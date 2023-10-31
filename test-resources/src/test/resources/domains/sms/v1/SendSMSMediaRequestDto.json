@@ -1,0 +1,25 @@
+{
+  "to": [
+    "+15551231234",
+    "+15551256344"
+  ],
+  "from": "+15551231234",
+  "body": {
+    "message": "Media message from Sinch!",
+    "url": "https://en.wikipedia.org/wiki/Sinch_(company)#/media/File:Sinch_LockUp_RGB.png"
+  },
+  "parameters": {
+    "name": {
+      "12345678910": "Joe",
+      "default": "there"
+    }
+  },
+  "type": "mt_media",
+  "delivery_report": "none",
+  "send_at": "2019-08-24T14:16:22Z",
+  "expire_at": "2019-08-24T14:17:22Z",
+  "callback_url": "callback url",
+  "client_reference": "client reference",
+  "feedback_enabled": false,
+  "strict_validation": true
+}
