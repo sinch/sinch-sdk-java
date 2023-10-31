@@ -1,0 +1,6 @@
+{
+  "access_token": "token value",
+  "expires_in": 123456,
+  "scope": "scope value",
+  "token_type": "token type value"
+}

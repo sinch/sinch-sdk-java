@@ -1,0 +1,11 @@
+{
+  "availableRegions": [
+    {
+      "regionCode": "AU",
+      "regionName": "Australia",
+      "types": [
+        "MOBILE"
+      ]
+    }
+  ]
+}

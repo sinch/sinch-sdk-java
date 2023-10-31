@@ -1,0 +1,38 @@
+{
+  "phoneNumber": "+12025550134",
+  "projectId": "51bc3f40-f266-4ca8-8938-a1ed0ff32b9a",
+  "displayName": "string",
+  "regionCode": "US",
+  "type": "MOBILE",
+  "capability": [
+    "SMS"
+  ],
+  "money": {
+    "currencyCode": "USD",
+    "amount": "2.00"
+  },
+  "paymentIntervalMonths": 0,
+  "nextChargeDate": "2019-08-24T14:15:22Z",
+  "expireAt": "2019-08-24T14:15:22Z",
+  "smsConfiguration": {
+    "servicePlanId": "string",
+    "scheduledProvisioning": {
+      "servicePlanId": "8200000f74924bd6800000b212f00000",
+      "status": "WAITING",
+      "lastUpdatedTime": "2019-08-24T14:15:22Z",
+      "campaignId": "string",
+      "errorCodes": []
+    },
+    "campaignId": "string"
+  },
+  "voiceConfiguration": {
+    "appId": "string",
+    "scheduledVoiceProvisioning": {
+      "appId": "string",
+      "status": "WAITING",
+      "lastUpdatedTime": "2019-08-24T14:15:22Z"
+    },
+    "lastUpdatedTime": "2019-08-24T14:15:22Z"
+  },
+  "callbackUrl": "https://www.your-callback-server.com/callback"
+}

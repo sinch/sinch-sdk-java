@@ -1,0 +1,88 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.sinch.sdk</groupId>
+    <artifactId>sinch-sdk-java-sample-app</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <packaging>jar</packaging>
+    <name>Sinch Java SDK Sample Application</name>
+
+    <properties>
+        <sinch.sdk.java.version>[0.0.0,)</sinch.sdk.java.version>
+        <sinch.sdk.java.staging></sinch.sdk.java.staging>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>staging</id>
+            <repositories>
+                <repository>
+                    <id>oss-staging</id>
+                    <url>https://oss.sonatype.org/content/repositories/${sinch.sdk.java.staging}/</url>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <version>3.2.0</version>
+            <executions>
+            <execution>
+                <id>add-sources</id>
+                <phase>generate-sources</phase>
+                <goals>
+                    <goal>add-source</goal>
+                </goals>
+                <configuration>
+                    <sources>
+                        <source>src/main/java</source>
+                                 </sources>
+                </configuration>
+            </execution>
+            </executions></plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.sinch.sdk</groupId>
+            <artifactId>sinch-sdk-java</artifactId>
+            <version>${sinch.sdk.java.version}</version>
+        </dependency>
+
+        <!-- We don't care about logs from 3rd party dependencies for sample app: then
+         we remove the warning about missing SLF4J logger -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>2.0.9</version>
+        </dependency>
+
+    </dependencies>
+
+
+</project>

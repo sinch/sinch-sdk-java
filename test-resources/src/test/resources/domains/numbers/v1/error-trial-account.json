@@ -1,0 +1,16 @@
+{
+  "error": {
+    "code": 403,
+    "message": "Trial account is not enabled to rent number",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "type": "ResourceInfo",
+        "resourceType": "AvailableNumber",
+        "resourceName": "",
+        "owner": "",
+        "description": "Trial account is not enabled to rent number"
+      }
+    ]
+  }
+}

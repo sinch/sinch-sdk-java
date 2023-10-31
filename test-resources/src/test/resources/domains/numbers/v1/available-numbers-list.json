@@ -1,0 +1,22 @@
+{
+  "availableNumbers": [
+    {
+      "phoneNumber": "+46650553763",
+      "regionCode": "SE",
+      "type": "LOCAL",
+      "capability": [
+        "VOICE"
+      ],
+      "setupPrice": {
+        "currencyCode": "DOLLAR",
+        "amount": "0.57"
+      },
+      "monthlyPrice": {
+        "currencyCode": "EUR",
+        "amount": "0.80"
+      },
+      "paymentIntervalMonths": 1,
+      "supportingDocumentationRequired": true
+    }
+  ]
+}
