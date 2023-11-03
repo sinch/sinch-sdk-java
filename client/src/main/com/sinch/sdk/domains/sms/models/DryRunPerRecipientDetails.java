@@ -1,7 +1,7 @@
 package com.sinch.sdk.domains.sms.models;
 
 /**
- * Dtails related to a dryRun recipient
+ * Details related to a dryRun recipient
  *
  * @since 1.0
  */

@@ -68,7 +68,6 @@ public class ApiExceptionBuilder {
 
     Object code = mappedResponse.get("code");
     Object text = mappedResponse.get("text");
-    ;
 
     if (null == code || null == text) {
       return Optional.empty();
