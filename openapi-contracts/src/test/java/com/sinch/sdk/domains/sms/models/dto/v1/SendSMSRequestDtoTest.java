@@ -56,16 +56,21 @@ class SendSMSRequestDtoTest extends BaseTest {
   @Test
   void serializeTextRequestDto() throws JsonProcessingException, JSONException {
 
-    Map<String, String> map =
-        Stream.of(
-                new AbstractMap.SimpleEntry<>("12345678910", "Joe"),
-                new AbstractMap.SimpleEntry<>(
-                    ParameterObjParameterKeyDto.JSON_PROPERTY_DEFAULT, "there"))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-
     ParameterObjDto parameterObjDto = new ParameterObjDto();
-
-    parameterObjDto.put("name", map);
+    parameterObjDto.put(
+        "an identifier",
+        Stream.of(new AbstractMap.SimpleEntry<>("a key", "a value"))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+    parameterObjDto.put(
+        ParameterObjDto.JSON_PROPERTY_LEFT_CURLY_BRACKET_PARAMETER_KEY_RIGHT_CURLY_BRACKET,
+        Stream.of(
+                new AbstractMap.SimpleEntry<>(
+                    ParameterObjParameterKeyDto
+                        .JSON_PROPERTY_LEFT_CURLY_BRACKET_MSISDN_RIGHT_CURLY_BRACKET,
+                    "msisdn value"),
+                new AbstractMap.SimpleEntry<>(
+                    ParameterObjParameterKeyDto.JSON_PROPERTY_DEFAULT, "default value"))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
     TextRequestDto textRequestDTO =
         new TextRequestDto()
             .to(Arrays.asList("+15551231234", "+15551256344"))
@@ -95,16 +100,22 @@ class SendSMSRequestDtoTest extends BaseTest {
   @Test
   void serializeMediaRequestDto() throws JsonProcessingException, JSONException {
 
-    Map<String, String> map =
-        Stream.of(
-                new AbstractMap.SimpleEntry<>("12345678910", "Joe"),
-                new AbstractMap.SimpleEntry<>(
-                    ParameterObjParameterKeyDto.JSON_PROPERTY_DEFAULT, "there"))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-
     ParameterObjDto parameterObjDto = new ParameterObjDto();
+    parameterObjDto.put(
+        "an identifier",
+        Stream.of(new AbstractMap.SimpleEntry<>("a key", "a value"))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+    parameterObjDto.put(
+        ParameterObjDto.JSON_PROPERTY_LEFT_CURLY_BRACKET_PARAMETER_KEY_RIGHT_CURLY_BRACKET,
+        Stream.of(
+                new AbstractMap.SimpleEntry<>(
+                    ParameterObjParameterKeyDto
+                        .JSON_PROPERTY_LEFT_CURLY_BRACKET_MSISDN_RIGHT_CURLY_BRACKET,
+                    "msisdn value"),
+                new AbstractMap.SimpleEntry<>(
+                    ParameterObjParameterKeyDto.JSON_PROPERTY_DEFAULT, "default value"))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
 
-    parameterObjDto.put("name", map);
     MediaRequestDto mediaRequestDTO =
         new MediaRequestDto("mt_media")
             .to(Arrays.asList("+15551231234", "+15551256344"))
@@ -114,7 +125,7 @@ class SendSMSRequestDtoTest extends BaseTest {
                         "https://en.wikipedia.org/wiki/Sinch_(company)#/media/File:Sinch_LockUp_RGB.png")
                     .message("Media message from Sinch!"))
             .from("+15551231234")
-            .deliveryReport("none")
+            .deliveryReport("summary")
             .sendAt(OffsetDateTime.parse("2019-08-24T14:16:22Z"))
             .expireAt(OffsetDateTime.parse("2019-08-24T14:17:22Z"))
             .callbackUrl("callback url")

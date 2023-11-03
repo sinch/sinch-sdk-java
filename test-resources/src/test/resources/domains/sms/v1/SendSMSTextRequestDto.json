@@ -18,9 +18,12 @@
   "from_ton": 6,
   "from_npi": 18,
   "parameters": {
-    "name": {
-      "12345678910": "Joe",
-      "default": "there"
+    "{parameter_key}": {
+      "{msisdn}": "msisdn value",
+      "default": "default value"
+    },
+    "an identifier": {
+      "a key": "a value"
     }
   }
 }

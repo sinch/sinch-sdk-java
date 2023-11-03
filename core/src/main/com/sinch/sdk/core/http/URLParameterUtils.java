@@ -33,7 +33,7 @@ public class URLParameterUtils {
     }
     Object value = parameter.getValue();
 
-    if (value instanceof String || value instanceof Number) {
+    if (value instanceof String || value instanceof Number || value instanceof Boolean) {
       return encodeString(parameter.getStyle(), parameter.getName(), value.toString());
     }
 
