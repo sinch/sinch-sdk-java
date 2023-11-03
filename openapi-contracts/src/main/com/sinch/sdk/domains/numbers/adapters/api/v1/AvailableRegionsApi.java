@@ -67,7 +67,12 @@ public class AvailableRegionsApi {
       String projectId, List<String> types) throws ApiException {
 
     LOGGER.finest(
-        "[numberServiceListAvailableRegions] " + "projectId: " + projectId + "types: " + types);
+        "[numberServiceListAvailableRegions] "
+            + "projectId: "
+            + projectId
+            + ", "
+            + "types: "
+            + types);
 
     HttpRequest httpRequest = numberServiceListAvailableRegionsRequestBuilder(projectId, types);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
