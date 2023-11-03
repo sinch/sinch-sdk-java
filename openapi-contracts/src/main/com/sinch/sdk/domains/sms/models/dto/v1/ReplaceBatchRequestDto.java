@@ -36,38 +36,41 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 // @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-@JsonDeserialize(using = DryRunRequestDto.DryRunRequestDtoDeserializer.class)
-@JsonSerialize(using = DryRunRequestDto.DryRunRequestDtoSerializer.class)
-public class DryRunRequestDto extends AbstractOpenApiSchema {
-  private static final Logger log = Logger.getLogger(DryRunRequestDto.class.getName());
+@JsonDeserialize(using = ReplaceBatchRequestDto.ReplaceBatchRequestDtoDeserializer.class)
+@JsonSerialize(using = ReplaceBatchRequestDto.ReplaceBatchRequestDtoSerializer.class)
+public class ReplaceBatchRequestDto extends AbstractOpenApiSchema {
+  private static final Logger log = Logger.getLogger(ReplaceBatchRequestDto.class.getName());
 
-  public static class DryRunRequestDtoSerializer extends StdSerializer<DryRunRequestDto> {
-    public DryRunRequestDtoSerializer(Class<DryRunRequestDto> t) {
+  public static class ReplaceBatchRequestDtoSerializer
+      extends StdSerializer<ReplaceBatchRequestDto> {
+    public ReplaceBatchRequestDtoSerializer(Class<ReplaceBatchRequestDto> t) {
       super(t);
     }
 
-    public DryRunRequestDtoSerializer() {
+    public ReplaceBatchRequestDtoSerializer() {
       this(null);
     }
 
     @Override
-    public void serialize(DryRunRequestDto value, JsonGenerator jgen, SerializerProvider provider)
+    public void serialize(
+        ReplaceBatchRequestDto value, JsonGenerator jgen, SerializerProvider provider)
         throws IOException, JsonProcessingException {
       jgen.writeObject(value.getActualInstance());
     }
   }
 
-  public static class DryRunRequestDtoDeserializer extends StdDeserializer<DryRunRequestDto> {
-    public DryRunRequestDtoDeserializer() {
-      this(DryRunRequestDto.class);
+  public static class ReplaceBatchRequestDtoDeserializer
+      extends StdDeserializer<ReplaceBatchRequestDto> {
+    public ReplaceBatchRequestDtoDeserializer() {
+      this(ReplaceBatchRequestDto.class);
     }
 
-    public DryRunRequestDtoDeserializer(Class<?> vc) {
+    public ReplaceBatchRequestDtoDeserializer(Class<?> vc) {
       super(vc);
     }
 
     @Override
-    public DryRunRequestDto deserialize(JsonParser jp, DeserializationContext ctxt)
+    public ReplaceBatchRequestDto deserialize(JsonParser jp, DeserializationContext ctxt)
         throws IOException, JsonProcessingException {
       JsonNode tree = jp.readValueAsTree();
       Object deserialized = null;
@@ -195,41 +198,43 @@ public class DryRunRequestDto extends AbstractOpenApiSchema {
       }
 
       if (match == 1) {
-        DryRunRequestDto ret = new DryRunRequestDto();
+        ReplaceBatchRequestDto ret = new ReplaceBatchRequestDto();
         ret.setActualInstance(deserialized);
         return ret;
       }
       throw new IOException(
           String.format(
-              "Failed deserialization for DryRunRequestDto: %d classes match result, expected 1",
+              "Failed deserialization for ReplaceBatchRequestDto: %d classes match result,"
+                  + " expected 1",
               match));
     }
 
     /** Handle deserialization of the 'null' value. */
     @Override
-    public DryRunRequestDto getNullValue(DeserializationContext ctxt) throws JsonMappingException {
-      throw new JsonMappingException(ctxt.getParser(), "DryRunRequestDto cannot be null");
+    public ReplaceBatchRequestDto getNullValue(DeserializationContext ctxt)
+        throws JsonMappingException {
+      throw new JsonMappingException(ctxt.getParser(), "ReplaceBatchRequestDto cannot be null");
     }
   }
 
   // store a list of schema names defined in oneOf
   public static final Map<String, Class<?>> schemas = new HashMap<>();
 
-  public DryRunRequestDto() {
+  public ReplaceBatchRequestDto() {
     super("oneOf", Boolean.FALSE);
   }
 
-  public DryRunRequestDto(BinaryRequestDto o) {
-    super("oneOf", Boolean.FALSE);
-    setActualInstance(o);
-  }
-
-  public DryRunRequestDto(MediaRequestDto o) {
+  public ReplaceBatchRequestDto(BinaryRequestDto o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public DryRunRequestDto(TextRequestDto o) {
+  public ReplaceBatchRequestDto(MediaRequestDto o) {
+    super("oneOf", Boolean.FALSE);
+    setActualInstance(o);
+  }
+
+  public ReplaceBatchRequestDto(TextRequestDto o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
@@ -238,12 +243,13 @@ public class DryRunRequestDto extends AbstractOpenApiSchema {
     schemas.put("BinaryRequestDto", BinaryRequestDto.class);
     schemas.put("MediaRequestDto", MediaRequestDto.class);
     schemas.put("TextRequestDto", TextRequestDto.class);
-    JSONNavigator.registerDescendants(DryRunRequestDto.class, Collections.unmodifiableMap(schemas));
+    JSONNavigator.registerDescendants(
+        ReplaceBatchRequestDto.class, Collections.unmodifiableMap(schemas));
   }
 
   @Override
   public Map<String, Class<?>> getSchemas() {
-    return DryRunRequestDto.schemas;
+    return ReplaceBatchRequestDto.schemas;
   }
 
   /**

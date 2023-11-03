@@ -65,6 +65,10 @@ public class AvailableRegionsApi {
    */
   public ListAvailableRegionsResponseDto numberServiceListAvailableRegions(
       String projectId, List<String> types) throws ApiException {
+
+    LOGGER.finest(
+        "[numberServiceListAvailableRegions] " + "projectId: " + projectId + "types: " + types);
+
     HttpRequest httpRequest = numberServiceListAvailableRegionsRequestBuilder(projectId, types);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
 
@@ -113,12 +117,6 @@ public class AvailableRegionsApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
     final String serializedBody = null;
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.GET,
