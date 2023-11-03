@@ -2,6 +2,8 @@ package com.sinch.sdk.domains.sms.models;
 
 import java.time.Instant;
 import java.util.Collection;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Base class for Batch types
@@ -9,21 +11,13 @@ import java.util.Collection;
  * @param <T> Type of batch
  * @since 1.0
  */
-public class Batch<T> {
+public class BaseBatch<T> {
 
-  private final String id;
+  private final T body;
 
   private final Collection<String> to;
 
   private final String from;
-
-  private final Boolean canceled;
-
-  private final T body;
-
-  private final Instant createdAt;
-
-  private final Instant modifiedAt;
 
   private final DeliveryReport deliveryReport;
 
@@ -38,14 +32,10 @@ public class Batch<T> {
   private final Boolean feedbackEnabled;
 
   /**
-   * @param id Unique identifier for batch
    * @param to List of Phone numbers and group IDs that will receive the batch
    * @param from Sender number. Must be valid phone number, short code or alphanumeric. Required if
    *     Automatic Default Originator not configured.
-   * @param canceled Indicates if the batch has been canceled or not.
    * @param body The message content
-   * @param createdAt when batch was created
-   * @param modifiedAt when batch was last updated
    * @param deliveryReport Request delivery report callback. Note that delivery reports can be
    *     fetched from the API regardless of this setting
    * @param sendAt If set in the future, the message will be delayed until send_at occurs. Must be
@@ -57,27 +47,21 @@ public class Batch<T> {
    *     added in the delivery report/callback of this batch
    * @param feedbackEnabled If set to true, then feedback is expected after successful delivery.
    */
-  public Batch(
-      String id,
+  public BaseBatch(
       Collection<String> to,
       String from,
-      Boolean canceled,
       T body,
-      Instant createdAt,
-      Instant modifiedAt,
       DeliveryReport deliveryReport,
       Instant sendAt,
       Instant expireAt,
       String callbackUrl,
       String clientReference,
       Boolean feedbackEnabled) {
-    this.id = id;
+    Objects.requireNonNull(to);
+    Objects.requireNonNull(body);
     this.to = to;
     this.from = from;
-    this.canceled = canceled;
     this.body = body;
-    this.createdAt = createdAt;
-    this.modifiedAt = modifiedAt;
     this.deliveryReport = deliveryReport;
     this.sendAt = sendAt;
     this.expireAt = expireAt;
@@ -90,77 +74,52 @@ public class Batch<T> {
     return new BatchBuilder<>();
   }
 
-  public String getId() {
-    return id;
-  }
-
   public Collection<String> getTo() {
     return to;
-  }
-
-  public String getFrom() {
-    return from;
-  }
-
-  public Boolean isCanceled() {
-    return canceled;
   }
 
   public T getBody() {
     return body;
   }
 
-  public Instant getCreatedAt() {
-    return createdAt;
+  public Optional<String> getFrom() {
+    return Optional.ofNullable(from);
   }
 
-  public Instant getModifiedAt() {
-    return modifiedAt;
+  public Optional<DeliveryReport> getDeliveryReport() {
+    return Optional.ofNullable(deliveryReport);
   }
 
-  public DeliveryReport getDeliveryReport() {
-    return deliveryReport;
+  public Optional<Instant> getSendAt() {
+    return Optional.ofNullable(sendAt);
   }
 
-  public Instant getSendAt() {
-    return sendAt;
+  public Optional<Instant> getExpireAt() {
+    return Optional.ofNullable(expireAt);
   }
 
-  public Instant getExpireAt() {
-    return expireAt;
+  public Optional<String> getCallbackUrl() {
+    return Optional.ofNullable(callbackUrl);
   }
 
-  public String getCallbackUrl() {
-    return callbackUrl;
+  public Optional<String> getClientReference() {
+    return Optional.ofNullable(clientReference);
   }
 
-  public String getClientReference() {
-    return clientReference;
-  }
-
-  public Boolean isFeedbackEnabled() {
-    return feedbackEnabled;
+  public Optional<Boolean> isFeedbackEnabled() {
+    return Optional.ofNullable(feedbackEnabled);
   }
 
   @Override
   public String toString() {
-    return "Batch{"
-        + "id='"
-        + id
-        + '\''
+    return "BaseBatch{"
+        + "body="
+        + body
         + ", to="
         + to
         + ", from='"
         + from
         + '\''
-        + ", canceled="
-        + canceled
-        + ", body="
-        + body
-        + ", createdAt="
-        + createdAt
-        + ", modifiedAt="
-        + modifiedAt
         + ", deliveryReport="
         + deliveryReport
         + ", sendAt="
@@ -180,36 +139,23 @@ public class Batch<T> {
 
   protected static class Builder<T, B extends Builder<T, B>> {
 
-    String id;
+    public Collection<String> to;
 
-    Collection<String> to;
+    public String from;
 
-    String from;
+    public T body;
 
-    Boolean canceled;
+    public DeliveryReport deliveryReport;
 
-    T body;
+    public Instant sendAt;
 
-    Instant createdAt;
+    public Instant expireAt;
 
-    Instant modifiedAt;
+    public String callbackUrl;
 
-    DeliveryReport deliveryReport;
+    public String clientReference;
 
-    Instant sendAt;
-
-    Instant expireAt;
-
-    String callbackUrl;
-
-    String clientReference;
-
-    Boolean feedbackEnabled;
-
-    public B setId(String id) {
-      this.id = id;
-      return self();
-    }
+    public Boolean feedbackEnabled;
 
     public B setTo(Collection<String> to) {
       this.to = to;
@@ -221,23 +167,8 @@ public class Batch<T> {
       return self();
     }
 
-    public B setCanceled(Boolean canceled) {
-      this.canceled = canceled;
-      return self();
-    }
-
     public B setBody(T body) {
       this.body = body;
-      return self();
-    }
-
-    public B setCreatedAt(Instant createdAt) {
-      this.createdAt = createdAt;
-      return self();
-    }
-
-    public B setModifiedAt(Instant modifiedAt) {
-      this.modifiedAt = modifiedAt;
       return self();
     }
 
@@ -271,15 +202,11 @@ public class Batch<T> {
       return self();
     }
 
-    public Batch<T> build() {
-      return new Batch<>(
-          id,
+    public BaseBatch<T> build() {
+      return new BaseBatch<>(
           to,
           from,
-          canceled,
           body,
-          createdAt,
-          modifiedAt,
           deliveryReport,
           sendAt,
           expireAt,
@@ -294,7 +221,7 @@ public class Batch<T> {
     }
   }
 
-  public static class BatchBuilder<T> extends Batch.Builder<T, BatchBuilder<T>> {
+  public static class BatchBuilder<T> extends BaseBatch.Builder<T, BatchBuilder<T>> {
     @Override
     protected BatchBuilder<T> self() {
       return this;

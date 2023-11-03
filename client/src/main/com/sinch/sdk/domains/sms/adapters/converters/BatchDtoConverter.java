@@ -1,11 +1,25 @@
 package com.sinch.sdk.domains.sms.adapters.converters;
 
+import static com.sinch.sdk.domains.sms.models.dto.v1.BinaryRequestDto.TypeEnum.MT_BINARY;
+import static com.sinch.sdk.domains.sms.models.dto.v1.MediaRequestDto.TypeEnum.MT_MEDIA;
+import static com.sinch.sdk.domains.sms.models.dto.v1.TextRequestDto.TypeEnum.MT_TEXT;
+
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.sms.models.*;
+import com.sinch.sdk.domains.sms.models.dto.v1.BinaryRequestDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.BinaryResponseDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.MediaBodyDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.MediaRequestDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.MediaResponseDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.SendSMS201ResponseDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.SendSMSRequestDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.TextRequestDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.TextResponseDto;
+import com.sinch.sdk.domains.sms.models.requests.SendSmsBatchBinaryRequest;
+import com.sinch.sdk.domains.sms.models.requests.SendSmsBatchMediaRequest;
+import com.sinch.sdk.domains.sms.models.requests.SendSmsBatchTextRequest;
+import java.time.ZoneOffset;
+import java.util.ArrayList;
 
 public class BatchDtoConverter {
 
@@ -36,11 +50,11 @@ public class BatchDtoConverter {
         .setCanceled(dto.getCanceled())
         .setBody(dto.getBody())
         .setUdh(dto.getUdh())
-        .setCreatedAt(dto.getCreatedAt().toInstant())
-        .setModifiedAt(dto.getModifiedAt().toInstant())
+        .setCreatedAt(null != dto.getCreatedAt() ? dto.getCreatedAt().toInstant() : null)
+        .setModifiedAt(null != dto.getModifiedAt() ? dto.getModifiedAt().toInstant() : null)
         .setDeliveryReport(DeliveryReport.from(dto.getDeliveryReport()))
-        .setSendAt(dto.getSendAt().toInstant())
-        .setExpireAt(dto.getExpireAt().toInstant())
+        .setSendAt(null != dto.getSendAt() ? dto.getSendAt().toInstant() : null)
+        .setExpireAt(null != dto.getExpireAt() ? dto.getExpireAt().toInstant() : null)
         .setCallbackUrl(dto.getCallbackUrl())
         .setClientReference(dto.getClientReference())
         .setFeedbackEnabled(dto.getFeedbackEnabled())
@@ -59,15 +73,17 @@ public class BatchDtoConverter {
         .setFrom(dto.getFrom())
         .setCanceled(dto.getCanceled())
         .setBody(
-            MediaBody.builder()
-                .setMessage(dto.getBody().getMessage())
-                .setUrl(dto.getBody().getUrl())
-                .build())
-        .setCreatedAt(dto.getCreatedAt().toInstant())
-        .setModifiedAt(dto.getModifiedAt().toInstant())
+            null != dto.getBody()
+                ? MediaBody.builder()
+                    .setMessage(dto.getBody().getMessage())
+                    .setUrl(dto.getBody().getUrl())
+                    .build()
+                : null)
+        .setCreatedAt(null != dto.getCreatedAt() ? dto.getCreatedAt().toInstant() : null)
+        .setModifiedAt(null != dto.getModifiedAt() ? dto.getModifiedAt().toInstant() : null)
         .setDeliveryReport(DeliveryReport.from(dto.getDeliveryReport()))
-        .setSendAt(dto.getSendAt().toInstant())
-        .setExpireAt(dto.getExpireAt().toInstant())
+        .setSendAt(null != dto.getSendAt() ? dto.getSendAt().toInstant() : null)
+        .setExpireAt(null != dto.getExpireAt() ? dto.getExpireAt().toInstant() : null)
         .setCallbackUrl(dto.getCallbackUrl())
         .setClientReference(dto.getClientReference())
         .setFeedbackEnabled(dto.getFeedbackEnabled())
@@ -82,11 +98,11 @@ public class BatchDtoConverter {
         .setFrom(dto.getFrom())
         .setCanceled(dto.getCanceled())
         .setBody(dto.getBody())
-        .setCreatedAt(dto.getCreatedAt().toInstant())
-        .setModifiedAt(dto.getModifiedAt().toInstant())
+        .setCreatedAt(null != dto.getCreatedAt() ? dto.getCreatedAt().toInstant() : null)
+        .setModifiedAt(null != dto.getModifiedAt() ? dto.getModifiedAt().toInstant() : null)
         .setDeliveryReport(DeliveryReport.from(dto.getDeliveryReport()))
-        .setSendAt(dto.getSendAt().toInstant())
-        .setExpireAt(dto.getExpireAt().toInstant())
+        .setSendAt(null != dto.getSendAt() ? dto.getSendAt().toInstant() : null)
+        .setExpireAt(null != dto.getExpireAt() ? dto.getExpireAt().toInstant() : null)
         .setCallbackUrl(dto.getCallbackUrl())
         .setClientReference(dto.getClientReference())
         .setFeedbackEnabled(dto.getFeedbackEnabled())
@@ -97,5 +113,82 @@ public class BatchDtoConverter {
         .setFromNpi(dto.getFromNpi())
         .setParameters(ParametersDtoConverter.convert(dto.getParameters()))
         .build();
+  }
+
+  public static SendSMSRequestDto convert(BaseBatch<?> value) {
+    if (value instanceof SendSmsBatchBinaryRequest) {
+      return convert((SendSmsBatchBinaryRequest) value);
+    } else if (value instanceof SendSmsBatchMediaRequest) {
+      return convert((SendSmsBatchMediaRequest) value);
+    } else if (value instanceof SendSmsBatchTextRequest) {
+      return convert((SendSmsBatchTextRequest) value);
+    } else {
+      throw new ApiException("Unexpected class:" + value.getClass().getName());
+    }
+  }
+
+  private static SendSMSRequestDto convert(SendSmsBatchBinaryRequest value) {
+    BinaryRequestDto dto =
+        new BinaryRequestDto()
+            .type(MT_BINARY.getValue())
+            .to(new ArrayList<>(value.getTo()))
+            .body(value.getBody());
+    value.getFrom().ifPresent(dto::from);
+    value.getDeliveryReport().ifPresent(f -> dto.setDeliveryReport(f.value()));
+    value.getSendAt().ifPresent(f -> dto.setSendAt(f.atOffset(ZoneOffset.UTC)));
+    value.getExpireAt().ifPresent(f -> dto.setExpireAt(f.atOffset(ZoneOffset.UTC)));
+    value.getCallbackUrl().ifPresent(dto::callbackUrl);
+    value.getClientReference().ifPresent(dto::clientReference);
+    value.isFeedbackEnabled().ifPresent(dto::feedbackEnabled);
+    value.isFlashMessage().ifPresent(dto::flashMessage);
+    value.isTruncateConcat().ifPresent(dto::truncateConcat);
+    value.getMaxNumberOfMessageParts().ifPresent(dto::maxNumberOfMessageParts);
+    value.getFromTon().ifPresent(dto::fromTon);
+    value.getFromNpi().ifPresent(dto::fromNpi);
+    dto.udh(value.getUdh());
+    return new SendSMSRequestDto(dto);
+  }
+
+  private static SendSMSRequestDto convert(SendSmsBatchMediaRequest value) {
+    MediaRequestDto dto =
+        new MediaRequestDto(MT_MEDIA.getValue())
+            .to(new ArrayList<>(value.getTo()))
+            .body(convert(value.getBody()));
+    value.getFrom().ifPresent(dto::from);
+    value.getDeliveryReport().ifPresent(f -> dto.setDeliveryReport(f.value()));
+    value.getSendAt().ifPresent(f -> dto.setSendAt(f.atOffset(ZoneOffset.UTC)));
+    value.getExpireAt().ifPresent(f -> dto.setExpireAt(f.atOffset(ZoneOffset.UTC)));
+    value.getCallbackUrl().ifPresent(dto::callbackUrl);
+    value.getClientReference().ifPresent(dto::clientReference);
+    value.isFeedbackEnabled().ifPresent(dto::feedbackEnabled);
+    value.isStrictValidation().ifPresent(dto::strictValidation);
+    value.getParameters().ifPresent(f -> dto.setParameters(ParametersDtoConverter.convert(f)));
+    return new SendSMSRequestDto(dto);
+  }
+
+  private static SendSMSRequestDto convert(SendSmsBatchTextRequest value) {
+    TextRequestDto dto =
+        new TextRequestDto()
+            .type(MT_TEXT.getValue())
+            .to(new ArrayList<>(value.getTo()))
+            .body(value.getBody());
+    value.getFrom().ifPresent(dto::from);
+    value.getDeliveryReport().ifPresent(f -> dto.setDeliveryReport(f.value()));
+    value.getSendAt().ifPresent(f -> dto.setSendAt(f.atOffset(ZoneOffset.UTC)));
+    value.getExpireAt().ifPresent(f -> dto.setExpireAt(f.atOffset(ZoneOffset.UTC)));
+    value.getCallbackUrl().ifPresent(dto::callbackUrl);
+    value.getClientReference().ifPresent(dto::clientReference);
+    value.isFeedbackEnabled().ifPresent(dto::feedbackEnabled);
+    value.isFlashMessage().ifPresent(dto::flashMessage);
+    value.isTruncateConcat().ifPresent(dto::truncateConcat);
+    value.getMaxNumberOfMessageParts().ifPresent(dto::maxNumberOfMessageParts);
+    value.getFromTon().ifPresent(dto::fromTon);
+    value.getFromNpi().ifPresent(dto::fromNpi);
+    value.getParameters().ifPresent(f -> dto.setParameters(ParametersDtoConverter.convert(f)));
+    return new SendSMSRequestDto(dto);
+  }
+
+  private static MediaBodyDto convert(MediaBody value) {
+    return new MediaBodyDto().url(value.getUrl()).message(value.getMessage().orElse(null));
   }
 }

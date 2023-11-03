@@ -87,6 +87,24 @@ public class InboundsApi {
       String endDate,
       String clientReference)
       throws ApiException {
+
+    LOGGER.finest(
+        "[listInboundMessages] "
+            + "servicePlanId: "
+            + servicePlanId
+            + "page: "
+            + page
+            + "pageSize: "
+            + pageSize
+            + "to: "
+            + to
+            + "startDate: "
+            + startDate
+            + "endDate: "
+            + endDate
+            + "clientReference: "
+            + clientReference);
+
     HttpRequest httpRequest =
         listInboundMessagesRequestBuilder(
             servicePlanId, page, pageSize, to, startDate, endDate, clientReference);
@@ -169,12 +187,6 @@ public class InboundsApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
     final String serializedBody = null;
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.GET,
@@ -197,6 +209,14 @@ public class InboundsApi {
    */
   public RetrieveInboundMessage200ResponseDto retrieveInboundMessage(
       String servicePlanId, String inboundId) throws ApiException {
+
+    LOGGER.finest(
+        "[retrieveInboundMessage] "
+            + "servicePlanId: "
+            + servicePlanId
+            + "inboundId: "
+            + inboundId);
+
     HttpRequest httpRequest = retrieveInboundMessageRequestBuilder(servicePlanId, inboundId);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
 
@@ -248,12 +268,6 @@ public class InboundsApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
     final String serializedBody = null;
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.GET,

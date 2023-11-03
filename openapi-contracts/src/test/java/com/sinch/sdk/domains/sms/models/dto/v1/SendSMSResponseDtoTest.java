@@ -15,7 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
-class SendSMS201ResponseDtoTest extends BaseTest {
+class SendSMSResponseDtoTest extends BaseTest {
 
   @GivenJsonResource("/domains/sms/v1/BinaryResponseDto.json")
   SendSMS201ResponseDto loadedBinary;
