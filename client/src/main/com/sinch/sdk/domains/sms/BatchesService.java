@@ -4,6 +4,8 @@ import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.sms.models.BaseBatch;
 import com.sinch.sdk.domains.sms.models.Batch;
 import com.sinch.sdk.domains.sms.models.DryRun;
+import com.sinch.sdk.domains.sms.models.requests.BatchesListRequestParameters;
+import com.sinch.sdk.domains.sms.models.responses.BatchesListResponse;
 
 /**
  * Batches Service
@@ -47,7 +49,17 @@ public interface BatchesService {
    *     response
    * @param batch The batch to be send
    * @return Details about dryRun execution
+   * @since 1.0
    */
   DryRun dryRun(boolean perRecipient, int numberOfRecipient, BaseBatch<?> batch)
       throws ApiException;
+
+  /**
+   * With the list operation you can list batch messages created in the last 14 days that you have
+   * created. This operation supports pagination.
+   *
+   * @param parameters Query parameters filtering returned batches
+   * @since 1.0
+   */
+  BatchesListResponse list(BatchesListRequestParameters parameters) throws ApiException;
 }

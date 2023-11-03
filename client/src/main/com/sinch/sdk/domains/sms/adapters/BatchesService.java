@@ -3,13 +3,21 @@ package com.sinch.sdk.domains.sms.adapters;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.core.models.pagination.Page;
+import com.sinch.sdk.core.models.pagination.PageToken;
+import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.sms.adapters.api.v1.BatchesApi;
 import com.sinch.sdk.domains.sms.adapters.converters.BatchDtoConverter;
 import com.sinch.sdk.domains.sms.adapters.converters.DryRunDtoConverter;
 import com.sinch.sdk.domains.sms.models.BaseBatch;
 import com.sinch.sdk.domains.sms.models.Batch;
 import com.sinch.sdk.domains.sms.models.DryRun;
+import com.sinch.sdk.domains.sms.models.dto.v1.ApiBatchListDto;
+import com.sinch.sdk.domains.sms.models.requests.BatchesListRequestParameters;
+import com.sinch.sdk.domains.sms.models.responses.BatchesListResponse;
 import com.sinch.sdk.models.Configuration;
+import java.time.Instant;
+import java.util.Collection;
 
 public class BatchesService implements com.sinch.sdk.domains.sms.BatchesService {
 
@@ -45,5 +53,27 @@ public class BatchesService implements com.sinch.sdk.domains.sms.BatchesService 
                 perRecipient,
                 numberOfRecipient,
                 BatchDtoConverter.convert(batch)));
+  }
+
+  public BatchesListResponse list(BatchesListRequestParameters parameters) throws ApiException {
+
+    BatchesListRequestParameters guardParameters =
+        null != parameters ? parameters : BatchesListRequestParameters.builder().build();
+
+    ApiBatchListDto response =
+        getApi()
+            .listBatches(
+                configuration.getProjectId(),
+                guardParameters.getPage().orElse(null),
+                guardParameters.getPageSize().orElse(null),
+                guardParameters.getFrom().orElse(null),
+                guardParameters.getStartDate().map(Instant::toString).orElse(null),
+                guardParameters.getEndDate().map(Instant::toString).orElse(null),
+                guardParameters.getClientReference().orElse(null));
+
+    Pair<Collection<Batch<?>>, PageToken<Integer>> content = BatchDtoConverter.convert(response);
+
+    return new BatchesListResponse(
+        this, new Page<>(guardParameters, content.getLeft(), content.getRight()));
   }
 }
