@@ -8,7 +8,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
-class RetrieveInboundMessage200ResponseDtoTest extends BaseTest {
+class RetrieveInboundMessageResponseDtoTest extends BaseTest {
 
   @GivenJsonResource("/domains/sms/v1/MOBinaryDto.json")
   RetrieveInboundMessage200ResponseDto loadedBinaryMessage;

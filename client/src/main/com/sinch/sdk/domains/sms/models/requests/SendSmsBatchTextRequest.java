@@ -1,30 +1,24 @@
-package com.sinch.sdk.domains.sms.models;
+package com.sinch.sdk.domains.sms.models.requests;
 
+import com.sinch.sdk.domains.sms.models.BaseBatch;
+import com.sinch.sdk.domains.sms.models.DeliveryReport;
+import com.sinch.sdk.domains.sms.models.Parameters;
 import java.time.Instant;
 import java.util.Collection;
+import java.util.Optional;
 
-/**
- * BatchText type
- *
- * @since 1.0
- */
-public class BatchText extends Batch<String> {
+public class SendSmsBatchTextRequest extends BaseBatch<String> {
   private final Boolean flashMessage;
   private final Parameters parameters;
   private final Boolean truncateConcat;
   private final Integer maxNumberOfMessageParts;
   private final Integer fromTon;
   private final Integer fromNpi;
-
   /**
-   * @param id Unique identifier for batch
    * @param to List of Phone numbers and group IDs that will receive the batch
    * @param from Sender number. Must be valid phone number, short code or alphanumeric. Required if
    *     Automatic Default Originator not configured.
-   * @param canceled Indicates if the batch has been canceled or not.
    * @param body The message content
-   * @param createdAt when batch was created
-   * @param modifiedAt when batch was last updated
    * @param deliveryReport Request delivery report callback. Note that delivery reports can be
    *     fetched from the API regardless of this setting
    * @param sendAt If set in the future, the message will be delayed until send_at occurs. Must be
@@ -43,14 +37,10 @@ public class BatchText extends Batch<String> {
    * @param fromTon The type of number for the sender number.
    * @param fromNpi Number Plan Indicator for the sender number.
    */
-  public BatchText(
-      String id,
+  public SendSmsBatchTextRequest(
       Collection<String> to,
       String from,
-      Boolean canceled,
       String body,
-      Instant createdAt,
-      Instant modifiedAt,
       DeliveryReport deliveryReport,
       Instant sendAt,
       Instant expireAt,
@@ -64,13 +54,9 @@ public class BatchText extends Batch<String> {
       Integer fromTon,
       Integer fromNpi) {
     super(
-        id,
         to,
         from,
-        canceled,
         body,
-        createdAt,
-        modifiedAt,
         deliveryReport,
         sendAt,
         expireAt,
@@ -85,33 +71,33 @@ public class BatchText extends Batch<String> {
     this.fromNpi = fromNpi;
   }
 
-  public Parameters getParameters() {
-    return parameters;
+  public Optional<Parameters> getParameters() {
+    return Optional.ofNullable(parameters);
   }
 
-  public Boolean isFlashMessage() {
-    return flashMessage;
+  public Optional<Boolean> isFlashMessage() {
+    return Optional.ofNullable(flashMessage);
   }
 
-  public Boolean isTruncateConcat() {
-    return truncateConcat;
+  public Optional<Boolean> isTruncateConcat() {
+    return Optional.ofNullable(truncateConcat);
   }
 
-  public Integer getMaxNumberOfMessageParts() {
-    return maxNumberOfMessageParts;
+  public Optional<Integer> getMaxNumberOfMessageParts() {
+    return Optional.ofNullable(maxNumberOfMessageParts);
   }
 
-  public Integer getFromTon() {
-    return fromTon;
+  public Optional<Integer> getFromTon() {
+    return Optional.ofNullable(fromTon);
   }
 
-  public Integer getFromNpi() {
-    return fromNpi;
+  public Optional<Integer> getFromNpi() {
+    return Optional.ofNullable(fromNpi);
   }
 
   @Override
   public String toString() {
-    return "BatchText{"
+    return "SendSmsBatchTextRequest{"
         + "flashMessage="
         + flashMessage
         + ", parameters="
@@ -132,7 +118,7 @@ public class BatchText extends Batch<String> {
     return new Builder();
   }
 
-  public static class Builder extends Batch.Builder<String, Builder> {
+  public static class Builder extends BaseBatch.Builder<String, Builder> {
     private Boolean flashMessage;
     private Parameters parameters;
     private Boolean truncateConcat;
@@ -142,7 +128,7 @@ public class BatchText extends Batch<String> {
 
     private Builder() {}
 
-    public Builder setFlashMessage(Boolean flashMessage) {
+    public Builder setFlashMessage(boolean flashMessage) {
       this.flashMessage = flashMessage;
       return this;
     }
@@ -172,15 +158,11 @@ public class BatchText extends Batch<String> {
       return this;
     }
 
-    public BatchText build() {
-      return new BatchText(
-          id,
+    public SendSmsBatchTextRequest build() {
+      return new SendSmsBatchTextRequest(
           to,
           from,
-          canceled,
           body,
-          createdAt,
-          modifiedAt,
           deliveryReport,
           sendAt,
           expireAt,

@@ -1,13 +1,28 @@
 package com.sinch.sdk.domains.sms.adapters.converters;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.utils.Pair;
-import com.sinch.sdk.domains.sms.models.*;
-import com.sinch.sdk.domains.sms.models.dto.v1.*;
+import com.sinch.sdk.domains.sms.adapters.BatchesServiceTest;
+import com.sinch.sdk.domains.sms.models.Batch;
+import com.sinch.sdk.domains.sms.models.BatchBinary;
+import com.sinch.sdk.domains.sms.models.BatchMedia;
+import com.sinch.sdk.domains.sms.models.BatchText;
+import com.sinch.sdk.domains.sms.models.Parameters;
+import com.sinch.sdk.domains.sms.models.dto.v1.BinaryResponseDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.MediaResponseDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.ParameterObjDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.ParameterObjParameterKeyDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.SendSMS201ResponseDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.SendSMSRequestDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.TextResponseDto;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
@@ -25,6 +40,15 @@ class BatchDtoConverterTest extends BaseTest {
 
   @GivenJsonResource("/domains/sms/v1/MediaResponseDto.json")
   public SendSMS201ResponseDto mediaResponseDto;
+
+  @GivenJsonResource("/domains/sms/v1/SendSMSBinaryRequestDto.json")
+  public SendSMSRequestDto binaryRequestDto;
+
+  @GivenJsonResource("/domains/sms/v1/SendSMSTextRequestDto.json")
+  public SendSMSRequestDto textRequestDto;
+
+  @GivenJsonResource("/domains/sms/v1/SendSMSMediaRequestDto.json")
+  public SendSMSRequestDto mediaRequestDto;
 
   public static void compareWithDto(Batch<?> client, SendSMS201ResponseDto dto) {
     Object obj = dto.getActualInstance();
@@ -70,8 +94,8 @@ class BatchDtoConverterTest extends BaseTest {
     assertEquals(dto.getTo(), client.getTo());
     assertEquals(dto.getFrom(), client.getFrom());
     assertEquals(dto.getCanceled(), client.isCanceled());
-    assertEquals(dto.getBody().getMessage(), client.getBody().getMessage());
     assertEquals(dto.getBody().getUrl(), client.getBody().getUrl());
+    assertEquals(dto.getBody().getMessage(), client.getBody().getMessage().get());
     assertEquals(dto.getType(), MediaResponseDto.TypeEnum.MT_MEDIA.getValue());
     assertEquals(dto.getCreatedAt().toInstant(), client.getCreatedAt());
     assertEquals(dto.getModifiedAt().toInstant(), client.getModifiedAt());
@@ -129,17 +153,41 @@ class BatchDtoConverterTest extends BaseTest {
   }
 
   @Test
-  void convertBinary() {
+  void convertBinaryResponse() {
     compareWithDto(BatchDtoConverter.convert(binaryResponseDto), binaryResponseDto);
   }
 
   @Test
-  void convertMedia() {
+  void convertMediaResponse() {
     compareWithDto(BatchDtoConverter.convert(mediaResponseDto), mediaResponseDto);
   }
 
   @Test
-  void convertText() {
+  void convertTextResponse() {
     compareWithDto(BatchDtoConverter.convert(textResponseDto), textResponseDto);
+  }
+
+  @Test
+  void convertBinaryRequest() {
+    org.assertj.core.api.Assertions.assertThat(
+            BatchDtoConverter.convert(BatchesServiceTest.sendSmsBatchBinaryRequest))
+        .usingRecursiveComparison()
+        .isEqualTo(binaryRequestDto);
+  }
+
+  @Test
+  void convertMediaRequest() {
+    org.assertj.core.api.Assertions.assertThat(
+            BatchDtoConverter.convert(BatchesServiceTest.sendSmsBatchMediaRequest))
+        .usingRecursiveComparison()
+        .isEqualTo(mediaRequestDto);
+  }
+
+  @Test
+  void convertTextRequest() {
+    org.assertj.core.api.Assertions.assertThat(
+            BatchDtoConverter.convert(BatchesServiceTest.sendSmsBatchTextRequest))
+        .usingRecursiveComparison()
+        .isEqualTo(textRequestDto);
   }
 }

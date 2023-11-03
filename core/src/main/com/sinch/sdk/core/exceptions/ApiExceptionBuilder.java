@@ -12,17 +12,17 @@ public class ApiExceptionBuilder {
   public static ApiException build(String message, int code, Map<String, ?> mappedResponse) {
 
     // Hardcoded Numbers API errors like format parsing
-    Optional<ApiException> numbersException = getExceptionFromNumbersOrSmsError(mappedResponse);
+    Optional<ApiException> numbersException = getExceptionFromNumbersError(mappedResponse);
+    if (numbersException.isPresent()) {
+      return numbersException.get();
+    }
 
-    return numbersException.orElseGet(() -> new ApiException(message, code));
+    Optional<ApiException> smsException = getExceptionFromSmsError(mappedResponse);
+    return smsException.orElseGet(() -> new ApiException(message, code));
   }
 
-  private static Optional<ApiException> getExceptionFromNumbersOrSmsError(
-      Map<?, ?> mappedResponse) {
+  private static Optional<ApiException> getExceptionFromNumbersError(Map<?, ?> mappedResponse) {
 
-    if (null == mappedResponse) {
-      return Optional.empty();
-    }
     // excepted numbers API errors have following form
     //   "error": {
     //      "code": int,
@@ -53,5 +53,27 @@ public class ApiExceptionBuilder {
 
     return Optional.of(
         new ApiException(String.format("%s: %s", statusValue, messageValue), codeValue));
+  }
+
+  private static Optional<ApiException> getExceptionFromSmsError(Map<?, ?> mappedResponse) {
+
+    // excepted SMS API errors have following form
+    //     "code": int,
+    //     "text": string,
+    // }
+
+    if (null == mappedResponse) {
+      return Optional.empty();
+    }
+
+    Object code = mappedResponse.get("code");
+    Object text = mappedResponse.get("text");
+    ;
+
+    if (null == code || null == text) {
+      return Optional.empty();
+    }
+
+    return Optional.of(new ApiException(String.format("%s: %s", code, text)));
   }
 }

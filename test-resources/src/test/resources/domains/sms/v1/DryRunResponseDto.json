@@ -1,0 +1,12 @@
+{
+  "number_of_recipients": 123,
+  "number_of_messages": 456,
+  "per_recipient": [
+    {
+      "recipient": "recipient string",
+      "message_part": "message part string",
+      "body": "body string",
+      "encoding": "encoding string"
+    }
+  ]
+}

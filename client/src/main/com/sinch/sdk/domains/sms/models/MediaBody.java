@@ -1,5 +1,7 @@
 package com.sinch.sdk.domains.sms.models;
 
+import java.util.Optional;
+
 /**
  * MediaBody object
  *
@@ -19,12 +21,16 @@ public class MediaBody {
     this.url = url;
   }
 
-  public String getMessage() {
-    return message;
+  public MediaBody(String url) {
+    this(url, null);
   }
 
   public String getUrl() {
     return url;
+  }
+
+  public Optional<String> getMessage() {
+    return Optional.ofNullable(message);
   }
 
   @Override
