@@ -12,8 +12,10 @@ public class UpdateSmsBatchMediaRequest extends UpdateBaseBatchRequest<MediaBody
   private final Boolean strictValidation;
   /**
    * @param toAdd List of phone numbers and group IDs to add to the batch.
-   * @param toRemove List of phone numbers and group IDs to remove from the batch.
    * @param body The message content
+   * @param toRemove List of phone numbers and group IDs to remove from the batch.
+   * @param from Sender number. Must be valid phone number, short code or alphanumeric. Required if
+   *     Automatic Default Originator not configured. * @param body The message content
    * @param deliveryReport Request delivery report callback. Note that delivery reports can be
    *     fetched from the API regardless of this setting
    * @param sendAt If set in the future, the message will be delayed until send_at occurs. Must be

@@ -512,4 +512,15 @@ public class BatchesServiceTest extends BaseTest {
 
     Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(batchText);
   }
+
+  @Test
+  void cancelBatch() throws ApiException {
+
+    when(api.cancelBatchMessage(eq(configuration.getProjectId()), eq("foo text batch id")))
+        .thenReturn(textResponseDto);
+
+    Batch<?> response = service.cancel("foo text batch id");
+
+    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(batchText);
+  }
 }

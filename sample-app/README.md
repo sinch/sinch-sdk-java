@@ -65,6 +65,7 @@ See https://developers.sinch.com for details about these parameters
 | SMS     | Batches   | - Get     | [com.sinch.sample.sms.batches.Get](src/main/java/com/sinch/sample/sms/batches/Get.java)                     | Require `BATCH_ID` parameter     |
 |         |           | - List    | [com.sinch.sample.sms.batches.List](src/main/java/com/sinch/sample/sms/batches/List.java)                   |                                  |
 |         |           | - Send    | [com.sinch.sample.sms.batches.Send](src/main/java/com/sinch/sample/sms/batches/Send.java)                   |                                  |
-|         |           | - Replace | [com.sinch.sample.sms.batches.Replace](src/main/java/com/sinch/sample/sms/batches/Replace.java)             | Require `BATCH_ID` parameter                                 |
-|         |           | - Update  | [com.sinch.sample.sms.batches.Update](src/main/java/com/sinch/sample/sms/batches/Update.java)               | Require `BATCH_ID` parameter                                 |
+|         |           | - Replace | [com.sinch.sample.sms.batches.Replace](src/main/java/com/sinch/sample/sms/batches/Replace.java)             | Require `BATCH_ID` parameter     |
+|         |           | - Update  | [com.sinch.sample.sms.batches.Update](src/main/java/com/sinch/sample/sms/batches/Update.java)               | Require `BATCH_ID` parameter     |
 |         |           | - DryRun  | [com.sinch.sample.sms.batches.DryRun](src/main/java/com/sinch/sample/sms/batches/dryRun.java)               |                                  |
+|         |           | - Cancel  | [com.sinch.sample.sms.batches.Cancel](src/main/java/com/sinch/sample/sms/batches/Cancel.java)               | Require `BATCH_ID` parameter     |
