@@ -85,4 +85,10 @@ public class BatchesService implements com.sinch.sdk.domains.sms.BatchesService 
             .updateBatchMessage(
                 configuration.getProjectId(), batchId, BatchDtoConverter.convert(batch)));
   }
+
+  public <T extends Batch<?>> T replace(String batchId, BaseBatch<?> batch) throws ApiException {
+    return BatchDtoConverter.convert(
+        getApi()
+            .replaceBatch(configuration.getProjectId(), batchId, BatchDtoConverter.convert(batch)));
+  }
 }

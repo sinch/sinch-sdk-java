@@ -1,21 +1,20 @@
 package com.sinch.sample.sms.batches;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.sms.models.DryRun;
+import com.sinch.sdk.domains.sms.models.BatchText;
 import com.sinch.sdk.domains.sms.models.requests.SendSmsBatchTextRequest;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.logging.Logger;
 
-public class dryRun extends BaseApplication {
+public class Replace extends BaseApplication {
+  private static final Logger LOGGER = Logger.getLogger(Replace.class.getName());
 
-  private static final Logger LOGGER = Logger.getLogger(dryRun.class.getName());
-
-  public dryRun() throws IOException {}
+  public Replace() throws IOException {}
 
   public static void main(String[] args) {
     try {
-      new dryRun().run();
+      new Replace().run();
     } catch (Exception e) {
       LOGGER.severe(e.getMessage());
       e.printStackTrace();
@@ -24,20 +23,20 @@ public class dryRun extends BaseApplication {
 
   public void run() {
 
-    LOGGER.info("DryRun Request");
-
-    DryRun value =
+    LOGGER.info("Replace batch" + batchId);
+    BatchText value =
         client
             .sms()
             .batches()
-            .dryRun(
-                true,
-                3,
+            .replace(
+                batchId,
                 SendSmsBatchTextRequest.builder()
-                    .setTo(Collections.singletonList("+foo number"))
+                    .setTo(Collections.singletonList("+33745149803"))
                     .setBody("the body")
+                    .setClientReference("a client reference")
+                    .setFrom("+33123456789")
                     .build());
 
-    LOGGER.info("Response :" + value);
+    LOGGER.info("Response: " + value);
   }
 }

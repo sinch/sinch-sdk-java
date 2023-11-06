@@ -27,7 +27,6 @@ import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiBatchListDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiDeliveryFeedbackDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.DryRun200ResponseDto;
-import com.sinch.sdk.domains.sms.models.dto.v1.ReplaceBatchRequestDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.SendSMS201ResponseDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.SendSMSRequestDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.UpdateBatchMessageRequestDto;
@@ -565,12 +564,12 @@ public class BatchesApi {
    * @param servicePlanId Your service plan ID. You can find this on your
    *     [Dashboard](https://dashboard.sinch.com/sms/api/rest). (required)
    * @param batchId The batch ID you received from sending a message. (required)
-   * @param replaceBatchRequestDto (optional)
+   * @param sendSMSRequestDto (optional)
    * @return SendSMS201ResponseDto
    * @throws ApiException if fails to make API call
    */
   public SendSMS201ResponseDto replaceBatch(
-      String servicePlanId, String batchId, ReplaceBatchRequestDto replaceBatchRequestDto)
+      String servicePlanId, String batchId, SendSMSRequestDto sendSMSRequestDto)
       throws ApiException {
 
     LOGGER.finest(
@@ -581,11 +580,10 @@ public class BatchesApi {
             + "batchId: "
             + batchId
             + ", "
-            + "replaceBatchRequestDto: "
-            + replaceBatchRequestDto);
+            + "sendSMSRequestDto: "
+            + sendSMSRequestDto);
 
-    HttpRequest httpRequest =
-        replaceBatchRequestBuilder(servicePlanId, batchId, replaceBatchRequestDto);
+    HttpRequest httpRequest = replaceBatchRequestBuilder(servicePlanId, batchId, sendSMSRequestDto);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
@@ -603,7 +601,7 @@ public class BatchesApi {
   }
 
   private HttpRequest replaceBatchRequestBuilder(
-      String servicePlanId, String batchId, ReplaceBatchRequestDto replaceBatchRequestDto)
+      String servicePlanId, String batchId, SendSMSRequestDto sendSMSRequestDto)
       throws ApiException {
     // verify the required parameter 'servicePlanId' is set
     if (servicePlanId == null) {
@@ -634,7 +632,7 @@ public class BatchesApi {
     final Collection<String> localVarContentTypes = Arrays.asList("application/json");
 
     final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
-    final String serializedBody = mapper.serialize(localVarContentTypes, replaceBatchRequestDto);
+    final String serializedBody = mapper.serialize(localVarContentTypes, sendSMSRequestDto);
 
     return new HttpRequest(
         localVarPath,

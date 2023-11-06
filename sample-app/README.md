@@ -49,8 +49,8 @@ See https://developers.sinch.com for details about these parameters
 
 ## Available samples classes
 
-| API     | Service   | Sample    | Class                                                                                                         | Notes                            |
-|---------|-----------|-----------|---------------------------------------------------------------------------------------------------------------|----------------------------------|
+| API     | Service   | Sample    | Class                                                                                                       | Notes                            |
+|---------|-----------|-----------|-------------------------------------------------------------------------------------------------------------|----------------------------------|
 | Numbers | Available | - Get     | [com.sinch.sample.numbers.available.Get](src/main/java/com/sinch/sample/numbers/available/Get.java)         | Require `PHONE_NUMBER` parameter |
 |         |           | - ListAll | [com.sinch.sample.numbers.available.ListAll](src/main/java/com/sinch/sample/numbers/available/ListAll.java) |                                  |
 |         |           | - Rent    | [com.sinch.sample.numbers.available.Rent](src/main/java/com/sinch/sample/numbers/available/Rent.java)       | Require `PHONE_NUMBER` parameter |
@@ -63,5 +63,8 @@ See https://developers.sinch.com for details about these parameters
 |         |           | - Update  | [com.sinch.sample.numbers.callback.Update](src/main/java/com/sinch/sample/numbers/callback/Get.java)        |                                  |
 |         | Regions   | - ListAll | [com.sinch.sample.numbers.regions.ListAll](src/main/java/com/sinch/sample/numbers/regions/ListAll.java)     |                                  |
 | SMS     | Batches   | - Get     | [com.sinch.sample.sms.batches.Get](src/main/java/com/sinch/sample/sms/batches/Get.java)                     | Require `BATCH_ID` parameter     |
-
-
+|         |           | - List    | [com.sinch.sample.sms.batches.List](src/main/java/com/sinch/sample/sms/batches/List.java)                   |                                  |
+|         |           | - Send    | [com.sinch.sample.sms.batches.Send](src/main/java/com/sinch/sample/sms/batches/Send.java)                   |                                  |
+|         |           | - Replace | [com.sinch.sample.sms.batches.Replace](src/main/java/com/sinch/sample/sms/batches/Replace.java)             | Require `BATCH_ID` parameter                                 |
+|         |           | - Update  | [com.sinch.sample.sms.batches.Update](src/main/java/com/sinch/sample/sms/batches/Update.java)               | Require `BATCH_ID` parameter                                 |
+|         |           | - DryRun  | [com.sinch.sample.sms.batches.DryRun](src/main/java/com/sinch/sample/sms/batches/dryRun.java)               |                                  |

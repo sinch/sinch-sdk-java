@@ -470,4 +470,46 @@ public class BatchesServiceTest extends BaseTest {
 
     Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(batchBinary);
   }
+
+  @Test
+  void replaceBinary() throws ApiException {
+
+    when(api.replaceBatch(
+            eq(configuration.getProjectId()),
+            eq("foo text batch id"),
+            eq(BatchDtoConverter.convert(sendSmsBatchBinaryRequest))))
+        .thenReturn(binaryResponseDto);
+
+    Batch<?> response = service.replace("foo text batch id", sendSmsBatchBinaryRequest);
+
+    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(batchBinary);
+  }
+
+  @Test
+  void replaceMedia() throws ApiException {
+
+    when(api.replaceBatch(
+            eq(configuration.getProjectId()),
+            eq("foo text batch id"),
+            eq(BatchDtoConverter.convert(sendSmsBatchMediaRequest))))
+        .thenReturn(mediaResponseDto);
+
+    Batch<?> response = service.replace("foo text batch id", sendSmsBatchMediaRequest);
+
+    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(batchMedia);
+  }
+
+  @Test
+  void replaceText() throws ApiException {
+
+    when(api.replaceBatch(
+            eq(configuration.getProjectId()),
+            eq("foo text batch id"),
+            eq(BatchDtoConverter.convert(sendSmsBatchTextRequest))))
+        .thenReturn(textResponseDto);
+
+    Batch<?> response = service.replace("foo text batch id", sendSmsBatchTextRequest);
+
+    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(batchText);
+  }
 }

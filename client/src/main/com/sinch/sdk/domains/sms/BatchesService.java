@@ -74,4 +74,15 @@ public interface BatchesService {
    */
   <T extends Batch<?>> T update(String batchId, UpdateBaseBatchRequest<?> batch)
       throws ApiException;
+
+  /**
+   * This operation will replace all the parameters of a batch with the provided values. It is the
+   * same as cancelling a batch and sending a new one instead.
+   *
+   * @param batchId The batch ID you received from sending a message
+   * @param <T> A type of Batch
+   * @return Batch information
+   * @since 1.0
+   */
+  <T extends Batch<?>> T replace(String batchId, BaseBatch<?> batch) throws ApiException;
 }
