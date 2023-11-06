@@ -119,11 +119,11 @@ public class SendSmsBatchBinaryRequest extends BaseBatch<String> {
   }
 
   public static class Builder extends BaseBatch.Builder<String, Builder> {
-    private boolean flashMessage;
-    private boolean truncateConcat;
-    private int maxNumberOfMessageParts;
-    private int fromTon;
-    private int fromNpi;
+    private Boolean flashMessage;
+    private Boolean truncateConcat;
+    private Integer maxNumberOfMessageParts;
+    private Integer fromTon;
+    private Integer fromNpi;
     private String udh;
 
     private Builder() {}

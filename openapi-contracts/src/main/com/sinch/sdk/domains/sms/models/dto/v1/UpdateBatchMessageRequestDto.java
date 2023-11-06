@@ -16,6 +16,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonToken;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -75,6 +76,48 @@ public class UpdateBatchMessageRequestDto extends AbstractOpenApiSchema {
         throws IOException, JsonProcessingException {
       JsonNode tree = jp.readValueAsTree();
       Object deserialized = null;
+      UpdateBatchMessageRequestDto newUpdateBatchMessageRequestDto =
+          new UpdateBatchMessageRequestDto();
+      Map<String, Object> result2 =
+          tree.traverse(jp.getCodec()).readValueAs(new TypeReference<Map<String, Object>>() {});
+      String discriminatorValue = (String) result2.get("type");
+      switch (discriminatorValue) {
+        case "ApiUpdateBinaryMtMessage":
+          deserialized =
+              tree.traverse(jp.getCodec()).readValueAs(ApiUpdateBinaryMtMessageDto.class);
+          newUpdateBatchMessageRequestDto.setActualInstance(deserialized);
+          return newUpdateBatchMessageRequestDto;
+        case "ApiUpdateMmsMtMessage":
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(ApiUpdateMmsMtMessageDto.class);
+          newUpdateBatchMessageRequestDto.setActualInstance(deserialized);
+          return newUpdateBatchMessageRequestDto;
+        case "ApiUpdateTextMtMessage":
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(ApiUpdateTextMtMessageDto.class);
+          newUpdateBatchMessageRequestDto.setActualInstance(deserialized);
+          return newUpdateBatchMessageRequestDto;
+        case "mt_binary":
+          deserialized =
+              tree.traverse(jp.getCodec()).readValueAs(ApiUpdateBinaryMtMessageDto.class);
+          newUpdateBatchMessageRequestDto.setActualInstance(deserialized);
+          return newUpdateBatchMessageRequestDto;
+        case "mt_media":
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(ApiUpdateMmsMtMessageDto.class);
+          newUpdateBatchMessageRequestDto.setActualInstance(deserialized);
+          return newUpdateBatchMessageRequestDto;
+        case "mt_text":
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(ApiUpdateTextMtMessageDto.class);
+          newUpdateBatchMessageRequestDto.setActualInstance(deserialized);
+          return newUpdateBatchMessageRequestDto;
+        default:
+          log.log(
+              Level.WARNING,
+              String.format(
+                  "Failed to lookup discriminator value `%s` for UpdateBatchMessageRequestDto."
+                      + " Possible values: ApiUpdateBinaryMtMessage ApiUpdateMmsMtMessage"
+                      + " ApiUpdateTextMtMessage mt_binary mt_media mt_text",
+                  discriminatorValue));
+      }
+
       boolean typeCoercion = ctxt.isEnabled(MapperFeature.ALLOW_COERCION_OF_SCALARS);
       int match = 0;
       JsonToken token = tree.traverse(jp.getCodec()).nextToken();
@@ -251,6 +294,16 @@ public class UpdateBatchMessageRequestDto extends AbstractOpenApiSchema {
     schemas.put("ApiUpdateTextMtMessageDto", ApiUpdateTextMtMessageDto.class);
     JSONNavigator.registerDescendants(
         UpdateBatchMessageRequestDto.class, Collections.unmodifiableMap(schemas));
+    // Initialize and register the discriminator mappings.
+    Map<String, Class<?>> mappings = new HashMap<String, Class<?>>();
+    mappings.put("ApiUpdateBinaryMtMessage", ApiUpdateBinaryMtMessageDto.class);
+    mappings.put("ApiUpdateMmsMtMessage", ApiUpdateMmsMtMessageDto.class);
+    mappings.put("ApiUpdateTextMtMessage", ApiUpdateTextMtMessageDto.class);
+    mappings.put("mt_binary", ApiUpdateBinaryMtMessageDto.class);
+    mappings.put("mt_media", ApiUpdateMmsMtMessageDto.class);
+    mappings.put("mt_text", ApiUpdateTextMtMessageDto.class);
+    mappings.put("UpdateBatchMessage_request", UpdateBatchMessageRequestDto.class);
+    JSONNavigator.registerDiscriminator(UpdateBatchMessageRequestDto.class, "type", mappings);
   }
 
   @Override

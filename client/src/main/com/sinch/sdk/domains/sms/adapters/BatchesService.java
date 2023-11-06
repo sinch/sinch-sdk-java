@@ -14,6 +14,7 @@ import com.sinch.sdk.domains.sms.models.Batch;
 import com.sinch.sdk.domains.sms.models.DryRun;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiBatchListDto;
 import com.sinch.sdk.domains.sms.models.requests.BatchesListRequestParameters;
+import com.sinch.sdk.domains.sms.models.requests.UpdateBaseBatchRequest;
 import com.sinch.sdk.domains.sms.models.responses.BatchesListResponse;
 import com.sinch.sdk.models.Configuration;
 import java.time.Instant;
@@ -75,5 +76,13 @@ public class BatchesService implements com.sinch.sdk.domains.sms.BatchesService 
 
     return new BatchesListResponse(
         this, new Page<>(guardParameters, content.getLeft(), content.getRight()));
+  }
+
+  public <T extends Batch<?>> T update(String batchId, UpdateBaseBatchRequest<?> batch)
+      throws ApiException {
+    return BatchDtoConverter.convert(
+        getApi()
+            .updateBatchMessage(
+                configuration.getProjectId(), batchId, BatchDtoConverter.convert(batch)));
   }
 }

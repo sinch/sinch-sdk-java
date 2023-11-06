@@ -55,11 +55,12 @@ public class BatchesApi {
   }
 
   /**
-   * Cancel a batch message A batch can be canceled aty point. If a batch is canceled while it&#39;s
-   * currently being delivered some messages currently being processed might still be delivered. The
-   * delivery report will indicate which messages were canceled and which weren&#39;t. Canceling a
-   * batch scheduled in the future will result in an empty delivery report while canceling an
-   * already sent batch would result in no change to the completed delivery report.
+   * Cancel a batch message A batch can be canceled at any point. If a batch is canceled while
+   * it&#39;s currently being delivered some messages currently being processed might still be
+   * delivered. The delivery report will indicate which messages were canceled and which
+   * weren&#39;t. Canceling a batch scheduled in the future will result in an empty delivery report
+   * while canceling an already sent batch would result in no change to the completed delivery
+   * report.
    *
    * @param servicePlanId Your service plan ID. You can find this on your
    *     [Dashboard](https://dashboard.sinch.com/sms/api/rest). (required)

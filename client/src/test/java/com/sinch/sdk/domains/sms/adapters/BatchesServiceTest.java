@@ -27,6 +27,9 @@ import com.sinch.sdk.domains.sms.models.dto.v1.SendSMS201ResponseDto;
 import com.sinch.sdk.domains.sms.models.requests.SendSmsBatchBinaryRequest;
 import com.sinch.sdk.domains.sms.models.requests.SendSmsBatchMediaRequest;
 import com.sinch.sdk.domains.sms.models.requests.SendSmsBatchTextRequest;
+import com.sinch.sdk.domains.sms.models.requests.UpdateSmsBatchBinaryRequest;
+import com.sinch.sdk.domains.sms.models.requests.UpdateSmsBatchMediaRequest;
+import com.sinch.sdk.domains.sms.models.requests.UpdateSmsBatchTextRequest;
 import com.sinch.sdk.domains.sms.models.responses.BatchesListResponse;
 import com.sinch.sdk.models.Configuration;
 import java.time.Instant;
@@ -191,6 +194,47 @@ public class BatchesServiceTest extends BaseTest {
           .setFromTon(fromTon)
           .setFromNpi(fromNpi)
           .setParameters(parameters)
+          .build();
+
+  public static final UpdateSmsBatchTextRequest updateSmsBatchTextRequest =
+      UpdateSmsBatchTextRequest.builder()
+          .setToAdd(to)
+          .setFrom(from)
+          .setBody(body)
+          .setDeliveryReport(deliveryReport)
+          .setSendAt(sendAt)
+          .setExpireAt(expireAt)
+          .setCallbackUrl(callbackUrl)
+          .setParameters(parameters)
+          .build();
+
+  public static final UpdateSmsBatchMediaRequest updateSmsBatchMediaRequest =
+      UpdateSmsBatchMediaRequest.builder()
+          .setToRemove(to)
+          .setFrom(from)
+          .setBody(
+              new MediaBody(
+                  "https://en.wikipedia.org/wiki/Sinch_(company)#/media/File:Sinch_LockUp_RGB.png",
+                  "Media message from Sinch!"))
+          .setDeliveryReport(DeliveryReport.SUMMARY)
+          .setSendAt(Instant.parse("2019-08-24T14:16:22Z"))
+          .setExpireAt(Instant.parse("2019-08-24T14:17:22Z"))
+          .setCallbackUrl(callbackUrl)
+          .setStrictValidation(true)
+          .setParameters(parameters)
+          .build();
+
+  public static final UpdateSmsBatchBinaryRequest updateSmsBatchBinaryRequest =
+      UpdateSmsBatchBinaryRequest.builder()
+          .setToAdd(Arrays.asList("+15551231234", "+15987365412"))
+          .setToRemove(Arrays.asList("+0123456789", "+9876543210"))
+          .setFrom(from)
+          .setBody(body)
+          .setDeliveryReport(DeliveryReport.FULL)
+          .setSendAt(sendAt)
+          .setExpireAt(expireAt)
+          .setCallbackUrl(callbackUrl)
+          .setUdh(udh)
           .build();
 
   @GivenJsonResource("/domains/sms/v1/BinaryResponseDto.json")
@@ -383,5 +427,47 @@ public class BatchesServiceTest extends BaseTest {
                 .setExpireAt(Instant.parse("2023-11-06T10:34:30.256Z"))
                 .setFeedbackEnabled(false)
                 .build());
+  }
+
+  @Test
+  void updateText() throws ApiException {
+
+    when(api.updateBatchMessage(
+            eq(configuration.getProjectId()),
+            eq("foo text batch id"),
+            eq(BatchDtoConverter.convert(updateSmsBatchTextRequest))))
+        .thenReturn(textResponseDto);
+
+    Batch<?> response = service.update("foo text batch id", updateSmsBatchTextRequest);
+
+    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(batchText);
+  }
+
+  @Test
+  void updateMedia() throws ApiException {
+
+    when(api.updateBatchMessage(
+            eq(configuration.getProjectId()),
+            eq("foo text batch id"),
+            eq(BatchDtoConverter.convert(updateSmsBatchMediaRequest))))
+        .thenReturn(mediaResponseDto);
+
+    Batch<?> response = service.update("foo text batch id", updateSmsBatchMediaRequest);
+
+    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(batchMedia);
+  }
+
+  @Test
+  void updateBinary() throws ApiException {
+
+    when(api.updateBatchMessage(
+            eq(configuration.getProjectId()),
+            eq("foo text batch id"),
+            eq(BatchDtoConverter.convert(updateSmsBatchBinaryRequest))))
+        .thenReturn(binaryResponseDto);
+
+    Batch<?> response = service.update("foo text batch id", updateSmsBatchBinaryRequest);
+
+    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(batchBinary);
   }
 }

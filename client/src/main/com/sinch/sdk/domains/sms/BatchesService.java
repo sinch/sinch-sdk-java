@@ -5,6 +5,7 @@ import com.sinch.sdk.domains.sms.models.BaseBatch;
 import com.sinch.sdk.domains.sms.models.Batch;
 import com.sinch.sdk.domains.sms.models.DryRun;
 import com.sinch.sdk.domains.sms.models.requests.BatchesListRequestParameters;
+import com.sinch.sdk.domains.sms.models.requests.UpdateBaseBatchRequest;
 import com.sinch.sdk.domains.sms.models.responses.BatchesListResponse;
 
 /**
@@ -62,4 +63,15 @@ public interface BatchesService {
    * @since 1.0
    */
   BatchesListResponse list(BatchesListRequestParameters parameters) throws ApiException;
+
+  /**
+   * This operation updates all specified parameters of a batch that matches the provided batch ID.
+   *
+   * @param batchId The batch ID you received from sending a message
+   * @param <T> A type of Batch
+   * @return Batch information
+   * @since 1.0
+   */
+  <T extends Batch<?>> T update(String batchId, UpdateBaseBatchRequest<?> batch)
+      throws ApiException;
 }
