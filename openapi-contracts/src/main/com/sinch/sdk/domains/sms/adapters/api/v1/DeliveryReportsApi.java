@@ -76,12 +76,16 @@ public class DeliveryReportsApi {
         "[getDeliveryReportByBatchId] "
             + "servicePlanId: "
             + servicePlanId
+            + ", "
             + "batchId: "
             + batchId
+            + ", "
             + "type: "
             + type
+            + ", "
             + "status: "
             + status
+            + ", "
             + "code: "
             + code);
 
@@ -179,8 +183,10 @@ public class DeliveryReportsApi {
         "[getDeliveryReportByPhoneNumber] "
             + "servicePlanId: "
             + servicePlanId
+            + ", "
             + "batchId: "
             + batchId
+            + ", "
             + "recipientMsisdn: "
             + recipientMsisdn);
 
@@ -290,18 +296,25 @@ public class DeliveryReportsApi {
         "[getDeliveryReports] "
             + "servicePlanId: "
             + servicePlanId
+            + ", "
             + "page: "
             + page
+            + ", "
             + "pageSize: "
             + pageSize
+            + ", "
             + "startDate: "
             + startDate
+            + ", "
             + "endDate: "
             + endDate
+            + ", "
             + "status: "
             + status
+            + ", "
             + "code: "
             + code
+            + ", "
             + "clientReference: "
             + clientReference);
 

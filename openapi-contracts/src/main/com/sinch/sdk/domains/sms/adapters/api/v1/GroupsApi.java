@@ -67,7 +67,12 @@ public class GroupsApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[createGroup] " + "servicePlanId: " + servicePlanId + "groupObjectDto: " + groupObjectDto);
+        "[createGroup] "
+            + "servicePlanId: "
+            + servicePlanId
+            + ", "
+            + "groupObjectDto: "
+            + groupObjectDto);
 
     HttpRequest httpRequest = createGroupRequestBuilder(servicePlanId, groupObjectDto);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
@@ -131,7 +136,8 @@ public class GroupsApi {
    */
   public void deleteGroup(String servicePlanId, String groupId) throws ApiException {
 
-    LOGGER.finest("[deleteGroup] " + "servicePlanId: " + servicePlanId + "groupId: " + groupId);
+    LOGGER.finest(
+        "[deleteGroup] " + "servicePlanId: " + servicePlanId + ", " + "groupId: " + groupId);
 
     HttpRequest httpRequest = deleteGroupRequestBuilder(servicePlanId, groupId);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
@@ -203,7 +209,8 @@ public class GroupsApi {
    */
   public List<String> getMembers(String servicePlanId, String groupId) throws ApiException {
 
-    LOGGER.finest("[getMembers] " + "servicePlanId: " + servicePlanId + "groupId: " + groupId);
+    LOGGER.finest(
+        "[getMembers] " + "servicePlanId: " + servicePlanId + ", " + "groupId: " + groupId);
 
     HttpRequest httpRequest = getMembersRequestBuilder(servicePlanId, groupId);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
@@ -282,8 +289,10 @@ public class GroupsApi {
         "[listGroups] "
             + "servicePlanId: "
             + servicePlanId
+            + ", "
             + "page: "
             + page
+            + ", "
             + "pageSize: "
             + pageSize);
 
@@ -368,8 +377,10 @@ public class GroupsApi {
         "[replaceGroup] "
             + "servicePlanId: "
             + servicePlanId
+            + ", "
             + "groupId: "
             + groupId
+            + ", "
             + "replaceGroupRequestDto: "
             + replaceGroupRequestDto);
 
@@ -447,7 +458,8 @@ public class GroupsApi {
   public CreateGroupResponseDto retrieveGroup(String servicePlanId, String groupId)
       throws ApiException {
 
-    LOGGER.finest("[retrieveGroup] " + "servicePlanId: " + servicePlanId + "groupId: " + groupId);
+    LOGGER.finest(
+        "[retrieveGroup] " + "servicePlanId: " + servicePlanId + ", " + "groupId: " + groupId);
 
     HttpRequest httpRequest = retrieveGroupRequestBuilder(servicePlanId, groupId);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
@@ -537,8 +549,10 @@ public class GroupsApi {
         "[updateGroup] "
             + "servicePlanId: "
             + servicePlanId
+            + ", "
             + "groupId: "
             + groupId
+            + ", "
             + "updateGroupRequestDto: "
             + updateGroupRequestDto);
 

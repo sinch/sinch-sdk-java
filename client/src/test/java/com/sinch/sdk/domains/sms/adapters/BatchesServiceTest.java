@@ -19,6 +19,7 @@ import com.sinch.sdk.domains.sms.models.DeliveryReport;
 import com.sinch.sdk.domains.sms.models.DryRun;
 import com.sinch.sdk.domains.sms.models.MediaBody;
 import com.sinch.sdk.domains.sms.models.Parameters;
+import com.sinch.sdk.domains.sms.models.dto.v1.ApiBatchListDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.DryRun200ResponseDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.ParameterObjDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.ParameterObjParameterKeyDto;
@@ -26,10 +27,13 @@ import com.sinch.sdk.domains.sms.models.dto.v1.SendSMS201ResponseDto;
 import com.sinch.sdk.domains.sms.models.requests.SendSmsBatchBinaryRequest;
 import com.sinch.sdk.domains.sms.models.requests.SendSmsBatchMediaRequest;
 import com.sinch.sdk.domains.sms.models.requests.SendSmsBatchTextRequest;
+import com.sinch.sdk.domains.sms.models.responses.BatchesListResponse;
 import com.sinch.sdk.models.Configuration;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -201,6 +205,12 @@ public class BatchesServiceTest extends BaseTest {
   @GivenJsonResource("/domains/sms/v1/DryRunResponseDto.json")
   DryRun200ResponseDto dryRunResponseDto;
 
+  @GivenJsonResource("/domains/sms/v1/ListBatchesResponseDtoPage0.json")
+  ApiBatchListDto listBatchesResponseDtoPage0;
+
+  @GivenJsonResource("/domains/sms/v1/ListBatchesResponseDtoPage1.json")
+  ApiBatchListDto listBatchesResponseDtoPage1;
+
   @Mock Configuration configuration;
   @Mock BatchesApi api;
   @InjectMocks BatchesService service;
@@ -292,5 +302,86 @@ public class BatchesServiceTest extends BaseTest {
     Assertions.assertThat(response)
         .usingRecursiveComparison()
         .isEqualTo(DryRunDtoConverterTest.dryRunClient);
+  }
+
+  @Test
+  void list() throws ApiException {
+
+    when(api.listBatches(
+            eq(configuration.getProjectId()),
+            eq(null),
+            eq(null),
+            eq(null),
+            eq(null),
+            eq(null),
+            eq(null)))
+        .thenReturn(listBatchesResponseDtoPage0);
+    when(api.listBatches(
+            eq(configuration.getProjectId()),
+            eq(1),
+            eq(null),
+            eq(null),
+            eq(null),
+            eq(null),
+            eq(null)))
+        .thenReturn(listBatchesResponseDtoPage1);
+
+    BatchesListResponse response = service.list(null);
+
+    Iterator<Batch<?>> iterator = response.autoPageIter();
+    Batch<?> batch = iterator.next();
+    Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
+    Assertions.assertThat(batch)
+        .usingRecursiveComparison()
+        .isEqualTo(
+            BatchBinary.builder()
+                .setId("01HEAWCHESCXG8SDG5R10VF8E1")
+                .setTo(Collections.singletonList("339876543213"))
+                .setFrom("33123456789")
+                .setCanceled(false)
+                .setBody("the body")
+                .setCreatedAt(Instant.parse("2023-11-03T15:21:21.113Z"))
+                .setModifiedAt(Instant.parse("2023-11-03T15:21:21.568Z"))
+                .setDeliveryReport(DeliveryReport.NONE)
+                .setExpireAt(Instant.parse("2023-11-06T15:21:21.973Z"))
+                .setClientReference("a client reference")
+                .setFeedbackEnabled(false)
+                .setFlashMessage(false)
+                .build());
+
+    batch = iterator.next();
+    Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
+    Assertions.assertThat(batch)
+        .usingRecursiveComparison()
+        .isEqualTo(
+            BatchText.builder()
+                .setId("01HEAC0AG69SVYYQ675VPYT28Q")
+                .setTo(Collections.singletonList("3300000000"))
+                .setCanceled(false)
+                .setBody("the body")
+                .setCreatedAt(Instant.parse("2023-11-03T10:35:03.558Z"))
+                .setModifiedAt(Instant.parse("2023-11-03T10:35:03.666Z"))
+                .setDeliveryReport(DeliveryReport.NONE)
+                .setExpireAt(Instant.parse("2023-11-03T10:35:03.558Z"))
+                .setFeedbackEnabled(true)
+                .setFlashMessage(false)
+                .build());
+
+    batch = iterator.next();
+    Assertions.assertThat(iterator.hasNext()).isEqualTo(false);
+    Assertions.assertThat(batch)
+        .usingRecursiveComparison()
+        .isEqualTo(
+            BatchMedia.builder()
+                .setId("01HEABZ9S80D4ENE3X6CPMATZR")
+                .setTo(Collections.singletonList("331111111"))
+                .setCanceled(false)
+                .setBody(MediaBody.builder().setUrl("an URL").build())
+                .setCreatedAt(Instant.parse("2023-11-03T10:34:30.056Z"))
+                .setModifiedAt(Instant.parse("2023-11-03T10:34:30.156Z"))
+                .setDeliveryReport(DeliveryReport.SUMMARY)
+                .setExpireAt(Instant.parse("2023-11-06T10:34:30.256Z"))
+                .setFeedbackEnabled(false)
+                .build());
   }
 }

@@ -92,16 +92,22 @@ public class InboundsApi {
         "[listInboundMessages] "
             + "servicePlanId: "
             + servicePlanId
+            + ", "
             + "page: "
             + page
+            + ", "
             + "pageSize: "
             + pageSize
+            + ", "
             + "to: "
             + to
+            + ", "
             + "startDate: "
             + startDate
+            + ", "
             + "endDate: "
             + endDate
+            + ", "
             + "clientReference: "
             + clientReference);
 
@@ -214,6 +220,7 @@ public class InboundsApi {
         "[retrieveInboundMessage] "
             + "servicePlanId: "
             + servicePlanId
+            + ", "
             + "inboundId: "
             + inboundId);
 

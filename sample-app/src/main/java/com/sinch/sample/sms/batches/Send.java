@@ -32,6 +32,8 @@ public class Send extends BaseApplication {
                 SendSmsBatchTextRequest.builder()
                     .setTo(Collections.singletonList("+foo "))
                     .setBody("the body")
+                    .setClientReference("a client reference")
+                    .setFrom("+33123456789")
                     .build());
 
     LOGGER.info("Response: " + value);

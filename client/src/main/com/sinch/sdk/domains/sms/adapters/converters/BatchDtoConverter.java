@@ -5,13 +5,23 @@ import static com.sinch.sdk.domains.sms.models.dto.v1.MediaRequestDto.TypeEnum.M
 import static com.sinch.sdk.domains.sms.models.dto.v1.TextRequestDto.TypeEnum.MT_TEXT;
 
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.domains.sms.models.*;
+import com.sinch.sdk.core.models.AbstractOpenApiSchema;
+import com.sinch.sdk.core.models.pagination.PageToken;
+import com.sinch.sdk.core.utils.Pair;
+import com.sinch.sdk.domains.sms.models.BaseBatch;
+import com.sinch.sdk.domains.sms.models.Batch;
+import com.sinch.sdk.domains.sms.models.BatchBinary;
+import com.sinch.sdk.domains.sms.models.BatchMedia;
+import com.sinch.sdk.domains.sms.models.BatchText;
+import com.sinch.sdk.domains.sms.models.DeliveryReport;
+import com.sinch.sdk.domains.sms.models.MediaBody;
+import com.sinch.sdk.domains.sms.models.dto.v1.ApiBatchListBatchesInnerDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.ApiBatchListDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.BinaryRequestDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.BinaryResponseDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.MediaBodyDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.MediaRequestDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.MediaResponseDto;
-import com.sinch.sdk.domains.sms.models.dto.v1.SendSMS201ResponseDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.SendSMSRequestDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.TextRequestDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.TextResponseDto;
@@ -20,22 +30,23 @@ import com.sinch.sdk.domains.sms.models.requests.SendSmsBatchMediaRequest;
 import com.sinch.sdk.domains.sms.models.requests.SendSmsBatchTextRequest;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class BatchDtoConverter {
 
-  public static <T extends Batch<?>> T convert(SendSMS201ResponseDto dto) {
+  public static <T extends Batch<?>> T convert(AbstractOpenApiSchema dto) {
     Object obj = dto.getActualInstance();
     if (obj instanceof BinaryResponseDto) {
       @SuppressWarnings("unchecked")
-      T t = (T) convertBinary(dto.getBinaryResponseDto());
+      T t = (T) convertBinary((BinaryResponseDto) obj);
       return t;
     } else if (obj instanceof MediaResponseDto) {
       @SuppressWarnings("unchecked")
-      T t = (T) convertMedia(dto.getMediaResponseDto());
+      T t = (T) convertMedia((MediaResponseDto) obj);
       return t;
     } else if (obj instanceof TextResponseDto) {
       @SuppressWarnings("unchecked")
-      T t = (T) convertText(dto.getTextResponseDto());
+      T t = (T) convertText((TextResponseDto) obj);
       return t;
     } else {
       throw new ApiException("Unexpected class:" + obj.getClass().getName());
@@ -190,5 +201,24 @@ public class BatchDtoConverter {
 
   private static MediaBodyDto convert(MediaBody value) {
     return new MediaBodyDto().url(value.getUrl()).message(value.getMessage().orElse(null));
+  }
+
+  public static <T extends Batch<?>> Pair<Collection<T>, PageToken<Integer>> convert(
+      ApiBatchListDto dto) {
+    // check end of pagination limit reached: (current page number * page size ) cannot be greater
+    // than "count" to be able to call next page
+    Integer nextPageToken =
+        ((dto.getPage() + 1) * Long.valueOf(dto.getPageSize())) >= dto.getCount()
+            ? null
+            : dto.getPage() + 1;
+    Collection<ApiBatchListBatchesInnerDto> collection = dto.getBatches();
+    Collection<T> pageContent = new ArrayList<>();
+    if (null != collection) {
+      for (ApiBatchListBatchesInnerDto apiBatchListBatchesInnerDto : collection) {
+        T convert = convert(apiBatchListBatchesInnerDto);
+        pageContent.add(convert);
+      }
+    }
+    return new Pair<>(pageContent, new PageToken<>(nextPageToken));
   }
 }

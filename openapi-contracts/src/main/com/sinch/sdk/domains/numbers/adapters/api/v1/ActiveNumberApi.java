@@ -70,6 +70,7 @@ public class ActiveNumberApi {
         "[numberServiceGetActiveNumber] "
             + "projectId: "
             + projectId
+            + ", "
             + "phoneNumber: "
             + phoneNumber);
 
@@ -175,20 +176,28 @@ public class ActiveNumberApi {
         "[numberServiceListActiveNumbers] "
             + "projectId: "
             + projectId
+            + ", "
             + "regionCode: "
             + regionCode
+            + ", "
             + "type: "
             + type
+            + ", "
             + "numberPatternPattern: "
             + numberPatternPattern
+            + ", "
             + "numberPatternSearchPattern: "
             + numberPatternSearchPattern
+            + ", "
             + "capability: "
             + capability
+            + ", "
             + "pageSize: "
             + pageSize
+            + ", "
             + "pageToken: "
             + pageToken
+            + ", "
             + "orderBy: "
             + orderBy);
 
@@ -342,6 +351,7 @@ public class ActiveNumberApi {
         "[numberServiceReleaseNumber] "
             + "projectId: "
             + projectId
+            + ", "
             + "phoneNumber: "
             + phoneNumber);
 
@@ -431,8 +441,10 @@ public class ActiveNumberApi {
         "[numberServiceUpdateActiveNumber] "
             + "projectId: "
             + projectId
+            + ", "
             + "phoneNumber: "
             + phoneNumber
+            + ", "
             + "activeNumberRequestDto: "
             + activeNumberRequestDto);
 
