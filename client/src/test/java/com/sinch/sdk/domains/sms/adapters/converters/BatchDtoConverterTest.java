@@ -24,6 +24,7 @@ import com.sinch.sdk.domains.sms.models.dto.v1.SendSMS201ResponseDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.SendSMSRequestDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.TextResponseDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.UpdateBatchMessageRequestDto;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
@@ -223,5 +224,14 @@ class BatchDtoConverterTest extends BaseTest {
             BatchDtoConverter.convert(BatchesServiceTest.updateSmsBatchBinaryRequest))
         .usingRecursiveComparison()
         .isEqualTo(updateBinaryRequestDto);
+  }
+
+  @Test
+  void convertDeliveryFeedbackRecipients() {
+    Collection<String> recipients = Arrays.asList("foo1", "foo2");
+    org.assertj.core.api.Assertions.assertThat(
+            BatchDtoConverter.convert(recipients).getRecipients())
+        .usingRecursiveComparison()
+        .isEqualTo(recipients);
   }
 }

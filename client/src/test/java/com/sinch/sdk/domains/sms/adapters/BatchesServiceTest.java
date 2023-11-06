@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.sms.adapters;
 
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
@@ -20,6 +21,7 @@ import com.sinch.sdk.domains.sms.models.DryRun;
 import com.sinch.sdk.domains.sms.models.MediaBody;
 import com.sinch.sdk.domains.sms.models.Parameters;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiBatchListDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.ApiDeliveryFeedbackDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.DryRun200ResponseDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.ParameterObjDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.ParameterObjParameterKeyDto;
@@ -37,8 +39,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
@@ -258,6 +263,8 @@ public class BatchesServiceTest extends BaseTest {
   @Mock Configuration configuration;
   @Mock BatchesApi api;
   @InjectMocks BatchesService service;
+
+  @Captor ArgumentCaptor<ApiDeliveryFeedbackDto> recipientsCaptor;
 
   @Test
   void getBinary() throws ApiException {
@@ -522,5 +529,19 @@ public class BatchesServiceTest extends BaseTest {
     Batch<?> response = service.cancel("foo text batch id");
 
     Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(batchText);
+  }
+
+  @Test
+  void sendDeliveryFeedback() throws ApiException {
+    List<String> recipients = Arrays.asList("foo", "foo2");
+
+    service.sendDeliveryFeedback("foo text batch id", recipients);
+
+    verify(api)
+        .deliveryFeedback(
+            eq(configuration.getProjectId()), eq("foo text batch id"), recipientsCaptor.capture());
+
+    ApiDeliveryFeedbackDto dto = recipientsCaptor.getValue();
+    Assertions.assertThat(dto.getRecipients()).usingRecursiveComparison().isEqualTo(recipients);
   }
 }

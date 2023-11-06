@@ -7,6 +7,7 @@ import com.sinch.sdk.domains.sms.models.DryRun;
 import com.sinch.sdk.domains.sms.models.requests.BatchesListRequestParameters;
 import com.sinch.sdk.domains.sms.models.requests.UpdateBaseBatchRequest;
 import com.sinch.sdk.domains.sms.models.responses.BatchesListResponse;
+import java.util.Collection;
 
 /**
  * Batches Service
@@ -123,4 +124,30 @@ public interface BatchesService {
    * @since 1.0
    */
   <T extends Batch<?>> T cancel(String batchId) throws ApiException;
+
+  /**
+   * Send delivery feedback for a message
+   *
+   * <p>Send feedback if your system can confirm successful message delivery.
+   *
+   * <p>Feedback can only be provided if feedback_enabled was set when batch was submitted.
+   *
+   * <p><em>Batches</em>: It is possible to submit feedback multiple times for the same batch for
+   * different recipients. Feedback without specified recipients is treated as successful message
+   * delivery to all recipients referenced in the batch. Note that the recipients key is still
+   * required even if the value is empty.
+   *
+   * <p><em>Groups</em>: If the batch message was creating using a group ID, at least one recipient
+   * is required. Excluding recipients (an empty recipient list) does not work and will result in a
+   * failed request.
+   *
+   * @param batchId The batch ID you received from sending a message
+   * @param recipients A list of phone numbers (MSISDNs) that have successfully received the
+   *     message. The key is required, however, the value can be an empty array ([]) for a batch. If
+   *     the feedback was enabled for a group, at least one phone number is required.
+   * @see <a
+   *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/deliveryFeedback">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/deliveryFeedback</a>
+   * @since 1.0
+   */
+  void sendDeliveryFeedback(String batchId, Collection<String> recipients) throws ApiException;
 }

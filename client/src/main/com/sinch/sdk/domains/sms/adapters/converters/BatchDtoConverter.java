@@ -13,6 +13,7 @@ import com.sinch.sdk.domains.sms.models.DeliveryReport;
 import com.sinch.sdk.domains.sms.models.MediaBody;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiBatchListBatchesInnerDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiBatchListDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.ApiDeliveryFeedbackDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiUpdateBinaryMtMessageDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiUpdateMmsMtMessageDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiUpdateTextMtMessageDto;
@@ -285,5 +286,9 @@ public class BatchDtoConverter {
       }
     }
     return new Pair<>(pageContent, new PageToken<>(nextPageToken));
+  }
+
+  public static ApiDeliveryFeedbackDto convert(Collection<String> recipients) {
+    return new ApiDeliveryFeedbackDto().recipients(new ArrayList<>(recipients));
   }
 }
