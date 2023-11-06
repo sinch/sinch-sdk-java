@@ -74,6 +74,7 @@ public class AvailableNumberApi {
         "[numberServiceGetAvailableNumber] "
             + "projectId: "
             + projectId
+            + ", "
             + "phoneNumber: "
             + phoneNumber);
 
@@ -179,16 +180,22 @@ public class AvailableNumberApi {
         "[numberServiceListAvailableNumbers] "
             + "projectId: "
             + projectId
+            + ", "
             + "regionCode: "
             + regionCode
+            + ", "
             + "type: "
             + type
+            + ", "
             + "numberPatternPattern: "
             + numberPatternPattern
+            + ", "
             + "numberPatternSearchPattern: "
             + numberPatternSearchPattern
+            + ", "
             + "capabilities: "
             + capabilities
+            + ", "
             + "size: "
             + size);
 
@@ -330,6 +337,7 @@ public class AvailableNumberApi {
         "[numberServiceRentAnyNumber] "
             + "projectId: "
             + projectId
+            + ", "
             + "rentAnyNumberRequestDto: "
             + rentAnyNumberRequestDto);
 
@@ -417,8 +425,10 @@ public class AvailableNumberApi {
         "[numberServiceRentNumber] "
             + "projectId: "
             + projectId
+            + ", "
             + "phoneNumber: "
             + phoneNumber
+            + ", "
             + "rentNumberRequestDto: "
             + rentNumberRequestDto);
 

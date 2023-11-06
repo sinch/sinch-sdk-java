@@ -132,6 +132,7 @@ public class CallbackConfigurationApi {
         "[updateCallbackConfiguration] "
             + "projectId: "
             + projectId
+            + ", "
             + "callbackConfigurationUpdateDto: "
             + callbackConfigurationUpdateDto);
 

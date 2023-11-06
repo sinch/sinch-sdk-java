@@ -1,0 +1,24 @@
+{
+  "count": 3,
+  "page": 1,
+  "batches": [
+    {
+      "id": "01HEABZ9S80D4ENE3X6CPMATZR",
+      "to": [
+        "331111111"
+      ],
+      "canceled": false,
+      "body": {
+        "url": "an URL"
+      },
+      "type": "mt_media",
+      "created_at": "2023-11-03T10:34:30.056Z",
+      "modified_at": "2023-11-03T10:34:30.156Z",
+      "delivery_report": "summary",
+      "expire_at": "2023-11-06T10:34:30.256Z",
+      "feedback_enabled": false
+    }
+  ],
+  "page_size": 2
+}
+

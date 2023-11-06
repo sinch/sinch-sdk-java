@@ -76,7 +76,7 @@ public abstract class BaseApplication {
 
   private static Properties handleConfigurations() throws IOException {
 
-    InputStream is = BaseApplication.class.getResourceAsStream("/resources/logging.properties");
+    InputStream is = BaseApplication.class.getResourceAsStream("/logging.properties");
     if (null != is) {
       LogManager.getLogManager().readConfiguration(is);
       is.close();

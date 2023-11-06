@@ -1,0 +1,39 @@
+{
+  "count": 3,
+  "page": 0,
+  "batches": [
+    {
+      "id": "01HEAWCHESCXG8SDG5R10VF8E1",
+      "to": [
+        "339876543213"
+      ],
+      "from": "33123456789",
+      "canceled": false,
+      "body": "the body",
+      "type": "mt_binary",
+      "created_at": "2023-11-03T15:21:21.113Z",
+      "modified_at": "2023-11-03T15:21:21.568Z",
+      "delivery_report": "none",
+      "expire_at": "2023-11-06T15:21:21.973Z",
+      "client_reference": "a client reference",
+      "feedback_enabled": false,
+      "flash_message": false
+    },
+    {
+      "id": "01HEAC0AG69SVYYQ675VPYT28Q",
+      "to": [
+        "3300000000"
+      ],
+      "canceled": false,
+      "body": "the body",
+      "type": "mt_text",
+      "created_at": "2023-11-03T10:35:03.558Z",
+      "modified_at": "2023-11-03T10:35:03.666Z",
+      "delivery_report": "none",
+      "expire_at": "2023-11-03T10:35:03.558Z",
+      "feedback_enabled": true,
+      "flash_message": false
+    }
+  ],
+  "page_size": 2
+}
