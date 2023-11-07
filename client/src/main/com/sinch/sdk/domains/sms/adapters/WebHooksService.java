@@ -23,6 +23,7 @@ public class WebHooksService implements com.sinch.sdk.domains.sms.WebHooksServic
     }
   }
 
+  @Override
   public BaseDeliveryReport deliveryReport(String jsonPayload) throws ApiMappingException {
     try {
       BaseDeliveryReport generic =

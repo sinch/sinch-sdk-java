@@ -1,6 +1,7 @@
 package com.sinch.sample.sms.webhooks;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.sms.models.webhooks.BaseDeliveryReport;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -38,8 +39,8 @@ public class DeliveryReport extends BaseApplication {
             + "}";
     LOGGER.info("Convert payload" + payload);
 
-    Object value = client.sms().webHooks().deliveryReport(payload);
+    BaseDeliveryReport value = client.sms().webHooks().deliveryReport(payload);
 
-    LOGGER.info("Convertion result: " + value);
+    LOGGER.info("Conversion result: " + value);
   }
 }
