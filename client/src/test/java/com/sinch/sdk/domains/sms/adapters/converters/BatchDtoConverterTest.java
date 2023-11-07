@@ -23,6 +23,8 @@ import com.sinch.sdk.domains.sms.models.dto.v1.ParameterObjParameterKeyDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.SendSMS201ResponseDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.SendSMSRequestDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.TextResponseDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.UpdateBatchMessageRequestDto;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
@@ -42,13 +44,22 @@ class BatchDtoConverterTest extends BaseTest {
   public SendSMS201ResponseDto mediaResponseDto;
 
   @GivenJsonResource("/domains/sms/v1/SendSMSBinaryRequestDto.json")
-  public SendSMSRequestDto binaryRequestDto;
+  public SendSMSRequestDto sendBinaryRequestDto;
 
   @GivenJsonResource("/domains/sms/v1/SendSMSTextRequestDto.json")
-  public SendSMSRequestDto textRequestDto;
+  public SendSMSRequestDto sendTextRequestDto;
 
   @GivenJsonResource("/domains/sms/v1/SendSMSMediaRequestDto.json")
-  public SendSMSRequestDto mediaRequestDto;
+  public SendSMSRequestDto sendMediaRequestDto;
+
+  @GivenJsonResource("/domains/sms/v1/UpdateSMSTextRequestDto.json")
+  public UpdateBatchMessageRequestDto updateTextRequestDto;
+
+  @GivenJsonResource("/domains/sms/v1/UpdateSMSMediaRequestDto.json")
+  public UpdateBatchMessageRequestDto updateMediaRequestDto;
+
+  @GivenJsonResource("/domains/sms/v1/UpdateSMSBinaryRequestDto.json")
+  public UpdateBatchMessageRequestDto updateBinaryRequestDto;
 
   public static void compareWithDto(Batch<?> client, SendSMS201ResponseDto dto) {
     Object obj = dto.getActualInstance();
@@ -168,26 +179,59 @@ class BatchDtoConverterTest extends BaseTest {
   }
 
   @Test
-  void convertBinaryRequest() {
+  void convertSendBinaryRequest() {
     org.assertj.core.api.Assertions.assertThat(
             BatchDtoConverter.convert(BatchesServiceTest.sendSmsBatchBinaryRequest))
         .usingRecursiveComparison()
-        .isEqualTo(binaryRequestDto);
+        .isEqualTo(sendBinaryRequestDto);
   }
 
   @Test
-  void convertMediaRequest() {
+  void convertSendtediaRequest() {
     org.assertj.core.api.Assertions.assertThat(
             BatchDtoConverter.convert(BatchesServiceTest.sendSmsBatchMediaRequest))
         .usingRecursiveComparison()
-        .isEqualTo(mediaRequestDto);
+        .isEqualTo(sendMediaRequestDto);
   }
 
   @Test
-  void convertTextRequest() {
+  void convertSendTextRequest() {
     org.assertj.core.api.Assertions.assertThat(
             BatchDtoConverter.convert(BatchesServiceTest.sendSmsBatchTextRequest))
         .usingRecursiveComparison()
-        .isEqualTo(textRequestDto);
+        .isEqualTo(sendTextRequestDto);
+  }
+
+  @Test
+  void convertUpdateTextRequest() {
+    org.assertj.core.api.Assertions.assertThat(
+            BatchDtoConverter.convert(BatchesServiceTest.updateSmsBatchTextRequest))
+        .usingRecursiveComparison()
+        .isEqualTo(updateTextRequestDto);
+  }
+
+  @Test
+  void convertUpdateMediaRequest() {
+    org.assertj.core.api.Assertions.assertThat(
+            BatchDtoConverter.convert(BatchesServiceTest.updateSmsBatchMediaRequest))
+        .usingRecursiveComparison()
+        .isEqualTo(updateMediaRequestDto);
+  }
+
+  @Test
+  void convertUpdateBinaryRequest() {
+    org.assertj.core.api.Assertions.assertThat(
+            BatchDtoConverter.convert(BatchesServiceTest.updateSmsBatchBinaryRequest))
+        .usingRecursiveComparison()
+        .isEqualTo(updateBinaryRequestDto);
+  }
+
+  @Test
+  void convertDeliveryFeedbackRecipients() {
+    Collection<String> recipients = Arrays.asList("foo1", "foo2");
+    org.assertj.core.api.Assertions.assertThat(
+            BatchDtoConverter.convert(recipients).getRecipients())
+        .usingRecursiveComparison()
+        .isEqualTo(recipients);
   }
 }
