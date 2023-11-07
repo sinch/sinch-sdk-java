@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.sms.adapters;
 
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
@@ -20,6 +21,7 @@ import com.sinch.sdk.domains.sms.models.DryRun;
 import com.sinch.sdk.domains.sms.models.MediaBody;
 import com.sinch.sdk.domains.sms.models.Parameters;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiBatchListDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.ApiDeliveryFeedbackDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.DryRun200ResponseDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.ParameterObjDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.ParameterObjParameterKeyDto;
@@ -27,6 +29,9 @@ import com.sinch.sdk.domains.sms.models.dto.v1.SendSMS201ResponseDto;
 import com.sinch.sdk.domains.sms.models.requests.SendSmsBatchBinaryRequest;
 import com.sinch.sdk.domains.sms.models.requests.SendSmsBatchMediaRequest;
 import com.sinch.sdk.domains.sms.models.requests.SendSmsBatchTextRequest;
+import com.sinch.sdk.domains.sms.models.requests.UpdateSmsBatchBinaryRequest;
+import com.sinch.sdk.domains.sms.models.requests.UpdateSmsBatchMediaRequest;
+import com.sinch.sdk.domains.sms.models.requests.UpdateSmsBatchTextRequest;
 import com.sinch.sdk.domains.sms.models.responses.BatchesListResponse;
 import com.sinch.sdk.models.Configuration;
 import java.time.Instant;
@@ -34,8 +39,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
@@ -193,6 +201,47 @@ public class BatchesServiceTest extends BaseTest {
           .setParameters(parameters)
           .build();
 
+  public static final UpdateSmsBatchTextRequest updateSmsBatchTextRequest =
+      UpdateSmsBatchTextRequest.builder()
+          .setToAdd(to)
+          .setFrom(from)
+          .setBody(body)
+          .setDeliveryReport(deliveryReport)
+          .setSendAt(sendAt)
+          .setExpireAt(expireAt)
+          .setCallbackUrl(callbackUrl)
+          .setParameters(parameters)
+          .build();
+
+  public static final UpdateSmsBatchMediaRequest updateSmsBatchMediaRequest =
+      UpdateSmsBatchMediaRequest.builder()
+          .setToRemove(to)
+          .setFrom(from)
+          .setBody(
+              new MediaBody(
+                  "https://en.wikipedia.org/wiki/Sinch_(company)#/media/File:Sinch_LockUp_RGB.png",
+                  "Media message from Sinch!"))
+          .setDeliveryReport(DeliveryReport.SUMMARY)
+          .setSendAt(Instant.parse("2019-08-24T14:16:22Z"))
+          .setExpireAt(Instant.parse("2019-08-24T14:17:22Z"))
+          .setCallbackUrl(callbackUrl)
+          .setStrictValidation(true)
+          .setParameters(parameters)
+          .build();
+
+  public static final UpdateSmsBatchBinaryRequest updateSmsBatchBinaryRequest =
+      UpdateSmsBatchBinaryRequest.builder()
+          .setToAdd(Arrays.asList("+15551231234", "+15987365412"))
+          .setToRemove(Arrays.asList("+0123456789", "+9876543210"))
+          .setFrom(from)
+          .setBody(body)
+          .setDeliveryReport(DeliveryReport.FULL)
+          .setSendAt(sendAt)
+          .setExpireAt(expireAt)
+          .setCallbackUrl(callbackUrl)
+          .setUdh(udh)
+          .build();
+
   @GivenJsonResource("/domains/sms/v1/BinaryResponseDto.json")
   public SendSMS201ResponseDto binaryResponseDto;
 
@@ -214,6 +263,8 @@ public class BatchesServiceTest extends BaseTest {
   @Mock Configuration configuration;
   @Mock BatchesApi api;
   @InjectMocks BatchesService service;
+
+  @Captor ArgumentCaptor<ApiDeliveryFeedbackDto> recipientsCaptor;
 
   @Test
   void getBinary() throws ApiException {
@@ -383,5 +434,114 @@ public class BatchesServiceTest extends BaseTest {
                 .setExpireAt(Instant.parse("2023-11-06T10:34:30.256Z"))
                 .setFeedbackEnabled(false)
                 .build());
+  }
+
+  @Test
+  void updateText() throws ApiException {
+
+    when(api.updateBatchMessage(
+            eq(configuration.getProjectId()),
+            eq("foo text batch id"),
+            eq(BatchDtoConverter.convert(updateSmsBatchTextRequest))))
+        .thenReturn(textResponseDto);
+
+    Batch<?> response = service.update("foo text batch id", updateSmsBatchTextRequest);
+
+    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(batchText);
+  }
+
+  @Test
+  void updateMedia() throws ApiException {
+
+    when(api.updateBatchMessage(
+            eq(configuration.getProjectId()),
+            eq("foo text batch id"),
+            eq(BatchDtoConverter.convert(updateSmsBatchMediaRequest))))
+        .thenReturn(mediaResponseDto);
+
+    Batch<?> response = service.update("foo text batch id", updateSmsBatchMediaRequest);
+
+    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(batchMedia);
+  }
+
+  @Test
+  void updateBinary() throws ApiException {
+
+    when(api.updateBatchMessage(
+            eq(configuration.getProjectId()),
+            eq("foo text batch id"),
+            eq(BatchDtoConverter.convert(updateSmsBatchBinaryRequest))))
+        .thenReturn(binaryResponseDto);
+
+    Batch<?> response = service.update("foo text batch id", updateSmsBatchBinaryRequest);
+
+    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(batchBinary);
+  }
+
+  @Test
+  void replaceBinary() throws ApiException {
+
+    when(api.replaceBatch(
+            eq(configuration.getProjectId()),
+            eq("foo text batch id"),
+            eq(BatchDtoConverter.convert(sendSmsBatchBinaryRequest))))
+        .thenReturn(binaryResponseDto);
+
+    Batch<?> response = service.replace("foo text batch id", sendSmsBatchBinaryRequest);
+
+    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(batchBinary);
+  }
+
+  @Test
+  void replaceMedia() throws ApiException {
+
+    when(api.replaceBatch(
+            eq(configuration.getProjectId()),
+            eq("foo text batch id"),
+            eq(BatchDtoConverter.convert(sendSmsBatchMediaRequest))))
+        .thenReturn(mediaResponseDto);
+
+    Batch<?> response = service.replace("foo text batch id", sendSmsBatchMediaRequest);
+
+    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(batchMedia);
+  }
+
+  @Test
+  void replaceText() throws ApiException {
+
+    when(api.replaceBatch(
+            eq(configuration.getProjectId()),
+            eq("foo text batch id"),
+            eq(BatchDtoConverter.convert(sendSmsBatchTextRequest))))
+        .thenReturn(textResponseDto);
+
+    Batch<?> response = service.replace("foo text batch id", sendSmsBatchTextRequest);
+
+    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(batchText);
+  }
+
+  @Test
+  void cancelBatch() throws ApiException {
+
+    when(api.cancelBatchMessage(eq(configuration.getProjectId()), eq("foo text batch id")))
+        .thenReturn(textResponseDto);
+
+    Batch<?> response = service.cancel("foo text batch id");
+
+    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(batchText);
+  }
+
+  @Test
+  void sendDeliveryFeedback() throws ApiException {
+    List<String> recipients = Arrays.asList("foo", "foo2");
+
+    service.sendDeliveryFeedback("foo text batch id", recipients);
+
+    verify(api)
+        .deliveryFeedback(
+            eq(configuration.getProjectId()), eq("foo text batch id"), recipientsCaptor.capture());
+
+    ApiDeliveryFeedbackDto dto = recipientsCaptor.getValue();
+    Assertions.assertThat(dto.getRecipients()).usingRecursiveComparison().isEqualTo(recipients);
   }
 }

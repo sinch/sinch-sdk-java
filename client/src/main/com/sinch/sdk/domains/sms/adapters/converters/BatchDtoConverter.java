@@ -1,9 +1,5 @@
 package com.sinch.sdk.domains.sms.adapters.converters;
 
-import static com.sinch.sdk.domains.sms.models.dto.v1.BinaryRequestDto.TypeEnum.MT_BINARY;
-import static com.sinch.sdk.domains.sms.models.dto.v1.MediaRequestDto.TypeEnum.MT_MEDIA;
-import static com.sinch.sdk.domains.sms.models.dto.v1.TextRequestDto.TypeEnum.MT_TEXT;
-
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.models.AbstractOpenApiSchema;
 import com.sinch.sdk.core.models.pagination.PageToken;
@@ -17,6 +13,10 @@ import com.sinch.sdk.domains.sms.models.DeliveryReport;
 import com.sinch.sdk.domains.sms.models.MediaBody;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiBatchListBatchesInnerDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiBatchListDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.ApiDeliveryFeedbackDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.ApiUpdateBinaryMtMessageDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.ApiUpdateMmsMtMessageDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.ApiUpdateTextMtMessageDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.BinaryRequestDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.BinaryResponseDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.MediaBodyDto;
@@ -25,9 +25,14 @@ import com.sinch.sdk.domains.sms.models.dto.v1.MediaResponseDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.SendSMSRequestDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.TextRequestDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.TextResponseDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.UpdateBatchMessageRequestDto;
 import com.sinch.sdk.domains.sms.models.requests.SendSmsBatchBinaryRequest;
 import com.sinch.sdk.domains.sms.models.requests.SendSmsBatchMediaRequest;
 import com.sinch.sdk.domains.sms.models.requests.SendSmsBatchTextRequest;
+import com.sinch.sdk.domains.sms.models.requests.UpdateBaseBatchRequest;
+import com.sinch.sdk.domains.sms.models.requests.UpdateSmsBatchBinaryRequest;
+import com.sinch.sdk.domains.sms.models.requests.UpdateSmsBatchMediaRequest;
+import com.sinch.sdk.domains.sms.models.requests.UpdateSmsBatchTextRequest;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -138,10 +143,22 @@ public class BatchDtoConverter {
     }
   }
 
+  public static UpdateBatchMessageRequestDto convert(UpdateBaseBatchRequest<?> value) {
+    if (value instanceof UpdateSmsBatchBinaryRequest) {
+      return convert((UpdateSmsBatchBinaryRequest) value);
+    } else if (value instanceof UpdateSmsBatchMediaRequest) {
+      return convert((UpdateSmsBatchMediaRequest) value);
+    } else if (value instanceof UpdateSmsBatchTextRequest) {
+      return convert((UpdateSmsBatchTextRequest) value);
+    } else {
+      throw new ApiException("Unexpected class:" + value.getClass().getName());
+    }
+  }
+
   private static SendSMSRequestDto convert(SendSmsBatchBinaryRequest value) {
     BinaryRequestDto dto =
         new BinaryRequestDto()
-            .type(MT_BINARY.getValue())
+            .type(BinaryRequestDto.TypeEnum.MT_BINARY.getValue())
             .to(new ArrayList<>(value.getTo()))
             .body(value.getBody());
     value.getFrom().ifPresent(dto::from);
@@ -162,7 +179,7 @@ public class BatchDtoConverter {
 
   private static SendSMSRequestDto convert(SendSmsBatchMediaRequest value) {
     MediaRequestDto dto =
-        new MediaRequestDto(MT_MEDIA.getValue())
+        new MediaRequestDto(MediaRequestDto.TypeEnum.MT_MEDIA.getValue())
             .to(new ArrayList<>(value.getTo()))
             .body(convert(value.getBody()));
     value.getFrom().ifPresent(dto::from);
@@ -180,7 +197,7 @@ public class BatchDtoConverter {
   private static SendSMSRequestDto convert(SendSmsBatchTextRequest value) {
     TextRequestDto dto =
         new TextRequestDto()
-            .type(MT_TEXT.getValue())
+            .type(TextRequestDto.TypeEnum.MT_TEXT.getValue())
             .to(new ArrayList<>(value.getTo()))
             .body(value.getBody());
     value.getFrom().ifPresent(dto::from);
@@ -197,6 +214,55 @@ public class BatchDtoConverter {
     value.getFromNpi().ifPresent(dto::fromNpi);
     value.getParameters().ifPresent(f -> dto.setParameters(ParametersDtoConverter.convert(f)));
     return new SendSMSRequestDto(dto);
+  }
+
+  private static UpdateBatchMessageRequestDto convert(UpdateSmsBatchTextRequest value) {
+    ApiUpdateTextMtMessageDto dto =
+        new ApiUpdateTextMtMessageDto().type(ApiUpdateTextMtMessageDto.TypeEnum.MT_TEXT.getValue());
+
+    value.getToAdd().ifPresent(f -> dto.toAdd(new ArrayList<>(f)));
+    value.getToRemove().ifPresent(f -> dto.toRemove(new ArrayList<>(f)));
+    value.getFrom().ifPresent(dto::from);
+    value.getBody().ifPresent(dto::body);
+    value.getDeliveryReport().ifPresent(f -> dto.setDeliveryReport(f.value()));
+    value.getSendAt().ifPresent(f -> dto.setSendAt(f.atOffset(ZoneOffset.UTC)));
+    value.getExpireAt().ifPresent(f -> dto.setExpireAt(f.atOffset(ZoneOffset.UTC)));
+    value.getCallbackUrl().ifPresent(dto::callbackUrl);
+    value.getParameters().ifPresent(f -> dto.setParameters(ParametersDtoConverter.convert(f)));
+    return new UpdateBatchMessageRequestDto(dto);
+  }
+
+  private static UpdateBatchMessageRequestDto convert(UpdateSmsBatchMediaRequest value) {
+    ApiUpdateMmsMtMessageDto dto =
+        new ApiUpdateMmsMtMessageDto().type(ApiUpdateMmsMtMessageDto.TypeEnum.MT_MEDIA.getValue());
+
+    value.getToAdd().ifPresent(f -> dto.toAdd(new ArrayList<>(f)));
+    value.getToRemove().ifPresent(f -> dto.toRemove(new ArrayList<>(f)));
+    value.getFrom().ifPresent(dto::from);
+    value.getBody().ifPresent(f -> dto.setBody(convert(f)));
+    value.getDeliveryReport().ifPresent(f -> dto.setDeliveryReport(f.value()));
+    value.getSendAt().ifPresent(f -> dto.setSendAt(f.atOffset(ZoneOffset.UTC)));
+    value.getExpireAt().ifPresent(f -> dto.setExpireAt(f.atOffset(ZoneOffset.UTC)));
+    value.getCallbackUrl().ifPresent(dto::callbackUrl);
+    value.getParameters().ifPresent(f -> dto.setParameters(ParametersDtoConverter.convert(f)));
+    value.isStrictValidation().ifPresent(dto::strictValidation);
+    return new UpdateBatchMessageRequestDto(dto);
+  }
+
+  private static UpdateBatchMessageRequestDto convert(UpdateSmsBatchBinaryRequest value) {
+    ApiUpdateBinaryMtMessageDto dto =
+        new ApiUpdateBinaryMtMessageDto()
+            .type(ApiUpdateBinaryMtMessageDto.TypeEnum.MT_BINARY.getValue());
+    value.getToAdd().ifPresent(f -> dto.toAdd(new ArrayList<>(f)));
+    value.getToRemove().ifPresent(f -> dto.toRemove(new ArrayList<>(f)));
+    value.getFrom().ifPresent(dto::from);
+    value.getBody().ifPresent(dto::setBody);
+    value.getDeliveryReport().ifPresent(f -> dto.setDeliveryReport(f.value()));
+    value.getSendAt().ifPresent(f -> dto.setSendAt(f.atOffset(ZoneOffset.UTC)));
+    value.getExpireAt().ifPresent(f -> dto.setExpireAt(f.atOffset(ZoneOffset.UTC)));
+    value.getCallbackUrl().ifPresent(dto::callbackUrl);
+    value.getUdh().ifPresent(dto::udh);
+    return new UpdateBatchMessageRequestDto(dto);
   }
 
   private static MediaBodyDto convert(MediaBody value) {
@@ -220,5 +286,9 @@ public class BatchDtoConverter {
       }
     }
     return new Pair<>(pageContent, new PageToken<>(nextPageToken));
+  }
+
+  public static ApiDeliveryFeedbackDto convert(Collection<String> recipients) {
+    return new ApiDeliveryFeedbackDto().recipients(new ArrayList<>(recipients));
   }
 }
