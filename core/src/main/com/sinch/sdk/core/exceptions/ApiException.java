@@ -15,6 +15,10 @@ public class ApiException extends RuntimeException {
     super(message);
   }
 
+  public ApiException(String message, Throwable throwable) {
+    super(message, throwable);
+  }
+
   public ApiException(String message, Throwable throwable, int code) {
     super(message, throwable);
     this.code = code;
