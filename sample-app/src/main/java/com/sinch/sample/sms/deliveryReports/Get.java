@@ -24,7 +24,7 @@ public class Get extends BaseApplication {
 
     com.sinch.sdk.domains.sms.models.webhooks.DeliveryReport response =
         client.sms().deliveryReports().get(batchId, null, null, null);
-    // DeliveryReport.FULL,
+    // DeliveryReportType.FULL,
     // Arrays.asList(DeliveryReportStatus.ABORTED, DeliveryReportStatus.CANCELLED),
     // Arrays.asList(401, 402));
 

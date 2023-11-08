@@ -19,7 +19,7 @@ public class BaseBatch<T> {
 
   private final String from;
 
-  private final DeliveryReport deliveryReport;
+  private final DeliveryReportType deliveryReport;
 
   private final Instant sendAt;
 
@@ -51,7 +51,7 @@ public class BaseBatch<T> {
       Collection<String> to,
       String from,
       T body,
-      DeliveryReport deliveryReport,
+      DeliveryReportType deliveryReport,
       Instant sendAt,
       Instant expireAt,
       String callbackUrl,
@@ -86,7 +86,7 @@ public class BaseBatch<T> {
     return Optional.ofNullable(from);
   }
 
-  public Optional<DeliveryReport> getDeliveryReport() {
+  public Optional<DeliveryReportType> getDeliveryReport() {
     return Optional.ofNullable(deliveryReport);
   }
 
@@ -120,7 +120,7 @@ public class BaseBatch<T> {
         + ", from='"
         + from
         + '\''
-        + ", deliveryReport="
+        + ", deliveryReportType="
         + deliveryReport
         + ", sendAt="
         + sendAt
@@ -145,7 +145,7 @@ public class BaseBatch<T> {
 
     public T body;
 
-    public DeliveryReport deliveryReport;
+    public DeliveryReportType deliveryReport;
 
     public Instant sendAt;
 
@@ -172,7 +172,7 @@ public class BaseBatch<T> {
       return self();
     }
 
-    public B setDeliveryReport(DeliveryReport deliveryReport) {
+    public B setDeliveryReport(DeliveryReportType deliveryReport) {
       this.deliveryReport = deliveryReport;
       return self();
     }

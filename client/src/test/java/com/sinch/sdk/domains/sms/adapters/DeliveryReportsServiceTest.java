@@ -10,8 +10,8 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.sms.adapters.api.v1.DeliveryReportsApi;
 import com.sinch.sdk.domains.sms.adapters.converters.DeliveryReportDtoConverter;
-import com.sinch.sdk.domains.sms.models.DeliveryReport;
 import com.sinch.sdk.domains.sms.models.DeliveryReportStatus;
+import com.sinch.sdk.domains.sms.models.DeliveryReportType;
 import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportDto;
 import com.sinch.sdk.domains.sms.models.webhooks.DeliveryReportMMS;
 import com.sinch.sdk.domains.sms.models.webhooks.DeliveryReportSMS;
@@ -48,7 +48,7 @@ class DeliveryReportsServiceTest extends BaseTest {
     com.sinch.sdk.domains.sms.models.webhooks.DeliveryReport response =
         service.get(
             "foo binary batch id",
-            DeliveryReport.from("foo type"),
+            DeliveryReportType.from("foo type"),
             Collections.singletonList(DeliveryReportStatus.from("foo statuses")),
             Collections.singletonList(456));
 
@@ -72,7 +72,7 @@ class DeliveryReportsServiceTest extends BaseTest {
     com.sinch.sdk.domains.sms.models.webhooks.DeliveryReport response =
         service.get(
             "foo binary batch id",
-            DeliveryReport.from("foo type"),
+            DeliveryReportType.from("foo type"),
             Collections.singletonList(DeliveryReportStatus.from("foo statuses")),
             Collections.singletonList(456));
 

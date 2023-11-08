@@ -6,55 +6,55 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 /**
- * DeliveryReport authorized values
+ * DeliveryReportType authorized values
  *
  * @since 1.0
  */
-public class DeliveryReport extends EnumDynamic<DeliveryReport> {
+public class DeliveryReportType extends EnumDynamic<DeliveryReportType> {
 
   /** No delivery report callback will be sent. */
-  public static final DeliveryReport NONE = new DeliveryReport("none");
+  public static final DeliveryReportType NONE = new DeliveryReportType("none");
   /** A single delivery report callback will be sent. */
-  public static final DeliveryReport SUMMARY = new DeliveryReport("summary");
+  public static final DeliveryReportType SUMMARY = new DeliveryReportType("summary");
   /**
    * A single delivery report callback will be sent which includes a list of recipients per delivery
    * status.
    */
-  public static final DeliveryReport FULL = new DeliveryReport("full");
+  public static final DeliveryReportType FULL = new DeliveryReportType("full");
   /**
    * A delivery report callback will be sent for each status change of a message. This could result
    * in a lot of callbacks and should be used with caution for larger batches. These delivery
    * reports also include a timestamp of when the Delivery Report originated from the SMSC.
    */
-  public static final DeliveryReport PER_RECIPIENT = new DeliveryReport("per_recipient");
+  public static final DeliveryReportType PER_RECIPIENT = new DeliveryReportType("per_recipient");
   /**
    * A delivery report callback representing the final status of a message will be sent for each
    * recipient. This will send only one callback per recipient, compared to the multiple callbacks
    * sent when using per_recipient. The delivery report will also include a timestamp of when it
    * originated from the SMSC.
    */
-  public static final DeliveryReport PER_RECIPIENT_FINAl =
-      new DeliveryReport("per_recipient_final");
+  public static final DeliveryReportType PER_RECIPIENT_FINAl =
+      new DeliveryReportType("per_recipient_final");
 
-  private static final EnumSupportDynamic<DeliveryReport> ENUM_SUPPORT =
+  private static final EnumSupportDynamic<DeliveryReportType> ENUM_SUPPORT =
       new EnumSupportDynamic<>(
-          DeliveryReport.class,
-          DeliveryReport::new,
+          DeliveryReportType.class,
+          DeliveryReportType::new,
           Arrays.asList(NONE, SUMMARY, FULL, PER_RECIPIENT, PER_RECIPIENT_FINAl));
 
-  private DeliveryReport(String value) {
+  private DeliveryReportType(String value) {
     super(value);
   }
 
-  public static Stream<DeliveryReport> values() {
+  public static Stream<DeliveryReportType> values() {
     return ENUM_SUPPORT.values();
   }
 
-  public static DeliveryReport from(String value) {
+  public static DeliveryReportType from(String value) {
     return ENUM_SUPPORT.from(value);
   }
 
-  public static String valueOf(DeliveryReport e) {
+  public static String valueOf(DeliveryReportType e) {
     return ENUM_SUPPORT.valueOf(e);
   }
 }

@@ -18,7 +18,7 @@ class BatchMediaBuilderTest {
   final Parameters parameters = null;
   final Instant createdAt = Instant.now();
   final Instant modifiedAt = Instant.now();
-  final DeliveryReport deliveryReport = DeliveryReport.FULL;
+  final DeliveryReportType deliveryReport = DeliveryReportType.FULL;
   final Instant sendAt = Instant.now();
   final Instant expireAt = Instant.now();
   final String callbackUrl = "callback value";

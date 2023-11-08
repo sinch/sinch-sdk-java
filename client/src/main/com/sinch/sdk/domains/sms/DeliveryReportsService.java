@@ -1,8 +1,8 @@
 package com.sinch.sdk.domains.sms;
 
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.domains.sms.models.DeliveryReport;
 import com.sinch.sdk.domains.sms.models.DeliveryReportStatus;
+import com.sinch.sdk.domains.sms.models.DeliveryReportType;
 import java.util.Collection;
 
 /**
@@ -47,7 +47,7 @@ public interface DeliveryReportsService {
    */
   com.sinch.sdk.domains.sms.models.webhooks.DeliveryReport get(
       String batchId,
-      DeliveryReport type,
+      DeliveryReportType type,
       Collection<DeliveryReportStatus> statuses,
       Collection<Integer> codes)
       throws ApiException;

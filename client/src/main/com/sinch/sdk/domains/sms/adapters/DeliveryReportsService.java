@@ -6,8 +6,8 @@ import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.domains.sms.adapters.api.v1.DeliveryReportsApi;
 import com.sinch.sdk.domains.sms.adapters.converters.DeliveryReportDtoConverter;
-import com.sinch.sdk.domains.sms.models.DeliveryReport;
 import com.sinch.sdk.domains.sms.models.DeliveryReportStatus;
+import com.sinch.sdk.domains.sms.models.DeliveryReportType;
 import com.sinch.sdk.models.Configuration;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -42,7 +42,7 @@ public class DeliveryReportsService implements com.sinch.sdk.domains.sms.Deliver
 
   public com.sinch.sdk.domains.sms.models.webhooks.DeliveryReport get(
       String batchId,
-      DeliveryReport type,
+      DeliveryReportType type,
       Collection<DeliveryReportStatus> statuses,
       Collection<Integer> codes)
       throws ApiException {

@@ -46,7 +46,7 @@ public class BatchMedia extends Batch<MediaBody> {
       MediaBody body,
       Instant createdAt,
       Instant modifiedAt,
-      DeliveryReport deliveryReport,
+      DeliveryReportType deliveryReport,
       Instant sendAt,
       Instant expireAt,
       String callbackUrl,
