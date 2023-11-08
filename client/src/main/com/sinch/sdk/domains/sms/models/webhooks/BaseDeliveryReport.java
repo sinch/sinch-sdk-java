@@ -69,4 +69,24 @@ public abstract class BaseDeliveryReport {
         + '\''
         + '}';
   }
+
+  public abstract static class Builder<B extends Builder<B>> {
+    protected String batchId;
+    protected String clientReference;
+
+    public B setBatchId(String batchId) {
+      this.batchId = batchId;
+      return self();
+    }
+
+    public B setClientReference(String clientReference) {
+      this.clientReference = clientReference;
+      return self();
+    }
+
+    @SuppressWarnings("unchecked")
+    protected B self() {
+      return (B) this;
+    }
+  }
 }

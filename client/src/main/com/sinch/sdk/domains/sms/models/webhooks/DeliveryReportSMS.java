@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.sms.models.webhooks;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sinch.sdk.domains.sms.models.webhooks.DeliveryReportMMS.Builder;
 import java.util.Collection;
 
 /**
@@ -31,5 +32,20 @@ public class DeliveryReportSMS extends DeliveryReport {
   @Override
   public String toString() {
     return "DeliveryReportSMS{} " + super.toString();
+  }
+
+  public static Builder builder() {
+    return new Builder();
+  }
+
+  public static class Builder extends DeliveryReport.Builder<Builder> {
+
+    private Builder() {
+      super();
+    }
+
+    public DeliveryReportSMS build() {
+      return new DeliveryReportSMS(batchId, clientReference, statuses, totalMessageCount);
+    }
   }
 }

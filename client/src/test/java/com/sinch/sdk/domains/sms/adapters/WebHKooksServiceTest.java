@@ -8,6 +8,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.exceptions.ApiMappingException;
+import com.sinch.sdk.domains.sms.adapters.converters.DeliveryReportDtoConverter;
 import com.sinch.sdk.domains.sms.models.dto.v1.webhooks.DeliveryReportDtoTest;
 import com.sinch.sdk.domains.sms.models.dto.v1.webhooks.DeliveryReportRecipientDtoTest;
 import com.sinch.sdk.domains.sms.models.dto.v1.webhooks.IncomingSMSBinaryDtoTest;
@@ -108,7 +109,7 @@ public class WebHKooksServiceTest extends BaseTest {
     Assertions.assertThat(response).isInstanceOf(DeliveryReportSMS.class);
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(DeliveryReportDtoTest.deliveryReportSMS);
+        .isEqualTo(DeliveryReportDtoConverter.convert(DeliveryReportDtoTest.deliveryReportSMS));
   }
 
   @Test
@@ -119,7 +120,7 @@ public class WebHKooksServiceTest extends BaseTest {
     Assertions.assertThat(response).isInstanceOf(DeliveryReportMMS.class);
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(DeliveryReportDtoTest.deliveryReportMMS);
+        .isEqualTo(DeliveryReportDtoConverter.convert(DeliveryReportDtoTest.deliveryReportMMS));
   }
 
   @Test

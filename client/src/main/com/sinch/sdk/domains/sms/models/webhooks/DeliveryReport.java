@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.sms.models.webhooks;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sinch.sdk.domains.sms.models.webhooks.BaseDeliveryReport.Builder;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -55,5 +56,27 @@ public abstract class DeliveryReport extends BaseDeliveryReport {
         + totalMessageCount
         + "} "
         + super.toString();
+  }
+
+  public abstract static class Builder<B extends Builder<B>> extends BaseDeliveryReport.Builder<B> {
+    protected Collection<DeliveryReportStatusDetails> statuses;
+    protected Integer totalMessageCount;
+
+    public B setStatuses(Collection<DeliveryReportStatusDetails> statuses) {
+      this.statuses = statuses;
+      return self();
+    }
+
+    public B setTotalMessageCount(Integer totalMessageCount) {
+      this.totalMessageCount = totalMessageCount;
+      return self();
+    }
+
+    @SuppressWarnings("unchecked")
+    protected B self() {
+      return (B) this;
+    }
+
+    public abstract DeliveryReport build();
   }
 }

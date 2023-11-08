@@ -3,6 +3,7 @@ package com.sinch.sdk.domains.sms.models.webhooks;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sinch.sdk.domains.sms.models.DeliveryReportStatus;
+import com.sinch.sdk.domains.sms.models.requests.BatchesListRequestParameters.Builder;
 import java.util.Collection;
 
 /**
@@ -71,5 +72,43 @@ public class DeliveryReportStatusDetails {
         + ", status="
         + status
         + '}';
+  }
+
+  public static Builder builder() {
+    return new Builder();
+  }
+
+  public static class Builder {
+
+    private Integer code;
+    private Integer count;
+    private Collection<String> recipients;
+    private DeliveryReportStatus status;
+
+    private Builder() {}
+
+    public Builder setCode(Integer code) {
+      this.code = code;
+      return this;
+    }
+
+    public Builder setCount(Integer count) {
+      this.count = count;
+      return this;
+    }
+
+    public Builder setRecipients(Collection<String> recipients) {
+      this.recipients = recipients;
+      return this;
+    }
+
+    public Builder setStatus(DeliveryReportStatus status) {
+      this.status = status;
+      return this;
+    }
+
+    public DeliveryReportStatusDetails build() {
+      return new DeliveryReportStatusDetails(code, count, recipients, status.value());
+    }
   }
 }
