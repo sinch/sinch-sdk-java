@@ -1,6 +1,7 @@
 package com.sinch.sample.sms.deliveryReports;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.sms.models.DeliveryReportBatch;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -22,8 +23,7 @@ public class Get extends BaseApplication {
 
     LOGGER.info("Get for :" + batchId);
 
-    com.sinch.sdk.domains.sms.models.webhooks.DeliveryReport response =
-        client.sms().deliveryReports().get(batchId, null, null, null);
+    DeliveryReportBatch response = client.sms().deliveryReports().get(batchId, null, null, null);
     // DeliveryReportType.FULL,
     // Arrays.asList(DeliveryReportStatus.ABORTED, DeliveryReportStatus.CANCELLED),
     // Arrays.asList(401, 402));

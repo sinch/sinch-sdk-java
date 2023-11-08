@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.sms;
 
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.domains.sms.models.DeliveryReportBatch;
 import com.sinch.sdk.domains.sms.models.DeliveryReportStatus;
 import com.sinch.sdk.domains.sms.models.DeliveryReportType;
 import java.util.Collection;
@@ -45,7 +46,7 @@ public interface DeliveryReportsService {
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/operation/GetDeliveryReportByBatchId">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/operation/GetDeliveryReportByBatchId</a>
    * @since 1.0
    */
-  com.sinch.sdk.domains.sms.models.webhooks.DeliveryReport get(
+  DeliveryReportBatch get(
       String batchId,
       DeliveryReportType type,
       Collection<DeliveryReportStatus> statuses,

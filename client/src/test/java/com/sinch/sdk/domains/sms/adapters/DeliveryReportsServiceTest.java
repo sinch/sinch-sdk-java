@@ -10,11 +10,12 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.sms.adapters.api.v1.DeliveryReportsApi;
 import com.sinch.sdk.domains.sms.adapters.converters.DeliveryReportDtoConverter;
+import com.sinch.sdk.domains.sms.models.DeliveryReportBatch;
+import com.sinch.sdk.domains.sms.models.DeliveryReportBatchMMS;
+import com.sinch.sdk.domains.sms.models.DeliveryReportBatchSMS;
 import com.sinch.sdk.domains.sms.models.DeliveryReportStatus;
 import com.sinch.sdk.domains.sms.models.DeliveryReportType;
 import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportDto;
-import com.sinch.sdk.domains.sms.models.webhooks.DeliveryReportMMS;
-import com.sinch.sdk.domains.sms.models.webhooks.DeliveryReportSMS;
 import com.sinch.sdk.models.Configuration;
 import java.util.Collections;
 import org.assertj.core.api.Assertions;
@@ -45,14 +46,14 @@ class DeliveryReportsServiceTest extends BaseTest {
             eq("456")))
         .thenReturn(deliveryReportSMSDto);
 
-    com.sinch.sdk.domains.sms.models.webhooks.DeliveryReport response =
+    DeliveryReportBatch response =
         service.get(
             "foo binary batch id",
             DeliveryReportType.from("foo type"),
             Collections.singletonList(DeliveryReportStatus.from("foo statuses")),
             Collections.singletonList(456));
 
-    assertInstanceOf(DeliveryReportSMS.class, response);
+    assertInstanceOf(DeliveryReportBatchSMS.class, response);
     Assertions.assertThat(response)
         .usingRecursiveComparison()
         .isEqualTo(DeliveryReportDtoConverter.convert(deliveryReportSMSDto));
@@ -69,14 +70,14 @@ class DeliveryReportsServiceTest extends BaseTest {
             eq("456")))
         .thenReturn(deliveryReportMMSDto);
 
-    com.sinch.sdk.domains.sms.models.webhooks.DeliveryReport response =
+    DeliveryReportBatch response =
         service.get(
             "foo binary batch id",
             DeliveryReportType.from("foo type"),
             Collections.singletonList(DeliveryReportStatus.from("foo statuses")),
             Collections.singletonList(456));
 
-    assertInstanceOf(DeliveryReportMMS.class, response);
+    assertInstanceOf(DeliveryReportBatchMMS.class, response);
     Assertions.assertThat(response)
         .usingRecursiveComparison()
         .isEqualTo(DeliveryReportDtoConverter.convert(deliveryReportMMSDto));

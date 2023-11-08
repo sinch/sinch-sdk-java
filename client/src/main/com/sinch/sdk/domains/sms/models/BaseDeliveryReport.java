@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.sms.models.webhooks;
+package com.sinch.sdk.domains.sms.models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -26,8 +26,8 @@ import java.util.Optional;
   @JsonSubTypes.Type(
       value = DeliveryReportRecipientMMS.class,
       name = "recipient_delivery_report_mms"),
-  @JsonSubTypes.Type(value = DeliveryReportSMS.class, name = "delivery_report_sms"),
-  @JsonSubTypes.Type(value = DeliveryReportMMS.class, name = "delivery_report_mms")
+  @JsonSubTypes.Type(value = DeliveryReportBatchSMS.class, name = "delivery_report_sms"),
+  @JsonSubTypes.Type(value = DeliveryReportBatchMMS.class, name = "delivery_report_mms")
 })
 public abstract class BaseDeliveryReport {
 

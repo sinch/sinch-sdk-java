@@ -1,25 +1,25 @@
 package com.sinch.sdk.domains.sms.adapters.converters;
 
+import com.sinch.sdk.domains.sms.models.DeliveryReportBatch;
+import com.sinch.sdk.domains.sms.models.DeliveryReportBatchMMS;
+import com.sinch.sdk.domains.sms.models.DeliveryReportBatchSMS;
 import com.sinch.sdk.domains.sms.models.DeliveryReportStatus;
+import com.sinch.sdk.domains.sms.models.DeliveryReportStatusDetails;
 import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportDto.TypeEnum;
 import com.sinch.sdk.domains.sms.models.dto.v1.MessageDeliveryStatusDto;
-import com.sinch.sdk.domains.sms.models.webhooks.DeliveryReport;
-import com.sinch.sdk.domains.sms.models.webhooks.DeliveryReportMMS;
-import com.sinch.sdk.domains.sms.models.webhooks.DeliveryReportSMS;
-import com.sinch.sdk.domains.sms.models.webhooks.DeliveryReportStatusDetails;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class DeliveryReportDtoConverter {
 
-  public static DeliveryReport convert(DeliveryReportDto dto) {
-    DeliveryReport.Builder<?> builder;
+  public static DeliveryReportBatch convert(DeliveryReportDto dto) {
+    DeliveryReportBatch.Builder<?> builder;
 
     if (Objects.equals(dto.getType(), TypeEnum.MMS.getValue())) {
-      builder = DeliveryReportMMS.builder();
+      builder = DeliveryReportBatchMMS.builder();
     } else if (Objects.equals(dto.getType(), TypeEnum.SMS.getValue())) {
-      builder = DeliveryReportSMS.builder();
+      builder = DeliveryReportBatchSMS.builder();
     } else {
       return null;
     }

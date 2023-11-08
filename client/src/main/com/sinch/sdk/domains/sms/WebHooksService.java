@@ -1,7 +1,7 @@
 package com.sinch.sdk.domains.sms;
 
 import com.sinch.sdk.core.exceptions.ApiMappingException;
-import com.sinch.sdk.domains.sms.models.webhooks.BaseDeliveryReport;
+import com.sinch.sdk.domains.sms.models.BaseDeliveryReport;
 import com.sinch.sdk.domains.sms.models.webhooks.BaseIncomingSMS;
 
 /**

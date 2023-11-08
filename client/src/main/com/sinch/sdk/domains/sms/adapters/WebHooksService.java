@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.exceptions.ApiMappingException;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.core.utils.databind.Mapper;
-import com.sinch.sdk.domains.sms.models.webhooks.BaseDeliveryReport;
+import com.sinch.sdk.domains.sms.models.BaseDeliveryReport;
 import com.sinch.sdk.domains.sms.models.webhooks.BaseIncomingSMS;
 
 public class WebHooksService implements com.sinch.sdk.domains.sms.WebHooksService {

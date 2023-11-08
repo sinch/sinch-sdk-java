@@ -1,8 +1,7 @@
-package com.sinch.sdk.domains.sms.models.webhooks;
+package com.sinch.sdk.domains.sms.models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sinch.sdk.domains.sms.models.webhooks.BaseDeliveryReport.Builder;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -11,7 +10,7 @@ import java.util.Objects;
  *
  * @since 1.0
  */
-public abstract class DeliveryReport extends BaseDeliveryReport {
+public abstract class DeliveryReportBatch extends BaseDeliveryReport {
 
   static final String JSON_PROPERTY_STATUSES = "statuses";
   private final Collection<DeliveryReportStatusDetails> statuses;
@@ -27,7 +26,7 @@ public abstract class DeliveryReport extends BaseDeliveryReport {
    * @param totalMessageCount <code>Required.</code> The total number of messages in the batch.
    */
   @JsonCreator
-  public DeliveryReport(
+  public DeliveryReportBatch(
       @JsonProperty(JSON_PROPERTY_BATCH_ID) String batchId,
       @JsonProperty(JSON_PROPERTY_CLIENT_REFERENCE) String clientReference,
       @JsonProperty(JSON_PROPERTY_STATUSES) Collection<DeliveryReportStatusDetails> statuses,
@@ -49,7 +48,7 @@ public abstract class DeliveryReport extends BaseDeliveryReport {
 
   @Override
   public String toString() {
-    return "DeliveryReport{"
+    return "DeliveryReportBatch{"
         + "statuses="
         + statuses
         + ", totalMessageCount="
@@ -77,6 +76,6 @@ public abstract class DeliveryReport extends BaseDeliveryReport {
       return (B) this;
     }
 
-    public abstract DeliveryReport build();
+    public abstract DeliveryReportBatch build();
   }
 }

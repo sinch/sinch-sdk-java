@@ -9,16 +9,16 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.exceptions.ApiMappingException;
 import com.sinch.sdk.domains.sms.adapters.converters.DeliveryReportDtoConverter;
+import com.sinch.sdk.domains.sms.models.BaseDeliveryReport;
+import com.sinch.sdk.domains.sms.models.DeliveryReportBatchMMS;
+import com.sinch.sdk.domains.sms.models.DeliveryReportBatchSMS;
+import com.sinch.sdk.domains.sms.models.DeliveryReportRecipientMMS;
+import com.sinch.sdk.domains.sms.models.DeliveryReportRecipientSMS;
 import com.sinch.sdk.domains.sms.models.dto.v1.webhooks.DeliveryReportDtoTest;
 import com.sinch.sdk.domains.sms.models.dto.v1.webhooks.DeliveryReportRecipientDtoTest;
 import com.sinch.sdk.domains.sms.models.dto.v1.webhooks.IncomingSMSBinaryDtoTest;
 import com.sinch.sdk.domains.sms.models.dto.v1.webhooks.IncomingSMSTextDtoTest;
-import com.sinch.sdk.domains.sms.models.webhooks.BaseDeliveryReport;
 import com.sinch.sdk.domains.sms.models.webhooks.BaseIncomingSMS;
-import com.sinch.sdk.domains.sms.models.webhooks.DeliveryReportMMS;
-import com.sinch.sdk.domains.sms.models.webhooks.DeliveryReportRecipientMMS;
-import com.sinch.sdk.domains.sms.models.webhooks.DeliveryReportRecipientSMS;
-import com.sinch.sdk.domains.sms.models.webhooks.DeliveryReportSMS;
 import com.sinch.sdk.domains.sms.models.webhooks.IncomingSMSBinary;
 import com.sinch.sdk.domains.sms.models.webhooks.IncomingSMSText;
 import org.assertj.core.api.Assertions;
@@ -106,7 +106,7 @@ public class WebHKooksServiceTest extends BaseTest {
 
     BaseDeliveryReport response = service.deliveryReport(deliveryReportSMSJsonString);
 
-    Assertions.assertThat(response).isInstanceOf(DeliveryReportSMS.class);
+    Assertions.assertThat(response).isInstanceOf(DeliveryReportBatchSMS.class);
     Assertions.assertThat(response)
         .usingRecursiveComparison()
         .isEqualTo(DeliveryReportDtoConverter.convert(DeliveryReportDtoTest.deliveryReportSMS));
@@ -117,7 +117,7 @@ public class WebHKooksServiceTest extends BaseTest {
 
     BaseDeliveryReport response = service.deliveryReport(deliveryReportMMSJsonString);
 
-    Assertions.assertThat(response).isInstanceOf(DeliveryReportMMS.class);
+    Assertions.assertThat(response).isInstanceOf(DeliveryReportBatchMMS.class);
     Assertions.assertThat(response)
         .usingRecursiveComparison()
         .isEqualTo(DeliveryReportDtoConverter.convert(DeliveryReportDtoTest.deliveryReportMMS));

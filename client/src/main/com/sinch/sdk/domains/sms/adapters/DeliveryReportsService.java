@@ -6,6 +6,7 @@ import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.domains.sms.adapters.api.v1.DeliveryReportsApi;
 import com.sinch.sdk.domains.sms.adapters.converters.DeliveryReportDtoConverter;
+import com.sinch.sdk.domains.sms.models.DeliveryReportBatch;
 import com.sinch.sdk.domains.sms.models.DeliveryReportStatus;
 import com.sinch.sdk.domains.sms.models.DeliveryReportType;
 import com.sinch.sdk.models.Configuration;
@@ -40,7 +41,7 @@ public class DeliveryReportsService implements com.sinch.sdk.domains.sms.Deliver
     this.api = new DeliveryReportsApi(httpClient, configuration.getSmsServer(), new HttpMapper());
   }
 
-  public com.sinch.sdk.domains.sms.models.webhooks.DeliveryReport get(
+  public DeliveryReportBatch get(
       String batchId,
       DeliveryReportType type,
       Collection<DeliveryReportStatus> statuses,

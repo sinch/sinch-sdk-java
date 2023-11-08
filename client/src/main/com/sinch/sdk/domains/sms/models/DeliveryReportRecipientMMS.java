@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.sms.models.webhooks;
+package com.sinch.sdk.domains.sms.models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,9 +1,7 @@
-package com.sinch.sdk.domains.sms.models.webhooks;
+package com.sinch.sdk.domains.sms.models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sinch.sdk.domains.sms.models.DeliveryReportStatus;
-import com.sinch.sdk.domains.sms.models.requests.BatchesListRequestParameters.Builder;
 import java.util.Collection;
 
 /**

@@ -1,16 +1,15 @@
-package com.sinch.sdk.domains.sms.models.webhooks;
+package com.sinch.sdk.domains.sms.models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sinch.sdk.domains.sms.models.webhooks.DeliveryReportMMS.Builder;
 import java.util.Collection;
 
 /**
- * SMS delivery Report
+ * MMS delivery Report
  *
  * @since 1.0
  */
-public class DeliveryReportSMS extends DeliveryReport {
+public class DeliveryReportBatchMMS extends DeliveryReportBatch {
 
   /**
    * @param batchId <code>Required.</code> The ID of the batch this delivery report belongs to.
@@ -21,7 +20,7 @@ public class DeliveryReportSMS extends DeliveryReport {
    * @param totalMessageCount <code>Required.</code> The total number of messages in the batch.
    */
   @JsonCreator
-  public DeliveryReportSMS(
+  public DeliveryReportBatchMMS(
       @JsonProperty(JSON_PROPERTY_BATCH_ID) String batchId,
       @JsonProperty(JSON_PROPERTY_CLIENT_REFERENCE) String clientReference,
       @JsonProperty(JSON_PROPERTY_STATUSES) Collection<DeliveryReportStatusDetails> statuses,
@@ -31,21 +30,21 @@ public class DeliveryReportSMS extends DeliveryReport {
 
   @Override
   public String toString() {
-    return "DeliveryReportSMS{} " + super.toString();
+    return "DeliveryReportBatchMMS{} " + super.toString();
   }
 
   public static Builder builder() {
     return new Builder();
   }
 
-  public static class Builder extends DeliveryReport.Builder<Builder> {
+  public static class Builder extends DeliveryReportBatch.Builder<Builder> {
 
-    private Builder() {
+    protected Builder() {
       super();
     }
 
-    public DeliveryReportSMS build() {
-      return new DeliveryReportSMS(batchId, clientReference, statuses, totalMessageCount);
+    public DeliveryReportBatchMMS build() {
+      return new DeliveryReportBatchMMS(batchId, clientReference, statuses, totalMessageCount);
     }
   }
 }
