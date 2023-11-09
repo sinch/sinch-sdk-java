@@ -14,15 +14,20 @@ import com.sinch.sdk.domains.sms.models.DeliveryReportBatch;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatchMMS;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatchSMS;
 import com.sinch.sdk.domains.sms.models.DeliveryReportRecipient;
+import com.sinch.sdk.domains.sms.models.DeliveryReportRecipientEncoding;
 import com.sinch.sdk.domains.sms.models.DeliveryReportRecipientMMS;
 import com.sinch.sdk.domains.sms.models.DeliveryReportRecipientSMS;
 import com.sinch.sdk.domains.sms.models.DeliveryReportStatus;
 import com.sinch.sdk.domains.sms.models.DeliveryReportType;
 import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportListDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.RecipientDeliveryReportDto;
 import com.sinch.sdk.domains.sms.models.requests.DeliveryReportBatchGetRequestParameters;
+import com.sinch.sdk.domains.sms.models.responses.DeliveryReportsListResponse;
 import com.sinch.sdk.models.Configuration;
+import java.time.Instant;
 import java.util.Arrays;
+import java.util.Iterator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -46,6 +51,12 @@ class DeliveryReportsServiceTest extends BaseTest {
 
   @GivenJsonResource("/domains/sms/v1/DeliveryReportRecipientMMSDto.json")
   RecipientDeliveryReportDto deliveryReportRecipientMMSDto;
+
+  @GivenJsonResource("/domains/sms/v1/ListDeliveryReportResponseDtoPage0.json")
+  DeliveryReportListDto listDeliveryReportResponseDtoPage0;
+
+  @GivenJsonResource("/domains/sms/v1/ListDeliveryReportResponseDtoPage1.json")
+  DeliveryReportListDto listDeliveryReportResponseDtoPage1;
 
   @Test
   void getDeliveryReportBatchSMS() throws ApiException {
@@ -131,5 +142,94 @@ class DeliveryReportsServiceTest extends BaseTest {
     Assertions.assertThat(response)
         .usingRecursiveComparison()
         .isEqualTo(DeliveryReportDtoConverter.convert(deliveryReportRecipientMMSDto));
+  }
+
+  @Test
+  void list() throws ApiException {
+
+    when(api.getDeliveryReports(
+            eq(configuration.getProjectId()),
+            eq(null),
+            eq(null),
+            eq(null),
+            eq(null),
+            eq(null),
+            eq(null),
+            eq(null)))
+        .thenReturn(listDeliveryReportResponseDtoPage0);
+    when(api.getDeliveryReports(
+            eq(configuration.getProjectId()),
+            eq(1),
+            eq(null),
+            eq(null),
+            eq(null),
+            eq(null),
+            eq(null),
+            eq(null)))
+        .thenReturn(listDeliveryReportResponseDtoPage1);
+
+    DeliveryReportsListResponse response = service.list(null);
+
+    Iterator<DeliveryReportRecipient> iterator = response.autoPageIter();
+    DeliveryReportRecipient item = iterator.next();
+    Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
+
+    assertInstanceOf(DeliveryReportRecipientSMS.class, item);
+    Assertions.assertThat(item)
+        .usingRecursiveComparison()
+        .isEqualTo(
+            DeliveryReportRecipientSMS.builder()
+                .setBatchId("01FC66621XXXXX119Z8PMV1QPQ")
+                .setRecipient("+44231235674")
+                .setCode(401)
+                .setStatus(DeliveryReportStatus.DISPATCHED)
+                .setAt(Instant.parse("2022-08-30T08:16:08.930Z"))
+                .setOperator("operator")
+                .setAppliedOriginator("applied originator")
+                .setClientReference("client reference")
+                .setEncoding(DeliveryReportRecipientEncoding.from("encoding"))
+                .setNumberOfMessageParts(123)
+                .setOperatorStatusAt(Instant.parse("2022-08-30T08:16:08.150Z"))
+                .build());
+
+    item = iterator.next();
+    Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
+    assertInstanceOf(DeliveryReportRecipientMMS.class, item);
+    Assertions.assertThat(item)
+        .usingRecursiveComparison()
+        .isEqualTo(
+            DeliveryReportRecipientMMS.builder()
+                .setBatchId("01FC66621XXXXX119Z8PMV1QPQ")
+                .setRecipient("+44231235674")
+                .setCode(401)
+                .setStatus(DeliveryReportStatus.DISPATCHED)
+                .setAt(Instant.parse("2022-08-30T08:16:08.930Z"))
+                .setOperator("operator")
+                .setAppliedOriginator("applied originator")
+                .setClientReference("client reference")
+                .setEncoding(DeliveryReportRecipientEncoding.from("encoding"))
+                .setNumberOfMessageParts(123)
+                .setOperatorStatusAt(Instant.parse("2022-08-30T08:16:08.150Z"))
+                .build());
+
+    item = iterator.next();
+    Assertions.assertThat(iterator.hasNext()).isEqualTo(false);
+    assertInstanceOf(DeliveryReportRecipientSMS.class, item);
+    Assertions.assertThat(item)
+        .usingRecursiveComparison()
+        .isEqualTo(
+            DeliveryReportRecipientSMS.builder()
+                .setBatchId("01FC66621XXXXX119Z8PMV1QPQ")
+                .setRecipient("+44231235674")
+                .setCode(401)
+                .setStatus(DeliveryReportStatus.DISPATCHED)
+                .setAt(Instant.parse("2022-08-30T08:16:08.930Z"))
+                .setOperator("operator")
+                .setAppliedOriginator("applied originator")
+                .setClientReference("client reference")
+                .setEncoding(DeliveryReportRecipientEncoding.from("encoding"))
+                .setNumberOfMessageParts(123)
+                .setOperatorStatusAt(Instant.parse("2022-08-30T08:16:08.150Z"))
+                .build());
   }
 }

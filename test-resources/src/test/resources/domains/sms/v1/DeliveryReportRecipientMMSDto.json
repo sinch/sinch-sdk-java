@@ -1,5 +1,4 @@
 {
-
   "type": "recipient_delivery_report_mms",
   "batch_id": "01FC66621XXXXX119Z8PMV1QPQ",
   "recipient": "+44231235674",
@@ -11,5 +10,5 @@
   "client_reference": "client reference",
   "encoding": "encoding",
   "number_of_message_parts": 123,
-  "operator_status_at":"2022-08-30T08:16:08.150Z"
+  "operator_status_at": "2022-08-30T08:16:08.150Z"
 }

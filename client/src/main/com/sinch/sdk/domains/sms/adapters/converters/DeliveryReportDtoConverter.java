@@ -1,5 +1,7 @@
 package com.sinch.sdk.domains.sms.adapters.converters;
 
+import com.sinch.sdk.core.models.pagination.PageToken;
+import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatch;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatchMMS;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatchSMS;
@@ -10,8 +12,11 @@ import com.sinch.sdk.domains.sms.models.DeliveryReportRecipientSMS;
 import com.sinch.sdk.domains.sms.models.DeliveryReportStatus;
 import com.sinch.sdk.domains.sms.models.DeliveryReportStatusDetails;
 import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportListDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.MessageDeliveryStatusDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.RecipientDeliveryReportDto;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -66,6 +71,25 @@ public class DeliveryReportDtoConverter {
         .setOperatorStatusAt(
             null != dto.getOperatorStatusAt() ? dto.getOperatorStatusAt().toInstant() : null)
         .build();
+  }
+
+  public static Pair<Collection<DeliveryReportRecipient>, PageToken<Integer>> convert(
+      DeliveryReportListDto dto) {
+    // check end of pagination limit reached: (current page number * page size ) cannot be greater
+    // than "count" to be able to call next page
+    Integer nextPageToken =
+        ((dto.getPage() + 1) * Long.valueOf(dto.getPageSize())) >= dto.getCount()
+            ? null
+            : dto.getPage() + 1;
+    Collection<RecipientDeliveryReportDto> collection = dto.getDeliveryReports();
+    Collection<DeliveryReportRecipient> pageContent = new ArrayList<>();
+    if (null != collection) {
+      for (RecipientDeliveryReportDto innerDto : collection) {
+        DeliveryReportRecipient convert = convert(innerDto);
+        pageContent.add(convert);
+      }
+    }
+    return new Pair<>(pageContent, new PageToken<>(nextPageToken));
   }
 
   private static DeliveryReportStatusDetails convert(MessageDeliveryStatusDto dto) {

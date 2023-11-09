@@ -4,6 +4,8 @@ import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatch;
 import com.sinch.sdk.domains.sms.models.DeliveryReportRecipient;
 import com.sinch.sdk.domains.sms.models.requests.DeliveryReportBatchGetRequestParameters;
+import com.sinch.sdk.domains.sms.models.requests.DeliveryReportListRequestParameters;
+import com.sinch.sdk.domains.sms.models.responses.DeliveryReportsListResponse;
 
 /**
  * Delivery reports Service
@@ -50,4 +52,17 @@ public interface DeliveryReportsService {
    * @since 1.0
    */
   DeliveryReportRecipient getForNumber(String batchId, String recipient) throws ApiException;
+
+  /**
+   * Get a list of finished delivery reports.<br>
+   * This operation supports pagination.
+   *
+   * @param parameters Filtering parameters
+   * @return Delivery report related to batchId according to filters
+   * @see <a
+   *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/operation/getDeliveryReports">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/operation/getDeliveryReports</a>
+   * @since 1.0
+   */
+  DeliveryReportsListResponse list(DeliveryReportListRequestParameters parameters)
+      throws ApiException;
 }
