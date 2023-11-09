@@ -13,9 +13,13 @@ import com.sinch.sdk.domains.sms.adapters.converters.DeliveryReportDtoConverter;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatch;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatchMMS;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatchSMS;
+import com.sinch.sdk.domains.sms.models.DeliveryReportRecipient;
+import com.sinch.sdk.domains.sms.models.DeliveryReportRecipientMMS;
+import com.sinch.sdk.domains.sms.models.DeliveryReportRecipientSMS;
 import com.sinch.sdk.domains.sms.models.DeliveryReportStatus;
 import com.sinch.sdk.domains.sms.models.DeliveryReportType;
 import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.RecipientDeliveryReportDto;
 import com.sinch.sdk.models.Configuration;
 import java.util.Collections;
 import org.assertj.core.api.Assertions;
@@ -30,13 +34,19 @@ class DeliveryReportsServiceTest extends BaseTest {
   @InjectMocks DeliveryReportsService service;
 
   @GivenJsonResource("/domains/sms/v1/DeliveryReportBatchSMSDto.json")
-  DeliveryReportDto deliveryReportSMSDto;
+  DeliveryReportDto deliveryReportBatchSMSDto;
 
   @GivenJsonResource("/domains/sms/v1/DeliveryReportBatchMMSDto.json")
-  DeliveryReportDto deliveryReportMMSDto;
+  DeliveryReportDto deliveryReportBatchMMSDto;
+
+  @GivenJsonResource("/domains/sms/v1/DeliveryReportRecipientSMSDto.json")
+  RecipientDeliveryReportDto deliveryReportRecipientSMSDto;
+
+  @GivenJsonResource("/domains/sms/v1/DeliveryReportRecipientMMSDto.json")
+  RecipientDeliveryReportDto deliveryReportRecipientMMSDto;
 
   @Test
-  void getDeliveryReportSMS() throws ApiException {
+  void getDeliveryReportBatchSMS() throws ApiException {
 
     when(api.getDeliveryReportByBatchId(
             eq(configuration.getProjectId()),
@@ -44,7 +54,7 @@ class DeliveryReportsServiceTest extends BaseTest {
             eq("foo type"),
             eq("foo statuses"),
             eq("456")))
-        .thenReturn(deliveryReportSMSDto);
+        .thenReturn(deliveryReportBatchSMSDto);
 
     DeliveryReportBatch response =
         service.get(
@@ -56,11 +66,11 @@ class DeliveryReportsServiceTest extends BaseTest {
     assertInstanceOf(DeliveryReportBatchSMS.class, response);
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(DeliveryReportDtoConverter.convert(deliveryReportSMSDto));
+        .isEqualTo(DeliveryReportDtoConverter.convert(deliveryReportBatchSMSDto));
   }
 
   @Test
-  void getDeliveryReportMMS() throws ApiException {
+  void getDeliveryReportBatchMMS() throws ApiException {
 
     when(api.getDeliveryReportByBatchId(
             eq(configuration.getProjectId()),
@@ -68,7 +78,7 @@ class DeliveryReportsServiceTest extends BaseTest {
             eq("foo type"),
             eq("foo statuses"),
             eq("456")))
-        .thenReturn(deliveryReportMMSDto);
+        .thenReturn(deliveryReportBatchMMSDto);
 
     DeliveryReportBatch response =
         service.get(
@@ -80,6 +90,36 @@ class DeliveryReportsServiceTest extends BaseTest {
     assertInstanceOf(DeliveryReportBatchMMS.class, response);
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(DeliveryReportDtoConverter.convert(deliveryReportMMSDto));
+        .isEqualTo(DeliveryReportDtoConverter.convert(deliveryReportBatchMMSDto));
+  }
+
+  @Test
+  void getDeliveryReportRecipientSMS() throws ApiException {
+
+    when(api.getDeliveryReportByPhoneNumber(
+            eq(configuration.getProjectId()), eq("foo binary batch id"), eq("foo number")))
+        .thenReturn(deliveryReportRecipientSMSDto);
+
+    DeliveryReportRecipient response = service.getForNumber("foo binary batch id", "foo number");
+
+    assertInstanceOf(DeliveryReportRecipientSMS.class, response);
+    Assertions.assertThat(response)
+        .usingRecursiveComparison()
+        .isEqualTo(DeliveryReportDtoConverter.convert(deliveryReportRecipientSMSDto));
+  }
+
+  @Test
+  void getDeliveryReportRecipientMMS() throws ApiException {
+
+    when(api.getDeliveryReportByPhoneNumber(
+            eq(configuration.getProjectId()), eq("foo binary batch id"), eq("foo number")))
+        .thenReturn(deliveryReportRecipientMMSDto);
+
+    DeliveryReportRecipient response = service.getForNumber("foo binary batch id", "foo number");
+
+    assertInstanceOf(DeliveryReportRecipientMMS.class, response);
+    Assertions.assertThat(response)
+        .usingRecursiveComparison()
+        .isEqualTo(DeliveryReportDtoConverter.convert(deliveryReportRecipientMMSDto));
   }
 }

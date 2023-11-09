@@ -9,7 +9,7 @@ import java.util.stream.Stream;
  * Applied encoding for message.
  *
  * @see <a
- *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/operation/deliveryReport!path=1/encoding&t=request">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/operation/deliveryReport!path=1/encoding&amp;t=request</a>
+ *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/operation/deliveryReport!path=1/encoding&amp;t=request">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/operation/deliveryReport!path=1/encoding&amp;t=request</a>
  * @since 1.0
  */
 public class DeliveryReportRecipientEncoding extends EnumDynamic<DeliveryReportRecipientEncoding> {

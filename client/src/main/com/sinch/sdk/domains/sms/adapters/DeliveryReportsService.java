@@ -7,6 +7,7 @@ import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.domains.sms.adapters.api.v1.DeliveryReportsApi;
 import com.sinch.sdk.domains.sms.adapters.converters.DeliveryReportDtoConverter;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatch;
+import com.sinch.sdk.domains.sms.models.DeliveryReportRecipient;
 import com.sinch.sdk.domains.sms.models.DeliveryReportStatus;
 import com.sinch.sdk.domains.sms.models.DeliveryReportType;
 import com.sinch.sdk.models.Configuration;
@@ -62,5 +63,11 @@ public class DeliveryReportsService implements com.sinch.sdk.domains.sms.Deliver
         getApi()
             .getDeliveryReportByBatchId(
                 configuration.getProjectId(), batchId, typeParam, statusesParam, codesParam));
+  }
+
+  public DeliveryReportRecipient getForNumber(String batchId, String recipient)
+      throws ApiException {
+    return DeliveryReportDtoConverter.convert(
+        getApi().getDeliveryReportByPhoneNumber(configuration.getProjectId(), batchId, recipient));
   }
 }
