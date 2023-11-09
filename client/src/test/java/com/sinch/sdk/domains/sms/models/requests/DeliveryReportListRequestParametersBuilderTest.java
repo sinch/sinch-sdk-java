@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.sms.models.requests;
 
+import com.sinch.sdk.domains.sms.models.DeliveryReportErrorCode;
 import com.sinch.sdk.domains.sms.models.DeliveryReportStatus;
 import java.time.Instant;
 import java.util.Arrays;
@@ -16,7 +17,9 @@ class DeliveryReportListRequestParametersBuilderTest {
   final Integer pageSize = 3;
   final Collection<DeliveryReportStatus> statuses =
       Arrays.asList(DeliveryReportStatus.CANCELLED, DeliveryReportStatus.DELETED);
-  final Collection<Integer> codes = Arrays.asList(123, 456);
+  final Collection<DeliveryReportErrorCode> codes =
+      Arrays.asList(
+          DeliveryReportErrorCode.from(123), DeliveryReportErrorCode.DELIVERY_REPORT_UNREACHABLE);
   final DeliveryReportListRequestParameters value =
       DeliveryReportListRequestParameters.builder()
           .setStartDate(startDate)
