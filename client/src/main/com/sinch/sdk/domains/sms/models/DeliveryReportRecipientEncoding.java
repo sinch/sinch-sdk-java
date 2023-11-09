@@ -12,14 +12,15 @@ import java.util.stream.Stream;
  *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/operation/deliveryReport!path=1/encoding&amp;t=request">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/operation/deliveryReport!path=1/encoding&amp;t=request</a>
  * @since 1.0
  */
-public class DeliveryReportRecipientEncoding extends EnumDynamic<DeliveryReportRecipientEncoding> {
+public class DeliveryReportRecipientEncoding
+    extends EnumDynamic<String, DeliveryReportRecipientEncoding> {
 
   public static final DeliveryReportRecipientEncoding GSM =
       new DeliveryReportRecipientEncoding("GSM");
   public static final DeliveryReportRecipientEncoding UNICODE =
       new DeliveryReportRecipientEncoding("UNICODE");
 
-  private static final EnumSupportDynamic<DeliveryReportRecipientEncoding> ENUM_SUPPORT =
+  private static final EnumSupportDynamic<String, DeliveryReportRecipientEncoding> ENUM_SUPPORT =
       new EnumSupportDynamic<>(
           DeliveryReportRecipientEncoding.class,
           DeliveryReportRecipientEncoding::new,

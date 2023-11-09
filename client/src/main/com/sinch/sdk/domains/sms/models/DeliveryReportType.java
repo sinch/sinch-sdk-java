@@ -10,7 +10,7 @@ import java.util.stream.Stream;
  *
  * @since 1.0
  */
-public class DeliveryReportType extends EnumDynamic<DeliveryReportType> {
+public class DeliveryReportType extends EnumDynamic<String, DeliveryReportType> {
 
   /** No delivery report callback will be sent. */
   public static final DeliveryReportType NONE = new DeliveryReportType("none");
@@ -36,7 +36,7 @@ public class DeliveryReportType extends EnumDynamic<DeliveryReportType> {
   public static final DeliveryReportType PER_RECIPIENT_FINAl =
       new DeliveryReportType("per_recipient_final");
 
-  private static final EnumSupportDynamic<DeliveryReportType> ENUM_SUPPORT =
+  private static final EnumSupportDynamic<String, DeliveryReportType> ENUM_SUPPORT =
       new EnumSupportDynamic<>(
           DeliveryReportType.class,
           DeliveryReportType::new,

@@ -38,7 +38,7 @@ public class DeliveryReportRecipientMMS extends DeliveryReportRecipient {
       String batchId,
       String clientReference,
       Instant at,
-      Integer code,
+      DeliveryReportErrorCode code,
       String recipient,
       DeliveryReportStatus status,
       String appliedOriginator,

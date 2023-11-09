@@ -5,6 +5,7 @@ import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatch;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatchMMS;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatchSMS;
+import com.sinch.sdk.domains.sms.models.DeliveryReportErrorCode;
 import com.sinch.sdk.domains.sms.models.DeliveryReportRecipient;
 import com.sinch.sdk.domains.sms.models.DeliveryReportRecipientEncoding;
 import com.sinch.sdk.domains.sms.models.DeliveryReportRecipientMMS;
@@ -61,7 +62,7 @@ public class DeliveryReportDtoConverter {
         .setBatchId(dto.getBatchId())
         .setClientReference(dto.getClientReference())
         .setAt(null != dto.getAt() ? dto.getAt().toInstant() : null)
-        .setCode(dto.getCode())
+        .setCode(DeliveryReportErrorCode.from(dto.getCode()))
         .setRecipient(dto.getRecipient())
         .setStatus(DeliveryReportStatus.from(dto.getStatus()))
         .setAppliedOriginator(dto.getAppliedOriginator())

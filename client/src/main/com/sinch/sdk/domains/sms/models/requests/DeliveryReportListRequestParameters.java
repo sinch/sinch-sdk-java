@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.sms.models.requests;
 
+import com.sinch.sdk.domains.sms.models.DeliveryReportErrorCode;
 import com.sinch.sdk.domains.sms.models.DeliveryReportStatus;
 import java.time.Instant;
 import java.util.Collection;
@@ -20,7 +21,7 @@ public class DeliveryReportListRequestParameters {
   private final Integer page;
   private final Integer pageSize;
   private final Collection<DeliveryReportStatus> statuses;
-  private final Collection<Integer> codes;
+  private final Collection<DeliveryReportErrorCode> codes;
 
   public DeliveryReportListRequestParameters(
       Instant startDate,
@@ -29,7 +30,7 @@ public class DeliveryReportListRequestParameters {
       Integer page,
       Integer pageSize,
       Collection<DeliveryReportStatus> statuses,
-      Collection<Integer> codes) {
+      Collection<DeliveryReportErrorCode> codes) {
     this.startDate = startDate;
     this.endDate = endDate;
     this.clientReference = clientReference;
@@ -63,7 +64,7 @@ public class DeliveryReportListRequestParameters {
     return Optional.ofNullable(statuses);
   }
 
-  public Optional<Collection<Integer>> getCodes() {
+  public Optional<Collection<DeliveryReportErrorCode>> getCodes() {
     return Optional.ofNullable(codes);
   }
 
@@ -83,7 +84,7 @@ public class DeliveryReportListRequestParameters {
     Integer page;
     Integer pageSize;
     Collection<DeliveryReportStatus> statuses;
-    Collection<Integer> codes;
+    Collection<DeliveryReportErrorCode> codes;
 
     private Builder() {}
 
@@ -127,7 +128,7 @@ public class DeliveryReportListRequestParameters {
       return this;
     }
 
-    public Builder setCodes(Collection<Integer> codes) {
+    public Builder setCodes(Collection<DeliveryReportErrorCode> codes) {
       this.codes = codes;
       return this;
     }

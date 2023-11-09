@@ -13,6 +13,7 @@ import com.sinch.sdk.domains.sms.adapters.converters.DeliveryReportDtoConverter;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatch;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatchMMS;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatchSMS;
+import com.sinch.sdk.domains.sms.models.DeliveryReportErrorCode;
 import com.sinch.sdk.domains.sms.models.DeliveryReportRecipient;
 import com.sinch.sdk.domains.sms.models.DeliveryReportRecipientEncoding;
 import com.sinch.sdk.domains.sms.models.DeliveryReportRecipientMMS;
@@ -181,7 +182,7 @@ class DeliveryReportsServiceTest extends BaseTest {
             DeliveryReportRecipientSMS.builder()
                 .setBatchId("01FC66621XXXXX119Z8PMV1QPQ")
                 .setRecipient("+44231235674")
-                .setCode(401)
+                .setCode(DeliveryReportErrorCode.from(401))
                 .setStatus(DeliveryReportStatus.DISPATCHED)
                 .setAt(Instant.parse("2022-08-30T08:16:08.930Z"))
                 .setOperator("operator")
@@ -201,7 +202,7 @@ class DeliveryReportsServiceTest extends BaseTest {
             DeliveryReportRecipientMMS.builder()
                 .setBatchId("01FC66621XXXXX119Z8PMV1QPQ")
                 .setRecipient("+44231235674")
-                .setCode(401)
+                .setCode(DeliveryReportErrorCode.DISPATCHED)
                 .setStatus(DeliveryReportStatus.DISPATCHED)
                 .setAt(Instant.parse("2022-08-30T08:16:08.930Z"))
                 .setOperator("operator")
@@ -221,7 +222,7 @@ class DeliveryReportsServiceTest extends BaseTest {
             DeliveryReportRecipientSMS.builder()
                 .setBatchId("01FC66621XXXXX119Z8PMV1QPQ")
                 .setRecipient("+44231235674")
-                .setCode(401)
+                .setCode(DeliveryReportErrorCode.from(401))
                 .setStatus(DeliveryReportStatus.DISPATCHED)
                 .setAt(Instant.parse("2022-08-30T08:16:08.930Z"))
                 .setOperator("operator")

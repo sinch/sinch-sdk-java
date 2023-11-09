@@ -10,7 +10,7 @@ import java.util.stream.Stream;
  *     href="https://developers.sinch.com/docs/numbers/api-reference/error-codes/provisioning-errors/">https://developers.sinch.com/docs/numbers/api-reference/error-codes/provisioning-errors/</a>
  * @since 1.0
  */
-public final class SmsErrorCode extends EnumDynamic<SmsErrorCode> {
+public final class SmsErrorCode extends EnumDynamic<String, SmsErrorCode> {
   public static final SmsErrorCode ERROR_CODE_UNSPECIFIED =
       new SmsErrorCode("ERROR_CODE_UNSPECIFIED");
   public static final SmsErrorCode INTERNAL_ERROR = new SmsErrorCode("INTERNAL_ERROR");
@@ -42,7 +42,7 @@ public final class SmsErrorCode extends EnumDynamic<SmsErrorCode> {
   public static final SmsErrorCode UNKNOWN_DEFAULT_OPEN_API =
       new SmsErrorCode("UNKNOWN_DEFAULT_OPEN_API");
 
-  private static final EnumSupportDynamic<SmsErrorCode> ENUM_SUPPORT =
+  private static final EnumSupportDynamic<String, SmsErrorCode> ENUM_SUPPORT =
       new EnumSupportDynamic<>(
           SmsErrorCode.class,
           SmsErrorCode::new,

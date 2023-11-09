@@ -14,7 +14,7 @@ import java.util.stream.Stream;
  *     href="https://developers.sinch.com/docs/sms/api-reference/#base-url/">https://developers.sinch.com/docs/sms/api-reference/#base-url/</a>
  * @since 1.0
  */
-public class SMSRegion extends EnumDynamic<SMSRegion> {
+public class SMSRegion extends EnumDynamic<String, SMSRegion> {
 
   /** United States */
   public static final SMSRegion US = new SMSRegion("us");
@@ -28,7 +28,7 @@ public class SMSRegion extends EnumDynamic<SMSRegion> {
   /** Canada */
   public static final SMSRegion CA = new SMSRegion("ca");
 
-  private static final EnumSupportDynamic<SMSRegion> ENUM_SUPPORT =
+  private static final EnumSupportDynamic<String, SMSRegion> ENUM_SUPPORT =
       new EnumSupportDynamic<>(SMSRegion.class, SMSRegion::new, Arrays.asList(US, EU, AU, BR, CA));
 
   private SMSRegion(String value) {

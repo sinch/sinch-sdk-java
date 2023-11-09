@@ -11,7 +11,7 @@ import java.util.Optional;
 public abstract class DeliveryReportRecipient extends BaseDeliveryReport {
 
   private final Instant at;
-  private final Integer code;
+  private final DeliveryReportErrorCode code;
   private final String recipient;
   private final DeliveryReportStatus status;
   private final String appliedOriginator;
@@ -49,7 +49,7 @@ public abstract class DeliveryReportRecipient extends BaseDeliveryReport {
       String batchId,
       String clientReference,
       Instant at,
-      Integer code,
+      DeliveryReportErrorCode code,
       String recipient,
       DeliveryReportStatus status,
       String appliedOriginator,
@@ -73,7 +73,7 @@ public abstract class DeliveryReportRecipient extends BaseDeliveryReport {
     return at;
   }
 
-  public Integer getCode() {
+  public DeliveryReportErrorCode getCode() {
     return code;
   }
 
@@ -138,7 +138,7 @@ public abstract class DeliveryReportRecipient extends BaseDeliveryReport {
   public abstract static class Builder<B extends Builder<B>> extends BaseDeliveryReport.Builder<B> {
 
     protected Instant at;
-    protected Integer code;
+    protected DeliveryReportErrorCode code;
     protected String recipient;
     protected DeliveryReportStatus status;
     protected String appliedOriginator;
@@ -152,7 +152,7 @@ public abstract class DeliveryReportRecipient extends BaseDeliveryReport {
       return this;
     }
 
-    public Builder<B> setCode(Integer code) {
+    public Builder<B> setCode(DeliveryReportErrorCode code) {
       this.code = code;
       return this;
     }
