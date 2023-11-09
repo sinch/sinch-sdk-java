@@ -1,10 +1,5 @@
 package com.sinch.sdk.domains.sms.models;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -13,27 +8,9 @@ import java.util.Optional;
  *
  * @since 1.0
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonTypeInfo(
-    use = JsonTypeInfo.Id.NAME,
-    include = JsonTypeInfo.As.EXISTING_PROPERTY,
-    property = "type",
-    visible = true)
-@JsonSubTypes({
-  @JsonSubTypes.Type(
-      value = DeliveryReportRecipientSMS.class,
-      name = "recipient_delivery_report_sms"),
-  @JsonSubTypes.Type(
-      value = DeliveryReportRecipientMMS.class,
-      name = "recipient_delivery_report_mms"),
-  @JsonSubTypes.Type(value = DeliveryReportBatchSMS.class, name = "delivery_report_sms"),
-  @JsonSubTypes.Type(value = DeliveryReportBatchMMS.class, name = "delivery_report_mms")
-})
 public abstract class BaseDeliveryReport {
 
-  static final String JSON_PROPERTY_BATCH_ID = "batch_id";
   private final String batchId;
-  static final String JSON_PROPERTY_CLIENT_REFERENCE = "client_reference";
   private final String clientReference;
 
   /**
@@ -41,10 +18,7 @@ public abstract class BaseDeliveryReport {
    * @param clientReference The client identifier of the batch this delivery report belongs to, if
    *     set when submitting batch.
    */
-  @JsonCreator
-  public BaseDeliveryReport(
-      @JsonProperty(JSON_PROPERTY_BATCH_ID) String batchId,
-      @JsonProperty(JSON_PROPERTY_CLIENT_REFERENCE) String clientReference) {
+  public BaseDeliveryReport(String batchId, String clientReference) {
     Objects.requireNonNull(batchId);
     this.batchId = batchId;
     this.clientReference = clientReference;

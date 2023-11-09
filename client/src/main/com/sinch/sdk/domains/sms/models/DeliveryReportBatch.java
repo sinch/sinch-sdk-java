@@ -1,7 +1,5 @@
 package com.sinch.sdk.domains.sms.models;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -12,9 +10,7 @@ import java.util.Objects;
  */
 public abstract class DeliveryReportBatch extends BaseDeliveryReport {
 
-  static final String JSON_PROPERTY_STATUSES = "statuses";
   private final Collection<DeliveryReportStatusDetails> statuses;
-  static final String JSON_PROPERTY_TOTAL_MESSAGE_COUNT = "total_message_count";
   private final Integer totalMessageCount;
 
   /**
@@ -25,12 +21,11 @@ public abstract class DeliveryReportBatch extends BaseDeliveryReport {
    *     least one recipient will be listed.
    * @param totalMessageCount <code>Required.</code> The total number of messages in the batch.
    */
-  @JsonCreator
   public DeliveryReportBatch(
-      @JsonProperty(JSON_PROPERTY_BATCH_ID) String batchId,
-      @JsonProperty(JSON_PROPERTY_CLIENT_REFERENCE) String clientReference,
-      @JsonProperty(JSON_PROPERTY_STATUSES) Collection<DeliveryReportStatusDetails> statuses,
-      @JsonProperty(JSON_PROPERTY_TOTAL_MESSAGE_COUNT) Integer totalMessageCount) {
+      String batchId,
+      String clientReference,
+      Collection<DeliveryReportStatusDetails> statuses,
+      Integer totalMessageCount) {
     super(batchId, clientReference);
     Objects.requireNonNull(statuses);
     Objects.requireNonNull(totalMessageCount);

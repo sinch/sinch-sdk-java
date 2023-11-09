@@ -3,11 +3,15 @@ package com.sinch.sdk.domains.sms.adapters.converters;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatch;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatchMMS;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatchSMS;
+import com.sinch.sdk.domains.sms.models.DeliveryReportRecipient;
+import com.sinch.sdk.domains.sms.models.DeliveryReportRecipientEncoding;
+import com.sinch.sdk.domains.sms.models.DeliveryReportRecipientMMS;
+import com.sinch.sdk.domains.sms.models.DeliveryReportRecipientSMS;
 import com.sinch.sdk.domains.sms.models.DeliveryReportStatus;
 import com.sinch.sdk.domains.sms.models.DeliveryReportStatusDetails;
 import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportDto;
-import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportDto.TypeEnum;
 import com.sinch.sdk.domains.sms.models.dto.v1.MessageDeliveryStatusDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.RecipientDeliveryReportDto;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -16,9 +20,9 @@ public class DeliveryReportDtoConverter {
   public static DeliveryReportBatch convert(DeliveryReportDto dto) {
     DeliveryReportBatch.Builder<?> builder;
 
-    if (Objects.equals(dto.getType(), TypeEnum.MMS.getValue())) {
+    if (Objects.equals(dto.getType(), DeliveryReportDto.TypeEnum.MMS.getValue())) {
       builder = DeliveryReportBatchMMS.builder();
-    } else if (Objects.equals(dto.getType(), TypeEnum.SMS.getValue())) {
+    } else if (Objects.equals(dto.getType(), DeliveryReportDto.TypeEnum.SMS.getValue())) {
       builder = DeliveryReportBatchSMS.builder();
     } else {
       return null;
@@ -34,6 +38,33 @@ public class DeliveryReportDtoConverter {
                     .collect(Collectors.toList())
                 : null)
         .setTotalMessageCount(dto.getTotalMessageCount())
+        .build();
+  }
+
+  public static DeliveryReportRecipient convert(RecipientDeliveryReportDto dto) {
+    DeliveryReportRecipient.Builder<?> builder;
+
+    if (Objects.equals(dto.getType(), RecipientDeliveryReportDto.TypeEnum.MMS.getValue())) {
+      builder = DeliveryReportRecipientMMS.builder();
+    } else if (Objects.equals(dto.getType(), RecipientDeliveryReportDto.TypeEnum.SMS.getValue())) {
+      builder = DeliveryReportRecipientSMS.builder();
+    } else {
+      return null;
+    }
+
+    return builder
+        .setBatchId(dto.getBatchId())
+        .setClientReference(dto.getClientReference())
+        .setAt(null != dto.getAt() ? dto.getAt().toInstant() : null)
+        .setCode(dto.getCode())
+        .setRecipient(dto.getRecipient())
+        .setStatus(DeliveryReportStatus.from(dto.getStatus()))
+        .setAppliedOriginator(dto.getAppliedOriginator())
+        .setEncoding(DeliveryReportRecipientEncoding.from(dto.getEncoding()))
+        .setNumberOfMessageParts(dto.getNumberOfMessageParts())
+        .setOperator(dto.getOperator())
+        .setOperatorStatusAt(
+            null != dto.getOperatorStatusAt() ? dto.getOperatorStatusAt().toInstant() : null)
         .build();
   }
 

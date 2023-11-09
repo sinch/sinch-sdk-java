@@ -29,19 +29,20 @@ public interface DeliveryReportsService {
    *
    * @param batchId The batch ID you received from sending a message param type param status param
    *     code
-   * @param type The type of delivery report.
+   * @param type Filter by type of delivery report.
    *     <ul>
    *       <li>A <code>summary</code> will count the number of messages sent per status.
    *       <li>A <code>full</code> report give that of a summary report but in addition, lists phone
    *           numbers.
    *     </ul>
    *
-   * @param statuses List of <a
+   * @param statuses Filter by list of <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/section/Delivery-report-statuses">statuses</a>
    *     to include
-   * @param codes List of <a
+   * @param codes Filter by list of <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/section/Delivery-report-error-codes">codes</a>
    *     to include
+   * @return Delivery report related to batchId according to filters
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/operation/GetDeliveryReportByBatchId">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/operation/GetDeliveryReportByBatchId</a>
    * @since 1.0

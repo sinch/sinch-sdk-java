@@ -29,10 +29,10 @@ class DeliveryReportsServiceTest extends BaseTest {
   @Mock DeliveryReportsApi api;
   @InjectMocks DeliveryReportsService service;
 
-  @GivenJsonResource("/domains/sms/v1/webhooks/DeliveryReportSMS.json")
+  @GivenJsonResource("/domains/sms/v1/DeliveryReportBatchSMSDto.json")
   DeliveryReportDto deliveryReportSMSDto;
 
-  @GivenJsonResource("/domains/sms/v1/webhooks/DeliveryReportMMS.json")
+  @GivenJsonResource("/domains/sms/v1/DeliveryReportBatchMMSDto.json")
   DeliveryReportDto deliveryReportMMSDto;
 
   @Test

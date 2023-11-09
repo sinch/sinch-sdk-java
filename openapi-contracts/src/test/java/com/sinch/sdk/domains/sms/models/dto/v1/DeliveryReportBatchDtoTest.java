@@ -1,24 +1,22 @@
-package com.sinch.sdk.domains.sms.models.dto.v1.webhooks;
+package com.sinch.sdk.domains.sms.models.dto.v1;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
-import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportDto;
-import com.sinch.sdk.domains.sms.models.dto.v1.MessageDeliveryStatusDto;
 import java.util.Collections;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
-public class DeliveryReportDtoTest extends BaseTest {
+public class DeliveryReportBatchDtoTest extends BaseTest {
 
-  @GivenJsonResource("/domains/sms/v1/webhooks/DeliveryReportSMS.json")
-  DeliveryReportDto deliveryReportSMSClient;
+  @GivenJsonResource("/domains/sms/v1/DeliveryReportBatchSMSDto.json")
+  DeliveryReportDto deliveryReportBatchSMSDto;
 
-  @GivenJsonResource("/domains/sms/v1/webhooks/DeliveryReportMMS.json")
-  DeliveryReportDto deliveryReportMMSClient;
+  @GivenJsonResource("/domains/sms/v1/DeliveryReportBatchMMSDto.json")
+  DeliveryReportDto deliveryReportBatchMMSDto;
 
-  public static DeliveryReportDto deliveryReportSMS =
+  public static DeliveryReportDto deliveryReportBatchSMS =
       new DeliveryReportDto("01FC66621XXXXX119Z8PMV1QPQ")
           .type("delivery_report_sms")
           .statuses(
@@ -30,7 +28,7 @@ public class DeliveryReportDtoTest extends BaseTest {
                       .status("Delivered")))
           .totalMessageCount(1);
 
-  public static DeliveryReportDto deliveryReportMMS =
+  public static DeliveryReportDto deliveryReportBatchMMS =
       new DeliveryReportDto("01FC66621XXXXX119Z8PMV1QPQ")
           .type("delivery_report_mms")
           .statuses(
@@ -43,16 +41,16 @@ public class DeliveryReportDtoTest extends BaseTest {
           .totalMessageCount(1);
 
   @Test
-  void deserializeDeliveryReportRecipientSMS() {
-    Assertions.assertThat(deliveryReportSMS)
+  void deserializeDeliveryReportBatchSMS() {
+    Assertions.assertThat(deliveryReportBatchSMS)
         .usingRecursiveComparison()
-        .isEqualTo(deliveryReportSMSClient);
+        .isEqualTo(deliveryReportBatchSMSDto);
   }
 
   @Test
-  void deserializeDeliveryReportRecipientMMS() {
-    Assertions.assertThat(deliveryReportMMS)
+  void deserializeDeliveryReportBatchMMS() {
+    Assertions.assertThat(deliveryReportBatchMMS)
         .usingRecursiveComparison()
-        .isEqualTo(deliveryReportMMSClient);
+        .isEqualTo(deliveryReportBatchMMSDto);
   }
 }

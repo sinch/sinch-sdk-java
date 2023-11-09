@@ -22,10 +22,10 @@ import org.junit.jupiter.api.Test;
 @TestWithResources
 class DeliveryReportBatchDtoConverterTest extends BaseTest {
 
-  @GivenJsonResource("/domains/sms/v1/webhooks/DeliveryReportSMS.json")
+  @GivenJsonResource("/domains/sms/v1/DeliveryReportBatchSMSDto.json")
   DeliveryReportDto deliveryReportSMSClientDto;
 
-  @GivenJsonResource("/domains/sms/v1/webhooks/DeliveryReportMMS.json")
+  @GivenJsonResource("/domains/sms/v1/DeliveryReportBatchMMSDto.json")
   DeliveryReportDto deliveryReportMMSClientDto;
 
   public static void compareWithDto(
