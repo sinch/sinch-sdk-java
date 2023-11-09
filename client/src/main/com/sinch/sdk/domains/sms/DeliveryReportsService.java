@@ -3,9 +3,7 @@ package com.sinch.sdk.domains.sms;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatch;
 import com.sinch.sdk.domains.sms.models.DeliveryReportRecipient;
-import com.sinch.sdk.domains.sms.models.DeliveryReportStatus;
-import com.sinch.sdk.domains.sms.models.DeliveryReportType;
-import java.util.Collection;
+import com.sinch.sdk.domains.sms.models.requests.DeliveryReportBatchGetRequestParameters;
 
 /**
  * Delivery reports Service
@@ -30,29 +28,13 @@ public interface DeliveryReportsService {
    *
    * @param batchId The batch ID you received from sending a message param type param status param
    *     code
-   * @param type Filter by type of delivery report.
-   *     <ul>
-   *       <li>A <code>summary</code> will count the number of messages sent per status.
-   *       <li>A <code>full</code> report give that of a summary report but in addition, lists phone
-   *           numbers.
-   *     </ul>
-   *
-   * @param statuses Filter by list of <a
-   *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/section/Delivery-report-statuses">statuses</a>
-   *     to include
-   * @param codes Filter by list of <a
-   *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/section/Delivery-report-error-codes">codes</a>
-   *     to include
+   * @param parameters Filtering parameters
    * @return Delivery report related to batchId according to filters
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/operation/GetDeliveryReportByBatchId">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/operation/GetDeliveryReportByBatchId</a>
    * @since 1.0
    */
-  DeliveryReportBatch get(
-      String batchId,
-      DeliveryReportType type,
-      Collection<DeliveryReportStatus> statuses,
-      Collection<Integer> codes)
+  DeliveryReportBatch get(String batchId, DeliveryReportBatchGetRequestParameters parameters)
       throws ApiException;
 
   /**

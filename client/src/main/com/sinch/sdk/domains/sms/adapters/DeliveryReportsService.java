@@ -8,10 +8,9 @@ import com.sinch.sdk.domains.sms.adapters.api.v1.DeliveryReportsApi;
 import com.sinch.sdk.domains.sms.adapters.converters.DeliveryReportDtoConverter;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatch;
 import com.sinch.sdk.domains.sms.models.DeliveryReportRecipient;
-import com.sinch.sdk.domains.sms.models.DeliveryReportStatus;
 import com.sinch.sdk.domains.sms.models.DeliveryReportType;
+import com.sinch.sdk.domains.sms.models.requests.DeliveryReportBatchGetRequestParameters;
 import com.sinch.sdk.models.Configuration;
-import java.util.Collection;
 import java.util.stream.Collectors;
 
 /**
@@ -42,27 +41,26 @@ public class DeliveryReportsService implements com.sinch.sdk.domains.sms.Deliver
     this.api = new DeliveryReportsApi(httpClient, configuration.getSmsServer(), new HttpMapper());
   }
 
-  public DeliveryReportBatch get(
-      String batchId,
-      DeliveryReportType type,
-      Collection<DeliveryReportStatus> statuses,
-      Collection<Integer> codes)
+  public DeliveryReportBatch get(String batchId, DeliveryReportBatchGetRequestParameters parameters)
       throws ApiException {
 
-    String typeParam = null != type ? type.value() : null;
-    String statusesParam =
-        null != statuses
-            ? statuses.stream().map(EnumDynamic::value).collect(Collectors.joining(","))
-            : null;
-    String codesParam =
-        null != codes
-            ? codes.stream().map(Object::toString).collect(Collectors.joining(","))
-            : null;
+    DeliveryReportBatchGetRequestParameters guardParameters =
+        null != parameters ? parameters : DeliveryReportBatchGetRequestParameters.builder().build();
 
     return DeliveryReportDtoConverter.convert(
         getApi()
             .getDeliveryReportByBatchId(
-                configuration.getProjectId(), batchId, typeParam, statusesParam, codesParam));
+                configuration.getProjectId(),
+                batchId,
+                guardParameters.getType().map(DeliveryReportType::value).orElse(null),
+                guardParameters
+                    .geStatues()
+                    .map(f -> f.stream().map(EnumDynamic::value).collect(Collectors.joining(",")))
+                    .orElse(null),
+                guardParameters
+                    .getCodes()
+                    .map(f -> f.stream().map(Object::toString).collect(Collectors.joining(",")))
+                    .orElse(null)));
   }
 
   public DeliveryReportRecipient getForNumber(String batchId, String recipient)

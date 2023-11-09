@@ -23,10 +23,7 @@ public class Get extends BaseApplication {
 
     LOGGER.info("Get for :" + batchId);
 
-    DeliveryReportBatch response = client.sms().deliveryReports().get(batchId, null, null, null);
-    // DeliveryReportType.FULL,
-    // Arrays.asList(DeliveryReportStatus.ABORTED, DeliveryReportStatus.CANCELLED),
-    // Arrays.asList(401, 402));
+    DeliveryReportBatch response = client.sms().deliveryReports().get(batchId, null);
 
     LOGGER.info("Response :" + response);
   }

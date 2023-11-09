@@ -20,8 +20,9 @@ import com.sinch.sdk.domains.sms.models.DeliveryReportStatus;
 import com.sinch.sdk.domains.sms.models.DeliveryReportType;
 import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.RecipientDeliveryReportDto;
+import com.sinch.sdk.domains.sms.models.requests.DeliveryReportBatchGetRequestParameters;
 import com.sinch.sdk.models.Configuration;
-import java.util.Collections;
+import java.util.Arrays;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -29,6 +30,7 @@ import org.mockito.Mock;
 
 @TestWithResources
 class DeliveryReportsServiceTest extends BaseTest {
+
   @Mock Configuration configuration;
   @Mock DeliveryReportsApi api;
   @InjectMocks DeliveryReportsService service;
@@ -52,16 +54,20 @@ class DeliveryReportsServiceTest extends BaseTest {
             eq(configuration.getProjectId()),
             eq("foo binary batch id"),
             eq("foo type"),
-            eq("foo statuses"),
-            eq("456")))
+            eq("foo status1,Cancelled"),
+            eq("456,789")))
         .thenReturn(deliveryReportBatchSMSDto);
 
     DeliveryReportBatch response =
         service.get(
             "foo binary batch id",
-            DeliveryReportType.from("foo type"),
-            Collections.singletonList(DeliveryReportStatus.from("foo statuses")),
-            Collections.singletonList(456));
+            DeliveryReportBatchGetRequestParameters.builder()
+                .setType(DeliveryReportType.from("foo type"))
+                .setStatuses(
+                    Arrays.asList(
+                        DeliveryReportStatus.from("foo status1"), DeliveryReportStatus.CANCELLED))
+                .setCodes(Arrays.asList(456, 789))
+                .build());
 
     assertInstanceOf(DeliveryReportBatchSMS.class, response);
     Assertions.assertThat(response)
@@ -76,16 +82,20 @@ class DeliveryReportsServiceTest extends BaseTest {
             eq(configuration.getProjectId()),
             eq("foo binary batch id"),
             eq("foo type"),
-            eq("foo statuses"),
-            eq("456")))
+            eq("foo status1,Cancelled"),
+            eq("456,789")))
         .thenReturn(deliveryReportBatchMMSDto);
 
     DeliveryReportBatch response =
         service.get(
             "foo binary batch id",
-            DeliveryReportType.from("foo type"),
-            Collections.singletonList(DeliveryReportStatus.from("foo statuses")),
-            Collections.singletonList(456));
+            DeliveryReportBatchGetRequestParameters.builder()
+                .setType(DeliveryReportType.from("foo type"))
+                .setStatuses(
+                    Arrays.asList(
+                        DeliveryReportStatus.from("foo status1"), DeliveryReportStatus.CANCELLED))
+                .setCodes(Arrays.asList(456, 789))
+                .build());
 
     assertInstanceOf(DeliveryReportBatchMMS.class, response);
     Assertions.assertThat(response)
