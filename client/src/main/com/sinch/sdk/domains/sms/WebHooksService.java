@@ -1,7 +1,7 @@
 package com.sinch.sdk.domains.sms;
 
 import com.sinch.sdk.core.exceptions.ApiMappingException;
-import com.sinch.sdk.domains.sms.models.webhooks.BaseDeliveryReport;
+import com.sinch.sdk.domains.sms.models.BaseDeliveryReport;
 import com.sinch.sdk.domains.sms.models.webhooks.BaseIncomingSMS;
 
 /**
@@ -81,7 +81,7 @@ public interface WebHooksService {
    * <ul>
    *   <li>The <code>delivery_report_sms</code> and <code>delivery_report_mms</code> types are
    *       documented under <b>Delivery report</b>. These are reports containing <a
-   *       href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/SendSMS!path=0/delivery_report&t=request">either
+   *       href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/SendSMS!path=0/delivery_report&amp;t=request">either
    *       a full report or summary report</a>, depending on your selection at the time the batch
    *       was sent.
    *   <li>The <code>recipient_delivery_report_sms</code> and <code>recipient_delivery_report_mms

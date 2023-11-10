@@ -10,14 +10,14 @@ import java.util.stream.Stream;
  *
  * @since 1.0
  */
-public final class Capability extends EnumDynamic<Capability> {
+public final class Capability extends EnumDynamic<String, Capability> {
   /** The SMS product can use the number. */
   public static final Capability SMS = new Capability("SMS");
 
   /** The Voice product can use the number. */
   public static final Capability VOICE = new Capability("VOICE");
 
-  private static final EnumSupportDynamic<Capability> ENUM_SUPPORT =
+  private static final EnumSupportDynamic<String, Capability> ENUM_SUPPORT =
       new EnumSupportDynamic<>(Capability.class, Capability::new, Arrays.asList(SMS, VOICE));
 
   private Capability(String value) {

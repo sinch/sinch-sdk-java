@@ -5,11 +5,11 @@ package com.sinch.sdk.core.utils;
  *
  * @param <E> Enum type
  */
-public abstract class EnumDynamic<E extends EnumDynamic<E>> {
+public abstract class EnumDynamic<T, E extends EnumDynamic<T, E>> {
 
-  private final String value;
+  private final T value;
 
-  protected EnumDynamic(String value) {
+  protected EnumDynamic(T value) {
     this.value = value;
   }
 
@@ -18,12 +18,12 @@ public abstract class EnumDynamic<E extends EnumDynamic<E>> {
    *
    * @return Enum value
    */
-  public String value() {
+  public T value() {
     return value;
   }
 
   public String toString() {
-    return value();
+    return value().toString();
   }
 
   public boolean equals(E o) {

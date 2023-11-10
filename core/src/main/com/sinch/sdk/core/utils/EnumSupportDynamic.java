@@ -13,15 +13,15 @@ import java.util.stream.Stream;
  * to extend it dynamically Typical use case: being able to send and/or receive values not yet
  * defined at SDK version release
  */
-public final class EnumSupportDynamic<E extends EnumDynamic<E>> {
+public final class EnumSupportDynamic<T, E extends EnumDynamic<T, E>> {
 
   private final Class<E> aClass;
-  private final Map<String, E> valueMap;
-  private final Function<String, E> surplusFactory;
+  private final Map<T, E> valueMap;
+  private final Function<T, E> surplusFactory;
 
   private volatile List<E> values;
 
-  public EnumSupportDynamic(Class<E> aClass, Function<String, E> surplusFactory, List<E> values) {
+  public EnumSupportDynamic(Class<E> aClass, Function<T, E> surplusFactory, List<E> values) {
 
     this.aClass = aClass;
     this.values = Collections.unmodifiableList(values);
@@ -39,25 +39,25 @@ public final class EnumSupportDynamic<E extends EnumDynamic<E>> {
     return values.stream();
   }
 
-  public String valueOf(E e) {
+  public T valueOf(E e) {
     return e == null ? null : e.value();
   }
 
-  public List<String> valuesOf(Collection<E> values) {
+  public List<T> valuesOf(Collection<E> values) {
     if (values == null) {
       return null;
     }
     return values.stream().map(this::valueOf).collect(toList());
   }
 
-  public List<E> fromValues(Collection<String> values) {
+  public List<E> fromValues(Collection<T> values) {
     if (values == null) {
       return null;
     }
     return values.stream().map(this::from).collect(toList());
   }
 
-  public E from(String value) {
+  public E from(T value) {
     if (value == null) {
       return null;
     }
@@ -102,7 +102,7 @@ public final class EnumSupportDynamic<E extends EnumDynamic<E>> {
 
     if (aClass.isInstance(o)) {
       E obj = aClass.cast(o);
-      return obj.value();
+      return obj.value().toString();
     }
 
     throw new IllegalArgumentException(

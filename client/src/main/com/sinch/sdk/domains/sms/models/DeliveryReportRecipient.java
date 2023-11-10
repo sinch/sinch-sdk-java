@@ -1,10 +1,6 @@
-package com.sinch.sdk.domains.sms.models.webhooks;
+package com.sinch.sdk.domains.sms.models;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sinch.sdk.domains.sms.models.DeliveryReportStatus;
 import java.time.Instant;
-import java.time.OffsetDateTime;
 import java.util.Optional;
 
 /**
@@ -14,23 +10,14 @@ import java.util.Optional;
  */
 public abstract class DeliveryReportRecipient extends BaseDeliveryReport {
 
-  static final String JSON_PROPERTY_AT = "at";
   private final Instant at;
-  static final String JSON_PROPERTY_CODE = "code";
-  private final Integer code;
-  static final String JSON_PROPERTY_RECIPIENT = "recipient";
+  private final DeliveryReportErrorCode code;
   private final String recipient;
-  static final String JSON_PROPERTY_STATUS = "status";
   private final DeliveryReportStatus status;
-  static final String JSON_PROPERTY_APPLIED_ORIGINATOR = "applied_originator";
   private final String appliedOriginator;
-  static final String JSON_PROPERTY_ENCODING = "encoding";
-  private final String encoding;
-  static final String JSON_PROPERTY_NUMBER_OF_MESSAGE_PARTS = "number_of_message_parts";
+  private final DeliveryReportRecipientEncoding encoding;
   private final Integer numberOfMessageParts;
-  static final String JSON_PROPERTY_OPERATOR = "operator";
   private final String operator;
-  static final String JSON_PROPERTY_OPERATOR_STATUS_AT = "operator_status_at";
   private final Instant operatorStatusAt;
 
   /**
@@ -58,36 +45,35 @@ public abstract class DeliveryReportRecipient extends BaseDeliveryReport {
    * @param operatorStatusAt A timestamp extracted from the Delivery Receipt from the originating
    *     SMSC
    */
-  @JsonCreator
   public DeliveryReportRecipient(
-      @JsonProperty(JSON_PROPERTY_BATCH_ID) String batchId,
-      @JsonProperty(JSON_PROPERTY_CLIENT_REFERENCE) String clientReference,
-      @JsonProperty(JSON_PROPERTY_AT) OffsetDateTime at,
-      @JsonProperty(JSON_PROPERTY_CODE) Integer code,
-      @JsonProperty(JSON_PROPERTY_RECIPIENT) String recipient,
-      @JsonProperty(JSON_PROPERTY_STATUS) String status,
-      @JsonProperty(JSON_PROPERTY_APPLIED_ORIGINATOR) String appliedOriginator,
-      @JsonProperty(JSON_PROPERTY_ENCODING) String encoding,
-      @JsonProperty(JSON_PROPERTY_NUMBER_OF_MESSAGE_PARTS) Integer numberOfMessageParts,
-      @JsonProperty(JSON_PROPERTY_OPERATOR) String operator,
-      @JsonProperty(JSON_PROPERTY_OPERATOR_STATUS_AT) OffsetDateTime operatorStatusAt) {
+      String batchId,
+      String clientReference,
+      Instant at,
+      DeliveryReportErrorCode code,
+      String recipient,
+      DeliveryReportStatus status,
+      String appliedOriginator,
+      DeliveryReportRecipientEncoding encoding,
+      Integer numberOfMessageParts,
+      String operator,
+      Instant operatorStatusAt) {
     super(batchId, clientReference);
-    this.at = null != at ? at.toInstant() : null;
+    this.at = at;
     this.code = code;
     this.recipient = recipient;
-    this.status = DeliveryReportStatus.from(status);
+    this.status = status;
     this.appliedOriginator = appliedOriginator;
     this.encoding = encoding;
     this.numberOfMessageParts = numberOfMessageParts;
     this.operator = operator;
-    this.operatorStatusAt = null != operatorStatusAt ? operatorStatusAt.toInstant() : null;
+    this.operatorStatusAt = operatorStatusAt;
   }
 
   public Instant getAt() {
     return at;
   }
 
-  public Integer getCode() {
+  public DeliveryReportErrorCode getCode() {
     return code;
   }
 
@@ -103,7 +89,7 @@ public abstract class DeliveryReportRecipient extends BaseDeliveryReport {
     return Optional.ofNullable(appliedOriginator);
   }
 
-  public Optional<String> getEncoding() {
+  public Optional<DeliveryReportRecipientEncoding> getEncoding() {
     return Optional.ofNullable(encoding);
   }
 
@@ -147,5 +133,65 @@ public abstract class DeliveryReportRecipient extends BaseDeliveryReport {
         + operatorStatusAt
         + "} "
         + super.toString();
+  }
+
+  public abstract static class Builder<B extends Builder<B>> extends BaseDeliveryReport.Builder<B> {
+
+    protected Instant at;
+    protected DeliveryReportErrorCode code;
+    protected String recipient;
+    protected DeliveryReportStatus status;
+    protected String appliedOriginator;
+    protected DeliveryReportRecipientEncoding encoding;
+    protected Integer numberOfMessageParts;
+    protected String operator;
+    protected Instant operatorStatusAt;
+
+    public Builder<B> setAt(Instant at) {
+      this.at = at;
+      return this;
+    }
+
+    public Builder<B> setCode(DeliveryReportErrorCode code) {
+      this.code = code;
+      return this;
+    }
+
+    public Builder<B> setRecipient(String recipient) {
+      this.recipient = recipient;
+      return this;
+    }
+
+    public Builder<B> setStatus(DeliveryReportStatus status) {
+      this.status = status;
+      return this;
+    }
+
+    public Builder<B> setAppliedOriginator(String appliedOriginator) {
+      this.appliedOriginator = appliedOriginator;
+      return this;
+    }
+
+    public Builder<B> setEncoding(DeliveryReportRecipientEncoding encoding) {
+      this.encoding = encoding;
+      return this;
+    }
+
+    public Builder<B> setNumberOfMessageParts(Integer numberOfMessageParts) {
+      this.numberOfMessageParts = numberOfMessageParts;
+      return this;
+    }
+
+    public Builder<B> setOperator(String operator) {
+      this.operator = operator;
+      return this;
+    }
+
+    public Builder<B> setOperatorStatusAt(Instant operatorStatusAt) {
+      this.operatorStatusAt = operatorStatusAt;
+      return this;
+    }
+
+    public abstract DeliveryReportRecipient build();
   }
 }

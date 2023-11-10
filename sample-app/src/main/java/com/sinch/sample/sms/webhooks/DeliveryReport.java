@@ -1,7 +1,7 @@
 package com.sinch.sample.sms.webhooks;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.sms.models.webhooks.BaseDeliveryReport;
+import com.sinch.sdk.domains.sms.models.BaseDeliveryReport;
 import java.io.IOException;
 import java.util.logging.Logger;
 

@@ -1,6 +1,6 @@
 package com.sinch.sdk.domains.sms.models.requests;
 
-import com.sinch.sdk.domains.sms.models.DeliveryReport;
+import com.sinch.sdk.domains.sms.models.DeliveryReportType;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Optional;
@@ -21,7 +21,7 @@ public class UpdateBaseBatchRequest<T> {
 
   private final Collection<String> toRemove;
 
-  private final DeliveryReport deliveryReport;
+  private final DeliveryReportType deliveryReport;
 
   private final Instant sendAt;
 
@@ -48,7 +48,7 @@ public class UpdateBaseBatchRequest<T> {
       Collection<String> toRemove,
       String from,
       T body,
-      DeliveryReport deliveryReport,
+      DeliveryReportType deliveryReport,
       Instant sendAt,
       Instant expireAt,
       String callbackUrl) {
@@ -82,7 +82,7 @@ public class UpdateBaseBatchRequest<T> {
     return Optional.ofNullable(from);
   }
 
-  public Optional<DeliveryReport> getDeliveryReport() {
+  public Optional<DeliveryReportType> getDeliveryReport() {
     return Optional.ofNullable(deliveryReport);
   }
 
@@ -110,7 +110,7 @@ public class UpdateBaseBatchRequest<T> {
         + toAdd
         + ", toRemove="
         + toRemove
-        + ", deliveryReport="
+        + ", deliveryReportType="
         + deliveryReport
         + ", sendAt="
         + sendAt
@@ -132,7 +132,7 @@ public class UpdateBaseBatchRequest<T> {
 
     public T body;
 
-    public DeliveryReport deliveryReport;
+    public DeliveryReportType deliveryReportType;
 
     public Instant sendAt;
 
@@ -160,8 +160,8 @@ public class UpdateBaseBatchRequest<T> {
       return self();
     }
 
-    public B setDeliveryReport(DeliveryReport deliveryReport) {
-      this.deliveryReport = deliveryReport;
+    public B setDeliveryReport(DeliveryReportType deliveryReportType) {
+      this.deliveryReportType = deliveryReportType;
       return self();
     }
 
@@ -182,7 +182,7 @@ public class UpdateBaseBatchRequest<T> {
 
     public UpdateBaseBatchRequest<T> build() {
       return new UpdateBaseBatchRequest<>(
-          toAdd, toRemove, from, body, deliveryReport, sendAt, expireAt, callbackUrl);
+          toAdd, toRemove, from, body, deliveryReportType, sendAt, expireAt, callbackUrl);
     }
 
     @SuppressWarnings("unchecked")

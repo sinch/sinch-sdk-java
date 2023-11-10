@@ -23,7 +23,7 @@ class BatchMediaTest {
                   "key 2", new Pair<>("value identifier2", "value 2"), "default value for ")));
   final Instant createdAt = Instant.now();
   final Instant modifiedAt = Instant.now();
-  final DeliveryReport deliveryReport = DeliveryReport.FULL;
+  final DeliveryReportType deliveryReport = DeliveryReportType.FULL;
   final Instant sendAt = Instant.now();
   final Instant expireAt = Instant.now();
   final String callbackUrl = "callback value";

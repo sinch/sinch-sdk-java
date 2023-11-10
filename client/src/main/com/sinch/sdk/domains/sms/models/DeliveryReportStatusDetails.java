@@ -1,8 +1,5 @@
-package com.sinch.sdk.domains.sms.models.webhooks;
+package com.sinch.sdk.domains.sms.models;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sinch.sdk.domains.sms.models.DeliveryReportStatus;
 import java.util.Collection;
 
 /**
@@ -12,13 +9,9 @@ import java.util.Collection;
  */
 public class DeliveryReportStatusDetails {
 
-  static final String JSON_PROPERTY_CODE = "code";
   private final Integer code;
-  static final String JSON_PROPERTY_COUNT = "count";
   private final Integer count;
-  static final String JSON_PROPERTY_RECIPIENTS = "recipients";
   private final Collection<String> recipients;
-  static final String JSON_PROPERTY_STATUS = "status";
   private final DeliveryReportStatus status;
 
   /**
@@ -31,12 +24,8 @@ public class DeliveryReportStatusDetails {
    * @param status <code>Required.</code> The simplified status as described in <em>Delivery Report
    *     Statuses</em>
    */
-  @JsonCreator
   public DeliveryReportStatusDetails(
-      @JsonProperty(JSON_PROPERTY_CODE) Integer code,
-      @JsonProperty(JSON_PROPERTY_COUNT) Integer count,
-      @JsonProperty(JSON_PROPERTY_RECIPIENTS) Collection<String> recipients,
-      @JsonProperty(JSON_PROPERTY_STATUS) String status) {
+      Integer code, Integer count, Collection<String> recipients, String status) {
     this.code = code;
     this.count = count;
     this.recipients = recipients;
@@ -71,5 +60,43 @@ public class DeliveryReportStatusDetails {
         + ", status="
         + status
         + '}';
+  }
+
+  public static Builder builder() {
+    return new Builder();
+  }
+
+  public static class Builder {
+
+    private Integer code;
+    private Integer count;
+    private Collection<String> recipients;
+    private DeliveryReportStatus status;
+
+    private Builder() {}
+
+    public Builder setCode(Integer code) {
+      this.code = code;
+      return this;
+    }
+
+    public Builder setCount(Integer count) {
+      this.count = count;
+      return this;
+    }
+
+    public Builder setRecipients(Collection<String> recipients) {
+      this.recipients = recipients;
+      return this;
+    }
+
+    public Builder setStatus(DeliveryReportStatus status) {
+      this.status = status;
+      return this;
+    }
+
+    public DeliveryReportStatusDetails build() {
+      return new DeliveryReportStatusDetails(code, count, recipients, status.value());
+    }
   }
 }

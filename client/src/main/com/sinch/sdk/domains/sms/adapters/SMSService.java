@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.sms.adapters;
 
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.domains.sms.BatchesService;
+import com.sinch.sdk.domains.sms.DeliveryReportsService;
 import com.sinch.sdk.domains.sms.WebHooksService;
 import com.sinch.sdk.models.Configuration;
 
@@ -11,6 +12,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
   private final HttpClient httpClient;
   private BatchesService batches;
   private WebHooksService webHooks;
+  private DeliveryReportsService deliveryReports;
 
   public SMSService(Configuration configuration, HttpClient httpClient) {
     this.configuration = configuration;
@@ -32,5 +34,14 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
       this.webHooks = new com.sinch.sdk.domains.sms.adapters.WebHooksService();
     }
     return this.webHooks;
+  }
+
+  @Override
+  public DeliveryReportsService deliveryReports() {
+    if (null == this.deliveryReports) {
+      this.deliveryReports =
+          new com.sinch.sdk.domains.sms.adapters.DeliveryReportsService(configuration, httpClient);
+    }
+    return this.deliveryReports;
   }
 }

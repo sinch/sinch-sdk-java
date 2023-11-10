@@ -16,7 +16,7 @@ import com.sinch.sdk.domains.sms.models.Batch;
 import com.sinch.sdk.domains.sms.models.BatchBinary;
 import com.sinch.sdk.domains.sms.models.BatchMedia;
 import com.sinch.sdk.domains.sms.models.BatchText;
-import com.sinch.sdk.domains.sms.models.DeliveryReport;
+import com.sinch.sdk.domains.sms.models.DeliveryReportType;
 import com.sinch.sdk.domains.sms.models.DryRun;
 import com.sinch.sdk.domains.sms.models.MediaBody;
 import com.sinch.sdk.domains.sms.models.Parameters;
@@ -56,7 +56,7 @@ public class BatchesServiceTest extends BaseTest {
   static final boolean canceled = false;
   static final Instant createdAt = Instant.parse("2019-08-24T14:15:22Z");
   static final Instant modifiedAt = Instant.parse("2019-08-24T14:17:22Z");
-  static final DeliveryReport deliveryReport = DeliveryReport.NONE;
+  static final DeliveryReportType deliveryReport = DeliveryReportType.NONE;
   static final Instant sendAt = Instant.parse("2019-08-24T14:19:22Z");
   static final Instant expireAt = Instant.parse("2019-08-24T14:21:22Z");
   static final String callbackUrl = "callback url";
@@ -115,7 +115,7 @@ public class BatchesServiceTest extends BaseTest {
                   "Media message from Sinch!"))
           .setCreatedAt(Instant.parse("2019-08-24T14:14:22Z"))
           .setModifiedAt(Instant.parse("2019-08-24T14:15:22Z"))
-          .setDeliveryReport(DeliveryReport.SUMMARY)
+          .setDeliveryReport(DeliveryReportType.SUMMARY)
           .setSendAt(Instant.parse("2019-08-24T14:16:22Z"))
           .setExpireAt(Instant.parse("2019-08-24T14:17:22Z"))
           .setCallbackUrl(callbackUrl)
@@ -173,7 +173,7 @@ public class BatchesServiceTest extends BaseTest {
               new MediaBody(
                   "https://en.wikipedia.org/wiki/Sinch_(company)#/media/File:Sinch_LockUp_RGB.png",
                   "Media message from Sinch!"))
-          .setDeliveryReport(DeliveryReport.SUMMARY)
+          .setDeliveryReport(DeliveryReportType.SUMMARY)
           .setSendAt(Instant.parse("2019-08-24T14:16:22Z"))
           .setExpireAt(Instant.parse("2019-08-24T14:17:22Z"))
           .setCallbackUrl(callbackUrl)
@@ -221,7 +221,7 @@ public class BatchesServiceTest extends BaseTest {
               new MediaBody(
                   "https://en.wikipedia.org/wiki/Sinch_(company)#/media/File:Sinch_LockUp_RGB.png",
                   "Media message from Sinch!"))
-          .setDeliveryReport(DeliveryReport.SUMMARY)
+          .setDeliveryReport(DeliveryReportType.SUMMARY)
           .setSendAt(Instant.parse("2019-08-24T14:16:22Z"))
           .setExpireAt(Instant.parse("2019-08-24T14:17:22Z"))
           .setCallbackUrl(callbackUrl)
@@ -235,7 +235,7 @@ public class BatchesServiceTest extends BaseTest {
           .setToRemove(Arrays.asList("+0123456789", "+9876543210"))
           .setFrom(from)
           .setBody(body)
-          .setDeliveryReport(DeliveryReport.FULL)
+          .setDeliveryReport(DeliveryReportType.FULL)
           .setSendAt(sendAt)
           .setExpireAt(expireAt)
           .setCallbackUrl(callbackUrl)
@@ -393,7 +393,7 @@ public class BatchesServiceTest extends BaseTest {
                 .setBody("the body")
                 .setCreatedAt(Instant.parse("2023-11-03T15:21:21.113Z"))
                 .setModifiedAt(Instant.parse("2023-11-03T15:21:21.568Z"))
-                .setDeliveryReport(DeliveryReport.NONE)
+                .setDeliveryReport(DeliveryReportType.NONE)
                 .setExpireAt(Instant.parse("2023-11-06T15:21:21.973Z"))
                 .setClientReference("a client reference")
                 .setFeedbackEnabled(false)
@@ -412,7 +412,7 @@ public class BatchesServiceTest extends BaseTest {
                 .setBody("the body")
                 .setCreatedAt(Instant.parse("2023-11-03T10:35:03.558Z"))
                 .setModifiedAt(Instant.parse("2023-11-03T10:35:03.666Z"))
-                .setDeliveryReport(DeliveryReport.NONE)
+                .setDeliveryReport(DeliveryReportType.NONE)
                 .setExpireAt(Instant.parse("2023-11-03T10:35:03.558Z"))
                 .setFeedbackEnabled(true)
                 .setFlashMessage(false)
@@ -430,7 +430,7 @@ public class BatchesServiceTest extends BaseTest {
                 .setBody(MediaBody.builder().setUrl("an URL").build())
                 .setCreatedAt(Instant.parse("2023-11-03T10:34:30.056Z"))
                 .setModifiedAt(Instant.parse("2023-11-03T10:34:30.156Z"))
-                .setDeliveryReport(DeliveryReport.SUMMARY)
+                .setDeliveryReport(DeliveryReportType.SUMMARY)
                 .setExpireAt(Instant.parse("2023-11-06T10:34:30.256Z"))
                 .setFeedbackEnabled(false)
                 .build());

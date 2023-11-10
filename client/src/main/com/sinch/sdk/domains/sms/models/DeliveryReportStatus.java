@@ -16,7 +16,7 @@ import java.util.stream.Stream;
  *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/section/Delivery-report-statuses">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/section/Delivery-report-statuses</a>
  * @since 1.0
  */
-public class DeliveryReportStatus extends EnumDynamic<DeliveryReportStatus> {
+public class DeliveryReportStatus extends EnumDynamic<String, DeliveryReportStatus> {
 
   /**
    * Message is queued within REST API system and will be dispatched according to the rate of the
@@ -51,7 +51,7 @@ public class DeliveryReportStatus extends EnumDynamic<DeliveryReportStatus> {
    */
   public static final DeliveryReportStatus UNKNOWN = new DeliveryReportStatus("Unknown");
 
-  private static final EnumSupportDynamic<DeliveryReportStatus> ENUM_SUPPORT =
+  private static final EnumSupportDynamic<String, DeliveryReportStatus> ENUM_SUPPORT =
       new EnumSupportDynamic<>(
           DeliveryReportStatus.class,
           DeliveryReportStatus::new,

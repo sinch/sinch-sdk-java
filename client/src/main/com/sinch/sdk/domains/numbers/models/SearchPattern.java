@@ -9,7 +9,7 @@ import java.util.Arrays;
  *
  * @since 1.0
  */
-public final class SearchPattern extends EnumDynamic<SearchPattern> {
+public final class SearchPattern extends EnumDynamic<String, SearchPattern> {
   /**
    * Numbers that begin with the @see NumberPattern.getPattern entered.
    *
@@ -26,7 +26,7 @@ public final class SearchPattern extends EnumDynamic<SearchPattern> {
   /** The number ends with the number pattern entered. */
   public static final SearchPattern END = new SearchPattern("END");
 
-  private static final EnumSupportDynamic<SearchPattern> ENUM_SUPPORT =
+  private static final EnumSupportDynamic<String, SearchPattern> ENUM_SUPPORT =
       new EnumSupportDynamic<>(
           SearchPattern.class, SearchPattern::new, Arrays.asList(START, CONTAINS, END));
 

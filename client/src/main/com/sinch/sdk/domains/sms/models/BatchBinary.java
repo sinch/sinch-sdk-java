@@ -50,7 +50,7 @@ public class BatchBinary extends Batch<String> {
       String body,
       Instant createdAt,
       Instant modifiedAt,
-      DeliveryReport deliveryReport,
+      DeliveryReportType deliveryReport,
       Instant sendAt,
       Instant expireAt,
       String callbackUrl,
