@@ -9,7 +9,7 @@ import com.sinch.sdk.domains.sms.models.Batch;
 import com.sinch.sdk.domains.sms.models.BatchBinary;
 import com.sinch.sdk.domains.sms.models.BatchMedia;
 import com.sinch.sdk.domains.sms.models.BatchText;
-import com.sinch.sdk.domains.sms.models.DeliveryReport;
+import com.sinch.sdk.domains.sms.models.DeliveryReportType;
 import com.sinch.sdk.domains.sms.models.MediaBody;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiBatchListBatchesInnerDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiBatchListDto;
@@ -68,7 +68,7 @@ public class BatchDtoConverter {
         .setUdh(dto.getUdh())
         .setCreatedAt(null != dto.getCreatedAt() ? dto.getCreatedAt().toInstant() : null)
         .setModifiedAt(null != dto.getModifiedAt() ? dto.getModifiedAt().toInstant() : null)
-        .setDeliveryReport(DeliveryReport.from(dto.getDeliveryReport()))
+        .setDeliveryReport(DeliveryReportType.from(dto.getDeliveryReport()))
         .setSendAt(null != dto.getSendAt() ? dto.getSendAt().toInstant() : null)
         .setExpireAt(null != dto.getExpireAt() ? dto.getExpireAt().toInstant() : null)
         .setCallbackUrl(dto.getCallbackUrl())
@@ -97,7 +97,7 @@ public class BatchDtoConverter {
                 : null)
         .setCreatedAt(null != dto.getCreatedAt() ? dto.getCreatedAt().toInstant() : null)
         .setModifiedAt(null != dto.getModifiedAt() ? dto.getModifiedAt().toInstant() : null)
-        .setDeliveryReport(DeliveryReport.from(dto.getDeliveryReport()))
+        .setDeliveryReport(DeliveryReportType.from(dto.getDeliveryReport()))
         .setSendAt(null != dto.getSendAt() ? dto.getSendAt().toInstant() : null)
         .setExpireAt(null != dto.getExpireAt() ? dto.getExpireAt().toInstant() : null)
         .setCallbackUrl(dto.getCallbackUrl())
@@ -116,7 +116,7 @@ public class BatchDtoConverter {
         .setBody(dto.getBody())
         .setCreatedAt(null != dto.getCreatedAt() ? dto.getCreatedAt().toInstant() : null)
         .setModifiedAt(null != dto.getModifiedAt() ? dto.getModifiedAt().toInstant() : null)
-        .setDeliveryReport(DeliveryReport.from(dto.getDeliveryReport()))
+        .setDeliveryReport(DeliveryReportType.from(dto.getDeliveryReport()))
         .setSendAt(null != dto.getSendAt() ? dto.getSendAt().toInstant() : null)
         .setExpireAt(null != dto.getExpireAt() ? dto.getExpireAt().toInstant() : null)
         .setCallbackUrl(dto.getCallbackUrl())

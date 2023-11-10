@@ -8,16 +8,17 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.exceptions.ApiMappingException;
-import com.sinch.sdk.domains.sms.models.dto.v1.webhooks.DeliveryReportDtoTest;
-import com.sinch.sdk.domains.sms.models.dto.v1.webhooks.DeliveryReportRecipientDtoTest;
+import com.sinch.sdk.domains.sms.adapters.converters.DeliveryReportDtoConverter;
+import com.sinch.sdk.domains.sms.models.BaseDeliveryReport;
+import com.sinch.sdk.domains.sms.models.DeliveryReportBatchMMS;
+import com.sinch.sdk.domains.sms.models.DeliveryReportBatchSMS;
+import com.sinch.sdk.domains.sms.models.DeliveryReportRecipientMMS;
+import com.sinch.sdk.domains.sms.models.DeliveryReportRecipientSMS;
+import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportBatchDtoTest;
+import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportRecipientDtoTest;
 import com.sinch.sdk.domains.sms.models.dto.v1.webhooks.IncomingSMSBinaryDtoTest;
 import com.sinch.sdk.domains.sms.models.dto.v1.webhooks.IncomingSMSTextDtoTest;
-import com.sinch.sdk.domains.sms.models.webhooks.BaseDeliveryReport;
 import com.sinch.sdk.domains.sms.models.webhooks.BaseIncomingSMS;
-import com.sinch.sdk.domains.sms.models.webhooks.DeliveryReportMMS;
-import com.sinch.sdk.domains.sms.models.webhooks.DeliveryReportRecipientMMS;
-import com.sinch.sdk.domains.sms.models.webhooks.DeliveryReportRecipientSMS;
-import com.sinch.sdk.domains.sms.models.webhooks.DeliveryReportSMS;
 import com.sinch.sdk.domains.sms.models.webhooks.IncomingSMSBinary;
 import com.sinch.sdk.domains.sms.models.webhooks.IncomingSMSText;
 import org.assertj.core.api.Assertions;
@@ -25,7 +26,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 
 @TestWithResources
-public class WebHKooksServiceTest extends BaseTest {
+public class WebHooksServiceTest extends BaseTest {
 
   @GivenTextResource("/domains/sms/v1/webhooks/IncomingSMSBinary.json")
   String incomingSMSBinaryJsonString;
@@ -33,17 +34,17 @@ public class WebHKooksServiceTest extends BaseTest {
   @GivenTextResource("/domains/sms/v1/webhooks/IncomingSMSText.json")
   String incomingSMSTextJsonString;
 
-  @GivenTextResource("/domains/sms/v1/webhooks/DeliveryReportRecipientSMS.json")
+  @GivenTextResource("/domains/sms/v1/DeliveryReportRecipientSMSDto.json")
   String deliveryReportRecipientSMSJsonString;
 
-  @GivenTextResource("/domains/sms/v1/webhooks/DeliveryReportRecipientMMS.json")
+  @GivenTextResource("/domains/sms/v1/DeliveryReportRecipientMMSDto.json")
   String deliveryReportRecipientMMSJsonString;
 
-  @GivenTextResource("/domains/sms/v1/webhooks/DeliveryReportSMS.json")
-  String deliveryReportSMSJsonString;
+  @GivenTextResource("/domains/sms/v1/DeliveryReportBatchSMSDto.json")
+  String deliveryReportBatchSMSJsonString;
 
-  @GivenTextResource("/domains/sms/v1/webhooks/DeliveryReportMMS.json")
-  String deliveryReportMMSJsonString;
+  @GivenTextResource("/domains/sms/v1/DeliveryReportBatchMMSDto.json")
+  String deliveryReportBatchMMSJsonString;
 
   @InjectMocks WebHooksService service;
 
@@ -86,7 +87,9 @@ public class WebHKooksServiceTest extends BaseTest {
     Assertions.assertThat(response).isInstanceOf(DeliveryReportRecipientSMS.class);
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(DeliveryReportRecipientDtoTest.deliveryReportRecipientSMS);
+        .isEqualTo(
+            DeliveryReportDtoConverter.convert(
+                DeliveryReportRecipientDtoTest.deliveryReportRecipientSMS));
   }
 
   @Test
@@ -97,29 +100,33 @@ public class WebHKooksServiceTest extends BaseTest {
     Assertions.assertThat(response).isInstanceOf(DeliveryReportRecipientMMS.class);
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(DeliveryReportRecipientDtoTest.deliveryReportRecipientMMS);
+        .isEqualTo(
+            DeliveryReportDtoConverter.convert(
+                DeliveryReportRecipientDtoTest.deliveryReportRecipientMMS));
   }
 
   @Test
-  void deliveryReportDeliveryReportSms() throws ApiException {
+  void deliveryReportBatchDeliveryReportSms() throws ApiException {
 
-    BaseDeliveryReport response = service.deliveryReport(deliveryReportSMSJsonString);
+    BaseDeliveryReport response = service.deliveryReport(deliveryReportBatchSMSJsonString);
 
-    Assertions.assertThat(response).isInstanceOf(DeliveryReportSMS.class);
+    Assertions.assertThat(response).isInstanceOf(DeliveryReportBatchSMS.class);
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(DeliveryReportDtoTest.deliveryReportSMS);
+        .isEqualTo(
+            DeliveryReportDtoConverter.convert(DeliveryReportBatchDtoTest.deliveryReportBatchSMS));
   }
 
   @Test
-  void deliveryReportDeliveryReportMms() throws ApiException {
+  void deliveryReportBatchDeliveryReportMms() throws ApiException {
 
-    BaseDeliveryReport response = service.deliveryReport(deliveryReportMMSJsonString);
+    BaseDeliveryReport response = service.deliveryReport(deliveryReportBatchMMSJsonString);
 
-    Assertions.assertThat(response).isInstanceOf(DeliveryReportMMS.class);
+    Assertions.assertThat(response).isInstanceOf(DeliveryReportBatchMMS.class);
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(DeliveryReportDtoTest.deliveryReportMMS);
+        .isEqualTo(
+            DeliveryReportDtoConverter.convert(DeliveryReportBatchDtoTest.deliveryReportBatchMMS));
   }
 
   @Test

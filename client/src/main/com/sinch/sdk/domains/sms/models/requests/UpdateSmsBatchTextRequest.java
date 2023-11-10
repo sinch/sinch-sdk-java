@@ -1,6 +1,6 @@
 package com.sinch.sdk.domains.sms.models.requests;
 
-import com.sinch.sdk.domains.sms.models.DeliveryReport;
+import com.sinch.sdk.domains.sms.models.DeliveryReportType;
 import com.sinch.sdk.domains.sms.models.Parameters;
 import java.time.Instant;
 import java.util.Collection;
@@ -29,7 +29,7 @@ public class UpdateSmsBatchTextRequest extends UpdateBaseBatchRequest<String> {
       Collection<String> toRemove,
       String from,
       String body,
-      DeliveryReport deliveryReport,
+      DeliveryReportType deliveryReport,
       Instant sendAt,
       Instant expireAt,
       String callbackUrl,
@@ -63,7 +63,15 @@ public class UpdateSmsBatchTextRequest extends UpdateBaseBatchRequest<String> {
 
     public UpdateSmsBatchTextRequest build() {
       return new UpdateSmsBatchTextRequest(
-          toAdd, toRemove, from, body, deliveryReport, sendAt, expireAt, callbackUrl, parameters);
+          toAdd,
+          toRemove,
+          from,
+          body,
+          deliveryReportType,
+          sendAt,
+          expireAt,
+          callbackUrl,
+          parameters);
     }
 
     @Override

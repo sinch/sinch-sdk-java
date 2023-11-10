@@ -25,7 +25,7 @@ public class Batch<T> {
 
   private final Instant modifiedAt;
 
-  private final DeliveryReport deliveryReport;
+  private final DeliveryReportType deliveryReport;
 
   private final Instant sendAt;
 
@@ -65,7 +65,7 @@ public class Batch<T> {
       T body,
       Instant createdAt,
       Instant modifiedAt,
-      DeliveryReport deliveryReport,
+      DeliveryReportType deliveryReport,
       Instant sendAt,
       Instant expireAt,
       String callbackUrl,
@@ -118,7 +118,7 @@ public class Batch<T> {
     return modifiedAt;
   }
 
-  public DeliveryReport getDeliveryReport() {
+  public DeliveryReportType getDeliveryReport() {
     return deliveryReport;
   }
 
@@ -161,7 +161,7 @@ public class Batch<T> {
         + createdAt
         + ", modifiedAt="
         + modifiedAt
-        + ", deliveryReport="
+        + ", deliveryReportType="
         + deliveryReport
         + ", sendAt="
         + sendAt
@@ -194,7 +194,7 @@ public class Batch<T> {
 
     Instant modifiedAt;
 
-    DeliveryReport deliveryReport;
+    DeliveryReportType deliveryReport;
 
     Instant sendAt;
 
@@ -241,7 +241,7 @@ public class Batch<T> {
       return self();
     }
 
-    public B setDeliveryReport(DeliveryReport deliveryReport) {
+    public B setDeliveryReport(DeliveryReportType deliveryReport) {
       this.deliveryReport = deliveryReport;
       return self();
     }

@@ -1,8 +1,6 @@
-package com.sinch.sdk.domains.sms.models.webhooks;
+package com.sinch.sdk.domains.sms.models;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import java.time.OffsetDateTime;
+import java.time.Instant;
 
 /**
  * SMS Delivery Report Recipient for SMS
@@ -36,19 +34,18 @@ public class DeliveryReportRecipientSMS extends DeliveryReportRecipient {
    * @param operatorStatusAt A timestamp extracted from the Delivery Receipt from the originating
    *     SMSC
    */
-  @JsonCreator
   public DeliveryReportRecipientSMS(
-      @JsonProperty(JSON_PROPERTY_BATCH_ID) String batchId,
-      @JsonProperty(JSON_PROPERTY_CLIENT_REFERENCE) String clientReference,
-      @JsonProperty(JSON_PROPERTY_AT) OffsetDateTime at,
-      @JsonProperty(JSON_PROPERTY_CODE) Integer code,
-      @JsonProperty(JSON_PROPERTY_RECIPIENT) String recipient,
-      @JsonProperty(JSON_PROPERTY_STATUS) String status,
-      @JsonProperty(JSON_PROPERTY_APPLIED_ORIGINATOR) String appliedOriginator,
-      @JsonProperty(JSON_PROPERTY_ENCODING) String encoding,
-      @JsonProperty(JSON_PROPERTY_NUMBER_OF_MESSAGE_PARTS) Integer numberOfMessageParts,
-      @JsonProperty(JSON_PROPERTY_OPERATOR) String operator,
-      @JsonProperty(JSON_PROPERTY_OPERATOR_STATUS_AT) OffsetDateTime operatorStatusAt) {
+      String batchId,
+      String clientReference,
+      Instant at,
+      DeliveryReportErrorCode code,
+      String recipient,
+      DeliveryReportStatus status,
+      String appliedOriginator,
+      DeliveryReportRecipientEncoding encoding,
+      Integer numberOfMessageParts,
+      String operator,
+      Instant operatorStatusAt) {
     super(
         batchId,
         clientReference,
@@ -66,5 +63,31 @@ public class DeliveryReportRecipientSMS extends DeliveryReportRecipient {
   @Override
   public String toString() {
     return "DeliveryReportRecipientSMS{} " + super.toString();
+  }
+
+  public static Builder builder() {
+    return new Builder();
+  }
+
+  public static class Builder extends DeliveryReportRecipient.Builder<Builder> {
+
+    protected Builder() {
+      super();
+    }
+
+    public DeliveryReportRecipientSMS build() {
+      return new DeliveryReportRecipientSMS(
+          batchId,
+          clientReference,
+          at,
+          code,
+          recipient,
+          status,
+          appliedOriginator,
+          encoding,
+          numberOfMessageParts,
+          operator,
+          operatorStatusAt);
+    }
   }
 }

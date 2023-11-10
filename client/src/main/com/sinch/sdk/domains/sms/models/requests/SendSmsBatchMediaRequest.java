@@ -1,7 +1,7 @@
 package com.sinch.sdk.domains.sms.models.requests;
 
 import com.sinch.sdk.domains.sms.models.BaseBatch;
-import com.sinch.sdk.domains.sms.models.DeliveryReport;
+import com.sinch.sdk.domains.sms.models.DeliveryReportType;
 import com.sinch.sdk.domains.sms.models.MediaBody;
 import com.sinch.sdk.domains.sms.models.Parameters;
 import java.time.Instant;
@@ -38,7 +38,7 @@ public class SendSmsBatchMediaRequest extends BaseBatch<MediaBody> {
       Collection<String> to,
       String from,
       MediaBody body,
-      DeliveryReport deliveryReport,
+      DeliveryReportType deliveryReport,
       Instant sendAt,
       Instant expireAt,
       String callbackUrl,
