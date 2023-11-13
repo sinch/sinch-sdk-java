@@ -9,10 +9,12 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.sms.adapters.api.v1.InboundsApi;
+import com.sinch.sdk.domains.sms.adapters.converters.InboundsDtoConverter;
 import com.sinch.sdk.domains.sms.models.Inbound;
 import com.sinch.sdk.domains.sms.models.InboundBinary;
 import com.sinch.sdk.domains.sms.models.InboundText;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiInboundListDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.InboundDto;
 import com.sinch.sdk.domains.sms.models.responses.InboundsListResponse;
 import com.sinch.sdk.models.Configuration;
 import java.time.Instant;
@@ -29,11 +31,45 @@ class InboundsServiceTest extends BaseTest {
   @Mock InboundsApi api;
   @InjectMocks InboundsService service;
 
+  @GivenJsonResource("/domains/sms/v1/MOBinaryDto.json")
+  InboundDto binary;
+
+  @GivenJsonResource("/domains/sms/v1/MOTextDto.json")
+  InboundDto text;
+
   @GivenJsonResource("/domains/sms/v1/InboundsListResponseDtoPage0.json")
   ApiInboundListDto inboundsLisResponseDtoPage0;
 
   @GivenJsonResource("/domains/sms/v1/InboundsListResponseDtoPage1.json")
   ApiInboundListDto inboundsLisResponseDtoPage1;
+
+  @Test
+  void getBinary() throws ApiException {
+
+    when(api.retrieveInboundMessage(eq(configuration.getProjectId()), eq("foo inbound ID")))
+        .thenReturn(binary);
+
+    Inbound<?> response = service.get("foo inbound ID");
+
+    assertInstanceOf(InboundBinary.class, response);
+    Assertions.assertThat(response)
+        .usingRecursiveComparison()
+        .isEqualTo(InboundsDtoConverter.convert(binary));
+  }
+
+  @Test
+  void getText() throws ApiException {
+
+    when(api.retrieveInboundMessage(eq(configuration.getProjectId()), eq("foo inbound ID")))
+        .thenReturn(text);
+
+    Inbound<?> response = service.get("foo inbound ID");
+
+    assertInstanceOf(InboundText.class, response);
+    Assertions.assertThat(response)
+        .usingRecursiveComparison()
+        .isEqualTo(InboundsDtoConverter.convert(text));
+  }
 
   @Test
   void list() throws ApiException {

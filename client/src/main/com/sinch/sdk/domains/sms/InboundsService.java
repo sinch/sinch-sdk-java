@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.sms;
 
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.domains.sms.models.Inbound;
 import com.sinch.sdk.domains.sms.models.requests.InboundsListRequestParameters;
 import com.sinch.sdk.domains.sms.models.responses.InboundsListResponse;
 
@@ -18,7 +19,9 @@ import com.sinch.sdk.domains.sms.models.responses.InboundsListResponse;
 public interface InboundsService {
 
   /**
-   * With the list operation, you can list all inbound messages that you have received. This
+   * List incoming messages
+   *
+   * <p>With the list operation, you can list all inbound messages that you have received. This
    * operation supports pagination. Inbounds are returned in reverse chronological order.
    *
    * @param parameters Filtering parameters
@@ -28,4 +31,17 @@ public interface InboundsService {
    * @since 1.0
    */
   InboundsListResponse list(InboundsListRequestParameters parameters) throws ApiException;
+
+  /**
+   * Retrieve inbound message
+   *
+   * <p>This operation retrieves a specific inbound message with the provided inbound ID
+   *
+   * @param inboundId The inbound ID found when listing inbound messages
+   * @return Inbound messages-
+   * @see <a
+   *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Inbounds/#tag/Inbounds/operation/RetrieveInboundMessage">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Inbounds/#tag/Inbounds/operation/RetrieveInboundMessage</a>
+   * @since 1.0
+   */
+  Inbound<?> get(String inboundId) throws ApiException;
 }
