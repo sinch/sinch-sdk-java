@@ -1,15 +1,13 @@
-package com.sinch.sdk.domains.sms.models.webhooks;
+package com.sinch.sdk.domains.sms.models;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import java.time.OffsetDateTime;
+import java.time.Instant;
 
 /**
  * Incoming SMS Text
  *
  * @since 1.0
  */
-public class IncomingSMSText extends BaseIncomingSMS<String> {
+public class InboundText extends Inbound<String> {
 
   /**
    * Text MO class
@@ -25,24 +23,43 @@ public class IncomingSMSText extends BaseIncomingSMS<String> {
    *     this feature requires additional setup on your account. Contact your account manager to
    *     enable this feature.
    * @param operatorId The MCC/MNC of the sender's operator if known.
-   * @param sendAt When the message left the originating device. Only available if provided by
+   * @param sentAt When the message left the originating device. Only available if provided by
    *     operator.
    */
-  @JsonCreator
-  public IncomingSMSText(
-      @JsonProperty(JSON_PROPERTY_BODY) String body,
-      @JsonProperty(JSON_PROPERTY_FROM) String from,
-      @JsonProperty(JSON_PROPERTY_ID) String id,
-      @JsonProperty(JSON_PROPERTY_RECEIVED_AT) OffsetDateTime receivedAt,
-      @JsonProperty(JSON_PROPERTY_TO) String to,
-      @JsonProperty(JSON_PROPERTY_CLIENT_REFERENCE) String clientReference,
-      @JsonProperty(JSON_PROPERTY_OPERATOR_ID) String operatorId,
-      @JsonProperty(JSON_PROPERTY_SENT_AT) OffsetDateTime sendAt) {
-    super(body, from, id, receivedAt, to, clientReference, operatorId, sendAt);
+  public InboundText(
+      String body,
+      String from,
+      String id,
+      Instant receivedAt,
+      String to,
+      String clientReference,
+      String operatorId,
+      Instant sentAt) {
+    super(body, from, id, receivedAt, to, clientReference, operatorId, sentAt);
   }
 
   @Override
   public String toString() {
-    return "IncomingSMSText{} " + super.toString();
+    return "InboundText{} " + super.toString();
+  }
+
+  public static Builder builder() {
+    return new Builder();
+  }
+
+  public static class Builder extends Inbound.Builder<String, Builder> {
+
+    protected Builder() {
+      super();
+    }
+
+    public InboundText build() {
+      return new InboundText(body, from, id, receivedAt, to, clientReference, operatorId, sentAt);
+    }
+
+    @Override
+    protected InboundText.Builder self() {
+      return this;
+    }
   }
 }

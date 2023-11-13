@@ -1,7 +1,5 @@
 package com.sinch.sdk.domains.sms.models.requests;
 
-import com.sinch.sdk.domains.sms.models.DeliveryReportErrorCode;
-import com.sinch.sdk.domains.sms.models.DeliveryReportStatus;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Optional;
@@ -13,40 +11,38 @@ import java.util.Optional;
  *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/operation/getDeliveryReports">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/operation/getDeliveryReports</a>
  * @since 1.0
  */
-public class DeliveryReportListRequestParameters {
+public class InboundsListRequestParameters {
 
   private final Instant startDate;
   private final Instant endDate;
   private final String clientReference;
   private final Integer page;
   private final Integer pageSize;
-  private final Collection<DeliveryReportStatus> statuses;
-  private final Collection<DeliveryReportErrorCode> codes;
+  private final Collection<String> to;
 
   /**
-   * @param startDate Only list messages received at or after this date/time. Default: 24h ago
-   * @param endDate Only list messages received before this date/time.
-   * @param clientReference Client reference to include
+   * @param startDate Only list messages received at or after this date/time
+   * @param endDate Only list messages received before this date/time
+   * @param clientReference Using a client reference in inbound messages requires additional setup
+   *     on your account. Contact your account manager to enable this feature. Only list inbound
+   *     messages that are in response to messages with a previously provided client reference.
    * @param page The page number starting from 0.
    * @param pageSize Determines the size of a page.
-   * @param statuses List of delivery report statuses to include
-   * @param codes List of delivery receipt error codes to include
+   * @param to Only list messages sent to these destinations
    */
-  public DeliveryReportListRequestParameters(
+  public InboundsListRequestParameters(
       Instant startDate,
       Instant endDate,
       String clientReference,
       Integer page,
       Integer pageSize,
-      Collection<DeliveryReportStatus> statuses,
-      Collection<DeliveryReportErrorCode> codes) {
+      Collection<String> to) {
     this.startDate = startDate;
     this.endDate = endDate;
     this.clientReference = clientReference;
     this.page = page;
     this.pageSize = pageSize;
-    this.statuses = statuses;
-    this.codes = codes;
+    this.to = to;
   }
 
   public Optional<Instant> getStartDate() {
@@ -69,19 +65,15 @@ public class DeliveryReportListRequestParameters {
     return Optional.ofNullable(pageSize);
   }
 
-  public Optional<Collection<DeliveryReportStatus>> getStatuses() {
-    return Optional.ofNullable(statuses);
-  }
-
-  public Optional<Collection<DeliveryReportErrorCode>> getCodes() {
-    return Optional.ofNullable(codes);
+  public Optional<Collection<String>> getTo() {
+    return Optional.ofNullable(to);
   }
 
   public static Builder builder() {
     return new Builder();
   }
 
-  public static Builder builder(DeliveryReportListRequestParameters parameters) {
+  public static Builder builder(InboundsListRequestParameters parameters) {
     return new Builder(parameters);
   }
 
@@ -92,19 +84,17 @@ public class DeliveryReportListRequestParameters {
     String clientReference;
     Integer page;
     Integer pageSize;
-    Collection<DeliveryReportStatus> statuses;
-    Collection<DeliveryReportErrorCode> codes;
+    Collection<String> to;
 
     private Builder() {}
 
-    private Builder(DeliveryReportListRequestParameters parameters) {
+    private Builder(InboundsListRequestParameters parameters) {
       this.startDate = parameters.startDate;
       this.endDate = parameters.endDate;
       this.clientReference = parameters.clientReference;
       this.page = parameters.page;
       this.pageSize = parameters.pageSize;
-      this.statuses = parameters.statuses;
-      this.codes = parameters.codes;
+      this.to = parameters.to;
     }
 
     public Builder setStartDate(Instant startDate) {
@@ -132,19 +122,14 @@ public class DeliveryReportListRequestParameters {
       return this;
     }
 
-    public Builder setStatuses(Collection<DeliveryReportStatus> statuses) {
-      this.statuses = statuses;
+    public Builder setTo(Collection<String> to) {
+      this.to = to;
       return this;
     }
 
-    public Builder setCodes(Collection<DeliveryReportErrorCode> codes) {
-      this.codes = codes;
-      return this;
-    }
-
-    public DeliveryReportListRequestParameters build() {
-      return new DeliveryReportListRequestParameters(
-          startDate, endDate, clientReference, page, pageSize, statuses, codes);
+    public InboundsListRequestParameters build() {
+      return new InboundsListRequestParameters(
+          startDate, endDate, clientReference, page, pageSize, to);
     }
   }
 }

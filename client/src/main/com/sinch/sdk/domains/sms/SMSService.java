@@ -32,4 +32,12 @@ public interface SMSService {
    * @since 1.0
    */
   DeliveryReportsService deliveryReports();
+
+  /**
+   * Inbounds Service instance
+   *
+   * @return service instance for project
+   * @since 1.0
+   */
+  InboundsService inbounds();
 }

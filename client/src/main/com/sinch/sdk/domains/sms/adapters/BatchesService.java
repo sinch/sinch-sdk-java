@@ -56,6 +56,10 @@ public class BatchesService implements com.sinch.sdk.domains.sms.BatchesService 
                 BatchDtoConverter.convert(batch)));
   }
 
+  public BatchesListResponse list() throws ApiException {
+    return this.list(null);
+  }
+
   public BatchesListResponse list(BatchesListRequestParameters parameters) throws ApiException {
 
     BatchesListRequestParameters guardParameters =

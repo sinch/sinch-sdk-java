@@ -2,27 +2,34 @@ package com.sinch.sdk.domains.sms.adapters;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.exceptions.ApiMappingException;
-import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.core.utils.databind.Mapper;
 import com.sinch.sdk.domains.sms.adapters.converters.DeliveryReportDtoConverter;
+import com.sinch.sdk.domains.sms.adapters.converters.InboundsDtoConverter;
 import com.sinch.sdk.domains.sms.models.BaseDeliveryReport;
+import com.sinch.sdk.domains.sms.models.Inbound;
 import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportDto.TypeEnum;
+import com.sinch.sdk.domains.sms.models.dto.v1.MOBinaryDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.MOTextDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.RecipientDeliveryReportDto;
-import com.sinch.sdk.domains.sms.models.webhooks.BaseIncomingSMS;
 import java.util.Objects;
 
 public class WebHooksService implements com.sinch.sdk.domains.sms.WebHooksService {
 
   @Override
-  public BaseIncomingSMS<?> incomingSMS(String jsonPayload) throws ApiMappingException {
+  public Inbound<?> incomingSMS(String jsonPayload) throws ApiMappingException {
     try {
-      BaseIncomingSMS<?> generic =
-          Mapper.getInstance().readValue(jsonPayload, BaseIncomingSMS.class);
-      if (null == generic && !StringUtil.isEmpty(jsonPayload)) {
-        throw new ApiMappingException(jsonPayload, null);
+      MOBinaryDto binary = Mapper.getInstance().readValue(jsonPayload, MOBinaryDto.class);
+      if (null != binary
+          && (Objects.equals(binary.getType(), MOBinaryDto.TypeEnum.MO_BINARY.getValue()))) {
+        return InboundsDtoConverter.convert(binary);
       }
-      return generic;
+      MOTextDto text = Mapper.getInstance().readValue(jsonPayload, MOTextDto.class);
+      if (null != text && (Objects.equals(text.getType(), MOTextDto.TypeEnum.MO_TEXT.getValue()))) {
+        return InboundsDtoConverter.convert(text);
+      }
+      throw new ApiMappingException(jsonPayload, null);
+
     } catch (JsonProcessingException e) {
       throw new ApiMappingException(jsonPayload, e);
     }

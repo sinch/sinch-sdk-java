@@ -9,18 +9,19 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.exceptions.ApiMappingException;
 import com.sinch.sdk.domains.sms.adapters.converters.DeliveryReportDtoConverter;
+import com.sinch.sdk.domains.sms.adapters.converters.InboundsDtoConverter;
 import com.sinch.sdk.domains.sms.models.BaseDeliveryReport;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatchMMS;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatchSMS;
 import com.sinch.sdk.domains.sms.models.DeliveryReportRecipientMMS;
 import com.sinch.sdk.domains.sms.models.DeliveryReportRecipientSMS;
+import com.sinch.sdk.domains.sms.models.Inbound;
+import com.sinch.sdk.domains.sms.models.InboundBinary;
+import com.sinch.sdk.domains.sms.models.InboundText;
 import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportBatchDtoTest;
 import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportRecipientDtoTest;
-import com.sinch.sdk.domains.sms.models.dto.v1.webhooks.IncomingSMSBinaryDtoTest;
-import com.sinch.sdk.domains.sms.models.dto.v1.webhooks.IncomingSMSTextDtoTest;
-import com.sinch.sdk.domains.sms.models.webhooks.BaseIncomingSMS;
-import com.sinch.sdk.domains.sms.models.webhooks.IncomingSMSBinary;
-import com.sinch.sdk.domains.sms.models.webhooks.IncomingSMSText;
+import com.sinch.sdk.domains.sms.models.dto.v1.MOBinaryDtoTest;
+import com.sinch.sdk.domains.sms.models.dto.v1.MOTextDtoTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -28,10 +29,10 @@ import org.mockito.InjectMocks;
 @TestWithResources
 public class WebHooksServiceTest extends BaseTest {
 
-  @GivenTextResource("/domains/sms/v1/webhooks/IncomingSMSBinary.json")
+  @GivenTextResource("/domains/sms/v1/MOBinaryDTO.json")
   String incomingSMSBinaryJsonString;
 
-  @GivenTextResource("/domains/sms/v1/webhooks/IncomingSMSText.json")
+  @GivenTextResource("/domains/sms/v1/MOTextDTO.json")
   String incomingSMSTextJsonString;
 
   @GivenTextResource("/domains/sms/v1/DeliveryReportRecipientSMSDto.json")
@@ -51,23 +52,23 @@ public class WebHooksServiceTest extends BaseTest {
   @Test
   void incomingSMSBinary() throws ApiException {
 
-    BaseIncomingSMS<?> response = service.incomingSMS(incomingSMSBinaryJsonString);
+    Inbound<?> response = service.incomingSMS(incomingSMSBinaryJsonString);
 
-    Assertions.assertThat(response).isInstanceOf(IncomingSMSBinary.class);
+    Assertions.assertThat(response).isInstanceOf(InboundBinary.class);
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(IncomingSMSBinaryDtoTest.incomingSMSBinary);
+        .isEqualTo(InboundsDtoConverter.convert(MOBinaryDtoTest.dto));
   }
 
   @Test
   void incomingSMSText() throws ApiException {
 
-    BaseIncomingSMS<?> response = service.incomingSMS(incomingSMSTextJsonString);
+    Inbound<?> response = service.incomingSMS(incomingSMSTextJsonString);
 
-    Assertions.assertThat(response).isInstanceOf(IncomingSMSText.class);
+    Assertions.assertThat(response).isInstanceOf(InboundText.class);
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(IncomingSMSTextDtoTest.incomingSMSText);
+        .isEqualTo(InboundsDtoConverter.convert(MOTextDtoTest.dto));
   }
 
   @Test
