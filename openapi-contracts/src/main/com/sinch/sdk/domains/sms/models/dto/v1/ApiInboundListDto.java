@@ -35,7 +35,7 @@ public class ApiInboundListDto {
   private Integer page;
 
   public static final String JSON_PROPERTY_INBOUNDS = "inbounds";
-  private List<ApiInboundListInboundsInnerDto> inbounds;
+  private List<InboundDto> inbounds;
 
   public static final String JSON_PROPERTY_PAGE_SIZE = "page_size";
   private Integer pageSize;
@@ -86,12 +86,12 @@ public class ApiInboundListDto {
     this.page = page;
   }
 
-  public ApiInboundListDto inbounds(List<ApiInboundListInboundsInnerDto> inbounds) {
+  public ApiInboundListDto inbounds(List<InboundDto> inbounds) {
     this.inbounds = inbounds;
     return this;
   }
 
-  public ApiInboundListDto addInboundsItem(ApiInboundListInboundsInnerDto inboundsItem) {
+  public ApiInboundListDto addInboundsItem(InboundDto inboundsItem) {
     if (this.inbounds == null) {
       this.inbounds = new ArrayList<>();
     }
@@ -106,13 +106,13 @@ public class ApiInboundListDto {
    */
   @JsonProperty(JSON_PROPERTY_INBOUNDS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public List<ApiInboundListInboundsInnerDto> getInbounds() {
+  public List<InboundDto> getInbounds() {
     return inbounds;
   }
 
   @JsonProperty(JSON_PROPERTY_INBOUNDS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setInbounds(List<ApiInboundListInboundsInnerDto> inbounds) {
+  public void setInbounds(List<InboundDto> inbounds) {
     this.inbounds = inbounds;
   }
 

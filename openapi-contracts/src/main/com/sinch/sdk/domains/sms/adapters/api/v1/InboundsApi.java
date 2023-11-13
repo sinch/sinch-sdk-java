@@ -25,7 +25,7 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameterUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiInboundListDto;
-import com.sinch.sdk.domains.sms.models.dto.v1.RetrieveInboundMessage200ResponseDto;
+import com.sinch.sdk.domains.sms.models.dto.v1.InboundDto;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -210,11 +210,11 @@ public class InboundsApi {
    * @param servicePlanId Your service plan ID. You can find this on your
    *     [Dashboard](https://dashboard.sinch.com/sms/api/rest). (required)
    * @param inboundId The inbound ID found when listing inbound messages. (required)
-   * @return RetrieveInboundMessage200ResponseDto
+   * @return InboundDto
    * @throws ApiException if fails to make API call
    */
-  public RetrieveInboundMessage200ResponseDto retrieveInboundMessage(
-      String servicePlanId, String inboundId) throws ApiException {
+  public InboundDto retrieveInboundMessage(String servicePlanId, String inboundId)
+      throws ApiException {
 
     LOGGER.finest(
         "[retrieveInboundMessage] "
@@ -228,8 +228,7 @@ public class InboundsApi {
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<RetrieveInboundMessage200ResponseDto> localVarReturnType =
-          new TypeReference<RetrieveInboundMessage200ResponseDto>() {};
+      TypeReference<InboundDto> localVarReturnType = new TypeReference<InboundDto>() {};
       return mapper.deserialize(response, localVarReturnType);
     }
     // fallback to default errors handling:

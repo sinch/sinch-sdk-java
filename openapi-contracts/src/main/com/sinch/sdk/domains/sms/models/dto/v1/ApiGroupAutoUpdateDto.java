@@ -17,14 +17,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.Objects;
 
-/** GroupAutoUpdateDto */
+/** ApiGroupAutoUpdateDto */
 @JsonPropertyOrder({
-  GroupAutoUpdateDto.JSON_PROPERTY_TO,
-  GroupAutoUpdateDto.JSON_PROPERTY_ADD,
-  GroupAutoUpdateDto.JSON_PROPERTY_REMOVE
+  ApiGroupAutoUpdateDto.JSON_PROPERTY_TO,
+  ApiGroupAutoUpdateDto.JSON_PROPERTY_ADD,
+  ApiGroupAutoUpdateDto.JSON_PROPERTY_REMOVE
 })
 // @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class GroupAutoUpdateDto {
+public class ApiGroupAutoUpdateDto {
   public static final String JSON_PROPERTY_TO = "to";
   private String to;
 
@@ -34,18 +34,15 @@ public class GroupAutoUpdateDto {
   public static final String JSON_PROPERTY_REMOVE = "remove";
   private RemoveKeywordDto remove;
 
-  public GroupAutoUpdateDto() {}
+  public ApiGroupAutoUpdateDto() {}
 
-  public GroupAutoUpdateDto to(String to) {
+  public ApiGroupAutoUpdateDto to(String to) {
     this.to = to;
     return this;
   }
 
   /**
-   * Short code or long number addressed in &lt;a
-   * href&#x3D;\&quot;https://community.sinch.com/t5/Glossary/MO-Mobile-Originated/ta-p/7618\&quot;
-   * target&#x3D;\&quot;_blank\&quot;&gt;MO&lt;/a&gt;. Constraints: Must be valid MSISDN or short
-   * code.
+   * Short code or long number addressed in MO. Constraints: Must be valid MSISDN or short code.
    *
    * @return to
    */
@@ -61,7 +58,7 @@ public class GroupAutoUpdateDto {
     this.to = to;
   }
 
-  public GroupAutoUpdateDto add(AddKeywordDto add) {
+  public ApiGroupAutoUpdateDto add(AddKeywordDto add) {
     this.add = add;
     return this;
   }
@@ -83,7 +80,7 @@ public class GroupAutoUpdateDto {
     this.add = add;
   }
 
-  public GroupAutoUpdateDto remove(RemoveKeywordDto remove) {
+  public ApiGroupAutoUpdateDto remove(RemoveKeywordDto remove) {
     this.remove = remove;
     return this;
   }
@@ -105,7 +102,7 @@ public class GroupAutoUpdateDto {
     this.remove = remove;
   }
 
-  /** Return true if this GroupAutoUpdate object is equal to o. */
+  /** Return true if this ApiGroupAutoUpdate object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -114,10 +111,10 @@ public class GroupAutoUpdateDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    GroupAutoUpdateDto groupAutoUpdate = (GroupAutoUpdateDto) o;
-    return Objects.equals(this.to, groupAutoUpdate.to)
-        && Objects.equals(this.add, groupAutoUpdate.add)
-        && Objects.equals(this.remove, groupAutoUpdate.remove);
+    ApiGroupAutoUpdateDto apiGroupAutoUpdate = (ApiGroupAutoUpdateDto) o;
+    return Objects.equals(this.to, apiGroupAutoUpdate.to)
+        && Objects.equals(this.add, apiGroupAutoUpdate.add)
+        && Objects.equals(this.remove, apiGroupAutoUpdate.remove);
   }
 
   @Override
@@ -128,7 +125,7 @@ public class GroupAutoUpdateDto {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class GroupAutoUpdateDto {\n");
+    sb.append("class ApiGroupAutoUpdateDto {\n");
     sb.append("    to: ").append(toIndentedString(to)).append("\n");
     sb.append("    add: ").append(toIndentedString(add)).append("\n");
     sb.append("    remove: ").append(toIndentedString(remove)).append("\n");

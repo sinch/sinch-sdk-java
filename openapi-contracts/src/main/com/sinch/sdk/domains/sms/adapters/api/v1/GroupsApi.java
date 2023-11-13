@@ -24,9 +24,9 @@ import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameterUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.domains.sms.models.dto.v1.ApiGroupListDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.CreateGroupResponseDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.GroupObjectDto;
-import com.sinch.sdk.domains.sms.models.dto.v1.ListGroups200ResponseDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.ReplaceGroupRequestDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.UpdateGroupRequestDto;
 import java.util.ArrayList;
@@ -279,10 +279,10 @@ public class GroupsApi {
    *     [Dashboard](https://dashboard.sinch.com/sms/api/rest). (required)
    * @param page The page number starting from 0. (optional, default to 0)
    * @param pageSize Determines the size of a page. (optional, default to 30)
-   * @return ListGroups200ResponseDto
+   * @return ApiGroupListDto
    * @throws ApiException if fails to make API call
    */
-  public ListGroups200ResponseDto listGroups(String servicePlanId, Integer page, Integer pageSize)
+  public ApiGroupListDto listGroups(String servicePlanId, Integer page, Integer pageSize)
       throws ApiException {
 
     LOGGER.finest(
@@ -300,8 +300,7 @@ public class GroupsApi {
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<ListGroups200ResponseDto> localVarReturnType =
-          new TypeReference<ListGroups200ResponseDto>() {};
+      TypeReference<ApiGroupListDto> localVarReturnType = new TypeReference<ApiGroupListDto>() {};
       return mapper.deserialize(response, localVarReturnType);
     }
     // fallback to default errors handling:
