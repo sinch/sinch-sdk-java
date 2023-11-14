@@ -15,6 +15,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
   private WebHooksService webHooks;
   private DeliveryReportsService deliveryReports;
   private InboundsService inbounds;
+  private GroupsService groups;
 
   public SMSService(Configuration configuration, HttpClient httpClient) {
     this.configuration = configuration;
@@ -54,5 +55,13 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
           new com.sinch.sdk.domains.sms.adapters.InboundsService(configuration, httpClient);
     }
     return this.inbounds;
+  }
+
+  @Override
+  public GroupsService groups() {
+    if (null == this.groups) {
+      this.groups = new com.sinch.sdk.domains.sms.adapters.GroupsService(configuration, httpClient);
+    }
+    return this.groups;
   }
 }
