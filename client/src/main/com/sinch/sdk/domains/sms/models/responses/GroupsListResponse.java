@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.NoSuchElementException;
 
 /**
- * List Incoming Messages response
+ * Groups List response
  *
  * @since 1.0
  */
