@@ -42,7 +42,7 @@ public interface GroupsService {
    * send_batch_msg</code> operation. An MSISDN can only occur once in a group and any attempts to
    * add a duplicate would be ignored but not rejected.
    *
-   * @param parameters Parameters t be used to define group onto creation
+   * @param parameters Parameters to be used to define group onto creation
    * @return Created group
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Groups/#tag/Groups/operation/CreateGroup">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Groups/#tag/Groups/operation/CreateGroup</a>
