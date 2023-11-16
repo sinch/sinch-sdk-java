@@ -1,17 +1,14 @@
-package com.sinch.sdk.domains.sms.models.webhooks;
+package com.sinch.sdk.domains.sms.models;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import java.time.OffsetDateTime;
+import java.time.Instant;
 
 /**
  * Incoming SMS Binary
  *
  * @since 1.0
  */
-public class IncomingSMSBinary extends BaseIncomingSMS<String> {
+public class InboundBinary extends Inbound<String> {
 
-  static final String JSON_PROPERTY_UDH = "udh";
   private final String udh;
 
   /**
@@ -32,17 +29,16 @@ public class IncomingSMSBinary extends BaseIncomingSMS<String> {
    *     operator.
    * @param udh The UDH header of a binary message HEX encoded. Max 140 bytes together with body.
    */
-  @JsonCreator
-  public IncomingSMSBinary(
-      @JsonProperty(JSON_PROPERTY_BODY) String body,
-      @JsonProperty(JSON_PROPERTY_FROM) String from,
-      @JsonProperty(JSON_PROPERTY_ID) String id,
-      @JsonProperty(JSON_PROPERTY_RECEIVED_AT) OffsetDateTime receivedAt,
-      @JsonProperty(JSON_PROPERTY_TO) String to,
-      @JsonProperty(JSON_PROPERTY_CLIENT_REFERENCE) String clientReference,
-      @JsonProperty(JSON_PROPERTY_OPERATOR_ID) String operatorId,
-      @JsonProperty(JSON_PROPERTY_SENT_AT) OffsetDateTime sendAt,
-      @JsonProperty(JSON_PROPERTY_UDH) String udh) {
+  public InboundBinary(
+      String body,
+      String from,
+      String id,
+      Instant receivedAt,
+      String to,
+      String clientReference,
+      String operatorId,
+      Instant sendAt,
+      String udh) {
     super(body, from, id, receivedAt, to, clientReference, operatorId, sendAt);
     this.udh = udh;
   }
@@ -53,6 +49,34 @@ public class IncomingSMSBinary extends BaseIncomingSMS<String> {
 
   @Override
   public String toString() {
-    return "IncomingSMSBinary{" + "udh='" + udh + '\'' + "} " + super.toString();
+    return "InboundBinary{" + "udh='" + udh + '\'' + "} " + super.toString();
+  }
+
+  public static Builder builder() {
+    return new Builder();
+  }
+
+  public static class Builder extends Inbound.Builder<String, Builder> {
+
+    String udh;
+
+    protected Builder() {
+      super();
+    }
+
+    public Builder setUdh(String udh) {
+      this.udh = udh;
+      return this;
+    }
+
+    public InboundBinary build() {
+      return new InboundBinary(
+          body, from, id, receivedAt, to, clientReference, operatorId, sentAt, udh);
+    }
+
+    @Override
+    protected Builder self() {
+      return this;
+    }
   }
 }

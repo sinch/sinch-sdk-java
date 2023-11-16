@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-class MOTextDtoTest extends BaseTest {
+public class MOTextDtoTest extends BaseTest {
 
   @GivenJsonResource("/domains/sms/v1/MOTextDto.json")
   MOTextDto loadedDto;
@@ -20,7 +20,7 @@ class MOTextDtoTest extends BaseTest {
   @GivenTextResource("/domains/sms/v1/MOTextDto.json")
   String jsonStringDto;
 
-  MOTextDto dto =
+  public static MOTextDto dto =
       new MOTextDto(MOTextDto.TypeEnum.MO_TEXT.getValue())
           .from("+11203494390")
           .id("01FC66621XXXXX119Z8PMV1QPA")

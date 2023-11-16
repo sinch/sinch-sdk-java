@@ -77,6 +77,10 @@ public class DeliveryReportsService implements com.sinch.sdk.domains.sms.Deliver
         getApi().getDeliveryReportByPhoneNumber(configuration.getProjectId(), batchId, recipient));
   }
 
+  public DeliveryReportsListResponse list() throws ApiException {
+    return this.list(null);
+  }
+
   public DeliveryReportsListResponse list(DeliveryReportListRequestParameters parameters)
       throws ApiException {
     DeliveryReportListRequestParameters guardParameters =

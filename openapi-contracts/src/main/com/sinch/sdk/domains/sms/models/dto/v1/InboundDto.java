@@ -37,79 +37,68 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 // @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-@JsonDeserialize(
-    using =
-        RetrieveInboundMessage200ResponseDto.RetrieveInboundMessage200ResponseDtoDeserializer.class)
-@JsonSerialize(
-    using =
-        RetrieveInboundMessage200ResponseDto.RetrieveInboundMessage200ResponseDtoSerializer.class)
-public class RetrieveInboundMessage200ResponseDto extends AbstractOpenApiSchema {
-  private static final Logger log =
-      Logger.getLogger(RetrieveInboundMessage200ResponseDto.class.getName());
+@JsonDeserialize(using = InboundDto.InboundDtoDeserializer.class)
+@JsonSerialize(using = InboundDto.InboundDtoSerializer.class)
+public class InboundDto extends AbstractOpenApiSchema {
+  private static final Logger log = Logger.getLogger(InboundDto.class.getName());
 
-  public static class RetrieveInboundMessage200ResponseDtoSerializer
-      extends StdSerializer<RetrieveInboundMessage200ResponseDto> {
-    public RetrieveInboundMessage200ResponseDtoSerializer(
-        Class<RetrieveInboundMessage200ResponseDto> t) {
+  public static class InboundDtoSerializer extends StdSerializer<InboundDto> {
+    public InboundDtoSerializer(Class<InboundDto> t) {
       super(t);
     }
 
-    public RetrieveInboundMessage200ResponseDtoSerializer() {
+    public InboundDtoSerializer() {
       this(null);
     }
 
     @Override
-    public void serialize(
-        RetrieveInboundMessage200ResponseDto value, JsonGenerator jgen, SerializerProvider provider)
+    public void serialize(InboundDto value, JsonGenerator jgen, SerializerProvider provider)
         throws IOException, JsonProcessingException {
       jgen.writeObject(value.getActualInstance());
     }
   }
 
-  public static class RetrieveInboundMessage200ResponseDtoDeserializer
-      extends StdDeserializer<RetrieveInboundMessage200ResponseDto> {
-    public RetrieveInboundMessage200ResponseDtoDeserializer() {
-      this(RetrieveInboundMessage200ResponseDto.class);
+  public static class InboundDtoDeserializer extends StdDeserializer<InboundDto> {
+    public InboundDtoDeserializer() {
+      this(InboundDto.class);
     }
 
-    public RetrieveInboundMessage200ResponseDtoDeserializer(Class<?> vc) {
+    public InboundDtoDeserializer(Class<?> vc) {
       super(vc);
     }
 
     @Override
-    public RetrieveInboundMessage200ResponseDto deserialize(
-        JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+    public InboundDto deserialize(JsonParser jp, DeserializationContext ctxt)
+        throws IOException, JsonProcessingException {
       JsonNode tree = jp.readValueAsTree();
       Object deserialized = null;
-      RetrieveInboundMessage200ResponseDto newRetrieveInboundMessage200ResponseDto =
-          new RetrieveInboundMessage200ResponseDto();
+      InboundDto newInboundDto = new InboundDto();
       Map<String, Object> result2 =
           tree.traverse(jp.getCodec()).readValueAs(new TypeReference<Map<String, Object>>() {});
       String discriminatorValue = (String) result2.get("type");
       switch (discriminatorValue) {
         case "MOBinary":
           deserialized = tree.traverse(jp.getCodec()).readValueAs(MOBinaryDto.class);
-          newRetrieveInboundMessage200ResponseDto.setActualInstance(deserialized);
-          return newRetrieveInboundMessage200ResponseDto;
+          newInboundDto.setActualInstance(deserialized);
+          return newInboundDto;
         case "MOText":
           deserialized = tree.traverse(jp.getCodec()).readValueAs(MOTextDto.class);
-          newRetrieveInboundMessage200ResponseDto.setActualInstance(deserialized);
-          return newRetrieveInboundMessage200ResponseDto;
+          newInboundDto.setActualInstance(deserialized);
+          return newInboundDto;
         case "mo_binary":
           deserialized = tree.traverse(jp.getCodec()).readValueAs(MOBinaryDto.class);
-          newRetrieveInboundMessage200ResponseDto.setActualInstance(deserialized);
-          return newRetrieveInboundMessage200ResponseDto;
+          newInboundDto.setActualInstance(deserialized);
+          return newInboundDto;
         case "mo_text":
           deserialized = tree.traverse(jp.getCodec()).readValueAs(MOTextDto.class);
-          newRetrieveInboundMessage200ResponseDto.setActualInstance(deserialized);
-          return newRetrieveInboundMessage200ResponseDto;
+          newInboundDto.setActualInstance(deserialized);
+          return newInboundDto;
         default:
           log.log(
               Level.WARNING,
               String.format(
-                  "Failed to lookup discriminator value `%s` for"
-                      + " RetrieveInboundMessage200ResponseDto. Possible values: MOBinary MOText"
-                      + " mo_binary mo_text",
+                  "Failed to lookup discriminator value `%s` for InboundDto. Possible values:"
+                      + " MOBinary MOText mo_binary mo_text",
                   discriminatorValue));
       }
 
@@ -193,39 +182,35 @@ public class RetrieveInboundMessage200ResponseDto extends AbstractOpenApiSchema 
       }
 
       if (match == 1) {
-        RetrieveInboundMessage200ResponseDto ret = new RetrieveInboundMessage200ResponseDto();
+        InboundDto ret = new InboundDto();
         ret.setActualInstance(deserialized);
         return ret;
       }
       throw new IOException(
           String.format(
-              "Failed deserialization for RetrieveInboundMessage200ResponseDto: %d classes match"
-                  + " result, expected 1",
-              match));
+              "Failed deserialization for InboundDto: %d classes match result, expected 1", match));
     }
 
     /** Handle deserialization of the 'null' value. */
     @Override
-    public RetrieveInboundMessage200ResponseDto getNullValue(DeserializationContext ctxt)
-        throws JsonMappingException {
-      throw new JsonMappingException(
-          ctxt.getParser(), "RetrieveInboundMessage200ResponseDto cannot be null");
+    public InboundDto getNullValue(DeserializationContext ctxt) throws JsonMappingException {
+      throw new JsonMappingException(ctxt.getParser(), "InboundDto cannot be null");
     }
   }
 
   // store a list of schema names defined in oneOf
   public static final Map<String, Class<?>> schemas = new HashMap<>();
 
-  public RetrieveInboundMessage200ResponseDto() {
+  public InboundDto() {
     super("oneOf", Boolean.FALSE);
   }
 
-  public RetrieveInboundMessage200ResponseDto(MOBinaryDto o) {
+  public InboundDto(MOBinaryDto o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public RetrieveInboundMessage200ResponseDto(MOTextDto o) {
+  public InboundDto(MOTextDto o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
@@ -233,22 +218,20 @@ public class RetrieveInboundMessage200ResponseDto extends AbstractOpenApiSchema 
   static {
     schemas.put("MOBinaryDto", MOBinaryDto.class);
     schemas.put("MOTextDto", MOTextDto.class);
-    JSONNavigator.registerDescendants(
-        RetrieveInboundMessage200ResponseDto.class, Collections.unmodifiableMap(schemas));
+    JSONNavigator.registerDescendants(InboundDto.class, Collections.unmodifiableMap(schemas));
     // Initialize and register the discriminator mappings.
     Map<String, Class<?>> mappings = new HashMap<String, Class<?>>();
     mappings.put("MOBinary", MOBinaryDto.class);
     mappings.put("MOText", MOTextDto.class);
     mappings.put("mo_binary", MOBinaryDto.class);
     mappings.put("mo_text", MOTextDto.class);
-    mappings.put("RetrieveInboundMessage_200_response", RetrieveInboundMessage200ResponseDto.class);
-    JSONNavigator.registerDiscriminator(
-        RetrieveInboundMessage200ResponseDto.class, "type", mappings);
+    mappings.put("Inbound", InboundDto.class);
+    JSONNavigator.registerDiscriminator(InboundDto.class, "type", mappings);
   }
 
   @Override
   public Map<String, Class<?>> getSchemas() {
-    return RetrieveInboundMessage200ResponseDto.schemas;
+    return InboundDto.schemas;
   }
 
   /**
