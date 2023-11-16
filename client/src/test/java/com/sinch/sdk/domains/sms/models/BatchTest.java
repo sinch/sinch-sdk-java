@@ -22,7 +22,7 @@ class BatchTest {
 
   final Instant modifiedAt = Instant.now();
 
-  final DeliveryReport deliveryReport = DeliveryReport.FULL;
+  final DeliveryReportType deliveryReport = DeliveryReportType.FULL;
 
   final Instant sendAt = Instant.now();
 

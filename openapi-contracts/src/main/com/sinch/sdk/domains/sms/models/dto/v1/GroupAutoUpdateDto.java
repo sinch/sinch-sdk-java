@@ -29,10 +29,10 @@ public class GroupAutoUpdateDto {
   private String to;
 
   public static final String JSON_PROPERTY_ADD = "add";
-  private String add;
+  private AddKeywordDto add;
 
   public static final String JSON_PROPERTY_REMOVE = "remove";
-  private String remove;
+  private RemoveKeywordDto remove;
 
   public GroupAutoUpdateDto() {}
 
@@ -61,7 +61,7 @@ public class GroupAutoUpdateDto {
     this.to = to;
   }
 
-  public GroupAutoUpdateDto add(String add) {
+  public GroupAutoUpdateDto add(AddKeywordDto add) {
     this.add = add;
     return this;
   }
@@ -73,17 +73,17 @@ public class GroupAutoUpdateDto {
    */
   @JsonProperty(JSON_PROPERTY_ADD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getAdd() {
+  public AddKeywordDto getAdd() {
     return add;
   }
 
   @JsonProperty(JSON_PROPERTY_ADD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setAdd(String add) {
+  public void setAdd(AddKeywordDto add) {
     this.add = add;
   }
 
-  public GroupAutoUpdateDto remove(String remove) {
+  public GroupAutoUpdateDto remove(RemoveKeywordDto remove) {
     this.remove = remove;
     return this;
   }
@@ -95,13 +95,13 @@ public class GroupAutoUpdateDto {
    */
   @JsonProperty(JSON_PROPERTY_REMOVE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getRemove() {
+  public RemoveKeywordDto getRemove() {
     return remove;
   }
 
   @JsonProperty(JSON_PROPERTY_REMOVE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setRemove(String remove) {
+  public void setRemove(RemoveKeywordDto remove) {
     this.remove = remove;
   }
 

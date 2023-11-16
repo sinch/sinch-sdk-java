@@ -8,13 +8,13 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
-class RetrieveInboundMessage200ResponseDtoTest extends BaseTest {
+class InboundDtoTest extends BaseTest {
 
   @GivenJsonResource("/domains/sms/v1/MOBinaryDto.json")
-  RetrieveInboundMessage200ResponseDto loadedBinaryMessage;
+  InboundDto loadedBinaryMessage;
 
   @GivenJsonResource("/domains/sms/v1/MOTextDto.json")
-  RetrieveInboundMessage200ResponseDto loadedTextMessage;
+  InboundDto loadedTextMessage;
 
   MOBinaryDto binaryDTO =
       new MOBinaryDto("mo_binary")
@@ -39,11 +39,9 @@ class RetrieveInboundMessage200ResponseDtoTest extends BaseTest {
           .operatorId("35000")
           .sentAt(OffsetDateTime.parse("2019-08-24T14:15:22Z"));
 
-  RetrieveInboundMessage200ResponseDto expectedBinaryMessageDto =
-      new RetrieveInboundMessage200ResponseDto(binaryDTO);
+  InboundDto expectedBinaryMessageDto = new InboundDto(binaryDTO);
 
-  RetrieveInboundMessage200ResponseDto expectedTextMessageDto =
-      new RetrieveInboundMessage200ResponseDto(textDTO);
+  InboundDto expectedTextMessageDto = new InboundDto(textDTO);
 
   @Test
   void deserializeBinaryMessage() {

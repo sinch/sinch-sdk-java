@@ -17,7 +17,7 @@ public class Batch<T> {
 
   private final String from;
 
-  private final boolean canceled;
+  private final Boolean canceled;
 
   private final T body;
 
@@ -25,7 +25,7 @@ public class Batch<T> {
 
   private final Instant modifiedAt;
 
-  private final DeliveryReport deliveryReport;
+  private final DeliveryReportType deliveryReport;
 
   private final Instant sendAt;
 
@@ -35,7 +35,7 @@ public class Batch<T> {
 
   private final String clientReference;
 
-  private final boolean feedbackEnabled;
+  private final Boolean feedbackEnabled;
 
   /**
    * @param id Unique identifier for batch
@@ -61,16 +61,16 @@ public class Batch<T> {
       String id,
       Collection<String> to,
       String from,
-      boolean canceled,
+      Boolean canceled,
       T body,
       Instant createdAt,
       Instant modifiedAt,
-      DeliveryReport deliveryReport,
+      DeliveryReportType deliveryReport,
       Instant sendAt,
       Instant expireAt,
       String callbackUrl,
       String clientReference,
-      boolean feedbackEnabled) {
+      Boolean feedbackEnabled) {
     this.id = id;
     this.to = to;
     this.from = from;
@@ -102,7 +102,7 @@ public class Batch<T> {
     return from;
   }
 
-  public boolean isCanceled() {
+  public Boolean isCanceled() {
     return canceled;
   }
 
@@ -118,7 +118,7 @@ public class Batch<T> {
     return modifiedAt;
   }
 
-  public DeliveryReport getDeliveryReport() {
+  public DeliveryReportType getDeliveryReport() {
     return deliveryReport;
   }
 
@@ -138,7 +138,7 @@ public class Batch<T> {
     return clientReference;
   }
 
-  public boolean isFeedbackEnabled() {
+  public Boolean isFeedbackEnabled() {
     return feedbackEnabled;
   }
 
@@ -161,7 +161,7 @@ public class Batch<T> {
         + createdAt
         + ", modifiedAt="
         + modifiedAt
-        + ", deliveryReport="
+        + ", deliveryReportType="
         + deliveryReport
         + ", sendAt="
         + sendAt
@@ -186,7 +186,7 @@ public class Batch<T> {
 
     String from;
 
-    boolean canceled;
+    Boolean canceled;
 
     T body;
 
@@ -194,7 +194,7 @@ public class Batch<T> {
 
     Instant modifiedAt;
 
-    DeliveryReport deliveryReport;
+    DeliveryReportType deliveryReport;
 
     Instant sendAt;
 
@@ -204,7 +204,7 @@ public class Batch<T> {
 
     String clientReference;
 
-    boolean feedbackEnabled;
+    Boolean feedbackEnabled;
 
     public B setId(String id) {
       this.id = id;
@@ -221,7 +221,7 @@ public class Batch<T> {
       return self();
     }
 
-    public B setCanceled(boolean canceled) {
+    public B setCanceled(Boolean canceled) {
       this.canceled = canceled;
       return self();
     }
@@ -241,7 +241,7 @@ public class Batch<T> {
       return self();
     }
 
-    public B setDeliveryReport(DeliveryReport deliveryReport) {
+    public B setDeliveryReport(DeliveryReportType deliveryReport) {
       this.deliveryReport = deliveryReport;
       return self();
     }
@@ -266,7 +266,7 @@ public class Batch<T> {
       return self();
     }
 
-    public B setFeedbackEnabled(boolean feedbackEnabled) {
+    public B setFeedbackEnabled(Boolean feedbackEnabled) {
       this.feedbackEnabled = feedbackEnabled;
       return self();
     }

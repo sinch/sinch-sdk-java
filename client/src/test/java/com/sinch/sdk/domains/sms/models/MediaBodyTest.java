@@ -9,7 +9,7 @@ class MediaBodyTest {
 
   @Test
   void getMessage() {
-    Assertions.assertThat(value.getMessage()).isEqualTo("the message");
+    Assertions.assertThat(value.getMessage().get()).isEqualTo("the message");
   }
 
   @Test

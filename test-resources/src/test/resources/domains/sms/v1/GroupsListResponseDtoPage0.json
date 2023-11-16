@@ -1,0 +1,31 @@
+{
+  "count": 3,
+  "page": 0,
+  "page_size": 2,
+  "groups": [
+    {
+      "id": "01FC66621XXXXX119Z8PMV1QPU",
+      "name": "My new customers",
+      "size": 2,
+      "created_at": "2019-08-24T14:15:22Z",
+      "modified_at": "2019-08-24T14:15:44Z",
+      "child_groups": [
+        "01FC66621XXXXX119Z8PMV1AHY",
+        "01FC66621XXXXX119Z8PMV1A00"
+      ],
+      "auto_update": {
+        "to": 15551231234,
+        "add": {
+          "first_word": "Add 1st keyword"
+        },
+        "remove": {
+          "first_word": "remove 1st keyword",
+          "second_word": "remove 2nd keyword"
+        }
+      }
+    },
+    {
+      "id": "foo id"
+    }
+  ]
+}

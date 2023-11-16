@@ -24,9 +24,9 @@ import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameterUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.domains.sms.models.dto.v1.ApiGroupListDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.CreateGroupResponseDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.GroupObjectDto;
-import com.sinch.sdk.domains.sms.models.dto.v1.ListGroups200ResponseDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.ReplaceGroupRequestDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.UpdateGroupRequestDto;
 import java.util.ArrayList;
@@ -65,6 +65,15 @@ public class GroupsApi {
    */
   public CreateGroupResponseDto createGroup(String servicePlanId, GroupObjectDto groupObjectDto)
       throws ApiException {
+
+    LOGGER.finest(
+        "[createGroup] "
+            + "servicePlanId: "
+            + servicePlanId
+            + ", "
+            + "groupObjectDto: "
+            + groupObjectDto);
+
     HttpRequest httpRequest = createGroupRequestBuilder(servicePlanId, groupObjectDto);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
 
@@ -107,12 +116,6 @@ public class GroupsApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
     final String serializedBody = mapper.serialize(localVarContentTypes, groupObjectDto);
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.POST,
@@ -132,6 +135,10 @@ public class GroupsApi {
    * @throws ApiException if fails to make API call
    */
   public void deleteGroup(String servicePlanId, String groupId) throws ApiException {
+
+    LOGGER.finest(
+        "[deleteGroup] " + "servicePlanId: " + servicePlanId + ", " + "groupId: " + groupId);
+
     HttpRequest httpRequest = deleteGroupRequestBuilder(servicePlanId, groupId);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
 
@@ -180,12 +187,6 @@ public class GroupsApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
     final String serializedBody = null;
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.DELETE,
@@ -207,6 +208,10 @@ public class GroupsApi {
    * @throws ApiException if fails to make API call
    */
   public List<String> getMembers(String servicePlanId, String groupId) throws ApiException {
+
+    LOGGER.finest(
+        "[getMembers] " + "servicePlanId: " + servicePlanId + ", " + "groupId: " + groupId);
+
     HttpRequest httpRequest = getMembersRequestBuilder(servicePlanId, groupId);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
 
@@ -256,12 +261,6 @@ public class GroupsApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
     final String serializedBody = null;
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.GET,
@@ -280,17 +279,28 @@ public class GroupsApi {
    *     [Dashboard](https://dashboard.sinch.com/sms/api/rest). (required)
    * @param page The page number starting from 0. (optional, default to 0)
    * @param pageSize Determines the size of a page. (optional, default to 30)
-   * @return ListGroups200ResponseDto
+   * @return ApiGroupListDto
    * @throws ApiException if fails to make API call
    */
-  public ListGroups200ResponseDto listGroups(String servicePlanId, Integer page, Integer pageSize)
+  public ApiGroupListDto listGroups(String servicePlanId, Integer page, Integer pageSize)
       throws ApiException {
+
+    LOGGER.finest(
+        "[listGroups] "
+            + "servicePlanId: "
+            + servicePlanId
+            + ", "
+            + "page: "
+            + page
+            + ", "
+            + "pageSize: "
+            + pageSize);
+
     HttpRequest httpRequest = listGroupsRequestBuilder(servicePlanId, page, pageSize);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<ListGroups200ResponseDto> localVarReturnType =
-          new TypeReference<ListGroups200ResponseDto>() {};
+      TypeReference<ApiGroupListDto> localVarReturnType = new TypeReference<ApiGroupListDto>() {};
       return mapper.deserialize(response, localVarReturnType);
     }
     // fallback to default errors handling:
@@ -336,12 +346,6 @@ public class GroupsApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
     final String serializedBody = null;
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.GET,
@@ -367,6 +371,18 @@ public class GroupsApi {
   public CreateGroupResponseDto replaceGroup(
       String servicePlanId, String groupId, ReplaceGroupRequestDto replaceGroupRequestDto)
       throws ApiException {
+
+    LOGGER.finest(
+        "[replaceGroup] "
+            + "servicePlanId: "
+            + servicePlanId
+            + ", "
+            + "groupId: "
+            + groupId
+            + ", "
+            + "replaceGroupRequestDto: "
+            + replaceGroupRequestDto);
+
     HttpRequest httpRequest =
         replaceGroupRequestBuilder(servicePlanId, groupId, replaceGroupRequestDto);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
@@ -419,12 +435,6 @@ public class GroupsApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
     final String serializedBody = mapper.serialize(localVarContentTypes, replaceGroupRequestDto);
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.PUT,
@@ -446,6 +456,10 @@ public class GroupsApi {
    */
   public CreateGroupResponseDto retrieveGroup(String servicePlanId, String groupId)
       throws ApiException {
+
+    LOGGER.finest(
+        "[retrieveGroup] " + "servicePlanId: " + servicePlanId + ", " + "groupId: " + groupId);
+
     HttpRequest httpRequest = retrieveGroupRequestBuilder(servicePlanId, groupId);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
 
@@ -496,12 +510,6 @@ public class GroupsApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
     final String serializedBody = null;
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.GET,
@@ -535,6 +543,18 @@ public class GroupsApi {
   public CreateGroupResponseDto updateGroup(
       String servicePlanId, String groupId, UpdateGroupRequestDto updateGroupRequestDto)
       throws ApiException {
+
+    LOGGER.finest(
+        "[updateGroup] "
+            + "servicePlanId: "
+            + servicePlanId
+            + ", "
+            + "groupId: "
+            + groupId
+            + ", "
+            + "updateGroupRequestDto: "
+            + updateGroupRequestDto);
+
     HttpRequest httpRequest =
         updateGroupRequestBuilder(servicePlanId, groupId, updateGroupRequestDto);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
@@ -587,12 +607,6 @@ public class GroupsApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
     final String serializedBody = mapper.serialize(localVarContentTypes, updateGroupRequestDto);
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.POST,

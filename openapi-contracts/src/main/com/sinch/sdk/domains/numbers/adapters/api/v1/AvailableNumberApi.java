@@ -69,6 +69,15 @@ public class AvailableNumberApi {
    */
   public AvailableNumberDto numberServiceGetAvailableNumber(String projectId, String phoneNumber)
       throws ApiException {
+
+    LOGGER.finest(
+        "[numberServiceGetAvailableNumber] "
+            + "projectId: "
+            + projectId
+            + ", "
+            + "phoneNumber: "
+            + phoneNumber);
+
     HttpRequest httpRequest = numberServiceGetAvailableNumberRequestBuilder(projectId, phoneNumber);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
 
@@ -123,12 +132,6 @@ public class AvailableNumberApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
     final String serializedBody = null;
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.GET,
@@ -172,6 +175,30 @@ public class AvailableNumberApi {
       List<String> capabilities,
       Integer size)
       throws ApiException {
+
+    LOGGER.finest(
+        "[numberServiceListAvailableNumbers] "
+            + "projectId: "
+            + projectId
+            + ", "
+            + "regionCode: "
+            + regionCode
+            + ", "
+            + "type: "
+            + type
+            + ", "
+            + "numberPatternPattern: "
+            + numberPatternPattern
+            + ", "
+            + "numberPatternSearchPattern: "
+            + numberPatternSearchPattern
+            + ", "
+            + "capabilities: "
+            + capabilities
+            + ", "
+            + "size: "
+            + size);
+
     HttpRequest httpRequest =
         numberServiceListAvailableNumbersRequestBuilder(
             projectId,
@@ -281,12 +308,6 @@ public class AvailableNumberApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
     final String serializedBody = null;
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.GET,
@@ -311,6 +332,15 @@ public class AvailableNumberApi {
    */
   public ActiveNumberDto numberServiceRentAnyNumber(
       String projectId, RentAnyNumberRequestDto rentAnyNumberRequestDto) throws ApiException {
+
+    LOGGER.finest(
+        "[numberServiceRentAnyNumber] "
+            + "projectId: "
+            + projectId
+            + ", "
+            + "rentAnyNumberRequestDto: "
+            + rentAnyNumberRequestDto);
+
     HttpRequest httpRequest =
         numberServiceRentAnyNumberRequestBuilder(projectId, rentAnyNumberRequestDto);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
@@ -361,12 +391,6 @@ public class AvailableNumberApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
     final String serializedBody = mapper.serialize(localVarContentTypes, rentAnyNumberRequestDto);
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.POST,
@@ -396,6 +420,18 @@ public class AvailableNumberApi {
   public ActiveNumberDto numberServiceRentNumber(
       String projectId, String phoneNumber, RentNumberRequestDto rentNumberRequestDto)
       throws ApiException {
+
+    LOGGER.finest(
+        "[numberServiceRentNumber] "
+            + "projectId: "
+            + projectId
+            + ", "
+            + "phoneNumber: "
+            + phoneNumber
+            + ", "
+            + "rentNumberRequestDto: "
+            + rentNumberRequestDto);
+
     HttpRequest httpRequest =
         numberServiceRentNumberRequestBuilder(projectId, phoneNumber, rentNumberRequestDto);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
@@ -454,12 +490,6 @@ public class AvailableNumberApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
     final String serializedBody = mapper.serialize(localVarContentTypes, rentNumberRequestDto);
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.POST,

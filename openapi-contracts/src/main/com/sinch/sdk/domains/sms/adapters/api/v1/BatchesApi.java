@@ -27,7 +27,6 @@ import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiBatchListDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiDeliveryFeedbackDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.DryRun200ResponseDto;
-import com.sinch.sdk.domains.sms.models.dto.v1.DryRunRequestDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.SendSMS201ResponseDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.SendSMSRequestDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.UpdateBatchMessageRequestDto;
@@ -70,6 +69,10 @@ public class BatchesApi {
    */
   public SendSMS201ResponseDto cancelBatchMessage(String servicePlanId, String batchId)
       throws ApiException {
+
+    LOGGER.finest(
+        "[cancelBatchMessage] " + "servicePlanId: " + servicePlanId + ", " + "batchId: " + batchId);
+
     HttpRequest httpRequest = cancelBatchMessageRequestBuilder(servicePlanId, batchId);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
 
@@ -120,12 +123,6 @@ public class BatchesApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
     final String serializedBody = null;
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.DELETE,
@@ -156,6 +153,18 @@ public class BatchesApi {
   public void deliveryFeedback(
       String servicePlanId, String batchId, ApiDeliveryFeedbackDto apiDeliveryFeedbackDto)
       throws ApiException {
+
+    LOGGER.finest(
+        "[deliveryFeedback] "
+            + "servicePlanId: "
+            + servicePlanId
+            + ", "
+            + "batchId: "
+            + batchId
+            + ", "
+            + "apiDeliveryFeedbackDto: "
+            + apiDeliveryFeedbackDto);
+
     HttpRequest httpRequest =
         deliveryFeedbackRequestBuilder(servicePlanId, batchId, apiDeliveryFeedbackDto);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
@@ -212,12 +221,6 @@ public class BatchesApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
     final String serializedBody = mapper.serialize(localVarContentTypes, apiDeliveryFeedbackDto);
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.POST,
@@ -237,7 +240,7 @@ public class BatchesApi {
    * @param perRecipient Whether to include per recipient details in the response (optional)
    * @param numberOfRecipients Max number of recipients to include per recipient details for in the
    *     response (optional, default to 100)
-   * @param dryRunRequestDto (optional)
+   * @param sendSMSRequestDto (optional)
    * @return DryRun200ResponseDto
    * @throws ApiException if fails to make API call
    */
@@ -245,10 +248,25 @@ public class BatchesApi {
       String servicePlanId,
       Boolean perRecipient,
       Integer numberOfRecipients,
-      DryRunRequestDto dryRunRequestDto)
+      SendSMSRequestDto sendSMSRequestDto)
       throws ApiException {
+
+    LOGGER.finest(
+        "[dryRun] "
+            + "servicePlanId: "
+            + servicePlanId
+            + ", "
+            + "perRecipient: "
+            + perRecipient
+            + ", "
+            + "numberOfRecipients: "
+            + numberOfRecipients
+            + ", "
+            + "sendSMSRequestDto: "
+            + sendSMSRequestDto);
+
     HttpRequest httpRequest =
-        dryRunRequestBuilder(servicePlanId, perRecipient, numberOfRecipients, dryRunRequestDto);
+        dryRunRequestBuilder(servicePlanId, perRecipient, numberOfRecipients, sendSMSRequestDto);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
@@ -269,7 +287,7 @@ public class BatchesApi {
       String servicePlanId,
       Boolean perRecipient,
       Integer numberOfRecipients,
-      DryRunRequestDto dryRunRequestDto)
+      SendSMSRequestDto sendSMSRequestDto)
       throws ApiException {
     // verify the required parameter 'servicePlanId' is set
     if (servicePlanId == null) {
@@ -308,14 +326,8 @@ public class BatchesApi {
     final Collection<String> localVarContentTypes = Arrays.asList("application/json");
 
     final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
-    final String serializedBody = mapper.serialize(localVarContentTypes, dryRunRequestDto);
+    final String serializedBody = mapper.serialize(localVarContentTypes, sendSMSRequestDto);
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.POST,
@@ -337,6 +349,10 @@ public class BatchesApi {
    */
   public SendSMS201ResponseDto getBatchMessage(String servicePlanId, String batchId)
       throws ApiException {
+
+    LOGGER.finest(
+        "[getBatchMessage] " + "servicePlanId: " + servicePlanId + ", " + "batchId: " + batchId);
+
     HttpRequest httpRequest = getBatchMessageRequestBuilder(servicePlanId, batchId);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
 
@@ -387,12 +403,6 @@ public class BatchesApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
     final String serializedBody = null;
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.GET,
@@ -432,6 +442,30 @@ public class BatchesApi {
       String endDate,
       String clientReference)
       throws ApiException {
+
+    LOGGER.finest(
+        "[listBatches] "
+            + "servicePlanId: "
+            + servicePlanId
+            + ", "
+            + "page: "
+            + page
+            + ", "
+            + "pageSize: "
+            + pageSize
+            + ", "
+            + "from: "
+            + from
+            + ", "
+            + "startDate: "
+            + startDate
+            + ", "
+            + "endDate: "
+            + endDate
+            + ", "
+            + "clientReference: "
+            + clientReference);
+
     HttpRequest httpRequest =
         listBatchesRequestBuilder(
             servicePlanId, page, pageSize, from, startDate, endDate, clientReference);
@@ -513,12 +547,6 @@ public class BatchesApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
     final String serializedBody = null;
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.GET,
@@ -536,13 +564,26 @@ public class BatchesApi {
    * @param servicePlanId Your service plan ID. You can find this on your
    *     [Dashboard](https://dashboard.sinch.com/sms/api/rest). (required)
    * @param batchId The batch ID you received from sending a message. (required)
-   * @param dryRunRequestDto (optional)
+   * @param sendSMSRequestDto (optional)
    * @return SendSMS201ResponseDto
    * @throws ApiException if fails to make API call
    */
   public SendSMS201ResponseDto replaceBatch(
-      String servicePlanId, String batchId, DryRunRequestDto dryRunRequestDto) throws ApiException {
-    HttpRequest httpRequest = replaceBatchRequestBuilder(servicePlanId, batchId, dryRunRequestDto);
+      String servicePlanId, String batchId, SendSMSRequestDto sendSMSRequestDto)
+      throws ApiException {
+
+    LOGGER.finest(
+        "[replaceBatch] "
+            + "servicePlanId: "
+            + servicePlanId
+            + ", "
+            + "batchId: "
+            + batchId
+            + ", "
+            + "sendSMSRequestDto: "
+            + sendSMSRequestDto);
+
+    HttpRequest httpRequest = replaceBatchRequestBuilder(servicePlanId, batchId, sendSMSRequestDto);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
@@ -560,7 +601,8 @@ public class BatchesApi {
   }
 
   private HttpRequest replaceBatchRequestBuilder(
-      String servicePlanId, String batchId, DryRunRequestDto dryRunRequestDto) throws ApiException {
+      String servicePlanId, String batchId, SendSMSRequestDto sendSMSRequestDto)
+      throws ApiException {
     // verify the required parameter 'servicePlanId' is set
     if (servicePlanId == null) {
       throw new ApiException(
@@ -590,14 +632,8 @@ public class BatchesApi {
     final Collection<String> localVarContentTypes = Arrays.asList("application/json");
 
     final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
-    final String serializedBody = mapper.serialize(localVarContentTypes, dryRunRequestDto);
+    final String serializedBody = mapper.serialize(localVarContentTypes, sendSMSRequestDto);
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.PUT,
@@ -624,6 +660,15 @@ public class BatchesApi {
    */
   public SendSMS201ResponseDto sendSMS(String servicePlanId, SendSMSRequestDto sendSMSRequestDto)
       throws ApiException {
+
+    LOGGER.finest(
+        "[sendSMS] "
+            + "servicePlanId: "
+            + servicePlanId
+            + ", "
+            + "sendSMSRequestDto: "
+            + sendSMSRequestDto);
+
     HttpRequest httpRequest = sendSMSRequestBuilder(servicePlanId, sendSMSRequestDto);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
 
@@ -666,12 +711,6 @@ public class BatchesApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
     final String serializedBody = mapper.serialize(localVarContentTypes, sendSMSRequestDto);
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.POST,
@@ -698,6 +737,18 @@ public class BatchesApi {
       String batchId,
       UpdateBatchMessageRequestDto updateBatchMessageRequestDto)
       throws ApiException {
+
+    LOGGER.finest(
+        "[updateBatchMessage] "
+            + "servicePlanId: "
+            + servicePlanId
+            + ", "
+            + "batchId: "
+            + batchId
+            + ", "
+            + "updateBatchMessageRequestDto: "
+            + updateBatchMessageRequestDto);
+
     HttpRequest httpRequest =
         updateBatchMessageRequestBuilder(servicePlanId, batchId, updateBatchMessageRequestDto);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
@@ -753,12 +804,6 @@ public class BatchesApi {
     final String serializedBody =
         mapper.serialize(localVarContentTypes, updateBatchMessageRequestDto);
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.POST,

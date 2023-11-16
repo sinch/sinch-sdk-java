@@ -12,7 +12,7 @@ import java.util.stream.Stream;
  *     href="https://developers.sinch.com/docs/numbers/api-reference/error-codes/provisioning-errors/">https://developers.sinch.com/docs/numbers/api-reference/error-codes/provisioning-errors/</a>
  * @since 1.0
  */
-public final class ProvisioningStatus extends EnumDynamic<ProvisioningStatus> {
+public final class ProvisioningStatus extends EnumDynamic<String, ProvisioningStatus> {
 
   public static final ProvisioningStatus PROVISIONING_STATUS_UNSPECIFIED =
       new ProvisioningStatus("PROVISIONING_STATUS_UNSPECIFIED");
@@ -22,7 +22,7 @@ public final class ProvisioningStatus extends EnumDynamic<ProvisioningStatus> {
   public static final ProvisioningStatus UNKNOWN_DEFAULT_OPEN_API =
       new ProvisioningStatus("UNKNOWN_DEFAULT_OPEN_API");
 
-  private static final EnumSupportDynamic<ProvisioningStatus> ENUM_SUPPORT =
+  private static final EnumSupportDynamic<String, ProvisioningStatus> ENUM_SUPPORT =
       new EnumSupportDynamic<>(
           ProvisioningStatus.class,
           ProvisioningStatus::new,

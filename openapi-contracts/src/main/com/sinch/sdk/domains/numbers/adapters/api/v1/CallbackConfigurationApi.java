@@ -59,6 +59,9 @@ public class CallbackConfigurationApi {
    * @throws ApiException if fails to make API call
    */
   public CallbackConfigurationDto getCallbackConfiguration(String projectId) throws ApiException {
+
+    LOGGER.finest("[getCallbackConfiguration] " + "projectId: " + projectId);
+
     HttpRequest httpRequest = getCallbackConfigurationRequestBuilder(projectId);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
 
@@ -100,12 +103,6 @@ public class CallbackConfigurationApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
     final String serializedBody = null;
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.GET,
@@ -130,6 +127,15 @@ public class CallbackConfigurationApi {
   public CallbackConfigurationDto updateCallbackConfiguration(
       String projectId, CallbackConfigurationUpdateDto callbackConfigurationUpdateDto)
       throws ApiException {
+
+    LOGGER.finest(
+        "[updateCallbackConfiguration] "
+            + "projectId: "
+            + projectId
+            + ", "
+            + "callbackConfigurationUpdateDto: "
+            + callbackConfigurationUpdateDto);
+
     HttpRequest httpRequest =
         updateCallbackConfigurationRequestBuilder(projectId, callbackConfigurationUpdateDto);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
@@ -176,12 +182,6 @@ public class CallbackConfigurationApi {
     final String serializedBody =
         mapper.serialize(localVarContentTypes, callbackConfigurationUpdateDto);
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.PATCH,

@@ -13,6 +13,7 @@ import java.util.NoSuchElementException;
  * @since 1.0
  */
 public abstract class ListResponse<T> {
+
   /**
    * Indicate if another page response is available
    *

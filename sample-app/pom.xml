@@ -12,7 +12,14 @@
     <properties>
         <sinch.sdk.java.version>[0.0.0,)</sinch.sdk.java.version>
         <sinch.sdk.java.staging></sinch.sdk.java.staging>
-    </properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.testSource>1.8</maven.compiler.testSource>
+        <maven.compiler.testTarget>1.8</maven.compiler.testTarget>
+        <maven.compiler.release>8</maven.compiler.release>
+        <maven.compiler.version>3.8.0</maven.compiler.version>
+        <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
+        <maven.compiler.showWarnings>true</maven.compiler.showWarnings></properties>
 
     <profiles>
         <profile>

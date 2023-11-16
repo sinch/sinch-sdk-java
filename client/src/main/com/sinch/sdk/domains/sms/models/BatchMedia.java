@@ -10,7 +10,7 @@ import java.util.Collection;
  */
 public class BatchMedia extends Batch<MediaBody> {
   private final Parameters parameters;
-  private final boolean strictValidation;
+  private final Boolean strictValidation;
 
   /**
    * @param id Unique identifier for batch
@@ -42,18 +42,18 @@ public class BatchMedia extends Batch<MediaBody> {
       String id,
       Collection<String> to,
       String from,
-      boolean canceled,
+      Boolean canceled,
       MediaBody body,
       Instant createdAt,
       Instant modifiedAt,
-      DeliveryReport deliveryReport,
+      DeliveryReportType deliveryReport,
       Instant sendAt,
       Instant expireAt,
       String callbackUrl,
       String clientReference,
-      boolean feedbackEnabled,
+      Boolean feedbackEnabled,
       Parameters parameters,
-      boolean strictValidation) {
+      Boolean strictValidation) {
     super(
         id,
         to,
@@ -76,7 +76,7 @@ public class BatchMedia extends Batch<MediaBody> {
     return parameters;
   }
 
-  public boolean isStrictValidation() {
+  public Boolean isStrictValidation() {
     return strictValidation;
   }
 
@@ -97,7 +97,7 @@ public class BatchMedia extends Batch<MediaBody> {
 
   public static class Builder extends Batch.Builder<MediaBody, Builder> {
     private Parameters parameters;
-    private boolean strictValidation;
+    private Boolean strictValidation;
 
     private Builder() {}
 
@@ -106,7 +106,7 @@ public class BatchMedia extends Batch<MediaBody> {
       return this;
     }
 
-    public Builder setStrictValidation(boolean strictValidation) {
+    public Builder setStrictValidation(Boolean strictValidation) {
       this.strictValidation = strictValidation;
       return this;
     }

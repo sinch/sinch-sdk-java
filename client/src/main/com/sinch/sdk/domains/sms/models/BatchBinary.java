@@ -9,11 +9,11 @@ import java.util.Collection;
  * @since 1.0
  */
 public class BatchBinary extends Batch<String> {
-  private final boolean flashMessage;
-  private final boolean truncateConcat;
-  private final int maxNumberOfMessageParts;
-  private final int fromTon;
-  private final int fromNpi;
+  private final Boolean flashMessage;
+  private final Boolean truncateConcat;
+  private final Integer maxNumberOfMessageParts;
+  private final Integer fromTon;
+  private final Integer fromNpi;
   private final String udh;
 
   /**
@@ -46,21 +46,21 @@ public class BatchBinary extends Batch<String> {
       String id,
       Collection<String> to,
       String from,
-      boolean canceled,
+      Boolean canceled,
       String body,
       Instant createdAt,
       Instant modifiedAt,
-      DeliveryReport deliveryReport,
+      DeliveryReportType deliveryReport,
       Instant sendAt,
       Instant expireAt,
       String callbackUrl,
       String clientReference,
-      boolean feedbackEnabled,
-      boolean flashMessage,
-      boolean truncateConcat,
-      int maxNumberOfMessageParts,
-      int fromTon,
-      int fromNpi,
+      Boolean feedbackEnabled,
+      Boolean flashMessage,
+      Boolean truncateConcat,
+      Integer maxNumberOfMessageParts,
+      Integer fromTon,
+      Integer fromNpi,
       String udh) {
     super(
         id,
@@ -84,23 +84,23 @@ public class BatchBinary extends Batch<String> {
     this.udh = udh;
   }
 
-  public boolean isFlashMessage() {
+  public Boolean isFlashMessage() {
     return flashMessage;
   }
 
-  public boolean isTruncateConcat() {
+  public Boolean isTruncateConcat() {
     return truncateConcat;
   }
 
-  public int getMaxNumberOfMessageParts() {
+  public Integer getMaxNumberOfMessageParts() {
     return maxNumberOfMessageParts;
   }
 
-  public int getFromTon() {
+  public Integer getFromTon() {
     return fromTon;
   }
 
-  public int getFromNpi() {
+  public Integer getFromNpi() {
     return fromNpi;
   }
 
@@ -134,36 +134,36 @@ public class BatchBinary extends Batch<String> {
 
   public static class Builder extends Batch.Builder<String, Builder> {
 
-    private boolean flashMessage;
-    private boolean truncateConcat;
-    private int maxNumberOfMessageParts;
-    private int fromTon;
-    private int fromNpi;
+    private Boolean flashMessage;
+    private Boolean truncateConcat;
+    private Integer maxNumberOfMessageParts;
+    private Integer fromTon;
+    private Integer fromNpi;
     private String udh;
 
     private Builder() {}
 
-    public Builder setFlashMessage(boolean flashMessage) {
+    public Builder setFlashMessage(Boolean flashMessage) {
       this.flashMessage = flashMessage;
       return this;
     }
 
-    public Builder setTruncateConcat(boolean truncateConcat) {
+    public Builder setTruncateConcat(Boolean truncateConcat) {
       this.truncateConcat = truncateConcat;
       return this;
     }
 
-    public Builder setMaxNumberOfMessageParts(int maxNumberOfMessageParts) {
+    public Builder setMaxNumberOfMessageParts(Integer maxNumberOfMessageParts) {
       this.maxNumberOfMessageParts = maxNumberOfMessageParts;
       return this;
     }
 
-    public Builder setFromTon(int fromTon) {
+    public Builder setFromTon(Integer fromTon) {
       this.fromTon = fromTon;
       return this;
     }
 
-    public Builder setFromNpi(int fromNpi) {
+    public Builder setFromNpi(Integer fromNpi) {
       this.fromNpi = fromNpi;
       return this;
     }

@@ -71,6 +71,24 @@ public class DeliveryReportsApi {
   public DeliveryReportDto getDeliveryReportByBatchId(
       String servicePlanId, String batchId, String type, String status, String code)
       throws ApiException {
+
+    LOGGER.finest(
+        "[getDeliveryReportByBatchId] "
+            + "servicePlanId: "
+            + servicePlanId
+            + ", "
+            + "batchId: "
+            + batchId
+            + ", "
+            + "type: "
+            + type
+            + ", "
+            + "status: "
+            + status
+            + ", "
+            + "code: "
+            + code);
+
     HttpRequest httpRequest =
         getDeliveryReportByBatchIdRequestBuilder(servicePlanId, batchId, type, status, code);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
@@ -137,12 +155,6 @@ public class DeliveryReportsApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
     final String serializedBody = null;
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.GET,
@@ -166,6 +178,18 @@ public class DeliveryReportsApi {
    */
   public RecipientDeliveryReportDto getDeliveryReportByPhoneNumber(
       String servicePlanId, String batchId, String recipientMsisdn) throws ApiException {
+
+    LOGGER.finest(
+        "[getDeliveryReportByPhoneNumber] "
+            + "servicePlanId: "
+            + servicePlanId
+            + ", "
+            + "batchId: "
+            + batchId
+            + ", "
+            + "recipientMsisdn: "
+            + recipientMsisdn);
+
     HttpRequest httpRequest =
         getDeliveryReportByPhoneNumberRequestBuilder(servicePlanId, batchId, recipientMsisdn);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
@@ -230,12 +254,6 @@ public class DeliveryReportsApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
     final String serializedBody = null;
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.GET,
@@ -273,6 +291,33 @@ public class DeliveryReportsApi {
       String code,
       String clientReference)
       throws ApiException {
+
+    LOGGER.finest(
+        "[getDeliveryReports] "
+            + "servicePlanId: "
+            + servicePlanId
+            + ", "
+            + "page: "
+            + page
+            + ", "
+            + "pageSize: "
+            + pageSize
+            + ", "
+            + "startDate: "
+            + startDate
+            + ", "
+            + "endDate: "
+            + endDate
+            + ", "
+            + "status: "
+            + status
+            + ", "
+            + "code: "
+            + code
+            + ", "
+            + "clientReference: "
+            + clientReference);
+
     HttpRequest httpRequest =
         getDeliveryReportsRequestBuilder(
             servicePlanId, page, pageSize, startDate, endDate, status, code, clientReference);
@@ -361,12 +406,6 @@ public class DeliveryReportsApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
     final String serializedBody = null;
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.GET,

@@ -19,30 +19,52 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** ListGroups200ResponseDto */
+/** ApiGroupListDto */
 @JsonPropertyOrder({
-  ListGroups200ResponseDto.JSON_PROPERTY_PAGE,
-  ListGroups200ResponseDto.JSON_PROPERTY_PAGE_SIZE,
-  ListGroups200ResponseDto.JSON_PROPERTY_COUNT,
-  ListGroups200ResponseDto.JSON_PROPERTY_GROUPS
+  ApiGroupListDto.JSON_PROPERTY_COUNT,
+  ApiGroupListDto.JSON_PROPERTY_PAGE,
+  ApiGroupListDto.JSON_PROPERTY_GROUPS,
+  ApiGroupListDto.JSON_PROPERTY_PAGE_SIZE
 })
 // @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class ListGroups200ResponseDto {
+public class ApiGroupListDto {
+  public static final String JSON_PROPERTY_COUNT = "count";
+  private Long count;
+
   public static final String JSON_PROPERTY_PAGE = "page";
   private Integer page;
+
+  public static final String JSON_PROPERTY_GROUPS = "groups";
+  private List<ApiGroupDto> groups;
 
   public static final String JSON_PROPERTY_PAGE_SIZE = "page_size";
   private Integer pageSize;
 
-  public static final String JSON_PROPERTY_COUNT = "count";
-  private Integer count;
+  public ApiGroupListDto() {}
 
-  public static final String JSON_PROPERTY_GROUPS = "groups";
-  private List<GroupObjectDto> groups;
+  public ApiGroupListDto count(Long count) {
+    this.count = count;
+    return this;
+  }
 
-  public ListGroups200ResponseDto() {}
+  /**
+   * The total number of entries matching the given filters.
+   *
+   * @return count
+   */
+  @JsonProperty(JSON_PROPERTY_COUNT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Long getCount() {
+    return count;
+  }
 
-  public ListGroups200ResponseDto page(Integer page) {
+  @JsonProperty(JSON_PROPERTY_COUNT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setCount(Long count) {
+    this.count = count;
+  }
+
+  public ApiGroupListDto page(Integer page) {
     this.page = page;
     return this;
   }
@@ -64,13 +86,43 @@ public class ListGroups200ResponseDto {
     this.page = page;
   }
 
-  public ListGroups200ResponseDto pageSize(Integer pageSize) {
+  public ApiGroupListDto groups(List<ApiGroupDto> groups) {
+    this.groups = groups;
+    return this;
+  }
+
+  public ApiGroupListDto addGroupsItem(ApiGroupDto groupsItem) {
+    if (this.groups == null) {
+      this.groups = new ArrayList<>();
+    }
+    this.groups.add(groupsItem);
+    return this;
+  }
+
+  /**
+   * Get groups
+   *
+   * @return groups
+   */
+  @JsonProperty(JSON_PROPERTY_GROUPS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public List<ApiGroupDto> getGroups() {
+    return groups;
+  }
+
+  @JsonProperty(JSON_PROPERTY_GROUPS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setGroups(List<ApiGroupDto> groups) {
+    this.groups = groups;
+  }
+
+  public ApiGroupListDto pageSize(Integer pageSize) {
     this.pageSize = pageSize;
     return this;
   }
 
   /**
-   * The number of groups returned in this request
+   * The number of entries returned in this request.
    *
    * @return pageSize
    */
@@ -86,59 +138,7 @@ public class ListGroups200ResponseDto {
     this.pageSize = pageSize;
   }
 
-  public ListGroups200ResponseDto count(Integer count) {
-    this.count = count;
-    return this;
-  }
-
-  /**
-   * The total number of groups.
-   *
-   * @return count
-   */
-  @JsonProperty(JSON_PROPERTY_COUNT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Integer getCount() {
-    return count;
-  }
-
-  @JsonProperty(JSON_PROPERTY_COUNT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCount(Integer count) {
-    this.count = count;
-  }
-
-  public ListGroups200ResponseDto groups(List<GroupObjectDto> groups) {
-    this.groups = groups;
-    return this;
-  }
-
-  public ListGroups200ResponseDto addGroupsItem(GroupObjectDto groupsItem) {
-    if (this.groups == null) {
-      this.groups = new ArrayList<>();
-    }
-    this.groups.add(groupsItem);
-    return this;
-  }
-
-  /**
-   * Get groups
-   *
-   * @return groups
-   */
-  @JsonProperty(JSON_PROPERTY_GROUPS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public List<GroupObjectDto> getGroups() {
-    return groups;
-  }
-
-  @JsonProperty(JSON_PROPERTY_GROUPS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setGroups(List<GroupObjectDto> groups) {
-    this.groups = groups;
-  }
-
-  /** Return true if this ListGroups_200_response object is equal to o. */
+  /** Return true if this ApiGroupList object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -147,26 +147,26 @@ public class ListGroups200ResponseDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ListGroups200ResponseDto listGroups200Response = (ListGroups200ResponseDto) o;
-    return Objects.equals(this.page, listGroups200Response.page)
-        && Objects.equals(this.pageSize, listGroups200Response.pageSize)
-        && Objects.equals(this.count, listGroups200Response.count)
-        && Objects.equals(this.groups, listGroups200Response.groups);
+    ApiGroupListDto apiGroupList = (ApiGroupListDto) o;
+    return Objects.equals(this.count, apiGroupList.count)
+        && Objects.equals(this.page, apiGroupList.page)
+        && Objects.equals(this.groups, apiGroupList.groups)
+        && Objects.equals(this.pageSize, apiGroupList.pageSize);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(page, pageSize, count, groups);
+    return Objects.hash(count, page, groups, pageSize);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ListGroups200ResponseDto {\n");
-    sb.append("    page: ").append(toIndentedString(page)).append("\n");
-    sb.append("    pageSize: ").append(toIndentedString(pageSize)).append("\n");
+    sb.append("class ApiGroupListDto {\n");
     sb.append("    count: ").append(toIndentedString(count)).append("\n");
+    sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    groups: ").append(toIndentedString(groups)).append("\n");
+    sb.append("    pageSize: ").append(toIndentedString(pageSize)).append("\n");
     sb.append("}");
     return sb.toString();
   }

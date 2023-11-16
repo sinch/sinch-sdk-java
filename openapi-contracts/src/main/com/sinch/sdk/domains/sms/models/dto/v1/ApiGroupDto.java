@@ -16,21 +16,58 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.time.OffsetDateTime;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /** ApiGroupDto */
-@JsonPropertyOrder({ApiGroupDto.JSON_PROPERTY_ID})
+@JsonPropertyOrder({
+  ApiGroupDto.JSON_PROPERTY_ID,
+  ApiGroupDto.JSON_PROPERTY_NAME,
+  ApiGroupDto.JSON_PROPERTY_SIZE,
+  ApiGroupDto.JSON_PROPERTY_CREATED_AT,
+  ApiGroupDto.JSON_PROPERTY_MODIFIED_AT,
+  ApiGroupDto.JSON_PROPERTY_CHILD_GROUPS,
+  ApiGroupDto.JSON_PROPERTY_AUTO_UPDATE
+})
 // @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class ApiGroupDto {
   public static final String JSON_PROPERTY_ID = "id";
   private String id;
 
+  public static final String JSON_PROPERTY_NAME = "name";
+  private String name;
+
+  public static final String JSON_PROPERTY_SIZE = "size";
+  private Integer size;
+
+  public static final String JSON_PROPERTY_CREATED_AT = "created_at";
+  private OffsetDateTime createdAt;
+
+  public static final String JSON_PROPERTY_MODIFIED_AT = "modified_at";
+  private OffsetDateTime modifiedAt;
+
+  public static final String JSON_PROPERTY_CHILD_GROUPS = "child_groups";
+  private Set<Object> childGroups;
+
+  public static final String JSON_PROPERTY_AUTO_UPDATE = "auto_update";
+  private ApiGroupAutoUpdateDto autoUpdate;
+
   public ApiGroupDto() {}
 
   @JsonCreator
-  public ApiGroupDto(@JsonProperty(JSON_PROPERTY_ID) String id) {
+  public ApiGroupDto(
+      @JsonProperty(JSON_PROPERTY_ID) String id,
+      @JsonProperty(JSON_PROPERTY_SIZE) Integer size,
+      @JsonProperty(JSON_PROPERTY_CREATED_AT) OffsetDateTime createdAt,
+      @JsonProperty(JSON_PROPERTY_MODIFIED_AT) OffsetDateTime modifiedAt) {
     this();
     this.id = id;
+    this.size = size;
+    this.createdAt = createdAt;
+    this.modifiedAt = modifiedAt;
   }
 
   /**
@@ -44,6 +81,115 @@ public class ApiGroupDto {
     return id;
   }
 
+  public ApiGroupDto name(String name) {
+    this.name = name;
+    return this;
+  }
+
+  /**
+   * Name of group if set.
+   *
+   * @return name
+   */
+  @JsonProperty(JSON_PROPERTY_NAME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getName() {
+    return name;
+  }
+
+  @JsonProperty(JSON_PROPERTY_NAME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  /**
+   * The number of members currently in the group.
+   *
+   * @return size
+   */
+  @JsonProperty(JSON_PROPERTY_SIZE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Integer getSize() {
+    return size;
+  }
+
+  /**
+   * Timestamp for when the group was created. YYYY-MM-DDThh:mm:ss.SSSZ format
+   *
+   * @return createdAt
+   */
+  @JsonProperty(JSON_PROPERTY_CREATED_AT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OffsetDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  /**
+   * Timestamp for when the group was last updated. YYYY-MM-DDThh:mm:ss.SSSZ format
+   *
+   * @return modifiedAt
+   */
+  @JsonProperty(JSON_PROPERTY_MODIFIED_AT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OffsetDateTime getModifiedAt() {
+    return modifiedAt;
+  }
+
+  public ApiGroupDto childGroups(Set<Object> childGroups) {
+    this.childGroups = childGroups;
+    return this;
+  }
+
+  public ApiGroupDto addChildGroupsItem(Object childGroupsItem) {
+    if (this.childGroups == null) {
+      this.childGroups = new LinkedHashSet<>();
+    }
+    this.childGroups.add(childGroupsItem);
+    return this;
+  }
+
+  /**
+   * MSISDNs of child group will be included in this group. If present then this group will be auto
+   * populated. Constraints: Elements must be group IDs.
+   *
+   * @return childGroups
+   */
+  @JsonProperty(JSON_PROPERTY_CHILD_GROUPS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Set<Object> getChildGroups() {
+    return childGroups;
+  }
+
+  @JsonDeserialize(as = LinkedHashSet.class)
+  @JsonProperty(JSON_PROPERTY_CHILD_GROUPS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setChildGroups(Set<Object> childGroups) {
+    this.childGroups = childGroups;
+  }
+
+  public ApiGroupDto autoUpdate(ApiGroupAutoUpdateDto autoUpdate) {
+    this.autoUpdate = autoUpdate;
+    return this;
+  }
+
+  /**
+   * Get autoUpdate
+   *
+   * @return autoUpdate
+   */
+  @JsonProperty(JSON_PROPERTY_AUTO_UPDATE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public ApiGroupAutoUpdateDto getAutoUpdate() {
+    return autoUpdate;
+  }
+
+  @JsonProperty(JSON_PROPERTY_AUTO_UPDATE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setAutoUpdate(ApiGroupAutoUpdateDto autoUpdate) {
+    this.autoUpdate = autoUpdate;
+  }
+
   /** Return true if this ApiGroup object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -54,12 +200,18 @@ public class ApiGroupDto {
       return false;
     }
     ApiGroupDto apiGroup = (ApiGroupDto) o;
-    return Objects.equals(this.id, apiGroup.id);
+    return Objects.equals(this.id, apiGroup.id)
+        && Objects.equals(this.name, apiGroup.name)
+        && Objects.equals(this.size, apiGroup.size)
+        && Objects.equals(this.createdAt, apiGroup.createdAt)
+        && Objects.equals(this.modifiedAt, apiGroup.modifiedAt)
+        && Objects.equals(this.childGroups, apiGroup.childGroups)
+        && Objects.equals(this.autoUpdate, apiGroup.autoUpdate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id);
+    return Objects.hash(id, name, size, createdAt, modifiedAt, childGroups, autoUpdate);
   }
 
   @Override
@@ -67,6 +219,12 @@ public class ApiGroupDto {
     StringBuilder sb = new StringBuilder();
     sb.append("class ApiGroupDto {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    size: ").append(toIndentedString(size)).append("\n");
+    sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
+    sb.append("    modifiedAt: ").append(toIndentedString(modifiedAt)).append("\n");
+    sb.append("    childGroups: ").append(toIndentedString(childGroups)).append("\n");
+    sb.append("    autoUpdate: ").append(toIndentedString(autoUpdate)).append("\n");
     sb.append("}");
     return sb.toString();
   }

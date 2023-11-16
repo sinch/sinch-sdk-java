@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-class MOBinaryDtoTest extends BaseTest {
+public class MOBinaryDtoTest extends BaseTest {
 
   @GivenJsonResource("/domains/sms/v1/MOBinaryDto.json")
   MOBinaryDto loadedDto;
@@ -20,7 +20,7 @@ class MOBinaryDtoTest extends BaseTest {
   @GivenTextResource("/domains/sms/v1/MOBinaryDto.json")
   String jsonStringDto;
 
-  MOBinaryDto dto =
+  public static MOBinaryDto dto =
       new MOBinaryDto(MOBinaryDto.TypeEnum.MO_BINARY.getValue())
           .from("+11203494390")
           .id("01FC66621XXXXX119Z8PMV1QPA")

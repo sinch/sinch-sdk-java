@@ -65,6 +65,15 @@ public class ActiveNumberApi {
    */
   public ActiveNumberDto numberServiceGetActiveNumber(String projectId, String phoneNumber)
       throws ApiException {
+
+    LOGGER.finest(
+        "[numberServiceGetActiveNumber] "
+            + "projectId: "
+            + projectId
+            + ", "
+            + "phoneNumber: "
+            + phoneNumber);
+
     HttpRequest httpRequest = numberServiceGetActiveNumberRequestBuilder(projectId, phoneNumber);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
 
@@ -116,12 +125,6 @@ public class ActiveNumberApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
     final String serializedBody = null;
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.GET,
@@ -168,6 +171,36 @@ public class ActiveNumberApi {
       String pageToken,
       String orderBy)
       throws ApiException {
+
+    LOGGER.finest(
+        "[numberServiceListActiveNumbers] "
+            + "projectId: "
+            + projectId
+            + ", "
+            + "regionCode: "
+            + regionCode
+            + ", "
+            + "type: "
+            + type
+            + ", "
+            + "numberPatternPattern: "
+            + numberPatternPattern
+            + ", "
+            + "numberPatternSearchPattern: "
+            + numberPatternSearchPattern
+            + ", "
+            + "capability: "
+            + capability
+            + ", "
+            + "pageSize: "
+            + pageSize
+            + ", "
+            + "pageToken: "
+            + pageToken
+            + ", "
+            + "orderBy: "
+            + orderBy);
+
     HttpRequest httpRequest =
         numberServiceListActiveNumbersRequestBuilder(
             projectId,
@@ -287,12 +320,6 @@ public class ActiveNumberApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
     final String serializedBody = null;
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.GET,
@@ -319,6 +346,15 @@ public class ActiveNumberApi {
    */
   public ActiveNumberDto numberServiceReleaseNumber(String projectId, String phoneNumber)
       throws ApiException {
+
+    LOGGER.finest(
+        "[numberServiceReleaseNumber] "
+            + "projectId: "
+            + projectId
+            + ", "
+            + "phoneNumber: "
+            + phoneNumber);
+
     HttpRequest httpRequest = numberServiceReleaseNumberRequestBuilder(projectId, phoneNumber);
     HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
 
@@ -370,12 +406,6 @@ public class ActiveNumberApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
     final String serializedBody = null;
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.POST,
@@ -406,6 +436,18 @@ public class ActiveNumberApi {
   public ActiveNumberDto numberServiceUpdateActiveNumber(
       String projectId, String phoneNumber, ActiveNumberRequestDto activeNumberRequestDto)
       throws ApiException {
+
+    LOGGER.finest(
+        "[numberServiceUpdateActiveNumber] "
+            + "projectId: "
+            + projectId
+            + ", "
+            + "phoneNumber: "
+            + phoneNumber
+            + ", "
+            + "activeNumberRequestDto: "
+            + activeNumberRequestDto);
+
     HttpRequest httpRequest =
         numberServiceUpdateActiveNumberRequestBuilder(
             projectId, phoneNumber, activeNumberRequestDto);
@@ -462,12 +504,6 @@ public class ActiveNumberApi {
     final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
     final String serializedBody = mapper.serialize(localVarContentTypes, activeNumberRequestDto);
 
-    /*if (memberVarReadTimeout != null) {
-      localVarRequestBuilder.timeout(memberVarReadTimeout);
-    }
-    if (memberVarInterceptor != null) {
-      memberVarInterceptor.accept(localVarRequestBuilder);
-    }*/
     return new HttpRequest(
         localVarPath,
         HttpMethod.PATCH,

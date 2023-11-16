@@ -9,12 +9,12 @@ import java.util.Collection;
  * @since 1.0
  */
 public class BatchText extends Batch<String> {
-  private final boolean flashMessage;
+  private final Boolean flashMessage;
   private final Parameters parameters;
-  private final boolean truncateConcat;
-  private final int maxNumberOfMessageParts;
-  private final int fromTon;
-  private final int fromNpi;
+  private final Boolean truncateConcat;
+  private final Integer maxNumberOfMessageParts;
+  private final Integer fromTon;
+  private final Integer fromNpi;
 
   /**
    * @param id Unique identifier for batch
@@ -47,22 +47,22 @@ public class BatchText extends Batch<String> {
       String id,
       Collection<String> to,
       String from,
-      boolean canceled,
+      Boolean canceled,
       String body,
       Instant createdAt,
       Instant modifiedAt,
-      DeliveryReport deliveryReport,
+      DeliveryReportType deliveryReport,
       Instant sendAt,
       Instant expireAt,
       String callbackUrl,
       String clientReference,
-      boolean flashMessage,
-      boolean feedbackEnabled,
+      Boolean flashMessage,
+      Boolean feedbackEnabled,
       Parameters parameters,
-      boolean truncateConcat,
-      int maxNumberOfMessageParts,
-      int fromTon,
-      int fromNpi) {
+      Boolean truncateConcat,
+      Integer maxNumberOfMessageParts,
+      Integer fromTon,
+      Integer fromNpi) {
     super(
         id,
         to,
@@ -89,23 +89,23 @@ public class BatchText extends Batch<String> {
     return parameters;
   }
 
-  public boolean isFlashMessage() {
+  public Boolean isFlashMessage() {
     return flashMessage;
   }
 
-  public boolean isTruncateConcat() {
+  public Boolean isTruncateConcat() {
     return truncateConcat;
   }
 
-  public int getMaxNumberOfMessageParts() {
+  public Integer getMaxNumberOfMessageParts() {
     return maxNumberOfMessageParts;
   }
 
-  public int getFromTon() {
+  public Integer getFromTon() {
     return fromTon;
   }
 
-  public int getFromNpi() {
+  public Integer getFromNpi() {
     return fromNpi;
   }
 
@@ -133,16 +133,16 @@ public class BatchText extends Batch<String> {
   }
 
   public static class Builder extends Batch.Builder<String, Builder> {
-    private boolean flashMessage;
+    private Boolean flashMessage;
     private Parameters parameters;
-    private boolean truncateConcat;
-    private int maxNumberOfMessageParts;
-    private int fromTon;
-    private int fromNpi;
+    private Boolean truncateConcat;
+    private Integer maxNumberOfMessageParts;
+    private Integer fromTon;
+    private Integer fromNpi;
 
     private Builder() {}
 
-    public Builder setFlashMessage(boolean flashMessage) {
+    public Builder setFlashMessage(Boolean flashMessage) {
       this.flashMessage = flashMessage;
       return this;
     }
@@ -152,22 +152,22 @@ public class BatchText extends Batch<String> {
       return this;
     }
 
-    public Builder setTruncateConcat(boolean truncateConcat) {
+    public Builder setTruncateConcat(Boolean truncateConcat) {
       this.truncateConcat = truncateConcat;
       return this;
     }
 
-    public Builder setMaxNumberOfMessageParts(int maxNumberOfMessageParts) {
+    public Builder setMaxNumberOfMessageParts(Integer maxNumberOfMessageParts) {
       this.maxNumberOfMessageParts = maxNumberOfMessageParts;
       return this;
     }
 
-    public Builder setFromTon(int fromTon) {
+    public Builder setFromTon(Integer fromTon) {
       this.fromTon = fromTon;
       return this;
     }
 
-    public Builder setFromNpi(int fromNpi) {
+    public Builder setFromNpi(Integer fromNpi) {
       this.fromNpi = fromNpi;
       return this;
     }

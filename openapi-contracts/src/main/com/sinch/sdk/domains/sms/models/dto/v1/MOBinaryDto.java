@@ -27,8 +27,8 @@ import java.util.Objects;
 /** MOBinaryDto */
 @JsonPropertyOrder({
   MOBinaryDto.JSON_PROPERTY_BODY,
-  MOBinaryDto.JSON_PROPERTY_UDH,
-  MOBinaryDto.JSON_PROPERTY_TYPE
+  MOBinaryDto.JSON_PROPERTY_TYPE,
+  MOBinaryDto.JSON_PROPERTY_UDH
 })
 // @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 /*@JsonIgnoreProperties(
@@ -43,9 +43,6 @@ import java.util.Objects;
 public class MOBinaryDto extends ApiMoMessageDto {
   public static final String JSON_PROPERTY_BODY = "body";
   private String body;
-
-  public static final String JSON_PROPERTY_UDH = "udh";
-  private String udh;
 
   /** SMS in binary format */
   public enum TypeEnum {
@@ -83,6 +80,9 @@ public class MOBinaryDto extends ApiMoMessageDto {
   public static final String JSON_PROPERTY_TYPE = "type";
   private String type;
 
+  public static final String JSON_PROPERTY_UDH = "udh";
+  private String udh;
+
   public MOBinaryDto() {}
 
   @JsonCreator
@@ -113,6 +113,17 @@ public class MOBinaryDto extends ApiMoMessageDto {
     this.body = body;
   }
 
+  /**
+   * SMS in binary format
+   *
+   * @return type
+   */
+  @JsonProperty(JSON_PROPERTY_TYPE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public String getType() {
+    return type;
+  }
+
   public MOBinaryDto udh(String udh) {
     this.udh = udh;
     return this;
@@ -133,17 +144,6 @@ public class MOBinaryDto extends ApiMoMessageDto {
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setUdh(String udh) {
     this.udh = udh;
-  }
-
-  /**
-   * SMS in binary format
-   *
-   * @return type
-   */
-  @JsonProperty(JSON_PROPERTY_TYPE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getType() {
-    return type;
   }
 
   @Override
@@ -199,14 +199,14 @@ public class MOBinaryDto extends ApiMoMessageDto {
     }
     MOBinaryDto moBinary = (MOBinaryDto) o;
     return Objects.equals(this.body, moBinary.body)
-        && Objects.equals(this.udh, moBinary.udh)
         && Objects.equals(this.type, moBinary.type)
+        && Objects.equals(this.udh, moBinary.udh)
         && super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(body, udh, type, super.hashCode());
+    return Objects.hash(body, type, udh, super.hashCode());
   }
 
   @Override
@@ -215,8 +215,8 @@ public class MOBinaryDto extends ApiMoMessageDto {
     sb.append("class MOBinaryDto {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    body: ").append(toIndentedString(body)).append("\n");
-    sb.append("    udh: ").append(toIndentedString(udh)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    udh: ").append(toIndentedString(udh)).append("\n");
     sb.append("}");
     return sb.toString();
   }

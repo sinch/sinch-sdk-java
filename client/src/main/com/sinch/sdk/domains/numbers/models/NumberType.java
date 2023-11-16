@@ -10,7 +10,7 @@ import java.util.stream.Stream;
  *
  * @since 1.0
  */
-public final class NumberType extends EnumDynamic<NumberType> {
+public final class NumberType extends EnumDynamic<String, NumberType> {
 
   /** Numbers that belong to a specific range. */
   public static final NumberType MOBILE = new NumberType("MOBILE");
@@ -20,7 +20,7 @@ public final class NumberType extends EnumDynamic<NumberType> {
   /** Numbers that are free of charge for the calling party but billed for all arriving calls. */
   public static final NumberType TOLL_FREE = new NumberType("TOLL_FREE");
 
-  private static final EnumSupportDynamic<NumberType> ENUM_SUPPORT =
+  private static final EnumSupportDynamic<String, NumberType> ENUM_SUPPORT =
       new EnumSupportDynamic<>(
           NumberType.class, NumberType::new, Arrays.asList(MOBILE, LOCAL, TOLL_FREE));
 
