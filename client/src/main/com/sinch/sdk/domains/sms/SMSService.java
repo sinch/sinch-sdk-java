@@ -40,4 +40,12 @@ public interface SMSService {
    * @since 1.0
    */
   InboundsService inbounds();
+
+  /**
+   * Groups Service instance
+   *
+   * @return service instance for project
+   * @since 1.0
+   */
+  GroupsService groups();
 }
