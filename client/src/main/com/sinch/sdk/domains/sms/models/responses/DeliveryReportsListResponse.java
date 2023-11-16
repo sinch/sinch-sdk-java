@@ -26,7 +26,7 @@ public class DeliveryReportsListResponse extends ListResponse<DeliveryReportReci
   }
 
   public boolean hasNextPage() {
-    return (null != page.getNextPageToken() && null != page.getNextPageToken().getToken());
+    return (null != page.getNextPageToken());
   }
 
   public DeliveryReportsListResponse nextPage() {
@@ -35,8 +35,7 @@ public class DeliveryReportsListResponse extends ListResponse<DeliveryReportReci
     }
     DeliveryReportListRequestParameters.Builder newParameters =
         DeliveryReportListRequestParameters.builder(page.getParameters());
-    Integer nextToken = page.getNextPageToken().getToken();
-    newParameters.setPage(nextToken);
+    newParameters.setPage(page.getNextPageToken());
     return service.list(newParameters.build());
   }
 

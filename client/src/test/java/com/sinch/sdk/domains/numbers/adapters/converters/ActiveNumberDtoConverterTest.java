@@ -2,7 +2,7 @@ package com.sinch.sdk.domains.numbers.adapters.converters;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.sinch.sdk.core.models.pagination.PageToken;
+import com.sinch.sdk.core.models.pagination.TokenPageNavigator;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.numbers.models.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.Capability;
@@ -50,7 +50,7 @@ class ActiveNumberDtoConverterTest {
     ActiveNumbersResponseDto dto = new ActiveNumbersResponseDto();
     dto.setActiveNumbers(Collections.singletonList(dtoItem));
 
-    Pair<Collection<ActiveNumber>, PageToken<String>> converted =
+    Pair<Collection<ActiveNumber>, TokenPageNavigator> converted =
         ActiveNumberDtoConverter.convert(dto);
 
     assertEquals(dto.getActiveNumbers().size(), converted.getLeft().size());

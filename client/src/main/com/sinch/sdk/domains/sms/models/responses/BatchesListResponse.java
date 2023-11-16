@@ -25,7 +25,7 @@ public class BatchesListResponse extends ListResponse<Batch<?>> {
   }
 
   public boolean hasNextPage() {
-    return (null != page.getNextPageToken() && null != page.getNextPageToken().getToken());
+    return (null != page.getNextPageToken());
   }
 
   public BatchesListResponse nextPage() {
@@ -34,8 +34,7 @@ public class BatchesListResponse extends ListResponse<Batch<?>> {
     }
     BatchesListRequestParameters.Builder newParameters =
         BatchesListRequestParameters.builder(page.getParameters());
-    Integer nextToken = page.getNextPageToken().getToken();
-    newParameters.setPage(nextToken);
+    newParameters.setPage(page.getNextPageToken());
     return service.list(newParameters.build());
   }
 
@@ -45,6 +44,6 @@ public class BatchesListResponse extends ListResponse<Batch<?>> {
 
   @Override
   public String toString() {
-    return "ActiveNumberListResponse{" + "page=" + page + '}';
+    return "BatchesListResponse{" + "page=" + page + '}';
   }
 }

@@ -1,6 +1,6 @@
 package com.sinch.sdk.domains.sms.adapters.converters;
 
-import com.sinch.sdk.core.models.pagination.PageToken;
+import com.sinch.sdk.core.models.pagination.CursorPageNavigator;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatch;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatchMMS;
@@ -74,14 +74,10 @@ public class DeliveryReportDtoConverter {
         .build();
   }
 
-  public static Pair<Collection<DeliveryReportRecipient>, PageToken<Integer>> convert(
+  public static Pair<Collection<DeliveryReportRecipient>, CursorPageNavigator> convert(
       DeliveryReportListDto dto) {
-    // check end of pagination limit reached: (current page number * page size ) cannot be greater
-    // than "count" to be able to call next page
-    Integer nextPageToken =
-        ((dto.getPage() + 1) * Long.valueOf(dto.getPageSize())) >= dto.getCount()
-            ? null
-            : dto.getPage() + 1;
+    CursorPageNavigator navigator =
+        new CursorPageNavigator(dto.getPage(), dto.getPageSize(), dto.getCount());
     Collection<RecipientDeliveryReportDto> collection = dto.getDeliveryReports();
     Collection<DeliveryReportRecipient> pageContent = new ArrayList<>();
     if (null != collection) {
@@ -90,7 +86,7 @@ public class DeliveryReportDtoConverter {
         pageContent.add(convert);
       }
     }
-    return new Pair<>(pageContent, new PageToken<>(nextPageToken));
+    return new Pair<>(pageContent, navigator);
   }
 
   private static DeliveryReportStatusDetails convert(MessageDeliveryStatusDto dto) {

@@ -2,7 +2,7 @@ package com.sinch.sdk.domains.sms.adapters.converters;
 
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.models.AbstractOpenApiSchema;
-import com.sinch.sdk.core.models.pagination.PageToken;
+import com.sinch.sdk.core.models.pagination.CursorPageNavigator;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.sms.models.BaseBatch;
 import com.sinch.sdk.domains.sms.models.Batch;
@@ -269,14 +269,10 @@ public class BatchDtoConverter {
     return new MediaBodyDto().url(value.getUrl()).message(value.getMessage().orElse(null));
   }
 
-  public static <T extends Batch<?>> Pair<Collection<T>, PageToken<Integer>> convert(
+  public static <T extends Batch<?>> Pair<Collection<T>, CursorPageNavigator> convert(
       ApiBatchListDto dto) {
-    // check end of pagination limit reached: (current page number * page size ) cannot be greater
-    // than "count" to be able to call next page
-    Integer nextPageToken =
-        ((dto.getPage() + 1) * Long.valueOf(dto.getPageSize())) >= dto.getCount()
-            ? null
-            : dto.getPage() + 1;
+    CursorPageNavigator navigator =
+        new CursorPageNavigator(dto.getPage(), dto.getPageSize(), dto.getCount());
     Collection<ApiBatchListBatchesInnerDto> collection = dto.getBatches();
     Collection<T> pageContent = new ArrayList<>();
     if (null != collection) {
@@ -285,7 +281,7 @@ public class BatchDtoConverter {
         pageContent.add(convert);
       }
     }
-    return new Pair<>(pageContent, new PageToken<>(nextPageToken));
+    return new Pair<>(pageContent, navigator);
   }
 
   public static ApiDeliveryFeedbackDto convert(Collection<String> recipients) {

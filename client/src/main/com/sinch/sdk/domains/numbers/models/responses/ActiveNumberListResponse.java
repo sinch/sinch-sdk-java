@@ -27,8 +27,7 @@ public class ActiveNumberListResponse extends ListResponse<ActiveNumber> {
   }
 
   public boolean hasNextPage() {
-    return (null != page.getNextPageToken()
-        && !StringUtil.isEmpty(page.getNextPageToken().getToken()));
+    return (null != page.getNextPageToken() && !StringUtil.isEmpty(page.getNextPageToken()));
   }
 
   public ActiveNumberListResponse nextPage() {
@@ -37,8 +36,7 @@ public class ActiveNumberListResponse extends ListResponse<ActiveNumber> {
     }
     ActiveNumberListRequestParameters.Builder newParameters =
         new ActiveNumberListRequestParameters.Builder(page.getParameters());
-    String nextToken = page.getNextPageToken().getToken();
-    newParameters.setPageToken(nextToken);
+    newParameters.setPageToken(page.getNextPageToken());
     return service.list(newParameters.build());
   }
 

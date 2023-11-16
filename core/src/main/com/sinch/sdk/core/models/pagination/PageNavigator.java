@@ -1,9 +1,9 @@
 package com.sinch.sdk.core.models.pagination;
 
-public class PageToken<T> {
+public class PageNavigator<T> {
   private final T token;
 
-  public PageToken(T token) {
+  public PageNavigator(T token) {
     this.token = token;
   }
 
@@ -13,6 +13,6 @@ public class PageToken<T> {
 
   @Override
   public String toString() {
-    return "PageToken{" + "token='" + token + '\'' + '}';
+    return "PageNavigator{" + "token='" + token + '\'' + '}';
   }
 }

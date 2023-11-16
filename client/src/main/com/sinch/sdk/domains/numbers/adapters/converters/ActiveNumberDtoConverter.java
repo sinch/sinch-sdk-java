@@ -1,6 +1,6 @@
 package com.sinch.sdk.domains.numbers.adapters.converters;
 
-import com.sinch.sdk.core.models.pagination.PageToken;
+import com.sinch.sdk.core.models.pagination.TokenPageNavigator;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.numbers.models.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.Capability;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class ActiveNumberDtoConverter {
 
-  public static Pair<Collection<ActiveNumber>, PageToken<String>> convert(
+  public static Pair<Collection<ActiveNumber>, TokenPageNavigator> convert(
       ActiveNumbersResponseDto dto) {
     String nextPageToken = dto.getNextPageToken();
     List<ActiveNumberDto> list = dto.getActiveNumbers();
@@ -23,7 +23,7 @@ public class ActiveNumberDtoConverter {
       pageContent =
           list.stream().map(ActiveNumberDtoConverter::convert).collect(Collectors.toList());
     }
-    return new Pair<>(pageContent, new PageToken<>(nextPageToken));
+    return new Pair<>(pageContent, new TokenPageNavigator(nextPageToken));
   }
 
   public static ActiveNumber convert(ActiveNumberDto dto) {
