@@ -5,14 +5,14 @@ import com.sinch.sdk.domains.numbers.models.AvailableNumber;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-public class Get extends BaseApplication {
-  private static final Logger LOGGER = Logger.getLogger(Get.class.getName());
+public class CheckAvailability extends BaseApplication {
+  private static final Logger LOGGER = Logger.getLogger(CheckAvailability.class.getName());
 
-  public Get() throws IOException {}
+  public CheckAvailability() throws IOException {}
 
   public static void main(String[] args) {
     try {
-      new Get().run();
+      new CheckAvailability().run();
     } catch (Exception e) {
       LOGGER.severe(e.getMessage());
       e.printStackTrace();
@@ -21,9 +21,9 @@ public class Get extends BaseApplication {
 
   public void run() {
 
-    LOGGER.info("Get for :" + phoneNumber);
+    LOGGER.info("CheckAvailability for: " + phoneNumber);
 
-    AvailableNumber value = client.numbers().available().get(phoneNumber);
+    AvailableNumber value = client.numbers().available().checkAvailability(phoneNumber);
 
     LOGGER.info("Response :" + value);
   }

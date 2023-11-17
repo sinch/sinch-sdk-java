@@ -80,7 +80,7 @@ public class AvailableNumberService
     return new AvailableNumberListResponse(entities);
   }
 
-  public AvailableNumber get(String phoneNumber) throws ApiException {
+  public AvailableNumber checkAvailability(String phoneNumber) throws ApiException {
     AvailableNumberDto response =
         getApi().numberServiceGetAvailableNumber(configuration.getProjectId(), phoneNumber);
     return AvailableNumberDtoConverter.convert(response);

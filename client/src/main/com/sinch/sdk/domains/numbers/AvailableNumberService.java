@@ -36,11 +36,13 @@ public interface AvailableNumberService {
   /**
    * Get available number information by phone number
    *
+   * <p>This endpoint allows you to enter a specific phone number to check if it's available for use
+   *
    * @param phoneNumber Phone number
    * @return Available number information
    * @since 1.0
    */
-  AvailableNumber get(String phoneNumber) throws ApiException;
+  AvailableNumber checkAvailability(String phoneNumber) throws ApiException;
 
   /**
    * Activate a new phone number
