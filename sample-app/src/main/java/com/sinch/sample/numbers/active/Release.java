@@ -21,7 +21,7 @@ public class Release extends BaseApplication {
 
   public void run() {
 
-    LOGGER.info("Get for :" + phoneNumber);
+    LOGGER.info("Release for: " + phoneNumber);
 
     ActiveNumber value = client.numbers().active().release(phoneNumber);
 

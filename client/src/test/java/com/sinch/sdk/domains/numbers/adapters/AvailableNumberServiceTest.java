@@ -136,7 +136,7 @@ class AvailableNumberServiceTest extends BaseTest {
     when(api.numberServiceGetAvailableNumber(eq(configuration.getProjectId()), eq("foo")))
         .thenReturn(getNumberDto);
 
-    AvailableNumber response = service.get("foo");
+    AvailableNumber response = service.checkAvailability("foo");
 
     AvailableNumber expected =
         AvailableNumber.builder()
