@@ -36,6 +36,12 @@ public class SinchClient {
 
   private HttpClientApache httpClient;
 
+  // TODO: generator tools do not generate security schemas related information.
+  // Will have to fix it with a generic way
+  public static final String SECURITY_SCHEME_KEYWORD_NUMBERS = "BasicAuth";
+  public static final String SECURITY_SCHEME_KEYWORD_VERIFICATION = "Basic";
+  public static final String SECURITY_SCHEME_KEYWORD_SMS = "BearerAuth";
+
   /**
    * Create a Sinch Client instance based onto configuration
    *
@@ -147,8 +153,11 @@ public class SinchClient {
       BearerAuthManager bearerAuthManager = new BearerAuthManager(configuration, new HttpMapper());
 
       Map<String, AuthManager> authManagers =
-          Stream.of(basicAuthManager, bearerAuthManager)
-              .map(e -> new AbstractMap.SimpleEntry<>(e.getSchema(), e))
+          Stream.of(
+                  new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_NUMBERS, basicAuthManager),
+                  new AbstractMap.SimpleEntry<>(
+                      SECURITY_SCHEME_KEYWORD_VERIFICATION, basicAuthManager),
+                  new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_SMS, bearerAuthManager))
               .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
       // TODO: by adding a setter, we could imagine having another HTTP client provided

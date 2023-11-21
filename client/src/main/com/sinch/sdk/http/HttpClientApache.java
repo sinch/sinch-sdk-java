@@ -5,14 +5,25 @@ import static com.sinch.sdk.auth.adapters.BearerAuthManager.BEARER_EXPIRED_KEYWO
 import static com.sinch.sdk.core.http.URLParameterUtils.encodeParametersAsString;
 
 import com.sinch.sdk.auth.AuthManager;
-import com.sinch.sdk.auth.adapters.BearerAuthManager;
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.core.http.*;
+import com.sinch.sdk.core.http.HttpMethod;
+import com.sinch.sdk.core.http.HttpRequest;
+import com.sinch.sdk.core.http.HttpResponse;
+import com.sinch.sdk.core.http.HttpStatus;
+import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Scanner;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.ClassicHttpRequest;
@@ -23,14 +34,28 @@ import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.http.io.support.ClassicRequestBuilder;
 
 public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
+
   private static final Logger LOGGER = Logger.getLogger(HttpClientApache.class.getName());
   private static final String AUTHORIZATION_HEADER_KEYWORD = "Authorization";
-  private final Map<String, AuthManager> authManagers;
+  /** Schemes names (could be aliases) from OAS files */
+  private final Map<String, AuthManager> authManagersByOasSecuritySchemes;
+  /**
+   * HTTP Authentication schemes: <a
+   * href="https://www.iana.org/assignments/http-authschemes/http-authschemes.xhtml">...</a>
+   */
+  private final Map<String, AuthManager> authManagersByAuthSchemes;
+
+  private static final String BEARER_SCHEME_NAME = "Bearer";
+
   private CloseableHttpClient client;
 
-  public HttpClientApache(Map<String, AuthManager> authManagers) {
+  public HttpClientApache(Map<String, AuthManager> authManagersByOasSecuritySchemes) {
     this.client = HttpClients.createDefault();
-    this.authManagers = authManagers;
+    this.authManagersByOasSecuritySchemes = authManagersByOasSecuritySchemes;
+    this.authManagersByAuthSchemes =
+        authManagersByOasSecuritySchemes.values().stream()
+            .map(authManager -> new AbstractMap.SimpleEntry<>(authManager.getSchema(), authManager))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a1, a2) -> a1));
   }
 
   private static HttpResponse processResponse(ClassicHttpResponse response) throws IOException {
@@ -125,12 +150,25 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
 
   private boolean processUnauthorizedResponse(HttpRequest request, HttpResponse response) {
 
-    AuthManager bearerAuthManager = authManagers.get(BearerAuthManager.BEARER_SCHEMA_KEYWORD);
-    // is request was with Bearer authentication ?
-    Collection<String> auths = request.getAuthNames();
+    AuthManager bearerAuthManager = authManagersByAuthSchemes.get(BEARER_SCHEME_NAME);
+    if (null == bearerAuthManager) {
+      // no bearer manager registered
+      return false;
+    }
 
-    if (null == bearerAuthManager || !auths.contains(BearerAuthManager.BEARER_SCHEMA_KEYWORD)) {
-      // not required to ask for a new token: original request is not using it
+    Collection<String> auths = request.getAuthNames();
+    Optional<String> requestSupportBearerAuthentication =
+        auths.stream()
+            .filter(
+                f ->
+                    null != authManagersByOasSecuritySchemes.get(f)
+                        && authManagersByOasSecuritySchemes
+                            .get(f)
+                            .getSchema()
+                            .equals(BEARER_SCHEME_NAME))
+            .findFirst();
+
+    if (!requestSupportBearerAuthentication.isPresent()) {
       return false;
     }
     // looking for "expired" keyword present in "www-authenticate" header
@@ -175,8 +213,8 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
     }
 
     for (String entry : values) {
-      if (authManagers.containsKey(entry)) {
-        AuthManager authManager = authManagers.get(entry);
+      if (authManagersByOasSecuritySchemes.containsKey(entry)) {
+        AuthManager authManager = authManagersByOasSecuritySchemes.get(entry);
         requestBuilder.setHeader(
             AUTHORIZATION_HEADER_KEYWORD, authManager.getAuthorizationHeaderValue());
         return;

@@ -12,7 +12,7 @@ public class GetForNumber extends BaseApplication {
 
   public static void main(String[] args) {
     try {
-      new Get().run();
+      new GetForNumber().run();
     } catch (Exception e) {
       LOGGER.severe(e.getMessage());
       e.printStackTrace();

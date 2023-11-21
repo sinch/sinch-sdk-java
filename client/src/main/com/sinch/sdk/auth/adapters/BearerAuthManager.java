@@ -15,11 +15,11 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 public class BearerAuthManager implements AuthManager {
-  public static final String BEARER_SCHEMA_KEYWORD = "BearerAuth";
   public static final String BEARER_EXPIRED_KEYWORD = "expired";
   public static final String BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD = "www-authenticate";
   private static final Logger LOGGER = Logger.getLogger(BearerAuthManager.class.getName());
-  private static final String BEARER_AUTH_KEYWORD = "Bearer";
+  private static final String SCHEMA_KEYWORD = "Bearer";
+  private static final String AUTH_KEYWORD = "Bearer";
   private static final int maxRefreshAttempt = 5;
   private final Configuration configuration;
   private final HttpMapper mapper;
@@ -32,7 +32,7 @@ public class BearerAuthManager implements AuthManager {
   }
 
   public String getSchema() {
-    return BEARER_SCHEMA_KEYWORD;
+    return SCHEMA_KEYWORD;
   }
 
   @Override
@@ -51,7 +51,7 @@ public class BearerAuthManager implements AuthManager {
     if (token == null) {
       refreshToken();
     }
-    return BEARER_AUTH_KEYWORD + " " + token;
+    return AUTH_KEYWORD + " " + token;
   }
 
   private void refreshToken() {
@@ -80,7 +80,7 @@ public class BearerAuthManager implements AuthManager {
             null,
             null,
             Collections.singletonList("application/x-www-form-urlencoded"),
-            Collections.singletonList(BasicAuthManager.BASIC_SCHEMA_KEYWORD));
+            Collections.singletonList("Basic"));
     try {
       HttpResponse httpResponse = httpClient.invokeAPI(configuration.getOAuthServer(), request);
       BearerAuthResponse authResponse =

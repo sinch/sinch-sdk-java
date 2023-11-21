@@ -21,7 +21,7 @@ class BasicAuthManagerTest {
 
   @Test
   void getSchema() {
-    assertEquals("BasicAuth", authManager.getSchema());
+    assertEquals("Basic", authManager.getSchema());
   }
 
   @Test

@@ -83,7 +83,7 @@ class HttpClientTestIT extends BaseTest {
             null,
             null,
             null,
-            Collections.singletonList(BasicAuthManager.BASIC_SCHEMA_KEYWORD)));
+            Collections.singletonList(basicAuthManager.getSchema())));
     RecordedRequest recordedRequest = mockBackEnd.takeRequest();
 
     String header = recordedRequest.getHeader("Authorization");
@@ -107,7 +107,7 @@ class HttpClientTestIT extends BaseTest {
             null,
             null,
             null,
-            Collections.singletonList(BearerAuthManager.BEARER_SCHEMA_KEYWORD)));
+            Collections.singletonList(bearerAuthManager.getSchema())));
 
     RecordedRequest recordedRequest = mockBackEnd.takeRequest();
 
@@ -149,7 +149,7 @@ class HttpClientTestIT extends BaseTest {
               null,
               null,
               null,
-              Collections.singletonList(BearerAuthManager.BEARER_SCHEMA_KEYWORD)));
+              Collections.singletonList(bearerAuthManager.getSchema())));
     } catch (ApiException ae) {
       // noop
     }

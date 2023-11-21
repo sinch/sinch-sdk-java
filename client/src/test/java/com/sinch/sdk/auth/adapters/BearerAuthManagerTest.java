@@ -46,7 +46,7 @@ public class BearerAuthManagerTest extends BaseTest {
 
   @Test
   void getSchema() {
-    assertEquals("BearerAuth", authManager.getSchema());
+    assertEquals("Bearer", authManager.getSchema());
   }
 
   @Test
@@ -79,7 +79,7 @@ public class BearerAuthManagerTest extends BaseTest {
 
     HttpRequest httpRequestCaptorValue = httpRequestCaptor.getValue();
     assertEquals(HttpMethod.POST, httpRequestCaptorValue.getMethod());
-    assertTrue(httpRequestCaptorValue.getAuthNames().stream().anyMatch(e -> e.equals("BasicAuth")));
+    assertTrue(httpRequestCaptorValue.getAuthNames().stream().anyMatch(e -> e.equals("Basic")));
     assertTrue(
         httpRequestCaptorValue.getContentType().stream()
             .anyMatch(e -> e.equals("application/x-www-form-urlencoded")));
