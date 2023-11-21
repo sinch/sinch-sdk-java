@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.numbers.adapters;
 
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.utils.EnumDynamic;
@@ -20,6 +21,7 @@ import com.sinch.sdk.domains.numbers.models.responses.AvailableNumberListRespons
 import com.sinch.sdk.models.Configuration;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -31,10 +33,12 @@ public class AvailableNumberService
 
   public AvailableNumberService() {}
 
-  public AvailableNumberService(Configuration configuration, HttpClient httpClient) {
+  public AvailableNumberService(
+      Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManagers) {
     this.configuration = configuration;
     this.api =
-        new AvailableNumberApi(httpClient, configuration.getNumbersServer(), new HttpMapper());
+        new AvailableNumberApi(
+            httpClient, configuration.getNumbersServer(), authManagers, new HttpMapper());
   }
 
   private AvailableNumberApi getApi() {

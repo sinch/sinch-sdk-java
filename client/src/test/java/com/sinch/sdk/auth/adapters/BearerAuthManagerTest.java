@@ -7,8 +7,8 @@ import static org.mockito.Mockito.*;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
-import com.sinch.sdk.auth.AuthManager;
 import com.sinch.sdk.core.exceptions.ApiAuthException;
+import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.http.HttpMethod;
@@ -17,6 +17,7 @@ import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.models.Configuration;
 import java.nio.charset.StandardCharsets;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -42,22 +43,26 @@ public class BearerAuthManagerTest extends BaseTest {
           .setOAuthUrl("OAuth url")
           .build();
 
-  AuthManager authManager = new BearerAuthManager(configuration, new HttpMapper());
+  AuthManager authManager;
+
+  @BeforeEach
+  public void initEach() {
+    authManager = new BearerAuthManager(configuration, new HttpMapper(), httpClient);
+  }
 
   @Test
   void getSchema() {
-    assertEquals("BearerAuth", authManager.getSchema());
+    assertEquals("Bearer", authManager.getSchema());
   }
 
   @Test
   void getAuthorizationHeaderValue() {
     String expectedToken = "Bearer token value";
 
-    when(httpClient.invokeAPI(any(), any()))
+    when(httpClient.invokeAPI(any(), any(), any()))
         .thenReturn(
             new HttpResponse(
                 200, "foo message", null, jsonResponse.getBytes(StandardCharsets.UTF_8)));
-    authManager.setHttpClient(httpClient);
 
     String token = authManager.getAuthorizationHeaderValue();
 
@@ -66,11 +71,11 @@ public class BearerAuthManagerTest extends BaseTest {
 
   @Test
   void callToOAuthServer() {
-    when(httpClient.invokeAPI(serverConfigurationCaptor.capture(), httpRequestCaptor.capture()))
+    when(httpClient.invokeAPI(
+            serverConfigurationCaptor.capture(), any(), httpRequestCaptor.capture()))
         .thenReturn(
             new HttpResponse(
                 200, "foo message", null, jsonResponse.getBytes(StandardCharsets.UTF_8)));
-    authManager.setHttpClient(httpClient);
 
     authManager.getAuthorizationHeaderValue();
 
@@ -79,7 +84,7 @@ public class BearerAuthManagerTest extends BaseTest {
 
     HttpRequest httpRequestCaptorValue = httpRequestCaptor.getValue();
     assertEquals(HttpMethod.POST, httpRequestCaptorValue.getMethod());
-    assertTrue(httpRequestCaptorValue.getAuthNames().stream().anyMatch(e -> e.equals("BasicAuth")));
+    assertTrue(httpRequestCaptorValue.getAuthNames().stream().anyMatch(e -> e.equals("Basic")));
     assertTrue(
         httpRequestCaptorValue.getContentType().stream()
             .anyMatch(e -> e.equals("application/x-www-form-urlencoded")));
@@ -88,22 +93,19 @@ public class BearerAuthManagerTest extends BaseTest {
 
   @Test
   void resetToken() {
-    when(httpClient.invokeAPI(any(), any()))
+    when(httpClient.invokeAPI(any(), any(), any()))
         .thenReturn(
             new HttpResponse(
                 200, "foo message", null, jsonResponse.getBytes(StandardCharsets.UTF_8)));
-    authManager.setHttpClient(httpClient);
 
     authManager.resetToken();
     authManager.getAuthorizationHeaderValue();
 
-    verify(httpClient, times(1)).invokeAPI(any(), any());
+    verify(httpClient, times(1)).invokeAPI(any(), any(), any());
   }
 
   @Test
   void noInfiniteLoopAndException() {
-    authManager.setHttpClient(httpClient);
-
     ApiAuthException exception =
         assertThrows(ApiAuthException.class, authManager::getAuthorizationHeaderValue);
     assertEquals(exception.getCode(), 401);

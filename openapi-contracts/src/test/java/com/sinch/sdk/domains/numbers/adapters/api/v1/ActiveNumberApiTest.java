@@ -32,10 +32,11 @@ class ActiveNumberApiTest extends BaseTest {
 
   @Mock HttpClient httpClient;
   @Mock ServerConfiguration serverConfiguration;
+
   HttpMapper mapper = new HttpMapper();
 
   @InjectMocks
-  ActiveNumberApi service = new ActiveNumberApi(httpClient, serverConfiguration, mapper);
+  ActiveNumberApi service = new ActiveNumberApi(httpClient, serverConfiguration, null, mapper);
 
   ActiveNumberDto expectedActiveNumberDto =
       new ActiveNumberDto(
@@ -72,7 +73,7 @@ class ActiveNumberApiTest extends BaseTest {
   @Test
   void list() {
 
-    when(httpClient.invokeAPI(eq(serverConfiguration), any()))
+    when(httpClient.invokeAPI(eq(serverConfiguration), any(), any()))
         .thenReturn(
             new HttpResponse(
                 200, "foo message", null, activeListResponse.getBytes(StandardCharsets.UTF_8)));
@@ -101,7 +102,7 @@ class ActiveNumberApiTest extends BaseTest {
   @Test
   void get() {
 
-    when(httpClient.invokeAPI(eq(serverConfiguration), any()))
+    when(httpClient.invokeAPI(eq(serverConfiguration), any(), any()))
         .thenReturn(
             new HttpResponse(
                 200, "foo message", null, activeGetResponse.getBytes(StandardCharsets.UTF_8)));
@@ -114,7 +115,7 @@ class ActiveNumberApiTest extends BaseTest {
   @Test
   void release() {
 
-    when(httpClient.invokeAPI(eq(serverConfiguration), any()))
+    when(httpClient.invokeAPI(eq(serverConfiguration), any(), any()))
         .thenReturn(
             new HttpResponse(
                 200, "foo message", null, activeGetResponse.getBytes(StandardCharsets.UTF_8)));
@@ -127,7 +128,7 @@ class ActiveNumberApiTest extends BaseTest {
   @Test
   void update() {
 
-    when(httpClient.invokeAPI(eq(serverConfiguration), any()))
+    when(httpClient.invokeAPI(eq(serverConfiguration), any(), any()))
         .thenReturn(
             new HttpResponse(
                 200, "foo message", null, activeGetResponse.getBytes(StandardCharsets.UTF_8)));

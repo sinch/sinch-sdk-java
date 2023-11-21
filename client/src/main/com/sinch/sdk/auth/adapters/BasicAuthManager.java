@@ -1,14 +1,12 @@
 package com.sinch.sdk.auth.adapters;
 
-import com.sinch.sdk.auth.AuthManager;
-import com.sinch.sdk.core.http.HttpClient;
+import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.models.Configuration;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 public class BasicAuthManager implements AuthManager {
-  public static final String BASIC_SCHEMA_KEYWORD = "BasicAuth";
-  private static final String BASIC_AUTH_KEYWORD = "Basic";
+  private static final String AUTH_KEYWORD = "Basic";
   private final Configuration configuration;
 
   public BasicAuthManager(Configuration configuration) {
@@ -16,12 +14,7 @@ public class BasicAuthManager implements AuthManager {
   }
 
   public String getSchema() {
-    return BASIC_SCHEMA_KEYWORD;
-  }
-
-  @Override
-  public void setHttpClient(HttpClient httpClient) {
-    // no op
+    return SCHEMA_KEYWORD_BASIC;
   }
 
   @Override
@@ -36,7 +29,7 @@ public class BasicAuthManager implements AuthManager {
 
     String raw = key + ":" + secret;
 
-    return BASIC_AUTH_KEYWORD
+    return AUTH_KEYWORD
         + " "
         + Base64.getEncoder().encodeToString(raw.getBytes(StandardCharsets.UTF_8));
   }

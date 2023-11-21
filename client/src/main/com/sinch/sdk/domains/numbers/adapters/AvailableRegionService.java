@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.numbers.adapters;
 
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.utils.EnumDynamic;
@@ -13,6 +14,7 @@ import com.sinch.sdk.domains.numbers.models.responses.AvailableRegionListRespons
 import com.sinch.sdk.models.Configuration;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class AvailableRegionService
@@ -23,10 +25,12 @@ public class AvailableRegionService
 
   public AvailableRegionService() {}
 
-  public AvailableRegionService(Configuration configuration, HttpClient httpClient) {
+  public AvailableRegionService(
+      Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManagers) {
     this.configuration = configuration;
     this.api =
-        new AvailableRegionsApi(httpClient, configuration.getNumbersServer(), new HttpMapper());
+        new AvailableRegionsApi(
+            httpClient, configuration.getNumbersServer(), authManagers, new HttpMapper());
   }
 
   public AvailableRegionListResponse list(AvailableRegionListAllRequestParameters parameters)

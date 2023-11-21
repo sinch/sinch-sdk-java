@@ -1,13 +1,21 @@
 package com.sinch.sdk.domains.sms.adapters;
 
+import com.sinch.sdk.auth.adapters.BearerAuthManager;
+import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
+import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.domains.sms.BatchesService;
 import com.sinch.sdk.domains.sms.DeliveryReportsService;
 import com.sinch.sdk.domains.sms.InboundsService;
 import com.sinch.sdk.domains.sms.WebHooksService;
 import com.sinch.sdk.models.Configuration;
+import java.util.AbstractMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
+  private static final String SECURITY_SCHEME_KEYWORD_SMS = "BearerAuth";
 
   private final Configuration configuration;
   private final HttpClient httpClient;
@@ -16,17 +24,26 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
   private DeliveryReportsService deliveryReports;
   private InboundsService inbounds;
   private GroupsService groups;
+  private final Map<String, AuthManager> authManagers;
 
   public SMSService(Configuration configuration, HttpClient httpClient) {
     this.configuration = configuration;
     this.httpClient = httpClient;
+
+    BearerAuthManager bearerAuthManager =
+        new BearerAuthManager(configuration, new HttpMapper(), httpClient);
+
+    authManagers =
+        Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_SMS, bearerAuthManager))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 
   @Override
   public BatchesService batches() {
     if (null == this.batches) {
       this.batches =
-          new com.sinch.sdk.domains.sms.adapters.BatchesService(configuration, httpClient);
+          new com.sinch.sdk.domains.sms.adapters.BatchesService(
+              configuration, httpClient, authManagers);
     }
     return this.batches;
   }
@@ -43,7 +60,8 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
   public DeliveryReportsService deliveryReports() {
     if (null == this.deliveryReports) {
       this.deliveryReports =
-          new com.sinch.sdk.domains.sms.adapters.DeliveryReportsService(configuration, httpClient);
+          new com.sinch.sdk.domains.sms.adapters.DeliveryReportsService(
+              configuration, httpClient, authManagers);
     }
     return this.deliveryReports;
   }
@@ -52,7 +70,8 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
   public InboundsService inbounds() {
     if (null == this.inbounds) {
       this.inbounds =
-          new com.sinch.sdk.domains.sms.adapters.InboundsService(configuration, httpClient);
+          new com.sinch.sdk.domains.sms.adapters.InboundsService(
+              configuration, httpClient, authManagers);
     }
     return this.inbounds;
   }
@@ -60,7 +79,9 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
   @Override
   public GroupsService groups() {
     if (null == this.groups) {
-      this.groups = new com.sinch.sdk.domains.sms.adapters.GroupsService(configuration, httpClient);
+      this.groups =
+          new com.sinch.sdk.domains.sms.adapters.GroupsService(
+              configuration, httpClient, authManagers);
     }
     return this.groups;
   }
