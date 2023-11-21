@@ -25,7 +25,7 @@ public class InboundsListResponse extends ListResponse<Inbound<?>> {
   }
 
   public boolean hasNextPage() {
-    return (null != page.getNextPageToken() && null != page.getNextPageToken().getToken());
+    return (null != page.getNextPageToken());
   }
 
   public InboundsListResponse nextPage() {
@@ -34,8 +34,7 @@ public class InboundsListResponse extends ListResponse<Inbound<?>> {
     }
     InboundsListRequestParameters.Builder newParameters =
         InboundsListRequestParameters.builder(page.getParameters());
-    Integer nextToken = page.getNextPageToken().getToken();
-    newParameters.setPage(nextToken);
+    newParameters.setPage(page.getNextPageToken());
     return service.list(newParameters.build());
   }
 

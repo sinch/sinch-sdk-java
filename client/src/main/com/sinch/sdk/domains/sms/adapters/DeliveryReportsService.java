@@ -3,8 +3,8 @@ package com.sinch.sdk.domains.sms.adapters;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.core.models.pagination.CursorPageNavigator;
 import com.sinch.sdk.core.models.pagination.Page;
-import com.sinch.sdk.core.models.pagination.PageToken;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.sms.adapters.api.v1.DeliveryReportsApi;
@@ -104,7 +104,7 @@ public class DeliveryReportsService implements com.sinch.sdk.domains.sms.Deliver
                     .orElse(null),
                 guardParameters.getClientReference().orElse(null));
 
-    Pair<Collection<DeliveryReportRecipient>, PageToken<Integer>> content =
+    Pair<Collection<DeliveryReportRecipient>, CursorPageNavigator> content =
         DeliveryReportDtoConverter.convert(response);
 
     return new DeliveryReportsListResponse(

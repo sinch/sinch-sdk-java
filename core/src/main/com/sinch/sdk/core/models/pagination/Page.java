@@ -4,18 +4,18 @@ import java.util.Collection;
 
 public class Page<P, E, T> {
 
-  private final PageToken<T> nextPageToken;
+  private final PageNavigator<T> nextPageNavigator;
   private final P parameters;
   private final Collection<E> entities;
 
-  public Page(P parameters, Collection<E> entities, PageToken<T> nextPageToken) {
+  public Page(P parameters, Collection<E> entities, PageNavigator<T> nextPageNavigator) {
     this.parameters = parameters;
     this.entities = entities;
-    this.nextPageToken = nextPageToken;
+    this.nextPageNavigator = nextPageNavigator;
   }
 
-  public PageToken<T> getNextPageToken() {
-    return nextPageToken;
+  public T getNextPageToken() {
+    return null != nextPageNavigator ? nextPageNavigator.getToken() : null;
   }
 
   public P getParameters() {
@@ -29,8 +29,8 @@ public class Page<P, E, T> {
   @Override
   public String toString() {
     return "Page{"
-        + "nextPageToken="
-        + nextPageToken
+        + "nextPageNavigator="
+        + nextPageNavigator
         + ", parameters="
         + parameters
         + ", entities="

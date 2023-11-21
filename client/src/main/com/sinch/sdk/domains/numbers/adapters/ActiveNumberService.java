@@ -4,7 +4,7 @@ import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.models.pagination.Page;
-import com.sinch.sdk.core.models.pagination.PageToken;
+import com.sinch.sdk.core.models.pagination.TokenPageNavigator;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.numbers.adapters.api.v1.ActiveNumberApi;
@@ -84,7 +84,7 @@ public class ActiveNumberService implements com.sinch.sdk.domains.numbers.Active
                 pageSize,
                 pageToken,
                 orderBy);
-    Pair<Collection<ActiveNumber>, PageToken<String>> content =
+    Pair<Collection<ActiveNumber>, TokenPageNavigator> content =
         ActiveNumberDtoConverter.convert(response);
     return new ActiveNumberListResponse(
         this, new Page<>(parameters, content.getLeft(), content.getRight()));

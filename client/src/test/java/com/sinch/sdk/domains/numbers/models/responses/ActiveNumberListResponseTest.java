@@ -6,7 +6,7 @@ import static org.mockito.Mockito.when;
 
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.models.pagination.Page;
-import com.sinch.sdk.core.models.pagination.PageToken;
+import com.sinch.sdk.core.models.pagination.TokenPageNavigator;
 import com.sinch.sdk.domains.numbers.ActiveNumberService;
 import com.sinch.sdk.domains.numbers.models.*;
 import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberListRequestParameters;
@@ -70,11 +70,11 @@ class ActiveNumberListResponseTest extends BaseTest {
           new Page<>(
               ActiveNumberListRequestParametersTest.value,
               list.stream().limit(5).collect(Collectors.toList()),
-              new PageToken<>("foo page2")),
+              new TokenPageNavigator("foo page2")),
           new Page<>(
               ActiveNumberListRequestParametersTest.value,
               list.stream().skip(5).limit(5).collect(Collectors.toList()),
-              new PageToken<>("foo page3")),
+              new TokenPageNavigator("foo page3")),
           new Page<>(
               ActiveNumberListRequestParametersTest.value,
               list.stream().skip(10).collect(Collectors.toList()),

@@ -8,7 +8,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.models.pagination.Page;
-import com.sinch.sdk.core.models.pagination.PageToken;
+import com.sinch.sdk.core.models.pagination.TokenPageNavigator;
 import com.sinch.sdk.domains.numbers.adapters.api.v1.ActiveNumberApi;
 import com.sinch.sdk.domains.numbers.adapters.converters.ActiveNumberUpdateRequestParametersDtoConverter;
 import com.sinch.sdk.domains.numbers.models.*;
@@ -89,7 +89,7 @@ class ActiveNumberServiceTest extends BaseTest {
                     .setVoiceConfiguration(new VoiceConfiguration("app id", null, null))
                     .setCallbackUrl("")
                     .build()),
-            new PageToken<>(""));
+            new TokenPageNavigator(""));
     Assertions.assertThat(response.getContent())
         .usingRecursiveComparison()
         .isEqualTo(expected.getEntities());
@@ -172,7 +172,7 @@ class ActiveNumberServiceTest extends BaseTest {
                                 Instant.parse("2023-09-25T12:08:02.115Z"))))
                     .setCallbackUrl("foo callback")
                     .build()),
-            new PageToken<>("foo"));
+            new TokenPageNavigator("foo"));
 
     ActiveNumberListResponse response = service.list(parameters);
 

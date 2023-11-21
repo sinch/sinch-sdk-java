@@ -2,7 +2,7 @@ package com.sinch.sdk.domains.sms.adapters.converters;
 
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.models.AbstractOpenApiSchema;
-import com.sinch.sdk.core.models.pagination.PageToken;
+import com.sinch.sdk.core.models.pagination.CursorPageNavigator;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.sms.models.Inbound;
 import com.sinch.sdk.domains.sms.models.InboundBinary;
@@ -27,13 +27,9 @@ public class InboundsDtoConverter {
     }
   }
 
-  public static Pair<Collection<Inbound<?>>, PageToken<Integer>> convert(ApiInboundListDto dto) {
-    // check end of pagination limit reached: (current page number * page size ) cannot be greater
-    // than "count" to be able to call next page
-    Integer nextPageToken =
-        ((dto.getPage() + 1) * Long.valueOf(dto.getPageSize())) >= dto.getCount()
-            ? null
-            : dto.getPage() + 1;
+  public static Pair<Collection<Inbound<?>>, CursorPageNavigator> convert(ApiInboundListDto dto) {
+    CursorPageNavigator navigator =
+        new CursorPageNavigator(dto.getPage(), dto.getPageSize(), dto.getCount());
     Collection<InboundDto> collection = dto.getInbounds();
     Collection<Inbound<?>> pageContent = new ArrayList<>();
     if (null != collection) {
@@ -42,7 +38,7 @@ public class InboundsDtoConverter {
         pageContent.add(convert);
       }
     }
-    return new Pair<>(pageContent, new PageToken<>(nextPageToken));
+    return new Pair<>(pageContent, navigator);
   }
 
   public static InboundBinary convert(MOBinaryDto dto) {
