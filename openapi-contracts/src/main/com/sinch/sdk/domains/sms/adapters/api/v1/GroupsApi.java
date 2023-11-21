@@ -15,6 +15,7 @@ package com.sinch.sdk.domains.sms.adapters.api.v1;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.exceptions.ApiExceptionBuilder;
+import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.http.HttpMethod;
@@ -43,12 +44,17 @@ public class GroupsApi {
   private static final Logger LOGGER = Logger.getLogger(GroupsApi.class.getName());
   private HttpClient httpClient;
   private ServerConfiguration serverConfiguration;
+  private Map<String, AuthManager> authManagersByOasSecuritySchemes;
   private HttpMapper mapper;
 
   public GroupsApi(
-      HttpClient httpClient, ServerConfiguration serverConfiguration, HttpMapper mapper) {
+      HttpClient httpClient,
+      ServerConfiguration serverConfiguration,
+      Map<String, AuthManager> authManagersByOasSecuritySchemes,
+      HttpMapper mapper) {
     this.httpClient = httpClient;
     this.serverConfiguration = serverConfiguration;
+    this.authManagersByOasSecuritySchemes = authManagersByOasSecuritySchemes;
     this.mapper = mapper;
   }
 
@@ -75,7 +81,9 @@ public class GroupsApi {
             + groupObjectDto);
 
     HttpRequest httpRequest = createGroupRequestBuilder(servicePlanId, groupObjectDto);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<CreateGroupResponseDto> localVarReturnType =
@@ -140,7 +148,9 @@ public class GroupsApi {
         "[deleteGroup] " + "servicePlanId: " + servicePlanId + ", " + "groupId: " + groupId);
 
     HttpRequest httpRequest = deleteGroupRequestBuilder(servicePlanId, groupId);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       return;
@@ -213,7 +223,9 @@ public class GroupsApi {
         "[getMembers] " + "servicePlanId: " + servicePlanId + ", " + "groupId: " + groupId);
 
     HttpRequest httpRequest = getMembersRequestBuilder(servicePlanId, groupId);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<List<String>> localVarReturnType = new TypeReference<List<String>>() {};
@@ -297,7 +309,9 @@ public class GroupsApi {
             + pageSize);
 
     HttpRequest httpRequest = listGroupsRequestBuilder(servicePlanId, page, pageSize);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<ApiGroupListDto> localVarReturnType = new TypeReference<ApiGroupListDto>() {};
@@ -385,7 +399,9 @@ public class GroupsApi {
 
     HttpRequest httpRequest =
         replaceGroupRequestBuilder(servicePlanId, groupId, replaceGroupRequestDto);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<CreateGroupResponseDto> localVarReturnType =
@@ -461,7 +477,9 @@ public class GroupsApi {
         "[retrieveGroup] " + "servicePlanId: " + servicePlanId + ", " + "groupId: " + groupId);
 
     HttpRequest httpRequest = retrieveGroupRequestBuilder(servicePlanId, groupId);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<CreateGroupResponseDto> localVarReturnType =
@@ -557,7 +575,9 @@ public class GroupsApi {
 
     HttpRequest httpRequest =
         updateGroupRequestBuilder(servicePlanId, groupId, updateGroupRequestDto);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<CreateGroupResponseDto> localVarReturnType =
