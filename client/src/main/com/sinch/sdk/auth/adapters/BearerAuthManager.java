@@ -1,43 +1,60 @@
 package com.sinch.sdk.auth.adapters;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.sinch.sdk.auth.AuthManager;
 import com.sinch.sdk.auth.models.BearerAuthResponse;
 import com.sinch.sdk.core.exceptions.ApiAuthException;
+import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
+import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.models.Configuration;
+import java.util.AbstractMap;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class BearerAuthManager implements AuthManager {
-  public static final String BEARER_SCHEMA_KEYWORD = "BearerAuth";
   public static final String BEARER_EXPIRED_KEYWORD = "expired";
   public static final String BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD = "www-authenticate";
   private static final Logger LOGGER = Logger.getLogger(BearerAuthManager.class.getName());
-  private static final String BEARER_AUTH_KEYWORD = "Bearer";
+  private static final String AUTH_KEYWORD = "Bearer";
   private static final int maxRefreshAttempt = 5;
-  private final Configuration configuration;
+  private final ServerConfiguration oAuthServer;
   private final HttpMapper mapper;
-  private HttpClient httpClient;
+  private final HttpClient httpClient;
+  private final Map<String, AuthManager> authManagers;
   private String token;
 
-  public BearerAuthManager(Configuration configuration, HttpMapper mapper) {
-    this.configuration = configuration;
+  public BearerAuthManager(Configuration configuration, HttpMapper mapper, HttpClient httpClient) {
+    this(configuration.getKeyId(), configuration.getKeySecret(), configuration, mapper, httpClient);
+  }
+
+  public BearerAuthManager(
+      String keyId,
+      String keySecret,
+      Configuration configuration,
+      HttpMapper mapper,
+      HttpClient httpClient) {
+    this.oAuthServer = configuration.getOAuthServer();
     this.mapper = mapper;
+    this.httpClient = httpClient;
+
+    AuthManager basicAuthManager = new BasicAuthManager(keyId, keySecret);
+    authManagers =
+        Stream.of(new AbstractMap.SimpleEntry<>(SCHEMA_KEYWORD_BASIC, basicAuthManager))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 
   public String getSchema() {
-    return BEARER_SCHEMA_KEYWORD;
-  }
-
-  @Override
-  public void setHttpClient(HttpClient httpClient) {
-    this.httpClient = httpClient;
+    return SCHEMA_KEYWORD_BEARER;
   }
 
   @Override
@@ -46,12 +63,13 @@ public class BearerAuthManager implements AuthManager {
   }
 
   @Override
-  public String getAuthorizationHeaderValue() {
+  public Collection<Pair<String, String>> getAuthorizationHeaders(
+      String method, String httpContentType, String path, String body) {
 
     if (token == null) {
       refreshToken();
     }
-    return BEARER_AUTH_KEYWORD + " " + token;
+    return Collections.singletonList(new Pair<>("Authorization", AUTH_KEYWORD + " " + token));
   }
 
   private void refreshToken() {
@@ -80,9 +98,9 @@ public class BearerAuthManager implements AuthManager {
             null,
             null,
             Collections.singletonList("application/x-www-form-urlencoded"),
-            Collections.singletonList(BasicAuthManager.BASIC_SCHEMA_KEYWORD));
+            Collections.singletonList(SCHEMA_KEYWORD_BASIC));
     try {
-      HttpResponse httpResponse = httpClient.invokeAPI(configuration.getOAuthServer(), request);
+      HttpResponse httpResponse = httpClient.invokeAPI(oAuthServer, authManagers, request);
       BearerAuthResponse authResponse =
           mapper.deserialize(httpResponse, new TypeReference<BearerAuthResponse>() {});
       return Optional.ofNullable(authResponse.getAccessToken());

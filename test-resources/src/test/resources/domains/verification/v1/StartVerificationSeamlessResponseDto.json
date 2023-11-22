@@ -1,0 +1,19 @@
+{
+  "id": "the id",
+  "method": "seamless",
+  "seamless": {
+    "targetUri": "target URI"
+  },
+  "_links": [
+    {
+      "rel": "status",
+      "href": "an href for status",
+      "method": "GET"
+    },
+    {
+      "rel": "report",
+      "href": "an href for report",
+      "method": "PUT"
+    }
+  ]
+}

@@ -12,7 +12,7 @@ public class GetForNumber extends BaseApplication {
 
   public static void main(String[] args) {
     try {
-      new Get().run();
+      new GetForNumber().run();
     } catch (Exception e) {
       LOGGER.severe(e.getMessage());
       e.printStackTrace();
@@ -21,7 +21,7 @@ public class GetForNumber extends BaseApplication {
 
   public void run() {
 
-    LOGGER.info("Get for :" + phoneNumber);
+    LOGGER.info("Get for: " + phoneNumber);
 
     DeliveryReportRecipient response =
         client.sms().deliveryReports().getForNumber(batchId, phoneNumber);

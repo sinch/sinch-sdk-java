@@ -17,6 +17,9 @@ public interface HttpClient extends AutoCloseable {
    */
   void setRequestHeaders(Map<String, String> headers);
 
-  HttpResponse invokeAPI(ServerConfiguration serverConfiguration, HttpRequest request)
+  HttpResponse invokeAPI(
+      ServerConfiguration serverConfiguration,
+      Map<String, AuthManager> authManagersByOasSecuritySchemes,
+      HttpRequest request)
       throws ApiException;
 }

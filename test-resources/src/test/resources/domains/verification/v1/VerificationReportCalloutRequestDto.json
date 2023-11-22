@@ -1,0 +1,6 @@
+{
+  "method": "callout",
+  "callout": {
+    "code": "foo code"
+  }
+}

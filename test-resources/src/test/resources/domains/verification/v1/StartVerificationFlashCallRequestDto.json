@@ -1,0 +1,12 @@
+{
+  "identity": {
+    "type": "number",
+    "endpoint": "+endpoint"
+  },
+  "reference": "a reference",
+  "custom": "a custom",
+  "method": "flashcall",
+  "flashCallOptions": {
+    "dialTimeout": 17
+  }
+}

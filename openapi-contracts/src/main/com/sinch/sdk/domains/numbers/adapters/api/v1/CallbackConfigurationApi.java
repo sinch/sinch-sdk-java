@@ -15,6 +15,7 @@ package com.sinch.sdk.domains.numbers.adapters.api.v1;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.exceptions.ApiExceptionBuilder;
+import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.http.HttpMethod;
@@ -22,7 +23,7 @@ import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
-import com.sinch.sdk.core.http.URLParameterUtils;
+import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.numbers.models.dto.v1.CallbackConfigurationDto;
 import com.sinch.sdk.domains.numbers.models.dto.v1.CallbackConfigurationUpdateDto;
@@ -40,12 +41,17 @@ public class CallbackConfigurationApi {
   private static final Logger LOGGER = Logger.getLogger(CallbackConfigurationApi.class.getName());
   private HttpClient httpClient;
   private ServerConfiguration serverConfiguration;
+  private Map<String, AuthManager> authManagersByOasSecuritySchemes;
   private HttpMapper mapper;
 
   public CallbackConfigurationApi(
-      HttpClient httpClient, ServerConfiguration serverConfiguration, HttpMapper mapper) {
+      HttpClient httpClient,
+      ServerConfiguration serverConfiguration,
+      Map<String, AuthManager> authManagersByOasSecuritySchemes,
+      HttpMapper mapper) {
     this.httpClient = httpClient;
     this.serverConfiguration = serverConfiguration;
+    this.authManagersByOasSecuritySchemes = authManagersByOasSecuritySchemes;
     this.mapper = mapper;
   }
 
@@ -63,7 +69,9 @@ public class CallbackConfigurationApi {
     LOGGER.finest("[getCallbackConfiguration] " + "projectId: " + projectId);
 
     HttpRequest httpRequest = getCallbackConfigurationRequestBuilder(projectId);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<CallbackConfigurationDto> localVarReturnType =
@@ -89,8 +97,7 @@ public class CallbackConfigurationApi {
     String localVarPath =
         "/v1/projects/{projectId}/callbackConfiguration"
             .replaceAll(
-                "\\{" + "projectId" + "\\}",
-                URLParameterUtils.encodeParameterValue(projectId.toString()));
+                "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -138,7 +145,9 @@ public class CallbackConfigurationApi {
 
     HttpRequest httpRequest =
         updateCallbackConfigurationRequestBuilder(projectId, callbackConfigurationUpdateDto);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<CallbackConfigurationDto> localVarReturnType =
@@ -167,8 +176,7 @@ public class CallbackConfigurationApi {
     String localVarPath =
         "/v1/projects/{projectId}/callbackConfiguration"
             .replaceAll(
-                "\\{" + "projectId" + "\\}",
-                URLParameterUtils.encodeParameterValue(projectId.toString()));
+                "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 

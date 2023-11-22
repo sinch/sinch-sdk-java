@@ -30,7 +30,8 @@ class AvailableRegionsApiTest extends BaseTest {
   HttpMapper mapper = new HttpMapper();
 
   @InjectMocks
-  AvailableRegionsApi service = new AvailableRegionsApi(httpClient, serverConfiguration, mapper);
+  AvailableRegionsApi service =
+      new AvailableRegionsApi(httpClient, serverConfiguration, null, mapper);
 
   AvailableRegionDto expectedAvailableRegionDto =
       new AvailableRegionDto("AU", "Australia", Collections.singletonList("MOBILE"));
@@ -38,7 +39,7 @@ class AvailableRegionsApiTest extends BaseTest {
   @Test
   void listAll() {
 
-    when(httpClient.invokeAPI(any(), any()))
+    when(httpClient.invokeAPI(any(), any(), any()))
         .thenReturn(
             new HttpResponse(
                 200, "foo message", null, availableListResponse.getBytes(StandardCharsets.UTF_8)));

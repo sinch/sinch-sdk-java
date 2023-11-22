@@ -1,7 +1,5 @@
 package com.sinch.sdk.domains.sms.models.requests;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.time.Instant;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
