@@ -232,6 +232,7 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
       Map<String, AuthManager> authManagersByOasSecuritySchemes,
       Collection<String> values,
       String body) {
+
     if (null == values || values.isEmpty() || null == authManagersByOasSecuritySchemes) {
       return;
     }

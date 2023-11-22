@@ -189,7 +189,6 @@ public class SinchClient {
 
   private HttpClientApache getHttpClient() {
     if (null == httpClient || httpClient.isClosed()) {
-
       // TODO: by adding a setter, we could imagine having another HTTP client provided
       // programmatically or use
       //  configuration file referencing another class by name
