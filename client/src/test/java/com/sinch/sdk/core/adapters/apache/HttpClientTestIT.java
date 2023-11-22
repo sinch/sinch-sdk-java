@@ -6,10 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
-import com.sinch.sdk.auth.AuthManager;
 import com.sinch.sdk.auth.adapters.BasicAuthManager;
 import com.sinch.sdk.auth.adapters.BearerAuthManager;
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.HttpRequest;
@@ -28,7 +28,6 @@ import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
@@ -42,15 +41,16 @@ class HttpClientTestIT extends BaseTest {
   Configuration configuration =
       Configuration.builder().setOAuthUrl(String.format("%s/auth", serverUrl)).build();
 
+  HttpClientApache httpClient = new HttpClientApache();
+
   AuthManager basicAuthManager = new BasicAuthManager(configuration);
-  BearerAuthManager bearerAuthManager = new BearerAuthManager(configuration, new HttpMapper());
+  BearerAuthManager bearerAuthManager =
+      new BearerAuthManager(configuration, new HttpMapper(), httpClient);
 
   Map<String, AuthManager> authManagers =
       Stream.of(basicAuthManager, bearerAuthManager)
           .map(e -> new AbstractMap.SimpleEntry<>(e.getSchema(), e))
           .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-
-  HttpClientApache httpClient = new HttpClientApache(authManagers);
 
   @BeforeAll
   static void classSetUp() throws IOException {
@@ -63,11 +63,6 @@ class HttpClientTestIT extends BaseTest {
     mockBackEnd.shutdown();
   }
 
-  @BeforeEach
-  void testSetUp() {
-    bearerAuthManager.setHttpClient(httpClient);
-  }
-
   @Test
   void basicAuthorization() throws InterruptedException {
 
@@ -75,6 +70,7 @@ class HttpClientTestIT extends BaseTest {
         new MockResponse().setBody("foo").addHeader("Content-Type", "application/json"));
     httpClient.invokeAPI(
         new ServerConfiguration(String.format("%s/foo", serverUrl)),
+        authManagers,
         new HttpRequest(
             "foo-path",
             HttpMethod.GET,
@@ -83,7 +79,7 @@ class HttpClientTestIT extends BaseTest {
             null,
             null,
             null,
-            Collections.singletonList(BasicAuthManager.BASIC_SCHEMA_KEYWORD)));
+            Collections.singletonList(basicAuthManager.getSchema())));
     RecordedRequest recordedRequest = mockBackEnd.takeRequest();
 
     String header = recordedRequest.getHeader("Authorization");
@@ -99,6 +95,7 @@ class HttpClientTestIT extends BaseTest {
         new MockResponse().setBody("foo3").addHeader("Content-Type", "application/json"));
     httpClient.invokeAPI(
         new ServerConfiguration(String.format("%s/foo", serverUrl)),
+        authManagers,
         new HttpRequest(
             "foo-path",
             HttpMethod.GET,
@@ -107,7 +104,7 @@ class HttpClientTestIT extends BaseTest {
             null,
             null,
             null,
-            Collections.singletonList(BearerAuthManager.BEARER_SCHEMA_KEYWORD)));
+            Collections.singletonList(bearerAuthManager.getSchema())));
 
     RecordedRequest recordedRequest = mockBackEnd.takeRequest();
 
@@ -141,6 +138,7 @@ class HttpClientTestIT extends BaseTest {
     try {
       httpClient.invokeAPI(
           new ServerConfiguration(String.format("%s/foo/", serverUrl)),
+          authManagers,
           new HttpRequest(
               "foo-path",
               HttpMethod.GET,
@@ -149,7 +147,7 @@ class HttpClientTestIT extends BaseTest {
               null,
               null,
               null,
-              Collections.singletonList(BearerAuthManager.BEARER_SCHEMA_KEYWORD)));
+              Collections.singletonList(bearerAuthManager.getSchema())));
     } catch (ApiException ae) {
       // noop
     }
@@ -192,6 +190,7 @@ class HttpClientTestIT extends BaseTest {
     try {
       httpClient.invokeAPI(
           new ServerConfiguration(String.format("%s/foo/", serverUrl)),
+          null,
           new HttpRequest("foo-path", HttpMethod.GET, null, null, httpRequest, null, null, null));
     } catch (ApiException ae) {
       // noop
@@ -215,6 +214,7 @@ class HttpClientTestIT extends BaseTest {
     try {
       httpClient.invokeAPI(
           new ServerConfiguration(String.format("%s/foo/", serverUrl)),
+          null,
           new HttpRequest("foo-path", HttpMethod.GET, null, null, null, null, null, null));
     } catch (ApiException ae) {
       // noop

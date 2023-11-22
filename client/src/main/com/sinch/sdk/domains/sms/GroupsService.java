@@ -114,6 +114,7 @@ public interface GroupsService {
    * Get phone numbers for a group
    *
    * @param groupId ID of a group that you are interested in getting.
+   * @return A list of phone numbers in E.164 format.
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Groups/#tag/Groups/operation/deleteGroup">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Groups/#tag/Groups/operation/deleteGroup</a>
    * @since 1.0

@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.numbers.adapters;
 
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.models.pagination.Page;
@@ -22,6 +23,7 @@ import com.sinch.sdk.domains.numbers.models.responses.ActiveNumberListResponse;
 import com.sinch.sdk.models.Configuration;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -32,9 +34,12 @@ public class ActiveNumberService implements com.sinch.sdk.domains.numbers.Active
 
   public ActiveNumberService() {}
 
-  public ActiveNumberService(Configuration configuration, HttpClient httpClient) {
+  public ActiveNumberService(
+      Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManagers) {
     this.configuration = configuration;
-    this.api = new ActiveNumberApi(httpClient, configuration.getNumbersServer(), new HttpMapper());
+    this.api =
+        new ActiveNumberApi(
+            httpClient, configuration.getNumbersServer(), authManagers, new HttpMapper());
   }
 
   private ActiveNumberApi getApi() {

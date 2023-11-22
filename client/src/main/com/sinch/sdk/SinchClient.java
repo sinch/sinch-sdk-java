@@ -1,9 +1,5 @@
 package com.sinch.sdk;
 
-import com.sinch.sdk.auth.AuthManager;
-import com.sinch.sdk.auth.adapters.BasicAuthManager;
-import com.sinch.sdk.auth.adapters.BearerAuthManager;
-import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.numbers.NumbersService;
 import com.sinch.sdk.domains.sms.SMSService;
@@ -12,10 +8,8 @@ import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.SMSRegion;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -165,21 +159,11 @@ public class SinchClient {
 
   private HttpClientApache getHttpClient() {
     if (null == httpClient || httpClient.isClosed()) {
-      AuthManager basicAuthManager = new BasicAuthManager(configuration);
-      BearerAuthManager bearerAuthManager = new BearerAuthManager(configuration, new HttpMapper());
-
-      Map<String, AuthManager> authManagers =
-          Stream.of(basicAuthManager, bearerAuthManager)
-              .map(e -> new AbstractMap.SimpleEntry<>(e.getSchema(), e))
-              .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
       // TODO: by adding a setter, we could imagine having another HTTP client provided
       // programmatically or use
       //  configuration file referencing another class by name
-      this.httpClient = new HttpClientApache(authManagers);
-
-      // Avoid multiple and costly http client creation and reuse it for authManager
-      bearerAuthManager.setHttpClient(this.httpClient);
+      this.httpClient = new HttpClientApache();
 
       // set SDK User-Agent
       String userAgent = formatSdkUserAgentHeader(versionProperties);
