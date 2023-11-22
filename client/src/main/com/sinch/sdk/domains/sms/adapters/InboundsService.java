@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.sms.adapters;
 
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.models.pagination.CursorPageNavigator;
@@ -16,6 +17,7 @@ import com.sinch.sdk.domains.sms.models.responses.InboundsListResponse;
 import com.sinch.sdk.models.Configuration;
 import java.time.Instant;
 import java.util.Collection;
+import java.util.Map;
 
 public class InboundsService implements com.sinch.sdk.domains.sms.InboundsService {
 
@@ -28,9 +30,11 @@ public class InboundsService implements com.sinch.sdk.domains.sms.InboundsServic
     return this.api;
   }
 
-  public InboundsService(Configuration configuration, HttpClient httpClient) {
+  public InboundsService(
+      Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManagers) {
     this.configuration = configuration;
-    this.api = new InboundsApi(httpClient, configuration.getSmsServer(), new HttpMapper());
+    this.api =
+        new InboundsApi(httpClient, configuration.getSmsServer(), authManagers, new HttpMapper());
   }
 
   public InboundsListResponse list() throws ApiException {

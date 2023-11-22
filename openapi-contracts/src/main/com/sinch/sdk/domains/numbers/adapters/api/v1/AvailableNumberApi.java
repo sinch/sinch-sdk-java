@@ -15,6 +15,7 @@ package com.sinch.sdk.domains.numbers.adapters.api.v1;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.exceptions.ApiExceptionBuilder;
+import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.http.HttpMethod;
@@ -43,12 +44,17 @@ public class AvailableNumberApi {
   private static final Logger LOGGER = Logger.getLogger(AvailableNumberApi.class.getName());
   private HttpClient httpClient;
   private ServerConfiguration serverConfiguration;
+  private Map<String, AuthManager> authManagersByOasSecuritySchemes;
   private HttpMapper mapper;
 
   public AvailableNumberApi(
-      HttpClient httpClient, ServerConfiguration serverConfiguration, HttpMapper mapper) {
+      HttpClient httpClient,
+      ServerConfiguration serverConfiguration,
+      Map<String, AuthManager> authManagersByOasSecuritySchemes,
+      HttpMapper mapper) {
     this.httpClient = httpClient;
     this.serverConfiguration = serverConfiguration;
+    this.authManagersByOasSecuritySchemes = authManagersByOasSecuritySchemes;
     this.mapper = mapper;
   }
 
@@ -79,7 +85,9 @@ public class AvailableNumberApi {
             + phoneNumber);
 
     HttpRequest httpRequest = numberServiceGetAvailableNumberRequestBuilder(projectId, phoneNumber);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<AvailableNumberDto> localVarReturnType =
@@ -208,7 +216,9 @@ public class AvailableNumberApi {
             numberPatternSearchPattern,
             capabilities,
             size);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<AvailableNumbersResponseDto> localVarReturnType =
@@ -343,7 +353,9 @@ public class AvailableNumberApi {
 
     HttpRequest httpRequest =
         numberServiceRentAnyNumberRequestBuilder(projectId, rentAnyNumberRequestDto);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<ActiveNumberDto> localVarReturnType = new TypeReference<ActiveNumberDto>() {};
@@ -434,7 +446,9 @@ public class AvailableNumberApi {
 
     HttpRequest httpRequest =
         numberServiceRentNumberRequestBuilder(projectId, phoneNumber, rentNumberRequestDto);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<ActiveNumberDto> localVarReturnType = new TypeReference<ActiveNumberDto>() {};

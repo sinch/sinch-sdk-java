@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.sms.adapters;
 
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.models.pagination.CursorPageNavigator;
@@ -19,6 +20,7 @@ import com.sinch.sdk.domains.sms.models.responses.BatchesListResponse;
 import com.sinch.sdk.models.Configuration;
 import java.time.Instant;
 import java.util.Collection;
+import java.util.Map;
 
 public class BatchesService implements com.sinch.sdk.domains.sms.BatchesService {
 
@@ -27,9 +29,11 @@ public class BatchesService implements com.sinch.sdk.domains.sms.BatchesService 
 
   public BatchesService() {}
 
-  public BatchesService(Configuration configuration, HttpClient httpClient) {
+  public BatchesService(
+      Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManagers) {
     this.configuration = configuration;
-    this.api = new BatchesApi(httpClient, configuration.getSmsServer(), new HttpMapper());
+    this.api =
+        new BatchesApi(httpClient, configuration.getSmsServer(), authManagers, new HttpMapper());
   }
 
   private BatchesApi getApi() {

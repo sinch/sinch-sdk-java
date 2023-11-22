@@ -15,6 +15,7 @@ package com.sinch.sdk.domains.sms.adapters.api.v1;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.exceptions.ApiExceptionBuilder;
+import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.http.HttpMethod;
@@ -41,12 +42,17 @@ public class DeliveryReportsApi {
   private static final Logger LOGGER = Logger.getLogger(DeliveryReportsApi.class.getName());
   private HttpClient httpClient;
   private ServerConfiguration serverConfiguration;
+  private Map<String, AuthManager> authManagersByOasSecuritySchemes;
   private HttpMapper mapper;
 
   public DeliveryReportsApi(
-      HttpClient httpClient, ServerConfiguration serverConfiguration, HttpMapper mapper) {
+      HttpClient httpClient,
+      ServerConfiguration serverConfiguration,
+      Map<String, AuthManager> authManagersByOasSecuritySchemes,
+      HttpMapper mapper) {
     this.httpClient = httpClient;
     this.serverConfiguration = serverConfiguration;
+    this.authManagersByOasSecuritySchemes = authManagersByOasSecuritySchemes;
     this.mapper = mapper;
   }
 
@@ -91,7 +97,9 @@ public class DeliveryReportsApi {
 
     HttpRequest httpRequest =
         getDeliveryReportByBatchIdRequestBuilder(servicePlanId, batchId, type, status, code);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<DeliveryReportDto> localVarReturnType =
@@ -192,7 +200,9 @@ public class DeliveryReportsApi {
 
     HttpRequest httpRequest =
         getDeliveryReportByPhoneNumberRequestBuilder(servicePlanId, batchId, recipientMsisdn);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<RecipientDeliveryReportDto> localVarReturnType =
@@ -321,7 +331,9 @@ public class DeliveryReportsApi {
     HttpRequest httpRequest =
         getDeliveryReportsRequestBuilder(
             servicePlanId, page, pageSize, startDate, endDate, status, code, clientReference);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<DeliveryReportListDto> localVarReturnType =

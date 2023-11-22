@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.numbers.adapters;
 
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.domains.numbers.adapters.api.v1.CallbackConfigurationApi;
@@ -10,6 +11,7 @@ import com.sinch.sdk.domains.numbers.models.CallbackConfiguration;
 import com.sinch.sdk.domains.numbers.models.dto.v1.CallbackConfigurationDto;
 import com.sinch.sdk.domains.numbers.models.requests.CallbackConfigurationUpdateRequestParameters;
 import com.sinch.sdk.models.Configuration;
+import java.util.Map;
 
 public class CallbackConfigurationService
     implements com.sinch.sdk.domains.numbers.CallbackConfigurationService {
@@ -19,11 +21,12 @@ public class CallbackConfigurationService
 
   public CallbackConfigurationService() {}
 
-  public CallbackConfigurationService(Configuration configuration, HttpClient httpClient) {
+  public CallbackConfigurationService(
+      Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManagers) {
     this.configuration = configuration;
     this.api =
         new CallbackConfigurationApi(
-            httpClient, configuration.getNumbersServer(), new HttpMapper());
+            httpClient, configuration.getNumbersServer(), authManagers, new HttpMapper());
   }
 
   private CallbackConfigurationApi getApi() {

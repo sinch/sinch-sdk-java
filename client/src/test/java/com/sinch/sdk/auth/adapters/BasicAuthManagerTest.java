@@ -2,7 +2,7 @@ package com.sinch.sdk.auth.adapters;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.sinch.sdk.auth.AuthManager;
+import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.models.Configuration;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -21,7 +21,7 @@ class BasicAuthManagerTest {
 
   @Test
   void getSchema() {
-    assertEquals("BasicAuth", authManager.getSchema());
+    assertEquals("Basic", authManager.getSchema());
   }
 
   @Test

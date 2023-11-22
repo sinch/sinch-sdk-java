@@ -15,6 +15,7 @@ package com.sinch.sdk.domains.sms.adapters.api.v1;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.exceptions.ApiExceptionBuilder;
+import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.http.HttpMethod;
@@ -44,12 +45,17 @@ public class BatchesApi {
   private static final Logger LOGGER = Logger.getLogger(BatchesApi.class.getName());
   private HttpClient httpClient;
   private ServerConfiguration serverConfiguration;
+  private Map<String, AuthManager> authManagersByOasSecuritySchemes;
   private HttpMapper mapper;
 
   public BatchesApi(
-      HttpClient httpClient, ServerConfiguration serverConfiguration, HttpMapper mapper) {
+      HttpClient httpClient,
+      ServerConfiguration serverConfiguration,
+      Map<String, AuthManager> authManagersByOasSecuritySchemes,
+      HttpMapper mapper) {
     this.httpClient = httpClient;
     this.serverConfiguration = serverConfiguration;
+    this.authManagersByOasSecuritySchemes = authManagersByOasSecuritySchemes;
     this.mapper = mapper;
   }
 
@@ -74,7 +80,9 @@ public class BatchesApi {
         "[cancelBatchMessage] " + "servicePlanId: " + servicePlanId + ", " + "batchId: " + batchId);
 
     HttpRequest httpRequest = cancelBatchMessageRequestBuilder(servicePlanId, batchId);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<SendSMS201ResponseDto> localVarReturnType =
@@ -167,7 +175,9 @@ public class BatchesApi {
 
     HttpRequest httpRequest =
         deliveryFeedbackRequestBuilder(servicePlanId, batchId, apiDeliveryFeedbackDto);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       return;
@@ -267,7 +277,9 @@ public class BatchesApi {
 
     HttpRequest httpRequest =
         dryRunRequestBuilder(servicePlanId, perRecipient, numberOfRecipients, sendSMSRequestDto);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<DryRun200ResponseDto> localVarReturnType =
@@ -354,7 +366,9 @@ public class BatchesApi {
         "[getBatchMessage] " + "servicePlanId: " + servicePlanId + ", " + "batchId: " + batchId);
 
     HttpRequest httpRequest = getBatchMessageRequestBuilder(servicePlanId, batchId);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<SendSMS201ResponseDto> localVarReturnType =
@@ -469,7 +483,9 @@ public class BatchesApi {
     HttpRequest httpRequest =
         listBatchesRequestBuilder(
             servicePlanId, page, pageSize, from, startDate, endDate, clientReference);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<ApiBatchListDto> localVarReturnType = new TypeReference<ApiBatchListDto>() {};
@@ -584,7 +600,9 @@ public class BatchesApi {
             + sendSMSRequestDto);
 
     HttpRequest httpRequest = replaceBatchRequestBuilder(servicePlanId, batchId, sendSMSRequestDto);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<SendSMS201ResponseDto> localVarReturnType =
@@ -670,7 +688,9 @@ public class BatchesApi {
             + sendSMSRequestDto);
 
     HttpRequest httpRequest = sendSMSRequestBuilder(servicePlanId, sendSMSRequestDto);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<SendSMS201ResponseDto> localVarReturnType =
@@ -751,7 +771,9 @@ public class BatchesApi {
 
     HttpRequest httpRequest =
         updateBatchMessageRequestBuilder(servicePlanId, batchId, updateBatchMessageRequestDto);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<SendSMS201ResponseDto> localVarReturnType =

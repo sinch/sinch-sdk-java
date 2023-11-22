@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.sms.adapters;
 
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.models.pagination.CursorPageNavigator;
@@ -19,6 +20,7 @@ import com.sinch.sdk.domains.sms.models.responses.DeliveryReportsListResponse;
 import com.sinch.sdk.models.Configuration;
 import java.time.Instant;
 import java.util.Collection;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -44,9 +46,12 @@ public class DeliveryReportsService implements com.sinch.sdk.domains.sms.Deliver
     return this.api;
   }
 
-  public DeliveryReportsService(Configuration configuration, HttpClient httpClient) {
+  public DeliveryReportsService(
+      Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManagers) {
     this.configuration = configuration;
-    this.api = new DeliveryReportsApi(httpClient, configuration.getSmsServer(), new HttpMapper());
+    this.api =
+        new DeliveryReportsApi(
+            httpClient, configuration.getSmsServer(), authManagers, new HttpMapper());
   }
 
   public DeliveryReportBatch get(String batchId, DeliveryReportBatchGetRequestParameters parameters)
