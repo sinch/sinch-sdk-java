@@ -9,8 +9,11 @@ import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
+import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.models.Configuration;
 import java.util.AbstractMap;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
@@ -24,15 +27,14 @@ public class BearerAuthManager implements AuthManager {
   private static final Logger LOGGER = Logger.getLogger(BearerAuthManager.class.getName());
   private static final String AUTH_KEYWORD = "Bearer";
   private static final int maxRefreshAttempt = 5;
-  private final Configuration configuration;
+  private final ServerConfiguration oAuthServer;
   private final HttpMapper mapper;
   private final HttpClient httpClient;
   private final Map<String, AuthManager> authManagers;
-
   private String token;
 
   public BearerAuthManager(Configuration configuration, HttpMapper mapper, HttpClient httpClient) {
-    this.configuration = configuration;
+    this.oAuthServer = configuration.getOAuthServer();
     this.mapper = mapper;
     this.httpClient = httpClient;
 
@@ -52,12 +54,13 @@ public class BearerAuthManager implements AuthManager {
   }
 
   @Override
-  public String getAuthorizationHeaderValue() {
+  public Collection<Pair<String, String>> getAuthorizationHeaders(
+      String method, String httpContentType, String path, String body) {
 
     if (token == null) {
       refreshToken();
     }
-    return AUTH_KEYWORD + " " + token;
+    return Collections.singletonList(new Pair<>("Authorization", AUTH_KEYWORD + " " + token));
   }
 
   private void refreshToken() {
@@ -88,8 +91,7 @@ public class BearerAuthManager implements AuthManager {
             Collections.singletonList("application/x-www-form-urlencoded"),
             Collections.singletonList(SCHEMA_KEYWORD_BASIC));
     try {
-      HttpResponse httpResponse =
-          httpClient.invokeAPI(configuration.getOAuthServer(), authManagers, request);
+      HttpResponse httpResponse = httpClient.invokeAPI(oAuthServer, authManagers, request);
       BearerAuthResponse authResponse =
           mapper.deserialize(httpResponse, new TypeReference<BearerAuthResponse>() {});
       return Optional.ofNullable(authResponse.getAccessToken());

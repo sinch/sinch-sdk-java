@@ -12,13 +12,18 @@ public class ApiExceptionBuilder {
   public static ApiException build(String message, int code, Map<String, ?> mappedResponse) {
 
     // Hardcoded Numbers API errors like format parsing
-    Optional<ApiException> numbersException = getExceptionFromNumbersError(mappedResponse);
-    if (numbersException.isPresent()) {
-      return numbersException.get();
+    Optional<ApiException> exception = getExceptionFromNumbersError(mappedResponse);
+    if (exception.isPresent()) {
+      return exception.get();
     }
 
-    Optional<ApiException> smsException = getExceptionFromSmsError(mappedResponse);
-    return smsException.orElseGet(() -> new ApiException(message, code));
+    exception = getExceptionFromSmsError(mappedResponse);
+    if (exception.isPresent()) {
+      return exception.get();
+    }
+
+    exception = getExceptionFromVerificationError(mappedResponse);
+    return exception.orElseGet(() -> new ApiException(message, code));
   }
 
   private static Optional<ApiException> getExceptionFromNumbersError(Map<?, ?> mappedResponse) {
@@ -74,5 +79,33 @@ public class ApiExceptionBuilder {
     }
 
     return Optional.of(new ApiException(String.format("%s: %s", code, text)));
+  }
+
+  private static Optional<ApiException> getExceptionFromVerificationError(
+      Map<?, ?> mappedResponse) {
+
+    // excepted Verification API errors have following form
+    //    "errorCode": int,
+    //    "message": string,
+    //    "reference": string
+
+    if (null == mappedResponse) {
+      return Optional.empty();
+    }
+
+    Integer codeValue = null;
+    if (mappedResponse.containsKey("errorCode")) {
+      codeValue = Integer.valueOf(String.valueOf(mappedResponse.get("errorCode")));
+    }
+    String messageValue = String.valueOf(mappedResponse.get("message"));
+    String referenceValue = String.valueOf(mappedResponse.get("reference"));
+
+    if (null == codeValue || null == messageValue || null == referenceValue) {
+      return Optional.empty();
+    }
+
+    return Optional.of(
+        new ApiException(
+            String.format("%s (reference=%s)", messageValue, referenceValue), codeValue));
   }
 }
