@@ -1,7 +1,6 @@
 package com.sinch.sdk.domains.verification.models;
 
-import com.sinch.sdk.domains.sms.models.Group.Builder;
-
+/** Identity based onto a number */
 public class NumberIdentity extends Identity {
   private final String endpoint;
 
@@ -9,6 +8,7 @@ public class NumberIdentity extends Identity {
     return endpoint;
   }
 
+  /** @param endpoint An E.164-compatible phone number. */
   public NumberIdentity(String endpoint) {
     this.endpoint = endpoint;
   }
@@ -27,7 +27,6 @@ public class NumberIdentity extends Identity {
     String endpoint;
 
     private Builder() {}
-    ;
 
     public Builder setEndpoint(String endpoint) {
       this.endpoint = endpoint;

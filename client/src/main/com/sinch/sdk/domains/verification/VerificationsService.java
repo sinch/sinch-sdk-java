@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.verification;
 
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
+import com.sinch.sdk.domains.verification.models.response.StartVerificationResponse;
 
 /**
  * Verifications Service
@@ -17,11 +18,11 @@ public interface VerificationsService {
    * Start verification
    *
    * <p>This method is used by the mobile and web Verification SDKs to start a verification. It can
-   * also be used to request a verification from your backend, by making an request.
+   * also be used to request a verification from your backend, by making a request.
    *
-   * @param parameters Parameters to be used to start verification return service instance for
-   *     project
+   * @param parameters Parameters to be used to start verification
+   * @return Verification response
    * @since 1.0
    */
-  void start(StartVerificationRequestParameters parameters);
+  StartVerificationResponse start(StartVerificationRequestParameters parameters);
 }

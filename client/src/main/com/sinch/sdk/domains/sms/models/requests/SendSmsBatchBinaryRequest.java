@@ -126,7 +126,9 @@ public class SendSmsBatchBinaryRequest extends BaseBatch<String> {
     private Integer fromNpi;
     private String udh;
 
-    private Builder() {}
+    private Builder() {
+      super();
+    }
 
     public Builder setFlashMessage(boolean flashMessage) {
       this.flashMessage = flashMessage;
@@ -158,6 +160,7 @@ public class SendSmsBatchBinaryRequest extends BaseBatch<String> {
       return this;
     }
 
+    @Override
     public SendSmsBatchBinaryRequest build() {
       return new SendSmsBatchBinaryRequest(
           to,

@@ -6,6 +6,7 @@ import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.domains.verification.adapters.api.v1.SendingAndReportingVerificationsApi;
 import com.sinch.sdk.domains.verification.adapters.converters.VerificationsDtoConverter;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
+import com.sinch.sdk.domains.verification.models.response.StartVerificationResponse;
 import com.sinch.sdk.models.Configuration;
 import java.util.Map;
 
@@ -27,7 +28,8 @@ public class VerificationsService
     return this.api;
   }
 
-  public void start(StartVerificationRequestParameters parameters) {
-    getApi().startVerification(VerificationsDtoConverter.convert(parameters));
+  public StartVerificationResponse start(StartVerificationRequestParameters parameters) {
+    return VerificationsDtoConverter.convert(
+        getApi().startVerification(VerificationsDtoConverter.convert(parameters)));
   }
 }

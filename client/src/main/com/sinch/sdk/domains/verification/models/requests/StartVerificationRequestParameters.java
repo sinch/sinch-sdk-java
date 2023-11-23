@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.verification.models.requests;
 
+import com.sinch.sdk.domains.sms.models.BaseDeliveryReport.Builder;
 import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.VerificationMethod;
 import java.util.Objects;
@@ -17,6 +18,13 @@ public class StartVerificationRequestParameters {
   private final String reference;
   private final String custom;
 
+  /**
+   * @param identity Specifies the type of endpoint that will be verified and the particular
+   *     endpoint. number is currently the only supported endpoint type
+   * @param method The type of the verification request.
+   * @param reference Used to pass your own reference in the request for tracking purposes.
+   * @param custom Can be used to pass custom data in the request.
+   */
   public StartVerificationRequestParameters(
       Identity identity, VerificationMethod method, String reference, String custom) {
     Objects.requireNonNull(identity);
@@ -60,39 +68,54 @@ public class StartVerificationRequestParameters {
         + '}';
   }
 
-  public static Builder builder() {
-    return new Builder();
+  public static Builder<?> builder() {
+    return new Builder<>();
   }
 
-  public static class Builder {
+  public static Builder<?> builder(VerificationMethod method) {
+    return new Builder<>(method);
+  }
+
+  public static class Builder<B extends Builder<B>> {
 
     Identity identity;
     VerificationMethod method;
     String reference;
     String custom;
 
-    public Builder setIdentity(Identity identity) {
-      this.identity = identity;
-      return this;
-    }
+    public Builder() {}
 
-    public Builder setMethod(VerificationMethod method) {
+    public Builder(VerificationMethod method) {
       this.method = method;
-      return this;
     }
 
-    public Builder setReference(String reference) {
+    public B setIdentity(Identity identity) {
+      this.identity = identity;
+      return self();
+    }
+
+    protected B setMethod(VerificationMethod method) {
+      this.method = method;
+      return self();
+    }
+
+    public B setReference(String reference) {
       this.reference = reference;
-      return this;
+      return self();
     }
 
-    public Builder setCustom(String custom) {
+    public B setCustom(String custom) {
       this.custom = custom;
-      return this;
+      return self();
     }
 
     public StartVerificationRequestParameters build() {
       return new StartVerificationRequestParameters(identity, method, reference, custom);
+    }
+
+    @SuppressWarnings("unchecked")
+    protected B self() {
+      return (B) this;
     }
   }
 }

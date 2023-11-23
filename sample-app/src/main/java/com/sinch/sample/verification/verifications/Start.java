@@ -1,9 +1,12 @@
 package com.sinch.sample.verification.verifications;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationMethod;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlashCallRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
+import com.sinch.sdk.domains.verification.models.response.StartVerificationResponse;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -26,15 +29,23 @@ public class Start extends BaseApplication {
 
     LOGGER.info("Start verification for : " + phoneNumber);
 
-    client
-        .verification()
-        .verifications()
-        .start(
-            StartVerificationFlashCallRequestParameters.builder()
-                .setIdentity(NumberIdentity.builder().setEndpoint("+33444555666").build())
-                .setMethod(VerificationMethod.SMS)
-                .build());
+    Identity identity = NumberIdentity.builder().setEndpoint(phoneNumber).build();
 
-    // LOGGER.info("Response :" + response);
+    VerificationMethod method = VerificationMethod.SMS;
+
+    StartVerificationRequestParameters parameters;
+    if (method != VerificationMethod.FLASH_CALL) {
+      parameters = StartVerificationRequestParameters.builder(method).setIdentity(identity).build();
+    } else {
+      //  Dedicated flashcall builder usage do not require setting explicit verification method
+      // parameter
+      parameters =
+          StartVerificationFlashCallRequestParameters.builder()
+              .setIdentity(identity)
+              .setDialTimeOut(17)
+              .build();
+    }
+    StartVerificationResponse response = client.verification().verifications().start(parameters);
+    LOGGER.info("Response :" + response);
   }
 }

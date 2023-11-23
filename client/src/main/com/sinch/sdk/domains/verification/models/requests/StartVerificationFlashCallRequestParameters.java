@@ -1,21 +1,26 @@
 package com.sinch.sdk.domains.verification.models.requests;
 
+import com.sinch.sdk.domains.sms.models.requests.SendSmsBatchBinaryRequest.Builder;
 import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.VerificationMethod;
 import java.util.Optional;
 
+/** Dedicated request parameters to be use for a flash call verification */
 public class StartVerificationFlashCallRequestParameters
     extends StartVerificationRequestParameters {
 
   private final Integer dialTimeOut;
 
+  /**
+   * @param identity Specifies the type of endpoint that will be verified and the particular
+   *     endpoint. number is currently the only supported endpoint type
+   * @param reference Used to pass your own reference in the request for tracking purposes.
+   * @param custom Can be used to pass custom data in the request.
+   * @param dialTimeOut The dial timeout in seconds.
+   */
   public StartVerificationFlashCallRequestParameters(
-      Identity identity,
-      VerificationMethod method,
-      String reference,
-      String custom,
-      Integer dialTimeOut) {
-    super(identity, method, reference, custom);
+      Identity identity, String reference, String custom, Integer dialTimeOut) {
+    super(identity, VerificationMethod.FLASH_CALL, reference, custom);
     this.dialTimeOut = dialTimeOut;
   }
 
@@ -36,18 +41,28 @@ public class StartVerificationFlashCallRequestParameters
     return new Builder();
   }
 
-  public static class Builder extends StartVerificationRequestParameters.Builder {
+  public static class Builder extends StartVerificationRequestParameters.Builder<Builder> {
 
     Integer dialTimeOut;
+
+    public Builder() {
+      super(VerificationMethod.FLASH_CALL);
+    }
 
     public Builder setDialTimeOut(Integer dialTimeOut) {
       this.dialTimeOut = dialTimeOut;
       return this;
     }
 
+    @Override
     public StartVerificationFlashCallRequestParameters build() {
       return new StartVerificationFlashCallRequestParameters(
-          identity, method, reference, custom, dialTimeOut);
+          identity, reference, custom, dialTimeOut);
+    }
+
+    @Override
+    protected Builder self() {
+      return this;
     }
   }
 }
