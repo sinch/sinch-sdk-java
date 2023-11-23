@@ -22,7 +22,6 @@ public class DeliveryReportErrorCode extends EnumDynamic<Integer, DeliveryReport
   /** Message has been dispatched to SMSC. */
   public static final DeliveryReportErrorCode DISPATCHED = new DeliveryReportErrorCode(401);
   /** SMSC rejected message. Retrying is likely to cause the same error. */
-  /** */
   public static final DeliveryReportErrorCode MESSAGE_UNROUTABLE = new DeliveryReportErrorCode(402);
   /** An unexpected error caused the message to fail. */
   public static final DeliveryReportErrorCode INTERNAL_ERROR = new DeliveryReportErrorCode(403);

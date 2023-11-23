@@ -7,7 +7,7 @@ public class URLParameter {
   private final boolean explode;
 
   /**
-   * Create a URL parameter from an object and a style: matrix, label, form, ... (see OAS <a
+   * Create a URL parameter from an object and a style: matrix, label, form, ... (see <a
    * href="https://spec.openapis.org/oas/latest.html#parameter-object">OAS site</a>)
    *
    * @param name The name of the parameter.

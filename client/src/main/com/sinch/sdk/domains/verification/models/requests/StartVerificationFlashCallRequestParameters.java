@@ -1,6 +1,5 @@
 package com.sinch.sdk.domains.verification.models.requests;
 
-import com.sinch.sdk.domains.sms.models.requests.SendSmsBatchBinaryRequest.Builder;
 import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.VerificationMethod;
 import java.util.Optional;

@@ -1,7 +1,6 @@
 package com.sinch.sdk.domains.verification.models.response;
 
 import com.sinch.sdk.domains.verification.models.Link;
-import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters.Builder;
 import java.util.Collection;
 
 /** Comme class to all Start verification requests */

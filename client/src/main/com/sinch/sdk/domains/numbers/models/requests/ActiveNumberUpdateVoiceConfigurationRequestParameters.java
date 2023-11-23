@@ -1,7 +1,5 @@
 package com.sinch.sdk.domains.numbers.models.requests;
 
-import com.sinch.sdk.domains.numbers.models.ActiveNumber.Builder;
-
 /***
  * SMS configuration parameters request to update an active number for a project
  * @since 1.0

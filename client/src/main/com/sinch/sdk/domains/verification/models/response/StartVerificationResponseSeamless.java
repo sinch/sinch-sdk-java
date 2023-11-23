@@ -1,7 +1,6 @@
 package com.sinch.sdk.domains.verification.models.response;
 
 import com.sinch.sdk.domains.verification.models.Link;
-import com.sinch.sdk.domains.verification.models.response.VerificationResponseCallout.Builder;
 import java.util.Collection;
 
 /** Dedicated response type for a seamless verification */

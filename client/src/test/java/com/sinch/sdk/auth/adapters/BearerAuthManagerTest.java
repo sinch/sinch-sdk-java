@@ -1,7 +1,6 @@
 package com.sinch.sdk.auth.adapters;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
