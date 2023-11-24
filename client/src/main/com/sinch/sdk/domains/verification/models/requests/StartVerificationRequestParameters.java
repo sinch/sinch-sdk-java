@@ -1,7 +1,7 @@
 package com.sinch.sdk.domains.verification.models.requests;
 
 import com.sinch.sdk.domains.verification.models.Identity;
-import com.sinch.sdk.domains.verification.models.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -13,7 +13,7 @@ import java.util.Optional;
 public class StartVerificationRequestParameters {
 
   private final Identity identity;
-  private final VerificationMethod method;
+  private final VerificationMethodType method;
   private final String reference;
   private final String custom;
 
@@ -25,7 +25,7 @@ public class StartVerificationRequestParameters {
    * @param custom Can be used to pass custom data in the request.
    */
   public StartVerificationRequestParameters(
-      Identity identity, VerificationMethod method, String reference, String custom) {
+      Identity identity, VerificationMethodType method, String reference, String custom) {
     Objects.requireNonNull(identity);
     Objects.requireNonNull(method);
 
@@ -39,7 +39,7 @@ public class StartVerificationRequestParameters {
     return identity;
   }
 
-  public VerificationMethod getMethod() {
+  public VerificationMethodType getMethod() {
     return method;
   }
 
@@ -71,20 +71,20 @@ public class StartVerificationRequestParameters {
     return new Builder<>();
   }
 
-  public static Builder<?> builder(VerificationMethod method) {
+  public static Builder<?> builder(VerificationMethodType method) {
     return new Builder<>(method);
   }
 
   public static class Builder<B extends Builder<B>> {
 
     Identity identity;
-    VerificationMethod method;
+    VerificationMethodType method;
     String reference;
     String custom;
 
     public Builder() {}
 
-    public Builder(VerificationMethod method) {
+    public Builder(VerificationMethodType method) {
       this.method = method;
     }
 
@@ -93,7 +93,7 @@ public class StartVerificationRequestParameters {
       return self();
     }
 
-    protected B setMethod(VerificationMethod method) {
+    protected B setMethod(VerificationMethodType method) {
       this.method = method;
       return self();
     }

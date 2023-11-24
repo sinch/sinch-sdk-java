@@ -1,0 +1,8 @@
+{
+  "id": "the id",
+  "method": "flashcall",
+  "status": "FAIL",
+  "reason": "Fraud",
+  "reference": "my reference",
+  "source": "my source"
+}

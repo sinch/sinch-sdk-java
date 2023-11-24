@@ -2,14 +2,14 @@ package com.sinch.sdk.domains.verification.models.requests;
 
 import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
-import com.sinch.sdk.domains.verification.models.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class StartVerificationRequestParametersTest {
 
   final Identity identity = NumberIdentity.builder().setEndpoint("foo identity").build();
-  final VerificationMethod method = VerificationMethod.CALLOUT;
+  final VerificationMethodType method = VerificationMethodType.CALLOUT;
   final String reference = "foo reference";
   final String custom = "foo custom";
 

@@ -7,7 +7,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
-public class StartStartVerificationResponseDtoTest extends BaseTest {
+public class StartVerificationResponseDtoTest extends BaseTest {
 
   @GivenJsonResource("/domains/verification/v1/StartVerificationCalloutResponseDto.json")
   InitiateVerificationResponseDto loadedStartVerificationCalloutDto;
