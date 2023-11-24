@@ -23,7 +23,7 @@ import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
-import com.sinch.sdk.core.http.URLParameterUtils;
+import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiBatchListDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiDeliveryFeedbackDto;
@@ -115,10 +115,9 @@ public class BatchesApi {
         "/xms/v1/{service_plan_id}/batches/{batch_id}"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()))
+                URLPathUtils.encodePathSegment(servicePlanId.toString()))
             .replaceAll(
-                "\\{" + "batch_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(batchId.toString()));
+                "\\{" + "batch_id" + "\\}", URLPathUtils.encodePathSegment(batchId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -215,10 +214,9 @@ public class BatchesApi {
         "/xms/v1/{service_plan_id}/batches/{batch_id}/delivery_feedback"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()))
+                URLPathUtils.encodePathSegment(servicePlanId.toString()))
             .replaceAll(
-                "\\{" + "batch_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(batchId.toString()));
+                "\\{" + "batch_id" + "\\}", URLPathUtils.encodePathSegment(batchId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -311,7 +309,7 @@ public class BatchesApi {
         "/xms/v1/{service_plan_id}/batches/dry_run"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()));
+                URLPathUtils.encodePathSegment(servicePlanId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
     if (null != perRecipient) {
@@ -401,10 +399,9 @@ public class BatchesApi {
         "/xms/v1/{service_plan_id}/batches/{batch_id}"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()))
+                URLPathUtils.encodePathSegment(servicePlanId.toString()))
             .replaceAll(
-                "\\{" + "batch_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(batchId.toString()));
+                "\\{" + "batch_id" + "\\}", URLPathUtils.encodePathSegment(batchId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -519,7 +516,7 @@ public class BatchesApi {
         "/xms/v1/{service_plan_id}/batches"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()));
+                URLPathUtils.encodePathSegment(servicePlanId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
     if (null != page) {
@@ -636,10 +633,9 @@ public class BatchesApi {
         "/xms/v1/{service_plan_id}/batches/{batch_id}"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()))
+                URLPathUtils.encodePathSegment(servicePlanId.toString()))
             .replaceAll(
-                "\\{" + "batch_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(batchId.toString()));
+                "\\{" + "batch_id" + "\\}", URLPathUtils.encodePathSegment(batchId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -718,7 +714,7 @@ public class BatchesApi {
         "/xms/v1/{service_plan_id}/batches"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()));
+                URLPathUtils.encodePathSegment(servicePlanId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -809,10 +805,9 @@ public class BatchesApi {
         "/xms/v1/{service_plan_id}/batches/{batch_id}"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()))
+                URLPathUtils.encodePathSegment(servicePlanId.toString()))
             .replaceAll(
-                "\\{" + "batch_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(batchId.toString()));
+                "\\{" + "batch_id" + "\\}", URLPathUtils.encodePathSegment(batchId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 

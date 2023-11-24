@@ -23,7 +23,7 @@ import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
-import com.sinch.sdk.core.http.URLParameterUtils;
+import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationResponseDto;
 import java.util.ArrayList;
@@ -94,8 +94,7 @@ public class QueryVerificationsApi {
 
     String localVarPath =
         "/verification/v1/verifications/id/{id}"
-            .replaceAll(
-                "\\{" + "id" + "\\}", URLParameterUtils.encodeParameterValue(id.toString()));
+            .replaceAll("\\{" + "id" + "\\}", URLPathUtils.encodePathSegment(id.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -182,14 +181,11 @@ public class QueryVerificationsApi {
 
     String localVarPath =
         "/verification/v1/verifications/{method}/{type}/{endpoint}"
+            .replaceAll("\\{" + "type" + "\\}", URLPathUtils.encodePathSegment(type.toString()))
             .replaceAll(
-                "\\{" + "type" + "\\}", URLParameterUtils.encodeParameterValue(type.toString()))
+                "\\{" + "endpoint" + "\\}", URLPathUtils.encodePathSegment(endpoint.toString()))
             .replaceAll(
-                "\\{" + "endpoint" + "\\}",
-                URLParameterUtils.encodeParameterValue(endpoint.toString()))
-            .replaceAll(
-                "\\{" + "method" + "\\}",
-                URLParameterUtils.encodeParameterValue(method.toString()));
+                "\\{" + "method" + "\\}", URLPathUtils.encodePathSegment(method.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -256,8 +252,7 @@ public class QueryVerificationsApi {
     String localVarPath =
         "/verification/v1/verifications/reference/{reference}"
             .replaceAll(
-                "\\{" + "reference" + "\\}",
-                URLParameterUtils.encodeParameterValue(reference.toString()));
+                "\\{" + "reference" + "\\}", URLPathUtils.encodePathSegment(reference.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 

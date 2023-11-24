@@ -336,7 +336,7 @@ public class VerificationResponseDto {
     this.callResult = callResult;
   }
 
-  /** Return true if this StartVerificationResponse object is equal to o. */
+  /** Return true if this VerificationResponse object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
