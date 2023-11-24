@@ -4,6 +4,7 @@ import com.sinch.sdk.core.exceptions.ApiAuthException;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.utils.Pair;
+import com.sinch.sdk.core.utils.StringUtil;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
@@ -63,7 +64,9 @@ public class VerificationApplicationAuthManager implements AuthManager {
   }
 
   private String getBodyMD5Hash(String body) {
-
+    if (StringUtil.isEmpty(body)) {
+      return "";
+    }
     try {
       MessageDigest md = MessageDigest.getInstance("MD5");
       byte[] digest = md.digest(body.getBytes(StandardCharsets.UTF_8));
@@ -80,7 +83,7 @@ public class VerificationApplicationAuthManager implements AuthManager {
         "\n",
         method,
         bodyMD5Hash,
-        httpContentType,
+        null != httpContentType ? httpContentType : "",
         XTIMESTAMP_HEADER + ":" + timestamp.toString(),
         path);
   }
