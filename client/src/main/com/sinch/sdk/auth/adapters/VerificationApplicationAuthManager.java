@@ -1,8 +1,11 @@
 package com.sinch.sdk.auth.adapters;
 
 import com.sinch.sdk.core.exceptions.ApiAuthException;
+import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.utils.Pair;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
@@ -40,11 +43,17 @@ public class VerificationApplicationAuthManager implements AuthManager {
   public Collection<Pair<String, String>> getAuthorizationHeaders(
       String method, String httpContentType, String path, String body) {
 
+    String decodePath;
+    try {
+      decodePath = new URI(path).getPath();
+    } catch (URISyntaxException e) {
+      throw new ApiException(e);
+    }
     // see
     // https://developers.sinch.com/docs/verification/api-reference/authentication/signed-request/
     Instant timestamp = Instant.now();
     String bodyMD5Hash = getBodyMD5Hash(body);
-    String stringToSign = getSignature(method, bodyMD5Hash, httpContentType, timestamp, path);
+    String stringToSign = getSignature(method, bodyMD5Hash, httpContentType, timestamp, decodePath);
     String encoded = encode(stringToSign);
     String key = this.key == null ? "" : this.key;
 
