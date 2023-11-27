@@ -7,7 +7,9 @@ import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.domains.verification.StatusService;
 import com.sinch.sdk.domains.verification.VerificationsService;
 import com.sinch.sdk.models.Configuration;
+import java.nio.charset.StandardCharsets;
 import java.util.AbstractMap;
+import java.util.Base64;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -22,28 +24,33 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
   private final HttpClient httpClient;
   private VerificationsService verifications;
   private StatusService status;
-  private final Map<String, AuthManager> authManagers;
+  private Map<String, AuthManager> authManagers;
 
   public VerificationService(Configuration configuration, HttpClient httpClient) {
     this.configuration = configuration;
     this.httpClient = httpClient;
 
+    // by default, unified id/secret from configuration are used but can be super sed if
+    // "useSecrets"
+    // is called after initialization
+    useSecrets(
+        configuration.getKeyId(),
+        Base64.getEncoder()
+            .encodeToString(configuration.getKeySecret().getBytes(StandardCharsets.UTF_8)));
+  }
+
+  public VerificationService useSecrets(String key, String secret) {
     AuthManager authManager;
     boolean useApplicationAuth = true;
     if (useApplicationAuth) {
-      authManager =
-          new VerificationApplicationAuthManager(
-              configuration.getKeyId(),
-              // TODO: Currently Verification do not accept project related key/secret. TBC
-              // fallback to the verifications usage ones for POC
-              // Base64.getEncoder().encodeToString(configuration.getKeySecret().getBytes(StandardCharsets.UTF_8))
-              configuration.getKeySecret());
+      authManager = new VerificationApplicationAuthManager(key, secret);
     } else {
-      authManager = new BasicAuthManager(configuration);
+      authManager = new BasicAuthManager(key, secret);
     }
     authManagers =
         Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_VERIFICATION, authManager))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    return this;
   }
 
   public VerificationsService verifications() {

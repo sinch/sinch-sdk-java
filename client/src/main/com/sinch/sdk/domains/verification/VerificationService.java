@@ -10,6 +10,17 @@ package com.sinch.sdk.domains.verification;
 public interface VerificationService {
 
   /**
+   * Use application secret in place of unified configuration for authentication (see Sinch
+   * dashboard for details)
+   *
+   * @param key see <a href="https://dashboard.sinch.com/voice/apps">dashboard</a>
+   * @param secret see <a href="https://dashboard.sinch.com/voice/apps">dashboard</a>
+   * @return service instance for project
+   * @since 1.0
+   */
+  VerificationService useSecrets(String key, String secret);
+
+  /**
    * Verifications Service instance
    *
    * @return service instance for project

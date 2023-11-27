@@ -34,11 +34,20 @@ public class BearerAuthManager implements AuthManager {
   private String token;
 
   public BearerAuthManager(Configuration configuration, HttpMapper mapper, HttpClient httpClient) {
+    this(configuration.getKeyId(), configuration.getKeySecret(), configuration, mapper, httpClient);
+  }
+
+  public BearerAuthManager(
+      String keyId,
+      String keySecret,
+      Configuration configuration,
+      HttpMapper mapper,
+      HttpClient httpClient) {
     this.oAuthServer = configuration.getOAuthServer();
     this.mapper = mapper;
     this.httpClient = httpClient;
 
-    AuthManager basicAuthManager = new BasicAuthManager(configuration);
+    AuthManager basicAuthManager = new BasicAuthManager(keyId, keySecret);
     authManagers =
         Stream.of(new AbstractMap.SimpleEntry<>(SCHEMA_KEYWORD_BASIC, basicAuthManager))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
