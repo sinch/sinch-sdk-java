@@ -23,7 +23,7 @@ import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
-import com.sinch.sdk.core.http.URLParameterUtils;
+import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.numbers.models.dto.v1.CallbackConfigurationDto;
 import com.sinch.sdk.domains.numbers.models.dto.v1.CallbackConfigurationUpdateDto;
@@ -97,8 +97,7 @@ public class CallbackConfigurationApi {
     String localVarPath =
         "/v1/projects/{projectId}/callbackConfiguration"
             .replaceAll(
-                "\\{" + "projectId" + "\\}",
-                URLParameterUtils.encodeParameterValue(projectId.toString()));
+                "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -177,8 +176,7 @@ public class CallbackConfigurationApi {
     String localVarPath =
         "/v1/projects/{projectId}/callbackConfiguration"
             .replaceAll(
-                "\\{" + "projectId" + "\\}",
-                URLParameterUtils.encodeParameterValue(projectId.toString()));
+                "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 

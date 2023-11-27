@@ -1,6 +1,10 @@
 package com.sinch.sdk.domains.verification;
 
+import com.sinch.sdk.domains.verification.models.Identity;
+import com.sinch.sdk.domains.verification.models.VerificationId;
+import com.sinch.sdk.domains.verification.models.VerificationReport;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.VerificationReportRequestParameters;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponse;
 
 /**
@@ -25,4 +29,29 @@ public interface VerificationsService {
    * @since 1.0
    */
   StartVerificationResponse start(StartVerificationRequestParameters parameters);
+
+  /**
+   * Report a verification using Identity
+   *
+   * <p>Report the received verification code to verify it, using the identity of the user (in most
+   * cases, the phone number). For an SMS PIN verification or Phone Call verification, this is the
+   * OTP code. For flashcalls, this is the CLI.
+   *
+   * @param identity Only number identity is supported
+   * @param parameters Parameters to be used to get report
+   * @return Verification report response
+   * @since 1.0
+   */
+  VerificationReport report(Identity identity, VerificationReportRequestParameters parameters);
+
+  /**
+   * Report the received verification code to verify it, using the Verification ID of the
+   * Verification request
+   *
+   * @param id Id returned from start verification
+   * @param parameters Parameters to be used to get report
+   * @return Verification report response
+   * @since 1.0
+   */
+  VerificationReport report(VerificationId id, VerificationReportRequestParameters parameters);
 }

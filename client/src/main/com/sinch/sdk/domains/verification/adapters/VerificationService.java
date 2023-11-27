@@ -4,6 +4,7 @@ import com.sinch.sdk.auth.adapters.BasicAuthManager;
 import com.sinch.sdk.auth.adapters.VerificationApplicationAuthManager;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
+import com.sinch.sdk.domains.verification.StatusService;
 import com.sinch.sdk.domains.verification.VerificationsService;
 import com.sinch.sdk.models.Configuration;
 import java.util.AbstractMap;
@@ -20,6 +21,7 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
   private final Configuration configuration;
   private final HttpClient httpClient;
   private VerificationsService verifications;
+  private StatusService status;
   private final Map<String, AuthManager> authManagers;
 
   public VerificationService(Configuration configuration, HttpClient httpClient) {
@@ -44,7 +46,6 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 
-  @Override
   public VerificationsService verifications() {
     if (null == this.verifications) {
       this.verifications =
@@ -52,5 +53,14 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
               configuration, httpClient, authManagers);
     }
     return this.verifications;
+  }
+
+  public StatusService status() {
+    if (null == this.status) {
+      this.status =
+          new com.sinch.sdk.domains.verification.adapters.StatusService(
+              configuration, httpClient, authManagers);
+    }
+    return this.status;
   }
 }

@@ -23,7 +23,7 @@ import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
-import com.sinch.sdk.core.http.URLParameterUtils;
+import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.verification.models.dto.v1.InitiateVerificationResourceDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.InitiateVerificationResponseDto;
@@ -116,8 +116,7 @@ public class SendingAndReportingVerificationsApi {
 
     String localVarPath =
         "/verification/v1/verifications/id/{id}"
-            .replaceAll(
-                "\\{" + "id" + "\\}", URLParameterUtils.encodeParameterValue(id.toString()));
+            .replaceAll("\\{" + "id" + "\\}", URLPathUtils.encodePathSegment(id.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -214,11 +213,9 @@ public class SendingAndReportingVerificationsApi {
 
     String localVarPath =
         "/verification/v1/verifications/{type}/{endpoint}"
+            .replaceAll("\\{" + "type" + "\\}", URLPathUtils.encodePathSegment(type.toString()))
             .replaceAll(
-                "\\{" + "type" + "\\}", URLParameterUtils.encodeParameterValue(type.toString()))
-            .replaceAll(
-                "\\{" + "endpoint" + "\\}",
-                URLParameterUtils.encodeParameterValue(endpoint.toString()));
+                "\\{" + "endpoint" + "\\}", URLPathUtils.encodePathSegment(endpoint.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -296,8 +293,7 @@ public class SendingAndReportingVerificationsApi {
 
     final Collection<String> localVarAccepts = Arrays.asList("application/json");
 
-    final Collection<String> localVarContentTypes =
-        Arrays.asList("application/json; charset=UTF-8");
+    final Collection<String> localVarContentTypes = Arrays.asList("application/json");
 
     final Collection<String> localVarAuthNames = Arrays.asList("Basic");
     final String serializedBody =

@@ -23,7 +23,7 @@ import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
-import com.sinch.sdk.core.http.URLParameterUtils;
+import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiGroupListDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.CreateGroupResponseDto;
@@ -111,7 +111,7 @@ public class GroupsApi {
         "/xms/v1/{service_plan_id}/groups"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()));
+                URLPathUtils.encodePathSegment(servicePlanId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -181,10 +181,9 @@ public class GroupsApi {
         "/xms/v1/{service_plan_id}/groups/{group_id}"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()))
+                URLPathUtils.encodePathSegment(servicePlanId.toString()))
             .replaceAll(
-                "\\{" + "group_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(groupId.toString()));
+                "\\{" + "group_id" + "\\}", URLPathUtils.encodePathSegment(groupId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -257,10 +256,9 @@ public class GroupsApi {
         "/xms/v1/{service_plan_id}/groups/{group_id}/members"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()))
+                URLPathUtils.encodePathSegment(servicePlanId.toString()))
             .replaceAll(
-                "\\{" + "group_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(groupId.toString()));
+                "\\{" + "group_id" + "\\}", URLPathUtils.encodePathSegment(groupId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -338,7 +336,7 @@ public class GroupsApi {
         "/xms/v1/{service_plan_id}/groups"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()));
+                URLPathUtils.encodePathSegment(servicePlanId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
     if (null != page) {
@@ -435,10 +433,9 @@ public class GroupsApi {
         "/xms/v1/{service_plan_id}/groups/{group_id}"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()))
+                URLPathUtils.encodePathSegment(servicePlanId.toString()))
             .replaceAll(
-                "\\{" + "group_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(groupId.toString()));
+                "\\{" + "group_id" + "\\}", URLPathUtils.encodePathSegment(groupId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -512,10 +509,9 @@ public class GroupsApi {
         "/xms/v1/{service_plan_id}/groups/{group_id}"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()))
+                URLPathUtils.encodePathSegment(servicePlanId.toString()))
             .replaceAll(
-                "\\{" + "group_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(groupId.toString()));
+                "\\{" + "group_id" + "\\}", URLPathUtils.encodePathSegment(groupId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -611,10 +607,9 @@ public class GroupsApi {
         "/xms/v1/{service_plan_id}/groups/{group_id}"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()))
+                URLPathUtils.encodePathSegment(servicePlanId.toString()))
             .replaceAll(
-                "\\{" + "group_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(groupId.toString()));
+                "\\{" + "group_id" + "\\}", URLPathUtils.encodePathSegment(groupId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 

@@ -2,14 +2,15 @@ package com.sinch.sdk.domains.verification.models.requests;
 
 import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
-import com.sinch.sdk.domains.verification.models.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.VerificationMethodType;
+import com.sinch.sdk.domains.verification.models.VerificationReference;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class StartVerificationFlashCallRequestParametersTest {
 
   final Identity identity = NumberIdentity.builder().setEndpoint("foo identity").build();
-  final VerificationMethod method = VerificationMethod.FLASH_CALL;
+  final VerificationMethodType method = VerificationMethodType.FLASH_CALL;
   final String reference = "foo reference";
   final String custom = "foo custom";
 
@@ -17,7 +18,7 @@ class StartVerificationFlashCallRequestParametersTest {
   final StartVerificationFlashCallRequestParameters value =
       StartVerificationFlashCallRequestParameters.builder()
           .setIdentity(identity)
-          .setReference(reference)
+          .setReference(VerificationReference.valueOf(reference))
           .setCustom(custom)
           .setDialTimeOut(dialTimeOut)
           .build();
@@ -34,7 +35,7 @@ class StartVerificationFlashCallRequestParametersTest {
 
   @Test
   void getReference() {
-    Assertions.assertThat(value.getReference().get()).isEqualTo(reference);
+    Assertions.assertThat(value.getReference().get().getReference()).isEqualTo(reference);
   }
 
   @Test

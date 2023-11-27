@@ -16,4 +16,12 @@ public interface VerificationService {
    * @since 1.0
    */
   VerificationsService verifications();
+
+  /**
+   * Status Service instance
+   *
+   * @return service instance for project
+   * @since 1.0
+   */
+  StatusService status();
 }

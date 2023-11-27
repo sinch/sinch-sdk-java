@@ -1,7 +1,8 @@
 package com.sinch.sdk.domains.verification.models.requests;
 
 import com.sinch.sdk.domains.verification.models.Identity;
-import com.sinch.sdk.domains.verification.models.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.VerificationMethodType;
+import com.sinch.sdk.domains.verification.models.VerificationReference;
 import java.util.Optional;
 
 /** Dedicated request parameters to be use for a flash call verification */
@@ -18,8 +19,8 @@ public class StartVerificationFlashCallRequestParameters
    * @param dialTimeOut The dial timeout in seconds.
    */
   public StartVerificationFlashCallRequestParameters(
-      Identity identity, String reference, String custom, Integer dialTimeOut) {
-    super(identity, VerificationMethod.FLASH_CALL, reference, custom);
+      Identity identity, VerificationReference reference, String custom, Integer dialTimeOut) {
+    super(identity, VerificationMethodType.FLASH_CALL, reference, custom);
     this.dialTimeOut = dialTimeOut;
   }
 
@@ -45,7 +46,7 @@ public class StartVerificationFlashCallRequestParameters
     Integer dialTimeOut;
 
     public Builder() {
-      super(VerificationMethod.FLASH_CALL);
+      super(VerificationMethodType.FLASH_CALL);
     }
 
     public Builder setDialTimeOut(Integer dialTimeOut) {

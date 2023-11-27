@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.verification.models.response;
 
 import com.sinch.sdk.domains.verification.models.Link;
+import com.sinch.sdk.domains.verification.models.VerificationId;
 import java.util.Collection;
 
 /** Dedicated response type for a sms verification */
@@ -17,7 +18,7 @@ public class StartVerificationResponseSMS extends StartVerificationResponse {
    *     SMS.
    */
   public StartVerificationResponseSMS(
-      String id, Collection<Link> links, String template, Integer interceptionTimeOut) {
+      VerificationId id, Collection<Link> links, String template, Integer interceptionTimeOut) {
     super(id, links);
     this.template = template;
     this.interceptionTimeOut = interceptionTimeOut;

@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.verification.models;
 
 /** Identity based onto a number */
 public class NumberIdentity extends Identity {
+
   private final String endpoint;
 
   public String getEndpoint() {
@@ -10,6 +11,7 @@ public class NumberIdentity extends Identity {
 
   /** @param endpoint An E.164-compatible phone number. */
   public NumberIdentity(String endpoint) {
+    super("number");
     this.endpoint = endpoint;
   }
 
