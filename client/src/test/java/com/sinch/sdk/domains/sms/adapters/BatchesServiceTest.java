@@ -379,7 +379,7 @@ public class BatchesServiceTest extends BaseTest {
 
     BatchesListResponse response = service.list(null);
 
-    Iterator<Batch<?>> iterator = response.autoPageIter();
+    Iterator<Batch<?>> iterator = response.iterator();
     Batch<?> batch = iterator.next();
     Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
     Assertions.assertThat(batch)

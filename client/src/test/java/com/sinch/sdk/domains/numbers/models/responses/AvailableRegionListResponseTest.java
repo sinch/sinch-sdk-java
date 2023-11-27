@@ -33,7 +33,7 @@ class AvailableRegionListResponseTest {
   void autoPageIter() {
     AtomicInteger count = new AtomicInteger();
     response
-        .autoPageIter()
+        .iterator()
         .forEachRemaining(
             value -> {
               Assertions.assertThat(value)

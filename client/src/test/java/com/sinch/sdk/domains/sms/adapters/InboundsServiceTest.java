@@ -95,7 +95,7 @@ class InboundsServiceTest extends BaseTest {
 
     InboundsListResponse response = service.list(null);
 
-    Iterator<Inbound<?>> iterator = response.autoPageIter();
+    Iterator<Inbound<?>> iterator = response.iterator();
     Inbound<?> item = iterator.next();
     Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
 

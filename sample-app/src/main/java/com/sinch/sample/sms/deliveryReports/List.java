@@ -36,7 +36,7 @@ public class List extends BaseApplication {
                     Arrays.asList(
                         DeliveryReportErrorCode.from(0), DeliveryReportErrorCode.DISPATCHED))
                 .build())
-        .autoPageIter()
+        .iterator()
         .forEachRemaining(f -> LOGGER.info(f.toString()));
   }
 }

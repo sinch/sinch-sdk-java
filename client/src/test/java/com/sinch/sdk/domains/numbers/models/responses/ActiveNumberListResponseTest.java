@@ -86,7 +86,7 @@ class ActiveNumberListResponseTest extends BaseTest {
     AtomicInteger count = new AtomicInteger();
     ActiveNumberListResponse response = new ActiveNumberListResponse(service, pages.get(0));
     response
-        .autoPageIter()
+        .iterator()
         .forEachRemaining(
             value -> {
               Assertions.assertThat(value)
