@@ -17,6 +17,7 @@ public class GroupsListResponse extends ListResponse<Group> {
 
   private final Page<GroupsListRequestParameters, Group, Integer> page;
   private final GroupsService service;
+  private GroupsListResponse nextPage;
 
   public GroupsListResponse(
       GroupsService service, Page<GroupsListRequestParameters, Group, Integer> page) {
@@ -25,17 +26,23 @@ public class GroupsListResponse extends ListResponse<Group> {
   }
 
   public boolean hasNextPage() {
-    return (null != page.getNextPageToken());
+
+    if (null == nextPage) {
+      GroupsListRequestParameters.Builder newParameters =
+          GroupsListRequestParameters.builder(page.getParameters());
+      newParameters.setPage(page.getNextPageToken());
+      nextPage = service.list(newParameters.build());
+    }
+    return (null != nextPage.getContent() && !nextPage.getContent().isEmpty());
   }
 
   public GroupsListResponse nextPage() {
     if (!hasNextPage()) {
       throw new NoSuchElementException("Reached the last page of the API response");
     }
-    GroupsListRequestParameters.Builder newParameters =
-        GroupsListRequestParameters.builder(page.getParameters());
-    newParameters.setPage(page.getNextPageToken());
-    return service.list(newParameters.build());
+    GroupsListResponse response = nextPage;
+    nextPage = null;
+    return response;
   }
 
   public Collection<Group> getContent() {

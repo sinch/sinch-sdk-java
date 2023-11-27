@@ -43,6 +43,9 @@ class InboundsServiceTest extends BaseTest {
   @GivenJsonResource("/domains/sms/v1/InboundsListResponseDtoPage1.json")
   ApiInboundListDto inboundsLisResponseDtoPage1;
 
+  @GivenJsonResource("/domains/sms/v1/InboundsListResponseDtoPage2.json")
+  ApiInboundListDto inboundsLisResponseDtoPage2;
+
   @Test
   void getBinary() throws ApiException {
 
@@ -92,7 +95,15 @@ class InboundsServiceTest extends BaseTest {
             eq(null),
             eq(null)))
         .thenReturn(inboundsLisResponseDtoPage1);
-
+    when(api.listInboundMessages(
+            eq(configuration.getProjectId()),
+            eq(2),
+            eq(null),
+            eq(null),
+            eq(null),
+            eq(null),
+            eq(null)))
+        .thenReturn(inboundsLisResponseDtoPage2);
     InboundsListResponse response = service.list(null);
 
     Iterator<Inbound<?>> iterator = response.iterator();
