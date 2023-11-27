@@ -36,7 +36,7 @@ public class List extends BaseApplication {
                 // .setClientReference("a client reference")
                 // .setStartDate(Instant.now())
                 .build())
-        .autoPageIter()
+        .iterator()
         .forEachRemaining(f -> LOGGER.info(f.toString()));
   }
 }

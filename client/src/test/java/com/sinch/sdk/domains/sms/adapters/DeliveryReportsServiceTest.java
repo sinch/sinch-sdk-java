@@ -171,7 +171,7 @@ class DeliveryReportsServiceTest extends BaseTest {
 
     DeliveryReportsListResponse response = service.list(null);
 
-    Iterator<DeliveryReportRecipient> iterator = response.autoPageIter();
+    Iterator<DeliveryReportRecipient> iterator = response.iterator();
     DeliveryReportRecipient item = iterator.next();
     Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
 

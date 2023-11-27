@@ -38,7 +38,7 @@ public class List extends BaseApplication {
                     .build());
     AtomicInteger page = new AtomicInteger(1);
     response
-        .autoPageIter()
+        .iterator()
         .forEachRemaining(
             value ->
                 LOGGER.info(

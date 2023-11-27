@@ -88,7 +88,7 @@ class GroupsServiceTest extends BaseTest {
 
     GroupsListResponse response = service.list(null);
 
-    Iterator<Group> iterator = response.autoPageIter();
+    Iterator<Group> iterator = response.iterator();
     Group item = iterator.next();
     Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
 
