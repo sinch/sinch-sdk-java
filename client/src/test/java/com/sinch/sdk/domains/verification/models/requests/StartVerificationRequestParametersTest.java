@@ -3,6 +3,7 @@ package com.sinch.sdk.domains.verification.models.requests;
 import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
+import com.sinch.sdk.domains.verification.models.VerificationReference;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ class StartVerificationRequestParametersTest {
       StartVerificationRequestParameters.builder()
           .setIdentity(identity)
           .setMethod(method)
-          .setReference(reference)
+          .setReference(VerificationReference.valueOf(reference))
           .setCustom(custom)
           .build();
 
@@ -33,7 +34,7 @@ class StartVerificationRequestParametersTest {
 
   @Test
   void getReference() {
-    Assertions.assertThat(value.getReference().get()).isEqualTo(reference);
+    Assertions.assertThat(value.getReference().get().getReference()).isEqualTo(reference);
   }
 
   @Test

@@ -9,7 +9,9 @@ import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.verification.adapters.api.v1.QueryVerificationsApi;
 import com.sinch.sdk.domains.verification.adapters.converters.VerificationsDtoConverterTest;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
+import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
+import com.sinch.sdk.domains.verification.models.VerificationReference;
 import com.sinch.sdk.domains.verification.models.VerificationReport;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportDtoTest;
 import com.sinch.sdk.models.Configuration;
@@ -32,7 +34,7 @@ public class StatusServiceTest extends BaseTest {
         .thenReturn(VerificationReportDtoTest.expectedVerificationCalloutDto);
 
     VerificationReport response =
-        service.getByIdentity(
+        service.get(
             NumberIdentity.builder().setEndpoint("endpoint string").build(),
             VerificationMethodType.SMS);
 
@@ -47,7 +49,7 @@ public class StatusServiceTest extends BaseTest {
     when(api.verificationStatusById(eq("the id")))
         .thenReturn(VerificationReportDtoTest.expectedVerificationCalloutDto);
 
-    VerificationReport response = service.getById("the id");
+    VerificationReport response = service.get(VerificationId.valueOf("the id"));
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
@@ -60,7 +62,7 @@ public class StatusServiceTest extends BaseTest {
     when(api.verificationStatusByReference(eq("the reference")))
         .thenReturn(VerificationReportDtoTest.expectedVerificationCalloutDto);
 
-    VerificationReport response = service.getByReference("the reference");
+    VerificationReport response = service.get(VerificationReference.valueOf("the reference"));
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()

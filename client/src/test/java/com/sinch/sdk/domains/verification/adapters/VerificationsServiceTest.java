@@ -10,6 +10,7 @@ import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.verification.adapters.api.v1.SendingAndReportingVerificationsApi;
 import com.sinch.sdk.domains.verification.adapters.converters.VerificationsDtoConverterTest;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
+import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationReport;
 import com.sinch.sdk.domains.verification.models.dto.v1.InitiateVerificationResourceDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.StartVerificationResponseDtoTest;
@@ -73,7 +74,9 @@ public class VerificationsServiceTest extends BaseTest {
         .thenReturn(VerificationReportDtoTest.expectedVerificationCalloutDto);
 
     VerificationReport response =
-        service.report("the id", VerificationsDtoConverterTest.verificationReportCalloutRequest);
+        service.report(
+            VerificationId.valueOf("the id"),
+            VerificationsDtoConverterTest.verificationReportCalloutRequest);
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()

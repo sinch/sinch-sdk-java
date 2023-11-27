@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.verification.models.response;
 
 import com.sinch.sdk.domains.verification.models.Link;
+import com.sinch.sdk.domains.verification.models.VerificationId;
 import java.util.Collection;
 
 /** Dedicated response type for a seamless verification */
@@ -13,7 +14,8 @@ public class StartVerificationResponseSeamless extends StartVerificationResponse
    * @param links Available methods and actions which can be done after a successful Verification
    * @param targetUri The target URI
    */
-  public StartVerificationResponseSeamless(String id, Collection<Link> links, String targetUri) {
+  public StartVerificationResponseSeamless(
+      VerificationId id, Collection<Link> links, String targetUri) {
     super(id, links);
     this.targetUri = targetUri;
   }

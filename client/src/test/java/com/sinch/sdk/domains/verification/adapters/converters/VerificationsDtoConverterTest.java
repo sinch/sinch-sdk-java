@@ -3,7 +3,9 @@ package com.sinch.sdk.domains.verification.adapters.converters;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.Price;
+import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
+import com.sinch.sdk.domains.verification.models.VerificationReference;
 import com.sinch.sdk.domains.verification.models.VerificationReportCallout;
 import com.sinch.sdk.domains.verification.models.VerificationReportFlashCall;
 import com.sinch.sdk.domains.verification.models.VerificationReportReasonType;
@@ -30,26 +32,26 @@ public class VerificationsDtoConverterTest extends BaseTest {
   public static StartVerificationRequestParameters startVerificationCalloutRequest =
       StartVerificationRequestParameters.builder(VerificationMethodType.CALLOUT)
           .setCustom("a custom")
-          .setReference("a reference")
+          .setReference(VerificationReference.valueOf("a reference"))
           .setIdentity(NumberIdentity.builder().setEndpoint("+endpoint").build())
           .build();
 
   public static StartVerificationResponseCallout expectedStartVerificationCalloutResponse =
       StartVerificationResponseCallout.builder()
-          .setId("the id")
+          .setId(VerificationId.valueOf("the id"))
           .setLinks(LinkDtoConverterTest.linksClient)
           .build();
 
   public static StartVerificationRequestParameters startVerificationFlashCallRequest =
       StartVerificationFlashCallRequestParameters.builder()
           .setCustom("a custom")
-          .setReference("a reference")
+          .setReference(VerificationReference.valueOf("a reference"))
           .setIdentity(NumberIdentity.builder().setEndpoint("+endpoint").build())
           .setDialTimeOut(17)
           .build();
   public static StartVerificationResponseFlashCall expectedStartVerificationFlashCallResponse =
       StartVerificationResponseFlashCall.builder()
-          .setId("the id")
+          .setId(VerificationId.valueOf("the id"))
           .setLinks(LinkDtoConverterTest.linksClient)
           .setCliFilter("(.*)5312(.*)")
           .setInterceptionTimeOut(45)
@@ -59,24 +61,24 @@ public class VerificationsDtoConverterTest extends BaseTest {
   public static StartVerificationRequestParameters startVerificationSeamlessRequest =
       StartVerificationRequestParameters.builder(VerificationMethodType.SEAMLESS)
           .setCustom("a custom")
-          .setReference("a reference")
+          .setReference(VerificationReference.valueOf("a reference"))
           .setIdentity(NumberIdentity.builder().setEndpoint("+endpoint").build())
           .build();
   public static StartVerificationResponseSeamless expectedStartVerificationSeamlessResponse =
       StartVerificationResponseSeamless.builder()
-          .setId("the id")
+          .setId(VerificationId.valueOf("the id"))
           .setLinks(LinkDtoConverterTest.linksClient)
           .setTargetUri("target URI")
           .build();
   public static StartVerificationRequestParameters startVerificationSMSRequest =
       StartVerificationRequestParameters.builder(VerificationMethodType.SMS)
           .setCustom("a custom")
-          .setReference("a reference")
+          .setReference(VerificationReference.valueOf("a reference"))
           .setIdentity(NumberIdentity.builder().setEndpoint("+endpoint").build())
           .build();
   public static StartVerificationResponseSMS expectedStartVerificationSMSResponse =
       StartVerificationResponseSMS.builder()
-          .setId("the id")
+          .setId(VerificationId.valueOf("the id"))
           .setLinks(LinkDtoConverterTest.linksClient)
           .setTemplate("Your verification code is {{CODE}}. Verified by Sinch")
           .setInterceptionTimeOut(298)
@@ -159,11 +161,11 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
   public static VerificationReportCallout expectedVerificationReportCalloutResponse =
       VerificationReportCallout.builder()
-          .setId("the id")
+          .setId(VerificationId.valueOf("the id"))
           .setStatus(VerificationReportStatusType.FAIL)
           .setReason(VerificationReportReasonType.FRAUD)
           .setCallComplete(true)
-          .setReference("my reference")
+          .setReference(VerificationReference.valueOf("my reference"))
           .setVerificationPrice(
               Price.builder()
                   .setCurrencyId("verificationPrice currency id")
@@ -200,10 +202,10 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
   public static VerificationReportFlashCall expectedVerificationReportFlashCallResponse =
       VerificationReportFlashCall.builder()
-          .setId("the id")
+          .setId(VerificationId.valueOf("the id"))
           .setStatus(VerificationReportStatusType.FAIL)
           .setReason(VerificationReportReasonType.FRAUD)
-          .setReference("my reference")
+          .setReference(VerificationReference.valueOf("my reference"))
           .setSource("my source")
           .build();
 
@@ -233,10 +235,10 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
   public static VerificationReportSMS expectedVerificationReportSMSResponse =
       VerificationReportSMS.builder()
-          .setId("the id")
+          .setId(VerificationId.valueOf("the id"))
           .setStatus(VerificationReportStatusType.FAIL)
           .setReason(VerificationReportReasonType.FRAUD)
-          .setReference("my reference")
+          .setReference(VerificationReference.valueOf("my reference"))
           .setSource("my source")
           .setVerificationPrice(
               Price.builder()

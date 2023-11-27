@@ -8,7 +8,9 @@ import com.sinch.sdk.domains.verification.adapters.api.v1.QueryVerificationsApi;
 import com.sinch.sdk.domains.verification.adapters.converters.VerificationsDtoConverter;
 import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
+import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
+import com.sinch.sdk.domains.verification.models.VerificationReference;
 import com.sinch.sdk.domains.verification.models.VerificationReport;
 import com.sinch.sdk.models.Configuration;
 import java.util.Map;
@@ -30,7 +32,7 @@ public class StatusService implements com.sinch.sdk.domains.verification.StatusS
     return this.api;
   }
 
-  public VerificationReport getByIdentity(Identity identity, VerificationMethodType method) {
+  public VerificationReport get(Identity identity, VerificationMethodType method) {
     if (!(identity instanceof NumberIdentity)) {
       throw new ApiException("Unexpected entity: " + identity);
     }
@@ -42,13 +44,14 @@ public class StatusService implements com.sinch.sdk.domains.verification.StatusS
                 numberIdentity.getType(), numberIdentity.getEndpoint(), method.value()));
   }
 
-  public VerificationReport getById(String id) {
+  public VerificationReport get(VerificationId id) {
 
-    return VerificationsDtoConverter.convert(getApi().verificationStatusById(id));
+    return VerificationsDtoConverter.convert(getApi().verificationStatusById(id.getId()));
   }
 
-  public VerificationReport getByReference(String reference) {
+  public VerificationReport get(VerificationReference reference) {
 
-    return VerificationsDtoConverter.convert(getApi().verificationStatusByReference(reference));
+    return VerificationsDtoConverter.convert(
+        getApi().verificationStatusByReference(reference.getReference()));
   }
 }

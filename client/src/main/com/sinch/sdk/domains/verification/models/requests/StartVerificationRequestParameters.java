@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.verification.models.requests;
 
 import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
+import com.sinch.sdk.domains.verification.models.VerificationReference;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -14,7 +15,7 @@ public class StartVerificationRequestParameters {
 
   private final Identity identity;
   private final VerificationMethodType method;
-  private final String reference;
+  private final VerificationReference reference;
   private final String custom;
 
   /**
@@ -25,7 +26,10 @@ public class StartVerificationRequestParameters {
    * @param custom Can be used to pass custom data in the request.
    */
   public StartVerificationRequestParameters(
-      Identity identity, VerificationMethodType method, String reference, String custom) {
+      Identity identity,
+      VerificationMethodType method,
+      VerificationReference reference,
+      String custom) {
     Objects.requireNonNull(identity);
     Objects.requireNonNull(method);
 
@@ -43,7 +47,7 @@ public class StartVerificationRequestParameters {
     return method;
   }
 
-  public Optional<String> getReference() {
+  public Optional<VerificationReference> getReference() {
     return Optional.ofNullable(reference);
   }
 
@@ -79,7 +83,7 @@ public class StartVerificationRequestParameters {
 
     Identity identity;
     VerificationMethodType method;
-    String reference;
+    VerificationReference reference;
     String custom;
 
     public Builder() {}
@@ -98,7 +102,7 @@ public class StartVerificationRequestParameters {
       return self();
     }
 
-    public B setReference(String reference) {
+    public B setReference(VerificationReference reference) {
       this.reference = reference;
       return self();
     }

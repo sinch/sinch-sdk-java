@@ -1,6 +1,7 @@
 package com.sinch.sample.verification.verifications;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.VerificationReport;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportCalloutRequestParameters;
@@ -27,7 +28,7 @@ public class GetReportById extends BaseApplication {
 
   public void run() {
 
-    String id = "018c017e-111d-cf38-6015-2003e49baaa1";
+    VerificationId id = VerificationId.valueOf("018c017e-111d-cf38-6015-2003e49baaa1");
 
     LOGGER.info("Get report by id for  : " + id);
 

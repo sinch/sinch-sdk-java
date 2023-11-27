@@ -8,7 +8,7 @@ public class VerificationReportSMS extends VerificationReport {
    * @param id The unique ID of the verification request
    * @param status The status of the verification request
    * @param reason Displays the reason why a verification has FAILED, was DENIED, or was ABORTED
-   * @param reference The reference ID that was optionally passed together with the verification
+   * @param reference The reference that was optionally passed together with the verification
    *     request
    * @param verificationPrice The maximum price charged for this verification process. This property
    *     will appear in the body of the response with a delay. It will become visible only when the
@@ -17,10 +17,10 @@ public class VerificationReportSMS extends VerificationReport {
    *     intercepted or not
    */
   public VerificationReportSMS(
-      String id,
+      VerificationId id,
       VerificationReportStatusType status,
       VerificationReportReasonType reason,
-      String reference,
+      VerificationReference reference,
       Price verificationPrice,
       String source) {
     super(id, status, reason, reference);

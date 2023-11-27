@@ -1,24 +1,25 @@
 package com.sinch.sdk.domains.verification.models.response;
 
 import com.sinch.sdk.domains.verification.models.Link;
+import com.sinch.sdk.domains.verification.models.VerificationId;
 import java.util.Collection;
 
 /** Comme class to all Start verification requests */
 public class StartVerificationResponse {
 
-  private final String id;
+  private final VerificationId id;
   private final Collection<Link> links;
 
   /**
    * @param id Verification identifier used to query for status.
    * @param links Available methods and actions which can be done after a successful Verification
    */
-  public StartVerificationResponse(String id, Collection<Link> links) {
+  public StartVerificationResponse(VerificationId id, Collection<Link> links) {
     this.id = id;
     this.links = links;
   }
 
-  public String getId() {
+  public VerificationId getId() {
     return id;
   }
 
@@ -37,10 +38,10 @@ public class StartVerificationResponse {
 
   public static class Builder<B extends Builder<B>> {
 
-    String id;
+    VerificationId id;
     Collection<Link> links;
 
-    public B setId(String id) {
+    public B setId(VerificationId id) {
       this.id = id;
       return self();
     }

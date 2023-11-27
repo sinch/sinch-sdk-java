@@ -1,6 +1,7 @@
 package com.sinch.sample.verification.status;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.verification.models.VerificationReference;
 import com.sinch.sdk.domains.verification.models.VerificationReport;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -22,11 +23,11 @@ public class GetByReference extends BaseApplication {
 
   public void run() {
 
-    String reference = "a reference";
+    VerificationReference reference = VerificationReference.valueOf("a test reference");
 
     LOGGER.info("Get status by reference for: '" + reference + "'");
 
-    VerificationReport response = client.verification().status().getByReference(reference);
+    VerificationReport response = client.verification().status().get(reference);
     LOGGER.info("Response :" + response);
   }
 }

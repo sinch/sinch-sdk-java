@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.verification;
 
 import com.sinch.sdk.domains.verification.models.Identity;
+import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationReport;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportRequestParameters;
@@ -52,5 +53,5 @@ public interface VerificationsService {
    * @return Verification report response
    * @since 1.0
    */
-  VerificationReport report(String id, VerificationReportRequestParameters parameters);
+  VerificationReport report(VerificationId id, VerificationReportRequestParameters parameters);
 }

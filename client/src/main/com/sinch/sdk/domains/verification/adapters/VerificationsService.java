@@ -8,6 +8,7 @@ import com.sinch.sdk.domains.verification.adapters.api.v1.SendingAndReportingVer
 import com.sinch.sdk.domains.verification.adapters.converters.VerificationsDtoConverter;
 import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
+import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationReport;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportRequestParameters;
@@ -53,9 +54,10 @@ public class VerificationsService
                 VerificationsDtoConverter.convert(parameters)));
   }
 
-  public VerificationReport report(String id, VerificationReportRequestParameters parameters) {
+  public VerificationReport report(
+      VerificationId id, VerificationReportRequestParameters parameters) {
 
     return VerificationsDtoConverter.convert(
-        getApi().reportVerificationById(id, VerificationsDtoConverter.convert(parameters)));
+        getApi().reportVerificationById(id.getId(), VerificationsDtoConverter.convert(parameters)));
   }
 }

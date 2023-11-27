@@ -3,23 +3,23 @@ package com.sinch.sdk.domains.verification.models;
 /** Comme class to all verification report responses */
 public class VerificationReport {
 
-  private final String id;
+  private final VerificationId id;
   private final VerificationReportStatusType status;
   private final VerificationReportReasonType reason;
-  private final String reference;
+  private final VerificationReference reference;
 
   public VerificationReport(
-      String id,
+      VerificationId id,
       VerificationReportStatusType status,
       VerificationReportReasonType reason,
-      String reference) {
+      VerificationReference reference) {
     this.id = id;
     this.status = status;
     this.reason = reason;
     this.reference = reference;
   }
 
-  public String getId() {
+  public VerificationId getId() {
     return id;
   }
 
@@ -31,7 +31,7 @@ public class VerificationReport {
     return reason;
   }
 
-  public String getReference() {
+  public VerificationReference getReference() {
     return reference;
   }
 
@@ -57,12 +57,12 @@ public class VerificationReport {
 
   public static class Builder<B extends Builder<B>> {
 
-    String id;
+    VerificationId id;
     VerificationReportStatusType status;
     VerificationReportReasonType reason;
-    String reference;
+    VerificationReference reference;
 
-    public B setId(String id) {
+    public B setId(VerificationId id) {
       this.id = id;
       return self();
     }
@@ -77,7 +77,7 @@ public class VerificationReport {
       return self();
     }
 
-    public B setReference(String reference) {
+    public B setReference(VerificationReference reference) {
       this.reference = reference;
       return self();
     }

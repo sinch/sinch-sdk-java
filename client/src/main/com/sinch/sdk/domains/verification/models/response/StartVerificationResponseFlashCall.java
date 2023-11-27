@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.verification.models.response;
 
 import com.sinch.sdk.domains.verification.models.Link;
+import com.sinch.sdk.domains.verification.models.VerificationId;
 import java.util.Collection;
 
 /** Dedicated response type for a flashcall verification */
@@ -22,7 +23,7 @@ public class StartVerificationResponseFlashCall extends StartVerificationRespons
    *     the set time in seconds.
    */
   public StartVerificationResponseFlashCall(
-      String id,
+      VerificationId id,
       Collection<Link> links,
       String cliFilter,
       Integer interceptionTimeOut,

@@ -1,7 +1,9 @@
 package com.sinch.sdk.domains.verification;
 
 import com.sinch.sdk.domains.verification.models.Identity;
+import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
+import com.sinch.sdk.domains.verification.models.VerificationReference;
 import com.sinch.sdk.domains.verification.models.VerificationReport;
 
 /**
@@ -25,7 +27,7 @@ public interface StatusService {
    * @return Verification report response
    * @since 1.0
    */
-  VerificationReport getByIdentity(Identity identity, VerificationMethodType method);
+  VerificationReport get(Identity identity, VerificationMethodType method);
 
   /**
    * Queries the verification result by sending the verification ID. With this query you can get the
@@ -35,7 +37,7 @@ public interface StatusService {
    * @return Verification report response
    * @since 1.0
    */
-  VerificationReport getById(String id);
+  VerificationReport get(VerificationId id);
 
   /**
    * Queries the verification result by sending the verification Reference. With this query you can
@@ -45,5 +47,5 @@ public interface StatusService {
    * @return Verification report response
    * @since 1.0
    */
-  VerificationReport getByReference(String reference);
+  VerificationReport get(VerificationReference reference);
 }

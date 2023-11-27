@@ -3,7 +3,9 @@ package com.sinch.sdk.domains.verification.adapters.converters;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
+import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
+import com.sinch.sdk.domains.verification.models.VerificationReference;
 import com.sinch.sdk.domains.verification.models.VerificationReport;
 import com.sinch.sdk.domains.verification.models.VerificationReportCallout;
 import com.sinch.sdk.domains.verification.models.VerificationReportFlashCall;
@@ -54,7 +56,7 @@ public class VerificationsDtoConverter {
 
     dto.identity(convert(client.getIdentity()))
         .method(convert(client.getMethod()))
-        .reference(client.getReference().orElse(null))
+        .reference(client.getReference().map(VerificationReference::getReference).orElse(null))
         .custom(client.getCustom().orElse(null));
 
     if (client instanceof StartVerificationFlashCallRequestParameters) {
@@ -142,7 +144,10 @@ public class VerificationsDtoConverter {
       default:
         builder = StartVerificationResponse.builder();
     }
-    return builder.setId(dto.getId()).setLinks(LinkDtoConverter.convert(dto.getLinks())).build();
+    return builder
+        .setId(VerificationId.valueOf(dto.getId()))
+        .setLinks(LinkDtoConverter.convert(dto.getLinks()))
+        .build();
   }
 
   public static VerificationReportRequestResourceDto convert(
@@ -249,10 +254,10 @@ public class VerificationsDtoConverter {
         throw new ApiException("Unexpected method: " + dto.getMethod());
     }
     return builder
-        .setId(dto.getId())
+        .setId(VerificationId.valueOf(dto.getId()))
         .setReason(VerificationReportReasonType.from(dto.getReason()))
         .setStatus(VerificationReportStatusType.from(dto.getStatus()))
-        .setReference(dto.getReference())
+        .setReference(VerificationReference.valueOf(dto.getReference()))
         .build();
   }
 }

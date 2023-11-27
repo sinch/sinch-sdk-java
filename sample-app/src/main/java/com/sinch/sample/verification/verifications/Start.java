@@ -4,6 +4,7 @@ import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
+import com.sinch.sdk.domains.verification.models.VerificationReference;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlashCallRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponse;
@@ -46,7 +47,7 @@ public class Start extends BaseApplication {
               .setDialTimeOut(17);
     }
 
-    builder.setIdentity(identity).setReference("a reference");
+    builder.setIdentity(identity).setReference(VerificationReference.valueOf("a test reference"));
 
     StartVerificationResponse response =
         client.verification().verifications().start(builder.build());
