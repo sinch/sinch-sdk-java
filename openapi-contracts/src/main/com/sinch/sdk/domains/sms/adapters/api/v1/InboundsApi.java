@@ -23,7 +23,7 @@ import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
-import com.sinch.sdk.core.http.URLParameterUtils;
+import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiInboundListDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.InboundDto;
@@ -157,7 +157,7 @@ public class InboundsApi {
         "/xms/v1/{service_plan_id}/inbounds"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()));
+                URLPathUtils.encodePathSegment(servicePlanId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
     if (null != page) {
@@ -268,10 +268,9 @@ public class InboundsApi {
         "/xms/v1/{service_plan_id}/inbounds/{inbound_id}"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()))
+                URLPathUtils.encodePathSegment(servicePlanId.toString()))
             .replaceAll(
-                "\\{" + "inbound_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(inboundId.toString()));
+                "\\{" + "inbound_id" + "\\}", URLPathUtils.encodePathSegment(inboundId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 

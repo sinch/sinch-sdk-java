@@ -1,7 +1,5 @@
 package com.sinch.sdk.domains.sms.models;
 
-import com.sinch.sdk.domains.sms.models.GroupAutoUpdateKeyword.Builder;
-
 public class GroupAutoUpdate {
   private final String to;
   private final GroupAutoUpdateKeyword add;
@@ -47,7 +45,6 @@ public class GroupAutoUpdate {
     GroupAutoUpdateKeyword remove;
 
     private Builder() {}
-    ;
 
     public Builder setTo(String to) {
       this.to = to;

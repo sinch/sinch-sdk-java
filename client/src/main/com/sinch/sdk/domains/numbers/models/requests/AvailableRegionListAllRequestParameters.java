@@ -1,6 +1,5 @@
 package com.sinch.sdk.domains.numbers.models.requests;
 
-import com.sinch.sdk.domains.numbers.models.ActiveNumber.Builder;
 import com.sinch.sdk.domains.numbers.models.NumberType;
 import java.util.Collection;
 import java.util.Optional;

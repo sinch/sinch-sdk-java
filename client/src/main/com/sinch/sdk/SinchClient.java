@@ -3,6 +3,7 @@ package com.sinch.sdk;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.numbers.NumbersService;
 import com.sinch.sdk.domains.sms.SMSService;
+import com.sinch.sdk.domains.verification.VerificationService;
 import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.SMSRegion;
@@ -26,6 +27,7 @@ public class SinchClient {
   private static final String NUMBERS_SERVER_KEY = "numbers-server";
   private static final String SMS_REGION_KEY = "sms-region";
   private static final String SMS_SERVER_KEY = "sms-server";
+  private static final String VERIFICATION_SERVER_KEY = "verification-server";
 
   private static final String PROJECT_NAME_KEY = "project.name";
   private static final String PROJECT_VERSION_KEY = "project.version";
@@ -41,8 +43,8 @@ public class SinchClient {
   private final Properties versionProperties;
 
   private NumbersService numbers;
-
   private SMSService sms;
+  private VerificationService verification;
 
   private HttpClientApache httpClient;
 
@@ -68,6 +70,9 @@ public class SinchClient {
     }
     if (null == configuration.getSmsRegion() && props.containsKey(SMS_REGION_KEY)) {
       builder.setSmsRegion(SMSRegion.from(props.getProperty(SMS_REGION_KEY)));
+    }
+    if (null == configuration.getVerificationUrl() && props.containsKey(VERIFICATION_SERVER_KEY)) {
+      builder.setVerificationUrl(props.getProperty(VERIFICATION_SERVER_KEY));
     }
     Configuration newConfiguration = builder.build();
     checkConfiguration(newConfiguration);
@@ -122,6 +127,21 @@ public class SinchClient {
     return sms;
   }
 
+  /**
+   * Get verification domain service
+   *
+   * @return Return instance onto verification API service
+   * @see <a
+   *     href="https://developers.sinch.com/docs/verification/api-reference//">https://developers.sinch.com/docs/verification/api-reference//</a>
+   * @since 1.0
+   */
+  public VerificationService verification() {
+    if (null == verification) {
+      verification = verificationInit();
+    }
+    return verification;
+  }
+
   private void checkConfiguration(Configuration configuration) throws NullPointerException {
     Objects.requireNonNull(configuration.getKeyId(), "'keyId' cannot be null");
     Objects.requireNonNull(configuration.getKeySecret(), "'keySecret' cannot be null");
@@ -129,6 +149,7 @@ public class SinchClient {
     Objects.requireNonNull(configuration.getOAuthUrl(), "'oauthUrl' cannot be null");
     Objects.requireNonNull(configuration.getNumbersUrl(), "'numbersUrl' cannot be null");
     Objects.requireNonNull(configuration.getSmsUrl(), "'smsUrl' cannot be null");
+    Objects.requireNonNull(configuration.getVerificationUrl(), "'verificationUrl' cannot be null");
   }
 
   private NumbersService numbersInit() {
@@ -144,6 +165,15 @@ public class SinchClient {
     LOGGER.fine(
         "Activate SMS API with server='" + getConfiguration().getSmsServer().getUrl() + "'");
     return new com.sinch.sdk.domains.sms.adapters.SMSService(getConfiguration(), getHttpClient());
+  }
+
+  private VerificationService verificationInit() {
+    LOGGER.fine(
+        "Activate verification API with server='"
+            + getConfiguration().getVerificationServer().getUrl()
+            + "'");
+    return new com.sinch.sdk.domains.verification.adapters.VerificationService(
+        getConfiguration(), getHttpClient());
   }
 
   private Properties handlePropertiesFile(String fileName) {

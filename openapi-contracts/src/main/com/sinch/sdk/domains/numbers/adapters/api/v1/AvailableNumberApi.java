@@ -23,7 +23,7 @@ import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
-import com.sinch.sdk.core.http.URLParameterUtils;
+import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.numbers.models.dto.v1.ActiveNumberDto;
 import com.sinch.sdk.domains.numbers.models.dto.v1.AvailableNumberDto;
@@ -123,11 +123,10 @@ public class AvailableNumberApi {
     String localVarPath =
         "/v1/projects/{projectId}/availableNumbers/{phoneNumber}"
             .replaceAll(
-                "\\{" + "projectId" + "\\}",
-                URLParameterUtils.encodeParameterValue(projectId.toString()))
+                "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()))
             .replaceAll(
                 "\\{" + "phoneNumber" + "\\}",
-                URLParameterUtils.encodeParameterValue(phoneNumber.toString()));
+                URLPathUtils.encodePathSegment(phoneNumber.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -267,8 +266,7 @@ public class AvailableNumberApi {
     String localVarPath =
         "/v1/projects/{projectId}/availableNumbers"
             .replaceAll(
-                "\\{" + "projectId" + "\\}",
-                URLParameterUtils.encodeParameterValue(projectId.toString()));
+                "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
     if (null != numberPatternPattern) {
@@ -389,8 +387,7 @@ public class AvailableNumberApi {
     String localVarPath =
         "/v1/projects/{projectId}/availableNumbers:rentAny"
             .replaceAll(
-                "\\{" + "projectId" + "\\}",
-                URLParameterUtils.encodeParameterValue(projectId.toString()));
+                "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -487,11 +484,10 @@ public class AvailableNumberApi {
     String localVarPath =
         "/v1/projects/{projectId}/availableNumbers/{phoneNumber}:rent"
             .replaceAll(
-                "\\{" + "projectId" + "\\}",
-                URLParameterUtils.encodeParameterValue(projectId.toString()))
+                "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()))
             .replaceAll(
                 "\\{" + "phoneNumber" + "\\}",
-                URLParameterUtils.encodeParameterValue(phoneNumber.toString()));
+                URLPathUtils.encodePathSegment(phoneNumber.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 

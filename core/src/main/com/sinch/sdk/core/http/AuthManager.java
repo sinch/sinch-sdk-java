@@ -1,13 +1,18 @@
 package com.sinch.sdk.core.http;
 
+import com.sinch.sdk.core.utils.Pair;
+import java.util.Collection;
+
 public interface AuthManager {
 
-  final String SCHEMA_KEYWORD_BEARER = "Bearer";
-  final String SCHEMA_KEYWORD_BASIC = "Basic";
+  // expected schemes identifier defined at OAS files level
+  String SCHEMA_KEYWORD_BEARER = "Bearer";
+  String SCHEMA_KEYWORD_BASIC = "Basic";
 
   String getSchema();
 
   void resetToken();
 
-  String getAuthorizationHeaderValue();
+  Collection<Pair<String, String>> getAuthorizationHeaders(
+      String method, String httpContentType, String path, String body);
 }

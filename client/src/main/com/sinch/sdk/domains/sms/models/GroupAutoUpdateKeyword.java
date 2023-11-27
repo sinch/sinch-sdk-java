@@ -1,7 +1,5 @@
 package com.sinch.sdk.domains.sms.models;
 
-import com.sinch.sdk.domains.sms.models.InboundBinary.Builder;
-
 public class GroupAutoUpdateKeyword {
 
   private final String firstWord;
@@ -47,7 +45,6 @@ public class GroupAutoUpdateKeyword {
     String secondWord;
 
     private Builder() {}
-    ;
 
     public Builder setFirstWord(String firstWord) {
       this.firstWord = firstWord;

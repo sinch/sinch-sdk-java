@@ -12,6 +12,7 @@ public class Configuration {
   private final String numbersUrl;
   private final SMSRegion smsRegion;
   private final String smsUrl;
+  private final String verificationUrl;
 
   private Configuration(
       String keyId,
@@ -20,7 +21,8 @@ public class Configuration {
       String oauthUrl,
       String numbersUrl,
       SMSRegion smsRegion,
-      String smsUrl) {
+      String smsUrl,
+      String verificationUrl) {
     this.keyId = keyId;
     this.keySecret = keySecret;
     this.projectId = projectId;
@@ -28,6 +30,7 @@ public class Configuration {
     this.numbersUrl = numbersUrl;
     this.smsRegion = null == smsRegion ? SMSRegion.US : smsRegion;
     this.smsUrl = smsUrl;
+    this.verificationUrl = verificationUrl;
   }
 
   @Override
@@ -48,6 +51,9 @@ public class Configuration {
         + '\''
         + ", smsUrl='"
         + smsUrl
+        + '\''
+        + ", verificationUrl='"
+        + verificationUrl
         + '\''
         + "}";
   }
@@ -157,6 +163,25 @@ public class Configuration {
     return smsUrl;
   }
 
+  /**
+   * Verification Server Configuration
+   *
+   * @return Verification Server configuration to be used
+   * @since 1.0
+   */
+  public ServerConfiguration getVerificationServer() {
+    return new ServerConfiguration(getVerificationUrl());
+  }
+  /**
+   * Verification URL
+   *
+   * @return Verification Server URL
+   * @since 1.0
+   */
+  public String getVerificationUrl() {
+    return verificationUrl;
+  }
+
   public static Builder builder() {
     return new Builder();
   }
@@ -175,6 +200,7 @@ public class Configuration {
     private String numbersUrl;
     private SMSRegion smsRegion;
     private String smsUrl;
+    private String verificationUrl;
 
     protected Builder() {}
 
@@ -192,6 +218,7 @@ public class Configuration {
       this.numbersUrl = configuration.getNumbersUrl();
       this.smsRegion = configuration.getSmsRegion();
       this.smsUrl = configuration.getSmsUrl();
+      this.verificationUrl = configuration.getVerificationUrl();
     }
 
     /**
@@ -202,7 +229,7 @@ public class Configuration {
      */
     public Configuration build() {
       return new Configuration(
-          keyId, keySecret, projectId, oauthUrl, numbersUrl, smsRegion, smsUrl);
+          keyId, keySecret, projectId, oauthUrl, numbersUrl, smsRegion, smsUrl, verificationUrl);
     }
 
     /**
@@ -286,6 +313,18 @@ public class Configuration {
      */
     public Builder setSmsUrl(String smsUrl) {
       this.smsUrl = smsUrl;
+      return this;
+    }
+
+    /**
+     * Set Verification API URL
+     *
+     * @param verificationUrl Verification API URL
+     * @return Current builder
+     * @since 1.0
+     */
+    public Builder setVerificationUrl(String verificationUrl) {
+      this.verificationUrl = verificationUrl;
       return this;
     }
   }

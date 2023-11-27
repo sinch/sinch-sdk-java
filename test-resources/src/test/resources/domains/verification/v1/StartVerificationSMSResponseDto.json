@@ -1,0 +1,20 @@
+{
+  "id": "the id",
+  "method": "sms",
+  "sms": {
+    "template": "Your verification code is {{CODE}}. Verified by Sinch",
+    "interceptionTimeout": 298
+  },
+  "_links": [
+    {
+      "rel": "status",
+      "href": "an href for status",
+      "method": "GET"
+    },
+    {
+      "rel": "report",
+      "href": "an href for report",
+      "method": "PUT"
+    }
+  ]
+}
