@@ -17,6 +17,7 @@ public class InboundsListResponse extends ListResponse<Inbound<?>> {
 
   private final Page<InboundsListRequestParameters, Inbound<?>, Integer> page;
   private final InboundsService service;
+  private InboundsListResponse nextPage;
 
   public InboundsListResponse(
       InboundsService service, Page<InboundsListRequestParameters, Inbound<?>, Integer> page) {
@@ -25,17 +26,22 @@ public class InboundsListResponse extends ListResponse<Inbound<?>> {
   }
 
   public boolean hasNextPage() {
-    return (null != page.getNextPageToken());
+    if (null == nextPage) {
+      InboundsListRequestParameters.Builder newParameters =
+          InboundsListRequestParameters.builder(page.getParameters());
+      newParameters.setPage(page.getNextPageToken());
+      nextPage = service.list(newParameters.build());
+    }
+    return (null != nextPage.getContent() && !nextPage.getContent().isEmpty());
   }
 
   public InboundsListResponse nextPage() {
     if (!hasNextPage()) {
       throw new NoSuchElementException("Reached the last page of the API response");
     }
-    InboundsListRequestParameters.Builder newParameters =
-        InboundsListRequestParameters.builder(page.getParameters());
-    newParameters.setPage(page.getNextPageToken());
-    return service.list(newParameters.build());
+    InboundsListResponse response = nextPage;
+    nextPage = null;
+    return response;
   }
 
   public Collection<Inbound<?>> getContent() {

@@ -17,6 +17,7 @@ public class DeliveryReportsListResponse extends ListResponse<DeliveryReportReci
 
   private final Page<DeliveryReportListRequestParameters, DeliveryReportRecipient, Integer> page;
   private final DeliveryReportsService service;
+  private DeliveryReportsListResponse nextPage;
 
   public DeliveryReportsListResponse(
       DeliveryReportsService service,
@@ -26,17 +27,23 @@ public class DeliveryReportsListResponse extends ListResponse<DeliveryReportReci
   }
 
   public boolean hasNextPage() {
-    return (null != page.getNextPageToken());
+
+    if (null == nextPage) {
+      DeliveryReportListRequestParameters.Builder newParameters =
+          DeliveryReportListRequestParameters.builder(page.getParameters());
+      newParameters.setPage(page.getNextPageToken());
+      nextPage = service.list(newParameters.build());
+    }
+    return (null != nextPage.getContent() && !nextPage.getContent().isEmpty());
   }
 
   public DeliveryReportsListResponse nextPage() {
     if (!hasNextPage()) {
       throw new NoSuchElementException("Reached the last page of the API response");
     }
-    DeliveryReportListRequestParameters.Builder newParameters =
-        DeliveryReportListRequestParameters.builder(page.getParameters());
-    newParameters.setPage(page.getNextPageToken());
-    return service.list(newParameters.build());
+    DeliveryReportsListResponse response = nextPage;
+    nextPage = null;
+    return response;
   }
 
   public Collection<DeliveryReportRecipient> getContent() {

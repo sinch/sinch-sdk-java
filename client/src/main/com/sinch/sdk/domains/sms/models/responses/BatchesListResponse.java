@@ -17,6 +17,7 @@ public class BatchesListResponse extends ListResponse<Batch<?>> {
 
   private final Page<BatchesListRequestParameters, Batch<?>, Integer> page;
   private final BatchesService service;
+  private BatchesListResponse nextPage;
 
   public BatchesListResponse(
       BatchesService service, Page<BatchesListRequestParameters, Batch<?>, Integer> page) {
@@ -25,17 +26,25 @@ public class BatchesListResponse extends ListResponse<Batch<?>> {
   }
 
   public boolean hasNextPage() {
-    return (null != page.getNextPageToken());
+
+    if (null == nextPage) {
+      BatchesListRequestParameters.Builder newParameters =
+          BatchesListRequestParameters.builder(page.getParameters());
+      newParameters.setPage(page.getNextPageToken());
+      nextPage = service.list(newParameters.build());
+    }
+    return (null != nextPage.getContent() && !nextPage.getContent().isEmpty());
   }
 
   public BatchesListResponse nextPage() {
+
     if (!hasNextPage()) {
       throw new NoSuchElementException("Reached the last page of the API response");
     }
-    BatchesListRequestParameters.Builder newParameters =
-        BatchesListRequestParameters.builder(page.getParameters());
-    newParameters.setPage(page.getNextPageToken());
-    return service.list(newParameters.build());
+
+    BatchesListResponse response = nextPage;
+    nextPage = null;
+    return response;
   }
 
   public Collection<Batch<?>> getContent() {

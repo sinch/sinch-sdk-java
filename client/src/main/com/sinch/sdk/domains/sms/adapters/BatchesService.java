@@ -3,15 +3,14 @@ package com.sinch.sdk.domains.sms.adapters;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
-import com.sinch.sdk.core.models.pagination.CursorPageNavigator;
 import com.sinch.sdk.core.models.pagination.Page;
-import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.sms.adapters.api.v1.BatchesApi;
 import com.sinch.sdk.domains.sms.adapters.converters.BatchDtoConverter;
 import com.sinch.sdk.domains.sms.adapters.converters.DryRunDtoConverter;
 import com.sinch.sdk.domains.sms.models.BaseBatch;
 import com.sinch.sdk.domains.sms.models.Batch;
 import com.sinch.sdk.domains.sms.models.DryRun;
+import com.sinch.sdk.domains.sms.models.SMSCursorPageNavigator;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiBatchListDto;
 import com.sinch.sdk.domains.sms.models.requests.BatchesListRequestParameters;
 import com.sinch.sdk.domains.sms.models.requests.UpdateBaseBatchRequest;
@@ -76,10 +75,11 @@ public class BatchesService implements com.sinch.sdk.domains.sms.BatchesService 
                 guardParameters.getEndDate().map(Instant::toString).orElse(null),
                 guardParameters.getClientReference().orElse(null));
 
-    Pair<Collection<Batch<?>>, CursorPageNavigator> content = BatchDtoConverter.convert(response);
+    Collection<Batch<?>> content = BatchDtoConverter.convert(response);
+    SMSCursorPageNavigator navigator =
+        new SMSCursorPageNavigator(response.getPage(), response.getPageSize());
 
-    return new BatchesListResponse(
-        this, new Page<>(guardParameters, content.getLeft(), content.getRight()));
+    return new BatchesListResponse(this, new Page<>(guardParameters, content, navigator));
   }
 
   public <T extends Batch<?>> T update(String batchId, UpdateBaseBatchRequest<?> batch)

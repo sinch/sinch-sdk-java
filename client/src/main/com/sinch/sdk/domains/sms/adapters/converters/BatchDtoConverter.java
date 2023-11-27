@@ -2,8 +2,6 @@ package com.sinch.sdk.domains.sms.adapters.converters;
 
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.models.AbstractOpenApiSchema;
-import com.sinch.sdk.core.models.pagination.CursorPageNavigator;
-import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.sms.models.BaseBatch;
 import com.sinch.sdk.domains.sms.models.Batch;
 import com.sinch.sdk.domains.sms.models.BatchBinary;
@@ -269,10 +267,8 @@ public class BatchDtoConverter {
     return new MediaBodyDto().url(value.getUrl()).message(value.getMessage().orElse(null));
   }
 
-  public static <T extends Batch<?>> Pair<Collection<T>, CursorPageNavigator> convert(
-      ApiBatchListDto dto) {
-    CursorPageNavigator navigator =
-        new CursorPageNavigator(dto.getPage(), dto.getPageSize(), dto.getCount());
+  public static <T extends Batch<?>> Collection<T> convert(ApiBatchListDto dto) {
+
     Collection<ApiBatchListBatchesInnerDto> collection = dto.getBatches();
     Collection<T> pageContent = new ArrayList<>();
     if (null != collection) {
@@ -281,7 +277,7 @@ public class BatchDtoConverter {
         pageContent.add(convert);
       }
     }
-    return new Pair<>(pageContent, navigator);
+    return pageContent;
   }
 
   public static ApiDeliveryFeedbackDto convert(Collection<String> recipients) {

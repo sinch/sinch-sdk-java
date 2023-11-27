@@ -2,8 +2,6 @@ package com.sinch.sdk.domains.sms.adapters.converters;
 
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.models.AbstractOpenApiSchema;
-import com.sinch.sdk.core.models.pagination.CursorPageNavigator;
-import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.sms.models.Inbound;
 import com.sinch.sdk.domains.sms.models.InboundBinary;
 import com.sinch.sdk.domains.sms.models.InboundText;
@@ -27,9 +25,8 @@ public class InboundsDtoConverter {
     }
   }
 
-  public static Pair<Collection<Inbound<?>>, CursorPageNavigator> convert(ApiInboundListDto dto) {
-    CursorPageNavigator navigator =
-        new CursorPageNavigator(dto.getPage(), dto.getPageSize(), dto.getCount());
+  public static Collection<Inbound<?>> convert(ApiInboundListDto dto) {
+
     Collection<InboundDto> collection = dto.getInbounds();
     Collection<Inbound<?>> pageContent = new ArrayList<>();
     if (null != collection) {
@@ -38,7 +35,7 @@ public class InboundsDtoConverter {
         pageContent.add(convert);
       }
     }
-    return new Pair<>(pageContent, navigator);
+    return pageContent;
   }
 
   public static InboundBinary convert(MOBinaryDto dto) {

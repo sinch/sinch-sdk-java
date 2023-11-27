@@ -3,12 +3,11 @@ package com.sinch.sdk.domains.sms.adapters;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
-import com.sinch.sdk.core.models.pagination.CursorPageNavigator;
 import com.sinch.sdk.core.models.pagination.Page;
-import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.sms.adapters.api.v1.GroupsApi;
 import com.sinch.sdk.domains.sms.adapters.converters.GroupsDtoConverter;
 import com.sinch.sdk.domains.sms.models.Group;
+import com.sinch.sdk.domains.sms.models.SMSCursorPageNavigator;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiGroupListDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.CreateGroupResponseDto;
 import com.sinch.sdk.domains.sms.models.requests.GroupCreateRequestParameters;
@@ -70,10 +69,11 @@ public class GroupsService implements com.sinch.sdk.domains.sms.GroupsService {
                 guardParameters.getPage().orElse(null),
                 guardParameters.getPageSize().orElse(null));
 
-    Pair<Collection<Group>, CursorPageNavigator> content = GroupsDtoConverter.convert(response);
+    Collection<Group> content = GroupsDtoConverter.convert(response);
+    SMSCursorPageNavigator navigator =
+        new SMSCursorPageNavigator(response.getPage(), response.getPageSize());
 
-    return new GroupsListResponse(
-        this, new Page<>(guardParameters, content.getLeft(), content.getRight()));
+    return new GroupsListResponse(this, new Page<>(guardParameters, content, navigator));
   }
 
   public Group replace(String groupId, GroupReplaceRequestParameters parameters)
