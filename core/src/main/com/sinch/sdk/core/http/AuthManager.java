@@ -5,6 +5,7 @@ import java.util.Collection;
 
 public interface AuthManager {
 
+  // expected schemes identifier defined at OAS files level
   String SCHEMA_KEYWORD_BEARER = "Bearer";
   String SCHEMA_KEYWORD_BASIC = "Basic";
 
