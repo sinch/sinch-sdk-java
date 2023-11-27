@@ -8,8 +8,6 @@ public class URLPathUtils {
 
   public static String encodePathSegment(String segment) {
 
-    System.out.println("jpp segment: " + segment);
-
     if (StringUtil.isEmpty(segment)) {
       return "";
     }
