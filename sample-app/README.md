@@ -49,7 +49,6 @@ See https://developers.sinch.com for details about these parameters
 
 ## Available samples classes
 
-<<<<<<< HEAD
 ### Full workflow
 A full application chaining calls to Numbers service to onboard onto Java SDK and Numbers: [NumbersSampleFlow](src/main/java/com/sinch/sample/numbers/NumbersSampleFlow.java)
 
@@ -68,7 +67,7 @@ A full application chaining calls to Numbers service to onboard onto Java SDK an
 |              |                | - Update               | [com.sinch.sample.numbers.active.Update](src/main/java/com/sinch/sample/numbers/active/Update.java)                                                   | Require `PHONE_NUMBER` parameter                  |
 |              | Callback       | - Get                  | [com.sinch.sample.numbers.callback.Get](src/main/java/com/sinch/sample/numbers/callback/Get.java)                                                     |                                                   |
 |              |                | - Update               | [com.sinch.sample.numbers.callback.Update](src/main/java/com/sinch/sample/numbers/callback/Get.java)                                                  |                                                   |
-|              | Regions        | - ListAll              | [com.sinch.sample.numbers.regions.ListAll](src/main/java/com/sinch/sample/numbers/regions/ListAll.java)                                               |                                                   |
+|              | Regions        | - ListAll              | [com.sinch.sample.numbers.regions.List](src/main/java/com/sinch/sample/numbers/regions/List.java)                                               |                                                   |
 | SMS          | Batches        | - Get                  | [com.sinch.sample.sms.batches.Get](src/main/java/com/sinch/sample/sms/batches/Get.java)                                                               | Require `BATCH_ID` parameter                      |
 |              |                | - List                 | [com.sinch.sample.sms.batches.List](src/main/java/com/sinch/sample/sms/batches/List.java)                                                             |                                                   |
 |              |                | - Send                 | [com.sinch.sample.sms.batches.Send](src/main/java/com/sinch/sample/sms/batches/Send.java)                                                             |                                                   |
