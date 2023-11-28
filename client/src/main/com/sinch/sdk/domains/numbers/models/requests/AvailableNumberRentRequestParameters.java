@@ -35,15 +35,15 @@ public class AvailableNumberRentRequestParameters {
   }
 
   public Optional<RentSMSConfigurationRequestParameters> getSmsConfiguration() {
-    return Optional.of(smsConfiguration);
+    return Optional.ofNullable(smsConfiguration);
   }
 
   public Optional<RentVoiceConfigurationRequestParameters> getVoiceConfiguration() {
-    return Optional.of(voiceConfiguration);
+    return Optional.ofNullable(voiceConfiguration);
   }
 
   public Optional<String> getCallBackUrl() {
-    return Optional.of(callbackUrl);
+    return Optional.ofNullable(callbackUrl);
   }
 
   public static Builder builder() {
