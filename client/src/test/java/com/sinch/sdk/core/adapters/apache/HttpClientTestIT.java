@@ -177,4 +177,50 @@ class HttpClientTestIT extends BaseTest {
     header = recordedRequest.getHeader("Authorization");
     assertEquals(header, "Bearer another token");
   }
+
+  @Test
+  void httpRequestHeaders() throws InterruptedException {
+    String key = "My-OAS-Header-Key";
+    String value = "OAS Header Value";
+    Map<String, String> httpRequest =
+        Stream.of(new String[][] {{key, value}})
+            .collect(Collectors.toMap(data -> data[0], data -> data[1]));
+
+    mockBackEnd.enqueue(
+        new MockResponse().setBody("foo").addHeader("Content-Type", "application/json"));
+
+    try {
+      httpClient.invokeAPI(
+          new ServerConfiguration(String.format("%s/foo/", serverUrl)),
+          new HttpRequest("foo-path", HttpMethod.GET, null, null, httpRequest, null, null, null));
+    } catch (ApiException ae) {
+      // noop
+    }
+    RecordedRequest recordedRequest = mockBackEnd.takeRequest();
+    String header = recordedRequest.getHeader(key);
+    assertEquals(header, value);
+  }
+
+  @Test
+  void sdkHeaders() throws InterruptedException {
+    String key = "My-Sdk-Header-Key";
+    String value = "SDK Header Value";
+    httpClient.setRequestHeaders(
+        Stream.of(new String[][] {{key, value}})
+            .collect(Collectors.toMap(data -> data[0], data -> data[1])));
+
+    mockBackEnd.enqueue(
+        new MockResponse().setBody("foo").addHeader("Content-Type", "application/json"));
+
+    try {
+      httpClient.invokeAPI(
+          new ServerConfiguration(String.format("%s/foo/", serverUrl)),
+          new HttpRequest("foo-path", HttpMethod.GET, null, null, null, null, null, null));
+    } catch (ApiException ae) {
+      // noop
+    }
+    RecordedRequest recordedRequest = mockBackEnd.takeRequest();
+    String header = recordedRequest.getHeader(key);
+    assertEquals(header, value);
+  }
 }
