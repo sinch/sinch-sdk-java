@@ -52,6 +52,9 @@ class GroupsServiceTest extends BaseTest {
   @GivenJsonResource("/domains/sms/v1/GroupsListResponseDtoPage1.json")
   ApiGroupListDto groupsListResponseDtoPage1;
 
+  @GivenJsonResource("/domains/sms/v1/GroupsListResponseDtoPage2.json")
+  ApiGroupListDto groupsListResponseDtoPage2;
+
   @Test
   void get() throws ApiException {
 
@@ -85,10 +88,12 @@ class GroupsServiceTest extends BaseTest {
         .thenReturn(groupsListResponseDtoPage0);
     when(api.listGroups(eq(configuration.getProjectId()), eq(1), eq(null)))
         .thenReturn(groupsListResponseDtoPage1);
+    when(api.listGroups(eq(configuration.getProjectId()), eq(2), eq(null)))
+        .thenReturn(groupsListResponseDtoPage2);
 
     GroupsListResponse response = service.list(null);
 
-    Iterator<Group> iterator = response.autoPageIter();
+    Iterator<Group> iterator = response.iterator();
     Group item = iterator.next();
     Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
 

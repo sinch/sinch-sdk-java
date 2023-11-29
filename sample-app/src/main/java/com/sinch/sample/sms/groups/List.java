@@ -26,6 +26,6 @@ public class List extends BaseApplication {
 
     GroupsListResponse response = client.sms().groups().list();
 
-    response.autoPageIter().forEachRemaining(f -> LOGGER.info(f.toString()));
+    response.iterator().forEachRemaining(f -> LOGGER.info(f.toString()));
   }
 }

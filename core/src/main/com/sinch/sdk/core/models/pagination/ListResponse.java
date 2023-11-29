@@ -46,7 +46,7 @@ public abstract class ListResponse<T> {
    *
    * @return Iterator onto items
    */
-  public Iterator<T> autoPageIter() {
+  public Iterator<T> iterator() {
     return new ItemsIterator<>(this);
   }
 

@@ -24,11 +24,6 @@ public class List extends BaseApplication {
     LOGGER.info("List inbounds");
 
     LOGGER.info("Response:");
-    client
-        .sms()
-        .inbounds()
-        .list(null)
-        .autoPageIter()
-        .forEachRemaining(f -> LOGGER.info(f.toString()));
+    client.sms().inbounds().list(null).iterator().forEachRemaining(f -> LOGGER.info(f.toString()));
   }
 }

@@ -59,6 +59,9 @@ class DeliveryReportsServiceTest extends BaseTest {
   @GivenJsonResource("/domains/sms/v1/ListDeliveryReportResponseDtoPage1.json")
   DeliveryReportListDto listDeliveryReportResponseDtoPage1;
 
+  @GivenJsonResource("/domains/sms/v1/ListDeliveryReportResponseDtoPage2.json")
+  DeliveryReportListDto listDeliveryReportResponseDtoPage2;
+
   @Test
   void getDeliveryReportBatchSMS() throws ApiException {
 
@@ -168,10 +171,19 @@ class DeliveryReportsServiceTest extends BaseTest {
             eq(null),
             eq(null)))
         .thenReturn(listDeliveryReportResponseDtoPage1);
-
+    when(api.getDeliveryReports(
+            eq(configuration.getProjectId()),
+            eq(2),
+            eq(null),
+            eq(null),
+            eq(null),
+            eq(null),
+            eq(null),
+            eq(null)))
+        .thenReturn(listDeliveryReportResponseDtoPage2);
     DeliveryReportsListResponse response = service.list(null);
 
-    Iterator<DeliveryReportRecipient> iterator = response.autoPageIter();
+    Iterator<DeliveryReportRecipient> iterator = response.iterator();
     DeliveryReportRecipient item = iterator.next();
     Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
 

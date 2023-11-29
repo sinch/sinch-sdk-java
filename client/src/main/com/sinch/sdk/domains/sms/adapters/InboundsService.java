@@ -3,12 +3,11 @@ package com.sinch.sdk.domains.sms.adapters;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
-import com.sinch.sdk.core.models.pagination.CursorPageNavigator;
 import com.sinch.sdk.core.models.pagination.Page;
-import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.sms.adapters.api.v1.InboundsApi;
 import com.sinch.sdk.domains.sms.adapters.converters.InboundsDtoConverter;
 import com.sinch.sdk.domains.sms.models.Inbound;
+import com.sinch.sdk.domains.sms.models.SMSCursorPageNavigator;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiInboundListDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.InboundDto;
 import com.sinch.sdk.domains.sms.models.requests.InboundsListRequestParameters;
@@ -52,11 +51,11 @@ public class InboundsService implements com.sinch.sdk.domains.sms.InboundsServic
                 guardParameters.getEndDate().map(Instant::toString).orElse(null),
                 guardParameters.getClientReference().orElse(null));
 
-    Pair<Collection<Inbound<?>>, CursorPageNavigator> content =
-        InboundsDtoConverter.convert(response);
+    Collection<Inbound<?>> content = InboundsDtoConverter.convert(response);
+    SMSCursorPageNavigator navigator =
+        new SMSCursorPageNavigator(response.getPage(), response.getPageSize());
 
-    return new InboundsListResponse(
-        this, new Page<>(guardParameters, content.getLeft(), content.getRight()));
+    return new InboundsListResponse(this, new Page<>(guardParameters, content, navigator));
   }
 
   public Inbound<?> get(String inboundId) throws ApiException {

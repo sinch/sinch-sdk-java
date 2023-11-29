@@ -260,6 +260,9 @@ public class BatchesServiceTest extends BaseTest {
   @GivenJsonResource("/domains/sms/v1/ListBatchesResponseDtoPage1.json")
   ApiBatchListDto listBatchesResponseDtoPage1;
 
+  @GivenJsonResource("/domains/sms/v1/ListBatchesResponseDtoPage2.json")
+  ApiBatchListDto listBatchesResponseDtoPage2;
+
   @Mock Configuration configuration;
   @Mock BatchesApi api;
   @InjectMocks BatchesService service;
@@ -376,10 +379,18 @@ public class BatchesServiceTest extends BaseTest {
             eq(null),
             eq(null)))
         .thenReturn(listBatchesResponseDtoPage1);
-
+    when(api.listBatches(
+            eq(configuration.getProjectId()),
+            eq(2),
+            eq(null),
+            eq(null),
+            eq(null),
+            eq(null),
+            eq(null)))
+        .thenReturn(listBatchesResponseDtoPage2);
     BatchesListResponse response = service.list(null);
 
-    Iterator<Batch<?>> iterator = response.autoPageIter();
+    Iterator<Batch<?>> iterator = response.iterator();
     Batch<?> batch = iterator.next();
     Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
     Assertions.assertThat(batch)

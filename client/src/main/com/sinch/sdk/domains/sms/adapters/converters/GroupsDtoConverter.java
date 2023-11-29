@@ -1,8 +1,6 @@
 package com.sinch.sdk.domains.sms.adapters.converters;
 
-import com.sinch.sdk.core.models.pagination.CursorPageNavigator;
 import com.sinch.sdk.core.utils.DateUtil;
-import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.sms.models.Group;
 import com.sinch.sdk.domains.sms.models.GroupAutoUpdate;
 import com.sinch.sdk.domains.sms.models.GroupAutoUpdateKeyword;
@@ -51,9 +49,8 @@ public class GroupsDtoConverter {
         .autoUpdate(client.getAutoUpdate().map(GroupsDtoConverter::convert).orElse(null));
   }
 
-  public static Pair<Collection<Group>, CursorPageNavigator> convert(ApiGroupListDto dto) {
-    CursorPageNavigator navigator =
-        new CursorPageNavigator(dto.getPage(), dto.getPageSize(), dto.getCount());
+  public static Collection<Group> convert(ApiGroupListDto dto) {
+
     Collection<ApiGroupDto> collection = dto.getGroups();
     Collection<Group> pageContent = new ArrayList<>();
     if (null != collection) {
@@ -62,7 +59,7 @@ public class GroupsDtoConverter {
         pageContent.add(convert);
       }
     }
-    return new Pair<>(pageContent, navigator);
+    return pageContent;
   }
 
   public static ReplaceGroupRequestDto convert(GroupReplaceRequestParameters client) {

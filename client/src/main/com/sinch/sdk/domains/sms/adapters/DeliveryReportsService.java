@@ -3,15 +3,14 @@ package com.sinch.sdk.domains.sms.adapters;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
-import com.sinch.sdk.core.models.pagination.CursorPageNavigator;
 import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.core.utils.EnumDynamic;
-import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.sms.adapters.api.v1.DeliveryReportsApi;
 import com.sinch.sdk.domains.sms.adapters.converters.DeliveryReportDtoConverter;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatch;
 import com.sinch.sdk.domains.sms.models.DeliveryReportRecipient;
 import com.sinch.sdk.domains.sms.models.DeliveryReportType;
+import com.sinch.sdk.domains.sms.models.SMSCursorPageNavigator;
 import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportListDto;
 import com.sinch.sdk.domains.sms.models.requests.DeliveryReportBatchGetRequestParameters;
 import com.sinch.sdk.domains.sms.models.requests.DeliveryReportListRequestParameters;
@@ -104,10 +103,10 @@ public class DeliveryReportsService implements com.sinch.sdk.domains.sms.Deliver
                     .orElse(null),
                 guardParameters.getClientReference().orElse(null));
 
-    Pair<Collection<DeliveryReportRecipient>, CursorPageNavigator> content =
-        DeliveryReportDtoConverter.convert(response);
+    Collection<DeliveryReportRecipient> content = DeliveryReportDtoConverter.convert(response);
+    SMSCursorPageNavigator navigator =
+        new SMSCursorPageNavigator(response.getPage(), response.getPageSize());
 
-    return new DeliveryReportsListResponse(
-        this, new Page<>(guardParameters, content.getLeft(), content.getRight()));
+    return new DeliveryReportsListResponse(this, new Page<>(guardParameters, content, navigator));
   }
 }

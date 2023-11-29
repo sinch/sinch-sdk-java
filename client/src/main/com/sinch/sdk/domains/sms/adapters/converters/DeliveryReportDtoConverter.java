@@ -1,7 +1,5 @@
 package com.sinch.sdk.domains.sms.adapters.converters;
 
-import com.sinch.sdk.core.models.pagination.CursorPageNavigator;
-import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatch;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatchMMS;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatchSMS;
@@ -74,10 +72,7 @@ public class DeliveryReportDtoConverter {
         .build();
   }
 
-  public static Pair<Collection<DeliveryReportRecipient>, CursorPageNavigator> convert(
-      DeliveryReportListDto dto) {
-    CursorPageNavigator navigator =
-        new CursorPageNavigator(dto.getPage(), dto.getPageSize(), dto.getCount());
+  public static Collection<DeliveryReportRecipient> convert(DeliveryReportListDto dto) {
     Collection<RecipientDeliveryReportDto> collection = dto.getDeliveryReports();
     Collection<DeliveryReportRecipient> pageContent = new ArrayList<>();
     if (null != collection) {
@@ -86,7 +81,7 @@ public class DeliveryReportDtoConverter {
         pageContent.add(convert);
       }
     }
-    return new Pair<>(pageContent, navigator);
+    return pageContent;
   }
 
   private static DeliveryReportStatusDetails convert(MessageDeliveryStatusDto dto) {
