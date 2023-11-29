@@ -49,6 +49,11 @@ See https://developers.sinch.com for details about these parameters
 
 ## Available samples classes
 
+### Full workflow
+A full application chaining calls to Numbers service to onboard onto Java SDK and Numbers: [NumbersSampleFlow](src/main/java/com/sinch/sample/numbers/NumbersSampleFlow.java)
+
+### Dedicated service feature samples
+
 | API     | Service        | Sample                 | Class                                                                                                                           | Notes                                             |
 |---------|----------------|------------------------|---------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------|
 | Numbers | Available      | - CheckAvailability    | [com.sinch.sample.numbers.available.CheckAvailability](src/main/java/com/sinch/sample/numbers/available/CheckAvailability.java) | Require `PHONE_NUMBER` parameter                  |
