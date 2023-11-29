@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * Abstract class used for handling unified paginated response
@@ -48,6 +50,19 @@ public abstract class ListResponse<T> {
    */
   public Iterator<T> iterator() {
     return new ItemsIterator<>(this);
+  }
+
+  /**
+   * Getting a stream across all items
+   *
+   * <p>Underline API (HTTP request) will be called on demand when next page content will be
+   * required to fulfill iterator with items for consecutive page
+   *
+   * @return Stream onto items
+   */
+  public Stream<T> stream() {
+    Iterable<T> iterable = this::iterator;
+    return StreamSupport.stream(iterable.spliterator(), false);
   }
 
   static class ItemsIterator<T> implements Iterator<T> {
