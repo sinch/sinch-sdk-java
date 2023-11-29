@@ -102,8 +102,8 @@ java.util.logging.ConsoleHandler.formatter = java.util.logging.SimpleFormatter
 java.util.logging.SimpleFormatter.format=[%1$tF %1$tT] [%4$-7s %2$s] %5$s %n
 ```
 
-## Examples
-See [sample-app](sample-app/src/main/java/com/sinch/sample) module
+## Onboarding/Examples
+The [sample-app](sample-app/README.md) directory contains ready to use samples and can be used to start your own applications based onto Sinch SDK.
 
 ## HTTP Client
 See [HTTP-CLIENT](HTTP-CLIENT.md) file
