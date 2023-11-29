@@ -35,7 +35,6 @@ public class SinchClient {
 
   private static final String PROJECT_NAME_KEY = "project.name";
   private static final String PROJECT_VERSION_KEY = "project.version";
-  private static final String PROJECT_JAVA_VERSION_KEY = "project.java.version";
   private static final String PROJECT_AUXILIARY_FLAG = "project.auxiliary_flag";
 
   // sinch-sdk/{sdk_version} ({language}/{language_version}; {implementation_type};
@@ -198,15 +197,14 @@ public class SinchClient {
         SDK_USER_AGENT_FORMAT,
         versionProperties.get(PROJECT_VERSION_KEY),
         "Java",
-        versionProperties.get(PROJECT_JAVA_VERSION_KEY),
+        System.getProperty("java.version"),
         "Apache",
         formatAuxiliaryFlag((String) versionProperties.get(PROJECT_AUXILIARY_FLAG)));
   }
 
   private String formatAuxiliaryFlag(String auxiliaryFlag) {
 
-    Collection<String> values =
-        Arrays.asList(System.getProperty("java.vendor"), System.getProperty("java.version"));
+    Collection<String> values = Arrays.asList(System.getProperty("java.vendor"));
 
     if (!StringUtil.isEmpty(auxiliaryFlag)) {
       values.add(auxiliaryFlag);
