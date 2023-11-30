@@ -88,12 +88,16 @@ public class AvailableNumberService
 
   public ActiveNumber rent(String phoneNumber, AvailableNumberRentRequestParameters parameters)
       throws ApiException {
+
+    AvailableNumberRentRequestParameters guardParameters =
+        null != parameters ? parameters : AvailableNumberRentRequestParameters.builder().build();
+
     ActiveNumberDto response =
         getApi()
             .numberServiceRentNumber(
                 configuration.getProjectId(),
                 phoneNumber,
-                AvailableRentRequestParametersDtoConverter.convert(parameters));
+                AvailableRentRequestParametersDtoConverter.convert(guardParameters));
     return ActiveNumberDtoConverter.convert(response);
   }
 

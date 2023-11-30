@@ -5,9 +5,6 @@ import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.numbers.models.*;
 import com.sinch.sdk.domains.numbers.models.requests.*;
-import com.sinch.sdk.domains.numbers.models.responses.ActiveNumberListResponse;
-import com.sinch.sdk.domains.numbers.models.responses.AvailableNumberListResponse;
-import com.sinch.sdk.domains.numbers.models.responses.AvailableRegionListResponse;
 import com.sinch.sdk.models.Configuration;
 import java.util.Collections;
 import java.util.Optional;
@@ -15,10 +12,6 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class NumbersSampleFlow {
-
-  private static final String SINCH_PROJECT_ID = "SINCH_PROJECT_ID";
-  private static final String SINCH_KEY_ID = "SINCH_KEY_ID";
-  private static final String SINCH_KEY_SECRET = "SINCH_KEY_SECRET";
 
   private static final Logger LOGGER = Utils.initializeLogger(NumbersSampleFlow.class.getName());
 
@@ -61,6 +54,8 @@ public class NumbersSampleFlow {
       phoneNumber = rentPhoneNumberByAny(++step, sinch, regionCode, testCodePattern);
     }
 
+    echo("Let's use now the 'ActiveNumbers' API to see how to manage this number.\n");
+
     // 3 Verify number is active
     // 3.1: verify by dedicated phone number request
     verifyActiveNumberByNumber(++step, sinch, phoneNumber);
@@ -92,7 +87,7 @@ public class NumbersSampleFlow {
             .build();
 
     // 2. Request for available regions using the built-in SDK method
-    AvailableRegionListResponse availableRegionListResponse =
+    var availableRegionListResponse =
         sinchClient.numbers().regions().list(availableRegionsRequestData);
 
     // 3. This API is following the SDK pattern for list and the server response is wrapped inside a
@@ -154,7 +149,7 @@ public class NumbersSampleFlow {
 
     // 2. Request for available numbers using the built-in SDK method
     // This API is following the SDK pattern for list and the server response is wrapped inside a
-    AvailableNumberListResponse availableNumbersListResponse =
+    var availableNumbersListResponse =
         sinchClient.numbers().available().list(availableNumbersRequestData);
 
     // 3. Looking for first available number
@@ -186,7 +181,8 @@ public class NumbersSampleFlow {
     echoStep(step, "Rent phone number: '" + phoneNumber + "'");
 
     // 1. Build the request data
-    var rentRequestData = AvailableNumberRentRequestParameters.builder().build();
+    var rentRequestData =
+        AvailableNumberRentRequestParameters.builder().setCallbackUrl("https://foo.url").build();
 
     // 2. Request to rent the number
     ActiveNumber rentedNumber =
@@ -197,7 +193,6 @@ public class NumbersSampleFlow {
             + rentedNumber.getPhoneNumber()
             + " has been rented with the 'rent' operation.The next charge date is "
             + rentedNumber.getNextChargeDate());
-    echo("Let's use now the 'ActiveNumbers' API to see how to manage this number.\n");
   }
 
   String rentPhoneNumberByAny(
@@ -264,14 +259,16 @@ public class NumbersSampleFlow {
             .build();
 
     // 2. Request for active number using the built-in SDK method
-    ActiveNumberListResponse activeNumbersListResponse =
+    var activeNumbersListResponse =
         sinchClient.numbers().active().list(listActiveNumbersRequestData);
 
     // 3. To check if the phone number is part of the active numbers: check the page
     // content and if not present, check the next page until we find the phone number, or we reach
     // the end of the list
     Optional<ActiveNumber> found;
+    boolean reachedEndOfPages = false;
     do {
+      // use stream onto page content to looking for phoneNumber
       found =
           activeNumbersListResponse.getContent().stream()
               .filter(
@@ -279,12 +276,17 @@ public class NumbersSampleFlow {
                       phoneNumber.equals(f.getPhoneNumber())
                           && regionCode.equals(f.getRegionCode()))
               .findFirst();
-      if (found.isEmpty() && activeNumbersListResponse.hasNextPage()) {
-        activeNumbersListResponse = activeNumbersListResponse.nextPage();
-      } else {
-        activeNumbersListResponse = null;
+
+      // not present within current page
+      if (found.isEmpty()) {
+        // need to load the next one... if there is one available
+        if (activeNumbersListResponse.hasNextPage()) {
+          activeNumbersListResponse = activeNumbersListResponse.nextPage();
+        } else {
+          reachedEndOfPages = true;
+        }
       }
-    } while (found.isEmpty() && null != activeNumbersListResponse);
+    } while (found.isEmpty() && !reachedEndOfPages);
 
     echo(
         (found.isPresent() ? "SUCCESS:" : "FAILED:")
@@ -312,13 +314,12 @@ public class NumbersSampleFlow {
             .build();
 
     // 2. Request for active number using the built-in SDK method
-    ActiveNumberListResponse activeNumbersListResponse =
+    var activeNumbersListResponse =
         sinchClient.numbers().active().list(listActiveNumbersRequestData);
 
     // 3. To check if the phone number is part of the active numbers: use the
     // auto-iterator. Like for hasNextPage/nextPage, http calls will be performed automatically when
     // required
-    activeNumbersListResponse = sinchClient.numbers().active().list(listActiveNumbersRequestData);
     var iterator = activeNumbersListResponse.iterator();
     boolean found = false;
     while (iterator.hasNext()) {
