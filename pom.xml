@@ -4,7 +4,7 @@
 
     <groupId>com.sinch.sdk</groupId>
     <artifactId>sinch-sdk-java</artifactId>
-    <version>0.0.1-alpha</version>
+    <version>0.0.2-SNAPSHOT</version>
 
     <name>Sinch Java SDK</name>
     <description>
