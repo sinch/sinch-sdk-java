@@ -4,6 +4,7 @@ import com.sinch.sdk.auth.AuthManager;
 import com.sinch.sdk.auth.adapters.BasicAuthManager;
 import com.sinch.sdk.auth.adapters.BearerAuthManager;
 import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.numbers.NumbersService;
 import com.sinch.sdk.domains.sms.SMSService;
 import com.sinch.sdk.http.HttpClientApache;
@@ -12,6 +13,8 @@ import com.sinch.sdk.models.SMSRegion;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.AbstractMap;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
@@ -22,14 +25,27 @@ import java.util.stream.Stream;
 /** Sinch Sdk Client implementation */
 public class SinchClient {
 
+  private static final String DEFAULT_PROPERTIES_FILE_NAME = "/config-default.properties";
+  private static final String VERSION_PROPERTIES_FILE_NAME = "/version.properties";
+
   private static final String OAUTH_URL_KEY = "oauth-url";
   private static final String NUMBERS_SERVER_KEY = "numbers-server";
   private static final String SMS_REGION_KEY = "sms-region";
   private static final String SMS_SERVER_KEY = "sms-server";
 
+  private static final String PROJECT_NAME_KEY = "project.name";
+  private static final String PROJECT_VERSION_KEY = "project.version";
+  private static final String PROJECT_AUXILIARY_FLAG = "project.auxiliary_flag";
+
+  // sinch-sdk/{sdk_version} ({language}/{language_version}; {implementation_type};
+  // {auxiliary_flag})
+  private static final String SDK_USER_AGENT_HEADER = "User-Agent";
+  private static final String SDK_USER_AGENT_FORMAT = "sinch-sdk/%s (%s/%s; %s; %s)";
   private static final Logger LOGGER = Logger.getLogger(SinchClient.class.getName());
 
   private final Configuration configuration;
+  private final Properties versionProperties;
+
   private NumbersService numbers;
 
   private SMSService sms;
@@ -46,7 +62,7 @@ public class SinchClient {
 
     Configuration.Builder builder = Configuration.builder(configuration);
 
-    Properties props = handleDefaultConfigurationFile();
+    Properties props = handlePropertiesFile(DEFAULT_PROPERTIES_FILE_NAME);
     if (null == configuration.getOAuthUrl() && props.containsKey(OAUTH_URL_KEY)) {
       builder.setOAuthUrl(props.getProperty(OAUTH_URL_KEY));
     }
@@ -63,7 +79,13 @@ public class SinchClient {
     checkConfiguration(newConfiguration);
     this.configuration = newConfiguration;
 
-    LOGGER.fine("SinchClient started with projectId='" + configuration.getProjectId() + "'");
+    versionProperties = handlePropertiesFile(VERSION_PROPERTIES_FILE_NAME);
+    LOGGER.fine(
+        String.format(
+            "%s (%s) started with projectId '%s'",
+            versionProperties.getProperty(PROJECT_NAME_KEY),
+            versionProperties.getProperty(PROJECT_VERSION_KEY),
+            configuration.getProjectId()));
   }
 
   /**
@@ -130,10 +152,10 @@ public class SinchClient {
     return new com.sinch.sdk.domains.sms.adapters.SMSService(getConfiguration(), getHttpClient());
   }
 
-  private Properties handleDefaultConfigurationFile() {
+  private Properties handlePropertiesFile(String fileName) {
 
     Properties prop = new Properties();
-    try (InputStream is = this.getClass().getResourceAsStream("/config-default.properties")) {
+    try (InputStream is = this.getClass().getResourceAsStream(fileName)) {
       prop.load(is);
     } catch (IOException e) {
       // NOOP
@@ -159,8 +181,34 @@ public class SinchClient {
       // Avoid multiple and costly http client creation and reuse it for authManager
       bearerAuthManager.setHttpClient(this.httpClient);
 
+      // set SDK User-Agent
+      String userAgent = formatSdkUserAgentHeader(versionProperties);
+      this.httpClient.setRequestHeaders(
+          Stream.of(new String[][] {{SDK_USER_AGENT_HEADER, userAgent}})
+              .collect(Collectors.toMap(data -> data[0], data -> data[1])));
+
       LOGGER.fine("HTTP client loaded");
     }
     return this.httpClient;
+  }
+
+  private String formatSdkUserAgentHeader(Properties versionProperties) {
+    return String.format(
+        SDK_USER_AGENT_FORMAT,
+        versionProperties.get(PROJECT_VERSION_KEY),
+        "Java",
+        System.getProperty("java.version"),
+        "Apache",
+        formatAuxiliaryFlag((String) versionProperties.get(PROJECT_AUXILIARY_FLAG)));
+  }
+
+  private String formatAuxiliaryFlag(String auxiliaryFlag) {
+
+    Collection<String> values = Arrays.asList(System.getProperty("java.vendor"));
+
+    if (!StringUtil.isEmpty(auxiliaryFlag)) {
+      values.add(auxiliaryFlag);
+    }
+    return String.join(",", values);
   }
 }

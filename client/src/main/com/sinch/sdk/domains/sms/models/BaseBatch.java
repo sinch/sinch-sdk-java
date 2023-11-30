@@ -70,10 +70,6 @@ public class BaseBatch<T> {
     this.feedbackEnabled = feedbackEnabled;
   }
 
-  public static <T> BatchBuilder<T> batchBuilder() {
-    return new BatchBuilder<>();
-  }
-
   public Collection<String> getTo() {
     return to;
   }

@@ -26,11 +26,17 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
   private static final Logger LOGGER = Logger.getLogger(HttpClientApache.class.getName());
   private static final String AUTHORIZATION_HEADER_KEYWORD = "Authorization";
   private final Map<String, AuthManager> authManagers;
+
+  private Map<String, String> headersToBeAdded;
   private CloseableHttpClient client;
 
   public HttpClientApache(Map<String, AuthManager> authManagers) {
     this.client = HttpClients.createDefault();
     this.authManagers = authManagers;
+  }
+
+  public void setRequestHeaders(Map<String, String> headers) {
+    this.headersToBeAdded = headers;
   }
 
   private static HttpResponse processResponse(ClassicHttpResponse response) throws IOException {
@@ -97,6 +103,9 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
 
       addCollectionHeader(requestBuilder, "Content-Type", contentType);
       addCollectionHeader(requestBuilder, "Accept", accept);
+
+      addHeaders(requestBuilder, headerParams);
+      addHeaders(requestBuilder, headersToBeAdded);
 
       addAuth(requestBuilder, authNames);
 
@@ -167,6 +176,17 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
     if (null != values && !values.isEmpty()) {
       requestBuilder.setHeader(header, String.join(",", values));
     }
+  }
+
+  private void addHeaders(ClassicRequestBuilder requestBuilder, Map<String, String> headers) {
+
+    if (null == headers) {
+      return;
+    }
+    headers
+        .entrySet()
+        .iterator()
+        .forEachRemaining(f -> requestBuilder.setHeader(f.getKey(), f.getValue()));
   }
 
   private void addAuth(ClassicRequestBuilder requestBuilder, Collection<String> values) {
