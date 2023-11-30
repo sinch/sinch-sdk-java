@@ -23,14 +23,14 @@ public class Send extends BaseApplication {
 
   public void run() {
 
-    LOGGER.info("Send Text");
+    LOGGER.info("Send Text to " + phoneNumber);
     BatchText value =
         client
             .sms()
             .batches()
             .send(
                 SendSmsBatchTextRequest.builder()
-                    .setTo(Collections.singletonList("+foo "))
+                    .setTo(Collections.singletonList(phoneNumber))
                     .setBody("the body")
                     .setClientReference("a client reference")
                     .setFrom("+33123456789")
