@@ -3,7 +3,7 @@ package com.sinch.sdk.domains.verification.models;
 public class VerificationReportSMS extends VerificationReport {
 
   private final Price verificationPrice;
-  private final String source;
+  private final VerificationSourceType source;
   /**
    * @param id The unique ID of the verification request
    * @param status The status of the verification request
@@ -13,8 +13,7 @@ public class VerificationReportSMS extends VerificationReport {
    * @param verificationPrice The maximum price charged for this verification process. This property
    *     will appear in the body of the response with a delay. It will become visible only when the
    *     verification status is other than PENDING
-   * @param source Free text that the client is sending, used to show if the call/SMS was
-   *     intercepted or not
+   * @param source Used to show if the SMS was intercepted or not
    */
   public VerificationReportSMS(
       VerificationId id,
@@ -22,7 +21,7 @@ public class VerificationReportSMS extends VerificationReport {
       VerificationReportReasonType reason,
       VerificationReference reference,
       Price verificationPrice,
-      String source) {
+      VerificationSourceType source) {
     super(id, status, reason, reference);
     this.verificationPrice = verificationPrice;
     this.source = source;
@@ -32,7 +31,7 @@ public class VerificationReportSMS extends VerificationReport {
     return verificationPrice;
   }
 
-  public String getSource() {
+  public VerificationSourceType getSource() {
     return source;
   }
 
@@ -55,14 +54,14 @@ public class VerificationReportSMS extends VerificationReport {
   public static class Builder extends VerificationReport.Builder<Builder> {
 
     Price verificationPrice;
-    String source;
+    VerificationSourceType source;
 
     public Builder setVerificationPrice(Price verificationPrice) {
       this.verificationPrice = verificationPrice;
       return this;
     }
 
-    public Builder setSource(String source) {
+    public Builder setSource(VerificationSourceType source) {
       this.source = source;
       return this;
     }

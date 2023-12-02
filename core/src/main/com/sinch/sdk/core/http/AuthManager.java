@@ -1,6 +1,7 @@
 package com.sinch.sdk.core.http;
 
 import com.sinch.sdk.core.utils.Pair;
+import java.time.Instant;
 import java.util.Collection;
 
 public interface AuthManager {
@@ -13,6 +14,11 @@ public interface AuthManager {
 
   void resetToken();
 
+  default Collection<Pair<String, String>> getAuthorizationHeaders(
+      String method, String httpContentType, String path, String body) {
+    return getAuthorizationHeaders(Instant.now().toString(), method, httpContentType, path, body);
+  }
+
   Collection<Pair<String, String>> getAuthorizationHeaders(
-      String method, String httpContentType, String path, String body);
+      String timestamp, String method, String httpContentType, String path, String body);
 }

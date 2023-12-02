@@ -1,5 +1,6 @@
 package com.sinch.sample;
 
+import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.models.Configuration;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,6 +13,10 @@ public class Utils {
   private static final String SINCH_KEY_ID = "SINCH_KEY_ID";
   private static final String SINCH_KEY_SECRET = "SINCH_KEY_SECRET";
   private static final String SINCH_PROJECT_ID = "SINCH_PROJECT_ID";
+
+  // can super sed unified Sinch credentials if defined
+  private static final String VERIFICATION_API_KEY = "VERIFICATION_API_KEY";
+  private static final String VERIFICATION_API_SECRET = "VERIFICATION_API_SECRET";
 
   public static Logger initializeLogger(String className) {
     try (InputStream logConfigInputStream =
@@ -64,5 +69,22 @@ public class Utils {
         .setKeySecret(keySecret)
         .setProjectId(projectId)
         .build();
+  }
+
+  public static void handleVerificationCredentials(SinchClient client, Properties props) {
+
+    String verificationApiKey =
+        null != System.getenv(VERIFICATION_API_KEY)
+            ? System.getenv(VERIFICATION_API_KEY)
+            : props.getProperty(VERIFICATION_API_KEY);
+    String verificationApiSecret =
+        null != System.getenv(VERIFICATION_API_SECRET)
+            ? System.getenv(VERIFICATION_API_SECRET)
+            : props.getProperty(VERIFICATION_API_SECRET);
+
+    // super-sed unified key/secret for verification API
+    if (null != verificationApiKey && null != verificationApiSecret) {
+      client.verification().setApplicationCredentials(verificationApiKey, verificationApiSecret);
+    }
   }
 }

@@ -64,7 +64,7 @@ public class BearerAuthManager implements AuthManager {
 
   @Override
   public Collection<Pair<String, String>> getAuthorizationHeaders(
-      String method, String httpContentType, String path, String body) {
+      String timestamp, String method, String httpContentType, String path, String body) {
 
     if (token == null) {
       refreshToken();

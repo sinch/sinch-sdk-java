@@ -1,0 +1,62 @@
+package com.sinch.sdk.domains.verification;
+
+import com.sinch.sdk.core.exceptions.ApiMappingException;
+import com.sinch.sdk.domains.verification.models.webhooks.VerificationEvent;
+import com.sinch.sdk.domains.verification.models.webhooks.VerificationResponse;
+import java.util.Map;
+
+/**
+ * Webhooks service
+ *  <p>
+ * Callback events are used to authorize and manage your verification requests and return
+ * verification results.
+ * <p>
+ * see <a
+ * href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post</a>
+ *
+ * @since 1.0
+ */
+public interface WebHooksService {
+
+  /**
+   * The Sinch Platform can initiate callback requests to a URL you define (Callback URL) on request
+   * and result events. All callback requests are signed using your Application key and secret pair
+   * found on your dashboard. The signature is included in the Authorization header of the request
+   * <p>By using following function, you can ensure authentication according to received payload
+   * from your backend</p>
+   *
+   * @param method      The HTTP method used ot handle the callback
+   * @param path        The path to you backend endpoint used for callback
+   * @param headers     Received headers
+   * @param jsonPayload Received payload
+   * @return Is authentication is validated (true) or not (false)
+   *
+   * see <a href="https://developers.sinch.com/docs/verification/api-reference/authentication/callback-signed-request">https://developers.sinch.com/docs/verification/api-reference/authentication/callback-signed-request</a>
+   * @since 1.0
+   */
+  boolean checkAuthentication(
+      String method, String path, Map<String, String> headers, String jsonPayload);
+
+  /**
+   * This function can be called to deserialize received payload onto callback onto proper java
+   * verification event class
+   *
+   * @param jsonPayload Received payload to be deserialized
+   * @return The verification event instance class
+   *
+   * see <a href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/</a>
+   * @since 1.0
+   */
+  VerificationEvent unserializeVerificationEvent(String jsonPayload) throws ApiMappingException;
+
+  /**
+   * This function can be called to serialize a verification response to be send as JSON
+   *
+   * @param response The response to be serialized
+   * @return The JSON string to be sent
+   *
+   * see <a href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/</a>
+   *  @since 1.0
+   */
+  String serializeVerificationResponse(VerificationResponse response) throws ApiMappingException;
+}

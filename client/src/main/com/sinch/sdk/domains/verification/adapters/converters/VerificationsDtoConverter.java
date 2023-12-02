@@ -12,6 +12,7 @@ import com.sinch.sdk.domains.verification.models.VerificationReportFlashCall;
 import com.sinch.sdk.domains.verification.models.VerificationReportReasonType;
 import com.sinch.sdk.domains.verification.models.VerificationReportSMS;
 import com.sinch.sdk.domains.verification.models.VerificationReportStatusType;
+import com.sinch.sdk.domains.verification.models.VerificationSourceType;
 import com.sinch.sdk.domains.verification.models.dto.v1.CalloutVerificationReportRequestDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.FlashCallInitiateVerificationResponseDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.FlashcallOptionsDto;
@@ -205,7 +206,11 @@ public class VerificationsDtoConverter {
       case FLASHCALL:
         {
           VerificationReportFlashCall.Builder abuilder =
-              VerificationReportFlashCall.builder().setSource(dto.getSource());
+              VerificationReportFlashCall.builder();
+
+              if (null != dto.getSource()) {
+                abuilder.setSource(VerificationSourceType.from(dto.getSource()));
+              }
           if (null != dto.getPrice()
               && null != dto.getPrice().getVerificationPriceInformationDto()) {
             VerificationPriceInformationDto price =
@@ -222,7 +227,10 @@ public class VerificationsDtoConverter {
       case SMS:
         {
           VerificationReportSMS.Builder abuilder =
-              VerificationReportSMS.builder().setSource(dto.getSource());
+              VerificationReportSMS.builder();
+          if (null != dto.getSource()) {
+            abuilder.setSource(VerificationSourceType.from(dto.getSource()));
+          }
           if (null != dto.getPrice()
               && null != dto.getPrice().getVerificationPriceInformationDto()) {
             VerificationPriceInformationDto price =

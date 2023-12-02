@@ -4,5 +4,5 @@
   "status": "FAIL",
   "reason": "Fraud",
   "reference": "my reference",
-  "source": "my source"
+  "source": "manual"
 }
