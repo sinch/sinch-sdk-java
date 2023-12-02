@@ -55,7 +55,7 @@ public abstract class BaseApplication {
 
     // super-sed unified key/secret for verification API
     if (null != verificationApiKey && null != verificationApiSecret) {
-      client.verification().useSecrets(verificationApiKey, verificationApiSecret);
+      client.verification().setApplicationCredentials(verificationApiKey, verificationApiSecret);
     }
   }
 

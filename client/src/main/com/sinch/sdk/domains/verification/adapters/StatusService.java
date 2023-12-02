@@ -14,22 +14,29 @@ import com.sinch.sdk.domains.verification.models.VerificationReference;
 import com.sinch.sdk.domains.verification.models.VerificationReport;
 import com.sinch.sdk.models.Configuration;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class StatusService implements com.sinch.sdk.domains.verification.StatusService {
 
-  private QueryVerificationsApi api;
-
-  public StatusService() {}
+  private final Configuration configuration;
+  private final HttpClient httpClient;
+  private final Supplier<Map<String, AuthManager>> authManagerSupplier;
 
   public StatusService(
-      Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManager) {
-    this.api =
-        new QueryVerificationsApi(
-            httpClient, configuration.getVerificationServer(), authManager, new HttpMapper());
+      Configuration configuration,
+      HttpClient httpClient,
+      Supplier<Map<String, AuthManager>> authManagerSupplier) {
+    this.configuration = configuration;
+    this.httpClient = httpClient;
+    this.authManagerSupplier = authManagerSupplier;
   }
 
-  private QueryVerificationsApi getApi() {
-    return this.api;
+  protected QueryVerificationsApi getApi() {
+    return new QueryVerificationsApi(
+        httpClient,
+        configuration.getVerificationServer(),
+        authManagerSupplier.get(),
+        new HttpMapper());
   }
 
   public VerificationReport get(Identity identity, VerificationMethodType method) {

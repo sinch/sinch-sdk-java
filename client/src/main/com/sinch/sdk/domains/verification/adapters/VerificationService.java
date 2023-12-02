@@ -2,15 +2,15 @@ package com.sinch.sdk.domains.verification.adapters;
 
 import com.sinch.sdk.auth.adapters.BasicAuthManager;
 import com.sinch.sdk.auth.adapters.VerificationApplicationAuthManager;
+import com.sinch.sdk.core.exceptions.ApiAuthException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.domains.verification.StatusService;
 import com.sinch.sdk.domains.verification.VerificationsService;
 import com.sinch.sdk.models.Configuration;
-import java.nio.charset.StandardCharsets;
 import java.util.AbstractMap;
-import java.util.Base64;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -25,21 +25,15 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
   private VerificationsService verifications;
   private StatusService status;
   private Map<String, AuthManager> authManagers;
+  private final Supplier<Map<String, AuthManager>> authManagersSupplier = () -> authManagers;
 
   public VerificationService(Configuration configuration, HttpClient httpClient) {
     this.configuration = configuration;
     this.httpClient = httpClient;
-
-    // by default, unified id/secret from configuration are used but can be super sed if
-    // "useSecrets"
-    // is called after initialization
-    useSecrets(
-        configuration.getKeyId(),
-        Base64.getEncoder()
-            .encodeToString(configuration.getKeySecret().getBytes(StandardCharsets.UTF_8)));
   }
 
-  public VerificationService useSecrets(String key, String secret) {
+  public VerificationService setApplicationCredentials(String key, String secret) {
+
     AuthManager authManager;
     boolean useApplicationAuth = true;
     if (useApplicationAuth) {
@@ -55,19 +49,30 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
 
   public VerificationsService verifications() {
     if (null == this.verifications) {
+      checkCredentials();
       this.verifications =
           new com.sinch.sdk.domains.verification.adapters.VerificationsService(
-              configuration, httpClient, authManagers);
+              configuration, httpClient, authManagersSupplier);
     }
     return this.verifications;
   }
 
   public StatusService status() {
     if (null == this.status) {
+      checkCredentials();
       this.status =
           new com.sinch.sdk.domains.verification.adapters.StatusService(
-              configuration, httpClient, authManagers);
+              configuration, httpClient, authManagersSupplier);
     }
     return this.status;
+  }
+
+  private void checkCredentials() throws ApiAuthException {
+    if (null == authManagers || authManagers.isEmpty()) {
+      throw new ApiAuthException(
+          String.format(
+              "Service '%s' cannot be called without defined credentials",
+              this.getClass().getSimpleName()));
+    }
   }
 }
