@@ -34,7 +34,7 @@ public class BasicAuthManager implements AuthManager {
 
   @Override
   public Collection<Pair<String, String>> getAuthorizationHeaders(
-      String method, String httpContentType, String path, String body) {
+      String timestamp, String method, String httpContentType, String path, String body) {
     String key = keyId == null ? "" : keyId;
     String secret = keySecret == null ? "" : keySecret;
 

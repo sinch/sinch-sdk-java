@@ -11,7 +11,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.time.Instant;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collection;
@@ -42,7 +41,7 @@ public class VerificationApplicationAuthManager implements AuthManager {
 
   @Override
   public Collection<Pair<String, String>> getAuthorizationHeaders(
-      String method, String httpContentType, String path, String body) {
+      String timestamp, String method, String httpContentType, String path, String body) {
 
     String decodePath;
     try {
@@ -52,7 +51,6 @@ public class VerificationApplicationAuthManager implements AuthManager {
     }
     // see
     // https://developers.sinch.com/docs/verification/api-reference/authentication/signed-request/
-    Instant timestamp = Instant.now();
     String bodyMD5Hash = getBodyMD5Hash(body);
     String stringToSign = getSignature(method, bodyMD5Hash, httpContentType, timestamp, decodePath);
     String encoded = encode(stringToSign);
@@ -78,13 +76,13 @@ public class VerificationApplicationAuthManager implements AuthManager {
   }
 
   private String getSignature(
-      String method, String bodyMD5Hash, String httpContentType, Instant timestamp, String path) {
+      String method, String bodyMD5Hash, String httpContentType, String timestamp, String path) {
     return String.join(
         "\n",
         method,
         bodyMD5Hash,
         null != httpContentType ? httpContentType : "",
-        XTIMESTAMP_HEADER + ":" + timestamp.toString(),
+        XTIMESTAMP_HEADER + ":" + timestamp,
         path);
   }
 

@@ -1,0 +1,14 @@
+{
+  "id": "1234567890",
+  "event": "VerificationResultEvent",
+  "method": "sms",
+  "identity": {
+    "type": "number",
+    "endpoint": "+11235551234"
+  },
+  "reference": "reference string",
+  "custom": "custom string",
+  "source": "manual",
+  "status": "DENIED",
+  "reason": "Fraud"
+}

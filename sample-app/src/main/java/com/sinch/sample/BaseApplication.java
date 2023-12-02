@@ -12,10 +12,6 @@ public abstract class BaseApplication {
 
   protected static final Logger LOGGER = Utils.initializeLogger(BaseApplication.class.getName());
 
-  // can super sed unified Sinch credentials if defined
-  private static final String VERIFICATION_API_KEY = "VERIFICATION_API_KEY";
-  private static final String VERIFICATION_API_SECRET = "VERIFICATION_API_SECRET";
-
   protected SinchClient client;
 
   protected String phoneNumber;
@@ -39,24 +35,7 @@ public abstract class BaseApplication {
 
     client = new SinchClient(configuration);
 
-    handleVerificationCredentials(client, properties);
-  }
-
-  void handleVerificationCredentials(SinchClient client, Properties props) {
-
-    String verificationApiKey =
-        null != System.getenv(VERIFICATION_API_KEY)
-            ? System.getenv(VERIFICATION_API_KEY)
-            : props.getProperty(VERIFICATION_API_KEY);
-    String verificationApiSecret =
-        null != System.getenv(VERIFICATION_API_SECRET)
-            ? System.getenv(VERIFICATION_API_SECRET)
-            : props.getProperty(VERIFICATION_API_SECRET);
-
-    // super-sed unified key/secret for verification API
-    if (null != verificationApiKey && null != verificationApiSecret) {
-      client.verification().setApplicationCredentials(verificationApiKey, verificationApiSecret);
-    }
+    Utils.handleVerificationCredentials(client, properties);
   }
 
   public abstract void run();

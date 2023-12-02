@@ -35,7 +35,7 @@ public class Rent extends BaseApplication {
           RentVoiceConfigurationRequestParameters.builder() // .setAppId("app id")
               .build();
       AvailableNumberRentRequestParameters parameters =
-          new AvailableNumberRentRequestParameters(rentSms, rentVoice, "foo callback");
+          new AvailableNumberRentRequestParameters(null, null, "foo callback");
       ActiveNumber value = client.numbers().available().rent(phoneNumber, parameters);
 
       LOGGER.info("Response :" + value);

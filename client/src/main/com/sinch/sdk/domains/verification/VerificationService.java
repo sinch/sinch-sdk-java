@@ -35,4 +35,12 @@ public interface VerificationService {
    * @since 1.0
    */
   StatusService status();
+
+  /**
+   * Webhooks helpers instance
+   *
+   * @return instance service related to webhooks helpers
+   * @since 1.0
+   */
+  WebHooksService webhooks();
 }

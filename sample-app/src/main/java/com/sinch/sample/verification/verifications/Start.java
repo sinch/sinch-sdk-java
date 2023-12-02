@@ -1,13 +1,10 @@
 package com.sinch.sample.verification.verifications;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
-import com.sinch.sdk.domains.verification.models.VerificationReference;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlashCallRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
-import com.sinch.sdk.domains.verification.models.response.StartVerificationResponse;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -15,7 +12,8 @@ public class Start extends BaseApplication {
 
   private static final Logger LOGGER = Logger.getLogger(Start.class.getName());
 
-  public Start() throws IOException {}
+  public Start() throws IOException {
+  }
 
   public static void main(String[] args) {
     try {
@@ -30,13 +28,13 @@ public class Start extends BaseApplication {
 
     LOGGER.info("Start verification for : " + phoneNumber);
 
-    Identity identity = NumberIdentity.builder().setEndpoint(phoneNumber).build();
+    var identity = NumberIdentity.builder().setEndpoint(phoneNumber).build();
 
-    VerificationMethodType method = VerificationMethodType.SMS;
+    var method = VerificationMethodType.SMS;
 
     StartVerificationRequestParameters.Builder<?> builder;
 
-    if (method != VerificationMethodType.FLASH_CALL) {
+    if (method != VerificationMethodType.CALLOUT) {
       builder = StartVerificationRequestParameters.builder(method);
     } else {
       // Dedicated flashcall builder usage do not require setting explicit verification method
@@ -47,10 +45,11 @@ public class Start extends BaseApplication {
               .setDialTimeOut(17);
     }
 
-    builder.setIdentity(identity).setReference(VerificationReference.valueOf("a test reference"));
+    // process common properties
+    builder.setIdentity(identity);
 
-    StartVerificationResponse response =
-        client.verification().verifications().start(builder.build());
+    var response = client.verification().verifications().start(builder.build());
+
     LOGGER.info("Response :" + response);
   }
 }
