@@ -11,15 +11,15 @@ import com.sinch.sdk.domains.verification.models.requests.VerificationReportSMSR
 import java.io.IOException;
 import java.util.logging.Logger;
 
-public class GetReportById extends BaseApplication {
+public class ReportById extends BaseApplication {
 
-  private static final Logger LOGGER = Logger.getLogger(GetReportById.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ReportById.class.getName());
 
-  public GetReportById() throws IOException {}
+  public ReportById() throws IOException {}
 
   public static void main(String[] args) {
     try {
-      new GetReportById().run();
+      new ReportById().run();
     } catch (Exception e) {
       LOGGER.severe(e.getMessage());
       e.printStackTrace();
