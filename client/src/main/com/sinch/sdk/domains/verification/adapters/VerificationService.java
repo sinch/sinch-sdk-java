@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.verification.adapters;
 
 import com.sinch.sdk.auth.adapters.BasicAuthManager;
 import com.sinch.sdk.auth.adapters.VerificationApplicationAuthManager;
+import com.sinch.sdk.core.exceptions.ApiAuthException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.domains.verification.StatusService;
@@ -9,6 +10,7 @@ import com.sinch.sdk.domains.verification.VerificationsService;
 import com.sinch.sdk.models.Configuration;
 import java.util.AbstractMap;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -22,45 +24,55 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
   private final HttpClient httpClient;
   private VerificationsService verifications;
   private StatusService status;
-  private final Map<String, AuthManager> authManagers;
+  private Map<String, AuthManager> authManagers;
+  private final Supplier<Map<String, AuthManager>> authManagersSupplier = () -> authManagers;
 
   public VerificationService(Configuration configuration, HttpClient httpClient) {
     this.configuration = configuration;
     this.httpClient = httpClient;
+  }
+
+  public VerificationService setApplicationCredentials(String key, String secret) {
 
     AuthManager authManager;
     boolean useApplicationAuth = true;
     if (useApplicationAuth) {
-      authManager =
-          new VerificationApplicationAuthManager(
-              configuration.getKeyId(),
-              // TODO: Currently Verification do not accept project related key/secret. TBC
-              // fallback to the verifications usage ones for POC
-              // Base64.getEncoder().encodeToString(configuration.getKeySecret().getBytes(StandardCharsets.UTF_8))
-              configuration.getKeySecret());
+      authManager = new VerificationApplicationAuthManager(key, secret);
     } else {
-      authManager = new BasicAuthManager(configuration);
+      authManager = new BasicAuthManager(key, secret);
     }
     authManagers =
         Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_VERIFICATION, authManager))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    return this;
   }
 
   public VerificationsService verifications() {
     if (null == this.verifications) {
+      checkCredentials();
       this.verifications =
           new com.sinch.sdk.domains.verification.adapters.VerificationsService(
-              configuration, httpClient, authManagers);
+              configuration, httpClient, authManagersSupplier);
     }
     return this.verifications;
   }
 
   public StatusService status() {
     if (null == this.status) {
+      checkCredentials();
       this.status =
           new com.sinch.sdk.domains.verification.adapters.StatusService(
-              configuration, httpClient, authManagers);
+              configuration, httpClient, authManagersSupplier);
     }
     return this.status;
+  }
+
+  private void checkCredentials() throws ApiAuthException {
+    if (null == authManagers || authManagers.isEmpty()) {
+      throw new ApiAuthException(
+          String.format(
+              "Service '%s' cannot be called without defined credentials",
+              this.getClass().getSimpleName()));
+    }
   }
 }

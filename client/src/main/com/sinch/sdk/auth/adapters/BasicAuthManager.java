@@ -15,8 +15,12 @@ public class BasicAuthManager implements AuthManager {
   private final String keySecret;
 
   public BasicAuthManager(Configuration configuration) {
-    this.keyId = configuration.getKeyId();
-    this.keySecret = configuration.getKeySecret();
+    this(configuration.getKeyId(), configuration.getKeySecret());
+  }
+
+  public BasicAuthManager(String keyId, String keySecret) {
+    this.keyId = keyId;
+    this.keySecret = keySecret;
   }
 
   public String getSchema() {
