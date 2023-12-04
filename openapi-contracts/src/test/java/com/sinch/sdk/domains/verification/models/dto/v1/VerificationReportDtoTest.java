@@ -45,7 +45,7 @@ public class VerificationReportDtoTest extends BaseTest {
           .status("FAIL")
           .reason("Fraud")
           .reference("my reference")
-          .source("my source");
+          .source("manual");
 
   @GivenJsonResource("/domains/verification/v1/VerificationReportSMSResponseDto.json")
   VerificationResponseDto loadedVerificationSMSDto;
@@ -57,7 +57,7 @@ public class VerificationReportDtoTest extends BaseTest {
           .status("FAIL")
           .reason("Fraud")
           .reference("my reference")
-          .source("my source")
+          .source("intercepted")
           .price(
               new VerificationResponsePriceDto(
                   new VerificationPriceInformationDto()

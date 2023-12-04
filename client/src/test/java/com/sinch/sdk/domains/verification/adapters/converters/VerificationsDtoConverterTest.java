@@ -11,6 +11,7 @@ import com.sinch.sdk.domains.verification.models.VerificationReportFlashCall;
 import com.sinch.sdk.domains.verification.models.VerificationReportReasonType;
 import com.sinch.sdk.domains.verification.models.VerificationReportSMS;
 import com.sinch.sdk.domains.verification.models.VerificationReportStatusType;
+import com.sinch.sdk.domains.verification.models.VerificationSourceType;
 import com.sinch.sdk.domains.verification.models.dto.v1.StartVerificationRequestDtoTest;
 import com.sinch.sdk.domains.verification.models.dto.v1.StartVerificationResponseDtoTest;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportDtoTest;
@@ -206,7 +207,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
           .setStatus(VerificationReportStatusType.FAIL)
           .setReason(VerificationReportReasonType.FRAUD)
           .setReference(VerificationReference.valueOf("my reference"))
-          .setSource("my source")
+          .setSource(VerificationSourceType.MANUAL)
           .build();
 
   @Test
@@ -239,7 +240,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
           .setStatus(VerificationReportStatusType.FAIL)
           .setReason(VerificationReportReasonType.FRAUD)
           .setReference(VerificationReference.valueOf("my reference"))
-          .setSource("my source")
+          .setSource(VerificationSourceType.INTERCEPTED)
           .setVerificationPrice(
               Price.builder()
                   .setCurrencyId("verificationPrice currency id")

@@ -5,7 +5,7 @@ public class VerificationReportFlashCall extends VerificationReport {
   private final Price verificationPrice;
   private final Price terminationPrice;
   private final Integer billableDuration;
-  private final String source;
+  private final VerificationSourceType source;
   /**
    * @param id The unique ID of the verification request
    * @param status The status of the verification request
@@ -23,8 +23,7 @@ public class VerificationReportFlashCall extends VerificationReport {
    *     termination debiting is enabled (disabled by default). Depending on the type of rounding
    *     used, the value is the actual call time rounded to the nearest second, minute or other
    *     value.
-   * @param source Free text that the client is sending, used to show if the call/SMS was
-   *     intercepted or not
+   * @param source Used to show if the call was intercepted or not
    */
   public VerificationReportFlashCall(
       VerificationId id,
@@ -34,7 +33,7 @@ public class VerificationReportFlashCall extends VerificationReport {
       Price verificationPrice,
       Price terminationPrice,
       Integer billableDuration,
-      String source) {
+      VerificationSourceType source) {
     super(id, status, reason, reference);
     this.verificationPrice = verificationPrice;
     this.terminationPrice = terminationPrice;
@@ -54,7 +53,7 @@ public class VerificationReportFlashCall extends VerificationReport {
     return billableDuration;
   }
 
-  public String getSource() {
+  public VerificationSourceType getSource() {
     return source;
   }
 
@@ -83,7 +82,7 @@ public class VerificationReportFlashCall extends VerificationReport {
     Price verificationPrice;
     Price terminationPrice;
     Integer billableDuration;
-    String source;
+    VerificationSourceType source;
 
     public Builder setVerificationPrice(Price verificationPrice) {
       this.verificationPrice = verificationPrice;
@@ -100,7 +99,7 @@ public class VerificationReportFlashCall extends VerificationReport {
       return this;
     }
 
-    public Builder setSource(String source) {
+    public Builder setSource(VerificationSourceType source) {
       this.source = source;
       return this;
     }

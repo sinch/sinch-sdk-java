@@ -8,6 +8,7 @@ import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.VerificationReference;
 import com.sinch.sdk.domains.verification.models.VerificationReportReasonType;
 import com.sinch.sdk.domains.verification.models.VerificationReportStatusType;
+import com.sinch.sdk.domains.verification.models.VerificationSourceType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -66,6 +67,6 @@ class VerificationResultEventTest {
 
   @Test
   void getSource() {
-    Assertions.assertThat(dto.getSource().get()).isEqualTo("source string");
+    Assertions.assertThat(dto.getSource().get()).isEqualTo(VerificationSourceType.MANUAL);
   }
 }
