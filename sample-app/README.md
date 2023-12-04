@@ -128,6 +128,12 @@ By using service like `ngrok` and running locally the SpringBoot application you
 4. Execute a Verification action and check the webhook calls
 
 #### Verification WebHooks
+Require to set following parameters (by environment or config file):
+- `APPLICATION_API_KEY`
+-` APPLICATION_API_SECRET`
+
+Check your dashboard to retrieve Application Credentials values
+
 | API          | Sample                 | Class                                                                                                                     | Notes |
 |--------------|------------------------|---------------------------------------------------------------------------------------------------------------------------|-------|
 | Verification | Springboot application | [com.sinch.sample.webhooks.VerificationApplication](src/main/java/com/sinch/sample/webhooks/VerificationApplication.java) |       |
