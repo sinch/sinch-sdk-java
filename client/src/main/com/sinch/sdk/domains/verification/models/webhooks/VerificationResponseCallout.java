@@ -31,7 +31,7 @@ public class VerificationResponseCallout extends VerificationResponse {
 
   /**
    * Call out related information for call out verification callback
-   * See <a href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post!c=200&path=2/callout&t=response">callout response documentation</a>
+   * See <a href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post!c=200&amp;path=2/callout&amp;t=response">callout response documentation</a>
    * @since 1.0
    */
   public static class CalloutResponse {
@@ -68,7 +68,7 @@ public class VerificationResponseCallout extends VerificationResponse {
 
   /**
    * Speech related information for SMS verification callback
-   * See <a href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post!c=200&path=2/callout&t=response">speech response documentation</a>
+   * See <a href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post!c=200&amp;path=2/callout&amp;t=response">speech response documentation</a>
    * @since 1.0
    */
   public static class SpeechResponse {

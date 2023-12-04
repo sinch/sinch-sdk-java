@@ -32,7 +32,7 @@ public class VerificationResponseFlashCall extends VerificationResponse {
 
   /**
    * Flash call related information for flach call verification callback
-   * See <a href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post!c=200&path=1/flashCall&t=response">callout response documentation</a>
+   * See <a href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post!c=200&amp;path=1/flashCall&amp;t=response">callout response documentation</a>
    * @since 1.0
    */
   public static class FlashCallResponse {
