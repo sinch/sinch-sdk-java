@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 public class SinchClient {
 
   private static final String DEFAULT_PROPERTIES_FILE_NAME = "/config-default.properties";
-  private static final String VERSION_PROPERTIES_FILE_NAME = "/version.properties";
+       private static final String VERSION_PROPERTIES_FILE_NAME = "/version.properties";
 
   private static final String OAUTH_URL_KEY = "oauth-url";
   private static final String NUMBERS_SERVER_KEY = "numbers-server";
@@ -224,4 +224,5 @@ public class SinchClient {
     }
     return String.join(",", values);
   }
+
 }

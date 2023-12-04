@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.verification.adapters;
 
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.verification.WebHooksService;
 import com.sinch.sdk.models.Configuration;
@@ -41,11 +42,26 @@ public class WebhooksServiceTest extends BaseTest {
   }
 
   @Test
-  void checkApplicationAuthenticationFailure() throws ApiException {
+  void checkApplicationAuthenticationFailureOnKey() throws ApiException {
 
     Map<String, String> headers =
         Stream.of(
-                new AbstractMap.SimpleEntry<>("authorization", "application foo="),
+                new AbstractMap.SimpleEntry<>("authorization", "application badkey:xfKhO0XvlRNJraahUBEJzzi1f3Fn3pYO41/ZzwOHPaQ="),
+                new AbstractMap.SimpleEntry<>("content-type", "application/json; charset=utf-8"),
+                new AbstractMap.SimpleEntry<>("x-timestamp", "2023-12-01T15:01:20.0406449Z"))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+    boolean authenticationResult =
+        webHooksService.checkAuthentication("POST", "/VerificationRequestEvent", headers, request);
+
+    Assertions.assertThat(authenticationResult).isEqualTo(false);
+  }
+  @Test
+  void checkApplicationAuthenticationFailureOnHash() throws ApiException {
+
+    Map<String, String> headers =
+        Stream.of(
+                new AbstractMap.SimpleEntry<>("authorization", "application 789:fooHash="),
                 new AbstractMap.SimpleEntry<>("content-type", "application/json; charset=utf-8"),
                 new AbstractMap.SimpleEntry<>("x-timestamp", "2023-12-01T15:01:20.0406449Z"))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
@@ -59,9 +75,14 @@ public class WebhooksServiceTest extends BaseTest {
   @BeforeEach
   public void setUp() throws IOException {
 
-    Configuration configuration = Configuration.builder().build();
-    VerificationService verificationService =
-        new VerificationService(configuration, null).setApplicationCredentials("789", "9876543210");
-    webHooksService = verificationService.webhooks();
+    Configuration configuration = Configuration.builder()
+        .setProjectId("unused")
+        .setKeyId("unused")
+        .setKeySecret("unused")
+        .setApplicationKey("789")
+        .setApplicationSecret("9876543210")
+        .build();
+
+    webHooksService = new SinchClient(configuration).verification().webhooks();
   }
 }

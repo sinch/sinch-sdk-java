@@ -58,7 +58,7 @@ public class VerificationApplicationAuthManager implements AuthManager {
 
     return Arrays.asList(
         new Pair<>("Authorization", AUTH_KEYWORD + " " + key + ":" + encoded),
-        new Pair<>(XTIMESTAMP_HEADER, timestamp.toString()));
+        new Pair<>(XTIMESTAMP_HEADER, timestamp));
   }
 
   private String getBodyMD5Hash(String body) {

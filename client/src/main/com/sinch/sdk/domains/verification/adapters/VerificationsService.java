@@ -15,30 +15,25 @@ import com.sinch.sdk.domains.verification.models.requests.VerificationReportRequ
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponse;
 import com.sinch.sdk.models.Configuration;
 import java.util.Map;
-import java.util.function.Supplier;
 
 public class VerificationsService
     implements com.sinch.sdk.domains.verification.VerificationsService {
 
-  private final Configuration configuration;
-  private final HttpClient httpClient;
-  private final Supplier<Map<String, AuthManager>> authManagerSupplier;
+  private final SendingAndReportingVerificationsApi api;
 
   public VerificationsService(
       Configuration configuration,
       HttpClient httpClient,
-      Supplier<Map<String, AuthManager>> authManagerSupplier) {
-    this.configuration = configuration;
-    this.httpClient = httpClient;
-    this.authManagerSupplier = authManagerSupplier;
+      Map<String, AuthManager> authManagers) {
+    this.api = new SendingAndReportingVerificationsApi(
+        httpClient,
+        configuration.getVerificationServer(),
+        authManagers,
+        new HttpMapper());
   }
 
   protected SendingAndReportingVerificationsApi getApi() {
-    return new SendingAndReportingVerificationsApi(
-        httpClient,
-        configuration.getVerificationServer(),
-        authManagerSupplier.get(),
-        new HttpMapper());
+    return this.api;
   }
 
   public StartVerificationResponse start(StartVerificationRequestParameters parameters) {

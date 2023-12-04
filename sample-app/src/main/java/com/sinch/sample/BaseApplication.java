@@ -35,7 +35,6 @@ public abstract class BaseApplication {
 
     client = new SinchClient(configuration);
 
-    Utils.handleVerificationCredentials(client, properties);
   }
 
   public abstract void run();

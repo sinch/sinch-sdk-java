@@ -20,7 +20,6 @@ import com.sinch.sdk.domains.verification.models.VerificationReport;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportDtoTest;
 import com.sinch.sdk.models.Configuration;
 import java.util.Map;
-import java.util.function.Supplier;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,13 +31,13 @@ public class StatusServiceTest extends BaseTest {
   @Mock QueryVerificationsApi api;
   @Mock Configuration configuration;
   @Mock HttpClient httpClient;
-  @Mock Supplier<Map<String, AuthManager>> authManagerSupplier;
+  @Mock Map<String, AuthManager> authManagers;
 
   StatusService service;
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new StatusService(configuration, httpClient, authManagerSupplier));
+    service = spy(new StatusService(configuration, httpClient, authManagers));
     doReturn(api).when(service).getApi();
   }
 

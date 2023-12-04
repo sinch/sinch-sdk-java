@@ -21,11 +21,6 @@ public class VerificationApplication {
   @Bean
   public SinchClient sinchClient() {
     Configuration configuration = Utils.loadConfiguration(LOGGER);
-    SinchClient sinchClient = new SinchClient(configuration);
-
-    Properties properties = Utils.loadProperties(LOGGER);
-    Utils.handleVerificationCredentials(sinchClient, properties);
-
-    return sinchClient;
+   return new SinchClient(configuration);
   }
 }

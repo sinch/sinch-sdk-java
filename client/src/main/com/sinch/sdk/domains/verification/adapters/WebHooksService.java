@@ -10,26 +10,23 @@ import com.sinch.sdk.domains.verification.models.webhooks.VerificationResponse;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.function.Supplier;
-import java.util.logging.Logger;
 
 public class WebHooksService implements com.sinch.sdk.domains.verification.WebHooksService {
-  private static final Logger LOGGER = Logger.getLogger(WebHooksService.class.getName());
 
-  private final Supplier<Map<String, AuthManager>> authManagerSupplier;
+  private final Map<String, AuthManager> authManagers;
 
-  public WebHooksService(Supplier<Map<String, AuthManager>> authManagerSupplier) {
-    this.authManagerSupplier = authManagerSupplier;
+  public WebHooksService(Map<String, AuthManager> authManagers) {
+    this.authManagers = authManagers;
   }
 
   public boolean checkAuthentication(
       String method, String path, Map<String, String> headers, String jsonPayload) {
 
     // convert header keys to use case-insensitive map keys
-    Map<String, String> ciHeaders = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-    ciHeaders.putAll(headers);
+    Map<String, String> caseInsensitiveHeaders = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    caseInsensitiveHeaders.putAll(headers);
 
-    String authorizationHeader = ciHeaders.get("Authorization");
+    String authorizationHeader = caseInsensitiveHeaders.get("Authorization");
 
     // no authorization required
     if (null == authorizationHeader) {
@@ -40,14 +37,21 @@ public class WebHooksService implements com.sinch.sdk.domains.verification.WebHo
     String authorizationKeyword = split.length > 0 ? split[0] : "";
     String authorizationHash = split.length > 1 ? split[1] : "";
 
+    String computedHash = computeHash(caseInsensitiveHeaders, authorizationKeyword, method, path, jsonPayload);
+
+    return computedHash.equals(authorizationHash);
+  }
+
+  private String computeHash(Map<String, String> caseInsensitiveHeaders, String authorizationKeyword,
+      String method, String path, String jsonPayload) {
     // getting content type header
-    String contentTypeHeader = ciHeaders.getOrDefault("content-type", "");
+    String contentTypeHeader = caseInsensitiveHeaders.getOrDefault("content-type", "");
 
     // getting x-timestamp header
-    String xTimeStampHeader = ciHeaders.get("x-timestamp");
+    String xTimeStampHeader = caseInsensitiveHeaders.get("x-timestamp");
 
     // getting manager related to Authorization header value
-    AuthManager authManager = authManagerSupplier.get().get(authorizationKeyword);
+    AuthManager authManager = authManagers.get(authorizationKeyword);
 
     // compute locally according to inputs
     Collection<Pair<String, String>> computedHeaders =
@@ -62,9 +66,7 @@ public class WebHooksService implements com.sinch.sdk.domains.verification.WebHo
             .map(Pair::getRight)
             .orElse("");
     String[] newSplit = computedAuthorization.split(" ");
-    String computedHash = newSplit.length > 1 ? newSplit[1] : "";
-
-    return computedHash.equals(authorizationHash);
+    return newSplit.length > 1 ? newSplit[1] : "";
   }
 
   @Override
