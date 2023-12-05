@@ -34,7 +34,7 @@ For more in depth version of the Sinch APIs, please refer to the official develo
 
 - JDK 8 or later
 - [Maven](https://maven.apache.org/)
-- [Maven Central](https://mvnrepository.com/artifact/com.sinch.sdk/sinch-java-sdk)
+- [Maven Repository for this SDK](https://central.sonatype.com/artifact/com.sinch.sdk/sinch-sdk-java)
 - [Sinch account](https://dashboard.sinch.com)
 
 ## Installation
