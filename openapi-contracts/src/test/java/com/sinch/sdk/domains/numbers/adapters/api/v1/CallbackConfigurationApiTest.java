@@ -30,8 +30,7 @@ class CallbackConfigurationApiTest extends BaseTest {
   HttpMapper mapper = new HttpMapper();
 
   @InjectMocks
-  CallbackConfigurationApi service =
-      new CallbackConfigurationApi(httpClient, serverConfiguration, null, mapper);
+  CallbacksApi service = new CallbacksApi(httpClient, serverConfiguration, null, mapper);
 
   CallbackConfigurationDto expectedDto =
       new CallbackConfigurationDto().projectId("The project ID").hmacSecret("The secret HMAC");

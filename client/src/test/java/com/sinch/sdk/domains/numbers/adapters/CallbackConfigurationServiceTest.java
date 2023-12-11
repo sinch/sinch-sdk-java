@@ -7,7 +7,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.domains.numbers.adapters.api.v1.CallbackConfigurationApi;
+import com.sinch.sdk.domains.numbers.adapters.api.v1.CallbacksApi;
 import com.sinch.sdk.domains.numbers.models.CallbackConfiguration;
 import com.sinch.sdk.domains.numbers.models.dto.v1.CallbackConfigurationDto;
 import com.sinch.sdk.domains.numbers.models.dto.v1.CallbackConfigurationUpdateDto;
@@ -25,7 +25,7 @@ class CallbackConfigurationServiceTest extends BaseTest {
   CallbackConfigurationDto callbackConfigurationDto;
 
   @Mock Configuration configuration;
-  @Mock CallbackConfigurationApi api;
+  @Mock CallbacksApi api;
   @InjectMocks CallbackConfigurationService service;
 
   @Test
