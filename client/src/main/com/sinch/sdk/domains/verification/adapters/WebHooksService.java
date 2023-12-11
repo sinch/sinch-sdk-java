@@ -11,10 +11,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Supplier;
-import java.util.logging.Logger;
 
 public class WebHooksService implements com.sinch.sdk.domains.verification.WebHooksService {
-  private static final Logger LOGGER = Logger.getLogger(WebHooksService.class.getName());
 
   private final Supplier<Map<String, AuthManager>> authManagerSupplier;
 
@@ -40,6 +38,13 @@ public class WebHooksService implements com.sinch.sdk.domains.verification.WebHo
     String authorizationKeyword = split.length > 0 ? split[0] : "";
     String authorizationHash = split.length > 1 ? split[1] : "";
 
+    String computedHash = computeHash(ciHeaders, authorizationKeyword, method, path, jsonPayload);
+
+    return computedHash.equals(authorizationHash);
+  }
+
+  private String computeHash(Map<String, String> ciHeaders, String authorizationKeyword,
+      String method, String path, String jsonPayload) {
     // getting content type header
     String contentTypeHeader = ciHeaders.getOrDefault("content-type", "");
 
@@ -62,9 +67,7 @@ public class WebHooksService implements com.sinch.sdk.domains.verification.WebHo
             .map(Pair::getRight)
             .orElse("");
     String[] newSplit = computedAuthorization.split(" ");
-    String computedHash = newSplit.length > 1 ? newSplit[1] : "";
-
-    return computedHash.equals(authorizationHash);
+    return newSplit.length > 1 ? newSplit[1] : "";
   }
 
   @Override
