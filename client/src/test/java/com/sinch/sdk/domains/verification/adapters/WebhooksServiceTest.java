@@ -42,11 +42,26 @@ public class WebhooksServiceTest extends BaseTest {
   }
 
   @Test
-  void checkApplicationAuthenticationFailure() throws ApiException {
+  void checkApplicationAuthenticationFailureOnKey() throws ApiException {
 
     Map<String, String> headers =
         Stream.of(
-                new AbstractMap.SimpleEntry<>("authorization", "application foo="),
+                new AbstractMap.SimpleEntry<>("authorization", "application badkey:xfKhO0XvlRNJraahUBEJzzi1f3Fn3pYO41/ZzwOHPaQ="),
+                new AbstractMap.SimpleEntry<>("content-type", "application/json; charset=utf-8"),
+                new AbstractMap.SimpleEntry<>("x-timestamp", "2023-12-01T15:01:20.0406449Z"))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+    boolean authenticationResult =
+        webHooksService.checkAuthentication("POST", "/VerificationRequestEvent", headers, request);
+
+    Assertions.assertThat(authenticationResult).isEqualTo(false);
+  }
+  @Test
+  void checkApplicationAuthenticationFailureOnHash() throws ApiException {
+
+    Map<String, String> headers =
+        Stream.of(
+                new AbstractMap.SimpleEntry<>("authorization", "application 789:fooHash="),
                 new AbstractMap.SimpleEntry<>("content-type", "application/json; charset=utf-8"),
                 new AbstractMap.SimpleEntry<>("x-timestamp", "2023-12-01T15:01:20.0406449Z"))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));

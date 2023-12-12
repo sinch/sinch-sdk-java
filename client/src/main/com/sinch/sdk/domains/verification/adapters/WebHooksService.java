@@ -15,8 +15,8 @@ public class WebHooksService implements com.sinch.sdk.domains.verification.WebHo
 
   private final Map<String, AuthManager> authManagers;
 
-  public WebHooksService(Map<String, AuthManager> authManagerSupplier) {
-    this.authManagers = authManagerSupplier;
+  public WebHooksService(Map<String, AuthManager> authManagers) {
+    this.authManagers = authManagers;
   }
 
   public boolean checkAuthentication(
@@ -37,6 +37,13 @@ public class WebHooksService implements com.sinch.sdk.domains.verification.WebHo
     String authorizationKeyword = split.length > 0 ? split[0] : "";
     String authorizationHash = split.length > 1 ? split[1] : "";
 
+    String computedHash = computeHash(ciHeaders, authorizationKeyword, method, path, jsonPayload);
+
+    return computedHash.equals(authorizationHash);
+  }
+
+  private String computeHash(Map<String, String> ciHeaders, String authorizationKeyword,
+      String method, String path, String jsonPayload) {
     // getting content type header
     String contentTypeHeader = ciHeaders.getOrDefault("content-type", "");
 
@@ -59,9 +66,7 @@ public class WebHooksService implements com.sinch.sdk.domains.verification.WebHo
             .map(Pair::getRight)
             .orElse("");
     String[] newSplit = computedAuthorization.split(" ");
-    String computedHash = newSplit.length > 1 ? newSplit[1] : "";
-
-    return computedHash.equals(authorizationHash);
+    return newSplit.length > 1 ? newSplit[1] : "";
   }
 
   @Override
