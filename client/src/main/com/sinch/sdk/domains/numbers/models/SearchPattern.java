@@ -19,10 +19,12 @@ public final class SearchPattern extends EnumDynamic<String, SearchPattern> {
    * <p>For example, to search for area code 206 in the US, you would enter, %2b1206
    */
   public static final SearchPattern START = new SearchPattern("START");
+
   /**
    * The number pattern entered is contained somewhere in the number, the location being undefined.
    */
   public static final SearchPattern CONTAINS = new SearchPattern("CONTAINS");
+
   /** The number ends with the number pattern entered. */
   public static final SearchPattern END = new SearchPattern("END");
 

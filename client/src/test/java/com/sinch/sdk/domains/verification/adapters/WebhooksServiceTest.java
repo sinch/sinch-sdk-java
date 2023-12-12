@@ -46,7 +46,9 @@ public class WebhooksServiceTest extends BaseTest {
 
     Map<String, String> headers =
         Stream.of(
-                new AbstractMap.SimpleEntry<>("authorization", "application badkey:xfKhO0XvlRNJraahUBEJzzi1f3Fn3pYO41/ZzwOHPaQ="),
+                new AbstractMap.SimpleEntry<>(
+                    "authorization",
+                    "application badkey:xfKhO0XvlRNJraahUBEJzzi1f3Fn3pYO41/ZzwOHPaQ="),
                 new AbstractMap.SimpleEntry<>("content-type", "application/json; charset=utf-8"),
                 new AbstractMap.SimpleEntry<>("x-timestamp", "2023-12-01T15:01:20.0406449Z"))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
@@ -56,6 +58,7 @@ public class WebhooksServiceTest extends BaseTest {
 
     Assertions.assertThat(authenticationResult).isEqualTo(false);
   }
+
   @Test
   void checkApplicationAuthenticationFailureOnHash() throws ApiException {
 
@@ -75,13 +78,14 @@ public class WebhooksServiceTest extends BaseTest {
   @BeforeEach
   public void setUp() throws IOException {
 
-    Configuration configuration = Configuration.builder()
-        .setProjectId("unused")
-        .setKeyId("unused")
-        .setKeySecret("unused")
-        .setApplicationKey("789")
-        .setApplicationSecret("9876543210")
-        .build();
+    Configuration configuration =
+        Configuration.builder()
+            .setProjectId("unused")
+            .setKeyId("unused")
+            .setKeySecret("unused")
+            .setApplicationKey("789")
+            .setApplicationSecret("9876543210")
+            .build();
 
     webHooksService = new SinchClient(configuration).verification().webhooks();
   }

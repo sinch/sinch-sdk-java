@@ -12,18 +12,28 @@ public class VerificationRequestEvent extends VerificationEvent {
   private final Collection<String> acceptLanguage;
 
   /**
-   *This event is a POST request to the specified verification callback URL and is triggered when a new verification request is made from the SDK client or the Verification Request API. This callback event is only triggered when a verification callback URL is specified in your dashboard.
+   * This event is a POST request to the specified verification callback URL and is triggered when a
+   * new verification request is made from the SDK client or the Verification Request API. This
+   * callback event is only triggered when a verification callback URL is specified in your
+   * dashboard.
+   *
    * @param id The ID of the verification request.
    * @param event The type of the event.
    * @param method The verification method
-   * @param identity Specifies the type of endpoint that will be verified and the particular endpoint. number is currently the only supported endpoint type
-   * @param reference The reference ID that was optionally passed together with the verification request
+   * @param identity Specifies the type of endpoint that will be verified and the particular
+   *     endpoint. number is currently the only supported endpoint type
+   * @param reference The reference ID that was optionally passed together with the verification
+   *     request
    * @param custom A custom string that can be provided during a verification request.
    * @param price The amount of money and currency of the verification request
-   * @param acceptLanguage Allows you to set or override if provided in the API request, the SMS verification content language. Only used with the SMS verification method. The content language specified in the API request or in the callback can be overridden by carrier provider specific templates, due to compliance and legal requirements, such as US shortcode requirements
-   * see <a href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post</a>
+   * @param acceptLanguage Allows you to set or override if provided in the API request, the SMS
+   *     verification content language. Only used with the SMS verification method. The content
+   *     language specified in the API request or in the callback can be overridden by carrier
+   *     provider specific templates, due to compliance and legal requirements, such as US shortcode
+   *     requirements see <a
+   *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post</a>
    * @since 1.0
-       */
+   */
   @JsonCreator
   VerificationRequestEvent(
       @JsonProperty("id") String id,

@@ -3,7 +3,6 @@ package com.sinch.sample.webhooks;
 import com.sinch.sample.Utils;
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.models.Configuration;
-import java.util.Properties;
 import java.util.logging.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,6 +20,6 @@ public class VerificationApplication {
   @Bean
   public SinchClient sinchClient() {
     Configuration configuration = Utils.loadConfiguration(LOGGER);
-   return new SinchClient(configuration);
+    return new SinchClient(configuration);
   }
 }

@@ -2,16 +2,13 @@ package com.sinch.sdk.domains.verification.models.webhooks;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * Verification response related to flash call
- */
+/** Verification response related to flash call */
 public class VerificationResponseFlashCall extends VerificationResponse {
 
   @JsonProperty("flashcall")
   private final FlashCallResponse flashCall;
 
   /**
-   *
    * @param action Determines whether the verification can be executed.
    * @param flashCall Flash call related information
    */
@@ -31,8 +28,10 @@ public class VerificationResponseFlashCall extends VerificationResponse {
   }
 
   /**
-   * Flash call related information for flach call verification callback
-   * See <a href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post!c=200&amp;path=1/flashCall&amp;t=response">callout response documentation</a>
+   * Flash call related information for flach call verification callback See <a
+   * href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post!c=200&amp;path=1/flashCall&amp;t=response">callout
+   * response documentation</a>
+   *
    * @since 1.0
    */
   public static class FlashCallResponse {
@@ -44,9 +43,15 @@ public class VerificationResponseFlashCall extends VerificationResponse {
     private final Integer dialTimeout;
 
     /**
-     *
-      * @param cli The phone number that will be displayed to the user when the flashcall is received on the user's phone. By default, the Sinch dashboard will randomly select the CLI that will be displayed during a flashcall from a pool of numbers. If you want to set your own CLI, you can specify it in the response to the Verification Request Event.
-     * @param dialTimeout The maximum time that a flashcall verification will be active and can be completed. If the phone number hasn't been verified successfully during this time, then the verification request will fail. By default, the Sinch dashboard will automatically optimize dial time out during a flashcall. If you want to set your own dial time out for the flashcall, you can specify it in the response to the Verification Request Event.
+     * @param cli The phone number that will be displayed to the user when the flashcall is received
+     *     on the user's phone. By default, the Sinch dashboard will randomly select the CLI that
+     *     will be displayed during a flashcall from a pool of numbers. If you want to set your own
+     *     CLI, you can specify it in the response to the Verification Request Event.
+     * @param dialTimeout The maximum time that a flashcall verification will be active and can be
+     *     completed. If the phone number hasn't been verified successfully during this time, then
+     *     the verification request will fail. By default, the Sinch dashboard will automatically
+     *     optimize dial time out during a flashcall. If you want to set your own dial time out for
+     *     the flashcall, you can specify it in the response to the Verification Request Event.
      */
     public FlashCallResponse(String cli, Integer dialTimeout) {
       this.cli = cli;

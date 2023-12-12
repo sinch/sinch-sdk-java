@@ -14,6 +14,7 @@ public final class NumberType extends EnumDynamic<String, NumberType> {
 
   /** Numbers that belong to a specific range. */
   public static final NumberType MOBILE = new NumberType("MOBILE");
+
   /** Numbers that are assigned to a specific geographic region. */
   public static final NumberType LOCAL = new NumberType("LOCAL");
 

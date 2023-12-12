@@ -20,14 +20,10 @@ public class StatusService implements com.sinch.sdk.domains.verification.StatusS
   private final QueryVerificationsApi api;
 
   public StatusService(
-      Configuration configuration,
-      HttpClient httpClient,
-     Map<String, AuthManager> authManagers) {
-    this.api =  new QueryVerificationsApi(
-        httpClient,
-        configuration.getVerificationServer(),
-        authManagers,
-        new HttpMapper());
+      Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManagers) {
+    this.api =
+        new QueryVerificationsApi(
+            httpClient, configuration.getVerificationServer(), authManagers, new HttpMapper());
   }
 
   protected QueryVerificationsApi getApi() {

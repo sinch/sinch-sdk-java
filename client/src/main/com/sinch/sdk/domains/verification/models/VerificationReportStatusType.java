@@ -16,17 +16,22 @@ public class VerificationReportStatusType
   /** The verification is ongoing */
   public static final VerificationReportStatusType PENDING =
       new VerificationReportStatusType("PENDING");
+
   /** The verification was successful */
   public static final VerificationReportStatusType SUCCESSFUL =
       new VerificationReportStatusType("SUCCESSFUL");
+
   /** The verification attempt was made, but the number wasn't verified */
   public static final VerificationReportStatusType FAIL = new VerificationReportStatusType("FAIL");
+
   /** The verification attempt was denied by Sinch or your backend */
   public static final VerificationReportStatusType DENIED =
       new VerificationReportStatusType("DENIED");
+
   /** The verification attempt was aborted by requesting a new verification */
   public static final VerificationReportStatusType ABORTED =
       new VerificationReportStatusType("ABORTED");
+
   /**
    * The verification couldn't be completed due to a network error or the number being unreachable
    */

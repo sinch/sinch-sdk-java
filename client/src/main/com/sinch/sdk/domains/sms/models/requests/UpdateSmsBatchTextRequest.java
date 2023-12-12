@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public class UpdateSmsBatchTextRequest extends UpdateBaseBatchRequest<String> {
   private final Parameters parameters;
+
   /**
    * @param toAdd List of phone numbers and group IDs to add to the batch.
    * @param toRemove List of phone numbers and group IDs to remove from the batch.

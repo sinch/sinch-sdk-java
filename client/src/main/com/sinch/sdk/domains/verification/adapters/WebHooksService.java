@@ -37,13 +37,18 @@ public class WebHooksService implements com.sinch.sdk.domains.verification.WebHo
     String authorizationKeyword = split.length > 0 ? split[0] : "";
     String authorizationHash = split.length > 1 ? split[1] : "";
 
-    String computedHash = computeHash(caseInsensitiveHeaders, authorizationKeyword, method, path, jsonPayload);
+    String computedHash =
+        computeHash(caseInsensitiveHeaders, authorizationKeyword, method, path, jsonPayload);
 
     return computedHash.equals(authorizationHash);
   }
 
-  private String computeHash(Map<String, String> caseInsensitiveHeaders, String authorizationKeyword,
-      String method, String path, String jsonPayload) {
+  private String computeHash(
+      Map<String, String> caseInsensitiveHeaders,
+      String authorizationKeyword,
+      String method,
+      String path,
+      String jsonPayload) {
     // getting content type header
     String contentTypeHeader = caseInsensitiveHeaders.getOrDefault("content-type", "");
 

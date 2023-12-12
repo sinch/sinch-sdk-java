@@ -15,7 +15,9 @@ public class AvailableRegionListAllRequestParameters {
 
   private final Collection<NumberType> types;
 
-  /** @param types Only return regions for which numbers are provided with the given types */
+  /**
+   * @param types Only return regions for which numbers are provided with the given types
+   */
   public AvailableRegionListAllRequestParameters(Collection<NumberType> types) {
     this.types = types;
   }

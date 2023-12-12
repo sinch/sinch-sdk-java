@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 public final class OrderBy extends EnumDynamic<String, OrderBy> {
   /** Ordering by phoneNumber */
   public static final OrderBy PHONE_NUMBER = new OrderBy("phoneNumber");
+
   /** Ordering by displayName */
   public static final OrderBy DISPLAY_NAME = new OrderBy("displayName");
 

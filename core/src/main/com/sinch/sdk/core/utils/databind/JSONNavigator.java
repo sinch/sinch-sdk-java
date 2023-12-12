@@ -12,6 +12,7 @@ public class JSONNavigator {
   /** A map of discriminators for all model classes. */
   private static final Map<Class<?>, ClassDiscriminatorMapping> modelDiscriminators =
       new HashMap<>();
+
   /** A map of oneOf/anyOf descendants for each model class. */
   private static final Map<Class<?>, Map<String, Class<?>>> modelDescendants = new HashMap<>();
 

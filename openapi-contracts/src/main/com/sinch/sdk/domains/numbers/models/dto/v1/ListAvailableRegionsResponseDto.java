@@ -43,7 +43,9 @@ public class ListAvailableRegionsResponseDto {
     return this;
   }
 
-  /** @return availableRegions */
+  /**
+   * @return availableRegions
+   */
   @JsonProperty(JSON_PROPERTY_AVAILABLE_REGIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<AvailableRegionDto> getAvailableRegions() {

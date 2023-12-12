@@ -205,12 +205,11 @@ public class VerificationsDtoConverter {
     switch (dto.getMethod()) {
       case FLASHCALL:
         {
-          VerificationReportFlashCall.Builder abuilder =
-              VerificationReportFlashCall.builder();
+          VerificationReportFlashCall.Builder abuilder = VerificationReportFlashCall.builder();
 
-              if (null != dto.getSource()) {
-                abuilder.setSource(VerificationSourceType.from(dto.getSource()));
-              }
+          if (null != dto.getSource()) {
+            abuilder.setSource(VerificationSourceType.from(dto.getSource()));
+          }
           if (null != dto.getPrice()
               && null != dto.getPrice().getVerificationPriceInformationDto()) {
             VerificationPriceInformationDto price =
@@ -226,8 +225,7 @@ public class VerificationsDtoConverter {
         }
       case SMS:
         {
-          VerificationReportSMS.Builder abuilder =
-              VerificationReportSMS.builder();
+          VerificationReportSMS.Builder abuilder = VerificationReportSMS.builder();
           if (null != dto.getSource()) {
             abuilder.setSource(VerificationSourceType.from(dto.getSource()));
           }

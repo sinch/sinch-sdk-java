@@ -80,5 +80,4 @@ public class Utils {
         .setApplicationSecret(verificationApiSecret)
         .build();
   }
-
 }

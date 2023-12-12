@@ -134,6 +134,7 @@ public class GroupsApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Delete a group This operation deletes the group with the provided group ID.
    *
@@ -206,6 +207,7 @@ public class GroupsApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Get phone numbers for a group This operation retrieves the members of the group with the
    * provided group ID.
@@ -281,6 +283,7 @@ public class GroupsApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * List Groups With the list operation you can list all groups that you have created. This
    * operation supports pagination. Groups are returned in reverse chronological order.
@@ -368,6 +371,7 @@ public class GroupsApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Replace a group The replace operation will replace all parameters, including members, of an
    * existing group with new values. Replacing a group targeted by a batch message scheduled in the
@@ -458,6 +462,7 @@ public class GroupsApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Retrieve a group This operation retrieves a specific group with the provided group ID.
    *
@@ -534,6 +539,7 @@ public class GroupsApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Update a group With the update group operation, you can add and remove members in an existing
    * group as well as rename the group. This method encompasses a few ways to update a group: 1. By

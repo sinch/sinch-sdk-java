@@ -7,11 +7,11 @@ import java.util.Map;
 
 /**
  * Webhooks service
- *  <p>
- * Callback events are used to authorize and manage your verification requests and return
+ *
+ * <p>Callback events are used to authorize and manage your verification requests and return
  * verification results.
- * <p>
- * see <a
+ *
+ * <p>see <a
  * href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post</a>
  *
  * @since 1.0
@@ -22,16 +22,17 @@ public interface WebHooksService {
    * The Sinch Platform can initiate callback requests to a URL you define (Callback URL) on request
    * and result events. All callback requests are signed using your Application key and secret pair
    * found on your dashboard. The signature is included in the Authorization header of the request
-   * <p>By using following function, you can ensure authentication according to received payload
-   * from your backend</p>
    *
-   * @param method      The HTTP method used ot handle the callback
-   * @param path        The path to you backend endpoint used for callback
-   * @param headers     Received headers
+   * <p>By using following function, you can ensure authentication according to received payload
+   * from your backend
+   *
+   * @param method The HTTP method used ot handle the callback
+   * @param path The path to you backend endpoint used for callback
+   * @param headers Received headers
    * @param jsonPayload Received payload
    * @return Is authentication is validated (true) or not (false)
-   *
-   * see <a href="https://developers.sinch.com/docs/verification/api-reference/authentication/callback-signed-request">https://developers.sinch.com/docs/verification/api-reference/authentication/callback-signed-request</a>
+   *     <p>see <a
+   *     href="https://developers.sinch.com/docs/verification/api-reference/authentication/callback-signed-request">https://developers.sinch.com/docs/verification/api-reference/authentication/callback-signed-request</a>
    * @since 1.0
    */
   boolean checkAuthentication(
@@ -43,8 +44,8 @@ public interface WebHooksService {
    *
    * @param jsonPayload Received payload to be deserialized
    * @return The verification event instance class
-   *
-   * see <a href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/</a>
+   *     <p>see <a
+   *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/</a>
    * @since 1.0
    */
   VerificationEvent unserializeVerificationEvent(String jsonPayload) throws ApiMappingException;
@@ -54,9 +55,9 @@ public interface WebHooksService {
    *
    * @param response The response to be serialized
    * @return The JSON string to be sent
-   *
-   * see <a href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/</a>
-   *  @since 1.0
+   *     <p>see <a
+   *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/</a>
+   * @since 1.0
    */
   String serializeVerificationResponse(VerificationResponse response) throws ApiMappingException;
 }
