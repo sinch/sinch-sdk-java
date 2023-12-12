@@ -10,8 +10,8 @@ import com.sinch.sdk.domains.verification.VerificationsService;
 import com.sinch.sdk.domains.verification.WebHooksService;
 import com.sinch.sdk.models.Configuration;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
-import java.util.function.Supplier;
 
 public class VerificationService implements com.sinch.sdk.domains.verification.VerificationService {
 
@@ -29,19 +29,21 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
   private Map<String, AuthManager> clientAuthManagers;
   private Map<String, AuthManager> webhooksAuthManagers;
 
-  private final Supplier<Map<String, AuthManager>> clientAuthManagersSupplier =
-      () -> clientAuthManagers;
-  private final Supplier<Map<String, AuthManager>> webhooksAuthManagersSupplier =
-      () -> webhooksAuthManagers;
-
   public VerificationService(Configuration configuration, HttpClient httpClient) {
+
+    // Currently, we are not supporting unified credentials: ensure application credentials are defined
+    Objects.requireNonNull(configuration.getApplicationKey(), "'applicationKey' cannot be null");
+    Objects.requireNonNull(configuration.getApplicationSecret(),
+        "'applicationSecret' cannot be null");
+
     this.configuration = configuration;
     this.httpClient = httpClient;
+    setApplicationCredentials(configuration.getApplicationKey(),configuration.getApplicationSecret() );
   }
 
-  public VerificationService setApplicationCredentials(String key, String secret) {
+  private void setApplicationCredentials(String key, String secret) {
 
-    AuthManager basicAuthManager = new BasicAuthManager(configuration);
+    AuthManager basicAuthManager = new BasicAuthManager(key, secret);
     AuthManager applicationAuthManager = new VerificationApplicationAuthManager(key, secret);
 
     boolean useApplicationAuth = true;
@@ -61,7 +63,6 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
     webhooksAuthManagers.put(BASIC_SECURITY_SCHEME_KEYWORD_VERIFICATION, basicAuthManager);
     webhooksAuthManagers.put(
         APPLICATION_SECURITY_SCHEME_KEYWORD_VERIFICATION, applicationAuthManager);
-    return this;
   }
 
   public VerificationsService verifications() {
@@ -69,7 +70,7 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
       checkCredentials();
       this.verifications =
           new com.sinch.sdk.domains.verification.adapters.VerificationsService(
-              configuration, httpClient, clientAuthManagersSupplier);
+              configuration, httpClient, clientAuthManagers);
     }
     return this.verifications;
   }
@@ -79,7 +80,7 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
       checkCredentials();
       this.status =
           new com.sinch.sdk.domains.verification.adapters.StatusService(
-              configuration, httpClient, clientAuthManagersSupplier);
+              configuration, httpClient, clientAuthManagers);
     }
     return this.status;
   }
@@ -89,7 +90,7 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
     if (null == this.webhooks) {
       this.webhooks =
           new com.sinch.sdk.domains.verification.adapters.WebHooksService(
-              webhooksAuthManagersSupplier);
+              webhooksAuthManagers);
     }
     return this.webhooks;
   }

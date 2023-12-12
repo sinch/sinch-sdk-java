@@ -2,7 +2,9 @@ package com.sinch.sdk.models;
 
 import com.sinch.sdk.core.models.ServerConfiguration;
 
-/** Configuration used by Sinch Client */
+/**
+ * Configuration used by Sinch Client
+ */
 public class Configuration {
 
   private final String keyId;
@@ -13,6 +15,9 @@ public class Configuration {
   private final SMSRegion smsRegion;
   private final String smsUrl;
   private final String verificationUrl;
+  private final String applicationKey;
+  private final String applicationSecret;
+
 
   private Configuration(
       String keyId,
@@ -22,7 +27,9 @@ public class Configuration {
       String numbersUrl,
       SMSRegion smsRegion,
       String smsUrl,
-      String verificationUrl) {
+      String verificationUrl,
+      String applicationKey,
+      String applicationSecret) {
     this.keyId = keyId;
     this.keySecret = keySecret;
     this.projectId = projectId;
@@ -31,6 +38,8 @@ public class Configuration {
     this.smsRegion = null == smsRegion ? SMSRegion.US : smsRegion;
     this.smsUrl = smsUrl;
     this.verificationUrl = verificationUrl;
+    this.applicationKey = applicationKey;
+    this.applicationSecret = applicationSecret;
   }
 
   @Override
@@ -146,7 +155,7 @@ public class Configuration {
    *
    * @return SMS region
    * @see <a
-   *     href="https://developers.sinch.com/docs/sms/api-reference/#base-url/">https://developers.sinch.com/docs/sms/api-reference/#base-url/</a>
+   * href="https://developers.sinch.com/docs/sms/api-reference/#base-url/">https://developers.sinch.com/docs/sms/api-reference/#base-url/</a>
    * @since 1.0
    */
   public SMSRegion getSmsRegion() {
@@ -172,6 +181,7 @@ public class Configuration {
   public ServerConfiguration getVerificationServer() {
     return new ServerConfiguration(getVerificationUrl());
   }
+
   /**
    * Verification URL
    *
@@ -182,6 +192,38 @@ public class Configuration {
     return verificationUrl;
   }
 
+  /**
+   * Application key to be used for Verification and Voice services
+   * <p>
+   * Use application secret in place of unified configuration for authentication (see Sinch
+   * dashboard for details) These credentials are related to Verification &amp; Voice Apps
+   *
+   * @return Application key
+   * @see <a
+   * href="https://developers.sinch.com/docs/verification/api-reference/authentication/">Sinch
+   * Documentation</a>
+   * @since 1.0
+   */
+  public String getApplicationKey() {
+    return applicationKey;
+  }
+
+  /**
+   * Application secret to be used for Verification and Voice services
+   * <p>
+   * Use application secret in place of unified configuration for authentication (see Sinch
+   * dashboard for details) These credentials are related to Verification &amp; Voice Apps
+   *
+   * @return Application key
+   * @see <a
+   * href="https://developers.sinch.com/docs/verification/api-reference/authentication/">Sinch
+   * Documentation</a>
+   * @since 1.0
+   */
+  public String getApplicationSecret() {
+    return applicationSecret;
+  }
+
   public static Builder builder() {
     return new Builder();
   }
@@ -190,7 +232,9 @@ public class Configuration {
     return new Builder(configuration);
   }
 
-  /** Configuration builder */
+  /**
+   * Configuration builder
+   */
   public static class Builder {
 
     private String keyId;
@@ -201,8 +245,11 @@ public class Configuration {
     private SMSRegion smsRegion;
     private String smsUrl;
     private String verificationUrl;
+    private String applicationKey;
+    private String applicationSecret;
 
-    protected Builder() {}
+    protected Builder() {
+    }
 
     /**
      * Initialize a builder with existing configuration
@@ -219,6 +266,8 @@ public class Configuration {
       this.smsRegion = configuration.getSmsRegion();
       this.smsUrl = configuration.getSmsUrl();
       this.verificationUrl = configuration.getVerificationUrl();
+      this.applicationKey = configuration.getApplicationKey();
+      this.applicationSecret = configuration.getApplicationSecret();
     }
 
     /**
@@ -229,7 +278,8 @@ public class Configuration {
      */
     public Configuration build() {
       return new Configuration(
-          keyId, keySecret, projectId, oauthUrl, numbersUrl, smsRegion, smsUrl, verificationUrl);
+          keyId, keySecret, projectId, oauthUrl, numbersUrl, smsRegion, smsUrl, verificationUrl,
+          applicationKey, applicationSecret);
     }
 
     /**
@@ -325,6 +375,30 @@ public class Configuration {
      */
     public Builder setVerificationUrl(String verificationUrl) {
       this.verificationUrl = verificationUrl;
+      return this;
+    }
+
+    /**
+     * Set Application secret
+     *
+     * @param applicationKey Application key to be used
+     * @return Current builder
+     * @since 1.0
+     */
+    public Builder setApplicationKey(String applicationKey) {
+      this.applicationKey = applicationKey;
+      return this;
+    }
+
+    /**
+     * Set Application secret
+     *
+     * @param applicationSecret Application secret to be used
+     * @return Current builder
+     * @since 1.0
+     */
+    public Builder setApplicationSecret(String applicationSecret) {
+      this.applicationSecret = applicationSecret;
       return this;
     }
   }

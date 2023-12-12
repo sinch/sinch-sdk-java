@@ -1,6 +1,5 @@
 package com.sinch.sample;
 
-import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.models.Configuration;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,8 +14,8 @@ public class Utils {
   private static final String SINCH_PROJECT_ID = "SINCH_PROJECT_ID";
 
   // can super sed unified Sinch credentials if defined
-  private static final String VERIFICATION_API_KEY = "VERIFICATION_API_KEY";
-  private static final String VERIFICATION_API_SECRET = "VERIFICATION_API_SECRET";
+  private static final String APPLICATION_API_KEY = "APPLICATION_API_KEY";
+  private static final String APPLICATION_API_SECRET = "APPLICATION_API_SECRET";
 
   public static Logger initializeLogger(String className) {
     try (InputStream logConfigInputStream =
@@ -64,27 +63,22 @@ public class Utils {
             ? System.getenv(SINCH_PROJECT_ID)
             : properties.getProperty(SINCH_PROJECT_ID);
 
+    String verificationApiKey =
+        null != System.getenv(APPLICATION_API_KEY)
+            ? System.getenv(APPLICATION_API_KEY)
+            : properties.getProperty(APPLICATION_API_KEY);
+    String verificationApiSecret =
+        null != System.getenv(APPLICATION_API_SECRET)
+            ? System.getenv(APPLICATION_API_SECRET)
+            : properties.getProperty(APPLICATION_API_SECRET);
+
     return Configuration.builder()
         .setKeyId(keyId)
         .setKeySecret(keySecret)
         .setProjectId(projectId)
+        .setApplicationKey(verificationApiKey)
+        .setApplicationSecret(verificationApiSecret)
         .build();
   }
 
-  public static void handleVerificationCredentials(SinchClient client, Properties props) {
-
-    String verificationApiKey =
-        null != System.getenv(VERIFICATION_API_KEY)
-            ? System.getenv(VERIFICATION_API_KEY)
-            : props.getProperty(VERIFICATION_API_KEY);
-    String verificationApiSecret =
-        null != System.getenv(VERIFICATION_API_SECRET)
-            ? System.getenv(VERIFICATION_API_SECRET)
-            : props.getProperty(VERIFICATION_API_SECRET);
-
-    // super-sed unified key/secret for verification API
-    if (null != verificationApiKey && null != verificationApiSecret) {
-      client.verification().setApplicationCredentials(verificationApiKey, verificationApiSecret);
-    }
-  }
 }

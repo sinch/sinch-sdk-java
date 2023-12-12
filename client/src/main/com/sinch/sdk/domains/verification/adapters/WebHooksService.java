@@ -10,14 +10,13 @@ import com.sinch.sdk.domains.verification.models.webhooks.VerificationResponse;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.function.Supplier;
 
 public class WebHooksService implements com.sinch.sdk.domains.verification.WebHooksService {
 
-  private final Supplier<Map<String, AuthManager>> authManagerSupplier;
+  private final Map<String, AuthManager> authManagers;
 
-  public WebHooksService(Supplier<Map<String, AuthManager>> authManagerSupplier) {
-    this.authManagerSupplier = authManagerSupplier;
+  public WebHooksService(Map<String, AuthManager> authManagers) {
+    this.authManagers = authManagers;
   }
 
   public boolean checkAuthentication(
@@ -52,7 +51,7 @@ public class WebHooksService implements com.sinch.sdk.domains.verification.WebHo
     String xTimeStampHeader = ciHeaders.get("x-timestamp");
 
     // getting manager related to Authorization header value
-    AuthManager authManager = authManagerSupplier.get().get(authorizationKeyword);
+    AuthManager authManager = authManagers.get(authorizationKeyword);
 
     // compute locally according to inputs
     Collection<Pair<String, String>> computedHeaders =
