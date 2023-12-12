@@ -18,6 +18,8 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.NumbersServ
   private ActiveNumberService active;
   private AvailableRegionService regions;
   private CallbackConfigurationService callback;
+  private WebHooksService webhooks;
+
   private final Map<String, AuthManager> authManagers;
 
   public NumbersService(Configuration configuration, HttpClient httpClient) {
@@ -56,5 +58,13 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.NumbersServ
       this.callback = new CallbackConfigurationService(configuration, httpClient, authManagers);
     }
     return this.callback;
+  }
+
+  public WebHooksService webhooks() {
+
+    if (null == this.webhooks) {
+      this.webhooks = new WebHooksService();
+    }
+    return this.webhooks;
   }
 }

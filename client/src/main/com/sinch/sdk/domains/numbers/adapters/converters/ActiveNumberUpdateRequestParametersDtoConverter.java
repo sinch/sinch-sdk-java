@@ -15,9 +15,7 @@ public class ActiveNumberUpdateRequestParametersDtoConverter {
         .getVoiceConfiguration()
         .ifPresent(
             value -> dto.setVoiceConfiguration(VoiceConfigurationDtoConverter.convert(value)));
-    // TODO: OAS file do not yet contains callback field
-    // parameters.getCallback()
-    //           .ifPresent(value -> dto.setCallback.convert(value)));
+    parameters.getCallback().ifPresent(dto::setCallbackUrl);
     return dto;
   }
 }

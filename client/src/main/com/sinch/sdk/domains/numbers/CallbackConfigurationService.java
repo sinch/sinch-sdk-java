@@ -8,7 +8,7 @@ import com.sinch.sdk.domains.numbers.models.requests.CallbackConfigurationUpdate
  * Callback Configuration Service
  *
  * @see <a
- *     href="https://developers.sinch.com/docs/numbers/api-reference/callbacks-numbers/tag/Callback-Configuration/">https://developers.sinch.com/docs/numbers/api-reference/callbacks-numbers/tag/Callback-Configuration/</a>
+ *     href="https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Callbacks/">https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Callbacks/</a>
  */
 public interface CallbackConfigurationService {
 
