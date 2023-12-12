@@ -6,6 +6,7 @@ public class VerificationReportFlashCall extends VerificationReport {
   private final Price terminationPrice;
   private final Integer billableDuration;
   private final VerificationSourceType source;
+
   /**
    * @param id The unique ID of the verification request
    * @param status The status of the verification request

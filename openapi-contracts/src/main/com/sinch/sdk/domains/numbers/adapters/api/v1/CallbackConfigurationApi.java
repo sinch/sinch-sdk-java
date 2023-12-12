@@ -120,6 +120,7 @@ public class CallbackConfigurationApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Update callback configuration Updates the callbacks configuration for the specified project
    *

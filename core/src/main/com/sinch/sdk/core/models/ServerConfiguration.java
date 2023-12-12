@@ -5,7 +5,9 @@ public class ServerConfiguration {
 
   public final String url;
 
-  /** @param url A URL to the target host. */
+  /**
+   * @param url A URL to the target host.
+   */
   public ServerConfiguration(String url) {
     this.url = url;
   }

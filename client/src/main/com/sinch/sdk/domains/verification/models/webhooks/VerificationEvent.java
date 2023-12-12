@@ -31,13 +31,16 @@ public class VerificationEvent {
 
   /**
    * Base class for verification event
+   *
    * @param id The ID of the verification request.
    * @param event The type of the event.
    * @param method The verification method
-   * @param identity Specifies the type of endpoint that will be verified and the particular endpoint. number is currently the only supported endpoint type
-   * @param reference The reference ID that was optionally passed together with the verification request
-   * @param custom A custom string that can be provided during a verification request.
-   * see <a href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/</a>
+   * @param identity Specifies the type of endpoint that will be verified and the particular
+   *     endpoint. number is currently the only supported endpoint type
+   * @param reference The reference ID that was optionally passed together with the verification
+   *     request
+   * @param custom A custom string that can be provided during a verification request. see <a
+   *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/</a>
    * @since 1.0
    */
   @JsonCreator

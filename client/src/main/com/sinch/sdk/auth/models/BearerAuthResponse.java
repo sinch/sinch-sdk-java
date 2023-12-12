@@ -19,7 +19,9 @@ public class BearerAuthResponse {
     return accessToken;
   }
 
-  /** @return Integer Token period expiration in seconds */
+  /**
+   * @return Integer Token period expiration in seconds
+   */
   public Integer getExpiresIn() {
     return expiresIn;
   }

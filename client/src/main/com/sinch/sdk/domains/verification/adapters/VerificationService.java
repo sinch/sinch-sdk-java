@@ -31,14 +31,16 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
 
   public VerificationService(Configuration configuration, HttpClient httpClient) {
 
-    // Currently, we are not supporting unified credentials: ensure application credentials are defined
+    // Currently, we are not supporting unified credentials: ensure application credentials are
+    // defined
     Objects.requireNonNull(configuration.getApplicationKey(), "'applicationKey' cannot be null");
-    Objects.requireNonNull(configuration.getApplicationSecret(),
-        "'applicationSecret' cannot be null");
+    Objects.requireNonNull(
+        configuration.getApplicationSecret(), "'applicationSecret' cannot be null");
 
     this.configuration = configuration;
     this.httpClient = httpClient;
-    setApplicationCredentials(configuration.getApplicationKey(),configuration.getApplicationSecret() );
+    setApplicationCredentials(
+        configuration.getApplicationKey(), configuration.getApplicationSecret());
   }
 
   private void setApplicationCredentials(String key, String secret) {
@@ -89,8 +91,7 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
     checkCredentials();
     if (null == this.webhooks) {
       this.webhooks =
-          new com.sinch.sdk.domains.verification.adapters.WebHooksService(
-              webhooksAuthManagers);
+          new com.sinch.sdk.domains.verification.adapters.WebHooksService(webhooksAuthManagers);
     }
     return this.webhooks;
   }

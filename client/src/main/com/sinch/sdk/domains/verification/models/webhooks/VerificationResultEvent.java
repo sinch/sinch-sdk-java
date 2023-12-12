@@ -14,18 +14,25 @@ public class VerificationResultEvent extends VerificationEvent {
   private final VerificationSourceType source;
 
   /**
-   * This event is a POST request to the specified verification callback URL and triggered when a verification has been completed and the result is known. It's used to report the verification result to the developer's backend application. This callback event is only triggered when the verification callback URL is specified in your dashboard.
+   * This event is a POST request to the specified verification callback URL and triggered when a
+   * verification has been completed and the result is known. It's used to report the verification
+   * result to the developer's backend application. This callback event is only triggered when the
+   * verification callback URL is specified in your dashboard.
+   *
    * @param id The ID of the verification request.
    * @param event The type of the event.
    * @param method The verification method
-   * @param identity Specifies the type of endpoint that will be verified and the particular endpoint. number is currently the only supported endpoint type
-   * @param reference The reference ID that was optionally passed together with the verification request
+   * @param identity Specifies the type of endpoint that will be verified and the particular
+   *     endpoint. number is currently the only supported endpoint type
+   * @param reference The reference ID that was optionally passed together with the verification
+   *     request
    * @param custom A custom string that can be provided during a verification request.
    * @param status The status of the verification request
    * @param reason Displays the reason why a verification has FAILED, was DENIED, or was ABORTED
-   * @param source Free text that the client is sending, used to show if the call/SMS was intercepted or not.
-   *     see <a href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationResultEvent/post">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationResultEvent/post</a>
-   *       @since 1.0
+   * @param source Free text that the client is sending, used to show if the call/SMS was
+   *     intercepted or not. see <a
+   *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationResultEvent/post">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationResultEvent/post</a>
+   * @since 1.0
    */
   @JsonCreator
   VerificationResultEvent(

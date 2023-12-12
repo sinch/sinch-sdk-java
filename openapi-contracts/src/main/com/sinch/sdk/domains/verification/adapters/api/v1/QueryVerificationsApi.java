@@ -117,6 +117,7 @@ public class QueryVerificationsApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Get verification by Identity Queries the verification result by sending the verification
    * Identity and its method. With this query you can get the result of a verification.
@@ -208,6 +209,7 @@ public class QueryVerificationsApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Get verification by Reference Queries the verification result by sending the verification
    * Reference. With this query you can get the result of a verification.

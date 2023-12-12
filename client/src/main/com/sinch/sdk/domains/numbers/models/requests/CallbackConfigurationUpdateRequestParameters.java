@@ -11,7 +11,9 @@ public class CallbackConfigurationUpdateRequestParameters {
   /** */
   private final String hmacSecret;
 
-  /** @param hmacSecret The HMAC secret to be updated for the specified project */
+  /**
+   * @param hmacSecret The HMAC secret to be updated for the specified project
+   */
   public CallbackConfigurationUpdateRequestParameters(String hmacSecret) {
     this.hmacSecret = hmacSecret;
   }

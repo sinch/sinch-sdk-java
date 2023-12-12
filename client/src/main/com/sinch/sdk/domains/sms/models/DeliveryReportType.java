@@ -14,19 +14,23 @@ public class DeliveryReportType extends EnumDynamic<String, DeliveryReportType> 
 
   /** No delivery report callback will be sent. */
   public static final DeliveryReportType NONE = new DeliveryReportType("none");
+
   /** A single delivery report callback will be sent. */
   public static final DeliveryReportType SUMMARY = new DeliveryReportType("summary");
+
   /**
    * A single delivery report callback will be sent which includes a list of recipients per delivery
    * status.
    */
   public static final DeliveryReportType FULL = new DeliveryReportType("full");
+
   /**
    * A delivery report callback will be sent for each status change of a message. This could result
    * in a lot of callbacks and should be used with caution for larger batches. These delivery
    * reports also include a timestamp of when the Delivery Report originated from the SMSC.
    */
   public static final DeliveryReportType PER_RECIPIENT = new DeliveryReportType("per_recipient");
+
   /**
    * A delivery report callback representing the final status of a message will be sent for each
    * recipient. This will send only one callback per recipient, compared to the multiple callbacks

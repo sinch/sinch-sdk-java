@@ -211,6 +211,7 @@ public class InboundsApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Retrieve inbound message This operation retrieves a specific inbound message with the provided
    * inbound ID.

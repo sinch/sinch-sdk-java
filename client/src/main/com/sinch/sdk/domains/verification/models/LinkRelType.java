@@ -14,6 +14,7 @@ public class LinkRelType extends EnumDynamic<String, LinkRelType> {
 
   /** Get the status of a Verification. */
   public static final LinkRelType STATUS = new LinkRelType("status");
+
   /** Report a verification */
   public static final LinkRelType REPORT = new LinkRelType("report");
 

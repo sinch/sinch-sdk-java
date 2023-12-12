@@ -270,13 +270,20 @@
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
                 <version>2.40.0</version>
+
                 <configuration>
+                    <json>
+                        <includes>
+                            <include>**/*.json</include>
+                        </includes>
+                    </json>
                     <java>
                         <includes>
                             <include>**/*.java</include>
                         </includes>
                       <excludes>
-                        <exclude>**/*.java</exclude>
+                          <!-- java 21 style not yet supported -->
+                        <exclude>sample-app/src/main/java/com/sinch/sample/webhooks/verification/VerificationController.java</exclude>
                       </excludes>
                         <googleJavaFormat>
                             <version>1.18.1</version>

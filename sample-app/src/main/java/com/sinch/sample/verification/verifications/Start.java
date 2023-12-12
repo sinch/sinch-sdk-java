@@ -12,8 +12,7 @@ public class Start extends BaseApplication {
 
   private static final Logger LOGGER = Logger.getLogger(Start.class.getName());
 
-  public Start() throws IOException {
-  }
+  public Start() throws IOException {}
 
   public static void main(String[] args) {
     try {

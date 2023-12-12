@@ -149,6 +149,7 @@ public class AvailableNumberApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * List available numbers Search for virtual numbers that are available for you to activate. You
    * can filter by any property on the available number resource.
@@ -326,6 +327,7 @@ public class AvailableNumberApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Rent any number that matches the criteria Search for and activate an available Sinch virtual
    * number all in one API call. Currently the rentAny operation works only for US 10DLC numbers
@@ -410,6 +412,7 @@ public class AvailableNumberApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Rent an available number Activate a virtual number to use with SMS products, Voice products, or
    * both. You&#39;ll use &#x60;smsConfiguration&#x60; to setup your number for SMS and

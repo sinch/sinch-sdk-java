@@ -142,6 +142,7 @@ public class ActiveNumberApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * List active numbers Lists all virtual numbers for a project.
    *
@@ -338,6 +339,7 @@ public class ActiveNumberApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Release number With this endpoint, you can cancel your subscription for a specific virtual
    * phone number.
@@ -425,6 +427,7 @@ public class ActiveNumberApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Update active number Update a virtual phone number. For example: you can configure SMS/Voice
    * services or set a friendly name. To update the name that displays, modify the
