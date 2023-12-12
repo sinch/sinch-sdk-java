@@ -1,6 +1,5 @@
 package com.sinch.sdk.domains.sms.models;
 
-import com.sinch.sdk.domains.sms.models.GroupAutoUpdateKeyword.Builder;
 import java.time.Instant;
 import java.util.Collection;
 
@@ -107,7 +106,6 @@ public class Group {
     GroupAutoUpdate autoUpdate;
 
     private Builder() {}
-    ;
 
     public Builder setId(String id) {
       this.id = id;

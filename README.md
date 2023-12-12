@@ -10,7 +10,7 @@ Java SDK
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://github.com/sinch/sinch-sdk-python/blob/main/LICENSE)
 
 
-[![Python 3.8](https://img.shields.io/badge/Java-8-blue.svg)](https://docs.oracle.com/javase/8)
+[![Java 8](https://img.shields.io/badge/Java-8-blue.svg)](https://docs.oracle.com/javase/8)
 
 
 </h1>
@@ -34,7 +34,6 @@ For more in depth version of the Sinch APIs, please refer to the official develo
 
 - JDK 8 or later
 - [Maven](https://maven.apache.org/)
-- [Maven Central](https://mvnrepository.com/artifact/com.sinch.sdk/sinch-java-sdk)
 - [Sinch account](https://dashboard.sinch.com)
 
 ## Installation

@@ -1,7 +1,5 @@
 package com.sinch.sdk.domains.numbers.models;
 
-import com.sinch.sdk.domains.numbers.models.ActiveNumber.Builder;
-
 /**
  * Callback configuration
  *

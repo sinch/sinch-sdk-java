@@ -1,6 +1,5 @@
 package com.sinch.sdk.domains.numbers.models.requests;
 
-import com.sinch.sdk.domains.numbers.models.ActiveNumber.Builder;
 import com.sinch.sdk.domains.numbers.models.Capability;
 import com.sinch.sdk.domains.numbers.models.NumberPattern;
 import com.sinch.sdk.domains.numbers.models.NumberType;

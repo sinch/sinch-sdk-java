@@ -15,6 +15,7 @@ package com.sinch.sdk.domains.sms.adapters.api.v1;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.exceptions.ApiExceptionBuilder;
+import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.http.HttpMethod;
@@ -22,7 +23,7 @@ import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
-import com.sinch.sdk.core.http.URLParameterUtils;
+import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiBatchListDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiDeliveryFeedbackDto;
@@ -44,12 +45,17 @@ public class BatchesApi {
   private static final Logger LOGGER = Logger.getLogger(BatchesApi.class.getName());
   private HttpClient httpClient;
   private ServerConfiguration serverConfiguration;
+  private Map<String, AuthManager> authManagersByOasSecuritySchemes;
   private HttpMapper mapper;
 
   public BatchesApi(
-      HttpClient httpClient, ServerConfiguration serverConfiguration, HttpMapper mapper) {
+      HttpClient httpClient,
+      ServerConfiguration serverConfiguration,
+      Map<String, AuthManager> authManagersByOasSecuritySchemes,
+      HttpMapper mapper) {
     this.httpClient = httpClient;
     this.serverConfiguration = serverConfiguration;
+    this.authManagersByOasSecuritySchemes = authManagersByOasSecuritySchemes;
     this.mapper = mapper;
   }
 
@@ -74,7 +80,9 @@ public class BatchesApi {
         "[cancelBatchMessage] " + "servicePlanId: " + servicePlanId + ", " + "batchId: " + batchId);
 
     HttpRequest httpRequest = cancelBatchMessageRequestBuilder(servicePlanId, batchId);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<SendSMS201ResponseDto> localVarReturnType =
@@ -107,10 +115,9 @@ public class BatchesApi {
         "/xms/v1/{service_plan_id}/batches/{batch_id}"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()))
+                URLPathUtils.encodePathSegment(servicePlanId.toString()))
             .replaceAll(
-                "\\{" + "batch_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(batchId.toString()));
+                "\\{" + "batch_id" + "\\}", URLPathUtils.encodePathSegment(batchId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -167,7 +174,9 @@ public class BatchesApi {
 
     HttpRequest httpRequest =
         deliveryFeedbackRequestBuilder(servicePlanId, batchId, apiDeliveryFeedbackDto);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       return;
@@ -205,10 +214,9 @@ public class BatchesApi {
         "/xms/v1/{service_plan_id}/batches/{batch_id}/delivery_feedback"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()))
+                URLPathUtils.encodePathSegment(servicePlanId.toString()))
             .replaceAll(
-                "\\{" + "batch_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(batchId.toString()));
+                "\\{" + "batch_id" + "\\}", URLPathUtils.encodePathSegment(batchId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -267,7 +275,9 @@ public class BatchesApi {
 
     HttpRequest httpRequest =
         dryRunRequestBuilder(servicePlanId, perRecipient, numberOfRecipients, sendSMSRequestDto);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<DryRun200ResponseDto> localVarReturnType =
@@ -299,7 +309,7 @@ public class BatchesApi {
         "/xms/v1/{service_plan_id}/batches/dry_run"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()));
+                URLPathUtils.encodePathSegment(servicePlanId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
     if (null != perRecipient) {
@@ -354,7 +364,9 @@ public class BatchesApi {
         "[getBatchMessage] " + "servicePlanId: " + servicePlanId + ", " + "batchId: " + batchId);
 
     HttpRequest httpRequest = getBatchMessageRequestBuilder(servicePlanId, batchId);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<SendSMS201ResponseDto> localVarReturnType =
@@ -387,10 +399,9 @@ public class BatchesApi {
         "/xms/v1/{service_plan_id}/batches/{batch_id}"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()))
+                URLPathUtils.encodePathSegment(servicePlanId.toString()))
             .replaceAll(
-                "\\{" + "batch_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(batchId.toString()));
+                "\\{" + "batch_id" + "\\}", URLPathUtils.encodePathSegment(batchId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -469,7 +480,9 @@ public class BatchesApi {
     HttpRequest httpRequest =
         listBatchesRequestBuilder(
             servicePlanId, page, pageSize, from, startDate, endDate, clientReference);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<ApiBatchListDto> localVarReturnType = new TypeReference<ApiBatchListDto>() {};
@@ -503,7 +516,7 @@ public class BatchesApi {
         "/xms/v1/{service_plan_id}/batches"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()));
+                URLPathUtils.encodePathSegment(servicePlanId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
     if (null != page) {
@@ -584,7 +597,9 @@ public class BatchesApi {
             + sendSMSRequestDto);
 
     HttpRequest httpRequest = replaceBatchRequestBuilder(servicePlanId, batchId, sendSMSRequestDto);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<SendSMS201ResponseDto> localVarReturnType =
@@ -618,10 +633,9 @@ public class BatchesApi {
         "/xms/v1/{service_plan_id}/batches/{batch_id}"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()))
+                URLPathUtils.encodePathSegment(servicePlanId.toString()))
             .replaceAll(
-                "\\{" + "batch_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(batchId.toString()));
+                "\\{" + "batch_id" + "\\}", URLPathUtils.encodePathSegment(batchId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -670,7 +684,9 @@ public class BatchesApi {
             + sendSMSRequestDto);
 
     HttpRequest httpRequest = sendSMSRequestBuilder(servicePlanId, sendSMSRequestDto);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<SendSMS201ResponseDto> localVarReturnType =
@@ -698,7 +714,7 @@ public class BatchesApi {
         "/xms/v1/{service_plan_id}/batches"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()));
+                URLPathUtils.encodePathSegment(servicePlanId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -751,7 +767,9 @@ public class BatchesApi {
 
     HttpRequest httpRequest =
         updateBatchMessageRequestBuilder(servicePlanId, batchId, updateBatchMessageRequestDto);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<SendSMS201ResponseDto> localVarReturnType =
@@ -787,10 +805,9 @@ public class BatchesApi {
         "/xms/v1/{service_plan_id}/batches/{batch_id}"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(servicePlanId.toString()))
+                URLPathUtils.encodePathSegment(servicePlanId.toString()))
             .replaceAll(
-                "\\{" + "batch_id" + "\\}",
-                URLParameterUtils.encodeParameterValue(batchId.toString()));
+                "\\{" + "batch_id" + "\\}", URLPathUtils.encodePathSegment(batchId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 

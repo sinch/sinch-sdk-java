@@ -7,13 +7,13 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 public abstract class BaseApplication {
-
   private static final String BATCH_ID_KEY = "BATCH_ID";
   private static final String PHONE_NUMBER_KEY = "PHONE_NUMBER";
 
   protected static final Logger LOGGER = Utils.initializeLogger(BaseApplication.class.getName());
 
   protected SinchClient client;
+
   protected String phoneNumber;
   protected String batchId;
 
@@ -34,6 +34,7 @@ public abstract class BaseApplication {
             : properties.getProperty(BATCH_ID_KEY);
 
     client = new SinchClient(configuration);
+
   }
 
   public abstract void run();

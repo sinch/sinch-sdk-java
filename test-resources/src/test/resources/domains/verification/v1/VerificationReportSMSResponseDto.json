@@ -1,0 +1,14 @@
+{
+  "id": "the id",
+  "method": "sms",
+  "status": "FAIL",
+  "reason": "Fraud",
+  "reference": "my reference",
+  "source": "intercepted",
+  "price": {
+    "verificationPrice": {
+      "currencyId": "verificationPrice currency id",
+      "amount": 3.141516
+    }
+  }
+}

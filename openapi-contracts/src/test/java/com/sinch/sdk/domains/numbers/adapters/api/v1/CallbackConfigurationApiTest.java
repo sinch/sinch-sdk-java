@@ -31,7 +31,7 @@ class CallbackConfigurationApiTest extends BaseTest {
 
   @InjectMocks
   CallbackConfigurationApi service =
-      new CallbackConfigurationApi(httpClient, serverConfiguration, mapper);
+      new CallbackConfigurationApi(httpClient, serverConfiguration, null, mapper);
 
   CallbackConfigurationDto expectedDto =
       new CallbackConfigurationDto().projectId("The project ID").hmacSecret("The secret HMAC");
@@ -39,7 +39,7 @@ class CallbackConfigurationApiTest extends BaseTest {
   @Test
   void get() {
 
-    when(httpClient.invokeAPI(eq(serverConfiguration), any()))
+    when(httpClient.invokeAPI(eq(serverConfiguration), any(), any()))
         .thenReturn(
             new HttpResponse(
                 200, "foo message", null, callbackConfiguration.getBytes(StandardCharsets.UTF_8)));
@@ -52,7 +52,7 @@ class CallbackConfigurationApiTest extends BaseTest {
   @Test
   void update() {
 
-    when(httpClient.invokeAPI(eq(serverConfiguration), any()))
+    when(httpClient.invokeAPI(eq(serverConfiguration), any(), any()))
         .thenReturn(
             new HttpResponse(
                 200, "foo message", null, callbackConfiguration.getBytes(StandardCharsets.UTF_8)));

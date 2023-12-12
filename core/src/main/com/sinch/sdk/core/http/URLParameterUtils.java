@@ -12,7 +12,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * See https://spec.openapis.org/oas/latest.html#parameter-object for encoding and rendering details
+ * See <a href="https://spec.openapis.org/oas/latest.html#parameter-object">OAS site</a> for
+ * encoding and rendering details
  */
 public class URLParameterUtils {
 

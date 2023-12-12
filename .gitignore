@@ -17,3 +17,5 @@ buildNumber.properties
 .classpath
 .idea
 *.iml
+
+sample-app/src/main/resources/config.properties

@@ -43,7 +43,8 @@ class AvailableNumberApiTest extends BaseTest {
   HttpMapper mapper = new HttpMapper();
 
   @InjectMocks
-  AvailableNumberApi service = new AvailableNumberApi(httpClient, serverConfiguration, mapper);
+  AvailableNumberApi service =
+      new AvailableNumberApi(httpClient, serverConfiguration, null, mapper);
 
   AvailableNumberDto expectedAvailableNumberDto =
       new AvailableNumberDto("+46650553763", "SE", 1, true)
@@ -92,7 +93,7 @@ class AvailableNumberApiTest extends BaseTest {
   @Test
   void listAll() {
 
-    when(httpClient.invokeAPI(any(), any()))
+    when(httpClient.invokeAPI(any(), any(), any()))
         .thenReturn(
             new HttpResponse(
                 200, "foo message", null, availableListResponse.getBytes(StandardCharsets.UTF_8)));
@@ -117,7 +118,7 @@ class AvailableNumberApiTest extends BaseTest {
   @Test
   void get() {
 
-    when(httpClient.invokeAPI(any(), any()))
+    when(httpClient.invokeAPI(any(), any(), any()))
         .thenReturn(
             new HttpResponse(
                 200, "foo message", null, availableGetResponse.getBytes(StandardCharsets.UTF_8)));
@@ -132,7 +133,7 @@ class AvailableNumberApiTest extends BaseTest {
   @Test
   void rentAny() {
 
-    when(httpClient.invokeAPI(any(), any()))
+    when(httpClient.invokeAPI(any(), any(), any()))
         .thenReturn(
             new HttpResponse(
                 200, "foo message", null, rentResponse.getBytes(StandardCharsets.UTF_8)));
@@ -159,7 +160,7 @@ class AvailableNumberApiTest extends BaseTest {
   @Test
   void rent() {
 
-    when(httpClient.invokeAPI(any(), any()))
+    when(httpClient.invokeAPI(any(), any(), any()))
         .thenReturn(
             new HttpResponse(
                 200, "foo message", null, rentResponse.getBytes(StandardCharsets.UTF_8)));
@@ -173,7 +174,7 @@ class AvailableNumberApiTest extends BaseTest {
   @Test
   void rentWithError() {
 
-    when(httpClient.invokeAPI(any(), any()))
+    when(httpClient.invokeAPI(any(), any(), any()))
         .thenReturn(
             new HttpResponse(
                 500, "foo message", null, errorTrialAccount.getBytes(StandardCharsets.UTF_8)));

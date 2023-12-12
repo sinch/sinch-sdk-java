@@ -13,6 +13,10 @@ public class Utils {
   private static final String SINCH_KEY_SECRET = "SINCH_KEY_SECRET";
   private static final String SINCH_PROJECT_ID = "SINCH_PROJECT_ID";
 
+  // can super sed unified Sinch credentials if defined
+  private static final String APPLICATION_API_KEY = "APPLICATION_API_KEY";
+  private static final String APPLICATION_API_SECRET = "APPLICATION_API_SECRET";
+
   public static Logger initializeLogger(String className) {
     try (InputStream logConfigInputStream =
         Utils.class.getClassLoader().getResourceAsStream("logging.properties")) {
@@ -59,10 +63,22 @@ public class Utils {
             ? System.getenv(SINCH_PROJECT_ID)
             : properties.getProperty(SINCH_PROJECT_ID);
 
+    String verificationApiKey =
+        null != System.getenv(APPLICATION_API_KEY)
+            ? System.getenv(APPLICATION_API_KEY)
+            : properties.getProperty(APPLICATION_API_KEY);
+    String verificationApiSecret =
+        null != System.getenv(APPLICATION_API_SECRET)
+            ? System.getenv(APPLICATION_API_SECRET)
+            : properties.getProperty(APPLICATION_API_SECRET);
+
     return Configuration.builder()
         .setKeyId(keyId)
         .setKeySecret(keySecret)
         .setProjectId(projectId)
+        .setApplicationKey(verificationApiKey)
+        .setApplicationSecret(verificationApiSecret)
         .build();
   }
+
 }

@@ -15,6 +15,7 @@ package com.sinch.sdk.domains.numbers.adapters.api.v1;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.exceptions.ApiExceptionBuilder;
+import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.http.HttpMethod;
@@ -22,7 +23,7 @@ import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
-import com.sinch.sdk.core.http.URLParameterUtils;
+import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.numbers.models.dto.v1.ActiveNumberDto;
 import com.sinch.sdk.domains.numbers.models.dto.v1.ActiveNumberRequestDto;
@@ -41,12 +42,17 @@ public class ActiveNumberApi {
   private static final Logger LOGGER = Logger.getLogger(ActiveNumberApi.class.getName());
   private HttpClient httpClient;
   private ServerConfiguration serverConfiguration;
+  private Map<String, AuthManager> authManagersByOasSecuritySchemes;
   private HttpMapper mapper;
 
   public ActiveNumberApi(
-      HttpClient httpClient, ServerConfiguration serverConfiguration, HttpMapper mapper) {
+      HttpClient httpClient,
+      ServerConfiguration serverConfiguration,
+      Map<String, AuthManager> authManagersByOasSecuritySchemes,
+      HttpMapper mapper) {
     this.httpClient = httpClient;
     this.serverConfiguration = serverConfiguration;
+    this.authManagersByOasSecuritySchemes = authManagersByOasSecuritySchemes;
     this.mapper = mapper;
   }
 
@@ -75,7 +81,9 @@ public class ActiveNumberApi {
             + phoneNumber);
 
     HttpRequest httpRequest = numberServiceGetActiveNumberRequestBuilder(projectId, phoneNumber);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<ActiveNumberDto> localVarReturnType = new TypeReference<ActiveNumberDto>() {};
@@ -108,11 +116,10 @@ public class ActiveNumberApi {
     String localVarPath =
         "/v1/projects/{projectId}/activeNumbers/{phoneNumber}"
             .replaceAll(
-                "\\{" + "projectId" + "\\}",
-                URLParameterUtils.encodeParameterValue(projectId.toString()))
+                "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()))
             .replaceAll(
                 "\\{" + "phoneNumber" + "\\}",
-                URLParameterUtils.encodeParameterValue(phoneNumber.toString()));
+                URLPathUtils.encodePathSegment(phoneNumber.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -212,7 +219,9 @@ public class ActiveNumberApi {
             pageSize,
             pageToken,
             orderBy);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<ActiveNumbersResponseDto> localVarReturnType =
@@ -261,8 +270,7 @@ public class ActiveNumberApi {
     String localVarPath =
         "/v1/projects/{projectId}/activeNumbers"
             .replaceAll(
-                "\\{" + "projectId" + "\\}",
-                URLParameterUtils.encodeParameterValue(projectId.toString()));
+                "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
     if (null != regionCode) {
@@ -356,7 +364,9 @@ public class ActiveNumberApi {
             + phoneNumber);
 
     HttpRequest httpRequest = numberServiceReleaseNumberRequestBuilder(projectId, phoneNumber);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<ActiveNumberDto> localVarReturnType = new TypeReference<ActiveNumberDto>() {};
@@ -389,11 +399,10 @@ public class ActiveNumberApi {
     String localVarPath =
         "/v1/projects/{projectId}/activeNumbers/{phoneNumber}:release"
             .replaceAll(
-                "\\{" + "projectId" + "\\}",
-                URLParameterUtils.encodeParameterValue(projectId.toString()))
+                "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()))
             .replaceAll(
                 "\\{" + "phoneNumber" + "\\}",
-                URLParameterUtils.encodeParameterValue(phoneNumber.toString()));
+                URLPathUtils.encodePathSegment(phoneNumber.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -451,7 +460,9 @@ public class ActiveNumberApi {
     HttpRequest httpRequest =
         numberServiceUpdateActiveNumberRequestBuilder(
             projectId, phoneNumber, activeNumberRequestDto);
-    HttpResponse response = httpClient.invokeAPI(this.serverConfiguration, httpRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
       TypeReference<ActiveNumberDto> localVarReturnType = new TypeReference<ActiveNumberDto>() {};
@@ -487,11 +498,10 @@ public class ActiveNumberApi {
     String localVarPath =
         "/v1/projects/{projectId}/activeNumbers/{phoneNumber}"
             .replaceAll(
-                "\\{" + "projectId" + "\\}",
-                URLParameterUtils.encodeParameterValue(projectId.toString()))
+                "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()))
             .replaceAll(
                 "\\{" + "phoneNumber" + "\\}",
-                URLParameterUtils.encodeParameterValue(phoneNumber.toString()));
+                URLPathUtils.encodePathSegment(phoneNumber.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 

@@ -34,7 +34,7 @@ public interface NumbersService {
   ActiveNumberService active();
 
   /**
-   * Callbacks Configuraiton Service instance
+   * Callbacks Configuration Service instance
    *
    * @return service instance for project
    * @since 1.0

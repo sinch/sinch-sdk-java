@@ -105,6 +105,7 @@
                         </execution>
                     </executions>
                     <configuration>
+                        <doctitle>${project.name}</doctitle>
                         <show>public</show>
                         <sourcepath>core/src/main;
                             client/src/main;
@@ -129,6 +130,10 @@
                         </sourceFileExcludes>
                         <groups>
                             <group>
+                                <title>Sinch Client</title>
+                                <packages>com.sinch.sdk*</packages>
+                            </group>
+                            <group>
                                 <title>Core package</title>
                                 <packages>com.sinch.sdk.core*</packages>
                             </group>
@@ -141,8 +146,8 @@
                                 <packages>com.sinch.sdk.domains.sms*</packages>
                             </group>
                             <group>
-                                <title>Sinch Client</title>
-                                <packages>com.sinch.sdk*</packages>
+                                <title>Verification</title>
+                                <packages>com.sinch.sdk.domains.verification*</packages>
                             </group>
                         </groups>
                     </configuration>
@@ -270,7 +275,9 @@
                         <includes>
                             <include>**/*.java</include>
                         </includes>
-
+                      <excludes>
+                        <exclude>**/*.java</exclude>
+                      </excludes>
                         <googleJavaFormat>
                             <version>1.8</version>
                             <style>GOOGLE</style>
