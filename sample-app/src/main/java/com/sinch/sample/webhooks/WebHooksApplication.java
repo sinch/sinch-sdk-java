@@ -9,12 +9,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class VerificationApplication {
-  private static final Logger LOGGER = Logger.getLogger(VerificationApplication.class.getName());
+public class WebHooksApplication {
+  private static final Logger LOGGER = Logger.getLogger(WebHooksApplication.class.getName());
 
   public static void main(String[] args) {
 
-    SpringApplication.run(VerificationApplication.class, args);
+    SpringApplication.run(WebHooksApplication.class, args);
   }
 
   @Bean
