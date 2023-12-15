@@ -23,28 +23,37 @@ public class DeliveryReportStatus extends EnumDynamic<String, DeliveryReportStat
    * account.
    */
   public static final DeliveryReportStatus QUEUED = new DeliveryReportStatus("Queued");
+
   /** Message has been dispatched and accepted for delivery by the SMSC. */
   public static final DeliveryReportStatus DISPATCHED = new DeliveryReportStatus("Dispatched");
+
   /** Message was aborted before reaching the SMSC. */
   public static final DeliveryReportStatus ABORTED = new DeliveryReportStatus("Aborted");
+
   /** Message was cancelled by user before reaching SMSC. */
   public static final DeliveryReportStatus CANCELLED = new DeliveryReportStatus("Cancelled");
+
   /** Message was rejected by the SMSC. */
   public static final DeliveryReportStatus REJECTED = new DeliveryReportStatus("Rejected");
+
   /**
    * Message has been deleted. Message was deleted by a remote SMSC. This may happen if the
    * destination is an invalid MSISDN or opted out subscriber.
    */
   public static final DeliveryReportStatus DELETED = new DeliveryReportStatus("Deleted");
+
   /** Message has been delivered. */
   public static final DeliveryReportStatus DELIVERED = new DeliveryReportStatus("Delivered");
+
   /** Message failed to be delivered. */
   public static final DeliveryReportStatus FAILED = new DeliveryReportStatus("Failed");
+
   /**
    * Message expired before delivery to the SMSC. This may happen if the expiry time for the message
    * was very short.
    */
   public static final DeliveryReportStatus EXPIRED = new DeliveryReportStatus("Expired");
+
   /**
    * Message was delivered to the SMSC but no Delivery Receipt has been received or a Delivery
    * Receipt that couldn't be interpreted was received.

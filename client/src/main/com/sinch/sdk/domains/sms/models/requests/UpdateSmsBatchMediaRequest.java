@@ -10,6 +10,7 @@ import java.util.Optional;
 public class UpdateSmsBatchMediaRequest extends UpdateBaseBatchRequest<MediaBody> {
   private final Parameters parameters;
   private final Boolean strictValidation;
+
   /**
    * @param toAdd List of phone numbers and group IDs to add to the batch.
    * @param body The message content

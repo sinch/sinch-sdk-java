@@ -7,8 +7,10 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 /**
- * Determines whether the verification can be executed.
- * See <a href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post!c=200&amp;path=0/action&amp;t=response">action type response documentation</a>
+ * Determines whether the verification can be executed. See <a
+ * href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post!c=200&amp;path=0/action&amp;t=response">action
+ * type response documentation</a>
+ *
  * @since 1.0
  */
 public class VerificationResponseActionType

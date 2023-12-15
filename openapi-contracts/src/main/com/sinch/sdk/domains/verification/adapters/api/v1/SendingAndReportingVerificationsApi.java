@@ -140,6 +140,7 @@ public class SendingAndReportingVerificationsApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Verify verification code by Identity Used to report OTP code.
    *
@@ -239,6 +240,7 @@ public class SendingAndReportingVerificationsApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Start verification This method is used by the mobile and web Verification SDKs to start a
    * verification. It can also be used to request a verification from your backend, by making an

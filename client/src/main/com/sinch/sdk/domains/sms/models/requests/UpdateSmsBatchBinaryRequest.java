@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public class UpdateSmsBatchBinaryRequest extends UpdateBaseBatchRequest<String> {
   private final String udh;
+
   /**
    * @param toAdd List of phone numbers and group IDs to add to the batch.List of Phone numbers and
    *     group IDs that will receive the batch

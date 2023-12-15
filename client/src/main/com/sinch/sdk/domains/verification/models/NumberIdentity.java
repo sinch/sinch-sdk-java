@@ -9,7 +9,9 @@ public class NumberIdentity extends Identity {
     return endpoint;
   }
 
-  /** @param endpoint An E.164-compatible phone number. */
+  /**
+   * @param endpoint An E.164-compatible phone number.
+   */
   public NumberIdentity(String endpoint) {
     super("number");
     this.endpoint = endpoint;

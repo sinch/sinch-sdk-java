@@ -22,14 +22,10 @@ public class VerificationsService
   private final SendingAndReportingVerificationsApi api;
 
   public VerificationsService(
-      Configuration configuration,
-      HttpClient httpClient,
-      Map<String, AuthManager> authManagers) {
-    this.api = new SendingAndReportingVerificationsApi(
-        httpClient,
-        configuration.getVerificationServer(),
-        authManagers,
-        new HttpMapper());
+      Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManagers) {
+    this.api =
+        new SendingAndReportingVerificationsApi(
+            httpClient, configuration.getVerificationServer(), authManagers, new HttpMapper());
   }
 
   protected SendingAndReportingVerificationsApi getApi() {

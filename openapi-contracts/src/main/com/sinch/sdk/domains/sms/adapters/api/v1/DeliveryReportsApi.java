@@ -172,6 +172,7 @@ public class DeliveryReportsApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Retrieve a recipient delivery report A recipient delivery report contains the message status
    * for a single recipient phone number.
@@ -272,6 +273,7 @@ public class DeliveryReportsApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Retrieve a list of delivery reports Get a list of finished delivery reports. This operation
    * supports pagination.

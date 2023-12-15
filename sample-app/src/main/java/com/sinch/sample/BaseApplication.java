@@ -34,7 +34,6 @@ public abstract class BaseApplication {
             : properties.getProperty(BATCH_ID_KEY);
 
     client = new SinchClient(configuration);
-
   }
 
   public abstract void run();

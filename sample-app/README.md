@@ -116,8 +116,8 @@ A full application chaining calls to Numbers service to onboard onto Java SDK an
 |         | - GetByReference   | [com.sinch.sample.verification.status.GetByReference](src/main/java/com/sinch/sample/verification/status/GetByReference.java)                   |                     |
 
 ### Dedicated webhooks feature samples
-#### How to run webhooks samples
-Webhooks samples are based onto dedicated SpringBoot applications.
+#### How to run webhooks sample application
+Webhooks samples are based onto a dedicated SpringBoot applications.
 By using service like `ngrok` and running locally the SpringBoot application you'll be able to use the local springboot application to response to callbacks defined within your dashboard
 1. Install `ngrok` and launch it (see [ngrok site](https://ngrok.com/docs))
 2. Run the application: `mvn -f pom-webhooks.xml clean package spring-boot:run`   
@@ -130,10 +130,12 @@ By using service like `ngrok` and running locally the SpringBoot application you
 #### Verification WebHooks
 Require to set following parameters (by environment or config file):
 - `APPLICATION_API_KEY`
--` APPLICATION_API_SECRET`
+- `APPLICATION_API_SECRET`
 
-Check your dashboard to retrieve Application Credentials values
+Check your dashboard to retrieve Application credentials values
 
-| API          | Sample                 | Class                                                                                                                     | Notes |
-|--------------|------------------------|---------------------------------------------------------------------------------------------------------------------------|-------|
-| Verification | Springboot application | [com.sinch.sample.webhooks.VerificationApplication](src/main/java/com/sinch/sample/webhooks/VerificationApplication.java) |       |
+| API          | Package                                                                                        | Notes |
+|--------------|------------------------------------------------------------------------------------------------|-------|
+| Numbers      | [com.sinch.sample.webhooks.numbers](src/main/java/com/sinch/sample/webhooks/numbers)           |       |
+| Verification | [com.sinch.sample.webhooks.verification](src/main/java/com/sinch/sample/webhooks/verification) |       |
+

@@ -2,16 +2,13 @@ package com.sinch.sdk.domains.verification.models.webhooks;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * Verification response related to call out
- */
+/** Verification response related to call out */
 public class VerificationResponseCallout extends VerificationResponse {
 
   @JsonProperty("callout")
   private final CalloutResponse callout;
 
   /**
-   *
    * @param action Determines whether the verification can be executed.
    * @param callout call out related information
    */
@@ -30,8 +27,10 @@ public class VerificationResponseCallout extends VerificationResponse {
   }
 
   /**
-   * Call out related information for call out verification callback
-   * See <a href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post!c=200&amp;path=2/callout&amp;t=response">callout response documentation</a>
+   * Call out related information for call out verification callback See <a
+   * href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post!c=200&amp;path=2/callout&amp;t=response">callout
+   * response documentation</a>
+   *
    * @since 1.0
    */
   public static class CalloutResponse {
@@ -43,8 +42,9 @@ public class VerificationResponseCallout extends VerificationResponse {
     private final SpeechResponse speech;
 
     /**
-     *
-     * @param code The Phone Call PIN that should be entered by the user. Sinch servers automatically generate PIN codes for Phone Call verification. If you want to set your own code, you can specify it in the response to the Verification Request Event.
+     * @param code The Phone Call PIN that should be entered by the user. Sinch servers
+     *     automatically generate PIN codes for Phone Call verification. If you want to set your own
+     *     code, you can specify it in the response to the Verification Request Event.
      * @param speech An object defining various properties for the text-to-speech message.
      */
     public CalloutResponse(Integer code, SpeechResponse speech) {
@@ -67,8 +67,10 @@ public class VerificationResponseCallout extends VerificationResponse {
   }
 
   /**
-   * Speech related information for SMS verification callback
-   * See <a href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post!c=200&amp;path=2/callout&amp;t=response">speech response documentation</a>
+   * Speech related information for SMS verification callback See <a
+   * href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post!c=200&amp;path=2/callout&amp;t=response">speech
+   * response documentation</a>
+   *
    * @since 1.0
    */
   public static class SpeechResponse {
@@ -77,8 +79,8 @@ public class VerificationResponseCallout extends VerificationResponse {
     private final String locale;
 
     /**
-     *
-     * @param locale Indicates the language that should be used for the text-to-speech message. Currently, only en-US is supported.
+     * @param locale Indicates the language that should be used for the text-to-speech message.
+     *     Currently, only en-US is supported.
      */
     public SpeechResponse(String locale) {
       this.locale = locale;

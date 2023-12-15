@@ -13,6 +13,7 @@ public class SendSmsBatchBinaryRequest extends BaseBatch<String> {
   private final Integer fromTon;
   private final Integer fromNpi;
   private final String udh;
+
   /**
    * @param to List of Phone numbers and group IDs that will receive the batch
    * @param from Sender number. Must be valid phone number, short code or alphanumeric. Required if

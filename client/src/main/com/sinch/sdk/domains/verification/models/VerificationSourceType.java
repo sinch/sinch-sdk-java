@@ -12,10 +12,10 @@ import java.util.stream.Stream;
  */
 public class VerificationSourceType extends EnumDynamic<String, VerificationSourceType> {
 
-  public static final VerificationSourceType INTERCEPTED = new VerificationSourceType("intercepted");
+  public static final VerificationSourceType INTERCEPTED =
+      new VerificationSourceType("intercepted");
 
   public static final VerificationSourceType MANUAL = new VerificationSourceType("manual");
-
 
   /** */
   private static final EnumSupportDynamic<String, VerificationSourceType> ENUM_SUPPORT =

@@ -14,6 +14,7 @@ public class SendSmsBatchTextRequest extends BaseBatch<String> {
   private final Integer maxNumberOfMessageParts;
   private final Integer fromTon;
   private final Integer fromNpi;
+
   /**
    * @param to List of Phone numbers and group IDs that will receive the batch
    * @param from Sender number. Must be valid phone number, short code or alphanumeric. Required if

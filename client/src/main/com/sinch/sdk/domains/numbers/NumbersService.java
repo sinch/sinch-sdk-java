@@ -40,4 +40,12 @@ public interface NumbersService {
    * @since 1.0
    */
   CallbackConfigurationService callback();
+
+  /**
+   * Webhooks helpers instance
+   *
+   * @return instance service related to webhooks helpers
+   * @since 1.0
+   */
+  WebHooksService webhooks();
 }

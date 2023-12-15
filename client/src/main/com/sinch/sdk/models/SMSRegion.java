@@ -21,10 +21,13 @@ public class SMSRegion extends EnumDynamic<String, SMSRegion> {
 
   /** European Union */
   public static final SMSRegion EU = new SMSRegion("eu");
+
   /** Australia */
   public static final SMSRegion AU = new SMSRegion("au");
+
   /** Brazil */
   public static final SMSRegion BR = new SMSRegion("br");
+
   /** Canada */
   public static final SMSRegion CA = new SMSRegion("ca");
 

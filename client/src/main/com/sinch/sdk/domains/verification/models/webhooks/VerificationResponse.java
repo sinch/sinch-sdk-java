@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Base class for verification callback response
+ *
  * @since 1.0
  */
 public class VerificationResponse {
@@ -12,7 +13,6 @@ public class VerificationResponse {
   private final VerificationResponseActionType action;
 
   /**
-   *
    * @param action Determines whether the verification can be executed
    */
   VerificationResponse(VerificationResponseActionType action) {

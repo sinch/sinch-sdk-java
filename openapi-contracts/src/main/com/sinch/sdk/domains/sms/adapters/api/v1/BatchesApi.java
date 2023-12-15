@@ -140,6 +140,7 @@ public class BatchesApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Send delivery feedback for a message Send feedback if your system can confirm successful
    * message delivery. Feedback can only be provided if &#x60;feedback_enabled&#x60; was set when
@@ -239,6 +240,7 @@ public class BatchesApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Dry run This operation will perform a dry run of a batch which calculates the bodies and number
    * of parts for all messages in the batch without actually sending any messages.
@@ -348,6 +350,7 @@ public class BatchesApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Get a batch message This operation returns a specific batch that matches the provided batch ID.
    *
@@ -424,6 +427,7 @@ public class BatchesApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * List Batches With the list operation you can list batch messages created in the last 14 days
    * that you have created. This operation supports pagination.
@@ -570,6 +574,7 @@ public class BatchesApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Replace a batch This operation will replace all the parameters of a batch with the provided
    * values. It is the same as cancelling a batch and sending a new one instead.
@@ -658,6 +663,7 @@ public class BatchesApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Send Send a message or a batch of messages. Depending on the length of the body, one message
    * might be split into multiple parts and charged accordingly. Any groups targeted in a scheduled
@@ -737,6 +743,7 @@ public class BatchesApi {
         localVarContentTypes,
         localVarAuthNames);
   }
+
   /**
    * Update a Batch message This operation updates all specified parameters of a batch that matches
    * the provided batch ID.

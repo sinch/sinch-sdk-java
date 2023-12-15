@@ -2,9 +2,7 @@ package com.sinch.sdk.models;
 
 import com.sinch.sdk.core.models.ServerConfiguration;
 
-/**
- * Configuration used by Sinch Client
- */
+/** Configuration used by Sinch Client */
 public class Configuration {
 
   private final String keyId;
@@ -17,7 +15,6 @@ public class Configuration {
   private final String verificationUrl;
   private final String applicationKey;
   private final String applicationSecret;
-
 
   private Configuration(
       String keyId,
@@ -155,7 +152,7 @@ public class Configuration {
    *
    * @return SMS region
    * @see <a
-   * href="https://developers.sinch.com/docs/sms/api-reference/#base-url/">https://developers.sinch.com/docs/sms/api-reference/#base-url/</a>
+   *     href="https://developers.sinch.com/docs/sms/api-reference/#base-url/">https://developers.sinch.com/docs/sms/api-reference/#base-url/</a>
    * @since 1.0
    */
   public SMSRegion getSmsRegion() {
@@ -194,14 +191,14 @@ public class Configuration {
 
   /**
    * Application key to be used for Verification and Voice services
-   * <p>
-   * Use application secret in place of unified configuration for authentication (see Sinch
+   *
+   * <p>Use application secret in place of unified configuration for authentication (see Sinch
    * dashboard for details) These credentials are related to Verification &amp; Voice Apps
    *
    * @return Application key
    * @see <a
-   * href="https://developers.sinch.com/docs/verification/api-reference/authentication/">Sinch
-   * Documentation</a>
+   *     href="https://developers.sinch.com/docs/verification/api-reference/authentication/">Sinch
+   *     Documentation</a>
    * @since 1.0
    */
   public String getApplicationKey() {
@@ -210,14 +207,14 @@ public class Configuration {
 
   /**
    * Application secret to be used for Verification and Voice services
-   * <p>
-   * Use application secret in place of unified configuration for authentication (see Sinch
+   *
+   * <p>Use application secret in place of unified configuration for authentication (see Sinch
    * dashboard for details) These credentials are related to Verification &amp; Voice Apps
    *
    * @return Application key
    * @see <a
-   * href="https://developers.sinch.com/docs/verification/api-reference/authentication/">Sinch
-   * Documentation</a>
+   *     href="https://developers.sinch.com/docs/verification/api-reference/authentication/">Sinch
+   *     Documentation</a>
    * @since 1.0
    */
   public String getApplicationSecret() {
@@ -232,9 +229,7 @@ public class Configuration {
     return new Builder(configuration);
   }
 
-  /**
-   * Configuration builder
-   */
+  /** Configuration builder */
   public static class Builder {
 
     private String keyId;
@@ -248,8 +243,7 @@ public class Configuration {
     private String applicationKey;
     private String applicationSecret;
 
-    protected Builder() {
-    }
+    protected Builder() {}
 
     /**
      * Initialize a builder with existing configuration
@@ -278,8 +272,16 @@ public class Configuration {
      */
     public Configuration build() {
       return new Configuration(
-          keyId, keySecret, projectId, oauthUrl, numbersUrl, smsRegion, smsUrl, verificationUrl,
-          applicationKey, applicationSecret);
+          keyId,
+          keySecret,
+          projectId,
+          oauthUrl,
+          numbersUrl,
+          smsRegion,
+          smsUrl,
+          verificationUrl,
+          applicationKey,
+          applicationSecret);
     }
 
     /**
