@@ -1,44 +1,27 @@
-# sinch-sdk-java
+# Sinch Java SDK
 
+Here you'll find documentation related to the Sinch Java SDK, including how to install it, initialize it, and start developing <language> code using Sinch services.
 
-<h1 style="text-align:center">
+To use Sinch services, you'll need a Sinch account and access keys. You can sign up for an account and create access keys at [dashboard.sinch.com](https://dashboard.sinch.com).
 
-[![Sinch Logo](https://developers.sinch.com/static/logo-07afe977d6d9dcd21b066d1612978e5c.svg)](https://www.sinch.com)
+For more information on the Sinch APIs on which this SDK is based, refer to the official [developer documentation portal](https://developers.sinch.com).
 
-Java SDK
+**This SDK is currently available for preview purposes only. It should not be used in production environments.**
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://github.com/sinch/sinch-sdk-python/blob/main/LICENSE)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Getting started](#getting-started)
+- [Logging]()
 
-
-[![Java 8](https://img.shields.io/badge/Java-8-blue.svg)](https://docs.oracle.com/javase/8)
-
-
-</h1>
-
-## Welcome to Sinch's Java SDK.
-
-Here you'll find documentation to start developing Java code using Sinch services.
-
-To use this SDK you'll need a Sinch account and API keys. Please sign up at [sinch.com](https://sinch.com)
-
-For more in depth version of the Sinch APIs, please refer to the official developer portal - [developers.sinch.com](https://developers.sinch.com/)
-
-**This SDK is currently available to selected developers for preview use only. It is being provided for the purpose of collecting feedback, and should not be used in production environments.**
-
-* [Installation](#installation)
-* [Getting started](#getting-started)
-* [Logging](#logging)
-***
-
-# Prerequisites
+## Prerequisites
 
 - JDK 8 or later
 - [Maven](https://maven.apache.org/)
+- [Maven Repository for this SDK](https://central.sonatype.com/artifact/com.sinch.sdk/sinch-sdk-java)
 - [Sinch account](https://dashboard.sinch.com)
 
 ## Installation
 
-### Maven setup
 Add to your `pom.xml` file the dependency to SDK:
 ```xml  
 <dependencies>
@@ -50,13 +33,17 @@ Add to your `pom.xml` file the dependency to SDK:
     ...
 </dependencies>
 ```
+Note the `${sdk.version}` need to be set according to released version to be used (see available versions from [Maven Repository](https://central.sonatype.com/artifact/com.sinch.sdk/sinch-sdk-java))
 
 ## Getting started
 
+Once the SDK is installed, you must start by initializing the main client class.
+
 ### Client initialization
 
-To initialize communication with Sinch backed, credentials obtained from Sinch portal have to be provided to the main client class of this SDK.
-It's highly advised to not hardcode those credentials, but to fetch them from environment variables:
+To initialize communication with the Sinch servers, credentials obtained from the Sinch dashboard must be provided to the main client class of this SDK. It's highly recommended to not hardcode these credentials and to load them from environment variables instead.
+
+Sample:
 
 ```java
 import com.sinch.sdk.SinchClient;
@@ -74,9 +61,31 @@ SinchClient client = new SinchClient(configuration);
 ## Products
 
 Sinch client provides access to the following Sinch products:
-- [Numbers](https://developers.sinch.com/docs/numbers)
-- [SMS](https://developers.sinch.com/docs/sms) (WIP)
 
+- Numbers [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/numbers/package-summary.html)
+- SMS [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/sms/package-summary.html)
+- Verification [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/verification/package-summary.html)
+- Voice _(WIP)_
+- additional products coming soon!
+
+## Logging
+
+The SDK uses the Java 8 logging feature ([java.util.logging](https://docs.oracle.com/javase/8/docs/api/java/util/logging/package-summary.html))
+Loggers and severity can be configured by using a `logging.properties` file like (see sample-app/src/main/resources/:
+```
+handlers = java.util.logging.ConsoleHandler
+java.util.logging.ConsoleHandler.level = INFO
+com.sinch.sdk.level = INFO
+
+java.util.logging.ConsoleHandler.formatter = java.util.logging.SimpleFormatter
+java.util.logging.SimpleFormatter.format=[%1$tF %1$tT] [%4$-7s %2$s] %5$s %n
+```
+
+## Sample apps
+
+The following sections detail how to build the SDK locally and how to use the included sample apps.
+
+#### Numbers product usage sample
 Usage example of the `numbers` product:
 
 ```java
@@ -89,26 +98,9 @@ AvailableNumberListResponse response = client
                                                                                     .build());
 ```
 
-## Logging
-The SDK uses the Java 8 logging feature ([java.util.logging](https://docs.oracle.com/javase/8/docs/api/java/util/logging/package-summary.html))
-Loggers and severity can be configured by using a `logging.properties` file like (see sample-app/src/main/resources/:
-```
-handlers = java.util.logging.ConsoleHandler
-java.util.logging.ConsoleHandler.level = INFO
-com.sinch.sdk.level = INFO
+#### Onboarding/Examples
+A dedicated [sample-app](sample-app/README.md) directory contains ready to use samples and can be used to start your own applications based onto Sinch SDK.
 
-java.util.logging.ConsoleHandler.formatter = java.util.logging.SimpleFormatter
-java.util.logging.SimpleFormatter.format=[%1$tF %1$tT] [%4$-7s %2$s] %5$s %n
-```
-
-## Onboarding/Examples
-The [sample-app](sample-app/README.md) directory contains ready to use samples and can be used to start your own applications based onto Sinch SDK.
-
-## HTTP Client
-See [HTTP-CLIENT](HTTP-CLIENT.md) file
-
-## Architecture
-See [ARCHITECTURE](ARCHITECTURE.md) file
 
 ## License
 

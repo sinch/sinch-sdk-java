@@ -8,7 +8,7 @@ It is not a submodule to mimic a real application to be built from a deployed SD
 
 - JDK 21 or later (Sinch SDK Java is requiring java 8 only but samples are requiring Java 21 JVM)
 - [Maven](https://maven.apache.org/)
-- [Maven Central](https://mvnrepository.com/artifact/com.sinch.sdk/sinch-sdk-java)
+- [Maven Repository for this SDK](https://central.sonatype.com/artifact/com.sinch.sdk/sinch-sdk-java)
 - [Sinch account](https://dashboard.sinch.com)
 
 ## Usage
