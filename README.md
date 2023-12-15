@@ -6,7 +6,7 @@ To use Sinch services, you'll need a Sinch account and access keys. You can sign
 
 For more information on the Sinch APIs on which this SDK is based, refer to the official [developer documentation portal](https://developers.sinch.com).
 
-**This SDK is currently available to selected developers for preview use only. It is being provided for the purpose of collecting feedback, and should not be used in production environments.**
+**This SDK is currently available for preview purposes only. It should not be used in production environments.**
 
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
