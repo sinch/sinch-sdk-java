@@ -115,6 +115,12 @@ A full application chaining calls to Numbers service to onboard onto Java SDK an
 |         | - GetByIdentity    | [com.sinch.sample.verification.status.GetByIdentity](src/main/java/com/sinch/sample/verification/status/GetByIdentity.java)                     |                     |
 |         | - GetByReference   | [com.sinch.sample.verification.status.GetByReference](src/main/java/com/sinch/sample/verification/status/GetByReference.java)                   |                     |
 
+#### Voice
+
+| Service  | Sample | Class                                                                                           |
+|----------|--------|-------------------------------------------------------------------------------------------------|
+| Callouts | Call   | [com.sinch.sample.voice.callouts.Call](src/main/java/com/sinch/sample/voice/callouts/Call.java) |                     |
+
 ### Dedicated webhooks feature samples
 #### How to run webhooks sample application
 Webhooks samples are based onto a dedicated SpringBoot applications.
