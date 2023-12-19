@@ -1,6 +1,6 @@
 package com.sinch.sdk.domains.voice.adapters;
 
-import com.sinch.sdk.auth.adapters.VoiceApplicationAuthManager;
+import com.sinch.sdk.auth.adapters.ApplicationAuthManager;
 import com.sinch.sdk.core.exceptions.ApiAuthException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
@@ -36,7 +36,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
 
   private void setApplicationCredentials(String key, String secret) {
 
-    AuthManager applicationAuthManager = new VoiceApplicationAuthManager(key, secret);
+    AuthManager applicationAuthManager = new ApplicationAuthManager(key, secret);
 
     clientAuthManagers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     clientAuthManagers.put(SECURITY_SCHEME_KEYWORD, applicationAuthManager);

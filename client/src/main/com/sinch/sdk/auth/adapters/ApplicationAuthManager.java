@@ -17,14 +17,14 @@ import java.util.Collection;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-public class VerificationApplicationAuthManager implements AuthManager {
+public class ApplicationAuthManager implements AuthManager {
 
   private static final String AUTH_KEYWORD = "Application";
   private static final String XTIMESTAMP_HEADER = "x-timestamp";
   private final String key;
   private final byte[] secret;
 
-  public VerificationApplicationAuthManager(String key, String base64Secret) {
+  public ApplicationAuthManager(String key, String base64Secret) {
     this.key = key;
     this.secret = Base64.getDecoder().decode(base64Secret);
   }
