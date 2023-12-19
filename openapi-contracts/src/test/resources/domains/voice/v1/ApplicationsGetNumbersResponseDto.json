@@ -1,0 +1,13 @@
+{
+  "numbers": [
+    {
+      "number": "+123456789",
+      "applicationkey": "an application key",
+      "capability": "voice"
+    },
+    {
+      "number": "+134567890",
+      "capability": "sms"
+    }
+  ]
+}

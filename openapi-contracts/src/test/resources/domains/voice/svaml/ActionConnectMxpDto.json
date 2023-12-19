@@ -1,0 +1,13 @@
+{
+  "name": "connectMxp",
+  "destination": {
+    "type": "username",
+    "endpoint": "a user string"
+  },
+  "callheaders": [
+    {
+      "key": "left string",
+      "value": "right string"
+    }
+  ]
+}

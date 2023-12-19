@@ -63,6 +63,7 @@
         <maven.compiler.version>3.8.0</maven.compiler.version>
         <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
         <maven.compiler.showWarnings>true</maven.compiler.showWarnings>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- 3rd party dependencies -->
         <jackson.version>2.15.2</jackson.version>
@@ -149,6 +150,10 @@
                                 <title>Verification</title>
                                 <packages>com.sinch.sdk.domains.verification*</packages>
                             </group>
+                            <group>
+                                <title>Voice</title>
+                                <packages>com.sinch.sdk.domains.voice*</packages>
+                            </group>
                         </groups>
                     </configuration>
                 </plugin>
@@ -201,7 +206,6 @@
                         <configuration>
                             <sources>
                                 <source>core/src/test/java</source>
-                                <source>test-resources/src/test/java</source>
                                 <source>openapi-contracts/src/test/java</source>
                                 <source>client/src/test/java</source>
                             </sources>
@@ -215,9 +219,6 @@
                         </goals>
                         <configuration>
                             <resources>
-                                <resource>
-                                    <directory>test-resources/src/test/resources</directory>
-                                </resource>
                                 <resource>
                                     <directory>client/src/test/resources</directory>
                                 </resource>
@@ -291,6 +292,7 @@
                       <excludes>
                           <!-- java 21 style not yet supported -->
                         <exclude>sample-app/src/main/java/com/sinch/sample/webhooks/verification/VerificationController.java</exclude>
+                        <exclude>sample-app/src/main/java/com/sinch/sample/webhooks/voice/VoiceController.java</exclude>
                       </excludes>
                         <googleJavaFormat>
                             <version>1.18.1</version>

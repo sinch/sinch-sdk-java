@@ -12,9 +12,13 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,21 +32,59 @@ import java.util.Objects;
   SvamlActionConnectMxpDto.JSON_PROPERTY_DESTINATION,
   SvamlActionConnectMxpDto.JSON_PROPERTY_CALLHEADERS
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlActionConnectMxpDto {
+  /** The name property. Must have the value &#x60;connectMxp&#x60;. */
+  public enum NameEnum {
+    CONNECTMXP("connectMxp"),
+
+    UNKNOWN_DEFAULT_OPEN_API("unknown_default_open_api");
+
+    private String value;
+
+    NameEnum(String value) {
+      this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static NameEnum fromValue(String value) {
+      for (NameEnum b : NameEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      return UNKNOWN_DEFAULT_OPEN_API;
+    }
+  }
+
   public static final String JSON_PROPERTY_NAME = "name";
   private String name;
+  private boolean nameDefined = false;
 
   public static final String JSON_PROPERTY_DESTINATION = "destination";
-  private SvamlActionConnectMxpDestinationDto destination;
+  private DestinationDto destination;
+  private boolean destinationDefined = false;
 
   public static final String JSON_PROPERTY_CALLHEADERS = "callheaders";
   private List<CallHeaderDto> callheaders;
+  private boolean callheadersDefined = false;
 
   public SvamlActionConnectMxpDto() {}
 
   public SvamlActionConnectMxpDto name(String name) {
     this.name = name;
+    this.nameDefined = true;
     return this;
   }
 
@@ -57,14 +99,21 @@ public class SvamlActionConnectMxpDto {
     return name;
   }
 
+  @JsonIgnore
+  public boolean getNameDefined() {
+    return nameDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setName(String name) {
     this.name = name;
+    this.nameDefined = true;
   }
 
-  public SvamlActionConnectMxpDto destination(SvamlActionConnectMxpDestinationDto destination) {
+  public SvamlActionConnectMxpDto destination(DestinationDto destination) {
     this.destination = destination;
+    this.destinationDefined = true;
     return this;
   }
 
@@ -75,18 +124,25 @@ public class SvamlActionConnectMxpDto {
    */
   @JsonProperty(JSON_PROPERTY_DESTINATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public SvamlActionConnectMxpDestinationDto getDestination() {
+  public DestinationDto getDestination() {
     return destination;
+  }
+
+  @JsonIgnore
+  public boolean getDestinationDefined() {
+    return destinationDefined;
   }
 
   @JsonProperty(JSON_PROPERTY_DESTINATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setDestination(SvamlActionConnectMxpDestinationDto destination) {
+  public void setDestination(DestinationDto destination) {
     this.destination = destination;
+    this.destinationDefined = true;
   }
 
   public SvamlActionConnectMxpDto callheaders(List<CallHeaderDto> callheaders) {
     this.callheaders = callheaders;
+    this.callheadersDefined = true;
     return this;
   }
 
@@ -94,6 +150,7 @@ public class SvamlActionConnectMxpDto {
     if (this.callheaders == null) {
       this.callheaders = new ArrayList<>();
     }
+    this.callheadersDefined = true;
     this.callheaders.add(callheadersItem);
     return this;
   }
@@ -110,10 +167,16 @@ public class SvamlActionConnectMxpDto {
     return callheaders;
   }
 
+  @JsonIgnore
+  public boolean getCallheadersDefined() {
+    return callheadersDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CALLHEADERS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCallheaders(List<CallHeaderDto> callheaders) {
     this.callheaders = callheaders;
+    this.callheadersDefined = true;
   }
 
   /** Return true if this svaml.action.connectMxp object is equal to o. */

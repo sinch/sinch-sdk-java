@@ -1,0 +1,14 @@
+{
+  "name": "connectPstn",
+  "number": "+123456789",
+  "locale": "fr",
+  "maxDuration": 123,
+  "dialTimeout": 456,
+  "cli": "cli value",
+  "suppressCallbacks": true,
+  "dtmf": "#w123",
+  "indications": "unknown value",
+  "amd": {
+    "enabled": true
+  }
+}

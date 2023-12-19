@@ -1,0 +1,6 @@
+{
+  "url": {
+    "primary": "https://foo.com",
+    "fallback": "https://fallback.foo.com"
+  }
+}

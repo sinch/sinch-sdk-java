@@ -2,18 +2,28 @@ package com.sinch.sdk.core.utils.databind;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.fasterxml.jackson.databind.introspect.AnnotatedMember;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.PropertyFilter;
 import com.fasterxml.jackson.databind.ser.PropertyWriter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Map;
 
 public class Mapper {
@@ -26,6 +36,9 @@ public class Mapper {
 
   private static class LazyHolder {
 
+    public static final SimpleModule module =
+        new JavaTimeModule()
+            .addDeserializer(OffsetDateTime.class, new OffsetDateTimeCustomDeserializer());
     public static final ObjectMapper INSTANCE =
         new ObjectMapper()
             .setAnnotationIntrospector(new FilteringIntrospection())
@@ -37,7 +50,27 @@ public class Mapper {
             .enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING)
             .setFilterProvider(
                 new SimpleFilterProvider().addFilter("uninitializedFilter", uninitializedFilter))
-            .registerModule(new JavaTimeModule());
+            .registerModule(module);
+  }
+
+  public static final class OffsetDateTimeCustomDeserializer
+      extends JsonDeserializer<OffsetDateTime> {
+
+    @Override
+    public OffsetDateTime deserialize(JsonParser parser, DeserializationContext context)
+        throws IOException {
+
+      String text = parser.getText();
+      // if OffsetDateTime parsing is failing: fallback to have a second chance to parse field by
+      // forcing time zone
+      // Currently: Voice CallInformation is receiving from server date without TZ
+      try {
+        return OffsetDateTime.parse(text, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+      } catch (DateTimeParseException e) {
+        return LocalDateTime.parse(text, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+            .atOffset(ZoneOffset.UTC);
+      }
+    }
   }
 
   public static final PropertyFilter uninitializedFilter =

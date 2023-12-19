@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -21,15 +23,18 @@ import java.util.Objects;
 
 /** GetNumbersResponseObjDto */
 @JsonPropertyOrder({GetNumbersResponseObjDto.JSON_PROPERTY_NUMBERS})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class GetNumbersResponseObjDto {
   public static final String JSON_PROPERTY_NUMBERS = "numbers";
   private List<GetNumbersResponseObjNumbersInnerDto> numbers;
+  private boolean numbersDefined = false;
 
   public GetNumbersResponseObjDto() {}
 
   public GetNumbersResponseObjDto numbers(List<GetNumbersResponseObjNumbersInnerDto> numbers) {
     this.numbers = numbers;
+    this.numbersDefined = true;
     return this;
   }
 
@@ -37,6 +42,7 @@ public class GetNumbersResponseObjDto {
     if (this.numbers == null) {
       this.numbers = new ArrayList<>();
     }
+    this.numbersDefined = true;
     this.numbers.add(numbersItem);
     return this;
   }
@@ -52,10 +58,16 @@ public class GetNumbersResponseObjDto {
     return numbers;
   }
 
+  @JsonIgnore
+  public boolean getNumbersDefined() {
+    return numbersDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NUMBERS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNumbers(List<GetNumbersResponseObjNumbersInnerDto> numbers) {
     this.numbers = numbers;
+    this.numbersDefined = true;
   }
 
   /** Return true if this getNumbersResponseObj object is equal to o. */

@@ -1,0 +1,23 @@
+{
+  "instructions": [
+    {
+      "name": "say",
+      "text": "Hello from instruction"
+    },
+    {
+      "name": "startRecording",
+      "options": {
+        "destinationUrl": "s3://my-bucket/",
+        "credentials": "AKIAIOSFODNN7EXAMPLE:wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY:eu-central-1",
+        "notificationEvents": true,
+        "transcriptionOptions": {
+          "enabled": true
+        }
+      }
+    }
+  ],
+  "action": {
+    "name": "connectConf",
+    "conferenceId": "My Conference Id"
+  }
+}

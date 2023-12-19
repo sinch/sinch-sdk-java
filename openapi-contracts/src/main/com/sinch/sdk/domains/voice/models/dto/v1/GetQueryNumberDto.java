@@ -12,68 +12,51 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.Objects;
 
 /** GetQueryNumberDto */
-@JsonPropertyOrder({
-  GetQueryNumberDto.JSON_PROPERTY_METHOD,
-  GetQueryNumberDto.JSON_PROPERTY_NUMBER_ITEM
-})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonPropertyOrder({GetQueryNumberDto.JSON_PROPERTY_NUMBER})
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class GetQueryNumberDto {
-  public static final String JSON_PROPERTY_METHOD = "method";
-  private String method;
-
-  public static final String JSON_PROPERTY_NUMBER_ITEM = "numberItem";
-  private GetQueryNumberNumberItemDto numberItem;
+  public static final String JSON_PROPERTY_NUMBER = "number";
+  private GetQueryNumberNumberDto number;
+  private boolean numberDefined = false;
 
   public GetQueryNumberDto() {}
 
-  public GetQueryNumberDto method(String method) {
-    this.method = method;
+  public GetQueryNumberDto number(GetQueryNumberNumberDto number) {
+    this.number = number;
+    this.numberDefined = true;
     return this;
   }
 
   /**
-   * The type of method.
+   * Get number
    *
-   * @return method
+   * @return number
    */
-  @JsonProperty(JSON_PROPERTY_METHOD)
+  @JsonProperty(JSON_PROPERTY_NUMBER)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getMethod() {
-    return method;
+  public GetQueryNumberNumberDto getNumber() {
+    return number;
   }
 
-  @JsonProperty(JSON_PROPERTY_METHOD)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setMethod(String method) {
-    this.method = method;
+  @JsonIgnore
+  public boolean getNumberDefined() {
+    return numberDefined;
   }
 
-  public GetQueryNumberDto numberItem(GetQueryNumberNumberItemDto numberItem) {
-    this.numberItem = numberItem;
-    return this;
-  }
-
-  /**
-   * Get numberItem
-   *
-   * @return numberItem
-   */
-  @JsonProperty(JSON_PROPERTY_NUMBER_ITEM)
+  @JsonProperty(JSON_PROPERTY_NUMBER)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public GetQueryNumberNumberItemDto getNumberItem() {
-    return numberItem;
-  }
-
-  @JsonProperty(JSON_PROPERTY_NUMBER_ITEM)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setNumberItem(GetQueryNumberNumberItemDto numberItem) {
-    this.numberItem = numberItem;
+  public void setNumber(GetQueryNumberNumberDto number) {
+    this.number = number;
+    this.numberDefined = true;
   }
 
   /** Return true if this getQueryNumber object is equal to o. */
@@ -86,21 +69,19 @@ public class GetQueryNumberDto {
       return false;
     }
     GetQueryNumberDto getQueryNumber = (GetQueryNumberDto) o;
-    return Objects.equals(this.method, getQueryNumber.method)
-        && Objects.equals(this.numberItem, getQueryNumber.numberItem);
+    return Objects.equals(this.number, getQueryNumber.number);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(method, numberItem);
+    return Objects.hash(number);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class GetQueryNumberDto {\n");
-    sb.append("    method: ").append(toIndentedString(method)).append("\n");
-    sb.append("    numberItem: ").append(toIndentedString(numberItem)).append("\n");
+    sb.append("    number: ").append(toIndentedString(number)).append("\n");
     sb.append("}");
     return sb.toString();
   }

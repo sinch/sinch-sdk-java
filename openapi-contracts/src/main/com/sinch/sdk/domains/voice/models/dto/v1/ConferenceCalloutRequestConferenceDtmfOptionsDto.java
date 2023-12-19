@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -26,21 +28,26 @@ import java.util.Objects;
   ConferenceCalloutRequestConferenceDtmfOptionsDto.JSON_PROPERTY_MAX_DIGITS,
   ConferenceCalloutRequestConferenceDtmfOptionsDto.JSON_PROPERTY_TIMEOUT_MILLS
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ConferenceCalloutRequestConferenceDtmfOptionsDto {
   public static final String JSON_PROPERTY_MODE = "mode";
   private String mode;
+  private boolean modeDefined = false;
 
   public static final String JSON_PROPERTY_MAX_DIGITS = "maxDigits";
   private Integer maxDigits;
+  private boolean maxDigitsDefined = false;
 
   public static final String JSON_PROPERTY_TIMEOUT_MILLS = "timeoutMills";
   private Integer timeoutMills;
+  private boolean timeoutMillsDefined = false;
 
   public ConferenceCalloutRequestConferenceDtmfOptionsDto() {}
 
   public ConferenceCalloutRequestConferenceDtmfOptionsDto mode(String mode) {
     this.mode = mode;
+    this.modeDefined = true;
     return this;
   }
 
@@ -55,14 +62,21 @@ public class ConferenceCalloutRequestConferenceDtmfOptionsDto {
     return mode;
   }
 
+  @JsonIgnore
+  public boolean getModeDefined() {
+    return modeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MODE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMode(String mode) {
     this.mode = mode;
+    this.modeDefined = true;
   }
 
   public ConferenceCalloutRequestConferenceDtmfOptionsDto maxDigits(Integer maxDigits) {
     this.maxDigits = maxDigits;
+    this.maxDigitsDefined = true;
     return this;
   }
 
@@ -81,14 +95,21 @@ public class ConferenceCalloutRequestConferenceDtmfOptionsDto {
     return maxDigits;
   }
 
+  @JsonIgnore
+  public boolean getMaxDigitsDefined() {
+    return maxDigitsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MAX_DIGITS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMaxDigits(Integer maxDigits) {
     this.maxDigits = maxDigits;
+    this.maxDigitsDefined = true;
   }
 
   public ConferenceCalloutRequestConferenceDtmfOptionsDto timeoutMills(Integer timeoutMills) {
     this.timeoutMills = timeoutMills;
+    this.timeoutMillsDefined = true;
     return this;
   }
 
@@ -104,10 +125,16 @@ public class ConferenceCalloutRequestConferenceDtmfOptionsDto {
     return timeoutMills;
   }
 
+  @JsonIgnore
+  public boolean getTimeoutMillsDefined() {
+    return timeoutMillsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TIMEOUT_MILLS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTimeoutMills(Integer timeoutMills) {
     this.timeoutMills = timeoutMills;
+    this.timeoutMillsDefined = true;
   }
 
   /** Return true if this conferenceCalloutRequest_conferenceDtmfOptions object is equal to o. */

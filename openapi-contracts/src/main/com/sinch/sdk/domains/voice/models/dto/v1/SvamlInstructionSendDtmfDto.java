@@ -12,9 +12,13 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Objects;
 
 /** Plays DTMF tones in the call. */
@@ -22,18 +26,55 @@ import java.util.Objects;
   SvamlInstructionSendDtmfDto.JSON_PROPERTY_NAME,
   SvamlInstructionSendDtmfDto.JSON_PROPERTY_VALUE
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlInstructionSendDtmfDto {
+  /** The &#x60;name&#x60; property. Must have the value &#x60;sendDtmf&#x60;. */
+  public enum NameEnum {
+    SENDDTMF("sendDtmf"),
+
+    UNKNOWN_DEFAULT_OPEN_API("unknown_default_open_api");
+
+    private String value;
+
+    NameEnum(String value) {
+      this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static NameEnum fromValue(String value) {
+      for (NameEnum b : NameEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      return UNKNOWN_DEFAULT_OPEN_API;
+    }
+  }
+
   public static final String JSON_PROPERTY_NAME = "name";
   private String name;
+  private boolean nameDefined = false;
 
   public static final String JSON_PROPERTY_VALUE = "value";
   private String value;
+  private boolean valueDefined = false;
 
   public SvamlInstructionSendDtmfDto() {}
 
   public SvamlInstructionSendDtmfDto name(String name) {
     this.name = name;
+    this.nameDefined = true;
     return this;
   }
 
@@ -48,14 +89,21 @@ public class SvamlInstructionSendDtmfDto {
     return name;
   }
 
+  @JsonIgnore
+  public boolean getNameDefined() {
+    return nameDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setName(String name) {
     this.name = name;
+    this.nameDefined = true;
   }
 
   public SvamlInstructionSendDtmfDto value(String value) {
     this.value = value;
+    this.valueDefined = true;
     return this;
   }
 
@@ -76,10 +124,16 @@ public class SvamlInstructionSendDtmfDto {
     return value;
   }
 
+  @JsonIgnore
+  public boolean getValueDefined() {
+    return valueDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_VALUE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setValue(String value) {
     this.value = value;
+    this.valueDefined = true;
   }
 
   /** Return true if this svaml.instruction.sendDtmf object is equal to o. */

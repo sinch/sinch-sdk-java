@@ -12,9 +12,13 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Objects;
 
 /**
@@ -33,42 +37,87 @@ import java.util.Objects;
   SvamlActionConnectPstnDto.JSON_PROPERTY_INDICATIONS,
   SvamlActionConnectPstnDto.JSON_PROPERTY_AMD
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlActionConnectPstnDto {
+  /** The name property. Must have the value &#x60;connectPstn&#x60;. */
+  public enum NameEnum {
+    CONNECTPSTN("connectPstn"),
+
+    UNKNOWN_DEFAULT_OPEN_API("unknown_default_open_api");
+
+    private String value;
+
+    NameEnum(String value) {
+      this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static NameEnum fromValue(String value) {
+      for (NameEnum b : NameEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      return UNKNOWN_DEFAULT_OPEN_API;
+    }
+  }
+
   public static final String JSON_PROPERTY_NAME = "name";
   private String name;
+  private boolean nameDefined = false;
 
   public static final String JSON_PROPERTY_NUMBER = "number";
   private String number;
+  private boolean numberDefined = false;
 
   public static final String JSON_PROPERTY_LOCALE = "locale";
   private String locale;
+  private boolean localeDefined = false;
 
   public static final String JSON_PROPERTY_MAX_DURATION = "maxDuration";
   private Integer maxDuration;
+  private boolean maxDurationDefined = false;
 
   public static final String JSON_PROPERTY_DIAL_TIMEOUT = "dialTimeout";
   private Integer dialTimeout;
+  private boolean dialTimeoutDefined = false;
 
   public static final String JSON_PROPERTY_CLI = "cli";
   private String cli;
+  private boolean cliDefined = false;
 
   public static final String JSON_PROPERTY_SUPPRESS_CALLBACKS = "suppressCallbacks";
   private Boolean suppressCallbacks;
+  private boolean suppressCallbacksDefined = false;
 
   public static final String JSON_PROPERTY_DTMF = "dtmf";
   private String dtmf;
+  private boolean dtmfDefined = false;
 
   public static final String JSON_PROPERTY_INDICATIONS = "indications";
   private String indications;
+  private boolean indicationsDefined = false;
 
   public static final String JSON_PROPERTY_AMD = "amd";
   private SvamlActionConnectPstnAmdDto amd;
+  private boolean amdDefined = false;
 
   public SvamlActionConnectPstnDto() {}
 
   public SvamlActionConnectPstnDto name(String name) {
     this.name = name;
+    this.nameDefined = true;
     return this;
   }
 
@@ -83,14 +132,21 @@ public class SvamlActionConnectPstnDto {
     return name;
   }
 
+  @JsonIgnore
+  public boolean getNameDefined() {
+    return nameDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setName(String name) {
     this.name = name;
+    this.nameDefined = true;
   }
 
   public SvamlActionConnectPstnDto number(String number) {
     this.number = number;
+    this.numberDefined = true;
     return this;
   }
 
@@ -106,14 +162,21 @@ public class SvamlActionConnectPstnDto {
     return number;
   }
 
+  @JsonIgnore
+  public boolean getNumberDefined() {
+    return numberDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NUMBER)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNumber(String number) {
     this.number = number;
+    this.numberDefined = true;
   }
 
   public SvamlActionConnectPstnDto locale(String locale) {
     this.locale = locale;
+    this.localeDefined = true;
     return this;
   }
 
@@ -130,14 +193,21 @@ public class SvamlActionConnectPstnDto {
     return locale;
   }
 
+  @JsonIgnore
+  public boolean getLocaleDefined() {
+    return localeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_LOCALE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setLocale(String locale) {
     this.locale = locale;
+    this.localeDefined = true;
   }
 
   public SvamlActionConnectPstnDto maxDuration(Integer maxDuration) {
     this.maxDuration = maxDuration;
+    this.maxDurationDefined = true;
     return this;
   }
 
@@ -153,14 +223,21 @@ public class SvamlActionConnectPstnDto {
     return maxDuration;
   }
 
+  @JsonIgnore
+  public boolean getMaxDurationDefined() {
+    return maxDurationDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MAX_DURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMaxDuration(Integer maxDuration) {
     this.maxDuration = maxDuration;
+    this.maxDurationDefined = true;
   }
 
   public SvamlActionConnectPstnDto dialTimeout(Integer dialTimeout) {
     this.dialTimeout = dialTimeout;
+    this.dialTimeoutDefined = true;
     return this;
   }
 
@@ -177,14 +254,21 @@ public class SvamlActionConnectPstnDto {
     return dialTimeout;
   }
 
+  @JsonIgnore
+  public boolean getDialTimeoutDefined() {
+    return dialTimeoutDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DIAL_TIMEOUT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDialTimeout(Integer dialTimeout) {
     this.dialTimeout = dialTimeout;
+    this.dialTimeoutDefined = true;
   }
 
   public SvamlActionConnectPstnDto cli(String cli) {
     this.cli = cli;
+    this.cliDefined = true;
     return this;
   }
 
@@ -201,14 +285,21 @@ public class SvamlActionConnectPstnDto {
     return cli;
   }
 
+  @JsonIgnore
+  public boolean getCliDefined() {
+    return cliDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CLI)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCli(String cli) {
     this.cli = cli;
+    this.cliDefined = true;
   }
 
   public SvamlActionConnectPstnDto suppressCallbacks(Boolean suppressCallbacks) {
     this.suppressCallbacks = suppressCallbacks;
+    this.suppressCallbacksDefined = true;
     return this;
   }
 
@@ -224,14 +315,21 @@ public class SvamlActionConnectPstnDto {
     return suppressCallbacks;
   }
 
+  @JsonIgnore
+  public boolean getSuppressCallbacksDefined() {
+    return suppressCallbacksDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SUPPRESS_CALLBACKS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSuppressCallbacks(Boolean suppressCallbacks) {
     this.suppressCallbacks = suppressCallbacks;
+    this.suppressCallbacksDefined = true;
   }
 
   public SvamlActionConnectPstnDto dtmf(String dtmf) {
     this.dtmf = dtmf;
+    this.dtmfDefined = true;
     return this;
   }
 
@@ -252,14 +350,21 @@ public class SvamlActionConnectPstnDto {
     return dtmf;
   }
 
+  @JsonIgnore
+  public boolean getDtmfDefined() {
+    return dtmfDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DTMF)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDtmf(String dtmf) {
     this.dtmf = dtmf;
+    this.dtmfDefined = true;
   }
 
   public SvamlActionConnectPstnDto indications(String indications) {
     this.indications = indications;
+    this.indicationsDefined = true;
     return this;
   }
 
@@ -274,14 +379,21 @@ public class SvamlActionConnectPstnDto {
     return indications;
   }
 
+  @JsonIgnore
+  public boolean getIndicationsDefined() {
+    return indicationsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_INDICATIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setIndications(String indications) {
     this.indications = indications;
+    this.indicationsDefined = true;
   }
 
   public SvamlActionConnectPstnDto amd(SvamlActionConnectPstnAmdDto amd) {
     this.amd = amd;
+    this.amdDefined = true;
     return this;
   }
 
@@ -296,10 +408,16 @@ public class SvamlActionConnectPstnDto {
     return amd;
   }
 
+  @JsonIgnore
+  public boolean getAmdDefined() {
+    return amdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_AMD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAmd(SvamlActionConnectPstnAmdDto amd) {
     this.amd = amd;
+    this.amdDefined = true;
   }
 
   /** Return true if this svaml.action.connectPstn object is equal to o. */

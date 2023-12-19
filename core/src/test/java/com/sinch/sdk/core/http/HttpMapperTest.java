@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sinch.sdk.core.exceptions.ApiException;
 import java.nio.charset.StandardCharsets;
+import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.stream.Collectors;
@@ -156,6 +157,53 @@ public class HttpMapperTest {
     HashMapSerialization value = new HashMapSerialization();
     value.put("my key", "my value");
     Assertions.assertThat(mapper.serialize(null, value)).isEqualTo("{\"my key\":\"my value\"}");
+  }
+
+  @Test
+  void deserializeOffsetDateTimeWithoutTZ() throws ApiException {
+
+    String date = "2024-01-05T08:23:28";
+    // DefaultSerialization value = new DefaultSerialization("my value");
+    String jsonValue =
+        String.format(" { \"" + DatesClass.JSON_PROPERTY_OFFSETDATETIME + "\" : \"" + date + "\"}");
+    HttpResponse httpResponse =
+        new HttpResponse(-100, null, null, jsonValue.getBytes(StandardCharsets.UTF_8));
+
+    DatesClass value = mapper.deserialize(httpResponse, new TypeReference<DatesClass>() {});
+    Assertions.assertThat(value.getOffsetDateTime()).isEqualTo(date + "Z");
+  }
+
+  @Test
+  void deserializeOffsetDateTimeWithTZ() throws ApiException {
+
+    String date = "2024-01-05T08:23:28Z";
+    // DefaultSerialization value = new DefaultSerialization("my value");
+    String jsonValue =
+        String.format(" { \"" + DatesClass.JSON_PROPERTY_OFFSETDATETIME + "\" : \"" + date + "\"}");
+    HttpResponse httpResponse =
+        new HttpResponse(-100, null, null, jsonValue.getBytes(StandardCharsets.UTF_8));
+
+    DatesClass value = mapper.deserialize(httpResponse, new TypeReference<DatesClass>() {});
+    Assertions.assertThat(value.getOffsetDateTime()).isEqualTo(date);
+  }
+
+  public static class DatesClass {
+    public static final String JSON_PROPERTY_OFFSETDATETIME = "offsetdatetime";
+    private OffsetDateTime offsetdatetime;
+
+    @JsonCreator
+    public DatesClass() {}
+
+    @JsonProperty(JSON_PROPERTY_OFFSETDATETIME)
+    public OffsetDateTime getOffsetDateTime() {
+      return offsetdatetime;
+    }
+
+    @JsonProperty(JSON_PROPERTY_OFFSETDATETIME)
+    public DatesClass setOffsetDateTime(OffsetDateTime value) {
+      this.offsetdatetime = value;
+      return this;
+    }
   }
 
   @JsonFilter("uninitializedFilter")

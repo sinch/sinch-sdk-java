@@ -3,6 +3,7 @@ package com.sinch.sdk.core.http;
 import com.sinch.sdk.core.utils.Pair;
 import java.time.Instant;
 import java.util.Collection;
+import java.util.Map;
 
 public interface AuthManager {
 
@@ -21,4 +22,7 @@ public interface AuthManager {
 
   Collection<Pair<String, String>> getAuthorizationHeaders(
       String timestamp, String method, String httpContentType, String path, String body);
+
+  boolean validateAuthenticatedRequest(
+      String method, String path, Map<String, String> headers, String jsonPayload);
 }

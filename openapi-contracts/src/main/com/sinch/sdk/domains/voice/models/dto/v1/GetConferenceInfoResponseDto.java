@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -21,16 +23,19 @@ import java.util.Objects;
 
 /** The response returns information about the participants in the conference. */
 @JsonPropertyOrder({GetConferenceInfoResponseDto.JSON_PROPERTY_PARTICIPANTS})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class GetConferenceInfoResponseDto {
   public static final String JSON_PROPERTY_PARTICIPANTS = "participants";
   private List<GetConferenceInfoResponseParticipantsInnerDto> participants;
+  private boolean participantsDefined = false;
 
   public GetConferenceInfoResponseDto() {}
 
   public GetConferenceInfoResponseDto participants(
       List<GetConferenceInfoResponseParticipantsInnerDto> participants) {
     this.participants = participants;
+    this.participantsDefined = true;
     return this;
   }
 
@@ -39,6 +44,7 @@ public class GetConferenceInfoResponseDto {
     if (this.participants == null) {
       this.participants = new ArrayList<>();
     }
+    this.participantsDefined = true;
     this.participants.add(participantsItem);
     return this;
   }
@@ -54,10 +60,16 @@ public class GetConferenceInfoResponseDto {
     return participants;
   }
 
+  @JsonIgnore
+  public boolean getParticipantsDefined() {
+    return participantsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_PARTICIPANTS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setParticipants(List<GetConferenceInfoResponseParticipantsInnerDto> participants) {
     this.participants = participants;
+    this.participantsDefined = true;
   }
 
   /** Return true if this getConferenceInfoResponse object is equal to o. */

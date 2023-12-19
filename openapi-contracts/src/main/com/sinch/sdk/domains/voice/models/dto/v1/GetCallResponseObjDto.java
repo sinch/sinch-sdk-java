@@ -13,6 +13,8 @@
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -35,13 +37,16 @@ import java.util.Objects;
   GetCallResponseObjDto.JSON_PROPERTY_USER_RATE,
   GetCallResponseObjDto.JSON_PROPERTY_DEBIT
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class GetCallResponseObjDto {
   public static final String JSON_PROPERTY_FROM = "from";
-  private String from;
+  private DestinationDto from;
+  private boolean fromDefined = false;
 
   public static final String JSON_PROPERTY_TO = "to";
-  private String to;
+  private DestinationDto to;
+  private boolean toDefined = false;
 
   /** Must be &#x60;pstn&#x60; for PSTN. */
   public enum DomainEnum {
@@ -78,12 +83,15 @@ public class GetCallResponseObjDto {
 
   public static final String JSON_PROPERTY_DOMAIN = "domain";
   private String domain;
+  private boolean domainDefined = false;
 
   public static final String JSON_PROPERTY_CALL_ID = "callId";
   private String callId;
+  private boolean callIdDefined = false;
 
   public static final String JSON_PROPERTY_DURATION = "duration";
   private Integer duration;
+  private boolean durationDefined = false;
 
   /** The status of the call. Either &#x60;ONGOING&#x60; or &#x60;FINAL&#x60; */
   public enum StatusEnum {
@@ -122,50 +130,11 @@ public class GetCallResponseObjDto {
 
   public static final String JSON_PROPERTY_STATUS = "status";
   private String status;
-
-  /** Contains the result of a call. */
-  public enum ResultEnum {
-    N_A("N/A"),
-
-    ANSWERED("ANSWERED"),
-
-    BUSY("BUSY"),
-
-    NOANSWER("NOANSWER"),
-
-    FAILED("FAILED"),
-
-    UNKNOWN_DEFAULT_OPEN_API("unknown_default_open_api");
-
-    private String value;
-
-    ResultEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static ResultEnum fromValue(String value) {
-      for (ResultEnum b : ResultEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      return UNKNOWN_DEFAULT_OPEN_API;
-    }
-  }
+  private boolean statusDefined = false;
 
   public static final String JSON_PROPERTY_RESULT = "result";
-  private String result;
+  private CallResultDto result;
+  private boolean resultDefined = false;
 
   /** Contains the reason why a call ended. */
   public enum ReasonEnum {
@@ -186,6 +155,8 @@ public class GetCallResponseObjDto {
     CANCEL("CANCEL"),
 
     GENERALERROR("GENERALERROR"),
+
+    INVALIDSVAMLACTION("INVALIDSVAMLACTION"),
 
     UNKNOWN_DEFAULT_OPEN_API("unknown_default_open_api");
 
@@ -218,67 +189,87 @@ public class GetCallResponseObjDto {
 
   public static final String JSON_PROPERTY_REASON = "reason";
   private String reason;
+  private boolean reasonDefined = false;
 
   public static final String JSON_PROPERTY_TIMESTAMP = "timestamp";
   private OffsetDateTime timestamp;
+  private boolean timestampDefined = false;
 
   public static final String JSON_PROPERTY_CUSTOM = "custom";
-  private Object custom;
+  private String custom;
+  private boolean customDefined = false;
 
   public static final String JSON_PROPERTY_USER_RATE = "userRate";
-  private String userRate;
+  private PriceDto userRate;
+  private boolean userRateDefined = false;
 
   public static final String JSON_PROPERTY_DEBIT = "debit";
-  private String debit;
+  private PriceDto debit;
+  private boolean debitDefined = false;
 
   public GetCallResponseObjDto() {}
 
-  public GetCallResponseObjDto from(String from) {
+  public GetCallResponseObjDto from(DestinationDto from) {
     this.from = from;
+    this.fromDefined = true;
     return this;
   }
 
   /**
-   * Contains the caller information.
+   * Get from
    *
    * @return from
    */
   @JsonProperty(JSON_PROPERTY_FROM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getFrom() {
+  public DestinationDto getFrom() {
     return from;
+  }
+
+  @JsonIgnore
+  public boolean getFromDefined() {
+    return fromDefined;
   }
 
   @JsonProperty(JSON_PROPERTY_FROM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setFrom(String from) {
+  public void setFrom(DestinationDto from) {
     this.from = from;
+    this.fromDefined = true;
   }
 
-  public GetCallResponseObjDto to(String to) {
+  public GetCallResponseObjDto to(DestinationDto to) {
     this.to = to;
+    this.toDefined = true;
     return this;
   }
 
   /**
-   * Contains the callee information.
+   * Get to
    *
    * @return to
    */
   @JsonProperty(JSON_PROPERTY_TO)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getTo() {
+  public DestinationDto getTo() {
     return to;
+  }
+
+  @JsonIgnore
+  public boolean getToDefined() {
+    return toDefined;
   }
 
   @JsonProperty(JSON_PROPERTY_TO)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setTo(String to) {
+  public void setTo(DestinationDto to) {
     this.to = to;
+    this.toDefined = true;
   }
 
   public GetCallResponseObjDto domain(String domain) {
     this.domain = domain;
+    this.domainDefined = true;
     return this;
   }
 
@@ -293,14 +284,21 @@ public class GetCallResponseObjDto {
     return domain;
   }
 
+  @JsonIgnore
+  public boolean getDomainDefined() {
+    return domainDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DOMAIN)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDomain(String domain) {
     this.domain = domain;
+    this.domainDefined = true;
   }
 
   public GetCallResponseObjDto callId(String callId) {
     this.callId = callId;
+    this.callIdDefined = true;
     return this;
   }
 
@@ -315,14 +313,21 @@ public class GetCallResponseObjDto {
     return callId;
   }
 
+  @JsonIgnore
+  public boolean getCallIdDefined() {
+    return callIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CALL_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCallId(String callId) {
     this.callId = callId;
+    this.callIdDefined = true;
   }
 
   public GetCallResponseObjDto duration(Integer duration) {
     this.duration = duration;
+    this.durationDefined = true;
     return this;
   }
 
@@ -337,14 +342,21 @@ public class GetCallResponseObjDto {
     return duration;
   }
 
+  @JsonIgnore
+  public boolean getDurationDefined() {
+    return durationDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDuration(Integer duration) {
     this.duration = duration;
+    this.durationDefined = true;
   }
 
   public GetCallResponseObjDto status(String status) {
     this.status = status;
+    this.statusDefined = true;
     return this;
   }
 
@@ -359,36 +371,50 @@ public class GetCallResponseObjDto {
     return status;
   }
 
+  @JsonIgnore
+  public boolean getStatusDefined() {
+    return statusDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_STATUS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setStatus(String status) {
     this.status = status;
+    this.statusDefined = true;
   }
 
-  public GetCallResponseObjDto result(String result) {
+  public GetCallResponseObjDto result(CallResultDto result) {
     this.result = result;
+    this.resultDefined = true;
     return this;
   }
 
   /**
-   * Contains the result of a call.
+   * Get result
    *
    * @return result
    */
   @JsonProperty(JSON_PROPERTY_RESULT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getResult() {
+  public CallResultDto getResult() {
     return result;
+  }
+
+  @JsonIgnore
+  public boolean getResultDefined() {
+    return resultDefined;
   }
 
   @JsonProperty(JSON_PROPERTY_RESULT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setResult(String result) {
+  public void setResult(CallResultDto result) {
     this.result = result;
+    this.resultDefined = true;
   }
 
   public GetCallResponseObjDto reason(String reason) {
     this.reason = reason;
+    this.reasonDefined = true;
     return this;
   }
 
@@ -403,14 +429,21 @@ public class GetCallResponseObjDto {
     return reason;
   }
 
+  @JsonIgnore
+  public boolean getReasonDefined() {
+    return reasonDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_REASON)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setReason(String reason) {
     this.reason = reason;
+    this.reasonDefined = true;
   }
 
   public GetCallResponseObjDto timestamp(OffsetDateTime timestamp) {
     this.timestamp = timestamp;
+    this.timestampDefined = true;
     return this;
   }
 
@@ -425,14 +458,21 @@ public class GetCallResponseObjDto {
     return timestamp;
   }
 
+  @JsonIgnore
+  public boolean getTimestampDefined() {
+    return timestampDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TIMESTAMP)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTimestamp(OffsetDateTime timestamp) {
     this.timestamp = timestamp;
+    this.timestampDefined = true;
   }
 
-  public GetCallResponseObjDto custom(Object custom) {
+  public GetCallResponseObjDto custom(String custom) {
     this.custom = custom;
+    this.customDefined = true;
     return this;
   }
 
@@ -443,58 +483,78 @@ public class GetCallResponseObjDto {
    */
   @JsonProperty(JSON_PROPERTY_CUSTOM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Object getCustom() {
+  public String getCustom() {
     return custom;
+  }
+
+  @JsonIgnore
+  public boolean getCustomDefined() {
+    return customDefined;
   }
 
   @JsonProperty(JSON_PROPERTY_CUSTOM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCustom(Object custom) {
+  public void setCustom(String custom) {
     this.custom = custom;
+    this.customDefined = true;
   }
 
-  public GetCallResponseObjDto userRate(String userRate) {
+  public GetCallResponseObjDto userRate(PriceDto userRate) {
     this.userRate = userRate;
+    this.userRateDefined = true;
     return this;
   }
 
   /**
-   * The rate per minute that was charged for the call.
+   * Get userRate
    *
    * @return userRate
    */
   @JsonProperty(JSON_PROPERTY_USER_RATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getUserRate() {
+  public PriceDto getUserRate() {
     return userRate;
+  }
+
+  @JsonIgnore
+  public boolean getUserRateDefined() {
+    return userRateDefined;
   }
 
   @JsonProperty(JSON_PROPERTY_USER_RATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setUserRate(String userRate) {
+  public void setUserRate(PriceDto userRate) {
     this.userRate = userRate;
+    this.userRateDefined = true;
   }
 
-  public GetCallResponseObjDto debit(String debit) {
+  public GetCallResponseObjDto debit(PriceDto debit) {
     this.debit = debit;
+    this.debitDefined = true;
     return this;
   }
 
   /**
-   * The total amount charged for the call.
+   * Get debit
    *
    * @return debit
    */
   @JsonProperty(JSON_PROPERTY_DEBIT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getDebit() {
+  public PriceDto getDebit() {
     return debit;
+  }
+
+  @JsonIgnore
+  public boolean getDebitDefined() {
+    return debitDefined;
   }
 
   @JsonProperty(JSON_PROPERTY_DEBIT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setDebit(String debit) {
+  public void setDebit(PriceDto debit) {
     this.debit = debit;
+    this.debitDefined = true;
   }
 
   /** Return true if this getCallResponseObj object is equal to o. */

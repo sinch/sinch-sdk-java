@@ -1,0 +1,26 @@
+{
+  "from": {
+    "type": "Username",
+    "endpoint": "user name endpoint validation"
+  },
+  "to": {
+    "type": "Number",
+    "endpoint": "+33123456789"
+  },
+  "domain": "pstn",
+  "callId": "a call UUID",
+  "duration": 138,
+  "status": "FINAL",
+  "result": "ANSWERED",
+  "reason": "CALLEEHANGUP",
+  "timestamp": "2024-01-08T09:48:12",
+  "custom": "{}",
+  "userRate": {
+    "currencyId": "EUR",
+    "amount": 0.1758
+  },
+  "debit": {
+    "currencyId": "EUR",
+    "amount": 0.5274
+  }
+}

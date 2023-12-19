@@ -3,15 +3,16 @@ package com.sinch.sdk.domains.verification.adapters;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.exceptions.ApiMappingException;
 import com.sinch.sdk.core.http.AuthManager;
-import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.core.utils.databind.Mapper;
 import com.sinch.sdk.domains.verification.models.webhooks.VerificationEvent;
 import com.sinch.sdk.domains.verification.models.webhooks.VerificationResponse;
-import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.logging.Logger;
 
 public class WebHooksService implements com.sinch.sdk.domains.verification.WebHooksService {
+
+  private static final Logger LOGGER = Logger.getLogger(WebHooksService.class.getName());
 
   private final Map<String, AuthManager> authManagers;
 
@@ -19,7 +20,7 @@ public class WebHooksService implements com.sinch.sdk.domains.verification.WebHo
     this.authManagers = authManagers;
   }
 
-  public boolean checkAuthentication(
+  public boolean validateAuthenticatedRequest(
       String method, String path, Map<String, String> headers, String jsonPayload) {
 
     // convert header keys to use case-insensitive map keys
@@ -35,43 +36,15 @@ public class WebHooksService implements com.sinch.sdk.domains.verification.WebHo
 
     String[] split = authorizationHeader.split(" ");
     String authorizationKeyword = split.length > 0 ? split[0] : "";
-    String authorizationHash = split.length > 1 ? split[1] : "";
 
-    String computedHash =
-        computeHash(caseInsensitiveHeaders, authorizationKeyword, method, path, jsonPayload);
-
-    return computedHash.equals(authorizationHash);
-  }
-
-  private String computeHash(
-      Map<String, String> caseInsensitiveHeaders,
-      String authorizationKeyword,
-      String method,
-      String path,
-      String jsonPayload) {
-    // getting content type header
-    String contentTypeHeader = caseInsensitiveHeaders.getOrDefault("content-type", "");
-
-    // getting x-timestamp header
-    String xTimeStampHeader = caseInsensitiveHeaders.get("x-timestamp");
-
-    // getting manager related to Authorization header value
     AuthManager authManager = authManagers.get(authorizationKeyword);
-
-    // compute locally according to inputs
-    Collection<Pair<String, String>> computedHeaders =
-        authManager.getAuthorizationHeaders(
-            xTimeStampHeader, method, contentTypeHeader, path, jsonPayload);
-
-    // get locally computed hash by auth manager
-    String computedAuthorization =
-        computedHeaders.stream()
-            .filter(f -> f.getLeft().equals("Authorization"))
-            .findFirst()
-            .map(Pair::getRight)
-            .orElse("");
-    String[] newSplit = computedAuthorization.split(" ");
-    return newSplit.length > 1 ? newSplit[1] : "";
+    if (null == authManager) {
+      // unknown auth manager
+      LOGGER.severe(
+          String.format("Auth manager for authorization '%s' not found", authorizationKeyword));
+      return false;
+    }
+    return authManager.validateAuthenticatedRequest(method, path, headers, jsonPayload);
   }
 
   @Override

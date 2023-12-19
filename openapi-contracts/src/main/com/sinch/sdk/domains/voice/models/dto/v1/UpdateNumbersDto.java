@@ -13,6 +13,8 @@
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -27,13 +29,16 @@ import java.util.Objects;
   UpdateNumbersDto.JSON_PROPERTY_APPLICATIONKEY,
   UpdateNumbersDto.JSON_PROPERTY_CAPABILITY
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class UpdateNumbersDto {
   public static final String JSON_PROPERTY_NUMBERS = "numbers";
   private List<String> numbers;
+  private boolean numbersDefined = false;
 
   public static final String JSON_PROPERTY_APPLICATIONKEY = "applicationkey";
   private String applicationkey;
+  private boolean applicationkeyDefined = false;
 
   /**
    * indicates the DID capability that needs to be assigned to the chosen application. Valid values
@@ -76,11 +81,13 @@ public class UpdateNumbersDto {
 
   public static final String JSON_PROPERTY_CAPABILITY = "capability";
   private String capability;
+  private boolean capabilityDefined = false;
 
   public UpdateNumbersDto() {}
 
   public UpdateNumbersDto numbers(List<String> numbers) {
     this.numbers = numbers;
+    this.numbersDefined = true;
     return this;
   }
 
@@ -88,6 +95,7 @@ public class UpdateNumbersDto {
     if (this.numbers == null) {
       this.numbers = new ArrayList<>();
     }
+    this.numbersDefined = true;
     this.numbers.add(numbersItem);
     return this;
   }
@@ -103,14 +111,21 @@ public class UpdateNumbersDto {
     return numbers;
   }
 
+  @JsonIgnore
+  public boolean getNumbersDefined() {
+    return numbersDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NUMBERS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNumbers(List<String> numbers) {
     this.numbers = numbers;
+    this.numbersDefined = true;
   }
 
   public UpdateNumbersDto applicationkey(String applicationkey) {
     this.applicationkey = applicationkey;
+    this.applicationkeyDefined = true;
     return this;
   }
 
@@ -126,14 +141,21 @@ public class UpdateNumbersDto {
     return applicationkey;
   }
 
+  @JsonIgnore
+  public boolean getApplicationkeyDefined() {
+    return applicationkeyDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_APPLICATIONKEY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setApplicationkey(String applicationkey) {
     this.applicationkey = applicationkey;
+    this.applicationkeyDefined = true;
   }
 
   public UpdateNumbersDto capability(String capability) {
     this.capability = capability;
+    this.capabilityDefined = true;
     return this;
   }
 
@@ -150,10 +172,16 @@ public class UpdateNumbersDto {
     return capability;
   }
 
+  @JsonIgnore
+  public boolean getCapabilityDefined() {
+    return capabilityDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CAPABILITY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCapability(String capability) {
     this.capability = capability;
+    this.capabilityDefined = true;
   }
 
   /** Return true if this updateNumbers object is equal to o. */

@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -19,18 +21,22 @@ import java.util.Objects;
 
 /** A configured option that the user can trigger to perform an action. */
 @JsonPropertyOrder({OptionDto.JSON_PROPERTY_DTMF, OptionDto.JSON_PROPERTY_ACTION})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class OptionDto {
   public static final String JSON_PROPERTY_DTMF = "dtmf";
   private String dtmf;
+  private boolean dtmfDefined = false;
 
   public static final String JSON_PROPERTY_ACTION = "action";
   private String action;
+  private boolean actionDefined = false;
 
   public OptionDto() {}
 
   public OptionDto dtmf(String dtmf) {
     this.dtmf = dtmf;
+    this.dtmfDefined = true;
     return this;
   }
 
@@ -45,14 +51,21 @@ public class OptionDto {
     return dtmf;
   }
 
+  @JsonIgnore
+  public boolean getDtmfDefined() {
+    return dtmfDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DTMF)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setDtmf(String dtmf) {
     this.dtmf = dtmf;
+    this.dtmfDefined = true;
   }
 
   public OptionDto action(String action) {
     this.action = action;
+    this.actionDefined = true;
     return this;
   }
 
@@ -67,10 +80,16 @@ public class OptionDto {
     return action;
   }
 
+  @JsonIgnore
+  public boolean getActionDefined() {
+    return actionDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ACTION)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setAction(String action) {
     this.action = action;
+    this.actionDefined = true;
   }
 
   /** Return true if this option object is equal to o. */

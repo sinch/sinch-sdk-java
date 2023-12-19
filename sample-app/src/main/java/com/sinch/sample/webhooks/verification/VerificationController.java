@@ -42,7 +42,7 @@ public class VerificationController {
         sinchClient
             .verification()
             .webhooks()
-            .checkAuthentication(
+            .validateAuthenticatedRequest(
                 // The HTTP verb this controller is managing
                 "POST",
                 // The URI this controller is managing

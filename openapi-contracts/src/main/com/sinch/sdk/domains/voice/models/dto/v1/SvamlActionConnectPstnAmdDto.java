@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -22,15 +24,18 @@ import java.util.Objects;
  * Detection](/docs/voice/api-reference/amd_v2) (AMD).
  */
 @JsonPropertyOrder({SvamlActionConnectPstnAmdDto.JSON_PROPERTY_ENABLED})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlActionConnectPstnAmdDto {
   public static final String JSON_PROPERTY_ENABLED = "enabled";
   private Boolean enabled;
+  private boolean enabledDefined = false;
 
   public SvamlActionConnectPstnAmdDto() {}
 
   public SvamlActionConnectPstnAmdDto enabled(Boolean enabled) {
     this.enabled = enabled;
+    this.enabledDefined = true;
     return this;
   }
 
@@ -45,10 +50,16 @@ public class SvamlActionConnectPstnAmdDto {
     return enabled;
   }
 
+  @JsonIgnore
+  public boolean getEnabledDefined() {
+    return enabledDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ENABLED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEnabled(Boolean enabled) {
     this.enabled = enabled;
+    this.enabledDefined = true;
   }
 
   /** Return true if this svaml_action_connectPstn_amd object is equal to o. */

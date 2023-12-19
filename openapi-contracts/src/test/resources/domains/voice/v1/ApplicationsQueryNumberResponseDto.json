@@ -1,0 +1,12 @@
+{
+  "number": {
+    "countryId": "FR",
+    "numberType": "Mobile",
+    "normalizedNumber": "+331234567489",
+    "restricted": true,
+    "rate": {
+      "currencyId": "USD",
+      "amount": 0.1850
+    }
+  }
+}

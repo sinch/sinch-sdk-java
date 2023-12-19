@@ -5,15 +5,23 @@ import static java.util.stream.Collectors.toList;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Utility class to manage extendable enumeration set Used to define a known set of value but enable
- * to extend it dynamically Typical use case: being able to send and/or receive values not yet
- * defined at SDK version release
+ * Utility class to manage extendable enumeration set
+ *
+ * <p>Used to define a known set of value but enable to extend it dynamically
+ *
+ * <p>Typical use case: being able to send and/or receive values not yet defined at SDK version
+ * release
+ *
+ * @param <T> Value type
+ * @param <E> Value instance
  */
 public final class EnumSupportDynamic<T, E extends EnumDynamic<T, E>> {
+  private static final Logger LOGGER = Logger.getLogger(EnumSupportDynamic.class.getName());
 
   private final Class<E> aClass;
   private final Map<T, E> valueMap;
@@ -72,6 +80,8 @@ public final class EnumSupportDynamic<T, E extends EnumDynamic<T, E>> {
 
       if (present == null) {
         E newValue = surplusFactory.apply(value);
+
+        LOGGER.warning(String.format("Dynamically create '%s' from '%s'", newValue, value));
 
         valueMap.put(value, newValue);
         values = createImmutableList(values, newValue);

@@ -28,7 +28,7 @@ public class ReportById extends BaseApplication {
 
   public void run() {
 
-    VerificationId id = VerificationId.valueOf("018c017e-111d-cf38-6015-2003e49baaa1");
+    VerificationId id = VerificationId.valueOf(verificationId);
 
     LOGGER.info("Get report by id for  : " + id);
 

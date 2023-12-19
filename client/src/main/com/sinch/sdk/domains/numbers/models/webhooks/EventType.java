@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 /**
+ * The type of the event
+ *
  * @see <a
  *     href="https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Callbacks/#tag/Callbacks/operation/ImportedNumberService_EventsCallback!path=eventType&t=request">https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Callbacks/#tag/Callbacks/operation/ImportedNumberService_EventsCallback!path=eventType&amp;t=request</a>
  * @since 1.0

@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -37,54 +39,70 @@ import java.util.Objects;
   ConferenceCalloutRequestDto.JSON_PROPERTY_CUSTOM,
   ConferenceCalloutRequestDto.JSON_PROPERTY_DOMAIN
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ConferenceCalloutRequestDto {
   public static final String JSON_PROPERTY_DESTINATION = "destination";
   private DestinationDto destination;
+  private boolean destinationDefined = false;
 
   public static final String JSON_PROPERTY_CONFERENCE_ID = "conferenceId";
   private String conferenceId;
+  private boolean conferenceIdDefined = false;
 
   public static final String JSON_PROPERTY_CLI = "cli";
   private String cli;
+  private boolean cliDefined = false;
 
   public static final String JSON_PROPERTY_CONFERENCE_DTMF_OPTIONS = "conferenceDtmfOptions";
   private ConferenceCalloutRequestConferenceDtmfOptionsDto conferenceDtmfOptions;
+  private boolean conferenceDtmfOptionsDefined = false;
 
   public static final String JSON_PROPERTY_DTMF = "dtmf";
   private String dtmf;
+  private boolean dtmfDefined = false;
 
   public static final String JSON_PROPERTY_MAX_DURATION = "maxDuration";
   private Integer maxDuration;
+  private boolean maxDurationDefined = false;
 
   public static final String JSON_PROPERTY_ENABLE_ACE = "enableAce";
   private Boolean enableAce;
+  private boolean enableAceDefined = false;
 
   public static final String JSON_PROPERTY_ENABLE_DICE = "enableDice";
   private Boolean enableDice;
+  private boolean enableDiceDefined = false;
 
   public static final String JSON_PROPERTY_ENABLE_PIE = "enablePie";
   private Boolean enablePie;
+  private boolean enablePieDefined = false;
 
   public static final String JSON_PROPERTY_LOCALE = "locale";
   private String locale;
+  private boolean localeDefined = false;
 
   public static final String JSON_PROPERTY_GREETING = "greeting";
   private String greeting;
+  private boolean greetingDefined = false;
 
   public static final String JSON_PROPERTY_MOH_CLASS = "mohClass";
   private String mohClass;
+  private boolean mohClassDefined = false;
 
   public static final String JSON_PROPERTY_CUSTOM = "custom";
   private String custom;
+  private boolean customDefined = false;
 
   public static final String JSON_PROPERTY_DOMAIN = "domain";
   private String domain;
+  private boolean domainDefined = false;
 
   public ConferenceCalloutRequestDto() {}
 
   public ConferenceCalloutRequestDto destination(DestinationDto destination) {
     this.destination = destination;
+    this.destinationDefined = true;
     return this;
   }
 
@@ -99,14 +117,21 @@ public class ConferenceCalloutRequestDto {
     return destination;
   }
 
+  @JsonIgnore
+  public boolean getDestinationDefined() {
+    return destinationDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DESTINATION)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setDestination(DestinationDto destination) {
     this.destination = destination;
+    this.destinationDefined = true;
   }
 
   public ConferenceCalloutRequestDto conferenceId(String conferenceId) {
     this.conferenceId = conferenceId;
+    this.conferenceIdDefined = true;
     return this;
   }
 
@@ -122,14 +147,21 @@ public class ConferenceCalloutRequestDto {
     return conferenceId;
   }
 
+  @JsonIgnore
+  public boolean getConferenceIdDefined() {
+    return conferenceIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CONFERENCE_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setConferenceId(String conferenceId) {
     this.conferenceId = conferenceId;
+    this.conferenceIdDefined = true;
   }
 
   public ConferenceCalloutRequestDto cli(String cli) {
     this.cli = cli;
+    this.cliDefined = true;
     return this;
   }
 
@@ -146,15 +178,22 @@ public class ConferenceCalloutRequestDto {
     return cli;
   }
 
+  @JsonIgnore
+  public boolean getCliDefined() {
+    return cliDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CLI)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCli(String cli) {
     this.cli = cli;
+    this.cliDefined = true;
   }
 
   public ConferenceCalloutRequestDto conferenceDtmfOptions(
       ConferenceCalloutRequestConferenceDtmfOptionsDto conferenceDtmfOptions) {
     this.conferenceDtmfOptions = conferenceDtmfOptions;
+    this.conferenceDtmfOptionsDefined = true;
     return this;
   }
 
@@ -169,15 +208,22 @@ public class ConferenceCalloutRequestDto {
     return conferenceDtmfOptions;
   }
 
+  @JsonIgnore
+  public boolean getConferenceDtmfOptionsDefined() {
+    return conferenceDtmfOptionsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CONFERENCE_DTMF_OPTIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setConferenceDtmfOptions(
       ConferenceCalloutRequestConferenceDtmfOptionsDto conferenceDtmfOptions) {
     this.conferenceDtmfOptions = conferenceDtmfOptions;
+    this.conferenceDtmfOptionsDefined = true;
   }
 
   public ConferenceCalloutRequestDto dtmf(String dtmf) {
     this.dtmf = dtmf;
+    this.dtmfDefined = true;
     return this;
   }
 
@@ -198,14 +244,21 @@ public class ConferenceCalloutRequestDto {
     return dtmf;
   }
 
+  @JsonIgnore
+  public boolean getDtmfDefined() {
+    return dtmfDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DTMF)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDtmf(String dtmf) {
     this.dtmf = dtmf;
+    this.dtmfDefined = true;
   }
 
   public ConferenceCalloutRequestDto maxDuration(Integer maxDuration) {
     this.maxDuration = maxDuration;
+    this.maxDurationDefined = true;
     return this;
   }
 
@@ -220,14 +273,21 @@ public class ConferenceCalloutRequestDto {
     return maxDuration;
   }
 
+  @JsonIgnore
+  public boolean getMaxDurationDefined() {
+    return maxDurationDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MAX_DURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMaxDuration(Integer maxDuration) {
     this.maxDuration = maxDuration;
+    this.maxDurationDefined = true;
   }
 
   public ConferenceCalloutRequestDto enableAce(Boolean enableAce) {
     this.enableAce = enableAce;
+    this.enableAceDefined = true;
     return this;
   }
 
@@ -249,14 +309,21 @@ public class ConferenceCalloutRequestDto {
     return enableAce;
   }
 
+  @JsonIgnore
+  public boolean getEnableAceDefined() {
+    return enableAceDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ENABLE_ACE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEnableAce(Boolean enableAce) {
     this.enableAce = enableAce;
+    this.enableAceDefined = true;
   }
 
   public ConferenceCalloutRequestDto enableDice(Boolean enableDice) {
     this.enableDice = enableDice;
+    this.enableDiceDefined = true;
     return this;
   }
 
@@ -275,14 +342,21 @@ public class ConferenceCalloutRequestDto {
     return enableDice;
   }
 
+  @JsonIgnore
+  public boolean getEnableDiceDefined() {
+    return enableDiceDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ENABLE_DICE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEnableDice(Boolean enableDice) {
     this.enableDice = enableDice;
+    this.enableDiceDefined = true;
   }
 
   public ConferenceCalloutRequestDto enablePie(Boolean enablePie) {
     this.enablePie = enablePie;
+    this.enablePieDefined = true;
     return this;
   }
 
@@ -299,14 +373,21 @@ public class ConferenceCalloutRequestDto {
     return enablePie;
   }
 
+  @JsonIgnore
+  public boolean getEnablePieDefined() {
+    return enablePieDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ENABLE_PIE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEnablePie(Boolean enablePie) {
     this.enablePie = enablePie;
+    this.enablePieDefined = true;
   }
 
   public ConferenceCalloutRequestDto locale(String locale) {
     this.locale = locale;
+    this.localeDefined = true;
     return this;
   }
 
@@ -323,14 +404,21 @@ public class ConferenceCalloutRequestDto {
     return locale;
   }
 
+  @JsonIgnore
+  public boolean getLocaleDefined() {
+    return localeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_LOCALE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setLocale(String locale) {
     this.locale = locale;
+    this.localeDefined = true;
   }
 
   public ConferenceCalloutRequestDto greeting(String greeting) {
     this.greeting = greeting;
+    this.greetingDefined = true;
     return this;
   }
 
@@ -345,14 +433,21 @@ public class ConferenceCalloutRequestDto {
     return greeting;
   }
 
+  @JsonIgnore
+  public boolean getGreetingDefined() {
+    return greetingDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_GREETING)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setGreeting(String greeting) {
     this.greeting = greeting;
+    this.greetingDefined = true;
   }
 
   public ConferenceCalloutRequestDto mohClass(String mohClass) {
     this.mohClass = mohClass;
+    this.mohClassDefined = true;
     return this;
   }
 
@@ -374,14 +469,21 @@ public class ConferenceCalloutRequestDto {
     return mohClass;
   }
 
+  @JsonIgnore
+  public boolean getMohClassDefined() {
+    return mohClassDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MOH_CLASS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMohClass(String mohClass) {
     this.mohClass = mohClass;
+    this.mohClassDefined = true;
   }
 
   public ConferenceCalloutRequestDto custom(String custom) {
     this.custom = custom;
+    this.customDefined = true;
     return this;
   }
 
@@ -396,14 +498,21 @@ public class ConferenceCalloutRequestDto {
     return custom;
   }
 
+  @JsonIgnore
+  public boolean getCustomDefined() {
+    return customDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CUSTOM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCustom(String custom) {
     this.custom = custom;
+    this.customDefined = true;
   }
 
   public ConferenceCalloutRequestDto domain(String domain) {
     this.domain = domain;
+    this.domainDefined = true;
     return this;
   }
 
@@ -418,10 +527,16 @@ public class ConferenceCalloutRequestDto {
     return domain;
   }
 
+  @JsonIgnore
+  public boolean getDomainDefined() {
+    return domainDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DOMAIN)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDomain(String domain) {
     this.domain = domain;
+    this.domainDefined = true;
   }
 
   /** Return true if this conferenceCalloutRequest object is equal to o. */
