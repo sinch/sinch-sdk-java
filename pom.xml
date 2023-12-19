@@ -149,6 +149,10 @@
                                 <title>Verification</title>
                                 <packages>com.sinch.sdk.domains.verification*</packages>
                             </group>
+                            <group>
+                                <title>Voice</title>
+                                <packages>com.sinch.sdk.domains.voice*</packages>
+                            </group>
                         </groups>
                     </configuration>
                 </plugin>

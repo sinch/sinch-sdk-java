@@ -16,13 +16,13 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
-class VerificationApplicationAuthManagerTest {
+class ApplicationAuthManagerTest {
 
   static final String KEY = "my-key-id";
   static final String SECRET =
       Base64.getEncoder().encodeToString("my-key-secret".getBytes(StandardCharsets.UTF_8));
 
-  AuthManager authManager = new VerificationApplicationAuthManager(KEY, SECRET);
+  AuthManager authManager = new ApplicationAuthManager(KEY, SECRET);
 
   @Test
   void getSchema() {

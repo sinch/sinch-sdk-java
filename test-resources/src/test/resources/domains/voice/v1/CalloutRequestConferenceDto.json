@@ -1,0 +1,26 @@
+{
+  "method": "conferenceCallout",
+  "conferenceCallout": {
+    "cli": "+14045001000",
+    "destination": {
+      "type": "number",
+      "endpoint": "+14045005000"
+    },
+    "locale": "en-US",
+    "greeting": "Welcome to my conference",
+    "conferenceId": "MyConfId",
+    "conferenceDtmfOptions": {
+      "mode": "detect",
+      "maxDigits": 3,
+      "timeoutMills": 456
+    },
+    "dtmf": "dtfm value",
+    "maxDuration": 32,
+    "enableAce": true,
+    "enableDice": true,
+    "enablePie": true,
+    "mohClass": "music2",
+    "custom": "my custom value",
+    "domain": "pstn"
+  }
+}
