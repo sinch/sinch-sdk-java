@@ -1,0 +1,65 @@
+name: Tag & Release
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "The branch to checkout when cutting the release."
+        required: true
+        default: "main"
+      releaseVersion:
+        description: "Version number to be released (use semver semantic: 'X.Y.Z')"
+        required: true
+      developmentVersion:
+        description: "Next development version to be set (use semver semantic: 'X.Y.Z', `-SNAPSHOT` suffix will be automatically added)"
+        required: true
+
+permissions:
+  contents: write
+  deployments: write
+jobs:
+  Releasing:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+      - name: Set up Maven Central Repository
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          server-id: ossrh
+          server-username: OSSRH_USER
+          server-password: OSSRH_PWD
+          gpg-private-key: ${{ secrets.GPG_KEY }}
+          gpg-passphrase: GPG_PWD
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Configure git
+        run: |
+          git config user.name git
+          git config user.email github-actions@github.com
+          git config --global credential.helper cache
+          git config --global credential.https://github.com.username ${{ env.GITHUB_USERNAME }}
+          git config --global credential.https://github.com.password ${{ env.GITHUB_TOKEN }}
+        env:
+          GITHUB_USERNAME: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release
+        run: |
+          mvn --batch-mode -s settings.xml release:clean release:prepare -Dtag=v${{ github.event.inputs.releaseVersion }} -DreleaseVersion=${{ github.event.inputs.releaseVersion }} -DdevelopmentVersion=${{ github.event.inputs.developmentVersion }}-SNAPSHOT -DscmReleaseCommitComment="[release] Set release & tag: ${{ github.event.inputs.releaseVersion }}" -DscmDevelopmentCommitComment="[release] Set next version: ${{ github.event.inputs.developmentVersion }}-SNAPSHOT"
+          mvn --batch-mode -s settings.xml release:perform -Dusername=${{ env.GITHUB_USERNAME }} -Dpassword=${{ env.GITHUB_TOKEN }} -DskipTests=true
+        env:
+          OSSRH_USER: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_PWD: ${{ secrets.OSSRH_PWD }}
+          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+          GPG_PWD: ${{ secrets.GPG_PWD }}
+          GITHUB_USERNAME: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
