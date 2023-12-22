@@ -8,7 +8,8 @@ import java.util.logging.Logger;
 
 public abstract class BaseApplication {
   private static final String BATCH_ID_KEY = "BATCH_ID";
-  private static final String PHONE_NUMBER_KEY = "PHONE_NUMBER";
+  public static final String PHONE_NUMBER_KEY = "PHONE_NUMBER";
+  public static final String CONFERENCE_ID = "CONFERENCE_ID";
 
   protected static final Logger LOGGER = Utils.initializeLogger(BaseApplication.class.getName());
 
@@ -16,6 +17,7 @@ public abstract class BaseApplication {
 
   protected String phoneNumber;
   protected String batchId;
+  protected String conferenceId;
 
   protected BaseApplication() throws IOException {
 
@@ -32,6 +34,11 @@ public abstract class BaseApplication {
         null != System.getenv(BATCH_ID_KEY)
             ? System.getenv(BATCH_ID_KEY)
             : properties.getProperty(BATCH_ID_KEY);
+
+    conferenceId =
+        null != System.getenv(CONFERENCE_ID)
+            ? System.getenv(CONFERENCE_ID)
+            : properties.getProperty(CONFERENCE_ID);
 
     client = new SinchClient(configuration);
   }

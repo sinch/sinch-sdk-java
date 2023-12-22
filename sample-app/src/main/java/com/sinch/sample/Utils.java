@@ -80,4 +80,17 @@ public class Utils {
         .setApplicationSecret(verificationApiSecret)
         .build();
   }
+
+  public static void echoStep(int step, String text) {
+    String formatted = "| Step " + step + ": " + text + " |";
+    String separator = String.format("+%0" + (formatted.length() - 2) + "d+", 0).replace('0', '-');
+
+    System.out.println(separator);
+    System.out.println(formatted);
+    System.out.println(separator);
+  }
+
+  public static void echo(String text) {
+    System.out.println("  " + text);
+  }
 }

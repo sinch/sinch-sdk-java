@@ -1,5 +1,8 @@
 package com.sinch.sample.numbers;
 
+import static com.sinch.sample.Utils.echo;
+import static com.sinch.sample.Utils.echoStep;
+
 import com.sinch.sample.Utils;
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.core.exceptions.ApiException;
@@ -376,18 +379,5 @@ public class NumbersSampleFlow {
             + phoneNumber
             + " has been released; it will expire at "
             + releasedNumber.getExpireAt());
-  }
-
-  void echoStep(int step, String text) {
-    String formatted = "| Step " + step + ": " + text + " |";
-    String separator = String.format("+%0" + (formatted.length() - 2) + "d+", 0).replace('0', '-');
-
-    System.out.println(separator);
-    System.out.println(formatted);
-    System.out.println(separator);
-  }
-
-  void echo(String text) {
-    System.out.println("  " + text);
   }
 }
