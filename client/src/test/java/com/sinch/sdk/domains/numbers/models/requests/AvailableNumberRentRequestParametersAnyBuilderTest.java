@@ -1,12 +1,12 @@
 package com.sinch.sdk.domains.numbers.models.requests;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.numbers.models.Capability;
 import com.sinch.sdk.domains.numbers.models.NumberPattern;
 import com.sinch.sdk.domains.numbers.models.NumberType;
 import com.sinch.sdk.domains.numbers.models.SearchPattern;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -41,36 +41,38 @@ class AvailableNumberRentRequestParametersAnyBuilderTest {
 
   @Test
   void getRegionCode() {
-    Assertions.assertThat(value.getRegionCode()).isEqualTo(regionCode);
+    Assertions.assertThat(value.getRegionCode().get()).isEqualTo(regionCode);
   }
 
   @Test
   void getType() {
-    Assertions.assertThat(value.getType()).isEqualTo(type);
+    Assertions.assertThat(value.getType().get()).isEqualTo(type);
   }
 
   @Test
   void getNumberPattern() {
-    Assertions.assertThat(value.getNumberPattern()).isEqualTo(Optional.of(numberPattern));
+    Assertions.assertThat(value.getNumberPattern()).isEqualTo(OptionalValue.of(numberPattern));
   }
 
   @Test
   void getCapabilities() {
-    Assertions.assertThat(value.getCapabilities()).isEqualTo(Optional.of(capabilities));
+    Assertions.assertThat(value.getCapabilities()).isEqualTo(OptionalValue.of(capabilities));
   }
 
   @Test
   void getSmsConfiguration() {
-    Assertions.assertThat(value.getSmsConfiguration()).isEqualTo(Optional.of(smsConfiguration));
+    Assertions.assertThat(value.getSmsConfiguration())
+        .isEqualTo(OptionalValue.of(smsConfiguration));
   }
 
   @Test
   void getVoiceConfiguration() {
-    Assertions.assertThat(value.getVoiceConfiguration()).isEqualTo(Optional.of(voiceConfiguration));
+    Assertions.assertThat(value.getVoiceConfiguration())
+        .isEqualTo(OptionalValue.of(voiceConfiguration));
   }
 
   @Test
   void getCallBackUrl() {
-    Assertions.assertThat(value.getCallBackUrl()).isEqualTo(Optional.of(callbackUrl));
+    Assertions.assertThat(value.getCallBackUrl()).isEqualTo(OptionalValue.of(callbackUrl));
   }
 }

@@ -162,10 +162,16 @@ class AvailableNumberServiceTest extends BaseTest {
     ActiveNumber response =
         service.rent(
             "foo",
-            new AvailableNumberRentRequestParameters(
-                new RentSMSConfigurationRequestParameters("", ""),
-                new RentVoiceConfigurationRequestParameters(""),
-                "foo"));
+            AvailableNumberRentRequestParameters.builder()
+                .setSmsConfiguration(
+                    RentSMSConfigurationRequestParameters.builder()
+                        .setServicePlanId("")
+                        .setCampaignId("")
+                        .build())
+                .setVoiceConfiguration(
+                    RentVoiceConfigurationRequestParameters.builder().setAppId("").build())
+                .setCallbackUrl("foo")
+                .build());
     ActiveNumber expected =
         ActiveNumber.builder()
             .setRegionCode("US")

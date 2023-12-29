@@ -39,7 +39,7 @@ public class List extends BaseApplication {
     LOGGER.info("Response");
 
     response.stream()
-        .peek(a -> LOGGER.info(a.toString()))
+        .peek(a -> LOGGER.info(String.format("%s: %s", a.getPhoneNumber(), a)))
         .forEach(
             a -> {
               /* just here to consume the stream*/

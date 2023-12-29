@@ -13,7 +13,7 @@ class CallbackConfigurationUpdateParametersDtoConverterTest {
 
   public static void compareWithDto(
       CallbackConfigurationUpdateRequestParameters client, CallbackConfigurationUpdateDto dto) {
-    assertEquals(dto.getHmacSecret(), client.getHMACSecret());
+    assertEquals(dto.getHmacSecret(), client.getHMACSecret().get());
   }
 
   @Test

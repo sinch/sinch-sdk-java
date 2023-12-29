@@ -25,6 +25,6 @@ public class CheckAvailability extends BaseApplication {
 
     AvailableNumber value = client.numbers().available().checkAvailability(phoneNumber);
 
-    LOGGER.info("Response :" + value);
+    LOGGER.info("Response: " + value);
   }
 }

@@ -24,6 +24,8 @@ public class VoiceConfigurationDtoConverter {
       return null;
     }
 
-    return new VoiceConfigurationDto().appId(configuration.getAppId());
+    VoiceConfigurationDto dto = new VoiceConfigurationDto();
+    configuration.getAppId().ifPresent(dto::appId);
+    return dto;
   }
 }

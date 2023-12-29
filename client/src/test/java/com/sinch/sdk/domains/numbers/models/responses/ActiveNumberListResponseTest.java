@@ -1,6 +1,9 @@
 package com.sinch.sdk.domains.numbers.models.responses;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -8,9 +11,18 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.core.models.pagination.TokenPageNavigator;
 import com.sinch.sdk.domains.numbers.ActiveNumberService;
-import com.sinch.sdk.domains.numbers.models.*;
+import com.sinch.sdk.domains.numbers.models.ActiveNumber;
+import com.sinch.sdk.domains.numbers.models.Capability;
+import com.sinch.sdk.domains.numbers.models.Money;
+import com.sinch.sdk.domains.numbers.models.NumberType;
+import com.sinch.sdk.domains.numbers.models.ProvisioningStatus;
+import com.sinch.sdk.domains.numbers.models.SMSConfiguration;
+import com.sinch.sdk.domains.numbers.models.ScheduledSmsProvisioning;
+import com.sinch.sdk.domains.numbers.models.ScheduledVoiceProvisioning;
+import com.sinch.sdk.domains.numbers.models.SmsErrorCode;
+import com.sinch.sdk.domains.numbers.models.VoiceConfiguration;
 import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberListRequestParameters;
-import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberListRequestParametersTest;
+import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberListRequestParametersBuilderTest;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,6 +37,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 class ActiveNumberListResponseTest extends BaseTest {
+
   @Mock ActiveNumberService service;
 
   List<ActiveNumber> list =
@@ -68,15 +81,15 @@ class ActiveNumberListResponseTest extends BaseTest {
   List<Page<ActiveNumberListRequestParameters, ActiveNumber, String>> pages =
       Arrays.asList(
           new Page<>(
-              ActiveNumberListRequestParametersTest.value,
+              ActiveNumberListRequestParametersBuilderTest.value,
               list.stream().limit(5).collect(Collectors.toList()),
               new TokenPageNavigator("foo page2")),
           new Page<>(
-              ActiveNumberListRequestParametersTest.value,
+              ActiveNumberListRequestParametersBuilderTest.value,
               list.stream().skip(5).limit(5).collect(Collectors.toList()),
               new TokenPageNavigator("foo page3")),
           new Page<>(
-              ActiveNumberListRequestParametersTest.value,
+              ActiveNumberListRequestParametersBuilderTest.value,
               list.stream().skip(10).collect(Collectors.toList()),
               null));
 

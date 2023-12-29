@@ -1,5 +1,7 @@
 package com.sinch.sdk.domains.numbers.models.requests;
 
+import com.sinch.sdk.core.models.OptionalValue;
+
 /**
  * Parameters request to update callback configuration
  *
@@ -9,16 +11,13 @@ package com.sinch.sdk.domains.numbers.models.requests;
  */
 public class CallbackConfigurationUpdateRequestParameters {
   /** */
-  private final String hmacSecret;
+  private final OptionalValue<String> hmacSecret;
 
-  /**
-   * @param hmacSecret The HMAC secret to be updated for the specified project
-   */
-  public CallbackConfigurationUpdateRequestParameters(String hmacSecret) {
+  private CallbackConfigurationUpdateRequestParameters(OptionalValue<String> hmacSecret) {
     this.hmacSecret = hmacSecret;
   }
 
-  public String getHMACSecret() {
+  public OptionalValue<String> getHMACSecret() {
     return hmacSecret;
   }
 
@@ -27,12 +26,17 @@ public class CallbackConfigurationUpdateRequestParameters {
   }
 
   public static class Builder {
-    String hmacSecret;
+    OptionalValue<String> hmacSecret = OptionalValue.empty();
 
     private Builder() {}
 
+    /***
+     *
+     * @param hmacSecret The HMAC secret to be updated for the specified project
+     * @return current builder
+     */
     public Builder setHMACSecret(String hmacSecret) {
-      this.hmacSecret = hmacSecret;
+      this.hmacSecret = OptionalValue.of(hmacSecret);
       return this;
     }
 

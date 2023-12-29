@@ -3,7 +3,6 @@ package com.sinch.sample.numbers.available;
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.numbers.models.*;
 import com.sinch.sdk.domains.numbers.models.requests.AvailableNumberRentAnyRequestParameters;
-import com.sinch.sdk.domains.numbers.models.requests.RentSMSConfigurationRequestParameters;
 import com.sinch.sdk.domains.numbers.models.requests.RentVoiceConfigurationRequestParameters;
 import java.io.IOException;
 import java.util.Collections;
@@ -25,7 +24,7 @@ public class RentAny extends BaseApplication {
 
   public void run() {
 
-    LOGGER.info("RentAny :");
+    LOGGER.info("RentAny:");
 
     AvailableNumberRentAnyRequestParameters parameters =
         AvailableNumberRentAnyRequestParameters.builder()
@@ -37,13 +36,18 @@ public class RentAny extends BaseApplication {
                     .setSearchPattern(SearchPattern.END)
                     .build())
             .setCapabilities(Collections.singletonList(Capability.VOICE))
-            .setSmsConfiguration(new RentSMSConfigurationRequestParameters("campaign id"))
-            .setVoiceConfiguration(new RentVoiceConfigurationRequestParameters("app id"))
-            .setCallbackUrl("foo callback")
+            /* .setSmsConfiguration(
+            RentSMSConfigurationRequestParameters.builder()
+                .setServicePlanId("foo service plan")
+                .setCampaignId("campaign id")
+                .build())*/
+            .setVoiceConfiguration(
+                RentVoiceConfigurationRequestParameters.builder().setAppId("app id").build())
+            .setCallbackUrl("https://callback")
             .build();
 
     ActiveNumber value = client.numbers().available().rentAny(parameters);
 
-    LOGGER.info("Response :" + value);
+    LOGGER.info("Response: " + value);
   }
 }

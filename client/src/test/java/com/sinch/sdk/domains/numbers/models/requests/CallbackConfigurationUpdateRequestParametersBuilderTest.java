@@ -10,6 +10,6 @@ class CallbackConfigurationUpdateRequestParametersBuilderTest {
 
   @Test
   void getHMACSecret() {
-    Assertions.assertThat(value.getHMACSecret()).isEqualTo("hmac value");
+    Assertions.assertThat(value.getHMACSecret().get()).isEqualTo("hmac value");
   }
 }

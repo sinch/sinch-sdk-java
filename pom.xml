@@ -221,6 +221,9 @@
                                 <resource>
                                     <directory>client/src/test/resources</directory>
                                 </resource>
+                                <resource>
+                                    <directory>openapi-contracts/src/test/resources</directory>
+                                </resource>
                             </resources>
                         </configuration>
                     </execution>

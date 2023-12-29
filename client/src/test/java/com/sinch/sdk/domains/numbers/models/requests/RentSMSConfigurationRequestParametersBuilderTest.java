@@ -1,6 +1,6 @@
 package com.sinch.sdk.domains.numbers.models.requests;
 
-import java.util.Optional;
+import com.sinch.sdk.core.models.OptionalValue;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -16,16 +16,16 @@ class RentSMSConfigurationRequestParametersBuilderTest {
 
   @Test
   void getServicePlanId() {
-    Assertions.assertThat(value.getServicePlanId()).isEqualTo("plan id");
+    Assertions.assertThat(value.getServicePlanId()).isEqualTo(OptionalValue.of("plan id"));
   }
 
   @Test
   void getCampaignId() {
-    Assertions.assertThat(value.getCampaignId()).isEqualTo(Optional.of("campaign id"));
+    Assertions.assertThat(value.getCampaignId()).isEqualTo(OptionalValue.of("campaign id"));
   }
 
   @Test
   void geCampaignIdEmpty() {
-    Assertions.assertThat(valueNoCampaign.getCampaignId()).isEqualTo(Optional.empty());
+    Assertions.assertThat(valueNoCampaign.getCampaignId()).isEqualTo(OptionalValue.empty());
   }
 }

@@ -25,6 +25,6 @@ public class Release extends BaseApplication {
 
     ActiveNumber value = client.numbers().active().release(phoneNumber);
 
-    LOGGER.info("Response :" + value);
+    LOGGER.info("Response: " + value);
   }
 }

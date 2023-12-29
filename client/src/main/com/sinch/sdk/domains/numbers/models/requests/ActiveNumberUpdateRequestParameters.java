@@ -1,6 +1,6 @@
 package com.sinch.sdk.domains.numbers.models.requests;
 
-import java.util.Optional;
+import com.sinch.sdk.core.models.OptionalValue;
 
 /**
  * Parameters request to update an active number for a project
@@ -10,55 +10,38 @@ import java.util.Optional;
  * @since 1.0
  */
 public class ActiveNumberUpdateRequestParameters {
-  private final String displayName;
-  private final ActiveNumberUpdateSMSConfigurationRequestParameters smsConfiguration;
-  private final ActiveNumberUpdateVoiceConfigurationRequestParameters voiceConfiguration;
-  private final String callback;
+  private final OptionalValue<String> displayName;
+  private final OptionalValue<ActiveNumberUpdateSMSConfigurationRequestParameters> smsConfiguration;
+  private final OptionalValue<ActiveNumberUpdateVoiceConfigurationRequestParameters>
+      voiceConfiguration;
+  private final OptionalValue<String> callback;
 
-  /**
-   * @param displayName see {@link #getDisplayName() getDisplayName getter}
-   * @param smsConfiguration see {@link #getSmsConfiguration() getSmsConfiguration getter}
-   * @param voiceConfiguration see {@link #getVoiceConfiguration() getVoiceConfiguration getter}
-   * @param callback see {@link #getCallback() getCallback getter}
-   */
-  public ActiveNumberUpdateRequestParameters(
-      String displayName,
-      ActiveNumberUpdateSMSConfigurationRequestParameters smsConfiguration,
-      ActiveNumberUpdateVoiceConfigurationRequestParameters voiceConfiguration,
-      String callback) {
+  private ActiveNumberUpdateRequestParameters(
+      OptionalValue<String> displayName,
+      OptionalValue<ActiveNumberUpdateSMSConfigurationRequestParameters> smsConfiguration,
+      OptionalValue<ActiveNumberUpdateVoiceConfigurationRequestParameters> voiceConfiguration,
+      OptionalValue<String> callback) {
     this.displayName = displayName;
     this.smsConfiguration = smsConfiguration;
     this.voiceConfiguration = voiceConfiguration;
     this.callback = callback;
   }
 
-  /**
-   * @return User supplied name for the phone number
-   */
-  public Optional<String> getDisplayName() {
-    return Optional.ofNullable(displayName);
+  public OptionalValue<String> getDisplayName() {
+    return displayName;
   }
 
-  /**
-   * @return The current SMS configuration for this number
-   */
-  public Optional<ActiveNumberUpdateSMSConfigurationRequestParameters> getSmsConfiguration() {
-    return Optional.ofNullable(smsConfiguration);
+  public OptionalValue<ActiveNumberUpdateSMSConfigurationRequestParameters> getSmsConfiguration() {
+    return smsConfiguration;
   }
 
-  /**
-   * @return The current voice configuration for this number
-   */
-  public Optional<ActiveNumberUpdateVoiceConfigurationRequestParameters> getVoiceConfiguration() {
-    return Optional.ofNullable(voiceConfiguration);
+  public OptionalValue<ActiveNumberUpdateVoiceConfigurationRequestParameters>
+      getVoiceConfiguration() {
+    return voiceConfiguration;
   }
 
-  /**
-   * @return The callback URL to be called for a rented number's provisioning / deprovisioning
-   *     operations ({@link com.sinch.sdk.domains.numbers.WebHooksService see WebHooksService})
-   */
-  public Optional<String> getCallback() {
-    return Optional.ofNullable(callback);
+  public OptionalValue<String> getCallback() {
+    return callback;
   }
 
   public static Builder builder() {
@@ -66,32 +49,52 @@ public class ActiveNumberUpdateRequestParameters {
   }
 
   public static class Builder {
-    String displayName;
-    ActiveNumberUpdateSMSConfigurationRequestParameters smsConfiguration;
-    ActiveNumberUpdateVoiceConfigurationRequestParameters voiceConfiguration;
-    String callback;
+    OptionalValue<String> displayName = OptionalValue.empty();
+    OptionalValue<ActiveNumberUpdateSMSConfigurationRequestParameters> smsConfiguration =
+        OptionalValue.empty();
+    OptionalValue<ActiveNumberUpdateVoiceConfigurationRequestParameters> voiceConfiguration =
+        OptionalValue.empty();
+    OptionalValue<String> callback = OptionalValue.empty();
 
     private Builder() {}
 
+    /**
+     * @param displayName User supplied name for the phone number
+     * @return current builder
+     */
     public Builder setDisplayName(String displayName) {
-      this.displayName = displayName;
+      this.displayName = OptionalValue.of(displayName);
       return this;
     }
 
+    /**
+     * @param smsConfiguration The current SMS configuration for this number
+     * @return current builder
+     */
     public Builder setSmsConfiguration(
         ActiveNumberUpdateSMSConfigurationRequestParameters smsConfiguration) {
-      this.smsConfiguration = smsConfiguration;
+      this.smsConfiguration = OptionalValue.of(smsConfiguration);
       return this;
     }
 
+    /**
+     * @param voiceConfiguration The current voice configuration for this number
+     * @return current builder
+     */
     public Builder setVoiceConfiguration(
         ActiveNumberUpdateVoiceConfigurationRequestParameters voiceConfiguration) {
-      this.voiceConfiguration = voiceConfiguration;
+      this.voiceConfiguration = OptionalValue.of(voiceConfiguration);
       return this;
     }
 
+    /**
+     * @param callback The callback URL to be called for a rented number's provisioning /
+     *     deprovisioning operations ({@link com.sinch.sdk.domains.numbers.WebHooksService see
+     *     WebHooksService})
+     * @return current builder
+     */
     public Builder setCallback(String callback) {
-      this.callback = callback;
+      this.callback = OptionalValue.of(callback);
       return this;
     }
 

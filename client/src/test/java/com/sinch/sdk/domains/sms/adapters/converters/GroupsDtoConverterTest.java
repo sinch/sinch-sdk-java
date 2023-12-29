@@ -52,10 +52,18 @@ class GroupsDtoConverterTest extends BaseTest {
 
   static void compareWithDto(GroupAutoUpdate client, GroupAutoUpdateDto dto) {
     assertEquals(dto.getTo(), client.getTo());
-    assertEquals(dto.getAdd().getFirstWord(), client.getAdd().getFirstWord());
-    assertEquals(dto.getAdd().getSecondWord(), client.getAdd().getSecondWord());
-    assertEquals(dto.getRemove().getFirstWord(), client.getRemove().getFirstWord());
-    assertEquals(dto.getRemove().getSecondWord(), client.getRemove().getSecondWord());
+
+    assertEquals(dto.getAdd().getFirstWordDefined(), client.getAdd().getFirstWord().isPresent());
+    assertEquals(dto.getAdd().getFirstWord(), client.getAdd().getFirstWord().orElse(null));
+    assertEquals(dto.getAdd().getSecondWordDefined(), client.getAdd().getSecondWord().isPresent());
+    assertEquals(dto.getAdd().getSecondWord(), client.getAdd().getSecondWord().orElse(null));
+
+    assertEquals(
+        dto.getRemove().getFirstWordDefined(), client.getRemove().getFirstWord().isPresent());
+    assertEquals(dto.getRemove().getFirstWord(), client.getRemove().getFirstWord().orElse(null));
+    assertEquals(
+        dto.getRemove().getSecondWordDefined(), client.getRemove().getSecondWord().isPresent());
+    assertEquals(dto.getRemove().getSecondWord(), client.getRemove().getSecondWord().orElse(null));
   }
 
   @Test

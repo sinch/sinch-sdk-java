@@ -4,6 +4,7 @@ import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.domains.numbers.adapters.api.v1.AvailableNumberApi;
 import com.sinch.sdk.domains.numbers.adapters.converters.ActiveNumberDtoConverter;
@@ -22,7 +23,6 @@ import com.sinch.sdk.models.Configuration;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class AvailableNumberService
@@ -47,10 +47,10 @@ public class AvailableNumberService
 
   public AvailableNumberListResponse list(AvailableNumberListAllRequestParameters parameters)
       throws ApiException {
-    String regionCode = parameters.getRegionCode();
-    NumberType type = parameters.getType();
+    String regionCode = parameters.getRegionCode().get();
+    NumberType type = parameters.getType().get();
 
-    Optional<NumberPattern> pattern = parameters.getNumberPattern();
+    OptionalValue<NumberPattern> pattern = parameters.getNumberPattern();
     String patternPattern = null;
     SearchPattern searchPattern = null;
     if (pattern.isPresent()) {

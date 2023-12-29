@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.numbers.adapters.converters;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.domains.numbers.models.NumberPattern;
 import com.sinch.sdk.domains.numbers.models.dto.v1.RentAnyNumberRequestDto;
@@ -7,7 +8,6 @@ import com.sinch.sdk.domains.numbers.models.dto.v1.RentAnyNumberRequestSmsConfig
 import com.sinch.sdk.domains.numbers.models.dto.v1.RentAnyNumberRequestVoiceConfigurationDto;
 import com.sinch.sdk.domains.numbers.models.dto.v1.SearchPatternDto;
 import com.sinch.sdk.domains.numbers.models.requests.AvailableNumberRentAnyRequestParameters;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class AvailableRentAnyRequestParametersDtoConverter {
@@ -16,10 +16,10 @@ public class AvailableRentAnyRequestParametersDtoConverter {
 
     RentAnyNumberRequestDto dto =
         new RentAnyNumberRequestDto()
-            .regionCode(parameters.getRegionCode())
-            .type(parameters.getType().value());
+            .regionCode(parameters.getRegionCode().get())
+            .type(parameters.getType().get().value());
 
-    Optional<NumberPattern> pattern = parameters.getNumberPattern();
+    OptionalValue<NumberPattern> pattern = parameters.getNumberPattern();
     if (pattern.isPresent()) {
       NumberPattern p = pattern.get();
       String patternPattern = p.getPattern();
@@ -36,22 +36,25 @@ public class AvailableRentAnyRequestParametersDtoConverter {
             value ->
                 dto.capabilities(
                     value.stream().map(EnumDynamic::value).collect(Collectors.toList())));
-
     parameters
         .getSmsConfiguration()
         .ifPresent(
-            value ->
-                dto.smsConfiguration(
-                    new RentAnyNumberRequestSmsConfigurationDto()
-                        .campaignId(value.getCampaignId().orElse(null))
-                        .servicePlanId(value.getServicePlanId())));
+            value -> {
+              RentAnyNumberRequestSmsConfigurationDto config =
+                  new RentAnyNumberRequestSmsConfigurationDto();
+              value.getServicePlanId().ifPresent(config::setServicePlanId);
+              value.getCampaignId().ifPresent(config::setCampaignId);
+              dto.smsConfiguration(config);
+            });
     parameters
         .getVoiceConfiguration()
         .ifPresent(
-            value ->
-                dto.voiceConfiguration(
-                    new RentAnyNumberRequestVoiceConfigurationDto().appId(value.getAppId())));
-
+            value -> {
+              RentAnyNumberRequestVoiceConfigurationDto config =
+                  new RentAnyNumberRequestVoiceConfigurationDto();
+              value.getAppId().ifPresent(config::setAppId);
+              dto.voiceConfiguration(config);
+            });
     parameters.getCallBackUrl().ifPresent(dto::callbackUrl);
     return dto;
   }

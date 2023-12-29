@@ -143,38 +143,51 @@ public class GroupsDtoConverter {
     if (null == dto) {
       return null;
     }
-    return GroupAutoUpdateKeyword.builder()
-        .setFirstWord(dto.getFirstWord())
-        .setSecondWord(dto.getSecondWord())
-        .build();
+
+    GroupAutoUpdateKeyword.Builder builder = GroupAutoUpdateKeyword.builder();
+    if (dto.getFirstWordDefined()) {
+      builder.setFirstWord(dto.getFirstWord());
+    }
+    if (dto.getSecondWordDefined()) {
+      builder.setSecondWord(dto.getSecondWord());
+    }
+    return builder.build();
   }
 
   private static UpdateGroupRequestAutoUpdateAddDto convertAdd(GroupAutoUpdateKeyword client) {
     if (null == client) {
       return null;
     }
-    return new UpdateGroupRequestAutoUpdateAddDto()
-        .firstWord(client.getFirstWord())
-        .secondWord(client.getSecondWord());
+
+    UpdateGroupRequestAutoUpdateAddDto dto = new UpdateGroupRequestAutoUpdateAddDto();
+    client.getFirstWord().ifPresent(dto::firstWord);
+    client.getSecondWord().ifPresent(dto::secondWord);
+    return dto;
   }
 
   private static GroupAutoUpdateKeyword convert(RemoveKeywordDto dto) {
     if (null == dto) {
       return null;
     }
-    return GroupAutoUpdateKeyword.builder()
-        .setFirstWord(dto.getFirstWord())
-        .setSecondWord(dto.getSecondWord())
-        .build();
+    GroupAutoUpdateKeyword.Builder builder = GroupAutoUpdateKeyword.builder();
+    if (dto.getFirstWordDefined()) {
+      builder.setFirstWord(dto.getFirstWord());
+    }
+    if (dto.getSecondWordDefined()) {
+      builder.setSecondWord(dto.getSecondWord());
+    }
+    return builder.build();
   }
 
   private static GroupObjectAutoUpdateRemoveDto convertRemove(GroupAutoUpdateKeyword client) {
     if (null == client) {
       return null;
     }
-    return new GroupObjectAutoUpdateRemoveDto()
-        .firstWord(client.getFirstWord())
-        .secondWord(client.getSecondWord());
+
+    GroupObjectAutoUpdateRemoveDto dto = new GroupObjectAutoUpdateRemoveDto();
+    client.getFirstWord().ifPresent(dto::firstWord);
+    client.getSecondWord().ifPresent(dto::secondWord);
+    return dto;
   }
 
   private static UpdateGroupRequestAutoUpdateRemoveDto convertRemoveForUpdate(
@@ -182,8 +195,10 @@ public class GroupsDtoConverter {
     if (null == client) {
       return null;
     }
-    return new UpdateGroupRequestAutoUpdateRemoveDto()
-        .firstWord(client.getFirstWord())
-        .secondWord(client.getSecondWord());
+
+    UpdateGroupRequestAutoUpdateRemoveDto dto = new UpdateGroupRequestAutoUpdateRemoveDto();
+    client.getFirstWord().ifPresent(dto::firstWord);
+    client.getSecondWord().ifPresent(dto::secondWord);
+    return dto;
   }
 }

@@ -1,6 +1,6 @@
 package com.sinch.sdk.domains.numbers.models.requests;
 
-import java.util.Optional;
+import com.sinch.sdk.core.models.OptionalValue;
 
 /**
  * Parameters request to rent a number
@@ -10,39 +10,29 @@ import java.util.Optional;
  * @since 1.0
  */
 public class AvailableNumberRentRequestParameters {
-  private final RentSMSConfigurationRequestParameters smsConfiguration;
-  private final RentVoiceConfigurationRequestParameters voiceConfiguration;
-  private final String callbackUrl;
+  private final OptionalValue<RentSMSConfigurationRequestParameters> smsConfiguration;
+  private final OptionalValue<RentVoiceConfigurationRequestParameters> voiceConfiguration;
+  private final OptionalValue<String> callbackUrl;
 
-  /**
-   * @param smsConfiguration The current SMS configuration for this number
-   * @param voiceConfiguration The current voice configuration for this number. During scheduled
-   *     provisioning, the app ID value may be empty in a response if it is still processing or if
-   *     it has failed. The status of scheduled provisioning will show under a
-   *     scheduledVoiceProvisioning object if it's still running. Once processed successfully, the
-   *     appId sent will appear directly under the voiceConfiguration object.
-   * @param callbackUrl The callback URL to be called for a rented number's provisioning /
-   *     deprovisioning operations.
-   */
-  public AvailableNumberRentRequestParameters(
-      RentSMSConfigurationRequestParameters smsConfiguration,
-      RentVoiceConfigurationRequestParameters voiceConfiguration,
-      String callbackUrl) {
+  private AvailableNumberRentRequestParameters(
+      OptionalValue<RentSMSConfigurationRequestParameters> smsConfiguration,
+      OptionalValue<RentVoiceConfigurationRequestParameters> voiceConfiguration,
+      OptionalValue<String> callbackUrl) {
     this.smsConfiguration = smsConfiguration;
     this.voiceConfiguration = voiceConfiguration;
     this.callbackUrl = callbackUrl;
   }
 
-  public Optional<RentSMSConfigurationRequestParameters> getSmsConfiguration() {
-    return Optional.ofNullable(smsConfiguration);
+  public OptionalValue<RentSMSConfigurationRequestParameters> getSmsConfiguration() {
+    return smsConfiguration;
   }
 
-  public Optional<RentVoiceConfigurationRequestParameters> getVoiceConfiguration() {
-    return Optional.ofNullable(voiceConfiguration);
+  public OptionalValue<RentVoiceConfigurationRequestParameters> getVoiceConfiguration() {
+    return voiceConfiguration;
   }
 
-  public Optional<String> getCallBackUrl() {
-    return Optional.ofNullable(callbackUrl);
+  public OptionalValue<String> getCallBackUrl() {
+    return callbackUrl;
   }
 
   public static Builder builder() {
@@ -50,25 +40,43 @@ public class AvailableNumberRentRequestParameters {
   }
 
   public static class Builder {
-    RentSMSConfigurationRequestParameters smsConfiguration;
-    RentVoiceConfigurationRequestParameters voiceConfiguration;
-    String callbackUrl;
+    OptionalValue<RentSMSConfigurationRequestParameters> smsConfiguration = OptionalValue.empty();
+    OptionalValue<RentVoiceConfigurationRequestParameters> voiceConfiguration =
+        OptionalValue.empty();
+    OptionalValue<String> callbackUrl = OptionalValue.empty();
 
     private Builder() {}
 
+    /**
+     * @param smsConfiguration The current SMS configuration for this number
+     * @return current builder
+     */
     public Builder setSmsConfiguration(RentSMSConfigurationRequestParameters smsConfiguration) {
-      this.smsConfiguration = smsConfiguration;
+      this.smsConfiguration = OptionalValue.of(smsConfiguration);
       return this;
     }
 
+    /**
+     * @param voiceConfiguration The current voice configuration for this number. During scheduled
+     *     provisioning, the app ID value may be empty in a response if it is still processing or if
+     *     it has failed. The status of scheduled provisioning will show under a
+     *     scheduledVoiceProvisioning object if it's still running. Once processed successfully, the
+     *     appId sent will appear directly under the voiceConfiguration object.
+     * @return current builder
+     */
     public Builder setVoiceConfiguration(
         RentVoiceConfigurationRequestParameters voiceConfiguration) {
-      this.voiceConfiguration = voiceConfiguration;
+      this.voiceConfiguration = OptionalValue.of(voiceConfiguration);
       return this;
     }
 
+    /**
+     * @param callbackUrl The callback URL to be called for a rented number's provisioning /
+     *     de-provisioning operations.
+     * @return current builder
+     */
     public Builder setCallbackUrl(String callbackUrl) {
-      this.callbackUrl = callbackUrl;
+      this.callbackUrl = OptionalValue.of(callbackUrl);
       return this;
     }
 
