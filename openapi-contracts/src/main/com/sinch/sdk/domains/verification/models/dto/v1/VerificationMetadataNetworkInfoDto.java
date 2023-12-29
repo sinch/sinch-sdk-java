@@ -35,7 +35,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 @JsonDeserialize(
     using = VerificationMetadataNetworkInfoDto.VerificationMetadataNetworkInfoDtoDeserializer.class)
 @JsonSerialize(

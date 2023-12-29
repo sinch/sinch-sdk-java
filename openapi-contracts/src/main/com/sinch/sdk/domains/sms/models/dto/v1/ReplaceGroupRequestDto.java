@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.sms.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -24,18 +26,22 @@ import java.util.Objects;
   ReplaceGroupRequestDto.JSON_PROPERTY_MEMBERS,
   ReplaceGroupRequestDto.JSON_PROPERTY_NAME
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ReplaceGroupRequestDto {
   public static final String JSON_PROPERTY_MEMBERS = "members";
-  private List<String> members = new ArrayList<>();
+  private List<String> members;
+  private boolean membersDefined = false;
 
   public static final String JSON_PROPERTY_NAME = "name";
   private String name;
+  private boolean nameDefined = false;
 
   public ReplaceGroupRequestDto() {}
 
   public ReplaceGroupRequestDto members(List<String> members) {
     this.members = members;
+    this.membersDefined = true;
     return this;
   }
 
@@ -43,6 +49,7 @@ public class ReplaceGroupRequestDto {
     if (this.members == null) {
       this.members = new ArrayList<>();
     }
+    this.membersDefined = true;
     this.members.add(membersItem);
     return this;
   }
@@ -60,14 +67,21 @@ public class ReplaceGroupRequestDto {
     return members;
   }
 
+  @JsonIgnore
+  public boolean getMembersDefined() {
+    return membersDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MEMBERS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setMembers(List<String> members) {
     this.members = members;
+    this.membersDefined = true;
   }
 
   public ReplaceGroupRequestDto name(String name) {
     this.name = name;
+    this.nameDefined = true;
     return this;
   }
 
@@ -82,10 +96,16 @@ public class ReplaceGroupRequestDto {
     return name;
   }
 
+  @JsonIgnore
+  public boolean getNameDefined() {
+    return nameDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setName(String name) {
     this.name = name;
+    this.nameDefined = true;
   }
 
   /** Return true if this ReplaceGroup_request object is equal to o. */

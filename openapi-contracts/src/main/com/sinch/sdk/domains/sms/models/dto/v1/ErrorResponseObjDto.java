@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.sms.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -19,18 +21,22 @@ import java.util.Objects;
 
 /** ErrorResponseObjDto */
 @JsonPropertyOrder({ErrorResponseObjDto.JSON_PROPERTY_CODE, ErrorResponseObjDto.JSON_PROPERTY_TEXT})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ErrorResponseObjDto {
   public static final String JSON_PROPERTY_CODE = "code";
   private String code;
+  private boolean codeDefined = false;
 
   public static final String JSON_PROPERTY_TEXT = "text";
   private String text;
+  private boolean textDefined = false;
 
   public ErrorResponseObjDto() {}
 
   public ErrorResponseObjDto code(String code) {
     this.code = code;
+    this.codeDefined = true;
     return this;
   }
 
@@ -45,14 +51,21 @@ public class ErrorResponseObjDto {
     return code;
   }
 
+  @JsonIgnore
+  public boolean getCodeDefined() {
+    return codeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CODE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCode(String code) {
     this.code = code;
+    this.codeDefined = true;
   }
 
   public ErrorResponseObjDto text(String text) {
     this.text = text;
+    this.textDefined = true;
     return this;
   }
 
@@ -67,10 +80,16 @@ public class ErrorResponseObjDto {
     return text;
   }
 
+  @JsonIgnore
+  public boolean getTextDefined() {
+    return textDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TEXT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setText(String text) {
     this.text = text;
+    this.textDefined = true;
   }
 
   /** Return true if this errorResponseObj object is equal to o. */

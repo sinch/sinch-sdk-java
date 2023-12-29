@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -24,21 +26,26 @@ import java.util.Objects;
   SimSwapResponseDto.JSON_PROPERTY_SWAPPED,
   SimSwapResponseDto.JSON_PROPERTY_SWAP_DATE
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SimSwapResponseDto {
   public static final String JSON_PROPERTY_ID = "id";
   private String id;
+  private boolean idDefined = false;
 
   public static final String JSON_PROPERTY_SWAPPED = "swapped";
   private Boolean swapped;
+  private boolean swappedDefined = false;
 
   public static final String JSON_PROPERTY_SWAP_DATE = "swapDate";
   private OffsetDateTime swapDate;
+  private boolean swapDateDefined = false;
 
   public SimSwapResponseDto() {}
 
   public SimSwapResponseDto id(String id) {
     this.id = id;
+    this.idDefined = true;
     return this;
   }
 
@@ -53,14 +60,21 @@ public class SimSwapResponseDto {
     return id;
   }
 
+  @JsonIgnore
+  public boolean getIdDefined() {
+    return idDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setId(String id) {
     this.id = id;
+    this.idDefined = true;
   }
 
   public SimSwapResponseDto swapped(Boolean swapped) {
     this.swapped = swapped;
+    this.swappedDefined = true;
     return this;
   }
 
@@ -75,14 +89,21 @@ public class SimSwapResponseDto {
     return swapped;
   }
 
+  @JsonIgnore
+  public boolean getSwappedDefined() {
+    return swappedDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SWAPPED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSwapped(Boolean swapped) {
     this.swapped = swapped;
+    this.swappedDefined = true;
   }
 
   public SimSwapResponseDto swapDate(OffsetDateTime swapDate) {
     this.swapDate = swapDate;
+    this.swapDateDefined = true;
     return this;
   }
 
@@ -97,10 +118,16 @@ public class SimSwapResponseDto {
     return swapDate;
   }
 
+  @JsonIgnore
+  public boolean getSwapDateDefined() {
+    return swapDateDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SWAP_DATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSwapDate(OffsetDateTime swapDate) {
     this.swapDate = swapDate;
+    this.swapDateDefined = true;
   }
 
   /** Return true if this SimSwapResponse object is equal to o. */

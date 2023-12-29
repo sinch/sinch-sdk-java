@@ -36,7 +36,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class DeliveryReportsApi {
 
   private static final Logger LOGGER = Logger.getLogger(DeliveryReportsApi.class.getName());
@@ -79,7 +78,8 @@ public class DeliveryReportsApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[getDeliveryReportByBatchId] "
+        "[getDeliveryReportByBatchId]"
+            + " "
             + "servicePlanId: "
             + servicePlanId
             + ", "
@@ -188,7 +188,8 @@ public class DeliveryReportsApi {
       String servicePlanId, String batchId, String recipientMsisdn) throws ApiException {
 
     LOGGER.finest(
-        "[getDeliveryReportByPhoneNumber] "
+        "[getDeliveryReportByPhoneNumber]"
+            + " "
             + "servicePlanId: "
             + servicePlanId
             + ", "
@@ -303,7 +304,8 @@ public class DeliveryReportsApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[getDeliveryReports] "
+        "[getDeliveryReports]"
+            + " "
             + "servicePlanId: "
             + servicePlanId
             + ", "

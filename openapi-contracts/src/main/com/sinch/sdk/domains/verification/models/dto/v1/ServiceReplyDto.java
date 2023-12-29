@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -23,21 +25,26 @@ import java.util.Objects;
   ServiceReplyDto.JSON_PROPERTY_MESSAGE,
   ServiceReplyDto.JSON_PROPERTY_STACK_TRACE
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ServiceReplyDto {
   public static final String JSON_PROPERTY_RESULT = "result";
   private Integer result;
+  private boolean resultDefined = false;
 
   public static final String JSON_PROPERTY_MESSAGE = "message";
   private String message;
+  private boolean messageDefined = false;
 
   public static final String JSON_PROPERTY_STACK_TRACE = "stackTrace";
   private String stackTrace;
+  private boolean stackTraceDefined = false;
 
   public ServiceReplyDto() {}
 
   public ServiceReplyDto result(Integer result) {
     this.result = result;
+    this.resultDefined = true;
     return this;
   }
 
@@ -52,14 +59,21 @@ public class ServiceReplyDto {
     return result;
   }
 
+  @JsonIgnore
+  public boolean getResultDefined() {
+    return resultDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_RESULT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setResult(Integer result) {
     this.result = result;
+    this.resultDefined = true;
   }
 
   public ServiceReplyDto message(String message) {
     this.message = message;
+    this.messageDefined = true;
     return this;
   }
 
@@ -74,14 +88,21 @@ public class ServiceReplyDto {
     return message;
   }
 
+  @JsonIgnore
+  public boolean getMessageDefined() {
+    return messageDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMessage(String message) {
     this.message = message;
+    this.messageDefined = true;
   }
 
   public ServiceReplyDto stackTrace(String stackTrace) {
     this.stackTrace = stackTrace;
+    this.stackTraceDefined = true;
     return this;
   }
 
@@ -96,10 +117,16 @@ public class ServiceReplyDto {
     return stackTrace;
   }
 
+  @JsonIgnore
+  public boolean getStackTraceDefined() {
+    return stackTraceDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_STACK_TRACE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setStackTrace(String stackTrace) {
     this.stackTrace = stackTrace;
+    this.stackTraceDefined = true;
   }
 
   /** Return true if this ServiceReply object is equal to o. */

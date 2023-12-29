@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -31,46 +33,59 @@ import java.util.Objects;
   InitiateVerificationResourceDto.JSON_PROPERTY_SEAMLESS_OPTIONS,
   InitiateVerificationResourceDto.JSON_PROPERTY_HONOUR_EARLY_REJECT
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class InitiateVerificationResourceDto {
   public static final String JSON_PROPERTY_IDENTITY = "identity";
   private InitiateVerificationResourceIdentityDto identity;
+  private boolean identityDefined = false;
 
   public static final String JSON_PROPERTY_METHOD = "method";
   private InitiateVerificationResourceMethodDto method;
+  private boolean methodDefined = false;
 
   public static final String JSON_PROPERTY_REFERENCE = "reference";
   private String reference;
+  private boolean referenceDefined = false;
 
   public static final String JSON_PROPERTY_CUSTOM = "custom";
   private String custom;
+  private boolean customDefined = false;
 
   public static final String JSON_PROPERTY_METADATA = "metadata";
   private InitiateVerificationResourceMetadataDto metadata;
+  private boolean metadataDefined = false;
 
   public static final String JSON_PROPERTY_FLASH_CALL_OPTIONS = "flashCallOptions";
   private InitiateVerificationResourceFlashCallOptionsDto flashCallOptions;
+  private boolean flashCallOptionsDefined = false;
 
   public static final String JSON_PROPERTY_CALLOUT_OPTIONS = "calloutOptions";
   private InitiateVerificationResourceCalloutOptionsDto calloutOptions;
+  private boolean calloutOptionsDefined = false;
 
   public static final String JSON_PROPERTY_SMS_OPTIONS = "smsOptions";
   private InitiateVerificationResourceSmsOptionsDto smsOptions;
+  private boolean smsOptionsDefined = false;
 
   public static final String JSON_PROPERTY_WHATSAPP_OPTIONS = "whatsappOptions";
   private InitiateVerificationResourceWhatsappOptionsDto whatsappOptions;
+  private boolean whatsappOptionsDefined = false;
 
   public static final String JSON_PROPERTY_SEAMLESS_OPTIONS = "seamlessOptions";
   private InitiateVerificationResourceSeamlessOptionsDto seamlessOptions;
+  private boolean seamlessOptionsDefined = false;
 
   public static final String JSON_PROPERTY_HONOUR_EARLY_REJECT = "honourEarlyReject";
   private Boolean honourEarlyReject;
+  private boolean honourEarlyRejectDefined = false;
 
   public InitiateVerificationResourceDto() {}
 
   public InitiateVerificationResourceDto identity(
       InitiateVerificationResourceIdentityDto identity) {
     this.identity = identity;
+    this.identityDefined = true;
     return this;
   }
 
@@ -85,14 +100,21 @@ public class InitiateVerificationResourceDto {
     return identity;
   }
 
+  @JsonIgnore
+  public boolean getIdentityDefined() {
+    return identityDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_IDENTITY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setIdentity(InitiateVerificationResourceIdentityDto identity) {
     this.identity = identity;
+    this.identityDefined = true;
   }
 
   public InitiateVerificationResourceDto method(InitiateVerificationResourceMethodDto method) {
     this.method = method;
+    this.methodDefined = true;
     return this;
   }
 
@@ -107,14 +129,21 @@ public class InitiateVerificationResourceDto {
     return method;
   }
 
+  @JsonIgnore
+  public boolean getMethodDefined() {
+    return methodDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_METHOD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMethod(InitiateVerificationResourceMethodDto method) {
     this.method = method;
+    this.methodDefined = true;
   }
 
   public InitiateVerificationResourceDto reference(String reference) {
     this.reference = reference;
+    this.referenceDefined = true;
     return this;
   }
 
@@ -129,14 +158,21 @@ public class InitiateVerificationResourceDto {
     return reference;
   }
 
+  @JsonIgnore
+  public boolean getReferenceDefined() {
+    return referenceDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_REFERENCE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setReference(String reference) {
     this.reference = reference;
+    this.referenceDefined = true;
   }
 
   public InitiateVerificationResourceDto custom(String custom) {
     this.custom = custom;
+    this.customDefined = true;
     return this;
   }
 
@@ -151,15 +187,22 @@ public class InitiateVerificationResourceDto {
     return custom;
   }
 
+  @JsonIgnore
+  public boolean getCustomDefined() {
+    return customDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CUSTOM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCustom(String custom) {
     this.custom = custom;
+    this.customDefined = true;
   }
 
   public InitiateVerificationResourceDto metadata(
       InitiateVerificationResourceMetadataDto metadata) {
     this.metadata = metadata;
+    this.metadataDefined = true;
     return this;
   }
 
@@ -174,15 +217,22 @@ public class InitiateVerificationResourceDto {
     return metadata;
   }
 
+  @JsonIgnore
+  public boolean getMetadataDefined() {
+    return metadataDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_METADATA)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMetadata(InitiateVerificationResourceMetadataDto metadata) {
     this.metadata = metadata;
+    this.metadataDefined = true;
   }
 
   public InitiateVerificationResourceDto flashCallOptions(
       InitiateVerificationResourceFlashCallOptionsDto flashCallOptions) {
     this.flashCallOptions = flashCallOptions;
+    this.flashCallOptionsDefined = true;
     return this;
   }
 
@@ -197,16 +247,23 @@ public class InitiateVerificationResourceDto {
     return flashCallOptions;
   }
 
+  @JsonIgnore
+  public boolean getFlashCallOptionsDefined() {
+    return flashCallOptionsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_FLASH_CALL_OPTIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFlashCallOptions(
       InitiateVerificationResourceFlashCallOptionsDto flashCallOptions) {
     this.flashCallOptions = flashCallOptions;
+    this.flashCallOptionsDefined = true;
   }
 
   public InitiateVerificationResourceDto calloutOptions(
       InitiateVerificationResourceCalloutOptionsDto calloutOptions) {
     this.calloutOptions = calloutOptions;
+    this.calloutOptionsDefined = true;
     return this;
   }
 
@@ -221,15 +278,22 @@ public class InitiateVerificationResourceDto {
     return calloutOptions;
   }
 
+  @JsonIgnore
+  public boolean getCalloutOptionsDefined() {
+    return calloutOptionsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CALLOUT_OPTIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCalloutOptions(InitiateVerificationResourceCalloutOptionsDto calloutOptions) {
     this.calloutOptions = calloutOptions;
+    this.calloutOptionsDefined = true;
   }
 
   public InitiateVerificationResourceDto smsOptions(
       InitiateVerificationResourceSmsOptionsDto smsOptions) {
     this.smsOptions = smsOptions;
+    this.smsOptionsDefined = true;
     return this;
   }
 
@@ -244,15 +308,22 @@ public class InitiateVerificationResourceDto {
     return smsOptions;
   }
 
+  @JsonIgnore
+  public boolean getSmsOptionsDefined() {
+    return smsOptionsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SMS_OPTIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSmsOptions(InitiateVerificationResourceSmsOptionsDto smsOptions) {
     this.smsOptions = smsOptions;
+    this.smsOptionsDefined = true;
   }
 
   public InitiateVerificationResourceDto whatsappOptions(
       InitiateVerificationResourceWhatsappOptionsDto whatsappOptions) {
     this.whatsappOptions = whatsappOptions;
+    this.whatsappOptionsDefined = true;
     return this;
   }
 
@@ -267,15 +338,22 @@ public class InitiateVerificationResourceDto {
     return whatsappOptions;
   }
 
+  @JsonIgnore
+  public boolean getWhatsappOptionsDefined() {
+    return whatsappOptionsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_WHATSAPP_OPTIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setWhatsappOptions(InitiateVerificationResourceWhatsappOptionsDto whatsappOptions) {
     this.whatsappOptions = whatsappOptions;
+    this.whatsappOptionsDefined = true;
   }
 
   public InitiateVerificationResourceDto seamlessOptions(
       InitiateVerificationResourceSeamlessOptionsDto seamlessOptions) {
     this.seamlessOptions = seamlessOptions;
+    this.seamlessOptionsDefined = true;
     return this;
   }
 
@@ -290,14 +368,21 @@ public class InitiateVerificationResourceDto {
     return seamlessOptions;
   }
 
+  @JsonIgnore
+  public boolean getSeamlessOptionsDefined() {
+    return seamlessOptionsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SEAMLESS_OPTIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSeamlessOptions(InitiateVerificationResourceSeamlessOptionsDto seamlessOptions) {
     this.seamlessOptions = seamlessOptions;
+    this.seamlessOptionsDefined = true;
   }
 
   public InitiateVerificationResourceDto honourEarlyReject(Boolean honourEarlyReject) {
     this.honourEarlyReject = honourEarlyReject;
+    this.honourEarlyRejectDefined = true;
     return this;
   }
 
@@ -312,10 +397,16 @@ public class InitiateVerificationResourceDto {
     return honourEarlyReject;
   }
 
+  @JsonIgnore
+  public boolean getHonourEarlyRejectDefined() {
+    return honourEarlyRejectDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_HONOUR_EARLY_REJECT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setHonourEarlyReject(Boolean honourEarlyReject) {
     this.honourEarlyReject = honourEarlyReject;
+    this.honourEarlyRejectDefined = true;
   }
 
   /** Return true if this InitiateVerificationResource object is equal to o. */

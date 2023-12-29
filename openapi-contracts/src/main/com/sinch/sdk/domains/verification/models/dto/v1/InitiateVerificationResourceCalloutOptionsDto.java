@@ -35,7 +35,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 @JsonDeserialize(
     using =
         InitiateVerificationResourceCalloutOptionsDto
@@ -136,8 +135,8 @@ public class InitiateVerificationResourceCalloutOptionsDto extends AbstractOpenA
       }
       throw new IOException(
           String.format(
-              "Failed deserialization for InitiateVerificationResourceCalloutOptionsDto: %d"
-                  + " classes match result, expected 1",
+              "Failed deserialization for InitiateVerificationResourceCalloutOptionsDto: %d classes"
+                  + " match result, expected 1",
               match));
     }
 

@@ -13,6 +13,8 @@
 package com.sinch.sdk.domains.numbers.models.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -30,28 +32,36 @@ import java.util.Objects;
   CallbackPayloadDto.JSON_PROPERTY_STATUS,
   CallbackPayloadDto.JSON_PROPERTY_FAILURE_CODE
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class CallbackPayloadDto {
   public static final String JSON_PROPERTY_EVENT_ID = "eventId";
   private String eventId;
+  private boolean eventIdDefined = false;
 
   public static final String JSON_PROPERTY_TIMESTAMP = "timestamp";
   private String timestamp;
+  private boolean timestampDefined = false;
 
   public static final String JSON_PROPERTY_PROJECT_ID = "projectId";
   private String projectId;
+  private boolean projectIdDefined = false;
 
   public static final String JSON_PROPERTY_RESOURCE_ID = "resourceId";
   private String resourceId;
+  private boolean resourceIdDefined = false;
 
   public static final String JSON_PROPERTY_RESOURCE_TYPE = "resourceType";
   private String resourceType;
+  private boolean resourceTypeDefined = false;
 
   public static final String JSON_PROPERTY_EVENT_TYPE = "eventType";
   private String eventType;
+  private boolean eventTypeDefined = false;
 
   public static final String JSON_PROPERTY_STATUS = "status";
   private String status;
+  private boolean statusDefined = false;
 
   /**
    * If the status is FAILED, a failure code will be provided. For numbers provisioning to SMS
@@ -120,11 +130,13 @@ public class CallbackPayloadDto {
 
   public static final String JSON_PROPERTY_FAILURE_CODE = "failureCode";
   private String failureCode;
+  private boolean failureCodeDefined = false;
 
   public CallbackPayloadDto() {}
 
   public CallbackPayloadDto eventId(String eventId) {
     this.eventId = eventId;
+    this.eventIdDefined = true;
     return this;
   }
 
@@ -139,14 +151,21 @@ public class CallbackPayloadDto {
     return eventId;
   }
 
+  @JsonIgnore
+  public boolean getEventIdDefined() {
+    return eventIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_EVENT_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEventId(String eventId) {
     this.eventId = eventId;
+    this.eventIdDefined = true;
   }
 
   public CallbackPayloadDto timestamp(String timestamp) {
     this.timestamp = timestamp;
+    this.timestampDefined = true;
     return this;
   }
 
@@ -161,14 +180,21 @@ public class CallbackPayloadDto {
     return timestamp;
   }
 
+  @JsonIgnore
+  public boolean getTimestampDefined() {
+    return timestampDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TIMESTAMP)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTimestamp(String timestamp) {
     this.timestamp = timestamp;
+    this.timestampDefined = true;
   }
 
   public CallbackPayloadDto projectId(String projectId) {
     this.projectId = projectId;
+    this.projectIdDefined = true;
     return this;
   }
 
@@ -183,14 +209,21 @@ public class CallbackPayloadDto {
     return projectId;
   }
 
+  @JsonIgnore
+  public boolean getProjectIdDefined() {
+    return projectIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_PROJECT_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setProjectId(String projectId) {
     this.projectId = projectId;
+    this.projectIdDefined = true;
   }
 
   public CallbackPayloadDto resourceId(String resourceId) {
     this.resourceId = resourceId;
+    this.resourceIdDefined = true;
     return this;
   }
 
@@ -206,14 +239,21 @@ public class CallbackPayloadDto {
     return resourceId;
   }
 
+  @JsonIgnore
+  public boolean getResourceIdDefined() {
+    return resourceIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_RESOURCE_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setResourceId(String resourceId) {
     this.resourceId = resourceId;
+    this.resourceIdDefined = true;
   }
 
   public CallbackPayloadDto resourceType(String resourceType) {
     this.resourceType = resourceType;
+    this.resourceTypeDefined = true;
     return this;
   }
 
@@ -228,14 +268,21 @@ public class CallbackPayloadDto {
     return resourceType;
   }
 
+  @JsonIgnore
+  public boolean getResourceTypeDefined() {
+    return resourceTypeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_RESOURCE_TYPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setResourceType(String resourceType) {
     this.resourceType = resourceType;
+    this.resourceTypeDefined = true;
   }
 
   public CallbackPayloadDto eventType(String eventType) {
     this.eventType = eventType;
+    this.eventTypeDefined = true;
     return this;
   }
 
@@ -250,14 +297,21 @@ public class CallbackPayloadDto {
     return eventType;
   }
 
+  @JsonIgnore
+  public boolean getEventTypeDefined() {
+    return eventTypeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_EVENT_TYPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEventType(String eventType) {
     this.eventType = eventType;
+    this.eventTypeDefined = true;
   }
 
   public CallbackPayloadDto status(String status) {
     this.status = status;
+    this.statusDefined = true;
     return this;
   }
 
@@ -272,14 +326,21 @@ public class CallbackPayloadDto {
     return status;
   }
 
+  @JsonIgnore
+  public boolean getStatusDefined() {
+    return statusDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_STATUS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setStatus(String status) {
     this.status = status;
+    this.statusDefined = true;
   }
 
   public CallbackPayloadDto failureCode(String failureCode) {
     this.failureCode = failureCode;
+    this.failureCodeDefined = true;
     return this;
   }
 
@@ -296,10 +357,16 @@ public class CallbackPayloadDto {
     return failureCode;
   }
 
+  @JsonIgnore
+  public boolean getFailureCodeDefined() {
+    return failureCodeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_FAILURE_CODE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFailureCode(String failureCode) {
     this.failureCode = failureCode;
+    this.failureCodeDefined = true;
   }
 
   /** Return true if this CallbackPayload object is equal to o. */

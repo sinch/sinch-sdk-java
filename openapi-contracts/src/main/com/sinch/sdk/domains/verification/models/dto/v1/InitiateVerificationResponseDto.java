@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -34,48 +36,62 @@ import java.util.Objects;
   InitiateVerificationResponseDto.JSON_PROPERTY_MAX_PRICE,
   InitiateVerificationResponseDto.JSON_PROPERTY_LINKS
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class InitiateVerificationResponseDto {
   public static final String JSON_PROPERTY_ID = "id";
   private String id;
+  private boolean idDefined = false;
 
   public static final String JSON_PROPERTY_METHOD = "method";
   private VerificationMethodDto method;
+  private boolean methodDefined = false;
 
   public static final String JSON_PROPERTY_SMS = "sms";
   private InitiateVerificationResponseSmsDto sms;
+  private boolean smsDefined = false;
 
   public static final String JSON_PROPERTY_FLASH_CALL = "flashCall";
   private InitiateVerificationResponseFlashCallDto flashCall;
+  private boolean flashCallDefined = false;
 
   public static final String JSON_PROPERTY_CALLOUT = "callout";
   private InitiateVerificationResponseCalloutDto callout;
+  private boolean calloutDefined = false;
 
   public static final String JSON_PROPERTY_SEAMLESS = "seamless";
   private InitiateVerificationResponseSeamlessDto seamless;
+  private boolean seamlessDefined = false;
 
   public static final String JSON_PROPERTY_WHATSAPP = "whatsapp";
   private InitiateVerificationResponseWhatsappDto whatsapp;
+  private boolean whatsappDefined = false;
 
   public static final String JSON_PROPERTY_AUTO = "auto";
   private InitiateVerificationResponseAutoDto auto;
+  private boolean autoDefined = false;
 
   public static final String JSON_PROPERTY_EARLY_REJECT = "earlyReject";
   private Boolean earlyReject;
+  private boolean earlyRejectDefined = false;
 
   public static final String JSON_PROPERTY_EARLY_REJECT_MESSAGE = "earlyRejectMessage";
   private String earlyRejectMessage;
+  private boolean earlyRejectMessageDefined = false;
 
   public static final String JSON_PROPERTY_MAX_PRICE = "maxPrice";
   private InitiateVerificationResponseMaxPriceDto maxPrice;
+  private boolean maxPriceDefined = false;
 
   public static final String JSON_PROPERTY_LINKS = "_links";
   private List<VerificationResourceLinkDto> links;
+  private boolean linksDefined = false;
 
   public InitiateVerificationResponseDto() {}
 
   public InitiateVerificationResponseDto id(String id) {
     this.id = id;
+    this.idDefined = true;
     return this;
   }
 
@@ -90,14 +106,21 @@ public class InitiateVerificationResponseDto {
     return id;
   }
 
+  @JsonIgnore
+  public boolean getIdDefined() {
+    return idDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setId(String id) {
     this.id = id;
+    this.idDefined = true;
   }
 
   public InitiateVerificationResponseDto method(VerificationMethodDto method) {
     this.method = method;
+    this.methodDefined = true;
     return this;
   }
 
@@ -112,14 +135,21 @@ public class InitiateVerificationResponseDto {
     return method;
   }
 
+  @JsonIgnore
+  public boolean getMethodDefined() {
+    return methodDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_METHOD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMethod(VerificationMethodDto method) {
     this.method = method;
+    this.methodDefined = true;
   }
 
   public InitiateVerificationResponseDto sms(InitiateVerificationResponseSmsDto sms) {
     this.sms = sms;
+    this.smsDefined = true;
     return this;
   }
 
@@ -134,15 +164,22 @@ public class InitiateVerificationResponseDto {
     return sms;
   }
 
+  @JsonIgnore
+  public boolean getSmsDefined() {
+    return smsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SMS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSms(InitiateVerificationResponseSmsDto sms) {
     this.sms = sms;
+    this.smsDefined = true;
   }
 
   public InitiateVerificationResponseDto flashCall(
       InitiateVerificationResponseFlashCallDto flashCall) {
     this.flashCall = flashCall;
+    this.flashCallDefined = true;
     return this;
   }
 
@@ -157,14 +194,21 @@ public class InitiateVerificationResponseDto {
     return flashCall;
   }
 
+  @JsonIgnore
+  public boolean getFlashCallDefined() {
+    return flashCallDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_FLASH_CALL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFlashCall(InitiateVerificationResponseFlashCallDto flashCall) {
     this.flashCall = flashCall;
+    this.flashCallDefined = true;
   }
 
   public InitiateVerificationResponseDto callout(InitiateVerificationResponseCalloutDto callout) {
     this.callout = callout;
+    this.calloutDefined = true;
     return this;
   }
 
@@ -179,15 +223,22 @@ public class InitiateVerificationResponseDto {
     return callout;
   }
 
+  @JsonIgnore
+  public boolean getCalloutDefined() {
+    return calloutDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CALLOUT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCallout(InitiateVerificationResponseCalloutDto callout) {
     this.callout = callout;
+    this.calloutDefined = true;
   }
 
   public InitiateVerificationResponseDto seamless(
       InitiateVerificationResponseSeamlessDto seamless) {
     this.seamless = seamless;
+    this.seamlessDefined = true;
     return this;
   }
 
@@ -202,15 +253,22 @@ public class InitiateVerificationResponseDto {
     return seamless;
   }
 
+  @JsonIgnore
+  public boolean getSeamlessDefined() {
+    return seamlessDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SEAMLESS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSeamless(InitiateVerificationResponseSeamlessDto seamless) {
     this.seamless = seamless;
+    this.seamlessDefined = true;
   }
 
   public InitiateVerificationResponseDto whatsapp(
       InitiateVerificationResponseWhatsappDto whatsapp) {
     this.whatsapp = whatsapp;
+    this.whatsappDefined = true;
     return this;
   }
 
@@ -225,14 +283,21 @@ public class InitiateVerificationResponseDto {
     return whatsapp;
   }
 
+  @JsonIgnore
+  public boolean getWhatsappDefined() {
+    return whatsappDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_WHATSAPP)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setWhatsapp(InitiateVerificationResponseWhatsappDto whatsapp) {
     this.whatsapp = whatsapp;
+    this.whatsappDefined = true;
   }
 
   public InitiateVerificationResponseDto auto(InitiateVerificationResponseAutoDto auto) {
     this.auto = auto;
+    this.autoDefined = true;
     return this;
   }
 
@@ -247,14 +312,21 @@ public class InitiateVerificationResponseDto {
     return auto;
   }
 
+  @JsonIgnore
+  public boolean getAutoDefined() {
+    return autoDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_AUTO)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAuto(InitiateVerificationResponseAutoDto auto) {
     this.auto = auto;
+    this.autoDefined = true;
   }
 
   public InitiateVerificationResponseDto earlyReject(Boolean earlyReject) {
     this.earlyReject = earlyReject;
+    this.earlyRejectDefined = true;
     return this;
   }
 
@@ -269,14 +341,21 @@ public class InitiateVerificationResponseDto {
     return earlyReject;
   }
 
+  @JsonIgnore
+  public boolean getEarlyRejectDefined() {
+    return earlyRejectDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_EARLY_REJECT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEarlyReject(Boolean earlyReject) {
     this.earlyReject = earlyReject;
+    this.earlyRejectDefined = true;
   }
 
   public InitiateVerificationResponseDto earlyRejectMessage(String earlyRejectMessage) {
     this.earlyRejectMessage = earlyRejectMessage;
+    this.earlyRejectMessageDefined = true;
     return this;
   }
 
@@ -291,15 +370,22 @@ public class InitiateVerificationResponseDto {
     return earlyRejectMessage;
   }
 
+  @JsonIgnore
+  public boolean getEarlyRejectMessageDefined() {
+    return earlyRejectMessageDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_EARLY_REJECT_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEarlyRejectMessage(String earlyRejectMessage) {
     this.earlyRejectMessage = earlyRejectMessage;
+    this.earlyRejectMessageDefined = true;
   }
 
   public InitiateVerificationResponseDto maxPrice(
       InitiateVerificationResponseMaxPriceDto maxPrice) {
     this.maxPrice = maxPrice;
+    this.maxPriceDefined = true;
     return this;
   }
 
@@ -314,14 +400,21 @@ public class InitiateVerificationResponseDto {
     return maxPrice;
   }
 
+  @JsonIgnore
+  public boolean getMaxPriceDefined() {
+    return maxPriceDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MAX_PRICE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMaxPrice(InitiateVerificationResponseMaxPriceDto maxPrice) {
     this.maxPrice = maxPrice;
+    this.maxPriceDefined = true;
   }
 
   public InitiateVerificationResponseDto links(List<VerificationResourceLinkDto> links) {
     this.links = links;
+    this.linksDefined = true;
     return this;
   }
 
@@ -329,6 +422,7 @@ public class InitiateVerificationResponseDto {
     if (this.links == null) {
       this.links = new ArrayList<>();
     }
+    this.linksDefined = true;
     this.links.add(linksItem);
     return this;
   }
@@ -344,10 +438,16 @@ public class InitiateVerificationResponseDto {
     return links;
   }
 
+  @JsonIgnore
+  public boolean getLinksDefined() {
+    return linksDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_LINKS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setLinks(List<VerificationResourceLinkDto> links) {
     this.links = links;
+    this.linksDefined = true;
   }
 
   /** Return true if this InitiateVerificationResponse object is equal to o. */

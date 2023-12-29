@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -38,66 +40,86 @@ import java.util.Objects;
   VerificationMetadataDto.JSON_PROPERTY_PURPOSE,
   VerificationMetadataDto.JSON_PROPERTY_OTHER
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class VerificationMetadataDto {
   public static final String JSON_PROPERTY_OS = "os";
   private String os;
+  private boolean osDefined = false;
 
   public static final String JSON_PROPERTY_DEVICE_ID = "deviceId";
   private String deviceId;
+  private boolean deviceIdDefined = false;
 
   public static final String JSON_PROPERTY_PLATFORM = "platform";
   private String platform;
+  private boolean platformDefined = false;
 
   public static final String JSON_PROPERTY_SDK = "sdk";
   private String sdk;
+  private boolean sdkDefined = false;
 
   public static final String JSON_PROPERTY_SDK_FLAVOR = "sdkFlavor";
   private String sdkFlavor;
+  private boolean sdkFlavorDefined = false;
 
   public static final String JSON_PROPERTY_DEFAULT_LOCALE = "defaultLocale";
   private String defaultLocale;
+  private boolean defaultLocaleDefined = false;
 
   public static final String JSON_PROPERTY_BATTERY_LEVEL = "batteryLevel";
   private String batteryLevel;
+  private boolean batteryLevelDefined = false;
 
   public static final String JSON_PROPERTY_SIM_CARDS_COUNT = "simCardsCount";
   private Integer simCardsCount;
+  private boolean simCardsCountDefined = false;
 
   public static final String JSON_PROPERTY_PERMISSIONS = "permissions";
   private VerificationMetadataPermissionsDto permissions;
+  private boolean permissionsDefined = false;
 
   public static final String JSON_PROPERTY_DEVICE = "device";
   private VerificationMetadataDeviceDto device;
+  private boolean deviceDefined = false;
 
   public static final String JSON_PROPERTY_SIM = "sim";
   private VerificationMetadataSimDto sim;
+  private boolean simDefined = false;
 
   public static final String JSON_PROPERTY_OPERATOR = "operator";
   private VerificationMetadataOperatorDto operator;
+  private boolean operatorDefined = false;
 
   public static final String JSON_PROPERTY_NETWORK_INFO = "networkInfo";
   private VerificationMetadataNetworkInfoDto networkInfo;
+  private boolean networkInfoDefined = false;
 
   public static final String JSON_PROPERTY_SIM_CARDS_INFO = "simCardsInfo";
   private VerificationMetadataSimCardsInfoDto simCardsInfo;
+  private boolean simCardsInfoDefined = false;
 
   public static final String JSON_PROPERTY_CLIENT_PRODUCT_ID = "clientProductId";
   private String clientProductId;
+  private boolean clientProductIdDefined = false;
 
   public static final String JSON_PROPERTY_FIRST_ATTEMPT = "firstAttempt";
   private Boolean firstAttempt;
+  private boolean firstAttemptDefined = false;
 
   public static final String JSON_PROPERTY_PURPOSE = "purpose";
   private String purpose;
+  private boolean purposeDefined = false;
 
   public static final String JSON_PROPERTY_OTHER = "other";
   private String other;
+  private boolean otherDefined = false;
 
   public VerificationMetadataDto() {}
 
   public VerificationMetadataDto os(String os) {
     this.os = os;
+    this.osDefined = true;
     return this;
   }
 
@@ -112,14 +134,21 @@ public class VerificationMetadataDto {
     return os;
   }
 
+  @JsonIgnore
+  public boolean getOsDefined() {
+    return osDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_OS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setOs(String os) {
     this.os = os;
+    this.osDefined = true;
   }
 
   public VerificationMetadataDto deviceId(String deviceId) {
     this.deviceId = deviceId;
+    this.deviceIdDefined = true;
     return this;
   }
 
@@ -134,14 +163,21 @@ public class VerificationMetadataDto {
     return deviceId;
   }
 
+  @JsonIgnore
+  public boolean getDeviceIdDefined() {
+    return deviceIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DEVICE_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDeviceId(String deviceId) {
     this.deviceId = deviceId;
+    this.deviceIdDefined = true;
   }
 
   public VerificationMetadataDto platform(String platform) {
     this.platform = platform;
+    this.platformDefined = true;
     return this;
   }
 
@@ -156,14 +192,21 @@ public class VerificationMetadataDto {
     return platform;
   }
 
+  @JsonIgnore
+  public boolean getPlatformDefined() {
+    return platformDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_PLATFORM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setPlatform(String platform) {
     this.platform = platform;
+    this.platformDefined = true;
   }
 
   public VerificationMetadataDto sdk(String sdk) {
     this.sdk = sdk;
+    this.sdkDefined = true;
     return this;
   }
 
@@ -178,14 +221,21 @@ public class VerificationMetadataDto {
     return sdk;
   }
 
+  @JsonIgnore
+  public boolean getSdkDefined() {
+    return sdkDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SDK)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSdk(String sdk) {
     this.sdk = sdk;
+    this.sdkDefined = true;
   }
 
   public VerificationMetadataDto sdkFlavor(String sdkFlavor) {
     this.sdkFlavor = sdkFlavor;
+    this.sdkFlavorDefined = true;
     return this;
   }
 
@@ -200,14 +250,21 @@ public class VerificationMetadataDto {
     return sdkFlavor;
   }
 
+  @JsonIgnore
+  public boolean getSdkFlavorDefined() {
+    return sdkFlavorDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SDK_FLAVOR)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSdkFlavor(String sdkFlavor) {
     this.sdkFlavor = sdkFlavor;
+    this.sdkFlavorDefined = true;
   }
 
   public VerificationMetadataDto defaultLocale(String defaultLocale) {
     this.defaultLocale = defaultLocale;
+    this.defaultLocaleDefined = true;
     return this;
   }
 
@@ -222,14 +279,21 @@ public class VerificationMetadataDto {
     return defaultLocale;
   }
 
+  @JsonIgnore
+  public boolean getDefaultLocaleDefined() {
+    return defaultLocaleDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DEFAULT_LOCALE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDefaultLocale(String defaultLocale) {
     this.defaultLocale = defaultLocale;
+    this.defaultLocaleDefined = true;
   }
 
   public VerificationMetadataDto batteryLevel(String batteryLevel) {
     this.batteryLevel = batteryLevel;
+    this.batteryLevelDefined = true;
     return this;
   }
 
@@ -244,14 +308,21 @@ public class VerificationMetadataDto {
     return batteryLevel;
   }
 
+  @JsonIgnore
+  public boolean getBatteryLevelDefined() {
+    return batteryLevelDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_BATTERY_LEVEL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setBatteryLevel(String batteryLevel) {
     this.batteryLevel = batteryLevel;
+    this.batteryLevelDefined = true;
   }
 
   public VerificationMetadataDto simCardsCount(Integer simCardsCount) {
     this.simCardsCount = simCardsCount;
+    this.simCardsCountDefined = true;
     return this;
   }
 
@@ -266,14 +337,21 @@ public class VerificationMetadataDto {
     return simCardsCount;
   }
 
+  @JsonIgnore
+  public boolean getSimCardsCountDefined() {
+    return simCardsCountDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SIM_CARDS_COUNT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSimCardsCount(Integer simCardsCount) {
     this.simCardsCount = simCardsCount;
+    this.simCardsCountDefined = true;
   }
 
   public VerificationMetadataDto permissions(VerificationMetadataPermissionsDto permissions) {
     this.permissions = permissions;
+    this.permissionsDefined = true;
     return this;
   }
 
@@ -288,14 +366,21 @@ public class VerificationMetadataDto {
     return permissions;
   }
 
+  @JsonIgnore
+  public boolean getPermissionsDefined() {
+    return permissionsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_PERMISSIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setPermissions(VerificationMetadataPermissionsDto permissions) {
     this.permissions = permissions;
+    this.permissionsDefined = true;
   }
 
   public VerificationMetadataDto device(VerificationMetadataDeviceDto device) {
     this.device = device;
+    this.deviceDefined = true;
     return this;
   }
 
@@ -310,14 +395,21 @@ public class VerificationMetadataDto {
     return device;
   }
 
+  @JsonIgnore
+  public boolean getDeviceDefined() {
+    return deviceDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DEVICE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDevice(VerificationMetadataDeviceDto device) {
     this.device = device;
+    this.deviceDefined = true;
   }
 
   public VerificationMetadataDto sim(VerificationMetadataSimDto sim) {
     this.sim = sim;
+    this.simDefined = true;
     return this;
   }
 
@@ -332,14 +424,21 @@ public class VerificationMetadataDto {
     return sim;
   }
 
+  @JsonIgnore
+  public boolean getSimDefined() {
+    return simDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SIM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSim(VerificationMetadataSimDto sim) {
     this.sim = sim;
+    this.simDefined = true;
   }
 
   public VerificationMetadataDto operator(VerificationMetadataOperatorDto operator) {
     this.operator = operator;
+    this.operatorDefined = true;
     return this;
   }
 
@@ -354,14 +453,21 @@ public class VerificationMetadataDto {
     return operator;
   }
 
+  @JsonIgnore
+  public boolean getOperatorDefined() {
+    return operatorDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_OPERATOR)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setOperator(VerificationMetadataOperatorDto operator) {
     this.operator = operator;
+    this.operatorDefined = true;
   }
 
   public VerificationMetadataDto networkInfo(VerificationMetadataNetworkInfoDto networkInfo) {
     this.networkInfo = networkInfo;
+    this.networkInfoDefined = true;
     return this;
   }
 
@@ -376,14 +482,21 @@ public class VerificationMetadataDto {
     return networkInfo;
   }
 
+  @JsonIgnore
+  public boolean getNetworkInfoDefined() {
+    return networkInfoDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NETWORK_INFO)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNetworkInfo(VerificationMetadataNetworkInfoDto networkInfo) {
     this.networkInfo = networkInfo;
+    this.networkInfoDefined = true;
   }
 
   public VerificationMetadataDto simCardsInfo(VerificationMetadataSimCardsInfoDto simCardsInfo) {
     this.simCardsInfo = simCardsInfo;
+    this.simCardsInfoDefined = true;
     return this;
   }
 
@@ -398,14 +511,21 @@ public class VerificationMetadataDto {
     return simCardsInfo;
   }
 
+  @JsonIgnore
+  public boolean getSimCardsInfoDefined() {
+    return simCardsInfoDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SIM_CARDS_INFO)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSimCardsInfo(VerificationMetadataSimCardsInfoDto simCardsInfo) {
     this.simCardsInfo = simCardsInfo;
+    this.simCardsInfoDefined = true;
   }
 
   public VerificationMetadataDto clientProductId(String clientProductId) {
     this.clientProductId = clientProductId;
+    this.clientProductIdDefined = true;
     return this;
   }
 
@@ -420,14 +540,21 @@ public class VerificationMetadataDto {
     return clientProductId;
   }
 
+  @JsonIgnore
+  public boolean getClientProductIdDefined() {
+    return clientProductIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CLIENT_PRODUCT_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setClientProductId(String clientProductId) {
     this.clientProductId = clientProductId;
+    this.clientProductIdDefined = true;
   }
 
   public VerificationMetadataDto firstAttempt(Boolean firstAttempt) {
     this.firstAttempt = firstAttempt;
+    this.firstAttemptDefined = true;
     return this;
   }
 
@@ -442,14 +569,21 @@ public class VerificationMetadataDto {
     return firstAttempt;
   }
 
+  @JsonIgnore
+  public boolean getFirstAttemptDefined() {
+    return firstAttemptDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_FIRST_ATTEMPT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFirstAttempt(Boolean firstAttempt) {
     this.firstAttempt = firstAttempt;
+    this.firstAttemptDefined = true;
   }
 
   public VerificationMetadataDto purpose(String purpose) {
     this.purpose = purpose;
+    this.purposeDefined = true;
     return this;
   }
 
@@ -464,14 +598,21 @@ public class VerificationMetadataDto {
     return purpose;
   }
 
+  @JsonIgnore
+  public boolean getPurposeDefined() {
+    return purposeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_PURPOSE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setPurpose(String purpose) {
     this.purpose = purpose;
+    this.purposeDefined = true;
   }
 
   public VerificationMetadataDto other(String other) {
     this.other = other;
+    this.otherDefined = true;
     return this;
   }
 
@@ -486,10 +627,16 @@ public class VerificationMetadataDto {
     return other;
   }
 
+  @JsonIgnore
+  public boolean getOtherDefined() {
+    return otherDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_OTHER)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setOther(String other) {
     this.other = other;
+    this.otherDefined = true;
   }
 
   /** Return true if this VerificationMetadata object is equal to o. */

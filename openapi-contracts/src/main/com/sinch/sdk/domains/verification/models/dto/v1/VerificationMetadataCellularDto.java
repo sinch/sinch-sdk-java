@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -22,18 +24,22 @@ import java.util.Objects;
   VerificationMetadataCellularDto.JSON_PROPERTY_SIGNAL_LEVEL,
   VerificationMetadataCellularDto.JSON_PROPERTY_TYPE
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class VerificationMetadataCellularDto {
   public static final String JSON_PROPERTY_SIGNAL_LEVEL = "signalLevel";
   private Integer signalLevel;
+  private boolean signalLevelDefined = false;
 
   public static final String JSON_PROPERTY_TYPE = "type";
   private String type;
+  private boolean typeDefined = false;
 
   public VerificationMetadataCellularDto() {}
 
   public VerificationMetadataCellularDto signalLevel(Integer signalLevel) {
     this.signalLevel = signalLevel;
+    this.signalLevelDefined = true;
     return this;
   }
 
@@ -48,14 +54,21 @@ public class VerificationMetadataCellularDto {
     return signalLevel;
   }
 
+  @JsonIgnore
+  public boolean getSignalLevelDefined() {
+    return signalLevelDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SIGNAL_LEVEL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSignalLevel(Integer signalLevel) {
     this.signalLevel = signalLevel;
+    this.signalLevelDefined = true;
   }
 
   public VerificationMetadataCellularDto type(String type) {
     this.type = type;
+    this.typeDefined = true;
     return this;
   }
 
@@ -70,10 +83,16 @@ public class VerificationMetadataCellularDto {
     return type;
   }
 
+  @JsonIgnore
+  public boolean getTypeDefined() {
+    return typeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TYPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setType(String type) {
     this.type = type;
+    this.typeDefined = true;
   }
 
   /** Return true if this VerificationMetadataCellular object is equal to o. */

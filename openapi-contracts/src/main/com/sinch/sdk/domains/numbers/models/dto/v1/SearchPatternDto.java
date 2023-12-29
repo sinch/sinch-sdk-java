@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.numbers.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -22,18 +24,22 @@ import java.util.Objects;
   SearchPatternDto.JSON_PROPERTY_PATTERN,
   SearchPatternDto.JSON_PROPERTY_SEARCH_PATTERN
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SearchPatternDto {
   public static final String JSON_PROPERTY_PATTERN = "pattern";
   private String pattern;
+  private boolean patternDefined = false;
 
   public static final String JSON_PROPERTY_SEARCH_PATTERN = "searchPattern";
   private String searchPattern;
+  private boolean searchPatternDefined = false;
 
   public SearchPatternDto() {}
 
   public SearchPatternDto pattern(String pattern) {
     this.pattern = pattern;
+    this.patternDefined = true;
     return this;
   }
 
@@ -48,14 +54,21 @@ public class SearchPatternDto {
     return pattern;
   }
 
+  @JsonIgnore
+  public boolean getPatternDefined() {
+    return patternDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_PATTERN)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setPattern(String pattern) {
     this.pattern = pattern;
+    this.patternDefined = true;
   }
 
   public SearchPatternDto searchPattern(String searchPattern) {
     this.searchPattern = searchPattern;
+    this.searchPatternDefined = true;
     return this;
   }
 
@@ -70,10 +83,16 @@ public class SearchPatternDto {
     return searchPattern;
   }
 
+  @JsonIgnore
+  public boolean getSearchPatternDefined() {
+    return searchPatternDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SEARCH_PATTERN)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSearchPattern(String searchPattern) {
     this.searchPattern = searchPattern;
+    this.searchPatternDefined = true;
   }
 
   /** Return true if this SearchPattern object is equal to o. */

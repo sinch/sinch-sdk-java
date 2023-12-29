@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.sms.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -26,24 +28,30 @@ import java.util.Objects;
   GroupObjectDto.JSON_PROPERTY_CHILD_GROUPS,
   GroupObjectDto.JSON_PROPERTY_AUTO_UPDATE
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class GroupObjectDto {
   public static final String JSON_PROPERTY_NAME = "name";
   private String name;
+  private boolean nameDefined = false;
 
   public static final String JSON_PROPERTY_MEMBERS = "members";
   private List<String> members;
+  private boolean membersDefined = false;
 
   public static final String JSON_PROPERTY_CHILD_GROUPS = "child_groups";
   private List<String> childGroups;
+  private boolean childGroupsDefined = false;
 
   public static final String JSON_PROPERTY_AUTO_UPDATE = "auto_update";
   private GroupObjectAutoUpdateDto autoUpdate;
+  private boolean autoUpdateDefined = false;
 
   public GroupObjectDto() {}
 
   public GroupObjectDto name(String name) {
     this.name = name;
+    this.nameDefined = true;
     return this;
   }
 
@@ -58,14 +66,21 @@ public class GroupObjectDto {
     return name;
   }
 
+  @JsonIgnore
+  public boolean getNameDefined() {
+    return nameDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setName(String name) {
     this.name = name;
+    this.nameDefined = true;
   }
 
   public GroupObjectDto members(List<String> members) {
     this.members = members;
+    this.membersDefined = true;
     return this;
   }
 
@@ -73,6 +88,7 @@ public class GroupObjectDto {
     if (this.members == null) {
       this.members = new ArrayList<>();
     }
+    this.membersDefined = true;
     this.members.add(membersItem);
     return this;
   }
@@ -92,14 +108,21 @@ public class GroupObjectDto {
     return members;
   }
 
+  @JsonIgnore
+  public boolean getMembersDefined() {
+    return membersDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MEMBERS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMembers(List<String> members) {
     this.members = members;
+    this.membersDefined = true;
   }
 
   public GroupObjectDto childGroups(List<String> childGroups) {
     this.childGroups = childGroups;
+    this.childGroupsDefined = true;
     return this;
   }
 
@@ -107,6 +130,7 @@ public class GroupObjectDto {
     if (this.childGroups == null) {
       this.childGroups = new ArrayList<>();
     }
+    this.childGroupsDefined = true;
     this.childGroups.add(childGroupsItem);
     return this;
   }
@@ -126,14 +150,21 @@ public class GroupObjectDto {
     return childGroups;
   }
 
+  @JsonIgnore
+  public boolean getChildGroupsDefined() {
+    return childGroupsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CHILD_GROUPS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setChildGroups(List<String> childGroups) {
     this.childGroups = childGroups;
+    this.childGroupsDefined = true;
   }
 
   public GroupObjectDto autoUpdate(GroupObjectAutoUpdateDto autoUpdate) {
     this.autoUpdate = autoUpdate;
+    this.autoUpdateDefined = true;
     return this;
   }
 
@@ -148,10 +179,16 @@ public class GroupObjectDto {
     return autoUpdate;
   }
 
+  @JsonIgnore
+  public boolean getAutoUpdateDefined() {
+    return autoUpdateDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_AUTO_UPDATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAutoUpdate(GroupObjectAutoUpdateDto autoUpdate) {
     this.autoUpdate = autoUpdate;
+    this.autoUpdateDefined = true;
   }
 
   /** Return true if this groupObject object is equal to o. */

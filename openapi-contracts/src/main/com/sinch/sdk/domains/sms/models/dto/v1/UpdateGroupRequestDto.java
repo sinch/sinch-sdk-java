@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.sms.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -28,30 +30,38 @@ import java.util.Objects;
   UpdateGroupRequestDto.JSON_PROPERTY_REMOVE_FROM_GROUP,
   UpdateGroupRequestDto.JSON_PROPERTY_AUTO_UPDATE
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class UpdateGroupRequestDto {
   public static final String JSON_PROPERTY_NAME = "name";
   private String name;
+  private boolean nameDefined = false;
 
   public static final String JSON_PROPERTY_ADD = "add";
   private List<String> add;
+  private boolean addDefined = false;
 
   public static final String JSON_PROPERTY_REMOVE = "remove";
   private List<String> remove;
+  private boolean removeDefined = false;
 
   public static final String JSON_PROPERTY_ADD_FROM_GROUP = "add_from_group";
   private String addFromGroup;
+  private boolean addFromGroupDefined = false;
 
   public static final String JSON_PROPERTY_REMOVE_FROM_GROUP = "remove_from_group";
   private String removeFromGroup;
+  private boolean removeFromGroupDefined = false;
 
   public static final String JSON_PROPERTY_AUTO_UPDATE = "auto_update";
   private UpdateGroupRequestAutoUpdateDto autoUpdate;
+  private boolean autoUpdateDefined = false;
 
   public UpdateGroupRequestDto() {}
 
   public UpdateGroupRequestDto name(String name) {
     this.name = name;
+    this.nameDefined = true;
     return this;
   }
 
@@ -67,14 +77,21 @@ public class UpdateGroupRequestDto {
     return name;
   }
 
+  @JsonIgnore
+  public boolean getNameDefined() {
+    return nameDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setName(String name) {
     this.name = name;
+    this.nameDefined = true;
   }
 
   public UpdateGroupRequestDto add(List<String> add) {
     this.add = add;
+    this.addDefined = true;
     return this;
   }
 
@@ -82,6 +99,7 @@ public class UpdateGroupRequestDto {
     if (this.add == null) {
       this.add = new ArrayList<>();
     }
+    this.addDefined = true;
     this.add.add(addItem);
     return this;
   }
@@ -100,14 +118,21 @@ public class UpdateGroupRequestDto {
     return add;
   }
 
+  @JsonIgnore
+  public boolean getAddDefined() {
+    return addDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ADD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAdd(List<String> add) {
     this.add = add;
+    this.addDefined = true;
   }
 
   public UpdateGroupRequestDto remove(List<String> remove) {
     this.remove = remove;
+    this.removeDefined = true;
     return this;
   }
 
@@ -115,6 +140,7 @@ public class UpdateGroupRequestDto {
     if (this.remove == null) {
       this.remove = new ArrayList<>();
     }
+    this.removeDefined = true;
     this.remove.add(removeItem);
     return this;
   }
@@ -133,14 +159,21 @@ public class UpdateGroupRequestDto {
     return remove;
   }
 
+  @JsonIgnore
+  public boolean getRemoveDefined() {
+    return removeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_REMOVE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRemove(List<String> remove) {
     this.remove = remove;
+    this.removeDefined = true;
   }
 
   public UpdateGroupRequestDto addFromGroup(String addFromGroup) {
     this.addFromGroup = addFromGroup;
+    this.addFromGroupDefined = true;
     return this;
   }
 
@@ -155,14 +188,21 @@ public class UpdateGroupRequestDto {
     return addFromGroup;
   }
 
+  @JsonIgnore
+  public boolean getAddFromGroupDefined() {
+    return addFromGroupDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ADD_FROM_GROUP)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAddFromGroup(String addFromGroup) {
     this.addFromGroup = addFromGroup;
+    this.addFromGroupDefined = true;
   }
 
   public UpdateGroupRequestDto removeFromGroup(String removeFromGroup) {
     this.removeFromGroup = removeFromGroup;
+    this.removeFromGroupDefined = true;
     return this;
   }
 
@@ -177,14 +217,21 @@ public class UpdateGroupRequestDto {
     return removeFromGroup;
   }
 
+  @JsonIgnore
+  public boolean getRemoveFromGroupDefined() {
+    return removeFromGroupDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_REMOVE_FROM_GROUP)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRemoveFromGroup(String removeFromGroup) {
     this.removeFromGroup = removeFromGroup;
+    this.removeFromGroupDefined = true;
   }
 
   public UpdateGroupRequestDto autoUpdate(UpdateGroupRequestAutoUpdateDto autoUpdate) {
     this.autoUpdate = autoUpdate;
+    this.autoUpdateDefined = true;
     return this;
   }
 
@@ -199,10 +246,16 @@ public class UpdateGroupRequestDto {
     return autoUpdate;
   }
 
+  @JsonIgnore
+  public boolean getAutoUpdateDefined() {
+    return autoUpdateDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_AUTO_UPDATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAutoUpdate(UpdateGroupRequestAutoUpdateDto autoUpdate) {
     this.autoUpdate = autoUpdate;
+    this.autoUpdateDefined = true;
   }
 
   /** Return true if this UpdateGroup_request object is equal to o. */

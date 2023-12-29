@@ -34,7 +34,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class QueryVerificationsApi {
 
   private static final Logger LOGGER = Logger.getLogger(QueryVerificationsApi.class.getName());
@@ -64,7 +63,7 @@ public class QueryVerificationsApi {
    */
   public VerificationResponseDto verificationStatusById(String id) throws ApiException {
 
-    LOGGER.finest("[verificationStatusById] " + "id: " + id);
+    LOGGER.finest("[verificationStatusById]" + " " + "id: " + id);
 
     HttpRequest httpRequest = verificationStatusByIdRequestBuilder(id);
     HttpResponse response =
@@ -132,7 +131,8 @@ public class QueryVerificationsApi {
       String type, String endpoint, String method) throws ApiException {
 
     LOGGER.finest(
-        "[verificationStatusByIdentity] "
+        "[verificationStatusByIdentity]"
+            + " "
             + "type: "
             + type
             + ", "
@@ -221,7 +221,7 @@ public class QueryVerificationsApi {
   public VerificationResponseDto verificationStatusByReference(String reference)
       throws ApiException {
 
-    LOGGER.finest("[verificationStatusByReference] " + "reference: " + reference);
+    LOGGER.finest("[verificationStatusByReference]" + " " + "reference: " + reference);
 
     HttpRequest httpRequest = verificationStatusByReferenceRequestBuilder(reference);
     HttpResponse response =

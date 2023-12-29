@@ -13,6 +13,8 @@
 package com.sinch.sdk.domains.numbers.models.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -31,17 +33,21 @@ import java.util.Objects;
   VoiceConfigurationDto.JSON_PROPERTY_LAST_UPDATED_TIME,
   VoiceConfigurationDto.JSON_PROPERTY_SCHEDULED_VOICE_PROVISIONING
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class VoiceConfigurationDto {
   public static final String JSON_PROPERTY_APP_ID = "appId";
   private String appId;
+  private boolean appIdDefined = false;
 
   public static final String JSON_PROPERTY_LAST_UPDATED_TIME = "lastUpdatedTime";
   private OffsetDateTime lastUpdatedTime;
+  private boolean lastUpdatedTimeDefined = false;
 
   public static final String JSON_PROPERTY_SCHEDULED_VOICE_PROVISIONING =
       "scheduledVoiceProvisioning";
   private ScheduledVoiceProvisioningDto scheduledVoiceProvisioning;
+  private boolean scheduledVoiceProvisioningDefined = false;
 
   public VoiceConfigurationDto() {}
 
@@ -50,10 +56,12 @@ public class VoiceConfigurationDto {
       @JsonProperty(JSON_PROPERTY_LAST_UPDATED_TIME) OffsetDateTime lastUpdatedTime) {
     this();
     this.lastUpdatedTime = lastUpdatedTime;
+    this.lastUpdatedTimeDefined = true;
   }
 
   public VoiceConfigurationDto appId(String appId) {
     this.appId = appId;
+    this.appIdDefined = true;
     return this;
   }
 
@@ -70,10 +78,16 @@ public class VoiceConfigurationDto {
     return appId;
   }
 
+  @JsonIgnore
+  public boolean getAppIdDefined() {
+    return appIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_APP_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAppId(String appId) {
     this.appId = appId;
+    this.appIdDefined = true;
   }
 
   /**
@@ -87,9 +101,15 @@ public class VoiceConfigurationDto {
     return lastUpdatedTime;
   }
 
+  @JsonIgnore
+  public boolean getLastUpdatedTimeDefined() {
+    return lastUpdatedTimeDefined;
+  }
+
   public VoiceConfigurationDto scheduledVoiceProvisioning(
       ScheduledVoiceProvisioningDto scheduledVoiceProvisioning) {
     this.scheduledVoiceProvisioning = scheduledVoiceProvisioning;
+    this.scheduledVoiceProvisioningDefined = true;
     return this;
   }
 
@@ -104,11 +124,17 @@ public class VoiceConfigurationDto {
     return scheduledVoiceProvisioning;
   }
 
+  @JsonIgnore
+  public boolean getScheduledVoiceProvisioningDefined() {
+    return scheduledVoiceProvisioningDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SCHEDULED_VOICE_PROVISIONING)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setScheduledVoiceProvisioning(
       ScheduledVoiceProvisioningDto scheduledVoiceProvisioning) {
     this.scheduledVoiceProvisioning = scheduledVoiceProvisioning;
+    this.scheduledVoiceProvisioningDefined = true;
   }
 
   /** Return true if this VoiceConfiguration object is equal to o. */

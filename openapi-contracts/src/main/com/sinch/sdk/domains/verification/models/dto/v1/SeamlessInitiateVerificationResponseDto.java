@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -22,18 +24,22 @@ import java.util.Objects;
   SeamlessInitiateVerificationResponseDto.JSON_PROPERTY_TARGET_URI,
   SeamlessInitiateVerificationResponseDto.JSON_PROPERTY_SUB_VERIFICATION_ID
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SeamlessInitiateVerificationResponseDto {
   public static final String JSON_PROPERTY_TARGET_URI = "targetUri";
   private String targetUri;
+  private boolean targetUriDefined = false;
 
   public static final String JSON_PROPERTY_SUB_VERIFICATION_ID = "subVerificationId";
   private String subVerificationId;
+  private boolean subVerificationIdDefined = false;
 
   public SeamlessInitiateVerificationResponseDto() {}
 
   public SeamlessInitiateVerificationResponseDto targetUri(String targetUri) {
     this.targetUri = targetUri;
+    this.targetUriDefined = true;
     return this;
   }
 
@@ -48,14 +54,21 @@ public class SeamlessInitiateVerificationResponseDto {
     return targetUri;
   }
 
+  @JsonIgnore
+  public boolean getTargetUriDefined() {
+    return targetUriDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TARGET_URI)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTargetUri(String targetUri) {
     this.targetUri = targetUri;
+    this.targetUriDefined = true;
   }
 
   public SeamlessInitiateVerificationResponseDto subVerificationId(String subVerificationId) {
     this.subVerificationId = subVerificationId;
+    this.subVerificationIdDefined = true;
     return this;
   }
 
@@ -70,10 +83,16 @@ public class SeamlessInitiateVerificationResponseDto {
     return subVerificationId;
   }
 
+  @JsonIgnore
+  public boolean getSubVerificationIdDefined() {
+    return subVerificationIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SUB_VERIFICATION_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSubVerificationId(String subVerificationId) {
     this.subVerificationId = subVerificationId;
+    this.subVerificationIdDefined = true;
   }
 
   /** Return true if this SeamlessInitiateVerificationResponse object is equal to o. */

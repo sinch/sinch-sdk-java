@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.sms.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -19,18 +21,22 @@ import java.util.Objects;
 
 /** The message content, including a URL to the media file */
 @JsonPropertyOrder({MediaBodyDto.JSON_PROPERTY_URL, MediaBodyDto.JSON_PROPERTY_MESSAGE})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class MediaBodyDto {
   public static final String JSON_PROPERTY_URL = "url";
   private String url;
+  private boolean urlDefined = false;
 
   public static final String JSON_PROPERTY_MESSAGE = "message";
   private String message;
+  private boolean messageDefined = false;
 
   public MediaBodyDto() {}
 
   public MediaBodyDto url(String url) {
     this.url = url;
+    this.urlDefined = true;
     return this;
   }
 
@@ -45,14 +51,21 @@ public class MediaBodyDto {
     return url;
   }
 
+  @JsonIgnore
+  public boolean getUrlDefined() {
+    return urlDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_URL)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setUrl(String url) {
     this.url = url;
+    this.urlDefined = true;
   }
 
   public MediaBodyDto message(String message) {
     this.message = message;
+    this.messageDefined = true;
     return this;
   }
 
@@ -67,10 +80,16 @@ public class MediaBodyDto {
     return message;
   }
 
+  @JsonIgnore
+  public boolean getMessageDefined() {
+    return messageDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMessage(String message) {
     this.message = message;
+    this.messageDefined = true;
   }
 
   /** Return true if this MediaBody object is equal to o. */

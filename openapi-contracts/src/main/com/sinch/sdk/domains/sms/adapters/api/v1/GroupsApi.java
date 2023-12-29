@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class GroupsApi {
 
   private static final Logger LOGGER = Logger.getLogger(GroupsApi.class.getName());
@@ -73,7 +72,8 @@ public class GroupsApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[createGroup] "
+        "[createGroup]"
+            + " "
             + "servicePlanId: "
             + servicePlanId
             + ", "
@@ -146,7 +146,7 @@ public class GroupsApi {
   public void deleteGroup(String servicePlanId, String groupId) throws ApiException {
 
     LOGGER.finest(
-        "[deleteGroup] " + "servicePlanId: " + servicePlanId + ", " + "groupId: " + groupId);
+        "[deleteGroup]" + " " + "servicePlanId: " + servicePlanId + ", " + "groupId: " + groupId);
 
     HttpRequest httpRequest = deleteGroupRequestBuilder(servicePlanId, groupId);
     HttpResponse response =
@@ -221,7 +221,7 @@ public class GroupsApi {
   public List<String> getMembers(String servicePlanId, String groupId) throws ApiException {
 
     LOGGER.finest(
-        "[getMembers] " + "servicePlanId: " + servicePlanId + ", " + "groupId: " + groupId);
+        "[getMembers]" + " " + "servicePlanId: " + servicePlanId + ", " + "groupId: " + groupId);
 
     HttpRequest httpRequest = getMembersRequestBuilder(servicePlanId, groupId);
     HttpResponse response =
@@ -299,7 +299,8 @@ public class GroupsApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[listGroups] "
+        "[listGroups]"
+            + " "
             + "servicePlanId: "
             + servicePlanId
             + ", "
@@ -389,7 +390,8 @@ public class GroupsApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[replaceGroup] "
+        "[replaceGroup]"
+            + " "
             + "servicePlanId: "
             + servicePlanId
             + ", "
@@ -476,7 +478,7 @@ public class GroupsApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[retrieveGroup] " + "servicePlanId: " + servicePlanId + ", " + "groupId: " + groupId);
+        "[retrieveGroup]" + " " + "servicePlanId: " + servicePlanId + ", " + "groupId: " + groupId);
 
     HttpRequest httpRequest = retrieveGroupRequestBuilder(servicePlanId, groupId);
     HttpResponse response =
@@ -565,7 +567,8 @@ public class GroupsApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[updateGroup] "
+        "[updateGroup]"
+            + " "
             + "servicePlanId: "
             + servicePlanId
             + ", "

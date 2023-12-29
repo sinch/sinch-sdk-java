@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.numbers.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -27,28 +29,35 @@ import java.util.Objects;
   ListAvailableNumberRequestDto.JSON_PROPERTY_TYPE,
   ListAvailableNumberRequestDto.JSON_PROPERTY_CAPABILITIES
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ListAvailableNumberRequestDto {
   public static final String JSON_PROPERTY_NUMBER_PATTERN = "NumberPattern";
   private NumberPatternPatternDto numberPattern;
+  private boolean numberPatternDefined = false;
 
   public static final String JSON_PROPERTY_NUMBER_PATTERN_SEARCH_PATTERN =
       "NumberPatternSearchPattern";
   private NumberPatternSearchPatternDto numberPatternSearchPattern;
+  private boolean numberPatternSearchPatternDefined = false;
 
   public static final String JSON_PROPERTY_REGION_CODE = "regionCode";
   private String regionCode;
+  private boolean regionCodeDefined = false;
 
   public static final String JSON_PROPERTY_TYPE = "type";
-  private String type = "MOBILE";
+  private String type;
+  private boolean typeDefined = false;
 
   public static final String JSON_PROPERTY_CAPABILITIES = "capabilities";
   private List<String> capabilities;
+  private boolean capabilitiesDefined = false;
 
   public ListAvailableNumberRequestDto() {}
 
   public ListAvailableNumberRequestDto numberPattern(NumberPatternPatternDto numberPattern) {
     this.numberPattern = numberPattern;
+    this.numberPatternDefined = true;
     return this;
   }
 
@@ -63,15 +72,22 @@ public class ListAvailableNumberRequestDto {
     return numberPattern;
   }
 
+  @JsonIgnore
+  public boolean getNumberPatternDefined() {
+    return numberPatternDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NUMBER_PATTERN)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNumberPattern(NumberPatternPatternDto numberPattern) {
     this.numberPattern = numberPattern;
+    this.numberPatternDefined = true;
   }
 
   public ListAvailableNumberRequestDto numberPatternSearchPattern(
       NumberPatternSearchPatternDto numberPatternSearchPattern) {
     this.numberPatternSearchPattern = numberPatternSearchPattern;
+    this.numberPatternSearchPatternDefined = true;
     return this;
   }
 
@@ -86,15 +102,22 @@ public class ListAvailableNumberRequestDto {
     return numberPatternSearchPattern;
   }
 
+  @JsonIgnore
+  public boolean getNumberPatternSearchPatternDefined() {
+    return numberPatternSearchPatternDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NUMBER_PATTERN_SEARCH_PATTERN)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNumberPatternSearchPattern(
       NumberPatternSearchPatternDto numberPatternSearchPattern) {
     this.numberPatternSearchPattern = numberPatternSearchPattern;
+    this.numberPatternSearchPatternDefined = true;
   }
 
   public ListAvailableNumberRequestDto regionCode(String regionCode) {
     this.regionCode = regionCode;
+    this.regionCodeDefined = true;
     return this;
   }
 
@@ -110,14 +133,21 @@ public class ListAvailableNumberRequestDto {
     return regionCode;
   }
 
+  @JsonIgnore
+  public boolean getRegionCodeDefined() {
+    return regionCodeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_REGION_CODE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRegionCode(String regionCode) {
     this.regionCode = regionCode;
+    this.regionCodeDefined = true;
   }
 
   public ListAvailableNumberRequestDto type(String type) {
     this.type = type;
+    this.typeDefined = true;
     return this;
   }
 
@@ -132,14 +162,21 @@ public class ListAvailableNumberRequestDto {
     return type;
   }
 
+  @JsonIgnore
+  public boolean getTypeDefined() {
+    return typeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TYPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setType(String type) {
     this.type = type;
+    this.typeDefined = true;
   }
 
   public ListAvailableNumberRequestDto capabilities(List<String> capabilities) {
     this.capabilities = capabilities;
+    this.capabilitiesDefined = true;
     return this;
   }
 
@@ -147,6 +184,7 @@ public class ListAvailableNumberRequestDto {
     if (this.capabilities == null) {
       this.capabilities = new ArrayList<>();
     }
+    this.capabilitiesDefined = true;
     this.capabilities.add(capabilitiesItem);
     return this;
   }
@@ -162,10 +200,16 @@ public class ListAvailableNumberRequestDto {
     return capabilities;
   }
 
+  @JsonIgnore
+  public boolean getCapabilitiesDefined() {
+    return capabilitiesDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CAPABILITIES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCapabilities(List<String> capabilities) {
     this.capabilities = capabilities;
+    this.capabilitiesDefined = true;
   }
 
   /** Return true if this ListAvailableNumberRequest object is equal to o. */

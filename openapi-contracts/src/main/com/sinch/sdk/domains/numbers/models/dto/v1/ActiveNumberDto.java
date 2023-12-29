@@ -13,6 +13,8 @@
 package com.sinch.sdk.domains.numbers.models.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -37,46 +39,60 @@ import java.util.Objects;
   ActiveNumberDto.JSON_PROPERTY_VOICE_CONFIGURATION,
   ActiveNumberDto.JSON_PROPERTY_CALLBACK_URL
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ActiveNumberDto {
   public static final String JSON_PROPERTY_PHONE_NUMBER = "phoneNumber";
   private String phoneNumber;
+  private boolean phoneNumberDefined = false;
 
   public static final String JSON_PROPERTY_PROJECT_ID = "projectId";
   private String projectId;
+  private boolean projectIdDefined = false;
 
   public static final String JSON_PROPERTY_DISPLAY_NAME = "displayName";
   private String displayName;
+  private boolean displayNameDefined = false;
 
   public static final String JSON_PROPERTY_REGION_CODE = "regionCode";
   private String regionCode;
+  private boolean regionCodeDefined = false;
 
   public static final String JSON_PROPERTY_TYPE = "type";
-  private String type = "MOBILE";
+  private String type;
+  private boolean typeDefined = false;
 
   public static final String JSON_PROPERTY_CAPABILITY = "capability";
   private List<String> capability;
+  private boolean capabilityDefined = false;
 
   public static final String JSON_PROPERTY_MONEY = "money";
   private MoneyDto money;
+  private boolean moneyDefined = false;
 
   public static final String JSON_PROPERTY_PAYMENT_INTERVAL_MONTHS = "paymentIntervalMonths";
   private Integer paymentIntervalMonths;
+  private boolean paymentIntervalMonthsDefined = false;
 
   public static final String JSON_PROPERTY_NEXT_CHARGE_DATE = "nextChargeDate";
   private OffsetDateTime nextChargeDate;
+  private boolean nextChargeDateDefined = false;
 
   public static final String JSON_PROPERTY_EXPIRE_AT = "expireAt";
   private OffsetDateTime expireAt;
+  private boolean expireAtDefined = false;
 
   public static final String JSON_PROPERTY_SMS_CONFIGURATION = "smsConfiguration";
   private SMSConfigurationDto smsConfiguration;
+  private boolean smsConfigurationDefined = false;
 
   public static final String JSON_PROPERTY_VOICE_CONFIGURATION = "voiceConfiguration";
   private VoiceConfigurationDto voiceConfiguration;
+  private boolean voiceConfigurationDefined = false;
 
   public static final String JSON_PROPERTY_CALLBACK_URL = "callbackUrl";
   private String callbackUrl;
+  private boolean callbackUrlDefined = false;
 
   public ActiveNumberDto() {}
 
@@ -88,13 +104,18 @@ public class ActiveNumberDto {
       @JsonProperty(JSON_PROPERTY_EXPIRE_AT) OffsetDateTime expireAt) {
     this();
     this.regionCode = regionCode;
+    this.regionCodeDefined = true;
     this.paymentIntervalMonths = paymentIntervalMonths;
+    this.paymentIntervalMonthsDefined = true;
     this.nextChargeDate = nextChargeDate;
+    this.nextChargeDateDefined = true;
     this.expireAt = expireAt;
+    this.expireAtDefined = true;
   }
 
   public ActiveNumberDto phoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
+    this.phoneNumberDefined = true;
     return this;
   }
 
@@ -112,14 +133,21 @@ public class ActiveNumberDto {
     return phoneNumber;
   }
 
+  @JsonIgnore
+  public boolean getPhoneNumberDefined() {
+    return phoneNumberDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_PHONE_NUMBER)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
+    this.phoneNumberDefined = true;
   }
 
   public ActiveNumberDto projectId(String projectId) {
     this.projectId = projectId;
+    this.projectIdDefined = true;
     return this;
   }
 
@@ -136,14 +164,21 @@ public class ActiveNumberDto {
     return projectId;
   }
 
+  @JsonIgnore
+  public boolean getProjectIdDefined() {
+    return projectIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_PROJECT_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setProjectId(String projectId) {
     this.projectId = projectId;
+    this.projectIdDefined = true;
   }
 
   public ActiveNumberDto displayName(String displayName) {
     this.displayName = displayName;
+    this.displayNameDefined = true;
     return this;
   }
 
@@ -158,10 +193,16 @@ public class ActiveNumberDto {
     return displayName;
   }
 
+  @JsonIgnore
+  public boolean getDisplayNameDefined() {
+    return displayNameDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DISPLAY_NAME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDisplayName(String displayName) {
     this.displayName = displayName;
+    this.displayNameDefined = true;
   }
 
   /**
@@ -176,8 +217,14 @@ public class ActiveNumberDto {
     return regionCode;
   }
 
+  @JsonIgnore
+  public boolean getRegionCodeDefined() {
+    return regionCodeDefined;
+  }
+
   public ActiveNumberDto type(String type) {
     this.type = type;
+    this.typeDefined = true;
     return this;
   }
 
@@ -192,14 +239,21 @@ public class ActiveNumberDto {
     return type;
   }
 
+  @JsonIgnore
+  public boolean getTypeDefined() {
+    return typeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TYPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setType(String type) {
     this.type = type;
+    this.typeDefined = true;
   }
 
   public ActiveNumberDto capability(List<String> capability) {
     this.capability = capability;
+    this.capabilityDefined = true;
     return this;
   }
 
@@ -207,6 +261,7 @@ public class ActiveNumberDto {
     if (this.capability == null) {
       this.capability = new ArrayList<>();
     }
+    this.capabilityDefined = true;
     this.capability.add(capabilityItem);
     return this;
   }
@@ -222,14 +277,21 @@ public class ActiveNumberDto {
     return capability;
   }
 
+  @JsonIgnore
+  public boolean getCapabilityDefined() {
+    return capabilityDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CAPABILITY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCapability(List<String> capability) {
     this.capability = capability;
+    this.capabilityDefined = true;
   }
 
   public ActiveNumberDto money(MoneyDto money) {
     this.money = money;
+    this.moneyDefined = true;
     return this;
   }
 
@@ -244,10 +306,16 @@ public class ActiveNumberDto {
     return money;
   }
 
+  @JsonIgnore
+  public boolean getMoneyDefined() {
+    return moneyDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MONEY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMoney(MoneyDto money) {
     this.money = money;
+    this.moneyDefined = true;
   }
 
   /**
@@ -261,6 +329,11 @@ public class ActiveNumberDto {
     return paymentIntervalMonths;
   }
 
+  @JsonIgnore
+  public boolean getPaymentIntervalMonthsDefined() {
+    return paymentIntervalMonthsDefined;
+  }
+
   /**
    * The date of the next charge.
    *
@@ -270,6 +343,11 @@ public class ActiveNumberDto {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OffsetDateTime getNextChargeDate() {
     return nextChargeDate;
+  }
+
+  @JsonIgnore
+  public boolean getNextChargeDateDefined() {
+    return nextChargeDateDefined;
   }
 
   /**
@@ -283,8 +361,14 @@ public class ActiveNumberDto {
     return expireAt;
   }
 
+  @JsonIgnore
+  public boolean getExpireAtDefined() {
+    return expireAtDefined;
+  }
+
   public ActiveNumberDto smsConfiguration(SMSConfigurationDto smsConfiguration) {
     this.smsConfiguration = smsConfiguration;
+    this.smsConfigurationDefined = true;
     return this;
   }
 
@@ -299,14 +383,21 @@ public class ActiveNumberDto {
     return smsConfiguration;
   }
 
+  @JsonIgnore
+  public boolean getSmsConfigurationDefined() {
+    return smsConfigurationDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SMS_CONFIGURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSmsConfiguration(SMSConfigurationDto smsConfiguration) {
     this.smsConfiguration = smsConfiguration;
+    this.smsConfigurationDefined = true;
   }
 
   public ActiveNumberDto voiceConfiguration(VoiceConfigurationDto voiceConfiguration) {
     this.voiceConfiguration = voiceConfiguration;
+    this.voiceConfigurationDefined = true;
     return this;
   }
 
@@ -321,14 +412,21 @@ public class ActiveNumberDto {
     return voiceConfiguration;
   }
 
+  @JsonIgnore
+  public boolean getVoiceConfigurationDefined() {
+    return voiceConfigurationDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_VOICE_CONFIGURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setVoiceConfiguration(VoiceConfigurationDto voiceConfiguration) {
     this.voiceConfiguration = voiceConfiguration;
+    this.voiceConfigurationDefined = true;
   }
 
   public ActiveNumberDto callbackUrl(String callbackUrl) {
     this.callbackUrl = callbackUrl;
+    this.callbackUrlDefined = true;
     return this;
   }
 
@@ -343,10 +441,16 @@ public class ActiveNumberDto {
     return callbackUrl;
   }
 
+  @JsonIgnore
+  public boolean getCallbackUrlDefined() {
+    return callbackUrlDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCallbackUrl(String callbackUrl) {
     this.callbackUrl = callbackUrl;
+    this.callbackUrlDefined = true;
   }
 
   /** Return true if this ActiveNumber object is equal to o. */

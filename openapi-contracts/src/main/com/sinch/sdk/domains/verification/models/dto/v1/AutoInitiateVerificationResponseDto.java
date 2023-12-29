@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -21,15 +23,18 @@ import java.util.Objects;
 
 /** AutoInitiateVerificationResponseDto */
 @JsonPropertyOrder({AutoInitiateVerificationResponseDto.JSON_PROPERTY_METHODS_ORDER})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class AutoInitiateVerificationResponseDto {
   public static final String JSON_PROPERTY_METHODS_ORDER = "methodsOrder";
   private List<String> methodsOrder;
+  private boolean methodsOrderDefined = false;
 
   public AutoInitiateVerificationResponseDto() {}
 
   public AutoInitiateVerificationResponseDto methodsOrder(List<String> methodsOrder) {
     this.methodsOrder = methodsOrder;
+    this.methodsOrderDefined = true;
     return this;
   }
 
@@ -37,6 +42,7 @@ public class AutoInitiateVerificationResponseDto {
     if (this.methodsOrder == null) {
       this.methodsOrder = new ArrayList<>();
     }
+    this.methodsOrderDefined = true;
     this.methodsOrder.add(methodsOrderItem);
     return this;
   }
@@ -52,10 +58,16 @@ public class AutoInitiateVerificationResponseDto {
     return methodsOrder;
   }
 
+  @JsonIgnore
+  public boolean getMethodsOrderDefined() {
+    return methodsOrderDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_METHODS_ORDER)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMethodsOrder(List<String> methodsOrder) {
     this.methodsOrder = methodsOrder;
+    this.methodsOrderDefined = true;
   }
 
   /** Return true if this AutoInitiateVerificationResponse object is equal to o. */

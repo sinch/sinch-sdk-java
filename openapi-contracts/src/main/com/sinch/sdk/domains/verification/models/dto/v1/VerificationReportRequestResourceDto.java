@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -27,33 +29,42 @@ import java.util.Objects;
   VerificationReportRequestResourceDto.JSON_PROPERTY_CALLOUT,
   VerificationReportRequestResourceDto.JSON_PROPERTY_WHATSAPP
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class VerificationReportRequestResourceDto {
   public static final String JSON_PROPERTY_METHOD = "method";
   private VerificationMethodDto method;
+  private boolean methodDefined = false;
 
   public static final String JSON_PROPERTY_SOURCE = "source";
   private String source;
+  private boolean sourceDefined = false;
 
   public static final String JSON_PROPERTY_CODE = "code";
   private String code;
+  private boolean codeDefined = false;
 
   public static final String JSON_PROPERTY_SMS = "sms";
   private VerificationReportRequestResourceSmsDto sms;
+  private boolean smsDefined = false;
 
   public static final String JSON_PROPERTY_FLASHCALL = "flashcall";
   private VerificationReportRequestResourceFlashcallDto flashcall;
+  private boolean flashcallDefined = false;
 
   public static final String JSON_PROPERTY_CALLOUT = "callout";
   private VerificationReportRequestResourceCalloutDto callout;
+  private boolean calloutDefined = false;
 
   public static final String JSON_PROPERTY_WHATSAPP = "whatsapp";
   private VerificationReportRequestResourceWhatsappDto whatsapp;
+  private boolean whatsappDefined = false;
 
   public VerificationReportRequestResourceDto() {}
 
   public VerificationReportRequestResourceDto method(VerificationMethodDto method) {
     this.method = method;
+    this.methodDefined = true;
     return this;
   }
 
@@ -68,14 +79,21 @@ public class VerificationReportRequestResourceDto {
     return method;
   }
 
+  @JsonIgnore
+  public boolean getMethodDefined() {
+    return methodDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_METHOD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMethod(VerificationMethodDto method) {
     this.method = method;
+    this.methodDefined = true;
   }
 
   public VerificationReportRequestResourceDto source(String source) {
     this.source = source;
+    this.sourceDefined = true;
     return this;
   }
 
@@ -91,14 +109,21 @@ public class VerificationReportRequestResourceDto {
     return source;
   }
 
+  @JsonIgnore
+  public boolean getSourceDefined() {
+    return sourceDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SOURCE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSource(String source) {
     this.source = source;
+    this.sourceDefined = true;
   }
 
   public VerificationReportRequestResourceDto code(String code) {
     this.code = code;
+    this.codeDefined = true;
     return this;
   }
 
@@ -113,14 +138,21 @@ public class VerificationReportRequestResourceDto {
     return code;
   }
 
+  @JsonIgnore
+  public boolean getCodeDefined() {
+    return codeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CODE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCode(String code) {
     this.code = code;
+    this.codeDefined = true;
   }
 
   public VerificationReportRequestResourceDto sms(VerificationReportRequestResourceSmsDto sms) {
     this.sms = sms;
+    this.smsDefined = true;
     return this;
   }
 
@@ -135,15 +167,22 @@ public class VerificationReportRequestResourceDto {
     return sms;
   }
 
+  @JsonIgnore
+  public boolean getSmsDefined() {
+    return smsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SMS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSms(VerificationReportRequestResourceSmsDto sms) {
     this.sms = sms;
+    this.smsDefined = true;
   }
 
   public VerificationReportRequestResourceDto flashcall(
       VerificationReportRequestResourceFlashcallDto flashcall) {
     this.flashcall = flashcall;
+    this.flashcallDefined = true;
     return this;
   }
 
@@ -158,15 +197,22 @@ public class VerificationReportRequestResourceDto {
     return flashcall;
   }
 
+  @JsonIgnore
+  public boolean getFlashcallDefined() {
+    return flashcallDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_FLASHCALL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFlashcall(VerificationReportRequestResourceFlashcallDto flashcall) {
     this.flashcall = flashcall;
+    this.flashcallDefined = true;
   }
 
   public VerificationReportRequestResourceDto callout(
       VerificationReportRequestResourceCalloutDto callout) {
     this.callout = callout;
+    this.calloutDefined = true;
     return this;
   }
 
@@ -181,15 +227,22 @@ public class VerificationReportRequestResourceDto {
     return callout;
   }
 
+  @JsonIgnore
+  public boolean getCalloutDefined() {
+    return calloutDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CALLOUT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCallout(VerificationReportRequestResourceCalloutDto callout) {
     this.callout = callout;
+    this.calloutDefined = true;
   }
 
   public VerificationReportRequestResourceDto whatsapp(
       VerificationReportRequestResourceWhatsappDto whatsapp) {
     this.whatsapp = whatsapp;
+    this.whatsappDefined = true;
     return this;
   }
 
@@ -204,10 +257,16 @@ public class VerificationReportRequestResourceDto {
     return whatsapp;
   }
 
+  @JsonIgnore
+  public boolean getWhatsappDefined() {
+    return whatsappDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_WHATSAPP)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setWhatsapp(VerificationReportRequestResourceWhatsappDto whatsapp) {
     this.whatsapp = whatsapp;
+    this.whatsappDefined = true;
   }
 
   /** Return true if this VerificationReportRequestResource object is equal to o. */

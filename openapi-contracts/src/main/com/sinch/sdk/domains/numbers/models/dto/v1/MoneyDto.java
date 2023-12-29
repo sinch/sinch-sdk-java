@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.numbers.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -19,18 +21,22 @@ import java.util.Objects;
 
 /** An object giving details on currency code and the amount charged. */
 @JsonPropertyOrder({MoneyDto.JSON_PROPERTY_CURRENCY_CODE, MoneyDto.JSON_PROPERTY_AMOUNT})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class MoneyDto {
   public static final String JSON_PROPERTY_CURRENCY_CODE = "currencyCode";
   private String currencyCode;
+  private boolean currencyCodeDefined = false;
 
   public static final String JSON_PROPERTY_AMOUNT = "amount";
   private String amount;
+  private boolean amountDefined = false;
 
   public MoneyDto() {}
 
   public MoneyDto currencyCode(String currencyCode) {
     this.currencyCode = currencyCode;
+    this.currencyCodeDefined = true;
     return this;
   }
 
@@ -47,14 +53,21 @@ public class MoneyDto {
     return currencyCode;
   }
 
+  @JsonIgnore
+  public boolean getCurrencyCodeDefined() {
+    return currencyCodeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CURRENCY_CODE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCurrencyCode(String currencyCode) {
     this.currencyCode = currencyCode;
+    this.currencyCodeDefined = true;
   }
 
   public MoneyDto amount(String amount) {
     this.amount = amount;
+    this.amountDefined = true;
     return this;
   }
 
@@ -71,10 +84,16 @@ public class MoneyDto {
     return amount;
   }
 
+  @JsonIgnore
+  public boolean getAmountDefined() {
+    return amountDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_AMOUNT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAmount(String amount) {
     this.amount = amount;
+    this.amountDefined = true;
   }
 
   /** Return true if this Money object is equal to o. */

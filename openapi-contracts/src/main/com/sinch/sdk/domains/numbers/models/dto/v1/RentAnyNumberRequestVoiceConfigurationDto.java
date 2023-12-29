@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.numbers.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -19,15 +21,18 @@ import java.util.Objects;
 
 /** RentAnyNumberRequestVoiceConfigurationDto */
 @JsonPropertyOrder({RentAnyNumberRequestVoiceConfigurationDto.JSON_PROPERTY_APP_ID})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class RentAnyNumberRequestVoiceConfigurationDto {
   public static final String JSON_PROPERTY_APP_ID = "appId";
   private String appId;
+  private boolean appIdDefined = false;
 
   public RentAnyNumberRequestVoiceConfigurationDto() {}
 
   public RentAnyNumberRequestVoiceConfigurationDto appId(String appId) {
     this.appId = appId;
+    this.appIdDefined = true;
     return this;
   }
 
@@ -44,10 +49,16 @@ public class RentAnyNumberRequestVoiceConfigurationDto {
     return appId;
   }
 
+  @JsonIgnore
+  public boolean getAppIdDefined() {
+    return appIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_APP_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setAppId(String appId) {
     this.appId = appId;
+    this.appIdDefined = true;
   }
 
   /** Return true if this RentAnyNumberRequest_voiceConfiguration object is equal to o. */

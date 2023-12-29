@@ -36,7 +36,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 @JsonDeserialize(using = ApiBatchListBatchesInnerDto.ApiBatchListBatchesInnerDtoDeserializer.class)
 @JsonSerialize(using = ApiBatchListBatchesInnerDto.ApiBatchListBatchesInnerDtoSerializer.class)
 public class ApiBatchListBatchesInnerDto extends AbstractOpenApiSchema {

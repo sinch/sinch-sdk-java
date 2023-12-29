@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.numbers.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -21,15 +23,18 @@ import java.util.Objects;
 
 /** Response message to list available phone numbers. */
 @JsonPropertyOrder({AvailableNumbersResponseDto.JSON_PROPERTY_AVAILABLE_NUMBERS})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class AvailableNumbersResponseDto {
   public static final String JSON_PROPERTY_AVAILABLE_NUMBERS = "availableNumbers";
   private List<AvailableNumberDto> availableNumbers;
+  private boolean availableNumbersDefined = false;
 
   public AvailableNumbersResponseDto() {}
 
   public AvailableNumbersResponseDto availableNumbers(List<AvailableNumberDto> availableNumbers) {
     this.availableNumbers = availableNumbers;
+    this.availableNumbersDefined = true;
     return this;
   }
 
@@ -38,6 +43,7 @@ public class AvailableNumbersResponseDto {
     if (this.availableNumbers == null) {
       this.availableNumbers = new ArrayList<>();
     }
+    this.availableNumbersDefined = true;
     this.availableNumbers.add(availableNumbersItem);
     return this;
   }
@@ -53,10 +59,16 @@ public class AvailableNumbersResponseDto {
     return availableNumbers;
   }
 
+  @JsonIgnore
+  public boolean getAvailableNumbersDefined() {
+    return availableNumbersDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_AVAILABLE_NUMBERS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAvailableNumbers(List<AvailableNumberDto> availableNumbers) {
     this.availableNumbers = availableNumbers;
+    this.availableNumbersDefined = true;
   }
 
   /** Return true if this AvailableNumbersResponse object is equal to o. */

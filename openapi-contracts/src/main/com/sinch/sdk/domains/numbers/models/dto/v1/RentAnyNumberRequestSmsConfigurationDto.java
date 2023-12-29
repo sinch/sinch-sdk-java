@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.numbers.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -22,18 +24,22 @@ import java.util.Objects;
   RentAnyNumberRequestSmsConfigurationDto.JSON_PROPERTY_SERVICE_PLAN_ID,
   RentAnyNumberRequestSmsConfigurationDto.JSON_PROPERTY_CAMPAIGN_ID
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class RentAnyNumberRequestSmsConfigurationDto {
   public static final String JSON_PROPERTY_SERVICE_PLAN_ID = "servicePlanId";
   private String servicePlanId;
+  private boolean servicePlanIdDefined = false;
 
   public static final String JSON_PROPERTY_CAMPAIGN_ID = "campaignId";
   private String campaignId;
+  private boolean campaignIdDefined = false;
 
   public RentAnyNumberRequestSmsConfigurationDto() {}
 
   public RentAnyNumberRequestSmsConfigurationDto servicePlanId(String servicePlanId) {
     this.servicePlanId = servicePlanId;
+    this.servicePlanIdDefined = true;
     return this;
   }
 
@@ -49,14 +55,21 @@ public class RentAnyNumberRequestSmsConfigurationDto {
     return servicePlanId;
   }
 
+  @JsonIgnore
+  public boolean getServicePlanIdDefined() {
+    return servicePlanIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SERVICE_PLAN_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setServicePlanId(String servicePlanId) {
     this.servicePlanId = servicePlanId;
+    this.servicePlanIdDefined = true;
   }
 
   public RentAnyNumberRequestSmsConfigurationDto campaignId(String campaignId) {
     this.campaignId = campaignId;
+    this.campaignIdDefined = true;
     return this;
   }
 
@@ -71,10 +84,16 @@ public class RentAnyNumberRequestSmsConfigurationDto {
     return campaignId;
   }
 
+  @JsonIgnore
+  public boolean getCampaignIdDefined() {
+    return campaignIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CAMPAIGN_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCampaignId(String campaignId) {
     this.campaignId = campaignId;
+    this.campaignIdDefined = true;
   }
 
   /** Return true if this RentAnyNumberRequest_smsConfiguration object is equal to o. */

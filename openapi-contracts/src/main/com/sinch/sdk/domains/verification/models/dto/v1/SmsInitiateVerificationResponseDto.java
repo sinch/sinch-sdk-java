@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -28,30 +30,38 @@ import java.util.Objects;
   SmsInitiateVerificationResponseDto.JSON_PROPERTY_SUB_VERIFICATION_ID,
   SmsInitiateVerificationResponseDto.JSON_PROPERTY_LINKS
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SmsInitiateVerificationResponseDto {
   public static final String JSON_PROPERTY_TEMPLATE = "template";
   private String template;
+  private boolean templateDefined = false;
 
   public static final String JSON_PROPERTY_INTERCEPTION_TIMEOUT = "interceptionTimeout";
   private Integer interceptionTimeout;
+  private boolean interceptionTimeoutDefined = false;
 
   public static final String JSON_PROPERTY_CODE = "code";
   private String code;
+  private boolean codeDefined = false;
 
   public static final String JSON_PROPERTY_CODE_MASK = "codeMask";
   private String codeMask;
+  private boolean codeMaskDefined = false;
 
   public static final String JSON_PROPERTY_SUB_VERIFICATION_ID = "subVerificationId";
   private String subVerificationId;
+  private boolean subVerificationIdDefined = false;
 
   public static final String JSON_PROPERTY_LINKS = "_links";
   private List<VerificationResourceLinkDto> links;
+  private boolean linksDefined = false;
 
   public SmsInitiateVerificationResponseDto() {}
 
   public SmsInitiateVerificationResponseDto template(String template) {
     this.template = template;
+    this.templateDefined = true;
     return this;
   }
 
@@ -66,14 +76,21 @@ public class SmsInitiateVerificationResponseDto {
     return template;
   }
 
+  @JsonIgnore
+  public boolean getTemplateDefined() {
+    return templateDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TEMPLATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTemplate(String template) {
     this.template = template;
+    this.templateDefined = true;
   }
 
   public SmsInitiateVerificationResponseDto interceptionTimeout(Integer interceptionTimeout) {
     this.interceptionTimeout = interceptionTimeout;
+    this.interceptionTimeoutDefined = true;
     return this;
   }
 
@@ -88,14 +105,21 @@ public class SmsInitiateVerificationResponseDto {
     return interceptionTimeout;
   }
 
+  @JsonIgnore
+  public boolean getInterceptionTimeoutDefined() {
+    return interceptionTimeoutDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_INTERCEPTION_TIMEOUT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setInterceptionTimeout(Integer interceptionTimeout) {
     this.interceptionTimeout = interceptionTimeout;
+    this.interceptionTimeoutDefined = true;
   }
 
   public SmsInitiateVerificationResponseDto code(String code) {
     this.code = code;
+    this.codeDefined = true;
     return this;
   }
 
@@ -110,14 +134,21 @@ public class SmsInitiateVerificationResponseDto {
     return code;
   }
 
+  @JsonIgnore
+  public boolean getCodeDefined() {
+    return codeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CODE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCode(String code) {
     this.code = code;
+    this.codeDefined = true;
   }
 
   public SmsInitiateVerificationResponseDto codeMask(String codeMask) {
     this.codeMask = codeMask;
+    this.codeMaskDefined = true;
     return this;
   }
 
@@ -132,14 +163,21 @@ public class SmsInitiateVerificationResponseDto {
     return codeMask;
   }
 
+  @JsonIgnore
+  public boolean getCodeMaskDefined() {
+    return codeMaskDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CODE_MASK)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCodeMask(String codeMask) {
     this.codeMask = codeMask;
+    this.codeMaskDefined = true;
   }
 
   public SmsInitiateVerificationResponseDto subVerificationId(String subVerificationId) {
     this.subVerificationId = subVerificationId;
+    this.subVerificationIdDefined = true;
     return this;
   }
 
@@ -154,14 +192,21 @@ public class SmsInitiateVerificationResponseDto {
     return subVerificationId;
   }
 
+  @JsonIgnore
+  public boolean getSubVerificationIdDefined() {
+    return subVerificationIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SUB_VERIFICATION_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSubVerificationId(String subVerificationId) {
     this.subVerificationId = subVerificationId;
+    this.subVerificationIdDefined = true;
   }
 
   public SmsInitiateVerificationResponseDto links(List<VerificationResourceLinkDto> links) {
     this.links = links;
+    this.linksDefined = true;
     return this;
   }
 
@@ -169,6 +214,7 @@ public class SmsInitiateVerificationResponseDto {
     if (this.links == null) {
       this.links = new ArrayList<>();
     }
+    this.linksDefined = true;
     this.links.add(linksItem);
     return this;
   }
@@ -184,10 +230,16 @@ public class SmsInitiateVerificationResponseDto {
     return links;
   }
 
+  @JsonIgnore
+  public boolean getLinksDefined() {
+    return linksDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_LINKS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setLinks(List<VerificationResourceLinkDto> links) {
     this.links = links;
+    this.linksDefined = true;
   }
 
   /** Return true if this SmsInitiateVerificationResponse object is equal to o. */

@@ -39,7 +39,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class BatchesApi {
 
   private static final Logger LOGGER = Logger.getLogger(BatchesApi.class.getName());
@@ -77,7 +76,13 @@ public class BatchesApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[cancelBatchMessage] " + "servicePlanId: " + servicePlanId + ", " + "batchId: " + batchId);
+        "[cancelBatchMessage]"
+            + " "
+            + "servicePlanId: "
+            + servicePlanId
+            + ", "
+            + "batchId: "
+            + batchId);
 
     HttpRequest httpRequest = cancelBatchMessageRequestBuilder(servicePlanId, batchId);
     HttpResponse response =
@@ -163,7 +168,8 @@ public class BatchesApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[deliveryFeedback] "
+        "[deliveryFeedback]"
+            + " "
             + "servicePlanId: "
             + servicePlanId
             + ", "
@@ -262,7 +268,8 @@ public class BatchesApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[dryRun] "
+        "[dryRun]"
+            + " "
             + "servicePlanId: "
             + servicePlanId
             + ", "
@@ -364,7 +371,13 @@ public class BatchesApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[getBatchMessage] " + "servicePlanId: " + servicePlanId + ", " + "batchId: " + batchId);
+        "[getBatchMessage]"
+            + " "
+            + "servicePlanId: "
+            + servicePlanId
+            + ", "
+            + "batchId: "
+            + batchId);
 
     HttpRequest httpRequest = getBatchMessageRequestBuilder(servicePlanId, batchId);
     HttpResponse response =
@@ -459,7 +472,8 @@ public class BatchesApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[listBatches] "
+        "[listBatches]"
+            + " "
             + "servicePlanId: "
             + servicePlanId
             + ", "
@@ -591,7 +605,8 @@ public class BatchesApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[replaceBatch] "
+        "[replaceBatch]"
+            + " "
             + "servicePlanId: "
             + servicePlanId
             + ", "
@@ -682,7 +697,8 @@ public class BatchesApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[sendSMS] "
+        "[sendSMS]"
+            + " "
             + "servicePlanId: "
             + servicePlanId
             + ", "
@@ -762,7 +778,8 @@ public class BatchesApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[updateBatchMessage] "
+        "[updateBatchMessage]"
+            + " "
             + "servicePlanId: "
             + servicePlanId
             + ", "

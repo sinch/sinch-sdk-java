@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -23,22 +25,27 @@ import java.util.Objects;
   VerificationPriceInformationDto.JSON_PROPERTY_TERMINATION_PRICE,
   VerificationPriceInformationDto.JSON_PROPERTY_BILLABLE_DURATION
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class VerificationPriceInformationDto {
   public static final String JSON_PROPERTY_VERIFICATION_PRICE = "verificationPrice";
   private VerificationPriceInformationVerificationPriceDto verificationPrice;
+  private boolean verificationPriceDefined = false;
 
   public static final String JSON_PROPERTY_TERMINATION_PRICE = "terminationPrice";
   private VerificationPriceInformationTerminationPriceDto terminationPrice;
+  private boolean terminationPriceDefined = false;
 
   public static final String JSON_PROPERTY_BILLABLE_DURATION = "billableDuration";
   private Integer billableDuration;
+  private boolean billableDurationDefined = false;
 
   public VerificationPriceInformationDto() {}
 
   public VerificationPriceInformationDto verificationPrice(
       VerificationPriceInformationVerificationPriceDto verificationPrice) {
     this.verificationPrice = verificationPrice;
+    this.verificationPriceDefined = true;
     return this;
   }
 
@@ -53,16 +60,23 @@ public class VerificationPriceInformationDto {
     return verificationPrice;
   }
 
+  @JsonIgnore
+  public boolean getVerificationPriceDefined() {
+    return verificationPriceDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_VERIFICATION_PRICE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setVerificationPrice(
       VerificationPriceInformationVerificationPriceDto verificationPrice) {
     this.verificationPrice = verificationPrice;
+    this.verificationPriceDefined = true;
   }
 
   public VerificationPriceInformationDto terminationPrice(
       VerificationPriceInformationTerminationPriceDto terminationPrice) {
     this.terminationPrice = terminationPrice;
+    this.terminationPriceDefined = true;
     return this;
   }
 
@@ -77,15 +91,22 @@ public class VerificationPriceInformationDto {
     return terminationPrice;
   }
 
+  @JsonIgnore
+  public boolean getTerminationPriceDefined() {
+    return terminationPriceDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TERMINATION_PRICE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTerminationPrice(
       VerificationPriceInformationTerminationPriceDto terminationPrice) {
     this.terminationPrice = terminationPrice;
+    this.terminationPriceDefined = true;
   }
 
   public VerificationPriceInformationDto billableDuration(Integer billableDuration) {
     this.billableDuration = billableDuration;
+    this.billableDurationDefined = true;
     return this;
   }
 
@@ -100,10 +121,16 @@ public class VerificationPriceInformationDto {
     return billableDuration;
   }
 
+  @JsonIgnore
+  public boolean getBillableDurationDefined() {
+    return billableDurationDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_BILLABLE_DURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setBillableDuration(Integer billableDuration) {
     this.billableDuration = billableDuration;
+    this.billableDurationDefined = true;
   }
 
   /** Return true if this VerificationPriceInformation object is equal to o. */

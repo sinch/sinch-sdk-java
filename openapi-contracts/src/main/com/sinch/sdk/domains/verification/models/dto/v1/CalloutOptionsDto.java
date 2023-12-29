@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -19,18 +21,22 @@ import java.util.Objects;
 
 /** CalloutOptionsDto */
 @JsonPropertyOrder({CalloutOptionsDto.JSON_PROPERTY_CODE, CalloutOptionsDto.JSON_PROPERTY_SPEECH})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class CalloutOptionsDto {
   public static final String JSON_PROPERTY_CODE = "code";
   private String code;
+  private boolean codeDefined = false;
 
   public static final String JSON_PROPERTY_SPEECH = "speech";
   private CalloutOptionsSpeechDto speech;
+  private boolean speechDefined = false;
 
   public CalloutOptionsDto() {}
 
   public CalloutOptionsDto code(String code) {
     this.code = code;
+    this.codeDefined = true;
     return this;
   }
 
@@ -45,14 +51,21 @@ public class CalloutOptionsDto {
     return code;
   }
 
+  @JsonIgnore
+  public boolean getCodeDefined() {
+    return codeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CODE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCode(String code) {
     this.code = code;
+    this.codeDefined = true;
   }
 
   public CalloutOptionsDto speech(CalloutOptionsSpeechDto speech) {
     this.speech = speech;
+    this.speechDefined = true;
     return this;
   }
 
@@ -67,10 +80,16 @@ public class CalloutOptionsDto {
     return speech;
   }
 
+  @JsonIgnore
+  public boolean getSpeechDefined() {
+    return speechDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SPEECH)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSpeech(CalloutOptionsSpeechDto speech) {
     this.speech = speech;
+    this.speechDefined = true;
   }
 
   /** Return true if this CalloutOptions object is equal to o. */

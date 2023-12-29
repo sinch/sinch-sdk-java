@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.sms.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -25,20 +27,24 @@ import java.util.Objects;
   ParameterObjParameterKeyDto.JSON_PROPERTY_LEFT_CURLY_BRACKET_MSISDN_RIGHT_CURLY_BRACKET,
   ParameterObjParameterKeyDto.JSON_PROPERTY_DEFAULT
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ParameterObjParameterKeyDto {
   public static final String JSON_PROPERTY_LEFT_CURLY_BRACKET_MSISDN_RIGHT_CURLY_BRACKET =
       "{msisdn}";
   private String leftCurlyBracketMsisdnRightCurlyBracket;
+  private boolean leftCurlyBracketMsisdnRightCurlyBracketDefined = false;
 
   public static final String JSON_PROPERTY_DEFAULT = "default";
   private String _default;
+  private boolean _defaultDefined = false;
 
   public ParameterObjParameterKeyDto() {}
 
   public ParameterObjParameterKeyDto leftCurlyBracketMsisdnRightCurlyBracket(
       String leftCurlyBracketMsisdnRightCurlyBracket) {
     this.leftCurlyBracketMsisdnRightCurlyBracket = leftCurlyBracketMsisdnRightCurlyBracket;
+    this.leftCurlyBracketMsisdnRightCurlyBracketDefined = true;
     return this;
   }
 
@@ -53,15 +59,22 @@ public class ParameterObjParameterKeyDto {
     return leftCurlyBracketMsisdnRightCurlyBracket;
   }
 
+  @JsonIgnore
+  public boolean getLeftCurlyBracketMsisdnRightCurlyBracketDefined() {
+    return leftCurlyBracketMsisdnRightCurlyBracketDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_LEFT_CURLY_BRACKET_MSISDN_RIGHT_CURLY_BRACKET)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setLeftCurlyBracketMsisdnRightCurlyBracket(
       String leftCurlyBracketMsisdnRightCurlyBracket) {
     this.leftCurlyBracketMsisdnRightCurlyBracket = leftCurlyBracketMsisdnRightCurlyBracket;
+    this.leftCurlyBracketMsisdnRightCurlyBracketDefined = true;
   }
 
   public ParameterObjParameterKeyDto _default(String _default) {
     this._default = _default;
+    this._defaultDefined = true;
     return this;
   }
 
@@ -78,10 +91,16 @@ public class ParameterObjParameterKeyDto {
     return _default;
   }
 
+  @JsonIgnore
+  public boolean getDefaultDefined() {
+    return _defaultDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DEFAULT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDefault(String _default) {
     this._default = _default;
+    this._defaultDefined = true;
   }
 
   /** Return true if this parameterObj__parameter_key_ object is equal to o. */

@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -23,21 +25,26 @@ import java.util.Objects;
   WhatsappOptionsDto.JSON_PROPERTY_CODE_TYPE,
   WhatsappOptionsDto.JSON_PROPERTY_CODE_MASK
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class WhatsappOptionsDto {
   public static final String JSON_PROPERTY_CODE = "code";
   private String code;
+  private boolean codeDefined = false;
 
   public static final String JSON_PROPERTY_CODE_TYPE = "codeType";
   private String codeType;
+  private boolean codeTypeDefined = false;
 
   public static final String JSON_PROPERTY_CODE_MASK = "codeMask";
   private String codeMask;
+  private boolean codeMaskDefined = false;
 
   public WhatsappOptionsDto() {}
 
   public WhatsappOptionsDto code(String code) {
     this.code = code;
+    this.codeDefined = true;
     return this;
   }
 
@@ -52,14 +59,21 @@ public class WhatsappOptionsDto {
     return code;
   }
 
+  @JsonIgnore
+  public boolean getCodeDefined() {
+    return codeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CODE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCode(String code) {
     this.code = code;
+    this.codeDefined = true;
   }
 
   public WhatsappOptionsDto codeType(String codeType) {
     this.codeType = codeType;
+    this.codeTypeDefined = true;
     return this;
   }
 
@@ -74,14 +88,21 @@ public class WhatsappOptionsDto {
     return codeType;
   }
 
+  @JsonIgnore
+  public boolean getCodeTypeDefined() {
+    return codeTypeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CODE_TYPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCodeType(String codeType) {
     this.codeType = codeType;
+    this.codeTypeDefined = true;
   }
 
   public WhatsappOptionsDto codeMask(String codeMask) {
     this.codeMask = codeMask;
+    this.codeMaskDefined = true;
     return this;
   }
 
@@ -96,10 +117,16 @@ public class WhatsappOptionsDto {
     return codeMask;
   }
 
+  @JsonIgnore
+  public boolean getCodeMaskDefined() {
+    return codeMaskDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CODE_MASK)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCodeMask(String codeMask) {
     this.codeMask = codeMask;
+    this.codeMaskDefined = true;
   }
 
   /** Return true if this WhatsappOptions object is equal to o. */

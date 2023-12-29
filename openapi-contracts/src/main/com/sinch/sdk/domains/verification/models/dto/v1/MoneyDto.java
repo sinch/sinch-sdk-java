@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -23,21 +25,26 @@ import java.util.Objects;
   MoneyDto.JSON_PROPERTY_AMOUNT,
   MoneyDto.JSON_PROPERTY_FORMATTED
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class MoneyDto {
   public static final String JSON_PROPERTY_CURRENCY_ID = "currencyId";
   private String currencyId;
+  private boolean currencyIdDefined = false;
 
   public static final String JSON_PROPERTY_AMOUNT = "amount";
   private Float amount;
+  private boolean amountDefined = false;
 
   public static final String JSON_PROPERTY_FORMATTED = "formatted";
   private String formatted;
+  private boolean formattedDefined = false;
 
   public MoneyDto() {}
 
   public MoneyDto currencyId(String currencyId) {
     this.currencyId = currencyId;
+    this.currencyIdDefined = true;
     return this;
   }
 
@@ -52,14 +59,21 @@ public class MoneyDto {
     return currencyId;
   }
 
+  @JsonIgnore
+  public boolean getCurrencyIdDefined() {
+    return currencyIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CURRENCY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCurrencyId(String currencyId) {
     this.currencyId = currencyId;
+    this.currencyIdDefined = true;
   }
 
   public MoneyDto amount(Float amount) {
     this.amount = amount;
+    this.amountDefined = true;
     return this;
   }
 
@@ -74,14 +88,21 @@ public class MoneyDto {
     return amount;
   }
 
+  @JsonIgnore
+  public boolean getAmountDefined() {
+    return amountDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_AMOUNT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAmount(Float amount) {
     this.amount = amount;
+    this.amountDefined = true;
   }
 
   public MoneyDto formatted(String formatted) {
     this.formatted = formatted;
+    this.formattedDefined = true;
     return this;
   }
 
@@ -96,10 +117,16 @@ public class MoneyDto {
     return formatted;
   }
 
+  @JsonIgnore
+  public boolean getFormattedDefined() {
+    return formattedDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_FORMATTED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFormatted(String formatted) {
     this.formatted = formatted;
+    this.formattedDefined = true;
   }
 
   /** Return true if this Money object is equal to o. */

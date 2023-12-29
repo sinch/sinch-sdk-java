@@ -36,7 +36,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class ActiveNumberApi {
 
   private static final Logger LOGGER = Logger.getLogger(ActiveNumberApi.class.getName());
@@ -73,7 +72,8 @@ public class ActiveNumberApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[numberServiceGetActiveNumber] "
+        "[numberServiceGetActiveNumber]"
+            + " "
             + "projectId: "
             + projectId
             + ", "
@@ -181,7 +181,8 @@ public class ActiveNumberApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[numberServiceListActiveNumbers] "
+        "[numberServiceListActiveNumbers]"
+            + " "
             + "projectId: "
             + projectId
             + ", "
@@ -358,7 +359,8 @@ public class ActiveNumberApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[numberServiceReleaseNumber] "
+        "[numberServiceReleaseNumber]"
+            + " "
             + "projectId: "
             + projectId
             + ", "
@@ -450,7 +452,8 @@ public class ActiveNumberApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[numberServiceUpdateActiveNumber] "
+        "[numberServiceUpdateActiveNumber]"
+            + " "
             + "projectId: "
             + projectId
             + ", "

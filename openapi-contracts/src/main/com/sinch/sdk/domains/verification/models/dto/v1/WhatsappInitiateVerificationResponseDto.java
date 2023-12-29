@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -26,24 +28,30 @@ import java.util.Objects;
   WhatsappInitiateVerificationResponseDto.JSON_PROPERTY_CODE_MASK,
   WhatsappInitiateVerificationResponseDto.JSON_PROPERTY_LINKS
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class WhatsappInitiateVerificationResponseDto {
   public static final String JSON_PROPERTY_SUB_VERIFICATION_ID = "subVerificationId";
   private String subVerificationId;
+  private boolean subVerificationIdDefined = false;
 
   public static final String JSON_PROPERTY_CODE = "code";
   private String code;
+  private boolean codeDefined = false;
 
   public static final String JSON_PROPERTY_CODE_MASK = "codeMask";
   private String codeMask;
+  private boolean codeMaskDefined = false;
 
   public static final String JSON_PROPERTY_LINKS = "_links";
   private List<VerificationResourceLinkDto> links;
+  private boolean linksDefined = false;
 
   public WhatsappInitiateVerificationResponseDto() {}
 
   public WhatsappInitiateVerificationResponseDto subVerificationId(String subVerificationId) {
     this.subVerificationId = subVerificationId;
+    this.subVerificationIdDefined = true;
     return this;
   }
 
@@ -58,14 +66,21 @@ public class WhatsappInitiateVerificationResponseDto {
     return subVerificationId;
   }
 
+  @JsonIgnore
+  public boolean getSubVerificationIdDefined() {
+    return subVerificationIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SUB_VERIFICATION_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSubVerificationId(String subVerificationId) {
     this.subVerificationId = subVerificationId;
+    this.subVerificationIdDefined = true;
   }
 
   public WhatsappInitiateVerificationResponseDto code(String code) {
     this.code = code;
+    this.codeDefined = true;
     return this;
   }
 
@@ -80,14 +95,21 @@ public class WhatsappInitiateVerificationResponseDto {
     return code;
   }
 
+  @JsonIgnore
+  public boolean getCodeDefined() {
+    return codeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CODE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCode(String code) {
     this.code = code;
+    this.codeDefined = true;
   }
 
   public WhatsappInitiateVerificationResponseDto codeMask(String codeMask) {
     this.codeMask = codeMask;
+    this.codeMaskDefined = true;
     return this;
   }
 
@@ -102,14 +124,21 @@ public class WhatsappInitiateVerificationResponseDto {
     return codeMask;
   }
 
+  @JsonIgnore
+  public boolean getCodeMaskDefined() {
+    return codeMaskDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CODE_MASK)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCodeMask(String codeMask) {
     this.codeMask = codeMask;
+    this.codeMaskDefined = true;
   }
 
   public WhatsappInitiateVerificationResponseDto links(List<VerificationResourceLinkDto> links) {
     this.links = links;
+    this.linksDefined = true;
     return this;
   }
 
@@ -118,6 +147,7 @@ public class WhatsappInitiateVerificationResponseDto {
     if (this.links == null) {
       this.links = new ArrayList<>();
     }
+    this.linksDefined = true;
     this.links.add(linksItem);
     return this;
   }
@@ -133,10 +163,16 @@ public class WhatsappInitiateVerificationResponseDto {
     return links;
   }
 
+  @JsonIgnore
+  public boolean getLinksDefined() {
+    return linksDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_LINKS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setLinks(List<VerificationResourceLinkDto> links) {
     this.links = links;
+    this.linksDefined = true;
   }
 
   /** Return true if this WhatsappInitiateVerificationResponse object is equal to o. */

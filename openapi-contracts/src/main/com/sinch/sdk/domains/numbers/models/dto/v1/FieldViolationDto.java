@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.numbers.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -22,18 +24,22 @@ import java.util.Objects;
   FieldViolationDto.JSON_PROPERTY_FIELD,
   FieldViolationDto.JSON_PROPERTY_DESCRIPTION
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class FieldViolationDto {
   public static final String JSON_PROPERTY_FIELD = "field";
   private String field;
+  private boolean fieldDefined = false;
 
   public static final String JSON_PROPERTY_DESCRIPTION = "description";
   private String description;
+  private boolean descriptionDefined = false;
 
   public FieldViolationDto() {}
 
   public FieldViolationDto field(String field) {
     this.field = field;
+    this.fieldDefined = true;
     return this;
   }
 
@@ -48,14 +54,21 @@ public class FieldViolationDto {
     return field;
   }
 
+  @JsonIgnore
+  public boolean getFieldDefined() {
+    return fieldDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_FIELD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setField(String field) {
     this.field = field;
+    this.fieldDefined = true;
   }
 
   public FieldViolationDto description(String description) {
     this.description = description;
+    this.descriptionDefined = true;
     return this;
   }
 
@@ -70,10 +83,16 @@ public class FieldViolationDto {
     return description;
   }
 
+  @JsonIgnore
+  public boolean getDescriptionDefined() {
+    return descriptionDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DESCRIPTION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDescription(String description) {
     this.description = description;
+    this.descriptionDefined = true;
   }
 
   /** Return true if this FieldViolation object is equal to o. */

@@ -36,7 +36,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 @JsonDeserialize(using = SendSMS201ResponseDto.SendSMS201ResponseDtoDeserializer.class)
 @JsonSerialize(using = SendSMS201ResponseDto.SendSMS201ResponseDtoSerializer.class)
 public class SendSMS201ResponseDto extends AbstractOpenApiSchema {

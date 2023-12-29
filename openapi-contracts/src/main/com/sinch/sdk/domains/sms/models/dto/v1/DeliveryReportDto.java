@@ -13,6 +13,8 @@
 package com.sinch.sdk.domains.sms.models.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -29,16 +31,20 @@ import java.util.Objects;
   DeliveryReportDto.JSON_PROPERTY_TYPE,
   DeliveryReportDto.JSON_PROPERTY_CLIENT_REFERENCE
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class DeliveryReportDto {
   public static final String JSON_PROPERTY_BATCH_ID = "batch_id";
   private String batchId;
+  private boolean batchIdDefined = false;
 
   public static final String JSON_PROPERTY_STATUSES = "statuses";
-  private List<MessageDeliveryStatusDto> statuses = new ArrayList<>();
+  private List<MessageDeliveryStatusDto> statuses;
+  private boolean statusesDefined = false;
 
   public static final String JSON_PROPERTY_TOTAL_MESSAGE_COUNT = "total_message_count";
   private Integer totalMessageCount;
+  private boolean totalMessageCountDefined = false;
 
   /** The delivery report type. */
   public enum TypeEnum {
@@ -77,9 +83,11 @@ public class DeliveryReportDto {
 
   public static final String JSON_PROPERTY_TYPE = "type";
   private String type;
+  private boolean typeDefined = false;
 
   public static final String JSON_PROPERTY_CLIENT_REFERENCE = "client_reference";
   private String clientReference;
+  private boolean clientReferenceDefined = false;
 
   public DeliveryReportDto() {}
 
@@ -87,6 +95,7 @@ public class DeliveryReportDto {
   public DeliveryReportDto(@JsonProperty(JSON_PROPERTY_BATCH_ID) String batchId) {
     this();
     this.batchId = batchId;
+    this.batchIdDefined = true;
   }
 
   /**
@@ -100,8 +109,14 @@ public class DeliveryReportDto {
     return batchId;
   }
 
+  @JsonIgnore
+  public boolean getBatchIdDefined() {
+    return batchIdDefined;
+  }
+
   public DeliveryReportDto statuses(List<MessageDeliveryStatusDto> statuses) {
     this.statuses = statuses;
+    this.statusesDefined = true;
     return this;
   }
 
@@ -109,6 +124,7 @@ public class DeliveryReportDto {
     if (this.statuses == null) {
       this.statuses = new ArrayList<>();
     }
+    this.statusesDefined = true;
     this.statuses.add(statusesItem);
     return this;
   }
@@ -124,14 +140,21 @@ public class DeliveryReportDto {
     return statuses;
   }
 
+  @JsonIgnore
+  public boolean getStatusesDefined() {
+    return statusesDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_STATUSES)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setStatuses(List<MessageDeliveryStatusDto> statuses) {
     this.statuses = statuses;
+    this.statusesDefined = true;
   }
 
   public DeliveryReportDto totalMessageCount(Integer totalMessageCount) {
     this.totalMessageCount = totalMessageCount;
+    this.totalMessageCountDefined = true;
     return this;
   }
 
@@ -146,14 +169,21 @@ public class DeliveryReportDto {
     return totalMessageCount;
   }
 
+  @JsonIgnore
+  public boolean getTotalMessageCountDefined() {
+    return totalMessageCountDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TOTAL_MESSAGE_COUNT)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setTotalMessageCount(Integer totalMessageCount) {
     this.totalMessageCount = totalMessageCount;
+    this.totalMessageCountDefined = true;
   }
 
   public DeliveryReportDto type(String type) {
     this.type = type;
+    this.typeDefined = true;
     return this;
   }
 
@@ -168,14 +198,21 @@ public class DeliveryReportDto {
     return type;
   }
 
+  @JsonIgnore
+  public boolean getTypeDefined() {
+    return typeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TYPE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setType(String type) {
     this.type = type;
+    this.typeDefined = true;
   }
 
   public DeliveryReportDto clientReference(String clientReference) {
     this.clientReference = clientReference;
+    this.clientReferenceDefined = true;
     return this;
   }
 
@@ -191,10 +228,16 @@ public class DeliveryReportDto {
     return clientReference;
   }
 
+  @JsonIgnore
+  public boolean getClientReferenceDefined() {
+    return clientReferenceDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CLIENT_REFERENCE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setClientReference(String clientReference) {
     this.clientReference = clientReference;
+    this.clientReferenceDefined = true;
   }
 
   /** Return true if this DeliveryReport object is equal to o. */

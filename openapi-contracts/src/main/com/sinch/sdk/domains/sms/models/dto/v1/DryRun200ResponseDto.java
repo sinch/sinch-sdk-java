@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.sms.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -25,21 +27,26 @@ import java.util.Objects;
   DryRun200ResponseDto.JSON_PROPERTY_NUMBER_OF_MESSAGES,
   DryRun200ResponseDto.JSON_PROPERTY_PER_RECIPIENT
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class DryRun200ResponseDto {
   public static final String JSON_PROPERTY_NUMBER_OF_RECIPIENTS = "number_of_recipients";
   private Integer numberOfRecipients;
+  private boolean numberOfRecipientsDefined = false;
 
   public static final String JSON_PROPERTY_NUMBER_OF_MESSAGES = "number_of_messages";
   private Integer numberOfMessages;
+  private boolean numberOfMessagesDefined = false;
 
   public static final String JSON_PROPERTY_PER_RECIPIENT = "per_recipient";
   private List<DryRun200ResponsePerRecipientInnerDto> perRecipient;
+  private boolean perRecipientDefined = false;
 
   public DryRun200ResponseDto() {}
 
   public DryRun200ResponseDto numberOfRecipients(Integer numberOfRecipients) {
     this.numberOfRecipients = numberOfRecipients;
+    this.numberOfRecipientsDefined = true;
     return this;
   }
 
@@ -54,14 +61,21 @@ public class DryRun200ResponseDto {
     return numberOfRecipients;
   }
 
+  @JsonIgnore
+  public boolean getNumberOfRecipientsDefined() {
+    return numberOfRecipientsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NUMBER_OF_RECIPIENTS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNumberOfRecipients(Integer numberOfRecipients) {
     this.numberOfRecipients = numberOfRecipients;
+    this.numberOfRecipientsDefined = true;
   }
 
   public DryRun200ResponseDto numberOfMessages(Integer numberOfMessages) {
     this.numberOfMessages = numberOfMessages;
+    this.numberOfMessagesDefined = true;
     return this;
   }
 
@@ -76,15 +90,22 @@ public class DryRun200ResponseDto {
     return numberOfMessages;
   }
 
+  @JsonIgnore
+  public boolean getNumberOfMessagesDefined() {
+    return numberOfMessagesDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NUMBER_OF_MESSAGES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNumberOfMessages(Integer numberOfMessages) {
     this.numberOfMessages = numberOfMessages;
+    this.numberOfMessagesDefined = true;
   }
 
   public DryRun200ResponseDto perRecipient(
       List<DryRun200ResponsePerRecipientInnerDto> perRecipient) {
     this.perRecipient = perRecipient;
+    this.perRecipientDefined = true;
     return this;
   }
 
@@ -93,6 +114,7 @@ public class DryRun200ResponseDto {
     if (this.perRecipient == null) {
       this.perRecipient = new ArrayList<>();
     }
+    this.perRecipientDefined = true;
     this.perRecipient.add(perRecipientItem);
     return this;
   }
@@ -109,10 +131,16 @@ public class DryRun200ResponseDto {
     return perRecipient;
   }
 
+  @JsonIgnore
+  public boolean getPerRecipientDefined() {
+    return perRecipientDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_PER_RECIPIENT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setPerRecipient(List<DryRun200ResponsePerRecipientInnerDto> perRecipient) {
     this.perRecipient = perRecipient;
+    this.perRecipientDefined = true;
   }
 
   /** Return true if this Dry_Run_200_response object is equal to o. */
