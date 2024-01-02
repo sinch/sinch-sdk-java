@@ -7,12 +7,13 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.domains.sms.models.Group;
 import com.sinch.sdk.domains.sms.models.GroupAutoUpdate;
-import com.sinch.sdk.domains.sms.models.GroupAutoUpdateKeyword;
 import com.sinch.sdk.domains.sms.models.dto.v1.CreateGroupResponseDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.GroupAutoUpdateDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.GroupObjectDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.ReplaceGroupRequestDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.UpdateGroupRequestDto;
+import com.sinch.sdk.domains.sms.models.requests.GroupAutoUpdateKeywordRequestParameters;
+import com.sinch.sdk.domains.sms.models.requests.GroupAutoUpdateRequestParameters;
 import com.sinch.sdk.domains.sms.models.requests.GroupCreateRequestParameters;
 import com.sinch.sdk.domains.sms.models.requests.GroupReplaceRequestParameters;
 import com.sinch.sdk.domains.sms.models.requests.GroupUpdateRequestParameters;
@@ -80,12 +81,14 @@ class GroupsDtoConverterTest extends BaseTest {
             .setChildGroupIds(
                 Arrays.asList("01FC66621XXXXX119Z8PMV1AHY", "01FC66621XXXXX119Z8PMV1A00"))
             .setAutoUpdate(
-                GroupAutoUpdate.builder()
+                GroupAutoUpdateRequestParameters.builder()
                     .setTo("15551231234")
                     .setAdd(
-                        GroupAutoUpdateKeyword.builder().setFirstWord("Add 1st keyword").build())
+                        GroupAutoUpdateKeywordRequestParameters.builder()
+                            .setFirstWord("Add 1st keyword")
+                            .build())
                     .setRemove(
-                        GroupAutoUpdateKeyword.builder()
+                        GroupAutoUpdateKeywordRequestParameters.builder()
                             .setFirstWord("remove 1st keyword")
                             .setSecondWord("remove 2nd keyword")
                             .build())
@@ -107,12 +110,14 @@ class GroupsDtoConverterTest extends BaseTest {
             .setAddFromGroup("add from group string")
             .setRemoveFromGroup("remove from group string")
             .setAutoUpdate(
-                GroupAutoUpdate.builder()
+                GroupAutoUpdateRequestParameters.builder()
                     .setTo("15551231234")
                     .setAdd(
-                        GroupAutoUpdateKeyword.builder().setFirstWord("Add 1st keyword").build())
+                        GroupAutoUpdateKeywordRequestParameters.builder()
+                            .setFirstWord("Add 1st keyword")
+                            .build())
                     .setRemove(
-                        GroupAutoUpdateKeyword.builder()
+                        GroupAutoUpdateKeywordRequestParameters.builder()
                             .setFirstWord("remove 1st keyword")
                             .setSecondWord("remove 2nd keyword")
                             .build())

@@ -1,6 +1,6 @@
 package com.sinch.sdk.domains.sms.models.requests;
 
-import java.util.Optional;
+import com.sinch.sdk.core.models.OptionalValue;
 
 /**
  * Parameters request to list groups
@@ -11,24 +11,20 @@ import java.util.Optional;
  */
 public class GroupsListRequestParameters {
 
-  private final Integer page;
-  private final Integer pageSize;
+  private final OptionalValue<Integer> page;
+  private final OptionalValue<Integer> pageSize;
 
-  /**
-   * @param page The page number starting from 0.
-   * @param pageSize Determines the size of a page.
-   */
-  public GroupsListRequestParameters(Integer page, Integer pageSize) {
+  public GroupsListRequestParameters(OptionalValue<Integer> page, OptionalValue<Integer> pageSize) {
     this.page = page;
     this.pageSize = pageSize;
   }
 
-  public Optional<Integer> getPage() {
-    return Optional.ofNullable(page);
+  public OptionalValue<Integer> getPage() {
+    return page;
   }
 
-  public Optional<Integer> getPageSize() {
-    return Optional.ofNullable(pageSize);
+  public OptionalValue<Integer> getPageSize() {
+    return pageSize;
   }
 
   public static Builder builder() {
@@ -41,8 +37,8 @@ public class GroupsListRequestParameters {
 
   public static class Builder {
 
-    Integer page;
-    Integer pageSize;
+    OptionalValue<Integer> page = OptionalValue.empty();
+    OptionalValue<Integer> pageSize = OptionalValue.empty();
 
     private Builder() {}
 
@@ -51,13 +47,21 @@ public class GroupsListRequestParameters {
       this.pageSize = parameters.pageSize;
     }
 
+    /**
+     * @param page The page number starting from 0.
+     * @return current builder
+     */
     public Builder setPage(Integer page) {
-      this.page = page;
+      this.page = OptionalValue.of(page);
       return this;
     }
 
+    /**
+     * @param pageSize Determines the size of a page.
+     * @return current builder
+     */
     public Builder setPageSize(Integer pageSize) {
-      this.pageSize = pageSize;
+      this.pageSize = OptionalValue.of(pageSize);
       return this;
     }
 

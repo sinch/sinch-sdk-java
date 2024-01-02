@@ -171,7 +171,7 @@ public class BatchDtoConverter {
     value.getMaxNumberOfMessageParts().ifPresent(dto::maxNumberOfMessageParts);
     value.getFromTon().ifPresent(dto::fromTon);
     value.getFromNpi().ifPresent(dto::fromNpi);
-    dto.udh(value.getUdh());
+    value.getUdh().ifPresent(dto::udh);
     return new SendSMSRequestDto(dto);
   }
 

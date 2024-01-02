@@ -1,9 +1,9 @@
 package com.sinch.sdk.domains.sms.models;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Base class for Batch types
@@ -17,46 +17,30 @@ public class BaseBatch<T> {
 
   private final Collection<String> to;
 
-  private final String from;
+  private final OptionalValue<String> from;
 
-  private final DeliveryReportType deliveryReport;
+  private final OptionalValue<DeliveryReportType> deliveryReport;
 
-  private final Instant sendAt;
+  private final OptionalValue<Instant> sendAt;
 
-  private final Instant expireAt;
+  private final OptionalValue<Instant> expireAt;
 
-  private final String callbackUrl;
+  private final OptionalValue<String> callbackUrl;
 
-  private final String clientReference;
+  private final OptionalValue<String> clientReference;
 
-  private final Boolean feedbackEnabled;
+  private final OptionalValue<Boolean> feedbackEnabled;
 
-  /**
-   * @param to List of Phone numbers and group IDs that will receive the batch
-   * @param from Sender number. Must be valid phone number, short code or alphanumeric. Required if
-   *     Automatic Default Originator not configured.
-   * @param body The message content
-   * @param deliveryReport Request delivery report callback. Note that delivery reports can be
-   *     fetched from the API regardless of this setting
-   * @param sendAt If set in the future, the message will be delayed until send_at occurs. Must be
-   *     before expire_at. If set in the past, messages will be sent immediately
-   * @param expireAt If set, the system will stop trying to deliver the message at this point. Must
-   *     be after send_at. Default and max is 3 days after send_at
-   * @param callbackUrl Override the default callback URL for this batch. Must be valid URL.
-   * @param clientReference The client identifier of a batch message. If set, the identifier will be
-   *     added in the delivery report/callback of this batch
-   * @param feedbackEnabled If set to true, then feedback is expected after successful delivery.
-   */
-  public BaseBatch(
+  protected BaseBatch(
       Collection<String> to,
-      String from,
+      OptionalValue<String> from,
       T body,
-      DeliveryReportType deliveryReport,
-      Instant sendAt,
-      Instant expireAt,
-      String callbackUrl,
-      String clientReference,
-      Boolean feedbackEnabled) {
+      OptionalValue<DeliveryReportType> deliveryReport,
+      OptionalValue<Instant> sendAt,
+      OptionalValue<Instant> expireAt,
+      OptionalValue<String> callbackUrl,
+      OptionalValue<String> clientReference,
+      OptionalValue<Boolean> feedbackEnabled) {
     Objects.requireNonNull(to);
     Objects.requireNonNull(body);
     this.to = to;
@@ -78,32 +62,32 @@ public class BaseBatch<T> {
     return body;
   }
 
-  public Optional<String> getFrom() {
-    return Optional.ofNullable(from);
+  public OptionalValue<String> getFrom() {
+    return from;
   }
 
-  public Optional<DeliveryReportType> getDeliveryReport() {
-    return Optional.ofNullable(deliveryReport);
+  public OptionalValue<DeliveryReportType> getDeliveryReport() {
+    return deliveryReport;
   }
 
-  public Optional<Instant> getSendAt() {
-    return Optional.ofNullable(sendAt);
+  public OptionalValue<Instant> getSendAt() {
+    return sendAt;
   }
 
-  public Optional<Instant> getExpireAt() {
-    return Optional.ofNullable(expireAt);
+  public OptionalValue<Instant> getExpireAt() {
+    return expireAt;
   }
 
-  public Optional<String> getCallbackUrl() {
-    return Optional.ofNullable(callbackUrl);
+  public OptionalValue<String> getCallbackUrl() {
+    return callbackUrl;
   }
 
-  public Optional<String> getClientReference() {
-    return Optional.ofNullable(clientReference);
+  public OptionalValue<String> getClientReference() {
+    return clientReference;
   }
 
-  public Optional<Boolean> isFeedbackEnabled() {
-    return Optional.ofNullable(feedbackEnabled);
+  public OptionalValue<Boolean> isFeedbackEnabled() {
+    return feedbackEnabled;
   }
 
   @Override
@@ -137,64 +121,105 @@ public class BaseBatch<T> {
 
     public Collection<String> to;
 
-    public String from;
+    public OptionalValue<String> from = OptionalValue.empty();
 
     public T body;
 
-    public DeliveryReportType deliveryReport;
+    public OptionalValue<DeliveryReportType> deliveryReport = OptionalValue.empty();
 
-    public Instant sendAt;
+    public OptionalValue<Instant> sendAt = OptionalValue.empty();
 
-    public Instant expireAt;
+    public OptionalValue<Instant> expireAt = OptionalValue.empty();
 
-    public String callbackUrl;
+    public OptionalValue<String> callbackUrl = OptionalValue.empty();
 
-    public String clientReference;
+    public OptionalValue<String> clientReference = OptionalValue.empty();
 
-    public Boolean feedbackEnabled;
+    public OptionalValue<Boolean> feedbackEnabled = OptionalValue.empty();
 
+    /**
+     * @param to List of Phone numbers and group IDs that will receive the batch
+     * @return current builder
+     */
     public B setTo(Collection<String> to) {
       this.to = to;
       return self();
     }
 
+    /**
+     * @param from Sender number. Must be valid phone number, short code or alphanumeric. Required
+     *     if Automatic Default Originator not configured.
+     * @return current builder
+     */
     public B setFrom(String from) {
-      this.from = from;
+      this.from = OptionalValue.of(from);
       return self();
     }
 
+    /**
+     * @param body The message content
+     * @return current builder
+     */
     public B setBody(T body) {
       this.body = body;
       return self();
     }
 
+    /**
+     * @param deliveryReport Request delivery report callback. Note that delivery reports can be
+     *     fetched from the API regardless of this setting
+     * @return current builder
+     */
     public B setDeliveryReport(DeliveryReportType deliveryReport) {
-      this.deliveryReport = deliveryReport;
+      this.deliveryReport = OptionalValue.of(deliveryReport);
       return self();
     }
 
+    /**
+     * @param sendAt If set in the future, the message will be delayed until send_at occurs. Must be
+     *     before expire_at. If set in the past, messages will be sent immediately
+     * @return current builder
+     */
     public B setSendAt(Instant sendAt) {
-      this.sendAt = sendAt;
+      this.sendAt = OptionalValue.of(sendAt);
       return self();
     }
 
+    /**
+     * @param expireAt If set, the system will stop trying to deliver the message at this point.
+     *     Must be after send_at. Default and max is 3 days after send_at
+     * @return current builder
+     */
     public B setExpireAt(Instant expireAt) {
-      this.expireAt = expireAt;
+      this.expireAt = OptionalValue.of(expireAt);
       return self();
     }
 
+    /**
+     * @param callbackUrl Override the default callback URL for this batch. Must be valid URL.
+     * @return current builder
+     */
     public B setCallbackUrl(String callbackUrl) {
-      this.callbackUrl = callbackUrl;
+      this.callbackUrl = OptionalValue.of(callbackUrl);
       return self();
     }
 
+    /**
+     * @param clientReference The client identifier of a batch message. If set, the identifier will
+     *     be added in the delivery report/callback of this batch
+     * @return current builder
+     */
     public B setClientReference(String clientReference) {
-      this.clientReference = clientReference;
+      this.clientReference = OptionalValue.of(clientReference);
       return self();
     }
 
+    /**
+     * @param feedbackEnabled If set to true, then feedback is expected after successful delivery.
+     * @return current builder
+     */
     public B setFeedbackEnabled(Boolean feedbackEnabled) {
-      this.feedbackEnabled = feedbackEnabled;
+      this.feedbackEnabled = OptionalValue.of(feedbackEnabled);
       return self();
     }
 

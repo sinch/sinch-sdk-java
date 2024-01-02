@@ -1,57 +1,35 @@
 package com.sinch.sdk.domains.sms.models.requests;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.sms.models.BaseBatch;
 import com.sinch.sdk.domains.sms.models.DeliveryReportType;
 import java.time.Instant;
 import java.util.Collection;
-import java.util.Optional;
 
 public class SendSmsBatchBinaryRequest extends BaseBatch<String> {
-  private final Boolean flashMessage;
-  private final Boolean truncateConcat;
-  private final Integer maxNumberOfMessageParts;
-  private final Integer fromTon;
-  private final Integer fromNpi;
-  private final String udh;
+  private final OptionalValue<Boolean> flashMessage;
+  private final OptionalValue<Boolean> truncateConcat;
+  private final OptionalValue<Integer> maxNumberOfMessageParts;
+  private final OptionalValue<Integer> fromTon;
+  private final OptionalValue<Integer> fromNpi;
+  private final OptionalValue<String> udh;
 
-  /**
-   * @param to List of Phone numbers and group IDs that will receive the batch
-   * @param from Sender number. Must be valid phone number, short code or alphanumeric. Required if
-   *     Automatic Default Originator not configured.
-   * @param body The message content
-   * @param deliveryReport Request delivery report callback. Note that delivery reports can be
-   *     fetched from the API regardless of this setting
-   * @param sendAt If set in the future, the message will be delayed until send_at occurs. Must be
-   *     before expire_at. If set in the past, messages will be sent immediately
-   * @param expireAt If set, the system will stop trying to deliver the message at this point. Must
-   *     be after send_at. Default and max is 3 days after send_at
-   * @param callbackUrl Override the default callback URL for this batch. Must be valid URL.
-   * @param clientReference The client identifier of a batch message. If set, the identifier will be
-   *     added in the delivery report/callback of this batch
-   * @param feedbackEnabled If set to true, then feedback is expected after successful delivery.
-   * @param flashMessage If sent as a flash message, displays true.
-   * @param truncateConcat If set to true, the message was shortened when exceeding one part.
-   * @param maxNumberOfMessageParts Displays the number of message parts set in the request.
-   * @param fromTon The type of number for the sender number.
-   * @param fromNpi Number Plan Indicator for the sender number.
-   * @param udh The UDH header of a binary message HEX encoded. Max 140 bytes including the body.
-   */
-  public SendSmsBatchBinaryRequest(
+  private SendSmsBatchBinaryRequest(
       Collection<String> to,
-      String from,
+      OptionalValue<String> from,
       String body,
-      DeliveryReportType deliveryReport,
-      Instant sendAt,
-      Instant expireAt,
-      String callbackUrl,
-      String clientReference,
-      Boolean flashMessage,
-      Boolean feedbackEnabled,
-      Boolean truncateConcat,
-      Integer maxNumberOfMessageParts,
-      Integer fromTon,
-      Integer fromNpi,
-      String udh) {
+      OptionalValue<DeliveryReportType> deliveryReport,
+      OptionalValue<Instant> sendAt,
+      OptionalValue<Instant> expireAt,
+      OptionalValue<String> callbackUrl,
+      OptionalValue<String> clientReference,
+      OptionalValue<Boolean> flashMessage,
+      OptionalValue<Boolean> feedbackEnabled,
+      OptionalValue<Boolean> truncateConcat,
+      OptionalValue<Integer> maxNumberOfMessageParts,
+      OptionalValue<Integer> fromTon,
+      OptionalValue<Integer> fromNpi,
+      OptionalValue<String> udh) {
     super(
         to,
         from,
@@ -70,27 +48,27 @@ public class SendSmsBatchBinaryRequest extends BaseBatch<String> {
     this.udh = udh;
   }
 
-  public Optional<Boolean> isFlashMessage() {
-    return Optional.ofNullable(flashMessage);
+  public OptionalValue<Boolean> isFlashMessage() {
+    return flashMessage;
   }
 
-  public Optional<Boolean> isTruncateConcat() {
-    return Optional.ofNullable(truncateConcat);
+  public OptionalValue<Boolean> isTruncateConcat() {
+    return truncateConcat;
   }
 
-  public Optional<Integer> getMaxNumberOfMessageParts() {
-    return Optional.ofNullable(maxNumberOfMessageParts);
+  public OptionalValue<Integer> getMaxNumberOfMessageParts() {
+    return maxNumberOfMessageParts;
   }
 
-  public Optional<Integer> getFromTon() {
-    return Optional.ofNullable(fromTon);
+  public OptionalValue<Integer> getFromTon() {
+    return fromTon;
   }
 
-  public Optional<Integer> getFromNpi() {
-    return Optional.ofNullable(fromNpi);
+  public OptionalValue<Integer> getFromNpi() {
+    return fromNpi;
   }
 
-  public String getUdh() {
+  public OptionalValue<String> getUdh() {
     return udh;
   }
 
@@ -120,44 +98,68 @@ public class SendSmsBatchBinaryRequest extends BaseBatch<String> {
   }
 
   public static class Builder extends BaseBatch.Builder<String, Builder> {
-    private Boolean flashMessage;
-    private Boolean truncateConcat;
-    private Integer maxNumberOfMessageParts;
-    private Integer fromTon;
-    private Integer fromNpi;
-    private String udh;
+    private OptionalValue<Boolean> flashMessage = OptionalValue.empty();
+    private OptionalValue<Boolean> truncateConcat = OptionalValue.empty();
+    private OptionalValue<Integer> maxNumberOfMessageParts = OptionalValue.empty();
+    private OptionalValue<Integer> fromTon = OptionalValue.empty();
+    private OptionalValue<Integer> fromNpi = OptionalValue.empty();
+    private OptionalValue<String> udh = OptionalValue.empty();
 
     private Builder() {
       super();
     }
 
+    /**
+     * @param flashMessage If sent as a flash message, displays true.
+     * @return current builder
+     */
     public Builder setFlashMessage(boolean flashMessage) {
-      this.flashMessage = flashMessage;
+      this.flashMessage = OptionalValue.of(flashMessage);
       return this;
     }
 
+    /**
+     * @param truncateConcat If set to true, the message was shortened when exceeding one part.
+     * @return current builder
+     */
     public Builder setTruncateConcat(boolean truncateConcat) {
-      this.truncateConcat = truncateConcat;
+      this.truncateConcat = OptionalValue.of(truncateConcat);
       return this;
     }
 
+    /**
+     * @param maxNumberOfMessageParts Displays the number of message parts set in the request.
+     * @return current builder
+     */
     public Builder setMaxNumberOfMessageParts(int maxNumberOfMessageParts) {
-      this.maxNumberOfMessageParts = maxNumberOfMessageParts;
+      this.maxNumberOfMessageParts = OptionalValue.of(maxNumberOfMessageParts);
       return this;
     }
 
+    /**
+     * @param fromTon The type of number for the sender number.
+     * @return current builder
+     */
     public Builder setFromTon(int fromTon) {
-      this.fromTon = fromTon;
+      this.fromTon = OptionalValue.of(fromTon);
       return this;
     }
 
+    /**
+     * @param fromNpi Number Plan Indicator for the sender number.
+     * @return current builder
+     */
     public Builder setFromNpi(int fromNpi) {
-      this.fromNpi = fromNpi;
+      this.fromNpi = OptionalValue.of(fromNpi);
       return this;
     }
 
+    /**
+     * @param udh The UDH header of a binary message HEX encoded. Max 140 bytes including the body.
+     * @return current builder
+     */
     public Builder setUdh(String udh) {
-      this.udh = udh;
+      this.udh = OptionalValue.of(udh);
       return this;
     }
 

@@ -1,9 +1,9 @@
 package com.sinch.sdk.domains.sms.models.requests;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.sms.models.DeliveryReportType;
 import java.time.Instant;
 import java.util.Collection;
-import java.util.Optional;
 
 /**
  * Base class for Batch types
@@ -13,45 +13,31 @@ import java.util.Optional;
  */
 public class UpdateBaseBatchRequest<T> {
 
-  private final String from;
+  private final OptionalValue<String> from;
 
-  private final T body;
+  private final OptionalValue<T> body;
 
-  private final Collection<String> toAdd;
+  private final OptionalValue<Collection<String>> toAdd;
 
-  private final Collection<String> toRemove;
+  private final OptionalValue<Collection<String>> toRemove;
 
-  private final DeliveryReportType deliveryReport;
+  private final OptionalValue<DeliveryReportType> deliveryReport;
 
-  private final Instant sendAt;
+  private final OptionalValue<Instant> sendAt;
 
-  private final Instant expireAt;
+  private final OptionalValue<Instant> expireAt;
 
-  private final String callbackUrl;
+  private final OptionalValue<String> callbackUrl;
 
-  /**
-   * @param toAdd List of phone numbers and group IDs to add to the batch.
-   * @param toRemove List of phone numbers and group IDs to remove from the batch.
-   * @param from Sender number. Must be valid phone number, short code or alphanumeric. Required if
-   *     Automatic Default Originator not configured.
-   * @param body The message content
-   * @param deliveryReport Request delivery report callback. Note that delivery reports can be
-   *     fetched from the API regardless of this setting
-   * @param sendAt If set in the future, the message will be delayed until send_at occurs. Must be
-   *     before expire_at. If set in the past, messages will be sent immediately
-   * @param expireAt If set, the system will stop trying to deliver the message at this point. Must
-   *     be after send_at. Default and max is 3 days after send_at
-   * @param callbackUrl Override the default callback URL for this batch. Must be valid URL.
-   */
-  public UpdateBaseBatchRequest(
-      Collection<String> toAdd,
-      Collection<String> toRemove,
-      String from,
-      T body,
-      DeliveryReportType deliveryReport,
-      Instant sendAt,
-      Instant expireAt,
-      String callbackUrl) {
+  protected UpdateBaseBatchRequest(
+      OptionalValue<Collection<String>> toAdd,
+      OptionalValue<Collection<String>> toRemove,
+      OptionalValue<String> from,
+      OptionalValue<T> body,
+      OptionalValue<DeliveryReportType> deliveryReport,
+      OptionalValue<Instant> sendAt,
+      OptionalValue<Instant> expireAt,
+      OptionalValue<String> callbackUrl) {
     this.toAdd = toAdd;
     this.toRemove = toRemove;
     this.from = from;
@@ -66,36 +52,36 @@ public class UpdateBaseBatchRequest<T> {
     return new BatchBuilder<>();
   }
 
-  public Optional<Collection<String>> getToAdd() {
-    return Optional.ofNullable(toAdd);
+  public OptionalValue<Collection<String>> getToAdd() {
+    return toAdd;
   }
 
-  public Optional<Collection<String>> getToRemove() {
-    return Optional.ofNullable(toRemove);
+  public OptionalValue<Collection<String>> getToRemove() {
+    return toRemove;
   }
 
-  public Optional<T> getBody() {
-    return Optional.ofNullable(body);
+  public OptionalValue<T> getBody() {
+    return body;
   }
 
-  public Optional<String> getFrom() {
-    return Optional.ofNullable(from);
+  public OptionalValue<String> getFrom() {
+    return from;
   }
 
-  public Optional<DeliveryReportType> getDeliveryReport() {
-    return Optional.ofNullable(deliveryReport);
+  public OptionalValue<DeliveryReportType> getDeliveryReport() {
+    return deliveryReport;
   }
 
-  public Optional<Instant> getSendAt() {
-    return Optional.ofNullable(sendAt);
+  public OptionalValue<Instant> getSendAt() {
+    return sendAt;
   }
 
-  public Optional<Instant> getExpireAt() {
-    return Optional.ofNullable(expireAt);
+  public OptionalValue<Instant> getExpireAt() {
+    return expireAt;
   }
 
-  public Optional<String> getCallbackUrl() {
-    return Optional.ofNullable(callbackUrl);
+  public OptionalValue<String> getCallbackUrl() {
+    return callbackUrl;
   }
 
   @Override
@@ -124,59 +110,95 @@ public class UpdateBaseBatchRequest<T> {
 
   protected static class Builder<T, B extends Builder<T, B>> {
 
-    public Collection<String> toAdd;
+    public OptionalValue<Collection<String>> toAdd = OptionalValue.empty();
 
-    public Collection<String> toRemove;
+    public OptionalValue<Collection<String>> toRemove = OptionalValue.empty();
 
-    public String from;
+    public OptionalValue<String> from = OptionalValue.empty();
 
-    public T body;
+    public OptionalValue<T> body = OptionalValue.empty();
 
-    public DeliveryReportType deliveryReportType;
+    public OptionalValue<DeliveryReportType> deliveryReportType = OptionalValue.empty();
 
-    public Instant sendAt;
+    public OptionalValue<Instant> sendAt = OptionalValue.empty();
 
-    public Instant expireAt;
+    public OptionalValue<Instant> expireAt = OptionalValue.empty();
 
-    public String callbackUrl;
+    public OptionalValue<String> callbackUrl = OptionalValue.empty();
 
+    /**
+     * @param toAdd List of phone numbers and group IDs to add to the batch.
+     * @return current builder
+     */
     public B setToAdd(Collection<String> toAdd) {
-      this.toAdd = toAdd;
+      this.toAdd = OptionalValue.of(toAdd);
       return self();
     }
 
+    /**
+     * @param toRemove List of phone numbers and group IDs to remove from the batch.
+     * @return current builder
+     */
     public B setToRemove(Collection<String> toRemove) {
-      this.toRemove = toRemove;
+      this.toRemove = OptionalValue.of(toRemove);
       return self();
     }
 
+    /**
+     * @param from Sender number. Must be valid phone number, short code or alphanumeric. Required
+     *     if Automatic Default Originator not configured.
+     * @return current builder
+     */
     public B setFrom(String from) {
-      this.from = from;
+      this.from = OptionalValue.of(from);
       return self();
     }
 
+    /**
+     * @param body The message content
+     * @return current builder
+     */
     public B setBody(T body) {
-      this.body = body;
+      this.body = OptionalValue.of(body);
       return self();
     }
 
+    /**
+     * @param deliveryReportType Request delivery report callback. Note that delivery reports can be
+     *     fetched from the API regardless of this setting
+     * @return current builder
+     */
     public B setDeliveryReport(DeliveryReportType deliveryReportType) {
-      this.deliveryReportType = deliveryReportType;
+      this.deliveryReportType = OptionalValue.of(deliveryReportType);
       return self();
     }
 
+    /**
+     * @param sendAt If set in the future, the message will be delayed until send_at occurs. Must be
+     *     before expire_at. If set in the past, messages will be sent immediately
+     * @return current builder
+     */
     public B setSendAt(Instant sendAt) {
-      this.sendAt = sendAt;
+      this.sendAt = OptionalValue.of(sendAt);
       return self();
     }
 
+    /**
+     * @param expireAt If set, the system will stop trying to deliver the message at this point.
+     *     Must be after send_at. Default and max is 3 days after send_at
+     * @return current builder
+     */
     public B setExpireAt(Instant expireAt) {
-      this.expireAt = expireAt;
+      this.expireAt = OptionalValue.of(expireAt);
       return self();
     }
 
+    /**
+     * @param callbackUrl Override the default callback URL for this batch. Must be valid URL.
+     * @return current builder
+     */
     public B setCallbackUrl(String callbackUrl) {
-      this.callbackUrl = callbackUrl;
+      this.callbackUrl = OptionalValue.of(callbackUrl);
       return self();
     }
 

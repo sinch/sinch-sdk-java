@@ -3,6 +3,7 @@ package com.sinch.sdk.core.models;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -183,6 +184,29 @@ public final class OptionalValue<T> {
       return value;
     } else {
       throw exceptionSupplier.get();
+    }
+  }
+
+  /**
+   * If a value is present, returns an {@code OptionalValue} describing the result of applying the
+   * given mapping function to the value, otherwise returns an empty {@code OptionalValue}.
+   *
+   * <p>If the mapping function returns a {@code null} result then this method returns an empty
+   * {@code OptionalValue}.
+   *
+   * @param mapper the mapping function to apply to a value, if present
+   * @param <U> The type of the value returned from the mapping function
+   * @return an {@code OptionalValue} describing the result of applying a mapping function to the
+   *     value of this {@code OptionalValue}, if a value is present, otherwise an empty {@code
+   *     OptionalValue}
+   * @throws NullPointerException if the mapping function is {@code null}
+   */
+  public <U> OptionalValue<U> map(Function<? super T, ? extends U> mapper) {
+    Objects.requireNonNull(mapper);
+    if (!isPresent()) {
+      return empty();
+    } else {
+      return OptionalValue.of(mapper.apply(value));
     }
   }
 

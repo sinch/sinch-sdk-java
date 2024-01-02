@@ -1,8 +1,8 @@
 package com.sinch.sdk.domains.sms.models.requests;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import java.time.Instant;
 import java.util.Collection;
-import java.util.Optional;
 
 /**
  * Parameters request to list delivery reports for a project
@@ -13,30 +13,20 @@ import java.util.Optional;
  */
 public class InboundsListRequestParameters {
 
-  private final Instant startDate;
-  private final Instant endDate;
-  private final String clientReference;
-  private final Integer page;
-  private final Integer pageSize;
-  private final Collection<String> to;
+  private final OptionalValue<Instant> startDate;
+  private final OptionalValue<Instant> endDate;
+  private final OptionalValue<String> clientReference;
+  private final OptionalValue<Integer> page;
+  private final OptionalValue<Integer> pageSize;
+  private final OptionalValue<Collection<String>> to;
 
-  /**
-   * @param startDate Only list messages received at or after this date/time
-   * @param endDate Only list messages received before this date/time
-   * @param clientReference Using a client reference in inbound messages requires additional setup
-   *     on your account. Contact your account manager to enable this feature. Only list inbound
-   *     messages that are in response to messages with a previously provided client reference.
-   * @param page The page number starting from 0.
-   * @param pageSize Determines the size of a page.
-   * @param to Only list messages sent to these destinations
-   */
-  public InboundsListRequestParameters(
-      Instant startDate,
-      Instant endDate,
-      String clientReference,
-      Integer page,
-      Integer pageSize,
-      Collection<String> to) {
+  private InboundsListRequestParameters(
+      OptionalValue<Instant> startDate,
+      OptionalValue<Instant> endDate,
+      OptionalValue<String> clientReference,
+      OptionalValue<Integer> page,
+      OptionalValue<Integer> pageSize,
+      OptionalValue<Collection<String>> to) {
     this.startDate = startDate;
     this.endDate = endDate;
     this.clientReference = clientReference;
@@ -45,28 +35,28 @@ public class InboundsListRequestParameters {
     this.to = to;
   }
 
-  public Optional<Instant> getStartDate() {
-    return Optional.ofNullable(startDate);
+  public OptionalValue<Instant> getStartDate() {
+    return startDate;
   }
 
-  public Optional<Instant> getEndDate() {
-    return Optional.ofNullable(endDate);
+  public OptionalValue<Instant> getEndDate() {
+    return endDate;
   }
 
-  public Optional<String> getClientReference() {
-    return Optional.ofNullable(clientReference);
+  public OptionalValue<String> getClientReference() {
+    return clientReference;
   }
 
-  public Optional<Integer> getPage() {
-    return Optional.ofNullable(page);
+  public OptionalValue<Integer> getPage() {
+    return page;
   }
 
-  public Optional<Integer> getPageSize() {
-    return Optional.ofNullable(pageSize);
+  public OptionalValue<Integer> getPageSize() {
+    return pageSize;
   }
 
-  public Optional<Collection<String>> getTo() {
-    return Optional.ofNullable(to);
+  public OptionalValue<Collection<String>> getTo() {
+    return to;
   }
 
   public static Builder builder() {
@@ -79,12 +69,12 @@ public class InboundsListRequestParameters {
 
   public static class Builder {
 
-    Instant startDate;
-    Instant endDate;
-    String clientReference;
-    Integer page;
-    Integer pageSize;
-    Collection<String> to;
+    OptionalValue<Instant> startDate = OptionalValue.empty();
+    OptionalValue<Instant> endDate = OptionalValue.empty();
+    OptionalValue<String> clientReference = OptionalValue.empty();
+    OptionalValue<Integer> page = OptionalValue.empty();
+    OptionalValue<Integer> pageSize = OptionalValue.empty();
+    OptionalValue<Collection<String>> to = OptionalValue.empty();
 
     private Builder() {}
 
@@ -97,33 +87,59 @@ public class InboundsListRequestParameters {
       this.to = parameters.to;
     }
 
+    /**
+     * @param startDate Only list messages received at or after this date/time
+     * @return current builder
+     */
     public Builder setStartDate(Instant startDate) {
-      this.startDate = startDate;
+      this.startDate = OptionalValue.of(startDate);
       return this;
     }
 
+    /**
+     * @param endDate Only list messages received before this date/time
+     * @return current builder
+     */
     public Builder setEndDate(Instant endDate) {
-      this.endDate = endDate;
+      this.endDate = OptionalValue.of(endDate);
       return this;
     }
 
+    /**
+     * @param clientReference Using a client reference in inbound messages requires additional setup
+     *     on your account. Contact your account manager to enable this feature. Only list inbound
+     *     messages that are in response to messages with a previously provided client reference.
+     *     * @return current builder
+     */
     public Builder setClientReference(String clientReference) {
-      this.clientReference = clientReference;
+      this.clientReference = OptionalValue.of(clientReference);
       return this;
     }
 
+    /**
+     * @param page The page number starting from 0.
+     * @return current builder
+     */
     public Builder setPage(Integer page) {
-      this.page = page;
+      this.page = OptionalValue.of(page);
       return this;
     }
 
+    /**
+     * @param pageSize Determines the size of a page.
+     * @return current builder
+     */
     public Builder setPageSize(Integer pageSize) {
-      this.pageSize = pageSize;
+      this.pageSize = OptionalValue.of(pageSize);
       return this;
     }
 
+    /**
+     * @param to Only list messages sent to these destinations
+     * @return current builder
+     */
     public Builder setTo(Collection<String> to) {
-      this.to = to;
+      this.to = OptionalValue.of(to);
       return this;
     }
 
