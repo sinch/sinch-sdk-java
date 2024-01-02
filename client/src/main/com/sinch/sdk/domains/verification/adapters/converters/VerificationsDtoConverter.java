@@ -55,22 +55,21 @@ public class VerificationsDtoConverter {
   public static InitiateVerificationResourceDto convert(StartVerificationRequestParameters client) {
     InitiateVerificationResourceDto dto = new InitiateVerificationResourceDto();
 
-    dto.identity(convert(client.getIdentity()))
-        .method(convert(client.getMethod()))
-        .reference(client.getReference().map(VerificationReference::getReference).orElse(null))
-        .custom(client.getCustom().orElse(null));
+    client.getIdentity().ifPresent(f -> dto.identity(convert(f)));
+    client.getMethod().ifPresent(f -> dto.method(convert(f)));
+    client.getReference().ifPresent(f -> dto.reference(f.getReference()));
+    client.getCustom().ifPresent(dto::custom);
 
     if (client instanceof StartVerificationFlashCallRequestParameters) {
       StartVerificationFlashCallRequestParameters options =
           (StartVerificationFlashCallRequestParameters) client;
-      dto.flashCallOptions(
-          options
-              .getDialTimeOut()
-              .map(
-                  f ->
+      options
+          .getDialTimeOut()
+          .ifPresent(
+              f ->
+                  dto.flashCallOptions(
                       new InitiateVerificationResourceFlashCallOptionsDto(
-                          new FlashcallOptionsDto().dialTimeout(f)))
-              .orElse(null));
+                          new FlashcallOptionsDto().dialTimeout(f))));
     }
     return dto;
   }
@@ -154,9 +153,9 @@ public class VerificationsDtoConverter {
   public static VerificationReportRequestResourceDto convert(
       VerificationReportRequestParameters client) {
 
-    VerificationReportRequestResourceDto dto =
-        new VerificationReportRequestResourceDto()
-            .method(VerificationMethodDto.fromValue(client.getMethod().value()));
+    VerificationReportRequestResourceDto dto = new VerificationReportRequestResourceDto();
+
+    client.getMethod().ifPresent(f -> dto.method(VerificationMethodDto.fromValue(f.value())));
 
     if (client instanceof VerificationReportFlashCallRequestParameters) {
       VerificationReportFlashCallRequestParameters typedClient =
@@ -177,25 +176,27 @@ public class VerificationsDtoConverter {
   private static VerificationReportRequestResourceFlashcallDto convert(
       VerificationReportFlashCallRequestParameters client) {
 
-    FlashcallVerificationReportRequestDto dto =
-        new FlashcallVerificationReportRequestDto().cli(client.getCli());
+    FlashcallVerificationReportRequestDto dto = new FlashcallVerificationReportRequestDto();
+
+    client.getCli().ifPresent(dto::cli);
     return new VerificationReportRequestResourceFlashcallDto(dto);
   }
 
   private static VerificationReportRequestResourceSmsDto convert(
       VerificationReportSMSRequestParameters client) {
 
-    SmsVerificationReportRequestDto dto =
-        new SmsVerificationReportRequestDto().code(client.getCode());
-    client.getCli().ifPresent(dto::setCli);
+    SmsVerificationReportRequestDto dto = new SmsVerificationReportRequestDto();
+    client.getCode().ifPresent(dto::code);
+    client.getCli().ifPresent(dto::cli);
     return new VerificationReportRequestResourceSmsDto(dto);
   }
 
   private static VerificationReportRequestResourceCalloutDto convert(
       VerificationReportCalloutRequestParameters client) {
 
-    CalloutVerificationReportRequestDto dto =
-        new CalloutVerificationReportRequestDto().code(client.getCode());
+    CalloutVerificationReportRequestDto dto = new CalloutVerificationReportRequestDto();
+    client.getCode().ifPresent(dto::code);
+
     return new VerificationReportRequestResourceCalloutDto(dto);
   }
 

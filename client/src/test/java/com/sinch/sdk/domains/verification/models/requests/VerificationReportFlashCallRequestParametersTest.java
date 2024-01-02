@@ -13,11 +13,11 @@ class VerificationReportFlashCallRequestParametersTest {
 
   @Test
   void getMethod() {
-    Assertions.assertThat(value.getMethod()).isEqualTo(VerificationMethodType.FLASH_CALL);
+    Assertions.assertThat(value.getMethod().get()).isEqualTo(VerificationMethodType.FLASH_CALL);
   }
 
   @Test
   void getCli() {
-    Assertions.assertThat(value.getCli()).isEqualTo(cli);
+    Assertions.assertThat(value.getCli().get()).isEqualTo(cli);
   }
 }

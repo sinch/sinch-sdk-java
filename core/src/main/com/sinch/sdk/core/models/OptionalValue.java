@@ -191,9 +191,6 @@ public final class OptionalValue<T> {
    * If a value is present, returns an {@code OptionalValue} describing the result of applying the
    * given mapping function to the value, otherwise returns an empty {@code OptionalValue}.
    *
-   * <p>If the mapping function returns a {@code null} result then this method returns an empty
-   * {@code OptionalValue}.
-   *
    * @param mapper the mapping function to apply to a value, if present
    * @param <U> The type of the value returned from the mapping function
    * @return an {@code OptionalValue} describing the result of applying a mapping function to the

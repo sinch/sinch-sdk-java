@@ -14,12 +14,12 @@ class VerificationReportSMSRequestParametersTest {
 
   @Test
   void getMethod() {
-    Assertions.assertThat(value.getMethod()).isEqualTo(VerificationMethodType.SMS);
+    Assertions.assertThat(value.getMethod().get()).isEqualTo(VerificationMethodType.SMS);
   }
 
   @Test
   void getCode() {
-    Assertions.assertThat(value.getCode()).isEqualTo(code);
+    Assertions.assertThat(value.getCode().get()).isEqualTo(code);
   }
 
   @Test

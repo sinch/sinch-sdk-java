@@ -1,31 +1,27 @@
 package com.sinch.sdk.domains.verification.models.requests;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.VerificationReference;
-import java.util.Optional;
 
-/** Dedicated request parameters to be use for a flash call verification */
+/** Dedicated request parameters to be used for a flash call verification */
 public class StartVerificationFlashCallRequestParameters
     extends StartVerificationRequestParameters {
 
-  private final Integer dialTimeOut;
+  private final OptionalValue<Integer> dialTimeOut;
 
-  /**
-   * @param identity Specifies the type of endpoint that will be verified and the particular
-   *     endpoint. number is currently the only supported endpoint type
-   * @param reference Used to pass your own reference in the request for tracking purposes.
-   * @param custom Can be used to pass custom data in the request.
-   * @param dialTimeOut The dial timeout in seconds.
-   */
-  public StartVerificationFlashCallRequestParameters(
-      Identity identity, VerificationReference reference, String custom, Integer dialTimeOut) {
-    super(identity, VerificationMethodType.FLASH_CALL, reference, custom);
+  private StartVerificationFlashCallRequestParameters(
+      OptionalValue<Identity> identity,
+      OptionalValue<VerificationReference> reference,
+      OptionalValue<String> custom,
+      OptionalValue<Integer> dialTimeOut) {
+    super(identity, OptionalValue.of(VerificationMethodType.FLASH_CALL), reference, custom);
     this.dialTimeOut = dialTimeOut;
   }
 
-  public Optional<Integer> getDialTimeOut() {
-    return Optional.ofNullable(dialTimeOut);
+  public OptionalValue<Integer> getDialTimeOut() {
+    return dialTimeOut;
   }
 
   @Override
@@ -43,14 +39,18 @@ public class StartVerificationFlashCallRequestParameters
 
   public static class Builder extends StartVerificationRequestParameters.Builder<Builder> {
 
-    Integer dialTimeOut;
+    OptionalValue<Integer> dialTimeOut = OptionalValue.empty();
 
     public Builder() {
       super(VerificationMethodType.FLASH_CALL);
     }
 
+    /**
+     * @param dialTimeOut The dial timeout in seconds.
+     * @return current builder
+     */
     public Builder setDialTimeOut(Integer dialTimeOut) {
-      this.dialTimeOut = dialTimeOut;
+      this.dialTimeOut = OptionalValue.of(dialTimeOut);
       return this;
     }
 
