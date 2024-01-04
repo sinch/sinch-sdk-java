@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -30,27 +32,34 @@ import java.util.Objects;
   SvamlActionParkDto.JSON_PROPERTY_HOLD_PROMPT,
   SvamlActionParkDto.JSON_PROPERTY_MAX_DURATION
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlActionParkDto {
   public static final String JSON_PROPERTY_NAME = "name";
   private String name;
+  private boolean nameDefined = false;
 
   public static final String JSON_PROPERTY_LOCALE = "locale";
   private String locale;
+  private boolean localeDefined = false;
 
   public static final String JSON_PROPERTY_INTRO_PROMPT = "introPrompt";
   private String introPrompt;
+  private boolean introPromptDefined = false;
 
   public static final String JSON_PROPERTY_HOLD_PROMPT = "holdPrompt";
   private String holdPrompt;
+  private boolean holdPromptDefined = false;
 
   public static final String JSON_PROPERTY_MAX_DURATION = "maxDuration";
   private Integer maxDuration;
+  private boolean maxDurationDefined = false;
 
   public SvamlActionParkDto() {}
 
   public SvamlActionParkDto name(String name) {
     this.name = name;
+    this.nameDefined = true;
     return this;
   }
 
@@ -65,14 +74,21 @@ public class SvamlActionParkDto {
     return name;
   }
 
+  @JsonIgnore
+  public boolean getNameDefined() {
+    return nameDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setName(String name) {
     this.name = name;
+    this.nameDefined = true;
   }
 
   public SvamlActionParkDto locale(String locale) {
     this.locale = locale;
+    this.localeDefined = true;
     return this;
   }
 
@@ -89,14 +105,21 @@ public class SvamlActionParkDto {
     return locale;
   }
 
+  @JsonIgnore
+  public boolean getLocaleDefined() {
+    return localeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_LOCALE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setLocale(String locale) {
     this.locale = locale;
+    this.localeDefined = true;
   }
 
   public SvamlActionParkDto introPrompt(String introPrompt) {
     this.introPrompt = introPrompt;
+    this.introPromptDefined = true;
     return this;
   }
 
@@ -112,14 +135,21 @@ public class SvamlActionParkDto {
     return introPrompt;
   }
 
+  @JsonIgnore
+  public boolean getIntroPromptDefined() {
+    return introPromptDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_INTRO_PROMPT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setIntroPrompt(String introPrompt) {
     this.introPrompt = introPrompt;
+    this.introPromptDefined = true;
   }
 
   public SvamlActionParkDto holdPrompt(String holdPrompt) {
     this.holdPrompt = holdPrompt;
+    this.holdPromptDefined = true;
     return this;
   }
 
@@ -136,14 +166,21 @@ public class SvamlActionParkDto {
     return holdPrompt;
   }
 
+  @JsonIgnore
+  public boolean getHoldPromptDefined() {
+    return holdPromptDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_HOLD_PROMPT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setHoldPrompt(String holdPrompt) {
     this.holdPrompt = holdPrompt;
+    this.holdPromptDefined = true;
   }
 
   public SvamlActionParkDto maxDuration(Integer maxDuration) {
     this.maxDuration = maxDuration;
+    this.maxDurationDefined = true;
     return this;
   }
 
@@ -158,10 +195,16 @@ public class SvamlActionParkDto {
     return maxDuration;
   }
 
+  @JsonIgnore
+  public boolean getMaxDurationDefined() {
+    return maxDurationDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MAX_DURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMaxDuration(Integer maxDuration) {
     this.maxDuration = maxDuration;
+    this.maxDurationDefined = true;
   }
 
   /** Return true if this svaml.action.park object is equal to o. */

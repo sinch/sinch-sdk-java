@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -22,18 +24,22 @@ import java.util.Objects;
   GetQueryNumberDto.JSON_PROPERTY_METHOD,
   GetQueryNumberDto.JSON_PROPERTY_NUMBER_ITEM
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class GetQueryNumberDto {
   public static final String JSON_PROPERTY_METHOD = "method";
   private String method;
+  private boolean methodDefined = false;
 
   public static final String JSON_PROPERTY_NUMBER_ITEM = "numberItem";
   private GetQueryNumberNumberItemDto numberItem;
+  private boolean numberItemDefined = false;
 
   public GetQueryNumberDto() {}
 
   public GetQueryNumberDto method(String method) {
     this.method = method;
+    this.methodDefined = true;
     return this;
   }
 
@@ -48,14 +54,21 @@ public class GetQueryNumberDto {
     return method;
   }
 
+  @JsonIgnore
+  public boolean getMethodDefined() {
+    return methodDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_METHOD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMethod(String method) {
     this.method = method;
+    this.methodDefined = true;
   }
 
   public GetQueryNumberDto numberItem(GetQueryNumberNumberItemDto numberItem) {
     this.numberItem = numberItem;
+    this.numberItemDefined = true;
     return this;
   }
 
@@ -70,10 +83,16 @@ public class GetQueryNumberDto {
     return numberItem;
   }
 
+  @JsonIgnore
+  public boolean getNumberItemDefined() {
+    return numberItemDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NUMBER_ITEM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNumberItem(GetQueryNumberNumberItemDto numberItem) {
     this.numberItem = numberItem;
+    this.numberItemDefined = true;
   }
 
   /** Return true if this getQueryNumber object is equal to o. */

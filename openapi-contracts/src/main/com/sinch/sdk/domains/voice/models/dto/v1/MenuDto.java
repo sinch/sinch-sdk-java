@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -30,36 +32,46 @@ import java.util.Objects;
   MenuDto.JSON_PROPERTY_MAX_TIMEOUT_MILLS,
   MenuDto.JSON_PROPERTY_OPTIONS
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class MenuDto {
   public static final String JSON_PROPERTY_ID = "id";
   private String id;
+  private boolean idDefined = false;
 
   public static final String JSON_PROPERTY_MAIN_PROMPT = "mainPrompt";
   private String mainPrompt;
+  private boolean mainPromptDefined = false;
 
   public static final String JSON_PROPERTY_REPEAT_PROMPT = "repeatPrompt";
   private String repeatPrompt;
+  private boolean repeatPromptDefined = false;
 
   public static final String JSON_PROPERTY_REPEATS = "repeats";
   private Integer repeats;
+  private boolean repeatsDefined = false;
 
   public static final String JSON_PROPERTY_MAX_DIGITS = "maxDigits";
   private Integer maxDigits;
+  private boolean maxDigitsDefined = false;
 
   public static final String JSON_PROPERTY_TIMEOUT_MILLS = "timeoutMills";
   private Integer timeoutMills;
+  private boolean timeoutMillsDefined = false;
 
   public static final String JSON_PROPERTY_MAX_TIMEOUT_MILLS = "maxTimeoutMills";
   private Integer maxTimeoutMills;
+  private boolean maxTimeoutMillsDefined = false;
 
   public static final String JSON_PROPERTY_OPTIONS = "options";
   private List<OptionDto> options;
+  private boolean optionsDefined = false;
 
   public MenuDto() {}
 
   public MenuDto id(String id) {
     this.id = id;
+    this.idDefined = true;
     return this;
   }
 
@@ -74,14 +86,21 @@ public class MenuDto {
     return id;
   }
 
+  @JsonIgnore
+  public boolean getIdDefined() {
+    return idDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setId(String id) {
     this.id = id;
+    this.idDefined = true;
   }
 
   public MenuDto mainPrompt(String mainPrompt) {
     this.mainPrompt = mainPrompt;
+    this.mainPromptDefined = true;
     return this;
   }
 
@@ -103,14 +122,21 @@ public class MenuDto {
     return mainPrompt;
   }
 
+  @JsonIgnore
+  public boolean getMainPromptDefined() {
+    return mainPromptDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MAIN_PROMPT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMainPrompt(String mainPrompt) {
     this.mainPrompt = mainPrompt;
+    this.mainPromptDefined = true;
   }
 
   public MenuDto repeatPrompt(String repeatPrompt) {
     this.repeatPrompt = repeatPrompt;
+    this.repeatPromptDefined = true;
     return this;
   }
 
@@ -132,14 +158,21 @@ public class MenuDto {
     return repeatPrompt;
   }
 
+  @JsonIgnore
+  public boolean getRepeatPromptDefined() {
+    return repeatPromptDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_REPEAT_PROMPT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRepeatPrompt(String repeatPrompt) {
     this.repeatPrompt = repeatPrompt;
+    this.repeatPromptDefined = true;
   }
 
   public MenuDto repeats(Integer repeats) {
     this.repeats = repeats;
+    this.repeatsDefined = true;
     return this;
   }
 
@@ -154,14 +187,21 @@ public class MenuDto {
     return repeats;
   }
 
+  @JsonIgnore
+  public boolean getRepeatsDefined() {
+    return repeatsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_REPEATS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRepeats(Integer repeats) {
     this.repeats = repeats;
+    this.repeatsDefined = true;
   }
 
   public MenuDto maxDigits(Integer maxDigits) {
     this.maxDigits = maxDigits;
+    this.maxDigitsDefined = true;
     return this;
   }
 
@@ -178,14 +218,21 @@ public class MenuDto {
     return maxDigits;
   }
 
+  @JsonIgnore
+  public boolean getMaxDigitsDefined() {
+    return maxDigitsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MAX_DIGITS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMaxDigits(Integer maxDigits) {
     this.maxDigits = maxDigits;
+    this.maxDigitsDefined = true;
   }
 
   public MenuDto timeoutMills(Integer timeoutMills) {
     this.timeoutMills = timeoutMills;
+    this.timeoutMillsDefined = true;
     return this;
   }
 
@@ -201,14 +248,21 @@ public class MenuDto {
     return timeoutMills;
   }
 
+  @JsonIgnore
+  public boolean getTimeoutMillsDefined() {
+    return timeoutMillsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TIMEOUT_MILLS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTimeoutMills(Integer timeoutMills) {
     this.timeoutMills = timeoutMills;
+    this.timeoutMillsDefined = true;
   }
 
   public MenuDto maxTimeoutMills(Integer maxTimeoutMills) {
     this.maxTimeoutMills = maxTimeoutMills;
+    this.maxTimeoutMillsDefined = true;
     return this;
   }
 
@@ -223,14 +277,21 @@ public class MenuDto {
     return maxTimeoutMills;
   }
 
+  @JsonIgnore
+  public boolean getMaxTimeoutMillsDefined() {
+    return maxTimeoutMillsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MAX_TIMEOUT_MILLS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMaxTimeoutMills(Integer maxTimeoutMills) {
     this.maxTimeoutMills = maxTimeoutMills;
+    this.maxTimeoutMillsDefined = true;
   }
 
   public MenuDto options(List<OptionDto> options) {
     this.options = options;
+    this.optionsDefined = true;
     return this;
   }
 
@@ -238,6 +299,7 @@ public class MenuDto {
     if (this.options == null) {
       this.options = new ArrayList<>();
     }
+    this.optionsDefined = true;
     this.options.add(optionsItem);
     return this;
   }
@@ -253,10 +315,16 @@ public class MenuDto {
     return options;
   }
 
+  @JsonIgnore
+  public boolean getOptionsDefined() {
+    return optionsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_OPTIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setOptions(List<OptionDto> options) {
     this.options = options;
+    this.optionsDefined = true;
   }
 
   /** Return true if this menu object is equal to o. */

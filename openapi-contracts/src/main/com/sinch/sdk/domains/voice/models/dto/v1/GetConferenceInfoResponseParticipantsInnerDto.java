@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -25,27 +27,34 @@ import java.util.Objects;
   GetConferenceInfoResponseParticipantsInnerDto.JSON_PROPERTY_MUTED,
   GetConferenceInfoResponseParticipantsInnerDto.JSON_PROPERTY_ONHOLD
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class GetConferenceInfoResponseParticipantsInnerDto {
   public static final String JSON_PROPERTY_CLI = "cli";
   private String cli;
+  private boolean cliDefined = false;
 
   public static final String JSON_PROPERTY_ID = "id";
   private String id;
+  private boolean idDefined = false;
 
   public static final String JSON_PROPERTY_DURATION = "duration";
   private Integer duration;
+  private boolean durationDefined = false;
 
   public static final String JSON_PROPERTY_MUTED = "muted";
   private Boolean muted;
+  private boolean mutedDefined = false;
 
   public static final String JSON_PROPERTY_ONHOLD = "onhold";
   private Boolean onhold;
+  private boolean onholdDefined = false;
 
   public GetConferenceInfoResponseParticipantsInnerDto() {}
 
   public GetConferenceInfoResponseParticipantsInnerDto cli(String cli) {
     this.cli = cli;
+    this.cliDefined = true;
     return this;
   }
 
@@ -61,14 +70,21 @@ public class GetConferenceInfoResponseParticipantsInnerDto {
     return cli;
   }
 
+  @JsonIgnore
+  public boolean getCliDefined() {
+    return cliDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CLI)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCli(String cli) {
     this.cli = cli;
+    this.cliDefined = true;
   }
 
   public GetConferenceInfoResponseParticipantsInnerDto id(String id) {
     this.id = id;
+    this.idDefined = true;
     return this;
   }
 
@@ -83,14 +99,21 @@ public class GetConferenceInfoResponseParticipantsInnerDto {
     return id;
   }
 
+  @JsonIgnore
+  public boolean getIdDefined() {
+    return idDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setId(String id) {
     this.id = id;
+    this.idDefined = true;
   }
 
   public GetConferenceInfoResponseParticipantsInnerDto duration(Integer duration) {
     this.duration = duration;
+    this.durationDefined = true;
     return this;
   }
 
@@ -105,14 +128,21 @@ public class GetConferenceInfoResponseParticipantsInnerDto {
     return duration;
   }
 
+  @JsonIgnore
+  public boolean getDurationDefined() {
+    return durationDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDuration(Integer duration) {
     this.duration = duration;
+    this.durationDefined = true;
   }
 
   public GetConferenceInfoResponseParticipantsInnerDto muted(Boolean muted) {
     this.muted = muted;
+    this.mutedDefined = true;
     return this;
   }
 
@@ -127,14 +157,21 @@ public class GetConferenceInfoResponseParticipantsInnerDto {
     return muted;
   }
 
+  @JsonIgnore
+  public boolean getMutedDefined() {
+    return mutedDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MUTED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMuted(Boolean muted) {
     this.muted = muted;
+    this.mutedDefined = true;
   }
 
   public GetConferenceInfoResponseParticipantsInnerDto onhold(Boolean onhold) {
     this.onhold = onhold;
+    this.onholdDefined = true;
     return this;
   }
 
@@ -149,10 +186,16 @@ public class GetConferenceInfoResponseParticipantsInnerDto {
     return onhold;
   }
 
+  @JsonIgnore
+  public boolean getOnholdDefined() {
+    return onholdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ONHOLD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setOnhold(Boolean onhold) {
     this.onhold = onhold;
+    this.onholdDefined = true;
   }
 
   /** Return true if this getConferenceInfoResponse_participants_inner object is equal to o. */

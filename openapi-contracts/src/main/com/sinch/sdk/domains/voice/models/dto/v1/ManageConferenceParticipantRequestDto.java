@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -22,18 +24,22 @@ import java.util.Objects;
   ManageConferenceParticipantRequestDto.JSON_PROPERTY_COMMAND,
   ManageConferenceParticipantRequestDto.JSON_PROPERTY_MOH
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ManageConferenceParticipantRequestDto {
   public static final String JSON_PROPERTY_COMMAND = "command";
   private String command;
+  private boolean commandDefined = false;
 
   public static final String JSON_PROPERTY_MOH = "moh";
   private String moh;
+  private boolean mohDefined = false;
 
   public ManageConferenceParticipantRequestDto() {}
 
   public ManageConferenceParticipantRequestDto command(String command) {
     this.command = command;
+    this.commandDefined = true;
     return this;
   }
 
@@ -48,14 +54,21 @@ public class ManageConferenceParticipantRequestDto {
     return command;
   }
 
+  @JsonIgnore
+  public boolean getCommandDefined() {
+    return commandDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_COMMAND)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setCommand(String command) {
     this.command = command;
+    this.commandDefined = true;
   }
 
   public ManageConferenceParticipantRequestDto moh(String moh) {
     this.moh = moh;
+    this.mohDefined = true;
     return this;
   }
 
@@ -73,10 +86,16 @@ public class ManageConferenceParticipantRequestDto {
     return moh;
   }
 
+  @JsonIgnore
+  public boolean getMohDefined() {
+    return mohDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MOH)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMoh(String moh) {
     this.moh = moh;
+    this.mohDefined = true;
   }
 
   /** Return true if this manageConferenceParticipantRequest object is equal to o. */

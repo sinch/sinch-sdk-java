@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -27,24 +29,30 @@ import java.util.Objects;
   SvamlActionConnectConfDto.JSON_PROPERTY_CONFERENCE_DTMF_OPTIONS,
   SvamlActionConnectConfDto.JSON_PROPERTY_MOH
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlActionConnectConfDto {
   public static final String JSON_PROPERTY_NAME = "name";
   private String name;
+  private boolean nameDefined = false;
 
   public static final String JSON_PROPERTY_CONFERENCE_ID = "conferenceId";
   private String conferenceId;
+  private boolean conferenceIdDefined = false;
 
   public static final String JSON_PROPERTY_CONFERENCE_DTMF_OPTIONS = "conferenceDtmfOptions";
   private SvamlActionConnectConfConferenceDtmfOptionsDto conferenceDtmfOptions;
+  private boolean conferenceDtmfOptionsDefined = false;
 
   public static final String JSON_PROPERTY_MOH = "moh";
   private String moh;
+  private boolean mohDefined = false;
 
   public SvamlActionConnectConfDto() {}
 
   public SvamlActionConnectConfDto name(String name) {
     this.name = name;
+    this.nameDefined = true;
     return this;
   }
 
@@ -59,14 +67,21 @@ public class SvamlActionConnectConfDto {
     return name;
   }
 
+  @JsonIgnore
+  public boolean getNameDefined() {
+    return nameDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setName(String name) {
     this.name = name;
+    this.nameDefined = true;
   }
 
   public SvamlActionConnectConfDto conferenceId(String conferenceId) {
     this.conferenceId = conferenceId;
+    this.conferenceIdDefined = true;
     return this;
   }
 
@@ -81,15 +96,22 @@ public class SvamlActionConnectConfDto {
     return conferenceId;
   }
 
+  @JsonIgnore
+  public boolean getConferenceIdDefined() {
+    return conferenceIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CONFERENCE_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setConferenceId(String conferenceId) {
     this.conferenceId = conferenceId;
+    this.conferenceIdDefined = true;
   }
 
   public SvamlActionConnectConfDto conferenceDtmfOptions(
       SvamlActionConnectConfConferenceDtmfOptionsDto conferenceDtmfOptions) {
     this.conferenceDtmfOptions = conferenceDtmfOptions;
+    this.conferenceDtmfOptionsDefined = true;
     return this;
   }
 
@@ -104,15 +126,22 @@ public class SvamlActionConnectConfDto {
     return conferenceDtmfOptions;
   }
 
+  @JsonIgnore
+  public boolean getConferenceDtmfOptionsDefined() {
+    return conferenceDtmfOptionsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CONFERENCE_DTMF_OPTIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setConferenceDtmfOptions(
       SvamlActionConnectConfConferenceDtmfOptionsDto conferenceDtmfOptions) {
     this.conferenceDtmfOptions = conferenceDtmfOptions;
+    this.conferenceDtmfOptionsDefined = true;
   }
 
   public SvamlActionConnectConfDto moh(String moh) {
     this.moh = moh;
+    this.mohDefined = true;
     return this;
   }
 
@@ -130,10 +159,16 @@ public class SvamlActionConnectConfDto {
     return moh;
   }
 
+  @JsonIgnore
+  public boolean getMohDefined() {
+    return mohDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MOH)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMoh(String moh) {
     this.moh = moh;
+    this.mohDefined = true;
   }
 
   /** Return true if this svaml.action.connectConf object is equal to o. */

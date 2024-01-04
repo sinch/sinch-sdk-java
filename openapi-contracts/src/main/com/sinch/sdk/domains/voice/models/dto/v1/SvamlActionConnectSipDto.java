@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -33,36 +35,46 @@ import java.util.Objects;
   SvamlActionConnectSipDto.JSON_PROPERTY_CALL_HEADERS,
   SvamlActionConnectSipDto.JSON_PROPERTY_MOH
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlActionConnectSipDto {
   public static final String JSON_PROPERTY_NAME = "name";
   private String name;
+  private boolean nameDefined = false;
 
   public static final String JSON_PROPERTY_DESTINATION = "destination";
   private SvamlActionConnectSipDestinationDto destination;
+  private boolean destinationDefined = false;
 
   public static final String JSON_PROPERTY_MAX_DURATION = "maxDuration";
   private Integer maxDuration;
+  private boolean maxDurationDefined = false;
 
   public static final String JSON_PROPERTY_CLI = "cli";
   private String cli;
+  private boolean cliDefined = false;
 
   public static final String JSON_PROPERTY_TRANSPORT = "transport";
   private String transport;
+  private boolean transportDefined = false;
 
   public static final String JSON_PROPERTY_SUPPRESS_CALLBACKS = "suppressCallbacks";
   private Boolean suppressCallbacks;
+  private boolean suppressCallbacksDefined = false;
 
   public static final String JSON_PROPERTY_CALL_HEADERS = "callHeaders";
   private List<CallHeaderDto> callHeaders;
+  private boolean callHeadersDefined = false;
 
   public static final String JSON_PROPERTY_MOH = "moh";
   private String moh;
+  private boolean mohDefined = false;
 
   public SvamlActionConnectSipDto() {}
 
   public SvamlActionConnectSipDto name(String name) {
     this.name = name;
+    this.nameDefined = true;
     return this;
   }
 
@@ -77,14 +89,21 @@ public class SvamlActionConnectSipDto {
     return name;
   }
 
+  @JsonIgnore
+  public boolean getNameDefined() {
+    return nameDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setName(String name) {
     this.name = name;
+    this.nameDefined = true;
   }
 
   public SvamlActionConnectSipDto destination(SvamlActionConnectSipDestinationDto destination) {
     this.destination = destination;
+    this.destinationDefined = true;
     return this;
   }
 
@@ -99,14 +118,21 @@ public class SvamlActionConnectSipDto {
     return destination;
   }
 
+  @JsonIgnore
+  public boolean getDestinationDefined() {
+    return destinationDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DESTINATION)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setDestination(SvamlActionConnectSipDestinationDto destination) {
     this.destination = destination;
+    this.destinationDefined = true;
   }
 
   public SvamlActionConnectSipDto maxDuration(Integer maxDuration) {
     this.maxDuration = maxDuration;
+    this.maxDurationDefined = true;
     return this;
   }
 
@@ -122,14 +148,21 @@ public class SvamlActionConnectSipDto {
     return maxDuration;
   }
 
+  @JsonIgnore
+  public boolean getMaxDurationDefined() {
+    return maxDurationDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MAX_DURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMaxDuration(Integer maxDuration) {
     this.maxDuration = maxDuration;
+    this.maxDurationDefined = true;
   }
 
   public SvamlActionConnectSipDto cli(String cli) {
     this.cli = cli;
+    this.cliDefined = true;
     return this;
   }
 
@@ -146,14 +179,21 @@ public class SvamlActionConnectSipDto {
     return cli;
   }
 
+  @JsonIgnore
+  public boolean getCliDefined() {
+    return cliDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CLI)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCli(String cli) {
     this.cli = cli;
+    this.cliDefined = true;
   }
 
   public SvamlActionConnectSipDto transport(String transport) {
     this.transport = transport;
+    this.transportDefined = true;
     return this;
   }
 
@@ -168,14 +208,21 @@ public class SvamlActionConnectSipDto {
     return transport;
   }
 
+  @JsonIgnore
+  public boolean getTransportDefined() {
+    return transportDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TRANSPORT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTransport(String transport) {
     this.transport = transport;
+    this.transportDefined = true;
   }
 
   public SvamlActionConnectSipDto suppressCallbacks(Boolean suppressCallbacks) {
     this.suppressCallbacks = suppressCallbacks;
+    this.suppressCallbacksDefined = true;
     return this;
   }
 
@@ -191,14 +238,21 @@ public class SvamlActionConnectSipDto {
     return suppressCallbacks;
   }
 
+  @JsonIgnore
+  public boolean getSuppressCallbacksDefined() {
+    return suppressCallbacksDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SUPPRESS_CALLBACKS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSuppressCallbacks(Boolean suppressCallbacks) {
     this.suppressCallbacks = suppressCallbacks;
+    this.suppressCallbacksDefined = true;
   }
 
   public SvamlActionConnectSipDto callHeaders(List<CallHeaderDto> callHeaders) {
     this.callHeaders = callHeaders;
+    this.callHeadersDefined = true;
     return this;
   }
 
@@ -206,6 +260,7 @@ public class SvamlActionConnectSipDto {
     if (this.callHeaders == null) {
       this.callHeaders = new ArrayList<>();
     }
+    this.callHeadersDefined = true;
     this.callHeaders.add(callHeadersItem);
     return this;
   }
@@ -223,14 +278,21 @@ public class SvamlActionConnectSipDto {
     return callHeaders;
   }
 
+  @JsonIgnore
+  public boolean getCallHeadersDefined() {
+    return callHeadersDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CALL_HEADERS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCallHeaders(List<CallHeaderDto> callHeaders) {
     this.callHeaders = callHeaders;
+    this.callHeadersDefined = true;
   }
 
   public SvamlActionConnectSipDto moh(String moh) {
     this.moh = moh;
+    this.mohDefined = true;
     return this;
   }
 
@@ -248,10 +310,16 @@ public class SvamlActionConnectSipDto {
     return moh;
   }
 
+  @JsonIgnore
+  public boolean getMohDefined() {
+    return mohDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MOH)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMoh(String moh) {
     this.moh = moh;
+    this.mohDefined = true;
   }
 
   /** Return true if this svaml.action.connectSip object is equal to o. */

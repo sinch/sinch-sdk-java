@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -26,21 +28,26 @@ import java.util.Objects;
   SvamlInstructionSayDto.JSON_PROPERTY_TEXT,
   SvamlInstructionSayDto.JSON_PROPERTY_LOCALE
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlInstructionSayDto {
   public static final String JSON_PROPERTY_NAME = "name";
   private String name;
+  private boolean nameDefined = false;
 
   public static final String JSON_PROPERTY_TEXT = "text";
   private String text;
+  private boolean textDefined = false;
 
   public static final String JSON_PROPERTY_LOCALE = "locale";
   private String locale;
+  private boolean localeDefined = false;
 
   public SvamlInstructionSayDto() {}
 
   public SvamlInstructionSayDto name(String name) {
     this.name = name;
+    this.nameDefined = true;
     return this;
   }
 
@@ -55,14 +62,21 @@ public class SvamlInstructionSayDto {
     return name;
   }
 
+  @JsonIgnore
+  public boolean getNameDefined() {
+    return nameDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setName(String name) {
     this.name = name;
+    this.nameDefined = true;
   }
 
   public SvamlInstructionSayDto text(String text) {
     this.text = text;
+    this.textDefined = true;
     return this;
   }
 
@@ -78,14 +92,21 @@ public class SvamlInstructionSayDto {
     return text;
   }
 
+  @JsonIgnore
+  public boolean getTextDefined() {
+    return textDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TEXT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setText(String text) {
     this.text = text;
+    this.textDefined = true;
   }
 
   public SvamlInstructionSayDto locale(String locale) {
     this.locale = locale;
+    this.localeDefined = true;
     return this;
   }
 
@@ -102,10 +123,16 @@ public class SvamlInstructionSayDto {
     return locale;
   }
 
+  @JsonIgnore
+  public boolean getLocaleDefined() {
+    return localeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_LOCALE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setLocale(String locale) {
     this.locale = locale;
+    this.localeDefined = true;
   }
 
   /** Return true if this svaml.instruction.say object is equal to o. */

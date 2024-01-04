@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -31,36 +33,46 @@ import java.util.Objects;
   CustomCalloutRequestDto.JSON_PROPERTY_ACE,
   CustomCalloutRequestDto.JSON_PROPERTY_PIE
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class CustomCalloutRequestDto {
   public static final String JSON_PROPERTY_CLI = "cli";
   private String cli;
+  private boolean cliDefined = false;
 
   public static final String JSON_PROPERTY_DESTINATION = "destination";
   private DestinationDto destination;
+  private boolean destinationDefined = false;
 
   public static final String JSON_PROPERTY_DTMF = "dtmf";
   private String dtmf;
+  private boolean dtmfDefined = false;
 
   public static final String JSON_PROPERTY_CUSTOM = "custom";
   private String custom;
+  private boolean customDefined = false;
 
   public static final String JSON_PROPERTY_MAX_DURATION = "maxDuration";
   private Integer maxDuration;
+  private boolean maxDurationDefined = false;
 
   public static final String JSON_PROPERTY_ICE = "ice";
   private String ice;
+  private boolean iceDefined = false;
 
   public static final String JSON_PROPERTY_ACE = "ace";
   private String ace;
+  private boolean aceDefined = false;
 
   public static final String JSON_PROPERTY_PIE = "pie";
   private String pie;
+  private boolean pieDefined = false;
 
   public CustomCalloutRequestDto() {}
 
   public CustomCalloutRequestDto cli(String cli) {
     this.cli = cli;
+    this.cliDefined = true;
     return this;
   }
 
@@ -77,14 +89,21 @@ public class CustomCalloutRequestDto {
     return cli;
   }
 
+  @JsonIgnore
+  public boolean getCliDefined() {
+    return cliDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CLI)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCli(String cli) {
     this.cli = cli;
+    this.cliDefined = true;
   }
 
   public CustomCalloutRequestDto destination(DestinationDto destination) {
     this.destination = destination;
+    this.destinationDefined = true;
     return this;
   }
 
@@ -99,14 +118,21 @@ public class CustomCalloutRequestDto {
     return destination;
   }
 
+  @JsonIgnore
+  public boolean getDestinationDefined() {
+    return destinationDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DESTINATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDestination(DestinationDto destination) {
     this.destination = destination;
+    this.destinationDefined = true;
   }
 
   public CustomCalloutRequestDto dtmf(String dtmf) {
     this.dtmf = dtmf;
+    this.dtmfDefined = true;
     return this;
   }
 
@@ -127,14 +153,21 @@ public class CustomCalloutRequestDto {
     return dtmf;
   }
 
+  @JsonIgnore
+  public boolean getDtmfDefined() {
+    return dtmfDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DTMF)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDtmf(String dtmf) {
     this.dtmf = dtmf;
+    this.dtmfDefined = true;
   }
 
   public CustomCalloutRequestDto custom(String custom) {
     this.custom = custom;
+    this.customDefined = true;
     return this;
   }
 
@@ -149,14 +182,21 @@ public class CustomCalloutRequestDto {
     return custom;
   }
 
+  @JsonIgnore
+  public boolean getCustomDefined() {
+    return customDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CUSTOM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCustom(String custom) {
     this.custom = custom;
+    this.customDefined = true;
   }
 
   public CustomCalloutRequestDto maxDuration(Integer maxDuration) {
     this.maxDuration = maxDuration;
+    this.maxDurationDefined = true;
     return this;
   }
 
@@ -171,14 +211,21 @@ public class CustomCalloutRequestDto {
     return maxDuration;
   }
 
+  @JsonIgnore
+  public boolean getMaxDurationDefined() {
+    return maxDurationDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MAX_DURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMaxDuration(Integer maxDuration) {
     this.maxDuration = maxDuration;
+    this.maxDurationDefined = true;
   }
 
   public CustomCalloutRequestDto ice(String ice) {
     this.ice = ice;
+    this.iceDefined = true;
     return this;
   }
 
@@ -196,14 +243,21 @@ public class CustomCalloutRequestDto {
     return ice;
   }
 
+  @JsonIgnore
+  public boolean getIceDefined() {
+    return iceDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ICE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setIce(String ice) {
     this.ice = ice;
+    this.iceDefined = true;
   }
 
   public CustomCalloutRequestDto ace(String ace) {
     this.ace = ace;
+    this.aceDefined = true;
     return this;
   }
 
@@ -229,14 +283,21 @@ public class CustomCalloutRequestDto {
     return ace;
   }
 
+  @JsonIgnore
+  public boolean getAceDefined() {
+    return aceDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ACE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAce(String ace) {
     this.ace = ace;
+    this.aceDefined = true;
   }
 
   public CustomCalloutRequestDto pie(String pie) {
     this.pie = pie;
+    this.pieDefined = true;
     return this;
   }
 
@@ -257,10 +318,16 @@ public class CustomCalloutRequestDto {
     return pie;
   }
 
+  @JsonIgnore
+  public boolean getPieDefined() {
+    return pieDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_PIE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setPie(String pie) {
     this.pie = pie;
+    this.pieDefined = true;
   }
 
   /** Return true if this customCalloutRequest object is equal to o. */

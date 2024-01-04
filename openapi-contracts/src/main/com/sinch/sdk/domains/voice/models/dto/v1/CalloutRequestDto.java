@@ -13,6 +13,8 @@
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -30,7 +32,8 @@ import java.util.Objects;
   CalloutRequestDto.JSON_PROPERTY_TTS_CALLOUT,
   CalloutRequestDto.JSON_PROPERTY_CUSTOM_CALLOUT
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class CalloutRequestDto {
   /** Sets the type of callout. */
   public enum MethodEnum {
@@ -71,20 +74,25 @@ public class CalloutRequestDto {
 
   public static final String JSON_PROPERTY_METHOD = "method";
   private String method;
+  private boolean methodDefined = false;
 
   public static final String JSON_PROPERTY_CONFERENCE_CALLOUT = "conferenceCallout";
   private ConferenceCalloutRequestDto conferenceCallout;
+  private boolean conferenceCalloutDefined = false;
 
   public static final String JSON_PROPERTY_TTS_CALLOUT = "ttsCallout";
   private TtsCalloutRequestDto ttsCallout;
+  private boolean ttsCalloutDefined = false;
 
   public static final String JSON_PROPERTY_CUSTOM_CALLOUT = "customCallout";
   private CustomCalloutRequestDto customCallout;
+  private boolean customCalloutDefined = false;
 
   public CalloutRequestDto() {}
 
   public CalloutRequestDto method(String method) {
     this.method = method;
+    this.methodDefined = true;
     return this;
   }
 
@@ -99,14 +107,21 @@ public class CalloutRequestDto {
     return method;
   }
 
+  @JsonIgnore
+  public boolean getMethodDefined() {
+    return methodDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_METHOD)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setMethod(String method) {
     this.method = method;
+    this.methodDefined = true;
   }
 
   public CalloutRequestDto conferenceCallout(ConferenceCalloutRequestDto conferenceCallout) {
     this.conferenceCallout = conferenceCallout;
+    this.conferenceCalloutDefined = true;
     return this;
   }
 
@@ -121,14 +136,21 @@ public class CalloutRequestDto {
     return conferenceCallout;
   }
 
+  @JsonIgnore
+  public boolean getConferenceCalloutDefined() {
+    return conferenceCalloutDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CONFERENCE_CALLOUT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setConferenceCallout(ConferenceCalloutRequestDto conferenceCallout) {
     this.conferenceCallout = conferenceCallout;
+    this.conferenceCalloutDefined = true;
   }
 
   public CalloutRequestDto ttsCallout(TtsCalloutRequestDto ttsCallout) {
     this.ttsCallout = ttsCallout;
+    this.ttsCalloutDefined = true;
     return this;
   }
 
@@ -143,14 +165,21 @@ public class CalloutRequestDto {
     return ttsCallout;
   }
 
+  @JsonIgnore
+  public boolean getTtsCalloutDefined() {
+    return ttsCalloutDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TTS_CALLOUT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTtsCallout(TtsCalloutRequestDto ttsCallout) {
     this.ttsCallout = ttsCallout;
+    this.ttsCalloutDefined = true;
   }
 
   public CalloutRequestDto customCallout(CustomCalloutRequestDto customCallout) {
     this.customCallout = customCallout;
+    this.customCalloutDefined = true;
     return this;
   }
 
@@ -165,10 +194,16 @@ public class CalloutRequestDto {
     return customCallout;
   }
 
+  @JsonIgnore
+  public boolean getCustomCalloutDefined() {
+    return customCalloutDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CUSTOM_CALLOUT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCustomCallout(CustomCalloutRequestDto customCallout) {
     this.customCallout = customCallout;
+    this.customCalloutDefined = true;
   }
 
   /** Return true if this CalloutRequest object is equal to o. */

@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -25,27 +27,34 @@ import java.util.Objects;
   GetRecordingFileInfoDto.JSON_PROPERTY_EXPIRES_ON,
   GetRecordingFileInfoDto.JSON_PROPERTY_HEADERS
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class GetRecordingFileInfoDto {
   public static final String JSON_PROPERTY_KEY = "key";
   private String key;
+  private boolean keyDefined = false;
 
   public static final String JSON_PROPERTY_URL = "url";
   private String url;
+  private boolean urlDefined = false;
 
   public static final String JSON_PROPERTY_CREATED_ON = "createdOn";
   private String createdOn;
+  private boolean createdOnDefined = false;
 
   public static final String JSON_PROPERTY_EXPIRES_ON = "expiresOn";
   private String expiresOn;
+  private boolean expiresOnDefined = false;
 
   public static final String JSON_PROPERTY_HEADERS = "headers";
   private Object headers;
+  private boolean headersDefined = false;
 
   public GetRecordingFileInfoDto() {}
 
   public GetRecordingFileInfoDto key(String key) {
     this.key = key;
+    this.keyDefined = true;
     return this;
   }
 
@@ -60,14 +69,21 @@ public class GetRecordingFileInfoDto {
     return key;
   }
 
+  @JsonIgnore
+  public boolean getKeyDefined() {
+    return keyDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_KEY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setKey(String key) {
     this.key = key;
+    this.keyDefined = true;
   }
 
   public GetRecordingFileInfoDto url(String url) {
     this.url = url;
+    this.urlDefined = true;
     return this;
   }
 
@@ -82,14 +98,21 @@ public class GetRecordingFileInfoDto {
     return url;
   }
 
+  @JsonIgnore
+  public boolean getUrlDefined() {
+    return urlDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_URL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setUrl(String url) {
     this.url = url;
+    this.urlDefined = true;
   }
 
   public GetRecordingFileInfoDto createdOn(String createdOn) {
     this.createdOn = createdOn;
+    this.createdOnDefined = true;
     return this;
   }
 
@@ -104,14 +127,21 @@ public class GetRecordingFileInfoDto {
     return createdOn;
   }
 
+  @JsonIgnore
+  public boolean getCreatedOnDefined() {
+    return createdOnDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CREATED_ON)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCreatedOn(String createdOn) {
     this.createdOn = createdOn;
+    this.createdOnDefined = true;
   }
 
   public GetRecordingFileInfoDto expiresOn(String expiresOn) {
     this.expiresOn = expiresOn;
+    this.expiresOnDefined = true;
     return this;
   }
 
@@ -126,14 +156,21 @@ public class GetRecordingFileInfoDto {
     return expiresOn;
   }
 
+  @JsonIgnore
+  public boolean getExpiresOnDefined() {
+    return expiresOnDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_EXPIRES_ON)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setExpiresOn(String expiresOn) {
     this.expiresOn = expiresOn;
+    this.expiresOnDefined = true;
   }
 
   public GetRecordingFileInfoDto headers(Object headers) {
     this.headers = headers;
+    this.headersDefined = true;
     return this;
   }
 
@@ -148,10 +185,16 @@ public class GetRecordingFileInfoDto {
     return headers;
   }
 
+  @JsonIgnore
+  public boolean getHeadersDefined() {
+    return headersDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_HEADERS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setHeaders(Object headers) {
     this.headers = headers;
+    this.headersDefined = true;
   }
 
   /** Return true if this getRecordingFileInfo object is equal to o. */

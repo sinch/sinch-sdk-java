@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -25,27 +27,34 @@ import java.util.Objects;
   NotifyRequestDto.JSON_PROPERTY_TYPE,
   NotifyRequestDto.JSON_PROPERTY_CUSTOM
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class NotifyRequestDto {
   public static final String JSON_PROPERTY_EVENT = "event";
   private String event;
+  private boolean eventDefined = false;
 
   public static final String JSON_PROPERTY_CALL_ID = "callId";
   private String callId;
+  private boolean callIdDefined = false;
 
   public static final String JSON_PROPERTY_VERSION = "version";
   private Integer version;
+  private boolean versionDefined = false;
 
   public static final String JSON_PROPERTY_TYPE = "type";
   private String type;
+  private boolean typeDefined = false;
 
   public static final String JSON_PROPERTY_CUSTOM = "custom";
   private String custom;
+  private boolean customDefined = false;
 
   public NotifyRequestDto() {}
 
   public NotifyRequestDto event(String event) {
     this.event = event;
+    this.eventDefined = true;
     return this;
   }
 
@@ -60,14 +69,21 @@ public class NotifyRequestDto {
     return event;
   }
 
+  @JsonIgnore
+  public boolean getEventDefined() {
+    return eventDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_EVENT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEvent(String event) {
     this.event = event;
+    this.eventDefined = true;
   }
 
   public NotifyRequestDto callId(String callId) {
     this.callId = callId;
+    this.callIdDefined = true;
     return this;
   }
 
@@ -82,14 +98,21 @@ public class NotifyRequestDto {
     return callId;
   }
 
+  @JsonIgnore
+  public boolean getCallIdDefined() {
+    return callIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CALL_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCallId(String callId) {
     this.callId = callId;
+    this.callIdDefined = true;
   }
 
   public NotifyRequestDto version(Integer version) {
     this.version = version;
+    this.versionDefined = true;
     return this;
   }
 
@@ -104,14 +127,21 @@ public class NotifyRequestDto {
     return version;
   }
 
+  @JsonIgnore
+  public boolean getVersionDefined() {
+    return versionDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_VERSION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setVersion(Integer version) {
     this.version = version;
+    this.versionDefined = true;
   }
 
   public NotifyRequestDto type(String type) {
     this.type = type;
+    this.typeDefined = true;
     return this;
   }
 
@@ -126,14 +156,21 @@ public class NotifyRequestDto {
     return type;
   }
 
+  @JsonIgnore
+  public boolean getTypeDefined() {
+    return typeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TYPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setType(String type) {
     this.type = type;
+    this.typeDefined = true;
   }
 
   public NotifyRequestDto custom(String custom) {
     this.custom = custom;
+    this.customDefined = true;
     return this;
   }
 
@@ -148,10 +185,16 @@ public class NotifyRequestDto {
     return custom;
   }
 
+  @JsonIgnore
+  public boolean getCustomDefined() {
+    return customDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CUSTOM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCustom(String custom) {
     this.custom = custom;
+    this.customDefined = true;
   }
 
   /** Return true if this notifyRequest object is equal to o. */

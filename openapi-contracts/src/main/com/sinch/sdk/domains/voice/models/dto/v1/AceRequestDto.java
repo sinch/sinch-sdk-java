@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -26,30 +28,38 @@ import java.util.Objects;
   AceRequestDto.JSON_PROPERTY_CUSTOM,
   AceRequestDto.JSON_PROPERTY_AMD
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class AceRequestDto {
   public static final String JSON_PROPERTY_EVENT = "event";
   private String event;
+  private boolean eventDefined = false;
 
   public static final String JSON_PROPERTY_CALL_ID = "callId";
   private String callId;
+  private boolean callIdDefined = false;
 
   public static final String JSON_PROPERTY_TIMESTAMP = "timestamp";
   private String timestamp;
+  private boolean timestampDefined = false;
 
   public static final String JSON_PROPERTY_VERSION = "version";
   private Integer version;
+  private boolean versionDefined = false;
 
   public static final String JSON_PROPERTY_CUSTOM = "custom";
   private String custom;
+  private boolean customDefined = false;
 
   public static final String JSON_PROPERTY_AMD = "amd";
   private AceRequestAmdDto amd;
+  private boolean amdDefined = false;
 
   public AceRequestDto() {}
 
   public AceRequestDto event(String event) {
     this.event = event;
+    this.eventDefined = true;
     return this;
   }
 
@@ -64,14 +74,21 @@ public class AceRequestDto {
     return event;
   }
 
+  @JsonIgnore
+  public boolean getEventDefined() {
+    return eventDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_EVENT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEvent(String event) {
     this.event = event;
+    this.eventDefined = true;
   }
 
   public AceRequestDto callId(String callId) {
     this.callId = callId;
+    this.callIdDefined = true;
     return this;
   }
 
@@ -86,14 +103,21 @@ public class AceRequestDto {
     return callId;
   }
 
+  @JsonIgnore
+  public boolean getCallIdDefined() {
+    return callIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CALL_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCallId(String callId) {
     this.callId = callId;
+    this.callIdDefined = true;
   }
 
   public AceRequestDto timestamp(String timestamp) {
     this.timestamp = timestamp;
+    this.timestampDefined = true;
     return this;
   }
 
@@ -108,14 +132,21 @@ public class AceRequestDto {
     return timestamp;
   }
 
+  @JsonIgnore
+  public boolean getTimestampDefined() {
+    return timestampDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TIMESTAMP)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTimestamp(String timestamp) {
     this.timestamp = timestamp;
+    this.timestampDefined = true;
   }
 
   public AceRequestDto version(Integer version) {
     this.version = version;
+    this.versionDefined = true;
     return this;
   }
 
@@ -130,14 +161,21 @@ public class AceRequestDto {
     return version;
   }
 
+  @JsonIgnore
+  public boolean getVersionDefined() {
+    return versionDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_VERSION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setVersion(Integer version) {
     this.version = version;
+    this.versionDefined = true;
   }
 
   public AceRequestDto custom(String custom) {
     this.custom = custom;
+    this.customDefined = true;
     return this;
   }
 
@@ -152,14 +190,21 @@ public class AceRequestDto {
     return custom;
   }
 
+  @JsonIgnore
+  public boolean getCustomDefined() {
+    return customDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CUSTOM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCustom(String custom) {
     this.custom = custom;
+    this.customDefined = true;
   }
 
   public AceRequestDto amd(AceRequestAmdDto amd) {
     this.amd = amd;
+    this.amdDefined = true;
     return this;
   }
 
@@ -174,10 +219,16 @@ public class AceRequestDto {
     return amd;
   }
 
+  @JsonIgnore
+  public boolean getAmdDefined() {
+    return amdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_AMD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAmd(AceRequestAmdDto amd) {
     this.amd = amd;
+    this.amdDefined = true;
   }
 
   /** Return true if this aceRequest object is equal to o. */

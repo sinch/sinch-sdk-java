@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -38,30 +40,38 @@ import java.util.Objects;
   SvamlActionRunMenuDto.JSON_PROPERTY_ENABLE_VOICE,
   SvamlActionRunMenuDto.JSON_PROPERTY_MENUS
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlActionRunMenuDto {
   public static final String JSON_PROPERTY_NAME = "name";
   private String name;
+  private boolean nameDefined = false;
 
   public static final String JSON_PROPERTY_BARGE = "barge";
   private Boolean barge;
+  private boolean bargeDefined = false;
 
   public static final String JSON_PROPERTY_LOCALE = "locale";
   private String locale;
+  private boolean localeDefined = false;
 
   public static final String JSON_PROPERTY_MAIN_MENU = "mainMenu";
   private String mainMenu;
+  private boolean mainMenuDefined = false;
 
   public static final String JSON_PROPERTY_ENABLE_VOICE = "enableVoice";
   private Boolean enableVoice;
+  private boolean enableVoiceDefined = false;
 
   public static final String JSON_PROPERTY_MENUS = "menus";
   private List<MenuDto> menus;
+  private boolean menusDefined = false;
 
   public SvamlActionRunMenuDto() {}
 
   public SvamlActionRunMenuDto name(String name) {
     this.name = name;
+    this.nameDefined = true;
     return this;
   }
 
@@ -76,14 +86,21 @@ public class SvamlActionRunMenuDto {
     return name;
   }
 
+  @JsonIgnore
+  public boolean getNameDefined() {
+    return nameDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setName(String name) {
     this.name = name;
+    this.nameDefined = true;
   }
 
   public SvamlActionRunMenuDto barge(Boolean barge) {
     this.barge = barge;
+    this.bargeDefined = true;
     return this;
   }
 
@@ -101,14 +118,21 @@ public class SvamlActionRunMenuDto {
     return barge;
   }
 
+  @JsonIgnore
+  public boolean getBargeDefined() {
+    return bargeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_BARGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setBarge(Boolean barge) {
     this.barge = barge;
+    this.bargeDefined = true;
   }
 
   public SvamlActionRunMenuDto locale(String locale) {
     this.locale = locale;
+    this.localeDefined = true;
     return this;
   }
 
@@ -127,14 +151,21 @@ public class SvamlActionRunMenuDto {
     return locale;
   }
 
+  @JsonIgnore
+  public boolean getLocaleDefined() {
+    return localeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_LOCALE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setLocale(String locale) {
     this.locale = locale;
+    this.localeDefined = true;
   }
 
   public SvamlActionRunMenuDto mainMenu(String mainMenu) {
     this.mainMenu = mainMenu;
+    this.mainMenuDefined = true;
     return this;
   }
 
@@ -149,14 +180,21 @@ public class SvamlActionRunMenuDto {
     return mainMenu;
   }
 
+  @JsonIgnore
+  public boolean getMainMenuDefined() {
+    return mainMenuDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MAIN_MENU)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMainMenu(String mainMenu) {
     this.mainMenu = mainMenu;
+    this.mainMenuDefined = true;
   }
 
   public SvamlActionRunMenuDto enableVoice(Boolean enableVoice) {
     this.enableVoice = enableVoice;
+    this.enableVoiceDefined = true;
     return this;
   }
 
@@ -172,14 +210,21 @@ public class SvamlActionRunMenuDto {
     return enableVoice;
   }
 
+  @JsonIgnore
+  public boolean getEnableVoiceDefined() {
+    return enableVoiceDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ENABLE_VOICE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEnableVoice(Boolean enableVoice) {
     this.enableVoice = enableVoice;
+    this.enableVoiceDefined = true;
   }
 
   public SvamlActionRunMenuDto menus(List<MenuDto> menus) {
     this.menus = menus;
+    this.menusDefined = true;
     return this;
   }
 
@@ -187,6 +232,7 @@ public class SvamlActionRunMenuDto {
     if (this.menus == null) {
       this.menus = new ArrayList<>();
     }
+    this.menusDefined = true;
     this.menus.add(menusItem);
     return this;
   }
@@ -204,10 +250,16 @@ public class SvamlActionRunMenuDto {
     return menus;
   }
 
+  @JsonIgnore
+  public boolean getMenusDefined() {
+    return menusDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MENUS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMenus(List<MenuDto> menus) {
     this.menus = menus;
+    this.menusDefined = true;
   }
 
   /** Return true if this svaml.action.runMenu object is equal to o. */

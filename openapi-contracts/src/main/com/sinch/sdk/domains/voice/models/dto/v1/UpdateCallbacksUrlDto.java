@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -22,18 +24,22 @@ import java.util.Objects;
   UpdateCallbacksUrlDto.JSON_PROPERTY_PRIMARY,
   UpdateCallbacksUrlDto.JSON_PROPERTY_FALLBACK
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class UpdateCallbacksUrlDto {
   public static final String JSON_PROPERTY_PRIMARY = "primary";
   private String primary;
+  private boolean primaryDefined = false;
 
   public static final String JSON_PROPERTY_FALLBACK = "fallback";
   private String fallback;
+  private boolean fallbackDefined = false;
 
   public UpdateCallbacksUrlDto() {}
 
   public UpdateCallbacksUrlDto primary(String primary) {
     this.primary = primary;
+    this.primaryDefined = true;
     return this;
   }
 
@@ -48,14 +54,21 @@ public class UpdateCallbacksUrlDto {
     return primary;
   }
 
+  @JsonIgnore
+  public boolean getPrimaryDefined() {
+    return primaryDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_PRIMARY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setPrimary(String primary) {
     this.primary = primary;
+    this.primaryDefined = true;
   }
 
   public UpdateCallbacksUrlDto fallback(String fallback) {
     this.fallback = fallback;
+    this.fallbackDefined = true;
     return this;
   }
 
@@ -70,10 +83,16 @@ public class UpdateCallbacksUrlDto {
     return fallback;
   }
 
+  @JsonIgnore
+  public boolean getFallbackDefined() {
+    return fallbackDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_FALLBACK)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFallback(String fallback) {
     this.fallback = fallback;
+    this.fallbackDefined = true;
   }
 
   /** Return true if this updateCallbacks_url object is equal to o. */

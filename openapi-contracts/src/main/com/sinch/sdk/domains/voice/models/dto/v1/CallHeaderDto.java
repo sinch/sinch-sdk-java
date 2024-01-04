@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -23,18 +25,22 @@ import java.util.Objects;
  * specified they will be available in ICE and DICE events.
  */
 @JsonPropertyOrder({CallHeaderDto.JSON_PROPERTY_KEY, CallHeaderDto.JSON_PROPERTY_VALUE})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class CallHeaderDto {
   public static final String JSON_PROPERTY_KEY = "key";
   private String key;
+  private boolean keyDefined = false;
 
   public static final String JSON_PROPERTY_VALUE = "value";
   private String value;
+  private boolean valueDefined = false;
 
   public CallHeaderDto() {}
 
   public CallHeaderDto key(String key) {
     this.key = key;
+    this.keyDefined = true;
     return this;
   }
 
@@ -49,14 +55,21 @@ public class CallHeaderDto {
     return key;
   }
 
+  @JsonIgnore
+  public boolean getKeyDefined() {
+    return keyDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_KEY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setKey(String key) {
     this.key = key;
+    this.keyDefined = true;
   }
 
   public CallHeaderDto value(String value) {
     this.value = value;
+    this.valueDefined = true;
     return this;
   }
 
@@ -71,10 +84,16 @@ public class CallHeaderDto {
     return value;
   }
 
+  @JsonIgnore
+  public boolean getValueDefined() {
+    return valueDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_VALUE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setValue(String value) {
     this.value = value;
+    this.valueDefined = true;
   }
 
   /** Return true if this callHeader object is equal to o. */

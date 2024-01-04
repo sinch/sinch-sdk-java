@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -24,24 +26,30 @@ import java.util.Objects;
   PieRequestMenuResultDto.JSON_PROPERTY_VALUE,
   PieRequestMenuResultDto.JSON_PROPERTY_INPUT_METHOD
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class PieRequestMenuResultDto {
   public static final String JSON_PROPERTY_MENU_ID = "menuId";
   private String menuId;
+  private boolean menuIdDefined = false;
 
   public static final String JSON_PROPERTY_TYPE = "type";
   private String type;
+  private boolean typeDefined = false;
 
   public static final String JSON_PROPERTY_VALUE = "value";
   private String value;
+  private boolean valueDefined = false;
 
   public static final String JSON_PROPERTY_INPUT_METHOD = "inputMethod";
   private String inputMethod;
+  private boolean inputMethodDefined = false;
 
   public PieRequestMenuResultDto() {}
 
   public PieRequestMenuResultDto menuId(String menuId) {
     this.menuId = menuId;
+    this.menuIdDefined = true;
     return this;
   }
 
@@ -56,14 +64,21 @@ public class PieRequestMenuResultDto {
     return menuId;
   }
 
+  @JsonIgnore
+  public boolean getMenuIdDefined() {
+    return menuIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MENU_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMenuId(String menuId) {
     this.menuId = menuId;
+    this.menuIdDefined = true;
   }
 
   public PieRequestMenuResultDto type(String type) {
     this.type = type;
+    this.typeDefined = true;
     return this;
   }
 
@@ -78,14 +93,21 @@ public class PieRequestMenuResultDto {
     return type;
   }
 
+  @JsonIgnore
+  public boolean getTypeDefined() {
+    return typeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TYPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setType(String type) {
     this.type = type;
+    this.typeDefined = true;
   }
 
   public PieRequestMenuResultDto value(String value) {
     this.value = value;
+    this.valueDefined = true;
     return this;
   }
 
@@ -100,14 +122,21 @@ public class PieRequestMenuResultDto {
     return value;
   }
 
+  @JsonIgnore
+  public boolean getValueDefined() {
+    return valueDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_VALUE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setValue(String value) {
     this.value = value;
+    this.valueDefined = true;
   }
 
   public PieRequestMenuResultDto inputMethod(String inputMethod) {
     this.inputMethod = inputMethod;
+    this.inputMethodDefined = true;
     return this;
   }
 
@@ -122,10 +151,16 @@ public class PieRequestMenuResultDto {
     return inputMethod;
   }
 
+  @JsonIgnore
+  public boolean getInputMethodDefined() {
+    return inputMethodDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_INPUT_METHOD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setInputMethod(String inputMethod) {
     this.inputMethod = inputMethod;
+    this.inputMethodDefined = true;
   }
 
   /** Return true if this pieRequest_menuResult object is equal to o. */

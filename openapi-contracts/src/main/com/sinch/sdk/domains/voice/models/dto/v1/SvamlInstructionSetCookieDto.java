@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -23,21 +25,26 @@ import java.util.Objects;
   SvamlInstructionSetCookieDto.JSON_PROPERTY_KEY,
   SvamlInstructionSetCookieDto.JSON_PROPERTY_VALUE
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlInstructionSetCookieDto {
   public static final String JSON_PROPERTY_NAME = "name";
   private String name;
+  private boolean nameDefined = false;
 
   public static final String JSON_PROPERTY_KEY = "key";
   private String key;
+  private boolean keyDefined = false;
 
   public static final String JSON_PROPERTY_VALUE = "value";
   private String value;
+  private boolean valueDefined = false;
 
   public SvamlInstructionSetCookieDto() {}
 
   public SvamlInstructionSetCookieDto name(String name) {
     this.name = name;
+    this.nameDefined = true;
     return this;
   }
 
@@ -52,14 +59,21 @@ public class SvamlInstructionSetCookieDto {
     return name;
   }
 
+  @JsonIgnore
+  public boolean getNameDefined() {
+    return nameDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setName(String name) {
     this.name = name;
+    this.nameDefined = true;
   }
 
   public SvamlInstructionSetCookieDto key(String key) {
     this.key = key;
+    this.keyDefined = true;
     return this;
   }
 
@@ -74,14 +88,21 @@ public class SvamlInstructionSetCookieDto {
     return key;
   }
 
+  @JsonIgnore
+  public boolean getKeyDefined() {
+    return keyDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_KEY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setKey(String key) {
     this.key = key;
+    this.keyDefined = true;
   }
 
   public SvamlInstructionSetCookieDto value(String value) {
     this.value = value;
+    this.valueDefined = true;
     return this;
   }
 
@@ -96,10 +117,16 @@ public class SvamlInstructionSetCookieDto {
     return value;
   }
 
+  @JsonIgnore
+  public boolean getValueDefined() {
+    return valueDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_VALUE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setValue(String value) {
     this.value = value;
+    this.valueDefined = true;
   }
 
   /** Return true if this svaml.instruction.setCookie object is equal to o. */
