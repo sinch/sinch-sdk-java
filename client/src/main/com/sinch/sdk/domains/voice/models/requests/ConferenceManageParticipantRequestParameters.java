@@ -1,25 +1,26 @@
 package com.sinch.sdk.domains.voice.models.requests;
 
-import java.util.Optional;
+import com.sinch.sdk.core.models.OptionalValue;
 
 /** Use to configure conference participant settings */
 public class ConferenceManageParticipantRequestParameters {
 
-  private final ConferenceManageParticipantCommandType command;
-  private final MohClassType moh;
+  private final OptionalValue<ConferenceManageParticipantCommandType> command;
+  private final OptionalValue<MohClassType> moh;
 
   private ConferenceManageParticipantRequestParameters(
-      ConferenceManageParticipantCommandType command, MohClassType moh) {
+      OptionalValue<ConferenceManageParticipantCommandType> command,
+      OptionalValue<MohClassType> moh) {
     this.command = command;
     this.moh = moh;
   }
 
-  public Optional<ConferenceManageParticipantCommandType> getCommand() {
-    return Optional.ofNullable(command);
+  public OptionalValue<ConferenceManageParticipantCommandType> getCommand() {
+    return command;
   }
 
-  public Optional<MohClassType> getMoh() {
-    return Optional.ofNullable(moh);
+  public OptionalValue<MohClassType> getMoh() {
+    return moh;
   }
 
   @Override
@@ -38,15 +39,15 @@ public class ConferenceManageParticipantRequestParameters {
 
   public static class Builder {
 
-    ConferenceManageParticipantCommandType command;
-    MohClassType moh;
+    OptionalValue<ConferenceManageParticipantCommandType> command = OptionalValue.empty();
+    OptionalValue<MohClassType> moh = OptionalValue.empty();
 
     /**
      * @param command Action to apply on conference participant.
      * @return current builder
      */
     public Builder setCommand(ConferenceManageParticipantCommandType command) {
-      this.command = command;
+      this.command = OptionalValue.of(command);
       return this;
     }
 
@@ -58,7 +59,7 @@ public class ConferenceManageParticipantRequestParameters {
      * @return current builder
      */
     public Builder setMoh(MohClassType moh) {
-      this.moh = moh;
+      this.moh = OptionalValue.of(moh);
       return this;
     }
 

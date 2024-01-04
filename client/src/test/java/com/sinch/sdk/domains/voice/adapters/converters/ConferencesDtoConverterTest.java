@@ -1,7 +1,5 @@
 package com.sinch.sdk.domains.voice.adapters.converters;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.sinch.sdk.domains.voice.models.dto.v1.ConferencesRequestDtoTest;
 import com.sinch.sdk.domains.voice.models.dto.v1.ConferencesResponseDtoTest;
 import com.sinch.sdk.domains.voice.models.requests.ConferenceManageParticipantRequestParametersTest;
