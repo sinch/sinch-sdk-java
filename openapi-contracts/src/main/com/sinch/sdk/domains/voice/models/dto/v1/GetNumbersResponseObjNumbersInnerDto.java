@@ -13,6 +13,8 @@
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -25,13 +27,16 @@ import java.util.Objects;
   GetNumbersResponseObjNumbersInnerDto.JSON_PROPERTY_APPLICATIONKEY,
   GetNumbersResponseObjNumbersInnerDto.JSON_PROPERTY_CAPABILITY
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class GetNumbersResponseObjNumbersInnerDto {
   public static final String JSON_PROPERTY_NUMBER = "number";
   private String number;
+  private boolean numberDefined = false;
 
   public static final String JSON_PROPERTY_APPLICATIONKEY = "applicationkey";
   private String applicationkey;
+  private boolean applicationkeyDefined = false;
 
   /**
    * indicates the DID capability that needs to be assigned to the chosen application. Valid values
@@ -74,11 +79,13 @@ public class GetNumbersResponseObjNumbersInnerDto {
 
   public static final String JSON_PROPERTY_CAPABILITY = "capability";
   private String capability;
+  private boolean capabilityDefined = false;
 
   public GetNumbersResponseObjNumbersInnerDto() {}
 
   public GetNumbersResponseObjNumbersInnerDto number(String number) {
     this.number = number;
+    this.numberDefined = true;
     return this;
   }
 
@@ -93,14 +100,21 @@ public class GetNumbersResponseObjNumbersInnerDto {
     return number;
   }
 
+  @JsonIgnore
+  public boolean getNumberDefined() {
+    return numberDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NUMBER)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNumber(String number) {
     this.number = number;
+    this.numberDefined = true;
   }
 
   public GetNumbersResponseObjNumbersInnerDto applicationkey(String applicationkey) {
     this.applicationkey = applicationkey;
+    this.applicationkeyDefined = true;
     return this;
   }
 
@@ -116,14 +130,21 @@ public class GetNumbersResponseObjNumbersInnerDto {
     return applicationkey;
   }
 
+  @JsonIgnore
+  public boolean getApplicationkeyDefined() {
+    return applicationkeyDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_APPLICATIONKEY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setApplicationkey(String applicationkey) {
     this.applicationkey = applicationkey;
+    this.applicationkeyDefined = true;
   }
 
   public GetNumbersResponseObjNumbersInnerDto capability(String capability) {
     this.capability = capability;
+    this.capabilityDefined = true;
     return this;
   }
 
@@ -140,10 +161,16 @@ public class GetNumbersResponseObjNumbersInnerDto {
     return capability;
   }
 
+  @JsonIgnore
+  public boolean getCapabilityDefined() {
+    return capabilityDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CAPABILITY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCapability(String capability) {
     this.capability = capability;
+    this.capabilityDefined = true;
   }
 
   /** Return true if this getNumbersResponseObj_numbers_inner object is equal to o. */

@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -28,21 +30,26 @@ import java.util.Objects;
   SvamlInstructionPlayFilesDto.JSON_PROPERTY_IDS,
   SvamlInstructionPlayFilesDto.JSON_PROPERTY_LOCALE
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlInstructionPlayFilesDto {
   public static final String JSON_PROPERTY_NAME = "name";
   private String name;
+  private boolean nameDefined = false;
 
   public static final String JSON_PROPERTY_IDS = "ids";
   private List<String> ids;
+  private boolean idsDefined = false;
 
   public static final String JSON_PROPERTY_LOCALE = "locale";
   private String locale;
+  private boolean localeDefined = false;
 
   public SvamlInstructionPlayFilesDto() {}
 
   public SvamlInstructionPlayFilesDto name(String name) {
     this.name = name;
+    this.nameDefined = true;
     return this;
   }
 
@@ -57,14 +64,21 @@ public class SvamlInstructionPlayFilesDto {
     return name;
   }
 
+  @JsonIgnore
+  public boolean getNameDefined() {
+    return nameDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setName(String name) {
     this.name = name;
+    this.nameDefined = true;
   }
 
   public SvamlInstructionPlayFilesDto ids(List<String> ids) {
     this.ids = ids;
+    this.idsDefined = true;
     return this;
   }
 
@@ -72,6 +86,7 @@ public class SvamlInstructionPlayFilesDto {
     if (this.ids == null) {
       this.ids = new ArrayList<>();
     }
+    this.idsDefined = true;
     this.ids.add(idsItem);
     return this;
   }
@@ -88,14 +103,21 @@ public class SvamlInstructionPlayFilesDto {
     return ids;
   }
 
+  @JsonIgnore
+  public boolean getIdsDefined() {
+    return idsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_IDS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setIds(List<String> ids) {
     this.ids = ids;
+    this.idsDefined = true;
   }
 
   public SvamlInstructionPlayFilesDto locale(String locale) {
     this.locale = locale;
+    this.localeDefined = true;
     return this;
   }
 
@@ -113,10 +135,16 @@ public class SvamlInstructionPlayFilesDto {
     return locale;
   }
 
+  @JsonIgnore
+  public boolean getLocaleDefined() {
+    return localeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_LOCALE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setLocale(String locale) {
     this.locale = locale;
+    this.localeDefined = true;
   }
 
   /** Return true if this svaml.instruction.playFiles object is equal to o. */

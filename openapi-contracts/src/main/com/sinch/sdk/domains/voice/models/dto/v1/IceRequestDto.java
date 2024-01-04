@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -37,57 +39,74 @@ import java.util.Objects;
   IceRequestDto.JSON_PROPERTY_RDNIS,
   IceRequestDto.JSON_PROPERTY_CALL_HEADERS
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class IceRequestDto {
   public static final String JSON_PROPERTY_EVENT = "event";
   private String event;
+  private boolean eventDefined = false;
 
   public static final String JSON_PROPERTY_CALL_ID = "callId";
   private String callId;
+  private boolean callIdDefined = false;
 
   public static final String JSON_PROPERTY_CALL_RESOURCE_URL = "callResourceUrl";
   private String callResourceUrl;
+  private boolean callResourceUrlDefined = false;
 
   public static final String JSON_PROPERTY_TIMESTAMP = "timestamp";
   private String timestamp;
+  private boolean timestampDefined = false;
 
   public static final String JSON_PROPERTY_VERSION = "version";
   private Integer version;
+  private boolean versionDefined = false;
 
   public static final String JSON_PROPERTY_CUSTOM = "custom";
   private String custom;
+  private boolean customDefined = false;
 
   public static final String JSON_PROPERTY_USER_RATE = "userRate";
   private IceRequestUserRateDto userRate;
+  private boolean userRateDefined = false;
 
   public static final String JSON_PROPERTY_CLI = "cli";
   private String cli;
+  private boolean cliDefined = false;
 
   public static final String JSON_PROPERTY_TO = "to";
   private IceRequestToDto to;
+  private boolean toDefined = false;
 
   public static final String JSON_PROPERTY_DOMAIN = "domain";
   private String domain;
+  private boolean domainDefined = false;
 
   public static final String JSON_PROPERTY_APPLICATION_KEY = "applicationKey";
   private String applicationKey;
+  private boolean applicationKeyDefined = false;
 
   public static final String JSON_PROPERTY_ORIGINATION_TYPE = "originationType";
   private String originationType;
+  private boolean originationTypeDefined = false;
 
   public static final String JSON_PROPERTY_DURATION = "duration";
   private Integer duration;
+  private boolean durationDefined = false;
 
   public static final String JSON_PROPERTY_RDNIS = "rdnis";
   private String rdnis;
+  private boolean rdnisDefined = false;
 
   public static final String JSON_PROPERTY_CALL_HEADERS = "callHeaders";
   private List<CallHeaderDto> callHeaders;
+  private boolean callHeadersDefined = false;
 
   public IceRequestDto() {}
 
   public IceRequestDto event(String event) {
     this.event = event;
+    this.eventDefined = true;
     return this;
   }
 
@@ -102,14 +121,21 @@ public class IceRequestDto {
     return event;
   }
 
+  @JsonIgnore
+  public boolean getEventDefined() {
+    return eventDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_EVENT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEvent(String event) {
     this.event = event;
+    this.eventDefined = true;
   }
 
   public IceRequestDto callId(String callId) {
     this.callId = callId;
+    this.callIdDefined = true;
     return this;
   }
 
@@ -124,14 +150,21 @@ public class IceRequestDto {
     return callId;
   }
 
+  @JsonIgnore
+  public boolean getCallIdDefined() {
+    return callIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CALL_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCallId(String callId) {
     this.callId = callId;
+    this.callIdDefined = true;
   }
 
   public IceRequestDto callResourceUrl(String callResourceUrl) {
     this.callResourceUrl = callResourceUrl;
+    this.callResourceUrlDefined = true;
     return this;
   }
 
@@ -146,14 +179,21 @@ public class IceRequestDto {
     return callResourceUrl;
   }
 
+  @JsonIgnore
+  public boolean getCallResourceUrlDefined() {
+    return callResourceUrlDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CALL_RESOURCE_URL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCallResourceUrl(String callResourceUrl) {
     this.callResourceUrl = callResourceUrl;
+    this.callResourceUrlDefined = true;
   }
 
   public IceRequestDto timestamp(String timestamp) {
     this.timestamp = timestamp;
+    this.timestampDefined = true;
     return this;
   }
 
@@ -168,14 +208,21 @@ public class IceRequestDto {
     return timestamp;
   }
 
+  @JsonIgnore
+  public boolean getTimestampDefined() {
+    return timestampDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TIMESTAMP)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTimestamp(String timestamp) {
     this.timestamp = timestamp;
+    this.timestampDefined = true;
   }
 
   public IceRequestDto version(Integer version) {
     this.version = version;
+    this.versionDefined = true;
     return this;
   }
 
@@ -190,14 +237,21 @@ public class IceRequestDto {
     return version;
   }
 
+  @JsonIgnore
+  public boolean getVersionDefined() {
+    return versionDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_VERSION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setVersion(Integer version) {
     this.version = version;
+    this.versionDefined = true;
   }
 
   public IceRequestDto custom(String custom) {
     this.custom = custom;
+    this.customDefined = true;
     return this;
   }
 
@@ -212,14 +266,21 @@ public class IceRequestDto {
     return custom;
   }
 
+  @JsonIgnore
+  public boolean getCustomDefined() {
+    return customDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CUSTOM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCustom(String custom) {
     this.custom = custom;
+    this.customDefined = true;
   }
 
   public IceRequestDto userRate(IceRequestUserRateDto userRate) {
     this.userRate = userRate;
+    this.userRateDefined = true;
     return this;
   }
 
@@ -234,14 +295,21 @@ public class IceRequestDto {
     return userRate;
   }
 
+  @JsonIgnore
+  public boolean getUserRateDefined() {
+    return userRateDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_USER_RATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setUserRate(IceRequestUserRateDto userRate) {
     this.userRate = userRate;
+    this.userRateDefined = true;
   }
 
   public IceRequestDto cli(String cli) {
     this.cli = cli;
+    this.cliDefined = true;
     return this;
   }
 
@@ -259,14 +327,21 @@ public class IceRequestDto {
     return cli;
   }
 
+  @JsonIgnore
+  public boolean getCliDefined() {
+    return cliDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CLI)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCli(String cli) {
     this.cli = cli;
+    this.cliDefined = true;
   }
 
   public IceRequestDto to(IceRequestToDto to) {
     this.to = to;
+    this.toDefined = true;
     return this;
   }
 
@@ -281,14 +356,21 @@ public class IceRequestDto {
     return to;
   }
 
+  @JsonIgnore
+  public boolean getToDefined() {
+    return toDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TO)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTo(IceRequestToDto to) {
     this.to = to;
+    this.toDefined = true;
   }
 
   public IceRequestDto domain(String domain) {
     this.domain = domain;
+    this.domainDefined = true;
     return this;
   }
 
@@ -303,14 +385,21 @@ public class IceRequestDto {
     return domain;
   }
 
+  @JsonIgnore
+  public boolean getDomainDefined() {
+    return domainDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DOMAIN)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDomain(String domain) {
     this.domain = domain;
+    this.domainDefined = true;
   }
 
   public IceRequestDto applicationKey(String applicationKey) {
     this.applicationKey = applicationKey;
+    this.applicationKeyDefined = true;
     return this;
   }
 
@@ -326,14 +415,21 @@ public class IceRequestDto {
     return applicationKey;
   }
 
+  @JsonIgnore
+  public boolean getApplicationKeyDefined() {
+    return applicationKeyDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_APPLICATION_KEY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setApplicationKey(String applicationKey) {
     this.applicationKey = applicationKey;
+    this.applicationKeyDefined = true;
   }
 
   public IceRequestDto originationType(String originationType) {
     this.originationType = originationType;
+    this.originationTypeDefined = true;
     return this;
   }
 
@@ -348,14 +444,21 @@ public class IceRequestDto {
     return originationType;
   }
 
+  @JsonIgnore
+  public boolean getOriginationTypeDefined() {
+    return originationTypeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ORIGINATION_TYPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setOriginationType(String originationType) {
     this.originationType = originationType;
+    this.originationTypeDefined = true;
   }
 
   public IceRequestDto duration(Integer duration) {
     this.duration = duration;
+    this.durationDefined = true;
     return this;
   }
 
@@ -370,14 +473,21 @@ public class IceRequestDto {
     return duration;
   }
 
+  @JsonIgnore
+  public boolean getDurationDefined() {
+    return durationDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDuration(Integer duration) {
     this.duration = duration;
+    this.durationDefined = true;
   }
 
   public IceRequestDto rdnis(String rdnis) {
     this.rdnis = rdnis;
+    this.rdnisDefined = true;
     return this;
   }
 
@@ -392,14 +502,21 @@ public class IceRequestDto {
     return rdnis;
   }
 
+  @JsonIgnore
+  public boolean getRdnisDefined() {
+    return rdnisDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_RDNIS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRdnis(String rdnis) {
     this.rdnis = rdnis;
+    this.rdnisDefined = true;
   }
 
   public IceRequestDto callHeaders(List<CallHeaderDto> callHeaders) {
     this.callHeaders = callHeaders;
+    this.callHeadersDefined = true;
     return this;
   }
 
@@ -407,6 +524,7 @@ public class IceRequestDto {
     if (this.callHeaders == null) {
       this.callHeaders = new ArrayList<>();
     }
+    this.callHeadersDefined = true;
     this.callHeaders.add(callHeadersItem);
     return this;
   }
@@ -423,10 +541,16 @@ public class IceRequestDto {
     return callHeaders;
   }
 
+  @JsonIgnore
+  public boolean getCallHeadersDefined() {
+    return callHeadersDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CALL_HEADERS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCallHeaders(List<CallHeaderDto> callHeaders) {
     this.callHeaders = callHeaders;
+    this.callHeadersDefined = true;
   }
 
   /** Return true if this iceRequest object is equal to o. */

@@ -39,7 +39,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class ApplicationsApi {
 
   private static final Logger LOGGER = Logger.getLogger(ApplicationsApi.class.getName());

@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -26,18 +28,22 @@ import java.util.Objects;
   IceRequestUserRateDto.JSON_PROPERTY_CURRENCY_ID,
   IceRequestUserRateDto.JSON_PROPERTY_AMOUNT
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class IceRequestUserRateDto {
   public static final String JSON_PROPERTY_CURRENCY_ID = "currencyId";
   private String currencyId;
+  private boolean currencyIdDefined = false;
 
   public static final String JSON_PROPERTY_AMOUNT = "amount";
   private BigDecimal amount;
+  private boolean amountDefined = false;
 
   public IceRequestUserRateDto() {}
 
   public IceRequestUserRateDto currencyId(String currencyId) {
     this.currencyId = currencyId;
+    this.currencyIdDefined = true;
     return this;
   }
 
@@ -52,14 +58,21 @@ public class IceRequestUserRateDto {
     return currencyId;
   }
 
+  @JsonIgnore
+  public boolean getCurrencyIdDefined() {
+    return currencyIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CURRENCY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCurrencyId(String currencyId) {
     this.currencyId = currencyId;
+    this.currencyIdDefined = true;
   }
 
   public IceRequestUserRateDto amount(BigDecimal amount) {
     this.amount = amount;
+    this.amountDefined = true;
     return this;
   }
 
@@ -74,10 +87,16 @@ public class IceRequestUserRateDto {
     return amount;
   }
 
+  @JsonIgnore
+  public boolean getAmountDefined() {
+    return amountDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_AMOUNT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAmount(BigDecimal amount) {
     this.amount = amount;
+    this.amountDefined = true;
   }
 
   /** Return true if this iceRequest_userRate object is equal to o. */

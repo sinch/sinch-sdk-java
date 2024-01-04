@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -25,18 +27,22 @@ import java.util.Objects;
   SvamlActionConnectMxpDestinationDto.JSON_PROPERTY_TYPE,
   SvamlActionConnectMxpDestinationDto.JSON_PROPERTY_ENDPOINT
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlActionConnectMxpDestinationDto {
   public static final String JSON_PROPERTY_TYPE = "type";
   private String type;
+  private boolean typeDefined = false;
 
   public static final String JSON_PROPERTY_ENDPOINT = "endpoint";
   private String endpoint;
+  private boolean endpointDefined = false;
 
   public SvamlActionConnectMxpDestinationDto() {}
 
   public SvamlActionConnectMxpDestinationDto type(String type) {
     this.type = type;
+    this.typeDefined = true;
     return this;
   }
 
@@ -51,14 +57,21 @@ public class SvamlActionConnectMxpDestinationDto {
     return type;
   }
 
+  @JsonIgnore
+  public boolean getTypeDefined() {
+    return typeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TYPE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setType(String type) {
     this.type = type;
+    this.typeDefined = true;
   }
 
   public SvamlActionConnectMxpDestinationDto endpoint(String endpoint) {
     this.endpoint = endpoint;
+    this.endpointDefined = true;
     return this;
   }
 
@@ -73,10 +86,16 @@ public class SvamlActionConnectMxpDestinationDto {
     return endpoint;
   }
 
+  @JsonIgnore
+  public boolean getEndpointDefined() {
+    return endpointDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ENDPOINT)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setEndpoint(String endpoint) {
     this.endpoint = endpoint;
+    this.endpointDefined = true;
   }
 
   /** Return true if this svaml_action_connectMxp_destination object is equal to o. */

@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -28,18 +30,22 @@ import java.util.Objects;
   SVAMLRequestBodyDto.JSON_PROPERTY_INSTRUCTIONS,
   SVAMLRequestBodyDto.JSON_PROPERTY_ACTION
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SVAMLRequestBodyDto {
   public static final String JSON_PROPERTY_INSTRUCTIONS = "instructions";
   private List<SvamlInstructionDto> instructions;
+  private boolean instructionsDefined = false;
 
   public static final String JSON_PROPERTY_ACTION = "action";
   private SvamlActionDto action;
+  private boolean actionDefined = false;
 
   public SVAMLRequestBodyDto() {}
 
   public SVAMLRequestBodyDto instructions(List<SvamlInstructionDto> instructions) {
     this.instructions = instructions;
+    this.instructionsDefined = true;
     return this;
   }
 
@@ -47,6 +53,7 @@ public class SVAMLRequestBodyDto {
     if (this.instructions == null) {
       this.instructions = new ArrayList<>();
     }
+    this.instructionsDefined = true;
     this.instructions.add(instructionsItem);
     return this;
   }
@@ -63,14 +70,21 @@ public class SVAMLRequestBodyDto {
     return instructions;
   }
 
+  @JsonIgnore
+  public boolean getInstructionsDefined() {
+    return instructionsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_INSTRUCTIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setInstructions(List<SvamlInstructionDto> instructions) {
     this.instructions = instructions;
+    this.instructionsDefined = true;
   }
 
   public SVAMLRequestBodyDto action(SvamlActionDto action) {
     this.action = action;
+    this.actionDefined = true;
     return this;
   }
 
@@ -85,10 +99,16 @@ public class SVAMLRequestBodyDto {
     return action;
   }
 
+  @JsonIgnore
+  public boolean getActionDefined() {
+    return actionDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ACTION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAction(SvamlActionDto action) {
     this.action = action;
+    this.actionDefined = true;
   }
 
   /** Return true if this SVAMLRequestBody object is equal to o. */

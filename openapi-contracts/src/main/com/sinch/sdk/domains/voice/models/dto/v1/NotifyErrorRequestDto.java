@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -28,36 +30,46 @@ import java.util.Objects;
   NotifyErrorRequestDto.JSON_PROPERTY_USER,
   NotifyErrorRequestDto.JSON_PROPERTY_CUSTOM
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class NotifyErrorRequestDto {
   public static final String JSON_PROPERTY_EVENT = "event";
   private String event;
+  private boolean eventDefined = false;
 
   public static final String JSON_PROPERTY_VERSION = "version";
   private Integer version;
+  private boolean versionDefined = false;
 
   public static final String JSON_PROPERTY_TYPE = "type";
   private String type;
+  private boolean typeDefined = false;
 
   public static final String JSON_PROPERTY_CALL_ID = "callId";
   private String callId;
+  private boolean callIdDefined = false;
 
   public static final String JSON_PROPERTY_ERROR_CODE = "errorCode";
   private Integer errorCode;
+  private boolean errorCodeDefined = false;
 
   public static final String JSON_PROPERTY_ERROR_MSG = "errorMsg";
   private String errorMsg;
+  private boolean errorMsgDefined = false;
 
   public static final String JSON_PROPERTY_USER = "user";
   private String user;
+  private boolean userDefined = false;
 
   public static final String JSON_PROPERTY_CUSTOM = "custom";
   private String custom;
+  private boolean customDefined = false;
 
   public NotifyErrorRequestDto() {}
 
   public NotifyErrorRequestDto event(String event) {
     this.event = event;
+    this.eventDefined = true;
     return this;
   }
 
@@ -72,14 +84,21 @@ public class NotifyErrorRequestDto {
     return event;
   }
 
+  @JsonIgnore
+  public boolean getEventDefined() {
+    return eventDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_EVENT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEvent(String event) {
     this.event = event;
+    this.eventDefined = true;
   }
 
   public NotifyErrorRequestDto version(Integer version) {
     this.version = version;
+    this.versionDefined = true;
     return this;
   }
 
@@ -94,14 +113,21 @@ public class NotifyErrorRequestDto {
     return version;
   }
 
+  @JsonIgnore
+  public boolean getVersionDefined() {
+    return versionDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_VERSION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setVersion(Integer version) {
     this.version = version;
+    this.versionDefined = true;
   }
 
   public NotifyErrorRequestDto type(String type) {
     this.type = type;
+    this.typeDefined = true;
     return this;
   }
 
@@ -117,14 +143,21 @@ public class NotifyErrorRequestDto {
     return type;
   }
 
+  @JsonIgnore
+  public boolean getTypeDefined() {
+    return typeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TYPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setType(String type) {
     this.type = type;
+    this.typeDefined = true;
   }
 
   public NotifyErrorRequestDto callId(String callId) {
     this.callId = callId;
+    this.callIdDefined = true;
     return this;
   }
 
@@ -139,14 +172,21 @@ public class NotifyErrorRequestDto {
     return callId;
   }
 
+  @JsonIgnore
+  public boolean getCallIdDefined() {
+    return callIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CALL_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCallId(String callId) {
     this.callId = callId;
+    this.callIdDefined = true;
   }
 
   public NotifyErrorRequestDto errorCode(Integer errorCode) {
     this.errorCode = errorCode;
+    this.errorCodeDefined = true;
     return this;
   }
 
@@ -161,14 +201,21 @@ public class NotifyErrorRequestDto {
     return errorCode;
   }
 
+  @JsonIgnore
+  public boolean getErrorCodeDefined() {
+    return errorCodeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ERROR_CODE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setErrorCode(Integer errorCode) {
     this.errorCode = errorCode;
+    this.errorCodeDefined = true;
   }
 
   public NotifyErrorRequestDto errorMsg(String errorMsg) {
     this.errorMsg = errorMsg;
+    this.errorMsgDefined = true;
     return this;
   }
 
@@ -183,14 +230,21 @@ public class NotifyErrorRequestDto {
     return errorMsg;
   }
 
+  @JsonIgnore
+  public boolean getErrorMsgDefined() {
+    return errorMsgDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ERROR_MSG)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setErrorMsg(String errorMsg) {
     this.errorMsg = errorMsg;
+    this.errorMsgDefined = true;
   }
 
   public NotifyErrorRequestDto user(String user) {
     this.user = user;
+    this.userDefined = true;
     return this;
   }
 
@@ -205,14 +259,21 @@ public class NotifyErrorRequestDto {
     return user;
   }
 
+  @JsonIgnore
+  public boolean getUserDefined() {
+    return userDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_USER)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setUser(String user) {
     this.user = user;
+    this.userDefined = true;
   }
 
   public NotifyErrorRequestDto custom(String custom) {
     this.custom = custom;
+    this.customDefined = true;
     return this;
   }
 
@@ -227,10 +288,16 @@ public class NotifyErrorRequestDto {
     return custom;
   }
 
+  @JsonIgnore
+  public boolean getCustomDefined() {
+    return customDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CUSTOM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCustom(String custom) {
     this.custom = custom;
+    this.customDefined = true;
   }
 
   /** Return true if this notifyErrorRequest object is equal to o. */

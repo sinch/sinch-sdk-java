@@ -33,7 +33,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 @JsonDeserialize(using = SvamlActionDto.SvamlActionDtoDeserializer.class)
 @JsonSerialize(using = SvamlActionDto.SvamlActionDtoSerializer.class)
 public class SvamlActionDto extends AbstractOpenApiSchema {

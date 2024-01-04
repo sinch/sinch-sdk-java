@@ -13,6 +13,8 @@
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -25,13 +27,16 @@ import java.util.Objects;
   UnassignNumbersDto.JSON_PROPERTY_APPLICATIONKEY,
   UnassignNumbersDto.JSON_PROPERTY_CAPABILITY
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class UnassignNumbersDto {
   public static final String JSON_PROPERTY_NUMBER = "number";
   private String number;
+  private boolean numberDefined = false;
 
   public static final String JSON_PROPERTY_APPLICATIONKEY = "applicationkey";
   private String applicationkey;
+  private boolean applicationkeyDefined = false;
 
   /**
    * (optional) indicates the DID capability that was assigned to the chosen application. Please
@@ -73,11 +78,13 @@ public class UnassignNumbersDto {
 
   public static final String JSON_PROPERTY_CAPABILITY = "capability";
   private String capability;
+  private boolean capabilityDefined = false;
 
   public UnassignNumbersDto() {}
 
   public UnassignNumbersDto number(String number) {
     this.number = number;
+    this.numberDefined = true;
     return this;
   }
 
@@ -92,14 +99,21 @@ public class UnassignNumbersDto {
     return number;
   }
 
+  @JsonIgnore
+  public boolean getNumberDefined() {
+    return numberDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NUMBER)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNumber(String number) {
     this.number = number;
+    this.numberDefined = true;
   }
 
   public UnassignNumbersDto applicationkey(String applicationkey) {
     this.applicationkey = applicationkey;
+    this.applicationkeyDefined = true;
     return this;
   }
 
@@ -115,14 +129,21 @@ public class UnassignNumbersDto {
     return applicationkey;
   }
 
+  @JsonIgnore
+  public boolean getApplicationkeyDefined() {
+    return applicationkeyDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_APPLICATIONKEY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setApplicationkey(String applicationkey) {
     this.applicationkey = applicationkey;
+    this.applicationkeyDefined = true;
   }
 
   public UnassignNumbersDto capability(String capability) {
     this.capability = capability;
+    this.capabilityDefined = true;
     return this;
   }
 
@@ -138,10 +159,16 @@ public class UnassignNumbersDto {
     return capability;
   }
 
+  @JsonIgnore
+  public boolean getCapabilityDefined() {
+    return capabilityDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CAPABILITY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCapability(String capability) {
     this.capability = capability;
+    this.capabilityDefined = true;
   }
 
   /** Return true if this unassignNumbers object is equal to o. */

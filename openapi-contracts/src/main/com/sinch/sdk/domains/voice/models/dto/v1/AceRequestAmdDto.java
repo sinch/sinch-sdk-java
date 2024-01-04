@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -26,21 +28,26 @@ import java.util.Objects;
   AceRequestAmdDto.JSON_PROPERTY_REASON,
   AceRequestAmdDto.JSON_PROPERTY_DURATION
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class AceRequestAmdDto {
   public static final String JSON_PROPERTY_STATUS = "status";
   private String status;
+  private boolean statusDefined = false;
 
   public static final String JSON_PROPERTY_REASON = "reason";
   private String reason;
+  private boolean reasonDefined = false;
 
   public static final String JSON_PROPERTY_DURATION = "duration";
   private Integer duration;
+  private boolean durationDefined = false;
 
   public AceRequestAmdDto() {}
 
   public AceRequestAmdDto status(String status) {
     this.status = status;
+    this.statusDefined = true;
     return this;
   }
 
@@ -55,14 +62,21 @@ public class AceRequestAmdDto {
     return status;
   }
 
+  @JsonIgnore
+  public boolean getStatusDefined() {
+    return statusDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_STATUS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setStatus(String status) {
     this.status = status;
+    this.statusDefined = true;
   }
 
   public AceRequestAmdDto reason(String reason) {
     this.reason = reason;
+    this.reasonDefined = true;
     return this;
   }
 
@@ -77,14 +91,21 @@ public class AceRequestAmdDto {
     return reason;
   }
 
+  @JsonIgnore
+  public boolean getReasonDefined() {
+    return reasonDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_REASON)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setReason(String reason) {
     this.reason = reason;
+    this.reasonDefined = true;
   }
 
   public AceRequestAmdDto duration(Integer duration) {
     this.duration = duration;
+    this.durationDefined = true;
     return this;
   }
 
@@ -99,10 +120,16 @@ public class AceRequestAmdDto {
     return duration;
   }
 
+  @JsonIgnore
+  public boolean getDurationDefined() {
+    return durationDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDuration(Integer duration) {
     this.duration = duration;
+    this.durationDefined = true;
   }
 
   /** Return true if this aceRequest_amd object is equal to o. */

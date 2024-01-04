@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -22,18 +24,22 @@ import java.util.Objects;
   SvamlInstructionStartRecordingDto.JSON_PROPERTY_NAME,
   SvamlInstructionStartRecordingDto.JSON_PROPERTY_OPTIONS
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlInstructionStartRecordingDto {
   public static final String JSON_PROPERTY_NAME = "name";
   private String name;
+  private boolean nameDefined = false;
 
   public static final String JSON_PROPERTY_OPTIONS = "options";
   private Object options;
+  private boolean optionsDefined = false;
 
   public SvamlInstructionStartRecordingDto() {}
 
   public SvamlInstructionStartRecordingDto name(String name) {
     this.name = name;
+    this.nameDefined = true;
     return this;
   }
 
@@ -48,14 +54,21 @@ public class SvamlInstructionStartRecordingDto {
     return name;
   }
 
+  @JsonIgnore
+  public boolean getNameDefined() {
+    return nameDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setName(String name) {
     this.name = name;
+    this.nameDefined = true;
   }
 
   public SvamlInstructionStartRecordingDto options(Object options) {
     this.options = options;
+    this.optionsDefined = true;
     return this;
   }
 
@@ -71,10 +84,16 @@ public class SvamlInstructionStartRecordingDto {
     return options;
   }
 
+  @JsonIgnore
+  public boolean getOptionsDefined() {
+    return optionsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_OPTIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setOptions(Object options) {
     this.options = options;
+    this.optionsDefined = true;
   }
 
   /** Return true if this svaml.instruction.startRecording object is equal to o. */

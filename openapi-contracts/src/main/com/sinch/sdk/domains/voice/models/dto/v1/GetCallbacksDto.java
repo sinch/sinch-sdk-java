@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -19,15 +21,18 @@ import java.util.Objects;
 
 /** GetCallbacksDto */
 @JsonPropertyOrder({GetCallbacksDto.JSON_PROPERTY_URL})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class GetCallbacksDto {
   public static final String JSON_PROPERTY_URL = "url";
   private GetCallbacksUrlDto url;
+  private boolean urlDefined = false;
 
   public GetCallbacksDto() {}
 
   public GetCallbacksDto url(GetCallbacksUrlDto url) {
     this.url = url;
+    this.urlDefined = true;
     return this;
   }
 
@@ -42,10 +47,16 @@ public class GetCallbacksDto {
     return url;
   }
 
+  @JsonIgnore
+  public boolean getUrlDefined() {
+    return urlDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_URL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setUrl(GetCallbacksUrlDto url) {
     this.url = url;
+    this.urlDefined = true;
   }
 
   /** Return true if this getCallbacks object is equal to o. */

@@ -13,6 +13,8 @@
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -21,7 +23,8 @@ import java.util.Objects;
 
 /** The type of device and number or endpoint to call. */
 @JsonPropertyOrder({DestinationDto.JSON_PROPERTY_TYPE, DestinationDto.JSON_PROPERTY_ENDPOINT})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class DestinationDto {
   /**
    * Can be of type &#x60;number&#x60; for PSTN endpoints or of type &#x60;username&#x60; for data
@@ -63,14 +66,17 @@ public class DestinationDto {
 
   public static final String JSON_PROPERTY_TYPE = "type";
   private String type;
+  private boolean typeDefined = false;
 
   public static final String JSON_PROPERTY_ENDPOINT = "endpoint";
   private String endpoint;
+  private boolean endpointDefined = false;
 
   public DestinationDto() {}
 
   public DestinationDto type(String type) {
     this.type = type;
+    this.typeDefined = true;
     return this;
   }
 
@@ -86,14 +92,21 @@ public class DestinationDto {
     return type;
   }
 
+  @JsonIgnore
+  public boolean getTypeDefined() {
+    return typeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TYPE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setType(String type) {
     this.type = type;
+    this.typeDefined = true;
   }
 
   public DestinationDto endpoint(String endpoint) {
     this.endpoint = endpoint;
+    this.endpointDefined = true;
     return this;
   }
 
@@ -109,10 +122,16 @@ public class DestinationDto {
     return endpoint;
   }
 
+  @JsonIgnore
+  public boolean getEndpointDefined() {
+    return endpointDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ENDPOINT)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setEndpoint(String endpoint) {
     this.endpoint = endpoint;
+    this.endpointDefined = true;
   }
 
   /** Return true if this destination object is equal to o. */

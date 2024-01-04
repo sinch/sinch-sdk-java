@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -19,15 +21,18 @@ import java.util.Objects;
 
 /** Specifies where to route the SIP call. */
 @JsonPropertyOrder({SvamlActionConnectSipDestinationDto.JSON_PROPERTY_ENDPOINT})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlActionConnectSipDestinationDto {
   public static final String JSON_PROPERTY_ENDPOINT = "endpoint";
   private String endpoint;
+  private boolean endpointDefined = false;
 
   public SvamlActionConnectSipDestinationDto() {}
 
   public SvamlActionConnectSipDestinationDto endpoint(String endpoint) {
     this.endpoint = endpoint;
+    this.endpointDefined = true;
     return this;
   }
 
@@ -42,10 +47,16 @@ public class SvamlActionConnectSipDestinationDto {
     return endpoint;
   }
 
+  @JsonIgnore
+  public boolean getEndpointDefined() {
+    return endpointDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ENDPOINT)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setEndpoint(String endpoint) {
     this.endpoint = endpoint;
+    this.endpointDefined = true;
   }
 
   /** Return true if this svaml_action_connectSip_destination object is equal to o. */

@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -36,54 +38,70 @@ import java.util.Objects;
   DiceRequestDto.JSON_PROPERTY_CALL_HEADERS,
   DiceRequestDto.JSON_PROPERTY_APPLICATION_KEY
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class DiceRequestDto {
   public static final String JSON_PROPERTY_EVENT = "event";
   private String event;
+  private boolean eventDefined = false;
 
   public static final String JSON_PROPERTY_CALL_ID = "callId";
   private String callId;
+  private boolean callIdDefined = false;
 
   public static final String JSON_PROPERTY_TIMESTAMP = "timestamp";
   private String timestamp;
+  private boolean timestampDefined = false;
 
   public static final String JSON_PROPERTY_REASON = "reason";
   private String reason;
+  private boolean reasonDefined = false;
 
   public static final String JSON_PROPERTY_RESULT = "result";
   private String result;
+  private boolean resultDefined = false;
 
   public static final String JSON_PROPERTY_VERSION = "version";
   private Integer version;
+  private boolean versionDefined = false;
 
   public static final String JSON_PROPERTY_CUSTOM = "custom";
   private String custom;
+  private boolean customDefined = false;
 
   public static final String JSON_PROPERTY_DEBIT = "debit";
   private DiceRequestDebitDto debit;
+  private boolean debitDefined = false;
 
   public static final String JSON_PROPERTY_USER_RATE = "userRate";
   private DiceRequestUserRateDto userRate;
+  private boolean userRateDefined = false;
 
   public static final String JSON_PROPERTY_TO = "to";
   private IceRequestToDto to;
+  private boolean toDefined = false;
 
   public static final String JSON_PROPERTY_DURATION = "duration";
   private Integer duration;
+  private boolean durationDefined = false;
 
   public static final String JSON_PROPERTY_FROM = "from";
   private String from;
+  private boolean fromDefined = false;
 
   public static final String JSON_PROPERTY_CALL_HEADERS = "callHeaders";
   private List<CallHeaderDto> callHeaders;
+  private boolean callHeadersDefined = false;
 
   public static final String JSON_PROPERTY_APPLICATION_KEY = "applicationKey";
   private String applicationKey;
+  private boolean applicationKeyDefined = false;
 
   public DiceRequestDto() {}
 
   public DiceRequestDto event(String event) {
     this.event = event;
+    this.eventDefined = true;
     return this;
   }
 
@@ -98,14 +116,21 @@ public class DiceRequestDto {
     return event;
   }
 
+  @JsonIgnore
+  public boolean getEventDefined() {
+    return eventDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_EVENT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEvent(String event) {
     this.event = event;
+    this.eventDefined = true;
   }
 
   public DiceRequestDto callId(String callId) {
     this.callId = callId;
+    this.callIdDefined = true;
     return this;
   }
 
@@ -120,14 +145,21 @@ public class DiceRequestDto {
     return callId;
   }
 
+  @JsonIgnore
+  public boolean getCallIdDefined() {
+    return callIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CALL_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCallId(String callId) {
     this.callId = callId;
+    this.callIdDefined = true;
   }
 
   public DiceRequestDto timestamp(String timestamp) {
     this.timestamp = timestamp;
+    this.timestampDefined = true;
     return this;
   }
 
@@ -142,14 +174,21 @@ public class DiceRequestDto {
     return timestamp;
   }
 
+  @JsonIgnore
+  public boolean getTimestampDefined() {
+    return timestampDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TIMESTAMP)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTimestamp(String timestamp) {
     this.timestamp = timestamp;
+    this.timestampDefined = true;
   }
 
   public DiceRequestDto reason(String reason) {
     this.reason = reason;
+    this.reasonDefined = true;
     return this;
   }
 
@@ -164,14 +203,21 @@ public class DiceRequestDto {
     return reason;
   }
 
+  @JsonIgnore
+  public boolean getReasonDefined() {
+    return reasonDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_REASON)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setReason(String reason) {
     this.reason = reason;
+    this.reasonDefined = true;
   }
 
   public DiceRequestDto result(String result) {
     this.result = result;
+    this.resultDefined = true;
     return this;
   }
 
@@ -186,14 +232,21 @@ public class DiceRequestDto {
     return result;
   }
 
+  @JsonIgnore
+  public boolean getResultDefined() {
+    return resultDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_RESULT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setResult(String result) {
     this.result = result;
+    this.resultDefined = true;
   }
 
   public DiceRequestDto version(Integer version) {
     this.version = version;
+    this.versionDefined = true;
     return this;
   }
 
@@ -208,14 +261,21 @@ public class DiceRequestDto {
     return version;
   }
 
+  @JsonIgnore
+  public boolean getVersionDefined() {
+    return versionDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_VERSION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setVersion(Integer version) {
     this.version = version;
+    this.versionDefined = true;
   }
 
   public DiceRequestDto custom(String custom) {
     this.custom = custom;
+    this.customDefined = true;
     return this;
   }
 
@@ -230,14 +290,21 @@ public class DiceRequestDto {
     return custom;
   }
 
+  @JsonIgnore
+  public boolean getCustomDefined() {
+    return customDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CUSTOM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCustom(String custom) {
     this.custom = custom;
+    this.customDefined = true;
   }
 
   public DiceRequestDto debit(DiceRequestDebitDto debit) {
     this.debit = debit;
+    this.debitDefined = true;
     return this;
   }
 
@@ -252,14 +319,21 @@ public class DiceRequestDto {
     return debit;
   }
 
+  @JsonIgnore
+  public boolean getDebitDefined() {
+    return debitDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DEBIT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDebit(DiceRequestDebitDto debit) {
     this.debit = debit;
+    this.debitDefined = true;
   }
 
   public DiceRequestDto userRate(DiceRequestUserRateDto userRate) {
     this.userRate = userRate;
+    this.userRateDefined = true;
     return this;
   }
 
@@ -274,14 +348,21 @@ public class DiceRequestDto {
     return userRate;
   }
 
+  @JsonIgnore
+  public boolean getUserRateDefined() {
+    return userRateDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_USER_RATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setUserRate(DiceRequestUserRateDto userRate) {
     this.userRate = userRate;
+    this.userRateDefined = true;
   }
 
   public DiceRequestDto to(IceRequestToDto to) {
     this.to = to;
+    this.toDefined = true;
     return this;
   }
 
@@ -296,14 +377,21 @@ public class DiceRequestDto {
     return to;
   }
 
+  @JsonIgnore
+  public boolean getToDefined() {
+    return toDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TO)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTo(IceRequestToDto to) {
     this.to = to;
+    this.toDefined = true;
   }
 
   public DiceRequestDto duration(Integer duration) {
     this.duration = duration;
+    this.durationDefined = true;
     return this;
   }
 
@@ -318,14 +406,21 @@ public class DiceRequestDto {
     return duration;
   }
 
+  @JsonIgnore
+  public boolean getDurationDefined() {
+    return durationDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDuration(Integer duration) {
     this.duration = duration;
+    this.durationDefined = true;
   }
 
   public DiceRequestDto from(String from) {
     this.from = from;
+    this.fromDefined = true;
     return this;
   }
 
@@ -340,14 +435,21 @@ public class DiceRequestDto {
     return from;
   }
 
+  @JsonIgnore
+  public boolean getFromDefined() {
+    return fromDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_FROM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFrom(String from) {
     this.from = from;
+    this.fromDefined = true;
   }
 
   public DiceRequestDto callHeaders(List<CallHeaderDto> callHeaders) {
     this.callHeaders = callHeaders;
+    this.callHeadersDefined = true;
     return this;
   }
 
@@ -355,6 +457,7 @@ public class DiceRequestDto {
     if (this.callHeaders == null) {
       this.callHeaders = new ArrayList<>();
     }
+    this.callHeadersDefined = true;
     this.callHeaders.add(callHeadersItem);
     return this;
   }
@@ -371,14 +474,21 @@ public class DiceRequestDto {
     return callHeaders;
   }
 
+  @JsonIgnore
+  public boolean getCallHeadersDefined() {
+    return callHeadersDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CALL_HEADERS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCallHeaders(List<CallHeaderDto> callHeaders) {
     this.callHeaders = callHeaders;
+    this.callHeadersDefined = true;
   }
 
   public DiceRequestDto applicationKey(String applicationKey) {
     this.applicationKey = applicationKey;
+    this.applicationKeyDefined = true;
     return this;
   }
 
@@ -394,10 +504,16 @@ public class DiceRequestDto {
     return applicationKey;
   }
 
+  @JsonIgnore
+  public boolean getApplicationKeyDefined() {
+    return applicationKeyDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_APPLICATION_KEY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setApplicationKey(String applicationKey) {
     this.applicationKey = applicationKey;
+    this.applicationKeyDefined = true;
   }
 
   /** Return true if this diceRequest object is equal to o. */
