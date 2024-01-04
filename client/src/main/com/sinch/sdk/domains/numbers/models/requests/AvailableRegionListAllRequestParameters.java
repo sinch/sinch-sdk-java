@@ -1,8 +1,8 @@
 package com.sinch.sdk.domains.numbers.models.requests;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.numbers.models.NumberType;
 import java.util.Collection;
-import java.util.Optional;
 
 /**
  * Parameters request to list all regions by criteria
@@ -13,17 +13,14 @@ import java.util.Optional;
  */
 public class AvailableRegionListAllRequestParameters {
 
-  private final Collection<NumberType> types;
+  private final OptionalValue<Collection<NumberType>> types;
 
-  /**
-   * @param types Only return regions for which numbers are provided with the given types
-   */
-  public AvailableRegionListAllRequestParameters(Collection<NumberType> types) {
+  private AvailableRegionListAllRequestParameters(OptionalValue<Collection<NumberType>> types) {
     this.types = types;
   }
 
-  public Optional<Collection<NumberType>> getTypes() {
-    return Optional.ofNullable(types);
+  public OptionalValue<Collection<NumberType>> getTypes() {
+    return types;
   }
 
   public static Builder builder() {
@@ -31,12 +28,16 @@ public class AvailableRegionListAllRequestParameters {
   }
 
   public static class Builder {
-    Collection<NumberType> types;
+    OptionalValue<Collection<NumberType>> types = OptionalValue.empty();
 
     private Builder() {}
 
+    /**
+     * @param types Only return regions for which numbers are provided with the given types
+     * @return current builder
+     */
     public Builder setTypes(Collection<NumberType> types) {
-      this.types = types;
+      this.types = OptionalValue.of(types);
       return this;
     }
 

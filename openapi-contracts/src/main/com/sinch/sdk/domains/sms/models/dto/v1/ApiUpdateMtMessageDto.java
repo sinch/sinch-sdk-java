@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.sms.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -31,36 +33,46 @@ import java.util.Objects;
   ApiUpdateMtMessageDto.JSON_PROPERTY_EXPIRE_AT,
   ApiUpdateMtMessageDto.JSON_PROPERTY_CALLBACK_URL
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ApiUpdateMtMessageDto {
   public static final String JSON_PROPERTY_FROM = "from";
   private String from;
+  private boolean fromDefined = false;
 
   public static final String JSON_PROPERTY_TYPE = "type";
   private String type;
+  private boolean typeDefined = false;
 
   public static final String JSON_PROPERTY_TO_ADD = "to_add";
   private List<String> toAdd;
+  private boolean toAddDefined = false;
 
   public static final String JSON_PROPERTY_TO_REMOVE = "to_remove";
   private List<String> toRemove;
+  private boolean toRemoveDefined = false;
 
   public static final String JSON_PROPERTY_DELIVERY_REPORT = "delivery_report";
   private String deliveryReport;
+  private boolean deliveryReportDefined = false;
 
   public static final String JSON_PROPERTY_SEND_AT = "send_at";
   private OffsetDateTime sendAt;
+  private boolean sendAtDefined = false;
 
   public static final String JSON_PROPERTY_EXPIRE_AT = "expire_at";
   private OffsetDateTime expireAt;
+  private boolean expireAtDefined = false;
 
   public static final String JSON_PROPERTY_CALLBACK_URL = "callback_url";
   private String callbackUrl;
+  private boolean callbackUrlDefined = false;
 
   public ApiUpdateMtMessageDto() {}
 
   public ApiUpdateMtMessageDto from(String from) {
     this.from = from;
+    this.fromDefined = true;
     return this;
   }
 
@@ -75,14 +87,21 @@ public class ApiUpdateMtMessageDto {
     return from;
   }
 
+  @JsonIgnore
+  public boolean getFromDefined() {
+    return fromDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_FROM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFrom(String from) {
     this.from = from;
+    this.fromDefined = true;
   }
 
   public ApiUpdateMtMessageDto type(String type) {
     this.type = type;
+    this.typeDefined = true;
     return this;
   }
 
@@ -97,14 +116,21 @@ public class ApiUpdateMtMessageDto {
     return type;
   }
 
+  @JsonIgnore
+  public boolean getTypeDefined() {
+    return typeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TYPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setType(String type) {
     this.type = type;
+    this.typeDefined = true;
   }
 
   public ApiUpdateMtMessageDto toAdd(List<String> toAdd) {
     this.toAdd = toAdd;
+    this.toAddDefined = true;
     return this;
   }
 
@@ -112,6 +138,7 @@ public class ApiUpdateMtMessageDto {
     if (this.toAdd == null) {
       this.toAdd = new ArrayList<>();
     }
+    this.toAddDefined = true;
     this.toAdd.add(toAddItem);
     return this;
   }
@@ -127,14 +154,21 @@ public class ApiUpdateMtMessageDto {
     return toAdd;
   }
 
+  @JsonIgnore
+  public boolean getToAddDefined() {
+    return toAddDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TO_ADD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setToAdd(List<String> toAdd) {
     this.toAdd = toAdd;
+    this.toAddDefined = true;
   }
 
   public ApiUpdateMtMessageDto toRemove(List<String> toRemove) {
     this.toRemove = toRemove;
+    this.toRemoveDefined = true;
     return this;
   }
 
@@ -142,6 +176,7 @@ public class ApiUpdateMtMessageDto {
     if (this.toRemove == null) {
       this.toRemove = new ArrayList<>();
     }
+    this.toRemoveDefined = true;
     this.toRemove.add(toRemoveItem);
     return this;
   }
@@ -157,14 +192,21 @@ public class ApiUpdateMtMessageDto {
     return toRemove;
   }
 
+  @JsonIgnore
+  public boolean getToRemoveDefined() {
+    return toRemoveDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TO_REMOVE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setToRemove(List<String> toRemove) {
     this.toRemove = toRemove;
+    this.toRemoveDefined = true;
   }
 
   public ApiUpdateMtMessageDto deliveryReport(String deliveryReport) {
     this.deliveryReport = deliveryReport;
+    this.deliveryReportDefined = true;
     return this;
   }
 
@@ -180,14 +222,21 @@ public class ApiUpdateMtMessageDto {
     return deliveryReport;
   }
 
+  @JsonIgnore
+  public boolean getDeliveryReportDefined() {
+    return deliveryReportDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DELIVERY_REPORT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDeliveryReport(String deliveryReport) {
     this.deliveryReport = deliveryReport;
+    this.deliveryReportDefined = true;
   }
 
   public ApiUpdateMtMessageDto sendAt(OffsetDateTime sendAt) {
     this.sendAt = sendAt;
+    this.sendAtDefined = true;
     return this;
   }
 
@@ -205,14 +254,21 @@ public class ApiUpdateMtMessageDto {
     return sendAt;
   }
 
+  @JsonIgnore
+  public boolean getSendAtDefined() {
+    return sendAtDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SEND_AT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSendAt(OffsetDateTime sendAt) {
     this.sendAt = sendAt;
+    this.sendAtDefined = true;
   }
 
   public ApiUpdateMtMessageDto expireAt(OffsetDateTime expireAt) {
     this.expireAt = expireAt;
+    this.expireAtDefined = true;
     return this;
   }
 
@@ -228,14 +284,21 @@ public class ApiUpdateMtMessageDto {
     return expireAt;
   }
 
+  @JsonIgnore
+  public boolean getExpireAtDefined() {
+    return expireAtDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_EXPIRE_AT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setExpireAt(OffsetDateTime expireAt) {
     this.expireAt = expireAt;
+    this.expireAtDefined = true;
   }
 
   public ApiUpdateMtMessageDto callbackUrl(String callbackUrl) {
     this.callbackUrl = callbackUrl;
+    this.callbackUrlDefined = true;
     return this;
   }
 
@@ -250,10 +313,16 @@ public class ApiUpdateMtMessageDto {
     return callbackUrl;
   }
 
+  @JsonIgnore
+  public boolean getCallbackUrlDefined() {
+    return callbackUrlDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCallbackUrl(String callbackUrl) {
     this.callbackUrl = callbackUrl;
+    this.callbackUrlDefined = true;
   }
 
   /** Return true if this ApiUpdateMtMessage object is equal to o. */

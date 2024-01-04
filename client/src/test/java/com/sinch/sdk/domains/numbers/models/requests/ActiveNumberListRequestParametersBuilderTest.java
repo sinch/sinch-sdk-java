@@ -6,19 +6,20 @@ import java.util.Collection;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class ActiveNumberListRequestParametersBuilderTest {
+public class ActiveNumberListRequestParametersBuilderTest {
 
-  final String regionCode = "foo region";
-  final NumberType type = NumberType.MOBILE;
-  final NumberPattern numberPattern =
+  static final String regionCode = "foo region";
+  static final NumberType type = NumberType.MOBILE;
+  static final NumberPattern numberPattern =
       NumberPattern.builder().setPattern("a pattern").setSearchPattern(SearchPattern.END).build();
-  final Collection<Capability> capabilities = Arrays.asList(Capability.VOICE, Capability.SMS);
-  final Integer pageSize = 45;
+  static final Collection<Capability> capabilities =
+      Arrays.asList(Capability.VOICE, Capability.SMS);
+  static final Integer pageSize = 45;
 
-  final String pageToken = "page token";
+  static final String pageToken = "page token";
 
-  final OrderBy orderBy = OrderBy.PHONE_NUMBER;
-  final ActiveNumberListRequestParameters value =
+  static final OrderBy orderBy = OrderBy.PHONE_NUMBER;
+  public static final ActiveNumberListRequestParameters value =
       ActiveNumberListRequestParameters.builder()
           .setRegionCode(regionCode)
           .setType(type)
@@ -31,12 +32,12 @@ class ActiveNumberListRequestParametersBuilderTest {
 
   @Test
   void getRegionCode() {
-    Assertions.assertThat(value.getRegionCode()).isEqualTo(regionCode);
+    Assertions.assertThat(value.getRegionCode().get()).isEqualTo(regionCode);
   }
 
   @Test
   void getType() {
-    Assertions.assertThat(value.getType()).usingRecursiveComparison().isEqualTo(type);
+    Assertions.assertThat(value.getType().get()).usingRecursiveComparison().isEqualTo(type);
   }
 
   @Test

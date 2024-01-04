@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -19,15 +21,18 @@ import java.util.Objects;
 
 /** FlashcallVerificationReportRequestDto */
 @JsonPropertyOrder({FlashcallVerificationReportRequestDto.JSON_PROPERTY_CLI})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class FlashcallVerificationReportRequestDto {
   public static final String JSON_PROPERTY_CLI = "cli";
   private String cli;
+  private boolean cliDefined = false;
 
   public FlashcallVerificationReportRequestDto() {}
 
   public FlashcallVerificationReportRequestDto cli(String cli) {
     this.cli = cli;
+    this.cliDefined = true;
     return this;
   }
 
@@ -42,10 +47,16 @@ public class FlashcallVerificationReportRequestDto {
     return cli;
   }
 
+  @JsonIgnore
+  public boolean getCliDefined() {
+    return cliDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CLI)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCli(String cli) {
     this.cli = cli;
+    this.cliDefined = true;
   }
 
   /** Return true if this FlashcallVerificationReportRequest object is equal to o. */

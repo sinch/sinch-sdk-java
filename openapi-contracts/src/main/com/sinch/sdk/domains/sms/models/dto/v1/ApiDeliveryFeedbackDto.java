@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.sms.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -21,15 +23,18 @@ import java.util.Objects;
 
 /** ApiDeliveryFeedbackDto */
 @JsonPropertyOrder({ApiDeliveryFeedbackDto.JSON_PROPERTY_RECIPIENTS})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ApiDeliveryFeedbackDto {
   public static final String JSON_PROPERTY_RECIPIENTS = "recipients";
-  private List<String> recipients = new ArrayList<>();
+  private List<String> recipients;
+  private boolean recipientsDefined = false;
 
   public ApiDeliveryFeedbackDto() {}
 
   public ApiDeliveryFeedbackDto recipients(List<String> recipients) {
     this.recipients = recipients;
+    this.recipientsDefined = true;
     return this;
   }
 
@@ -37,6 +42,7 @@ public class ApiDeliveryFeedbackDto {
     if (this.recipients == null) {
       this.recipients = new ArrayList<>();
     }
+    this.recipientsDefined = true;
     this.recipients.add(recipientsItem);
     return this;
   }
@@ -54,10 +60,16 @@ public class ApiDeliveryFeedbackDto {
     return recipients;
   }
 
+  @JsonIgnore
+  public boolean getRecipientsDefined() {
+    return recipientsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_RECIPIENTS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setRecipients(List<String> recipients) {
     this.recipients = recipients;
+    this.recipientsDefined = true;
   }
 
   /** Return true if this ApiDeliveryFeedback object is equal to o. */

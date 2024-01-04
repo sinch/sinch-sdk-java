@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class AvailableNumberApi {
 
   private static final Logger LOGGER = Logger.getLogger(AvailableNumberApi.class.getName());
@@ -77,7 +76,8 @@ public class AvailableNumberApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[numberServiceGetAvailableNumber] "
+        "[numberServiceGetAvailableNumber]"
+            + " "
             + "projectId: "
             + projectId
             + ", "
@@ -185,7 +185,8 @@ public class AvailableNumberApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[numberServiceListAvailableNumbers] "
+        "[numberServiceListAvailableNumbers]"
+            + " "
             + "projectId: "
             + projectId
             + ", "
@@ -344,7 +345,8 @@ public class AvailableNumberApi {
       String projectId, RentAnyNumberRequestDto rentAnyNumberRequestDto) throws ApiException {
 
     LOGGER.finest(
-        "[numberServiceRentAnyNumber] "
+        "[numberServiceRentAnyNumber]"
+            + " "
             + "projectId: "
             + projectId
             + ", "
@@ -434,7 +436,8 @@ public class AvailableNumberApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[numberServiceRentNumber] "
+        "[numberServiceRentNumber]"
+            + " "
             + "projectId: "
             + projectId
             + ", "

@@ -1,7 +1,7 @@
 package com.sinch.sdk.domains.sms.models.requests;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Collection;
-import java.util.Optional;
 
 /**
  * Parameters request to replace a group
@@ -12,25 +12,21 @@ import java.util.Optional;
  */
 public class GroupReplaceRequestParameters {
 
-  private final String name;
-  private final Collection<String> members;
+  private final OptionalValue<String> name;
+  private final OptionalValue<Collection<String>> members;
 
-  /**
-   * @param name Name of the group
-   * @param members The initial members of the group.
-   *     <p>Constraints: Elements must be phone numbers in E.164 format MSISDNs.
-   */
-  public GroupReplaceRequestParameters(String name, Collection<String> members) {
+  private GroupReplaceRequestParameters(
+      OptionalValue<String> name, OptionalValue<Collection<String>> members) {
     this.name = name;
     this.members = members;
   }
 
-  public Optional<String> getName() {
-    return Optional.ofNullable(name);
+  public OptionalValue<String> getName() {
+    return name;
   }
 
-  public Optional<Collection<String>> getMembers() {
-    return Optional.ofNullable(members);
+  public OptionalValue<Collection<String>> getMembers() {
+    return members;
   }
 
   @Override
@@ -48,23 +44,32 @@ public class GroupReplaceRequestParameters {
 
   public static class Builder {
 
-    String name;
-    Collection<String> members;
+    OptionalValue<String> name = OptionalValue.empty();
+    OptionalValue<Collection<String>> members = OptionalValue.empty();
 
     private Builder() {}
 
     private Builder(GroupReplaceRequestParameters parameters) {
-      this.name = parameters.getName().orElse(null);
-      this.members = parameters.getMembers().orElse(null);
+      this.name = parameters.getName();
+      this.members = parameters.getMembers();
     }
 
+    /**
+     * @param name Name of the group
+     * @return current builder
+     */
     public Builder setName(String name) {
-      this.name = name;
+      this.name = OptionalValue.of(name);
       return this;
     }
 
+    /**
+     * @param members The initial members of the group.
+     *     <p>Constraints: Elements must be phone numbers in E.164 format MSISDNs.
+     * @return current builder
+     */
     public Builder setMembers(Collection<String> members) {
-      this.members = members;
+      this.members = OptionalValue.of(members);
       return this;
     }
 

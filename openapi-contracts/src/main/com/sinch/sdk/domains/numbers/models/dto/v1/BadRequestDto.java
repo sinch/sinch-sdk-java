@@ -13,6 +13,8 @@
 package com.sinch.sdk.domains.numbers.models.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -23,7 +25,8 @@ import java.util.Objects;
 
 /** BadRequestDto */
 @JsonPropertyOrder({BadRequestDto.JSON_PROPERTY_TYPE, BadRequestDto.JSON_PROPERTY_FIELD_VIOLATIONS})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class BadRequestDto {
   /** Gets or Sets type */
   public enum TypeEnum {
@@ -60,14 +63,17 @@ public class BadRequestDto {
 
   public static final String JSON_PROPERTY_TYPE = "type";
   private String type;
+  private boolean typeDefined = false;
 
   public static final String JSON_PROPERTY_FIELD_VIOLATIONS = "fieldViolations";
   private List<FieldViolationDto> fieldViolations;
+  private boolean fieldViolationsDefined = false;
 
   public BadRequestDto() {}
 
   public BadRequestDto type(String type) {
     this.type = type;
+    this.typeDefined = true;
     return this;
   }
 
@@ -82,14 +88,21 @@ public class BadRequestDto {
     return type;
   }
 
+  @JsonIgnore
+  public boolean getTypeDefined() {
+    return typeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TYPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setType(String type) {
     this.type = type;
+    this.typeDefined = true;
   }
 
   public BadRequestDto fieldViolations(List<FieldViolationDto> fieldViolations) {
     this.fieldViolations = fieldViolations;
+    this.fieldViolationsDefined = true;
     return this;
   }
 
@@ -97,6 +110,7 @@ public class BadRequestDto {
     if (this.fieldViolations == null) {
       this.fieldViolations = new ArrayList<>();
     }
+    this.fieldViolationsDefined = true;
     this.fieldViolations.add(fieldViolationsItem);
     return this;
   }
@@ -112,10 +126,16 @@ public class BadRequestDto {
     return fieldViolations;
   }
 
+  @JsonIgnore
+  public boolean getFieldViolationsDefined() {
+    return fieldViolationsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_FIELD_VIOLATIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFieldViolations(List<FieldViolationDto> fieldViolations) {
     this.fieldViolations = fieldViolations;
+    this.fieldViolationsDefined = true;
   }
 
   /** Return true if this BadRequest object is equal to o. */

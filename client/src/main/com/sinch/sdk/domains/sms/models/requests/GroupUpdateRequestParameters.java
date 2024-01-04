@@ -1,11 +1,10 @@
 package com.sinch.sdk.domains.sms.models.requests;
 
-import com.sinch.sdk.domains.sms.models.GroupAutoUpdate;
+import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Collection;
-import java.util.Optional;
 
 /**
- * Parameters request to updat" a group
+ * Parameters request to update" a group
  *
  * @see <a
  *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Groups/#tag/Groups/operation/UpdateGroup">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Groups/#tag/Groups/operation/UpdateGroup</a>
@@ -13,20 +12,20 @@ import java.util.Optional;
  */
 public class GroupUpdateRequestParameters {
 
-  private final String name;
-  private final Collection<String> add;
-  private final Collection<String> remove;
-  private final String addFromGroup;
-  private final String removeFromGroup;
-  private final GroupAutoUpdate autoUpdate;
+  private final OptionalValue<String> name;
+  private final OptionalValue<Collection<String>> add;
+  private final OptionalValue<Collection<String>> remove;
+  private final OptionalValue<String> addFromGroup;
+  private final OptionalValue<String> removeFromGroup;
+  private final OptionalValue<GroupAutoUpdateRequestParameters> autoUpdate;
 
-  public GroupUpdateRequestParameters(
-      String name,
-      Collection<String> add,
-      Collection<String> remove,
-      String addFromGroup,
-      String removeFromGroup,
-      GroupAutoUpdate autoUpdate) {
+  private GroupUpdateRequestParameters(
+      OptionalValue<String> name,
+      OptionalValue<Collection<String>> add,
+      OptionalValue<Collection<String>> remove,
+      OptionalValue<String> addFromGroup,
+      OptionalValue<String> removeFromGroup,
+      OptionalValue<GroupAutoUpdateRequestParameters> autoUpdate) {
     this.name = name;
     this.add = add;
     this.remove = remove;
@@ -35,28 +34,28 @@ public class GroupUpdateRequestParameters {
     this.autoUpdate = autoUpdate;
   }
 
-  public Optional<String> getName() {
-    return Optional.ofNullable(name);
+  public OptionalValue<String> getName() {
+    return name;
   }
 
-  public Optional<Collection<String>> getAdd() {
-    return Optional.ofNullable(add);
+  public OptionalValue<Collection<String>> getAdd() {
+    return add;
   }
 
-  public Optional<Collection<String>> getRemove() {
-    return Optional.ofNullable(remove);
+  public OptionalValue<Collection<String>> getRemove() {
+    return remove;
   }
 
-  public Optional<String> getAddFromGroup() {
-    return Optional.ofNullable(addFromGroup);
+  public OptionalValue<String> getAddFromGroup() {
+    return addFromGroup;
   }
 
-  public Optional<String> getRemoveFromGroup() {
-    return Optional.ofNullable(removeFromGroup);
+  public OptionalValue<String> getRemoveFromGroup() {
+    return removeFromGroup;
   }
 
-  public Optional<GroupAutoUpdate> getAutoUpdate() {
-    return Optional.ofNullable(autoUpdate);
+  public OptionalValue<GroupAutoUpdateRequestParameters> getAutoUpdate() {
+    return autoUpdate;
   }
 
   @Override
@@ -90,61 +89,85 @@ public class GroupUpdateRequestParameters {
 
   public static class Builder {
 
-    String name;
+    OptionalValue<String> name = OptionalValue.empty();
 
-    Collection<String> add;
+    OptionalValue<Collection<String>> add = OptionalValue.empty();
 
-    Collection<String> remove;
+    OptionalValue<Collection<String>> remove = OptionalValue.empty();
 
-    String addFromGroup;
+    OptionalValue<String> addFromGroup = OptionalValue.empty();
 
-    String removeFromGroup;
+    OptionalValue<String> removeFromGroup = OptionalValue.empty();
 
-    GroupAutoUpdate autoUpdate;
+    OptionalValue<GroupAutoUpdateRequestParameters> autoUpdate = OptionalValue.empty();
 
     private Builder() {}
 
     private Builder(GroupUpdateRequestParameters parameters) {
-      this.name = parameters.getName().orElse(null);
-
-      this.add = parameters.getAdd().orElse(null);
-
-      this.remove = parameters.getRemove().orElse(null);
-
-      this.addFromGroup = parameters.getAddFromGroup().orElse(null);
-
-      this.removeFromGroup = parameters.getRemoveFromGroup().orElse(null);
-
-      this.autoUpdate = parameters.getAutoUpdate().orElse(null);
+      this.name = parameters.getName();
+      this.add = parameters.getAdd();
+      this.remove = parameters.getRemove();
+      this.addFromGroup = parameters.getAddFromGroup();
+      this.removeFromGroup = parameters.getRemoveFromGroup();
+      this.autoUpdate = parameters.getAutoUpdate();
     }
 
+    /**
+     * @param name The name of the group. Omitting name from the JSON body will leave the name
+     *     unchanged. To remove an existing name set, name explicitly to the JSON value null.
+     * @return current builder
+     */
     public Builder setName(String name) {
-      this.name = name;
+      this.name = OptionalValue.of(name);
       return this;
     }
 
+    /**
+     * @param add Add a list of phone numbers (MSISDNs) to this group. The phone numbers are a
+     *     strings within an array and must be in E.164 format.
+     * @return current builder
+     */
     public Builder setAdd(Collection<String> add) {
-      this.add = add;
+      this.add = OptionalValue.of(add);
       return this;
     }
 
+    /**
+     * @param remove Remove a list of phone numbers (MSISDNs) to this group.The phone numbers are a
+     *     strings within an array and must be in E.164 format.
+     * @return current builder
+     */
     public Builder setRemove(Collection<String> remove) {
-      this.remove = remove;
+      this.remove = OptionalValue.of(remove);
       return this;
     }
 
+    /**
+     * @param addFromGroup Copy the members from the another group into this group. Constraints:
+     *     Must be valid group ID
+     * @return current builder
+     */
     public Builder setAddFromGroup(String addFromGroup) {
-      this.addFromGroup = addFromGroup;
+      this.addFromGroup = OptionalValue.of(addFromGroup);
       return this;
     }
 
+    /**
+     * @param removeFromGroup Remove the members in a specified group from this group.
+     *     <p>Constraints: Must be valid group ID
+     * @return current builder
+     */
     public Builder setRemoveFromGroup(String removeFromGroup) {
-      this.removeFromGroup = removeFromGroup;
+      this.removeFromGroup = OptionalValue.of(removeFromGroup);
       return this;
     }
 
-    public Builder setAutoUpdate(GroupAutoUpdate autoUpdate) {
-      this.autoUpdate = autoUpdate;
+    /**
+     * @param autoUpdate auto update settings
+     * @return current builder
+     */
+    public Builder setAutoUpdate(GroupAutoUpdateRequestParameters autoUpdate) {
+      this.autoUpdate = OptionalValue.of(autoUpdate);
       return this;
     }
 

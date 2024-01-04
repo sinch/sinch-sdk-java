@@ -1,10 +1,10 @@
 package com.sinch.sdk.domains.numbers.models.requests;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.numbers.models.Capability;
 import com.sinch.sdk.domains.numbers.models.NumberPattern;
 import com.sinch.sdk.domains.numbers.models.NumberType;
 import java.util.Collection;
-import java.util.Optional;
 
 /**
  * Parameters request to list available numbers for a project
@@ -14,26 +14,18 @@ import java.util.Optional;
  * @since 1.0
  */
 public class AvailableNumberListAllRequestParameters {
-  private final String regionCode;
-  private final NumberType type;
-  private final NumberPattern numberPattern;
-  private final Collection<Capability> capabilities;
-  private final Integer size;
+  private final OptionalValue<String> regionCode;
+  private final OptionalValue<NumberType> type;
+  private final OptionalValue<NumberPattern> numberPattern;
+  private final OptionalValue<Collection<Capability>> capabilities;
+  private final OptionalValue<Integer> size;
 
-  /**
-   * @param regionCode Region code to filter by. ISO 3166-1 alpha-2 country code of the phone
-   *     number. Example: US, GB or SE.
-   * @param type Number type to filter by
-   * @param numberPattern Search pattern
-   * @param capabilities Capabilities to filter by
-   * @param size Optional. The maximum number of items to return.
-   */
-  public AvailableNumberListAllRequestParameters(
-      String regionCode,
-      NumberType type,
-      NumberPattern numberPattern,
-      Collection<Capability> capabilities,
-      Integer size) {
+  private AvailableNumberListAllRequestParameters(
+      OptionalValue<String> regionCode,
+      OptionalValue<NumberType> type,
+      OptionalValue<NumberPattern> numberPattern,
+      OptionalValue<Collection<Capability>> capabilities,
+      OptionalValue<Integer> size) {
     this.regionCode = regionCode;
     this.type = type;
     this.numberPattern = numberPattern;
@@ -41,24 +33,24 @@ public class AvailableNumberListAllRequestParameters {
     this.size = size;
   }
 
-  public String getRegionCode() {
+  public OptionalValue<String> getRegionCode() {
     return regionCode;
   }
 
-  public NumberType getType() {
+  public OptionalValue<NumberType> getType() {
     return type;
   }
 
-  public Optional<NumberPattern> getNumberPattern() {
-    return Optional.ofNullable(numberPattern);
+  public OptionalValue<NumberPattern> getNumberPattern() {
+    return numberPattern;
   }
 
-  public Optional<Collection<Capability>> getCapabilities() {
-    return Optional.ofNullable(capabilities);
+  public OptionalValue<Collection<Capability>> getCapabilities() {
+    return capabilities;
   }
 
-  public Optional<Integer> getSize() {
-    return Optional.ofNullable(size);
+  public OptionalValue<Integer> getSize() {
+    return size;
   }
 
   public static Builder builder() {
@@ -66,36 +58,55 @@ public class AvailableNumberListAllRequestParameters {
   }
 
   public static class Builder {
-    String regionCode;
-    NumberType type;
-    NumberPattern numberPattern;
-    Collection<Capability> capabilities;
-    Integer size;
+    OptionalValue<String> regionCode = OptionalValue.empty();
+    OptionalValue<NumberType> type = OptionalValue.empty();
+    OptionalValue<NumberPattern> numberPattern = OptionalValue.empty();
+    OptionalValue<Collection<Capability>> capabilities = OptionalValue.empty();
+    OptionalValue<Integer> size = OptionalValue.empty();
 
     private Builder() {}
 
+    /**
+     * @param regionCode Region code to filter by. ISO 3166-1 alpha-2 country code of the phone
+     *     number. Example: US, GB or SE.
+     * @return current builder
+     */
     public Builder setRegionCode(String regionCode) {
-      this.regionCode = regionCode;
+      this.regionCode = OptionalValue.of(regionCode);
       return this;
     }
 
+    /**
+     * @param type Number type to filter by
+     * @return current builder
+     */
     public Builder setType(NumberType type) {
-      this.type = type;
+      this.type = OptionalValue.of(type);
       return this;
     }
 
+    /**
+     * @return current builder
+     */
     public Builder setNumberPattern(NumberPattern numberPattern) {
-      this.numberPattern = numberPattern;
+      this.numberPattern = OptionalValue.of(numberPattern);
       return this;
     }
 
+    /**
+     * @return current builder
+     */
     public Builder setCapabilities(Collection<Capability> capabilities) {
-      this.capabilities = capabilities;
+      this.capabilities = OptionalValue.of(capabilities);
       return this;
     }
 
+    /**
+     * @param size Optional. The maximum number of items to return.
+     * @return current builder
+     */
     public Builder setSize(Integer size) {
-      this.size = size;
+      this.size = OptionalValue.of(size);
       return this;
     }
 

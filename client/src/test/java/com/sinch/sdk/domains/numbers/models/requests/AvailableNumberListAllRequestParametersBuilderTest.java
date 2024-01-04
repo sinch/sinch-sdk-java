@@ -29,12 +29,12 @@ class AvailableNumberListAllRequestParametersBuilderTest {
 
   @Test
   void getRegionCode() {
-    Assertions.assertThat(value.getRegionCode()).isEqualTo(regionCode);
+    Assertions.assertThat(value.getRegionCode().get()).isEqualTo(regionCode);
   }
 
   @Test
   void getType() {
-    Assertions.assertThat(value.getType()).usingRecursiveComparison().isEqualTo(type);
+    Assertions.assertThat(value.getType().get()).usingRecursiveComparison().isEqualTo(type);
   }
 
   @Test

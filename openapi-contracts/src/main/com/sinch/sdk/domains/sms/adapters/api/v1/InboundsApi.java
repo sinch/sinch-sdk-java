@@ -35,7 +35,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class InboundsApi {
 
   private static final Logger LOGGER = Logger.getLogger(InboundsApi.class.getName());
@@ -95,7 +94,8 @@ public class InboundsApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[listInboundMessages] "
+        "[listInboundMessages]"
+            + " "
             + "servicePlanId: "
             + servicePlanId
             + ", "
@@ -226,7 +226,8 @@ public class InboundsApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[retrieveInboundMessage] "
+        "[retrieveInboundMessage]"
+            + " "
             + "servicePlanId: "
             + servicePlanId
             + ", "

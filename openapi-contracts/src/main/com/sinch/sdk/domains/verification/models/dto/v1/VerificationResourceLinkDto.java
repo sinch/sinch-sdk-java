@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -23,21 +25,26 @@ import java.util.Objects;
   VerificationResourceLinkDto.JSON_PROPERTY_HREF,
   VerificationResourceLinkDto.JSON_PROPERTY_METHOD
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class VerificationResourceLinkDto {
   public static final String JSON_PROPERTY_REL = "rel";
   private String rel;
+  private boolean relDefined = false;
 
   public static final String JSON_PROPERTY_HREF = "href";
   private String href;
+  private boolean hrefDefined = false;
 
   public static final String JSON_PROPERTY_METHOD = "method";
   private String method;
+  private boolean methodDefined = false;
 
   public VerificationResourceLinkDto() {}
 
   public VerificationResourceLinkDto rel(String rel) {
     this.rel = rel;
+    this.relDefined = true;
     return this;
   }
 
@@ -52,14 +59,21 @@ public class VerificationResourceLinkDto {
     return rel;
   }
 
+  @JsonIgnore
+  public boolean getRelDefined() {
+    return relDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_REL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRel(String rel) {
     this.rel = rel;
+    this.relDefined = true;
   }
 
   public VerificationResourceLinkDto href(String href) {
     this.href = href;
+    this.hrefDefined = true;
     return this;
   }
 
@@ -74,14 +88,21 @@ public class VerificationResourceLinkDto {
     return href;
   }
 
+  @JsonIgnore
+  public boolean getHrefDefined() {
+    return hrefDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_HREF)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setHref(String href) {
     this.href = href;
+    this.hrefDefined = true;
   }
 
   public VerificationResourceLinkDto method(String method) {
     this.method = method;
+    this.methodDefined = true;
     return this;
   }
 
@@ -96,10 +117,16 @@ public class VerificationResourceLinkDto {
     return method;
   }
 
+  @JsonIgnore
+  public boolean getMethodDefined() {
+    return methodDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_METHOD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMethod(String method) {
     this.method = method;
+    this.methodDefined = true;
   }
 
   /** Return true if this VerificationResourceLink object is equal to o. */

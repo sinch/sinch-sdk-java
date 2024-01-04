@@ -14,6 +14,8 @@ package com.sinch.sdk.domains.sms.models.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -29,11 +31,13 @@ import java.util.Objects;
 @JsonPropertyOrder({
   ParameterObjDto.JSON_PROPERTY_LEFT_CURLY_BRACKET_PARAMETER_KEY_RIGHT_CURLY_BRACKET
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ParameterObjDto extends HashMap<String, Object> {
   public static final String JSON_PROPERTY_LEFT_CURLY_BRACKET_PARAMETER_KEY_RIGHT_CURLY_BRACKET =
       "{parameter_key}";
   private ParameterObjParameterKeyDto leftCurlyBracketParameterKeyRightCurlyBracket;
+  private boolean leftCurlyBracketParameterKeyRightCurlyBracketDefined = false;
 
   public ParameterObjDto() {}
 
@@ -41,6 +45,7 @@ public class ParameterObjDto extends HashMap<String, Object> {
       ParameterObjParameterKeyDto leftCurlyBracketParameterKeyRightCurlyBracket) {
     this.leftCurlyBracketParameterKeyRightCurlyBracket =
         leftCurlyBracketParameterKeyRightCurlyBracket;
+    this.leftCurlyBracketParameterKeyRightCurlyBracketDefined = true;
     return this;
   }
 
@@ -55,12 +60,18 @@ public class ParameterObjDto extends HashMap<String, Object> {
     return leftCurlyBracketParameterKeyRightCurlyBracket;
   }
 
+  @JsonIgnore
+  public boolean getLeftCurlyBracketParameterKeyRightCurlyBracketDefined() {
+    return leftCurlyBracketParameterKeyRightCurlyBracketDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_LEFT_CURLY_BRACKET_PARAMETER_KEY_RIGHT_CURLY_BRACKET)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setLeftCurlyBracketParameterKeyRightCurlyBracket(
       ParameterObjParameterKeyDto leftCurlyBracketParameterKeyRightCurlyBracket) {
     this.leftCurlyBracketParameterKeyRightCurlyBracket =
         leftCurlyBracketParameterKeyRightCurlyBracket;
+    this.leftCurlyBracketParameterKeyRightCurlyBracketDefined = true;
   }
 
   /**

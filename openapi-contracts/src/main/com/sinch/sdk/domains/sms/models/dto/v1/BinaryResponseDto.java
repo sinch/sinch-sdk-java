@@ -13,6 +13,8 @@
 package com.sinch.sdk.domains.sms.models.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -45,25 +47,32 @@ import java.util.Objects;
   BinaryResponseDto.JSON_PROPERTY_FROM_TON,
   BinaryResponseDto.JSON_PROPERTY_FROM_NPI
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class BinaryResponseDto {
   public static final String JSON_PROPERTY_ID = "id";
   private String id;
+  private boolean idDefined = false;
 
   public static final String JSON_PROPERTY_TO = "to";
   private List<String> to;
+  private boolean toDefined = false;
 
   public static final String JSON_PROPERTY_FROM = "from";
   private String from;
+  private boolean fromDefined = false;
 
   public static final String JSON_PROPERTY_CANCELED = "canceled";
-  private Boolean canceled = false;
+  private Boolean canceled;
+  private boolean canceledDefined = false;
 
   public static final String JSON_PROPERTY_BODY = "body";
   private String body;
+  private boolean bodyDefined = false;
 
   public static final String JSON_PROPERTY_UDH = "udh";
   private String udh;
+  private boolean udhDefined = false;
 
   /**
    * SMS in &lt;a
@@ -104,46 +113,60 @@ public class BinaryResponseDto {
 
   public static final String JSON_PROPERTY_TYPE = "type";
   private String type;
+  private boolean typeDefined = false;
 
   public static final String JSON_PROPERTY_CREATED_AT = "created_at";
   private OffsetDateTime createdAt;
+  private boolean createdAtDefined = false;
 
   public static final String JSON_PROPERTY_MODIFIED_AT = "modified_at";
   private OffsetDateTime modifiedAt;
+  private boolean modifiedAtDefined = false;
 
   public static final String JSON_PROPERTY_DELIVERY_REPORT = "delivery_report";
-  private String deliveryReport = "none";
+  private String deliveryReport;
+  private boolean deliveryReportDefined = false;
 
   public static final String JSON_PROPERTY_SEND_AT = "send_at";
   private OffsetDateTime sendAt;
+  private boolean sendAtDefined = false;
 
   public static final String JSON_PROPERTY_EXPIRE_AT = "expire_at";
   private OffsetDateTime expireAt;
+  private boolean expireAtDefined = false;
 
   public static final String JSON_PROPERTY_CALLBACK_URL = "callback_url";
   private String callbackUrl;
+  private boolean callbackUrlDefined = false;
 
   public static final String JSON_PROPERTY_CLIENT_REFERENCE = "client_reference";
   private String clientReference;
+  private boolean clientReferenceDefined = false;
 
   public static final String JSON_PROPERTY_FEEDBACK_ENABLED = "feedback_enabled";
-  private Boolean feedbackEnabled = false;
+  private Boolean feedbackEnabled;
+  private boolean feedbackEnabledDefined = false;
 
   public static final String JSON_PROPERTY_FLASH_MESSAGE = "flash_message";
-  private Boolean flashMessage = false;
+  private Boolean flashMessage;
+  private boolean flashMessageDefined = false;
 
   public static final String JSON_PROPERTY_TRUNCATE_CONCAT = "truncate_concat";
   private Boolean truncateConcat;
+  private boolean truncateConcatDefined = false;
 
   public static final String JSON_PROPERTY_MAX_NUMBER_OF_MESSAGE_PARTS =
       "max_number_of_message_parts";
   private Integer maxNumberOfMessageParts;
+  private boolean maxNumberOfMessagePartsDefined = false;
 
   public static final String JSON_PROPERTY_FROM_TON = "from_ton";
   private Integer fromTon;
+  private boolean fromTonDefined = false;
 
   public static final String JSON_PROPERTY_FROM_NPI = "from_npi";
   private Integer fromNpi;
+  private boolean fromNpiDefined = false;
 
   public BinaryResponseDto() {}
 
@@ -155,9 +178,13 @@ public class BinaryResponseDto {
       @JsonProperty(JSON_PROPERTY_MODIFIED_AT) OffsetDateTime modifiedAt) {
     this();
     this.id = id;
+    this.idDefined = true;
     this.canceled = canceled;
+    this.canceledDefined = true;
     this.createdAt = createdAt;
+    this.createdAtDefined = true;
     this.modifiedAt = modifiedAt;
+    this.modifiedAtDefined = true;
   }
 
   /**
@@ -171,8 +198,14 @@ public class BinaryResponseDto {
     return id;
   }
 
+  @JsonIgnore
+  public boolean getIdDefined() {
+    return idDefined;
+  }
+
   public BinaryResponseDto to(List<String> to) {
     this.to = to;
+    this.toDefined = true;
     return this;
   }
 
@@ -180,6 +213,7 @@ public class BinaryResponseDto {
     if (this.to == null) {
       this.to = new ArrayList<>();
     }
+    this.toDefined = true;
     this.to.add(toItem);
     return this;
   }
@@ -196,14 +230,21 @@ public class BinaryResponseDto {
     return to;
   }
 
+  @JsonIgnore
+  public boolean getToDefined() {
+    return toDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TO)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTo(List<String> to) {
     this.to = to;
+    this.toDefined = true;
   }
 
   public BinaryResponseDto from(String from) {
     this.from = from;
+    this.fromDefined = true;
     return this;
   }
 
@@ -218,10 +259,16 @@ public class BinaryResponseDto {
     return from;
   }
 
+  @JsonIgnore
+  public boolean getFromDefined() {
+    return fromDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_FROM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFrom(String from) {
     this.from = from;
+    this.fromDefined = true;
   }
 
   /**
@@ -235,8 +282,14 @@ public class BinaryResponseDto {
     return canceled;
   }
 
+  @JsonIgnore
+  public boolean getCanceledDefined() {
+    return canceledDefined;
+  }
+
   public BinaryResponseDto body(String body) {
     this.body = body;
+    this.bodyDefined = true;
     return this;
   }
 
@@ -251,14 +304,21 @@ public class BinaryResponseDto {
     return body;
   }
 
+  @JsonIgnore
+  public boolean getBodyDefined() {
+    return bodyDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_BODY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setBody(String body) {
     this.body = body;
+    this.bodyDefined = true;
   }
 
   public BinaryResponseDto udh(String udh) {
     this.udh = udh;
+    this.udhDefined = true;
     return this;
   }
 
@@ -276,14 +336,21 @@ public class BinaryResponseDto {
     return udh;
   }
 
+  @JsonIgnore
+  public boolean getUdhDefined() {
+    return udhDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_UDH)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setUdh(String udh) {
     this.udh = udh;
+    this.udhDefined = true;
   }
 
   public BinaryResponseDto type(String type) {
     this.type = type;
+    this.typeDefined = true;
     return this;
   }
 
@@ -300,10 +367,16 @@ public class BinaryResponseDto {
     return type;
   }
 
+  @JsonIgnore
+  public boolean getTypeDefined() {
+    return typeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TYPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setType(String type) {
     this.type = type;
+    this.typeDefined = true;
   }
 
   /**
@@ -319,6 +392,11 @@ public class BinaryResponseDto {
     return createdAt;
   }
 
+  @JsonIgnore
+  public boolean getCreatedAtDefined() {
+    return createdAtDefined;
+  }
+
   /**
    * Timestamp for when batch was last updated. Formatted as
    * [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601). For example:
@@ -332,8 +410,14 @@ public class BinaryResponseDto {
     return modifiedAt;
   }
 
+  @JsonIgnore
+  public boolean getModifiedAtDefined() {
+    return modifiedAtDefined;
+  }
+
   public BinaryResponseDto deliveryReport(String deliveryReport) {
     this.deliveryReport = deliveryReport;
+    this.deliveryReportDefined = true;
     return this;
   }
 
@@ -350,14 +434,21 @@ public class BinaryResponseDto {
     return deliveryReport;
   }
 
+  @JsonIgnore
+  public boolean getDeliveryReportDefined() {
+    return deliveryReportDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DELIVERY_REPORT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDeliveryReport(String deliveryReport) {
     this.deliveryReport = deliveryReport;
+    this.deliveryReportDefined = true;
   }
 
   public BinaryResponseDto sendAt(OffsetDateTime sendAt) {
     this.sendAt = sendAt;
+    this.sendAtDefined = true;
     return this;
   }
 
@@ -374,14 +465,21 @@ public class BinaryResponseDto {
     return sendAt;
   }
 
+  @JsonIgnore
+  public boolean getSendAtDefined() {
+    return sendAtDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SEND_AT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSendAt(OffsetDateTime sendAt) {
     this.sendAt = sendAt;
+    this.sendAtDefined = true;
   }
 
   public BinaryResponseDto expireAt(OffsetDateTime expireAt) {
     this.expireAt = expireAt;
+    this.expireAtDefined = true;
     return this;
   }
 
@@ -398,14 +496,21 @@ public class BinaryResponseDto {
     return expireAt;
   }
 
+  @JsonIgnore
+  public boolean getExpireAtDefined() {
+    return expireAtDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_EXPIRE_AT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setExpireAt(OffsetDateTime expireAt) {
     this.expireAt = expireAt;
+    this.expireAtDefined = true;
   }
 
   public BinaryResponseDto callbackUrl(String callbackUrl) {
     this.callbackUrl = callbackUrl;
+    this.callbackUrlDefined = true;
     return this;
   }
 
@@ -420,14 +525,21 @@ public class BinaryResponseDto {
     return callbackUrl;
   }
 
+  @JsonIgnore
+  public boolean getCallbackUrlDefined() {
+    return callbackUrlDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCallbackUrl(String callbackUrl) {
     this.callbackUrl = callbackUrl;
+    this.callbackUrlDefined = true;
   }
 
   public BinaryResponseDto clientReference(String clientReference) {
     this.clientReference = clientReference;
+    this.clientReferenceDefined = true;
     return this;
   }
 
@@ -443,14 +555,21 @@ public class BinaryResponseDto {
     return clientReference;
   }
 
+  @JsonIgnore
+  public boolean getClientReferenceDefined() {
+    return clientReferenceDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CLIENT_REFERENCE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setClientReference(String clientReference) {
     this.clientReference = clientReference;
+    this.clientReferenceDefined = true;
   }
 
   public BinaryResponseDto feedbackEnabled(Boolean feedbackEnabled) {
     this.feedbackEnabled = feedbackEnabled;
+    this.feedbackEnabledDefined = true;
     return this;
   }
 
@@ -467,14 +586,21 @@ public class BinaryResponseDto {
     return feedbackEnabled;
   }
 
+  @JsonIgnore
+  public boolean getFeedbackEnabledDefined() {
+    return feedbackEnabledDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_FEEDBACK_ENABLED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFeedbackEnabled(Boolean feedbackEnabled) {
     this.feedbackEnabled = feedbackEnabled;
+    this.feedbackEnabledDefined = true;
   }
 
   public BinaryResponseDto flashMessage(Boolean flashMessage) {
     this.flashMessage = flashMessage;
+    this.flashMessageDefined = true;
     return this;
   }
 
@@ -489,14 +615,21 @@ public class BinaryResponseDto {
     return flashMessage;
   }
 
+  @JsonIgnore
+  public boolean getFlashMessageDefined() {
+    return flashMessageDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_FLASH_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFlashMessage(Boolean flashMessage) {
     this.flashMessage = flashMessage;
+    this.flashMessageDefined = true;
   }
 
   public BinaryResponseDto truncateConcat(Boolean truncateConcat) {
     this.truncateConcat = truncateConcat;
+    this.truncateConcatDefined = true;
     return this;
   }
 
@@ -511,14 +644,21 @@ public class BinaryResponseDto {
     return truncateConcat;
   }
 
+  @JsonIgnore
+  public boolean getTruncateConcatDefined() {
+    return truncateConcatDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TRUNCATE_CONCAT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTruncateConcat(Boolean truncateConcat) {
     this.truncateConcat = truncateConcat;
+    this.truncateConcatDefined = true;
   }
 
   public BinaryResponseDto maxNumberOfMessageParts(Integer maxNumberOfMessageParts) {
     this.maxNumberOfMessageParts = maxNumberOfMessageParts;
+    this.maxNumberOfMessagePartsDefined = true;
     return this;
   }
 
@@ -533,14 +673,21 @@ public class BinaryResponseDto {
     return maxNumberOfMessageParts;
   }
 
+  @JsonIgnore
+  public boolean getMaxNumberOfMessagePartsDefined() {
+    return maxNumberOfMessagePartsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MAX_NUMBER_OF_MESSAGE_PARTS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMaxNumberOfMessageParts(Integer maxNumberOfMessageParts) {
     this.maxNumberOfMessageParts = maxNumberOfMessageParts;
+    this.maxNumberOfMessagePartsDefined = true;
   }
 
   public BinaryResponseDto fromTon(Integer fromTon) {
     this.fromTon = fromTon;
+    this.fromTonDefined = true;
     return this;
   }
 
@@ -555,14 +702,21 @@ public class BinaryResponseDto {
     return fromTon;
   }
 
+  @JsonIgnore
+  public boolean getFromTonDefined() {
+    return fromTonDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_FROM_TON)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFromTon(Integer fromTon) {
     this.fromTon = fromTon;
+    this.fromTonDefined = true;
   }
 
   public BinaryResponseDto fromNpi(Integer fromNpi) {
     this.fromNpi = fromNpi;
+    this.fromNpiDefined = true;
     return this;
   }
 
@@ -577,10 +731,16 @@ public class BinaryResponseDto {
     return fromNpi;
   }
 
+  @JsonIgnore
+  public boolean getFromNpiDefined() {
+    return fromNpiDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_FROM_NPI)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFromNpi(Integer fromNpi) {
     this.fromNpi = fromNpi;
+    this.fromNpiDefined = true;
   }
 
   /** Return true if this BinaryResponse object is equal to o. */

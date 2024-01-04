@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -19,15 +21,18 @@ import java.util.Objects;
 
 /** WhatsappVerificationReportRequestDto */
 @JsonPropertyOrder({WhatsappVerificationReportRequestDto.JSON_PROPERTY_CODE})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class WhatsappVerificationReportRequestDto {
   public static final String JSON_PROPERTY_CODE = "code";
   private String code;
+  private boolean codeDefined = false;
 
   public WhatsappVerificationReportRequestDto() {}
 
   public WhatsappVerificationReportRequestDto code(String code) {
     this.code = code;
+    this.codeDefined = true;
     return this;
   }
 
@@ -42,10 +47,16 @@ public class WhatsappVerificationReportRequestDto {
     return code;
   }
 
+  @JsonIgnore
+  public boolean getCodeDefined() {
+    return codeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CODE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCode(String code) {
     this.code = code;
+    this.codeDefined = true;
   }
 
   /** Return true if this WhatsappVerificationReportRequest object is equal to o. */

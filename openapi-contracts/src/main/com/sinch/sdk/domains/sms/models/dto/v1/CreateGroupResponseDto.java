@@ -13,6 +13,8 @@
 package com.sinch.sdk.domains.sms.models.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -32,28 +34,36 @@ import java.util.Set;
   CreateGroupResponseDto.JSON_PROPERTY_CHILD_GROUPS,
   CreateGroupResponseDto.JSON_PROPERTY_AUTO_UPDATE
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class CreateGroupResponseDto {
   public static final String JSON_PROPERTY_ID = "id";
   private String id;
+  private boolean idDefined = false;
 
   public static final String JSON_PROPERTY_NAME = "name";
   private String name;
+  private boolean nameDefined = false;
 
   public static final String JSON_PROPERTY_SIZE = "size";
   private Integer size;
+  private boolean sizeDefined = false;
 
   public static final String JSON_PROPERTY_CREATED_AT = "created_at";
   private OffsetDateTime createdAt;
+  private boolean createdAtDefined = false;
 
   public static final String JSON_PROPERTY_MODIFIED_AT = "modified_at";
   private OffsetDateTime modifiedAt;
+  private boolean modifiedAtDefined = false;
 
   public static final String JSON_PROPERTY_CHILD_GROUPS = "child_groups";
   private Set<Object> childGroups;
+  private boolean childGroupsDefined = false;
 
   public static final String JSON_PROPERTY_AUTO_UPDATE = "auto_update";
   private GroupAutoUpdateDto autoUpdate;
+  private boolean autoUpdateDefined = false;
 
   public CreateGroupResponseDto() {}
 
@@ -64,12 +74,16 @@ public class CreateGroupResponseDto {
       @JsonProperty(JSON_PROPERTY_MODIFIED_AT) OffsetDateTime modifiedAt) {
     this();
     this.size = size;
+    this.sizeDefined = true;
     this.createdAt = createdAt;
+    this.createdAtDefined = true;
     this.modifiedAt = modifiedAt;
+    this.modifiedAtDefined = true;
   }
 
   public CreateGroupResponseDto id(String id) {
     this.id = id;
+    this.idDefined = true;
     return this;
   }
 
@@ -84,14 +98,21 @@ public class CreateGroupResponseDto {
     return id;
   }
 
+  @JsonIgnore
+  public boolean getIdDefined() {
+    return idDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setId(String id) {
     this.id = id;
+    this.idDefined = true;
   }
 
   public CreateGroupResponseDto name(String name) {
     this.name = name;
+    this.nameDefined = true;
     return this;
   }
 
@@ -106,10 +127,16 @@ public class CreateGroupResponseDto {
     return name;
   }
 
+  @JsonIgnore
+  public boolean getNameDefined() {
+    return nameDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setName(String name) {
     this.name = name;
+    this.nameDefined = true;
   }
 
   /**
@@ -123,6 +150,11 @@ public class CreateGroupResponseDto {
     return size;
   }
 
+  @JsonIgnore
+  public boolean getSizeDefined() {
+    return sizeDefined;
+  }
+
   /**
    * Timestamp for group creation. Format: YYYY-MM-DDThh:mm:ss.SSSZ
    *
@@ -132,6 +164,11 @@ public class CreateGroupResponseDto {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OffsetDateTime getCreatedAt() {
     return createdAt;
+  }
+
+  @JsonIgnore
+  public boolean getCreatedAtDefined() {
+    return createdAtDefined;
   }
 
   /**
@@ -145,8 +182,14 @@ public class CreateGroupResponseDto {
     return modifiedAt;
   }
 
+  @JsonIgnore
+  public boolean getModifiedAtDefined() {
+    return modifiedAtDefined;
+  }
+
   public CreateGroupResponseDto childGroups(Set<Object> childGroups) {
     this.childGroups = childGroups;
+    this.childGroupsDefined = true;
     return this;
   }
 
@@ -154,6 +197,7 @@ public class CreateGroupResponseDto {
     if (this.childGroups == null) {
       this.childGroups = new LinkedHashSet<>();
     }
+    this.childGroupsDefined = true;
     this.childGroups.add(childGroupsItem);
     return this;
   }
@@ -170,15 +214,22 @@ public class CreateGroupResponseDto {
     return childGroups;
   }
 
+  @JsonIgnore
+  public boolean getChildGroupsDefined() {
+    return childGroupsDefined;
+  }
+
   @JsonDeserialize(as = LinkedHashSet.class)
   @JsonProperty(JSON_PROPERTY_CHILD_GROUPS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setChildGroups(Set<Object> childGroups) {
     this.childGroups = childGroups;
+    this.childGroupsDefined = true;
   }
 
   public CreateGroupResponseDto autoUpdate(GroupAutoUpdateDto autoUpdate) {
     this.autoUpdate = autoUpdate;
+    this.autoUpdateDefined = true;
     return this;
   }
 
@@ -193,10 +244,16 @@ public class CreateGroupResponseDto {
     return autoUpdate;
   }
 
+  @JsonIgnore
+  public boolean getAutoUpdateDefined() {
+    return autoUpdateDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_AUTO_UPDATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAutoUpdate(GroupAutoUpdateDto autoUpdate) {
     this.autoUpdate = autoUpdate;
+    this.autoUpdateDefined = true;
   }
 
   /** Return true if this createGroupResponse object is equal to o. */

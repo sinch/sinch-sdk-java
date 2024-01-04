@@ -35,7 +35,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 @JsonDeserialize(
     using = VerificationResponseIdentityDto.VerificationResponseIdentityDtoDeserializer.class)
 @JsonSerialize(
@@ -126,8 +125,8 @@ public class VerificationResponseIdentityDto extends AbstractOpenApiSchema {
       }
       throw new IOException(
           String.format(
-              "Failed deserialization for VerificationResponseIdentityDto: %d classes match"
-                  + " result, expected 1",
+              "Failed deserialization for VerificationResponseIdentityDto: %d classes match result,"
+                  + " expected 1",
               match));
     }
 

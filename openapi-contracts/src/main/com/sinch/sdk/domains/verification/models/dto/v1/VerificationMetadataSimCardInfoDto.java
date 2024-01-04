@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -22,18 +24,22 @@ import java.util.Objects;
   VerificationMetadataSimCardInfoDto.JSON_PROPERTY_OPERATOR,
   VerificationMetadataSimCardInfoDto.JSON_PROPERTY_SIM
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class VerificationMetadataSimCardInfoDto {
   public static final String JSON_PROPERTY_OPERATOR = "operator";
   private VerificationMetadataOperatorDto operator;
+  private boolean operatorDefined = false;
 
   public static final String JSON_PROPERTY_SIM = "sim";
   private VerificationMetadataSimDto sim;
+  private boolean simDefined = false;
 
   public VerificationMetadataSimCardInfoDto() {}
 
   public VerificationMetadataSimCardInfoDto operator(VerificationMetadataOperatorDto operator) {
     this.operator = operator;
+    this.operatorDefined = true;
     return this;
   }
 
@@ -48,14 +54,21 @@ public class VerificationMetadataSimCardInfoDto {
     return operator;
   }
 
+  @JsonIgnore
+  public boolean getOperatorDefined() {
+    return operatorDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_OPERATOR)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setOperator(VerificationMetadataOperatorDto operator) {
     this.operator = operator;
+    this.operatorDefined = true;
   }
 
   public VerificationMetadataSimCardInfoDto sim(VerificationMetadataSimDto sim) {
     this.sim = sim;
+    this.simDefined = true;
     return this;
   }
 
@@ -70,10 +83,16 @@ public class VerificationMetadataSimCardInfoDto {
     return sim;
   }
 
+  @JsonIgnore
+  public boolean getSimDefined() {
+    return simDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SIM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSim(VerificationMetadataSimDto sim) {
     this.sim = sim;
+    this.simDefined = true;
   }
 
   /** Return true if this VerificationMetadataSimCardInfo object is equal to o. */

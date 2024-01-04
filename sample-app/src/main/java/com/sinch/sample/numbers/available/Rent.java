@@ -25,7 +25,7 @@ public class Rent extends BaseApplication {
 
   public void run() {
 
-    LOGGER.info("Rent for :" + phoneNumber);
+    LOGGER.info("Rent for: " + phoneNumber);
     try {
 
       RentSMSConfigurationRequestParameters rentSms =
@@ -35,10 +35,12 @@ public class Rent extends BaseApplication {
           RentVoiceConfigurationRequestParameters.builder() // .setAppId("app id")
               .build();
       AvailableNumberRentRequestParameters parameters =
-          new AvailableNumberRentRequestParameters(null, null, "foo callback");
+          AvailableNumberRentRequestParameters.builder()
+              // .setCallbackUrl("foo callback")
+              .build();
       ActiveNumber value = client.numbers().available().rent(phoneNumber, parameters);
 
-      LOGGER.info("Response :" + value);
+      LOGGER.info("Response: " + value);
     } catch (ApiException e) {
       LOGGER.severe("Error: " + e);
     }

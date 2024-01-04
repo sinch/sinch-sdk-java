@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.sms.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -26,24 +28,30 @@ import java.util.Objects;
   ApiBatchListDto.JSON_PROPERTY_BATCHES,
   ApiBatchListDto.JSON_PROPERTY_PAGE_SIZE
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ApiBatchListDto {
   public static final String JSON_PROPERTY_COUNT = "count";
   private Long count;
+  private boolean countDefined = false;
 
   public static final String JSON_PROPERTY_PAGE = "page";
   private Integer page;
+  private boolean pageDefined = false;
 
   public static final String JSON_PROPERTY_BATCHES = "batches";
   private List<ApiBatchListBatchesInnerDto> batches;
+  private boolean batchesDefined = false;
 
   public static final String JSON_PROPERTY_PAGE_SIZE = "page_size";
   private Integer pageSize;
+  private boolean pageSizeDefined = false;
 
   public ApiBatchListDto() {}
 
   public ApiBatchListDto count(Long count) {
     this.count = count;
+    this.countDefined = true;
     return this;
   }
 
@@ -58,14 +66,21 @@ public class ApiBatchListDto {
     return count;
   }
 
+  @JsonIgnore
+  public boolean getCountDefined() {
+    return countDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_COUNT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCount(Long count) {
     this.count = count;
+    this.countDefined = true;
   }
 
   public ApiBatchListDto page(Integer page) {
     this.page = page;
+    this.pageDefined = true;
     return this;
   }
 
@@ -80,14 +95,21 @@ public class ApiBatchListDto {
     return page;
   }
 
+  @JsonIgnore
+  public boolean getPageDefined() {
+    return pageDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_PAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setPage(Integer page) {
     this.page = page;
+    this.pageDefined = true;
   }
 
   public ApiBatchListDto batches(List<ApiBatchListBatchesInnerDto> batches) {
     this.batches = batches;
+    this.batchesDefined = true;
     return this;
   }
 
@@ -95,6 +117,7 @@ public class ApiBatchListDto {
     if (this.batches == null) {
       this.batches = new ArrayList<>();
     }
+    this.batchesDefined = true;
     this.batches.add(batchesItem);
     return this;
   }
@@ -110,14 +133,21 @@ public class ApiBatchListDto {
     return batches;
   }
 
+  @JsonIgnore
+  public boolean getBatchesDefined() {
+    return batchesDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_BATCHES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setBatches(List<ApiBatchListBatchesInnerDto> batches) {
     this.batches = batches;
+    this.batchesDefined = true;
   }
 
   public ApiBatchListDto pageSize(Integer pageSize) {
     this.pageSize = pageSize;
+    this.pageSizeDefined = true;
     return this;
   }
 
@@ -132,10 +162,16 @@ public class ApiBatchListDto {
     return pageSize;
   }
 
+  @JsonIgnore
+  public boolean getPageSizeDefined() {
+    return pageSizeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_PAGE_SIZE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setPageSize(Integer pageSize) {
     this.pageSize = pageSize;
+    this.pageSizeDefined = true;
   }
 
   /** Return true if this ApiBatchList object is equal to o. */

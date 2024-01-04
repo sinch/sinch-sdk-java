@@ -25,12 +25,12 @@ class StartVerificationFlashCallRequestParametersTest {
 
   @Test
   void getIdentity() {
-    Assertions.assertThat(value.getIdentity()).isEqualTo(identity);
+    Assertions.assertThat(value.getIdentity().get()).isEqualTo(identity);
   }
 
   @Test
   void getMethod() {
-    Assertions.assertThat(value.getMethod()).isEqualTo(method);
+    Assertions.assertThat(value.getMethod().get()).isEqualTo(method);
   }
 
   @Test

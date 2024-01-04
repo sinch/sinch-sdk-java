@@ -19,6 +19,8 @@ import com.sinch.sdk.domains.sms.models.dto.v1.UpdateGroupRequestAutoUpdateAddDt
 import com.sinch.sdk.domains.sms.models.dto.v1.UpdateGroupRequestAutoUpdateDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.UpdateGroupRequestAutoUpdateRemoveDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.UpdateGroupRequestDto;
+import com.sinch.sdk.domains.sms.models.requests.GroupAutoUpdateKeywordRequestParameters;
+import com.sinch.sdk.domains.sms.models.requests.GroupAutoUpdateRequestParameters;
 import com.sinch.sdk.domains.sms.models.requests.GroupCreateRequestParameters;
 import com.sinch.sdk.domains.sms.models.requests.GroupReplaceRequestParameters;
 import com.sinch.sdk.domains.sms.models.requests.GroupUpdateRequestParameters;
@@ -42,11 +44,12 @@ public class GroupsDtoConverter {
   }
 
   public static GroupObjectDto convert(GroupCreateRequestParameters client) {
-    return new GroupObjectDto()
-        .name(client.getName().orElse(null))
-        .members(client.getMembers().map(ArrayList::new).orElse(null))
-        .childGroups(client.getChildGroupIds().map(ArrayList::new).orElse(null))
-        .autoUpdate(client.getAutoUpdate().map(GroupsDtoConverter::convert).orElse(null));
+    GroupObjectDto dto = new GroupObjectDto();
+    client.getName().ifPresent(dto::name);
+    client.getMembers().ifPresent(f -> dto.members(new ArrayList<>(f)));
+    client.getChildGroupIds().ifPresent(f -> dto.childGroups(new ArrayList<>(f)));
+    client.getAutoUpdate().ifPresent(f -> dto.autoUpdate(GroupsDtoConverter.convert(f)));
+    return dto;
   }
 
   public static Collection<Group> convert(ApiGroupListDto dto) {
@@ -63,19 +66,21 @@ public class GroupsDtoConverter {
   }
 
   public static ReplaceGroupRequestDto convert(GroupReplaceRequestParameters client) {
-    return new ReplaceGroupRequestDto()
-        .name(client.getName().orElse(null))
-        .members(client.getMembers().map(ArrayList::new).orElse(null));
+    ReplaceGroupRequestDto dto = new ReplaceGroupRequestDto();
+    client.getName().ifPresent(dto::name);
+    client.getMembers().ifPresent(f -> dto.members(new ArrayList<>(f)));
+    return dto;
   }
 
   public static UpdateGroupRequestDto convert(GroupUpdateRequestParameters client) {
-    return new UpdateGroupRequestDto()
-        .name(client.getName().orElse(null))
-        .add(client.getAdd().map(ArrayList::new).orElse(null))
-        .remove(client.getRemove().map(ArrayList::new).orElse(null))
-        .addFromGroup(client.getAddFromGroup().orElse(null))
-        .removeFromGroup(client.getRemoveFromGroup().orElse(null))
-        .autoUpdate(client.getAutoUpdate().map(GroupsDtoConverter::convertForUpdate).orElse(null));
+    UpdateGroupRequestDto dto = new UpdateGroupRequestDto();
+    client.getName().ifPresent(dto::name);
+    client.getAdd().ifPresent(f -> dto.add(new ArrayList<>(f)));
+    client.getRemove().ifPresent(f -> dto.remove(new ArrayList<>(f)));
+    client.getAddFromGroup().ifPresent(dto::addFromGroup);
+    client.getRemoveFromGroup().ifPresent(dto::removeFromGroup);
+    client.getAutoUpdate().ifPresent(f -> dto.autoUpdate(GroupsDtoConverter.convertForUpdate(f)));
+    return dto;
   }
 
   private static Group convert(ApiGroupDto dto) {
@@ -119,71 +124,92 @@ public class GroupsDtoConverter {
         .build();
   }
 
-  private static GroupObjectAutoUpdateDto convert(GroupAutoUpdate client) {
+  private static GroupObjectAutoUpdateDto convert(GroupAutoUpdateRequestParameters client) {
     if (null == client) {
       return null;
     }
-    return new GroupObjectAutoUpdateDto()
-        .to(client.getTo())
-        .add(convertAdd(client.getAdd()))
-        .remove(convertRemove(client.getRemove()));
+    GroupObjectAutoUpdateDto dto = new GroupObjectAutoUpdateDto();
+    client.getTo().ifPresent(dto::to);
+    client.getAdd().ifPresent(f -> dto.add(convertAdd(f)));
+    client.getRemove().ifPresent(f -> dto.remove(convertRemove(f)));
+    return dto;
   }
 
-  private static UpdateGroupRequestAutoUpdateDto convertForUpdate(GroupAutoUpdate client) {
+  private static UpdateGroupRequestAutoUpdateDto convertForUpdate(
+      GroupAutoUpdateRequestParameters client) {
     if (null == client) {
       return null;
     }
-    return new UpdateGroupRequestAutoUpdateDto()
-        .to(client.getTo())
-        .add(convertAdd(client.getAdd()))
-        .remove(convertRemoveForUpdate(client.getRemove()));
+    UpdateGroupRequestAutoUpdateDto dto = new UpdateGroupRequestAutoUpdateDto();
+
+    client.getTo().ifPresent(dto::to);
+    client.getAdd().ifPresent(f -> dto.add(convertAdd(f)));
+    client.getRemove().ifPresent(f -> dto.remove(convertRemoveForUpdate(f)));
+    return dto;
   }
 
   private static GroupAutoUpdateKeyword convert(AddKeywordDto dto) {
     if (null == dto) {
       return null;
     }
-    return GroupAutoUpdateKeyword.builder()
-        .setFirstWord(dto.getFirstWord())
-        .setSecondWord(dto.getSecondWord())
-        .build();
+
+    GroupAutoUpdateKeyword.Builder builder = GroupAutoUpdateKeyword.builder();
+    if (dto.getFirstWordDefined()) {
+      builder.setFirstWord(dto.getFirstWord());
+    }
+    if (dto.getSecondWordDefined()) {
+      builder.setSecondWord(dto.getSecondWord());
+    }
+    return builder.build();
   }
 
-  private static UpdateGroupRequestAutoUpdateAddDto convertAdd(GroupAutoUpdateKeyword client) {
+  private static UpdateGroupRequestAutoUpdateAddDto convertAdd(
+      GroupAutoUpdateKeywordRequestParameters client) {
     if (null == client) {
       return null;
     }
-    return new UpdateGroupRequestAutoUpdateAddDto()
-        .firstWord(client.getFirstWord())
-        .secondWord(client.getSecondWord());
+
+    UpdateGroupRequestAutoUpdateAddDto dto = new UpdateGroupRequestAutoUpdateAddDto();
+    client.getFirstWord().ifPresent(dto::firstWord);
+    client.getSecondWord().ifPresent(dto::secondWord);
+    return dto;
   }
 
   private static GroupAutoUpdateKeyword convert(RemoveKeywordDto dto) {
     if (null == dto) {
       return null;
     }
-    return GroupAutoUpdateKeyword.builder()
-        .setFirstWord(dto.getFirstWord())
-        .setSecondWord(dto.getSecondWord())
-        .build();
+    GroupAutoUpdateKeyword.Builder builder = GroupAutoUpdateKeyword.builder();
+    if (dto.getFirstWordDefined()) {
+      builder.setFirstWord(dto.getFirstWord());
+    }
+    if (dto.getSecondWordDefined()) {
+      builder.setSecondWord(dto.getSecondWord());
+    }
+    return builder.build();
   }
 
-  private static GroupObjectAutoUpdateRemoveDto convertRemove(GroupAutoUpdateKeyword client) {
+  private static GroupObjectAutoUpdateRemoveDto convertRemove(
+      GroupAutoUpdateKeywordRequestParameters client) {
     if (null == client) {
       return null;
     }
-    return new GroupObjectAutoUpdateRemoveDto()
-        .firstWord(client.getFirstWord())
-        .secondWord(client.getSecondWord());
+
+    GroupObjectAutoUpdateRemoveDto dto = new GroupObjectAutoUpdateRemoveDto();
+    client.getFirstWord().ifPresent(dto::firstWord);
+    client.getSecondWord().ifPresent(dto::secondWord);
+    return dto;
   }
 
   private static UpdateGroupRequestAutoUpdateRemoveDto convertRemoveForUpdate(
-      GroupAutoUpdateKeyword client) {
+      GroupAutoUpdateKeywordRequestParameters client) {
     if (null == client) {
       return null;
     }
-    return new UpdateGroupRequestAutoUpdateRemoveDto()
-        .firstWord(client.getFirstWord())
-        .secondWord(client.getSecondWord());
+
+    UpdateGroupRequestAutoUpdateRemoveDto dto = new UpdateGroupRequestAutoUpdateRemoveDto();
+    client.getFirstWord().ifPresent(dto::firstWord);
+    client.getSecondWord().ifPresent(dto::secondWord);
+    return dto;
   }
 }

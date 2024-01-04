@@ -34,7 +34,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class AvailableRegionsApi {
 
   private static final Logger LOGGER = Logger.getLogger(AvailableRegionsApi.class.getName());
@@ -73,7 +72,8 @@ public class AvailableRegionsApi {
       String projectId, List<String> types) throws ApiException {
 
     LOGGER.finest(
-        "[numberServiceListAvailableRegions] "
+        "[numberServiceListAvailableRegions]"
+            + " "
             + "projectId: "
             + projectId
             + ", "

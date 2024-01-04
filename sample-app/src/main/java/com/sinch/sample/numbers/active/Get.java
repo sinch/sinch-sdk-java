@@ -21,9 +21,9 @@ public class Get extends BaseApplication {
 
   public void run() {
 
-    LOGGER.info("Get for :" + phoneNumber);
+    LOGGER.info("Get for: " + phoneNumber);
     ActiveNumber value = client.numbers().active().get(phoneNumber);
 
-    LOGGER.info("Response :" + value);
+    LOGGER.info("Response: " + value);
   }
 }

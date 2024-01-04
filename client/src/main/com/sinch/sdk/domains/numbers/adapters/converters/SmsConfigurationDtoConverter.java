@@ -24,7 +24,7 @@ public class SmsConfigurationDtoConverter {
       return null;
     }
     SMSConfigurationDto dto = new SMSConfigurationDto();
-    dto.servicePlanId(configuration.getServicePlanId());
+    configuration.getServicePlanId().ifPresent(dto::servicePlanId);
     configuration.getCampaignId().ifPresent(dto::campaignId);
     return dto;
   }

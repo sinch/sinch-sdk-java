@@ -1,8 +1,7 @@
 package com.sinch.sdk.domains.sms.models.requests;
 
-import com.sinch.sdk.domains.sms.models.GroupAutoUpdate;
+import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Collection;
-import java.util.Optional;
 
 /**
  * Parameters request to create a group
@@ -13,42 +12,36 @@ import java.util.Optional;
  */
 public class GroupCreateRequestParameters {
 
-  private final String name;
-  private final Collection<String> members;
-  private final Collection<String> childGroupIds;
-  private final GroupAutoUpdate autoUpdate;
+  private final OptionalValue<String> name;
+  private final OptionalValue<Collection<String>> members;
+  private final OptionalValue<Collection<String>> childGroupIds;
+  private final OptionalValue<GroupAutoUpdateRequestParameters> autoUpdate;
 
-  /**
-   * @param name Name of the group
-   * @param members Initial list of phone numbers in E.164 format MSISDNs for the group
-   * @param childGroupIds Child group IDs
-   * @param autoUpdate Auto update settings
-   */
-  public GroupCreateRequestParameters(
-      String name,
-      Collection<String> members,
-      Collection<String> childGroupIds,
-      GroupAutoUpdate autoUpdate) {
+  private GroupCreateRequestParameters(
+      OptionalValue<String> name,
+      OptionalValue<Collection<String>> members,
+      OptionalValue<Collection<String>> childGroupIds,
+      OptionalValue<GroupAutoUpdateRequestParameters> autoUpdate) {
     this.name = name;
     this.members = members;
     this.childGroupIds = childGroupIds;
     this.autoUpdate = autoUpdate;
   }
 
-  public Optional<String> getName() {
-    return Optional.ofNullable(name);
+  public OptionalValue<String> getName() {
+    return name;
   }
 
-  public Optional<Collection<String>> getMembers() {
-    return Optional.ofNullable(members);
+  public OptionalValue<Collection<String>> getMembers() {
+    return members;
   }
 
-  public Optional<Collection<String>> getChildGroupIds() {
-    return Optional.ofNullable(childGroupIds);
+  public OptionalValue<Collection<String>> getChildGroupIds() {
+    return childGroupIds;
   }
 
-  public Optional<GroupAutoUpdate> getAutoUpdate() {
-    return Optional.ofNullable(autoUpdate);
+  public OptionalValue<GroupAutoUpdateRequestParameters> getAutoUpdate() {
+    return autoUpdate;
   }
 
   @Override
@@ -76,37 +69,53 @@ public class GroupCreateRequestParameters {
 
   public static class Builder {
 
-    String name;
-    Collection<String> members;
-    Collection<String> childGroupIds;
-    GroupAutoUpdate autoUpdate;
+    OptionalValue<String> name = OptionalValue.empty();
+    OptionalValue<Collection<String>> members = OptionalValue.empty();
+    OptionalValue<Collection<String>> childGroupIds = OptionalValue.empty();
+    OptionalValue<GroupAutoUpdateRequestParameters> autoUpdate = OptionalValue.empty();
 
     private Builder() {}
 
     private Builder(GroupCreateRequestParameters parameters) {
-      this.name = parameters.getName().orElse(null);
-      this.members = parameters.getMembers().orElse(null);
-      this.childGroupIds = parameters.getChildGroupIds().orElse(null);
-      this.autoUpdate = parameters.getAutoUpdate().orElse(null);
+      this.name = parameters.getName();
+      this.members = parameters.getMembers();
+      this.childGroupIds = parameters.getChildGroupIds();
+      this.autoUpdate = parameters.getAutoUpdate();
     }
 
+    /**
+     * @param name Name of the group
+     * @return current builder
+     */
     public Builder setName(String name) {
-      this.name = name;
+      this.name = OptionalValue.of(name);
       return this;
     }
 
+    /**
+     * @param members Initial list of phone numbers in E.164 format MSISDNs for the group
+     * @return current builder
+     */
     public Builder setMembers(Collection<String> members) {
-      this.members = members;
+      this.members = OptionalValue.of(members);
       return this;
     }
 
+    /**
+     * @param childGroupIds Child group IDs
+     * @return current builder
+     */
     public Builder setChildGroupIds(Collection<String> childGroupIds) {
-      this.childGroupIds = childGroupIds;
+      this.childGroupIds = OptionalValue.of(childGroupIds);
       return this;
     }
 
-    public Builder setAutoUpdate(GroupAutoUpdate autoUpdate) {
-      this.autoUpdate = autoUpdate;
+    /**
+     * @param autoUpdate Auto update settings
+     * @return current builder
+     */
+    public Builder setAutoUpdate(GroupAutoUpdateRequestParameters autoUpdate) {
+      this.autoUpdate = OptionalValue.of(autoUpdate);
       return this;
     }
 

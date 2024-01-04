@@ -11,6 +11,8 @@ public class CallbackConfigurationUpdateRequestParametersDtoConverter {
     if (null == parameters) {
       return null;
     }
-    return new CallbackConfigurationUpdateDto().hmacSecret(parameters.getHMACSecret());
+    CallbackConfigurationUpdateDto dto = new CallbackConfigurationUpdateDto();
+    parameters.getHMACSecret().ifPresent(dto::hmacSecret);
+    return dto;
   }
 }

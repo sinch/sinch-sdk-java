@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -30,36 +32,46 @@ import java.util.Objects;
   FlashCallInitiateVerificationResponseDto.JSON_PROPERTY_SUB_VERIFICATION_ID,
   FlashCallInitiateVerificationResponseDto.JSON_PROPERTY_LINKS
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class FlashCallInitiateVerificationResponseDto {
   public static final String JSON_PROPERTY_CLI = "cli";
   private String cli;
+  private boolean cliDefined = false;
 
   public static final String JSON_PROPERTY_CLI_FILTER = "cliFilter";
   private String cliFilter;
+  private boolean cliFilterDefined = false;
 
   public static final String JSON_PROPERTY_INTERCEPTION_TIMEOUT = "interceptionTimeout";
   private Integer interceptionTimeout;
+  private boolean interceptionTimeoutDefined = false;
 
   public static final String JSON_PROPERTY_REPORT_TIMEOUT = "reportTimeout";
   private Integer reportTimeout;
+  private boolean reportTimeoutDefined = false;
 
   public static final String JSON_PROPERTY_DENY_CALL_AFTER = "denyCallAfter";
   private Integer denyCallAfter;
+  private boolean denyCallAfterDefined = false;
 
   public static final String JSON_PROPERTY_CALL_ID = "callId";
   private String callId;
+  private boolean callIdDefined = false;
 
   public static final String JSON_PROPERTY_SUB_VERIFICATION_ID = "subVerificationId";
   private String subVerificationId;
+  private boolean subVerificationIdDefined = false;
 
   public static final String JSON_PROPERTY_LINKS = "_links";
   private List<VerificationResourceLinkDto> links;
+  private boolean linksDefined = false;
 
   public FlashCallInitiateVerificationResponseDto() {}
 
   public FlashCallInitiateVerificationResponseDto cli(String cli) {
     this.cli = cli;
+    this.cliDefined = true;
     return this;
   }
 
@@ -74,14 +86,21 @@ public class FlashCallInitiateVerificationResponseDto {
     return cli;
   }
 
+  @JsonIgnore
+  public boolean getCliDefined() {
+    return cliDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CLI)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCli(String cli) {
     this.cli = cli;
+    this.cliDefined = true;
   }
 
   public FlashCallInitiateVerificationResponseDto cliFilter(String cliFilter) {
     this.cliFilter = cliFilter;
+    this.cliFilterDefined = true;
     return this;
   }
 
@@ -96,14 +115,21 @@ public class FlashCallInitiateVerificationResponseDto {
     return cliFilter;
   }
 
+  @JsonIgnore
+  public boolean getCliFilterDefined() {
+    return cliFilterDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CLI_FILTER)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCliFilter(String cliFilter) {
     this.cliFilter = cliFilter;
+    this.cliFilterDefined = true;
   }
 
   public FlashCallInitiateVerificationResponseDto interceptionTimeout(Integer interceptionTimeout) {
     this.interceptionTimeout = interceptionTimeout;
+    this.interceptionTimeoutDefined = true;
     return this;
   }
 
@@ -118,14 +144,21 @@ public class FlashCallInitiateVerificationResponseDto {
     return interceptionTimeout;
   }
 
+  @JsonIgnore
+  public boolean getInterceptionTimeoutDefined() {
+    return interceptionTimeoutDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_INTERCEPTION_TIMEOUT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setInterceptionTimeout(Integer interceptionTimeout) {
     this.interceptionTimeout = interceptionTimeout;
+    this.interceptionTimeoutDefined = true;
   }
 
   public FlashCallInitiateVerificationResponseDto reportTimeout(Integer reportTimeout) {
     this.reportTimeout = reportTimeout;
+    this.reportTimeoutDefined = true;
     return this;
   }
 
@@ -140,14 +173,21 @@ public class FlashCallInitiateVerificationResponseDto {
     return reportTimeout;
   }
 
+  @JsonIgnore
+  public boolean getReportTimeoutDefined() {
+    return reportTimeoutDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_REPORT_TIMEOUT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setReportTimeout(Integer reportTimeout) {
     this.reportTimeout = reportTimeout;
+    this.reportTimeoutDefined = true;
   }
 
   public FlashCallInitiateVerificationResponseDto denyCallAfter(Integer denyCallAfter) {
     this.denyCallAfter = denyCallAfter;
+    this.denyCallAfterDefined = true;
     return this;
   }
 
@@ -162,14 +202,21 @@ public class FlashCallInitiateVerificationResponseDto {
     return denyCallAfter;
   }
 
+  @JsonIgnore
+  public boolean getDenyCallAfterDefined() {
+    return denyCallAfterDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DENY_CALL_AFTER)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDenyCallAfter(Integer denyCallAfter) {
     this.denyCallAfter = denyCallAfter;
+    this.denyCallAfterDefined = true;
   }
 
   public FlashCallInitiateVerificationResponseDto callId(String callId) {
     this.callId = callId;
+    this.callIdDefined = true;
     return this;
   }
 
@@ -184,14 +231,21 @@ public class FlashCallInitiateVerificationResponseDto {
     return callId;
   }
 
+  @JsonIgnore
+  public boolean getCallIdDefined() {
+    return callIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CALL_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCallId(String callId) {
     this.callId = callId;
+    this.callIdDefined = true;
   }
 
   public FlashCallInitiateVerificationResponseDto subVerificationId(String subVerificationId) {
     this.subVerificationId = subVerificationId;
+    this.subVerificationIdDefined = true;
     return this;
   }
 
@@ -206,14 +260,21 @@ public class FlashCallInitiateVerificationResponseDto {
     return subVerificationId;
   }
 
+  @JsonIgnore
+  public boolean getSubVerificationIdDefined() {
+    return subVerificationIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SUB_VERIFICATION_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSubVerificationId(String subVerificationId) {
     this.subVerificationId = subVerificationId;
+    this.subVerificationIdDefined = true;
   }
 
   public FlashCallInitiateVerificationResponseDto links(List<VerificationResourceLinkDto> links) {
     this.links = links;
+    this.linksDefined = true;
     return this;
   }
 
@@ -222,6 +283,7 @@ public class FlashCallInitiateVerificationResponseDto {
     if (this.links == null) {
       this.links = new ArrayList<>();
     }
+    this.linksDefined = true;
     this.links.add(linksItem);
     return this;
   }
@@ -237,10 +299,16 @@ public class FlashCallInitiateVerificationResponseDto {
     return links;
   }
 
+  @JsonIgnore
+  public boolean getLinksDefined() {
+    return linksDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_LINKS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setLinks(List<VerificationResourceLinkDto> links) {
     this.links = links;
+    this.linksDefined = true;
   }
 
   /** Return true if this FlashCallInitiateVerificationResponse object is equal to o. */

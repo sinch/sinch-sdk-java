@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -32,48 +34,62 @@ import java.util.Objects;
   VerificationResponseDto.JSON_PROPERTY_CALL_COMPLETE,
   VerificationResponseDto.JSON_PROPERTY_CALL_RESULT
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class VerificationResponseDto {
   public static final String JSON_PROPERTY_ID = "id";
   private String id;
+  private boolean idDefined = false;
 
   public static final String JSON_PROPERTY_METHOD = "method";
   private VerificationMethodDto method;
+  private boolean methodDefined = false;
 
   public static final String JSON_PROPERTY_STATUS = "status";
   private String status;
+  private boolean statusDefined = false;
 
   public static final String JSON_PROPERTY_REASON = "reason";
   private String reason;
+  private boolean reasonDefined = false;
 
   public static final String JSON_PROPERTY_REFERENCE = "reference";
   private String reference;
+  private boolean referenceDefined = false;
 
   public static final String JSON_PROPERTY_SOURCE = "source";
   private String source;
+  private boolean sourceDefined = false;
 
   public static final String JSON_PROPERTY_PRICE = "price";
   private VerificationResponsePriceDto price;
+  private boolean priceDefined = false;
 
   public static final String JSON_PROPERTY_IDENTITY = "identity";
   private VerificationResponseIdentityDto identity;
+  private boolean identityDefined = false;
 
   public static final String JSON_PROPERTY_COUNTRY_ID = "countryId";
   private String countryId;
+  private boolean countryIdDefined = false;
 
   public static final String JSON_PROPERTY_VERIFICATION_TIMESTAMP = "verificationTimestamp";
   private String verificationTimestamp;
+  private boolean verificationTimestampDefined = false;
 
   public static final String JSON_PROPERTY_CALL_COMPLETE = "callComplete";
   private Boolean callComplete;
+  private boolean callCompleteDefined = false;
 
   public static final String JSON_PROPERTY_CALL_RESULT = "callResult";
   private String callResult;
+  private boolean callResultDefined = false;
 
   public VerificationResponseDto() {}
 
   public VerificationResponseDto id(String id) {
     this.id = id;
+    this.idDefined = true;
     return this;
   }
 
@@ -88,14 +104,21 @@ public class VerificationResponseDto {
     return id;
   }
 
+  @JsonIgnore
+  public boolean getIdDefined() {
+    return idDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setId(String id) {
     this.id = id;
+    this.idDefined = true;
   }
 
   public VerificationResponseDto method(VerificationMethodDto method) {
     this.method = method;
+    this.methodDefined = true;
     return this;
   }
 
@@ -110,14 +133,21 @@ public class VerificationResponseDto {
     return method;
   }
 
+  @JsonIgnore
+  public boolean getMethodDefined() {
+    return methodDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_METHOD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMethod(VerificationMethodDto method) {
     this.method = method;
+    this.methodDefined = true;
   }
 
   public VerificationResponseDto status(String status) {
     this.status = status;
+    this.statusDefined = true;
     return this;
   }
 
@@ -132,14 +162,21 @@ public class VerificationResponseDto {
     return status;
   }
 
+  @JsonIgnore
+  public boolean getStatusDefined() {
+    return statusDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_STATUS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setStatus(String status) {
     this.status = status;
+    this.statusDefined = true;
   }
 
   public VerificationResponseDto reason(String reason) {
     this.reason = reason;
+    this.reasonDefined = true;
     return this;
   }
 
@@ -154,14 +191,21 @@ public class VerificationResponseDto {
     return reason;
   }
 
+  @JsonIgnore
+  public boolean getReasonDefined() {
+    return reasonDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_REASON)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setReason(String reason) {
     this.reason = reason;
+    this.reasonDefined = true;
   }
 
   public VerificationResponseDto reference(String reference) {
     this.reference = reference;
+    this.referenceDefined = true;
     return this;
   }
 
@@ -176,14 +220,21 @@ public class VerificationResponseDto {
     return reference;
   }
 
+  @JsonIgnore
+  public boolean getReferenceDefined() {
+    return referenceDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_REFERENCE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setReference(String reference) {
     this.reference = reference;
+    this.referenceDefined = true;
   }
 
   public VerificationResponseDto source(String source) {
     this.source = source;
+    this.sourceDefined = true;
     return this;
   }
 
@@ -198,14 +249,21 @@ public class VerificationResponseDto {
     return source;
   }
 
+  @JsonIgnore
+  public boolean getSourceDefined() {
+    return sourceDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SOURCE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSource(String source) {
     this.source = source;
+    this.sourceDefined = true;
   }
 
   public VerificationResponseDto price(VerificationResponsePriceDto price) {
     this.price = price;
+    this.priceDefined = true;
     return this;
   }
 
@@ -220,14 +278,21 @@ public class VerificationResponseDto {
     return price;
   }
 
+  @JsonIgnore
+  public boolean getPriceDefined() {
+    return priceDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_PRICE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setPrice(VerificationResponsePriceDto price) {
     this.price = price;
+    this.priceDefined = true;
   }
 
   public VerificationResponseDto identity(VerificationResponseIdentityDto identity) {
     this.identity = identity;
+    this.identityDefined = true;
     return this;
   }
 
@@ -242,14 +307,21 @@ public class VerificationResponseDto {
     return identity;
   }
 
+  @JsonIgnore
+  public boolean getIdentityDefined() {
+    return identityDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_IDENTITY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setIdentity(VerificationResponseIdentityDto identity) {
     this.identity = identity;
+    this.identityDefined = true;
   }
 
   public VerificationResponseDto countryId(String countryId) {
     this.countryId = countryId;
+    this.countryIdDefined = true;
     return this;
   }
 
@@ -264,14 +336,21 @@ public class VerificationResponseDto {
     return countryId;
   }
 
+  @JsonIgnore
+  public boolean getCountryIdDefined() {
+    return countryIdDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_COUNTRY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCountryId(String countryId) {
     this.countryId = countryId;
+    this.countryIdDefined = true;
   }
 
   public VerificationResponseDto verificationTimestamp(String verificationTimestamp) {
     this.verificationTimestamp = verificationTimestamp;
+    this.verificationTimestampDefined = true;
     return this;
   }
 
@@ -286,14 +365,21 @@ public class VerificationResponseDto {
     return verificationTimestamp;
   }
 
+  @JsonIgnore
+  public boolean getVerificationTimestampDefined() {
+    return verificationTimestampDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_VERIFICATION_TIMESTAMP)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setVerificationTimestamp(String verificationTimestamp) {
     this.verificationTimestamp = verificationTimestamp;
+    this.verificationTimestampDefined = true;
   }
 
   public VerificationResponseDto callComplete(Boolean callComplete) {
     this.callComplete = callComplete;
+    this.callCompleteDefined = true;
     return this;
   }
 
@@ -308,14 +394,21 @@ public class VerificationResponseDto {
     return callComplete;
   }
 
+  @JsonIgnore
+  public boolean getCallCompleteDefined() {
+    return callCompleteDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CALL_COMPLETE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCallComplete(Boolean callComplete) {
     this.callComplete = callComplete;
+    this.callCompleteDefined = true;
   }
 
   public VerificationResponseDto callResult(String callResult) {
     this.callResult = callResult;
+    this.callResultDefined = true;
     return this;
   }
 
@@ -330,10 +423,16 @@ public class VerificationResponseDto {
     return callResult;
   }
 
+  @JsonIgnore
+  public boolean getCallResultDefined() {
+    return callResultDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CALL_RESULT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCallResult(String callResult) {
     this.callResult = callResult;
+    this.callResultDefined = true;
   }
 
   /** Return true if this VerificationResponse object is equal to o. */

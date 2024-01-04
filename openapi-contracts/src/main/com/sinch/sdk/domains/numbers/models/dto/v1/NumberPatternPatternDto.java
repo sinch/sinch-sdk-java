@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.numbers.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -19,15 +21,18 @@ import java.util.Objects;
 
 /** Sequence of digits to search for. */
 @JsonPropertyOrder({NumberPatternPatternDto.JSON_PROPERTY_NUMBER_PATTERN})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class NumberPatternPatternDto {
   public static final String JSON_PROPERTY_NUMBER_PATTERN = "NumberPattern";
   private SearchPatternDto numberPattern;
+  private boolean numberPatternDefined = false;
 
   public NumberPatternPatternDto() {}
 
   public NumberPatternPatternDto numberPattern(SearchPatternDto numberPattern) {
     this.numberPattern = numberPattern;
+    this.numberPatternDefined = true;
     return this;
   }
 
@@ -42,10 +47,16 @@ public class NumberPatternPatternDto {
     return numberPattern;
   }
 
+  @JsonIgnore
+  public boolean getNumberPatternDefined() {
+    return numberPatternDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NUMBER_PATTERN)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNumberPattern(SearchPatternDto numberPattern) {
     this.numberPattern = numberPattern;
+    this.numberPatternDefined = true;
   }
 
   /** Return true if this numberPattern.pattern object is equal to o. */

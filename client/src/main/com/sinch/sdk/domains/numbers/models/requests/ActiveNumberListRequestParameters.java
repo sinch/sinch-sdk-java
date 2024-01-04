@@ -1,11 +1,11 @@
 package com.sinch.sdk.domains.numbers.models.requests;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.numbers.models.Capability;
 import com.sinch.sdk.domains.numbers.models.NumberPattern;
 import com.sinch.sdk.domains.numbers.models.NumberType;
 import com.sinch.sdk.domains.numbers.models.OrderBy;
 import java.util.Collection;
-import java.util.Optional;
 
 /**
  * Parameters request to list active numbers for a project
@@ -15,32 +15,23 @@ import java.util.Optional;
  * @since 1.0
  */
 public class ActiveNumberListRequestParameters {
-  private final String regionCode;
-  private final NumberType type;
-  private final NumberPattern numberPattern;
-  private final Collection<Capability> capabilities;
-  private final Integer pageSize;
-  private final String pageToken;
-  private final OrderBy orderBy;
 
-  /**
-   * @param regionCode Region code to filter by. ISO 3166-1 alpha-2 country code of the phone
-   *     number. Example: US, GB or SE.
-   * @param type Number type to filter by
-   * @param numberPattern Pattern to search for
-   * @param capabilities Number capabilities to filter by
-   * @param pageSize The maximum number of items to return.
-   * @param pageToken The next page token value returned from a previous List request, if any
-   * @param orderBy Ordering results
-   */
-  public ActiveNumberListRequestParameters(
-      String regionCode,
-      NumberType type,
-      NumberPattern numberPattern,
-      Collection<Capability> capabilities,
-      Integer pageSize,
-      String pageToken,
-      OrderBy orderBy) {
+  private final OptionalValue<String> regionCode;
+  private final OptionalValue<NumberType> type;
+  private final OptionalValue<NumberPattern> numberPattern;
+  private final OptionalValue<Collection<Capability>> capabilities;
+  private final OptionalValue<Integer> pageSize;
+  private final OptionalValue<String> pageToken;
+  private final OptionalValue<OrderBy> orderBy;
+
+  private ActiveNumberListRequestParameters(
+      OptionalValue<String> regionCode,
+      OptionalValue<NumberType> type,
+      OptionalValue<NumberPattern> numberPattern,
+      OptionalValue<Collection<Capability>> capabilities,
+      OptionalValue<Integer> pageSize,
+      OptionalValue<String> pageToken,
+      OptionalValue<OrderBy> orderBy) {
     this.regionCode = regionCode;
     this.type = type;
     this.numberPattern = numberPattern;
@@ -50,32 +41,32 @@ public class ActiveNumberListRequestParameters {
     this.orderBy = orderBy;
   }
 
-  public String getRegionCode() {
+  public OptionalValue<String> getRegionCode() {
     return regionCode;
   }
 
-  public NumberType getType() {
+  public OptionalValue<NumberType> getType() {
     return type;
   }
 
-  public Optional<NumberPattern> getNumberPattern() {
-    return Optional.ofNullable(numberPattern);
+  public OptionalValue<NumberPattern> getNumberPattern() {
+    return numberPattern;
   }
 
-  public Optional<Collection<Capability>> getCapabilities() {
-    return Optional.ofNullable(capabilities);
+  public OptionalValue<Collection<Capability>> getCapabilities() {
+    return capabilities;
   }
 
-  public Optional<Integer> getPageSize() {
-    return Optional.ofNullable(pageSize);
+  public OptionalValue<Integer> getPageSize() {
+    return pageSize;
   }
 
-  public Optional<String> getPageToken() {
-    return Optional.ofNullable(pageToken);
+  public OptionalValue<String> getPageToken() {
+    return pageToken;
   }
 
-  public Optional<OrderBy> getOrderBy() {
-    return Optional.ofNullable(orderBy);
+  public OptionalValue<OrderBy> getOrderBy() {
+    return orderBy;
   }
 
   @Override
@@ -104,58 +95,88 @@ public class ActiveNumberListRequestParameters {
   }
 
   public static class Builder {
-    String regionCode;
-    NumberType type;
-    NumberPattern numberPattern;
-    Collection<Capability> capabilities;
-    Integer pageSize;
-    String pageToken;
-    OrderBy orderBy;
+
+    OptionalValue<String> regionCode = OptionalValue.empty();
+    OptionalValue<NumberType> type = OptionalValue.empty();
+    OptionalValue<NumberPattern> numberPattern = OptionalValue.empty();
+    OptionalValue<Collection<Capability>> capabilities = OptionalValue.empty();
+    OptionalValue<Integer> pageSize = OptionalValue.empty();
+    OptionalValue<String> pageToken = OptionalValue.empty();
+    OptionalValue<OrderBy> orderBy = OptionalValue.empty();
 
     private Builder() {}
 
     public Builder(ActiveNumberListRequestParameters parameters) {
-      this.setRegionCode(parameters.regionCode)
-          .setType(parameters.type)
-          .setNumberPattern(parameters.numberPattern)
-          .setCapabilities(parameters.capabilities)
-          .setPageSize(parameters.pageSize)
-          .setPageToken(parameters.pageToken)
-          .setOrderBy(parameters.orderBy);
+      parameters.regionCode.ifPresent(this::setRegionCode);
+      parameters.type.ifPresent(this::setType);
+      parameters.numberPattern.ifPresent(this::setNumberPattern);
+      parameters.capabilities.ifPresent(this::setCapabilities);
+      parameters.pageSize.ifPresent(this::setPageSize);
+      parameters.pageToken.ifPresent(this::setPageToken);
+      parameters.orderBy.ifPresent(this::setOrderBy);
     }
 
+    /**
+     * @param regionCode Region code to filter by. ISO 3166-1 alpha-2 country code of the phone
+     *     number. Example: US, GB or SE.
+     * @return Current builder
+     */
     public Builder setRegionCode(String regionCode) {
-      this.regionCode = regionCode;
+      this.regionCode = OptionalValue.of(regionCode);
       return this;
     }
 
+    /**
+     * @param type Number type to filter by
+     * @return Current builder
+     */
     public Builder setType(NumberType type) {
-      this.type = type;
+      this.type = OptionalValue.of(type);
       return this;
     }
 
+    /**
+     * @param numberPattern Pattern to search for
+     * @return Current builder
+     */
     public Builder setNumberPattern(NumberPattern numberPattern) {
-      this.numberPattern = numberPattern;
+      this.numberPattern = OptionalValue.of(numberPattern);
       return this;
     }
 
+    /**
+     * @param capabilities Number capabilities to filter by
+     * @return Current builder
+     */
     public Builder setCapabilities(Collection<Capability> capabilities) {
-      this.capabilities = capabilities;
+      this.capabilities = OptionalValue.of(capabilities);
       return this;
     }
 
+    /**
+     * @param pageSize The maximum number of items to return.
+     * @return Current builder
+     */
     public Builder setPageSize(Integer pageSize) {
-      this.pageSize = pageSize;
+      this.pageSize = OptionalValue.of(pageSize);
       return this;
     }
 
+    /**
+     * @param pageToken The next page token value returned from a previous List request, if any
+     * @return Current builder
+     */
     public Builder setPageToken(String pageToken) {
-      this.pageToken = pageToken;
+      this.pageToken = OptionalValue.of(pageToken);
       return this;
     }
 
+    /**
+     * @param orderBy Ordering results
+     * @return Current builder
+     */
     public Builder setOrderBy(OrderBy orderBy) {
-      this.orderBy = orderBy;
+      this.orderBy = OptionalValue.of(orderBy);
       return this;
     }
 

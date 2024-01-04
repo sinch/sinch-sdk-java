@@ -1,18 +1,19 @@
 package com.sinch.sdk.domains.verification.models.requests;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 
 public class VerificationReportCalloutRequestParameters
     extends VerificationReportRequestParameters {
 
-  private final String code;
+  private final OptionalValue<String> code;
 
-  public VerificationReportCalloutRequestParameters(String code) {
-    super(VerificationMethodType.CALLOUT);
+  private VerificationReportCalloutRequestParameters(OptionalValue<String> code) {
+    super(OptionalValue.of(VerificationMethodType.CALLOUT));
     this.code = code;
   }
 
-  public String getCode() {
+  public OptionalValue<String> getCode() {
     return code;
   }
 
@@ -32,14 +33,18 @@ public class VerificationReportCalloutRequestParameters
 
   public static class Builder extends VerificationReportRequestParameters.Builder<Builder> {
 
-    String code;
+    OptionalValue<String> code = OptionalValue.empty();
 
     public Builder() {
       super(VerificationMethodType.CALLOUT);
     }
 
+    /**
+     * @param code The code which was received by the user submitting the Phone Call verification.
+     * @return current builder
+     */
     public Builder setCode(String code) {
-      this.code = code;
+      this.code = OptionalValue.of(code);
       return this;
     }
 

@@ -13,6 +13,8 @@
 package com.sinch.sdk.domains.numbers.models.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -36,32 +38,41 @@ import java.util.Objects;
   AvailableNumberDto.JSON_PROPERTY_PAYMENT_INTERVAL_MONTHS,
   AvailableNumberDto.JSON_PROPERTY_SUPPORTING_DOCUMENTATION_REQUIRED
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class AvailableNumberDto {
   public static final String JSON_PROPERTY_PHONE_NUMBER = "phoneNumber";
   private String phoneNumber;
+  private boolean phoneNumberDefined = false;
 
   public static final String JSON_PROPERTY_REGION_CODE = "regionCode";
   private String regionCode;
+  private boolean regionCodeDefined = false;
 
   public static final String JSON_PROPERTY_TYPE = "type";
-  private String type = "LOCAL";
+  private String type;
+  private boolean typeDefined = false;
 
   public static final String JSON_PROPERTY_CAPABILITY = "capability";
   private List<String> capability;
+  private boolean capabilityDefined = false;
 
   public static final String JSON_PROPERTY_SETUP_PRICE = "setupPrice";
   private MoneyDto setupPrice;
+  private boolean setupPriceDefined = false;
 
   public static final String JSON_PROPERTY_MONTHLY_PRICE = "monthlyPrice";
   private MoneyDto monthlyPrice;
+  private boolean monthlyPriceDefined = false;
 
   public static final String JSON_PROPERTY_PAYMENT_INTERVAL_MONTHS = "paymentIntervalMonths";
   private Integer paymentIntervalMonths;
+  private boolean paymentIntervalMonthsDefined = false;
 
   public static final String JSON_PROPERTY_SUPPORTING_DOCUMENTATION_REQUIRED =
       "supportingDocumentationRequired";
   private Boolean supportingDocumentationRequired;
+  private boolean supportingDocumentationRequiredDefined = false;
 
   public AvailableNumberDto() {}
 
@@ -74,9 +85,13 @@ public class AvailableNumberDto {
           Boolean supportingDocumentationRequired) {
     this();
     this.phoneNumber = phoneNumber;
+    this.phoneNumberDefined = true;
     this.regionCode = regionCode;
+    this.regionCodeDefined = true;
     this.paymentIntervalMonths = paymentIntervalMonths;
+    this.paymentIntervalMonthsDefined = true;
     this.supportingDocumentationRequired = supportingDocumentationRequired;
+    this.supportingDocumentationRequiredDefined = true;
   }
 
   /**
@@ -93,6 +108,11 @@ public class AvailableNumberDto {
     return phoneNumber;
   }
 
+  @JsonIgnore
+  public boolean getPhoneNumberDefined() {
+    return phoneNumberDefined;
+  }
+
   /**
    * ISO 3166-1 alpha-2 country code of the phone number. Example: &#x60;US&#x60;, &#x60;GB&#x60; or
    * &#x60;SE&#x60;.
@@ -105,8 +125,14 @@ public class AvailableNumberDto {
     return regionCode;
   }
 
+  @JsonIgnore
+  public boolean getRegionCodeDefined() {
+    return regionCodeDefined;
+  }
+
   public AvailableNumberDto type(String type) {
     this.type = type;
+    this.typeDefined = true;
     return this;
   }
 
@@ -121,14 +147,21 @@ public class AvailableNumberDto {
     return type;
   }
 
+  @JsonIgnore
+  public boolean getTypeDefined() {
+    return typeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TYPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setType(String type) {
     this.type = type;
+    this.typeDefined = true;
   }
 
   public AvailableNumberDto capability(List<String> capability) {
     this.capability = capability;
+    this.capabilityDefined = true;
     return this;
   }
 
@@ -136,6 +169,7 @@ public class AvailableNumberDto {
     if (this.capability == null) {
       this.capability = new ArrayList<>();
     }
+    this.capabilityDefined = true;
     this.capability.add(capabilityItem);
     return this;
   }
@@ -151,14 +185,21 @@ public class AvailableNumberDto {
     return capability;
   }
 
+  @JsonIgnore
+  public boolean getCapabilityDefined() {
+    return capabilityDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CAPABILITY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCapability(List<String> capability) {
     this.capability = capability;
+    this.capabilityDefined = true;
   }
 
   public AvailableNumberDto setupPrice(MoneyDto setupPrice) {
     this.setupPrice = setupPrice;
+    this.setupPriceDefined = true;
     return this;
   }
 
@@ -173,14 +214,21 @@ public class AvailableNumberDto {
     return setupPrice;
   }
 
+  @JsonIgnore
+  public boolean getSetupPriceDefined() {
+    return setupPriceDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SETUP_PRICE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSetupPrice(MoneyDto setupPrice) {
     this.setupPrice = setupPrice;
+    this.setupPriceDefined = true;
   }
 
   public AvailableNumberDto monthlyPrice(MoneyDto monthlyPrice) {
     this.monthlyPrice = monthlyPrice;
+    this.monthlyPriceDefined = true;
     return this;
   }
 
@@ -195,10 +243,16 @@ public class AvailableNumberDto {
     return monthlyPrice;
   }
 
+  @JsonIgnore
+  public boolean getMonthlyPriceDefined() {
+    return monthlyPriceDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MONTHLY_PRICE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMonthlyPrice(MoneyDto monthlyPrice) {
     this.monthlyPrice = monthlyPrice;
+    this.monthlyPriceDefined = true;
   }
 
   /**
@@ -212,6 +266,11 @@ public class AvailableNumberDto {
     return paymentIntervalMonths;
   }
 
+  @JsonIgnore
+  public boolean getPaymentIntervalMonthsDefined() {
+    return paymentIntervalMonthsDefined;
+  }
+
   /**
    * Whether or not supplementary documentation will be required to complete the number rental.
    *
@@ -221,6 +280,11 @@ public class AvailableNumberDto {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getSupportingDocumentationRequired() {
     return supportingDocumentationRequired;
+  }
+
+  @JsonIgnore
+  public boolean getSupportingDocumentationRequiredDefined() {
+    return supportingDocumentationRequiredDefined;
   }
 
   /** Return true if this AvailableNumber object is equal to o. */

@@ -13,6 +13,8 @@
 package com.sinch.sdk.domains.numbers.models.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -25,16 +27,20 @@ import java.util.Objects;
   AvailableRegionDto.JSON_PROPERTY_REGION_NAME,
   AvailableRegionDto.JSON_PROPERTY_TYPES
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class AvailableRegionDto {
   public static final String JSON_PROPERTY_REGION_CODE = "regionCode";
   private String regionCode;
+  private boolean regionCodeDefined = false;
 
   public static final String JSON_PROPERTY_REGION_NAME = "regionName";
   private String regionName;
+  private boolean regionNameDefined = false;
 
   public static final String JSON_PROPERTY_TYPES = "types";
   private List<String> types;
+  private boolean typesDefined = false;
 
   public AvailableRegionDto() {}
 
@@ -45,8 +51,11 @@ public class AvailableRegionDto {
       @JsonProperty(JSON_PROPERTY_TYPES) List<String> types) {
     this();
     this.regionCode = regionCode;
+    this.regionCodeDefined = true;
     this.regionName = regionName;
+    this.regionNameDefined = true;
     this.types = types;
+    this.typesDefined = true;
   }
 
   /**
@@ -60,6 +69,11 @@ public class AvailableRegionDto {
     return regionCode;
   }
 
+  @JsonIgnore
+  public boolean getRegionCodeDefined() {
+    return regionCodeDefined;
+  }
+
   /**
    * Display name of the region. Examples: United States, United Kingdom or Sweden.
    *
@@ -69,6 +83,11 @@ public class AvailableRegionDto {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getRegionName() {
     return regionName;
+  }
+
+  @JsonIgnore
+  public boolean getRegionNameDefined() {
+    return regionNameDefined;
   }
 
   /**
@@ -81,6 +100,11 @@ public class AvailableRegionDto {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<String> getTypes() {
     return types;
+  }
+
+  @JsonIgnore
+  public boolean getTypesDefined() {
+    return typesDefined;
   }
 
   /** Return true if this AvailableRegion object is equal to o. */

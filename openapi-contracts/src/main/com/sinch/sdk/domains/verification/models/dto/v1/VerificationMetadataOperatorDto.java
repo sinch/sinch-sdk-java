@@ -35,7 +35,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 @JsonDeserialize(
     using = VerificationMetadataOperatorDto.VerificationMetadataOperatorDtoDeserializer.class)
 @JsonSerialize(
@@ -131,8 +130,8 @@ public class VerificationMetadataOperatorDto extends AbstractOpenApiSchema {
       }
       throw new IOException(
           String.format(
-              "Failed deserialization for VerificationMetadataOperatorDto: %d classes match"
-                  + " result, expected 1",
+              "Failed deserialization for VerificationMetadataOperatorDto: %d classes match result,"
+                  + " expected 1",
               match));
     }
 

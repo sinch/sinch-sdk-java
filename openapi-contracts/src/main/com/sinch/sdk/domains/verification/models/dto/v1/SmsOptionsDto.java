@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -26,30 +28,38 @@ import java.util.Objects;
   SmsOptionsDto.JSON_PROPERTY_READ_PERMISSION_TOKEN,
   SmsOptionsDto.JSON_PROPERTY_APPLICATION_HASH
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SmsOptionsDto {
   public static final String JSON_PROPERTY_CODE = "code";
   private String code;
+  private boolean codeDefined = false;
 
   public static final String JSON_PROPERTY_CODE_TYPE = "codeType";
   private String codeType;
+  private boolean codeTypeDefined = false;
 
   public static final String JSON_PROPERTY_CODE_MASK = "codeMask";
   private String codeMask;
+  private boolean codeMaskDefined = false;
 
   public static final String JSON_PROPERTY_TEMPLATE = "template";
   private String template;
+  private boolean templateDefined = false;
 
   public static final String JSON_PROPERTY_READ_PERMISSION_TOKEN = "readPermissionToken";
   private String readPermissionToken;
+  private boolean readPermissionTokenDefined = false;
 
   public static final String JSON_PROPERTY_APPLICATION_HASH = "applicationHash";
   private String applicationHash;
+  private boolean applicationHashDefined = false;
 
   public SmsOptionsDto() {}
 
   public SmsOptionsDto code(String code) {
     this.code = code;
+    this.codeDefined = true;
     return this;
   }
 
@@ -64,14 +74,21 @@ public class SmsOptionsDto {
     return code;
   }
 
+  @JsonIgnore
+  public boolean getCodeDefined() {
+    return codeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CODE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCode(String code) {
     this.code = code;
+    this.codeDefined = true;
   }
 
   public SmsOptionsDto codeType(String codeType) {
     this.codeType = codeType;
+    this.codeTypeDefined = true;
     return this;
   }
 
@@ -86,14 +103,21 @@ public class SmsOptionsDto {
     return codeType;
   }
 
+  @JsonIgnore
+  public boolean getCodeTypeDefined() {
+    return codeTypeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CODE_TYPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCodeType(String codeType) {
     this.codeType = codeType;
+    this.codeTypeDefined = true;
   }
 
   public SmsOptionsDto codeMask(String codeMask) {
     this.codeMask = codeMask;
+    this.codeMaskDefined = true;
     return this;
   }
 
@@ -108,14 +132,21 @@ public class SmsOptionsDto {
     return codeMask;
   }
 
+  @JsonIgnore
+  public boolean getCodeMaskDefined() {
+    return codeMaskDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CODE_MASK)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCodeMask(String codeMask) {
     this.codeMask = codeMask;
+    this.codeMaskDefined = true;
   }
 
   public SmsOptionsDto template(String template) {
     this.template = template;
+    this.templateDefined = true;
     return this;
   }
 
@@ -130,14 +161,21 @@ public class SmsOptionsDto {
     return template;
   }
 
+  @JsonIgnore
+  public boolean getTemplateDefined() {
+    return templateDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TEMPLATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTemplate(String template) {
     this.template = template;
+    this.templateDefined = true;
   }
 
   public SmsOptionsDto readPermissionToken(String readPermissionToken) {
     this.readPermissionToken = readPermissionToken;
+    this.readPermissionTokenDefined = true;
     return this;
   }
 
@@ -152,14 +190,21 @@ public class SmsOptionsDto {
     return readPermissionToken;
   }
 
+  @JsonIgnore
+  public boolean getReadPermissionTokenDefined() {
+    return readPermissionTokenDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_READ_PERMISSION_TOKEN)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setReadPermissionToken(String readPermissionToken) {
     this.readPermissionToken = readPermissionToken;
+    this.readPermissionTokenDefined = true;
   }
 
   public SmsOptionsDto applicationHash(String applicationHash) {
     this.applicationHash = applicationHash;
+    this.applicationHashDefined = true;
     return this;
   }
 
@@ -174,10 +219,16 @@ public class SmsOptionsDto {
     return applicationHash;
   }
 
+  @JsonIgnore
+  public boolean getApplicationHashDefined() {
+    return applicationHashDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_APPLICATION_HASH)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setApplicationHash(String applicationHash) {
     this.applicationHash = applicationHash;
+    this.applicationHashDefined = true;
   }
 
   /** Return true if this SmsOptions object is equal to o. */

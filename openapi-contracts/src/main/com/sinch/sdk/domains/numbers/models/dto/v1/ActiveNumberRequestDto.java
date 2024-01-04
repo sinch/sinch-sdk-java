@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.numbers.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -24,24 +26,30 @@ import java.util.Objects;
   ActiveNumberRequestDto.JSON_PROPERTY_VOICE_CONFIGURATION,
   ActiveNumberRequestDto.JSON_PROPERTY_CALLBACK_URL
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ActiveNumberRequestDto {
   public static final String JSON_PROPERTY_DISPLAY_NAME = "displayName";
   private String displayName;
+  private boolean displayNameDefined = false;
 
   public static final String JSON_PROPERTY_SMS_CONFIGURATION = "smsConfiguration";
   private SMSConfigurationDto smsConfiguration;
+  private boolean smsConfigurationDefined = false;
 
   public static final String JSON_PROPERTY_VOICE_CONFIGURATION = "voiceConfiguration";
   private VoiceConfigurationDto voiceConfiguration;
+  private boolean voiceConfigurationDefined = false;
 
   public static final String JSON_PROPERTY_CALLBACK_URL = "callbackUrl";
   private String callbackUrl;
+  private boolean callbackUrlDefined = false;
 
   public ActiveNumberRequestDto() {}
 
   public ActiveNumberRequestDto displayName(String displayName) {
     this.displayName = displayName;
+    this.displayNameDefined = true;
     return this;
   }
 
@@ -56,14 +64,21 @@ public class ActiveNumberRequestDto {
     return displayName;
   }
 
+  @JsonIgnore
+  public boolean getDisplayNameDefined() {
+    return displayNameDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DISPLAY_NAME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDisplayName(String displayName) {
     this.displayName = displayName;
+    this.displayNameDefined = true;
   }
 
   public ActiveNumberRequestDto smsConfiguration(SMSConfigurationDto smsConfiguration) {
     this.smsConfiguration = smsConfiguration;
+    this.smsConfigurationDefined = true;
     return this;
   }
 
@@ -78,14 +93,21 @@ public class ActiveNumberRequestDto {
     return smsConfiguration;
   }
 
+  @JsonIgnore
+  public boolean getSmsConfigurationDefined() {
+    return smsConfigurationDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SMS_CONFIGURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSmsConfiguration(SMSConfigurationDto smsConfiguration) {
     this.smsConfiguration = smsConfiguration;
+    this.smsConfigurationDefined = true;
   }
 
   public ActiveNumberRequestDto voiceConfiguration(VoiceConfigurationDto voiceConfiguration) {
     this.voiceConfiguration = voiceConfiguration;
+    this.voiceConfigurationDefined = true;
     return this;
   }
 
@@ -100,14 +122,21 @@ public class ActiveNumberRequestDto {
     return voiceConfiguration;
   }
 
+  @JsonIgnore
+  public boolean getVoiceConfigurationDefined() {
+    return voiceConfigurationDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_VOICE_CONFIGURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setVoiceConfiguration(VoiceConfigurationDto voiceConfiguration) {
     this.voiceConfiguration = voiceConfiguration;
+    this.voiceConfigurationDefined = true;
   }
 
   public ActiveNumberRequestDto callbackUrl(String callbackUrl) {
     this.callbackUrl = callbackUrl;
+    this.callbackUrlDefined = true;
     return this;
   }
 
@@ -122,10 +151,16 @@ public class ActiveNumberRequestDto {
     return callbackUrl;
   }
 
+  @JsonIgnore
+  public boolean getCallbackUrlDefined() {
+    return callbackUrlDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCallbackUrl(String callbackUrl) {
     this.callbackUrl = callbackUrl;
+    this.callbackUrlDefined = true;
   }
 
   /** Return true if this ActiveNumberRequest object is equal to o. */

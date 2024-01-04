@@ -13,6 +13,8 @@
 package com.sinch.sdk.domains.numbers.models.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -28,7 +30,8 @@ import java.util.Objects;
   InternalErrorErrorDto.JSON_PROPERTY_STATUS,
   InternalErrorErrorDto.JSON_PROPERTY_DETAILS
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class InternalErrorErrorDto {
   /** Gets or Sets code */
   public enum CodeEnum {
@@ -65,9 +68,11 @@ public class InternalErrorErrorDto {
 
   public static final String JSON_PROPERTY_CODE = "code";
   private Integer code;
+  private boolean codeDefined = false;
 
   public static final String JSON_PROPERTY_MESSAGE = "message";
   private String message;
+  private boolean messageDefined = false;
 
   /** Gets or Sets status */
   public enum StatusEnum {
@@ -106,14 +111,17 @@ public class InternalErrorErrorDto {
 
   public static final String JSON_PROPERTY_STATUS = "status";
   private String status;
+  private boolean statusDefined = false;
 
   public static final String JSON_PROPERTY_DETAILS = "details";
   private List<Object> details;
+  private boolean detailsDefined = false;
 
   public InternalErrorErrorDto() {}
 
   public InternalErrorErrorDto code(Integer code) {
     this.code = code;
+    this.codeDefined = true;
     return this;
   }
 
@@ -128,14 +136,21 @@ public class InternalErrorErrorDto {
     return code;
   }
 
+  @JsonIgnore
+  public boolean getCodeDefined() {
+    return codeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CODE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCode(Integer code) {
     this.code = code;
+    this.codeDefined = true;
   }
 
   public InternalErrorErrorDto message(String message) {
     this.message = message;
+    this.messageDefined = true;
     return this;
   }
 
@@ -150,14 +165,21 @@ public class InternalErrorErrorDto {
     return message;
   }
 
+  @JsonIgnore
+  public boolean getMessageDefined() {
+    return messageDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMessage(String message) {
     this.message = message;
+    this.messageDefined = true;
   }
 
   public InternalErrorErrorDto status(String status) {
     this.status = status;
+    this.statusDefined = true;
     return this;
   }
 
@@ -172,14 +194,21 @@ public class InternalErrorErrorDto {
     return status;
   }
 
+  @JsonIgnore
+  public boolean getStatusDefined() {
+    return statusDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_STATUS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setStatus(String status) {
     this.status = status;
+    this.statusDefined = true;
   }
 
   public InternalErrorErrorDto details(List<Object> details) {
     this.details = details;
+    this.detailsDefined = true;
     return this;
   }
 
@@ -187,6 +216,7 @@ public class InternalErrorErrorDto {
     if (this.details == null) {
       this.details = new ArrayList<>();
     }
+    this.detailsDefined = true;
     this.details.add(detailsItem);
     return this;
   }
@@ -202,10 +232,16 @@ public class InternalErrorErrorDto {
     return details;
   }
 
+  @JsonIgnore
+  public boolean getDetailsDefined() {
+    return detailsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DETAILS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDetails(List<Object> details) {
     this.details = details;
+    this.detailsDefined = true;
   }
 
   /** Return true if this InternalError_error object is equal to o. */

@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.numbers.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -31,33 +33,42 @@ import java.util.Objects;
   RentAnyNumberRequestDto.JSON_PROPERTY_VOICE_CONFIGURATION,
   RentAnyNumberRequestDto.JSON_PROPERTY_CALLBACK_URL
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class RentAnyNumberRequestDto {
   public static final String JSON_PROPERTY_REGION_CODE = "regionCode";
   private String regionCode;
+  private boolean regionCodeDefined = false;
 
   public static final String JSON_PROPERTY_TYPE = "type";
-  private String type = "LOCAL";
+  private String type;
+  private boolean typeDefined = false;
 
   public static final String JSON_PROPERTY_NUMBER_PATTERN = "numberPattern";
   private SearchPatternDto numberPattern;
+  private boolean numberPatternDefined = false;
 
   public static final String JSON_PROPERTY_CAPABILITIES = "capabilities";
   private List<String> capabilities;
+  private boolean capabilitiesDefined = false;
 
   public static final String JSON_PROPERTY_SMS_CONFIGURATION = "smsConfiguration";
   private RentAnyNumberRequestSmsConfigurationDto smsConfiguration;
+  private boolean smsConfigurationDefined = false;
 
   public static final String JSON_PROPERTY_VOICE_CONFIGURATION = "voiceConfiguration";
   private RentAnyNumberRequestVoiceConfigurationDto voiceConfiguration;
+  private boolean voiceConfigurationDefined = false;
 
   public static final String JSON_PROPERTY_CALLBACK_URL = "callbackUrl";
   private String callbackUrl;
+  private boolean callbackUrlDefined = false;
 
   public RentAnyNumberRequestDto() {}
 
   public RentAnyNumberRequestDto regionCode(String regionCode) {
     this.regionCode = regionCode;
+    this.regionCodeDefined = true;
     return this;
   }
 
@@ -73,14 +84,21 @@ public class RentAnyNumberRequestDto {
     return regionCode;
   }
 
+  @JsonIgnore
+  public boolean getRegionCodeDefined() {
+    return regionCodeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_REGION_CODE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setRegionCode(String regionCode) {
     this.regionCode = regionCode;
+    this.regionCodeDefined = true;
   }
 
   public RentAnyNumberRequestDto type(String type) {
     this.type = type;
+    this.typeDefined = true;
     return this;
   }
 
@@ -95,14 +113,21 @@ public class RentAnyNumberRequestDto {
     return type;
   }
 
+  @JsonIgnore
+  public boolean getTypeDefined() {
+    return typeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TYPE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setType(String type) {
     this.type = type;
+    this.typeDefined = true;
   }
 
   public RentAnyNumberRequestDto numberPattern(SearchPatternDto numberPattern) {
     this.numberPattern = numberPattern;
+    this.numberPatternDefined = true;
     return this;
   }
 
@@ -117,14 +142,21 @@ public class RentAnyNumberRequestDto {
     return numberPattern;
   }
 
+  @JsonIgnore
+  public boolean getNumberPatternDefined() {
+    return numberPatternDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NUMBER_PATTERN)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNumberPattern(SearchPatternDto numberPattern) {
     this.numberPattern = numberPattern;
+    this.numberPatternDefined = true;
   }
 
   public RentAnyNumberRequestDto capabilities(List<String> capabilities) {
     this.capabilities = capabilities;
+    this.capabilitiesDefined = true;
     return this;
   }
 
@@ -132,6 +164,7 @@ public class RentAnyNumberRequestDto {
     if (this.capabilities == null) {
       this.capabilities = new ArrayList<>();
     }
+    this.capabilitiesDefined = true;
     this.capabilities.add(capabilitiesItem);
     return this;
   }
@@ -147,15 +180,22 @@ public class RentAnyNumberRequestDto {
     return capabilities;
   }
 
+  @JsonIgnore
+  public boolean getCapabilitiesDefined() {
+    return capabilitiesDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CAPABILITIES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCapabilities(List<String> capabilities) {
     this.capabilities = capabilities;
+    this.capabilitiesDefined = true;
   }
 
   public RentAnyNumberRequestDto smsConfiguration(
       RentAnyNumberRequestSmsConfigurationDto smsConfiguration) {
     this.smsConfiguration = smsConfiguration;
+    this.smsConfigurationDefined = true;
     return this;
   }
 
@@ -170,15 +210,22 @@ public class RentAnyNumberRequestDto {
     return smsConfiguration;
   }
 
+  @JsonIgnore
+  public boolean getSmsConfigurationDefined() {
+    return smsConfigurationDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SMS_CONFIGURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSmsConfiguration(RentAnyNumberRequestSmsConfigurationDto smsConfiguration) {
     this.smsConfiguration = smsConfiguration;
+    this.smsConfigurationDefined = true;
   }
 
   public RentAnyNumberRequestDto voiceConfiguration(
       RentAnyNumberRequestVoiceConfigurationDto voiceConfiguration) {
     this.voiceConfiguration = voiceConfiguration;
+    this.voiceConfigurationDefined = true;
     return this;
   }
 
@@ -193,14 +240,21 @@ public class RentAnyNumberRequestDto {
     return voiceConfiguration;
   }
 
+  @JsonIgnore
+  public boolean getVoiceConfigurationDefined() {
+    return voiceConfigurationDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_VOICE_CONFIGURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setVoiceConfiguration(RentAnyNumberRequestVoiceConfigurationDto voiceConfiguration) {
     this.voiceConfiguration = voiceConfiguration;
+    this.voiceConfigurationDefined = true;
   }
 
   public RentAnyNumberRequestDto callbackUrl(String callbackUrl) {
     this.callbackUrl = callbackUrl;
+    this.callbackUrlDefined = true;
     return this;
   }
 
@@ -215,10 +269,16 @@ public class RentAnyNumberRequestDto {
     return callbackUrl;
   }
 
+  @JsonIgnore
+  public boolean getCallbackUrlDefined() {
+    return callbackUrlDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCallbackUrl(String callbackUrl) {
     this.callbackUrl = callbackUrl;
+    this.callbackUrlDefined = true;
   }
 
   /** Return true if this RentAnyNumberRequest object is equal to o. */

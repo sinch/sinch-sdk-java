@@ -1,33 +1,41 @@
 package com.sinch.sdk.domains.numbers.adapters.converters;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.numbers.models.dto.v1.RentAnyNumberRequestSmsConfigurationDto;
 import com.sinch.sdk.domains.numbers.models.dto.v1.RentAnyNumberRequestVoiceConfigurationDto;
 import com.sinch.sdk.domains.numbers.models.dto.v1.RentNumberRequestDto;
 import com.sinch.sdk.domains.numbers.models.requests.AvailableNumberRentRequestParameters;
 import com.sinch.sdk.domains.numbers.models.requests.RentSMSConfigurationRequestParameters;
 import com.sinch.sdk.domains.numbers.models.requests.RentVoiceConfigurationRequestParameters;
-import java.util.Optional;
 
 public class AvailableRentRequestParametersDtoConverter {
 
   public static RentNumberRequestDto convert(AvailableNumberRentRequestParameters parameters) {
 
-    Optional<RentSMSConfigurationRequestParameters> sms = parameters.getSmsConfiguration();
-    Optional<RentVoiceConfigurationRequestParameters> voice = parameters.getVoiceConfiguration();
-    Optional<String> callbackUrl = parameters.getCallBackUrl();
+    OptionalValue<RentSMSConfigurationRequestParameters> sms = parameters.getSmsConfiguration();
+    OptionalValue<RentVoiceConfigurationRequestParameters> voice =
+        parameters.getVoiceConfiguration();
+    OptionalValue<String> callbackUrl = parameters.getCallBackUrl();
 
     RentNumberRequestDto dto = new RentNumberRequestDto();
 
     sms.ifPresent(
-        value ->
-            dto.smsConfiguration(
-                new RentAnyNumberRequestSmsConfigurationDto()
-                    .campaignId(value.getCampaignId().orElse(null))
-                    .servicePlanId(value.getServicePlanId())));
+        value -> {
+          RentAnyNumberRequestSmsConfigurationDto config =
+              new RentAnyNumberRequestSmsConfigurationDto();
+          value.getServicePlanId().ifPresent(config::setServicePlanId);
+          value.getCampaignId().ifPresent(config::setCampaignId);
+          dto.smsConfiguration(config);
+        });
+
     voice.ifPresent(
-        value ->
-            dto.voiceConfiguration(
-                new RentAnyNumberRequestVoiceConfigurationDto().appId(value.getAppId())));
+        value -> {
+          RentAnyNumberRequestVoiceConfigurationDto config =
+              new RentAnyNumberRequestVoiceConfigurationDto();
+          value.getAppId().ifPresent(config::setAppId);
+          dto.voiceConfiguration(config);
+        });
+
     callbackUrl.ifPresent(dto::callbackUrl);
     return dto;
   }

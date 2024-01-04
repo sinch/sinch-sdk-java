@@ -17,13 +17,16 @@ class ActiveNumberUpdateRequestParametersDtoConverterTest {
 
   public static void compareWithDto(
       ActiveNumberUpdateSMSConfigurationRequestParameters client, SMSConfigurationDto dto) {
-    assertEquals(dto.getServicePlanId(), client.getServicePlanId());
+    assertEquals(dto.getServicePlanIdDefined(), client.getServicePlanId().isPresent());
+    assertEquals(dto.getServicePlanId(), client.getServicePlanId().get());
+    assertEquals(dto.getCampaignIdDefined(), client.getCampaignId().isPresent());
     assertEquals(dto.getCampaignId(), client.getCampaignId().get());
   }
 
   public static void compareWithDto(
       ActiveNumberUpdateVoiceConfigurationRequestParameters client, VoiceConfigurationDto dto) {
-    assertEquals(dto.getAppId(), client.getAppId());
+    assertEquals(dto.getAppIdDefined(), client.getAppId().isPresent());
+    assertEquals(dto.getAppId(), client.getAppId().get());
   }
 
   public static void compareWithDto(
@@ -31,10 +34,7 @@ class ActiveNumberUpdateRequestParametersDtoConverterTest {
     assertEquals(dto.getDisplayName(), client.getDisplayName().get());
     compareWithDto(client.getSmsConfiguration().get(), dto.getSmsConfiguration());
     compareWithDto(client.getVoiceConfiguration().get(), dto.getVoiceConfiguration());
-    // TODO: OAS file do not yet contains callback field declaration
-    // assertEquals(dto.getCallback(),
-    //             client.getCallback());
-
+    assertEquals(dto.getCallbackUrl(), client.getCallback().get());
   }
 
   @Test

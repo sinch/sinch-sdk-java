@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.numbers.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -25,21 +27,26 @@ import java.util.Objects;
   ActiveNumbersResponseDto.JSON_PROPERTY_NEXT_PAGE_TOKEN,
   ActiveNumbersResponseDto.JSON_PROPERTY_TOTAL_SIZE
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ActiveNumbersResponseDto {
   public static final String JSON_PROPERTY_ACTIVE_NUMBERS = "activeNumbers";
   private List<ActiveNumberDto> activeNumbers;
+  private boolean activeNumbersDefined = false;
 
   public static final String JSON_PROPERTY_NEXT_PAGE_TOKEN = "nextPageToken";
   private String nextPageToken;
+  private boolean nextPageTokenDefined = false;
 
   public static final String JSON_PROPERTY_TOTAL_SIZE = "totalSize";
   private Integer totalSize;
+  private boolean totalSizeDefined = false;
 
   public ActiveNumbersResponseDto() {}
 
   public ActiveNumbersResponseDto activeNumbers(List<ActiveNumberDto> activeNumbers) {
     this.activeNumbers = activeNumbers;
+    this.activeNumbersDefined = true;
     return this;
   }
 
@@ -47,6 +54,7 @@ public class ActiveNumbersResponseDto {
     if (this.activeNumbers == null) {
       this.activeNumbers = new ArrayList<>();
     }
+    this.activeNumbersDefined = true;
     this.activeNumbers.add(activeNumbersItem);
     return this;
   }
@@ -62,14 +70,21 @@ public class ActiveNumbersResponseDto {
     return activeNumbers;
   }
 
+  @JsonIgnore
+  public boolean getActiveNumbersDefined() {
+    return activeNumbersDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ACTIVE_NUMBERS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setActiveNumbers(List<ActiveNumberDto> activeNumbers) {
     this.activeNumbers = activeNumbers;
+    this.activeNumbersDefined = true;
   }
 
   public ActiveNumbersResponseDto nextPageToken(String nextPageToken) {
     this.nextPageToken = nextPageToken;
+    this.nextPageTokenDefined = true;
     return this;
   }
 
@@ -84,14 +99,21 @@ public class ActiveNumbersResponseDto {
     return nextPageToken;
   }
 
+  @JsonIgnore
+  public boolean getNextPageTokenDefined() {
+    return nextPageTokenDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NEXT_PAGE_TOKEN)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNextPageToken(String nextPageToken) {
     this.nextPageToken = nextPageToken;
+    this.nextPageTokenDefined = true;
   }
 
   public ActiveNumbersResponseDto totalSize(Integer totalSize) {
     this.totalSize = totalSize;
+    this.totalSizeDefined = true;
     return this;
   }
 
@@ -106,10 +128,16 @@ public class ActiveNumbersResponseDto {
     return totalSize;
   }
 
+  @JsonIgnore
+  public boolean getTotalSizeDefined() {
+    return totalSizeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TOTAL_SIZE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTotalSize(Integer totalSize) {
     this.totalSize = totalSize;
+    this.totalSizeDefined = true;
   }
 
   /** Return true if this ActiveNumbersResponse object is equal to o. */

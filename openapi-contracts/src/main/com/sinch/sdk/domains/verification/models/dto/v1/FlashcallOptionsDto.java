@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -24,24 +26,30 @@ import java.util.Objects;
   FlashcallOptionsDto.JSON_PROPERTY_DIAL_TIMEOUT,
   FlashcallOptionsDto.JSON_PROPERTY_INTERCEPTION_TIMEOUT
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class FlashcallOptionsDto {
   public static final String JSON_PROPERTY_CLI = "cli";
   private String cli;
+  private boolean cliDefined = false;
 
   public static final String JSON_PROPERTY_CLI_EXTRA_DIGITS = "cliExtraDigits";
   private String cliExtraDigits;
+  private boolean cliExtraDigitsDefined = false;
 
   public static final String JSON_PROPERTY_DIAL_TIMEOUT = "dialTimeout";
   private Integer dialTimeout;
+  private boolean dialTimeoutDefined = false;
 
   public static final String JSON_PROPERTY_INTERCEPTION_TIMEOUT = "interceptionTimeout";
   private Integer interceptionTimeout;
+  private boolean interceptionTimeoutDefined = false;
 
   public FlashcallOptionsDto() {}
 
   public FlashcallOptionsDto cli(String cli) {
     this.cli = cli;
+    this.cliDefined = true;
     return this;
   }
 
@@ -56,14 +64,21 @@ public class FlashcallOptionsDto {
     return cli;
   }
 
+  @JsonIgnore
+  public boolean getCliDefined() {
+    return cliDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CLI)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCli(String cli) {
     this.cli = cli;
+    this.cliDefined = true;
   }
 
   public FlashcallOptionsDto cliExtraDigits(String cliExtraDigits) {
     this.cliExtraDigits = cliExtraDigits;
+    this.cliExtraDigitsDefined = true;
     return this;
   }
 
@@ -78,14 +93,21 @@ public class FlashcallOptionsDto {
     return cliExtraDigits;
   }
 
+  @JsonIgnore
+  public boolean getCliExtraDigitsDefined() {
+    return cliExtraDigitsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CLI_EXTRA_DIGITS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCliExtraDigits(String cliExtraDigits) {
     this.cliExtraDigits = cliExtraDigits;
+    this.cliExtraDigitsDefined = true;
   }
 
   public FlashcallOptionsDto dialTimeout(Integer dialTimeout) {
     this.dialTimeout = dialTimeout;
+    this.dialTimeoutDefined = true;
     return this;
   }
 
@@ -100,14 +122,21 @@ public class FlashcallOptionsDto {
     return dialTimeout;
   }
 
+  @JsonIgnore
+  public boolean getDialTimeoutDefined() {
+    return dialTimeoutDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_DIAL_TIMEOUT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDialTimeout(Integer dialTimeout) {
     this.dialTimeout = dialTimeout;
+    this.dialTimeoutDefined = true;
   }
 
   public FlashcallOptionsDto interceptionTimeout(Integer interceptionTimeout) {
     this.interceptionTimeout = interceptionTimeout;
+    this.interceptionTimeoutDefined = true;
     return this;
   }
 
@@ -122,10 +151,16 @@ public class FlashcallOptionsDto {
     return interceptionTimeout;
   }
 
+  @JsonIgnore
+  public boolean getInterceptionTimeoutDefined() {
+    return interceptionTimeoutDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_INTERCEPTION_TIMEOUT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setInterceptionTimeout(Integer interceptionTimeout) {
     this.interceptionTimeout = interceptionTimeout;
+    this.interceptionTimeoutDefined = true;
   }
 
   /** Return true if this FlashcallOptions object is equal to o. */

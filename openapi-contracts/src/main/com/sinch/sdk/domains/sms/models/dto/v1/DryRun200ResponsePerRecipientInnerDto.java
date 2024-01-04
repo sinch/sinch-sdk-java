@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.sms.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -24,24 +26,30 @@ import java.util.Objects;
   DryRun200ResponsePerRecipientInnerDto.JSON_PROPERTY_BODY,
   DryRun200ResponsePerRecipientInnerDto.JSON_PROPERTY_ENCODING
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class DryRun200ResponsePerRecipientInnerDto {
   public static final String JSON_PROPERTY_RECIPIENT = "recipient";
   private String recipient;
+  private boolean recipientDefined = false;
 
   public static final String JSON_PROPERTY_MESSAGE_PART = "message_part";
   private String messagePart;
+  private boolean messagePartDefined = false;
 
   public static final String JSON_PROPERTY_BODY = "body";
   private String body;
+  private boolean bodyDefined = false;
 
   public static final String JSON_PROPERTY_ENCODING = "encoding";
   private String encoding;
+  private boolean encodingDefined = false;
 
   public DryRun200ResponsePerRecipientInnerDto() {}
 
   public DryRun200ResponsePerRecipientInnerDto recipient(String recipient) {
     this.recipient = recipient;
+    this.recipientDefined = true;
     return this;
   }
 
@@ -56,14 +64,21 @@ public class DryRun200ResponsePerRecipientInnerDto {
     return recipient;
   }
 
+  @JsonIgnore
+  public boolean getRecipientDefined() {
+    return recipientDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_RECIPIENT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRecipient(String recipient) {
     this.recipient = recipient;
+    this.recipientDefined = true;
   }
 
   public DryRun200ResponsePerRecipientInnerDto messagePart(String messagePart) {
     this.messagePart = messagePart;
+    this.messagePartDefined = true;
     return this;
   }
 
@@ -78,14 +93,21 @@ public class DryRun200ResponsePerRecipientInnerDto {
     return messagePart;
   }
 
+  @JsonIgnore
+  public boolean getMessagePartDefined() {
+    return messagePartDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_MESSAGE_PART)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMessagePart(String messagePart) {
     this.messagePart = messagePart;
+    this.messagePartDefined = true;
   }
 
   public DryRun200ResponsePerRecipientInnerDto body(String body) {
     this.body = body;
+    this.bodyDefined = true;
     return this;
   }
 
@@ -100,14 +122,21 @@ public class DryRun200ResponsePerRecipientInnerDto {
     return body;
   }
 
+  @JsonIgnore
+  public boolean getBodyDefined() {
+    return bodyDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_BODY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setBody(String body) {
     this.body = body;
+    this.bodyDefined = true;
   }
 
   public DryRun200ResponsePerRecipientInnerDto encoding(String encoding) {
     this.encoding = encoding;
+    this.encodingDefined = true;
     return this;
   }
 
@@ -122,10 +151,16 @@ public class DryRun200ResponsePerRecipientInnerDto {
     return encoding;
   }
 
+  @JsonIgnore
+  public boolean getEncodingDefined() {
+    return encodingDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ENCODING)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEncoding(String encoding) {
     this.encoding = encoding;
+    this.encodingDefined = true;
   }
 
   /** Return true if this Dry_Run_200_response_per_recipient_inner object is equal to o. */

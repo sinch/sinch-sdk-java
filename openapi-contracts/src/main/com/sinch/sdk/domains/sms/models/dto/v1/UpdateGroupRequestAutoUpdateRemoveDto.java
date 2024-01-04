@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.sms.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -22,18 +24,22 @@ import java.util.Objects;
   UpdateGroupRequestAutoUpdateRemoveDto.JSON_PROPERTY_FIRST_WORD,
   UpdateGroupRequestAutoUpdateRemoveDto.JSON_PROPERTY_SECOND_WORD
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class UpdateGroupRequestAutoUpdateRemoveDto {
   public static final String JSON_PROPERTY_FIRST_WORD = "first_word";
   private String firstWord;
+  private boolean firstWordDefined = false;
 
   public static final String JSON_PROPERTY_SECOND_WORD = "second_word";
   private String secondWord;
+  private boolean secondWordDefined = false;
 
   public UpdateGroupRequestAutoUpdateRemoveDto() {}
 
   public UpdateGroupRequestAutoUpdateRemoveDto firstWord(String firstWord) {
     this.firstWord = firstWord;
+    this.firstWordDefined = true;
     return this;
   }
 
@@ -50,14 +56,21 @@ public class UpdateGroupRequestAutoUpdateRemoveDto {
     return firstWord;
   }
 
+  @JsonIgnore
+  public boolean getFirstWordDefined() {
+    return firstWordDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_FIRST_WORD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFirstWord(String firstWord) {
     this.firstWord = firstWord;
+    this.firstWordDefined = true;
   }
 
   public UpdateGroupRequestAutoUpdateRemoveDto secondWord(String secondWord) {
     this.secondWord = secondWord;
+    this.secondWordDefined = true;
     return this;
   }
 
@@ -73,10 +86,16 @@ public class UpdateGroupRequestAutoUpdateRemoveDto {
     return secondWord;
   }
 
+  @JsonIgnore
+  public boolean getSecondWordDefined() {
+    return secondWordDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SECOND_WORD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSecondWord(String secondWord) {
     this.secondWord = secondWord;
+    this.secondWordDefined = true;
   }
 
   /** Return true if this UpdateGroup_request_auto_update_remove object is equal to o. */

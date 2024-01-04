@@ -13,6 +13,6 @@ class VerificationReportRequestParametersTest {
 
   @Test
   void getMethod() {
-    Assertions.assertThat(value.getMethod()).isEqualTo(method);
+    Assertions.assertThat(value.getMethod().get()).isEqualTo(method);
   }
 }

@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.numbers.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -21,16 +23,19 @@ import java.util.Objects;
 
 /** Response message to list regions for which numbers are provided. */
 @JsonPropertyOrder({ListAvailableRegionsResponseDto.JSON_PROPERTY_AVAILABLE_REGIONS})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ListAvailableRegionsResponseDto {
   public static final String JSON_PROPERTY_AVAILABLE_REGIONS = "availableRegions";
   private List<AvailableRegionDto> availableRegions;
+  private boolean availableRegionsDefined = false;
 
   public ListAvailableRegionsResponseDto() {}
 
   public ListAvailableRegionsResponseDto availableRegions(
       List<AvailableRegionDto> availableRegions) {
     this.availableRegions = availableRegions;
+    this.availableRegionsDefined = true;
     return this;
   }
 
@@ -39,6 +44,7 @@ public class ListAvailableRegionsResponseDto {
     if (this.availableRegions == null) {
       this.availableRegions = new ArrayList<>();
     }
+    this.availableRegionsDefined = true;
     this.availableRegions.add(availableRegionsItem);
     return this;
   }
@@ -52,10 +58,16 @@ public class ListAvailableRegionsResponseDto {
     return availableRegions;
   }
 
+  @JsonIgnore
+  public boolean getAvailableRegionsDefined() {
+    return availableRegionsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_AVAILABLE_REGIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAvailableRegions(List<AvailableRegionDto> availableRegions) {
     this.availableRegions = availableRegions;
+    this.availableRegionsDefined = true;
   }
 
   /** Return true if this ListAvailableRegionsResponse object is equal to o. */

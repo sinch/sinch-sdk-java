@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -25,27 +27,34 @@ import java.util.Objects;
   CalloutSpeechDto.JSON_PROPERTY_SPEED,
   CalloutSpeechDto.JSON_PROPERTY_SSML_TEMPLATE
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class CalloutSpeechDto {
   public static final String JSON_PROPERTY_GREETING = "greeting";
   private String greeting;
+  private boolean greetingDefined = false;
 
   public static final String JSON_PROPERTY_LOCALE = "locale";
   private String locale;
+  private boolean localeDefined = false;
 
   public static final String JSON_PROPERTY_CODE_PROMPT = "codePrompt";
   private String codePrompt;
+  private boolean codePromptDefined = false;
 
   public static final String JSON_PROPERTY_SPEED = "speed";
   private String speed;
+  private boolean speedDefined = false;
 
   public static final String JSON_PROPERTY_SSML_TEMPLATE = "ssmlTemplate";
   private String ssmlTemplate;
+  private boolean ssmlTemplateDefined = false;
 
   public CalloutSpeechDto() {}
 
   public CalloutSpeechDto greeting(String greeting) {
     this.greeting = greeting;
+    this.greetingDefined = true;
     return this;
   }
 
@@ -60,14 +69,21 @@ public class CalloutSpeechDto {
     return greeting;
   }
 
+  @JsonIgnore
+  public boolean getGreetingDefined() {
+    return greetingDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_GREETING)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setGreeting(String greeting) {
     this.greeting = greeting;
+    this.greetingDefined = true;
   }
 
   public CalloutSpeechDto locale(String locale) {
     this.locale = locale;
+    this.localeDefined = true;
     return this;
   }
 
@@ -82,14 +98,21 @@ public class CalloutSpeechDto {
     return locale;
   }
 
+  @JsonIgnore
+  public boolean getLocaleDefined() {
+    return localeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_LOCALE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setLocale(String locale) {
     this.locale = locale;
+    this.localeDefined = true;
   }
 
   public CalloutSpeechDto codePrompt(String codePrompt) {
     this.codePrompt = codePrompt;
+    this.codePromptDefined = true;
     return this;
   }
 
@@ -104,14 +127,21 @@ public class CalloutSpeechDto {
     return codePrompt;
   }
 
+  @JsonIgnore
+  public boolean getCodePromptDefined() {
+    return codePromptDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CODE_PROMPT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCodePrompt(String codePrompt) {
     this.codePrompt = codePrompt;
+    this.codePromptDefined = true;
   }
 
   public CalloutSpeechDto speed(String speed) {
     this.speed = speed;
+    this.speedDefined = true;
     return this;
   }
 
@@ -126,14 +156,21 @@ public class CalloutSpeechDto {
     return speed;
   }
 
+  @JsonIgnore
+  public boolean getSpeedDefined() {
+    return speedDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SPEED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSpeed(String speed) {
     this.speed = speed;
+    this.speedDefined = true;
   }
 
   public CalloutSpeechDto ssmlTemplate(String ssmlTemplate) {
     this.ssmlTemplate = ssmlTemplate;
+    this.ssmlTemplateDefined = true;
     return this;
   }
 
@@ -148,10 +185,16 @@ public class CalloutSpeechDto {
     return ssmlTemplate;
   }
 
+  @JsonIgnore
+  public boolean getSsmlTemplateDefined() {
+    return ssmlTemplateDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_SSML_TEMPLATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSsmlTemplate(String ssmlTemplate) {
     this.ssmlTemplate = ssmlTemplate;
+    this.ssmlTemplateDefined = true;
   }
 
   /** Return true if this CalloutSpeech object is equal to o. */

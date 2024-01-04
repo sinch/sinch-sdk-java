@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -24,25 +26,31 @@ import java.util.Objects;
   VerificationMetadataSimCardInfoCollectionDto.JSON_PROPERTY_3,
   VerificationMetadataSimCardInfoCollectionDto.JSON_PROPERTY_COUNT
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class VerificationMetadataSimCardInfoCollectionDto {
   public static final String JSON_PROPERTY_1 = "1";
   private VerificationMetadataSimCardInfoCollection1Dto _1;
+  private boolean _1Defined = false;
 
   public static final String JSON_PROPERTY_2 = "2";
   private VerificationMetadataSimCardInfoCollection1Dto _2;
+  private boolean _2Defined = false;
 
   public static final String JSON_PROPERTY_3 = "3";
   private VerificationMetadataSimCardInfoCollection1Dto _3;
+  private boolean _3Defined = false;
 
   public static final String JSON_PROPERTY_COUNT = "count";
   private Integer count;
+  private boolean countDefined = false;
 
   public VerificationMetadataSimCardInfoCollectionDto() {}
 
   public VerificationMetadataSimCardInfoCollectionDto _1(
       VerificationMetadataSimCardInfoCollection1Dto _1) {
     this._1 = _1;
+    this._1Defined = true;
     return this;
   }
 
@@ -57,15 +65,22 @@ public class VerificationMetadataSimCardInfoCollectionDto {
     return _1;
   }
 
+  @JsonIgnore
+  public boolean get1Defined() {
+    return _1Defined;
+  }
+
   @JsonProperty(JSON_PROPERTY_1)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void set1(VerificationMetadataSimCardInfoCollection1Dto _1) {
     this._1 = _1;
+    this._1Defined = true;
   }
 
   public VerificationMetadataSimCardInfoCollectionDto _2(
       VerificationMetadataSimCardInfoCollection1Dto _2) {
     this._2 = _2;
+    this._2Defined = true;
     return this;
   }
 
@@ -80,15 +95,22 @@ public class VerificationMetadataSimCardInfoCollectionDto {
     return _2;
   }
 
+  @JsonIgnore
+  public boolean get2Defined() {
+    return _2Defined;
+  }
+
   @JsonProperty(JSON_PROPERTY_2)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void set2(VerificationMetadataSimCardInfoCollection1Dto _2) {
     this._2 = _2;
+    this._2Defined = true;
   }
 
   public VerificationMetadataSimCardInfoCollectionDto _3(
       VerificationMetadataSimCardInfoCollection1Dto _3) {
     this._3 = _3;
+    this._3Defined = true;
     return this;
   }
 
@@ -103,14 +125,21 @@ public class VerificationMetadataSimCardInfoCollectionDto {
     return _3;
   }
 
+  @JsonIgnore
+  public boolean get3Defined() {
+    return _3Defined;
+  }
+
   @JsonProperty(JSON_PROPERTY_3)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void set3(VerificationMetadataSimCardInfoCollection1Dto _3) {
     this._3 = _3;
+    this._3Defined = true;
   }
 
   public VerificationMetadataSimCardInfoCollectionDto count(Integer count) {
     this.count = count;
+    this.countDefined = true;
     return this;
   }
 
@@ -125,10 +154,16 @@ public class VerificationMetadataSimCardInfoCollectionDto {
     return count;
   }
 
+  @JsonIgnore
+  public boolean getCountDefined() {
+    return countDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_COUNT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCount(Integer count) {
     this.count = count;
+    this.countDefined = true;
   }
 
   /** Return true if this VerificationMetadataSimCardInfoCollection object is equal to o. */

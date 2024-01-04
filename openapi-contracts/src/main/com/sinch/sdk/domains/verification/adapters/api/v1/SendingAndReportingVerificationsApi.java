@@ -37,7 +37,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class SendingAndReportingVerificationsApi {
 
   private static final Logger LOGGER =
@@ -71,7 +70,8 @@ public class SendingAndReportingVerificationsApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[reportVerificationById] "
+        "[reportVerificationById]"
+            + " "
             + "id: "
             + id
             + ", "
@@ -157,7 +157,8 @@ public class SendingAndReportingVerificationsApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[reportVerificationByIdentity] "
+        "[reportVerificationByIdentity]"
+            + " "
             + "type: "
             + type
             + ", "
@@ -254,7 +255,8 @@ public class SendingAndReportingVerificationsApi {
       InitiateVerificationResourceDto initiateVerificationResourceDto) throws ApiException {
 
     LOGGER.finest(
-        "[startVerification] "
+        "[startVerification]"
+            + " "
             + "initiateVerificationResourceDto: "
             + initiateVerificationResourceDto);
 

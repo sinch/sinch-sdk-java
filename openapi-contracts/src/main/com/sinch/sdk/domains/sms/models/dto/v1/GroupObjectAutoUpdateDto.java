@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.sms.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -23,21 +25,26 @@ import java.util.Objects;
   GroupObjectAutoUpdateDto.JSON_PROPERTY_ADD,
   GroupObjectAutoUpdateDto.JSON_PROPERTY_REMOVE
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class GroupObjectAutoUpdateDto {
   public static final String JSON_PROPERTY_TO = "to";
   private String to;
+  private boolean toDefined = false;
 
   public static final String JSON_PROPERTY_ADD = "add";
   private UpdateGroupRequestAutoUpdateAddDto add;
+  private boolean addDefined = false;
 
   public static final String JSON_PROPERTY_REMOVE = "remove";
   private GroupObjectAutoUpdateRemoveDto remove;
+  private boolean removeDefined = false;
 
   public GroupObjectAutoUpdateDto() {}
 
   public GroupObjectAutoUpdateDto to(String to) {
     this.to = to;
+    this.toDefined = true;
     return this;
   }
 
@@ -55,14 +62,21 @@ public class GroupObjectAutoUpdateDto {
     return to;
   }
 
+  @JsonIgnore
+  public boolean getToDefined() {
+    return toDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_TO)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTo(String to) {
     this.to = to;
+    this.toDefined = true;
   }
 
   public GroupObjectAutoUpdateDto add(UpdateGroupRequestAutoUpdateAddDto add) {
     this.add = add;
+    this.addDefined = true;
     return this;
   }
 
@@ -77,14 +91,21 @@ public class GroupObjectAutoUpdateDto {
     return add;
   }
 
+  @JsonIgnore
+  public boolean getAddDefined() {
+    return addDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_ADD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAdd(UpdateGroupRequestAutoUpdateAddDto add) {
     this.add = add;
+    this.addDefined = true;
   }
 
   public GroupObjectAutoUpdateDto remove(GroupObjectAutoUpdateRemoveDto remove) {
     this.remove = remove;
+    this.removeDefined = true;
     return this;
   }
 
@@ -99,10 +120,16 @@ public class GroupObjectAutoUpdateDto {
     return remove;
   }
 
+  @JsonIgnore
+  public boolean getRemoveDefined() {
+    return removeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_REMOVE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRemove(GroupObjectAutoUpdateRemoveDto remove) {
     this.remove = remove;
+    this.removeDefined = true;
   }
 
   /** Return true if this groupObject_auto_update object is equal to o. */

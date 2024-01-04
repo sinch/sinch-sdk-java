@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.numbers.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -19,15 +21,18 @@ import java.util.Objects;
 
 /** The request to update the callbacks configuration for the current project */
 @JsonPropertyOrder({CallbackConfigurationUpdateDto.JSON_PROPERTY_HMAC_SECRET})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class CallbackConfigurationUpdateDto {
   public static final String JSON_PROPERTY_HMAC_SECRET = "hmacSecret";
   private String hmacSecret;
+  private boolean hmacSecretDefined = false;
 
   public CallbackConfigurationUpdateDto() {}
 
   public CallbackConfigurationUpdateDto hmacSecret(String hmacSecret) {
     this.hmacSecret = hmacSecret;
+    this.hmacSecretDefined = true;
     return this;
   }
 
@@ -42,10 +47,16 @@ public class CallbackConfigurationUpdateDto {
     return hmacSecret;
   }
 
+  @JsonIgnore
+  public boolean getHmacSecretDefined() {
+    return hmacSecretDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_HMAC_SECRET)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setHmacSecret(String hmacSecret) {
     this.hmacSecret = hmacSecret;
+    this.hmacSecretDefined = true;
   }
 
   /** Return true if this CallbackConfigurationUpdate object is equal to o. */

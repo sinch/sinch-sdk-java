@@ -4,7 +4,7 @@ import java.time.Instant;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class BatchesListRequestParametersTest {
+class BatchesListRequestParametersBuilderTest {
 
   static final String from = "foo from";
 
@@ -15,7 +15,14 @@ class BatchesListRequestParametersTest {
   static Integer pageSize = 3;
 
   public static final BatchesListRequestParameters value =
-      new BatchesListRequestParameters(from, startDate, endDate, clientReference, page, pageSize);
+      BatchesListRequestParameters.builder()
+          .setFrom(from)
+          .setStartDate(startDate)
+          .setEndDate(endDate)
+          .setClientReference(clientReference)
+          .setPage(page)
+          .setPageSize(pageSize)
+          .build();
 
   @Test
   void getFrom() {

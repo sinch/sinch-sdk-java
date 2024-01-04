@@ -35,7 +35,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class CallbacksApi {
 
   private static final Logger LOGGER = Logger.getLogger(CallbacksApi.class.getName());
@@ -66,7 +65,7 @@ public class CallbacksApi {
    */
   public CallbackConfigurationDto getCallbackConfiguration(String projectId) throws ApiException {
 
-    LOGGER.finest("[getCallbackConfiguration] " + "projectId: " + projectId);
+    LOGGER.finest("[getCallbackConfiguration]" + " " + "projectId: " + projectId);
 
     HttpRequest httpRequest = getCallbackConfigurationRequestBuilder(projectId);
     HttpResponse response =
@@ -137,7 +136,8 @@ public class CallbacksApi {
       throws ApiException {
 
     LOGGER.finest(
-        "[updateCallbackConfiguration] "
+        "[updateCallbackConfiguration]"
+            + " "
             + "projectId: "
             + projectId
             + ", "

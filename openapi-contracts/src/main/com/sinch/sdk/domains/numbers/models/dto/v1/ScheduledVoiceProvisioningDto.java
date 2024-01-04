@@ -13,6 +13,8 @@
 package com.sinch.sdk.domains.numbers.models.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -28,16 +30,20 @@ import java.util.Objects;
   ScheduledVoiceProvisioningDto.JSON_PROPERTY_STATUS,
   ScheduledVoiceProvisioningDto.JSON_PROPERTY_LAST_UPDATED_TIME
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ScheduledVoiceProvisioningDto {
   public static final String JSON_PROPERTY_APP_ID = "appId";
   private String appId;
+  private boolean appIdDefined = false;
 
   public static final String JSON_PROPERTY_STATUS = "status";
   private ProvisioningStatusDto status;
+  private boolean statusDefined = false;
 
   public static final String JSON_PROPERTY_LAST_UPDATED_TIME = "lastUpdatedTime";
   private OffsetDateTime lastUpdatedTime;
+  private boolean lastUpdatedTimeDefined = false;
 
   public ScheduledVoiceProvisioningDto() {}
 
@@ -47,7 +53,9 @@ public class ScheduledVoiceProvisioningDto {
       @JsonProperty(JSON_PROPERTY_LAST_UPDATED_TIME) OffsetDateTime lastUpdatedTime) {
     this();
     this.appId = appId;
+    this.appIdDefined = true;
     this.lastUpdatedTime = lastUpdatedTime;
+    this.lastUpdatedTimeDefined = true;
   }
 
   /**
@@ -63,8 +71,14 @@ public class ScheduledVoiceProvisioningDto {
     return appId;
   }
 
+  @JsonIgnore
+  public boolean getAppIdDefined() {
+    return appIdDefined;
+  }
+
   public ScheduledVoiceProvisioningDto status(ProvisioningStatusDto status) {
     this.status = status;
+    this.statusDefined = true;
     return this;
   }
 
@@ -79,10 +93,16 @@ public class ScheduledVoiceProvisioningDto {
     return status;
   }
 
+  @JsonIgnore
+  public boolean getStatusDefined() {
+    return statusDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_STATUS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setStatus(ProvisioningStatusDto status) {
     this.status = status;
+    this.statusDefined = true;
   }
 
   /**
@@ -94,6 +114,11 @@ public class ScheduledVoiceProvisioningDto {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OffsetDateTime getLastUpdatedTime() {
     return lastUpdatedTime;
+  }
+
+  @JsonIgnore
+  public boolean getLastUpdatedTimeDefined() {
+    return lastUpdatedTimeDefined;
   }
 
   /** Return true if this ScheduledVoiceProvisioning object is equal to o. */

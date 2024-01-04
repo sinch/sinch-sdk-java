@@ -1,19 +1,17 @@
 package com.sinch.sdk.domains.verification.models.requests;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
-import java.util.Objects;
 
 public class VerificationReportRequestParameters {
 
-  private final VerificationMethodType method;
+  private final OptionalValue<VerificationMethodType> method;
 
-  public VerificationReportRequestParameters(VerificationMethodType method) {
-    Objects.requireNonNull(method);
-
+  protected VerificationReportRequestParameters(OptionalValue<VerificationMethodType> method) {
     this.method = method;
   }
 
-  public VerificationMethodType getMethod() {
+  public OptionalValue<VerificationMethodType> getMethod() {
     return method;
   }
 
@@ -28,16 +26,20 @@ public class VerificationReportRequestParameters {
 
   public static class Builder<B extends Builder<B>> {
 
-    VerificationMethodType method;
+    OptionalValue<VerificationMethodType> method;
 
     public Builder() {}
 
     public Builder(VerificationMethodType method) {
-      this.method = method;
+      this.method = OptionalValue.of(method);
     }
 
+    /**
+     * @param method The type of the verification request.
+     * @return current builder
+     */
     protected B setMethod(VerificationMethodType method) {
-      this.method = method;
+      this.method = OptionalValue.of(method);
       return self();
     }
 

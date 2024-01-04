@@ -13,6 +13,8 @@
 package com.sinch.sdk.domains.numbers.models.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -31,22 +33,28 @@ import java.util.Objects;
   ScheduledProvisioningDto.JSON_PROPERTY_LAST_UPDATED_TIME,
   ScheduledProvisioningDto.JSON_PROPERTY_ERROR_CODES
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ScheduledProvisioningDto {
   public static final String JSON_PROPERTY_SERVICE_PLAN_ID = "servicePlanId";
   private String servicePlanId;
+  private boolean servicePlanIdDefined = false;
 
   public static final String JSON_PROPERTY_CAMPAIGN_ID = "campaignId";
   private String campaignId;
+  private boolean campaignIdDefined = false;
 
   public static final String JSON_PROPERTY_STATUS = "status";
   private ProvisioningStatusDto status;
+  private boolean statusDefined = false;
 
   public static final String JSON_PROPERTY_LAST_UPDATED_TIME = "lastUpdatedTime";
   private OffsetDateTime lastUpdatedTime;
+  private boolean lastUpdatedTimeDefined = false;
 
   public static final String JSON_PROPERTY_ERROR_CODES = "errorCodes";
   private List<SmsErrorCodeDto> errorCodes;
+  private boolean errorCodesDefined = false;
 
   public ScheduledProvisioningDto() {}
 
@@ -58,9 +66,13 @@ public class ScheduledProvisioningDto {
       @JsonProperty(JSON_PROPERTY_ERROR_CODES) List<SmsErrorCodeDto> errorCodes) {
     this();
     this.servicePlanId = servicePlanId;
+    this.servicePlanIdDefined = true;
     this.campaignId = campaignId;
+    this.campaignIdDefined = true;
     this.lastUpdatedTime = lastUpdatedTime;
+    this.lastUpdatedTimeDefined = true;
     this.errorCodes = errorCodes;
+    this.errorCodesDefined = true;
   }
 
   /**
@@ -74,6 +86,11 @@ public class ScheduledProvisioningDto {
     return servicePlanId;
   }
 
+  @JsonIgnore
+  public boolean getServicePlanIdDefined() {
+    return servicePlanIdDefined;
+  }
+
   /**
    * TCR campaign ID that the scheduled provisioning job will configure with the number.
    *
@@ -85,8 +102,14 @@ public class ScheduledProvisioningDto {
     return campaignId;
   }
 
+  @JsonIgnore
+  public boolean getCampaignIdDefined() {
+    return campaignIdDefined;
+  }
+
   public ScheduledProvisioningDto status(ProvisioningStatusDto status) {
     this.status = status;
+    this.statusDefined = true;
     return this;
   }
 
@@ -101,10 +124,16 @@ public class ScheduledProvisioningDto {
     return status;
   }
 
+  @JsonIgnore
+  public boolean getStatusDefined() {
+    return statusDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_STATUS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setStatus(ProvisioningStatusDto status) {
     this.status = status;
+    this.statusDefined = true;
   }
 
   /**
@@ -118,6 +147,11 @@ public class ScheduledProvisioningDto {
     return lastUpdatedTime;
   }
 
+  @JsonIgnore
+  public boolean getLastUpdatedTimeDefined() {
+    return lastUpdatedTimeDefined;
+  }
+
   /**
    * Get errorCodes
    *
@@ -127,6 +161,11 @@ public class ScheduledProvisioningDto {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<SmsErrorCodeDto> getErrorCodes() {
     return errorCodes;
+  }
+
+  @JsonIgnore
+  public boolean getErrorCodesDefined() {
+    return errorCodesDefined;
   }
 
   /** Return true if this ScheduledProvisioning object is equal to o. */

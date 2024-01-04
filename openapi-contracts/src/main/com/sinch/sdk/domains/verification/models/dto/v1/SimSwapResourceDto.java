@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -19,15 +21,18 @@ import java.util.Objects;
 
 /** SimSwapResourceDto */
 @JsonPropertyOrder({SimSwapResourceDto.JSON_PROPERTY_NUMBER})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SimSwapResourceDto {
   public static final String JSON_PROPERTY_NUMBER = "number";
   private String number;
+  private boolean numberDefined = false;
 
   public SimSwapResourceDto() {}
 
   public SimSwapResourceDto number(String number) {
     this.number = number;
+    this.numberDefined = true;
     return this;
   }
 
@@ -42,10 +47,16 @@ public class SimSwapResourceDto {
     return number;
   }
 
+  @JsonIgnore
+  public boolean getNumberDefined() {
+    return numberDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_NUMBER)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNumber(String number) {
     this.number = number;
+    this.numberDefined = true;
   }
 
   /** Return true if this SimSwapResource object is equal to o. */

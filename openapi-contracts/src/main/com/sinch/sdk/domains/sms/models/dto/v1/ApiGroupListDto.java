@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.sms.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -26,24 +28,30 @@ import java.util.Objects;
   ApiGroupListDto.JSON_PROPERTY_GROUPS,
   ApiGroupListDto.JSON_PROPERTY_PAGE_SIZE
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ApiGroupListDto {
   public static final String JSON_PROPERTY_COUNT = "count";
   private Long count;
+  private boolean countDefined = false;
 
   public static final String JSON_PROPERTY_PAGE = "page";
   private Integer page;
+  private boolean pageDefined = false;
 
   public static final String JSON_PROPERTY_GROUPS = "groups";
   private List<ApiGroupDto> groups;
+  private boolean groupsDefined = false;
 
   public static final String JSON_PROPERTY_PAGE_SIZE = "page_size";
   private Integer pageSize;
+  private boolean pageSizeDefined = false;
 
   public ApiGroupListDto() {}
 
   public ApiGroupListDto count(Long count) {
     this.count = count;
+    this.countDefined = true;
     return this;
   }
 
@@ -58,14 +66,21 @@ public class ApiGroupListDto {
     return count;
   }
 
+  @JsonIgnore
+  public boolean getCountDefined() {
+    return countDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_COUNT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCount(Long count) {
     this.count = count;
+    this.countDefined = true;
   }
 
   public ApiGroupListDto page(Integer page) {
     this.page = page;
+    this.pageDefined = true;
     return this;
   }
 
@@ -80,14 +95,21 @@ public class ApiGroupListDto {
     return page;
   }
 
+  @JsonIgnore
+  public boolean getPageDefined() {
+    return pageDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_PAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setPage(Integer page) {
     this.page = page;
+    this.pageDefined = true;
   }
 
   public ApiGroupListDto groups(List<ApiGroupDto> groups) {
     this.groups = groups;
+    this.groupsDefined = true;
     return this;
   }
 
@@ -95,6 +117,7 @@ public class ApiGroupListDto {
     if (this.groups == null) {
       this.groups = new ArrayList<>();
     }
+    this.groupsDefined = true;
     this.groups.add(groupsItem);
     return this;
   }
@@ -110,14 +133,21 @@ public class ApiGroupListDto {
     return groups;
   }
 
+  @JsonIgnore
+  public boolean getGroupsDefined() {
+    return groupsDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_GROUPS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setGroups(List<ApiGroupDto> groups) {
     this.groups = groups;
+    this.groupsDefined = true;
   }
 
   public ApiGroupListDto pageSize(Integer pageSize) {
     this.pageSize = pageSize;
+    this.pageSizeDefined = true;
     return this;
   }
 
@@ -132,10 +162,16 @@ public class ApiGroupListDto {
     return pageSize;
   }
 
+  @JsonIgnore
+  public boolean getPageSizeDefined() {
+    return pageSizeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_PAGE_SIZE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setPageSize(Integer pageSize) {
     this.pageSize = pageSize;
+    this.pageSizeDefined = true;
   }
 
   /** Return true if this ApiGroupList object is equal to o. */

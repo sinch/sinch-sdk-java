@@ -1,6 +1,6 @@
 package com.sinch.sdk.domains.numbers.models.requests;
 
-import java.util.Optional;
+import com.sinch.sdk.core.models.OptionalValue;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -25,16 +25,18 @@ class AvailableNumberRentRequestParametersBuilderTest {
 
   @Test
   void getSmsConfiguration() {
-    Assertions.assertThat(value.getSmsConfiguration()).isEqualTo(Optional.of(smsConfiguration));
+    Assertions.assertThat(value.getSmsConfiguration())
+        .isEqualTo(OptionalValue.of(smsConfiguration));
   }
 
   @Test
   void getVoiceConfiguration() {
-    Assertions.assertThat(value.getVoiceConfiguration()).isEqualTo(Optional.of(voiceConfiguration));
+    Assertions.assertThat(value.getVoiceConfiguration())
+        .isEqualTo(OptionalValue.of(voiceConfiguration));
   }
 
   @Test
   void getCallBackUrl() {
-    Assertions.assertThat(value.getCallBackUrl()).isEqualTo(Optional.of(callbackUrl));
+    Assertions.assertThat(value.getCallBackUrl()).isEqualTo(OptionalValue.of(callbackUrl));
   }
 }

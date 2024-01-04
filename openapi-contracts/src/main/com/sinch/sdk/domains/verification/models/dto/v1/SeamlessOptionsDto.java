@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -19,15 +21,18 @@ import java.util.Objects;
 
 /** SeamlessOptionsDto */
 @JsonPropertyOrder({SeamlessOptionsDto.JSON_PROPERTY_END_USER_IP})
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SeamlessOptionsDto {
   public static final String JSON_PROPERTY_END_USER_IP = "endUserIp";
   private String endUserIp;
+  private boolean endUserIpDefined = false;
 
   public SeamlessOptionsDto() {}
 
   public SeamlessOptionsDto endUserIp(String endUserIp) {
     this.endUserIp = endUserIp;
+    this.endUserIpDefined = true;
     return this;
   }
 
@@ -42,10 +47,16 @@ public class SeamlessOptionsDto {
     return endUserIp;
   }
 
+  @JsonIgnore
+  public boolean getEndUserIpDefined() {
+    return endUserIpDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_END_USER_IP)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setEndUserIp(String endUserIp) {
     this.endUserIp = endUserIp;
+    this.endUserIpDefined = true;
   }
 
   /** Return true if this SeamlessOptions object is equal to o. */

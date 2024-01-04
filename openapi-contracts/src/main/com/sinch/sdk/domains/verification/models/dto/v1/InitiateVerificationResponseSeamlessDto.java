@@ -35,7 +35,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 @JsonDeserialize(
     using =
         InitiateVerificationResponseSeamlessDto.InitiateVerificationResponseSeamlessDtoDeserializer
@@ -142,8 +141,8 @@ public class InitiateVerificationResponseSeamlessDto extends AbstractOpenApiSche
       }
       throw new IOException(
           String.format(
-              "Failed deserialization for InitiateVerificationResponseSeamlessDto: %d classes"
-                  + " match result, expected 1",
+              "Failed deserialization for InitiateVerificationResponseSeamlessDto: %d classes match"
+                  + " result, expected 1",
               match));
     }
 

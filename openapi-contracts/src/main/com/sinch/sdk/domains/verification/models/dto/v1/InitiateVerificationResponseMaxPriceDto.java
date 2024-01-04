@@ -35,7 +35,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 @JsonDeserialize(
     using =
         InitiateVerificationResponseMaxPriceDto.InitiateVerificationResponseMaxPriceDtoDeserializer
@@ -133,8 +132,8 @@ public class InitiateVerificationResponseMaxPriceDto extends AbstractOpenApiSche
       }
       throw new IOException(
           String.format(
-              "Failed deserialization for InitiateVerificationResponseMaxPriceDto: %d classes"
-                  + " match result, expected 1",
+              "Failed deserialization for InitiateVerificationResponseMaxPriceDto: %d classes match"
+                  + " result, expected 1",
               match));
     }
 

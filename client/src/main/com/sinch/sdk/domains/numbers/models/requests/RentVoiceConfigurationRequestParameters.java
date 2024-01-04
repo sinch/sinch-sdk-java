@@ -1,22 +1,20 @@
 package com.sinch.sdk.domains.numbers.models.requests;
 
+import com.sinch.sdk.core.models.OptionalValue;
+
 /**
  * Voice configuration parameters request to rent a number
  *
  * @since 1.0
  */
 public class RentVoiceConfigurationRequestParameters {
-  private final String appId;
+  private final OptionalValue<String> appId;
 
-  /**
-   * @param appId Your app ID for the Voice API. The appId can be found in your Sinch Customer
-   *     Dashboard under Voice, then apps.
-   */
-  public RentVoiceConfigurationRequestParameters(String appId) {
+  private RentVoiceConfigurationRequestParameters(OptionalValue<String> appId) {
     this.appId = appId;
   }
 
-  public String getAppId() {
+  public OptionalValue<String> getAppId() {
     return appId;
   }
 
@@ -25,12 +23,17 @@ public class RentVoiceConfigurationRequestParameters {
   }
 
   public static class Builder {
-    String appId;
+    OptionalValue<String> appId = OptionalValue.empty();
 
     private Builder() {}
 
+    /**
+     * @param appId Your app ID for the Voice API. The appId can be found in your Sinch Customer
+     *     Dashboard under Voice, then apps.
+     * @return current builder
+     */
     public Builder setAppId(String appId) {
-      this.appId = appId;
+      this.appId = OptionalValue.of(appId);
       return this;
     }
 

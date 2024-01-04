@@ -12,6 +12,8 @@
 
 package com.sinch.sdk.domains.sms.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -27,24 +29,30 @@ import java.util.Set;
   MessageDeliveryStatusDto.JSON_PROPERTY_RECIPIENTS,
   MessageDeliveryStatusDto.JSON_PROPERTY_STATUS
 })
-// @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class MessageDeliveryStatusDto {
   public static final String JSON_PROPERTY_CODE = "code";
   private Integer code;
+  private boolean codeDefined = false;
 
   public static final String JSON_PROPERTY_COUNT = "count";
   private Integer count;
+  private boolean countDefined = false;
 
   public static final String JSON_PROPERTY_RECIPIENTS = "recipients";
-  private Set<String> recipients = new LinkedHashSet<>();
+  private Set<String> recipients;
+  private boolean recipientsDefined = false;
 
   public static final String JSON_PROPERTY_STATUS = "status";
   private String status;
+  private boolean statusDefined = false;
 
   public MessageDeliveryStatusDto() {}
 
   public MessageDeliveryStatusDto code(Integer code) {
     this.code = code;
+    this.codeDefined = true;
     return this;
   }
 
@@ -59,14 +67,21 @@ public class MessageDeliveryStatusDto {
     return code;
   }
 
+  @JsonIgnore
+  public boolean getCodeDefined() {
+    return codeDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_CODE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setCode(Integer code) {
     this.code = code;
+    this.codeDefined = true;
   }
 
   public MessageDeliveryStatusDto count(Integer count) {
     this.count = count;
+    this.countDefined = true;
     return this;
   }
 
@@ -81,14 +96,21 @@ public class MessageDeliveryStatusDto {
     return count;
   }
 
+  @JsonIgnore
+  public boolean getCountDefined() {
+    return countDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_COUNT)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setCount(Integer count) {
     this.count = count;
+    this.countDefined = true;
   }
 
   public MessageDeliveryStatusDto recipients(Set<String> recipients) {
     this.recipients = recipients;
+    this.recipientsDefined = true;
     return this;
   }
 
@@ -96,6 +118,7 @@ public class MessageDeliveryStatusDto {
     if (this.recipients == null) {
       this.recipients = new LinkedHashSet<>();
     }
+    this.recipientsDefined = true;
     this.recipients.add(recipientsItem);
     return this;
   }
@@ -112,15 +135,22 @@ public class MessageDeliveryStatusDto {
     return recipients;
   }
 
+  @JsonIgnore
+  public boolean getRecipientsDefined() {
+    return recipientsDefined;
+  }
+
   @JsonDeserialize(as = LinkedHashSet.class)
   @JsonProperty(JSON_PROPERTY_RECIPIENTS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setRecipients(Set<String> recipients) {
     this.recipients = recipients;
+    this.recipientsDefined = true;
   }
 
   public MessageDeliveryStatusDto status(String status) {
     this.status = status;
+    this.statusDefined = true;
     return this;
   }
 
@@ -135,10 +165,16 @@ public class MessageDeliveryStatusDto {
     return status;
   }
 
+  @JsonIgnore
+  public boolean getStatusDefined() {
+    return statusDefined;
+  }
+
   @JsonProperty(JSON_PROPERTY_STATUS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setStatus(String status) {
     this.status = status;
+    this.statusDefined = true;
   }
 
   /** Return true if this MessageDeliveryStatus object is equal to o. */

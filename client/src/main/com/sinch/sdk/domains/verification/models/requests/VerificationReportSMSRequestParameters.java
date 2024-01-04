@@ -1,25 +1,26 @@
 package com.sinch.sdk.domains.verification.models.requests;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
-import java.util.Optional;
 
 public class VerificationReportSMSRequestParameters extends VerificationReportRequestParameters {
 
-  private final String code;
-  private final String cli;
+  private final OptionalValue<String> code;
+  private final OptionalValue<String> cli;
 
-  public VerificationReportSMSRequestParameters(String code, String cli) {
-    super(VerificationMethodType.SMS);
+  private VerificationReportSMSRequestParameters(
+      OptionalValue<String> code, OptionalValue<String> cli) {
+    super(OptionalValue.of(VerificationMethodType.SMS));
     this.code = code;
     this.cli = cli;
   }
 
-  public String getCode() {
+  public OptionalValue<String> getCode() {
     return code;
   }
 
-  public Optional<String> getCli() {
-    return Optional.ofNullable(cli);
+  public OptionalValue<String> getCli() {
+    return cli;
   }
 
   @Override
@@ -41,20 +42,28 @@ public class VerificationReportSMSRequestParameters extends VerificationReportRe
 
   public static class Builder extends VerificationReportRequestParameters.Builder<Builder> {
 
-    String code;
-    String cli;
+    OptionalValue<String> code = OptionalValue.empty();
+    OptionalValue<String> cli = OptionalValue.empty();
 
     public Builder() {
       super(VerificationMethodType.SMS);
     }
 
+    /**
+     * @param code The code which was received by the user submitting the SMS verification.
+     * @return current builder
+     */
     public Builder setCode(String code) {
-      this.code = code;
+      this.code = OptionalValue.of(code);
       return this;
     }
 
+    /**
+     * @param cli The sender ID of the SMS.
+     * @return current builder
+     */
     public Builder setCli(String cli) {
-      this.cli = cli;
+      this.cli = OptionalValue.of(cli);
       return this;
     }
 

@@ -22,8 +22,8 @@ class AvailableRentAnyRequestParametersDtoConverterTest {
 
   public static void compareWithDto(
       AvailableNumberRentAnyRequestParameters client, RentAnyNumberRequestDto dto) {
-    assertEquals(dto.getRegionCode(), client.getRegionCode());
-    assertEquals(dto.getType(), NumberType.valueOf(client.getType()));
+    assertEquals(dto.getRegionCode(), client.getRegionCode().get());
+    assertEquals(dto.getType(), NumberType.valueOf(client.getType().get()));
     if (null == dto.getNumberPattern()) {
       assertFalse(client.getNumberPattern().isPresent());
     } else {
@@ -50,13 +50,14 @@ class AvailableRentAnyRequestParametersDtoConverterTest {
           client.getSmsConfiguration().get().getCampaignId().get());
       assertEquals(
           dto.getSmsConfiguration().getServicePlanId(),
-          client.getSmsConfiguration().get().getServicePlanId());
+          client.getSmsConfiguration().get().getServicePlanId().get());
     }
     if (null == dto.getVoiceConfiguration()) {
       assertFalse(client.getVoiceConfiguration().isPresent());
     } else {
       assertEquals(
-          dto.getVoiceConfiguration().getAppId(), client.getVoiceConfiguration().get().getAppId());
+          dto.getVoiceConfiguration().getAppId(),
+          client.getVoiceConfiguration().get().getAppId().get());
     }
     if (null == dto.getCallbackUrl()) {
       assertFalse(client.getCallBackUrl().isPresent());
@@ -84,8 +85,12 @@ class AvailableRentAnyRequestParametersDtoConverterTest {
                     .build())
             .setCapabilities(Collections.singletonList(Capability.SMS))
             .setSmsConfiguration(
-                new RentSMSConfigurationRequestParameters("campaign id", ("service plan")))
-            .setVoiceConfiguration(new RentVoiceConfigurationRequestParameters("app id"))
+                RentSMSConfigurationRequestParameters.builder()
+                    .setCampaignId("campaign id")
+                    .setServicePlanId("service plan")
+                    .build())
+            .setVoiceConfiguration(
+                RentVoiceConfigurationRequestParameters.builder().setAppId("app id").build())
             .setCallbackUrl("callback url")
             .build();
   }
