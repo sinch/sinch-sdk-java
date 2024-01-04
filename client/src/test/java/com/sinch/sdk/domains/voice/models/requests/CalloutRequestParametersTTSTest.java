@@ -1,8 +1,6 @@
 package com.sinch.sdk.domains.voice.models.requests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sinch.sdk.domains.voice.models.CalloutMethodType;
 import com.sinch.sdk.models.E164PhoneNumber;
@@ -28,30 +26,14 @@ public class CalloutRequestParametersTTSTest {
           .build();
 
   @Test
-  void destinationRequired() {
-
-    Exception exception =
-        assertThrows(
-            NullPointerException.class,
-            () -> {
-              CalloutRequestParametersConference.builder().setConferenceId("foo").build();
-            });
-    assertTrue(exception.getMessage().contains("destination"));
-  }
-
-  @Test
-  void destination() {
-    assertEquals(DestinationNumber.valueOf("+14045005000"), ttsRequestParameters.getDestination());
-  }
-
-  @Test
   void getMethod() {
-    assertEquals(CalloutMethodType.TTS_CALLOUT, ttsRequestParameters.getMethod());
+    assertEquals(CalloutMethodType.TTS_CALLOUT, ttsRequestParameters.getMethod().get());
   }
 
   @Test
   void getDestination() {
-    assertEquals(DestinationNumber.valueOf("+14045005000"), ttsRequestParameters.getDestination());
+    assertEquals(
+        DestinationNumber.valueOf("+14045005000"), ttsRequestParameters.getDestination().get());
   }
 
   @Test
