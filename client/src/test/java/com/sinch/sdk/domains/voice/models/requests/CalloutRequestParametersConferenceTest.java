@@ -33,46 +33,23 @@ public class CalloutRequestParametersConferenceTest {
           .build();
 
   @Test
-  void destinationRequired() {
-
-    Exception exception =
-        assertThrows(
-            NullPointerException.class,
-            () -> {
-              CalloutRequestParametersConference.builder().setConferenceId("foo").build();
-            });
-    assertTrue(exception.getMessage().contains("destination"));
-  }
-
-  @Test
-  void conferenceIdRequired() {
-
-    Exception exception =
-        assertThrows(
-            NullPointerException.class,
-            () -> {
-              CalloutRequestParametersConference.builder()
-                  .setDestination(DestinationNumber.valueOf("foo"))
-                  .build();
-            });
-    assertTrue(exception.getMessage().contains("conferenceId"));
-  }
-
-  @Test
   void destination() {
     assertEquals(
-        DestinationNumber.valueOf("+14045005000"), conferenceRequestParameters.getDestination());
+        DestinationNumber.valueOf("+14045005000"),
+        conferenceRequestParameters.getDestination().get());
   }
 
   @Test
   void getMethod() {
-    assertEquals(CalloutMethodType.CONFERENCE_CALLOUT, conferenceRequestParameters.getMethod());
+    assertEquals(
+        CalloutMethodType.CONFERENCE_CALLOUT, conferenceRequestParameters.getMethod().get());
   }
 
   @Test
   void getDestination() {
     assertEquals(
-        DestinationNumber.valueOf("+14045005000"), conferenceRequestParameters.getDestination());
+        DestinationNumber.valueOf("+14045005000"),
+        conferenceRequestParameters.getDestination().get());
   }
 
   @Test
@@ -93,7 +70,7 @@ public class CalloutRequestParametersConferenceTest {
 
   @Test
   void getConferenceId() {
-    assertEquals("MyConfId", conferenceRequestParameters.getConferenceId());
+    assertEquals("MyConfId", conferenceRequestParameters.getConferenceId().get());
   }
 
   @Test

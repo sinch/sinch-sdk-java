@@ -1,8 +1,6 @@
 package com.sinch.sdk.domains.voice.models.requests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sinch.sdk.domains.voice.models.CalloutMethodType;
 import com.sinch.sdk.models.E164PhoneNumber;
@@ -27,26 +25,14 @@ public class CalloutRequestParametersCustomTest {
           .build();
 
   @Test
-  void destinationRequired() {
-
-    Exception exception =
-        assertThrows(
-            NullPointerException.class,
-            () -> {
-              CalloutRequestParametersConference.builder().setConferenceId("foo").build();
-            });
-    assertTrue(exception.getMessage().contains("destination"));
-  }
-
-  @Test
   void getMethod() {
-    assertEquals(CalloutMethodType.CUSTOM_CALLOUT, customRequestParameters.getMethod());
+    assertEquals(CalloutMethodType.CUSTOM_CALLOUT, customRequestParameters.getMethod().get());
   }
 
   @Test
   void getDestination() {
     assertEquals(
-        DestinationNumber.valueOf("+14045005000"), customRequestParameters.getDestination());
+        DestinationNumber.valueOf("+14045005000"), customRequestParameters.getDestination().get());
   }
 
   @Test

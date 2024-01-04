@@ -44,14 +44,14 @@ public class CalloutsDtoConverter {
 
   private static CalloutRequestDto convert(CalloutRequestParametersConference client) {
 
-    ConferenceCalloutRequestDto dto =
-        new ConferenceCalloutRequestDto().destination(convert(client.getDestination()));
+    ConferenceCalloutRequestDto dto = new ConferenceCalloutRequestDto();
 
+    client.getDestination().ifPresent(f -> dto.setDestination(convert(f)));
     client.getCli().ifPresent(f -> dto.setCli(f.stringValue()));
     client.getDtfm().ifPresent(dto::setDtmf);
     client.getCustom().ifPresent(dto::setCustom);
 
-    dto.conferenceId(client.getConferenceId());
+    client.getConferenceId().ifPresent(dto::conferenceId);
     client.getDtfmOptions().ifPresent(f -> dto.setConferenceDtmfOptions(convert(f)));
 
     client.getMaxDuration().ifPresent(dto::setMaxDuration);
@@ -70,9 +70,9 @@ public class CalloutsDtoConverter {
 
   private static CalloutRequestDto convert(CalloutRequestParametersTTS client) {
 
-    TtsCalloutRequestDto dto =
-        new TtsCalloutRequestDto().destination(convert(client.getDestination()));
+    TtsCalloutRequestDto dto = new TtsCalloutRequestDto();
 
+    client.getDestination().ifPresent(f -> dto.setDestination(convert(f)));
     client.getCli().ifPresent(f -> dto.setCli(f.stringValue()));
     client.getDtfm().ifPresent(dto::setDtmf);
     client.getCustom().ifPresent(dto::setCustom);
@@ -89,9 +89,9 @@ public class CalloutsDtoConverter {
 
   private static CalloutRequestDto convert(CalloutRequestParametersCustom client) {
 
-    CustomCalloutRequestDto dto =
-        new CustomCalloutRequestDto().destination(convert(client.getDestination()));
+    CustomCalloutRequestDto dto = new CustomCalloutRequestDto();
 
+    client.getDestination().ifPresent(f -> dto.setDestination(convert(f)));
     client.getCli().ifPresent(f -> dto.setCli(f.stringValue()));
     client.getDtfm().ifPresent(dto::setDtmf);
     client.getCustom().ifPresent(dto::setCustom);
