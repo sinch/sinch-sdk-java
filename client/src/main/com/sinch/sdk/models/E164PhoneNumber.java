@@ -6,7 +6,22 @@ import java.util.regex.Pattern;
 
 public class E164PhoneNumber {
 
-  private static final Pattern pattern = Pattern.compile("^\\+(?:[0-9] ?){6,14}[0-9]$");
+  // See https://community.sinch.com/t5/Glossary/E-164/ta-p/7537
+  private static final Pattern PATTERN =
+      // adapted from https://stackoverflow.com/a/40347281
+      Pattern.compile(
+          String.format(
+              "%s%s%s%s",
+              // prefix
+              "^\\+",
+              // 1 to 3 digits: Country code (with or without parentheses) / Do not accept '0' as
+              // 1st digit
+              // https://en.wikipedia.org/wiki/List_of_country_calling_codes
+              "(([\\\\(][1-9][0-9]{0,2}[\\\\)])|([1-9][0-9]{0,2}))",
+              // Minimum of 5 digits (for fixed line phones in Solomon Islands)
+              "\\d\\d\\d\\d\\d",
+              // ending with digits
+              "\\d*$"));
 
   private final String number;
 
@@ -27,7 +42,8 @@ public class E164PhoneNumber {
   }
 
   public static boolean validate(String value) {
-    Matcher matcher = pattern.matcher(value);
+    // don't worry about spaces
+    Matcher matcher = PATTERN.matcher(value.replaceAll("\\s+", ""));
     return matcher.matches();
   }
 
