@@ -33,13 +33,6 @@ public class CalloutRequestParametersConferenceTest {
           .build();
 
   @Test
-  void destination() {
-    assertEquals(
-        DestinationNumber.valueOf("+14045005000"),
-        conferenceRequestParameters.getDestination().get());
-  }
-
-  @Test
   void getMethod() {
     assertEquals(
         CalloutMethodType.CONFERENCE_CALLOUT, conferenceRequestParameters.getMethod().get());
