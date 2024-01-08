@@ -12,11 +12,13 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -38,12 +40,45 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlActionConnectSipDto {
+  /** The name property. Must have the value &#x60;connectSip&#x60;. */
+  public enum NameEnum {
+    CONNECTSIP("connectSip"),
+
+    UNKNOWN_DEFAULT_OPEN_API("unknown_default_open_api");
+
+    private String value;
+
+    NameEnum(String value) {
+      this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static NameEnum fromValue(String value) {
+      for (NameEnum b : NameEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      return UNKNOWN_DEFAULT_OPEN_API;
+    }
+  }
+
   public static final String JSON_PROPERTY_NAME = "name";
   private String name;
   private boolean nameDefined = false;
 
   public static final String JSON_PROPERTY_DESTINATION = "destination";
-  private SvamlActionConnectSipDestinationDto destination;
+  private DestinationDto destination;
   private boolean destinationDefined = false;
 
   public static final String JSON_PROPERTY_MAX_DURATION = "maxDuration";
@@ -101,7 +136,7 @@ public class SvamlActionConnectSipDto {
     this.nameDefined = true;
   }
 
-  public SvamlActionConnectSipDto destination(SvamlActionConnectSipDestinationDto destination) {
+  public SvamlActionConnectSipDto destination(DestinationDto destination) {
     this.destination = destination;
     this.destinationDefined = true;
     return this;
@@ -114,7 +149,7 @@ public class SvamlActionConnectSipDto {
    */
   @JsonProperty(JSON_PROPERTY_DESTINATION)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public SvamlActionConnectSipDestinationDto getDestination() {
+  public DestinationDto getDestination() {
     return destination;
   }
 
@@ -125,7 +160,7 @@ public class SvamlActionConnectSipDto {
 
   @JsonProperty(JSON_PROPERTY_DESTINATION)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setDestination(SvamlActionConnectSipDestinationDto destination) {
+  public void setDestination(DestinationDto destination) {
     this.destination = destination;
     this.destinationDefined = true;
   }
