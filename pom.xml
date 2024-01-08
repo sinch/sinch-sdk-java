@@ -34,9 +34,9 @@
     </developers>
 
     <scm>
-        <url>https://github.com/sinch/sinch-sdk-java/tree/main</url>
-        <connection>scm:git:git://github.com/sinch/sinch-sdk-java.git</connection>
-        <developerConnection>scm:git:ssh://github.com:sinch/sinch-sdk-java.git</developerConnection>
+        <url>https://github.com/sinch/sinch-sdk-java.git</url>
+        <connection>scm:git:${project.scm.url}</connection>
+        <developerConnection>scm:git:${project.scm.url}</developerConnection>
     </scm>
 
     <issueManagement>
@@ -76,7 +76,7 @@
         <!-- releasing -->
         <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
         <maven.javadoc.plugin.version>3.6.0</maven.javadoc.plugin.version>
-        <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
+        <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
         <maven-gpg-plugin.version>1.5</maven-gpg-plugin.version>
         <nexus-staging-maven-plugin>1.6.13</nexus-staging-maven-plugin>
     </properties>
@@ -261,10 +261,14 @@
             <!-- deployment/releasing-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>${maven-deploy-plugin.version}</version>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${maven-release-plugin.version}</version>
                 <configuration>
-                    <skip>true</skip>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <releaseProfiles>release</releaseProfiles>
+                    <tagNameFormat>@{project.version}</tagNameFormat>
+                    <goals>deploy</goals>
                 </configuration>
             </plugin>
 
@@ -414,7 +418,14 @@
 
     <profiles>
         <profile>
-            <id>deploy</id>
+            <id>release</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+
             <build>
                 <plugins>
 
@@ -450,7 +461,7 @@
                                 </goals>
                                 <configuration>
                                     <keyname>${gpg.keyname}</keyname>
-                                    <passphraseServerId>${gpg.keyname}</passphraseServerId>
+                                    <passphraseServerId>${gpg.passphrase}</passphraseServerId>
                                     <gpgArguments>
                                         <arg>--pinentry-mode</arg>
                                         <arg>loopback</arg>
@@ -465,15 +476,6 @@
                         <artifactId>nexus-staging-maven-plugin</artifactId>
                         <version>${nexus-staging-maven-plugin}</version>
                         <extensions>true</extensions>
-                        <executions>
-                            <execution>
-                                <id>default-deploy</id>
-                                <phase>deploy</phase>
-                                <goals>
-                                    <goal>deploy</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                         <configuration>
                             <!-- Source: https://help.sonatype.com/repomanager2/staging-releases/configuring-your-project-for-deployment
                                serverId: The id of the server element in settings.xml from which the user credentials for accessing the repository manager should be retrieved
