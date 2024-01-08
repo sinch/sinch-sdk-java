@@ -52,6 +52,7 @@ Variable to be used:
 - `PHONE_NUMBER`: Some test are requiring a phone number parameter.
 - `BATCH_ID`: Some test are requiring a phone number parameter (SMS).
 - `CONFERENCE_ID`: Some test are requiring a conference ID parameter (Voice Conference).
+- `CALL_ID`: Some test are requiring a call ID parameter related to a conference participant (Voice).
 
 See https://developers.sinch.com for details about these parameters
 
@@ -119,14 +120,14 @@ See https://developers.sinch.com for details about these parameters
 
 #### Voice
 
-| Service     | Sample            | Class                                                                                                                           | Note                              | 
-|-------------|-------------------|---------------------------------------------------------------------------------------------------------------------------------|-----------------------------------|
-| Callouts    | Call              | [com.sinch.sample.voice.callouts.Call](src/main/java/com/sinch/sample/voice/callouts/Call.java)                                 |                                   |
-| Conferences | Call              | [com.sinch.sample.voice.conferences.Call](src/main/java/com/sinch/sample/voice/conferences/Call.java)                           | Require `CONFERENCE_ID` parameter | 
-|             | Get               | [com.sinch.sample.voice.conferences.Get](src/main/java/com/sinch/sample/voice/conferences/Get.java)                             | Require `CONFERENCE_ID` parameter | 
-|             | KickParticipant   | [com.sinch.sample.voice.conferences.KickParticipant](src/main/java/com/sinch/sample/voice/conferences/KickParticipant.java)     | Require `CONFERENCE_ID` parameter | 
-|             | KickAll           | [com.sinch.sample.voice.conferences.KickAll](src/main/java/com/sinch/sample/voice/conferences/KickAll.java)                     | Require `CONFERENCE_ID` parameter | 
-|             | ManageParticipant | [com.sinch.sample.voice.conferences.ManageParticipant](src/main/java/com/sinch/sample/voice/conferences/ManageParticipant.java) | Require `CONFERENCE_ID` parameter | 
+| Service     | Sample            | Class                                                                                                                           | Note                                           | 
+|-------------|-------------------|---------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------|
+| Callouts    | Call              | [com.sinch.sample.voice.callouts.Call](src/main/java/com/sinch/sample/voice/callouts/Call.java)                                 |                                                |
+| Conferences | Call              | [com.sinch.sample.voice.conferences.Call](src/main/java/com/sinch/sample/voice/conferences/Call.java)                           | Require `CONFERENCE_ID` parameter              | 
+|             | Get               | [com.sinch.sample.voice.conferences.Get](src/main/java/com/sinch/sample/voice/conferences/Get.java)                             | Require `CONFERENCE_ID` parameter              | 
+|             | KickParticipant   | [com.sinch.sample.voice.conferences.KickParticipant](src/main/java/com/sinch/sample/voice/conferences/KickParticipant.java)     | Require `CONFERENCE_ID` & `CALL_ID`parameters  | 
+|             | KickAll           | [com.sinch.sample.voice.conferences.KickAll](src/main/java/com/sinch/sample/voice/conferences/KickAll.java)                     | Require `CONFERENCE_ID` parameter              | 
+|             | ManageParticipant | [com.sinch.sample.voice.conferences.ManageParticipant](src/main/java/com/sinch/sample/voice/conferences/ManageParticipant.java) | Require `CONFERENCE_ID`  & `CALL_ID`parameters | 
 
 ### Dedicated webhooks feature samples
 #### How to run webhooks sample application

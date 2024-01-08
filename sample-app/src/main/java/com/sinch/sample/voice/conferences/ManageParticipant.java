@@ -24,8 +24,6 @@ public class ManageParticipant extends BaseApplication {
 
   public void run() {
 
-    String callId = "e429ecbb-6057-4756-8148-2b498f968136";
-
     var command = ConferenceManageParticipantCommandType.MUTE;
     var moh = MohClassType.MUSIC1;
 
