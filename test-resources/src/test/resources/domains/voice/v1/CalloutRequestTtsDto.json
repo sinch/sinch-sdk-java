@@ -3,8 +3,8 @@
   "ttsCallout": {
     "cli": "+14045001000",
     "destination": {
-      "type": "number",
-      "endpoint": "+14045005000"
+      "type": "username",
+      "endpoint": "an user name"
     },
     "dtmf": "dtfm value",
     "domain": "pstn",

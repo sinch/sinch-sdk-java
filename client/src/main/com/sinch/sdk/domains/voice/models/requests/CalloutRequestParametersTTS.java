@@ -2,6 +2,8 @@ package com.sinch.sdk.domains.voice.models.requests;
 
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.voice.models.CalloutMethodType;
+import com.sinch.sdk.domains.voice.models.Destination;
+import com.sinch.sdk.domains.voice.models.DomainType;
 import com.sinch.sdk.models.E164PhoneNumber;
 
 /**

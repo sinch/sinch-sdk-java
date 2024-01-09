@@ -26,7 +26,8 @@ public class CalloutRequestDtoTest extends BaseTest {
           .method(MethodEnum.CONFERENCECALLOUT.getValue())
           .conferenceCallout(
               new ConferenceCalloutRequestDto()
-                  .destination(new DestinationDto().type("number").endpoint("+14045005000"))
+                  .destination(
+                      new DestinationDto().type(DestinationTypeDto.NUMBER).endpoint("+14045005000"))
                   .cli("+14045001000")
                   .locale("en-US")
                   .greeting("Welcome to my conference")
@@ -50,7 +51,10 @@ public class CalloutRequestDtoTest extends BaseTest {
           .method(MethodEnum.TTSCALLOUT.getValue())
           .ttsCallout(
               new TtsCalloutRequestDto()
-                  .destination(new DestinationDto().type("number").endpoint("+14045005000"))
+                  .destination(
+                      new DestinationDto()
+                          .type(DestinationTypeDto.USERNAME)
+                          .endpoint("an user name"))
                   .cli("+14045001000")
                   .dtmf("dtfm value")
                   .custom("my custom value")
@@ -70,7 +74,8 @@ public class CalloutRequestDtoTest extends BaseTest {
           .method(MethodEnum.CUSTOMCALLOUT.getValue())
           .customCallout(
               new CustomCalloutRequestDto()
-                  .destination(new DestinationDto().type("number").endpoint("+14045005000"))
+                  .destination(
+                      new DestinationDto().type(DestinationTypeDto.NUMBER).endpoint("+14045005000"))
                   .cli("+14045001000")
                   .dtmf("dtfm value")
                   .custom("my custom value")

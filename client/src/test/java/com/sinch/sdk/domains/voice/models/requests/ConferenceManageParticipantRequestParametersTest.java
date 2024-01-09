@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.voice.models.requests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.sinch.sdk.domains.voice.models.MohClassType;
 import org.junit.jupiter.api.Test;
 
 public class ConferenceManageParticipantRequestParametersTest {

@@ -3,6 +3,11 @@ package com.sinch.sdk.domains.voice.models.requests;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.sinch.sdk.domains.voice.models.CalloutMethodType;
+import com.sinch.sdk.domains.voice.models.ConferenceDtfmOptions;
+import com.sinch.sdk.domains.voice.models.DestinationNumber;
+import com.sinch.sdk.domains.voice.models.DomainType;
+import com.sinch.sdk.domains.voice.models.DtfmModeType;
+import com.sinch.sdk.domains.voice.models.MohClassType;
 import com.sinch.sdk.models.E164PhoneNumber;
 import org.junit.jupiter.api.Test;
 

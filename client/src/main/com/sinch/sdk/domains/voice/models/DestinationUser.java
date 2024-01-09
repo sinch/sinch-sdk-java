@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.voice.models.requests;
+package com.sinch.sdk.domains.voice.models;
 
 import java.util.Objects;
 
@@ -22,5 +22,22 @@ public class DestinationUser extends Destination {
 
   public static DestinationUser valueOf(String user) {
     return new DestinationUser(user);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    DestinationUser that = (DestinationUser) o;
+    return Objects.equals(userName, that.userName);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(userName);
   }
 }

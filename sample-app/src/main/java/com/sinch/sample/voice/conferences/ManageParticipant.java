@@ -1,9 +1,9 @@
 package com.sinch.sample.voice.conferences;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.voice.models.MohClassType;
 import com.sinch.sdk.domains.voice.models.requests.ConferenceManageParticipantCommandType;
 import com.sinch.sdk.domains.voice.models.requests.ConferenceManageParticipantRequestParameters;
-import com.sinch.sdk.domains.voice.models.requests.MohClassType;
 import java.io.IOException;
 import java.util.logging.Logger;
 

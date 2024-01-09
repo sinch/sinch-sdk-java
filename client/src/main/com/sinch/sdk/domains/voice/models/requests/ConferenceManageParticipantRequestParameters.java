@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.voice.models.requests;
 
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.voice.models.MohClassType;
 
 /** Use to configure conference participant settings */
 public class ConferenceManageParticipantRequestParameters {

@@ -1,7 +1,6 @@
-package com.sinch.sdk.domains.voice.models.requests;
+package com.sinch.sdk.domains.voice.models;
 
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConference.Builder;
 
 /**
  * Options to control how DTMF signals are used by the participant in the conference. For

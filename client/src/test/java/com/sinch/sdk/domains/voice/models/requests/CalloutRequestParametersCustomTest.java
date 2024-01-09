@@ -3,6 +3,7 @@ package com.sinch.sdk.domains.voice.models.requests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.sinch.sdk.domains.voice.models.CalloutMethodType;
+import com.sinch.sdk.domains.voice.models.DestinationNumber;
 import com.sinch.sdk.models.E164PhoneNumber;
 import org.junit.jupiter.api.Test;
 

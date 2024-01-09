@@ -1,22 +1,17 @@
 package com.sinch.sdk.domains.voice.adapters.converters;
 
+import com.sinch.sdk.domains.voice.models.ConferenceDtfmOptions;
 import com.sinch.sdk.domains.voice.models.dto.v1.CalloutRequestDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.CalloutRequestDto.MethodEnum;
 import com.sinch.sdk.domains.voice.models.dto.v1.ConferenceCalloutRequestConferenceDtmfOptionsDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.ConferenceCalloutRequestDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.CustomCalloutRequestDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.DestinationDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.DestinationDto.TypeEnum;
 import com.sinch.sdk.domains.voice.models.dto.v1.GetCalloutResponseObjDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.TtsCalloutRequestDto;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParameters;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConference;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersCustom;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersTTS;
-import com.sinch.sdk.domains.voice.models.requests.ConferenceDtfmOptions;
-import com.sinch.sdk.domains.voice.models.requests.Destination;
-import com.sinch.sdk.domains.voice.models.requests.DestinationNumber;
-import com.sinch.sdk.domains.voice.models.requests.DestinationUser;
 
 public class CalloutsDtoConverter {
 
@@ -46,7 +41,7 @@ public class CalloutsDtoConverter {
 
     ConferenceCalloutRequestDto dto = new ConferenceCalloutRequestDto();
 
-    client.getDestination().ifPresent(f -> dto.setDestination(convert(f)));
+    client.getDestination().ifPresent(f -> dto.setDestination(DestinationDtoConverter.convert(f)));
     client.getCli().ifPresent(f -> dto.setCli(f.stringValue()));
     client.getDtfm().ifPresent(dto::setDtmf);
     client.getCustom().ifPresent(dto::setCustom);
@@ -72,7 +67,7 @@ public class CalloutsDtoConverter {
 
     TtsCalloutRequestDto dto = new TtsCalloutRequestDto();
 
-    client.getDestination().ifPresent(f -> dto.setDestination(convert(f)));
+    client.getDestination().ifPresent(f -> dto.setDestination(DestinationDtoConverter.convert(f)));
     client.getCli().ifPresent(f -> dto.setCli(f.stringValue()));
     client.getDtfm().ifPresent(dto::setDtmf);
     client.getCustom().ifPresent(dto::setCustom);
@@ -91,7 +86,7 @@ public class CalloutsDtoConverter {
 
     CustomCalloutRequestDto dto = new CustomCalloutRequestDto();
 
-    client.getDestination().ifPresent(f -> dto.setDestination(convert(f)));
+    client.getDestination().ifPresent(f -> dto.setDestination(DestinationDtoConverter.convert(f)));
     client.getCli().ifPresent(f -> dto.setCli(f.stringValue()));
     client.getDtfm().ifPresent(dto::setDtmf);
     client.getCustom().ifPresent(dto::setCustom);
@@ -102,18 +97,6 @@ public class CalloutsDtoConverter {
     client.getPie().ifPresent(dto::setPie);
 
     return new CalloutRequestDto().method(MethodEnum.CUSTOMCALLOUT.getValue()).customCallout(dto);
-  }
-
-  private static DestinationDto convert(Destination client) {
-    DestinationDto dto = new DestinationDto();
-    if (client instanceof DestinationNumber) {
-      DestinationNumber destination = (DestinationNumber) client;
-      dto.type(TypeEnum.NUMBER.getValue()).endpoint(destination.getPhoneNumber().stringValue());
-    } else if (client instanceof DestinationUser) {
-      DestinationUser destination = (DestinationUser) client;
-      dto.type(TypeEnum.USERNAME.getValue()).endpoint(destination.getUserName());
-    }
-    return dto;
   }
 
   private static ConferenceCalloutRequestConferenceDtmfOptionsDto convert(

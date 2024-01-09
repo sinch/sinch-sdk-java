@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.voice.models.requests;
+package com.sinch.sdk.domains.voice.models;
 
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
