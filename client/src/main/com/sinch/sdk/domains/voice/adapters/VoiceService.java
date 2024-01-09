@@ -18,6 +18,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
   private final HttpClient httpClient;
   private CalloutsService callouts;
   private ConferencesService conferences;
+  private CallsService calls;
 
   private Map<String, AuthManager> clientAuthManagers;
 
@@ -61,6 +62,16 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
               configuration, httpClient, clientAuthManagers);
     }
     return this.conferences;
+  }
+
+  public CallsService calls() {
+    if (null == this.calls) {
+      checkCredentials();
+      this.calls =
+          new com.sinch.sdk.domains.voice.adapters.CallsService(
+              configuration, httpClient, clientAuthManagers);
+    }
+    return this.calls;
   }
 
   private void checkCredentials() throws ApiAuthException {

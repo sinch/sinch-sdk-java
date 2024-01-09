@@ -24,4 +24,6 @@ public interface VoiceService {
    * @since 1.0
    */
   ConferencesService conferences();
+
+  CallsService calls();
 }
