@@ -3,6 +3,7 @@ package com.sinch.sdk.domains.voice.models.requests;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.voice.models.CalloutMethodType;
 import com.sinch.sdk.domains.voice.models.Destination;
+import com.sinch.sdk.models.DualToneMultiFrequency;
 import com.sinch.sdk.models.E164PhoneNumber;
 
 /**
@@ -19,7 +20,7 @@ public class CalloutRequestParametersCustom extends CalloutRequestParameters {
   private CalloutRequestParametersCustom(
       OptionalValue<Destination> destination,
       OptionalValue<E164PhoneNumber> cli,
-      OptionalValue<String> dtfm,
+      OptionalValue<DualToneMultiFrequency> dtfm,
       OptionalValue<String> custom,
       OptionalValue<Integer> maxDuration,
       OptionalValue<String> ice,

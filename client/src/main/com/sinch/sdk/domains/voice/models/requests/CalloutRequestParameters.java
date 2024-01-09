@@ -3,20 +3,21 @@ package com.sinch.sdk.domains.voice.models.requests;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.voice.models.CalloutMethodType;
 import com.sinch.sdk.domains.voice.models.Destination;
+import com.sinch.sdk.models.DualToneMultiFrequency;
 import com.sinch.sdk.models.E164PhoneNumber;
 
 public class CalloutRequestParameters {
   private final OptionalValue<CalloutMethodType> method;
   private final OptionalValue<Destination> destination;
   private final OptionalValue<E164PhoneNumber> cli;
-  private final OptionalValue<String> dtfm;
+  private final OptionalValue<DualToneMultiFrequency> dtfm;
   private final OptionalValue<String> custom;
 
   protected CalloutRequestParameters(
       OptionalValue<CalloutMethodType> method,
       OptionalValue<Destination> destination,
       OptionalValue<E164PhoneNumber> cli,
-      OptionalValue<String> dtfm,
+      OptionalValue<DualToneMultiFrequency> dtfm,
       OptionalValue<String> custom) {
 
     this.method = method;
@@ -38,7 +39,7 @@ public class CalloutRequestParameters {
     return cli;
   }
 
-  public OptionalValue<String> getDtfm() {
+  public OptionalValue<DualToneMultiFrequency> getDtfm() {
     return dtfm;
   }
 
@@ -59,7 +60,7 @@ public class CalloutRequestParameters {
 
     OptionalValue<Destination> destination = OptionalValue.empty();
     OptionalValue<E164PhoneNumber> cli = OptionalValue.empty();
-    OptionalValue<String> dtfm = OptionalValue.empty();
+    OptionalValue<DualToneMultiFrequency> dtfm = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
 
     public Builder() {}
@@ -92,7 +93,7 @@ public class CalloutRequestParameters {
      *     entered.
      * @return current builder
      */
-    public B setDtfm(String dtfm) {
+    public B setDtfm(DualToneMultiFrequency dtfm) {
       this.dtfm = OptionalValue.of(dtfm);
       return self();
     }

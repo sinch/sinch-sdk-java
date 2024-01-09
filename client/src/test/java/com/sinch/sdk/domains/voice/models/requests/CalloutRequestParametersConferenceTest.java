@@ -8,6 +8,7 @@ import com.sinch.sdk.domains.voice.models.DestinationNumber;
 import com.sinch.sdk.domains.voice.models.DomainType;
 import com.sinch.sdk.domains.voice.models.DtfmModeType;
 import com.sinch.sdk.domains.voice.models.MohClassType;
+import com.sinch.sdk.models.DualToneMultiFrequency;
 import com.sinch.sdk.models.E164PhoneNumber;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +26,7 @@ public class CalloutRequestParametersConferenceTest {
           .setConferenceId("MyConfId")
           .setCli(E164PhoneNumber.valueOf("+14045001000"))
           .setDtfmOptions(dtfmOptions)
-          .setDtfm("dtfm value")
+          .setDtfm(DualToneMultiFrequency.valueOf("w123#"))
           .setMaxDuration(32)
           .setEnableAce(Boolean.TRUE)
           .setEnableDice(Boolean.TRUE)
@@ -58,7 +59,7 @@ public class CalloutRequestParametersConferenceTest {
 
   @Test
   void getDtfm() {
-    assertEquals("dtfm value", conferenceRequestParameters.getDtfm().get());
+    assertEquals("w123#", conferenceRequestParameters.getDtfm().get().stringValue());
   }
 
   @Test

@@ -43,7 +43,7 @@ public class CalloutsDtoConverter {
 
     client.getDestination().ifPresent(f -> dto.setDestination(DestinationDtoConverter.convert(f)));
     client.getCli().ifPresent(f -> dto.setCli(f.stringValue()));
-    client.getDtfm().ifPresent(dto::setDtmf);
+    client.getDtfm().ifPresent(f -> dto.setDtmf(f.stringValue()));
     client.getCustom().ifPresent(dto::setCustom);
 
     client.getConferenceId().ifPresent(dto::conferenceId);
@@ -69,7 +69,7 @@ public class CalloutsDtoConverter {
 
     client.getDestination().ifPresent(f -> dto.setDestination(DestinationDtoConverter.convert(f)));
     client.getCli().ifPresent(f -> dto.setCli(f.stringValue()));
-    client.getDtfm().ifPresent(dto::setDtmf);
+    client.getDtfm().ifPresent(f -> dto.setDtmf(f.stringValue()));
     client.getCustom().ifPresent(dto::setCustom);
     client.getEnableAce().ifPresent(dto::setEnableAce);
     client.getEnableDice().ifPresent(dto::setEnableDice);
@@ -88,7 +88,7 @@ public class CalloutsDtoConverter {
 
     client.getDestination().ifPresent(f -> dto.setDestination(DestinationDtoConverter.convert(f)));
     client.getCli().ifPresent(f -> dto.setCli(f.stringValue()));
-    client.getDtfm().ifPresent(dto::setDtmf);
+    client.getDtfm().ifPresent(f -> dto.setDtmf(f.stringValue()));
     client.getCustom().ifPresent(dto::setCustom);
 
     client.getMaxDuration().ifPresent(dto::setMaxDuration);

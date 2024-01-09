@@ -42,9 +42,7 @@ public abstract class BaseApplication {
             ? System.getenv(CONFERENCE_ID)
             : properties.getProperty(CONFERENCE_ID);
     callId =
-        null != System.getenv(CALL_ID)
-            ? System.getenv(CALL_ID)
-            : properties.getProperty(CALL_ID);
+        null != System.getenv(CALL_ID) ? System.getenv(CALL_ID) : properties.getProperty(CALL_ID);
 
     client = new SinchClient(configuration);
   }

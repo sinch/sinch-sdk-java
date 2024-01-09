@@ -14,7 +14,7 @@
       "maxDigits": 3,
       "timeoutMills": 456
     },
-    "dtmf": "dtfm value",
+    "dtmf": "w123#",
     "maxDuration": 32,
     "enableAce": true,
     "enableDice": true,

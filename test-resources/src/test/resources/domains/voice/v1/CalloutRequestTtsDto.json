@@ -6,7 +6,7 @@
       "type": "username",
       "endpoint": "an user name"
     },
-    "dtmf": "dtfm value",
+    "dtmf": "w123#",
     "domain": "pstn",
     "custom": "my custom value",
     "locale": "en-US",

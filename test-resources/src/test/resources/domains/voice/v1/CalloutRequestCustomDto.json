@@ -6,7 +6,7 @@
       "type": "number",
       "endpoint": "+14045005000"
     },
-    "dtmf": "dtfm value",
+    "dtmf": "w123#",
     "custom": "my custom value",
     "maxDuration": 32,
     "ice": "{\"action\": {\"name\": \"connectPstn\", \"number\": \"+12233445566\", \"cli\": \"+12234325234\", \"amd\": {\"enabled\": \"true\"}}}",
