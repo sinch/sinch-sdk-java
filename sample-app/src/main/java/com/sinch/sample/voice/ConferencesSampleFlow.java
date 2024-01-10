@@ -61,11 +61,28 @@ public class ConferencesSampleFlow {
     // 2. Waiting for participant to join the conference (trying during 1 minute)
     waitForParticipant(++step, sinch, conferenceId, callId);
 
-    // 3. Mute participant
-    muteParticipant(++step, sinch, conferenceId, callId);
+    // 3. Get participant information
+    getCallInformation(++step, sinch, conferenceId, callId);
 
-    // 4. Kick all participants
+    // 4. Mute participant
+    muteParticipant(++step, sinch, conferenceId, callId);
+    Thread.sleep(3000);
+
+    // 5. Get conference information
+    getConferenceInfo(++step, sinch, conferenceId);
+
+    // 6. Get participant information
+    getCallInformation(++step, sinch, conferenceId, callId);
+
+    // 7. Kick all participants
     kickAllParticipants(++step, sinch, conferenceId);
+    Thread.sleep(3000);
+
+    // 8. Get participant information
+    getCallInformation(++step, sinch, conferenceId, callId);
+
+    // 9. Get conference information
+    getConferenceInfo(++step, sinch, conferenceId);
   }
 
   String joinConference(
@@ -81,7 +98,7 @@ public class ConferencesSampleFlow {
             .setDestination(DestinationNumber.valueOf(phoneNumber))
             .setGreeting("Hello from Sinch Conference sample with Jav SDK")
             .setMohClass(MohClassType.MUSIC1)
-            .setCli(E164PhoneNumber.valueOf("A cli number"))
+            .setCli(E164PhoneNumber.valueOf("+1123456789"))
             .build();
 
     // 2. Perform the request
@@ -138,6 +155,15 @@ public class ConferencesSampleFlow {
     response.stream().iterator().forEachRemaining(f -> echo("- %s".formatted(f)));
 
     return response;
+  }
+
+  void getCallInformation(int step, SinchClient sinchClient, String conferenceId, String callId) {
+
+    echoStep(step, "Get call information for participant '%s'".formatted(callId));
+
+    var response = sinchClient.voice().calls().get(callId);
+
+    echo("Call information: %s".formatted(response));
   }
 
   void muteParticipant(int step, SinchClient sinchClient, String conferenceId, String callId) {

@@ -2,6 +2,8 @@ package com.sinch.sdk.domains.voice.adapters.converters;
 
 import com.sinch.sdk.domains.voice.models.DomainType;
 import com.sinch.sdk.domains.voice.models.dto.v1.GetCallResponseObjDto;
+import com.sinch.sdk.domains.voice.models.dto.v1.SVAMLRequestBodyDto;
+import com.sinch.sdk.domains.voice.models.requests.CallUpdateRequestParameters;
 import com.sinch.sdk.domains.voice.models.response.CallInformation;
 import com.sinch.sdk.domains.voice.models.response.CallReasonType;
 import com.sinch.sdk.domains.voice.models.response.CallResultType;
@@ -27,5 +29,17 @@ public class CallsDtoConverter {
         .setUserRate(PriceDtoConverter.convert(dto.getUserRate()))
         .setDebit(PriceDtoConverter.convert(dto.getDebit()))
         .build();
+  }
+
+  public static SVAMLRequestBodyDto convert(CallUpdateRequestParameters client) {
+    if (null == client) {
+      return null;
+    }
+    SVAMLRequestBodyDto dto = new SVAMLRequestBodyDto();
+
+    dto.instructions(SAVMLInstructionDtoConverter.convert(client.getInstructions()));
+    dto.action(SAVMLActionDtoConverter.convert(client.getAction()));
+
+    return dto;
   }
 }
