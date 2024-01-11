@@ -128,6 +128,9 @@ See https://developers.sinch.com for details about these parameters
 |             | KickParticipant   | [com.sinch.sample.voice.conferences.KickParticipant](src/main/java/com/sinch/sample/voice/conferences/KickParticipant.java)     | Require `CONFERENCE_ID` & `CALL_ID`parameters  | 
 |             | KickAll           | [com.sinch.sample.voice.conferences.KickAll](src/main/java/com/sinch/sample/voice/conferences/KickAll.java)                     | Require `CONFERENCE_ID` parameter              | 
 |             | ManageParticipant | [com.sinch.sample.voice.conferences.ManageParticipant](src/main/java/com/sinch/sample/voice/conferences/ManageParticipant.java) | Require `CONFERENCE_ID`  & `CALL_ID`parameters | 
+| Calls       | Get               | [com.sinch.sample.voice.calls.Get](src/main/java/com/sinch/sample/voice/calls/Get.java)                                         | Require `CALL_ID`parameter                     | 
+|             | Update            | [com.sinch.sample.voice.calls.Update](src/main/java/com/sinch/sample/voice/calls/Update.java)                                   | Require `CONFERENCE_ID`  & `CALL_ID`parameters | 
+|             | ManageWithCallLeg | [com.sinch.sample.voice.calls.ManageWithCallLeg](src/main/java/com/sinch/sample/voice/calls/ManageWithCallLeg.java)             | Require `CONFERENCE_ID`  & `CALL_ID`parameters | 
 
 ### Dedicated webhooks feature samples
 #### How to run webhooks sample application

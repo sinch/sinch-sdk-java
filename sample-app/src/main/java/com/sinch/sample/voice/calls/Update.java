@@ -1,15 +1,13 @@
 package com.sinch.sample.voice.calls;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.voice.models.DestinationNumber;
 import com.sinch.sdk.domains.voice.models.requests.CallUpdateRequestParameters;
-import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConference;
 import com.sinch.sdk.domains.voice.models.svaml.ActionRunMenu;
 import com.sinch.sdk.domains.voice.models.svaml.Instruction;
+import com.sinch.sdk.domains.voice.models.svaml.InstructionSay;
 import com.sinch.sdk.domains.voice.models.svaml.Menu;
 import com.sinch.sdk.domains.voice.models.svaml.MenuOption;
 import com.sinch.sdk.domains.voice.models.svaml.MenuOptionActionType;
-import com.sinch.sdk.models.E164PhoneNumber;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -32,22 +30,6 @@ public class Update extends BaseApplication {
 
   public void run() {
 
-    callId =
-        client
-            .voice()
-            .callouts()
-            .call(
-                CalloutRequestParametersConference.builder()
-                    .setConferenceId(conferenceId)
-                    .setDestination(DestinationNumber.valueOf(phoneNumber))
-                    .setCli(E164PhoneNumber.valueOf("+123456789"))
-                    .setCustom("my custom value")
-                    .build());
-    try {
-      Thread.sleep(10000);
-    } catch (InterruptedException e) {
-      throw new RuntimeException(e);
-    }
     LOGGER.info(
         "Updating call information for '%s' (conference '%s')".formatted(callId, conferenceId));
 
@@ -62,7 +44,7 @@ public class Update extends BaseApplication {
                     Menu.builder()
                         .setId("the id")
                         .setMainPrompt("main prompt")
-                        .setRepeatPrompt("repeat tprompt")
+                        .setRepeatPrompt("repeat prompt")
                         .setRepeats(5)
                         .setMaxDigits(18)
                         .setTimeoutMills(500)
@@ -75,15 +57,8 @@ public class Update extends BaseApplication {
 
     Collection<Instruction> instructions =
         Arrays.asList(
-            // InstructionAnswer.builder().build()
-            // InstructionPlayFile.builder().setIds(Arrays.asList("[Welcome]")).setLocale("en").build(),
-            //    InstructionSay.builder().setText("Hello from sample app").setLocale("en").build()
-            //
-            // InstructionSendDtfm.builder().setDtfm(DualToneMultiFrequency.valueOf("ww123#")).build()
-            //  InstructionSetCookie.builder().setKey("a key").setValue("a value").build()
-            // InstructionStartRecording.builder().setOptions(StartRecordingOptions.builder().setCredentials("foo").setDestinationUrl("foo").setFormat("mp3").setNotificationEvents(true).build()).build()
-            //  InstructionStopRecording.builder().build()
-            );
+            InstructionSay.builder().setText("Hello from sample app").setLocale("en").build());
+
     var parameters =
         CallUpdateRequestParameters.builder()
             .setInstructions(instructions)
