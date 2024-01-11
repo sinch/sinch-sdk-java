@@ -36,9 +36,9 @@ class DualToneMultiFrequencyTest {
   @Test
   void noExceptionOnRelax() {
     String value = "my invalid value";
-    DualToneMultiFrequency.setRelax(true);
+    DualToneMultiFrequency.setStrict(false);
     assertEquals(DualToneMultiFrequency.valueOf(value).stringValue(), value);
-    DualToneMultiFrequency.setRelax(false);
+    DualToneMultiFrequency.setStrict(true);
   }
 
   @Test

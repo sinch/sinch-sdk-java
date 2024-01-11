@@ -25,9 +25,11 @@ public class E164PhoneNumber {
 
   private final String number;
 
+  private static boolean strict = true;
+
   public E164PhoneNumber(String number) {
 
-    if (!validate(number)) {
+    if (strict && !validate(number)) {
       throw new NumberFormatException(String.format("Invalid E164 format for '%s' number", number));
     }
     this.number = number;
@@ -45,6 +47,15 @@ public class E164PhoneNumber {
     // don't worry about spaces
     Matcher matcher = PATTERN.matcher(value.replaceAll("\\s+", ""));
     return matcher.matches();
+  }
+
+  /**
+   * Configure if invalid string values will throw an Exception or not
+   *
+   * @param strict Set strict mode to true/false
+   */
+  public static void setStrict(boolean strict) {
+    E164PhoneNumber.strict = strict;
   }
 
   @Override

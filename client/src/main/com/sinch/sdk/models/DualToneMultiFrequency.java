@@ -19,7 +19,7 @@ public class DualToneMultiFrequency {
   private static final Pattern PATTERN = Pattern.compile("([0-9#w])*");
   private final String dtfm;
 
-  private static boolean relax = false;
+  private static boolean strict = true;
 
   /**
    * Create an instance of DualToneMultiFrequency
@@ -29,7 +29,7 @@ public class DualToneMultiFrequency {
    */
   public DualToneMultiFrequency(String dtfm) throws IllegalArgumentException {
 
-    if (!relax && !validate(dtfm)) {
+    if (strict && !validate(dtfm)) {
       throw new IllegalArgumentException(
           String.format("Invalid DTFM format for '%s' number", dtfm));
     }
@@ -58,10 +58,10 @@ public class DualToneMultiFrequency {
   /**
    * Configure if invalid string values will throw an Exception or not
    *
-   * @param relax Set relax mode to true/false
+   * @param strict Set strict mode to true/false
    */
-  public static void setRelax(boolean relax) {
-    DualToneMultiFrequency.relax = relax;
+  public static void setStrict(boolean strict) {
+    DualToneMultiFrequency.strict = strict;
   }
 
   /**
