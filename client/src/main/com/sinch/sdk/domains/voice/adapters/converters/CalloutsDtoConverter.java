@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.voice.adapters.converters;
 
+import com.sinch.sdk.domains.common.adapters.converters.EnumDynamicConverter;
 import com.sinch.sdk.domains.voice.models.ConferenceDtfmOptions;
 import com.sinch.sdk.domains.voice.models.dto.v1.CalloutRequestDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.CalloutRequestDto.MethodEnum;
@@ -55,8 +56,8 @@ public class CalloutsDtoConverter {
     client.getEnablePie().ifPresent(dto::setEnablePie);
     client.getLocale().ifPresent(dto::setLocale);
     client.getGreeting().ifPresent(dto::setGreeting);
-    client.getMohClass().ifPresent(f -> dto.setMohClass(f.value()));
-    client.getDomain().ifPresent(f -> dto.setDomain(f.value()));
+    client.getMohClass().ifPresent(f -> dto.setMohClass(EnumDynamicConverter.convert(f)));
+    client.getDomain().ifPresent(f -> dto.setDomain(EnumDynamicConverter.convert(f)));
 
     return new CalloutRequestDto()
         .method(MethodEnum.CONFERENCECALLOUT.getValue())
@@ -75,7 +76,7 @@ public class CalloutsDtoConverter {
     client.getEnableDice().ifPresent(dto::setEnableDice);
     client.getEnablePie().ifPresent(dto::setEnablePie);
     client.getLocale().ifPresent(dto::setLocale);
-    client.getDomain().ifPresent(f -> dto.setDomain(f.value()));
+    client.getDomain().ifPresent(f -> dto.setDomain(EnumDynamicConverter.convert(f)));
     client.getText().ifPresent(dto::setText);
     client.getPrompts().ifPresent(dto::setPrompts);
 
@@ -103,7 +104,7 @@ public class CalloutsDtoConverter {
       ConferenceDtfmOptions client) {
     ConferenceCalloutRequestConferenceDtmfOptionsDto dto =
         new ConferenceCalloutRequestConferenceDtmfOptionsDto();
-    client.getMode().ifPresent(f -> dto.setMode(f.value()));
+    client.getMode().ifPresent(f -> dto.setMode(EnumDynamicConverter.convert(f)));
     client.getMaxDigits().ifPresent(dto::setMaxDigits);
     client.getTimeoutMills().ifPresent(dto::setTimeoutMills);
     return dto;

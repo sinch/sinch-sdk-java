@@ -1,9 +1,8 @@
 package com.sinch.sdk.domains.voice.adapters.converters;
 
 import com.sinch.sdk.core.utils.Pair;
+import com.sinch.sdk.domains.common.adapters.converters.EnumDynamicConverter;
 import com.sinch.sdk.domains.voice.models.ConferenceDtfmOptions;
-import com.sinch.sdk.domains.voice.models.MohClassType;
-import com.sinch.sdk.domains.voice.models.TransportType;
 import com.sinch.sdk.domains.voice.models.dto.v1.CallHeaderDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.MenuDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.OptionDto;
@@ -28,10 +27,8 @@ import com.sinch.sdk.domains.voice.models.svaml.ActionHangUp;
 import com.sinch.sdk.domains.voice.models.svaml.ActionPark;
 import com.sinch.sdk.domains.voice.models.svaml.ActionRunMenu;
 import com.sinch.sdk.domains.voice.models.svaml.AnsweringMachineDetection;
-import com.sinch.sdk.domains.voice.models.svaml.IndicationType;
 import com.sinch.sdk.domains.voice.models.svaml.Menu;
 import com.sinch.sdk.domains.voice.models.svaml.MenuOption;
-import com.sinch.sdk.domains.voice.models.svaml.MenuOptionActionType;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
@@ -86,7 +83,7 @@ public class SAVMLActionDtoConverter {
     SvamlActionConnectConfDto dto = new SvamlActionConnectConfDto();
     dto.setName(SvamlActionConnectConfDto.NameEnum.CONNECTCONF.getValue());
     dto.setConferenceId(client.getConferenceId());
-    dto.setMoh(convert(client.getMoh()));
+    dto.setMoh(EnumDynamicConverter.convert(client.getMoh()));
     dto.setConferenceDtmfOptions(convert(client.getDtfmOptions()));
     return dto;
   }
@@ -115,7 +112,7 @@ public class SAVMLActionDtoConverter {
     dto.setCli(client.getCli());
     dto.setSuppressCallbacks(client.getSuppressCallbacks());
     dto.setDtmf(DualToneMultiFrequencyDtoConverter.convert(client.getDtmf()));
-    dto.setIndications(convert(client.getIndications()));
+    dto.setIndications(EnumDynamicConverter.convert(client.getIndications()));
     dto.setAmd(convert(client.getAnsweringMachineDetectionEnabled()));
     return dto;
   }
@@ -129,10 +126,10 @@ public class SAVMLActionDtoConverter {
     dto.setDestination(DestinationDtoConverter.convert(client.getDestination()));
     dto.setMaxDuration(client.getMaxDuration());
     dto.setCli(client.getCli());
-    dto.setTransport(convert(client.getTransport()));
+    dto.setTransport(EnumDynamicConverter.convert(client.getTransport()));
     dto.setSuppressCallbacks(client.getSuppressCallbacks());
     dto.setCallHeaders(convertHeaderCollection(client.getCallheaders()));
-    dto.setMoh(convert(client.getMoh()));
+    dto.setMoh(EnumDynamicConverter.convert(client.getMoh()));
     return dto;
   }
 
@@ -188,7 +185,7 @@ public class SAVMLActionDtoConverter {
     }
     SvamlActionConnectConfConferenceDtmfOptionsDto dto =
         new SvamlActionConnectConfConferenceDtmfOptionsDto();
-    client.getMode().ifPresent(f -> dto.setMode(f.value()));
+    client.getMode().ifPresent(f -> dto.setMode(EnumDynamicConverter.convert(f)));
     client.getMaxDigits().ifPresent(dto::setMaxDigits);
     client.getTimeoutMills().ifPresent(dto::setTimeoutMills);
     return dto;
@@ -212,27 +209,6 @@ public class SAVMLActionDtoConverter {
     SvamlActionConnectPstnAmdDto dto = new SvamlActionConnectPstnAmdDto();
     dto.setEnabled(client.getEnabled());
     return dto;
-  }
-
-  private static String convert(TransportType client) {
-    if (null == client) {
-      return null;
-    }
-    return client.value();
-  }
-
-  private static String convert(MohClassType client) {
-    if (null == client) {
-      return null;
-    }
-    return client.value();
-  }
-
-  private static String convert(IndicationType client) {
-    if (null == client) {
-      return null;
-    }
-    return client.value();
   }
 
   private static List<MenuDto> convertMenuCollection(Collection<Menu> client) {
@@ -266,15 +242,8 @@ public class SAVMLActionDtoConverter {
         .map(
             f ->
                 new OptionDto()
-                    .action(convert(f.getAction()))
+                    .action(EnumDynamicConverter.convert(f.getAction()))
                     .dtmf(DualToneMultiFrequencyDtoConverter.convert(f.getDtfm())))
         .collect(Collectors.toList());
-  }
-
-  private static String convert(MenuOptionActionType client) {
-    if (null == client) {
-      return null;
-    }
-    return client.value();
   }
 }

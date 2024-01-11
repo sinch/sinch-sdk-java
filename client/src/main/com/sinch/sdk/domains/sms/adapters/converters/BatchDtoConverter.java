@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.sms.adapters.converters;
 
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.models.AbstractOpenApiSchema;
+import com.sinch.sdk.domains.common.adapters.converters.EnumDynamicConverter;
 import com.sinch.sdk.domains.sms.models.BaseBatch;
 import com.sinch.sdk.domains.sms.models.Batch;
 import com.sinch.sdk.domains.sms.models.BatchBinary;
@@ -160,7 +161,9 @@ public class BatchDtoConverter {
             .to(new ArrayList<>(value.getTo()))
             .body(value.getBody());
     value.getFrom().ifPresent(dto::from);
-    value.getDeliveryReport().ifPresent(f -> dto.setDeliveryReport(f.value()));
+    value
+        .getDeliveryReport()
+        .ifPresent(f -> dto.setDeliveryReport(EnumDynamicConverter.convert(f)));
     value.getSendAt().ifPresent(f -> dto.setSendAt(f.atOffset(ZoneOffset.UTC)));
     value.getExpireAt().ifPresent(f -> dto.setExpireAt(f.atOffset(ZoneOffset.UTC)));
     value.getCallbackUrl().ifPresent(dto::callbackUrl);
@@ -181,7 +184,9 @@ public class BatchDtoConverter {
             .to(new ArrayList<>(value.getTo()))
             .body(convert(value.getBody()));
     value.getFrom().ifPresent(dto::from);
-    value.getDeliveryReport().ifPresent(f -> dto.setDeliveryReport(f.value()));
+    value
+        .getDeliveryReport()
+        .ifPresent(f -> dto.setDeliveryReport(EnumDynamicConverter.convert(f)));
     value.getSendAt().ifPresent(f -> dto.setSendAt(f.atOffset(ZoneOffset.UTC)));
     value.getExpireAt().ifPresent(f -> dto.setExpireAt(f.atOffset(ZoneOffset.UTC)));
     value.getCallbackUrl().ifPresent(dto::callbackUrl);
@@ -199,7 +204,9 @@ public class BatchDtoConverter {
             .to(new ArrayList<>(value.getTo()))
             .body(value.getBody());
     value.getFrom().ifPresent(dto::from);
-    value.getDeliveryReport().ifPresent(f -> dto.setDeliveryReport(f.value()));
+    value
+        .getDeliveryReport()
+        .ifPresent(f -> dto.setDeliveryReport(EnumDynamicConverter.convert(f)));
     value.getSendAt().ifPresent(f -> dto.setSendAt(f.atOffset(ZoneOffset.UTC)));
     value.getExpireAt().ifPresent(f -> dto.setExpireAt(f.atOffset(ZoneOffset.UTC)));
     value.getCallbackUrl().ifPresent(dto::callbackUrl);
@@ -222,7 +229,9 @@ public class BatchDtoConverter {
     value.getToRemove().ifPresent(f -> dto.toRemove(new ArrayList<>(f)));
     value.getFrom().ifPresent(dto::from);
     value.getBody().ifPresent(dto::body);
-    value.getDeliveryReport().ifPresent(f -> dto.setDeliveryReport(f.value()));
+    value
+        .getDeliveryReport()
+        .ifPresent(f -> dto.setDeliveryReport(EnumDynamicConverter.convert(f)));
     value.getSendAt().ifPresent(f -> dto.setSendAt(f.atOffset(ZoneOffset.UTC)));
     value.getExpireAt().ifPresent(f -> dto.setExpireAt(f.atOffset(ZoneOffset.UTC)));
     value.getCallbackUrl().ifPresent(dto::callbackUrl);
@@ -238,7 +247,9 @@ public class BatchDtoConverter {
     value.getToRemove().ifPresent(f -> dto.toRemove(new ArrayList<>(f)));
     value.getFrom().ifPresent(dto::from);
     value.getBody().ifPresent(f -> dto.setBody(convert(f)));
-    value.getDeliveryReport().ifPresent(f -> dto.setDeliveryReport(f.value()));
+    value
+        .getDeliveryReport()
+        .ifPresent(f -> dto.setDeliveryReport(EnumDynamicConverter.convert(f)));
     value.getSendAt().ifPresent(f -> dto.setSendAt(f.atOffset(ZoneOffset.UTC)));
     value.getExpireAt().ifPresent(f -> dto.setExpireAt(f.atOffset(ZoneOffset.UTC)));
     value.getCallbackUrl().ifPresent(dto::callbackUrl);
@@ -255,7 +266,9 @@ public class BatchDtoConverter {
     value.getToRemove().ifPresent(f -> dto.toRemove(new ArrayList<>(f)));
     value.getFrom().ifPresent(dto::from);
     value.getBody().ifPresent(dto::setBody);
-    value.getDeliveryReport().ifPresent(f -> dto.setDeliveryReport(f.value()));
+    value
+        .getDeliveryReport()
+        .ifPresent(f -> dto.setDeliveryReport(EnumDynamicConverter.convert(f)));
     value.getSendAt().ifPresent(f -> dto.setSendAt(f.atOffset(ZoneOffset.UTC)));
     value.getExpireAt().ifPresent(f -> dto.setExpireAt(f.atOffset(ZoneOffset.UTC)));
     value.getCallbackUrl().ifPresent(dto::callbackUrl);
