@@ -206,7 +206,6 @@
                         <configuration>
                             <sources>
                                 <source>core/src/test/java</source>
-                                <source>test-resources/src/test/java</source>
                                 <source>openapi-contracts/src/test/java</source>
                                 <source>client/src/test/java</source>
                             </sources>
@@ -220,9 +219,6 @@
                         </goals>
                         <configuration>
                             <resources>
-                                <resource>
-                                    <directory>test-resources/src/test/resources</directory>
-                                </resource>
                                 <resource>
                                     <directory>client/src/test/resources</directory>
                                 </resource>
