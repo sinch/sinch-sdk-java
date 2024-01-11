@@ -3,7 +3,7 @@ package com.sinch.sdk.domains.voice.adapters.converters;
 import com.sinch.sdk.domains.voice.models.DomainType;
 import com.sinch.sdk.domains.voice.models.dto.v1.GetCallResponseObjDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.SVAMLRequestBodyDto;
-import com.sinch.sdk.domains.voice.models.requests.CallUpdateRequestParameters;
+import com.sinch.sdk.domains.voice.models.requests.CallsUpdateRequestParameters;
 import com.sinch.sdk.domains.voice.models.response.CallInformation;
 import com.sinch.sdk.domains.voice.models.response.CallReasonType;
 import com.sinch.sdk.domains.voice.models.response.CallResultType;
@@ -31,7 +31,7 @@ public class CallsDtoConverter {
         .build();
   }
 
-  public static SVAMLRequestBodyDto convert(CallUpdateRequestParameters client) {
+  public static SVAMLRequestBodyDto convert(CallsUpdateRequestParameters client) {
     if (null == client) {
       return null;
     }

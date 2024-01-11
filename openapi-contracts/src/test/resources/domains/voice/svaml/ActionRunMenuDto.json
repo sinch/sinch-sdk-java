@@ -1,0 +1,24 @@
+{
+    "name": "runMenu",
+    "barge": true,
+    "locale": "fr",
+    "mainMenu": " the main menu",
+    "enableVoice": false,
+    "menus": [
+      {
+        "id": "the id",
+        "mainPrompt": "main prompt",
+        "repeatPrompt": "repeat prompt",
+        "repeats": 5,
+        "maxDigits": 18,
+        "timeoutMills": 500,
+        "maxTimeoutMills": 123456,
+        "options": [
+          {
+            "dtmf": "#w",
+            "action": "menu"
+          }
+        ]
+      }
+    ]
+  }

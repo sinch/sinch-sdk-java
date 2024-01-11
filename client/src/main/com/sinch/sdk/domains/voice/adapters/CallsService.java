@@ -6,7 +6,7 @@ import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.domains.voice.adapters.api.v1.CallsApi;
 import com.sinch.sdk.domains.voice.adapters.converters.CallsDtoConverter;
 import com.sinch.sdk.domains.voice.models.CallLegType;
-import com.sinch.sdk.domains.voice.models.requests.CallUpdateRequestParameters;
+import com.sinch.sdk.domains.voice.models.requests.CallsUpdateRequestParameters;
 import com.sinch.sdk.domains.voice.models.response.CallInformation;
 import com.sinch.sdk.models.Configuration;
 import java.util.Map;
@@ -30,12 +30,12 @@ public class CallsService implements com.sinch.sdk.domains.voice.CallsService {
     return CallsDtoConverter.convert(getApi().callingGetCallResult(callId));
   }
 
-  public void update(String callId, CallUpdateRequestParameters parameters) {
+  public void update(String callId, CallsUpdateRequestParameters parameters) {
     getApi().callingUpdateCall(callId, CallsDtoConverter.convert(parameters));
   }
 
   public void manageWithCallLeg(
-      String callId, CallLegType callLeg, CallUpdateRequestParameters parameters) {
+      String callId, CallLegType callLeg, CallsUpdateRequestParameters parameters) {
     getApi()
         .callingManageCallWithCallLeg(
             callId, callLeg.value(), CallsDtoConverter.convert(parameters));

@@ -6,12 +6,19 @@ import com.sinch.sdk.domains.voice.models.DestinationNumber;
 import com.sinch.sdk.domains.voice.models.DestinationUser;
 import com.sinch.sdk.domains.voice.models.DomainType;
 import com.sinch.sdk.domains.voice.models.Price;
+import com.sinch.sdk.domains.voice.models.dto.svaml.ActionConnectConfDtoTest;
+import com.sinch.sdk.domains.voice.models.dto.svaml.InstructionAnswerDtoTest;
 import com.sinch.sdk.domains.voice.models.dto.v1.CallsResponseDtoTest;
+import com.sinch.sdk.domains.voice.models.dto.v1.SVAMLRequestBodyDto;
+import com.sinch.sdk.domains.voice.models.dto.v1.SvamlActionDto;
+import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionDto;
+import com.sinch.sdk.domains.voice.models.requests.CallsUpdateRequestParametersTest;
 import com.sinch.sdk.domains.voice.models.response.CallInformation;
 import com.sinch.sdk.domains.voice.models.response.CallReasonType;
 import com.sinch.sdk.domains.voice.models.response.CallResultType;
 import com.sinch.sdk.domains.voice.models.response.CallStatusType;
 import java.time.Instant;
+import java.util.Collections;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -34,12 +41,26 @@ public class CallsDtoConverterTest extends BaseTest {
           .setDebit(Price.builder().setCurrencyId("EUR").setAmount(0.5274F).build())
           .build();
 
+  public static SVAMLRequestBodyDto svamlRequestBodyDto =
+      new SVAMLRequestBodyDto()
+          .action(new SvamlActionDto(ActionConnectConfDtoTest.dto))
+          .instructions(
+              Collections.singletonList(new SvamlInstructionDto(InstructionAnswerDtoTest.dto)));
+
   @Test
-  void callsGet() {
+  void convertCallInformation() {
 
     Assertions.assertThat(
             CallsDtoConverter.convert(CallsResponseDtoTest.expectedCallsGetInformationResponseDto))
         .usingRecursiveComparison()
         .isEqualTo(expectedCallInformation);
+  }
+
+  @Test
+  void convertCallsUpdateRequestParameters() {
+
+    Assertions.assertThat(svamlRequestBodyDto)
+        .usingRecursiveComparison()
+        .isEqualTo(CallsDtoConverter.convert(CallsUpdateRequestParametersTest.parameters));
   }
 }

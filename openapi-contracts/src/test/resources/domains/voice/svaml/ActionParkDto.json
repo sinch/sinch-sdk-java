@@ -1,0 +1,7 @@
+{
+  "name": "park",
+  "locale": "en",
+  "introPrompt": "intro prompt",
+  "holdPrompt": "hold prompt",
+  "maxDuration": 456
+}

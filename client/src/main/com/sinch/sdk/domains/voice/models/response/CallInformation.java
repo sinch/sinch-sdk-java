@@ -3,7 +3,6 @@ package com.sinch.sdk.domains.voice.models.response;
 import com.sinch.sdk.domains.voice.models.Destination;
 import com.sinch.sdk.domains.voice.models.DomainType;
 import com.sinch.sdk.domains.voice.models.Price;
-import com.sinch.sdk.domains.voice.models.requests.CallUpdateRequestParameters.Builder;
 import java.time.Instant;
 
 /** Information related to a specific call */

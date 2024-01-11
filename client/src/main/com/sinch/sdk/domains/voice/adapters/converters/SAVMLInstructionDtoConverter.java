@@ -12,7 +12,7 @@ import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionStartRecordingO
 import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionStopRecordingDto;
 import com.sinch.sdk.domains.voice.models.svaml.Instruction;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionAnswer;
-import com.sinch.sdk.domains.voice.models.svaml.InstructionPlayFile;
+import com.sinch.sdk.domains.voice.models.svaml.InstructionPlayFiles;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionSay;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionSendDtfm;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionSetCookie;
@@ -49,8 +49,8 @@ public class SAVMLInstructionDtoConverter {
     if (client instanceof InstructionAnswer) {
       InstructionAnswer typedClient = (InstructionAnswer) client;
       convertedDto = convert(typedClient);
-    } else if (client instanceof InstructionPlayFile) {
-      InstructionPlayFile typedClient = (InstructionPlayFile) client;
+    } else if (client instanceof InstructionPlayFiles) {
+      InstructionPlayFiles typedClient = (InstructionPlayFiles) client;
       convertedDto = convert(typedClient);
     } else if (client instanceof InstructionSay) {
       InstructionSay typedClient = (InstructionSay) client;
@@ -84,7 +84,7 @@ public class SAVMLInstructionDtoConverter {
     return dto;
   }
 
-  private static SvamlInstructionPlayFilesDto convert(InstructionPlayFile client) {
+  private static SvamlInstructionPlayFilesDto convert(InstructionPlayFiles client) {
     if (null == client) {
       return null;
     }

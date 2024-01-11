@@ -2,12 +2,12 @@ package com.sinch.sdk.domains.voice.models.svaml;
 
 import java.util.Collection;
 
-public class InstructionPlayFile extends Instruction {
+public class InstructionPlayFiles extends Instruction {
 
   private final Collection<String> ids;
   private final String locale;
 
-  private InstructionPlayFile(Collection<String> ids, String locale) {
+  private InstructionPlayFiles(Collection<String> ids, String locale) {
     this.ids = ids;
     this.locale = locale;
   }
@@ -22,7 +22,7 @@ public class InstructionPlayFile extends Instruction {
 
   @Override
   public String toString() {
-    return "InstructionPlayFile{"
+    return "InstructionPlayFiles{"
         + "ids="
         + ids
         + ", locale='"
@@ -51,8 +51,8 @@ public class InstructionPlayFile extends Instruction {
       return this;
     }
 
-    public InstructionPlayFile build() {
-      return new InstructionPlayFile(ids, locale);
+    public InstructionPlayFiles build() {
+      return new InstructionPlayFiles(ids, locale);
     }
 
     @SuppressWarnings("unchecked")

@@ -10,11 +10,11 @@ import java.util.Collection;
  * @see <a href="https://developers.sinch.com/docs/voice/api-reference/svaml/">SAVML
  *     Dcoumentation</a>
  */
-public class CallUpdateRequestParameters {
+public class CallsUpdateRequestParameters {
   private final Collection<Instruction> instructions;
   private final Action action;
 
-  private CallUpdateRequestParameters(Collection<Instruction> instructions, Action action) {
+  private CallsUpdateRequestParameters(Collection<Instruction> instructions, Action action) {
     this.instructions = instructions;
     this.action = action;
   }
@@ -39,7 +39,7 @@ public class CallUpdateRequestParameters {
 
   @Override
   public String toString() {
-    return "CallUpdateRequestParameters{"
+    return "CallsUpdateRequestParameters{"
         + "instructions="
         + instructions
         + ", action="
@@ -90,8 +90,8 @@ public class CallUpdateRequestParameters {
      *
      * @return Built instance
      */
-    public CallUpdateRequestParameters build() {
-      return new CallUpdateRequestParameters(instructions, action);
+    public CallsUpdateRequestParameters build() {
+      return new CallsUpdateRequestParameters(instructions, action);
     }
   }
 }

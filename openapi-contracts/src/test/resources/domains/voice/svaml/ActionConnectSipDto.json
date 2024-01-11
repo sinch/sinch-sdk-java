@@ -1,0 +1,18 @@
+{
+  "name": "connectSip",
+  "destination": {
+    "type": "sip",
+    "endpoint": "a sip string"
+  },
+  "maxDuration": 456,
+  "cli": "a cli value",
+  "transport": "TLS",
+  "suppressCallbacks": true,
+  "callHeaders": [
+    {
+      "key": "left string",
+      "value": "right string"
+    }
+  ],
+  "moh": "music2"
+}

@@ -2,7 +2,7 @@ package com.sinch.sample.voice.calls;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.voice.models.CallLegType;
-import com.sinch.sdk.domains.voice.models.requests.CallUpdateRequestParameters;
+import com.sinch.sdk.domains.voice.models.requests.CallsUpdateRequestParameters;
 import com.sinch.sdk.domains.voice.models.svaml.ActionContinue;
 import com.sinch.sdk.domains.voice.models.svaml.Instruction;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionSay;
@@ -38,7 +38,7 @@ public class ManageWithCallLeg extends BaseApplication {
             InstructionSay.builder().setText("Hello from sample app").setLocale("en").build());
 
     var parameters =
-        CallUpdateRequestParameters.builder()
+        CallsUpdateRequestParameters.builder()
             .setInstructions(instructions)
             .setAction(action)
             .build();
