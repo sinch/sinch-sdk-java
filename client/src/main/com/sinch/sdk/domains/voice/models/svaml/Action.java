@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.voice.models.svaml;
 
+/** Base class for SAVML Action */
 public abstract class Action {
 
   @Override
@@ -9,6 +10,11 @@ public abstract class Action {
 
   public abstract static class Builder<B extends Builder<B>> {
 
+    /**
+     * Build the instance
+     *
+     * @return Built instance
+     */
     public abstract Action build();
 
     @SuppressWarnings("unchecked")

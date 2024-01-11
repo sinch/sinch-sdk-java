@@ -5,7 +5,7 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** Domains type */
+/** The status of a call */
 public class CallStatusType extends EnumDynamic<String, CallStatusType> {
 
   public static final CallStatusType ONGOING = new CallStatusType("ONGOING");

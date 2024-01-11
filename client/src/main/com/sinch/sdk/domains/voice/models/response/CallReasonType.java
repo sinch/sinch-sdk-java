@@ -5,7 +5,7 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** Domains type */
+/** Describe the reason why a call ended */
 public class CallReasonType extends EnumDynamic<String, CallReasonType> {
 
   public static final CallReasonType NA = new CallReasonType("N/A");

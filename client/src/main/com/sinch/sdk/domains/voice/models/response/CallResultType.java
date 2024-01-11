@@ -5,7 +5,7 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** Domains type */
+/** Describe the result of a call */
 public class CallResultType extends EnumDynamic<String, CallResultType> {
 
   public static final CallResultType NA = new CallResultType("N/A");

@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 /**
+ * Errors used in SMS Scheduled Provisioning configuration by the Numbers API
+ *
  * @see <a
  *     href="https://developers.sinch.com/docs/numbers/api-reference/error-codes/provisioning-errors/">https://developers.sinch.com/docs/numbers/api-reference/error-codes/provisioning-errors/</a>
  * @since 1.0

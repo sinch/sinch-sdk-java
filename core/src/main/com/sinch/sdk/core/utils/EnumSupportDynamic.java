@@ -9,9 +9,15 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Utility class to manage extendable enumeration set Used to define a known set of value but enable
- * to extend it dynamically Typical use case: being able to send and/or receive values not yet
- * defined at SDK version release
+ * Utility class to manage extendable enumeration set
+ *
+ * <p>Used to define a known set of value but enable to extend it dynamically
+ *
+ * <p>Typical use case: being able to send and/or receive values not yet defined at SDK version
+ * release
+ *
+ * @param <T> Value type
+ * @param <E> Value instance
  */
 public final class EnumSupportDynamic<T, E extends EnumDynamic<T, E>> {
 
