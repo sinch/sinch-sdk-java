@@ -1,6 +1,8 @@
 package com.sinch.sdk.models;
 
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 /**
@@ -16,10 +18,10 @@ import java.util.regex.Pattern;
  */
 public class DualToneMultiFrequency {
 
+  private static final Logger LOGGER = Logger.getLogger(DualToneMultiFrequency.class.getName());
   private static final Pattern PATTERN = Pattern.compile("([0-9#w])*");
+  private static final AtomicBoolean STRICT = new AtomicBoolean(true);
   private final String dtfm;
-
-  private static boolean strict = true;
 
   /**
    * Create an instance of DualToneMultiFrequency
@@ -29,20 +31,15 @@ public class DualToneMultiFrequency {
    */
   public DualToneMultiFrequency(String dtfm) throws IllegalArgumentException {
 
-    if (strict && !validate(dtfm)) {
-      throw new IllegalArgumentException(
-          String.format("Invalid DTFM format for '%s' number", dtfm));
+    if (!validate(dtfm)) {
+      String message = String.format("Invalid DTFM format for '%s' number", dtfm);
+
+      if (STRICT.get()) {
+        throw new IllegalArgumentException(message);
+      }
+      LOGGER.warning(message);
     }
     this.dtfm = dtfm;
-  }
-
-  /**
-   * Get the DTFM value
-   *
-   * @return The dtfm value
-   */
-  public String stringValue() {
-    return dtfm;
   }
 
   /**
@@ -61,7 +58,7 @@ public class DualToneMultiFrequency {
    * @param strict Set strict mode to true/false
    */
   public static void setStrict(boolean strict) {
-    DualToneMultiFrequency.strict = strict;
+    DualToneMultiFrequency.STRICT.set(strict);
   }
 
   /**
@@ -72,6 +69,15 @@ public class DualToneMultiFrequency {
    */
   public static boolean validate(String value) {
     return PATTERN.matcher(value).matches();
+  }
+
+  /**
+   * Get the DTFM value
+   *
+   * @return The dtfm value
+   */
+  public String stringValue() {
+    return dtfm;
   }
 
   @Override
