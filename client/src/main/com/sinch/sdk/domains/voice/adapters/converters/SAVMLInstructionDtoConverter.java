@@ -9,6 +9,7 @@ import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionSendDtmfDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionSetCookieDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionStartRecordingDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionStartRecordingOptionsDto;
+import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionStartRecordingOptionsTranscriptionOptionsDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionStopRecordingDto;
 import com.sinch.sdk.domains.voice.models.svaml.Instruction;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionAnswer;
@@ -19,6 +20,7 @@ import com.sinch.sdk.domains.voice.models.svaml.InstructionSetCookie;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionStartRecording;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionStopRecording;
 import com.sinch.sdk.domains.voice.models.svaml.StartRecordingOptions;
+import com.sinch.sdk.domains.voice.models.svaml.TranscriptionOptions;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -159,6 +161,19 @@ public class SAVMLInstructionDtoConverter {
     dto.setCredentials(client.getCredentials());
     dto.setFormat(client.getFormat());
     dto.setNotificationEvents(client.getNotificationEvents());
+    dto.setTranscriptionOptions(convert(client.getTranscriptionOptions()));
+    return dto;
+  }
+
+  private static SvamlInstructionStartRecordingOptionsTranscriptionOptionsDto convert(
+      TranscriptionOptions client) {
+    if (null == client) {
+      return null;
+    }
+    SvamlInstructionStartRecordingOptionsTranscriptionOptionsDto dto =
+        new SvamlInstructionStartRecordingOptionsTranscriptionOptionsDto();
+    dto.setEnabled(client.getEnabled());
+    dto.locale(client.getLocale());
     return dto;
   }
 }

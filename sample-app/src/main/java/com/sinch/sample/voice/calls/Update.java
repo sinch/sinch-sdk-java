@@ -32,6 +32,7 @@ import com.sinch.sdk.domains.voice.models.svaml.Menu;
 import com.sinch.sdk.domains.voice.models.svaml.MenuOption;
 import com.sinch.sdk.domains.voice.models.svaml.MenuOptionActionType;
 import com.sinch.sdk.domains.voice.models.svaml.StartRecordingOptions;
+import com.sinch.sdk.domains.voice.models.svaml.TranscriptionOptions;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import com.sinch.sdk.models.E164PhoneNumber;
 import java.io.IOException;
@@ -158,13 +159,15 @@ public class Update extends BaseApplication {
                     .setDestinationUrl("foo")
                     .setFormat("mp3")
                     .setNotificationEvents(true)
+                    .setTranscriptionOptions(
+                        TranscriptionOptions.builder().setEnabled(true).setLocale("en-US").build())
                     .build())
             .build();
 
     var instructionStopRecording = InstructionStopRecording.builder().build();
 
-    Action action = null;
-    Instruction instruction = instructionStopRecording;
+    Action action = actionConnectPstn;
+    Instruction instruction = instructionStartRecording;
 
     Collection<Instruction> instructions = Collections.singletonList(instruction);
 

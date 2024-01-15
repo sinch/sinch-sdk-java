@@ -16,6 +16,7 @@ import com.sinch.sdk.domains.voice.models.svaml.InstructionSetCookie;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionStartRecording;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionStopRecording;
 import com.sinch.sdk.domains.voice.models.svaml.StartRecordingOptions;
+import com.sinch.sdk.domains.voice.models.svaml.TranscriptionOptions;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import java.util.Collections;
 import org.assertj.core.api.Assertions;
@@ -48,6 +49,8 @@ public class SAVMLInstructionDtoConverterTest {
                   .setDestinationUrl("destination value")
                   .setFormat("mp3")
                   .setNotificationEvents(true)
+                  .setTranscriptionOptions(
+                      TranscriptionOptions.builder().setEnabled(true).setLocale("en-US").build())
                   .build())
           .build();
 
