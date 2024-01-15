@@ -1,9 +1,9 @@
 package com.sinch.sample.voice.conferences;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.voice.models.MohClassType;
 import com.sinch.sdk.domains.voice.models.requests.ConferenceManageParticipantCommandType;
 import com.sinch.sdk.domains.voice.models.requests.ConferenceManageParticipantRequestParameters;
-import com.sinch.sdk.domains.voice.models.requests.MohClassType;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -23,8 +23,6 @@ public class ManageParticipant extends BaseApplication {
   }
 
   public void run() {
-
-    String callId = "e429ecbb-6057-4756-8148-2b498f968136";
 
     var command = ConferenceManageParticipantCommandType.MUTE;
     var moh = MohClassType.MUSIC1;

@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.numbers.adapters.converters;
 
+import com.sinch.sdk.domains.common.adapters.converters.EnumDynamicConverter;
 import com.sinch.sdk.domains.numbers.models.ProvisioningStatus;
 import com.sinch.sdk.domains.numbers.models.ScheduledVoiceProvisioning;
 import com.sinch.sdk.domains.numbers.models.dto.v1.ProvisioningStatusDto;
@@ -28,7 +29,8 @@ public class ScheduledVoiceProvisioningDtoConverter {
     ScheduledVoiceProvisioningDto dto =
         new ScheduledVoiceProvisioningDto(
             provisioning.getAppId(), provisioning.getLastUpdatedTime().atOffset(ZoneOffset.UTC));
-    dto.status(ProvisioningStatusDto.fromValue(provisioning.getStatus().value()));
+    dto.status(
+        ProvisioningStatusDto.fromValue(EnumDynamicConverter.convert(provisioning.getStatus())));
     return dto;
   }
 }

@@ -1,11 +1,14 @@
 package com.sinch.sdk.models;
 
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class E164PhoneNumber {
 
+  private static final Logger LOGGER = Logger.getLogger(E164PhoneNumber.class.getName());
   // See https://community.sinch.com/t5/Glossary/E-164/ta-p/7537
   private static final Pattern PATTERN =
       // adapted from https://stackoverflow.com/a/40347281
@@ -22,19 +25,19 @@ public class E164PhoneNumber {
               "\\d\\d\\d\\d\\d",
               // ending with digits
               "\\d*$"));
-
+  private static final AtomicBoolean STRICT = new AtomicBoolean(true);
   private final String number;
 
   public E164PhoneNumber(String number) {
 
     if (!validate(number)) {
-      throw new NumberFormatException(String.format("Invalid E164 format for '%s' number", number));
+      String message = String.format("Invalid E164 format for '%s' number", number);
+      if (STRICT.get()) {
+        throw new NumberFormatException(message);
+      }
+      LOGGER.warning(message);
     }
     this.number = number;
-  }
-
-  public String stringValue() {
-    return number;
   }
 
   public static E164PhoneNumber valueOf(String value) {
@@ -45,6 +48,19 @@ public class E164PhoneNumber {
     // don't worry about spaces
     Matcher matcher = PATTERN.matcher(value.replaceAll("\\s+", ""));
     return matcher.matches();
+  }
+
+  /**
+   * Configure if invalid string values will throw an Exception or not
+   *
+   * @param strict Set strict mode to true/false
+   */
+  public static void setStrict(boolean strict) {
+    E164PhoneNumber.STRICT.set(strict);
+  }
+
+  public String stringValue() {
+    return number;
   }
 
   @Override

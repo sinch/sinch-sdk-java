@@ -24,4 +24,12 @@ public interface VoiceService {
    * @since 1.0
    */
   ConferencesService conferences();
+
+  /**
+   * Calls Service instance
+   *
+   * @return service instance for project
+   * @since 1.0
+   */
+  CallsService calls();
 }

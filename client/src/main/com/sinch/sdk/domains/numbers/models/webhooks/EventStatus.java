@@ -8,6 +8,8 @@ import java.util.stream.Stream;
 public final class EventStatus extends EnumDynamic<String, EventStatus> {
 
   /**
+   * The status of the event
+   *
    * @see <a
    *     href="https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Callbacks/#tag/Callbacks/operation/ImportedNumberService_EventsCallback!path=status&t=request/">https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Callbacks/#tag/Callbacks/operation/ImportedNumberService_EventsCallback!path=status&amp;t=request/</a>
    * @since 1.0

@@ -1,0 +1,9 @@
+{
+  "name": "startRecording",
+  "options": {
+    "destinationUrl": "destination value",
+    "credentials": "credential value",
+    "format": "mp3",
+    "notificationEvents": true
+  }
+}

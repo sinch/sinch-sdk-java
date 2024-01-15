@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.numbers.adapters.converters;
 
+import com.sinch.sdk.domains.common.adapters.converters.EnumDynamicConverter;
 import com.sinch.sdk.domains.numbers.models.ProvisioningStatus;
 import com.sinch.sdk.domains.numbers.models.ScheduledSmsProvisioning;
 import com.sinch.sdk.domains.numbers.models.SmsErrorCode;
@@ -36,7 +37,7 @@ public class ScheduledSmsProvisioningDtoConverter {
         provisioning.getCampaignId(),
         provisioning.getLastUpdatedTime().atOffset(ZoneOffset.UTC),
         provisioning.getErrorCodes().stream()
-            .map(e -> SmsErrorCodeDto.fromValue(e.value()))
+            .map(e -> SmsErrorCodeDto.fromValue(EnumDynamicConverter.convert(e)))
             .collect(Collectors.toList()));
   }
 }

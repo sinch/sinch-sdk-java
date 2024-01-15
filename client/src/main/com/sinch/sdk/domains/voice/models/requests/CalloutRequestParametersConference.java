@@ -2,6 +2,11 @@ package com.sinch.sdk.domains.voice.models.requests;
 
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.voice.models.CalloutMethodType;
+import com.sinch.sdk.domains.voice.models.ConferenceDtfmOptions;
+import com.sinch.sdk.domains.voice.models.Destination;
+import com.sinch.sdk.domains.voice.models.DomainType;
+import com.sinch.sdk.domains.voice.models.MohClassType;
+import com.sinch.sdk.models.DualToneMultiFrequency;
 import com.sinch.sdk.models.E164PhoneNumber;
 
 /**
@@ -24,7 +29,7 @@ public class CalloutRequestParametersConference extends CalloutRequestParameters
   private CalloutRequestParametersConference(
       OptionalValue<Destination> destination,
       OptionalValue<E164PhoneNumber> cli,
-      OptionalValue<String> dtfm,
+      OptionalValue<DualToneMultiFrequency> dtfm,
       OptionalValue<String> custom,
       OptionalValue<String> conferenceId,
       OptionalValue<ConferenceDtfmOptions> dtfmOptions,

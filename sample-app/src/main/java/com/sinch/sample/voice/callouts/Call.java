@@ -1,8 +1,8 @@
 package com.sinch.sample.voice.callouts;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.voice.models.DestinationNumber;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConference;
-import com.sinch.sdk.domains.voice.models.requests.DestinationNumber;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -29,6 +29,7 @@ public class Call extends BaseApplication {
         CalloutRequestParametersConference.builder()
             .setDestination(DestinationNumber.valueOf(phoneNumber))
             .setConferenceId("My conference Id")
+            .setCustom("my custom value")
             .build();
     var response = client.voice().callouts().call(parameters);
 

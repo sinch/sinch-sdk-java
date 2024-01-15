@@ -1,0 +1,10 @@
+ {
+    "name": "connectConf",
+    "conferenceId": "My Conference Id",
+    "conferenceDtmfOptions": {
+      "mode": "forward",
+      "maxDigits": 45,
+      "timeoutMills": 456
+    },
+    "moh": "music3"
+  }

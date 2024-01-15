@@ -12,11 +12,13 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Objects;
 
 /** Starts a recording of the call. */
@@ -27,12 +29,45 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlInstructionStartRecordingDto {
+  /** The &#x60;name&#x60; property. Must have the value &#x60;startRecording&#x60;. */
+  public enum NameEnum {
+    STARTRECORDING("startRecording"),
+
+    UNKNOWN_DEFAULT_OPEN_API("unknown_default_open_api");
+
+    private String value;
+
+    NameEnum(String value) {
+      this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static NameEnum fromValue(String value) {
+      for (NameEnum b : NameEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      return UNKNOWN_DEFAULT_OPEN_API;
+    }
+  }
+
   public static final String JSON_PROPERTY_NAME = "name";
   private String name;
   private boolean nameDefined = false;
 
   public static final String JSON_PROPERTY_OPTIONS = "options";
-  private Object options;
+  private SvamlInstructionStartRecordingOptionsDto options;
   private boolean optionsDefined = false;
 
   public SvamlInstructionStartRecordingDto() {}
@@ -66,21 +101,21 @@ public class SvamlInstructionStartRecordingDto {
     this.nameDefined = true;
   }
 
-  public SvamlInstructionStartRecordingDto options(Object options) {
+  public SvamlInstructionStartRecordingDto options(
+      SvamlInstructionStartRecordingOptionsDto options) {
     this.options = options;
     this.optionsDefined = true;
     return this;
   }
 
   /**
-   * An object that specifies details about the recording. For more details, see [Recording
-   * Options](../../recording/#recording-options).
+   * Get options
    *
    * @return options
    */
   @JsonProperty(JSON_PROPERTY_OPTIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Object getOptions() {
+  public SvamlInstructionStartRecordingOptionsDto getOptions() {
     return options;
   }
 
@@ -91,7 +126,7 @@ public class SvamlInstructionStartRecordingDto {
 
   @JsonProperty(JSON_PROPERTY_OPTIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setOptions(Object options) {
+  public void setOptions(SvamlInstructionStartRecordingOptionsDto options) {
     this.options = options;
     this.optionsDefined = true;
   }

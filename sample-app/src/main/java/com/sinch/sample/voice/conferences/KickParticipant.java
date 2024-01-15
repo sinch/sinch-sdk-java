@@ -21,7 +21,6 @@ public class KickParticipant extends BaseApplication {
 
   public void run() {
 
-    String callId = "e429ecbb-6057-4756-8148-2b498f968136";
     LOGGER.info("Kick participant '%s' for conference '%s".formatted(callId, conferenceId));
 
     client.voice().conferences().kickParticipant(conferenceId, callId);

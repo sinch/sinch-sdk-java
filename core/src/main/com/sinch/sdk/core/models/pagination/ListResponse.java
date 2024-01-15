@@ -12,6 +12,7 @@ import java.util.stream.StreamSupport;
  *
  * <p>Act as an iterator over pages response and pages content.
  *
+ * @param <T> Page content items type
  * @since 1.0
  */
 public abstract class ListResponse<T> {

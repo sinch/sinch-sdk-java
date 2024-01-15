@@ -3,6 +3,8 @@ package com.sinch.sdk.domains.voice.models.requests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.sinch.sdk.domains.voice.models.CalloutMethodType;
+import com.sinch.sdk.domains.voice.models.DestinationNumber;
+import com.sinch.sdk.models.DualToneMultiFrequency;
 import com.sinch.sdk.models.E164PhoneNumber;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +15,7 @@ public class CalloutRequestParametersCustomTest {
           .setDestination(DestinationNumber.valueOf("+14045005000"))
           .setCli(E164PhoneNumber.valueOf("+14045001000"))
           .setCustom("my custom value")
-          .setDtfm("dtfm value")
+          .setDtfm(DualToneMultiFrequency.valueOf("w123#"))
           .setMaxDuration(32)
           .setIce(
               "{\"action\": {\"name\": \"connectPstn\", \"number\": \"+12233445566\", \"cli\":"
@@ -42,7 +44,7 @@ public class CalloutRequestParametersCustomTest {
 
   @Test
   void getDtfm() {
-    assertEquals("dtfm value", customRequestParameters.getDtfm().get());
+    assertEquals("w123#", customRequestParameters.getDtfm().get().stringValue());
   }
 
   @Test

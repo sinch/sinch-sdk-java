@@ -26,7 +26,8 @@ public class CalloutRequestDtoTest extends BaseTest {
           .method(MethodEnum.CONFERENCECALLOUT.getValue())
           .conferenceCallout(
               new ConferenceCalloutRequestDto()
-                  .destination(new DestinationDto().type("number").endpoint("+14045005000"))
+                  .destination(
+                      new DestinationDto().type(DestinationTypeDto.NUMBER).endpoint("+14045005000"))
                   .cli("+14045001000")
                   .locale("en-US")
                   .greeting("Welcome to my conference")
@@ -36,7 +37,7 @@ public class CalloutRequestDtoTest extends BaseTest {
                           .mode("detect")
                           .maxDigits(3)
                           .timeoutMills(456))
-                  .dtmf("dtfm value")
+                  .dtmf("w123#")
                   .maxDuration(32)
                   .enableAce(true)
                   .enableDice(true)
@@ -50,9 +51,12 @@ public class CalloutRequestDtoTest extends BaseTest {
           .method(MethodEnum.TTSCALLOUT.getValue())
           .ttsCallout(
               new TtsCalloutRequestDto()
-                  .destination(new DestinationDto().type("number").endpoint("+14045005000"))
+                  .destination(
+                      new DestinationDto()
+                          .type(DestinationTypeDto.USERNAME)
+                          .endpoint("an user name"))
                   .cli("+14045001000")
-                  .dtmf("dtfm value")
+                  .dtmf("w123#")
                   .custom("my custom value")
                   .domain("pstn")
                   .locale("en-US")
@@ -70,9 +74,10 @@ public class CalloutRequestDtoTest extends BaseTest {
           .method(MethodEnum.CUSTOMCALLOUT.getValue())
           .customCallout(
               new CustomCalloutRequestDto()
-                  .destination(new DestinationDto().type("number").endpoint("+14045005000"))
+                  .destination(
+                      new DestinationDto().type(DestinationTypeDto.NUMBER).endpoint("+14045005000"))
                   .cli("+14045001000")
-                  .dtmf("dtfm value")
+                  .dtmf("w123#")
                   .custom("my custom value")
                   .maxDuration(32)
                   .ice(

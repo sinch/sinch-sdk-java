@@ -3,6 +3,9 @@ package com.sinch.sdk.domains.voice.models.requests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.sinch.sdk.domains.voice.models.CalloutMethodType;
+import com.sinch.sdk.domains.voice.models.DestinationUser;
+import com.sinch.sdk.domains.voice.models.DomainType;
+import com.sinch.sdk.models.DualToneMultiFrequency;
 import com.sinch.sdk.models.E164PhoneNumber;
 import org.junit.jupiter.api.Test;
 
@@ -10,9 +13,9 @@ public class CalloutRequestParametersTTSTest {
 
   public static final CalloutRequestParametersTTS ttsRequestParameters =
       CalloutRequestParametersTTS.builder()
-          .setDestination(DestinationNumber.valueOf("+14045005000"))
+          .setDestination(DestinationUser.valueOf("an user name"))
           .setCli(E164PhoneNumber.valueOf("+14045001000"))
-          .setDtfm("dtfm value")
+          .setDtfm(DualToneMultiFrequency.valueOf("w123#"))
           .setEnableAce(Boolean.TRUE)
           .setEnableDice(Boolean.TRUE)
           .setEnablePie(Boolean.TRUE)
@@ -33,7 +36,7 @@ public class CalloutRequestParametersTTSTest {
   @Test
   void getDestination() {
     assertEquals(
-        DestinationNumber.valueOf("+14045005000"), ttsRequestParameters.getDestination().get());
+        DestinationUser.valueOf("an user name"), ttsRequestParameters.getDestination().get());
   }
 
   @Test
@@ -43,7 +46,7 @@ public class CalloutRequestParametersTTSTest {
 
   @Test
   void getDtfm() {
-    assertEquals("dtfm value", ttsRequestParameters.getDtfm().get());
+    assertEquals("w123#", ttsRequestParameters.getDtfm().get().stringValue());
   }
 
   @Test

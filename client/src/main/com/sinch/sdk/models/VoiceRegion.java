@@ -6,6 +6,11 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 /**
+ * The Calling API uses a variety of endpoints depending on where in the world you are located.
+ *
+ * <p>When using methods concerning individual calls, you can define what regional endpoint you want
+ * to use for the call. The following regional endpoints are available:
+ *
  * @see <a href="https://developers.sinch.com/docs/voice/api-reference/#endpoints">endpoints
  *     description</a>
  */

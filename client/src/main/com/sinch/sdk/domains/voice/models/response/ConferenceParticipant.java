@@ -1,7 +1,6 @@
 package com.sinch.sdk.domains.voice.models.response;
 
-import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParameters.Builder;
-
+/** Information about a conference's participant */
 public class ConferenceParticipant {
   private final String cli;
   private final String id;
@@ -18,22 +17,48 @@ public class ConferenceParticipant {
     this.onhold = onhold;
   }
 
+  /**
+   * The phone number of the PSTN participant that was connected in the conference, or whatever was
+   * passed as CLI for data originated/terminated calls.
+   *
+   * @return The value
+   */
   public String getCli() {
     return cli;
   }
 
+  /**
+   * The callId of the call leg that the participant joined the conference.
+   *
+   * @return Uniq identifier related toi the call
+   */
   public String getId() {
     return id;
   }
 
+  /**
+   * The number of seconds that the participant has been connected to the conference
+   *
+   * @return Duration value
+   */
   public Integer getDuration() {
     return duration;
   }
 
+  /**
+   * Is participant is muted or not
+   *
+   * @return Muted state
+   */
   public Boolean getMuted() {
     return muted;
   }
 
+  /**
+   * Is participant is on hold or not
+   *
+   * @return The on hold state
+   */
   public Boolean getOnhold() {
     return onhold;
   }
@@ -56,6 +81,11 @@ public class ConferenceParticipant {
         + '}';
   }
 
+  /**
+   * Create a builder instance
+   *
+   * @return Dedicated builder
+   */
   public static Builder builder() {
     return new Builder();
   }
@@ -68,9 +98,8 @@ public class ConferenceParticipant {
     Boolean onhold;
 
     /**
-     * @param cli The phone number of the PSTN participant that was connected in the conference, or
-     *     whatever was passed as CLI for data originated/terminated calls.
-     * @return current builder
+     * @see ConferenceParticipant#getCli() getter
+     * @return Current builder
      */
     public Builder setCli(String cli) {
       this.cli = cli;
@@ -78,8 +107,8 @@ public class ConferenceParticipant {
     }
 
     /**
-     * @param id The callId of the call leg that the participant joined the conference.
-     * @return current builder
+     * @see ConferenceParticipant#getId() getter
+     * @return Current builder
      */
     public Builder setId(String id) {
       this.id = id;
@@ -87,9 +116,8 @@ public class ConferenceParticipant {
     }
 
     /**
-     * @param duration The number of seconds that the participant has been connected to the
-     *     conference.
-     * @return current builder
+     * @see ConferenceParticipant#getDuration() getter
+     * @return Current builder
      */
     public Builder setDuration(Integer duration) {
       this.duration = duration;
@@ -97,8 +125,8 @@ public class ConferenceParticipant {
     }
 
     /**
-     * @param muted Is participant is muted
-     * @return current builder
+     * @see ConferenceParticipant#getMuted() getter
+     * @return Current builder
      */
     public Builder setMuted(Boolean muted) {
       this.muted = muted;
@@ -106,8 +134,8 @@ public class ConferenceParticipant {
     }
 
     /**
-     * @param onhold Is participant is on-hold
-     * @return current builder
+     * @see ConferenceParticipant#getOnhold() getter
+     * @return Current builder
      */
     public Builder setOnhold(Boolean onhold) {
       this.onhold = onhold;

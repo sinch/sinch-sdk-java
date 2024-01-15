@@ -49,6 +49,14 @@ class E164PhoneNumberTest {
   }
 
   @Test
+  void noExceptionOnRelax() {
+    String value = "my invalid value";
+    E164PhoneNumber.setStrict(false);
+    assertEquals(E164PhoneNumber.valueOf(value).stringValue(), value);
+    E164PhoneNumber.setStrict(true);
+  }
+
+  @Test
   void validateTrue() {
     validNumbers.forEach(
         f -> assertTrue(E164PhoneNumber.validate(f), String.format("'%s' is valid", f)));

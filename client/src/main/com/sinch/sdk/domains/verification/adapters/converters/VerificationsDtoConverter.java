@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.verification.adapters.converters;
 
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.domains.common.adapters.converters.EnumDynamicConverter;
 import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
@@ -83,7 +84,8 @@ public class VerificationsDtoConverter {
   }
 
   public static InitiateVerificationResourceMethodDto convert(VerificationMethodType client) {
-    VerificationMethodDto dto = VerificationMethodDto.fromValue(client.value());
+    VerificationMethodDto dto =
+        VerificationMethodDto.fromValue(EnumDynamicConverter.convert(client));
     return new InitiateVerificationResourceMethodDto(dto);
   }
 
@@ -155,7 +157,10 @@ public class VerificationsDtoConverter {
 
     VerificationReportRequestResourceDto dto = new VerificationReportRequestResourceDto();
 
-    client.getMethod().ifPresent(f -> dto.method(VerificationMethodDto.fromValue(f.value())));
+    client
+        .getMethod()
+        .ifPresent(
+            f -> dto.method(VerificationMethodDto.fromValue(EnumDynamicConverter.convert(f))));
 
     if (client instanceof VerificationReportFlashCallRequestParameters) {
       VerificationReportFlashCallRequestParameters typedClient =

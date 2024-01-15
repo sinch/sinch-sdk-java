@@ -41,11 +41,11 @@ import java.util.Objects;
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class GetCallResponseObjDto {
   public static final String JSON_PROPERTY_FROM = "from";
-  private String from;
+  private DestinationDto from;
   private boolean fromDefined = false;
 
   public static final String JSON_PROPERTY_TO = "to";
-  private String to;
+  private DestinationDto to;
   private boolean toDefined = false;
 
   /** Must be &#x60;pstn&#x60; for PSTN. */
@@ -235,33 +235,33 @@ public class GetCallResponseObjDto {
   private boolean timestampDefined = false;
 
   public static final String JSON_PROPERTY_CUSTOM = "custom";
-  private Object custom;
+  private String custom;
   private boolean customDefined = false;
 
   public static final String JSON_PROPERTY_USER_RATE = "userRate";
-  private String userRate;
+  private PriceDto userRate;
   private boolean userRateDefined = false;
 
   public static final String JSON_PROPERTY_DEBIT = "debit";
-  private String debit;
+  private PriceDto debit;
   private boolean debitDefined = false;
 
   public GetCallResponseObjDto() {}
 
-  public GetCallResponseObjDto from(String from) {
+  public GetCallResponseObjDto from(DestinationDto from) {
     this.from = from;
     this.fromDefined = true;
     return this;
   }
 
   /**
-   * Contains the caller information.
+   * Get from
    *
    * @return from
    */
   @JsonProperty(JSON_PROPERTY_FROM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getFrom() {
+  public DestinationDto getFrom() {
     return from;
   }
 
@@ -272,25 +272,25 @@ public class GetCallResponseObjDto {
 
   @JsonProperty(JSON_PROPERTY_FROM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setFrom(String from) {
+  public void setFrom(DestinationDto from) {
     this.from = from;
     this.fromDefined = true;
   }
 
-  public GetCallResponseObjDto to(String to) {
+  public GetCallResponseObjDto to(DestinationDto to) {
     this.to = to;
     this.toDefined = true;
     return this;
   }
 
   /**
-   * Contains the callee information.
+   * Get to
    *
    * @return to
    */
   @JsonProperty(JSON_PROPERTY_TO)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getTo() {
+  public DestinationDto getTo() {
     return to;
   }
 
@@ -301,7 +301,7 @@ public class GetCallResponseObjDto {
 
   @JsonProperty(JSON_PROPERTY_TO)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setTo(String to) {
+  public void setTo(DestinationDto to) {
     this.to = to;
     this.toDefined = true;
   }
@@ -509,7 +509,7 @@ public class GetCallResponseObjDto {
     this.timestampDefined = true;
   }
 
-  public GetCallResponseObjDto custom(Object custom) {
+  public GetCallResponseObjDto custom(String custom) {
     this.custom = custom;
     this.customDefined = true;
     return this;
@@ -522,7 +522,7 @@ public class GetCallResponseObjDto {
    */
   @JsonProperty(JSON_PROPERTY_CUSTOM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public Object getCustom() {
+  public String getCustom() {
     return custom;
   }
 
@@ -533,25 +533,25 @@ public class GetCallResponseObjDto {
 
   @JsonProperty(JSON_PROPERTY_CUSTOM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCustom(Object custom) {
+  public void setCustom(String custom) {
     this.custom = custom;
     this.customDefined = true;
   }
 
-  public GetCallResponseObjDto userRate(String userRate) {
+  public GetCallResponseObjDto userRate(PriceDto userRate) {
     this.userRate = userRate;
     this.userRateDefined = true;
     return this;
   }
 
   /**
-   * The rate per minute that was charged for the call.
+   * Get userRate
    *
    * @return userRate
    */
   @JsonProperty(JSON_PROPERTY_USER_RATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getUserRate() {
+  public PriceDto getUserRate() {
     return userRate;
   }
 
@@ -562,25 +562,25 @@ public class GetCallResponseObjDto {
 
   @JsonProperty(JSON_PROPERTY_USER_RATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setUserRate(String userRate) {
+  public void setUserRate(PriceDto userRate) {
     this.userRate = userRate;
     this.userRateDefined = true;
   }
 
-  public GetCallResponseObjDto debit(String debit) {
+  public GetCallResponseObjDto debit(PriceDto debit) {
     this.debit = debit;
     this.debitDefined = true;
     return this;
   }
 
   /**
-   * The total amount charged for the call.
+   * Get debit
    *
    * @return debit
    */
   @JsonProperty(JSON_PROPERTY_DEBIT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getDebit() {
+  public PriceDto getDebit() {
     return debit;
   }
 
@@ -591,7 +591,7 @@ public class GetCallResponseObjDto {
 
   @JsonProperty(JSON_PROPERTY_DEBIT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setDebit(String debit) {
+  public void setDebit(PriceDto debit) {
     this.debit = debit;
     this.debitDefined = true;
   }

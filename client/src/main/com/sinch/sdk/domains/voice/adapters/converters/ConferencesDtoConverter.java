@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.voice.adapters.converters;
 
+import com.sinch.sdk.domains.common.adapters.converters.EnumDynamicConverter;
 import com.sinch.sdk.domains.voice.models.dto.v1.GetConferenceInfoResponseDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.GetConferenceInfoResponseParticipantsInnerDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.ManageConferenceParticipantRequestDto;
@@ -35,8 +36,8 @@ public class ConferencesDtoConverter {
       ConferenceManageParticipantRequestParameters client) {
 
     ManageConferenceParticipantRequestDto dto = new ManageConferenceParticipantRequestDto();
-    client.getCommand().ifPresent(f -> dto.command(f.value()));
-    client.getMoh().ifPresent(f -> dto.moh(f.value()));
+    client.getCommand().ifPresent(f -> dto.command(EnumDynamicConverter.convert(f)));
+    client.getMoh().ifPresent(f -> dto.moh(EnumDynamicConverter.convert(f)));
     return dto;
   }
 }
