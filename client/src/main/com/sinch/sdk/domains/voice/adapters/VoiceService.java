@@ -4,6 +4,7 @@ import com.sinch.sdk.auth.adapters.ApplicationAuthManager;
 import com.sinch.sdk.core.exceptions.ApiAuthException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
+import com.sinch.sdk.domains.voice.ApplicationsService;
 import com.sinch.sdk.domains.voice.CalloutsService;
 import com.sinch.sdk.models.Configuration;
 import java.util.Map;
@@ -19,6 +20,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
   private CalloutsService callouts;
   private ConferencesService conferences;
   private CallsService calls;
+  private ApplicationsService applications;
 
   private Map<String, AuthManager> clientAuthManagers;
 
@@ -72,6 +74,16 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
               configuration, httpClient, clientAuthManagers);
     }
     return this.calls;
+  }
+
+  public ApplicationsService applications() {
+    if (null == this.applications) {
+      checkCredentials();
+      this.applications =
+          new com.sinch.sdk.domains.voice.adapters.ApplicationsService(
+              configuration, httpClient, clientAuthManagers);
+    }
+    return this.applications;
   }
 
   private void checkCredentials() throws ApiAuthException {

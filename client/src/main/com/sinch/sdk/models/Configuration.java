@@ -15,6 +15,8 @@ public class Configuration {
   private final String verificationUrl;
   private final VoiceRegion voiceRegion;
   private final String voiceUrl;
+  private final String voiceApplicationMngmtUrl;
+
   private final String applicationKey;
   private final String applicationSecret;
 
@@ -29,6 +31,7 @@ public class Configuration {
       String verificationUrl,
       VoiceRegion voiceRegion,
       String voiceUrl,
+      String voiceApplicationMngmtUrl,
       String applicationKey,
       String applicationSecret) {
     this.keyId = keyId;
@@ -41,6 +44,7 @@ public class Configuration {
     this.verificationUrl = verificationUrl;
     this.voiceRegion = voiceRegion;
     this.voiceUrl = voiceUrl;
+    this.voiceApplicationMngmtUrl = voiceApplicationMngmtUrl;
     this.applicationKey = applicationKey;
     this.applicationSecret = applicationSecret;
   }
@@ -66,6 +70,9 @@ public class Configuration {
         + voiceRegion
         + ", voiceUrl='"
         + voiceUrl
+        + '\''
+        + ", voiceApplicationMngmtUrl='"
+        + voiceApplicationMngmtUrl
         + '\''
         + '}';
   }
@@ -226,6 +233,26 @@ public class Configuration {
   }
 
   /**
+   * Voice Application Management URL
+   *
+   * @return Voice Application Management URL
+   * @since 1.0
+   */
+  public String getVoiceApplicationMngmtUrl() {
+    return voiceApplicationMngmtUrl;
+  }
+
+  /**
+   * Voice Application Management Configuration
+   *
+   * @return Voice Application Management to be used
+   * @since 1.0
+   */
+  public ServerConfiguration getVoiceApplicationMngmtServer() {
+    return new ServerConfiguration(getVoiceApplicationMngmtUrl());
+  }
+
+  /**
    * Application key to be used for Verification and Voice services
    *
    * <p>Use application secret in place of unified configuration for authentication (see Sinch
@@ -280,6 +307,7 @@ public class Configuration {
     public String applicationSecret;
     public VoiceRegion voiceRegion;
     public String voiceUrl;
+    public String voiceApplicationMngmtUrl;
 
     protected Builder() {}
 
@@ -302,6 +330,7 @@ public class Configuration {
       this.applicationSecret = configuration.getApplicationSecret();
       this.voiceRegion = configuration.getVoiceRegion();
       this.voiceUrl = configuration.getVoiceUrl();
+      this.voiceApplicationMngmtUrl = configuration.getVoiceApplicationMngmtUrl();
     }
 
     /**
@@ -322,6 +351,7 @@ public class Configuration {
           verificationUrl,
           voiceRegion,
           voiceUrl,
+          voiceApplicationMngmtUrl,
           applicationKey,
           applicationSecret);
     }
@@ -443,6 +473,18 @@ public class Configuration {
      */
     public Builder setVoiceUrl(String voiceUrl) {
       this.voiceUrl = voiceUrl;
+      return this;
+    }
+
+    /**
+     * Set URL dedicated to Voice Application management to be used
+     *
+     * @param voiceApplicationMngmtUrl Voice Application Management URL
+     * @return Current builder
+     * @since 1.0
+     */
+    public Builder setVoiceApplicationMngmtUrl(String voiceApplicationMngmtUrl) {
+      this.voiceApplicationMngmtUrl = voiceApplicationMngmtUrl;
       return this;
     }
 

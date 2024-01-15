@@ -20,13 +20,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.Objects;
 
 /** Contains primary and or fallback callback URLs */
-@JsonPropertyOrder({
-  UpdateCallbacksUrlDto.JSON_PROPERTY_PRIMARY,
-  UpdateCallbacksUrlDto.JSON_PROPERTY_FALLBACK
-})
+@JsonPropertyOrder({CallbacksUrlDto.JSON_PROPERTY_PRIMARY, CallbacksUrlDto.JSON_PROPERTY_FALLBACK})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class UpdateCallbacksUrlDto {
+public class CallbacksUrlDto {
   public static final String JSON_PROPERTY_PRIMARY = "primary";
   private String primary;
   private boolean primaryDefined = false;
@@ -35,9 +32,9 @@ public class UpdateCallbacksUrlDto {
   private String fallback;
   private boolean fallbackDefined = false;
 
-  public UpdateCallbacksUrlDto() {}
+  public CallbacksUrlDto() {}
 
-  public UpdateCallbacksUrlDto primary(String primary) {
+  public CallbacksUrlDto primary(String primary) {
     this.primary = primary;
     this.primaryDefined = true;
     return this;
@@ -66,14 +63,15 @@ public class UpdateCallbacksUrlDto {
     this.primaryDefined = true;
   }
 
-  public UpdateCallbacksUrlDto fallback(String fallback) {
+  public CallbacksUrlDto fallback(String fallback) {
     this.fallback = fallback;
     this.fallbackDefined = true;
     return this;
   }
 
   /**
-   * Your fallback callback URL
+   * Your fallback callback URL (returned if configured). It is used only if Sinch platform gets a
+   * timeout or error from your primary callback URL.
    *
    * @return fallback
    */
@@ -95,7 +93,7 @@ public class UpdateCallbacksUrlDto {
     this.fallbackDefined = true;
   }
 
-  /** Return true if this updateCallbacks_url object is equal to o. */
+  /** Return true if this callbacks_url object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -104,9 +102,9 @@ public class UpdateCallbacksUrlDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UpdateCallbacksUrlDto updateCallbacksUrl = (UpdateCallbacksUrlDto) o;
-    return Objects.equals(this.primary, updateCallbacksUrl.primary)
-        && Objects.equals(this.fallback, updateCallbacksUrl.fallback);
+    CallbacksUrlDto callbacksUrl = (CallbacksUrlDto) o;
+    return Objects.equals(this.primary, callbacksUrl.primary)
+        && Objects.equals(this.fallback, callbacksUrl.fallback);
   }
 
   @Override
@@ -117,7 +115,7 @@ public class UpdateCallbacksUrlDto {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UpdateCallbacksUrlDto {\n");
+    sb.append("class CallbacksUrlDto {\n");
     sb.append("    primary: ").append(toIndentedString(primary)).append("\n");
     sb.append("    fallback: ").append(toIndentedString(fallback)).append("\n");
     sb.append("}");

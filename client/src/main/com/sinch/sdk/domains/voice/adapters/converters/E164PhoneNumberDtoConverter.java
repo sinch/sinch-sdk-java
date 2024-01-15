@@ -10,4 +10,11 @@ public class E164PhoneNumberDtoConverter {
     }
     return client.stringValue();
   }
+
+  public static E164PhoneNumber convert(String dto) {
+    if (null == dto) {
+      return null;
+    }
+    return E164PhoneNumber.valueOf(dto);
+  }
 }

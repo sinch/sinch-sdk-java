@@ -19,18 +19,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.Objects;
 
-/** GetCallbacksDto */
-@JsonPropertyOrder({GetCallbacksDto.JSON_PROPERTY_URL})
+/** CallbacksDto */
+@JsonPropertyOrder({CallbacksDto.JSON_PROPERTY_URL})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class GetCallbacksDto {
+public class CallbacksDto {
   public static final String JSON_PROPERTY_URL = "url";
-  private GetCallbacksUrlDto url;
+  private CallbacksUrlDto url;
   private boolean urlDefined = false;
 
-  public GetCallbacksDto() {}
+  public CallbacksDto() {}
 
-  public GetCallbacksDto url(GetCallbacksUrlDto url) {
+  public CallbacksDto url(CallbacksUrlDto url) {
     this.url = url;
     this.urlDefined = true;
     return this;
@@ -43,7 +43,7 @@ public class GetCallbacksDto {
    */
   @JsonProperty(JSON_PROPERTY_URL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public GetCallbacksUrlDto getUrl() {
+  public CallbacksUrlDto getUrl() {
     return url;
   }
 
@@ -54,12 +54,12 @@ public class GetCallbacksDto {
 
   @JsonProperty(JSON_PROPERTY_URL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setUrl(GetCallbacksUrlDto url) {
+  public void setUrl(CallbacksUrlDto url) {
     this.url = url;
     this.urlDefined = true;
   }
 
-  /** Return true if this getCallbacks object is equal to o. */
+  /** Return true if this callbacks object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -68,8 +68,8 @@ public class GetCallbacksDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    GetCallbacksDto getCallbacks = (GetCallbacksDto) o;
-    return Objects.equals(this.url, getCallbacks.url);
+    CallbacksDto callbacks = (CallbacksDto) o;
+    return Objects.equals(this.url, callbacks.url);
   }
 
   @Override
@@ -80,7 +80,7 @@ public class GetCallbacksDto {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class GetCallbacksDto {\n");
+    sb.append("class CallbacksDto {\n");
     sb.append("    url: ").append(toIndentedString(url)).append("\n");
     sb.append("}");
     return sb.toString();

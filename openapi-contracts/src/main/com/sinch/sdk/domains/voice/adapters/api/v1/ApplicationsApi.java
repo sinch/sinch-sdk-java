@@ -25,11 +25,10 @@ import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.domains.voice.models.dto.v1.GetCallbacksDto;
+import com.sinch.sdk.domains.voice.models.dto.v1.CallbacksDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.GetNumbersResponseObjDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.GetQueryNumberDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.UnassignNumbersDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.UpdateCallbacksDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.UpdateNumbersDto;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -126,10 +125,10 @@ public class ApplicationsApi {
    * Get Callback URLs Returns any callback URLs configured for the specified application.
    *
    * @param applicationkey The unique identifying key of the application. (required)
-   * @return GetCallbacksDto
+   * @return CallbacksDto
    * @throws ApiException if fails to make API call
    */
-  public GetCallbacksDto configurationGetCallbackURLs(String applicationkey) throws ApiException {
+  public CallbacksDto configurationGetCallbackURLs(String applicationkey) throws ApiException {
 
     LOGGER.finest("[configurationGetCallbackURLs]" + " " + "applicationkey: " + applicationkey);
 
@@ -139,7 +138,7 @@ public class ApplicationsApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<GetCallbacksDto> localVarReturnType = new TypeReference<GetCallbacksDto>() {};
+      TypeReference<CallbacksDto> localVarReturnType = new TypeReference<CallbacksDto>() {};
       return mapper.deserialize(response, localVarReturnType);
     }
     // fallback to default errors handling:
@@ -306,11 +305,11 @@ public class ApplicationsApi {
    * Update Callbacks Update the configured callback URLs for the specified application.
    *
    * @param applicationkey The unique identifying key of the application. (required)
-   * @param updateCallbacksDto (optional)
+   * @param callbacksDto (optional)
    * @throws ApiException if fails to make API call
    */
-  public void configurationUpdateCallbackURLs(
-      String applicationkey, UpdateCallbacksDto updateCallbacksDto) throws ApiException {
+  public void configurationUpdateCallbackURLs(String applicationkey, CallbacksDto callbacksDto)
+      throws ApiException {
 
     LOGGER.finest(
         "[configurationUpdateCallbackURLs]"
@@ -318,11 +317,11 @@ public class ApplicationsApi {
             + "applicationkey: "
             + applicationkey
             + ", "
-            + "updateCallbacksDto: "
-            + updateCallbacksDto);
+            + "callbacksDto: "
+            + callbacksDto);
 
     HttpRequest httpRequest =
-        configurationUpdateCallbackURLsRequestBuilder(applicationkey, updateCallbacksDto);
+        configurationUpdateCallbackURLsRequestBuilder(applicationkey, callbacksDto);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -340,7 +339,7 @@ public class ApplicationsApi {
   }
 
   private HttpRequest configurationUpdateCallbackURLsRequestBuilder(
-      String applicationkey, UpdateCallbacksDto updateCallbacksDto) throws ApiException {
+      String applicationkey, CallbacksDto callbacksDto) throws ApiException {
     // verify the required parameter 'applicationkey' is set
     if (applicationkey == null) {
       throw new ApiException(
@@ -364,7 +363,7 @@ public class ApplicationsApi {
     final Collection<String> localVarContentTypes = Arrays.asList("application/json");
 
     final Collection<String> localVarAuthNames = Arrays.asList("Basic", "Signed");
-    final String serializedBody = mapper.serialize(localVarContentTypes, updateCallbacksDto);
+    final String serializedBody = mapper.serialize(localVarContentTypes, callbacksDto);
 
     return new HttpRequest(
         localVarPath,

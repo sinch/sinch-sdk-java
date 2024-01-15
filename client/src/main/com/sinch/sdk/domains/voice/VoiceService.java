@@ -32,4 +32,12 @@ public interface VoiceService {
    * @since 1.0
    */
   CallsService calls();
+
+  /**
+   * Applications Service instance
+   *
+   * @return service instance for project
+   * @since 1.0
+   */
+  ApplicationsService applications();
 }

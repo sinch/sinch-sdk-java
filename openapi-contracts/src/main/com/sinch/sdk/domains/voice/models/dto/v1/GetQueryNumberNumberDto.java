@@ -23,15 +23,15 @@ import java.util.Objects;
 
 /** The number item object. */
 @JsonPropertyOrder({
-  GetQueryNumberNumberItemDto.JSON_PROPERTY_COUNTRY_ID,
-  GetQueryNumberNumberItemDto.JSON_PROPERTY_NUMBER_TYPE,
-  GetQueryNumberNumberItemDto.JSON_PROPERTY_NORMALIZED_NUMBER,
-  GetQueryNumberNumberItemDto.JSON_PROPERTY_RESTRICTED,
-  GetQueryNumberNumberItemDto.JSON_PROPERTY_RATE
+  GetQueryNumberNumberDto.JSON_PROPERTY_COUNTRY_ID,
+  GetQueryNumberNumberDto.JSON_PROPERTY_NUMBER_TYPE,
+  GetQueryNumberNumberDto.JSON_PROPERTY_NORMALIZED_NUMBER,
+  GetQueryNumberNumberDto.JSON_PROPERTY_RESTRICTED,
+  GetQueryNumberNumberDto.JSON_PROPERTY_RATE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class GetQueryNumberNumberItemDto {
+public class GetQueryNumberNumberDto {
   public static final String JSON_PROPERTY_COUNTRY_ID = "countryId";
   private String countryId;
   private boolean countryIdDefined = false;
@@ -88,12 +88,12 @@ public class GetQueryNumberNumberItemDto {
   private boolean restrictedDefined = false;
 
   public static final String JSON_PROPERTY_RATE = "rate";
-  private GetQueryNumberNumberItemRateDto rate;
+  private PriceDto rate;
   private boolean rateDefined = false;
 
-  public GetQueryNumberNumberItemDto() {}
+  public GetQueryNumberNumberDto() {}
 
-  public GetQueryNumberNumberItemDto countryId(String countryId) {
+  public GetQueryNumberNumberDto countryId(String countryId) {
     this.countryId = countryId;
     this.countryIdDefined = true;
     return this;
@@ -122,7 +122,7 @@ public class GetQueryNumberNumberItemDto {
     this.countryIdDefined = true;
   }
 
-  public GetQueryNumberNumberItemDto numberType(String numberType) {
+  public GetQueryNumberNumberDto numberType(String numberType) {
     this.numberType = numberType;
     this.numberTypeDefined = true;
     return this;
@@ -151,7 +151,7 @@ public class GetQueryNumberNumberItemDto {
     this.numberTypeDefined = true;
   }
 
-  public GetQueryNumberNumberItemDto normalizedNumber(String normalizedNumber) {
+  public GetQueryNumberNumberDto normalizedNumber(String normalizedNumber) {
     this.normalizedNumber = normalizedNumber;
     this.normalizedNumberDefined = true;
     return this;
@@ -180,7 +180,7 @@ public class GetQueryNumberNumberItemDto {
     this.normalizedNumberDefined = true;
   }
 
-  public GetQueryNumberNumberItemDto restricted(Boolean restricted) {
+  public GetQueryNumberNumberDto restricted(Boolean restricted) {
     this.restricted = restricted;
     this.restrictedDefined = true;
     return this;
@@ -209,7 +209,7 @@ public class GetQueryNumberNumberItemDto {
     this.restrictedDefined = true;
   }
 
-  public GetQueryNumberNumberItemDto rate(GetQueryNumberNumberItemRateDto rate) {
+  public GetQueryNumberNumberDto rate(PriceDto rate) {
     this.rate = rate;
     this.rateDefined = true;
     return this;
@@ -222,7 +222,7 @@ public class GetQueryNumberNumberItemDto {
    */
   @JsonProperty(JSON_PROPERTY_RATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public GetQueryNumberNumberItemRateDto getRate() {
+  public PriceDto getRate() {
     return rate;
   }
 
@@ -233,12 +233,12 @@ public class GetQueryNumberNumberItemDto {
 
   @JsonProperty(JSON_PROPERTY_RATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setRate(GetQueryNumberNumberItemRateDto rate) {
+  public void setRate(PriceDto rate) {
     this.rate = rate;
     this.rateDefined = true;
   }
 
-  /** Return true if this getQueryNumber_numberItem object is equal to o. */
+  /** Return true if this getQueryNumber_number object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -247,12 +247,12 @@ public class GetQueryNumberNumberItemDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    GetQueryNumberNumberItemDto getQueryNumberNumberItem = (GetQueryNumberNumberItemDto) o;
-    return Objects.equals(this.countryId, getQueryNumberNumberItem.countryId)
-        && Objects.equals(this.numberType, getQueryNumberNumberItem.numberType)
-        && Objects.equals(this.normalizedNumber, getQueryNumberNumberItem.normalizedNumber)
-        && Objects.equals(this.restricted, getQueryNumberNumberItem.restricted)
-        && Objects.equals(this.rate, getQueryNumberNumberItem.rate);
+    GetQueryNumberNumberDto getQueryNumberNumber = (GetQueryNumberNumberDto) o;
+    return Objects.equals(this.countryId, getQueryNumberNumber.countryId)
+        && Objects.equals(this.numberType, getQueryNumberNumber.numberType)
+        && Objects.equals(this.normalizedNumber, getQueryNumberNumber.normalizedNumber)
+        && Objects.equals(this.restricted, getQueryNumberNumber.restricted)
+        && Objects.equals(this.rate, getQueryNumberNumber.rate);
   }
 
   @Override
@@ -263,7 +263,7 @@ public class GetQueryNumberNumberItemDto {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class GetQueryNumberNumberItemDto {\n");
+    sb.append("class GetQueryNumberNumberDto {\n");
     sb.append("    countryId: ").append(toIndentedString(countryId)).append("\n");
     sb.append("    numberType: ").append(toIndentedString(numberType)).append("\n");
     sb.append("    normalizedNumber: ").append(toIndentedString(normalizedNumber)).append("\n");

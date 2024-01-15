@@ -10,7 +10,6 @@ public abstract class BaseApplication {
   private static final String BATCH_ID_KEY = "BATCH_ID";
   public static final String PHONE_NUMBER_KEY = "PHONE_NUMBER";
   public static final String CONFERENCE_ID = "CONFERENCE_ID";
-
   public static final String CALL_ID = "CALL_ID";
 
   protected static final Logger LOGGER = Utils.initializeLogger(BaseApplication.class.getName());
@@ -21,6 +20,7 @@ public abstract class BaseApplication {
   protected String batchId;
   protected String conferenceId;
   protected String callId;
+  protected String applicationKey;
 
   protected BaseApplication() throws IOException {
 
@@ -44,8 +44,9 @@ public abstract class BaseApplication {
     callId =
         null != System.getenv(CALL_ID) ? System.getenv(CALL_ID) : properties.getProperty(CALL_ID);
 
+    applicationKey = configuration.getApplicationKey();
     client = new SinchClient(configuration);
   }
 
-  public abstract void run();
+  public abstract void run() throws InterruptedException;
 }
