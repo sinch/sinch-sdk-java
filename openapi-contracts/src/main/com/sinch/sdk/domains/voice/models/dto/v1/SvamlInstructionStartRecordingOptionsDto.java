@@ -24,7 +24,8 @@ import java.util.Objects;
   SvamlInstructionStartRecordingOptionsDto.JSON_PROPERTY_DESTINATION_URL,
   SvamlInstructionStartRecordingOptionsDto.JSON_PROPERTY_CREDENTIALS,
   SvamlInstructionStartRecordingOptionsDto.JSON_PROPERTY_FORMAT,
-  SvamlInstructionStartRecordingOptionsDto.JSON_PROPERTY_NOTIFICATION_EVENTS
+  SvamlInstructionStartRecordingOptionsDto.JSON_PROPERTY_NOTIFICATION_EVENTS,
+  SvamlInstructionStartRecordingOptionsDto.JSON_PROPERTY_TRANSCRIPTION_OPTIONS
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
@@ -44,6 +45,10 @@ public class SvamlInstructionStartRecordingOptionsDto {
   public static final String JSON_PROPERTY_NOTIFICATION_EVENTS = "notificationEvents";
   private Boolean notificationEvents;
   private boolean notificationEventsDefined = false;
+
+  public static final String JSON_PROPERTY_TRANSCRIPTION_OPTIONS = "transcriptionOptions";
+  private SvamlInstructionStartRecordingOptionsTranscriptionOptionsDto transcriptionOptions;
+  private boolean transcriptionOptionsDefined = false;
 
   public SvamlInstructionStartRecordingOptionsDto() {}
 
@@ -163,6 +168,37 @@ public class SvamlInstructionStartRecordingOptionsDto {
     this.notificationEventsDefined = true;
   }
 
+  public SvamlInstructionStartRecordingOptionsDto transcriptionOptions(
+      SvamlInstructionStartRecordingOptionsTranscriptionOptionsDto transcriptionOptions) {
+    this.transcriptionOptions = transcriptionOptions;
+    this.transcriptionOptionsDefined = true;
+    return this;
+  }
+
+  /**
+   * Get transcriptionOptions
+   *
+   * @return transcriptionOptions
+   */
+  @JsonProperty(JSON_PROPERTY_TRANSCRIPTION_OPTIONS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public SvamlInstructionStartRecordingOptionsTranscriptionOptionsDto getTranscriptionOptions() {
+    return transcriptionOptions;
+  }
+
+  @JsonIgnore
+  public boolean getTranscriptionOptionsDefined() {
+    return transcriptionOptionsDefined;
+  }
+
+  @JsonProperty(JSON_PROPERTY_TRANSCRIPTION_OPTIONS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setTranscriptionOptions(
+      SvamlInstructionStartRecordingOptionsTranscriptionOptionsDto transcriptionOptions) {
+    this.transcriptionOptions = transcriptionOptions;
+    this.transcriptionOptionsDefined = true;
+  }
+
   /** Return true if this svaml.instruction.startRecordingOptions object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -178,12 +214,15 @@ public class SvamlInstructionStartRecordingOptionsDto {
         && Objects.equals(this.credentials, svamlInstructionStartRecordingOptions.credentials)
         && Objects.equals(this.format, svamlInstructionStartRecordingOptions.format)
         && Objects.equals(
-            this.notificationEvents, svamlInstructionStartRecordingOptions.notificationEvents);
+            this.notificationEvents, svamlInstructionStartRecordingOptions.notificationEvents)
+        && Objects.equals(
+            this.transcriptionOptions, svamlInstructionStartRecordingOptions.transcriptionOptions);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(destinationUrl, credentials, format, notificationEvents);
+    return Objects.hash(
+        destinationUrl, credentials, format, notificationEvents, transcriptionOptions);
   }
 
   @Override
@@ -194,6 +233,9 @@ public class SvamlInstructionStartRecordingOptionsDto {
     sb.append("    credentials: ").append(toIndentedString(credentials)).append("\n");
     sb.append("    format: ").append(toIndentedString(format)).append("\n");
     sb.append("    notificationEvents: ").append(toIndentedString(notificationEvents)).append("\n");
+    sb.append("    transcriptionOptions: ")
+        .append(toIndentedString(transcriptionOptions))
+        .append("\n");
     sb.append("}");
     return sb.toString();
   }

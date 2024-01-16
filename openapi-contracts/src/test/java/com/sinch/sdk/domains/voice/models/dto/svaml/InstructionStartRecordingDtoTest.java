@@ -7,6 +7,7 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionStartRecordingDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionStartRecordingDto.NameEnum;
 import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionStartRecordingOptionsDto;
+import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionStartRecordingOptionsTranscriptionOptionsDto;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -22,7 +23,11 @@ public class InstructionStartRecordingDtoTest extends BaseTest {
                   .credentials("credential value")
                   .destinationUrl("destination value")
                   .format("mp3")
-                  .notificationEvents(true));
+                  .notificationEvents(true)
+                  .transcriptionOptions(
+                      new SvamlInstructionStartRecordingOptionsTranscriptionOptionsDto()
+                          .enabled(true)
+                          .locale("en-US")));
 
   @GivenTextResource("/domains/voice/svaml/InstructionStartRecordingDto.json")
   String json;

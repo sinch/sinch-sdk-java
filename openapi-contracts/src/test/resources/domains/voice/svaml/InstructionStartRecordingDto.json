@@ -4,6 +4,10 @@
     "destinationUrl": "destination value",
     "credentials": "credential value",
     "format": "mp3",
-    "notificationEvents": true
+    "notificationEvents": true,
+    "transcriptionOptions": {
+      "enabled": true,
+      "locale": "en-US"
+    }
   }
 }

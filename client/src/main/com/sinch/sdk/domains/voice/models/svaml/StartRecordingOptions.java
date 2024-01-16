@@ -6,13 +6,19 @@ public class StartRecordingOptions {
   private final String credentials;
   private final String format;
   private final Boolean notificationEvents;
+  private final TranscriptionOptions transcriptionOptions;
 
   private StartRecordingOptions(
-      String destinationUrl, String credentials, String format, Boolean notificationEvents) {
+      String destinationUrl,
+      String credentials,
+      String format,
+      Boolean notificationEvents,
+      TranscriptionOptions transcriptionOptions) {
     this.destinationUrl = destinationUrl;
     this.credentials = credentials;
     this.format = format;
     this.notificationEvents = notificationEvents;
+    this.transcriptionOptions = transcriptionOptions;
   }
 
   public String getDestinationUrl() {
@@ -31,6 +37,10 @@ public class StartRecordingOptions {
     return notificationEvents;
   }
 
+  public TranscriptionOptions getTranscriptionOptions() {
+    return transcriptionOptions;
+  }
+
   @Override
   public String toString() {
     return "StartRecordingOptions{"
@@ -45,6 +55,8 @@ public class StartRecordingOptions {
         + '\''
         + ", notificationEvents="
         + notificationEvents
+        + ", transcriptionOptions="
+        + transcriptionOptions
         + '}';
   }
 
@@ -58,6 +70,7 @@ public class StartRecordingOptions {
     String credentials;
     String format;
     Boolean notificationEvents;
+    TranscriptionOptions transcriptionOptions;
 
     public Builder setDestinationUrl(String destinationUrl) {
       this.destinationUrl = destinationUrl;
@@ -79,8 +92,14 @@ public class StartRecordingOptions {
       return this;
     }
 
+    public Builder setTranscriptionOptions(TranscriptionOptions transcriptionOptions) {
+      this.transcriptionOptions = transcriptionOptions;
+      return this;
+    }
+
     public StartRecordingOptions build() {
-      return new StartRecordingOptions(destinationUrl, credentials, format, notificationEvents);
+      return new StartRecordingOptions(
+          destinationUrl, credentials, format, notificationEvents, transcriptionOptions);
     }
   }
 }
