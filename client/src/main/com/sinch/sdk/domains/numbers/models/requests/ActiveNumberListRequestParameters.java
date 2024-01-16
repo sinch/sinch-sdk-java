@@ -94,6 +94,10 @@ public class ActiveNumberListRequestParameters {
     return new Builder();
   }
 
+  public static Builder builder(ActiveNumberListRequestParameters parameters) {
+    return new Builder(parameters);
+  }
+
   public static class Builder {
 
     OptionalValue<String> regionCode = OptionalValue.empty();
@@ -106,7 +110,7 @@ public class ActiveNumberListRequestParameters {
 
     private Builder() {}
 
-    public Builder(ActiveNumberListRequestParameters parameters) {
+    private Builder(ActiveNumberListRequestParameters parameters) {
       parameters.regionCode.ifPresent(this::setRegionCode);
       parameters.type.ifPresent(this::setType);
       parameters.numberPattern.ifPresent(this::setNumberPattern);

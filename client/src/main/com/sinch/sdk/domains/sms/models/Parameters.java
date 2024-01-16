@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 public class Parameters extends HashMap<String, Parameters.Entry> {
 
+  private static final long serialVersionUID = 1L;
+
   public Parameters(Collection<Parameters.Entry> list) {
     super(list.stream().collect(Collectors.toMap(entry -> entry.key, entry -> entry)));
   }
