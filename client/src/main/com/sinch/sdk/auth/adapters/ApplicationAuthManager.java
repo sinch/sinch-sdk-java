@@ -16,10 +16,13 @@ import java.util.Base64;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.logging.Logger;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 public class ApplicationAuthManager implements AuthManager {
+
+  private static final Logger LOGGER = Logger.getLogger(ApplicationAuthManager.class.getName());
 
   private static final String AUTH_KEYWORD = "Application";
   private static final String XTIMESTAMP_HEADER = "x-timestamp";
@@ -109,20 +112,52 @@ public class ApplicationAuthManager implements AuthManager {
 
     String authorizationHeader = caseInsensitiveHeaders.get("Authorization");
 
-    // no authorization required
+    // missing authorization header
     if (null == authorizationHeader) {
-      return true;
+      return false;
     }
 
-    String[] split = authorizationHeader.split(" ");
-    String authorizationHash = split.length > 1 ? split[1] : "";
+    Pair<String, String> header = extractAuthorizationHeader(authorizationHeader);
 
-    String computedHash = computeHash(caseInsensitiveHeaders, method, path, jsonPayload);
+    String authorizationKeyword = header.getLeft();
+    if (!isValidAuthManagerKeyword(authorizationKeyword)) {
+      LOGGER.severe(
+          String.format("Invalid auth manager called with '%s' keyword", authorizationKeyword));
+      return false;
+    }
 
-    return computedHash.equals(authorizationHash);
+    String authorizationValue = header.getRight();
+    Pair<String, String> parts = extractAuthorizationValues(authorizationValue);
+
+    // is key is matching with current one?
+    if (!parts.getLeft().equals(key)) {
+      return false;
+    }
+
+    String computedValue = computeValue(caseInsensitiveHeaders, method, path, jsonPayload);
+
+    return computedValue.equals(authorizationValue);
   }
 
-  private String computeHash(
+  private Pair<String, String> extractAuthorizationHeader(String authorizationHeader) {
+    String[] split = authorizationHeader.split(" ");
+    String authorizationKeyword = split.length > 0 ? split[0] : "";
+    String authorizationHash = split.length > 1 ? split[1] : "";
+    return new Pair<>(authorizationKeyword, authorizationHash);
+  }
+
+  private boolean isValidAuthManagerKeyword(String authorizationKeyword) {
+    return authorizationKeyword.compareToIgnoreCase(AUTH_KEYWORD) == 0;
+  }
+
+  private Pair<String, String> extractAuthorizationValues(String authorizationValue) {
+    String[] split = authorizationValue.split(":");
+    String authorizationKey = split.length > 0 ? split[0] : "";
+    String authorizationHash = split.length > 1 ? split[1] : "";
+    return new Pair<>(authorizationKey, authorizationHash);
+  }
+
+  private String computeValue(
       Map<String, String> caseInsensitiveHeaders, String method, String path, String jsonPayload) {
     // getting content type header
     String contentTypeHeader = caseInsensitiveHeaders.getOrDefault("content-type", "");
