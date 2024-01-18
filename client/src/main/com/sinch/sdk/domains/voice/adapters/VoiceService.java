@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.voice.adapters;
 
 import com.sinch.sdk.auth.adapters.ApplicationAuthManager;
+import com.sinch.sdk.auth.adapters.BasicAuthManager;
 import com.sinch.sdk.core.exceptions.ApiAuthException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
@@ -15,6 +16,10 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
 
   private static final String SECURITY_SCHEME_KEYWORD = "Signed";
 
+  private static final String BASIC_SECURITY_SCHEME_KEYWORD = "Basic";
+
+  private static final String APPLICATION_SECURITY_SCHEME_KEYWORD = "Application";
+
   private final Configuration configuration;
   private final HttpClient httpClient;
   private CalloutsService callouts;
@@ -23,6 +28,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
   private ApplicationsService applications;
 
   private Map<String, AuthManager> clientAuthManagers;
+  private Map<String, AuthManager> webhooksAuthManagers;
 
   public VoiceService(Configuration configuration, HttpClient httpClient) {
 
@@ -40,10 +46,17 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
 
   private void setApplicationCredentials(String key, String secret) {
 
+    AuthManager basicAuthManager = new BasicAuthManager(key, secret);
     AuthManager applicationAuthManager = new ApplicationAuthManager(key, secret);
 
     clientAuthManagers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     clientAuthManagers.put(SECURITY_SCHEME_KEYWORD, applicationAuthManager);
+
+    // here we need both auth managers to handle webhooks because we are receiving an Authorization
+    // header with "Application" keyword
+    webhooksAuthManagers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    webhooksAuthManagers.put(BASIC_SECURITY_SCHEME_KEYWORD, basicAuthManager);
+    webhooksAuthManagers.put(APPLICATION_SECURITY_SCHEME_KEYWORD, applicationAuthManager);
   }
 
   public CalloutsService callouts() {

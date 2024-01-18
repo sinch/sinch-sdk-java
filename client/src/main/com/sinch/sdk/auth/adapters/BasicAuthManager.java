@@ -7,8 +7,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Map;
+import java.util.logging.Logger;
 
 public class BasicAuthManager implements AuthManager {
+
+  private static final Logger LOGGER = Logger.getLogger(BasicAuthManager.class.getName());
 
   private static final String AUTH_KEYWORD = "Basic";
   private final String keyId;
@@ -46,5 +50,11 @@ public class BasicAuthManager implements AuthManager {
             AUTH_KEYWORD
                 + " "
                 + Base64.getEncoder().encodeToString(raw.getBytes(StandardCharsets.UTF_8))));
+  }
+
+  public boolean checkAuthentication(
+      String method, String path, Map<String, String> headers, String jsonPayload) {
+    LOGGER.severe("checkAuthentication not implemented");
+    return false;
   }
 }

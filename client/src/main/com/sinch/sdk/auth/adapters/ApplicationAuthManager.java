@@ -14,6 +14,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collection;
+import java.util.Map;
+import java.util.TreeMap;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -96,5 +98,50 @@ public class ApplicationAuthManager implements AuthManager {
     } catch (NoSuchAlgorithmException | InvalidKeyException e) {
       throw new ApiAuthException(e);
     }
+  }
+
+  public boolean checkAuthentication(
+      String method, String path, Map<String, String> headers, String jsonPayload) {
+
+    // convert header keys to use case-insensitive map keys
+    Map<String, String> caseInsensitiveHeaders = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    caseInsensitiveHeaders.putAll(headers);
+
+    String authorizationHeader = caseInsensitiveHeaders.get("Authorization");
+
+    // no authorization required
+    if (null == authorizationHeader) {
+      return true;
+    }
+
+    String[] split = authorizationHeader.split(" ");
+    String authorizationHash = split.length > 1 ? split[1] : "";
+
+    String computedHash = computeHash(caseInsensitiveHeaders, method, path, jsonPayload);
+
+    return computedHash.equals(authorizationHash);
+  }
+
+  private String computeHash(
+      Map<String, String> caseInsensitiveHeaders, String method, String path, String jsonPayload) {
+    // getting content type header
+    String contentTypeHeader = caseInsensitiveHeaders.getOrDefault("content-type", "");
+
+    // getting x-timestamp header
+    String xTimeStampHeader = caseInsensitiveHeaders.get("x-timestamp");
+
+    // compute locally according to inputs
+    Collection<Pair<String, String>> computedHeaders =
+        getAuthorizationHeaders(xTimeStampHeader, method, contentTypeHeader, path, jsonPayload);
+
+    // get locally computed hash by auth manager
+    String computedAuthorization =
+        computedHeaders.stream()
+            .filter(f -> f.getLeft().equals("Authorization"))
+            .findFirst()
+            .map(Pair::getRight)
+            .orElse("");
+    String[] newSplit = computedAuthorization.split(" ");
+    return newSplit.length > 1 ? newSplit[1] : "";
   }
 }
