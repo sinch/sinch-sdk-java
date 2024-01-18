@@ -20,7 +20,7 @@ public class WebHooksService implements com.sinch.sdk.domains.verification.WebHo
     this.authManagers = authManagers;
   }
 
-  public boolean checkAuthentication(
+  public boolean validateAuthenticatedRequest(
       String method, String path, Map<String, String> headers, String jsonPayload) {
 
     // convert header keys to use case-insensitive map keys
@@ -44,7 +44,7 @@ public class WebHooksService implements com.sinch.sdk.domains.verification.WebHo
           String.format("Auth manager for authorization '%s' not found", authorizationKeyword));
       return false;
     }
-    return authManager.checkAuthentication(method, path, headers, jsonPayload);
+    return authManager.validateAuthenticatedRequest(method, path, headers, jsonPayload);
   }
 
   @Override

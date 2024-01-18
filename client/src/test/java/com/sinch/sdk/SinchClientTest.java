@@ -81,7 +81,7 @@ class SinchClientTest {
     Configuration configuration =
         Configuration.builder().setKeyId("foo").setKeySecret("foo").setProjectId("foo").build();
     SinchClient client = new SinchClient(configuration);
-    assertFalse(StringUtil.isEmpty(client.getConfiguration().getVoiceApplicationMngmtUrl()));
+    assertFalse(StringUtil.isEmpty(client.getConfiguration().getVoiceApplicationManagementUrl()));
   }
 
   @Test
@@ -122,6 +122,6 @@ class SinchClientTest {
             .setVoiceApplicationMngmtUrl("my foo url")
             .build();
     SinchClient client = new SinchClient(configuration);
-    assertEquals(client.getConfiguration().getVoiceApplicationMngmtUrl(), "my foo url");
+    assertEquals(client.getConfiguration().getVoiceApplicationManagementUrl(), "my foo url");
   }
 }

@@ -110,7 +110,7 @@ public class BearerAuthManager implements AuthManager {
     }
   }
 
-  public boolean checkAuthentication(
+  public boolean validateAuthenticatedRequest(
       String method, String path, Map<String, String> headers, String jsonPayload) {
     LOGGER.severe("checkAuthentication not implemented");
     return false;

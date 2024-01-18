@@ -52,7 +52,7 @@ public class BasicAuthManager implements AuthManager {
                 + Base64.getEncoder().encodeToString(raw.getBytes(StandardCharsets.UTF_8))));
   }
 
-  public boolean checkAuthentication(
+  public boolean validateAuthenticatedRequest(
       String method, String path, Map<String, String> headers, String jsonPayload) {
     LOGGER.severe("checkAuthentication not implemented");
     return false;

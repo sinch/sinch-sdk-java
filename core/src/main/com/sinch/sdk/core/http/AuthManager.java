@@ -23,6 +23,6 @@ public interface AuthManager {
   Collection<Pair<String, String>> getAuthorizationHeaders(
       String timestamp, String method, String httpContentType, String path, String body);
 
-  boolean checkAuthentication(
+  boolean validateAuthenticatedRequest(
       String method, String path, Map<String, String> headers, String jsonPayload);
 }

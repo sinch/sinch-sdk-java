@@ -15,7 +15,7 @@ public class Configuration {
   private final String verificationUrl;
   private final VoiceRegion voiceRegion;
   private final String voiceUrl;
-  private final String voiceApplicationMngmtUrl;
+  private final String voiceApplicationManagementUrl;
 
   private final String applicationKey;
   private final String applicationSecret;
@@ -31,7 +31,7 @@ public class Configuration {
       String verificationUrl,
       VoiceRegion voiceRegion,
       String voiceUrl,
-      String voiceApplicationMngmtUrl,
+      String voiceApplicationManagementUrl,
       String applicationKey,
       String applicationSecret) {
     this.keyId = keyId;
@@ -44,7 +44,7 @@ public class Configuration {
     this.verificationUrl = verificationUrl;
     this.voiceRegion = voiceRegion;
     this.voiceUrl = voiceUrl;
-    this.voiceApplicationMngmtUrl = voiceApplicationMngmtUrl;
+    this.voiceApplicationManagementUrl = voiceApplicationManagementUrl;
     this.applicationKey = applicationKey;
     this.applicationSecret = applicationSecret;
   }
@@ -72,7 +72,7 @@ public class Configuration {
         + voiceUrl
         + '\''
         + ", voiceApplicationMngmtUrl='"
-        + voiceApplicationMngmtUrl
+        + voiceApplicationManagementUrl
         + '\''
         + '}';
   }
@@ -238,8 +238,8 @@ public class Configuration {
    * @return Voice Application Management URL
    * @since 1.0
    */
-  public String getVoiceApplicationMngmtUrl() {
-    return voiceApplicationMngmtUrl;
+  public String getVoiceApplicationManagementUrl() {
+    return voiceApplicationManagementUrl;
   }
 
   /**
@@ -248,8 +248,8 @@ public class Configuration {
    * @return Voice Application Management to be used
    * @since 1.0
    */
-  public ServerConfiguration getVoiceApplicationMngmtServer() {
-    return new ServerConfiguration(getVoiceApplicationMngmtUrl());
+  public ServerConfiguration getVoiceApplicationManagementServer() {
+    return new ServerConfiguration(getVoiceApplicationManagementUrl());
   }
 
   /**
@@ -330,7 +330,7 @@ public class Configuration {
       this.applicationSecret = configuration.getApplicationSecret();
       this.voiceRegion = configuration.getVoiceRegion();
       this.voiceUrl = configuration.getVoiceUrl();
-      this.voiceApplicationMngmtUrl = configuration.getVoiceApplicationMngmtUrl();
+      this.voiceApplicationMngmtUrl = configuration.getVoiceApplicationManagementUrl();
     }
 
     /**

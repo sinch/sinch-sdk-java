@@ -100,7 +100,7 @@ public class ApplicationAuthManager implements AuthManager {
     }
   }
 
-  public boolean checkAuthentication(
+  public boolean validateAuthenticatedRequest(
       String method, String path, Map<String, String> headers, String jsonPayload) {
 
     // convert header keys to use case-insensitive map keys

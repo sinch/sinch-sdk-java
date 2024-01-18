@@ -36,7 +36,8 @@ public class WebhooksServiceTest extends BaseTest {
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     boolean authenticationResult =
-        webHooksService.checkAuthentication("POST", "/VerificationRequestEvent", headers, request);
+        webHooksService.validateAuthenticatedRequest(
+            "POST", "/VerificationRequestEvent", headers, request);
 
     Assertions.assertThat(authenticationResult).isEqualTo(true);
   }
@@ -54,7 +55,8 @@ public class WebhooksServiceTest extends BaseTest {
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     boolean authenticationResult =
-        webHooksService.checkAuthentication("POST", "/VerificationRequestEvent", headers, request);
+        webHooksService.validateAuthenticatedRequest(
+            "POST", "/VerificationRequestEvent", headers, request);
 
     Assertions.assertThat(authenticationResult).isEqualTo(false);
   }
@@ -70,7 +72,8 @@ public class WebhooksServiceTest extends BaseTest {
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     boolean authenticationResult =
-        webHooksService.checkAuthentication("POST", "/VerificationRequestEvent", headers, request);
+        webHooksService.validateAuthenticatedRequest(
+            "POST", "/VerificationRequestEvent", headers, request);
 
     Assertions.assertThat(authenticationResult).isEqualTo(false);
   }

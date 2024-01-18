@@ -22,7 +22,7 @@ public class ApplicationsService implements com.sinch.sdk.domains.voice.Applicat
     this.api =
         new ApplicationsApi(
             httpClient,
-            configuration.getVoiceApplicationMngmtServer(),
+            configuration.getVoiceApplicationManagementServer(),
             authManagers,
             new HttpMapper());
   }

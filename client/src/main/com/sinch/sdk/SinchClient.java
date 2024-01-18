@@ -133,7 +133,7 @@ public class SinchClient {
     }
 
     // application management server
-    if (null == configuration.getVoiceApplicationMngmtUrl()
+    if (null == configuration.getVoiceApplicationManagementUrl()
         && props.containsKey(VOICE_APPLICATION_MANAGEMENT_SERVER_KEY)) {
       builder.setVoiceApplicationMngmtUrl(
           props.getProperty(VOICE_APPLICATION_MANAGEMENT_SERVER_KEY));
