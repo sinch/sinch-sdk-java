@@ -77,6 +77,14 @@ class SinchClientTest {
   }
 
   @Test
+  void defaultVoiceApplicationManagementUrl() {
+    Configuration configuration =
+        Configuration.builder().setKeyId("foo").setKeySecret("foo").setProjectId("foo").build();
+    SinchClient client = new SinchClient(configuration);
+    assertFalse(StringUtil.isEmpty(client.getConfiguration().getVoiceApplicationManagementUrl()));
+  }
+
+  @Test
   void voiceUrlFromRegion() {
     Configuration configuration =
         Configuration.builder()
@@ -102,5 +110,18 @@ class SinchClientTest {
     SinchClient client = new SinchClient(configuration);
     assertEquals(client.getConfiguration().getVoiceRegion(), VoiceRegion.EUROPE);
     assertEquals(client.getConfiguration().getVoiceUrl(), "my foo url");
+  }
+
+  @Test
+  void voiceApplicationManagementUrlFromUrl() {
+    Configuration configuration =
+        Configuration.builder()
+            .setKeyId("foo")
+            .setKeySecret("foo")
+            .setProjectId("foo")
+            .setVoiceApplicationMngmtUrl("my foo url")
+            .build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(client.getConfiguration().getVoiceApplicationManagementUrl(), "my foo url");
   }
 }

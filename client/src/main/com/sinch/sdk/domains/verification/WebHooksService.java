@@ -35,7 +35,7 @@ public interface WebHooksService {
    *     href="https://developers.sinch.com/docs/verification/api-reference/authentication/callback-signed-request">https://developers.sinch.com/docs/verification/api-reference/authentication/callback-signed-request</a>
    * @since 1.0
    */
-  boolean checkAuthentication(
+  boolean validateAuthenticatedRequest(
       String method, String path, Map<String, String> headers, String jsonPayload);
 
   /**

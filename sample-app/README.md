@@ -120,17 +120,23 @@ See https://developers.sinch.com for details about these parameters
 
 #### Voice
 
-| Service     | Sample            | Class                                                                                                                           | Note                                           | 
-|-------------|-------------------|---------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------|
-| Callouts    | Call              | [com.sinch.sample.voice.callouts.Call](src/main/java/com/sinch/sample/voice/callouts/Call.java)                                 |                                                |
-| Conferences | Call              | [com.sinch.sample.voice.conferences.Call](src/main/java/com/sinch/sample/voice/conferences/Call.java)                           | Require `CONFERENCE_ID` parameter              | 
-|             | Get               | [com.sinch.sample.voice.conferences.Get](src/main/java/com/sinch/sample/voice/conferences/Get.java)                             | Require `CONFERENCE_ID` parameter              | 
-|             | KickParticipant   | [com.sinch.sample.voice.conferences.KickParticipant](src/main/java/com/sinch/sample/voice/conferences/KickParticipant.java)     | Require `CONFERENCE_ID` & `CALL_ID`parameters  | 
-|             | KickAll           | [com.sinch.sample.voice.conferences.KickAll](src/main/java/com/sinch/sample/voice/conferences/KickAll.java)                     | Require `CONFERENCE_ID` parameter              | 
-|             | ManageParticipant | [com.sinch.sample.voice.conferences.ManageParticipant](src/main/java/com/sinch/sample/voice/conferences/ManageParticipant.java) | Require `CONFERENCE_ID`  & `CALL_ID`parameters | 
-| Calls       | Get               | [com.sinch.sample.voice.calls.Get](src/main/java/com/sinch/sample/voice/calls/Get.java)                                         | Require `CALL_ID`parameter                     | 
-|             | Update            | [com.sinch.sample.voice.calls.Update](src/main/java/com/sinch/sample/voice/calls/Update.java)                                   | Require `CONFERENCE_ID`  & `CALL_ID`parameters | 
-|             | ManageWithCallLeg | [com.sinch.sample.voice.calls.ManageWithCallLeg](src/main/java/com/sinch/sample/voice/calls/ManageWithCallLeg.java)             | Require `CONFERENCE_ID`  & `CALL_ID`parameters | 
+| Service      | Sample             | Class                                                                                                                               | Note                                                      | 
+|--------------|--------------------|-------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------|
+| Callouts     | Call               | [com.sinch.sample.voice.callouts.Call](src/main/java/com/sinch/sample/voice/callouts/Call.java)                                     |                                                           |
+| Conferences  | Call               | [com.sinch.sample.voice.conferences.Call](src/main/java/com/sinch/sample/voice/conferences/Call.java)                               | Require `CONFERENCE_ID` parameter                         | 
+|              | Get                | [com.sinch.sample.voice.conferences.Get](src/main/java/com/sinch/sample/voice/conferences/Get.java)                                 | Require `CONFERENCE_ID` parameter                         | 
+|              | KickParticipant    | [com.sinch.sample.voice.conferences.KickParticipant](src/main/java/com/sinch/sample/voice/conferences/KickParticipant.java)         | Require `CONFERENCE_ID` & `CALL_ID` parameters            | 
+|              | KickAll            | [com.sinch.sample.voice.conferences.KickAll](src/main/java/com/sinch/sample/voice/conferences/KickAll.java)                         | Require `CONFERENCE_ID` parameter                         | 
+|              | ManageParticipant  | [com.sinch.sample.voice.conferences.ManageParticipant](src/main/java/com/sinch/sample/voice/conferences/ManageParticipant.java)     | Require `CONFERENCE_ID`  & `CALL_ID` parameters           | 
+| Calls        | Get                | [com.sinch.sample.voice.calls.Get](src/main/java/com/sinch/sample/voice/calls/Get.java)                                             | Require `CALL_ID` parameter                               | 
+|              | Update             | [com.sinch.sample.voice.calls.Update](src/main/java/com/sinch/sample/voice/calls/Update.java)                                       | Require `CONFERENCE_ID`  & `CALL_ID` parameters           | 
+|              | ManageWithCallLeg  | [com.sinch.sample.voice.calls.ManageWithCallLeg](src/main/java/com/sinch/sample/voice/calls/ManageWithCallLeg.java)                 | Require `CONFERENCE_ID`  & `CALL_ID` parameters           | 
+| Applications | GetCallbackUrls    | [com.sinch.sample.voice.applications.GetCallbackUrls](src/main/java/com/sinch/sample/voice/applications/GetCallbackUrls.java)       | Require `APPLICATION_API_KEY` parameter                   | 
+|              | GetNumbers         | [com.sinch.sample.voice.applications.GetNumbers](src/main/java/com/sinch/sample/voice/applications/GetNumbers.java)                 |                                                           | 
+|              | QueryNumber        | [com.sinch.sample.voice.applications.QueryNumber](src/main/java/com/sinch/sample/voice/applications/QueryNumber.java)               | Require `PHONE_NUMBER` parameter                          | 
+|              | UnassignNumber     | [com.sinch.sample.voice.applications.UnassignNumber](src/main/java/com/sinch/sample/voice/applications/UnassignNumber.java)         | Require `APPLICATION_API_KEY` & `PHONE_NUMBER` parameters | 
+|              | UpdateCallbackUrls | [com.sinch.sample.voice.applications.UpdateCallbackUrls](src/main/java/com/sinch/sample/voice/applications/UpdateCallbackUrls.java) | Require `APPLICATION_API_KEY` parameter                   | 
+|              | UpdateNumbers      | [com.sinch.sample.voice.applications.UpdateNumbers](src/main/java/com/sinch/sample/voice/applications/UpdateNumbers.java)           | Require `APPLICATION_API_KEY` & `PHONE_NUMBER` parameters | 
 
 ### Dedicated webhooks feature samples
 #### How to run webhooks sample application

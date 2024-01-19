@@ -31,6 +31,8 @@ public class SinchClient {
   private static final String SMS_SERVER_KEY = "sms-server";
 
   private static final String VOICE_REGION_KEY = "voice-region";
+  private static final String VOICE_APPLICATION_MANAGEMENT_SERVER_KEY =
+      "voice-application-management-server";
 
   private static final String VERIFICATION_SERVER_KEY = "verification-server";
 
@@ -128,6 +130,13 @@ public class SinchClient {
               ? VoiceRegion.GLOBAL
               : builder.voiceRegion;
       builder.setVoiceUrl(props.getProperty(String.format("voice-server-%s", region.value())));
+    }
+
+    // application management server
+    if (null == configuration.getVoiceApplicationManagementUrl()
+        && props.containsKey(VOICE_APPLICATION_MANAGEMENT_SERVER_KEY)) {
+      builder.setVoiceApplicationMngmtUrl(
+          props.getProperty(VOICE_APPLICATION_MANAGEMENT_SERVER_KEY));
     }
   }
 
