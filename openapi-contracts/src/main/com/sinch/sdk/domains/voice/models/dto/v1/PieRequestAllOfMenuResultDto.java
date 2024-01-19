@@ -12,26 +12,71 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Objects;
 
 /** An object containing information about the returned menu result. */
 @JsonPropertyOrder({
-  PieRequestMenuResultDto.JSON_PROPERTY_MENU_ID,
-  PieRequestMenuResultDto.JSON_PROPERTY_TYPE,
-  PieRequestMenuResultDto.JSON_PROPERTY_VALUE,
-  PieRequestMenuResultDto.JSON_PROPERTY_INPUT_METHOD
+  PieRequestAllOfMenuResultDto.JSON_PROPERTY_MENU_ID,
+  PieRequestAllOfMenuResultDto.JSON_PROPERTY_TYPE,
+  PieRequestAllOfMenuResultDto.JSON_PROPERTY_VALUE,
+  PieRequestAllOfMenuResultDto.JSON_PROPERTY_INPUT_METHOD
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class PieRequestMenuResultDto {
+public class PieRequestAllOfMenuResultDto {
   public static final String JSON_PROPERTY_MENU_ID = "menuId";
   private String menuId;
   private boolean menuIdDefined = false;
+
+  /** The type of information that&#39;s returned. */
+  public enum TypeEnum {
+    ERROR("error"),
+
+    RETURN("return"),
+
+    SEQUENCE("sequence"),
+
+    TIMEOUT("timeout"),
+
+    HANGUP("hangup"),
+
+    INVALIDINPUT("invalidinput"),
+
+    UNKNOWN_DEFAULT_OPEN_API("unknown_default_open_api");
+
+    private String value;
+
+    TypeEnum(String value) {
+      this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static TypeEnum fromValue(String value) {
+      for (TypeEnum b : TypeEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      return UNKNOWN_DEFAULT_OPEN_API;
+    }
+  }
 
   public static final String JSON_PROPERTY_TYPE = "type";
   private String type;
@@ -45,9 +90,9 @@ public class PieRequestMenuResultDto {
   private String inputMethod;
   private boolean inputMethodDefined = false;
 
-  public PieRequestMenuResultDto() {}
+  public PieRequestAllOfMenuResultDto() {}
 
-  public PieRequestMenuResultDto menuId(String menuId) {
+  public PieRequestAllOfMenuResultDto menuId(String menuId) {
     this.menuId = menuId;
     this.menuIdDefined = true;
     return this;
@@ -76,7 +121,7 @@ public class PieRequestMenuResultDto {
     this.menuIdDefined = true;
   }
 
-  public PieRequestMenuResultDto type(String type) {
+  public PieRequestAllOfMenuResultDto type(String type) {
     this.type = type;
     this.typeDefined = true;
     return this;
@@ -105,7 +150,7 @@ public class PieRequestMenuResultDto {
     this.typeDefined = true;
   }
 
-  public PieRequestMenuResultDto value(String value) {
+  public PieRequestAllOfMenuResultDto value(String value) {
     this.value = value;
     this.valueDefined = true;
     return this;
@@ -134,7 +179,7 @@ public class PieRequestMenuResultDto {
     this.valueDefined = true;
   }
 
-  public PieRequestMenuResultDto inputMethod(String inputMethod) {
+  public PieRequestAllOfMenuResultDto inputMethod(String inputMethod) {
     this.inputMethod = inputMethod;
     this.inputMethodDefined = true;
     return this;
@@ -163,7 +208,7 @@ public class PieRequestMenuResultDto {
     this.inputMethodDefined = true;
   }
 
-  /** Return true if this pieRequest_menuResult object is equal to o. */
+  /** Return true if this pieRequest_allOf_menuResult object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -172,11 +217,11 @@ public class PieRequestMenuResultDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    PieRequestMenuResultDto pieRequestMenuResult = (PieRequestMenuResultDto) o;
-    return Objects.equals(this.menuId, pieRequestMenuResult.menuId)
-        && Objects.equals(this.type, pieRequestMenuResult.type)
-        && Objects.equals(this.value, pieRequestMenuResult.value)
-        && Objects.equals(this.inputMethod, pieRequestMenuResult.inputMethod);
+    PieRequestAllOfMenuResultDto pieRequestAllOfMenuResult = (PieRequestAllOfMenuResultDto) o;
+    return Objects.equals(this.menuId, pieRequestAllOfMenuResult.menuId)
+        && Objects.equals(this.type, pieRequestAllOfMenuResult.type)
+        && Objects.equals(this.value, pieRequestAllOfMenuResult.value)
+        && Objects.equals(this.inputMethod, pieRequestAllOfMenuResult.inputMethod);
   }
 
   @Override
@@ -187,7 +232,7 @@ public class PieRequestMenuResultDto {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class PieRequestMenuResultDto {\n");
+    sb.append("class PieRequestAllOfMenuResultDto {\n");
     sb.append("    menuId: ").append(toIndentedString(menuId)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    value: ").append(toIndentedString(value)).append("\n");

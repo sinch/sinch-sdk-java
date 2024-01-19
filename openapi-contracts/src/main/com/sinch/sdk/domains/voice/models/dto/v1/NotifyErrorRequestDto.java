@@ -24,7 +24,7 @@ import java.util.Objects;
   NotifyErrorRequestDto.JSON_PROPERTY_EVENT,
   NotifyErrorRequestDto.JSON_PROPERTY_VERSION,
   NotifyErrorRequestDto.JSON_PROPERTY_TYPE,
-  NotifyErrorRequestDto.JSON_PROPERTY_CALL_ID,
+  NotifyErrorRequestDto.JSON_PROPERTY_CALLID,
   NotifyErrorRequestDto.JSON_PROPERTY_ERROR_CODE,
   NotifyErrorRequestDto.JSON_PROPERTY_ERROR_MSG,
   NotifyErrorRequestDto.JSON_PROPERTY_USER,
@@ -45,9 +45,9 @@ public class NotifyErrorRequestDto {
   private String type;
   private boolean typeDefined = false;
 
-  public static final String JSON_PROPERTY_CALL_ID = "callId";
-  private String callId;
-  private boolean callIdDefined = false;
+  public static final String JSON_PROPERTY_CALLID = "callid";
+  private String callid;
+  private boolean callidDefined = false;
 
   public static final String JSON_PROPERTY_ERROR_CODE = "errorCode";
   private Integer errorCode;
@@ -155,33 +155,33 @@ public class NotifyErrorRequestDto {
     this.typeDefined = true;
   }
 
-  public NotifyErrorRequestDto callId(String callId) {
-    this.callId = callId;
-    this.callIdDefined = true;
+  public NotifyErrorRequestDto callid(String callid) {
+    this.callid = callid;
+    this.callidDefined = true;
     return this;
   }
 
   /**
    * The unique ID assigned to this call.
    *
-   * @return callId
+   * @return callid
    */
-  @JsonProperty(JSON_PROPERTY_CALL_ID)
+  @JsonProperty(JSON_PROPERTY_CALLID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getCallId() {
-    return callId;
+  public String getCallid() {
+    return callid;
   }
 
   @JsonIgnore
-  public boolean getCallIdDefined() {
-    return callIdDefined;
+  public boolean getCallidDefined() {
+    return callidDefined;
   }
 
-  @JsonProperty(JSON_PROPERTY_CALL_ID)
+  @JsonProperty(JSON_PROPERTY_CALLID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCallId(String callId) {
-    this.callId = callId;
-    this.callIdDefined = true;
+  public void setCallid(String callid) {
+    this.callid = callid;
+    this.callidDefined = true;
   }
 
   public NotifyErrorRequestDto errorCode(Integer errorCode) {
@@ -313,7 +313,7 @@ public class NotifyErrorRequestDto {
     return Objects.equals(this.event, notifyErrorRequest.event)
         && Objects.equals(this.version, notifyErrorRequest.version)
         && Objects.equals(this.type, notifyErrorRequest.type)
-        && Objects.equals(this.callId, notifyErrorRequest.callId)
+        && Objects.equals(this.callid, notifyErrorRequest.callid)
         && Objects.equals(this.errorCode, notifyErrorRequest.errorCode)
         && Objects.equals(this.errorMsg, notifyErrorRequest.errorMsg)
         && Objects.equals(this.user, notifyErrorRequest.user)
@@ -322,7 +322,7 @@ public class NotifyErrorRequestDto {
 
   @Override
   public int hashCode() {
-    return Objects.hash(event, version, type, callId, errorCode, errorMsg, user, custom);
+    return Objects.hash(event, version, type, callid, errorCode, errorMsg, user, custom);
   }
 
   @Override
@@ -332,7 +332,7 @@ public class NotifyErrorRequestDto {
     sb.append("    event: ").append(toIndentedString(event)).append("\n");
     sb.append("    version: ").append(toIndentedString(version)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("    callId: ").append(toIndentedString(callId)).append("\n");
+    sb.append("    callid: ").append(toIndentedString(callid)).append("\n");
     sb.append("    errorCode: ").append(toIndentedString(errorCode)).append("\n");
     sb.append("    errorMsg: ").append(toIndentedString(errorMsg)).append("\n");
     sb.append("    user: ").append(toIndentedString(user)).append("\n");

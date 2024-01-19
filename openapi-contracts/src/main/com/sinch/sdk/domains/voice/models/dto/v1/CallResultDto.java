@@ -15,28 +15,23 @@ package com.sinch.sdk.domains.voice.models.dto.v1;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-/**
- * Can be of type &#x60;number&#x60; for PSTN endpoints or of type &#x60;username&#x60; for data
- * endpoints.
- */
-public enum DestinationTypeDto {
-  NUMBER("number"),
+/** Contains the result of a call. */
+public enum CallResultDto {
+  N_A("N/A"),
 
-  NUMBER2("Number"),
+  ANSWERED("ANSWERED"),
 
-  USERNAME("username"),
+  BUSY("BUSY"),
 
-  USERNAME2("Username"),
+  NOANSWER("NOANSWER"),
 
-  SIP("sip"),
-
-  DID("did"),
+  FAILED("FAILED"),
 
   UNKNOWN_DEFAULT_OPEN_API("unknown_default_open_api");
 
   private String value;
 
-  DestinationTypeDto(String value) {
+  CallResultDto(String value) {
     this.value = value;
   }
 
@@ -51,8 +46,8 @@ public enum DestinationTypeDto {
   }
 
   @JsonCreator
-  public static DestinationTypeDto fromValue(String value) {
-    for (DestinationTypeDto b : DestinationTypeDto.values()) {
+  public static CallResultDto fromValue(String value) {
+    for (CallResultDto b : CallResultDto.values()) {
       if (b.value.equals(value)) {
         return b;
       }

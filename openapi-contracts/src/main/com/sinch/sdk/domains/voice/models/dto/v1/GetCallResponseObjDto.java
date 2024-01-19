@@ -132,49 +132,8 @@ public class GetCallResponseObjDto {
   private String status;
   private boolean statusDefined = false;
 
-  /** Contains the result of a call. */
-  public enum ResultEnum {
-    N_A("N/A"),
-
-    ANSWERED("ANSWERED"),
-
-    BUSY("BUSY"),
-
-    NOANSWER("NOANSWER"),
-
-    FAILED("FAILED"),
-
-    UNKNOWN_DEFAULT_OPEN_API("unknown_default_open_api");
-
-    private String value;
-
-    ResultEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static ResultEnum fromValue(String value) {
-      for (ResultEnum b : ResultEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      return UNKNOWN_DEFAULT_OPEN_API;
-    }
-  }
-
   public static final String JSON_PROPERTY_RESULT = "result";
-  private String result;
+  private CallResultDto result;
   private boolean resultDefined = false;
 
   /** Contains the reason why a call ended. */
@@ -196,6 +155,8 @@ public class GetCallResponseObjDto {
     CANCEL("CANCEL"),
 
     GENERALERROR("GENERALERROR"),
+
+    INVALIDSVAMLACTION("INVALIDSVAMLACTION"),
 
     UNKNOWN_DEFAULT_OPEN_API("unknown_default_open_api");
 
@@ -422,20 +383,20 @@ public class GetCallResponseObjDto {
     this.statusDefined = true;
   }
 
-  public GetCallResponseObjDto result(String result) {
+  public GetCallResponseObjDto result(CallResultDto result) {
     this.result = result;
     this.resultDefined = true;
     return this;
   }
 
   /**
-   * Contains the result of a call.
+   * Get result
    *
    * @return result
    */
   @JsonProperty(JSON_PROPERTY_RESULT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getResult() {
+  public CallResultDto getResult() {
     return result;
   }
 
@@ -446,7 +407,7 @@ public class GetCallResponseObjDto {
 
   @JsonProperty(JSON_PROPERTY_RESULT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setResult(String result) {
+  public void setResult(CallResultDto result) {
     this.result = result;
     this.resultDefined = true;
   }

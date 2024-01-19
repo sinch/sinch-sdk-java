@@ -44,7 +44,7 @@ public class WebhooksEventDtoConverterTest extends BaseTest {
       DisconnectCallEvent.builder()
           .setCallId("a call id")
           .setTimestamp(Instant.parse("2024-01-19T12:49:53Z"))
-          .setReason(CallReasonType.MANAGERHANGUP)
+          .setReason(CallReasonType.MANAGER_HANGUP)
           .setResult(CallResultType.ANSWERED)
           .setVersion(1)
           .setCustom("my custom value")

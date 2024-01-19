@@ -16,27 +16,23 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Can be of type &#x60;number&#x60; for PSTN endpoints or of type &#x60;username&#x60; for data
- * endpoints.
+ * Can be either &#x60;pstn&#x60; for PSTN endpoint or &#x60;mxp&#x60; for data (app or web)
+ * clients.
  */
-public enum DestinationTypeDto {
-  NUMBER("number"),
+public enum DomainDto {
+  PSTN("pstn"),
 
-  NUMBER2("Number"),
+  MXP("mxp"),
 
-  USERNAME("username"),
+  PSTN2("PSTN"),
 
-  USERNAME2("Username"),
-
-  SIP("sip"),
-
-  DID("did"),
+  MXP2("MXP"),
 
   UNKNOWN_DEFAULT_OPEN_API("unknown_default_open_api");
 
   private String value;
 
-  DestinationTypeDto(String value) {
+  DomainDto(String value) {
     this.value = value;
   }
 
@@ -51,8 +47,8 @@ public enum DestinationTypeDto {
   }
 
   @JsonCreator
-  public static DestinationTypeDto fromValue(String value) {
-    for (DestinationTypeDto b : DestinationTypeDto.values()) {
+  public static DomainDto fromValue(String value) {
+    for (DomainDto b : DomainDto.values()) {
       if (b.value.equals(value)) {
         return b;
       }

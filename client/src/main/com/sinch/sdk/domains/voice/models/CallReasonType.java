@@ -10,13 +10,14 @@ public class CallReasonType extends EnumDynamic<String, CallReasonType> {
 
   public static final CallReasonType NA = new CallReasonType("N/A");
   public static final CallReasonType TIMEOUT = new CallReasonType("TIMEOUT");
-  public static final CallReasonType CALLERHANGUP = new CallReasonType("CALLERHANGUP");
-  public static final CallReasonType CALLEEHANGUP = new CallReasonType("CALLEEHANGUP");
+  public static final CallReasonType CALLER_HANGUP = new CallReasonType("CALLERHANGUP");
+  public static final CallReasonType CALLEE_HANGUP = new CallReasonType("CALLEEHANGUP");
   public static final CallReasonType BLOCKED = new CallReasonType("BLOCKED");
-  public static final CallReasonType NOCREDITPARTNER = new CallReasonType("NOCREDITPARTNER");
-  public static final CallReasonType MANAGERHANGUP = new CallReasonType("MANAGERHANGUP");
+  public static final CallReasonType NO_CREDIT_PARTNER = new CallReasonType("NOCREDITPARTNER");
+  public static final CallReasonType MANAGER_HANGUP = new CallReasonType("MANAGERHANGUP");
   public static final CallReasonType CANCEL = new CallReasonType("CANCEL");
-  public static final CallReasonType GENERALERROR = new CallReasonType("GENERALERROR");
+  public static final CallReasonType GENERAL_ERROR = new CallReasonType("GENERALERROR");
+  public static final CallReasonType INVALID_SVAMLACTION = new CallReasonType("INVALIDSVAMLACTION");
 
   private static final EnumSupportDynamic<String, CallReasonType> ENUM_SUPPORT =
       new EnumSupportDynamic<>(
@@ -25,13 +26,14 @@ public class CallReasonType extends EnumDynamic<String, CallReasonType> {
           Arrays.asList(
               NA,
               TIMEOUT,
-              CALLERHANGUP,
-              CALLEEHANGUP,
+              CALLER_HANGUP,
+              CALLEE_HANGUP,
               BLOCKED,
-              NOCREDITPARTNER,
-              MANAGERHANGUP,
+              NO_CREDIT_PARTNER,
+              MANAGER_HANGUP,
               CANCEL,
-              GENERALERROR));
+              GENERAL_ERROR,
+              INVALID_SVAMLACTION));
 
   private CallReasonType(String value) {
     super(value);

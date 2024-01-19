@@ -34,7 +34,7 @@ public class CallsDtoConverterTest extends BaseTest {
           .setDuration(138)
           .setStatus(CallStatusType.FINAL)
           .setResult(CallResultType.ANSWERED)
-          .setReason(CallReasonType.CALLEEHANGUP)
+          .setReason(CallReasonType.CALLEE_HANGUP)
           .setTimeStamp(Instant.parse("2024-01-08T09:48:12Z"))
           .setCustom("{}")
           .setUserRate(Price.builder().setCurrencyId("EUR").setAmount(0.1758F).build())

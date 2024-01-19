@@ -12,13 +12,11 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Objects;
 
 /**
@@ -53,46 +51,8 @@ public class TtsCalloutRequestDto {
   private String dtmf;
   private boolean dtmfDefined = false;
 
-  /**
-   * Can be either &#x60;pstn&#x60; for PSTN endpoint or &#x60;mxp&#x60; for data (app or web)
-   * clients.
-   */
-  public enum DomainEnum {
-    PSTN("pstn"),
-
-    MXP("mxp"),
-
-    UNKNOWN_DEFAULT_OPEN_API("unknown_default_open_api");
-
-    private String value;
-
-    DomainEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static DomainEnum fromValue(String value) {
-      for (DomainEnum b : DomainEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      return UNKNOWN_DEFAULT_OPEN_API;
-    }
-  }
-
   public static final String JSON_PROPERTY_DOMAIN = "domain";
-  private String domain;
+  private DomainDto domain;
   private boolean domainDefined = false;
 
   public static final String JSON_PROPERTY_CUSTOM = "custom";
@@ -220,21 +180,20 @@ public class TtsCalloutRequestDto {
     this.dtmfDefined = true;
   }
 
-  public TtsCalloutRequestDto domain(String domain) {
+  public TtsCalloutRequestDto domain(DomainDto domain) {
     this.domain = domain;
     this.domainDefined = true;
     return this;
   }
 
   /**
-   * Can be either &#x60;pstn&#x60; for PSTN endpoint or &#x60;mxp&#x60; for data (app or web)
-   * clients.
+   * Get domain
    *
    * @return domain
    */
   @JsonProperty(JSON_PROPERTY_DOMAIN)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getDomain() {
+  public DomainDto getDomain() {
     return domain;
   }
 
@@ -245,7 +204,7 @@ public class TtsCalloutRequestDto {
 
   @JsonProperty(JSON_PROPERTY_DOMAIN)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setDomain(String domain) {
+  public void setDomain(DomainDto domain) {
     this.domain = domain;
     this.domainDefined = true;
   }
