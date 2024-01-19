@@ -7,6 +7,7 @@ import com.sinch.sdk.domains.voice.models.dto.v1.CalloutRequestDto.MethodEnum;
 import com.sinch.sdk.domains.voice.models.dto.v1.ConferenceCalloutRequestConferenceDtmfOptionsDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.ConferenceCalloutRequestDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.CustomCalloutRequestDto;
+import com.sinch.sdk.domains.voice.models.dto.v1.DomainDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.GetCalloutResponseObjDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.TtsCalloutRequestDto;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParameters;
@@ -76,7 +77,9 @@ public class CalloutsDtoConverter {
     client.getEnableDice().ifPresent(dto::setEnableDice);
     client.getEnablePie().ifPresent(dto::setEnablePie);
     client.getLocale().ifPresent(dto::setLocale);
-    client.getDomain().ifPresent(f -> dto.setDomain(EnumDynamicConverter.convert(f)));
+    client
+        .getDomain()
+        .ifPresent(f -> dto.setDomain(DomainDto.fromValue(EnumDynamicConverter.convert(f))));
     client.getText().ifPresent(dto::setText);
     client.getPrompts().ifPresent(dto::setPrompts);
 

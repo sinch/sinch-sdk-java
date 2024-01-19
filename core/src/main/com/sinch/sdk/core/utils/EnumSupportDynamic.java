@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.toList;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,6 +21,7 @@ import java.util.stream.Stream;
  * @param <E> Value instance
  */
 public final class EnumSupportDynamic<T, E extends EnumDynamic<T, E>> {
+  private static final Logger LOGGER = Logger.getLogger(EnumSupportDynamic.class.getName());
 
   private final Class<E> aClass;
   private final Map<T, E> valueMap;
@@ -78,6 +80,8 @@ public final class EnumSupportDynamic<T, E extends EnumDynamic<T, E>> {
 
       if (present == null) {
         E newValue = surplusFactory.apply(value);
+
+        LOGGER.warning(String.format("Dynamically create '%s' from '%s'", newValue, value));
 
         valueMap.put(value, newValue);
         values = createImmutableList(values, newValue);

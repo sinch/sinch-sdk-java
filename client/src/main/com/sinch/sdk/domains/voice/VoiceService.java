@@ -40,4 +40,12 @@ public interface VoiceService {
    * @since 1.0
    */
   ApplicationsService applications();
+
+  /**
+   * Webhooks helpers instance
+   *
+   * @return instance service related to webhooks helpers
+   * @since 1.0
+   */
+  WebHooksService webhooks();
 }

@@ -1,11 +1,11 @@
 package com.sinch.sdk.domains.voice.adapters.converters;
 
+import com.sinch.sdk.domains.voice.models.CallReasonType;
+import com.sinch.sdk.domains.voice.models.CallResultType;
 import com.sinch.sdk.domains.voice.models.DomainType;
 import com.sinch.sdk.domains.voice.models.dto.v1.GetCallResponseObjDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.SVAMLRequestBodyDto;
 import com.sinch.sdk.domains.voice.models.response.CallInformation;
-import com.sinch.sdk.domains.voice.models.response.CallReasonType;
-import com.sinch.sdk.domains.voice.models.response.CallResultType;
 import com.sinch.sdk.domains.voice.models.response.CallStatusType;
 import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
 
@@ -22,7 +22,7 @@ public class CallsDtoConverter {
         .setCallId(dto.getCallId())
         .setDuration(dto.getDuration())
         .setStatus(null != dto.getStatus() ? CallStatusType.from(dto.getStatus()) : null)
-        .setResult(null != dto.getResult() ? CallResultType.from(dto.getResult()) : null)
+        .setResult(null != dto.getResult() ? CallResultType.from(dto.getResult().getValue()) : null)
         .setReason(null != dto.getReason() ? CallReasonType.from(dto.getReason()) : null)
         .setTimeStamp(null != dto.getTimestamp() ? dto.getTimestamp().toInstant() : null)
         .setCustom(null != dto.getCustom() ? dto.getCustom() : null)

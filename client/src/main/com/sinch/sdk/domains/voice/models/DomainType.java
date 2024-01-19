@@ -14,9 +14,13 @@ public class DomainType extends EnumDynamic<String, DomainType> {
   /** data (app or web) clients */
   public static final DomainType MXP = new DomainType("mxp");
 
+  /** Conference */
+  public static final DomainType CONFERENCE = new DomainType("conference");
+
   /** */
   private static final EnumSupportDynamic<String, DomainType> ENUM_SUPPORT =
-      new EnumSupportDynamic<>(DomainType.class, DomainType::new, Arrays.asList(PSTN, MXP));
+      new EnumSupportDynamic<>(
+          DomainType.class, DomainType::new, Arrays.asList(PSTN, MXP, CONFERENCE));
 
   private DomainType(String value) {
     super(value);
