@@ -41,8 +41,10 @@ class E164PhoneNumberTest {
   @Test
   void throwExceptionOnInvalid() {
     String value = "my invalid value";
+    E164PhoneNumber.setStrict(true);
     Exception exception =
         assertThrows(NumberFormatException.class, () -> E164PhoneNumber.valueOf(value));
+    E164PhoneNumber.setStrict(false);
     assertTrue(
         exception.getMessage().contains(value),
         String.format("'%s' should contains '%s'", exception.getMessage(), value));

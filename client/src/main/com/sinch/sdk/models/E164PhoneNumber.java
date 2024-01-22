@@ -25,7 +25,7 @@ public class E164PhoneNumber {
               "\\d\\d\\d\\d\\d",
               // ending with digits
               "\\d*$"));
-  private static final AtomicBoolean STRICT = new AtomicBoolean(true);
+  private static final AtomicBoolean STRICT = new AtomicBoolean(false);
   private final String number;
 
   public E164PhoneNumber(String number) {
