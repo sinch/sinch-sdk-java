@@ -29,6 +29,7 @@ import com.sinch.sdk.domains.voice.models.svaml.ActionRunMenu;
 import com.sinch.sdk.domains.voice.models.svaml.AnsweringMachineDetection;
 import com.sinch.sdk.domains.voice.models.svaml.Menu;
 import com.sinch.sdk.domains.voice.models.svaml.MenuOption;
+import com.sinch.sdk.domains.voice.models.svaml.MenuOptionAction;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
@@ -82,9 +83,9 @@ public class SAVMLActionDtoConverter {
     }
     SvamlActionConnectConfDto dto = new SvamlActionConnectConfDto();
     dto.setName(SvamlActionConnectConfDto.NameEnum.CONNECTCONF.getValue());
-    dto.setConferenceId(client.getConferenceId());
-    dto.setMoh(EnumDynamicConverter.convert(client.getMoh()));
-    dto.setConferenceDtmfOptions(convert(client.getDtfmOptions()));
+    client.getConferenceId().ifPresent(dto::setConferenceId);
+    client.getMoh().ifPresent(f -> dto.setMoh(EnumDynamicConverter.convert(f)));
+    client.getDtfmOptions().ifPresent(f -> dto.setConferenceDtmfOptions(convert(f)));
     return dto;
   }
 
@@ -94,8 +95,8 @@ public class SAVMLActionDtoConverter {
     }
     SvamlActionConnectMxpDto dto = new SvamlActionConnectMxpDto();
     dto.setName(SvamlActionConnectMxpDto.NameEnum.CONNECTMXP.getValue());
-    dto.setDestination(DestinationDtoConverter.convert(client.getDestination()));
-    dto.setCallheaders(convertHeaderCollection(client.getCallheaders()));
+    client.getDestination().ifPresent(f -> dto.setDestination(DestinationDtoConverter.convert(f)));
+    client.getCallheaders().ifPresent(f -> dto.setCallheaders(convertHeaderCollection(f)));
     return dto;
   }
 
@@ -105,15 +106,15 @@ public class SAVMLActionDtoConverter {
     }
     SvamlActionConnectPstnDto dto = new SvamlActionConnectPstnDto();
     dto.setName(SvamlActionConnectPstnDto.NameEnum.CONNECTPSTN.getValue());
-    dto.setNumber(E164PhoneNumberDtoConverter.convert(client.getNumber()));
-    dto.setLocale(client.getLocale());
-    dto.setMaxDuration(client.getMaxDuration());
-    dto.setDialTimeout(client.getDialTimeout());
-    dto.setCli(client.getCli());
-    dto.setSuppressCallbacks(client.getSuppressCallbacks());
-    dto.setDtmf(DualToneMultiFrequencyDtoConverter.convert(client.getDtmf()));
-    dto.setIndications(EnumDynamicConverter.convert(client.getIndications()));
-    dto.setAmd(convert(client.getAnsweringMachineDetectionEnabled()));
+    client.getNumber().ifPresent(f -> dto.setNumber(E164PhoneNumberDtoConverter.convert(f)));
+    client.getLocale().ifPresent(dto::setLocale);
+    client.getMaxDuration().ifPresent(dto::setMaxDuration);
+    client.getDialTimeout().ifPresent(dto::setDialTimeout);
+    client.getCli().ifPresent(dto::setCli);
+    client.getSuppressCallbacks().ifPresent(dto::setSuppressCallbacks);
+    client.getDtmf().ifPresent(f -> dto.setDtmf(DualToneMultiFrequencyDtoConverter.convert(f)));
+    client.getIndications().ifPresent(f -> dto.setIndications(EnumDynamicConverter.convert(f)));
+    client.getAnsweringMachineDetectionEnabled().ifPresent(f -> dto.setAmd(convert(f)));
     return dto;
   }
 
@@ -123,13 +124,13 @@ public class SAVMLActionDtoConverter {
     }
     SvamlActionConnectSipDto dto = new SvamlActionConnectSipDto();
     dto.setName(SvamlActionConnectSipDto.NameEnum.CONNECTSIP.getValue());
-    dto.setDestination(DestinationDtoConverter.convert(client.getDestination()));
-    dto.setMaxDuration(client.getMaxDuration());
-    dto.setCli(client.getCli());
-    dto.setTransport(EnumDynamicConverter.convert(client.getTransport()));
-    dto.setSuppressCallbacks(client.getSuppressCallbacks());
-    dto.setCallHeaders(convertHeaderCollection(client.getCallheaders()));
-    dto.setMoh(EnumDynamicConverter.convert(client.getMoh()));
+    client.getDestination().ifPresent(f -> dto.setDestination(DestinationDtoConverter.convert(f)));
+    client.getMaxDuration().ifPresent(dto::setMaxDuration);
+    client.getCli().ifPresent(dto::setCli);
+    client.getTransport().ifPresent(f -> dto.setTransport(EnumDynamicConverter.convert(f)));
+    client.getSuppressCallbacks().ifPresent(dto::setSuppressCallbacks);
+    client.getCallheaders().ifPresent(f -> dto.setCallHeaders(convertHeaderCollection(f)));
+    client.getMoh().ifPresent(f -> dto.setMoh(EnumDynamicConverter.convert(f)));
     return dto;
   }
 
@@ -157,10 +158,11 @@ public class SAVMLActionDtoConverter {
     }
     SvamlActionParkDto dto = new SvamlActionParkDto();
     dto.setName(SvamlActionParkDto.NameEnum.PARK.getValue());
-    dto.setLocale(client.getLocale());
-    dto.setIntroPrompt(client.getIntroPrompt());
-    dto.setHoldPrompt(client.getHoldPrompt());
-    dto.setMaxDuration(client.getMaxDuration());
+    client.getLocale().ifPresent(dto::setLocale);
+    client.getIntroPrompt().ifPresent(dto::setIntroPrompt);
+    client.getHoldPrompt().ifPresent(dto::setHoldPrompt);
+    client.getMaxDuration().ifPresent(dto::setMaxDuration);
+
     return dto;
   }
 
@@ -170,11 +172,11 @@ public class SAVMLActionDtoConverter {
     }
     SvamlActionRunMenuDto dto = new SvamlActionRunMenuDto();
     dto.setName(SvamlActionRunMenuDto.NameEnum.RUNMENU.getValue());
-    dto.setBarge(client.getBarge());
-    dto.setLocale(client.getLocale());
-    dto.setMainMenu(client.getMainMenu());
-    dto.setEnableVoice(client.getEnableVoice());
-    dto.setMenus(convertMenuCollection(client.getMenus()));
+    client.getBarge().ifPresent(dto::setBarge);
+    client.getLocale().ifPresent(dto::setLocale);
+    client.getMainMenu().ifPresent(dto::setMainMenu);
+    client.getEnableVoice().ifPresent(dto::setEnableVoice);
+    client.getMenus().ifPresent(f -> dto.setMenus(convertMenuCollection(f)));
     return dto;
   }
 
@@ -207,7 +209,8 @@ public class SAVMLActionDtoConverter {
     }
 
     SvamlActionConnectPstnAmdDto dto = new SvamlActionConnectPstnAmdDto();
-    dto.setEnabled(client.getEnabled());
+
+    client.getEnabled().ifPresent(dto::setEnabled);
     return dto;
   }
 
@@ -223,14 +226,15 @@ public class SAVMLActionDtoConverter {
       return null;
     }
     MenuDto dto = new MenuDto();
-    dto.setId(client.getId());
-    dto.setMainPrompt(client.getMainPrompt());
-    dto.setRepeatPrompt(client.getRepeatPrompt());
-    dto.setRepeats(client.getRepeats());
-    dto.setMaxDigits(client.getMaxDigits());
-    dto.setTimeoutMills(client.getTimeoutMills());
-    dto.setMaxTimeoutMills(client.getMaxTimeoutMills());
-    dto.setOptions(convertMenuOptionCollection(client.getOptions()));
+
+    client.getId().ifPresent(dto::setId);
+    client.getMainPrompt().ifPresent(dto::setMainPrompt);
+    client.getRepeatPrompt().ifPresent(dto::setRepeatPrompt);
+    client.getRepeats().ifPresent(dto::setRepeats);
+    client.getMaxDigits().ifPresent(dto::setMaxDigits);
+    client.getTimeoutMills().ifPresent(dto::setTimeoutMills);
+    client.getMaxTimeoutMills().ifPresent(dto::setMaxTimeoutMills);
+    client.getOptions().ifPresent(f -> dto.setOptions(convertMenuOptionCollection(f)));
     return dto;
   }
 
@@ -240,10 +244,19 @@ public class SAVMLActionDtoConverter {
     }
     return client.stream()
         .map(
-            f ->
-                new OptionDto()
-                    .action(EnumDynamicConverter.convert(f.getAction()))
-                    .dtmf(DualToneMultiFrequencyDtoConverter.convert(f.getDtfm())))
+            f -> {
+              OptionDto dto = new OptionDto();
+              f.getAction().ifPresent(f2 -> dto.action(convert(f2)));
+              f.getDtfm().ifPresent(f2 -> dto.dtmf(DualToneMultiFrequencyDtoConverter.convert(f2)));
+              return dto;
+            })
         .collect(Collectors.toList());
+  }
+
+  private static String convert(MenuOptionAction client) {
+    if (null == client) {
+      return null;
+    }
+    return String.format("%s(%s)", client.getType().value(), client.getId());
   }
 }

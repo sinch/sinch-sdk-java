@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.voice.models.svaml;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.voice.models.requests.Control;
 import java.util.Collection;
 
@@ -10,10 +11,11 @@ import java.util.Collection;
  *     Dcoumentation</a>
  */
 public class SVAMLControl extends Control {
-  private final Collection<Instruction> instructions;
-  private final Action action;
+  private final OptionalValue<Collection<Instruction>> instructions;
+  private final OptionalValue<Action> action;
 
-  private SVAMLControl(Collection<Instruction> instructions, Action action) {
+  private SVAMLControl(
+      OptionalValue<Collection<Instruction>> instructions, OptionalValue<Action> action) {
     this.instructions = instructions;
     this.action = action;
   }
@@ -23,7 +25,7 @@ public class SVAMLControl extends Control {
    *
    * @return See builder {@link Builder#setInstructions setter}
    */
-  public Collection<Instruction> getInstructions() {
+  public OptionalValue<Collection<Instruction>> getInstructions() {
     return instructions;
   }
 
@@ -32,7 +34,7 @@ public class SVAMLControl extends Control {
    *
    * @return See builder {@link Builder#setAction setter}
    */
-  public Action getAction() {
+  public OptionalValue<Action> getAction() {
     return action;
   }
 
@@ -52,8 +54,8 @@ public class SVAMLControl extends Control {
 
   public static class Builder {
 
-    Collection<Instruction> instructions;
-    Action action;
+    OptionalValue<Collection<Instruction>> instructions = OptionalValue.empty();
+    OptionalValue<Action> action = OptionalValue.empty();
 
     public Builder() {}
 
@@ -64,7 +66,7 @@ public class SVAMLControl extends Control {
      * @return Current builder
      */
     public Builder setInstructions(Collection<Instruction> instructions) {
-      this.instructions = instructions;
+      this.instructions = OptionalValue.of(instructions);
       return this;
     }
 
@@ -75,7 +77,7 @@ public class SVAMLControl extends Control {
      * @return Current builder
      */
     public Builder setAction(Action action) {
-      this.action = action;
+      this.action = OptionalValue.of(action);
       return this;
     }
 

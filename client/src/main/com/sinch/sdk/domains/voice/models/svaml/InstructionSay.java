@@ -1,20 +1,22 @@
 package com.sinch.sdk.domains.voice.models.svaml;
 
+import com.sinch.sdk.core.models.OptionalValue;
+
 public class InstructionSay extends Instruction {
 
-  private final String text;
-  private final String locale;
+  private final OptionalValue<String> text;
+  private final OptionalValue<String> locale;
 
-  private InstructionSay(String text, String locale) {
+  private InstructionSay(OptionalValue<String> text, OptionalValue<String> locale) {
     this.text = text;
     this.locale = locale;
   }
 
-  public String getText() {
+  public OptionalValue<String> getText() {
     return text;
   }
 
-  public String getLocale() {
+  public OptionalValue<String> getLocale() {
     return locale;
   }
 
@@ -36,16 +38,16 @@ public class InstructionSay extends Instruction {
 
   public static class Builder<B extends Builder<B>> {
 
-    String text;
-    String locale;
+    OptionalValue<String> text = OptionalValue.empty();
+    OptionalValue<String> locale = OptionalValue.empty();
 
     public Builder<B> setText(String text) {
-      this.text = text;
+      this.text = OptionalValue.of(text);
       return this;
     }
 
     public Builder<B> setLocale(String locale) {
-      this.locale = locale;
+      this.locale = OptionalValue.of(locale);
       return this;
     }
 

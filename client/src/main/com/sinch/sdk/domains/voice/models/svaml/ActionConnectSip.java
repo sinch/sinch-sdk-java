@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.voice.models.svaml;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.voice.models.DestinationSip;
 import com.sinch.sdk.domains.voice.models.MohClassType;
@@ -8,22 +9,22 @@ import java.util.Collection;
 
 public class ActionConnectSip extends Action {
 
-  private final DestinationSip destination;
-  private final Integer maxDuration;
-  private final String cli;
-  private final TransportType transport;
-  private final Boolean suppressCallbacks;
-  private final Collection<Pair<String, String>> callheaders;
-  private final MohClassType moh;
+  private final OptionalValue<DestinationSip> destination;
+  private final OptionalValue<Integer> maxDuration;
+  private final OptionalValue<String> cli;
+  private final OptionalValue<TransportType> transport;
+  private final OptionalValue<Boolean> suppressCallbacks;
+  private final OptionalValue<Collection<Pair<String, String>>> callheaders;
+  private final OptionalValue<MohClassType> moh;
 
   private ActionConnectSip(
-      DestinationSip destination,
-      Integer maxDuration,
-      String cli,
-      TransportType transport,
-      Boolean suppressCallbacks,
-      Collection<Pair<String, String>> callheaders,
-      MohClassType moh) {
+      OptionalValue<DestinationSip> destination,
+      OptionalValue<Integer> maxDuration,
+      OptionalValue<String> cli,
+      OptionalValue<TransportType> transport,
+      OptionalValue<Boolean> suppressCallbacks,
+      OptionalValue<Collection<Pair<String, String>>> callheaders,
+      OptionalValue<MohClassType> moh) {
     this.destination = destination;
     this.maxDuration = maxDuration;
     this.cli = cli;
@@ -33,31 +34,31 @@ public class ActionConnectSip extends Action {
     this.moh = moh;
   }
 
-  public DestinationSip getDestination() {
+  public OptionalValue<DestinationSip> getDestination() {
     return destination;
   }
 
-  public Integer getMaxDuration() {
+  public OptionalValue<Integer> getMaxDuration() {
     return maxDuration;
   }
 
-  public String getCli() {
+  public OptionalValue<String> getCli() {
     return cli;
   }
 
-  public TransportType getTransport() {
+  public OptionalValue<TransportType> getTransport() {
     return transport;
   }
 
-  public Boolean getSuppressCallbacks() {
+  public OptionalValue<Boolean> getSuppressCallbacks() {
     return suppressCallbacks;
   }
 
-  public Collection<Pair<String, String>> getCallheaders() {
+  public OptionalValue<Collection<Pair<String, String>>> getCallheaders() {
     return callheaders;
   }
 
-  public MohClassType getMoh() {
+  public OptionalValue<MohClassType> getMoh() {
     return moh;
   }
 
@@ -89,46 +90,46 @@ public class ActionConnectSip extends Action {
 
   public static class Builder<B extends Builder<B>> {
 
-    DestinationSip destination;
-    Integer maxDuration;
-    String cli;
-    TransportType transport;
-    Boolean suppressCallbacks;
-    Collection<Pair<String, String>> callheaders;
-    MohClassType moh;
+    OptionalValue<DestinationSip> destination = OptionalValue.empty();
+    OptionalValue<Integer> maxDuration = OptionalValue.empty();
+    OptionalValue<String> cli = OptionalValue.empty();
+    OptionalValue<TransportType> transport = OptionalValue.empty();
+    OptionalValue<Boolean> suppressCallbacks = OptionalValue.empty();
+    OptionalValue<Collection<Pair<String, String>>> callheaders = OptionalValue.empty();
+    OptionalValue<MohClassType> moh = OptionalValue.empty();
 
     public Builder<B> setDestination(DestinationSip destination) {
-      this.destination = destination;
+      this.destination = OptionalValue.of(destination);
       return this;
     }
 
     public Builder<B> setMaxDuration(Integer maxDuration) {
-      this.maxDuration = maxDuration;
+      this.maxDuration = OptionalValue.of(maxDuration);
       return this;
     }
 
     public Builder<B> setCli(String cli) {
-      this.cli = cli;
+      this.cli = OptionalValue.of(cli);
       return this;
     }
 
     public Builder<B> setTransport(TransportType transport) {
-      this.transport = transport;
+      this.transport = OptionalValue.of(transport);
       return this;
     }
 
     public Builder<B> setSuppressCallbacks(Boolean suppressCallbacks) {
-      this.suppressCallbacks = suppressCallbacks;
+      this.suppressCallbacks = OptionalValue.of(suppressCallbacks);
       return this;
     }
 
     public Builder<B> setCallheaders(Collection<Pair<String, String>> callheaders) {
-      this.callheaders = callheaders;
+      this.callheaders = OptionalValue.of(callheaders);
       return this;
     }
 
     public Builder<B> setMoh(MohClassType moh) {
-      this.moh = moh;
+      this.moh = OptionalValue.of(moh);
       return this;
     }
 

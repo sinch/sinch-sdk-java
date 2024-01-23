@@ -92,10 +92,8 @@ public class SAVMLInstructionDtoConverter {
     }
     SvamlInstructionPlayFilesDto dto = new SvamlInstructionPlayFilesDto();
     dto.setName(NameEnum.PLAYFILES.getValue());
-    if (null != client.getIds()) {
-      dto.ids(new ArrayList<>(client.getIds()));
-    }
-    dto.locale(client.getLocale());
+    client.getIds().ifPresent(f -> dto.setIds(new ArrayList<>(f)));
+    client.getLocale().ifPresent(dto::locale);
     return dto;
   }
 
@@ -105,8 +103,8 @@ public class SAVMLInstructionDtoConverter {
     }
     SvamlInstructionSayDto dto = new SvamlInstructionSayDto();
     dto.setName(SvamlInstructionSayDto.NameEnum.SAY.getValue());
-    dto.setText(client.getText());
-    dto.setLocale(client.getLocale());
+    client.getText().ifPresent(dto::setText);
+    client.getLocale().ifPresent(dto::setLocale);
     return dto;
   }
 
@@ -116,9 +114,7 @@ public class SAVMLInstructionDtoConverter {
     }
     SvamlInstructionSendDtmfDto dto = new SvamlInstructionSendDtmfDto();
     dto.setName(SvamlInstructionSendDtmfDto.NameEnum.SENDDTMF.getValue());
-    if (null != client.getTDtfm()) {
-      dto.setValue(client.getTDtfm().stringValue());
-    }
+    client.getTDtfm().ifPresent(f -> dto.setValue(f.stringValue()));
     return dto;
   }
 
@@ -128,8 +124,9 @@ public class SAVMLInstructionDtoConverter {
     }
     SvamlInstructionSetCookieDto dto = new SvamlInstructionSetCookieDto();
     dto.setName(SvamlInstructionSetCookieDto.NameEnum.SETCOOKIE.getValue());
-    dto.setKey(client.getKey());
-    dto.setValue(client.getValue());
+
+    client.getKey().ifPresent(dto::setKey);
+    client.getValue().ifPresent(dto::setValue);
     return dto;
   }
 
@@ -139,7 +136,7 @@ public class SAVMLInstructionDtoConverter {
     }
     SvamlInstructionStartRecordingDto dto = new SvamlInstructionStartRecordingDto();
     dto.setName(SvamlInstructionStartRecordingDto.NameEnum.STARTRECORDING.getValue());
-    dto.setOptions(convert(client.getOptions()));
+    client.getOptions().ifPresent(f -> dto.setOptions(convert(f)));
     return dto;
   }
 
@@ -157,11 +154,12 @@ public class SAVMLInstructionDtoConverter {
       return null;
     }
     SvamlInstructionStartRecordingOptionsDto dto = new SvamlInstructionStartRecordingOptionsDto();
-    dto.setDestinationUrl(client.getDestinationUrl());
-    dto.setCredentials(client.getCredentials());
-    dto.setFormat(client.getFormat());
-    dto.setNotificationEvents(client.getNotificationEvents());
-    dto.setTranscriptionOptions(convert(client.getTranscriptionOptions()));
+
+    client.getDestinationUrl().ifPresent(dto::setDestinationUrl);
+    client.getCredentials().ifPresent(dto::setCredentials);
+    client.getFormat().ifPresent(dto::setFormat);
+    client.getNotificationEvents().ifPresent(dto::setNotificationEvents);
+    client.getTranscriptionOptions().ifPresent(f -> dto.setTranscriptionOptions(convert(f)));
     return dto;
   }
 
@@ -172,8 +170,8 @@ public class SAVMLInstructionDtoConverter {
     }
     SvamlInstructionStartRecordingOptionsTranscriptionOptionsDto dto =
         new SvamlInstructionStartRecordingOptionsTranscriptionOptionsDto();
-    dto.setEnabled(client.getEnabled());
-    dto.locale(client.getLocale());
+    client.getEnabled().ifPresent(dto::setEnabled);
+    client.getLocale().ifPresent(dto::locale);
     return dto;
   }
 }

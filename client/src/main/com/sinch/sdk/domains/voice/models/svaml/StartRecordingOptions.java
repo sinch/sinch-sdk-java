@@ -1,19 +1,21 @@
 package com.sinch.sdk.domains.voice.models.svaml;
 
+import com.sinch.sdk.core.models.OptionalValue;
+
 public class StartRecordingOptions {
 
-  private final String destinationUrl;
-  private final String credentials;
-  private final String format;
-  private final Boolean notificationEvents;
-  private final TranscriptionOptions transcriptionOptions;
+  private final OptionalValue<String> destinationUrl;
+  private final OptionalValue<String> credentials;
+  private final OptionalValue<String> format;
+  private final OptionalValue<Boolean> notificationEvents;
+  private final OptionalValue<TranscriptionOptions> transcriptionOptions;
 
   private StartRecordingOptions(
-      String destinationUrl,
-      String credentials,
-      String format,
-      Boolean notificationEvents,
-      TranscriptionOptions transcriptionOptions) {
+      OptionalValue<String> destinationUrl,
+      OptionalValue<String> credentials,
+      OptionalValue<String> format,
+      OptionalValue<Boolean> notificationEvents,
+      OptionalValue<TranscriptionOptions> transcriptionOptions) {
     this.destinationUrl = destinationUrl;
     this.credentials = credentials;
     this.format = format;
@@ -21,23 +23,23 @@ public class StartRecordingOptions {
     this.transcriptionOptions = transcriptionOptions;
   }
 
-  public String getDestinationUrl() {
+  public OptionalValue<String> getDestinationUrl() {
     return destinationUrl;
   }
 
-  public String getCredentials() {
+  public OptionalValue<String> getCredentials() {
     return credentials;
   }
 
-  public String getFormat() {
+  public OptionalValue<String> getFormat() {
     return format;
   }
 
-  public Boolean getNotificationEvents() {
+  public OptionalValue<Boolean> getNotificationEvents() {
     return notificationEvents;
   }
 
-  public TranscriptionOptions getTranscriptionOptions() {
+  public OptionalValue<TranscriptionOptions> getTranscriptionOptions() {
     return transcriptionOptions;
   }
 
@@ -66,34 +68,34 @@ public class StartRecordingOptions {
 
   public static class Builder {
 
-    String destinationUrl;
-    String credentials;
-    String format;
-    Boolean notificationEvents;
-    TranscriptionOptions transcriptionOptions;
+    OptionalValue<String> destinationUrl = OptionalValue.empty();
+    OptionalValue<String> credentials = OptionalValue.empty();
+    OptionalValue<String> format = OptionalValue.empty();
+    OptionalValue<Boolean> notificationEvents = OptionalValue.empty();
+    OptionalValue<TranscriptionOptions> transcriptionOptions = OptionalValue.empty();
 
     public Builder setDestinationUrl(String destinationUrl) {
-      this.destinationUrl = destinationUrl;
+      this.destinationUrl = OptionalValue.of(destinationUrl);
       return this;
     }
 
     public Builder setCredentials(String credentials) {
-      this.credentials = credentials;
+      this.credentials = OptionalValue.of(credentials);
       return this;
     }
 
     public Builder setFormat(String format) {
-      this.format = format;
+      this.format = OptionalValue.of(format);
       return this;
     }
 
     public Builder setNotificationEvents(Boolean notificationEvents) {
-      this.notificationEvents = notificationEvents;
+      this.notificationEvents = OptionalValue.of(notificationEvents);
       return this;
     }
 
     public Builder setTranscriptionOptions(TranscriptionOptions transcriptionOptions) {
-      this.transcriptionOptions = transcriptionOptions;
+      this.transcriptionOptions = OptionalValue.of(transcriptionOptions);
       return this;
     }
 

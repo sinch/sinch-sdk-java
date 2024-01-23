@@ -1,20 +1,22 @@
 package com.sinch.sdk.domains.voice.models.svaml;
 
+import com.sinch.sdk.core.models.OptionalValue;
+
 public class TranscriptionOptions {
 
-  private final Boolean enabled;
-  private final String locale;
+  private final OptionalValue<Boolean> enabled;
+  private final OptionalValue<String> locale;
 
-  private TranscriptionOptions(Boolean enabled, String locale) {
+  private TranscriptionOptions(OptionalValue<Boolean> enabled, OptionalValue<String> locale) {
     this.enabled = enabled;
     this.locale = locale;
   }
 
-  public Boolean getEnabled() {
+  public OptionalValue<Boolean> getEnabled() {
     return enabled;
   }
 
-  public String getLocale() {
+  public OptionalValue<String> getLocale() {
     return locale;
   }
 
@@ -29,16 +31,16 @@ public class TranscriptionOptions {
 
   public static class Builder {
 
-    Boolean enabled;
-    String locale;
+    OptionalValue<Boolean> enabled = OptionalValue.empty();
+    OptionalValue<String> locale = OptionalValue.empty();
 
     public Builder setEnabled(Boolean enabled) {
-      this.enabled = enabled;
+      this.enabled = OptionalValue.of(enabled);
       return this;
     }
 
     public Builder setLocale(String locale) {
-      this.locale = locale;
+      this.locale = OptionalValue.of(locale);
       return this;
     }
 

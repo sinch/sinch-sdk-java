@@ -2,9 +2,7 @@ package com.sinch.sdk.domains.voice.models.svaml;
 
 public class InstructionStopRecording extends Instruction {
 
-  private InstructionStopRecording() {
-    ;
-  }
+  private InstructionStopRecording() {}
 
   @Override
   public String toString() {

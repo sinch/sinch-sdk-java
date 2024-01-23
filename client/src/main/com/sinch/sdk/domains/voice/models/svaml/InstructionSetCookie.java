@@ -1,20 +1,22 @@
 package com.sinch.sdk.domains.voice.models.svaml;
 
+import com.sinch.sdk.core.models.OptionalValue;
+
 public class InstructionSetCookie extends Instruction {
 
-  private final String key;
-  private final String value;
+  private final OptionalValue<String> key;
+  private final OptionalValue<String> value;
 
-  private InstructionSetCookie(String key, String value) {
+  private InstructionSetCookie(OptionalValue<String> key, OptionalValue<String> value) {
     this.key = key;
     this.value = value;
   }
 
-  public String getKey() {
+  public OptionalValue<String> getKey() {
     return key;
   }
 
-  public String getValue() {
+  public OptionalValue<String> getValue() {
     return value;
   }
 
@@ -37,16 +39,16 @@ public class InstructionSetCookie extends Instruction {
 
   public static class Builder<B extends Builder<B>> {
 
-    String key;
-    String value;
+    OptionalValue<String> key = OptionalValue.empty();
+    OptionalValue<String> value = OptionalValue.empty();
 
     public Builder<B> setKey(String key) {
-      this.key = key;
+      this.key = OptionalValue.of(key);
       return this;
     }
 
     public Builder<B> setValue(String value) {
-      this.value = value;
+      this.value = OptionalValue.of(value);
       return this;
     }
 

@@ -34,7 +34,8 @@ public class ActionRunMenuDtoTest extends BaseTest {
                       .timeoutMills(500)
                       .maxTimeoutMills(123456)
                       .options(
-                          Collections.singletonList(new OptionDto().dtmf("#w").action("menu")))));
+                          Collections.singletonList(
+                              new OptionDto().dtmf("#w").action("menu(foo)")))));
 
   @GivenTextResource("/domains/voice/svaml/ActionRunMenuDto.json")
   String json;

@@ -81,11 +81,13 @@ public class CalloutRequestDtoTest extends BaseTest {
                   .custom("my custom value")
                   .maxDuration(32)
                   .ice(
-                      "{\"action\": {\"name\": \"connectPstn\", \"number\": \"+12233445566\","
-                          + " \"cli\": \"+12234325234\", \"amd\": {\"enabled\": \"true\"}}}")
+                      "{\"action\":{\"name\":\"connectPstn\",\"number\":"
+                          + "\"+12233445566\",\"cli\":\"+12234325234\",\"amd\":"
+                          + "{\"enabled\":true}}}")
                   .ace(
-                      "{\"instructions\": [{\"name\": \"say\", \"text\": \"Hello, this is a call"
-                          + " from Sinch!\"}], \"action\": {\"name\": \"hangup\"}}")
+                      "{\"instructions\":[{\"name\":\"say\",\"text\":\"Hello,"
+                          + " this is a call from Sinch!\"}],\"action\":{\"name\":"
+                          + "\"hangup\"}}")
                   .pie("https://your-application-server-host/application"));
 
   @Test

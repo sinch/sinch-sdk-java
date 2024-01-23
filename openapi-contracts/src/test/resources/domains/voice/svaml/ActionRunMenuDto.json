@@ -16,7 +16,7 @@
         "options": [
           {
             "dtmf": "#w",
-            "action": "menu"
+            "action": "menu(foo)"
           }
         ]
       }

@@ -1,30 +1,33 @@
 package com.sinch.sdk.domains.voice.models.svaml;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.voice.models.ConferenceDtfmOptions;
 import com.sinch.sdk.domains.voice.models.MohClassType;
 
 public class ActionConnectConference extends Action {
 
-  private final String conferenceId;
-  private final ConferenceDtfmOptions dtfmOptions;
-  private final MohClassType moh;
+  private final OptionalValue<String> conferenceId;
+  private final OptionalValue<ConferenceDtfmOptions> dtfmOptions;
+  private final OptionalValue<MohClassType> moh;
 
   private ActionConnectConference(
-      String conferenceId, ConferenceDtfmOptions dtfmOptions, MohClassType moh) {
+      OptionalValue<String> conferenceId,
+      OptionalValue<ConferenceDtfmOptions> dtfmOptions,
+      OptionalValue<MohClassType> moh) {
     this.conferenceId = conferenceId;
     this.dtfmOptions = dtfmOptions;
     this.moh = moh;
   }
 
-  public String getConferenceId() {
+  public OptionalValue<String> getConferenceId() {
     return conferenceId;
   }
 
-  public ConferenceDtfmOptions getDtfmOptions() {
+  public OptionalValue<ConferenceDtfmOptions> getDtfmOptions() {
     return dtfmOptions;
   }
 
-  public MohClassType getMoh() {
+  public OptionalValue<MohClassType> getMoh() {
     return moh;
   }
 
@@ -48,22 +51,22 @@ public class ActionConnectConference extends Action {
 
   public static class Builder<B extends Builder<B>> {
 
-    String conferenceId;
-    ConferenceDtfmOptions dtfmOptions;
-    MohClassType moh;
+    OptionalValue<String> conferenceId = OptionalValue.empty();
+    OptionalValue<ConferenceDtfmOptions> dtfmOptions = OptionalValue.empty();
+    OptionalValue<MohClassType> moh = OptionalValue.empty();
 
     public Builder<B> setConferenceId(String conferenceId) {
-      this.conferenceId = conferenceId;
+      this.conferenceId = OptionalValue.of(conferenceId);
       return this;
     }
 
     public Builder<B> setDtfmOptions(ConferenceDtfmOptions dtfmOptions) {
-      this.dtfmOptions = dtfmOptions;
+      this.dtfmOptions = OptionalValue.of(dtfmOptions);
       return this;
     }
 
     public Builder<B> setMoh(MohClassType moh) {
-      this.moh = moh;
+      this.moh = OptionalValue.of(moh);
       return this;
     }
 

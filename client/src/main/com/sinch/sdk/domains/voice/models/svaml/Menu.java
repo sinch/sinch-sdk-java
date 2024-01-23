@@ -1,27 +1,28 @@
 package com.sinch.sdk.domains.voice.models.svaml;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Collection;
 
 public class Menu {
 
-  private final String id;
-  private final String mainPrompt;
-  private final String repeatPrompt;
-  private final Integer repeats;
-  private final Integer maxDigits;
-  private final Integer timeoutMills;
-  private final Integer maxTimeoutMills;
-  private final Collection<MenuOption> options;
+  private final OptionalValue<String> id;
+  private final OptionalValue<String> mainPrompt;
+  private final OptionalValue<String> repeatPrompt;
+  private final OptionalValue<Integer> repeats;
+  private final OptionalValue<Integer> maxDigits;
+  private final OptionalValue<Integer> timeoutMills;
+  private final OptionalValue<Integer> maxTimeoutMills;
+  private final OptionalValue<Collection<MenuOption>> options;
 
   private Menu(
-      String id,
-      String mainPrompt,
-      String repeatPrompt,
-      Integer repeats,
-      Integer maxDigits,
-      Integer timeoutMills,
-      Integer maxTimeoutMills,
-      Collection<MenuOption> options) {
+      OptionalValue<String> id,
+      OptionalValue<String> mainPrompt,
+      OptionalValue<String> repeatPrompt,
+      OptionalValue<Integer> repeats,
+      OptionalValue<Integer> maxDigits,
+      OptionalValue<Integer> timeoutMills,
+      OptionalValue<Integer> maxTimeoutMills,
+      OptionalValue<Collection<MenuOption>> options) {
     this.id = id;
     this.mainPrompt = mainPrompt;
     this.repeatPrompt = repeatPrompt;
@@ -32,35 +33,35 @@ public class Menu {
     this.options = options;
   }
 
-  public String getId() {
+  public OptionalValue<String> getId() {
     return id;
   }
 
-  public String getMainPrompt() {
+  public OptionalValue<String> getMainPrompt() {
     return mainPrompt;
   }
 
-  public String getRepeatPrompt() {
+  public OptionalValue<String> getRepeatPrompt() {
     return repeatPrompt;
   }
 
-  public Integer getRepeats() {
+  public OptionalValue<Integer> getRepeats() {
     return repeats;
   }
 
-  public Integer getMaxDigits() {
+  public OptionalValue<Integer> getMaxDigits() {
     return maxDigits;
   }
 
-  public Integer getTimeoutMills() {
+  public OptionalValue<Integer> getTimeoutMills() {
     return timeoutMills;
   }
 
-  public Integer getMaxTimeoutMills() {
+  public OptionalValue<Integer> getMaxTimeoutMills() {
     return maxTimeoutMills;
   }
 
-  public Collection<MenuOption> getOptions() {
+  public OptionalValue<Collection<MenuOption>> getOptions() {
     return options;
   }
 
@@ -95,52 +96,52 @@ public class Menu {
 
   public static class Builder {
 
-    String id;
-    String mainPrompt;
-    String repeatPrompt;
-    Integer repeats;
-    Integer maxDigits;
-    Integer timeoutMills;
-    Integer maxTimeoutMills;
-    Collection<MenuOption> options;
+    OptionalValue<String> id = OptionalValue.empty();
+    OptionalValue<String> mainPrompt = OptionalValue.empty();
+    OptionalValue<String> repeatPrompt = OptionalValue.empty();
+    OptionalValue<Integer> repeats = OptionalValue.empty();
+    OptionalValue<Integer> maxDigits = OptionalValue.empty();
+    OptionalValue<Integer> timeoutMills = OptionalValue.empty();
+    OptionalValue<Integer> maxTimeoutMills = OptionalValue.empty();
+    OptionalValue<Collection<MenuOption>> options = OptionalValue.empty();
 
     public Builder setId(String id) {
-      this.id = id;
+      this.id = OptionalValue.of(id);
       return this;
     }
 
     public Builder setMainPrompt(String mainPrompt) {
-      this.mainPrompt = mainPrompt;
+      this.mainPrompt = OptionalValue.of(mainPrompt);
       return this;
     }
 
     public Builder setRepeatPrompt(String repeatPrompt) {
-      this.repeatPrompt = repeatPrompt;
+      this.repeatPrompt = OptionalValue.of(repeatPrompt);
       return this;
     }
 
     public Builder setRepeats(Integer repeats) {
-      this.repeats = repeats;
+      this.repeats = OptionalValue.of(repeats);
       return this;
     }
 
     public Builder setMaxDigits(Integer maxDigits) {
-      this.maxDigits = maxDigits;
+      this.maxDigits = OptionalValue.of(maxDigits);
       return this;
     }
 
     public Builder setTimeoutMills(Integer timeoutMills) {
-      this.timeoutMills = timeoutMills;
+      this.timeoutMills = OptionalValue.of(timeoutMills);
       return this;
     }
 
     public Builder setMaxTimeoutMills(Integer maxTimeoutMills) {
-      this.maxTimeoutMills = maxTimeoutMills;
+      this.maxTimeoutMills = OptionalValue.of(maxTimeoutMills);
       return this;
     }
 
     public Builder setOptions(Collection<MenuOption> options) {
-      this.options = options;
+      this.options = OptionalValue.of(options);
       return this;
     }
 

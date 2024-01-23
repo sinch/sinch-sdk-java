@@ -1,16 +1,17 @@
 package com.sinch.sdk.domains.voice.models.svaml;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 
 public class InstructionSendDtfm extends Instruction {
 
-  private final DualToneMultiFrequency dtfm;
+  private final OptionalValue<DualToneMultiFrequency> dtfm;
 
-  private InstructionSendDtfm(DualToneMultiFrequency dtfm) {
+  private InstructionSendDtfm(OptionalValue<DualToneMultiFrequency> dtfm) {
     this.dtfm = dtfm;
   }
 
-  public DualToneMultiFrequency getTDtfm() {
+  public OptionalValue<DualToneMultiFrequency> getTDtfm() {
     return dtfm;
   }
 
@@ -25,10 +26,10 @@ public class InstructionSendDtfm extends Instruction {
 
   public static class Builder<B extends Builder<B>> {
 
-    DualToneMultiFrequency dtfm;
+    OptionalValue<DualToneMultiFrequency> dtfm = OptionalValue.empty();
 
     public Builder<B> setDtfm(DualToneMultiFrequency dtfm) {
-      this.dtfm = dtfm;
+      this.dtfm = OptionalValue.of(dtfm);
       return this;
     }
 

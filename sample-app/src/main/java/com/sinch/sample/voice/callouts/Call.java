@@ -6,8 +6,18 @@ import com.sinch.sdk.domains.voice.models.DestinationNumber;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParameters;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConference;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersCustom;
+import com.sinch.sdk.domains.voice.models.svaml.ActionConnectPstn;
+import com.sinch.sdk.domains.voice.models.svaml.ActionRunMenu;
+import com.sinch.sdk.domains.voice.models.svaml.InstructionSay;
+import com.sinch.sdk.domains.voice.models.svaml.Menu;
+import com.sinch.sdk.domains.voice.models.svaml.MenuOption;
+import com.sinch.sdk.domains.voice.models.svaml.MenuOptionAction;
+import com.sinch.sdk.domains.voice.models.svaml.MenuOptionActionType;
+import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
+import com.sinch.sdk.models.DualToneMultiFrequency;
 import com.sinch.sdk.models.E164PhoneNumber;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class Call extends BaseApplication {
@@ -37,10 +47,58 @@ public class Call extends BaseApplication {
     if (type == CalloutMethodType.CUSTOM_CALLOUT) {
       parameters =
           CalloutRequestParametersCustom.builder()
-              // .setIce("https://8dbd-78-117-86-140.ngrok-free.app/VoiceEvent")
-              // .setAce(true)
-              .setDestination(DestinationNumber.valueOf(phoneNumber))
-              .setCli(E164PhoneNumber.valueOf(virtualPhoneNumber))
+              .setIce(
+                  SVAMLControl.builder()
+                      .setAction(
+                          ActionConnectPstn.builder()
+                              .setNumber(E164PhoneNumber.valueOf(phoneNumber))
+                              .setCli("+123456789")
+                              .build())
+                      .setInstructions(
+                          Arrays.asList(
+                              InstructionSay.builder().setText("Hello from Sinch").build()))
+                      .build())
+              .setAce(
+                  SVAMLControl.builder()
+                      .setAction(
+                          ActionRunMenu.builder()
+                              .setLocale("Kimberly")
+                              .setEnableVoice(true)
+                              .setMenus(
+                                  Arrays.asList(
+                                      Menu.builder()
+                                          .setId("main")
+                                          .setMainPrompt(
+                                              "#tts[Welcome to the main menu. Press 1 to confirm"
+                                                  + " order or 4 to cancel]")
+                                          .setRepeatPrompt(
+                                              "#tts[Incorrect value, please try again]")
+                                          .setTimeoutMills(5000)
+                                          .setOptions(
+                                              Arrays.asList(
+                                                  MenuOption.builder()
+                                                      .setDtfm(DualToneMultiFrequency.valueOf("1"))
+                                                      .setAction(
+                                                          MenuOptionAction.from(
+                                                              MenuOptionActionType.MENU, "confirm"))
+                                                      .build(),
+                                                  MenuOption.builder()
+                                                      .setDtfm(DualToneMultiFrequency.valueOf("4"))
+                                                      .setAction(
+                                                          MenuOptionAction.from(
+                                                              MenuOptionActionType.RETURN,
+                                                              "cancel"))
+                                                      .build()))
+                                          .build(),
+                                      Menu.builder()
+                                          .setId("confirm")
+                                          .setMainPrompt(
+                                              "#tts[Thank you for confirming your order. Enter your"
+                                                  + " 4-digit PIN.]")
+                                          .setMaxDigits(4)
+                                          .build()))
+                              .build())
+                      .build())
               .build();
       ;
     }

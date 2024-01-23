@@ -1,30 +1,31 @@
 package com.sinch.sdk.domains.voice.models.svaml;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import com.sinch.sdk.models.E164PhoneNumber;
 
 public class ActionConnectPstn extends Action {
 
-  private final E164PhoneNumber number;
-  private final String locale;
-  private final Integer maxDuration;
-  private final Integer dialTimeout;
-  private final String cli;
-  private final Boolean suppressCallbacks;
-  private final DualToneMultiFrequency dtmf;
-  private final IndicationType indications;
-  private final AnsweringMachineDetection answeringMachineDetectionEnabled;
+  private final OptionalValue<E164PhoneNumber> number;
+  private final OptionalValue<String> locale;
+  private final OptionalValue<Integer> maxDuration;
+  private final OptionalValue<Integer> dialTimeout;
+  private final OptionalValue<String> cli;
+  private final OptionalValue<Boolean> suppressCallbacks;
+  private final OptionalValue<DualToneMultiFrequency> dtmf;
+  private final OptionalValue<IndicationType> indications;
+  private final OptionalValue<AnsweringMachineDetection> answeringMachineDetectionEnabled;
 
   private ActionConnectPstn(
-      E164PhoneNumber number,
-      String locale,
-      Integer maxDuration,
-      Integer dialTimeout,
-      String cli,
-      Boolean suppressCallbacks,
-      DualToneMultiFrequency dtmf,
-      IndicationType indications,
-      AnsweringMachineDetection answeringMachineDetectionEnabled) {
+      OptionalValue<E164PhoneNumber> number,
+      OptionalValue<String> locale,
+      OptionalValue<Integer> maxDuration,
+      OptionalValue<Integer> dialTimeout,
+      OptionalValue<String> cli,
+      OptionalValue<Boolean> suppressCallbacks,
+      OptionalValue<DualToneMultiFrequency> dtmf,
+      OptionalValue<IndicationType> indications,
+      OptionalValue<AnsweringMachineDetection> answeringMachineDetectionEnabled) {
     this.number = number;
     this.locale = locale;
     this.maxDuration = maxDuration;
@@ -36,39 +37,39 @@ public class ActionConnectPstn extends Action {
     this.answeringMachineDetectionEnabled = answeringMachineDetectionEnabled;
   }
 
-  public E164PhoneNumber getNumber() {
+  public OptionalValue<E164PhoneNumber> getNumber() {
     return number;
   }
 
-  public String getLocale() {
+  public OptionalValue<String> getLocale() {
     return locale;
   }
 
-  public Integer getMaxDuration() {
+  public OptionalValue<Integer> getMaxDuration() {
     return maxDuration;
   }
 
-  public Integer getDialTimeout() {
+  public OptionalValue<Integer> getDialTimeout() {
     return dialTimeout;
   }
 
-  public String getCli() {
+  public OptionalValue<String> getCli() {
     return cli;
   }
 
-  public Boolean getSuppressCallbacks() {
+  public OptionalValue<Boolean> getSuppressCallbacks() {
     return suppressCallbacks;
   }
 
-  public DualToneMultiFrequency getDtmf() {
+  public OptionalValue<DualToneMultiFrequency> getDtmf() {
     return dtmf;
   }
 
-  public IndicationType getIndications() {
+  public OptionalValue<IndicationType> getIndications() {
     return indications;
   }
 
-  public AnsweringMachineDetection getAnsweringMachineDetectionEnabled() {
+  public OptionalValue<AnsweringMachineDetection> getAnsweringMachineDetectionEnabled() {
     return answeringMachineDetectionEnabled;
   }
 
@@ -105,59 +106,60 @@ public class ActionConnectPstn extends Action {
 
   public static class Builder<B extends Builder<B>> {
 
-    E164PhoneNumber number;
-    String locale;
-    Integer maxDuration;
-    Integer dialTimeout;
-    String cli;
-    Boolean suppressCallbacks;
-    DualToneMultiFrequency dtmf;
-    IndicationType indications;
-    AnsweringMachineDetection answeringMachineDetectionEnabled;
+    OptionalValue<E164PhoneNumber> number = OptionalValue.empty();
+    OptionalValue<String> locale = OptionalValue.empty();
+    OptionalValue<Integer> maxDuration = OptionalValue.empty();
+    OptionalValue<Integer> dialTimeout = OptionalValue.empty();
+    OptionalValue<String> cli = OptionalValue.empty();
+    OptionalValue<Boolean> suppressCallbacks = OptionalValue.empty();
+    OptionalValue<DualToneMultiFrequency> dtmf = OptionalValue.empty();
+    OptionalValue<IndicationType> indications = OptionalValue.empty();
+    OptionalValue<AnsweringMachineDetection> answeringMachineDetectionEnabled =
+        OptionalValue.empty();
 
     public Builder<B> setNumber(E164PhoneNumber number) {
-      this.number = number;
+      this.number = OptionalValue.of(number);
       return this;
     }
 
     public Builder<B> setLocale(String locale) {
-      this.locale = locale;
+      this.locale = OptionalValue.of(locale);
       return this;
     }
 
     public Builder<B> setMaxDuration(Integer duration) {
-      this.maxDuration = duration;
+      this.maxDuration = OptionalValue.of(duration);
       return this;
     }
 
     public Builder<B> setDialTimeout(Integer dialTimeout) {
-      this.dialTimeout = dialTimeout;
+      this.dialTimeout = OptionalValue.of(dialTimeout);
       return this;
     }
 
     public Builder<B> setCli(String cli) {
-      this.cli = cli;
+      this.cli = OptionalValue.of(cli);
       return this;
     }
 
     public Builder<B> setSuppressCallbacks(Boolean suppressCallbacks) {
-      this.suppressCallbacks = suppressCallbacks;
+      this.suppressCallbacks = OptionalValue.of(suppressCallbacks);
       return this;
     }
 
     public Builder<B> setDtmf(DualToneMultiFrequency dtmf) {
-      this.dtmf = dtmf;
+      this.dtmf = OptionalValue.of(dtmf);
       return this;
     }
 
     public Builder<B> setIndications(IndicationType indications) {
-      this.indications = indications;
+      this.indications = OptionalValue.of(indications);
       return this;
     }
 
     public Builder<B> setAnsweringMachineDetectionEnabled(
         AnsweringMachineDetection answeringMachineDetectionEnabled) {
-      this.answeringMachineDetectionEnabled = answeringMachineDetectionEnabled;
+      this.answeringMachineDetectionEnabled = OptionalValue.of(answeringMachineDetectionEnabled);
       return this;
     }
 

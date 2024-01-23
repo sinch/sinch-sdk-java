@@ -29,6 +29,7 @@ import com.sinch.sdk.domains.voice.models.svaml.InstructionStartRecording;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionStopRecording;
 import com.sinch.sdk.domains.voice.models.svaml.Menu;
 import com.sinch.sdk.domains.voice.models.svaml.MenuOption;
+import com.sinch.sdk.domains.voice.models.svaml.MenuOptionAction;
 import com.sinch.sdk.domains.voice.models.svaml.MenuOptionActionType;
 import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
 import com.sinch.sdk.domains.voice.models.svaml.StartRecordingOptions;
@@ -91,7 +92,10 @@ public class Update extends BaseApplication {
                         .setMaxTimeoutMills(123456)
                         .setOptions(
                             Collections.singletonList(
-                                MenuOption.builder().setAction(MenuOptionActionType.MENU).build()))
+                                MenuOption.builder()
+                                    .setAction(
+                                        MenuOptionAction.from(MenuOptionActionType.MENU, "foo"))
+                                    .build()))
                         .build()))
             .build();
 

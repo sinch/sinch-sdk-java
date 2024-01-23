@@ -18,13 +18,13 @@ public class SVAMLControlTest {
 
   @Test
   void action() {
-    assertEquals(SAVMLActionDtoConverterTest.actionConnectConference, parameters.getAction());
+    assertEquals(SAVMLActionDtoConverterTest.actionConnectConference, parameters.getAction().get());
   }
 
   @Test
   void instructions() {
     assertEquals(
         Collections.singletonList(SAVMLInstructionDtoConverterTest.instructionAnswer),
-        parameters.getInstructions());
+        parameters.getInstructions().get());
   }
 }

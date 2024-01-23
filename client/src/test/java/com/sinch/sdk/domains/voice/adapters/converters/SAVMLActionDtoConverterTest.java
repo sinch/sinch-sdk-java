@@ -28,6 +28,7 @@ import com.sinch.sdk.domains.voice.models.svaml.AnsweringMachineDetection;
 import com.sinch.sdk.domains.voice.models.svaml.IndicationType;
 import com.sinch.sdk.domains.voice.models.svaml.Menu;
 import com.sinch.sdk.domains.voice.models.svaml.MenuOption;
+import com.sinch.sdk.domains.voice.models.svaml.MenuOptionAction;
 import com.sinch.sdk.domains.voice.models.svaml.MenuOptionActionType;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import com.sinch.sdk.models.E164PhoneNumber;
@@ -111,7 +112,8 @@ public class SAVMLActionDtoConverterTest {
                       .setOptions(
                           Collections.singletonList(
                               MenuOption.builder()
-                                  .setAction(MenuOptionActionType.MENU)
+                                  .setAction(
+                                      MenuOptionAction.from(MenuOptionActionType.MENU, "foo"))
                                   .setDtfm(DualToneMultiFrequency.valueOf("#w"))
                                   .build()))
                       .build()))

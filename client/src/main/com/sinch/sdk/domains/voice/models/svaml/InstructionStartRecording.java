@@ -1,14 +1,16 @@
 package com.sinch.sdk.domains.voice.models.svaml;
 
+import com.sinch.sdk.core.models.OptionalValue;
+
 public class InstructionStartRecording extends Instruction {
 
-  private final StartRecordingOptions options;
+  private final OptionalValue<StartRecordingOptions> options;
 
-  private InstructionStartRecording(StartRecordingOptions options) {
+  private InstructionStartRecording(OptionalValue<StartRecordingOptions> options) {
     this.options = options;
   }
 
-  public StartRecordingOptions getOptions() {
+  public OptionalValue<StartRecordingOptions> getOptions() {
     return options;
   }
 
@@ -23,10 +25,10 @@ public class InstructionStartRecording extends Instruction {
 
   public static class Builder<B extends Builder<B>> {
 
-    StartRecordingOptions options;
+    OptionalValue<StartRecordingOptions> options = OptionalValue.empty();
 
     public Builder<B> setOptions(StartRecordingOptions options) {
-      this.options = options;
+      this.options = OptionalValue.of(options);
       return this;
     }
 

@@ -37,9 +37,10 @@ public class CallsDtoConverter {
     }
     SVAMLRequestBodyDto dto = new SVAMLRequestBodyDto();
 
-    dto.instructions(SAVMLInstructionDtoConverter.convert(client.getInstructions()));
-    dto.action(SAVMLActionDtoConverter.convert(client.getAction()));
-
+    client
+        .getInstructions()
+        .ifPresent(f -> dto.instructions(SAVMLInstructionDtoConverter.convert(f)));
+    client.getAction().ifPresent(f -> dto.action(SAVMLActionDtoConverter.convert(f)));
     return dto;
   }
 }

@@ -1,16 +1,16 @@
 package com.sinch.sdk.domains.voice.models.svaml;
 
-import com.sinch.sdk.domains.voice.models.svaml.ActionConnectPstn.Builder;
+import com.sinch.sdk.core.models.OptionalValue;
 
 public class AnsweringMachineDetection {
 
-  private final Boolean enabled;
+  private final OptionalValue<Boolean> enabled;
 
-  private AnsweringMachineDetection(Boolean enabled) {
+  private AnsweringMachineDetection(OptionalValue<Boolean> enabled) {
     this.enabled = enabled;
   }
 
-  public Boolean getEnabled() {
+  public OptionalValue<Boolean> getEnabled() {
     return enabled;
   }
 
@@ -20,10 +20,10 @@ public class AnsweringMachineDetection {
 
   public static class Builder {
 
-    Boolean enabled;
+    OptionalValue<Boolean> enabled = OptionalValue.empty();
 
     public Builder setEnabled(Boolean enabled) {
-      this.enabled = enabled;
+      this.enabled = OptionalValue.of(enabled);
       return this;
     }
 

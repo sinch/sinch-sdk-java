@@ -1,32 +1,38 @@
 package com.sinch.sdk.domains.voice.models.svaml;
 
+import com.sinch.sdk.core.models.OptionalValue;
+
 public class ActionPark extends Action {
 
-  private final String locale;
-  private final String introPrompt;
-  private final String holdPrompt;
-  private final Integer maxDuration;
+  private final OptionalValue<String> locale;
+  private final OptionalValue<String> introPrompt;
+  private final OptionalValue<String> holdPrompt;
+  private final OptionalValue<Integer> maxDuration;
 
-  private ActionPark(String locale, String introPrompt, String holdPrompt, Integer maxDuration) {
+  private ActionPark(
+      OptionalValue<String> locale,
+      OptionalValue<String> introPrompt,
+      OptionalValue<String> holdPrompt,
+      OptionalValue<Integer> maxDuration) {
     this.locale = locale;
     this.introPrompt = introPrompt;
     this.holdPrompt = holdPrompt;
     this.maxDuration = maxDuration;
   }
 
-  public String getLocale() {
+  public OptionalValue<String> getLocale() {
     return locale;
   }
 
-  public String getIntroPrompt() {
+  public OptionalValue<String> getIntroPrompt() {
     return introPrompt;
   }
 
-  public String getHoldPrompt() {
+  public OptionalValue<String> getHoldPrompt() {
     return holdPrompt;
   }
 
-  public Integer getMaxDuration() {
+  public OptionalValue<Integer> getMaxDuration() {
     return maxDuration;
   }
 
@@ -54,28 +60,28 @@ public class ActionPark extends Action {
 
   public static class Builder<B extends Builder<B>> {
 
-    String locale;
-    String introPrompt;
-    String holdPrompt;
-    Integer maxDuration;
+    OptionalValue<String> locale = OptionalValue.empty();
+    OptionalValue<String> introPrompt = OptionalValue.empty();
+    OptionalValue<String> holdPrompt = OptionalValue.empty();
+    OptionalValue<Integer> maxDuration = OptionalValue.empty();
 
     public Builder<B> setLocale(String locale) {
-      this.locale = locale;
+      this.locale = OptionalValue.of(locale);
       return this;
     }
 
     public Builder<B> setIntroPrompt(String introPrompt) {
-      this.introPrompt = introPrompt;
+      this.introPrompt = OptionalValue.of(introPrompt);
       return this;
     }
 
     public Builder<B> setHoldPrompt(String holdPrompt) {
-      this.holdPrompt = holdPrompt;
+      this.holdPrompt = OptionalValue.of(holdPrompt);
       return this;
     }
 
     public Builder<B> setMaxDuration(Integer maxDuration) {
-      this.maxDuration = maxDuration;
+      this.maxDuration = OptionalValue.of(maxDuration);
       return this;
     }
 

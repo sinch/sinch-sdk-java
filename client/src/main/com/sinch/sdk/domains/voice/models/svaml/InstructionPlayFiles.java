@@ -1,22 +1,24 @@
 package com.sinch.sdk.domains.voice.models.svaml;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Collection;
 
 public class InstructionPlayFiles extends Instruction {
 
-  private final Collection<String> ids;
-  private final String locale;
+  private final OptionalValue<Collection<String>> ids;
+  private final OptionalValue<String> locale;
 
-  private InstructionPlayFiles(Collection<String> ids, String locale) {
+  private InstructionPlayFiles(
+      OptionalValue<Collection<String>> ids, OptionalValue<String> locale) {
     this.ids = ids;
     this.locale = locale;
   }
 
-  public Collection<String> getIds() {
+  public OptionalValue<Collection<String>> getIds() {
     return ids;
   }
 
-  public String getLocale() {
+  public OptionalValue<String> getLocale() {
     return locale;
   }
 
@@ -38,16 +40,16 @@ public class InstructionPlayFiles extends Instruction {
 
   public static class Builder<B extends Builder<B>> {
 
-    Collection<String> ids;
-    String locale;
+    OptionalValue<Collection<String>> ids = OptionalValue.empty();
+    OptionalValue<String> locale = OptionalValue.empty();
 
     public Builder<B> setIds(Collection<String> ids) {
-      this.ids = ids;
+      this.ids = OptionalValue.of(ids);
       return this;
     }
 
     public Builder<B> setLocale(String locale) {
-      this.locale = locale;
+      this.locale = OptionalValue.of(locale);
       return this;
     }
 

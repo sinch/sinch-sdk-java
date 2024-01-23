@@ -1,24 +1,27 @@
 package com.sinch.sdk.domains.voice.models.svaml;
 
+import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.voice.models.Destination;
 import java.util.Collection;
 
 public class ActionConnectMxp extends Action {
 
-  private final Destination destination;
-  private final Collection<Pair<String, String>> callheaders;
+  private final OptionalValue<Destination> destination;
+  private final OptionalValue<Collection<Pair<String, String>>> callheaders;
 
-  private ActionConnectMxp(Destination destination, Collection<Pair<String, String>> callheaders) {
+  private ActionConnectMxp(
+      OptionalValue<Destination> destination,
+      OptionalValue<Collection<Pair<String, String>>> callheaders) {
     this.destination = destination;
     this.callheaders = callheaders;
   }
 
-  public Destination getDestination() {
+  public OptionalValue<Destination> getDestination() {
     return destination;
   }
 
-  public Collection<Pair<String, String>> getCallheaders() {
+  public OptionalValue<Collection<Pair<String, String>>> getCallheaders() {
     return callheaders;
   }
 
@@ -39,16 +42,16 @@ public class ActionConnectMxp extends Action {
 
   public static class Builder<B extends Builder<B>> {
 
-    Destination destination;
-    Collection<Pair<String, String>> callheaders;
+    OptionalValue<Destination> destination = OptionalValue.empty();
+    OptionalValue<Collection<Pair<String, String>>> callheaders = OptionalValue.empty();
 
     public Builder<B> setDestination(Destination destination) {
-      this.destination = destination;
+      this.destination = OptionalValue.of(destination);
       return this;
     }
 
     public Builder<B> setCallheaders(Collection<Pair<String, String>> callheaders) {
-      this.callheaders = callheaders;
+      this.callheaders = OptionalValue.of(callheaders);
       return this;
     }
 

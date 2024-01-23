@@ -3,7 +3,6 @@ package com.sinch.sdk.domains.voice.adapters.converters;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.exceptions.ApiMappingException;
 import com.sinch.sdk.core.utils.databind.Mapper;
-import com.sinch.sdk.domains.voice.models.dto.v1.SVAMLRequestBodyDto;
 import com.sinch.sdk.domains.voice.models.requests.Control;
 import com.sinch.sdk.domains.voice.models.requests.ControlUrl;
 import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
@@ -33,9 +32,7 @@ public class ControlDtoConverter {
 
   private static String convertControlToEscapedJSON(SVAMLControl client) {
     try {
-      SVAMLRequestBodyDto dto =  CallsDtoConverter.convert(client);
-      String json = Mapper.getInstance().writeValueAsString(dto);
-      return json.replaceAll("\"", "\\\"");
+      return Mapper.getInstance().writeValueAsString(CallsDtoConverter.convert(client));
     } catch (JsonProcessingException e) {
       throw new ApiMappingException(client.toString(), e);
     }
