@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.voice.models.requests;
+package com.sinch.sdk.domains.voice.models.svaml;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -7,10 +7,10 @@ import com.sinch.sdk.domains.voice.adapters.converters.SAVMLInstructionDtoConver
 import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
-public class CallsUpdateRequestParametersTest {
+public class SVAMLControlTest {
 
-  public static final CallsUpdateRequestParameters parameters =
-      CallsUpdateRequestParameters.builder()
+  public static final SVAMLControl parameters =
+      SVAMLControl.builder()
           .setAction(SAVMLActionDtoConverterTest.actionConnectConference)
           .setInstructions(
               Collections.singletonList(SAVMLInstructionDtoConverterTest.instructionAnswer))

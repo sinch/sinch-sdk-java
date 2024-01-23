@@ -12,11 +12,11 @@ import com.sinch.sdk.domains.voice.models.dto.v1.CallsResponseDtoTest;
 import com.sinch.sdk.domains.voice.models.dto.v1.SVAMLRequestBodyDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.SvamlActionDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionDto;
-import com.sinch.sdk.domains.voice.models.requests.CallsUpdateRequestParametersTest;
 import com.sinch.sdk.domains.voice.models.response.CallInformation;
 import com.sinch.sdk.domains.voice.models.response.CallReasonType;
 import com.sinch.sdk.domains.voice.models.response.CallResultType;
 import com.sinch.sdk.domains.voice.models.response.CallStatusType;
+import com.sinch.sdk.domains.voice.models.svaml.SVAMLControlTest;
 import java.time.Instant;
 import java.util.Collections;
 import org.assertj.core.api.Assertions;
@@ -61,6 +61,6 @@ public class CallsDtoConverterTest extends BaseTest {
 
     Assertions.assertThat(svamlRequestBodyDto)
         .usingRecursiveComparison()
-        .isEqualTo(CallsDtoConverter.convert(CallsUpdateRequestParametersTest.parameters));
+        .isEqualTo(CallsDtoConverter.convert(SVAMLControlTest.parameters));
   }
 }

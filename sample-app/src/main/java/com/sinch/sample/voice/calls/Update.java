@@ -8,7 +8,6 @@ import com.sinch.sdk.domains.voice.models.DestinationUser;
 import com.sinch.sdk.domains.voice.models.DtfmModeType;
 import com.sinch.sdk.domains.voice.models.MohClassType;
 import com.sinch.sdk.domains.voice.models.TransportType;
-import com.sinch.sdk.domains.voice.models.requests.CallsUpdateRequestParameters;
 import com.sinch.sdk.domains.voice.models.svaml.Action;
 import com.sinch.sdk.domains.voice.models.svaml.ActionConnectConference;
 import com.sinch.sdk.domains.voice.models.svaml.ActionConnectMxp;
@@ -31,6 +30,7 @@ import com.sinch.sdk.domains.voice.models.svaml.InstructionStopRecording;
 import com.sinch.sdk.domains.voice.models.svaml.Menu;
 import com.sinch.sdk.domains.voice.models.svaml.MenuOption;
 import com.sinch.sdk.domains.voice.models.svaml.MenuOptionActionType;
+import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
 import com.sinch.sdk.domains.voice.models.svaml.StartRecordingOptions;
 import com.sinch.sdk.domains.voice.models.svaml.TranscriptionOptions;
 import com.sinch.sdk.models.DualToneMultiFrequency;
@@ -171,11 +171,7 @@ public class Update extends BaseApplication {
 
     Collection<Instruction> instructions = Collections.singletonList(instruction);
 
-    var parameters =
-        CallsUpdateRequestParameters.builder()
-            .setInstructions(instructions)
-            .setAction(action)
-            .build();
+    var parameters = SVAMLControl.builder().setInstructions(instructions).setAction(action).build();
     client.voice().calls().update(callId, parameters);
   }
 }

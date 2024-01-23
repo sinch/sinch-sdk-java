@@ -1,7 +1,6 @@
-package com.sinch.sdk.domains.voice.models.requests;
+package com.sinch.sdk.domains.voice.models.svaml;
 
-import com.sinch.sdk.domains.voice.models.svaml.Action;
-import com.sinch.sdk.domains.voice.models.svaml.Instruction;
+import com.sinch.sdk.domains.voice.models.requests.Control;
 import java.util.Collection;
 
 /**
@@ -10,11 +9,11 @@ import java.util.Collection;
  * @see <a href="https://developers.sinch.com/docs/voice/api-reference/svaml/">SAVML
  *     Dcoumentation</a>
  */
-public class CallsUpdateRequestParameters {
+public class SVAMLControl extends Control {
   private final Collection<Instruction> instructions;
   private final Action action;
 
-  private CallsUpdateRequestParameters(Collection<Instruction> instructions, Action action) {
+  private SVAMLControl(Collection<Instruction> instructions, Action action) {
     this.instructions = instructions;
     this.action = action;
   }
@@ -39,12 +38,7 @@ public class CallsUpdateRequestParameters {
 
   @Override
   public String toString() {
-    return "CallsUpdateRequestParameters{"
-        + "instructions="
-        + instructions
-        + ", action="
-        + action
-        + '}';
+    return "SVAMLControl{" + "instructions=" + instructions + ", action=" + action + '}';
   }
 
   /**
@@ -90,8 +84,8 @@ public class CallsUpdateRequestParameters {
      *
      * @return Built instance
      */
-    public CallsUpdateRequestParameters build() {
-      return new CallsUpdateRequestParameters(instructions, action);
+    public SVAMLControl build() {
+      return new SVAMLControl(instructions, action);
     }
   }
 }

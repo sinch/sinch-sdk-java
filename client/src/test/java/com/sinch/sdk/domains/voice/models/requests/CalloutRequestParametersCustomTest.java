@@ -4,8 +4,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.sinch.sdk.domains.voice.models.CalloutMethodType;
 import com.sinch.sdk.domains.voice.models.DestinationNumber;
+import com.sinch.sdk.domains.voice.models.svaml.ActionConnectPstn;
+import com.sinch.sdk.domains.voice.models.svaml.ActionHangUp;
+import com.sinch.sdk.domains.voice.models.svaml.AnsweringMachineDetection;
+import com.sinch.sdk.domains.voice.models.svaml.InstructionSay;
+import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import com.sinch.sdk.models.E164PhoneNumber;
+import java.util.Arrays;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class CalloutRequestParametersCustomTest {
@@ -18,12 +25,25 @@ public class CalloutRequestParametersCustomTest {
           .setDtfm(DualToneMultiFrequency.valueOf("w123#"))
           .setMaxDuration(32)
           .setIce(
-              "{\"action\": {\"name\": \"connectPstn\", \"number\": \"+12233445566\", \"cli\":"
-                  + " \"+12234325234\", \"amd\": {\"enabled\": \"true\"}}}")
+              SVAMLControl.builder()
+                  .setAction(
+                      ActionConnectPstn.builder()
+                          .setCli("+12234325234")
+                          .setNumber(E164PhoneNumber.valueOf("+12233445566"))
+                          .setAnsweringMachineDetectionEnabled(
+                              AnsweringMachineDetection.builder().setEnabled(true).build())
+                          .build())
+                  .build())
           .setAce(
-              "{\"instructions\": [{\"name\": \"say\", \"text\": \"Hello, this is a call from"
-                  + " Sinch!\"}], \"action\": {\"name\": \"hangup\"}}")
-          .setPie("https://your-application-server-host/application")
+              SVAMLControl.builder()
+                  .setAction(ActionHangUp.builder().build())
+                  .setInstructions(
+                      Arrays.asList(
+                          InstructionSay.builder()
+                              .setText("Hello, this is a call from Sinch!")
+                              .build()))
+                  .build())
+          .setPie(ControlUrl.from("https://your-application-server-host/application"))
           .build();
 
   @Test
@@ -54,23 +74,41 @@ public class CalloutRequestParametersCustomTest {
 
   @Test
   void getIce() {
-    assertEquals(
-        "{\"action\": {\"name\": \"connectPstn\", \"number\": \"+12233445566\", \"cli\":"
-            + " \"+12234325234\", \"amd\": {\"enabled\": \"true\"}}}",
-        customRequestParameters.getIce().get());
+    Assertions.assertThat(
+            SVAMLControl.builder()
+                .setAction(
+                    ActionConnectPstn.builder()
+                        .setCli("+12234325234")
+                        .setNumber(E164PhoneNumber.valueOf("+12233445566"))
+                        .setAnsweringMachineDetectionEnabled(
+                            AnsweringMachineDetection.builder().setEnabled(true).build())
+                        .build())
+                .build())
+        .usingRecursiveComparison()
+        .isEqualTo(customRequestParameters.getIce().get());
   }
 
   @Test
   void getAce() {
-    assertEquals(
-        "{\"instructions\": [{\"name\": \"say\", \"text\": \"Hello, this is a call from Sinch!\"}],"
-            + " \"action\": {\"name\": \"hangup\"}}",
-        customRequestParameters.getAce().get());
+
+    Assertions.assertThat(
+            SVAMLControl.builder()
+                .setAction(ActionHangUp.builder().build())
+                .setInstructions(
+                    Arrays.asList(
+                        InstructionSay.builder()
+                            .setText("Hello, this is a call from Sinch!")
+                            .build()))
+                .build())
+        .usingRecursiveComparison()
+        .isEqualTo(customRequestParameters.getAce().get());
   }
 
   @Test
   void getPie() {
-    assertEquals(
-        "https://your-application-server-host/application", customRequestParameters.getPie().get());
+
+    Assertions.assertThat(ControlUrl.from("https://your-application-server-host/application"))
+        .usingRecursiveComparison()
+        .isEqualTo(customRequestParameters.getPie().get());
   }
 }

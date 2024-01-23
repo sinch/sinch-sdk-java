@@ -2,10 +2,10 @@ package com.sinch.sample.voice.calls;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.voice.models.CallLegType;
-import com.sinch.sdk.domains.voice.models.requests.CallsUpdateRequestParameters;
 import com.sinch.sdk.domains.voice.models.svaml.ActionContinue;
 import com.sinch.sdk.domains.voice.models.svaml.Instruction;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionSay;
+import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
@@ -37,11 +37,7 @@ public class ManageWithCallLeg extends BaseApplication {
         Collections.singletonList(
             InstructionSay.builder().setText("Hello from sample app").setLocale("en").build());
 
-    var parameters =
-        CallsUpdateRequestParameters.builder()
-            .setInstructions(instructions)
-            .setAction(action)
-            .build();
+    var parameters = SVAMLControl.builder().setInstructions(instructions).setAction(action).build();
     client.voice().calls().manageWithCallLeg(callId, CallLegType.BOTH, parameters);
   }
 }

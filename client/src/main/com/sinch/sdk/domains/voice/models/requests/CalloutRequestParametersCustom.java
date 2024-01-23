@@ -13,9 +13,9 @@ import com.sinch.sdk.models.E164PhoneNumber;
 public class CalloutRequestParametersCustom extends CalloutRequestParameters {
 
   private final OptionalValue<Integer> maxDuration;
-  private final OptionalValue<String> ice;
-  private final OptionalValue<String> ace;
-  private final OptionalValue<String> pie;
+  private final OptionalValue<Control> ice;
+  private final OptionalValue<Control> ace;
+  private final OptionalValue<Control> pie;
 
   private CalloutRequestParametersCustom(
       OptionalValue<Destination> destination,
@@ -23,9 +23,9 @@ public class CalloutRequestParametersCustom extends CalloutRequestParameters {
       OptionalValue<DualToneMultiFrequency> dtfm,
       OptionalValue<String> custom,
       OptionalValue<Integer> maxDuration,
-      OptionalValue<String> ice,
-      OptionalValue<String> ace,
-      OptionalValue<String> pie) {
+      OptionalValue<Control> ice,
+      OptionalValue<Control> ace,
+      OptionalValue<Control> pie) {
     super(OptionalValue.of(CalloutMethodType.CUSTOM_CALLOUT), destination, cli, dtfm, custom);
 
     this.maxDuration = maxDuration;
@@ -38,15 +38,15 @@ public class CalloutRequestParametersCustom extends CalloutRequestParameters {
     return maxDuration;
   }
 
-  public OptionalValue<String> getIce() {
+  public OptionalValue<Control> getIce() {
     return ice;
   }
 
-  public OptionalValue<String> getAce() {
+  public OptionalValue<Control> getAce() {
     return ace;
   }
 
-  public OptionalValue<String> getPie() {
+  public OptionalValue<Control> getPie() {
     return pie;
   }
 
@@ -75,9 +75,9 @@ public class CalloutRequestParametersCustom extends CalloutRequestParameters {
   public static class Builder extends CalloutRequestParameters.Builder<Builder> {
 
     OptionalValue<Integer> maxDuration = OptionalValue.empty();
-    OptionalValue<String> ice = OptionalValue.empty();
-    OptionalValue<String> ace = OptionalValue.empty();
-    OptionalValue<String> pie = OptionalValue.empty();
+    OptionalValue<Control> ice = OptionalValue.empty();
+    OptionalValue<Control> ace = OptionalValue.empty();
+    OptionalValue<Control> pie = OptionalValue.empty();
 
     public Builder() {
       super();
@@ -109,7 +109,7 @@ public class CalloutRequestParametersCustom extends CalloutRequestParameters {
      * @param ice The Incoming Call Event value
      * @return current builder
      */
-    public Builder setIce(String ice) {
+    public Builder setIce(Control ice) {
       this.ice = OptionalValue.of(ice);
       return self();
     }
@@ -126,7 +126,7 @@ public class CalloutRequestParametersCustom extends CalloutRequestParameters {
      * @param ace The Answered Call Event value
      * @return current builder
      */
-    public Builder setAce(String ace) {
+    public Builder setAce(Control ace) {
       this.ace = OptionalValue.of(ace);
       return self();
     }
@@ -146,7 +146,7 @@ public class CalloutRequestParametersCustom extends CalloutRequestParameters {
      * @param pie Prompt Input Event value
      * @return current builder
      */
-    public Builder setPie(String pie) {
+    public Builder setPie(Control pie) {
       this.pie = OptionalValue.of(pie);
       return self();
     }

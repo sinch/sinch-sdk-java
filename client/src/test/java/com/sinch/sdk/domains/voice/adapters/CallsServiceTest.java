@@ -16,8 +16,8 @@ import com.sinch.sdk.domains.voice.adapters.converters.CallsDtoConverterTest;
 import com.sinch.sdk.domains.voice.models.CallLegType;
 import com.sinch.sdk.domains.voice.models.dto.v1.CallsResponseDtoTest;
 import com.sinch.sdk.domains.voice.models.dto.v1.SVAMLRequestBodyDto;
-import com.sinch.sdk.domains.voice.models.requests.CallsUpdateRequestParametersTest;
 import com.sinch.sdk.domains.voice.models.response.CallInformation;
+import com.sinch.sdk.domains.voice.models.svaml.SVAMLControlTest;
 import com.sinch.sdk.models.Configuration;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -64,7 +64,7 @@ public class CallsServiceTest extends BaseTest {
   @Test
   void update() throws ApiException {
 
-    service.update("call id", CallsUpdateRequestParametersTest.parameters);
+    service.update("call id", SVAMLControlTest.parameters);
 
     verify(api).callingUpdateCall(callIdCaptor.capture(), updateParametersCaptor.capture());
 
@@ -78,8 +78,7 @@ public class CallsServiceTest extends BaseTest {
   @Test
   void manageWithCallLeg() throws ApiException {
 
-    service.manageWithCallLeg(
-        "call id", CallLegType.BOTH, CallsUpdateRequestParametersTest.parameters);
+    service.manageWithCallLeg("call id", CallLegType.BOTH, SVAMLControlTest.parameters);
 
     verify(api)
         .callingManageCallWithCallLeg(

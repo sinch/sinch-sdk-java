@@ -93,9 +93,9 @@ public class CalloutsDtoConverter {
     client.getCustom().ifPresent(dto::setCustom);
 
     client.getMaxDuration().ifPresent(dto::setMaxDuration);
-    client.getIce().ifPresent(dto::setIce);
-    client.getAce().ifPresent(dto::setAce);
-    client.getPie().ifPresent(dto::setPie);
+    client.getIce().ifPresent(f -> dto.setIce(ControlDtoConverter.convert(f)));
+    client.getAce().ifPresent(f -> dto.setAce(ControlDtoConverter.convert(f)));
+    client.getPie().ifPresent(f -> dto.setPie(ControlDtoConverter.convert(f)));
 
     return new CalloutRequestDto().method(MethodEnum.CUSTOMCALLOUT.getValue()).customCallout(dto);
   }
