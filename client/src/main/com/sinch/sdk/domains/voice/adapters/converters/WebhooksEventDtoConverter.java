@@ -10,6 +10,8 @@ import com.sinch.sdk.domains.voice.models.dto.v1.AceRequestDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.CallHeaderDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.DiceRequestDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.IceRequestDto;
+import com.sinch.sdk.domains.voice.models.dto.v1.PieRequestAllOfMenuResultDto;
+import com.sinch.sdk.domains.voice.models.dto.v1.PieRequestDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.WebhooksEventDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.WebhooksEventRequestDto;
 import com.sinch.sdk.domains.voice.models.webhooks.AmdAnswer;
@@ -19,6 +21,10 @@ import com.sinch.sdk.domains.voice.models.webhooks.AnsweredCallEvent;
 import com.sinch.sdk.domains.voice.models.webhooks.CallEvent;
 import com.sinch.sdk.domains.voice.models.webhooks.DisconnectCallEvent;
 import com.sinch.sdk.domains.voice.models.webhooks.IncomingCallEvent;
+import com.sinch.sdk.domains.voice.models.webhooks.MenuInputType;
+import com.sinch.sdk.domains.voice.models.webhooks.MenuResult;
+import com.sinch.sdk.domains.voice.models.webhooks.MenuResultInputMethodType;
+import com.sinch.sdk.domains.voice.models.webhooks.PromptInputEvent;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,6 +49,9 @@ public class WebhooksEventDtoConverter {
     } else if (instance instanceof AceRequestDto) {
       AceRequestDto aceDto = (AceRequestDto) instance;
       builder = convert(aceDto);
+    } else if (instance instanceof PieRequestDto) {
+      PieRequestDto pieDto = (PieRequestDto) instance;
+      builder = convert(pieDto);
     } else {
       throw new ApiException("Unexpected event:" + dto);
     }
@@ -103,6 +112,21 @@ public class WebhooksEventDtoConverter {
         .setAmd(convert(dto.getAmd()));
   }
 
+  private static PromptInputEvent.Builder<?> convert(PieRequestDto dto) {
+
+    PromptInputEvent.Builder<?> builder = PromptInputEvent.builder();
+    if (null == dto) {
+      return builder;
+    }
+    return builder
+        .setTimestamp(OffsetDateTimeDtoConverter.convert(dto.getTimestamp()))
+        .setCustom(dto.getCustom())
+        .setApplicationKey(dto.getApplicationKey())
+        .setCallId(dto.getCallid())
+        .setVersion(dto.getVersion())
+        .setMenuResult(convert(dto.getMenuResult()));
+  }
+
   private static AmdAnswer convert(AceRequestAllOfAmdDto dto) {
 
     if (null == dto) {
@@ -134,5 +158,14 @@ public class WebhooksEventDtoConverter {
       return null;
     }
     return dto.stream().map(f -> new Pair<>(f.getKey(), f.getValue())).collect(Collectors.toList());
+  }
+
+  private static MenuResult convert(PieRequestAllOfMenuResultDto dto) {
+    return MenuResult.builder()
+        .setMenuId(dto.getMenuId())
+        .setType(MenuInputType.from(dto.getType()))
+        .setValue(dto.getValue())
+        .setInputMethod(MenuResultInputMethodType.from(dto.getInputMethod()))
+        .build();
   }
 }

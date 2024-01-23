@@ -3,8 +3,6 @@ package com.sinch.sdk.domains.voice.models.dto.v1;
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
-import com.sinch.sdk.domains.voice.models.dto.v1.AceRequestDto.EventEnum;
-import com.sinch.sdk.domains.voice.models.dto.v1.DiceRequestDto.ReasonEnum;
 import java.time.OffsetDateTime;
 import java.util.Collections;
 import org.assertj.core.api.Assertions;
@@ -21,6 +19,9 @@ public class WebhooksEventRequestDtoTest extends BaseTest {
 
   @GivenJsonResource("/domains/voice/webhooks/AceRequestDto.json")
   WebhooksEventDto loadedAceRequestDto;
+
+  @GivenJsonResource("/domains/voice/webhooks/PieRequestDto.json")
+  WebhooksEventDto loadedPieRequestDto;
 
   public static WebhooksEventDto expectedIceRequestDto =
       new WebhooksEventDto(
@@ -54,7 +55,7 @@ public class WebhooksEventRequestDtoTest extends BaseTest {
               .to(new DestinationDto().type(DestinationTypeDto.NUMBER).endpoint("123456789"))
               .applicationKey("an app key")
               .result(CallResultDto.ANSWERED)
-              .reason(ReasonEnum.MANAGERHANGUP.getValue())
+              .reason(DiceRequestDto.ReasonEnum.MANAGERHANGUP.getValue())
               .from("private")
               .duration(1)
               .debit(new PriceDto().currencyId("EUR").amount(0.1758F))
@@ -63,7 +64,7 @@ public class WebhooksEventRequestDtoTest extends BaseTest {
   public static WebhooksEventDto expectedAceRequestDto =
       new WebhooksEventDto(
           new AceRequestDto()
-              .event(EventEnum.ACE.getValue())
+              .event(AceRequestDto.EventEnum.ACE.getValue())
               .callid("a call id")
               .timestamp(OffsetDateTime.parse("2024-01-19T12:49:53Z"))
               .version(1)
@@ -71,6 +72,22 @@ public class WebhooksEventRequestDtoTest extends BaseTest {
               .applicationKey("my application key")
               .amd(
                   new AceRequestAllOfAmdDto().status("human").reason("longgreeting").duration(15)));
+
+  public static WebhooksEventDto expectedPieRequestDto =
+      new WebhooksEventDto(
+          new PieRequestDto()
+              .event(PieRequestDto.EventEnum.PIE.getValue())
+              .callid("a call id")
+              .timestamp(OffsetDateTime.parse("2024-01-23T15:04:28Z"))
+              .version(1)
+              .custom("my custom value")
+              .applicationKey("my application key")
+              .menuResult(
+                  new PieRequestAllOfMenuResultDto()
+                      .menuId("confirm")
+                      .type("sequence")
+                      .value("1452")
+                      .inputMethod("dtmf")));
 
   @Test
   void deserializeIceRequest() {
@@ -91,5 +108,12 @@ public class WebhooksEventRequestDtoTest extends BaseTest {
     Assertions.assertThat(loadedAceRequestDto)
         .usingRecursiveComparison()
         .isEqualTo(expectedAceRequestDto);
+  }
+
+  @Test
+  void deserializePieRequest() {
+    Assertions.assertThat(loadedPieRequestDto)
+        .usingRecursiveComparison()
+        .isEqualTo(expectedPieRequestDto);
   }
 }

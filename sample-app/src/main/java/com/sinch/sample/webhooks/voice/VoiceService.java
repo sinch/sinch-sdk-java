@@ -1,7 +1,12 @@
 package com.sinch.sample.webhooks.voice;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.voice.models.webhooks.CallEvent;
+import com.sinch.sdk.domains.voice.models.svaml.ActionConnectConference;
+import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
+import com.sinch.sdk.domains.voice.models.webhooks.AnsweredCallEvent;
+import com.sinch.sdk.domains.voice.models.webhooks.DisconnectCallEvent;
+import com.sinch.sdk.domains.voice.models.webhooks.IncomingCallEvent;
+import com.sinch.sdk.domains.voice.models.webhooks.PromptInputEvent;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,33 +23,27 @@ public class VoiceService {
     this.sinchClient = sinchClient;
   }
 
-  public String callEvent(CallEvent event) {
+  public SVAMLControl incoming(IncomingCallEvent event) {
 
     LOGGER.info("decoded event :" + event);
+    return SVAMLControl.builder().build();
+  }
 
-    /*VerificationResponse.Builder<?> builder;
-    var method = event.getMethod();
+  public SVAMLControl answered(AnsweredCallEvent event) {
 
-    if (method == VerificationMethodType.SMS) {
-      builder = VerificationResponseSMS.builder().setCode(1234);
-    } else if (method == VerificationMethodType.FLASH_CALL) {
-      builder = VerificationResponseFlashCall.builder().setDialTimeout(12);
-    } else if (method == VerificationMethodType.CALLOUT) {
-      builder = VerificationResponseCallout.builder().setCode(4567)
-      // only "en-US" is supported, not mandatory to set it
-      // .setLocale("en-US")
-      ;
-    } else {
-      throw new ApiException("Unexpected methode value: '" + method + "'");
-    }
+    LOGGER.info("decoded event :" + event);
+    return SVAMLControl.builder()
+        .setAction(ActionConnectConference.builder().setConferenceId("My Conference Id").build())
+        .build();
+  }
 
-    builder.setAction(VerificationResponseActionType.ALLOW);
+  public void disconnect(DisconnectCallEvent event) {
 
-    var response =
-        sinchClient.verification().webhooks().serializeVerificationResponse(builder.build());
-    LOGGER.info("Response :" + response);
+    LOGGER.info("decoded event :" + event);
+  }
 
-    return response;*/
-    return "";
+  public void prompt(PromptInputEvent event) {
+
+    LOGGER.info("decoded event :" + event);
   }
 }

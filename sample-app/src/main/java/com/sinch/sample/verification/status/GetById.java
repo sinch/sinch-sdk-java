@@ -23,7 +23,7 @@ public class GetById extends BaseApplication {
 
   public void run() {
 
-    VerificationId id = VerificationId.valueOf("018c01d2-a726-0b2b-5c0f-0dab29e5a2f9");
+    VerificationId id = VerificationId.valueOf(callId);
 
     LOGGER.info("Get status by id for  : " + id);
 

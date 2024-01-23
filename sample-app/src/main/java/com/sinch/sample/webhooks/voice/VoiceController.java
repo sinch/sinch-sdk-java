@@ -1,7 +1,10 @@
 package com.sinch.sample.webhooks.voice;
 
 import com.sinch.sdk.SinchClient;
+import com.sinch.sdk.domains.voice.models.webhooks.AnsweredCallEvent;
+import com.sinch.sdk.domains.voice.models.webhooks.DisconnectCallEvent;
 import com.sinch.sdk.domains.voice.models.webhooks.IncomingCallEvent;
+import com.sinch.sdk.domains.voice.models.webhooks.PromptInputEvent;
 import java.util.Map;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,16 +65,27 @@ public class VoiceController {
     // let business layer process the request
     var response =
         switch (event) {
-          case IncomingCallEvent e -> service.callEvent(event);
-            /* case VerificationResultEvent e -> {
-              service.verificationEvent(e);
-              yield null;
-            }*/
+          case IncomingCallEvent e -> service.incoming(e);
+          case AnsweredCallEvent e -> service.answered(e);
+          case DisconnectCallEvent e -> {
+            service.disconnect(e);
+            yield null;
+          }
+          case PromptInputEvent e -> {
+            service.prompt(e);
+            yield null;
+          }
           default -> throw new IllegalStateException("Unexpected value: " + event);
         };
 
-    LOGGER.finest("response: " + response);
+    if (null == response) {
+      return "";
+    }
 
-    return response;
+    LOGGER.finest("response: " + response);
+    String responseBody = sinchClient.voice().webhooks().serializeWebhooksResponse(response);
+    LOGGER.finest("payload: " + responseBody);
+
+    return responseBody;
   }
 }

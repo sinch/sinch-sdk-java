@@ -1,6 +1,6 @@
 package com.sinch.sample.voice;
 
-import static com.sinch.sample.BaseApplication.CONFERENCE_ID;
+import static com.sinch.sample.BaseApplication.CONFERENCE_ID_KEY;
 import static com.sinch.sample.BaseApplication.PHONE_NUMBER_KEY;
 import static com.sinch.sample.Utils.echo;
 import static com.sinch.sample.Utils.echoStep;
@@ -32,9 +32,9 @@ public class ConferencesSampleFlow {
       var properties = Utils.loadProperties(LOGGER);
       var configuration = Utils.loadConfiguration(LOGGER);
       var conferenceId =
-          null != System.getenv(CONFERENCE_ID)
-              ? System.getenv(CONFERENCE_ID)
-              : properties.getProperty(CONFERENCE_ID);
+          null != System.getenv(CONFERENCE_ID_KEY)
+              ? System.getenv(CONFERENCE_ID_KEY)
+              : properties.getProperty(CONFERENCE_ID_KEY);
       var phoneNumber =
           null != System.getenv(PHONE_NUMBER_KEY)
               ? System.getenv(PHONE_NUMBER_KEY)

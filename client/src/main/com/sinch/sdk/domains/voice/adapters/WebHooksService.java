@@ -4,8 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.exceptions.ApiMappingException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.utils.databind.Mapper;
+import com.sinch.sdk.domains.voice.adapters.converters.CallsDtoConverter;
 import com.sinch.sdk.domains.voice.adapters.converters.WebhooksEventDtoConverter;
+import com.sinch.sdk.domains.voice.models.dto.v1.SVAMLRequestBodyDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.WebhooksEventDto;
+import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
 import com.sinch.sdk.domains.voice.models.webhooks.CallEvent;
 import java.util.Map;
 import java.util.TreeMap;
@@ -54,6 +57,16 @@ public class WebHooksService implements com.sinch.sdk.domains.voice.WebHooksServ
       return WebhooksEventDtoConverter.convert(o);
     } catch (JsonProcessingException e) {
       throw new ApiMappingException(jsonPayload, e);
+    }
+  }
+
+  @Override
+  public String serializeWebhooksResponse(SVAMLControl response) throws ApiMappingException {
+    SVAMLRequestBodyDto dto = CallsDtoConverter.convert(response);
+    try {
+      return Mapper.getInstance().writeValueAsString(dto);
+    } catch (JsonProcessingException e) {
+      throw new ApiMappingException(response.toString(), e);
     }
   }
 }

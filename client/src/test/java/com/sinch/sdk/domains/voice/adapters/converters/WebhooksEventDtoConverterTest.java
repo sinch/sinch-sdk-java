@@ -15,6 +15,10 @@ import com.sinch.sdk.domains.voice.models.webhooks.AmdAnswerStatusType;
 import com.sinch.sdk.domains.voice.models.webhooks.AnsweredCallEvent;
 import com.sinch.sdk.domains.voice.models.webhooks.DisconnectCallEvent;
 import com.sinch.sdk.domains.voice.models.webhooks.IncomingCallEvent;
+import com.sinch.sdk.domains.voice.models.webhooks.MenuInputType;
+import com.sinch.sdk.domains.voice.models.webhooks.MenuResult;
+import com.sinch.sdk.domains.voice.models.webhooks.MenuResultInputMethodType;
+import com.sinch.sdk.domains.voice.models.webhooks.PromptInputEvent;
 import java.time.Instant;
 import java.util.Collections;
 import org.assertj.core.api.Assertions;
@@ -70,6 +74,22 @@ public class WebhooksEventDtoConverterTest extends BaseTest {
                   .build())
           .build();
 
+  public static PromptInputEvent expectedPromptInputEvent =
+      PromptInputEvent.builder()
+          .setCallId("a call id")
+          .setCustom("my custom value")
+          .setTimestamp(Instant.parse(("2024-01-23T15:04:28Z")))
+          .setVersion(1)
+          .setApplicationKey("my application key")
+          .setMenuResult(
+              MenuResult.builder()
+                  .setMenuId("confirm")
+                  .setType(MenuInputType.SEQUENCE)
+                  .setValue("1452")
+                  .setInputMethod(MenuResultInputMethodType.DTMF)
+                  .build())
+          .build();
+
   @Test
   void convertIncomingCallRequest() {
 
@@ -95,5 +115,14 @@ public class WebhooksEventDtoConverterTest extends BaseTest {
             WebhooksEventDtoConverter.convert(WebhooksEventRequestDtoTest.expectedAceRequestDto))
         .usingRecursiveComparison()
         .isEqualTo(expectedAnsweredCallEvent);
+  }
+
+  @Test
+  void convertPieEvent() {
+
+    Assertions.assertThat(
+            WebhooksEventDtoConverter.convert(WebhooksEventRequestDtoTest.expectedPieRequestDto))
+        .usingRecursiveComparison()
+        .isEqualTo(expectedPromptInputEvent);
   }
 }

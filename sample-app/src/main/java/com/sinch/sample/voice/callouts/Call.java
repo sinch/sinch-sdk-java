@@ -6,6 +6,7 @@ import com.sinch.sdk.domains.voice.models.DestinationNumber;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParameters;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConference;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersCustom;
+import com.sinch.sdk.domains.voice.models.requests.ControlUrl;
 import com.sinch.sdk.domains.voice.models.svaml.ActionConnectPstn;
 import com.sinch.sdk.domains.voice.models.svaml.ActionRunMenu;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionSay;
@@ -41,12 +42,13 @@ public class Call extends BaseApplication {
 
     CalloutRequestParameters parameters = null;
 
-    CalloutMethodType type = CalloutMethodType.CUSTOM_CALLOUT;
+    CalloutMethodType type = CalloutMethodType.CONFERENCE_CALLOUT;
 
     // custom
     if (type == CalloutMethodType.CUSTOM_CALLOUT) {
       parameters =
           CalloutRequestParametersCustom.builder()
+              .setCustom("my custom value")
               .setIce(
                   SVAMLControl.builder()
                       .setAction(
@@ -99,6 +101,7 @@ public class Call extends BaseApplication {
                                           .build()))
                               .build())
                       .build())
+              .setPie(ControlUrl.from(webhooksVoicePath))
               .build();
       ;
     }
