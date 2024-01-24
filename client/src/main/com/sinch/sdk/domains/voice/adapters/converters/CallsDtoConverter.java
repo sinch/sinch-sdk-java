@@ -39,8 +39,8 @@ public class CallsDtoConverter {
 
     client
         .getInstructions()
-        .ifPresent(f -> dto.instructions(SAVMLInstructionDtoConverter.convert(f)));
-    client.getAction().ifPresent(f -> dto.action(SAVMLActionDtoConverter.convert(f)));
+        .ifPresent(f -> dto.instructions(SVAMLInstructionDtoConverter.convert(f)));
+    client.getAction().ifPresent(f -> dto.action(SVAMLActionDtoConverter.convert(f)));
     return dto;
   }
 }

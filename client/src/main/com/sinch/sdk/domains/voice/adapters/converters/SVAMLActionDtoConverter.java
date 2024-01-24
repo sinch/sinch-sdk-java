@@ -35,8 +35,8 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-public class SAVMLActionDtoConverter {
-  private static final Logger LOGGER = Logger.getLogger(SAVMLActionDtoConverter.class.getName());
+public class SVAMLActionDtoConverter {
+  private static final Logger LOGGER = Logger.getLogger(SVAMLActionDtoConverter.class.getName());
 
   public static SvamlActionDto convert(Action client) {
     if (null == client) {
@@ -218,7 +218,7 @@ public class SAVMLActionDtoConverter {
     if (null == client) {
       return null;
     }
-    return client.stream().map(SAVMLActionDtoConverter::convert).collect(Collectors.toList());
+    return client.stream().map(SVAMLActionDtoConverter::convert).collect(Collectors.toList());
   }
 
   private static MenuDto convert(Menu client) {

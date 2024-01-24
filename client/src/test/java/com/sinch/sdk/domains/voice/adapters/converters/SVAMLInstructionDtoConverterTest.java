@@ -22,7 +22,7 @@ import java.util.Collections;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class SAVMLInstructionDtoConverterTest {
+public class SVAMLInstructionDtoConverterTest {
 
   public static final InstructionAnswer instructionAnswer = InstructionAnswer.builder().build();
 
@@ -59,7 +59,7 @@ public class SAVMLInstructionDtoConverterTest {
   @Test
   void convertInstructionAnswer() {
     Assertions.assertThat(
-            SAVMLInstructionDtoConverter.convert(Collections.singletonList(instructionAnswer)))
+            SVAMLInstructionDtoConverter.convert(Collections.singletonList(instructionAnswer)))
         .usingRecursiveComparison()
         .isEqualTo(
             Collections.singletonList(new SvamlInstructionDto(InstructionAnswerDtoTest.dto)));
@@ -68,7 +68,7 @@ public class SAVMLInstructionDtoConverterTest {
   @Test
   void convertInstructionPlayFiles() {
     Assertions.assertThat(
-            SAVMLInstructionDtoConverter.convert(Collections.singletonList(instructionPlayFiles)))
+            SVAMLInstructionDtoConverter.convert(Collections.singletonList(instructionPlayFiles)))
         .usingRecursiveComparison()
         .isEqualTo(
             Collections.singletonList(new SvamlInstructionDto(InstructionPlayFilesDtoTest.dto)));
@@ -77,7 +77,7 @@ public class SAVMLInstructionDtoConverterTest {
   @Test
   void convertInstructionSay() {
     Assertions.assertThat(
-            SAVMLInstructionDtoConverter.convert(Collections.singletonList(instructionSay)))
+            SVAMLInstructionDtoConverter.convert(Collections.singletonList(instructionSay)))
         .usingRecursiveComparison()
         .isEqualTo(Collections.singletonList(new SvamlInstructionDto(InstructionSayDtoTest.dto)));
   }
@@ -85,7 +85,7 @@ public class SAVMLInstructionDtoConverterTest {
   @Test
   void convertInstructionSendDtfm() {
     Assertions.assertThat(
-            SAVMLInstructionDtoConverter.convert(Collections.singletonList(instructionDtfm)))
+            SVAMLInstructionDtoConverter.convert(Collections.singletonList(instructionDtfm)))
         .usingRecursiveComparison()
         .isEqualTo(
             Collections.singletonList(new SvamlInstructionDto(InstructionSendDtfmDtoTest.dto)));
@@ -94,7 +94,7 @@ public class SAVMLInstructionDtoConverterTest {
   @Test
   void convertInstructionSetCookie() {
     Assertions.assertThat(
-            SAVMLInstructionDtoConverter.convert(Collections.singletonList(instructionSetCookie)))
+            SVAMLInstructionDtoConverter.convert(Collections.singletonList(instructionSetCookie)))
         .usingRecursiveComparison()
         .isEqualTo(
             Collections.singletonList(new SvamlInstructionDto(InstructionSetCookieDtoTest.dto)));
@@ -103,7 +103,7 @@ public class SAVMLInstructionDtoConverterTest {
   @Test
   void convertInstructionStartRecording() {
     Assertions.assertThat(
-            SAVMLInstructionDtoConverter.convert(
+            SVAMLInstructionDtoConverter.convert(
                 Collections.singletonList(instructionStartRecording)))
         .usingRecursiveComparison()
         .isEqualTo(
@@ -114,7 +114,7 @@ public class SAVMLInstructionDtoConverterTest {
   @Test
   void convertInstructionStopRecording() {
     Assertions.assertThat(
-            SAVMLInstructionDtoConverter.convert(
+            SVAMLInstructionDtoConverter.convert(
                 Collections.singletonList(instructionStopRecording)))
         .usingRecursiveComparison()
         .isEqualTo(
