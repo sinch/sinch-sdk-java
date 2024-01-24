@@ -10,6 +10,7 @@ import com.sinch.sdk.domains.voice.models.dto.v1.AceRequestDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.CallHeaderDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.DiceRequestDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.IceRequestDto;
+import com.sinch.sdk.domains.voice.models.dto.v1.NotifyRequestDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.PieRequestAllOfMenuResultDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.PieRequestDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.WebhooksEventDto;
@@ -18,40 +19,39 @@ import com.sinch.sdk.domains.voice.models.webhooks.AmdAnswer;
 import com.sinch.sdk.domains.voice.models.webhooks.AmdAnswerReasonType;
 import com.sinch.sdk.domains.voice.models.webhooks.AmdAnswerStatusType;
 import com.sinch.sdk.domains.voice.models.webhooks.AnsweredCallEvent;
-import com.sinch.sdk.domains.voice.models.webhooks.CallEvent;
 import com.sinch.sdk.domains.voice.models.webhooks.DisconnectCallEvent;
 import com.sinch.sdk.domains.voice.models.webhooks.IncomingCallEvent;
 import com.sinch.sdk.domains.voice.models.webhooks.MenuInputType;
 import com.sinch.sdk.domains.voice.models.webhooks.MenuResult;
 import com.sinch.sdk.domains.voice.models.webhooks.MenuResultInputMethodType;
+import com.sinch.sdk.domains.voice.models.webhooks.NotifyEvent;
 import com.sinch.sdk.domains.voice.models.webhooks.PromptInputEvent;
+import com.sinch.sdk.domains.voice.models.webhooks.WebhooksEvent;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class WebhooksEventDtoConverter {
 
-  public static CallEvent convert(WebhooksEventDto dto) {
+  public static WebhooksEvent convert(WebhooksEventDto dto) {
 
     if (null == dto) {
       return null;
     }
 
-    CallEvent.Builder<?> builder;
+    WebhooksEvent.Builder<?> builder;
 
     WebhooksEventRequestDto instance = (WebhooksEventRequestDto) dto.getActualInstance();
     if (instance instanceof IceRequestDto) {
-      IceRequestDto iceDto = (IceRequestDto) instance;
-      builder = convert(iceDto);
+      builder = convert((IceRequestDto) instance);
     } else if (instance instanceof DiceRequestDto) {
-      DiceRequestDto diceDto = (DiceRequestDto) instance;
-      builder = convert(diceDto);
+      builder = convert((DiceRequestDto) instance);
     } else if (instance instanceof AceRequestDto) {
-      AceRequestDto aceDto = (AceRequestDto) instance;
-      builder = convert(aceDto);
+      builder = convert((AceRequestDto) instance);
     } else if (instance instanceof PieRequestDto) {
-      PieRequestDto pieDto = (PieRequestDto) instance;
-      builder = convert(pieDto);
+      builder = convert((PieRequestDto) instance);
+    } else if (instance instanceof NotifyRequestDto) {
+      builder = convert((NotifyRequestDto) instance);
     } else {
       throw new ApiException("Unexpected event:" + dto);
     }
@@ -125,6 +125,19 @@ public class WebhooksEventDtoConverter {
         .setCallId(dto.getCallid())
         .setVersion(dto.getVersion())
         .setMenuResult(convert(dto.getMenuResult()));
+  }
+
+  private static NotifyEvent.Builder<?> convert(NotifyRequestDto dto) {
+
+    NotifyEvent.Builder<?> builder = NotifyEvent.builder();
+    if (null == dto) {
+      return builder;
+    }
+    return builder
+        .setCustom(dto.getCustom())
+        .setCallId(dto.getCallid())
+        .setVersion(dto.getVersion())
+        .setType(dto.getType());
   }
 
   private static AmdAnswer convert(AceRequestAllOfAmdDto dto) {

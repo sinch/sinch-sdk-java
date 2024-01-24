@@ -9,7 +9,7 @@ import com.sinch.sdk.domains.voice.adapters.converters.WebhooksEventDtoConverter
 import com.sinch.sdk.domains.voice.models.dto.v1.SVAMLRequestBodyDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.WebhooksEventDto;
 import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
-import com.sinch.sdk.domains.voice.models.webhooks.CallEvent;
+import com.sinch.sdk.domains.voice.models.webhooks.WebhooksEvent;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Logger;
@@ -51,7 +51,7 @@ public class WebHooksService implements com.sinch.sdk.domains.voice.WebHooksServ
   }
 
   @Override
-  public CallEvent unserializeWebhooksEvent(String jsonPayload) throws ApiMappingException {
+  public WebhooksEvent unserializeWebhooksEvent(String jsonPayload) throws ApiMappingException {
     try {
       WebhooksEventDto o = Mapper.getInstance().readValue(jsonPayload, WebhooksEventDto.class);
       return WebhooksEventDtoConverter.convert(o);

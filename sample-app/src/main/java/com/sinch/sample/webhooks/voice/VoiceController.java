@@ -4,6 +4,7 @@ import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.voice.models.webhooks.AnsweredCallEvent;
 import com.sinch.sdk.domains.voice.models.webhooks.DisconnectCallEvent;
 import com.sinch.sdk.domains.voice.models.webhooks.IncomingCallEvent;
+import com.sinch.sdk.domains.voice.models.webhooks.NotifyEvent;
 import com.sinch.sdk.domains.voice.models.webhooks.PromptInputEvent;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -73,6 +74,10 @@ public class VoiceController {
           }
           case PromptInputEvent e -> {
             service.prompt(e);
+            yield null;
+          }
+          case NotifyEvent e -> {
+            service.notify(e);
             yield null;
           }
           default -> throw new IllegalStateException("Unexpected value: " + event);

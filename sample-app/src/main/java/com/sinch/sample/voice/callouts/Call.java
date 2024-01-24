@@ -3,9 +3,11 @@ package com.sinch.sample.voice.callouts;
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.voice.models.CalloutMethodType;
 import com.sinch.sdk.domains.voice.models.DestinationNumber;
+import com.sinch.sdk.domains.voice.models.DomainType;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParameters;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConference;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersCustom;
+import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersTTS;
 import com.sinch.sdk.domains.voice.models.requests.ControlUrl;
 import com.sinch.sdk.domains.voice.models.svaml.ActionConnectPstn;
 import com.sinch.sdk.domains.voice.models.svaml.ActionRunMenu;
@@ -44,6 +46,18 @@ public class Call extends BaseApplication {
 
     CalloutMethodType type = CalloutMethodType.CONFERENCE_CALLOUT;
 
+    if (type == CalloutMethodType.TTS_CALLOUT) {
+      parameters =
+          CalloutRequestParametersTTS.builder()
+              .setDestination(DestinationNumber.valueOf(phoneNumber))
+              .setEnableAce(true)
+              .setEnableDice(true)
+              .setEnablePie(true)
+              .setText("Hello")
+              .setDtfm(DualToneMultiFrequency.valueOf("w#1"))
+              .build();
+    }
+
     // custom
     if (type == CalloutMethodType.CUSTOM_CALLOUT) {
       parameters =
@@ -53,7 +67,7 @@ public class Call extends BaseApplication {
                   SVAMLControl.builder()
                       .setAction(
                           ActionConnectPstn.builder()
-                              .setNumber(E164PhoneNumber.valueOf(phoneNumber))
+                              .setNumber(E164PhoneNumber.valueOf(virtualPhoneNumber))
                               .setCli("+123456789")
                               .build())
                       .setInstructions(
@@ -111,6 +125,7 @@ public class Call extends BaseApplication {
           CalloutRequestParametersConference.builder()
               .setDestination(DestinationNumber.valueOf(phoneNumber))
               .setConferenceId(conferenceId)
+              .setDomain(DomainType.PSTN)
               .setCustom("my custom value")
               .setEnableAce(true)
               .setEnableDice(true)
