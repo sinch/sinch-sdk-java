@@ -10,10 +10,20 @@ public class WebhooksEvent {
     this.version = version;
   }
 
+  /**
+   * The unique ID assigned to call related to this event
+   *
+   * @return Call ID value
+   */
   public String getCallId() {
     return callId;
   }
 
+  /**
+   * The current API version
+   *
+   * @return API version sending the event
+   */
   public Integer getVersion() {
     return version;
   }

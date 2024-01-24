@@ -51,7 +51,7 @@ public interface WebHooksService {
   VerificationEvent unserializeVerificationEvent(String jsonPayload) throws ApiMappingException;
 
   /**
-   * This function can be called to serialize a verification response to be send as JSON
+   * This function can be called to serialize a verification response to be sent as JSON
    *
    * @param response The response to be serialized
    * @return The JSON string to be sent

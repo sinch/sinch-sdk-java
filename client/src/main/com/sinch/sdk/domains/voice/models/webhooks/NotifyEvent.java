@@ -1,5 +1,12 @@
 package com.sinch.sdk.domains.voice.models.webhooks;
 
+/**
+ * This is the general callback used to send notifications. It's a POST request to the specified
+ * calling callback URL.
+ *
+ * <p>If there is no response to the callback within the timeout period, the notification is
+ * discarded.
+ */
 public class NotifyEvent extends WebhooksEvent {
 
   private final String custom;
@@ -11,10 +18,20 @@ public class NotifyEvent extends WebhooksEvent {
     this.type = type;
   }
 
+  /**
+   * An optional parameter containing notification-specific information
+   *
+   * @return custom value
+   */
   public String getCustom() {
     return custom;
   }
 
+  /**
+   * The type of information communicated in the notification
+   *
+   * @return type value
+   */
   public String getType() {
     return type;
   }

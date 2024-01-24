@@ -3,6 +3,7 @@ package com.sinch.sdk.domains.voice.models.webhooks;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatch.Builder;
 import java.time.Instant;
 
+/** Base class for webhooks call event */
 public class CallEvent extends WebhooksEvent {
 
   private final Instant timestamp;
@@ -14,10 +15,20 @@ public class CallEvent extends WebhooksEvent {
     this.custom = custom;
   }
 
+  /**
+   * Event timestamp
+   *
+   * @return Timestamp value
+   */
   public Instant getTimestamp() {
     return timestamp;
   }
 
+  /**
+   * A string that can be used to pass custom information related to the call.
+   *
+   * @return The custom value used for call
+   */
   public String getCustom() {
     return custom;
   }

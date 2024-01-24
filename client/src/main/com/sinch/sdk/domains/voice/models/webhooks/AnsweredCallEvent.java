@@ -2,6 +2,25 @@ package com.sinch.sdk.domains.voice.models.webhooks;
 
 import java.time.Instant;
 
+/**
+ * This callback is made when the call is picked up by the callee (person receiving the call).
+ *
+ * <p>It's a POST request to the specified calling callback URL. Look here for allowed {@link
+ * com.sinch.sdk.domains.voice.models.svaml.Action instructions} and {@link
+ * com.sinch.sdk.domains.voice.models.svaml.Instruction actions}.
+ *
+ * <p>If there is no response to the callback within the timeout period, the call is connected.
+ *
+ * <p>If you have Answering Machine Detection (<a
+ * href="https://developers.sinch.com/docs/voice/api-reference/amd_v2">AMD</a>) enabled, the amd
+ * object will also be present on ACE callbacks.
+ *
+ * <p>Note: ACE Callbacks are not issued for InApp Calls (destination: username), only PSTN and SIP
+ * calls.
+ *
+ * @see <a
+ *     href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/#tag/Callbacks/operation/ace">ACE</a>
+ */
 public class AnsweredCallEvent extends CallEvent {
 
   private final AmdAnswer amd;
@@ -12,6 +31,12 @@ public class AnsweredCallEvent extends CallEvent {
     this.amd = amd;
   }
 
+  /**
+   * If Answering Machine Detection is enabled, this object contains information about whether the
+   * call was answered by a machine.
+   *
+   * @return AMD Answer value
+   */
   public AmdAnswer getAmd() {
     return amd;
   }

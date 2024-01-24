@@ -1,8 +1,8 @@
 package com.sinch.sdk.domains.voice.models.requests;
 
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.voice.models.CalloutMethodType;
 import com.sinch.sdk.domains.voice.models.Destination;
+import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConference.Builder;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import com.sinch.sdk.models.E164PhoneNumber;
 
@@ -26,7 +26,7 @@ public class CalloutRequestParametersCustom extends CalloutRequestParameters {
       OptionalValue<Control> ice,
       OptionalValue<Control> ace,
       OptionalValue<Control> pie) {
-    super(OptionalValue.of(CalloutMethodType.CUSTOM_CALLOUT), destination, cli, dtfm, custom);
+    super(destination, cli, dtfm, custom);
 
     this.maxDuration = maxDuration;
     this.ice = ice;
@@ -34,18 +34,38 @@ public class CalloutRequestParametersCustom extends CalloutRequestParameters {
     this.pie = pie;
   }
 
+  /**
+   * See builder
+   *
+   * @see Builder#setMaxDuration(Integer)
+   */
   public OptionalValue<Integer> getMaxDuration() {
     return maxDuration;
   }
 
+  /**
+   * See builder
+   *
+   * @see Builder#setIce(Control)
+   */
   public OptionalValue<Control> getIce() {
     return ice;
   }
 
+  /**
+   * See builder
+   *
+   * @see Builder#setAce(Control)
+   */
   public OptionalValue<Control> getAce() {
     return ace;
   }
 
+  /**
+   * See builder
+   *
+   * @see Builder#setPie(Control)
+   */
   public OptionalValue<Control> getPie() {
     return pie;
   }

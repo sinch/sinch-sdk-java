@@ -1,5 +1,10 @@
 package com.sinch.sdk.domains.voice.models.webhooks;
 
+/**
+ * If Answering Machine Detection (see <a
+ * href="https://developers.sinch.com/docs/voice/api-reference/amd_v2/">AMD</a>) is enabled, this
+ * object contains information about whether the call was answered by a machine.
+ */
 public class AmdAnswer {
 
   private final AmdAnswerStatusType status;
@@ -12,14 +17,29 @@ public class AmdAnswer {
     this.duration = duration;
   }
 
+  /**
+   * Get the status
+   *
+   * @return Status value
+   */
   public AmdAnswerStatusType getStatus() {
     return status;
   }
 
+  /**
+   * Get the reason
+   *
+   * @return Reason value
+   */
   public AmdAnswerReasonType getReason() {
     return reason;
   }
 
+  /**
+   * Get the length of the call
+   *
+   * @return Call length
+   */
   public Integer getDuration() {
     return duration;
   }

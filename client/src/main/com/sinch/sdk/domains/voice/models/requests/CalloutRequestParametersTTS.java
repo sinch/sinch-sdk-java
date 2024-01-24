@@ -1,9 +1,9 @@
 package com.sinch.sdk.domains.voice.models.requests;
 
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.voice.models.CalloutMethodType;
 import com.sinch.sdk.domains.voice.models.Destination;
 import com.sinch.sdk.domains.voice.models.DomainType;
+import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersCustom.Builder;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import com.sinch.sdk.models.E164PhoneNumber;
 
@@ -33,7 +33,7 @@ public class CalloutRequestParametersTTS extends CalloutRequestParameters {
       OptionalValue<DomainType> domain,
       OptionalValue<String> text,
       OptionalValue<String> prompts) {
-    super(OptionalValue.of(CalloutMethodType.TTS_CALLOUT), destination, cli, dtfm, custom);
+    super(destination, cli, dtfm, custom);
 
     this.enableAce = enableAce;
     this.enableDice = enableDice;
@@ -44,30 +44,51 @@ public class CalloutRequestParametersTTS extends CalloutRequestParameters {
     this.domain = domain;
   }
 
+  /**
+   * @see Builder#setEnableAce(Boolean)
+   */
   public OptionalValue<Boolean> getEnableAce() {
     return enableAce;
   }
 
+  /**
+   * @see Builder#setEnableDice(Boolean)
+   */
   public OptionalValue<Boolean> getEnableDice() {
     return enableDice;
   }
 
+  /**
+   * @see Builder#setEnablePie(Boolean)
+   */
   public OptionalValue<Boolean> getEnablePie() {
     return enablePie;
   }
 
+  /**
+   * @see Builder#setLocale(String)
+   */
   public OptionalValue<String> getLocale() {
     return locale;
   }
 
+  /**
+   * @see Builder#setDomain(DomainType)
+   */
   public OptionalValue<DomainType> getDomain() {
     return domain;
   }
 
+  /**
+   * @see Builder#setText(String)
+   */
   public OptionalValue<String> getText() {
     return text;
   }
 
+  /**
+   * @see Builder#setPrompts(String)
+   */
   public OptionalValue<String> getPrompts() {
     return prompts;
   }

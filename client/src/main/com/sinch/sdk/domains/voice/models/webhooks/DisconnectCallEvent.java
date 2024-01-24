@@ -6,6 +6,15 @@ import com.sinch.sdk.domains.voice.models.Destination;
 import com.sinch.sdk.domains.voice.models.Price;
 import java.time.Instant;
 
+/**
+ * This callback is made when the call is disconnected.
+ *
+ * <p>It's a POST request to the specified calling callback URL. This event doesn't support
+ * instructions and only supports the hangup action.
+ *
+ * @see <a
+ *     href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/#tag/Callbacks/operation/dice">DICE</a>
+ */
 public class DisconnectCallEvent extends CallEvent {
 
   private final CallReasonType reason;
@@ -41,34 +50,74 @@ public class DisconnectCallEvent extends CallEvent {
     this.from = from;
   }
 
+  /**
+   * The reason the call was disconnected
+   *
+   * @return Reason value
+   */
   public CallReasonType getReason() {
     return reason;
   }
 
+  /**
+   * The result of the call
+   *
+   * @return Result value
+   */
   public CallResultType getResult() {
     return result;
   }
 
+  /**
+   * Amount charged for the call
+   *
+   * @return charge value
+   */
   public Price getDebit() {
     return debit;
   }
 
+  /**
+   * Rate per minute for the call
+   *
+   * @return rate value
+   */
   public Price getUserRate() {
     return userRate;
   }
 
+  /**
+   * Information about the recipient of the call
+   *
+   * @return Recipient information
+   */
   public Destination getTo() {
     return to;
   }
 
+  /**
+   * The unique application key
+   *
+   * @return Application key value
+   */
   public String getApplicationKey() {
     return applicationKey;
   }
 
+  /**
+   * The duration of the call in seconds
+   *
+   * @return Call duration
+   */
   public Integer getDuration() {
     return duration;
   }
 
+  /**
+   * Information about the initiator of the call.
+   *
+   * @return Initiator information
+   */
   public String getFrom() {
     return from;
   }

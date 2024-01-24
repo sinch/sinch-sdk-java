@@ -2,7 +2,6 @@ package com.sinch.sdk.domains.voice.models.requests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.sinch.sdk.domains.voice.models.CalloutMethodType;
 import com.sinch.sdk.domains.voice.models.ConferenceDtfmOptions;
 import com.sinch.sdk.domains.voice.models.DestinationNumber;
 import com.sinch.sdk.domains.voice.models.DomainType;
@@ -37,12 +36,6 @@ public class CalloutRequestParametersConferenceTest {
           .setCustom("my custom value")
           .setDomain(DomainType.PSTN)
           .build();
-
-  @Test
-  void getMethod() {
-    assertEquals(
-        CalloutMethodType.CONFERENCE_CALLOUT, conferenceRequestParameters.getMethod().get());
-  }
 
   @Test
   void getDestination() {
