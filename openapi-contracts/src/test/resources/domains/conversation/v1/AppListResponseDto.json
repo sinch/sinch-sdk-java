@@ -1,0 +1,58 @@
+{
+  "apps": [
+    {
+      "id": "an app id",
+      "channel_credentials": [
+        {
+          "channel": "MESSENGER",
+          "static_token": {
+            "token": "my token"
+          },
+          "callback_secret": "foo value",
+          "state": {
+            "status": "ACTIVE",
+            "description": ""
+          },
+          "channel_known_id": "a channel id"
+        }
+      ],
+      "conversation_metadata_report_view": "NONE",
+      "display_name": "Brazil App",
+      "rate_limits": {
+        "outbound": 20,
+        "inbound": 100,
+        "webhooks": 200
+      },
+      "retention_policy": {
+        "retention_type": "CONVERSATION_EXPIRE_POLICY",
+        "ttl_days": 180
+      },
+      "dispatch_retention_policy": {
+        "retention_type": "MESSAGE_EXPIRE_POLICY",
+        "ttl_days": 0
+      },
+      "processing_mode": "DISPATCH",
+      "smart_conversation": {
+        "enabled": true
+      },
+      "queue_stats": {
+        "outbound_size": 0,
+        "outbound_limit": 500000
+      },
+      "persist_message_status": {
+        "enabled": false
+      },
+      "message_search": {
+        "enabled": true
+      },
+      "callback_settings": {
+        "secret_for_overridden_callback_urls": "my secret"
+      },
+      "delivery_report_based_fallback": {
+        "enabled": true,
+        "delivery_report_waiting_time": 455
+      },
+      "message_retry_settings": null
+    }
+  ]
+}
