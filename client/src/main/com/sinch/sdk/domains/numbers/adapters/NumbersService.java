@@ -3,6 +3,7 @@ package com.sinch.sdk.domains.numbers.adapters;
 import com.sinch.sdk.auth.adapters.BasicAuthManager;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
+import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.models.Configuration;
 import java.util.AbstractMap;
 import java.util.Map;
@@ -23,6 +24,11 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.NumbersServ
   private final Map<String, AuthManager> authManagers;
 
   public NumbersService(Configuration configuration, HttpClient httpClient) {
+
+    StringUtil.requireNonEmpty(configuration.getKeyId(), "'keyId' must be defined");
+    StringUtil.requireNonEmpty(configuration.getKeySecret(), "'keySecret' must be defined");
+    StringUtil.requireNonEmpty(configuration.getProjectId(), "'projectId' must be defined");
+
     this.configuration = configuration;
     this.httpClient = httpClient;
     AuthManager basicAuthManager = new BasicAuthManager(configuration);

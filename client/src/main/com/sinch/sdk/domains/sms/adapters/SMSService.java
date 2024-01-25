@@ -4,6 +4,7 @@ import com.sinch.sdk.auth.adapters.BearerAuthManager;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.sms.BatchesService;
 import com.sinch.sdk.domains.sms.DeliveryReportsService;
 import com.sinch.sdk.domains.sms.InboundsService;
@@ -27,6 +28,13 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
   private final Map<String, AuthManager> authManagers;
 
   public SMSService(Configuration configuration, HttpClient httpClient) {
+
+    // Currently, we are only supporting  unified credentials: ensure credentials are
+    // defined
+    StringUtil.requireNonEmpty(configuration.getKeyId(), "'keyId' must be defined");
+    StringUtil.requireNonEmpty(configuration.getKeySecret(), "'keySecret' must be defined");
+    StringUtil.requireNonEmpty(configuration.getProjectId(), "'projectId' must be defined");
+
     this.configuration = configuration;
     this.httpClient = httpClient;
 
