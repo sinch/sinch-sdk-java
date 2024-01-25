@@ -26,6 +26,7 @@ import java.util.Objects;
 @JsonPropertyOrder({
   MMSCredentialsDto.JSON_PROPERTY_ACCOUNT_ID,
   MMSCredentialsDto.JSON_PROPERTY_API_KEY,
+  MMSCredentialsDto.JSON_PROPERTY_DEFAULT_SENDER,
   MMSCredentialsDto.JSON_PROPERTY_BASIC_AUTH
 })
 @JsonFilter("uninitializedFilter")
@@ -38,6 +39,10 @@ public class MMSCredentialsDto {
   public static final String JSON_PROPERTY_API_KEY = "api_key";
   private String apiKey;
   private boolean apiKeyDefined = false;
+
+  public static final String JSON_PROPERTY_DEFAULT_SENDER = "default_sender";
+  private String defaultSender;
+  private boolean defaultSenderDefined = false;
 
   public static final String JSON_PROPERTY_BASIC_AUTH = "basic_auth";
   private BasicAuthCredentialDto basicAuth;
@@ -103,6 +108,36 @@ public class MMSCredentialsDto {
     this.apiKeyDefined = true;
   }
 
+  public MMSCredentialsDto defaultSender(String defaultSender) {
+    this.defaultSender = defaultSender;
+    this.defaultSenderDefined = true;
+    return this;
+  }
+
+  /**
+   * Default Sender (shortcode or longnumber), will be used when {{YOUR_MMS_SENDER}} in a message is
+   * empty
+   *
+   * @return defaultSender
+   */
+  @JsonProperty(JSON_PROPERTY_DEFAULT_SENDER)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getDefaultSender() {
+    return defaultSender;
+  }
+
+  @JsonIgnore
+  public boolean getDefaultSenderDefined() {
+    return defaultSenderDefined;
+  }
+
+  @JsonProperty(JSON_PROPERTY_DEFAULT_SENDER)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setDefaultSender(String defaultSender) {
+    this.defaultSender = defaultSender;
+    this.defaultSenderDefined = true;
+  }
+
   public MMSCredentialsDto basicAuth(BasicAuthCredentialDto basicAuth) {
     this.basicAuth = basicAuth;
     this.basicAuthDefined = true;
@@ -144,12 +179,13 @@ public class MMSCredentialsDto {
     MMSCredentialsDto mmSCredentials = (MMSCredentialsDto) o;
     return Objects.equals(this.accountId, mmSCredentials.accountId)
         && Objects.equals(this.apiKey, mmSCredentials.apiKey)
+        && Objects.equals(this.defaultSender, mmSCredentials.defaultSender)
         && Objects.equals(this.basicAuth, mmSCredentials.basicAuth);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(accountId, apiKey, basicAuth);
+    return Objects.hash(accountId, apiKey, defaultSender, basicAuth);
   }
 
   @Override
@@ -158,6 +194,7 @@ public class MMSCredentialsDto {
     sb.append("class MMSCredentialsDto {\n");
     sb.append("    accountId: ").append(toIndentedString(accountId)).append("\n");
     sb.append("    apiKey: ").append(toIndentedString(apiKey)).append("\n");
+    sb.append("    defaultSender: ").append(toIndentedString(defaultSender)).append("\n");
     sb.append("    basicAuth: ").append(toIndentedString(basicAuth)).append("\n");
     sb.append("}");
     return sb.toString();

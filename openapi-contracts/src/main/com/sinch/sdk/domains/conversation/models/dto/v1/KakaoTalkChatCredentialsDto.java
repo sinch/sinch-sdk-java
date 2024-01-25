@@ -23,13 +23,20 @@ import java.util.Objects;
  * If you are including the KakaoTalkChat channel in the &#x60;channel_identifier&#x60; property,
  * you must include this object.
  */
-@JsonPropertyOrder({KakaoTalkChatCredentialsDto.JSON_PROPERTY_KAKAOTALK_PLUS_FRIEND_ID})
+@JsonPropertyOrder({
+  KakaoTalkChatCredentialsDto.JSON_PROPERTY_KAKAOTALK_PLUS_FRIEND_ID,
+  KakaoTalkChatCredentialsDto.JSON_PROPERTY_API_KEY
+})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class KakaoTalkChatCredentialsDto {
   public static final String JSON_PROPERTY_KAKAOTALK_PLUS_FRIEND_ID = "kakaotalk_plus_friend_id";
   private String kakaotalkPlusFriendId;
   private boolean kakaotalkPlusFriendIdDefined = false;
+
+  public static final String JSON_PROPERTY_API_KEY = "api_key";
+  private String apiKey;
+  private boolean apiKeyDefined = false;
 
   public KakaoTalkChatCredentialsDto() {}
 
@@ -62,6 +69,35 @@ public class KakaoTalkChatCredentialsDto {
     this.kakaotalkPlusFriendIdDefined = true;
   }
 
+  public KakaoTalkChatCredentialsDto apiKey(String apiKey) {
+    this.apiKey = apiKey;
+    this.apiKeyDefined = true;
+    return this;
+  }
+
+  /**
+   * Get apiKey
+   *
+   * @return apiKey
+   */
+  @JsonProperty(JSON_PROPERTY_API_KEY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getApiKey() {
+    return apiKey;
+  }
+
+  @JsonIgnore
+  public boolean getApiKeyDefined() {
+    return apiKeyDefined;
+  }
+
+  @JsonProperty(JSON_PROPERTY_API_KEY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setApiKey(String apiKey) {
+    this.apiKey = apiKey;
+    this.apiKeyDefined = true;
+  }
+
   /** Return true if this KakaoTalkChatCredentials object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -73,12 +109,13 @@ public class KakaoTalkChatCredentialsDto {
     }
     KakaoTalkChatCredentialsDto kakaoTalkChatCredentials = (KakaoTalkChatCredentialsDto) o;
     return Objects.equals(
-        this.kakaotalkPlusFriendId, kakaoTalkChatCredentials.kakaotalkPlusFriendId);
+            this.kakaotalkPlusFriendId, kakaoTalkChatCredentials.kakaotalkPlusFriendId)
+        && Objects.equals(this.apiKey, kakaoTalkChatCredentials.apiKey);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(kakaotalkPlusFriendId);
+    return Objects.hash(kakaotalkPlusFriendId, apiKey);
   }
 
   @Override
@@ -88,6 +125,7 @@ public class KakaoTalkChatCredentialsDto {
     sb.append("    kakaotalkPlusFriendId: ")
         .append(toIndentedString(kakaotalkPlusFriendId))
         .append("\n");
+    sb.append("    apiKey: ").append(toIndentedString(apiKey)).append("\n");
     sb.append("}");
     return sb.toString();
   }

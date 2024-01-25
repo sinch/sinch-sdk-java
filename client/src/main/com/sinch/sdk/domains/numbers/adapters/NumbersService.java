@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class NumbersService implements com.sinch.sdk.domains.numbers.NumbersService {
-  private static final String SECURITY_SCHEME_KEYWORD_NUMBERS = "BasicAuth";
+  private static final String SECURITY_SCHEME_KEYWORD_NUMBERS = "BasicAuthCredentials";
 
   private final Configuration configuration;
   private final HttpClient httpClient;
