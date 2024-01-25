@@ -143,9 +143,6 @@ public class SinchClient {
   }
 
   private void checkConfiguration(Configuration configuration) throws NullPointerException {
-    Objects.requireNonNull(configuration.getKeyId(), "'keyId' cannot be null");
-    Objects.requireNonNull(configuration.getKeySecret(), "'keySecret' cannot be null");
-    Objects.requireNonNull(configuration.getProjectId(), "'projectId' cannot be null");
     Objects.requireNonNull(configuration.getOAuthUrl(), "'oauthUrl' cannot be null");
     Objects.requireNonNull(configuration.getNumbersUrl(), "'numbersUrl' cannot be null");
     Objects.requireNonNull(configuration.getSmsUrl(), "'smsUrl' cannot be null");

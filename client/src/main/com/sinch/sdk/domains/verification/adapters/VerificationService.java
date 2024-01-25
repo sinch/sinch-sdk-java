@@ -5,12 +5,12 @@ import com.sinch.sdk.auth.adapters.VerificationApplicationAuthManager;
 import com.sinch.sdk.core.exceptions.ApiAuthException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
+import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.verification.StatusService;
 import com.sinch.sdk.domains.verification.VerificationsService;
 import com.sinch.sdk.domains.verification.WebHooksService;
 import com.sinch.sdk.models.Configuration;
 import java.util.Map;
-import java.util.Objects;
 import java.util.TreeMap;
 
 public class VerificationService implements com.sinch.sdk.domains.verification.VerificationService {
@@ -33,9 +33,10 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
 
     // Currently, we are not supporting unified credentials: ensure application credentials are
     // defined
-    Objects.requireNonNull(configuration.getApplicationKey(), "'applicationKey' cannot be null");
-    Objects.requireNonNull(
-        configuration.getApplicationSecret(), "'applicationSecret' cannot be null");
+    StringUtil.requireNonEmpty(
+        configuration.getApplicationKey(), "'applicationKey' must be defined");
+    StringUtil.requireNonEmpty(
+        configuration.getApplicationSecret(), "'applicationSecret' must be defined");
 
     this.configuration = configuration;
     this.httpClient = httpClient;
