@@ -136,7 +136,7 @@ public class AvailableNumberApi {
 
     final Collection<String> localVarContentTypes = Arrays.asList();
 
-    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
+    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuthCredentials");
     final String serializedBody = null;
 
     return new HttpRequest(
@@ -315,7 +315,7 @@ public class AvailableNumberApi {
 
     final Collection<String> localVarContentTypes = Arrays.asList();
 
-    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
+    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuthCredentials");
     final String serializedBody = null;
 
     return new HttpRequest(
@@ -401,7 +401,7 @@ public class AvailableNumberApi {
 
     final Collection<String> localVarContentTypes = Arrays.asList("application/json");
 
-    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
+    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuthCredentials");
     final String serializedBody = mapper.serialize(localVarContentTypes, rentAnyNumberRequestDto);
 
     return new HttpRequest(
@@ -503,7 +503,7 @@ public class AvailableNumberApi {
 
     final Collection<String> localVarContentTypes = Arrays.asList("application/json");
 
-    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
+    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuthCredentials");
     final String serializedBody = mapper.serialize(localVarContentTypes, rentNumberRequestDto);
 
     return new HttpRequest(
