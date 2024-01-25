@@ -1,12 +1,14 @@
 package com.sinch.sdk;
 
 import com.sinch.sdk.core.utils.StringUtil;
+import com.sinch.sdk.domains.conversation.ConversationService;
 import com.sinch.sdk.domains.numbers.NumbersService;
 import com.sinch.sdk.domains.sms.SMSService;
 import com.sinch.sdk.domains.verification.VerificationService;
 import com.sinch.sdk.domains.voice.VoiceService;
 import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.ConversationRegion;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.SMSRegion;
 import com.sinch.sdk.models.SmsContext;
@@ -41,6 +43,11 @@ public class SinchClient {
 
   private static final String VERIFICATION_SERVER_KEY = "verification-server";
 
+  private static final String CONVERSATION_REGION_KEY = "conversation-region";
+  private static final String CONVERSATION_SERVER_KEY = "conversation-server";
+  private static final String CONVERSATION_TEMPLATE_SERVER_KEY =
+      "template-management-conversation-server";
+
   private static final String PROJECT_NAME_KEY = "project.name";
   private static final String PROJECT_VERSION_KEY = "project.version";
   private static final String PROJECT_AUXILIARY_FLAG = "project.auxiliary_flag";
@@ -58,6 +65,7 @@ public class SinchClient {
   private SMSService sms;
   private VerificationService verification;
   private VoiceService voice;
+  private ConversationService conversation;
 
   private HttpClientApache httpClient;
 
@@ -80,6 +88,7 @@ public class SinchClient {
     handleDefaultSmsSettings(configuration, props, builder);
     handleDefaultVerificationSettings(configuration, props, builder);
     handleDefaultVoiceSettings(configuration, props, builder);
+    handleDefaultConversationSettings(configuration, props, builder);
 
     Configuration newConfiguration = builder.build();
     checkConfiguration(newConfiguration);
@@ -189,6 +198,33 @@ public class SinchClient {
     }
   }
 
+  private void handleDefaultConversationSettings(
+      Configuration configuration, Properties props, Configuration.Builder builder) {
+    if (null == configuration.getConversationRegion()
+        && props.containsKey(CONVERSATION_REGION_KEY)) {
+      builder.setConversationRegion(
+          ConversationRegion.from(props.getProperty(CONVERSATION_REGION_KEY)));
+    }
+
+    // server is not defined: use the region to set to an existing one and use "us" as a default
+    // fallback
+    ConversationRegion region =
+        (null == builder.conversationRegion
+                || StringUtil.isEmpty(builder.conversationRegion.value()))
+            ? ConversationRegion.US
+            : builder.conversationRegion;
+
+    if (StringUtil.isEmpty(builder.conversationUrl)) {
+      builder.setConversationUrl(
+          String.format(props.getProperty(CONVERSATION_SERVER_KEY), region.value()));
+    }
+
+    if (StringUtil.isEmpty(builder.conversationTemplateManagementUrl)) {
+      builder.setConversationTemplateManagementUrl(
+          String.format(props.getProperty(CONVERSATION_TEMPLATE_SERVER_KEY), region.value()));
+    }
+  }
+
   /**
    * Get current configuration
    *
@@ -259,6 +295,21 @@ public class SinchClient {
     return voice;
   }
 
+  /**
+   * Get Conversation domain service
+   *
+   * @return Return instance onto Conversation API service
+   * @see <a
+   *     href="https://developers.sinch.com/docs/conversation/">https://developers.sinch.com/docs/conversation/</a>
+   * @since 1.0
+   */
+  public ConversationService conversation() {
+    if (null == conversation) {
+      conversation = conversationInit();
+    }
+    return conversation;
+  }
+
   private void checkConfiguration(Configuration configuration) throws NullPointerException {
     Objects.requireNonNull(configuration.getOAuthUrl(), "'oauthUrl' cannot be null");
   }
@@ -299,6 +350,11 @@ public class SinchClient {
         getConfiguration().getApplicationCredentials().orElse(null),
         getConfiguration().getVoiceContext().orElse(null),
         getHttpClient());
+  }
+
+  private ConversationService conversationInit() {
+    return new com.sinch.sdk.domains.conversation.adapters.ConversationService(
+        getConfiguration(), getHttpClient());
   }
 
   private Properties handlePropertiesFile(String fileName) {

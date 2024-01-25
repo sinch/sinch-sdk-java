@@ -129,8 +129,9 @@
                             com.sinch.sdk.pagination.Page*;
                             **.dto.*;
                             **.api.*;
-                            **.adapters.converters;
                             **.adapters;
+                            **.adapters;
+                            **.adapters.**;
                         </excludePackageNames>
                         <sourceFileExcludes>
                             <sourceFileExclude>**/pagination/Page*.java</sourceFileExclude>
@@ -144,6 +145,10 @@
                             <group>
                                 <title>Core package</title>
                                 <packages>com.sinch.sdk.core*</packages>
+                            </group>
+                            <group>
+                                <title>Conversation</title>
+                                <packages>com.sinch.sdk.domains.conversation*</packages>
                             </group>
                             <group>
                                 <title>Numbers</title>
