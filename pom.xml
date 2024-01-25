@@ -129,6 +129,8 @@
                             com.sinch.sdk.http;
                             com.sinch.sdk.pagination.Page*;
                             **.dto.*;
+                            **.api.*;
+                            **.adapters.**;
                             **.adapters.converters;
                             **.adapters;
                             **.adapters*;
@@ -163,6 +165,10 @@
                             <group>
                                 <title>Core package</title>
                                 <packages>com.sinch.sdk.core*</packages>
+                            </group>
+                            <group>
+                                <title>Conversation</title>
+                                <packages>com.sinch.sdk.domains.conversation*</packages>
                             </group>
                             <group>
                                 <title>Numbers</title>
