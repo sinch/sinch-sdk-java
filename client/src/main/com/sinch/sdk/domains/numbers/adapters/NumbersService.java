@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 
 public class NumbersService implements com.sinch.sdk.domains.numbers.NumbersService {
   private static final Logger LOGGER = Logger.getLogger(NumbersService.class.getName());
-  private static final String SECURITY_SCHEME_KEYWORD_NUMBERS = "BasicAuth";
+  private static final String SECURITY_SCHEME_KEYWORD = "BasicAuthCredentials";
 
   private final String uriUUID;
   private final NumbersContext context;
@@ -48,7 +48,7 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.NumbersServ
         new BasicAuthManager(credentials.getKeyId(), credentials.getKeySecret());
 
     authManagers =
-        Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_NUMBERS, basicAuthManager))
+        Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD, basicAuthManager))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 

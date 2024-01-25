@@ -15,6 +15,10 @@ public class Configuration {
   private final VerificationContext verificationContext;
   private final VoiceContext voiceContext;
 
+  private final ConversationRegion conversationRegion;
+  private final String conversationUrl;
+  private final String conversationTemplateManagementUrl;
+
   private Configuration(
       UnifiedCredentials unifiedCredentials,
       ApplicationCredentials applicationCredentials,
@@ -23,7 +27,10 @@ public class Configuration {
       NumbersContext numbersContext,
       SmsContext smsContext,
       VerificationContext verificationContext,
-      VoiceContext voiceContext) {
+      VoiceContext voiceContext,
+      ConversationRegion conversationRegion,
+      String conversationUrl,
+      String conversationTemplateManagementUrl) {
     this.unifiedCredentials = unifiedCredentials;
     this.applicationCredentials = applicationCredentials;
     this.smsServicePlanCredentials = smsServicePlanCredentials;
@@ -32,6 +39,10 @@ public class Configuration {
     this.smsContext = smsContext;
     this.voiceContext = voiceContext;
     this.verificationContext = verificationContext;
+    this.conversationRegion =
+        null == conversationRegion ? ConversationRegion.US : conversationRegion;
+    this.conversationUrl = conversationUrl;
+    this.conversationTemplateManagementUrl = conversationTemplateManagementUrl;
   }
 
   @Override
@@ -48,7 +59,15 @@ public class Configuration {
         + verificationContext
         + ", voiceContext="
         + voiceContext
-        + '}';
+        + ", conversationRegion="
+        + conversationRegion
+        + ", conversationUrl='"
+        + conversationUrl
+        + '\''
+        + ", conversationTemplateManagementUrl='"
+        + conversationTemplateManagementUrl
+        + '\''
+        + "}";
   }
 
   /**
@@ -146,6 +165,56 @@ public class Configuration {
   }
 
   /**
+   * Conversation Region to be used for Conversation service
+   *
+   * @return Conversation region
+   * @since 1.0
+   */
+  public ConversationRegion getConversationRegion() {
+    return conversationRegion;
+  }
+
+  /**
+   * Conversation Server Configuration
+   *
+   * @return Conversation Server configuration to be used
+   * @since 1.0
+   */
+  public ServerConfiguration getConversationServer() {
+    return new ServerConfiguration(getConversationUrl());
+  }
+
+  /**
+   * Conversation URL
+   *
+   * @return Conversation Server URL
+   * @since 1.0
+   */
+  public String getConversationUrl() {
+    return conversationUrl;
+  }
+
+  /**
+   * Conversation Template Server Configuration
+   *
+   * @return Conversation Server configuration to be used
+   * @since 1.0
+   */
+  public ServerConfiguration getConversationTemplateManagementUrlServer() {
+    return new ServerConfiguration(getConversationTemplateManagementUrl());
+  }
+
+  /**
+   * Conversation Template Management URL
+   *
+   * @return Conversation Server URL
+   * @since 1.0
+   */
+  public String getConversationTemplateManagementUrl() {
+    return conversationTemplateManagementUrl;
+  }
+
+  /**
    * Getting Builder
    *
    * @return New Builder instance
@@ -182,6 +251,10 @@ public class Configuration {
     VerificationContext.Builder verificationContext;
     VoiceContext.Builder voiceContext;
 
+    public ConversationRegion conversationRegion;
+    public String conversationUrl;
+    public String conversationTemplateManagementUrl;
+
     protected Builder() {}
 
     /**
@@ -210,6 +283,10 @@ public class Configuration {
       this.verificationContext =
           configuration.getVerificationContext().map(VerificationContext::builder).orElse(null);
       this.voiceContext = configuration.getVoiceContext().map(VoiceContext::builder).orElse(null);
+
+      this.conversationRegion = configuration.getConversationRegion();
+      this.conversationUrl = configuration.getConversationUrl();
+      this.conversationTemplateManagementUrl = configuration.getConversationTemplateManagementUrl();
     }
 
     /**
@@ -281,7 +358,7 @@ public class Configuration {
      *
      * @param applicationSecret key
      * @return Current builder
-     * @see ApplicationCredentials#getApplicationSecret() () getter
+     * @see ApplicationCredentials#getApplicationSecret() getter
      * @since 1.0
      */
     public Builder setApplicationSecret(String applicationSecret) {
@@ -307,7 +384,7 @@ public class Configuration {
     /**
      * Set Numbers related context
      *
-     * @param context {@link #getNumbersContext()} () getter}
+     * @param context {@link #getNumbersContext() getter}
      * @return Current builder
      * @since 1.0
      */
@@ -334,7 +411,7 @@ public class Configuration {
     /**
      * Set SMS related service plan token
      *
-     * @param token {@link SmsServicePlanCredentials#getApiToken()} () getter}
+     * @param token {@link SmsServicePlanCredentials#getApiToken() getter}
      * @return Current builder
      * @since 1.0
      */
@@ -349,7 +426,7 @@ public class Configuration {
     /**
      * Set SMS related region
      *
-     * @param region {@link SmsContext#getSmsRegion()} () getter}
+     * @param region {@link SmsContext#getSmsRegion() getter}
      * @return Current builder
      * @since 1.0
      */
@@ -364,7 +441,7 @@ public class Configuration {
     /**
      * Set Sms related context
      *
-     * @param context {@link #getSmsContext()} ()} () getter}
+     * @param context {@link #getSmsContext() getter}
      * @return Current builder
      * @since 1.0
      */
@@ -413,9 +490,44 @@ public class Configuration {
     }
 
     /**
-     * Create instance
+     * Set Conversation Region to be used
      *
-     * @return The instance build with current builder values
+     * @param conversationRegion Conversation Region
+     * @return Current builder
+     * @since 1.0
+     */
+    public Builder setConversationRegion(ConversationRegion conversationRegion) {
+      this.conversationRegion = conversationRegion;
+      return this;
+    }
+
+    /**
+     * Set Conversation API URL
+     *
+     * @param conversationUrl Conversation API URL
+     * @return Current builder
+     * @since 1.0
+     */
+    public Builder setConversationUrl(String conversationUrl) {
+      this.conversationUrl = conversationUrl;
+      return this;
+    }
+
+    /**
+     * Set Conversation Template Management API URL
+     *
+     * @param conversationTemplateManagementUrl Conversation Template Management URL
+     * @return Current builder * @since 1.0
+     */
+    public Builder setConversationTemplateManagementUrl(String conversationTemplateManagementUrl) {
+      this.conversationTemplateManagementUrl = conversationTemplateManagementUrl;
+      return this;
+    }
+
+    /**
+     * Build a Configuration instance from builder current state
+     *
+     * @return Configuration instance build from current builder state
      * @since 1.0
      */
     public Configuration build() {
@@ -428,7 +540,10 @@ public class Configuration {
           null != numbersContext ? numbersContext.build() : null,
           null != smsContext ? smsContext.build() : null,
           null != verificationContext ? verificationContext.build() : null,
-          null != voiceContext ? voiceContext.build() : null);
+          null != voiceContext ? voiceContext.build() : null,
+          conversationRegion,
+          conversationUrl,
+          conversationTemplateManagementUrl);
     }
   }
 }
