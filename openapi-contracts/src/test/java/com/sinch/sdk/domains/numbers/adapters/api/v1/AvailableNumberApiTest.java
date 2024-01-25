@@ -186,6 +186,9 @@ class AvailableNumberApiTest extends BaseTest {
 
     assertEquals(exception.getCode(), 403);
     assertEquals(
-        exception.getMessage(), "PERMISSION_DENIED: Trial account is not enabled to rent number");
+        exception.getMessage(),
+        "PERMISSION_DENIED: Trial account is not enabled to rent number. Details:"
+            + " {type=ResourceInfo, resourceType=AvailableNumber, resourceName=, owner=,"
+            + " description=Trial account is not enabled to rent number}");
   }
 }
