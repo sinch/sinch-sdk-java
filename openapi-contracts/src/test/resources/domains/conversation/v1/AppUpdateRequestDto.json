@@ -1,0 +1,38 @@
+{
+  "channel_credentials": [
+    {
+      "channel": "MESSENGER",
+      "static_token": {
+        "token": "my token"
+      },
+      "callback_secret": "foo value",
+      "channel_known_id": "a channel id"
+    },
+    {
+      "channel": "SMS",
+      "static_bearer": {
+        "claimed_identity": "my identity",
+        "token": "sms token"
+      },
+      "callback_secret": "",
+      "channel_known_id": ""
+    }
+  ],
+  "conversation_metadata_report_view": "NONE",
+  "display_name": "Brazil App",
+  "retention_policy": {
+    "retention_type": "CONVERSATION_EXPIRE_POLICY",
+    "ttl_days": 180
+  },
+  "dispatch_retention_policy": {
+    "retention_type": "MESSAGE_EXPIRE_POLICY",
+    "ttl_days": 0
+  },
+  "processing_mode": "DISPATCH",
+  "smart_conversation": {
+    "enabled": true
+  },
+  "callback_settings": {
+    "secret_for_overridden_callback_urls": "my secret"
+  }
+}

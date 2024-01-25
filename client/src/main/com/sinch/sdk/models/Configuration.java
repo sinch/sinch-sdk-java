@@ -8,6 +8,8 @@ public class Configuration {
   private final String keyId;
   private final String keySecret;
   private final String projectId;
+  private final String applicationKey;
+  private final String applicationSecret;
   private final String oauthUrl;
   private final String numbersUrl;
   private final SMSRegion smsRegion;
@@ -16,14 +18,16 @@ public class Configuration {
   private final VoiceRegion voiceRegion;
   private final String voiceUrl;
   private final String voiceApplicationManagementUrl;
+  private final ConversationRegion conversationRegion;
+  private final String conversationUrl;
+  private final String conversationTemplateManagementUrl;
 
-  private final String applicationKey;
-  private final String applicationSecret;
-
-  private Configuration(
+  public Configuration(
       String keyId,
       String keySecret,
       String projectId,
+      String applicationKey,
+      String applicationSecret,
       String oauthUrl,
       String numbersUrl,
       SMSRegion smsRegion,
@@ -32,11 +36,14 @@ public class Configuration {
       VoiceRegion voiceRegion,
       String voiceUrl,
       String voiceApplicationManagementUrl,
-      String applicationKey,
-      String applicationSecret) {
+      ConversationRegion conversationRegion,
+      String conversationUrl,
+      String conversationTemplateManagementUrl) {
     this.keyId = keyId;
     this.keySecret = keySecret;
     this.projectId = projectId;
+    this.applicationKey = applicationKey;
+    this.applicationSecret = applicationSecret;
     this.oauthUrl = oauthUrl;
     this.numbersUrl = numbersUrl;
     this.smsRegion = null == smsRegion ? SMSRegion.US : smsRegion;
@@ -45,8 +52,10 @@ public class Configuration {
     this.voiceRegion = voiceRegion;
     this.voiceUrl = voiceUrl;
     this.voiceApplicationManagementUrl = voiceApplicationManagementUrl;
-    this.applicationKey = applicationKey;
-    this.applicationSecret = applicationSecret;
+    this.conversationRegion =
+        null == conversationRegion ? ConversationRegion.US : conversationRegion;
+    this.conversationUrl = conversationUrl;
+    this.conversationTemplateManagementUrl = conversationTemplateManagementUrl;
   }
 
   @Override
@@ -74,7 +83,15 @@ public class Configuration {
         + ", voiceApplicationMngmtUrl='"
         + voiceApplicationManagementUrl
         + '\''
-        + '}';
+        + ", conversationRegion="
+        + conversationRegion
+        + ", conversationUrl='"
+        + conversationUrl
+        + '\''
+        + ", conversationTemplateManagementUrl='"
+        + conversationTemplateManagementUrl
+        + '\''
+        + "}";
   }
 
   /**
@@ -108,6 +125,38 @@ public class Configuration {
    */
   public String getProjectId() {
     return projectId;
+  }
+
+  /**
+   * Application key to be used for Verification and Voice services
+   *
+   * <p>Use application secret in place of unified configuration for authentication (see Sinch
+   * dashboard for details) These credentials are related to Verification &amp; Voice Apps
+   *
+   * @return Application key
+   * @see <a
+   *     href="https://developers.sinch.com/docs/verification/api-reference/authentication/">Sinch
+   *     Documentation</a>
+   * @since 1.0
+   */
+  public String getApplicationKey() {
+    return applicationKey;
+  }
+
+  /**
+   * Application secret to be used for Verification and Voice services
+   *
+   * <p>Use application secret in place of unified configuration for authentication (see Sinch
+   * dashboard for details) These credentials are related to Verification &amp; Voice Apps
+   *
+   * @return Application key
+   * @see <a
+   *     href="https://developers.sinch.com/docs/verification/api-reference/authentication/">Sinch
+   *     Documentation</a>
+   * @since 1.0
+   */
+  public String getApplicationSecret() {
+    return applicationSecret;
   }
 
   /**
@@ -164,8 +213,6 @@ public class Configuration {
    * SMS Region
    *
    * @return SMS region
-   * @see <a
-   *     href="https://developers.sinch.com/docs/sms/api-reference/#base-url/">https://developers.sinch.com/docs/sms/api-reference/#base-url/</a>
    * @since 1.0
    */
   public SMSRegion getSmsRegion() {
@@ -203,7 +250,7 @@ public class Configuration {
   }
 
   /**
-   * Voice region
+   * Get selected Voice region
    *
    * @return Selected Voice Region
    * @since 1.0
@@ -253,35 +300,53 @@ public class Configuration {
   }
 
   /**
-   * Application key to be used for Verification and Voice services
+   * Conversation Region to be used for Conversation service
    *
-   * <p>Use application secret in place of unified configuration for authentication (see Sinch
-   * dashboard for details) These credentials are related to Verification &amp; Voice Apps
-   *
-   * @return Application key
-   * @see <a
-   *     href="https://developers.sinch.com/docs/verification/api-reference/authentication/">Sinch
-   *     Documentation</a>
+   * @return Conversation region
    * @since 1.0
    */
-  public String getApplicationKey() {
-    return applicationKey;
+  public ConversationRegion getConversationRegion() {
+    return conversationRegion;
   }
 
   /**
-   * Application secret to be used for Verification and Voice services
+   * Conversation Server Configuration
    *
-   * <p>Use application secret in place of unified configuration for authentication (see Sinch
-   * dashboard for details) These credentials are related to Verification &amp; Voice Apps
-   *
-   * @return Application key
-   * @see <a
-   *     href="https://developers.sinch.com/docs/verification/api-reference/authentication/">Sinch
-   *     Documentation</a>
+   * @return Conversation Server configuration to be used
    * @since 1.0
    */
-  public String getApplicationSecret() {
-    return applicationSecret;
+  public ServerConfiguration getConversationServer() {
+    return new ServerConfiguration(getConversationUrl());
+  }
+
+  /**
+   * Conversation URL
+   *
+   * @return Conversation Server URL
+   * @since 1.0
+   */
+  public String getConversationUrl() {
+    return conversationUrl;
+  }
+
+  /**
+   * Conversation Template Server Configuration
+   *
+   * @return Conversation Server configuration to be used
+   * @since 1.0
+   */
+  public ServerConfiguration getConversationTemplateManagementUrlServer() {
+    return new ServerConfiguration(getConversationTemplateManagementUrl());
+  }
+
+  /**
+   * Conversation Template Management URL
+   *
+   * @return Conversation Server URL
+   * @since 1.0
+   */
+  public String getConversationTemplateManagementUrl() {
+    return conversationTemplateManagementUrl;
   }
 
   /**
@@ -312,19 +377,22 @@ public class Configuration {
    */
   public static class Builder {
 
-    String keyId;
-    String keySecret;
-    String projectId;
-    String oauthUrl;
-    String numbersUrl;
-    SMSRegion smsRegion;
-    String smsUrl;
-    String verificationUrl;
-    String applicationKey;
-    String applicationSecret;
-    VoiceRegion voiceRegion;
-    String voiceUrl;
-    String voiceApplicationMngmtUrl;
+    private String keyId;
+    private String keySecret;
+    private String projectId;
+    private String applicationKey;
+    private String applicationSecret;
+    private String oauthUrl;
+    private String numbersUrl;
+    private SMSRegion smsRegion;
+    private String smsUrl;
+    private String verificationUrl;
+    public VoiceRegion voiceRegion;
+    public String voiceUrl;
+    private String voiceApplicationMngmtUrl;
+    public ConversationRegion conversationRegion;
+    public String conversationUrl;
+    public String conversationTemplateManagementUrl;
 
     protected Builder() {}
 
@@ -338,6 +406,8 @@ public class Configuration {
       this.keyId = configuration.getKeyId();
       this.keySecret = configuration.getKeySecret();
       this.projectId = configuration.getProjectId();
+      this.applicationKey = configuration.getApplicationKey();
+      this.applicationSecret = configuration.getApplicationSecret();
       this.oauthUrl = configuration.getOAuthUrl();
       this.numbersUrl = configuration.getNumbersUrl();
       this.smsRegion = configuration.getSmsRegion();
@@ -348,6 +418,9 @@ public class Configuration {
       this.voiceRegion = configuration.getVoiceRegion();
       this.voiceUrl = configuration.getVoiceUrl();
       this.voiceApplicationMngmtUrl = configuration.getVoiceApplicationManagementUrl();
+      this.conversationRegion = configuration.getConversationRegion();
+      this.conversationUrl = configuration.getConversationUrl();
+      this.conversationTemplateManagementUrl = configuration.getConversationTemplateManagementUrl();
     }
 
     /**
@@ -383,6 +456,30 @@ public class Configuration {
      */
     public Builder setProjectId(String projectId) {
       this.projectId = projectId;
+      return this;
+    }
+
+    /**
+     * Set Application secret
+     *
+     * @param applicationKey Application key to be used
+     * @return Current builder
+     * @since 1.0
+     */
+    public Builder setApplicationKey(String applicationKey) {
+      this.applicationKey = applicationKey;
+      return this;
+    }
+
+    /**
+     * Set Application secret
+     *
+     * @param applicationSecret Application secret to be used
+     * @return Current builder
+     * @since 1.0
+     */
+    public Builder setApplicationSecret(String applicationSecret) {
+      this.applicationSecret = applicationSecret;
       return this;
     }
 
@@ -447,9 +544,9 @@ public class Configuration {
     }
 
     /**
-     * Set region to be used for Vioce service
+     * Set Voice region to be used
      *
-     * @param voiceRegion The regino
+     * @param voiceRegion The region
      * @return Current builder
      * @since 1.0
      */
@@ -483,26 +580,37 @@ public class Configuration {
     }
 
     /**
-     * Set Application secret
+     * Set Application secret Set Conversation Region to be used
      *
-     * @param applicationKey Application key to be used
+     * @param conversationRegion Conversation Region
      * @return Current builder
      * @since 1.0
      */
-    public Builder setApplicationKey(String applicationKey) {
-      this.applicationKey = applicationKey;
+    public Builder setConversationRegion(ConversationRegion conversationRegion) {
+      this.conversationRegion = conversationRegion;
       return this;
     }
 
     /**
-     * Set Application secret
+     * Set Conversation API URL
      *
-     * @param applicationSecret Application secret to be used
+     * @param conversationUrl Conversation API URL
      * @return Current builder
      * @since 1.0
      */
-    public Builder setApplicationSecret(String applicationSecret) {
-      this.applicationSecret = applicationSecret;
+    public Builder setConversationUrl(String conversationUrl) {
+      this.conversationUrl = conversationUrl;
+      return this;
+    }
+
+    /**
+     * Set Conversation Template Management API URL
+     *
+     * @param conversationTemplateManagementUrl Conversation Template Management URL
+     * @return Current builder * @since 1.0
+     */
+    public Builder setConversationTemplateManagementUrl(String conversationTemplateManagementUrl) {
+      this.conversationTemplateManagementUrl = conversationTemplateManagementUrl;
       return this;
     }
 
@@ -531,9 +639,9 @@ public class Configuration {
     }
 
     /**
-     * Create instance
+     * Build a Configuration instance from builder current state
      *
-     * @return The instance build with current builder values
+     * @return Configuration instance build from current builder state
      * @since 1.0
      */
     public Configuration build() {
@@ -541,6 +649,8 @@ public class Configuration {
           keyId,
           keySecret,
           projectId,
+          applicationKey,
+          applicationSecret,
           oauthUrl,
           numbersUrl,
           smsRegion,
@@ -549,8 +659,9 @@ public class Configuration {
           voiceRegion,
           voiceUrl,
           voiceApplicationMngmtUrl,
-          applicationKey,
-          applicationSecret);
+          conversationRegion,
+          conversationUrl,
+          conversationTemplateManagementUrl);
     }
   }
 }

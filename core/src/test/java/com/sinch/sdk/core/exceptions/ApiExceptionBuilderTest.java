@@ -50,7 +50,11 @@ class ApiExceptionBuilderTest extends BaseTest {
             202,
             Mapper.getInstance()
                 .readValue(numberError, new TypeReference<HashMap<String, ?>>() {}));
-    assertEquals("PERMISSION_DENIED: Trial account is not enabled to rent number", e.getMessage());
+    assertEquals(
+        "PERMISSION_DENIED: Trial account is not enabled to rent number. Details:"
+            + " {type=ResourceInfo, resourceType=AvailableNumber, resourceName=, owner=,"
+            + " description=Trial account is not enabled to rent number}",
+        e.getMessage());
     assertEquals(403, e.getCode());
   }
 
