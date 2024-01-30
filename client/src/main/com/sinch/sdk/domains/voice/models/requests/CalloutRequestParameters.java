@@ -61,7 +61,16 @@ public class CalloutRequestParameters {
 
   @Override
   public String toString() {
-    return "";
+    return "CalloutRequestParameters{"
+        + "destination="
+        + destination
+        + ", cli="
+        + cli
+        + ", dtfm="
+        + dtfm
+        + ", custom="
+        + custom
+        + '}';
   }
 
   public static Builder<?> builder() {
