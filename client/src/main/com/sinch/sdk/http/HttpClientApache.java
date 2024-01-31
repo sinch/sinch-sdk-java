@@ -253,7 +253,7 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
             .forEachRemaining(f -> requestBuilder.setHeader(f.getLeft(), f.getRight()));
         return;
       } else {
-        LOGGER.info("Ignore unknown authentication value: '" + entry + "'");
+        LOGGER.finest("Ignore unknown authentication value: '" + entry + "'");
       }
     }
   }

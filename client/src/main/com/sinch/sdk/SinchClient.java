@@ -4,9 +4,11 @@ import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.numbers.NumbersService;
 import com.sinch.sdk.domains.sms.SMSService;
 import com.sinch.sdk.domains.verification.VerificationService;
+import com.sinch.sdk.domains.voice.VoiceService;
 import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.SMSRegion;
+import com.sinch.sdk.models.VoiceRegion;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -27,6 +29,11 @@ public class SinchClient {
   private static final String NUMBERS_SERVER_KEY = "numbers-server";
   private static final String SMS_REGION_KEY = "sms-region";
   private static final String SMS_SERVER_KEY = "sms-server";
+
+  private static final String VOICE_REGION_KEY = "voice-region";
+  private static final String VOICE_APPLICATION_MANAGEMENT_SERVER_KEY =
+      "voice-application-management-server";
+
   private static final String VERIFICATION_SERVER_KEY = "verification-server";
 
   private static final String PROJECT_NAME_KEY = "project.name";
@@ -45,6 +52,7 @@ public class SinchClient {
   private NumbersService numbers;
   private SMSService sms;
   private VerificationService verification;
+  private VoiceService voice;
 
   private HttpClientApache httpClient;
 
@@ -57,23 +65,17 @@ public class SinchClient {
   public SinchClient(Configuration configuration) {
 
     Configuration.Builder builder = Configuration.builder(configuration);
-
     Properties props = handlePropertiesFile(DEFAULT_PROPERTIES_FILE_NAME);
+
     if (null == configuration.getOAuthUrl() && props.containsKey(OAUTH_URL_KEY)) {
       builder.setOAuthUrl(props.getProperty(OAUTH_URL_KEY));
     }
-    if (null == configuration.getNumbersUrl() && props.containsKey(NUMBERS_SERVER_KEY)) {
-      builder.setNumbersUrl(props.getProperty(NUMBERS_SERVER_KEY));
-    }
-    if (null == configuration.getSmsUrl() && props.containsKey(SMS_SERVER_KEY)) {
-      builder.setSmsUrl(props.getProperty(SMS_SERVER_KEY));
-    }
-    if (null == configuration.getSmsRegion() && props.containsKey(SMS_REGION_KEY)) {
-      builder.setSmsRegion(SMSRegion.from(props.getProperty(SMS_REGION_KEY)));
-    }
-    if (null == configuration.getVerificationUrl() && props.containsKey(VERIFICATION_SERVER_KEY)) {
-      builder.setVerificationUrl(props.getProperty(VERIFICATION_SERVER_KEY));
-    }
+
+    handleDefaultNumbersSettings(configuration, props, builder);
+    handleDefaultSmsSettings(configuration, props, builder);
+    handleDefaultVerificationSettings(configuration, props, builder);
+    handleDefaultVoiceSettings(configuration, props, builder);
+
     Configuration newConfiguration = builder.build();
     checkConfiguration(newConfiguration);
     this.configuration = newConfiguration;
@@ -85,6 +87,57 @@ public class SinchClient {
             versionProperties.getProperty(PROJECT_NAME_KEY),
             versionProperties.getProperty(PROJECT_VERSION_KEY),
             configuration.getProjectId()));
+  }
+
+  private void handleDefaultNumbersSettings(
+      Configuration configuration, Properties props, Configuration.Builder builder) {
+
+    if (null == configuration.getNumbersUrl() && props.containsKey(NUMBERS_SERVER_KEY)) {
+      builder.setNumbersUrl(props.getProperty(NUMBERS_SERVER_KEY));
+    }
+  }
+
+  private void handleDefaultSmsSettings(
+      Configuration configuration, Properties props, Configuration.Builder builder) {
+
+    if (null == configuration.getSmsUrl() && props.containsKey(SMS_SERVER_KEY)) {
+      builder.setSmsUrl(props.getProperty(SMS_SERVER_KEY));
+    }
+    if (null == configuration.getSmsRegion() && props.containsKey(SMS_REGION_KEY)) {
+      builder.setSmsRegion(SMSRegion.from(props.getProperty(SMS_REGION_KEY)));
+    }
+  }
+
+  private void handleDefaultVerificationSettings(
+      Configuration configuration, Properties props, Configuration.Builder builder) {
+
+    if (null == configuration.getVerificationUrl() && props.containsKey(VERIFICATION_SERVER_KEY)) {
+      builder.setVerificationUrl(props.getProperty(VERIFICATION_SERVER_KEY));
+    }
+  }
+
+  private void handleDefaultVoiceSettings(
+      Configuration configuration, Properties props, Configuration.Builder builder) {
+    if (null == configuration.getVoiceRegion() && props.containsKey(VOICE_REGION_KEY)) {
+      builder.setVoiceRegion(VoiceRegion.from(props.getProperty(VOICE_REGION_KEY)));
+    }
+
+    // server is not defined: use the region to set to an existing one and use "global" as a default
+    // fallback
+    if (StringUtil.isEmpty(builder.voiceUrl)) {
+      VoiceRegion region =
+          StringUtil.isEmpty(builder.voiceRegion.value())
+              ? VoiceRegion.GLOBAL
+              : builder.voiceRegion;
+      builder.setVoiceUrl(props.getProperty(String.format("voice-server-%s", region.value())));
+    }
+
+    // application management server
+    if (null == configuration.getVoiceApplicationManagementUrl()
+        && props.containsKey(VOICE_APPLICATION_MANAGEMENT_SERVER_KEY)) {
+      builder.setVoiceApplicationMngmtUrl(
+          props.getProperty(VOICE_APPLICATION_MANAGEMENT_SERVER_KEY));
+    }
   }
 
   /**
@@ -142,6 +195,21 @@ public class SinchClient {
     return verification;
   }
 
+  /**
+   * Get voice domain service
+   *
+   * @return Return instance onto Voice API service
+   * @see <a
+   *     href="https://developers.sinch.com/docs/voice/api-reference">https://developers.sinch.com/docs/voice/api-reference</a>
+   * @since 1.0
+   */
+  public VoiceService voice() {
+    if (null == voice) {
+      voice = voiceInit();
+    }
+    return voice;
+  }
+
   private void checkConfiguration(Configuration configuration) throws NullPointerException {
     Objects.requireNonNull(configuration.getOAuthUrl(), "'oauthUrl' cannot be null");
     Objects.requireNonNull(configuration.getNumbersUrl(), "'numbersUrl' cannot be null");
@@ -170,6 +238,13 @@ public class SinchClient {
             + getConfiguration().getVerificationServer().getUrl()
             + "'");
     return new com.sinch.sdk.domains.verification.adapters.VerificationService(
+        getConfiguration(), getHttpClient());
+  }
+
+  private VoiceService voiceInit() {
+    LOGGER.fine(
+        "Activate voice API with server='" + getConfiguration().getVoiceServer().getUrl() + "'");
+    return new com.sinch.sdk.domains.voice.adapters.VoiceService(
         getConfiguration(), getHttpClient());
   }
 

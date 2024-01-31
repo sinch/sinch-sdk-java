@@ -3,6 +3,7 @@ package com.sinch.sdk.core.utils;
 /**
  * Abstract class providing common definition to extendable enums
  *
+ * @param <T> Type of value
  * @param <E> Enum type
  */
 public abstract class EnumDynamic<T, E extends EnumDynamic<T, E>> {

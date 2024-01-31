@@ -1,7 +1,7 @@
 package com.sinch.sdk.domains.verification.adapters;
 
+import com.sinch.sdk.auth.adapters.ApplicationAuthManager;
 import com.sinch.sdk.auth.adapters.BasicAuthManager;
-import com.sinch.sdk.auth.adapters.VerificationApplicationAuthManager;
 import com.sinch.sdk.core.exceptions.ApiAuthException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
@@ -47,7 +47,7 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
   private void setApplicationCredentials(String key, String secret) {
 
     AuthManager basicAuthManager = new BasicAuthManager(key, secret);
-    AuthManager applicationAuthManager = new VerificationApplicationAuthManager(key, secret);
+    AuthManager applicationAuthManager = new ApplicationAuthManager(key, secret);
 
     boolean useApplicationAuth = true;
     // to handle request from client we can only have "Basic" keyword behind the auth managers

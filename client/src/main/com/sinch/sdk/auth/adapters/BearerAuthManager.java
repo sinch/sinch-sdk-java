@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class BearerAuthManager implements AuthManager {
+
   public static final String BEARER_EXPIRED_KEYWORD = "expired";
   public static final String BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD = "www-authenticate";
   private static final Logger LOGGER = Logger.getLogger(BearerAuthManager.class.getName());
@@ -107,5 +108,11 @@ public class BearerAuthManager implements AuthManager {
     } catch (Exception e) {
       return Optional.empty();
     }
+  }
+
+  public boolean validateAuthenticatedRequest(
+      String method, String path, Map<String, String> headers, String jsonPayload) {
+    LOGGER.severe("checkAuthentication not implemented");
+    return false;
   }
 }

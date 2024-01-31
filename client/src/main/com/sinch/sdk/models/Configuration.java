@@ -13,6 +13,10 @@ public class Configuration {
   private final SMSRegion smsRegion;
   private final String smsUrl;
   private final String verificationUrl;
+  private final VoiceRegion voiceRegion;
+  private final String voiceUrl;
+  private final String voiceApplicationManagementUrl;
+
   private final String applicationKey;
   private final String applicationSecret;
 
@@ -25,6 +29,9 @@ public class Configuration {
       SMSRegion smsRegion,
       String smsUrl,
       String verificationUrl,
+      VoiceRegion voiceRegion,
+      String voiceUrl,
+      String voiceApplicationManagementUrl,
       String applicationKey,
       String applicationSecret) {
     this.keyId = keyId;
@@ -35,33 +42,39 @@ public class Configuration {
     this.smsRegion = null == smsRegion ? SMSRegion.US : smsRegion;
     this.smsUrl = smsUrl;
     this.verificationUrl = verificationUrl;
+    this.voiceRegion = voiceRegion;
+    this.voiceUrl = voiceUrl;
+    this.voiceApplicationManagementUrl = voiceApplicationManagementUrl;
     this.applicationKey = applicationKey;
     this.applicationSecret = applicationSecret;
   }
 
   @Override
   public String toString() {
-    // ! do not dump secret values
     return "Configuration{"
-        + "keyId=..."
-        + ", keySecret=..."
-        + ", projectId=..."
-        + ", oAuthUrl='"
+        + "oauthUrl='"
         + oauthUrl
         + '\''
         + ", numbersUrl='"
         + numbersUrl
         + '\''
-        + ", smsRegion='"
+        + ", smsRegion="
         + smsRegion
-        + '\''
         + ", smsUrl='"
         + smsUrl
         + '\''
         + ", verificationUrl='"
         + verificationUrl
         + '\''
-        + "}";
+        + ", voiceRegion="
+        + voiceRegion
+        + ", voiceUrl='"
+        + voiceUrl
+        + '\''
+        + ", voiceApplicationMngmtUrl='"
+        + voiceApplicationManagementUrl
+        + '\''
+        + '}';
   }
 
   /**
@@ -190,6 +203,56 @@ public class Configuration {
   }
 
   /**
+   * Voice region
+   *
+   * @return Selected Voice Region
+   * @since 1.0
+   */
+  public VoiceRegion getVoiceRegion() {
+    return voiceRegion;
+  }
+
+  /**
+   * Voice URL
+   *
+   * @return Voice Server URL
+   * @since 1.0
+   */
+  public String getVoiceUrl() {
+    return voiceUrl;
+  }
+
+  /**
+   * Voice Server Configuration
+   *
+   * @return Voice Server configuration to be used
+   * @since 1.0
+   */
+  public ServerConfiguration getVoiceServer() {
+    return new ServerConfiguration(getVoiceUrl());
+  }
+
+  /**
+   * Voice Application Management URL
+   *
+   * @return Voice Application Management URL
+   * @since 1.0
+   */
+  public String getVoiceApplicationManagementUrl() {
+    return voiceApplicationManagementUrl;
+  }
+
+  /**
+   * Voice Application Management Configuration
+   *
+   * @return Voice Application Management to be used
+   * @since 1.0
+   */
+  public ServerConfiguration getVoiceApplicationManagementServer() {
+    return new ServerConfiguration(getVoiceApplicationManagementUrl());
+  }
+
+  /**
    * Application key to be used for Verification and Voice services
    *
    * <p>Use application secret in place of unified configuration for authentication (see Sinch
@@ -232,16 +295,19 @@ public class Configuration {
   /** Configuration builder */
   public static class Builder {
 
-    private String keyId;
-    private String keySecret;
-    private String projectId;
-    private String oauthUrl;
-    private String numbersUrl;
-    private SMSRegion smsRegion;
-    private String smsUrl;
-    private String verificationUrl;
-    private String applicationKey;
-    private String applicationSecret;
+    public String keyId;
+    public String keySecret;
+    public String projectId;
+    public String oauthUrl;
+    public String numbersUrl;
+    public SMSRegion smsRegion;
+    public String smsUrl;
+    public String verificationUrl;
+    public String applicationKey;
+    public String applicationSecret;
+    public VoiceRegion voiceRegion;
+    public String voiceUrl;
+    public String voiceApplicationMngmtUrl;
 
     protected Builder() {}
 
@@ -262,6 +328,9 @@ public class Configuration {
       this.verificationUrl = configuration.getVerificationUrl();
       this.applicationKey = configuration.getApplicationKey();
       this.applicationSecret = configuration.getApplicationSecret();
+      this.voiceRegion = configuration.getVoiceRegion();
+      this.voiceUrl = configuration.getVoiceUrl();
+      this.voiceApplicationMngmtUrl = configuration.getVoiceApplicationManagementUrl();
     }
 
     /**
@@ -280,6 +349,9 @@ public class Configuration {
           smsRegion,
           smsUrl,
           verificationUrl,
+          voiceRegion,
+          voiceUrl,
+          voiceApplicationMngmtUrl,
           applicationKey,
           applicationSecret);
     }
@@ -377,6 +449,42 @@ public class Configuration {
      */
     public Builder setVerificationUrl(String verificationUrl) {
       this.verificationUrl = verificationUrl;
+      return this;
+    }
+
+    /**
+     * Set region to be used for Vioce service
+     *
+     * @param voiceRegion The regino
+     * @return Current builder
+     * @since 1.0
+     */
+    public Builder setVoiceRegion(VoiceRegion voiceRegion) {
+      this.voiceRegion = voiceRegion;
+      return this;
+    }
+
+    /**
+     * Set Voice URL to be used
+     *
+     * @param voiceUrl Voice URL
+     * @return Current builder
+     * @since 1.0
+     */
+    public Builder setVoiceUrl(String voiceUrl) {
+      this.voiceUrl = voiceUrl;
+      return this;
+    }
+
+    /**
+     * Set URL dedicated to Voice Application management to be used
+     *
+     * @param voiceApplicationMngmtUrl Voice Application Management URL
+     * @return Current builder
+     * @since 1.0
+     */
+    public Builder setVoiceApplicationMngmtUrl(String voiceApplicationMngmtUrl) {
+      this.voiceApplicationMngmtUrl = voiceApplicationMngmtUrl;
       return this;
     }
 
