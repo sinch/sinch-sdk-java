@@ -9,7 +9,7 @@ import com.sinch.sample.Utils;
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.voice.models.DestinationNumber;
-import com.sinch.sdk.domains.voice.models.MohClassType;
+import com.sinch.sdk.domains.voice.models.MusicOnHoldType;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConference;
 import com.sinch.sdk.domains.voice.models.requests.ConferenceManageParticipantCommandType;
 import com.sinch.sdk.domains.voice.models.requests.ConferenceManageParticipantRequestParameters;
@@ -97,7 +97,7 @@ public class ConferencesSampleFlow {
             .setConferenceId(conferenceId)
             .setDestination(DestinationNumber.valueOf(phoneNumber))
             .setGreeting("Hello from Sinch Conference sample with Jav SDK")
-            .setMohClass(MohClassType.MUSIC1)
+            .setMusicOnHold(MusicOnHoldType.MUSIC1)
             .setCli(E164PhoneNumber.valueOf("+1123456789"))
             .build();
 

@@ -4,8 +4,7 @@ import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.voice.models.ConferenceDtfmOptions;
 import com.sinch.sdk.domains.voice.models.Destination;
 import com.sinch.sdk.domains.voice.models.DomainType;
-import com.sinch.sdk.domains.voice.models.MohClassType;
-import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParameters.Builder;
+import com.sinch.sdk.domains.voice.models.MusicOnHoldType;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import com.sinch.sdk.models.E164PhoneNumber;
 
@@ -23,7 +22,7 @@ public class CalloutRequestParametersConference extends CalloutRequestParameters
   private final OptionalValue<Boolean> enablePie;
   private final OptionalValue<String> locale;
   private final OptionalValue<String> greeting;
-  private final OptionalValue<MohClassType> mohClass;
+  private final OptionalValue<MusicOnHoldType> musicOnHold;
   private final OptionalValue<DomainType> domain;
 
   private CalloutRequestParametersConference(
@@ -39,7 +38,7 @@ public class CalloutRequestParametersConference extends CalloutRequestParameters
       OptionalValue<Boolean> enablePie,
       OptionalValue<String> locale,
       OptionalValue<String> greeting,
-      OptionalValue<MohClassType> mohClass,
+      OptionalValue<MusicOnHoldType> musicOnHold,
       OptionalValue<DomainType> domain) {
     super(destination, cli, dtfm, custom);
 
@@ -51,7 +50,7 @@ public class CalloutRequestParametersConference extends CalloutRequestParameters
     this.enablePie = enablePie;
     this.locale = locale;
     this.greeting = greeting;
-    this.mohClass = mohClass;
+    this.musicOnHold = musicOnHold;
     this.domain = domain;
   }
 
@@ -112,10 +111,10 @@ public class CalloutRequestParametersConference extends CalloutRequestParameters
   }
 
   /**
-   * @see Builder#setMohClass(MohClassType)
+   * @see Builder#setMusicOnHold(MusicOnHoldType) (MusicOnHoldType)
    */
-  public OptionalValue<MohClassType> getMohClass() {
-    return mohClass;
+  public OptionalValue<MusicOnHoldType> getMusicOnHold() {
+    return musicOnHold;
   }
 
   /**
@@ -147,8 +146,8 @@ public class CalloutRequestParametersConference extends CalloutRequestParameters
         + ", greeting='"
         + greeting
         + '\''
-        + ", mohClass="
-        + mohClass
+        + ", musicOnHold="
+        + musicOnHold
         + ", domain="
         + domain
         + "} "
@@ -169,7 +168,7 @@ public class CalloutRequestParametersConference extends CalloutRequestParameters
     OptionalValue<Boolean> enablePie = OptionalValue.empty();
     OptionalValue<String> locale = OptionalValue.empty();
     OptionalValue<String> greeting = OptionalValue.empty();
-    OptionalValue<MohClassType> mohClass = OptionalValue.empty();
+    OptionalValue<MusicOnHoldType> musicOnHold = OptionalValue.empty();
     OptionalValue<DomainType> domain = OptionalValue.empty();
 
     public Builder() {
@@ -286,11 +285,11 @@ public class CalloutRequestParametersConference extends CalloutRequestParameters
      * should listen to while they're alone in the conference, waiting for other participants to
      * join.
      *
-     * @param mohClass The music-on-hold to be used
+     * @param musicOnHold The music-on-hold to be used
      * @return current builder
      */
-    public Builder setMohClass(MohClassType mohClass) {
-      this.mohClass = OptionalValue.of(mohClass);
+    public Builder setMusicOnHold(MusicOnHoldType musicOnHold) {
+      this.musicOnHold = OptionalValue.of(musicOnHold);
       return self();
     }
 
@@ -319,7 +318,7 @@ public class CalloutRequestParametersConference extends CalloutRequestParameters
           enablePie,
           locale,
           greeting,
-          mohClass,
+          musicOnHold,
           domain);
     }
 

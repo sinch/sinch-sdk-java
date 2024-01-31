@@ -2,7 +2,7 @@ package com.sinch.sdk.domains.voice.models.requests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.sinch.sdk.domains.voice.models.MohClassType;
+import com.sinch.sdk.domains.voice.models.MusicOnHoldType;
 import org.junit.jupiter.api.Test;
 
 public class ConferenceManageParticipantRequestParametersTest {
@@ -11,7 +11,7 @@ public class ConferenceManageParticipantRequestParametersTest {
       conferenceManageParticipantRequestParameters =
           ConferenceManageParticipantRequestParameters.builder()
               .setCommand(ConferenceManageParticipantCommandType.UNMUTE)
-              .setMoh(MohClassType.RING)
+              .setMusicOnHold(MusicOnHoldType.RING)
               .build();
 
   @Test
@@ -23,6 +23,7 @@ public class ConferenceManageParticipantRequestParametersTest {
 
   @Test
   void moh() {
-    assertEquals(MohClassType.RING, conferenceManageParticipantRequestParameters.getMoh().get());
+    assertEquals(
+        MusicOnHoldType.RING, conferenceManageParticipantRequestParameters.getMusicOnHold().get());
   }
 }

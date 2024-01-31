@@ -5,7 +5,7 @@ import com.sinch.sdk.domains.voice.models.ConferenceDtfmOptions;
 import com.sinch.sdk.domains.voice.models.DestinationSip;
 import com.sinch.sdk.domains.voice.models.DestinationUser;
 import com.sinch.sdk.domains.voice.models.DtfmModeType;
-import com.sinch.sdk.domains.voice.models.MohClassType;
+import com.sinch.sdk.domains.voice.models.MusicOnHoldType;
 import com.sinch.sdk.domains.voice.models.TransportType;
 import com.sinch.sdk.domains.voice.models.dto.svaml.ActionConnectConfDtoTest;
 import com.sinch.sdk.domains.voice.models.dto.svaml.ActionConnectMxpDtoTest;
@@ -47,7 +47,7 @@ public class SVAMLActionDtoConverterTest {
                   .setMaxDigits(45)
                   .setTimeoutMills(456)
                   .build())
-          .setMoh(MohClassType.MUSIC3)
+          .setMusicOnHold(MusicOnHoldType.MUSIC3)
           .build();
 
   ActionConnectMxp actionConnectMxp =
@@ -77,8 +77,8 @@ public class SVAMLActionDtoConverterTest {
           .setCli("a cli value")
           .setTransport(TransportType.TLS)
           .setSuppressCallbacks(true)
-          .setCallheaders(Collections.singletonList(new Pair<>("left string", "right string")))
-          .setMoh(MohClassType.MUSIC2)
+          .setCallHeaders(Collections.singletonList(new Pair<>("left string", "right string")))
+          .setMusicOnHold(MusicOnHoldType.MUSIC2)
           .build();
 
   ActionContinue actionContinue = ActionContinue.builder().build();

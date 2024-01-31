@@ -37,7 +37,7 @@ public class ConferencesDtoConverter {
 
     ManageConferenceParticipantRequestDto dto = new ManageConferenceParticipantRequestDto();
     client.getCommand().ifPresent(f -> dto.command(EnumDynamicConverter.convert(f)));
-    client.getMoh().ifPresent(f -> dto.moh(EnumDynamicConverter.convert(f)));
+    client.getMusicOnHold().ifPresent(f -> dto.moh(EnumDynamicConverter.convert(f)));
     return dto;
   }
 }

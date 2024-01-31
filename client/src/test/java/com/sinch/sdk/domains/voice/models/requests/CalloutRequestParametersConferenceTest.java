@@ -6,7 +6,7 @@ import com.sinch.sdk.domains.voice.models.ConferenceDtfmOptions;
 import com.sinch.sdk.domains.voice.models.DestinationNumber;
 import com.sinch.sdk.domains.voice.models.DomainType;
 import com.sinch.sdk.domains.voice.models.DtfmModeType;
-import com.sinch.sdk.domains.voice.models.MohClassType;
+import com.sinch.sdk.domains.voice.models.MusicOnHoldType;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import com.sinch.sdk.models.E164PhoneNumber;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ public class CalloutRequestParametersConferenceTest {
           .setEnablePie(Boolean.TRUE)
           .setLocale("en-US")
           .setGreeting("Welcome to my conference")
-          .setMohClass(MohClassType.MUSIC2)
+          .setMusicOnHold(MusicOnHoldType.MUSIC2)
           .setCustom("my custom value")
           .setDomain(DomainType.PSTN)
           .build();
@@ -102,7 +102,7 @@ public class CalloutRequestParametersConferenceTest {
 
   @Test
   void getMohClass() {
-    assertEquals(MohClassType.MUSIC2, conferenceRequestParameters.getMohClass().get());
+    assertEquals(MusicOnHoldType.MUSIC2, conferenceRequestParameters.getMusicOnHold().get());
   }
 
   @Test

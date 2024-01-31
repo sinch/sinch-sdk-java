@@ -1,20 +1,19 @@
 package com.sinch.sdk.domains.voice.models.requests;
 
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.voice.models.MohClassType;
-import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersTTS.Builder;
+import com.sinch.sdk.domains.voice.models.MusicOnHoldType;
 
 /** Use to configure conference participant settings */
 public class ConferenceManageParticipantRequestParameters {
 
   private final OptionalValue<ConferenceManageParticipantCommandType> command;
-  private final OptionalValue<MohClassType> moh;
+  private final OptionalValue<MusicOnHoldType> musicOnHold;
 
   private ConferenceManageParticipantRequestParameters(
       OptionalValue<ConferenceManageParticipantCommandType> command,
-      OptionalValue<MohClassType> moh) {
+      OptionalValue<MusicOnHoldType> musicOnHold) {
     this.command = command;
-    this.moh = moh;
+    this.musicOnHold = musicOnHold;
   }
 
   /**
@@ -25,10 +24,10 @@ public class ConferenceManageParticipantRequestParameters {
   }
 
   /**
-   * @see Builder#setMoh(MohClassType)
+   * @see Builder#setMusicOnHold(MusicOnHoldType) (MusicOnHoldType)
    */
-  public OptionalValue<MohClassType> getMoh() {
-    return moh;
+  public OptionalValue<MusicOnHoldType> getMusicOnHold() {
+    return musicOnHold;
   }
 
   @Override
@@ -36,8 +35,8 @@ public class ConferenceManageParticipantRequestParameters {
     return "ConferenceManageParticipantRequestParameters{"
         + "command="
         + command
-        + ", moh="
-        + moh
+        + ", musicOnHold="
+        + musicOnHold
         + '}';
   }
 
@@ -48,7 +47,7 @@ public class ConferenceManageParticipantRequestParameters {
   public static class Builder {
 
     OptionalValue<ConferenceManageParticipantCommandType> command = OptionalValue.empty();
-    OptionalValue<MohClassType> moh = OptionalValue.empty();
+    OptionalValue<MusicOnHoldType> musicOnHold = OptionalValue.empty();
 
     /**
      * @param command Action to apply on conference participant.
@@ -60,19 +59,19 @@ public class ConferenceManageParticipantRequestParameters {
     }
 
     /**
-     * @param moh Means "music on hold". If this optional parameter is included, plays music to the
-     *     first participant in a conference while they're alone and waiting for other participants
-     *     to join. If moh isn't specified, the user will only hear silence while alone in the
+     * @param musicOnHold If this optional parameter is included, plays music to the first
+     *     participant in a conference while they're alone and waiting for other participants to
+     *     join. If musicOnHold isn't specified, the user will only hear silence while alone in the
      *     conference. This property is only available to use with the onhold command.
      * @return current builder
      */
-    public Builder setMoh(MohClassType moh) {
-      this.moh = OptionalValue.of(moh);
+    public Builder setMusicOnHold(MusicOnHoldType musicOnHold) {
+      this.musicOnHold = OptionalValue.of(musicOnHold);
       return this;
     }
 
     public ConferenceManageParticipantRequestParameters build() {
-      return new ConferenceManageParticipantRequestParameters(command, moh);
+      return new ConferenceManageParticipantRequestParameters(command, musicOnHold);
     }
   }
 }

@@ -1,7 +1,7 @@
 package com.sinch.sample.voice.conferences;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.voice.models.MohClassType;
+import com.sinch.sdk.domains.voice.models.MusicOnHoldType;
 import com.sinch.sdk.domains.voice.models.requests.ConferenceManageParticipantCommandType;
 import com.sinch.sdk.domains.voice.models.requests.ConferenceManageParticipantRequestParameters;
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class ManageParticipant extends BaseApplication {
   public void run() {
 
     var command = ConferenceManageParticipantCommandType.MUTE;
-    var moh = MohClassType.MUSIC1;
+    var moh = MusicOnHoldType.MUSIC1;
 
     LOGGER.info(
         "Manage participant '%s' for conference '%s'. Setting command to '%s' and moh to '%s'"
@@ -39,7 +39,7 @@ public class ManageParticipant extends BaseApplication {
             callId,
             ConferenceManageParticipantRequestParameters.builder()
                 .setCommand(command)
-                .setMoh(moh)
+                .setMusicOnHold(moh)
                 .build());
   }
 }

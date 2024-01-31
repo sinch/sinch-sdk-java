@@ -2,21 +2,21 @@ package com.sinch.sdk.domains.voice.models.svaml;
 
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.voice.models.ConferenceDtfmOptions;
-import com.sinch.sdk.domains.voice.models.MohClassType;
+import com.sinch.sdk.domains.voice.models.MusicOnHoldType;
 
 public class ActionConnectConference extends Action {
 
   private final OptionalValue<String> conferenceId;
   private final OptionalValue<ConferenceDtfmOptions> dtfmOptions;
-  private final OptionalValue<MohClassType> moh;
+  private final OptionalValue<MusicOnHoldType> musicOnHold;
 
   private ActionConnectConference(
       OptionalValue<String> conferenceId,
       OptionalValue<ConferenceDtfmOptions> dtfmOptions,
-      OptionalValue<MohClassType> moh) {
+      OptionalValue<MusicOnHoldType> musicOnHold) {
     this.conferenceId = conferenceId;
     this.dtfmOptions = dtfmOptions;
-    this.moh = moh;
+    this.musicOnHold = musicOnHold;
   }
 
   public OptionalValue<String> getConferenceId() {
@@ -27,8 +27,8 @@ public class ActionConnectConference extends Action {
     return dtfmOptions;
   }
 
-  public OptionalValue<MohClassType> getMoh() {
-    return moh;
+  public OptionalValue<MusicOnHoldType> getMusicOnHold() {
+    return musicOnHold;
   }
 
   @Override
@@ -39,8 +39,8 @@ public class ActionConnectConference extends Action {
         + '\''
         + ", dtfmOptions="
         + dtfmOptions
-        + ", moh="
-        + moh
+        + ", musicOnHold="
+        + musicOnHold
         + "} "
         + super.toString();
   }
@@ -53,7 +53,7 @@ public class ActionConnectConference extends Action {
 
     OptionalValue<String> conferenceId = OptionalValue.empty();
     OptionalValue<ConferenceDtfmOptions> dtfmOptions = OptionalValue.empty();
-    OptionalValue<MohClassType> moh = OptionalValue.empty();
+    OptionalValue<MusicOnHoldType> musicOnHold = OptionalValue.empty();
 
     public Builder<B> setConferenceId(String conferenceId) {
       this.conferenceId = OptionalValue.of(conferenceId);
@@ -65,13 +65,13 @@ public class ActionConnectConference extends Action {
       return this;
     }
 
-    public Builder<B> setMoh(MohClassType moh) {
-      this.moh = OptionalValue.of(moh);
+    public Builder<B> setMusicOnHold(MusicOnHoldType musicOnHold) {
+      this.musicOnHold = OptionalValue.of(musicOnHold);
       return this;
     }
 
     public ActionConnectConference build() {
-      return new ActionConnectConference(conferenceId, dtfmOptions, moh);
+      return new ActionConnectConference(conferenceId, dtfmOptions, musicOnHold);
     }
 
     @SuppressWarnings("unchecked")

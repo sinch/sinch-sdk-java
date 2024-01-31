@@ -84,7 +84,7 @@ public class SVAMLActionDtoConverter {
     SvamlActionConnectConfDto dto = new SvamlActionConnectConfDto();
     dto.setName(SvamlActionConnectConfDto.NameEnum.CONNECTCONF.getValue());
     client.getConferenceId().ifPresent(dto::setConferenceId);
-    client.getMoh().ifPresent(f -> dto.setMoh(EnumDynamicConverter.convert(f)));
+    client.getMusicOnHold().ifPresent(f -> dto.setMoh(EnumDynamicConverter.convert(f)));
     client.getDtfmOptions().ifPresent(f -> dto.setConferenceDtmfOptions(convert(f)));
     return dto;
   }
@@ -129,8 +129,8 @@ public class SVAMLActionDtoConverter {
     client.getCli().ifPresent(dto::setCli);
     client.getTransport().ifPresent(f -> dto.setTransport(EnumDynamicConverter.convert(f)));
     client.getSuppressCallbacks().ifPresent(dto::setSuppressCallbacks);
-    client.getCallheaders().ifPresent(f -> dto.setCallHeaders(convertHeaderCollection(f)));
-    client.getMoh().ifPresent(f -> dto.setMoh(EnumDynamicConverter.convert(f)));
+    client.getCallHeaders().ifPresent(f -> dto.setCallHeaders(convertHeaderCollection(f)));
+    client.getMusicOnHold().ifPresent(f -> dto.setMoh(EnumDynamicConverter.convert(f)));
     return dto;
   }
 

@@ -57,7 +57,7 @@ public class CalloutsDtoConverter {
     client.getEnablePie().ifPresent(dto::setEnablePie);
     client.getLocale().ifPresent(dto::setLocale);
     client.getGreeting().ifPresent(dto::setGreeting);
-    client.getMohClass().ifPresent(f -> dto.setMohClass(EnumDynamicConverter.convert(f)));
+    client.getMusicOnHold().ifPresent(f -> dto.setMohClass(EnumDynamicConverter.convert(f)));
     client.getDomain().ifPresent(f -> dto.setDomain(EnumDynamicConverter.convert(f)));
 
     return new CalloutRequestDto()

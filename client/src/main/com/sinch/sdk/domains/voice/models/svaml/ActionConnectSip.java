@@ -3,7 +3,7 @@ package com.sinch.sdk.domains.voice.models.svaml;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.voice.models.DestinationSip;
-import com.sinch.sdk.domains.voice.models.MohClassType;
+import com.sinch.sdk.domains.voice.models.MusicOnHoldType;
 import com.sinch.sdk.domains.voice.models.TransportType;
 import java.util.Collection;
 
@@ -14,8 +14,8 @@ public class ActionConnectSip extends Action {
   private final OptionalValue<String> cli;
   private final OptionalValue<TransportType> transport;
   private final OptionalValue<Boolean> suppressCallbacks;
-  private final OptionalValue<Collection<Pair<String, String>>> callheaders;
-  private final OptionalValue<MohClassType> moh;
+  private final OptionalValue<Collection<Pair<String, String>>> callHeaders;
+  private final OptionalValue<MusicOnHoldType> musicOnHold;
 
   private ActionConnectSip(
       OptionalValue<DestinationSip> destination,
@@ -23,15 +23,15 @@ public class ActionConnectSip extends Action {
       OptionalValue<String> cli,
       OptionalValue<TransportType> transport,
       OptionalValue<Boolean> suppressCallbacks,
-      OptionalValue<Collection<Pair<String, String>>> callheaders,
-      OptionalValue<MohClassType> moh) {
+      OptionalValue<Collection<Pair<String, String>>> callHeaders,
+      OptionalValue<MusicOnHoldType> musicOnHold) {
     this.destination = destination;
     this.maxDuration = maxDuration;
     this.cli = cli;
     this.transport = transport;
     this.suppressCallbacks = suppressCallbacks;
-    this.callheaders = callheaders;
-    this.moh = moh;
+    this.callHeaders = callHeaders;
+    this.musicOnHold = musicOnHold;
   }
 
   public OptionalValue<DestinationSip> getDestination() {
@@ -54,12 +54,12 @@ public class ActionConnectSip extends Action {
     return suppressCallbacks;
   }
 
-  public OptionalValue<Collection<Pair<String, String>>> getCallheaders() {
-    return callheaders;
+  public OptionalValue<Collection<Pair<String, String>>> getCallHeaders() {
+    return callHeaders;
   }
 
-  public OptionalValue<MohClassType> getMoh() {
-    return moh;
+  public OptionalValue<MusicOnHoldType> getMusicOnHold() {
+    return musicOnHold;
   }
 
   @Override
@@ -76,10 +76,10 @@ public class ActionConnectSip extends Action {
         + transport
         + ", suppressCallbacks="
         + suppressCallbacks
-        + ", callheaders="
-        + callheaders
-        + ", moh="
-        + moh
+        + ", callHeaders="
+        + callHeaders
+        + ", musicOnHold="
+        + musicOnHold
         + "} "
         + super.toString();
   }
@@ -95,8 +95,8 @@ public class ActionConnectSip extends Action {
     OptionalValue<String> cli = OptionalValue.empty();
     OptionalValue<TransportType> transport = OptionalValue.empty();
     OptionalValue<Boolean> suppressCallbacks = OptionalValue.empty();
-    OptionalValue<Collection<Pair<String, String>>> callheaders = OptionalValue.empty();
-    OptionalValue<MohClassType> moh = OptionalValue.empty();
+    OptionalValue<Collection<Pair<String, String>>> callHeaders = OptionalValue.empty();
+    OptionalValue<MusicOnHoldType> musicOnHold = OptionalValue.empty();
 
     public Builder<B> setDestination(DestinationSip destination) {
       this.destination = OptionalValue.of(destination);
@@ -123,19 +123,19 @@ public class ActionConnectSip extends Action {
       return this;
     }
 
-    public Builder<B> setCallheaders(Collection<Pair<String, String>> callheaders) {
-      this.callheaders = OptionalValue.of(callheaders);
+    public Builder<B> setCallHeaders(Collection<Pair<String, String>> callHeaders) {
+      this.callHeaders = OptionalValue.of(callHeaders);
       return this;
     }
 
-    public Builder<B> setMoh(MohClassType moh) {
-      this.moh = OptionalValue.of(moh);
+    public Builder<B> setMusicOnHold(MusicOnHoldType musicOnHold) {
+      this.musicOnHold = OptionalValue.of(musicOnHold);
       return this;
     }
 
     public ActionConnectSip build() {
       return new ActionConnectSip(
-          destination, maxDuration, cli, transport, suppressCallbacks, callheaders, moh);
+          destination, maxDuration, cli, transport, suppressCallbacks, callHeaders, musicOnHold);
     }
 
     @SuppressWarnings("unchecked")

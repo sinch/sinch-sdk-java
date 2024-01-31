@@ -6,7 +6,7 @@ import com.sinch.sdk.domains.voice.models.ConferenceDtfmOptions;
 import com.sinch.sdk.domains.voice.models.DestinationSip;
 import com.sinch.sdk.domains.voice.models.DestinationUser;
 import com.sinch.sdk.domains.voice.models.DtfmModeType;
-import com.sinch.sdk.domains.voice.models.MohClassType;
+import com.sinch.sdk.domains.voice.models.MusicOnHoldType;
 import com.sinch.sdk.domains.voice.models.TransportType;
 import com.sinch.sdk.domains.voice.models.svaml.Action;
 import com.sinch.sdk.domains.voice.models.svaml.ActionConnectConference;
@@ -71,7 +71,7 @@ public class Update extends BaseApplication {
                     .setMaxDigits(45)
                     .setTimeoutMills(456)
                     .build())
-            .setMoh(MohClassType.MUSIC3)
+            .setMusicOnHold(MusicOnHoldType.MUSIC3)
             .build();
 
     var actionRunMenu =
@@ -126,8 +126,8 @@ public class Update extends BaseApplication {
             .setCli("a cli value")
             .setTransport(TransportType.TLS)
             .setSuppressCallbacks(true)
-            .setCallheaders(List.of(new Pair<>("left string", "right string")))
-            .setMoh(MohClassType.MUSIC2)
+            .setCallHeaders(List.of(new Pair<>("left string", "right string")))
+            .setMusicOnHold(MusicOnHoldType.MUSIC2)
             .build();
 
     var actionContinue = ActionContinue.builder().build();
