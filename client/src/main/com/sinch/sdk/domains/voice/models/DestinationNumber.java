@@ -3,28 +3,28 @@ package com.sinch.sdk.domains.voice.models;
 import com.sinch.sdk.models.E164PhoneNumber;
 import java.util.Objects;
 
-/** Destination of type numbers for PSTN endpoints */
+/** Destination of numbers type */
 public class DestinationNumber extends Destination {
 
   private final E164PhoneNumber phoneNumber;
-  private final TYPE type;
+  private final DestinationNumberType type;
 
   /**
-   * Create e destination instance of type PSTN
+   * Create a destination instance of type PSTN
    *
    * @param phoneNumber Valid E164 phone number
    */
   public DestinationNumber(E164PhoneNumber phoneNumber) {
-    this(phoneNumber, TYPE.PSTN);
+    this(phoneNumber, DestinationNumberType.PSTN);
   }
 
   /**
-   * Create e destination instance of specified type
+   * Create a destination instance of specified type
    *
    * @param phoneNumber Valid E164 phone number
    * @param type Phone number type
    */
-  public DestinationNumber(E164PhoneNumber phoneNumber, TYPE type) {
+  public DestinationNumber(E164PhoneNumber phoneNumber, DestinationNumberType type) {
     Objects.requireNonNull(phoneNumber);
     this.phoneNumber = phoneNumber;
     this.type = type;
@@ -34,7 +34,7 @@ public class DestinationNumber extends Destination {
     return phoneNumber;
   }
 
-  public TYPE getType() {
+  public DestinationNumberType getType() {
     return type;
   }
 
@@ -51,13 +51,6 @@ public class DestinationNumber extends Destination {
 
   public static DestinationNumber valueOf(String e164PhoneNumber) {
     return new DestinationNumber(E164PhoneNumber.valueOf(e164PhoneNumber));
-  }
-
-  public enum TYPE {
-    /** * Public Switched Telephone Network */
-    PSTN,
-    /** * Direct inward dialing */
-    DID
   }
 
   @Override
