@@ -2,10 +2,6 @@ name: Tag & Release
 on:
   workflow_dispatch:
     inputs:
-      branch:
-        description: "The branch to checkout when cutting the release."
-        required: true
-        default: "main"
       releaseVersion:
         description: "Version number to be released (use semver semantic: 'X.Y.Z')"
         required: true
@@ -16,6 +12,7 @@ on:
 permissions:
   contents: write
   deployments: write
+  pull-requests: write
 jobs:
   Releasing:
     runs-on: ubuntu-latest
@@ -52,6 +49,11 @@ jobs:
         env:
           GITHUB_USERNAME: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create and switch to dedicated release branch
+        run: |
+          git checkout -b release-${{ github.event.inputs.releaseVersion }}
+
       - name: Release
         run: |
           mvn --batch-mode -s settings.xml release:clean release:prepare -Dtag=v${{ github.event.inputs.releaseVersion }} -DreleaseVersion=${{ github.event.inputs.releaseVersion }} -DdevelopmentVersion=${{ github.event.inputs.developmentVersion }}-SNAPSHOT -DscmReleaseCommitComment="[release] Set release & tag: ${{ github.event.inputs.releaseVersion }}" -DscmDevelopmentCommitComment="[release] Set next version: ${{ github.event.inputs.developmentVersion }}-SNAPSHOT"
@@ -62,4 +64,10 @@ jobs:
           GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
           GPG_PWD: ${{ secrets.GPG_PWD }}
           GITHUB_USERNAME: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+      - name: Create dedicated release pull request
+        run: gh pr create -d -B main -H release-${{ github.event.inputs.releaseVersion }} --title "Merge release release-${{ github.event.inputs.releaseVersion }} branch into main" --body 'Created by Github action'
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
