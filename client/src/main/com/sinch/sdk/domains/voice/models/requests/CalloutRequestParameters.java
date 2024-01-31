@@ -1,55 +1,76 @@
 package com.sinch.sdk.domains.voice.models.requests;
 
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.voice.models.CalloutMethodType;
 import com.sinch.sdk.domains.voice.models.Destination;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import com.sinch.sdk.models.E164PhoneNumber;
 
 public class CalloutRequestParameters {
-  private final OptionalValue<CalloutMethodType> method;
   private final OptionalValue<Destination> destination;
   private final OptionalValue<E164PhoneNumber> cli;
   private final OptionalValue<DualToneMultiFrequency> dtfm;
   private final OptionalValue<String> custom;
 
   protected CalloutRequestParameters(
-      OptionalValue<CalloutMethodType> method,
       OptionalValue<Destination> destination,
       OptionalValue<E164PhoneNumber> cli,
       OptionalValue<DualToneMultiFrequency> dtfm,
       OptionalValue<String> custom) {
 
-    this.method = method;
     this.destination = destination;
     this.cli = cli;
     this.dtfm = dtfm;
     this.custom = custom;
   }
 
-  public OptionalValue<CalloutMethodType> getMethod() {
-    return method;
-  }
-
+  /**
+   * Destination getter
+   *
+   * @see Builder#setDestination(Destination)
+   */
   public OptionalValue<Destination> getDestination() {
     return destination;
   }
 
+  /**
+   * Cli getter
+   *
+   * @see Builder#setCli(E164PhoneNumber)
+   */
   public OptionalValue<E164PhoneNumber> getCli() {
     return cli;
   }
 
+  /**
+   * Dual Tone Multi Frequency getter
+   *
+   * @see Builder#setDtfm(DualToneMultiFrequency)
+   */
   public OptionalValue<DualToneMultiFrequency> getDtfm() {
     return dtfm;
   }
 
+  /**
+   * Custom value getter
+   *
+   * @see Builder#setCustom(String)
+   */
   public OptionalValue<String> getCustom() {
     return custom;
   }
 
   @Override
   public String toString() {
-    return "CalloutRequestParameters{" + "method=" + method + '}';
+    return "CalloutRequestParameters{"
+        + "destination="
+        + destination
+        + ", cli="
+        + cli
+        + ", dtfm="
+        + dtfm
+        + ", custom="
+        + custom
+        + '}';
   }
 
   public static Builder<?> builder() {
@@ -86,11 +107,6 @@ public class CalloutRequestParameters {
 
     /**
      * @param dtfm When the destination picks up, this DTMF tones will be played to the callee.
-     *     Valid characters in the string are "0"-"9", "#" and "w". A "w" will render a 500 ms
-     *     pause. Example: "ww1234#w#" will render a 1s pause, the DTMF tones "1", "2", "3", "4" and
-     *     "#" followed by a 0.5s pause and finally the DTMF tone for "#". This can be used if the
-     *     callout destination for instance require a conference PIN code or an extension to be
-     *     entered.
      * @return current builder
      */
     public B setDtfm(DualToneMultiFrequency dtfm) {

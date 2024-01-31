@@ -36,7 +36,7 @@ import java.util.Collections;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class SAVMLActionDtoConverterTest {
+public class SVAMLActionDtoConverterTest {
 
   public static final ActionConnectConference actionConnectConference =
       ActionConnectConference.builder()
@@ -121,56 +121,56 @@ public class SAVMLActionDtoConverterTest {
 
   @Test
   void convertActionConnectConf() {
-    Assertions.assertThat(SAVMLActionDtoConverter.convert(actionConnectConference))
+    Assertions.assertThat(SVAMLActionDtoConverter.convert(actionConnectConference))
         .usingRecursiveComparison()
         .isEqualTo(new SvamlActionDto(ActionConnectConfDtoTest.dto));
   }
 
   @Test
   void convertActionConnectMxp() {
-    Assertions.assertThat(SAVMLActionDtoConverter.convert(actionConnectMxp))
+    Assertions.assertThat(SVAMLActionDtoConverter.convert(actionConnectMxp))
         .usingRecursiveComparison()
         .isEqualTo(new SvamlActionDto(ActionConnectMxpDtoTest.dto));
   }
 
   @Test
   void convertActionConnectPstn() {
-    Assertions.assertThat(SAVMLActionDtoConverter.convert(actionConnectPstn))
+    Assertions.assertThat(SVAMLActionDtoConverter.convert(actionConnectPstn))
         .usingRecursiveComparison()
         .isEqualTo(new SvamlActionDto(ActionConnectPstnDtoTest.dto));
   }
 
   @Test
   void convertActionConnectSip() {
-    Assertions.assertThat(SAVMLActionDtoConverter.convert(actionConnectSip))
+    Assertions.assertThat(SVAMLActionDtoConverter.convert(actionConnectSip))
         .usingRecursiveComparison()
         .isEqualTo(new SvamlActionDto(ActionConnectSipDtoTest.dto));
   }
 
   @Test
   void convertActionContinue() {
-    Assertions.assertThat(SAVMLActionDtoConverter.convert(actionContinue))
+    Assertions.assertThat(SVAMLActionDtoConverter.convert(actionContinue))
         .usingRecursiveComparison()
         .isEqualTo(new SvamlActionDto(ActionContinueDtoTest.dto));
   }
 
   @Test
   void convertActionHangup() {
-    Assertions.assertThat(SAVMLActionDtoConverter.convert(actionHanghup))
+    Assertions.assertThat(SVAMLActionDtoConverter.convert(actionHanghup))
         .usingRecursiveComparison()
         .isEqualTo(new SvamlActionDto(ActionHangUpDtoTest.dto));
   }
 
   @Test
   void convertActionPark() {
-    Assertions.assertThat(SAVMLActionDtoConverter.convert(actionPark))
+    Assertions.assertThat(SVAMLActionDtoConverter.convert(actionPark))
         .usingRecursiveComparison()
         .isEqualTo(new SvamlActionDto(ActionParkDtoTest.dto));
   }
 
   @Test
   void convertActionRunMenu() {
-    Assertions.assertThat(SAVMLActionDtoConverter.convert(actionRunMenu))
+    Assertions.assertThat(SVAMLActionDtoConverter.convert(actionRunMenu))
         .usingRecursiveComparison()
         .isEqualTo(new SvamlActionDto(ActionRunMenuDtoTest.dto));
   }

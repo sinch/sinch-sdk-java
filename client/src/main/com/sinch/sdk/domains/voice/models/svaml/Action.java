@@ -1,6 +1,6 @@
 package com.sinch.sdk.domains.voice.models.svaml;
 
-/** Base class for SAVML Action */
+/** Base class for SVAML Action */
 public abstract class Action {
 
   @Override

@@ -1,0 +1,7 @@
+{
+  "event": "notify",
+  "callid": "a call id",
+  "custom": "my custom value",
+  "version": 1,
+  "type": "recording_finished"
+}

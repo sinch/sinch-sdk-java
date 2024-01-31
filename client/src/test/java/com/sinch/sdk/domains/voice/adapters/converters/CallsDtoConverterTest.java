@@ -2,6 +2,8 @@ package com.sinch.sdk.domains.voice.adapters.converters;
 
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.domains.voice.models.CallReasonType;
+import com.sinch.sdk.domains.voice.models.CallResultType;
 import com.sinch.sdk.domains.voice.models.DestinationNumber;
 import com.sinch.sdk.domains.voice.models.DestinationUser;
 import com.sinch.sdk.domains.voice.models.DomainType;
@@ -13,8 +15,6 @@ import com.sinch.sdk.domains.voice.models.dto.v1.SVAMLRequestBodyDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.SvamlActionDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionDto;
 import com.sinch.sdk.domains.voice.models.response.CallInformation;
-import com.sinch.sdk.domains.voice.models.response.CallReasonType;
-import com.sinch.sdk.domains.voice.models.response.CallResultType;
 import com.sinch.sdk.domains.voice.models.response.CallStatusType;
 import com.sinch.sdk.domains.voice.models.svaml.SVAMLControlTest;
 import java.time.Instant;
@@ -34,7 +34,7 @@ public class CallsDtoConverterTest extends BaseTest {
           .setDuration(138)
           .setStatus(CallStatusType.FINAL)
           .setResult(CallResultType.ANSWERED)
-          .setReason(CallReasonType.CALLEEHANGUP)
+          .setReason(CallReasonType.CALLEE_HANGUP)
           .setTimeStamp(Instant.parse("2024-01-08T09:48:12Z"))
           .setCustom("{}")
           .setUserRate(Price.builder().setCurrencyId("EUR").setAmount(0.1758F).build())

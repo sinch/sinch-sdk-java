@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 public class ControlDtoConverter {
 
-  private static final Logger LOGGER = Logger.getLogger(SAVMLActionDtoConverter.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(SVAMLActionDtoConverter.class.getName());
 
   public static String convert(Control client) {
     if (null == client) {

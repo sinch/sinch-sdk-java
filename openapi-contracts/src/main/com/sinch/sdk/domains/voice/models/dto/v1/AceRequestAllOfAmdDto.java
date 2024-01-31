@@ -12,11 +12,13 @@
 
 package com.sinch.sdk.domains.voice.models.dto.v1;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Objects;
 
 /**
@@ -24,16 +26,90 @@ import java.util.Objects;
  * contains information about whether the call was answered by a machine.
  */
 @JsonPropertyOrder({
-  AceRequestAmdDto.JSON_PROPERTY_STATUS,
-  AceRequestAmdDto.JSON_PROPERTY_REASON,
-  AceRequestAmdDto.JSON_PROPERTY_DURATION
+  AceRequestAllOfAmdDto.JSON_PROPERTY_STATUS,
+  AceRequestAllOfAmdDto.JSON_PROPERTY_REASON,
+  AceRequestAllOfAmdDto.JSON_PROPERTY_DURATION
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class AceRequestAmdDto {
+public class AceRequestAllOfAmdDto {
+  /** The determination by the system of who answered the call. */
+  public enum StatusEnum {
+    MACHINE("machine"),
+
+    HUMAN("human"),
+
+    NOTSURE("notsure"),
+
+    HANGUP("hangup"),
+
+    UNKNOWN_DEFAULT_OPEN_API("unknown_default_open_api");
+
+    private String value;
+
+    StatusEnum(String value) {
+      this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static StatusEnum fromValue(String value) {
+      for (StatusEnum b : StatusEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      return UNKNOWN_DEFAULT_OPEN_API;
+    }
+  }
+
   public static final String JSON_PROPERTY_STATUS = "status";
   private String status;
   private boolean statusDefined = false;
+
+  /** The reason that the system used to determine who answered the call. */
+  public enum ReasonEnum {
+    LONGGREETING("longgreeting"),
+
+    INITIALSILENCE("initialsilence"),
+
+    UNKNOWN_DEFAULT_OPEN_API("unknown_default_open_api");
+
+    private String value;
+
+    ReasonEnum(String value) {
+      this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static ReasonEnum fromValue(String value) {
+      for (ReasonEnum b : ReasonEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      return UNKNOWN_DEFAULT_OPEN_API;
+    }
+  }
 
   public static final String JSON_PROPERTY_REASON = "reason";
   private String reason;
@@ -43,9 +119,9 @@ public class AceRequestAmdDto {
   private Integer duration;
   private boolean durationDefined = false;
 
-  public AceRequestAmdDto() {}
+  public AceRequestAllOfAmdDto() {}
 
-  public AceRequestAmdDto status(String status) {
+  public AceRequestAllOfAmdDto status(String status) {
     this.status = status;
     this.statusDefined = true;
     return this;
@@ -74,7 +150,7 @@ public class AceRequestAmdDto {
     this.statusDefined = true;
   }
 
-  public AceRequestAmdDto reason(String reason) {
+  public AceRequestAllOfAmdDto reason(String reason) {
     this.reason = reason;
     this.reasonDefined = true;
     return this;
@@ -103,7 +179,7 @@ public class AceRequestAmdDto {
     this.reasonDefined = true;
   }
 
-  public AceRequestAmdDto duration(Integer duration) {
+  public AceRequestAllOfAmdDto duration(Integer duration) {
     this.duration = duration;
     this.durationDefined = true;
     return this;
@@ -132,7 +208,7 @@ public class AceRequestAmdDto {
     this.durationDefined = true;
   }
 
-  /** Return true if this aceRequest_amd object is equal to o. */
+  /** Return true if this aceRequest_allOf_amd object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -141,10 +217,10 @@ public class AceRequestAmdDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AceRequestAmdDto aceRequestAmd = (AceRequestAmdDto) o;
-    return Objects.equals(this.status, aceRequestAmd.status)
-        && Objects.equals(this.reason, aceRequestAmd.reason)
-        && Objects.equals(this.duration, aceRequestAmd.duration);
+    AceRequestAllOfAmdDto aceRequestAllOfAmd = (AceRequestAllOfAmdDto) o;
+    return Objects.equals(this.status, aceRequestAllOfAmd.status)
+        && Objects.equals(this.reason, aceRequestAllOfAmd.reason)
+        && Objects.equals(this.duration, aceRequestAllOfAmd.duration);
   }
 
   @Override
@@ -155,7 +231,7 @@ public class AceRequestAmdDto {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AceRequestAmdDto {\n");
+    sb.append("class AceRequestAllOfAmdDto {\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    reason: ").append(toIndentedString(reason)).append("\n");
     sb.append("    duration: ").append(toIndentedString(duration)).append("\n");

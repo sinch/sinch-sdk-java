@@ -1,5 +1,7 @@
 package com.sinch.sdk.domains.voice.models.response;
 
+import com.sinch.sdk.domains.voice.models.CallReasonType;
+import com.sinch.sdk.domains.voice.models.CallResultType;
 import com.sinch.sdk.domains.voice.models.Destination;
 import com.sinch.sdk.domains.voice.models.DomainType;
 import com.sinch.sdk.domains.voice.models.Price;

@@ -58,7 +58,7 @@ public class CalloutRequestDtoTest extends BaseTest {
                   .cli("+14045001000")
                   .dtmf("w123#")
                   .custom("my custom value")
-                  .domain("pstn")
+                  .domain(DomainDto.PSTN)
                   .locale("en-US")
                   .text("text value")
                   .prompts(

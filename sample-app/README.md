@@ -49,10 +49,14 @@ Like for credentials, use the following command to define a parameter required b
    ```
 
 Variable to be used:
-- `PHONE_NUMBER`: Some test are requiring a phone number parameter.
-- `BATCH_ID`: Some test are requiring a phone number parameter (SMS).
-- `CONFERENCE_ID`: Some test are requiring a conference ID parameter (Voice Conference).
-- `CALL_ID`: Some test are requiring a call ID parameter related to a conference participant (Voice).
+- `PHONE_NUMBER`: Phone number parameter to be used for destination calls
+- `BATCH_ID`: Batch identifier parameter (SMS).
+- `CONFERENCE_ID`: Conference ID parameter to be used with Voice Conference.
+- `CALL_ID`: Call identifier parameter related to a Voice call (conference, ...).
+- `VERIFICATION_ID`: Verification identifier parameter related to a ... verification action
+
+- `WEBHOOKS_URL`: URL to be used as base path for webhooks
+- `WEBHOOKS_VOICE_PATH`: Voice path value (will be concatenated to `WEBHOOKS_URL` on runtime) to define the Voice webhooks URL 
 
 See https://developers.sinch.com for details about these parameters
 
@@ -122,7 +126,7 @@ See https://developers.sinch.com for details about these parameters
 
 | Service      | Sample             | Class                                                                                                                               | Note                                                      | 
 |--------------|--------------------|-------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------|
-| Callouts     | Call               | [com.sinch.sample.voice.callouts.Call](src/main/java/com/sinch/sample/voice/callouts/Call.java)                                     |                                                           |
+| Callouts     | Call               | [com.sinch.sample.voice.callouts.Call](src/main/java/com/sinch/sample/voice/callouts/Call.java)                                     | Require `PHONE_NUMBER` and `WEBHOOKS_URL` parameters      |
 | Conferences  | Call               | [com.sinch.sample.voice.conferences.Call](src/main/java/com/sinch/sample/voice/conferences/Call.java)                               | Require `CONFERENCE_ID` parameter                         | 
 |              | Get                | [com.sinch.sample.voice.conferences.Get](src/main/java/com/sinch/sample/voice/conferences/Get.java)                                 | Require `CONFERENCE_ID` parameter                         | 
 |              | KickParticipant    | [com.sinch.sample.voice.conferences.KickParticipant](src/main/java/com/sinch/sample/voice/conferences/KickParticipant.java)         | Require `CONFERENCE_ID` & `CALL_ID` parameters            | 
@@ -161,4 +165,5 @@ Check your dashboard to retrieve Application credentials values
 |--------------|------------------------------------------------------------------------------------------------|-------|
 | Numbers      | [com.sinch.sample.webhooks.numbers](src/main/java/com/sinch/sample/webhooks/numbers)           |       |
 | Verification | [com.sinch.sample.webhooks.verification](src/main/java/com/sinch/sample/webhooks/verification) |       |
+| Voice        | [com.sinch.sample.webhooks.voice](src/main/java/com/sinch/sample/webhooks/voice)               |       |
 

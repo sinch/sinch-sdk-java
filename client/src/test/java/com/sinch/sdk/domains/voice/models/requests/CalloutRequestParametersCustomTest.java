@@ -2,7 +2,6 @@ package com.sinch.sdk.domains.voice.models.requests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.sinch.sdk.domains.voice.models.CalloutMethodType;
 import com.sinch.sdk.domains.voice.models.DestinationNumber;
 import com.sinch.sdk.domains.voice.models.svaml.ActionConnectPstn;
 import com.sinch.sdk.domains.voice.models.svaml.ActionHangUp;
@@ -45,11 +44,6 @@ public class CalloutRequestParametersCustomTest {
                   .build())
           .setPie(ControlUrl.from("https://your-application-server-host/application"))
           .build();
-
-  @Test
-  void getMethod() {
-    assertEquals(CalloutMethodType.CUSTOM_CALLOUT, customRequestParameters.getMethod().get());
-  }
 
   @Test
   void getDestination() {

@@ -27,17 +27,17 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-public class SAVMLInstructionDtoConverter {
+public class SVAMLInstructionDtoConverter {
 
   private static final Logger LOGGER =
-      Logger.getLogger(SAVMLInstructionDtoConverter.class.getName());
+      Logger.getLogger(SVAMLInstructionDtoConverter.class.getName());
 
   public static List<SvamlInstructionDto> convert(Collection<Instruction> instructions) {
     if (null == instructions) {
       return null;
     }
     return instructions.stream()
-        .map(SAVMLInstructionDtoConverter::convertInstruction)
+        .map(SVAMLInstructionDtoConverter::convertInstruction)
         .collect(Collectors.toList());
   }
 

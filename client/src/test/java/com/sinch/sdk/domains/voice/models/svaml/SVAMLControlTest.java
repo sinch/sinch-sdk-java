@@ -2,8 +2,8 @@ package com.sinch.sdk.domains.voice.models.svaml;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.sinch.sdk.domains.voice.adapters.converters.SAVMLActionDtoConverterTest;
-import com.sinch.sdk.domains.voice.adapters.converters.SAVMLInstructionDtoConverterTest;
+import com.sinch.sdk.domains.voice.adapters.converters.SVAMLActionDtoConverterTest;
+import com.sinch.sdk.domains.voice.adapters.converters.SVAMLInstructionDtoConverterTest;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
@@ -11,20 +11,20 @@ public class SVAMLControlTest {
 
   public static final SVAMLControl parameters =
       SVAMLControl.builder()
-          .setAction(SAVMLActionDtoConverterTest.actionConnectConference)
+          .setAction(SVAMLActionDtoConverterTest.actionConnectConference)
           .setInstructions(
-              Collections.singletonList(SAVMLInstructionDtoConverterTest.instructionAnswer))
+              Collections.singletonList(SVAMLInstructionDtoConverterTest.instructionAnswer))
           .build();
 
   @Test
   void action() {
-    assertEquals(SAVMLActionDtoConverterTest.actionConnectConference, parameters.getAction().get());
+    assertEquals(SVAMLActionDtoConverterTest.actionConnectConference, parameters.getAction().get());
   }
 
   @Test
   void instructions() {
     assertEquals(
-        Collections.singletonList(SAVMLInstructionDtoConverterTest.instructionAnswer),
+        Collections.singletonList(SVAMLInstructionDtoConverterTest.instructionAnswer),
         parameters.getInstructions().get());
   }
 }

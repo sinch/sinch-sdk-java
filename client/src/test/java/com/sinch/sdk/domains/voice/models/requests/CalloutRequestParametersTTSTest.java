@@ -2,7 +2,6 @@ package com.sinch.sdk.domains.voice.models.requests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.sinch.sdk.domains.voice.models.CalloutMethodType;
 import com.sinch.sdk.domains.voice.models.DestinationUser;
 import com.sinch.sdk.domains.voice.models.DomainType;
 import com.sinch.sdk.models.DualToneMultiFrequency;
@@ -27,11 +26,6 @@ public class CalloutRequestParametersTTSTest {
               "#ssml[<speak><p>Your PIN code is <say-as"
                   + " interpret-as=\"digits\">1234</say-as></p><p>Please enter it now</p></speak>]")
           .build();
-
-  @Test
-  void getMethod() {
-    assertEquals(CalloutMethodType.TTS_CALLOUT, ttsRequestParameters.getMethod().get());
-  }
 
   @Test
   void getDestination() {

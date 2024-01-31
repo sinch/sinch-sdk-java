@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.voice.models.requests;
 
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.voice.models.MohClassType;
+import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersTTS.Builder;
 
 /** Use to configure conference participant settings */
 public class ConferenceManageParticipantRequestParameters {
@@ -16,10 +17,16 @@ public class ConferenceManageParticipantRequestParameters {
     this.moh = moh;
   }
 
+  /**
+   * @see Builder#setCommand(ConferenceManageParticipantCommandType)
+   */
   public OptionalValue<ConferenceManageParticipantCommandType> getCommand() {
     return command;
   }
 
+  /**
+   * @see Builder#setMoh(MohClassType)
+   */
   public OptionalValue<MohClassType> getMoh() {
     return moh;
   }

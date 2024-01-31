@@ -1,11 +1,11 @@
 package com.sinch.sdk.domains.voice.models.requests;
 
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.voice.models.CalloutMethodType;
 import com.sinch.sdk.domains.voice.models.ConferenceDtfmOptions;
 import com.sinch.sdk.domains.voice.models.Destination;
 import com.sinch.sdk.domains.voice.models.DomainType;
 import com.sinch.sdk.domains.voice.models.MohClassType;
+import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParameters.Builder;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import com.sinch.sdk.models.E164PhoneNumber;
 
@@ -41,7 +41,7 @@ public class CalloutRequestParametersConference extends CalloutRequestParameters
       OptionalValue<String> greeting,
       OptionalValue<MohClassType> mohClass,
       OptionalValue<DomainType> domain) {
-    super(OptionalValue.of(CalloutMethodType.CONFERENCE_CALLOUT), destination, cli, dtfm, custom);
+    super(destination, cli, dtfm, custom);
 
     this.conferenceId = conferenceId;
     this.dtfmOptions = dtfmOptions;
@@ -55,42 +55,72 @@ public class CalloutRequestParametersConference extends CalloutRequestParameters
     this.domain = domain;
   }
 
+  /**
+   * @see Builder#setConferenceId(String)
+   */
   public OptionalValue<String> getConferenceId() {
     return conferenceId;
   }
 
+  /**
+   * @see Builder#setDtfm(DualToneMultiFrequency)
+   */
   public OptionalValue<ConferenceDtfmOptions> getDtfmOptions() {
     return dtfmOptions;
   }
 
+  /**
+   * @see Builder#setMaxDuration(Integer)
+   */
   public OptionalValue<Integer> getMaxDuration() {
     return maxDuration;
   }
 
+  /**
+   * @see Builder#setEnableAce(Boolean)
+   */
   public OptionalValue<Boolean> getEnableAce() {
     return enableAce;
   }
 
+  /**
+   * @see Builder#setEnableDice(Boolean)
+   */
   public OptionalValue<Boolean> getEnableDice() {
     return enableDice;
   }
 
+  /**
+   * @see Builder#setEnablePie(Boolean)
+   */
   public OptionalValue<Boolean> getEnablePie() {
     return enablePie;
   }
 
+  /**
+   * @see Builder#setLocale(String)
+   */
   public OptionalValue<String> getLocale() {
     return locale;
   }
 
+  /**
+   * @see Builder#setGreeting(String)
+   */
   public OptionalValue<String> getGreeting() {
     return greeting;
   }
 
+  /**
+   * @see Builder#setMohClass(MohClassType)
+   */
   public OptionalValue<MohClassType> getMohClass() {
     return mohClass;
   }
 
+  /**
+   * @see Builder#setDomain(DomainType)
+   */
   public OptionalValue<DomainType> getDomain() {
     return domain;
   }
@@ -147,8 +177,10 @@ public class CalloutRequestParametersConference extends CalloutRequestParameters
     }
 
     /**
-     * @param conferenceId The conferenceId of the conference to which you want the callee to join.
-     *     If the * conferenceId doesn't exist a conference room will be created.
+     * The conferenceId of the conference to which you want the callee to join. * If the *
+     * conferenceId doesn't exist a conference room will be created.
+     *
+     * @param conferenceId The conference value
      * @return current builder
      */
     public Builder setConferenceId(String conferenceId) {
@@ -157,8 +189,10 @@ public class CalloutRequestParametersConference extends CalloutRequestParameters
     }
 
     /**
-     * @param dtfmOptions Options to control how DTMF signals are used by the participant in the
-     *     conference
+     * Define Dual Tone Multi Frequency options to control how DTMF signals are used by the
+     * participant in the conference
+     *
+     * @param dtfmOptions DTFM definition
      * @return current builder
      */
     public Builder setDtfmOptions(ConferenceDtfmOptions dtfmOptions) {
@@ -261,6 +295,8 @@ public class CalloutRequestParametersConference extends CalloutRequestParameters
     }
 
     /**
+     * Domain related call
+     *
      * @param domain Domain to be used
      * @return current builder
      */

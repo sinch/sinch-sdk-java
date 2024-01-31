@@ -5,9 +5,9 @@ import com.sinch.sdk.domains.voice.models.requests.Control;
 import java.util.Collection;
 
 /**
- * Class enabling to define SAVML actions and instructions
+ * Class enabling to define SVAML actions and instructions
  *
- * @see <a href="https://developers.sinch.com/docs/voice/api-reference/svaml/">SAVML
+ * @see <a href="https://developers.sinch.com/docs/voice/api-reference/svaml/">SVAML
  *     Dcoumentation</a>
  */
 public class SVAMLControl extends Control {

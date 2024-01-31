@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.voice.models;
 
 import com.sinch.sdk.models.E164PhoneNumber;
 
+/** Information about your number. */
 public class ApplicationAssignedNumber {
 
   private final E164PhoneNumber number;

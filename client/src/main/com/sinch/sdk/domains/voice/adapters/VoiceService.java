@@ -7,6 +7,7 @@ import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.domains.voice.ApplicationsService;
 import com.sinch.sdk.domains.voice.CalloutsService;
+import com.sinch.sdk.domains.voice.WebHooksService;
 import com.sinch.sdk.models.Configuration;
 import java.util.Map;
 import java.util.Objects;
@@ -26,6 +27,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
   private ConferencesService conferences;
   private CallsService calls;
   private ApplicationsService applications;
+  private WebHooksService webhooks;
 
   private Map<String, AuthManager> clientAuthManagers;
   private Map<String, AuthManager> webhooksAuthManagers;
@@ -97,6 +99,15 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
               configuration, httpClient, clientAuthManagers);
     }
     return this.applications;
+  }
+
+  public WebHooksService webhooks() {
+    checkCredentials();
+    if (null == this.webhooks) {
+      this.webhooks =
+          new com.sinch.sdk.domains.voice.adapters.WebHooksService(webhooksAuthManagers);
+    }
+    return this.webhooks;
   }
 
   private void checkCredentials() throws ApiAuthException {

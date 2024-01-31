@@ -4,7 +4,6 @@ import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.domains.voice.models.dto.v1.GetCallResponseObjDto.ReasonEnum;
-import com.sinch.sdk.domains.voice.models.dto.v1.GetCallResponseObjDto.ResultEnum;
 import com.sinch.sdk.domains.voice.models.dto.v1.GetCallResponseObjDto.StatusEnum;
 import java.time.OffsetDateTime;
 import org.assertj.core.api.Assertions;
@@ -27,7 +26,7 @@ public class CallsResponseDtoTest extends BaseTest {
           .callId("a call UUID")
           .duration(138)
           .status(StatusEnum.FINAL.getValue())
-          .result(ResultEnum.ANSWERED.getValue())
+          .result(CallResultDto.ANSWERED)
           .reason(ReasonEnum.CALLEEHANGUP.getValue())
           .timestamp(OffsetDateTime.parse("2024-01-08T09:48:12Z"))
           .custom("{}")
