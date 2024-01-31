@@ -125,8 +125,8 @@ public class SVAMLInstructionDtoConverter {
     SvamlInstructionSetCookieDto dto = new SvamlInstructionSetCookieDto();
     dto.setName(SvamlInstructionSetCookieDto.NameEnum.SETCOOKIE.getValue());
 
-    client.getKey().ifPresent(dto::setKey);
-    client.getValue().ifPresent(dto::setValue);
+    dto.setKey(client.getKey());
+    dto.setValue(client.getValue());
     return dto;
   }
 

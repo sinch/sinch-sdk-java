@@ -1,14 +1,11 @@
 package com.sinch.sdk.domains.voice.models.svaml;
 
-import java.util.Objects;
-
 public class InstructionSetCookie extends Instruction {
 
   private final String key;
   private final String value;
 
   private InstructionSetCookie(String key, String value) {
-    Objects.requireNonNull(key, "Key cannot be null");
     this.key = key;
     this.value = value;
   }
@@ -40,8 +37,8 @@ public class InstructionSetCookie extends Instruction {
 
   public static class Builder<B extends Builder<B>> {
 
-    String key ;
-    String value ;
+    String key;
+    String value;
 
     public Builder<B> setKey(String key) {
       this.key = key;
