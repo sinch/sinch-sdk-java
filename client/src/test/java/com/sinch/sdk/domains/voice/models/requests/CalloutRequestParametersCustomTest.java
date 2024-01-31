@@ -29,7 +29,7 @@ public class CalloutRequestParametersCustomTest {
                       ActionConnectPstn.builder()
                           .setCli("+12234325234")
                           .setNumber(E164PhoneNumber.valueOf("+12233445566"))
-                          .setAnsweringMachineDetectionEnabled(
+                          .setAnsweringMachineDetection(
                               AnsweringMachineDetection.builder().setEnabled(true).build())
                           .build())
                   .build())
@@ -74,7 +74,7 @@ public class CalloutRequestParametersCustomTest {
                     ActionConnectPstn.builder()
                         .setCli("+12234325234")
                         .setNumber(E164PhoneNumber.valueOf("+12233445566"))
-                        .setAnsweringMachineDetectionEnabled(
+                        .setAnsweringMachineDetection(
                             AnsweringMachineDetection.builder().setEnabled(true).build())
                         .build())
                 .build())

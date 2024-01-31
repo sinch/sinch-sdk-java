@@ -64,9 +64,9 @@ public class SVAMLActionDtoConverterTest {
           .setDialTimeout(456)
           .setCli("cli value")
           .setSuppressCallbacks(true)
-          .setDtmf(DualToneMultiFrequency.valueOf("#w123"))
+          .setDualToneMultiFrequency(DualToneMultiFrequency.valueOf("#w123"))
           .setIndications(IndicationType.from("unknown value"))
-          .setAnsweringMachineDetectionEnabled(
+          .setAnsweringMachineDetection(
               AnsweringMachineDetection.builder().setEnabled(true).build())
           .build();
 

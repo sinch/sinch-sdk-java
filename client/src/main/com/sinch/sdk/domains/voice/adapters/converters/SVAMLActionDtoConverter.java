@@ -112,9 +112,11 @@ public class SVAMLActionDtoConverter {
     client.getDialTimeout().ifPresent(dto::setDialTimeout);
     client.getCli().ifPresent(dto::setCli);
     client.getSuppressCallbacks().ifPresent(dto::setSuppressCallbacks);
-    client.getDtmf().ifPresent(f -> dto.setDtmf(DualToneMultiFrequencyDtoConverter.convert(f)));
+    client
+        .getDualToneMultiFrequency()
+        .ifPresent(f -> dto.setDtmf(DualToneMultiFrequencyDtoConverter.convert(f)));
     client.getIndications().ifPresent(f -> dto.setIndications(EnumDynamicConverter.convert(f)));
-    client.getAnsweringMachineDetectionEnabled().ifPresent(f -> dto.setAmd(convert(f)));
+    client.getAnsweringMachineDetection().ifPresent(f -> dto.setAmd(convert(f)));
     return dto;
   }
 

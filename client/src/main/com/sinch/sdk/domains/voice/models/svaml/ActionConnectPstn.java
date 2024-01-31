@@ -12,9 +12,9 @@ public class ActionConnectPstn extends Action {
   private final OptionalValue<Integer> dialTimeout;
   private final OptionalValue<String> cli;
   private final OptionalValue<Boolean> suppressCallbacks;
-  private final OptionalValue<DualToneMultiFrequency> dtmf;
+  private final OptionalValue<DualToneMultiFrequency> dualToneMultiFrequency;
   private final OptionalValue<IndicationType> indications;
-  private final OptionalValue<AnsweringMachineDetection> answeringMachineDetectionEnabled;
+  private final OptionalValue<AnsweringMachineDetection> answeringMachineDetection;
 
   private ActionConnectPstn(
       OptionalValue<E164PhoneNumber> number,
@@ -23,7 +23,7 @@ public class ActionConnectPstn extends Action {
       OptionalValue<Integer> dialTimeout,
       OptionalValue<String> cli,
       OptionalValue<Boolean> suppressCallbacks,
-      OptionalValue<DualToneMultiFrequency> dtmf,
+      OptionalValue<DualToneMultiFrequency> dualToneMultiFrequency,
       OptionalValue<IndicationType> indications,
       OptionalValue<AnsweringMachineDetection> answeringMachineDetectionEnabled) {
     this.number = number;
@@ -32,9 +32,9 @@ public class ActionConnectPstn extends Action {
     this.dialTimeout = dialTimeout;
     this.cli = cli;
     this.suppressCallbacks = suppressCallbacks;
-    this.dtmf = dtmf;
+    this.dualToneMultiFrequency = dualToneMultiFrequency;
     this.indications = indications;
-    this.answeringMachineDetectionEnabled = answeringMachineDetectionEnabled;
+    this.answeringMachineDetection = answeringMachineDetectionEnabled;
   }
 
   public OptionalValue<E164PhoneNumber> getNumber() {
@@ -61,16 +61,16 @@ public class ActionConnectPstn extends Action {
     return suppressCallbacks;
   }
 
-  public OptionalValue<DualToneMultiFrequency> getDtmf() {
-    return dtmf;
+  public OptionalValue<DualToneMultiFrequency> getDualToneMultiFrequency() {
+    return dualToneMultiFrequency;
   }
 
   public OptionalValue<IndicationType> getIndications() {
     return indications;
   }
 
-  public OptionalValue<AnsweringMachineDetection> getAnsweringMachineDetectionEnabled() {
-    return answeringMachineDetectionEnabled;
+  public OptionalValue<AnsweringMachineDetection> getAnsweringMachineDetection() {
+    return answeringMachineDetection;
   }
 
   @Override
@@ -90,12 +90,12 @@ public class ActionConnectPstn extends Action {
         + '\''
         + ", suppressCallbacks="
         + suppressCallbacks
-        + ", dtmf="
-        + dtmf
+        + ", dualToneMultiFrequency="
+        + dualToneMultiFrequency
         + ", indications="
         + indications
-        + ", answeringMachineDetectionEnabled="
-        + answeringMachineDetectionEnabled
+        + ", answeringMachineDetection="
+        + answeringMachineDetection
         + "} "
         + super.toString();
   }
@@ -112,10 +112,9 @@ public class ActionConnectPstn extends Action {
     OptionalValue<Integer> dialTimeout = OptionalValue.empty();
     OptionalValue<String> cli = OptionalValue.empty();
     OptionalValue<Boolean> suppressCallbacks = OptionalValue.empty();
-    OptionalValue<DualToneMultiFrequency> dtmf = OptionalValue.empty();
+    OptionalValue<DualToneMultiFrequency> dualToneMultiFrequency = OptionalValue.empty();
     OptionalValue<IndicationType> indications = OptionalValue.empty();
-    OptionalValue<AnsweringMachineDetection> answeringMachineDetectionEnabled =
-        OptionalValue.empty();
+    OptionalValue<AnsweringMachineDetection> answeringMachineDetection = OptionalValue.empty();
 
     public Builder<B> setNumber(E164PhoneNumber number) {
       this.number = OptionalValue.of(number);
@@ -147,8 +146,8 @@ public class ActionConnectPstn extends Action {
       return this;
     }
 
-    public Builder<B> setDtmf(DualToneMultiFrequency dtmf) {
-      this.dtmf = OptionalValue.of(dtmf);
+    public Builder<B> setDualToneMultiFrequency(DualToneMultiFrequency dualToneMultiFrequency) {
+      this.dualToneMultiFrequency = OptionalValue.of(dualToneMultiFrequency);
       return this;
     }
 
@@ -157,9 +156,9 @@ public class ActionConnectPstn extends Action {
       return this;
     }
 
-    public Builder<B> setAnsweringMachineDetectionEnabled(
-        AnsweringMachineDetection answeringMachineDetectionEnabled) {
-      this.answeringMachineDetectionEnabled = OptionalValue.of(answeringMachineDetectionEnabled);
+    public Builder<B> setAnsweringMachineDetection(
+        AnsweringMachineDetection answeringMachineDetection) {
+      this.answeringMachineDetection = OptionalValue.of(answeringMachineDetection);
       return this;
     }
 
@@ -171,9 +170,9 @@ public class ActionConnectPstn extends Action {
           dialTimeout,
           cli,
           suppressCallbacks,
-          dtmf,
+          dualToneMultiFrequency,
           indications,
-          answeringMachineDetectionEnabled);
+          answeringMachineDetection);
     }
 
     @SuppressWarnings("unchecked")
