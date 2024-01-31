@@ -1,5 +1,7 @@
 package com.sinch.sdk.domains.voice.models.svaml;
 
+import java.util.Objects;
+
 /** Navigates to the named menu */
 public class MenuOptionAction {
 
@@ -7,6 +9,7 @@ public class MenuOptionAction {
   private final String id;
 
   private MenuOptionAction(MenuOptionActionType type, String id) {
+    Objects.requireNonNull(type, "Action type cannot be null");
     this.type = type;
     this.id = id;
   }

@@ -256,7 +256,7 @@ public class SVAMLActionDtoConverter {
   }
 
   private static String convert(MenuOptionAction client) {
-    if (null == client) {
+    if (null == client || null == client.getType()) {
       return null;
     }
     return String.format("%s(%s)", client.getType().value(), client.getId());

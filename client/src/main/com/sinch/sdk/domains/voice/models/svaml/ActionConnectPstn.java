@@ -25,7 +25,7 @@ public class ActionConnectPstn extends Action {
       OptionalValue<Boolean> suppressCallbacks,
       OptionalValue<DualToneMultiFrequency> dualToneMultiFrequency,
       OptionalValue<IndicationType> indications,
-      OptionalValue<AnsweringMachineDetection> answeringMachineDetectionEnabled) {
+      OptionalValue<AnsweringMachineDetection> answeringMachineDetection) {
     this.number = number;
     this.locale = locale;
     this.maxDuration = maxDuration;
@@ -34,7 +34,7 @@ public class ActionConnectPstn extends Action {
     this.suppressCallbacks = suppressCallbacks;
     this.dualToneMultiFrequency = dualToneMultiFrequency;
     this.indications = indications;
-    this.answeringMachineDetection = answeringMachineDetectionEnabled;
+    this.answeringMachineDetection = answeringMachineDetection;
   }
 
   public OptionalValue<E164PhoneNumber> getNumber() {
