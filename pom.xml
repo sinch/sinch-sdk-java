@@ -1,10 +1,9 @@
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.sinch.sdk</groupId>
     <artifactId>sinch-sdk-java</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.3-alpha</version>
 
     <name>Sinch Java SDK</name>
     <description>
@@ -37,7 +36,8 @@
         <url>https://github.com/sinch/sinch-sdk-java.git</url>
         <connection>scm:git:${project.scm.url}</connection>
         <developerConnection>scm:git:${project.scm.url}</developerConnection>
-    </scm>
+      <tag>v0.0.3-alpha</tag>
+  </scm>
 
     <issueManagement>
         <url>https://github.com/sinch/sinch-sdk-java/issues</url>
@@ -299,13 +299,13 @@
                             <style>GOOGLE</style>
                             <reflowLongStrings>true</reflowLongStrings>
                         </googleJavaFormat>
-                        <endWithNewline/>
-                        <removeUnusedImports/>
+                        <endWithNewline />
+                        <removeUnusedImports />
                         <indent>
                             <spaces>true</spaces>
                             <spacesPerTab>2</spacesPerTab>
                         </indent>
-                        <trimTrailingWhitespace/>
+                        <trimTrailingWhitespace />
                     </java>
 
                 </configuration>
