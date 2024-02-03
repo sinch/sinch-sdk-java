@@ -295,19 +295,19 @@ public class Configuration {
   /** Configuration builder */
   public static class Builder {
 
-    public String keyId;
-    public String keySecret;
-    public String projectId;
-    public String oauthUrl;
-    public String numbersUrl;
-    public SMSRegion smsRegion;
-    public String smsUrl;
-    public String verificationUrl;
-    public String applicationKey;
-    public String applicationSecret;
-    public VoiceRegion voiceRegion;
-    public String voiceUrl;
-    public String voiceApplicationMngmtUrl;
+    String keyId;
+    String keySecret;
+    String projectId;
+    String oauthUrl;
+    String numbersUrl;
+    SMSRegion smsRegion;
+    String smsUrl;
+    String verificationUrl;
+    String applicationKey;
+    String applicationSecret;
+    VoiceRegion voiceRegion;
+    String voiceUrl;
+    String voiceApplicationMngmtUrl;
 
     protected Builder() {}
 
@@ -331,29 +331,6 @@ public class Configuration {
       this.voiceRegion = configuration.getVoiceRegion();
       this.voiceUrl = configuration.getVoiceUrl();
       this.voiceApplicationMngmtUrl = configuration.getVoiceApplicationManagementUrl();
-    }
-
-    /**
-     * Build a Configuration instance from builder current state
-     *
-     * @return Configuration instance build from current builder state
-     * @since 1.0
-     */
-    public Configuration build() {
-      return new Configuration(
-          keyId,
-          keySecret,
-          projectId,
-          oauthUrl,
-          numbersUrl,
-          smsRegion,
-          smsUrl,
-          verificationUrl,
-          voiceRegion,
-          voiceUrl,
-          voiceApplicationMngmtUrl,
-          applicationKey,
-          applicationSecret);
     }
 
     /**
@@ -510,6 +487,53 @@ public class Configuration {
     public Builder setApplicationSecret(String applicationSecret) {
       this.applicationSecret = applicationSecret;
       return this;
+    }
+
+    /**
+     * Setter
+     *
+     * <p>See {@link Configuration#getVoiceRegion()} getter
+     *
+     * @return Current builder
+     * @since 1.0
+     */
+    public VoiceRegion getVoiceRegion() {
+      return voiceRegion;
+    }
+
+    /**
+     * Setter
+     *
+     * <p>See {@link Configuration#getVoiceUrl()} getter
+     *
+     * @return Current builder
+     * @since 1.0
+     */
+    public String getVoiceUrl() {
+      return voiceUrl;
+    }
+
+    /**
+     * Create instance
+     *
+     * @return The instance build with current builder values
+     * @since 1.0
+     */
+    public Configuration build() {
+      return new Configuration(
+          keyId,
+          keySecret,
+          projectId,
+          oauthUrl,
+          numbersUrl,
+          smsRegion,
+          smsUrl,
+          verificationUrl,
+          voiceRegion,
+          voiceUrl,
+          voiceApplicationMngmtUrl,
+          applicationKey,
+          applicationSecret);
     }
   }
 }

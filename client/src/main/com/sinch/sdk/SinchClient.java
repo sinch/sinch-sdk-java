@@ -124,11 +124,11 @@ public class SinchClient {
 
     // server is not defined: use the region to set to an existing one and use "global" as a default
     // fallback
-    if (StringUtil.isEmpty(builder.voiceUrl)) {
+    if (StringUtil.isEmpty(builder.getVoiceUrl())) {
       VoiceRegion region =
-          StringUtil.isEmpty(builder.voiceRegion.value())
+          StringUtil.isEmpty(builder.getVoiceRegion().value())
               ? VoiceRegion.GLOBAL
-              : builder.voiceRegion;
+              : builder.getVoiceRegion();
       builder.setVoiceUrl(props.getProperty(String.format("voice-server-%s", region.value())));
     }
 
