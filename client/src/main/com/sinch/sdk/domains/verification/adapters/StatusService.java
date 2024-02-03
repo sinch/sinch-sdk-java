@@ -1,12 +1,10 @@
 package com.sinch.sdk.domains.verification.adapters;
 
-import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.domains.verification.adapters.api.v1.QueryVerificationsApi;
 import com.sinch.sdk.domains.verification.adapters.converters.VerificationsDtoConverter;
-import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
@@ -30,16 +28,10 @@ public class StatusService implements com.sinch.sdk.domains.verification.StatusS
     return this.api;
   }
 
-  public VerificationReport get(Identity identity, VerificationMethodType method) {
-    if (!(identity instanceof NumberIdentity)) {
-      throw new ApiException("Unexpected entity: " + identity);
-    }
-    NumberIdentity numberIdentity = (NumberIdentity) identity;
+  public VerificationReport get(NumberIdentity identity, VerificationMethodType method) {
 
     return VerificationsDtoConverter.convert(
-        getApi()
-            .verificationStatusByIdentity(
-                numberIdentity.getType(), numberIdentity.getEndpoint(), method.value()));
+        getApi().verificationStatusByIdentity("number", identity.getEndpoint(), method.value()));
   }
 
   public VerificationReport get(VerificationId id) {

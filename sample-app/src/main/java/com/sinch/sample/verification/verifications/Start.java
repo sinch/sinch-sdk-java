@@ -38,10 +38,7 @@ public class Start extends BaseApplication {
     } else {
       // Dedicated flashcall builder usage do not require setting explicit verification method
       // parameter
-      builder =
-          StartVerificationFlashCallRequestParameters.builder()
-              .setIdentity(identity)
-              .setDialTimeOut(17);
+      builder = StartVerificationFlashCallRequestParameters.builder().setDialTimeOut(17);
     }
 
     // process common properties

@@ -1,20 +1,21 @@
 package com.sinch.sdk.domains.verification.models;
 
-/** Base class for Identity based objects */
+/** Base class for Identity objects */
 public abstract class Identity {
 
-  public final String type;
+  private final String type;
 
-  public Identity(String type) {
+  /**
+   * Create an instance of identity with type
+   *
+   * @param type Identity type
+   */
+  protected Identity(String type) {
     this.type = type;
   }
 
   @Override
   public String toString() {
     return "Identity{" + "type='" + type + '\'' + '}';
-  }
-
-  public String getType() {
-    return type;
   }
 }
