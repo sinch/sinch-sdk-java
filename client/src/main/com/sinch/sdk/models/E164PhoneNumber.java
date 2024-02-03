@@ -28,7 +28,7 @@ public class E164PhoneNumber {
   private static final AtomicBoolean STRICT = new AtomicBoolean(false);
   private final String number;
 
-  public E164PhoneNumber(String number) {
+  private E164PhoneNumber(String number) {
 
     if (!validate(number)) {
       String message = String.format("Invalid E164 format for '%s' number", number);
