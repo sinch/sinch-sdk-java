@@ -13,8 +13,5 @@ public class ApiAuthException extends ApiException {
   public ApiAuthException(String message) {
     super(message, null, HttpStatus.UNAUTHORIZED);
   }
-
-  public ApiAuthException(int code, String message) {
-    super(message, null, code);
-  }
+  
 }
