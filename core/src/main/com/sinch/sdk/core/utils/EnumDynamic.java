@@ -23,17 +23,24 @@ public abstract class EnumDynamic<T, E extends EnumDynamic<T, E>> {
     return value;
   }
 
+  @Override
   public String toString() {
     return value().toString();
   }
 
-  public boolean equals(E o) {
+  @Override
+  public boolean equals(Object o) {
     if (o == this) {
       return true;
     }
-    return java.util.Objects.equals(this.value, o.value());
+    if (!(o instanceof EnumDynamic)) {
+      return false;
+    }
+
+    return java.util.Objects.equals(this.value, ((EnumDynamic<?, ?>) o).value());
   }
 
+  @Override
   public int hashCode() {
     return value.hashCode();
   }

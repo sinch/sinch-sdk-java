@@ -1,11 +1,19 @@
 package com.sinch.sdk.core.models.pagination;
 
+/** Cursor Based Page Navigator */
 public class CursorPageNavigator extends PageNavigator<Integer> {
 
   private final Integer currentPage;
   private final Integer pageSize;
   private final Long collectionSize;
 
+  /**
+   * Create new instance
+   *
+   * @param currentPage Current page value
+   * @param pageSize Page size
+   * @param collectionSize Size of collection
+   */
   public CursorPageNavigator(Integer currentPage, Integer pageSize, Long collectionSize) {
     super(null);
     this.currentPage = currentPage;
@@ -19,6 +27,7 @@ public class CursorPageNavigator extends PageNavigator<Integer> {
     return ((currentPage + 1) * Long.valueOf(pageSize)) >= collectionSize ? null : currentPage + 1;
   }
 
+  /** {@inheritDoc} */
   @Override
   public Integer getToken() {
     return computeNextPageCursor();

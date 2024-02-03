@@ -18,6 +18,12 @@ public class VerificationResponseFlashCall extends VerificationResponse {
     this.flashCall = flashCall;
   }
 
+  /**
+   * Flash call Response related information
+   *
+   * @return Flash call related information
+   * @since 1.0
+   */
   public FlashCallResponse getFlashCall() {
     return flashCall;
   }
@@ -43,6 +49,8 @@ public class VerificationResponseFlashCall extends VerificationResponse {
     private final Integer dialTimeout;
 
     /**
+     * Flash call response related information
+     *
      * @param cli The phone number that will be displayed to the user when the flashcall is received
      *     on the user's phone. By default, the Sinch dashboard will randomly select the CLI that
      *     will be displayed during a flashcall from a pool of numbers. If you want to set your own
@@ -58,10 +66,22 @@ public class VerificationResponseFlashCall extends VerificationResponse {
       this.dialTimeout = dialTimeout;
     }
 
+    /**
+     * See constructor
+     *
+     * @return See {@link FlashCallResponse#FlashCallResponse(String, Integer) FlashCallResponse}
+     * @since 1.0
+     */
     public String getCli() {
       return cli;
     }
 
+    /**
+     * See constructor
+     *
+     * @return See {@link FlashCallResponse#FlashCallResponse(String, Integer) FlashCallResponse}
+     * @since 1.0
+     */
     public Integer getDialTimeout() {
       return dialTimeout;
     }
@@ -72,26 +92,63 @@ public class VerificationResponseFlashCall extends VerificationResponse {
     }
   }
 
+  /**
+   * Getting Builder
+   *
+   * @return New Builder instance
+   * @since 1.0
+   */
   public static Builder builder() {
     return new Builder();
   }
 
+  /**
+   * Dedicated Builder
+   *
+   * @since 1.0
+   */
   public static class Builder extends VerificationResponse.Builder<Builder> {
 
     String cli;
 
     Integer dialTimeout;
 
+    private Builder() {}
+
+    /**
+     * See {@link
+     * VerificationResponseFlashCall#VerificationResponseFlashCall(VerificationResponseActionType,
+     * FlashCallResponse) constructor}
+     *
+     * @param cli see constructor
+     * @return The current builder
+     * @since 1.0
+     */
     public Builder setCli(String cli) {
       this.cli = cli;
       return self();
     }
 
+    /**
+     * See {@link
+     * VerificationResponseFlashCall#VerificationResponseFlashCall(VerificationResponseActionType,
+     * FlashCallResponse) constructor}
+     *
+     * @param dialTimeout see constructor
+     * @return The current builder
+     * @since 1.0
+     */
     public Builder setDialTimeout(Integer dialTimeout) {
       this.dialTimeout = dialTimeout;
       return self();
     }
 
+    /**
+     * Create instance
+     *
+     * @return The instance build with current builder values
+     * @since 1.0
+     */
     public VerificationResponseFlashCall build() {
       return new VerificationResponseFlashCall(action, new FlashCallResponse(cli, dialTimeout));
     }

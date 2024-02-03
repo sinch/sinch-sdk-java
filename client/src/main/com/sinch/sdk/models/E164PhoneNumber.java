@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/** E164 Phone Number representation class helper */
 public class E164PhoneNumber {
 
   private static final Logger LOGGER = Logger.getLogger(E164PhoneNumber.class.getName());
@@ -28,6 +29,11 @@ public class E164PhoneNumber {
   private static final AtomicBoolean STRICT = new AtomicBoolean(false);
   private final String number;
 
+  /**
+   * Create a new instance
+   *
+   * @param number Phone number value
+   */
   private E164PhoneNumber(String number) {
 
     if (!validate(number)) {
@@ -40,10 +46,22 @@ public class E164PhoneNumber {
     this.number = number;
   }
 
+  /**
+   * Create a new instance
+   *
+   * @param value Phone number value
+   * @return The newly created E164 instance
+   */
   public static E164PhoneNumber valueOf(String value) {
     return new E164PhoneNumber(value);
   }
 
+  /**
+   * Validate value against E164 representation pattern,
+   *
+   * @param value String value representation to be checked
+   * @return TRUE/FALSE
+   */
   public static boolean validate(String value) {
     // don't worry about spaces
     Matcher matcher = PATTERN.matcher(value.replaceAll("\\s+", ""));
@@ -59,6 +77,11 @@ public class E164PhoneNumber {
     E164PhoneNumber.STRICT.set(strict);
   }
 
+  /**
+   * Get current value as a String
+   *
+   * @return The value
+   */
   public String stringValue() {
     return number;
   }

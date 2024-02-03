@@ -3,11 +3,21 @@ package com.sinch.sdk.core.exceptions;
 import java.util.Map;
 import java.util.Optional;
 
+/** APIException Builder helper to transform dedicated domains error response to Exception */
 public class ApiExceptionBuilder {
 
   private ApiExceptionBuilder() {}
   ;
 
+  /**
+   * Consume Unqualified Map of fields received from an API error into a dedicated Exception
+   *
+   * @param message the detail message.
+   * @param code Code
+   * @param mappedResponse Map of fields (usually coming from a JSON representation) to be
+   *     interpreted
+   * @return Dedicated ApiException
+   */
   public static ApiException build(String message, int code, Map<String, ?> mappedResponse) {
 
     // Hardcoded Numbers API errors like format parsing

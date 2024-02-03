@@ -284,15 +284,32 @@ public class Configuration {
     return applicationSecret;
   }
 
+  /**
+   * Getting Builder
+   *
+   * @return New Builder instance
+   * @since 1.0
+   */
   public static Builder builder() {
     return new Builder();
   }
 
+  /**
+   * Getting Builder
+   *
+   * @param configuration Source configuration to fill initial builder state
+   * @return New Builder instance
+   * @since 1.0
+   */
   public static Builder builder(Configuration configuration) {
     return new Builder(configuration);
   }
 
-  /** Configuration builder */
+  /**
+   * Dedicated Builder
+   *
+   * @since 1.0
+   */
   public static class Builder {
 
     String keyId;

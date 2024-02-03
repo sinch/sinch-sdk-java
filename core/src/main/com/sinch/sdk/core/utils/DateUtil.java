@@ -6,6 +6,9 @@ import java.time.OffsetDateTime;
 /** Utility class for Date */
 public class DateUtil {
 
+  private DateUtil() {}
+  ;
+
   /**
    * Convert an OffsetDateTime to Instant with null value protection
    *
