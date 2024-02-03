@@ -8,7 +8,7 @@ public class Price {
    * @param currencyId ISO 4217 currency code
    * @param amount The amount
    */
-  public Price(String currencyId, Float amount) {
+  private Price(String currencyId, Float amount) {
     this.currencyId = currencyId;
     this.amount = amount;
   }

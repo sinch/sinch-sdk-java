@@ -2,9 +2,9 @@ package com.sinch.sdk.domains.verification.models;
 
 public class VerificationId {
 
-  public final String id;
+  private final String id;
 
-  public VerificationId(String id) {
+  private VerificationId(String id) {
     this.id = id;
   }
 

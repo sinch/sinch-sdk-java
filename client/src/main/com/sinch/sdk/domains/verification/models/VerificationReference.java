@@ -2,9 +2,9 @@ package com.sinch.sdk.domains.verification.models;
 
 public class VerificationReference {
 
-  public final String reference;
+  private final String reference;
 
-  public VerificationReference(String reference) {
+  private VerificationReference(String reference) {
     this.reference = reference;
   }
 

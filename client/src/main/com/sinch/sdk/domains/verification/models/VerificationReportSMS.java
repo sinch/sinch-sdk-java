@@ -16,7 +16,7 @@ public class VerificationReportSMS extends VerificationReport {
    *     verification status is other than PENDING
    * @param source Used to show if the SMS was intercepted or not
    */
-  public VerificationReportSMS(
+  private VerificationReportSMS(
       VerificationId id,
       VerificationReportStatusType status,
       VerificationReportReasonType reason,

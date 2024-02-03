@@ -26,7 +26,7 @@ public class VerificationReportFlashCall extends VerificationReport {
    *     value.
    * @param source Used to show if the call was intercepted or not
    */
-  public VerificationReportFlashCall(
+  private VerificationReportFlashCall(
       VerificationId id,
       VerificationReportStatusType status,
       VerificationReportReasonType reason,

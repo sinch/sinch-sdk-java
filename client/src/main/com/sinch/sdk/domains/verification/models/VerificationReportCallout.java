@@ -26,7 +26,7 @@ public class VerificationReportCallout extends VerificationReport {
    *     value.
    * @param callComplete Shows whether the call is complete or not.
    */
-  public VerificationReportCallout(
+  private VerificationReportCallout(
       VerificationId id,
       VerificationReportStatusType status,
       VerificationReportReasonType reason,

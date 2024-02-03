@@ -12,7 +12,7 @@ public class NumberIdentity extends Identity {
   /**
    * @param endpoint An E.164-compatible phone number.
    */
-  public NumberIdentity(String endpoint) {
+  private NumberIdentity(String endpoint) {
     super("number");
     this.endpoint = endpoint;
   }

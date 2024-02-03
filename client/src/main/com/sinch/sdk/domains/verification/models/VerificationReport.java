@@ -1,6 +1,10 @@
 package com.sinch.sdk.domains.verification.models;
 
-/** Comme class to all verification report responses */
+/**
+ * Common class to all verification report responses
+ *
+ * @since 1.0
+ */
 public class VerificationReport {
 
   private final VerificationId id;
@@ -8,7 +12,7 @@ public class VerificationReport {
   private final VerificationReportReasonType reason;
   private final VerificationReference reference;
 
-  public VerificationReport(
+  protected VerificationReport(
       VerificationId id,
       VerificationReportStatusType status,
       VerificationReportReasonType reason,
@@ -51,7 +55,7 @@ public class VerificationReport {
         + '}';
   }
 
-  public static Builder<?> builder() {
+  protected static Builder<?> builder() {
     return new Builder<>();
   }
 

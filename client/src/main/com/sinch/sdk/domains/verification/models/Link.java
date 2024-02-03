@@ -8,13 +8,7 @@ public class Link {
   private final String href;
   private final HttpMethod method;
 
-  /**
-   * @param rel The related action that can be performed on the initiated Verification
-   * @param href The complete URL to perform the specified action, localized to the DataCenter which
-   *     handled the original Verification request
-   * @param method The HTTP method to use when performing the action using the linked localized URL
-   */
-  public Link(LinkRelType rel, String href, HttpMethod method) {
+  private Link(LinkRelType rel, String href, HttpMethod method) {
     this.rel = rel;
     this.href = href;
     this.method = method;
