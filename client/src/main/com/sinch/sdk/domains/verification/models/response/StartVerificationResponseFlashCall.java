@@ -22,7 +22,7 @@ public class StartVerificationResponseFlashCall extends StartVerificationRespons
    * @param denyCallAfter Used by the SDKs, this setting makes the handset deny the flashcall after
    *     the set time in seconds.
    */
-  public StartVerificationResponseFlashCall(
+  private StartVerificationResponseFlashCall(
       VerificationId id,
       Collection<Link> links,
       String cliFilter,

@@ -14,7 +14,7 @@ public class StartVerificationResponseSeamless extends StartVerificationResponse
    * @param links Available methods and actions which can be done after a successful Verification
    * @param targetUri The target URI
    */
-  public StartVerificationResponseSeamless(
+  private StartVerificationResponseSeamless(
       VerificationId id, Collection<Link> links, String targetUri) {
     super(id, links);
     this.targetUri = targetUri;

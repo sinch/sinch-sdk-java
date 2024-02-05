@@ -45,7 +45,7 @@ public class VerificationReportSMSRequestParameters extends VerificationReportRe
     OptionalValue<String> code = OptionalValue.empty();
     OptionalValue<String> cli = OptionalValue.empty();
 
-    public Builder() {
+    protected Builder() {
       super(VerificationMethodType.SMS);
     }
 
@@ -67,7 +67,6 @@ public class VerificationReportSMSRequestParameters extends VerificationReportRe
       return this;
     }
 
-    @Override
     public VerificationReportSMSRequestParameters build() {
       return new VerificationReportSMSRequestParameters(code, cli);
     }

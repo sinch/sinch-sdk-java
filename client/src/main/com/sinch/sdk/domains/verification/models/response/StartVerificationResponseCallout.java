@@ -11,7 +11,7 @@ public class StartVerificationResponseCallout extends StartVerificationResponse 
    * @param id Verification identifier used to query for status.
    * @param links Available methods and actions which can be done after a successful Verification
    */
-  public StartVerificationResponseCallout(VerificationId id, Collection<Link> links) {
+  private StartVerificationResponseCallout(VerificationId id, Collection<Link> links) {
     super(id, links);
   }
 

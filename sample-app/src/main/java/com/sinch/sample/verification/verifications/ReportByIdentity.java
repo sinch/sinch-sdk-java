@@ -43,7 +43,7 @@ public class ReportByIdentity extends BaseApplication {
     } else if (method == VerificationMethodType.CALLOUT) {
       builder = VerificationReportCalloutRequestParameters.builder().setCode("5762");
     } else {
-      builder = VerificationReportRequestParameters.builder();
+      throw new UnsupportedOperationException("Unknown method " + method);
     }
 
     VerificationReport response =

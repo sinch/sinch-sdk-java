@@ -17,6 +17,8 @@ import java.util.stream.StreamSupport;
  */
 public abstract class ListResponse<T> {
 
+  protected ListResponse() {}
+
   /**
    * Indicate if another page response is available
    *

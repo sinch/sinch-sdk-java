@@ -15,9 +15,8 @@ class StartVerificationRequestParametersTest {
   final String custom = "foo custom";
 
   final StartVerificationRequestParameters value =
-      StartVerificationRequestParameters.builder()
+      StartVerificationRequestParameters.builder(method)
           .setIdentity(identity)
-          .setMethod(method)
           .setReference(VerificationReference.valueOf(reference))
           .setCustom(custom)
           .build();

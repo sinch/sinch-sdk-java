@@ -100,7 +100,7 @@ public final class EnumSupportDynamic<T, E extends EnumDynamic<T, E>> {
     return Objects.compare(v1, v2, String::compareTo);
   }
 
-  public String toComparableValue(Object o) {
+  private String toComparableValue(Object o) {
 
     if (o == null) {
       return null;

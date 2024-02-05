@@ -35,7 +35,7 @@ public class VerificationReportCalloutRequestParameters
 
     OptionalValue<String> code = OptionalValue.empty();
 
-    public Builder() {
+    protected Builder() {
       super(VerificationMethodType.CALLOUT);
     }
 
@@ -48,7 +48,6 @@ public class VerificationReportCalloutRequestParameters
       return this;
     }
 
-    @Override
     public VerificationReportCalloutRequestParameters build() {
       return new VerificationReportCalloutRequestParameters(code);
     }

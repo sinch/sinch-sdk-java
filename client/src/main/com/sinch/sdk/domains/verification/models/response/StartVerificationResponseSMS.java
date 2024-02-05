@@ -17,7 +17,7 @@ public class StartVerificationResponseSMS extends StartVerificationResponse {
    * @param interceptionTimeOut The amount of time in seconds that the client should wait for the
    *     SMS.
    */
-  public StartVerificationResponseSMS(
+  private StartVerificationResponseSMS(
       VerificationId id, Collection<Link> links, String template, Integer interceptionTimeOut) {
     super(id, links);
     this.template = template;

@@ -20,7 +20,7 @@ public class VerificationReportRequestParameters {
     return "VerificationReportRequestParameters{" + "method=" + method + '}';
   }
 
-  public static Builder<?> builder() {
+  protected static Builder<?> builder() {
     return new Builder<>();
   }
 
@@ -28,19 +28,10 @@ public class VerificationReportRequestParameters {
 
     OptionalValue<VerificationMethodType> method;
 
-    public Builder() {}
+    protected Builder() {}
 
-    public Builder(VerificationMethodType method) {
+    protected Builder(VerificationMethodType method) {
       this.method = OptionalValue.of(method);
-    }
-
-    /**
-     * @param method The type of the verification request.
-     * @return current builder
-     */
-    protected B setMethod(VerificationMethodType method) {
-      this.method = OptionalValue.of(method);
-      return self();
     }
 
     public VerificationReportRequestParameters build() {

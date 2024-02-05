@@ -35,7 +35,7 @@ public class VerificationReportFlashCallRequestParameters
 
     OptionalValue<String> cli = OptionalValue.empty();
 
-    public Builder() {
+    protected Builder() {
       super(VerificationMethodType.FLASH_CALL);
     }
 
@@ -48,7 +48,6 @@ public class VerificationReportFlashCallRequestParameters
       return this;
     }
 
-    @Override
     public VerificationReportFlashCallRequestParameters build() {
       return new VerificationReportFlashCallRequestParameters(cli);
     }

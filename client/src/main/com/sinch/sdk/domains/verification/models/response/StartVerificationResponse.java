@@ -14,7 +14,7 @@ public class StartVerificationResponse {
    * @param id Verification identifier used to query for status.
    * @param links Available methods and actions which can be done after a successful Verification
    */
-  public StartVerificationResponse(VerificationId id, Collection<Link> links) {
+  protected StartVerificationResponse(VerificationId id, Collection<Link> links) {
     this.id = id;
     this.links = links;
   }

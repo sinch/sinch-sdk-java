@@ -60,10 +60,6 @@ public class StartVerificationRequestParameters {
         + '}';
   }
 
-  public static Builder<?> builder() {
-    return new Builder<>();
-  }
-
   public static Builder<?> builder(VerificationMethodType method) {
     return new Builder<>(method);
   }
@@ -75,12 +71,10 @@ public class StartVerificationRequestParameters {
     OptionalValue<VerificationReference> reference = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
 
-    public Builder() {}
-
     /**
      * @param method The type of the verification request
      */
-    public Builder(VerificationMethodType method) {
+    protected Builder(VerificationMethodType method) {
       this.method = OptionalValue.of(method);
     }
 
@@ -91,15 +85,6 @@ public class StartVerificationRequestParameters {
      */
     public B setIdentity(Identity identity) {
       this.identity = OptionalValue.of(identity);
-      return self();
-    }
-
-    /**
-     * @param method The type of the verification request.
-     * @return current builder
-     */
-    protected B setMethod(VerificationMethodType method) {
-      this.method = OptionalValue.of(method);
       return self();
     }
 

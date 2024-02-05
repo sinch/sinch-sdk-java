@@ -41,7 +41,7 @@ public class StartVerificationFlashCallRequestParameters
 
     OptionalValue<Integer> dialTimeOut = OptionalValue.empty();
 
-    public Builder() {
+    private Builder() {
       super(VerificationMethodType.FLASH_CALL);
     }
 
