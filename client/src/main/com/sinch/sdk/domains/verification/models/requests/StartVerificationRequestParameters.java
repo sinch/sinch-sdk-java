@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.verification.models.requests;
 
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.Identity;
+import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.VerificationReference;
 
@@ -83,7 +84,7 @@ public class StartVerificationRequestParameters {
      *     endpoint. number is currently the only supported endpoint type
      * @return current builder
      */
-    public B setIdentity(Identity identity) {
+    public B setIdentity(NumberIdentity identity) {
       this.identity = OptionalValue.of(identity);
       return self();
     }

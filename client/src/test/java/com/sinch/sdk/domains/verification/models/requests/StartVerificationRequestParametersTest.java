@@ -1,6 +1,5 @@
 package com.sinch.sdk.domains.verification.models.requests;
 
-import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.VerificationReference;
@@ -9,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class StartVerificationRequestParametersTest {
 
-  final Identity identity = NumberIdentity.builder().setEndpoint("foo identity").build();
+  final NumberIdentity identity = NumberIdentity.builder().setEndpoint("foo identity").build();
   final VerificationMethodType method = VerificationMethodType.CALLOUT;
   final String reference = "foo reference";
   final String custom = "foo custom";
