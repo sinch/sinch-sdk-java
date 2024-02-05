@@ -35,7 +35,7 @@ public interface WebHooksService {
    *     href="https://developers.sinch.com/docs/verification/api-reference/authentication/callback-signed-request">https://developers.sinch.com/docs/verification/api-reference/authentication/callback-signed-request</a>
    * @since 1.0
    */
-  boolean validateAuthenticatedRequest(
+  boolean validateAuthenticationHeader(
       String method, String path, Map<String, String> headers, String jsonPayload);
 
   /**
@@ -48,7 +48,7 @@ public interface WebHooksService {
    *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/</a>
    * @since 1.0
    */
-  VerificationEvent unserializeVerificationEvent(String jsonPayload) throws ApiMappingException;
+  VerificationEvent parseEvent(String jsonPayload) throws ApiMappingException;
 
   /**
    * This function can be called to serialize a verification response to be sent as JSON
@@ -59,5 +59,5 @@ public interface WebHooksService {
    *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/</a>
    * @since 1.0
    */
-  String serializeVerificationResponse(VerificationResponse response) throws ApiMappingException;
+  String serializeResponse(VerificationResponse response) throws ApiMappingException;
 }

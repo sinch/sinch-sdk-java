@@ -20,7 +20,7 @@ public class WebHooksService implements com.sinch.sdk.domains.verification.WebHo
     this.authManagers = authManagers;
   }
 
-  public boolean validateAuthenticatedRequest(
+  public boolean validateAuthenticationHeader(
       String method, String path, Map<String, String> headers, String jsonPayload) {
 
     // convert header keys to use case-insensitive map keys
@@ -48,8 +48,7 @@ public class WebHooksService implements com.sinch.sdk.domains.verification.WebHo
   }
 
   @Override
-  public VerificationEvent unserializeVerificationEvent(String jsonPayload)
-      throws ApiMappingException {
+  public VerificationEvent parseEvent(String jsonPayload) throws ApiMappingException {
     try {
       return Mapper.getInstance().readValue(jsonPayload, VerificationEvent.class);
     } catch (JsonProcessingException e) {
@@ -58,8 +57,7 @@ public class WebHooksService implements com.sinch.sdk.domains.verification.WebHo
   }
 
   @Override
-  public String serializeVerificationResponse(VerificationResponse response)
-      throws ApiMappingException {
+  public String serializeResponse(VerificationResponse response) throws ApiMappingException {
     try {
       return Mapper.getInstance().writeValueAsString(response);
     } catch (JsonProcessingException e) {

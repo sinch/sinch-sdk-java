@@ -34,7 +34,7 @@ public class VoiceController {
       value = "/VoiceEvent",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public String VerificationEvent(
+  public String VoiceEvent(
       @RequestHeader Map<String, String> headers, @RequestBody String body) {
 
     LOGGER.finest("Received body:" + body);
@@ -43,7 +43,7 @@ public class VoiceController {
     // ensure valid authentication to handle request
     var validAuth =
         sinchClient
-            .verification()
+            .voice()
             .webhooks()
             .validateAuthenticatedRequest(
                 // The HTTP verb this controller is managing
