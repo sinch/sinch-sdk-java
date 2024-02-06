@@ -6,7 +6,7 @@ import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.VerificationReference;
 
 /**
- * Dedicated request parameters to be used for a flash call verification
+ * Dedicated request parameters to be used for a FLASH_CALL verification
  *
  * @since 1.0
  */
@@ -20,7 +20,7 @@ public class StartVerificationFlashCallRequestParameters
       OptionalValue<VerificationReference> reference,
       OptionalValue<String> custom,
       OptionalValue<Integer> dialTimeOut) {
-    super(identity, OptionalValue.of(VerificationMethodType.FLASH_CALL), reference, custom);
+    super(identity, VerificationMethodType.FLASH_CALL, reference, custom);
     this.dialTimeOut = dialTimeOut;
   }
 
@@ -63,9 +63,7 @@ public class StartVerificationFlashCallRequestParameters
 
     OptionalValue<Integer> dialTimeOut = OptionalValue.empty();
 
-    private Builder() {
-      super(VerificationMethodType.FLASH_CALL);
-    }
+    private Builder() {}
 
     /**
      * Set the dial timeout

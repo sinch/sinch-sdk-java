@@ -56,8 +56,8 @@ public class VerificationsDtoConverter {
   public static InitiateVerificationResourceDto convert(StartVerificationRequestParameters client) {
     InitiateVerificationResourceDto dto = new InitiateVerificationResourceDto();
 
+    dto.method(convert(client.getMethod()));
     client.getIdentity().ifPresent(f -> dto.identity(convert(f)));
-    client.getMethod().ifPresent(f -> dto.method(convert(f)));
     client.getReference().ifPresent(f -> dto.reference(f.getReference()));
     client.getCustom().ifPresent(dto::custom);
 

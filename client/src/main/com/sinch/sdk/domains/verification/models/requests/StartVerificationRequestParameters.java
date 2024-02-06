@@ -11,16 +11,16 @@ import com.sinch.sdk.domains.verification.models.VerificationReference;
  *
  * @since 1.0
  */
-public class StartVerificationRequestParameters {
+public abstract class StartVerificationRequestParameters {
 
+  private final VerificationMethodType method;
   private final OptionalValue<Identity> identity;
-  private final OptionalValue<VerificationMethodType> method;
   private final OptionalValue<VerificationReference> reference;
   private final OptionalValue<String> custom;
 
   protected StartVerificationRequestParameters(
       OptionalValue<Identity> identity,
-      OptionalValue<VerificationMethodType> method,
+      VerificationMethodType method,
       OptionalValue<VerificationReference> reference,
       OptionalValue<String> custom) {
     this.identity = identity;
@@ -46,7 +46,7 @@ public class StartVerificationRequestParameters {
    * @return The method value
    * @since 1.0
    */
-  public OptionalValue<VerificationMethodType> getMethod() {
+  public VerificationMethodType getMethod() {
     return method;
   }
 
@@ -74,10 +74,10 @@ public class StartVerificationRequestParameters {
   @Override
   public String toString() {
     return "StartVerificationRequestParameters{"
-        + "identity="
-        + identity
-        + ", method="
+        + "method="
         + method
+        + ", identity="
+        + identity
         + ", reference='"
         + reference
         + '\''
@@ -88,38 +88,16 @@ public class StartVerificationRequestParameters {
   }
 
   /**
-   * Getting Builder
-   *
-   * @param method Method to be used
-   * @return New Builder instance
-   * @since 1.0
-   */
-  public static Builder<?> builder(VerificationMethodType method) {
-    return new Builder<>(method);
-  }
-
-  /**
    * Dedicated Builder
    *
    * @param <B> Builder
    * @since 1.0
    */
-  public static class Builder<B extends Builder<B>> {
+  public abstract static class Builder<B extends Builder<B>> {
 
     OptionalValue<Identity> identity = OptionalValue.empty();
-    OptionalValue<VerificationMethodType> method = OptionalValue.empty();
     OptionalValue<VerificationReference> reference = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
-
-    /**
-     * The type of the verification request
-     *
-     * @param method The type value
-     * @since 1.0
-     */
-    protected Builder(VerificationMethodType method) {
-      this.method = OptionalValue.of(method);
-    }
 
     /**
      * Specifies the type of endpoint that will be verified and the particular endpoint.
@@ -165,9 +143,7 @@ public class StartVerificationRequestParameters {
      * @return The instance build with current builder values
      * @since 1.0
      */
-    public StartVerificationRequestParameters build() {
-      return new StartVerificationRequestParameters(identity, method, reference, custom);
-    }
+    public abstract StartVerificationRequestParameters build();
 
     @SuppressWarnings("unchecked")
     protected B self() {

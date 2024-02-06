@@ -10,8 +10,7 @@ import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.verification.VerificationsService;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
-import com.sinch.sdk.domains.verification.models.VerificationMethodType;
-import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportSMSRequestParameters;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.E164PhoneNumber;
@@ -84,7 +83,7 @@ public class VerificationsSampleFlowInteractive {
       VerificationsService service, E164PhoneNumber phoneNumber) {
 
     var parameters =
-        StartVerificationRequestParameters.builder(VerificationMethodType.SMS)
+        StartVerificationSMSRequestParameters.builder()
             .setIdentity(NumberIdentity.valueOf(phoneNumber))
             .build();
     echo("Sending verification request onto '%s'".formatted(phoneNumber.stringValue()));
