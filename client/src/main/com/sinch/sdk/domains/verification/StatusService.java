@@ -1,6 +1,6 @@
 package com.sinch.sdk.domains.verification;
 
-import com.sinch.sdk.domains.verification.models.Identity;
+import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.VerificationReference;
@@ -22,12 +22,13 @@ public interface StatusService {
    * Queries the verification result by sending the verification Identity (usually a phone number)
    * and its method. With this query you can get the result of a verification.
    *
-   * @param identity Only number identity is supported
+   * @param identity Currently <b>Only</b> {@link
+   *     com.sinch.sdk.domains.verification.models.NumberIdentity NumberIdentity} is supported
    * @param method Method used for verification
    * @return Verification report response
    * @since 1.0
    */
-  VerificationReport get(Identity identity, VerificationMethodType method);
+  VerificationReport get(NumberIdentity identity, VerificationMethodType method);
 
   /**
    * Queries the verification result by sending the verification ID. With this query you can get the

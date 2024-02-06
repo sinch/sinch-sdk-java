@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.verification.models.requests;
 
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.Identity;
+import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.VerificationReference;
 
@@ -10,16 +11,16 @@ import com.sinch.sdk.domains.verification.models.VerificationReference;
  *
  * @since 1.0
  */
-public class StartVerificationRequestParameters {
+public abstract class StartVerificationRequestParameters {
 
+  private final VerificationMethodType method;
   private final OptionalValue<Identity> identity;
-  private final OptionalValue<VerificationMethodType> method;
   private final OptionalValue<VerificationReference> reference;
   private final OptionalValue<String> custom;
 
   protected StartVerificationRequestParameters(
       OptionalValue<Identity> identity,
-      OptionalValue<VerificationMethodType> method,
+      VerificationMethodType method,
       OptionalValue<VerificationReference> reference,
       OptionalValue<String> custom) {
     this.identity = identity;
@@ -28,18 +29,44 @@ public class StartVerificationRequestParameters {
     this.custom = custom;
   }
 
+  /**
+   * See {@link StartVerificationRequestParameters.Builder#setIdentity(NumberIdentity) builder
+   * setter}
+   *
+   * @return The reference value
+   * @since 1.0
+   */
   public OptionalValue<Identity> getIdentity() {
     return identity;
   }
 
-  public OptionalValue<VerificationMethodType> getMethod() {
+  /**
+   * The type of the verification request.
+   *
+   * @return The method value
+   * @since 1.0
+   */
+  public VerificationMethodType getMethod() {
     return method;
   }
 
+  /**
+   * See {@link StartVerificationRequestParameters.Builder#setReference(VerificationReference)
+   * builder setter}
+   *
+   * @return The reference value
+   * @since 1.0
+   */
   public OptionalValue<VerificationReference> getReference() {
     return reference;
   }
 
+  /**
+   * See {@link StartVerificationRequestParameters.Builder#setCustom(String) builder setter}
+   *
+   * @return The custom value
+   * @since 1.0
+   */
   public OptionalValue<String> getCustom() {
     return custom;
   }
@@ -47,10 +74,10 @@ public class StartVerificationRequestParameters {
   @Override
   public String toString() {
     return "StartVerificationRequestParameters{"
-        + "identity="
-        + identity
-        + ", method="
+        + "method="
         + method
+        + ", identity="
+        + identity
         + ", reference='"
         + reference
         + '\''
@@ -60,52 +87,38 @@ public class StartVerificationRequestParameters {
         + '}';
   }
 
-  public static Builder<?> builder() {
-    return new Builder<>();
-  }
-
-  public static Builder<?> builder(VerificationMethodType method) {
-    return new Builder<>(method);
-  }
-
-  public static class Builder<B extends Builder<B>> {
+  /**
+   * Dedicated Builder
+   *
+   * @param <B> Builder
+   * @since 1.0
+   */
+  public abstract static class Builder<B extends Builder<B>> {
 
     OptionalValue<Identity> identity = OptionalValue.empty();
-    OptionalValue<VerificationMethodType> method = OptionalValue.empty();
     OptionalValue<VerificationReference> reference = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
 
-    public Builder() {}
-
     /**
-     * @param method The type of the verification request
-     */
-    public Builder(VerificationMethodType method) {
-      this.method = OptionalValue.of(method);
-    }
-
-    /**
+     * Specifies the type of endpoint that will be verified and the particular endpoint.
+     * NumberIdentity is currently the only supported endpoint type
+     *
      * @param identity Specifies the type of endpoint that will be verified and the particular
      *     endpoint. number is currently the only supported endpoint type
      * @return current builder
+     * @since 1.0
      */
-    public B setIdentity(Identity identity) {
+    public B setIdentity(NumberIdentity identity) {
       this.identity = OptionalValue.of(identity);
       return self();
     }
 
     /**
-     * @param method The type of the verification request.
+     * Used to pass your own reference in the request for tracking purposes
+     *
+     * @param reference your own reference to be used
      * @return current builder
-     */
-    protected B setMethod(VerificationMethodType method) {
-      this.method = OptionalValue.of(method);
-      return self();
-    }
-
-    /**
-     * @param reference Used to pass your own reference in the request for tracking purposes.
-     * @return current builder
+     * @since 1.0
      */
     public B setReference(VerificationReference reference) {
       this.reference = OptionalValue.of(reference);
@@ -113,17 +126,24 @@ public class StartVerificationRequestParameters {
     }
 
     /**
-     * @param custom Can be used to pass custom data in the request.
+     * Pass custom data in the request
+     *
+     * @param custom custom data
      * @return current builder
+     * @since 1.0
      */
     public B setCustom(String custom) {
       this.custom = OptionalValue.of(custom);
       return self();
     }
 
-    public StartVerificationRequestParameters build() {
-      return new StartVerificationRequestParameters(identity, method, reference, custom);
-    }
+    /**
+     * Create instance
+     *
+     * @return The instance build with current builder values
+     * @since 1.0
+     */
+    public abstract StartVerificationRequestParameters build();
 
     @SuppressWarnings("unchecked")
     protected B self() {

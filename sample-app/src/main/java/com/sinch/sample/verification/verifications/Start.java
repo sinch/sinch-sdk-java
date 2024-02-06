@@ -3,8 +3,11 @@ package com.sinch.sample.verification.verifications;
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlashCallRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationSeamlessRequestParameters;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -33,15 +36,16 @@ public class Start extends BaseApplication {
 
     StartVerificationRequestParameters.Builder<?> builder;
 
-    if (method != VerificationMethodType.CALLOUT) {
-      builder = StartVerificationRequestParameters.builder(method);
+    if (method == VerificationMethodType.CALLOUT) {
+      builder = StartVerificationCalloutRequestParameters.builder();
+    } else if (method == VerificationMethodType.SMS) {
+      builder = StartVerificationSMSRequestParameters.builder();
+    } else if (method == VerificationMethodType.SEAMLESS) {
+      builder = StartVerificationSeamlessRequestParameters.builder();
+    } else if (method == VerificationMethodType.FLASH_CALL) {
+      builder = StartVerificationFlashCallRequestParameters.builder().setDialTimeOut(17);
     } else {
-      // Dedicated flashcall builder usage do not require setting explicit verification method
-      // parameter
-      builder =
-          StartVerificationFlashCallRequestParameters.builder()
-              .setIdentity(identity)
-              .setDialTimeOut(17);
+      throw new IllegalArgumentException("Unexpected method type '%s'".formatted(method));
     }
 
     // process common properties

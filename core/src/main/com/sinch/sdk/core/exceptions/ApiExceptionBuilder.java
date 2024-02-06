@@ -3,12 +3,21 @@ package com.sinch.sdk.core.exceptions;
 import java.util.Map;
 import java.util.Optional;
 
+/** APIException Builder helper to transform dedicated domains error response to Exception */
 public class ApiExceptionBuilder {
 
-  public static ApiException build(String message, int code) {
-    return new ApiException(message, code);
-  }
+  private ApiExceptionBuilder() {}
+  ;
 
+  /**
+   * Consume Unqualified Map of fields received from an API error into a dedicated Exception
+   *
+   * @param message the detail message.
+   * @param code Code
+   * @param mappedResponse Map of fields (usually coming from a JSON representation) to be
+   *     interpreted
+   * @return Dedicated ApiException
+   */
   public static ApiException build(String message, int code, Map<String, ?> mappedResponse) {
 
     // Hardcoded Numbers API errors like format parsing
@@ -17,13 +26,13 @@ public class ApiExceptionBuilder {
       return exception.get();
     }
 
-    exception = getExceptionFromSmsError(mappedResponse);
+    exception = getExceptionFromSmsError(code, mappedResponse);
     if (exception.isPresent()) {
       return exception.get();
     }
 
     exception = getExceptionFromVerificationError(mappedResponse);
-    return exception.orElseGet(() -> new ApiException(message, code));
+    return exception.orElseGet(() -> new ApiException(code, message));
   }
 
   private static Optional<ApiException> getExceptionFromNumbersError(Map<?, ?> mappedResponse) {
@@ -57,13 +66,14 @@ public class ApiExceptionBuilder {
     }
 
     return Optional.of(
-        new ApiException(String.format("%s: %s", statusValue, messageValue), codeValue));
+        new ApiException(codeValue, String.format("%s: %s", statusValue, messageValue)));
   }
 
-  private static Optional<ApiException> getExceptionFromSmsError(Map<?, ?> mappedResponse) {
+  private static Optional<ApiException> getExceptionFromSmsError(
+      int intCode, Map<?, ?> mappedResponse) {
 
     // excepted SMS API errors have following form
-    //     "code": int,
+    //     "code": string,
     //     "text": string,
     // }
 
@@ -78,7 +88,7 @@ public class ApiExceptionBuilder {
       return Optional.empty();
     }
 
-    return Optional.of(new ApiException(String.format("%s: %s", code, text)));
+    return Optional.of(new ApiException(intCode, String.format("%s: %s", code, text)));
   }
 
   private static Optional<ApiException> getExceptionFromVerificationError(
@@ -106,6 +116,6 @@ public class ApiExceptionBuilder {
 
     return Optional.of(
         new ApiException(
-            String.format("%s (reference=%s)", messageValue, referenceValue), codeValue));
+            codeValue, String.format("%s (reference=%s)", messageValue, referenceValue)));
   }
 }

@@ -48,14 +48,31 @@ public class VerificationReportStatusType
     super(value);
   }
 
+  /**
+   * Get declared values
+   *
+   * @return Stream of values
+   */
   public static Stream<VerificationReportStatusType> values() {
     return ENUM_SUPPORT.values();
   }
 
+  /**
+   * Get value from a string
+   *
+   * @param value String identifier
+   * @return Dynamic enum from value. A new enum is created if value is not yet registered
+   */
   public static VerificationReportStatusType from(String value) {
     return ENUM_SUPPORT.from(value);
   }
 
+  /**
+   * Value of the enum as String
+   *
+   * @param e The enum identifier
+   * @return String identifier of the enum value
+   */
   public static String valueOf(VerificationReportStatusType e) {
     return ENUM_SUPPORT.valueOf(e);
   }

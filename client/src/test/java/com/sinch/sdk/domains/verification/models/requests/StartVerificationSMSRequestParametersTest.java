@@ -6,20 +6,18 @@ import com.sinch.sdk.domains.verification.models.VerificationReference;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class StartVerificationFlashCallRequestParametersTest {
+class StartVerificationSMSRequestParametersTest {
 
   final NumberIdentity identity = NumberIdentity.builder().setEndpoint("foo identity").build();
-  final VerificationMethodType method = VerificationMethodType.FLASH_CALL;
+  final VerificationMethodType method = VerificationMethodType.SMS;
   final String reference = "foo reference";
   final String custom = "foo custom";
 
-  final Integer dialTimeOut = 123;
-  final StartVerificationFlashCallRequestParameters value =
-      StartVerificationFlashCallRequestParameters.builder()
+  final StartVerificationSMSRequestParameters value =
+      StartVerificationSMSRequestParameters.builder()
           .setIdentity(identity)
           .setReference(VerificationReference.valueOf(reference))
           .setCustom(custom)
-          .setDialTimeOut(dialTimeOut)
           .build();
 
   @Test
@@ -40,10 +38,5 @@ class StartVerificationFlashCallRequestParametersTest {
   @Test
   void getCustom() {
     Assertions.assertThat(value.getCustom().get()).isEqualTo(custom);
-  }
-
-  @Test
-  void getDialTimeOut() {
-    Assertions.assertThat(value.getDialTimeOut().get()).isEqualTo(dialTimeOut);
   }
 }

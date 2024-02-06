@@ -3,6 +3,8 @@ package com.sinch.sdk.core.utils;
 /** Utility class for string */
 public class StringUtil {
 
+  private StringUtil() {}
+
   /**
    * Check if a string is empty
    *

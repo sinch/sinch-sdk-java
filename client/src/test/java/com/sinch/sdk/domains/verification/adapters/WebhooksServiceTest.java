@@ -36,7 +36,7 @@ public class WebhooksServiceTest extends BaseTest {
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     boolean authenticationResult =
-        webHooksService.validateAuthenticatedRequest(
+        webHooksService.validateAuthenticationHeader(
             "POST", "/VerificationRequestEvent", headers, request);
 
     Assertions.assertThat(authenticationResult).isEqualTo(true);

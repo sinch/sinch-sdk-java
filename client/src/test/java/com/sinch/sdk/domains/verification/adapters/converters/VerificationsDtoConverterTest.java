@@ -4,7 +4,6 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.Price;
 import com.sinch.sdk.domains.verification.models.VerificationId;
-import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.VerificationReference;
 import com.sinch.sdk.domains.verification.models.VerificationReportCallout;
 import com.sinch.sdk.domains.verification.models.VerificationReportFlashCall;
@@ -16,8 +15,11 @@ import com.sinch.sdk.domains.verification.models.dto.v1.StartVerificationRequest
 import com.sinch.sdk.domains.verification.models.dto.v1.StartVerificationResponseDtoTest;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportDtoTest;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportRequestDtoTest;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlashCallRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationSeamlessRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportCalloutRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportFlashCallRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportSMSRequestParameters;
@@ -31,7 +33,7 @@ import org.junit.jupiter.api.Test;
 public class VerificationsDtoConverterTest extends BaseTest {
 
   public static StartVerificationRequestParameters startVerificationCalloutRequest =
-      StartVerificationRequestParameters.builder(VerificationMethodType.CALLOUT)
+      StartVerificationCalloutRequestParameters.builder()
           .setCustom("a custom")
           .setReference(VerificationReference.valueOf("a reference"))
           .setIdentity(NumberIdentity.builder().setEndpoint("+endpoint").build())
@@ -60,7 +62,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
           .setDenyCallAfter(0)
           .build();
   public static StartVerificationRequestParameters startVerificationSeamlessRequest =
-      StartVerificationRequestParameters.builder(VerificationMethodType.SEAMLESS)
+      StartVerificationSeamlessRequestParameters.builder()
           .setCustom("a custom")
           .setReference(VerificationReference.valueOf("a reference"))
           .setIdentity(NumberIdentity.builder().setEndpoint("+endpoint").build())
@@ -72,7 +74,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
           .setTargetUri("target URI")
           .build();
   public static StartVerificationRequestParameters startVerificationSMSRequest =
-      StartVerificationRequestParameters.builder(VerificationMethodType.SMS)
+      StartVerificationSMSRequestParameters.builder()
           .setCustom("a custom")
           .setReference(VerificationReference.valueOf("a reference"))
           .setIdentity(NumberIdentity.builder().setEndpoint("+endpoint").build())

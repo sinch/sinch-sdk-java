@@ -4,22 +4,30 @@ import com.sinch.sdk.domains.verification.models.Link;
 import com.sinch.sdk.domains.verification.models.VerificationId;
 import java.util.Collection;
 
-/** Dedicated response type for a seamless verification */
+/**
+ * Dedicated response type for a seamless call verification started with {@link
+ * com.sinch.sdk.domains.verification.VerificationsService#start(StartVerificationRequestParameters)
+ * VerificationsService#start()} initiated wit method {@link
+ * com.sinch.sdk.domains.verification.models.VerificationMethodType#SEAMLESS SEAMLESS}
+ *
+ * @since 1.0
+ */
 public class StartVerificationResponseSeamless extends StartVerificationResponse {
 
   private final String targetUri;
 
-  /**
-   * @param id Verification identifier used to query for status.
-   * @param links Available methods and actions which can be done after a successful Verification
-   * @param targetUri The target URI
-   */
-  public StartVerificationResponseSeamless(
+  private StartVerificationResponseSeamless(
       VerificationId id, Collection<Link> links, String targetUri) {
     super(id, links);
     this.targetUri = targetUri;
   }
 
+  /**
+   * The target URI
+   *
+   * @return The target URI
+   * @since 1.0
+   */
   public String getTargetUri() {
     return targetUri;
   }
@@ -34,19 +42,47 @@ public class StartVerificationResponseSeamless extends StartVerificationResponse
         + super.toString();
   }
 
+  /**
+   * Getting Builder
+   *
+   * @return New Builder instance
+   * @since 1.0
+   */
   public static Builder builder() {
     return new Builder();
   }
 
+  /**
+   * Dedicated Builder
+   *
+   * @since 1.0
+   */
   public static class Builder extends StartVerificationResponse.Builder<Builder> {
 
     String targetUri;
 
+    private Builder() {
+      super();
+    }
+
+    /**
+     * See {@link StartVerificationResponseSeamless#getLinks() getter}
+     *
+     * @param targetUri see getter
+     * @return The current builder
+     * @since 1.0
+     */
     public Builder setTargetUri(String targetUri) {
       this.targetUri = targetUri;
       return this;
     }
 
+    /**
+     * Create instance
+     *
+     * @return The instance build with current builder values
+     * @since 1.0
+     */
     public StartVerificationResponseSeamless build() {
       return new StartVerificationResponseSeamless(id, links, targetUri);
     }

@@ -26,7 +26,7 @@ public class VerificationService {
     this.sinchClient = sinchClient;
   }
 
-  public String verificationEvent(VerificationRequestEvent event) {
+  public VerificationResponse verificationEvent(VerificationRequestEvent event) {
 
     LOGGER.info("decoded event :" + event);
 
@@ -48,10 +48,8 @@ public class VerificationService {
 
     builder.setAction(VerificationResponseActionType.ALLOW);
 
-    var response =
-        sinchClient.verification().webhooks().serializeVerificationResponse(builder.build());
+    var response = builder.build();
     LOGGER.info("Response :" + response);
-
     return response;
   }
 

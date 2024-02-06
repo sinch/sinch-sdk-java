@@ -11,6 +11,12 @@ import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.VerificationReference;
 import java.util.Optional;
 
+/**
+ * Base class for received Verification Events onto webhooks callback
+ *
+ * @see <a
+ *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks</a>
+ */
 @JsonTypeInfo(
     use = JsonTypeInfo.Id.NAME,
     include = JsonTypeInfo.As.EXISTING_PROPERTY,
@@ -21,7 +27,6 @@ import java.util.Optional;
   @JsonSubTypes.Type(value = VerificationResultEvent.class, name = "VerificationResultEvent")
 })
 public class VerificationEvent {
-
   private final VerificationId id;
   private final String event;
   private final VerificationMethodType method;
@@ -29,20 +34,6 @@ public class VerificationEvent {
   private final VerificationReference reference;
   private final String custom;
 
-  /**
-   * Base class for verification event
-   *
-   * @param id The ID of the verification request.
-   * @param event The type of the event.
-   * @param method The verification method
-   * @param identity Specifies the type of endpoint that will be verified and the particular
-   *     endpoint. number is currently the only supported endpoint type
-   * @param reference The reference ID that was optionally passed together with the verification
-   *     request
-   * @param custom A custom string that can be provided during a verification request. see <a
-   *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/</a>
-   * @since 1.0
-   */
   @JsonCreator
   VerificationEvent(
       @JsonProperty("id") String id,
@@ -63,26 +54,63 @@ public class VerificationEvent {
     this.custom = custom;
   }
 
+  /**
+   * The ID of the verification request.
+   *
+   * @return Id value
+   * @since 1.0
+   */
   public VerificationId getId() {
     return id;
   }
 
+  /**
+   * The type of the event
+   *
+   * @return event value
+   * @since 1.0
+   */
   public String getEvent() {
     return event;
   }
 
+  /**
+   * The verification method
+   *
+   * @return The method value
+   * @since 1.0
+   */
   public VerificationMethodType getMethod() {
     return method;
   }
 
+  /**
+   * Specifies the type of endpoint that will be verified and the particular endpoint. {@link
+   * NumberIdentity} is currently the only supported endpoint type
+   *
+   * @return identity
+   * @since 1.0
+   */
   public Identity getIdentity() {
     return identity;
   }
 
+  /**
+   * The reference that was optionally passed together with the verification request
+   *
+   * @return Reference value
+   * @since 1.0
+   */
   public Optional<VerificationReference> getReference() {
     return Optional.ofNullable(reference);
   }
 
+  /**
+   * A custom string that can be provided during a verification request
+   *
+   * @return The custom value
+   * @since 1.0
+   */
   public Optional<String> getCustom() {
     return Optional.ofNullable(custom);
   }

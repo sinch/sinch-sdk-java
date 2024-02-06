@@ -17,6 +17,12 @@ public class VerificationResponseCallout extends VerificationResponse {
     this.callout = callout;
   }
 
+  /**
+   * Call out related information
+   *
+   * @return Call out related information
+   * @since 1.0
+   */
   public CalloutResponse getCallout() {
     return callout;
   }
@@ -27,7 +33,7 @@ public class VerificationResponseCallout extends VerificationResponse {
   }
 
   /**
-   * Call out related information for call out verification callback See <a
+   * Call out related information for call out verification callback. See <a
    * href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post!c=200&amp;path=2/callout&amp;t=response">callout
    * response documentation</a>
    *
@@ -42,7 +48,9 @@ public class VerificationResponseCallout extends VerificationResponse {
     private final SpeechResponse speech;
 
     /**
-     * @param code The Phone Call PIN that should be entered by the user. Sinch servers
+     * Construct a CalloutResponse instance
+     *
+     * @param code The Phone Call PIN that should be entered by the user. Sinch's servers
      *     automatically generate PIN codes for Phone Call verification. If you want to set your own
      *     code, you can specify it in the response to the Verification Request Event.
      * @param speech An object defining various properties for the text-to-speech message.
@@ -52,10 +60,22 @@ public class VerificationResponseCallout extends VerificationResponse {
       this.speech = speech;
     }
 
+    /**
+     * see CalloutResponse Constructor
+     *
+     * @return see {@link CalloutResponse#CalloutResponse(Integer, SpeechResponse) constructor}
+     * @since 1.0
+     */
     public Integer getCode() {
       return code;
     }
 
+    /**
+     * see CalloutResponse Constructor
+     *
+     * @return see {@link CalloutResponse#CalloutResponse(Integer, SpeechResponse) constructor}
+     * @since 1.0
+     */
     public SpeechResponse getSpeech() {
       return speech;
     }
@@ -67,7 +87,7 @@ public class VerificationResponseCallout extends VerificationResponse {
   }
 
   /**
-   * Speech related information for SMS verification callback See <a
+   * Speech related information for SMS verification callback. See <a
    * href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post!c=200&amp;path=2/callout&amp;t=response">speech
    * response documentation</a>
    *
@@ -79,13 +99,21 @@ public class VerificationResponseCallout extends VerificationResponse {
     private final String locale;
 
     /**
-     * @param locale Indicates the language that should be used for the text-to-speech message.
-     *     Currently, only en-US is supported.
+     * Indicates the language that should be used for the text-to-speech message. Currently, only
+     * en-US is supported.
+     *
+     * @param locale Locale value
      */
     public SpeechResponse(String locale) {
       this.locale = locale;
     }
 
+    /**
+     * see SpeechResponse Constructor
+     *
+     * @return see {@link SpeechResponse#SpeechResponse(String) constructor}
+     * @since 1.0
+     */
     public String getLocale() {
       return locale;
     }
@@ -96,26 +124,59 @@ public class VerificationResponseCallout extends VerificationResponse {
     }
   }
 
+  /**
+   * Getting Builder
+   *
+   * @return New Builder instance
+   * @since 1.0
+   */
   public static Builder builder() {
     return new Builder();
   }
 
+  /**
+   * Dedicated Builder
+   *
+   * @since 1.0
+   */
   public static class Builder extends VerificationResponse.Builder<Builder> {
 
     Integer code;
 
     String locale;
 
+    private Builder() {}
+
+    /**
+     * See {@link CalloutResponse#CalloutResponse(Integer, SpeechResponse) constructor}
+     *
+     * @param code see constructor
+     * @return The current builder
+     * @since 1.0
+     */
     public Builder setCode(Integer code) {
       this.code = code;
       return self();
     }
 
+    /**
+     * See {@link SpeechResponse#SpeechResponse(String) constructor}
+     *
+     * @param locale see constructor
+     * @return The current builder
+     * @since 1.0
+     */
     public Builder setLocale(String locale) {
       this.locale = locale;
       return self();
     }
 
+    /**
+     * Create instance
+     *
+     * @return The instance build with current builder values
+     * @since 1.0
+     */
     public VerificationResponseCallout build() {
       return new VerificationResponseCallout(
           action, new CalloutResponse(code, new SpeechResponse(locale)));

@@ -30,12 +30,7 @@ class E164PhoneNumberTest {
 
   @Test
   void stringValue() {
-    assertEquals(new E164PhoneNumber(phoneNumber).stringValue(), phoneNumber);
-  }
-
-  @Test
-  void valueOf() {
-    assertEquals(E164PhoneNumber.valueOf(phoneNumber), new E164PhoneNumber(phoneNumber));
+    assertEquals(E164PhoneNumber.valueOf(phoneNumber).stringValue(), phoneNumber);
   }
 
   @Test

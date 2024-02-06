@@ -1,7 +1,6 @@
 package com.sinch.sample.verification.status;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.VerificationReport;
@@ -25,7 +24,7 @@ public class GetByIdentity extends BaseApplication {
 
   public void run() {
 
-    Identity identity = NumberIdentity.builder().setEndpoint(phoneNumber).build();
+    var identity = NumberIdentity.builder().setEndpoint(phoneNumber).build();
 
     LOGGER.info("Get status by identity for  : " + identity);
 

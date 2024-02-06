@@ -1,23 +1,21 @@
 package com.sinch.sdk.domains.verification.models.requests;
 
-import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.VerificationReference;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class StartVerificationRequestParametersTest {
+class StartVerificationSeamlessRequestParametersTest {
 
-  final Identity identity = NumberIdentity.builder().setEndpoint("foo identity").build();
-  final VerificationMethodType method = VerificationMethodType.CALLOUT;
+  final NumberIdentity identity = NumberIdentity.builder().setEndpoint("foo identity").build();
+  final VerificationMethodType method = VerificationMethodType.SEAMLESS;
   final String reference = "foo reference";
   final String custom = "foo custom";
 
-  final StartVerificationRequestParameters value =
-      StartVerificationRequestParameters.builder()
+  final StartVerificationSeamlessRequestParameters value =
+      StartVerificationSeamlessRequestParameters.builder()
           .setIdentity(identity)
-          .setMethod(method)
           .setReference(VerificationReference.valueOf(reference))
           .setCustom(custom)
           .build();
@@ -29,7 +27,7 @@ class StartVerificationRequestParametersTest {
 
   @Test
   void getMethod() {
-    Assertions.assertThat(value.getMethod().get()).isEqualTo(method);
+    Assertions.assertThat(value.getMethod()).isEqualTo(method);
   }
 
   @Test

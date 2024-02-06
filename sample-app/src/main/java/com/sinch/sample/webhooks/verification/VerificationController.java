@@ -42,7 +42,7 @@ public class VerificationController {
         sinchClient
             .verification()
             .webhooks()
-            .validateAuthenticatedRequest(
+            .validateAuthenticationHeader(
                 // The HTTP verb this controller is managing
                 "POST",
                 // The URI this controller is managing
@@ -58,7 +58,7 @@ public class VerificationController {
     }
 
     // decode the request payload
-    var event = sinchClient.verification().webhooks().unserializeVerificationEvent(body);
+    var event = sinchClient.verification().webhooks().parseEvent(body);
 
     // let business layer process the request
     var response = switch (event) {
@@ -70,8 +70,12 @@ public class VerificationController {
       default -> throw new IllegalStateException("Unexpected value: " + event);
     };
 
-    LOGGER.finest("response: " + response);
+    var serializedResponse =// null != response ?
+        sinchClient.verification().webhooks().serializeResponse(response);
+  //  : "";
 
-    return response;
+    LOGGER.finest("JSON response: " + serializedResponse);
+
+    return serializedResponse;
   }
 }

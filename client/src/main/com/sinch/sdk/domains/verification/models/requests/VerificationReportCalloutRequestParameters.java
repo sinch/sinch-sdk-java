@@ -3,6 +3,12 @@ package com.sinch.sdk.domains.verification.models.requests;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 
+/**
+ * Dedicated request parameters to be used to start a verification report by callout (Verification
+ * by placing a PSTN call to the user's phone)
+ *
+ * @since 1.0
+ */
 public class VerificationReportCalloutRequestParameters
     extends VerificationReportRequestParameters {
 
@@ -13,6 +19,12 @@ public class VerificationReportCalloutRequestParameters
     this.code = code;
   }
 
+  /**
+   * See {@link VerificationReportCalloutRequestParameters.Builder#setCode(String) builder setter}
+   *
+   * @return Code value
+   * @since 1.0
+   */
   public OptionalValue<String> getCode() {
     return code;
   }
@@ -27,19 +39,32 @@ public class VerificationReportCalloutRequestParameters
         + super.toString();
   }
 
+  /**
+   * Getting Builder
+   *
+   * @return New Builder instance
+   * @since 1.0
+   */
   public static Builder builder() {
     return new Builder();
   }
 
+  /**
+   * Dedicated Builder
+   *
+   * @since 1.0
+   */
   public static class Builder extends VerificationReportRequestParameters.Builder<Builder> {
 
     OptionalValue<String> code = OptionalValue.empty();
 
-    public Builder() {
+    protected Builder() {
       super(VerificationMethodType.CALLOUT);
     }
 
     /**
+     * The code which was received by the user submitting the SMS verification.
+     *
      * @param code The code which was received by the user submitting the Phone Call verification.
      * @return current builder
      */
@@ -48,7 +73,12 @@ public class VerificationReportCalloutRequestParameters
       return this;
     }
 
-    @Override
+    /**
+     * Create instance
+     *
+     * @return The instance build with current builder values
+     * @since 1.0
+     */
     public VerificationReportCalloutRequestParameters build() {
       return new VerificationReportCalloutRequestParameters(code);
     }
