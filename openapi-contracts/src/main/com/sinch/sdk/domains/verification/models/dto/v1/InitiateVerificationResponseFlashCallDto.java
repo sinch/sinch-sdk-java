@@ -43,12 +43,14 @@ import java.util.logging.Logger;
     using =
         InitiateVerificationResponseFlashCallDto.InitiateVerificationResponseFlashCallDtoSerializer
             .class)
-public class InitiateVerificationResponseFlashCallDto extends AbstractOpenApiSchema {
+public final class InitiateVerificationResponseFlashCallDto extends AbstractOpenApiSchema {
   private static final Logger log =
       Logger.getLogger(InitiateVerificationResponseFlashCallDto.class.getName());
 
-  public static class InitiateVerificationResponseFlashCallDtoSerializer
+  public static final class InitiateVerificationResponseFlashCallDtoSerializer
       extends StdSerializer<InitiateVerificationResponseFlashCallDto> {
+    private static final long serialVersionUID = 1L;
+
     public InitiateVerificationResponseFlashCallDtoSerializer(
         Class<InitiateVerificationResponseFlashCallDto> t) {
       super(t);
@@ -68,8 +70,11 @@ public class InitiateVerificationResponseFlashCallDto extends AbstractOpenApiSch
     }
   }
 
-  public static class InitiateVerificationResponseFlashCallDtoDeserializer
+  public static final class InitiateVerificationResponseFlashCallDtoDeserializer
       extends StdDeserializer<InitiateVerificationResponseFlashCallDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public InitiateVerificationResponseFlashCallDtoDeserializer() {
       this(InitiateVerificationResponseFlashCallDto.class);
     }

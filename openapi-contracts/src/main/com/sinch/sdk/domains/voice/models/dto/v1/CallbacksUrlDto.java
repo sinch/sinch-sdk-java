@@ -24,6 +24,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class CallbacksUrlDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_PRIMARY = "primary";
   private String primary;
   private boolean primaryDefined = false;

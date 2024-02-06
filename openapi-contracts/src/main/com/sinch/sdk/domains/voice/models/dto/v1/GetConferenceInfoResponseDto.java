@@ -26,6 +26,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class GetConferenceInfoResponseDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_PARTICIPANTS = "participants";
   private List<GetConferenceInfoResponseParticipantsInnerDto> participants;
   private boolean participantsDefined = false;

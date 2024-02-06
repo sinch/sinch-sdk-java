@@ -24,6 +24,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class GetCalloutResponseObjDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_CALL_ID = "callId";
   private String callId;
   private boolean callIdDefined = false;

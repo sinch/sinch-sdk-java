@@ -43,12 +43,14 @@ import java.util.logging.Logger;
     using =
         InitiateVerificationResourceSmsOptionsDto
             .InitiateVerificationResourceSmsOptionsDtoSerializer.class)
-public class InitiateVerificationResourceSmsOptionsDto extends AbstractOpenApiSchema {
+public final class InitiateVerificationResourceSmsOptionsDto extends AbstractOpenApiSchema {
   private static final Logger log =
       Logger.getLogger(InitiateVerificationResourceSmsOptionsDto.class.getName());
 
-  public static class InitiateVerificationResourceSmsOptionsDtoSerializer
+  public static final class InitiateVerificationResourceSmsOptionsDtoSerializer
       extends StdSerializer<InitiateVerificationResourceSmsOptionsDto> {
+    private static final long serialVersionUID = 1L;
+
     public InitiateVerificationResourceSmsOptionsDtoSerializer(
         Class<InitiateVerificationResourceSmsOptionsDto> t) {
       super(t);
@@ -68,8 +70,11 @@ public class InitiateVerificationResourceSmsOptionsDto extends AbstractOpenApiSc
     }
   }
 
-  public static class InitiateVerificationResourceSmsOptionsDtoDeserializer
+  public static final class InitiateVerificationResourceSmsOptionsDtoDeserializer
       extends StdDeserializer<InitiateVerificationResourceSmsOptionsDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public InitiateVerificationResourceSmsOptionsDtoDeserializer() {
       this(InitiateVerificationResourceSmsOptionsDto.class);
     }

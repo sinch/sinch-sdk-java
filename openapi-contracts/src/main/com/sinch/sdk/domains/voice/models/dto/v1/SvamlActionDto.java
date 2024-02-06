@@ -35,10 +35,12 @@ import java.util.logging.Logger;
 
 @JsonDeserialize(using = SvamlActionDto.SvamlActionDtoDeserializer.class)
 @JsonSerialize(using = SvamlActionDto.SvamlActionDtoSerializer.class)
-public class SvamlActionDto extends AbstractOpenApiSchema {
+public final class SvamlActionDto extends AbstractOpenApiSchema {
   private static final Logger log = Logger.getLogger(SvamlActionDto.class.getName());
 
-  public static class SvamlActionDtoSerializer extends StdSerializer<SvamlActionDto> {
+  public static final class SvamlActionDtoSerializer extends StdSerializer<SvamlActionDto> {
+    private static final long serialVersionUID = 1L;
+
     public SvamlActionDtoSerializer(Class<SvamlActionDto> t) {
       super(t);
     }
@@ -54,7 +56,9 @@ public class SvamlActionDto extends AbstractOpenApiSchema {
     }
   }
 
-  public static class SvamlActionDtoDeserializer extends StdDeserializer<SvamlActionDto> {
+  public static final class SvamlActionDtoDeserializer extends StdDeserializer<SvamlActionDto> {
+    private static final long serialVersionUID = 1L;
+
     public SvamlActionDtoDeserializer() {
       this(SvamlActionDto.class);
     }

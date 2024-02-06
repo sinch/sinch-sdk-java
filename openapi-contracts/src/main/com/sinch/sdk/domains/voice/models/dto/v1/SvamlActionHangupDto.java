@@ -32,6 +32,8 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlActionHangupDto {
+  private static final long serialVersionUID = 1L;
+
   /** The name property. Must have the value &#x60;hangup&#x60;. */
   public enum NameEnum {
     HANGUP("hangup"),

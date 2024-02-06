@@ -36,6 +36,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ApiUpdateMtMessageDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_FROM = "from";
   private String from;
   private boolean fromDefined = false;

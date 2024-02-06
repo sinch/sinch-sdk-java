@@ -27,6 +27,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class CallbackConfigurationDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_PROJECT_ID = "projectId";
   private String projectId;
   private boolean projectIdDefined = false;

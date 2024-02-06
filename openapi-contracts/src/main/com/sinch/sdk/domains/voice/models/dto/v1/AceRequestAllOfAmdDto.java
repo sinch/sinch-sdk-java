@@ -33,6 +33,8 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class AceRequestAllOfAmdDto {
+  private static final long serialVersionUID = 1L;
+
   /** The determination by the system of who answered the call. */
   public enum StatusEnum {
     MACHINE("machine"),

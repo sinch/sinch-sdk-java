@@ -43,12 +43,14 @@ import java.util.logging.Logger;
     using =
         InitiateVerificationResourceFlashCallOptionsDto
             .InitiateVerificationResourceFlashCallOptionsDtoSerializer.class)
-public class InitiateVerificationResourceFlashCallOptionsDto extends AbstractOpenApiSchema {
+public final class InitiateVerificationResourceFlashCallOptionsDto extends AbstractOpenApiSchema {
   private static final Logger log =
       Logger.getLogger(InitiateVerificationResourceFlashCallOptionsDto.class.getName());
 
-  public static class InitiateVerificationResourceFlashCallOptionsDtoSerializer
+  public static final class InitiateVerificationResourceFlashCallOptionsDtoSerializer
       extends StdSerializer<InitiateVerificationResourceFlashCallOptionsDto> {
+    private static final long serialVersionUID = 1L;
+
     public InitiateVerificationResourceFlashCallOptionsDtoSerializer(
         Class<InitiateVerificationResourceFlashCallOptionsDto> t) {
       super(t);
@@ -68,8 +70,11 @@ public class InitiateVerificationResourceFlashCallOptionsDto extends AbstractOpe
     }
   }
 
-  public static class InitiateVerificationResourceFlashCallOptionsDtoDeserializer
+  public static final class InitiateVerificationResourceFlashCallOptionsDtoDeserializer
       extends StdDeserializer<InitiateVerificationResourceFlashCallOptionsDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public InitiateVerificationResourceFlashCallOptionsDtoDeserializer() {
       this(InitiateVerificationResourceFlashCallOptionsDto.class);
     }

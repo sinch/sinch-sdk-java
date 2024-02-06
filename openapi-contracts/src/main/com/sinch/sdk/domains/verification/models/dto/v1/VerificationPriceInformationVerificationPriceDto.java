@@ -43,12 +43,14 @@ import java.util.logging.Logger;
     using =
         VerificationPriceInformationVerificationPriceDto
             .VerificationPriceInformationVerificationPriceDtoSerializer.class)
-public class VerificationPriceInformationVerificationPriceDto extends AbstractOpenApiSchema {
+public final class VerificationPriceInformationVerificationPriceDto extends AbstractOpenApiSchema {
   private static final Logger log =
       Logger.getLogger(VerificationPriceInformationVerificationPriceDto.class.getName());
 
-  public static class VerificationPriceInformationVerificationPriceDtoSerializer
+  public static final class VerificationPriceInformationVerificationPriceDtoSerializer
       extends StdSerializer<VerificationPriceInformationVerificationPriceDto> {
+    private static final long serialVersionUID = 1L;
+
     public VerificationPriceInformationVerificationPriceDtoSerializer(
         Class<VerificationPriceInformationVerificationPriceDto> t) {
       super(t);
@@ -68,8 +70,11 @@ public class VerificationPriceInformationVerificationPriceDto extends AbstractOp
     }
   }
 
-  public static class VerificationPriceInformationVerificationPriceDtoDeserializer
+  public static final class VerificationPriceInformationVerificationPriceDtoDeserializer
       extends StdDeserializer<VerificationPriceInformationVerificationPriceDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public VerificationPriceInformationVerificationPriceDtoDeserializer() {
       this(VerificationPriceInformationVerificationPriceDto.class);
     }

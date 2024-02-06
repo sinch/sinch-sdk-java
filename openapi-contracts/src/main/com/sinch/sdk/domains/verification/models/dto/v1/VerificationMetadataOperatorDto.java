@@ -39,12 +39,14 @@ import java.util.logging.Logger;
     using = VerificationMetadataOperatorDto.VerificationMetadataOperatorDtoDeserializer.class)
 @JsonSerialize(
     using = VerificationMetadataOperatorDto.VerificationMetadataOperatorDtoSerializer.class)
-public class VerificationMetadataOperatorDto extends AbstractOpenApiSchema {
+public final class VerificationMetadataOperatorDto extends AbstractOpenApiSchema {
   private static final Logger log =
       Logger.getLogger(VerificationMetadataOperatorDto.class.getName());
 
-  public static class VerificationMetadataOperatorDtoSerializer
+  public static final class VerificationMetadataOperatorDtoSerializer
       extends StdSerializer<VerificationMetadataOperatorDto> {
+    private static final long serialVersionUID = 1L;
+
     public VerificationMetadataOperatorDtoSerializer(Class<VerificationMetadataOperatorDto> t) {
       super(t);
     }
@@ -61,8 +63,11 @@ public class VerificationMetadataOperatorDto extends AbstractOpenApiSchema {
     }
   }
 
-  public static class VerificationMetadataOperatorDtoDeserializer
+  public static final class VerificationMetadataOperatorDtoDeserializer
       extends StdDeserializer<VerificationMetadataOperatorDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public VerificationMetadataOperatorDtoDeserializer() {
       this(VerificationMetadataOperatorDto.class);
     }

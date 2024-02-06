@@ -31,6 +31,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ApiGroupListDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_COUNT = "count";
   private Long count;
   private boolean countDefined = false;

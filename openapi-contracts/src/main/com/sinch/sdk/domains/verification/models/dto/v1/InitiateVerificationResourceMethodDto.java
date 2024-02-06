@@ -42,12 +42,14 @@ import java.util.logging.Logger;
 @JsonSerialize(
     using =
         InitiateVerificationResourceMethodDto.InitiateVerificationResourceMethodDtoSerializer.class)
-public class InitiateVerificationResourceMethodDto extends AbstractOpenApiSchema {
+public final class InitiateVerificationResourceMethodDto extends AbstractOpenApiSchema {
   private static final Logger log =
       Logger.getLogger(InitiateVerificationResourceMethodDto.class.getName());
 
-  public static class InitiateVerificationResourceMethodDtoSerializer
+  public static final class InitiateVerificationResourceMethodDtoSerializer
       extends StdSerializer<InitiateVerificationResourceMethodDto> {
+    private static final long serialVersionUID = 1L;
+
     public InitiateVerificationResourceMethodDtoSerializer(
         Class<InitiateVerificationResourceMethodDto> t) {
       super(t);
@@ -67,8 +69,11 @@ public class InitiateVerificationResourceMethodDto extends AbstractOpenApiSchema
     }
   }
 
-  public static class InitiateVerificationResourceMethodDtoDeserializer
+  public static final class InitiateVerificationResourceMethodDtoDeserializer
       extends StdDeserializer<InitiateVerificationResourceMethodDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public InitiateVerificationResourceMethodDtoDeserializer() {
       this(InitiateVerificationResourceMethodDto.class);
     }

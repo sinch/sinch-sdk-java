@@ -55,6 +55,7 @@ import java.util.Objects;
   @JsonSubTypes.Type(value = MOTextDto.class, name = "MOText"),
 })
 public class ApiMoMessageDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_FROM = "from";
   private String from;
   private boolean fromDefined = false;

@@ -43,12 +43,14 @@ import java.util.logging.Logger;
     using =
         VerificationReportRequestResourceSmsDto.VerificationReportRequestResourceSmsDtoSerializer
             .class)
-public class VerificationReportRequestResourceSmsDto extends AbstractOpenApiSchema {
+public final class VerificationReportRequestResourceSmsDto extends AbstractOpenApiSchema {
   private static final Logger log =
       Logger.getLogger(VerificationReportRequestResourceSmsDto.class.getName());
 
-  public static class VerificationReportRequestResourceSmsDtoSerializer
+  public static final class VerificationReportRequestResourceSmsDtoSerializer
       extends StdSerializer<VerificationReportRequestResourceSmsDto> {
+    private static final long serialVersionUID = 1L;
+
     public VerificationReportRequestResourceSmsDtoSerializer(
         Class<VerificationReportRequestResourceSmsDto> t) {
       super(t);
@@ -68,8 +70,11 @@ public class VerificationReportRequestResourceSmsDto extends AbstractOpenApiSche
     }
   }
 
-  public static class VerificationReportRequestResourceSmsDtoDeserializer
+  public static final class VerificationReportRequestResourceSmsDtoDeserializer
       extends StdDeserializer<VerificationReportRequestResourceSmsDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public VerificationReportRequestResourceSmsDtoDeserializer() {
       this(VerificationReportRequestResourceSmsDto.class);
     }

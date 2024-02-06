@@ -43,12 +43,14 @@ import java.util.logging.Logger;
     using =
         VerificationMetadataNetworkInfoDataDto.VerificationMetadataNetworkInfoDataDtoSerializer
             .class)
-public class VerificationMetadataNetworkInfoDataDto extends AbstractOpenApiSchema {
+public final class VerificationMetadataNetworkInfoDataDto extends AbstractOpenApiSchema {
   private static final Logger log =
       Logger.getLogger(VerificationMetadataNetworkInfoDataDto.class.getName());
 
-  public static class VerificationMetadataNetworkInfoDataDtoSerializer
+  public static final class VerificationMetadataNetworkInfoDataDtoSerializer
       extends StdSerializer<VerificationMetadataNetworkInfoDataDto> {
+    private static final long serialVersionUID = 1L;
+
     public VerificationMetadataNetworkInfoDataDtoSerializer(
         Class<VerificationMetadataNetworkInfoDataDto> t) {
       super(t);
@@ -68,8 +70,11 @@ public class VerificationMetadataNetworkInfoDataDto extends AbstractOpenApiSchem
     }
   }
 
-  public static class VerificationMetadataNetworkInfoDataDtoDeserializer
+  public static final class VerificationMetadataNetworkInfoDataDtoDeserializer
       extends StdDeserializer<VerificationMetadataNetworkInfoDataDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public VerificationMetadataNetworkInfoDataDtoDeserializer() {
       this(VerificationMetadataNetworkInfoDataDto.class);
     }

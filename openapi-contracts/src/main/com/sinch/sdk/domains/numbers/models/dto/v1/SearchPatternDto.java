@@ -27,6 +27,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SearchPatternDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_PATTERN = "pattern";
   private String pattern;
   private boolean patternDefined = false;

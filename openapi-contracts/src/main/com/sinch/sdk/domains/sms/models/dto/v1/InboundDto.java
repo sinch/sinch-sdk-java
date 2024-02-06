@@ -38,10 +38,12 @@ import java.util.logging.Logger;
 
 @JsonDeserialize(using = InboundDto.InboundDtoDeserializer.class)
 @JsonSerialize(using = InboundDto.InboundDtoSerializer.class)
-public class InboundDto extends AbstractOpenApiSchema {
+public final class InboundDto extends AbstractOpenApiSchema {
   private static final Logger log = Logger.getLogger(InboundDto.class.getName());
 
-  public static class InboundDtoSerializer extends StdSerializer<InboundDto> {
+  public static final class InboundDtoSerializer extends StdSerializer<InboundDto> {
+    private static final long serialVersionUID = 1L;
+
     public InboundDtoSerializer(Class<InboundDto> t) {
       super(t);
     }
@@ -57,7 +59,10 @@ public class InboundDto extends AbstractOpenApiSchema {
     }
   }
 
-  public static class InboundDtoDeserializer extends StdDeserializer<InboundDto> {
+  public static final class InboundDtoDeserializer extends StdDeserializer<InboundDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public InboundDtoDeserializer() {
       this(InboundDto.class);
     }

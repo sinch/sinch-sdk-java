@@ -43,12 +43,14 @@ import java.util.logging.Logger;
     using =
         InitiateVerificationResourceMetadataDto.InitiateVerificationResourceMetadataDtoSerializer
             .class)
-public class InitiateVerificationResourceMetadataDto extends AbstractOpenApiSchema {
+public final class InitiateVerificationResourceMetadataDto extends AbstractOpenApiSchema {
   private static final Logger log =
       Logger.getLogger(InitiateVerificationResourceMetadataDto.class.getName());
 
-  public static class InitiateVerificationResourceMetadataDtoSerializer
+  public static final class InitiateVerificationResourceMetadataDtoSerializer
       extends StdSerializer<InitiateVerificationResourceMetadataDto> {
+    private static final long serialVersionUID = 1L;
+
     public InitiateVerificationResourceMetadataDtoSerializer(
         Class<InitiateVerificationResourceMetadataDto> t) {
       super(t);
@@ -68,8 +70,11 @@ public class InitiateVerificationResourceMetadataDto extends AbstractOpenApiSche
     }
   }
 
-  public static class InitiateVerificationResourceMetadataDtoDeserializer
+  public static final class InitiateVerificationResourceMetadataDtoDeserializer
       extends StdDeserializer<InitiateVerificationResourceMetadataDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public InitiateVerificationResourceMetadataDtoDeserializer() {
       this(InitiateVerificationResourceMetadataDto.class);
     }

@@ -29,6 +29,8 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlInstructionSendDtmfDto {
+  private static final long serialVersionUID = 1L;
+
   /** The &#x60;name&#x60; property. Must have the value &#x60;sendDtmf&#x60;. */
   public enum NameEnum {
     SENDDTMF("sendDtmf"),

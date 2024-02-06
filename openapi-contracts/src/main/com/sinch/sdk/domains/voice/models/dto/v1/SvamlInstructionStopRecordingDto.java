@@ -26,6 +26,8 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlInstructionStopRecordingDto {
+  private static final long serialVersionUID = 1L;
+
   /** The &#x60;name&#x60; property. Must have the value &#x60;stopRecording&#x60;. */
   public enum NameEnum {
     STOPRECORDING("stopRecording"),

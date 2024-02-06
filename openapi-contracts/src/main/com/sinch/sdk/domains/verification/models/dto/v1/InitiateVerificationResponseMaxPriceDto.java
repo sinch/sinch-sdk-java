@@ -43,12 +43,14 @@ import java.util.logging.Logger;
     using =
         InitiateVerificationResponseMaxPriceDto.InitiateVerificationResponseMaxPriceDtoSerializer
             .class)
-public class InitiateVerificationResponseMaxPriceDto extends AbstractOpenApiSchema {
+public final class InitiateVerificationResponseMaxPriceDto extends AbstractOpenApiSchema {
   private static final Logger log =
       Logger.getLogger(InitiateVerificationResponseMaxPriceDto.class.getName());
 
-  public static class InitiateVerificationResponseMaxPriceDtoSerializer
+  public static final class InitiateVerificationResponseMaxPriceDtoSerializer
       extends StdSerializer<InitiateVerificationResponseMaxPriceDto> {
+    private static final long serialVersionUID = 1L;
+
     public InitiateVerificationResponseMaxPriceDtoSerializer(
         Class<InitiateVerificationResponseMaxPriceDto> t) {
       super(t);
@@ -68,8 +70,11 @@ public class InitiateVerificationResponseMaxPriceDto extends AbstractOpenApiSche
     }
   }
 
-  public static class InitiateVerificationResponseMaxPriceDtoDeserializer
+  public static final class InitiateVerificationResponseMaxPriceDtoDeserializer
       extends StdDeserializer<InitiateVerificationResponseMaxPriceDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public InitiateVerificationResponseMaxPriceDtoDeserializer() {
       this(InitiateVerificationResponseMaxPriceDto.class);
     }

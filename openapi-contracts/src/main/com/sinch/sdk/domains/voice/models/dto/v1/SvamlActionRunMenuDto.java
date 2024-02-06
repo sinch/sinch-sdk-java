@@ -45,6 +45,8 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlActionRunMenuDto {
+  private static final long serialVersionUID = 1L;
+
   /** The name property. Must have the value &#x60;runMenu&#x60;. */
   public enum NameEnum {
     RUNMENU("runMenu"),

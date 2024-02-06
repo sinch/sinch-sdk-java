@@ -44,6 +44,8 @@ import java.util.Objects;
     property = "event",
     visible = true)
 public class NotifyRequestDto extends WebhooksEventRequestDto {
+  private static final long serialVersionUID = 1L;
+
   /** Must have the value &#x60;notify&#x60;. */
   public enum EventEnum {
     NOTIFY("notify"),

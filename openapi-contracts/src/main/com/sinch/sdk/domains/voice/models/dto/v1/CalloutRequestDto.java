@@ -35,6 +35,8 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class CalloutRequestDto {
+  private static final long serialVersionUID = 1L;
+
   /** Sets the type of callout. */
   public enum MethodEnum {
     CONFERENCECALLOUT("conferenceCallout"),

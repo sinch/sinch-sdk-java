@@ -30,6 +30,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ParameterObjParameterKeyDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_LEFT_CURLY_BRACKET_MSISDN_RIGHT_CURLY_BRACKET =
       "{msisdn}";
   private String leftCurlyBracketMsisdnRightCurlyBracket;

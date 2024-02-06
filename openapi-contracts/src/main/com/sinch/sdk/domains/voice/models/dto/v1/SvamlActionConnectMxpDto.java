@@ -35,6 +35,8 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlActionConnectMxpDto {
+  private static final long serialVersionUID = 1L;
+
   /** The name property. Must have the value &#x60;connectMxp&#x60;. */
   public enum NameEnum {
     CONNECTMXP("connectMxp"),

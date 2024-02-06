@@ -24,6 +24,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SeamlessOptionsDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_END_USER_IP = "endUserIp";
   private String endUserIp;
   private boolean endUserIpDefined = false;

@@ -37,6 +37,7 @@ import java.util.Set;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class CreateGroupResponseDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_ID = "id";
   private String id;
   private boolean idDefined = false;

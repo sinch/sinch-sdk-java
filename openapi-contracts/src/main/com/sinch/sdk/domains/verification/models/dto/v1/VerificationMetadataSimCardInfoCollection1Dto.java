@@ -43,12 +43,14 @@ import java.util.logging.Logger;
     using =
         VerificationMetadataSimCardInfoCollection1Dto
             .VerificationMetadataSimCardInfoCollection1DtoSerializer.class)
-public class VerificationMetadataSimCardInfoCollection1Dto extends AbstractOpenApiSchema {
+public final class VerificationMetadataSimCardInfoCollection1Dto extends AbstractOpenApiSchema {
   private static final Logger log =
       Logger.getLogger(VerificationMetadataSimCardInfoCollection1Dto.class.getName());
 
-  public static class VerificationMetadataSimCardInfoCollection1DtoSerializer
+  public static final class VerificationMetadataSimCardInfoCollection1DtoSerializer
       extends StdSerializer<VerificationMetadataSimCardInfoCollection1Dto> {
+    private static final long serialVersionUID = 1L;
+
     public VerificationMetadataSimCardInfoCollection1DtoSerializer(
         Class<VerificationMetadataSimCardInfoCollection1Dto> t) {
       super(t);
@@ -68,8 +70,11 @@ public class VerificationMetadataSimCardInfoCollection1Dto extends AbstractOpenA
     }
   }
 
-  public static class VerificationMetadataSimCardInfoCollection1DtoDeserializer
+  public static final class VerificationMetadataSimCardInfoCollection1DtoDeserializer
       extends StdDeserializer<VerificationMetadataSimCardInfoCollection1Dto> {
+
+    private static final long serialVersionUID = 1L;
+
     public VerificationMetadataSimCardInfoCollection1DtoDeserializer() {
       this(VerificationMetadataSimCardInfoCollection1Dto.class);
     }

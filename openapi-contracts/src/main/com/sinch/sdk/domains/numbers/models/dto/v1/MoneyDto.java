@@ -24,6 +24,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class MoneyDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_CURRENCY_CODE = "currencyCode";
   private String currencyCode;
   private boolean currencyCodeDefined = false;

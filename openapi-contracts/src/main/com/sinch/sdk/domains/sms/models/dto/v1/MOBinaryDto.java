@@ -45,6 +45,7 @@ import java.util.Objects;
     property = "type",
     visible = true)
 public class MOBinaryDto extends ApiMoMessageDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_BODY = "body";
   private String body;
   private boolean bodyDefined = false;

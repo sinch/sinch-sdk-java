@@ -24,6 +24,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class OptionDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_DTMF = "dtmf";
   private String dtmf;
   private boolean dtmfDefined = false;

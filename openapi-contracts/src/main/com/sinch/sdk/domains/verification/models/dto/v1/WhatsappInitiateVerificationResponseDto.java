@@ -31,6 +31,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class WhatsappInitiateVerificationResponseDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_SUB_VERIFICATION_ID = "subVerificationId";
   private String subVerificationId;
   private boolean subVerificationIdDefined = false;

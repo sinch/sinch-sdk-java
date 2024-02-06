@@ -57,6 +57,8 @@ import java.util.Objects;
     property = "event",
     visible = true)
 public class IceRequestDto extends WebhooksEventRequestDto {
+  private static final long serialVersionUID = 1L;
+
   /** Must have the value &#x60;ice&#x60;. */
   public enum EventEnum {
     ICE("ice"),

@@ -33,6 +33,8 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class InternalErrorErrorDto {
+  private static final long serialVersionUID = 1L;
+
   /** Gets or Sets code */
   public enum CodeEnum {
     NUMBER_500(500),

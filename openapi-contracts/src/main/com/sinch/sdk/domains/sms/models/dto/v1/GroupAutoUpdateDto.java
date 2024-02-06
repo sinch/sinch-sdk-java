@@ -28,6 +28,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class GroupAutoUpdateDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_TO = "to";
   private String to;
   private boolean toDefined = false;
