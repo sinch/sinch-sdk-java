@@ -29,6 +29,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class VerificationMetadataSimCardInfoCollectionDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_1 = "1";
   private VerificationMetadataSimCardInfoCollection1Dto _1;
   private boolean _1Defined = false;

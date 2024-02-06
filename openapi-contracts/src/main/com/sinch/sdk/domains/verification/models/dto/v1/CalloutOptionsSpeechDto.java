@@ -37,11 +37,13 @@ import java.util.logging.Logger;
 
 @JsonDeserialize(using = CalloutOptionsSpeechDto.CalloutOptionsSpeechDtoDeserializer.class)
 @JsonSerialize(using = CalloutOptionsSpeechDto.CalloutOptionsSpeechDtoSerializer.class)
-public class CalloutOptionsSpeechDto extends AbstractOpenApiSchema {
+public final class CalloutOptionsSpeechDto extends AbstractOpenApiSchema {
   private static final Logger log = Logger.getLogger(CalloutOptionsSpeechDto.class.getName());
 
-  public static class CalloutOptionsSpeechDtoSerializer
+  public static final class CalloutOptionsSpeechDtoSerializer
       extends StdSerializer<CalloutOptionsSpeechDto> {
+    private static final long serialVersionUID = 1L;
+
     public CalloutOptionsSpeechDtoSerializer(Class<CalloutOptionsSpeechDto> t) {
       super(t);
     }
@@ -58,8 +60,11 @@ public class CalloutOptionsSpeechDto extends AbstractOpenApiSchema {
     }
   }
 
-  public static class CalloutOptionsSpeechDtoDeserializer
+  public static final class CalloutOptionsSpeechDtoDeserializer
       extends StdDeserializer<CalloutOptionsSpeechDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public CalloutOptionsSpeechDtoDeserializer() {
       this(CalloutOptionsSpeechDto.class);
     }

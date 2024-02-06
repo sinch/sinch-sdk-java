@@ -43,12 +43,14 @@ import java.util.logging.Logger;
     using =
         InitiateVerificationResourceIdentityDto.InitiateVerificationResourceIdentityDtoSerializer
             .class)
-public class InitiateVerificationResourceIdentityDto extends AbstractOpenApiSchema {
+public final class InitiateVerificationResourceIdentityDto extends AbstractOpenApiSchema {
   private static final Logger log =
       Logger.getLogger(InitiateVerificationResourceIdentityDto.class.getName());
 
-  public static class InitiateVerificationResourceIdentityDtoSerializer
+  public static final class InitiateVerificationResourceIdentityDtoSerializer
       extends StdSerializer<InitiateVerificationResourceIdentityDto> {
+    private static final long serialVersionUID = 1L;
+
     public InitiateVerificationResourceIdentityDtoSerializer(
         Class<InitiateVerificationResourceIdentityDto> t) {
       super(t);
@@ -68,8 +70,11 @@ public class InitiateVerificationResourceIdentityDto extends AbstractOpenApiSche
     }
   }
 
-  public static class InitiateVerificationResourceIdentityDtoDeserializer
+  public static final class InitiateVerificationResourceIdentityDtoDeserializer
       extends StdDeserializer<InitiateVerificationResourceIdentityDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public InitiateVerificationResourceIdentityDtoDeserializer() {
       this(InitiateVerificationResourceIdentityDto.class);
     }

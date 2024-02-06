@@ -33,6 +33,8 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlInstructionSayDto {
+  private static final long serialVersionUID = 1L;
+
   /** The &#x60;name&#x60; property. Must have the value &#x60;say&#x60;. */
   public enum NameEnum {
     SAY("say"),

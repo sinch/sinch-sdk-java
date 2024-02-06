@@ -26,6 +26,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class AvailableNumbersResponseDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_AVAILABLE_NUMBERS = "availableNumbers";
   private List<AvailableNumberDto> availableNumbers;
   private boolean availableNumbersDefined = false;

@@ -42,6 +42,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class MediaRequestDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_TO = "to";
   private List<String> to;
   private boolean toDefined = false;

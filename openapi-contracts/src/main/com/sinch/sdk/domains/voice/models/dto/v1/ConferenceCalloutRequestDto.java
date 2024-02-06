@@ -42,6 +42,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ConferenceCalloutRequestDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_DESTINATION = "destination";
   private DestinationDto destination;
   private boolean destinationDefined = false;

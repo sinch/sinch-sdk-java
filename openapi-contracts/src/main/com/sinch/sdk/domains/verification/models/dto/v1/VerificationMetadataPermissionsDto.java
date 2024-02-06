@@ -39,12 +39,14 @@ import java.util.logging.Logger;
     using = VerificationMetadataPermissionsDto.VerificationMetadataPermissionsDtoDeserializer.class)
 @JsonSerialize(
     using = VerificationMetadataPermissionsDto.VerificationMetadataPermissionsDtoSerializer.class)
-public class VerificationMetadataPermissionsDto extends AbstractOpenApiSchema {
+public final class VerificationMetadataPermissionsDto extends AbstractOpenApiSchema {
   private static final Logger log =
       Logger.getLogger(VerificationMetadataPermissionsDto.class.getName());
 
-  public static class VerificationMetadataPermissionsDtoSerializer
+  public static final class VerificationMetadataPermissionsDtoSerializer
       extends StdSerializer<VerificationMetadataPermissionsDto> {
+    private static final long serialVersionUID = 1L;
+
     public VerificationMetadataPermissionsDtoSerializer(
         Class<VerificationMetadataPermissionsDto> t) {
       super(t);
@@ -62,8 +64,11 @@ public class VerificationMetadataPermissionsDto extends AbstractOpenApiSchema {
     }
   }
 
-  public static class VerificationMetadataPermissionsDtoDeserializer
+  public static final class VerificationMetadataPermissionsDtoDeserializer
       extends StdDeserializer<VerificationMetadataPermissionsDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public VerificationMetadataPermissionsDtoDeserializer() {
       this(VerificationMetadataPermissionsDto.class);
     }

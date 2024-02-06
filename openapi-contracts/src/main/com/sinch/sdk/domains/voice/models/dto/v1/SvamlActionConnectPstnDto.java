@@ -40,6 +40,8 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlActionConnectPstnDto {
+  private static final long serialVersionUID = 1L;
+
   /** The name property. Must have the value &#x60;connectPstn&#x60;. */
   public enum NameEnum {
     CONNECTPSTN("connectPstn"),

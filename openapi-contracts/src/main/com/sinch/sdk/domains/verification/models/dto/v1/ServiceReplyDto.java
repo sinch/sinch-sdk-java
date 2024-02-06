@@ -28,6 +28,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ServiceReplyDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_RESULT = "result";
   private Integer result;
   private boolean resultDefined = false;

@@ -28,6 +28,8 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class BadRequestDto {
+  private static final long serialVersionUID = 1L;
+
   /** Gets or Sets type */
   public enum TypeEnum {
     BADREQUEST("BadRequest"),

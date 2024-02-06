@@ -39,12 +39,14 @@ import java.util.logging.Logger;
     using = VerificationResponseIdentityDto.VerificationResponseIdentityDtoDeserializer.class)
 @JsonSerialize(
     using = VerificationResponseIdentityDto.VerificationResponseIdentityDtoSerializer.class)
-public class VerificationResponseIdentityDto extends AbstractOpenApiSchema {
+public final class VerificationResponseIdentityDto extends AbstractOpenApiSchema {
   private static final Logger log =
       Logger.getLogger(VerificationResponseIdentityDto.class.getName());
 
-  public static class VerificationResponseIdentityDtoSerializer
+  public static final class VerificationResponseIdentityDtoSerializer
       extends StdSerializer<VerificationResponseIdentityDto> {
+    private static final long serialVersionUID = 1L;
+
     public VerificationResponseIdentityDtoSerializer(Class<VerificationResponseIdentityDto> t) {
       super(t);
     }
@@ -61,8 +63,11 @@ public class VerificationResponseIdentityDto extends AbstractOpenApiSchema {
     }
   }
 
-  public static class VerificationResponseIdentityDtoDeserializer
+  public static final class VerificationResponseIdentityDtoDeserializer
       extends StdDeserializer<VerificationResponseIdentityDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public VerificationResponseIdentityDtoDeserializer() {
       this(VerificationResponseIdentityDto.class);
     }

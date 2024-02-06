@@ -30,6 +30,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class AvailableRegionDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_REGION_CODE = "regionCode";
   private String regionCode;
   private boolean regionCodeDefined = false;

@@ -3,6 +3,8 @@ package com.sinch.sdk.core.exceptions;
 /** Sinch Client exception related to payload parsing/mapping error */
 public class ApiMappingException extends ApiException {
 
+  private static final long serialVersionUID = 1L;
+
   /**
    * Exception throw when parsing a payload was causing an issue
    *

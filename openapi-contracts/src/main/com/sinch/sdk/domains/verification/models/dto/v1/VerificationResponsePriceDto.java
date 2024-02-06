@@ -38,11 +38,13 @@ import java.util.logging.Logger;
 @JsonDeserialize(
     using = VerificationResponsePriceDto.VerificationResponsePriceDtoDeserializer.class)
 @JsonSerialize(using = VerificationResponsePriceDto.VerificationResponsePriceDtoSerializer.class)
-public class VerificationResponsePriceDto extends AbstractOpenApiSchema {
+public final class VerificationResponsePriceDto extends AbstractOpenApiSchema {
   private static final Logger log = Logger.getLogger(VerificationResponsePriceDto.class.getName());
 
-  public static class VerificationResponsePriceDtoSerializer
+  public static final class VerificationResponsePriceDtoSerializer
       extends StdSerializer<VerificationResponsePriceDto> {
+    private static final long serialVersionUID = 1L;
+
     public VerificationResponsePriceDtoSerializer(Class<VerificationResponsePriceDto> t) {
       super(t);
     }
@@ -59,8 +61,11 @@ public class VerificationResponsePriceDto extends AbstractOpenApiSchema {
     }
   }
 
-  public static class VerificationResponsePriceDtoDeserializer
+  public static final class VerificationResponsePriceDtoDeserializer
       extends StdDeserializer<VerificationResponsePriceDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public VerificationResponsePriceDtoDeserializer() {
       this(VerificationResponsePriceDto.class);
     }

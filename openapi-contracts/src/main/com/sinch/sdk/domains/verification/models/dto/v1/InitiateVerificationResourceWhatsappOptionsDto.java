@@ -43,12 +43,14 @@ import java.util.logging.Logger;
     using =
         InitiateVerificationResourceWhatsappOptionsDto
             .InitiateVerificationResourceWhatsappOptionsDtoSerializer.class)
-public class InitiateVerificationResourceWhatsappOptionsDto extends AbstractOpenApiSchema {
+public final class InitiateVerificationResourceWhatsappOptionsDto extends AbstractOpenApiSchema {
   private static final Logger log =
       Logger.getLogger(InitiateVerificationResourceWhatsappOptionsDto.class.getName());
 
-  public static class InitiateVerificationResourceWhatsappOptionsDtoSerializer
+  public static final class InitiateVerificationResourceWhatsappOptionsDtoSerializer
       extends StdSerializer<InitiateVerificationResourceWhatsappOptionsDto> {
+    private static final long serialVersionUID = 1L;
+
     public InitiateVerificationResourceWhatsappOptionsDtoSerializer(
         Class<InitiateVerificationResourceWhatsappOptionsDto> t) {
       super(t);
@@ -68,8 +70,11 @@ public class InitiateVerificationResourceWhatsappOptionsDto extends AbstractOpen
     }
   }
 
-  public static class InitiateVerificationResourceWhatsappOptionsDtoDeserializer
+  public static final class InitiateVerificationResourceWhatsappOptionsDtoDeserializer
       extends StdDeserializer<InitiateVerificationResourceWhatsappOptionsDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public InitiateVerificationResourceWhatsappOptionsDtoDeserializer() {
       this(InitiateVerificationResourceWhatsappOptionsDto.class);
     }

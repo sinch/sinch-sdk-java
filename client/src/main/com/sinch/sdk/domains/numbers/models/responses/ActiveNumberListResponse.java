@@ -35,7 +35,7 @@ public class ActiveNumberListResponse extends ListResponse<ActiveNumber> {
       throw new NoSuchElementException("Reached the last page of the API response");
     }
     ActiveNumberListRequestParameters.Builder newParameters =
-        new ActiveNumberListRequestParameters.Builder(page.getParameters());
+        ActiveNumberListRequestParameters.builder(page.getParameters());
     newParameters.setPageToken(page.getNextPageToken());
     return service.list(newParameters.build());
   }

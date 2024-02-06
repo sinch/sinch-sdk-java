@@ -29,6 +29,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class DryRun200ResponsePerRecipientInnerDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_RECIPIENT = "recipient";
   private String recipient;
   private boolean recipientDefined = false;

@@ -37,11 +37,13 @@ import java.util.logging.Logger;
 
 @JsonDeserialize(using = VerificationMetadataSimDto.VerificationMetadataSimDtoDeserializer.class)
 @JsonSerialize(using = VerificationMetadataSimDto.VerificationMetadataSimDtoSerializer.class)
-public class VerificationMetadataSimDto extends AbstractOpenApiSchema {
+public final class VerificationMetadataSimDto extends AbstractOpenApiSchema {
   private static final Logger log = Logger.getLogger(VerificationMetadataSimDto.class.getName());
 
-  public static class VerificationMetadataSimDtoSerializer
+  public static final class VerificationMetadataSimDtoSerializer
       extends StdSerializer<VerificationMetadataSimDto> {
+    private static final long serialVersionUID = 1L;
+
     public VerificationMetadataSimDtoSerializer(Class<VerificationMetadataSimDto> t) {
       super(t);
     }
@@ -58,8 +60,11 @@ public class VerificationMetadataSimDto extends AbstractOpenApiSchema {
     }
   }
 
-  public static class VerificationMetadataSimDtoDeserializer
+  public static final class VerificationMetadataSimDtoDeserializer
       extends StdDeserializer<VerificationMetadataSimDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public VerificationMetadataSimDtoDeserializer() {
       this(VerificationMetadataSimDto.class);
     }

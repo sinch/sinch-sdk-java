@@ -40,12 +40,14 @@ import java.util.logging.Logger;
         VerificationMetadataSimCardsInfoDto.VerificationMetadataSimCardsInfoDtoDeserializer.class)
 @JsonSerialize(
     using = VerificationMetadataSimCardsInfoDto.VerificationMetadataSimCardsInfoDtoSerializer.class)
-public class VerificationMetadataSimCardsInfoDto extends AbstractOpenApiSchema {
+public final class VerificationMetadataSimCardsInfoDto extends AbstractOpenApiSchema {
   private static final Logger log =
       Logger.getLogger(VerificationMetadataSimCardsInfoDto.class.getName());
 
-  public static class VerificationMetadataSimCardsInfoDtoSerializer
+  public static final class VerificationMetadataSimCardsInfoDtoSerializer
       extends StdSerializer<VerificationMetadataSimCardsInfoDto> {
+    private static final long serialVersionUID = 1L;
+
     public VerificationMetadataSimCardsInfoDtoSerializer(
         Class<VerificationMetadataSimCardsInfoDto> t) {
       super(t);
@@ -63,8 +65,11 @@ public class VerificationMetadataSimCardsInfoDto extends AbstractOpenApiSchema {
     }
   }
 
-  public static class VerificationMetadataSimCardsInfoDtoDeserializer
+  public static final class VerificationMetadataSimCardsInfoDtoDeserializer
       extends StdDeserializer<VerificationMetadataSimCardsInfoDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public VerificationMetadataSimCardsInfoDtoDeserializer() {
       this(VerificationMetadataSimCardsInfoDto.class);
     }

@@ -27,6 +27,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class VerificationMetadataCellularDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_SIGNAL_LEVEL = "signalLevel";
   private Integer signalLevel;
   private boolean signalLevelDefined = false;

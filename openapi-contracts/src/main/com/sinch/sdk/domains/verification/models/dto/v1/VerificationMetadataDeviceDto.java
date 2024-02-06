@@ -38,11 +38,13 @@ import java.util.logging.Logger;
 @JsonDeserialize(
     using = VerificationMetadataDeviceDto.VerificationMetadataDeviceDtoDeserializer.class)
 @JsonSerialize(using = VerificationMetadataDeviceDto.VerificationMetadataDeviceDtoSerializer.class)
-public class VerificationMetadataDeviceDto extends AbstractOpenApiSchema {
+public final class VerificationMetadataDeviceDto extends AbstractOpenApiSchema {
   private static final Logger log = Logger.getLogger(VerificationMetadataDeviceDto.class.getName());
 
-  public static class VerificationMetadataDeviceDtoSerializer
+  public static final class VerificationMetadataDeviceDtoSerializer
       extends StdSerializer<VerificationMetadataDeviceDto> {
+    private static final long serialVersionUID = 1L;
+
     public VerificationMetadataDeviceDtoSerializer(Class<VerificationMetadataDeviceDto> t) {
       super(t);
     }
@@ -59,8 +61,11 @@ public class VerificationMetadataDeviceDto extends AbstractOpenApiSchema {
     }
   }
 
-  public static class VerificationMetadataDeviceDtoDeserializer
+  public static final class VerificationMetadataDeviceDtoDeserializer
       extends StdDeserializer<VerificationMetadataDeviceDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public VerificationMetadataDeviceDtoDeserializer() {
       this(VerificationMetadataDeviceDto.class);
     }

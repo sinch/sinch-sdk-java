@@ -41,6 +41,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class AvailableNumberDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_PHONE_NUMBER = "phoneNumber";
   private String phoneNumber;
   private boolean phoneNumberDefined = false;

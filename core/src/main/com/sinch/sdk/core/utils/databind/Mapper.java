@@ -113,6 +113,8 @@ public class Mapper {
 
   private static class FilteringIntrospection extends JacksonAnnotationIntrospector {
 
+    private static final long serialVersionUID = 1L;
+
     @Override
     public Object findFilterId(Annotated ac) {
 

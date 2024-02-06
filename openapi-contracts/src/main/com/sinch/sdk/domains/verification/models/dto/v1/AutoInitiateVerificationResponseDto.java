@@ -26,6 +26,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class AutoInitiateVerificationResponseDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_METHODS_ORDER = "methodsOrder";
   private List<String> methodsOrder;
   private boolean methodsOrderDefined = false;

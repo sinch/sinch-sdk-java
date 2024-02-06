@@ -43,12 +43,14 @@ import java.util.logging.Logger;
     using =
         InitiateVerificationResourceSeamlessOptionsDto
             .InitiateVerificationResourceSeamlessOptionsDtoSerializer.class)
-public class InitiateVerificationResourceSeamlessOptionsDto extends AbstractOpenApiSchema {
+public final class InitiateVerificationResourceSeamlessOptionsDto extends AbstractOpenApiSchema {
   private static final Logger log =
       Logger.getLogger(InitiateVerificationResourceSeamlessOptionsDto.class.getName());
 
-  public static class InitiateVerificationResourceSeamlessOptionsDtoSerializer
+  public static final class InitiateVerificationResourceSeamlessOptionsDtoSerializer
       extends StdSerializer<InitiateVerificationResourceSeamlessOptionsDto> {
+    private static final long serialVersionUID = 1L;
+
     public InitiateVerificationResourceSeamlessOptionsDtoSerializer(
         Class<InitiateVerificationResourceSeamlessOptionsDto> t) {
       super(t);
@@ -68,8 +70,11 @@ public class InitiateVerificationResourceSeamlessOptionsDto extends AbstractOpen
     }
   }
 
-  public static class InitiateVerificationResourceSeamlessOptionsDtoDeserializer
+  public static final class InitiateVerificationResourceSeamlessOptionsDtoDeserializer
       extends StdDeserializer<InitiateVerificationResourceSeamlessOptionsDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public InitiateVerificationResourceSeamlessOptionsDtoDeserializer() {
       this(InitiateVerificationResourceSeamlessOptionsDto.class);
     }

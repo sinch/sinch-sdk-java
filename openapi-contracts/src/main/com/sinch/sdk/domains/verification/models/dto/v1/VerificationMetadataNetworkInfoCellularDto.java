@@ -43,12 +43,14 @@ import java.util.logging.Logger;
     using =
         VerificationMetadataNetworkInfoCellularDto
             .VerificationMetadataNetworkInfoCellularDtoSerializer.class)
-public class VerificationMetadataNetworkInfoCellularDto extends AbstractOpenApiSchema {
+public final class VerificationMetadataNetworkInfoCellularDto extends AbstractOpenApiSchema {
   private static final Logger log =
       Logger.getLogger(VerificationMetadataNetworkInfoCellularDto.class.getName());
 
-  public static class VerificationMetadataNetworkInfoCellularDtoSerializer
+  public static final class VerificationMetadataNetworkInfoCellularDtoSerializer
       extends StdSerializer<VerificationMetadataNetworkInfoCellularDto> {
+    private static final long serialVersionUID = 1L;
+
     public VerificationMetadataNetworkInfoCellularDtoSerializer(
         Class<VerificationMetadataNetworkInfoCellularDto> t) {
       super(t);
@@ -68,8 +70,11 @@ public class VerificationMetadataNetworkInfoCellularDto extends AbstractOpenApiS
     }
   }
 
-  public static class VerificationMetadataNetworkInfoCellularDtoDeserializer
+  public static final class VerificationMetadataNetworkInfoCellularDtoDeserializer
       extends StdDeserializer<VerificationMetadataNetworkInfoCellularDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public VerificationMetadataNetworkInfoCellularDtoDeserializer() {
       this(VerificationMetadataNetworkInfoCellularDto.class);
     }

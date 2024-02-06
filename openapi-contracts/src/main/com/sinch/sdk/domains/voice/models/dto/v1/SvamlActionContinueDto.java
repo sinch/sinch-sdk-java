@@ -29,6 +29,8 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlActionContinueDto {
+  private static final long serialVersionUID = 1L;
+
   /** The name property. Must have the value &#x60;continue&#x60;. */
   public enum NameEnum {
     CONTINUE("continue"),

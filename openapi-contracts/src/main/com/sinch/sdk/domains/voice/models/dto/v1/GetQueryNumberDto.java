@@ -24,6 +24,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class GetQueryNumberDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_NUMBER = "number";
   private GetQueryNumberNumberDto number;
   private boolean numberDefined = false;

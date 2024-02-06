@@ -38,11 +38,13 @@ import java.util.logging.Logger;
 
 @JsonDeserialize(using = ApiBatchListBatchesInnerDto.ApiBatchListBatchesInnerDtoDeserializer.class)
 @JsonSerialize(using = ApiBatchListBatchesInnerDto.ApiBatchListBatchesInnerDtoSerializer.class)
-public class ApiBatchListBatchesInnerDto extends AbstractOpenApiSchema {
+public final class ApiBatchListBatchesInnerDto extends AbstractOpenApiSchema {
   private static final Logger log = Logger.getLogger(ApiBatchListBatchesInnerDto.class.getName());
 
-  public static class ApiBatchListBatchesInnerDtoSerializer
+  public static final class ApiBatchListBatchesInnerDtoSerializer
       extends StdSerializer<ApiBatchListBatchesInnerDto> {
+    private static final long serialVersionUID = 1L;
+
     public ApiBatchListBatchesInnerDtoSerializer(Class<ApiBatchListBatchesInnerDto> t) {
       super(t);
     }
@@ -59,8 +61,11 @@ public class ApiBatchListBatchesInnerDto extends AbstractOpenApiSchema {
     }
   }
 
-  public static class ApiBatchListBatchesInnerDtoDeserializer
+  public static final class ApiBatchListBatchesInnerDtoDeserializer
       extends StdDeserializer<ApiBatchListBatchesInnerDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public ApiBatchListBatchesInnerDtoDeserializer() {
       this(ApiBatchListBatchesInnerDto.class);
     }

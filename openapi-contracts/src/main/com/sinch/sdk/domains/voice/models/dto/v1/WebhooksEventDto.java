@@ -38,10 +38,12 @@ import java.util.logging.Logger;
 
 @JsonDeserialize(using = WebhooksEventDto.WebhooksEventDtoDeserializer.class)
 @JsonSerialize(using = WebhooksEventDto.WebhooksEventDtoSerializer.class)
-public class WebhooksEventDto extends AbstractOpenApiSchema {
+public final class WebhooksEventDto extends AbstractOpenApiSchema {
   private static final Logger log = Logger.getLogger(WebhooksEventDto.class.getName());
 
-  public static class WebhooksEventDtoSerializer extends StdSerializer<WebhooksEventDto> {
+  public static final class WebhooksEventDtoSerializer extends StdSerializer<WebhooksEventDto> {
+    private static final long serialVersionUID = 1L;
+
     public WebhooksEventDtoSerializer(Class<WebhooksEventDto> t) {
       super(t);
     }
@@ -57,7 +59,10 @@ public class WebhooksEventDto extends AbstractOpenApiSchema {
     }
   }
 
-  public static class WebhooksEventDtoDeserializer extends StdDeserializer<WebhooksEventDto> {
+  public static final class WebhooksEventDtoDeserializer extends StdDeserializer<WebhooksEventDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public WebhooksEventDtoDeserializer() {
       this(WebhooksEventDto.class);
     }

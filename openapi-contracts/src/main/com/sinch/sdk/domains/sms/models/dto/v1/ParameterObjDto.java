@@ -34,6 +34,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ParameterObjDto extends HashMap<String, Object> {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_LEFT_CURLY_BRACKET_PARAMETER_KEY_RIGHT_CURLY_BRACKET =
       "{parameter_key}";
   private ParameterObjParameterKeyDto leftCurlyBracketParameterKeyRightCurlyBracket;

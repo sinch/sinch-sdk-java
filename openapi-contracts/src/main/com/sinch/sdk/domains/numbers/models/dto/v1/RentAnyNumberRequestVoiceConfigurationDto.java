@@ -24,6 +24,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class RentAnyNumberRequestVoiceConfigurationDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_APP_ID = "appId";
   private String appId;
   private boolean appIdDefined = false;

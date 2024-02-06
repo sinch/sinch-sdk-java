@@ -50,6 +50,7 @@ import java.util.Objects;
   @JsonSubTypes.Type(value = PieRequestDto.class, name = "pieRequest"),
 })
 public class WebhooksEventRequestDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_EVENT = "event";
   private String event;
   private boolean eventDefined = false;

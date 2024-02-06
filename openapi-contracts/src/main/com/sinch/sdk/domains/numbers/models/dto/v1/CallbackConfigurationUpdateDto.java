@@ -24,6 +24,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class CallbackConfigurationUpdateDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_HMAC_SECRET = "hmacSecret";
   private String hmacSecret;
   private boolean hmacSecretDefined = false;

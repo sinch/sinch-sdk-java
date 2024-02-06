@@ -38,10 +38,13 @@ import java.util.logging.Logger;
 
 @JsonDeserialize(using = SendSMS201ResponseDto.SendSMS201ResponseDtoDeserializer.class)
 @JsonSerialize(using = SendSMS201ResponseDto.SendSMS201ResponseDtoSerializer.class)
-public class SendSMS201ResponseDto extends AbstractOpenApiSchema {
+public final class SendSMS201ResponseDto extends AbstractOpenApiSchema {
   private static final Logger log = Logger.getLogger(SendSMS201ResponseDto.class.getName());
 
-  public static class SendSMS201ResponseDtoSerializer extends StdSerializer<SendSMS201ResponseDto> {
+  public static final class SendSMS201ResponseDtoSerializer
+      extends StdSerializer<SendSMS201ResponseDto> {
+    private static final long serialVersionUID = 1L;
+
     public SendSMS201ResponseDtoSerializer(Class<SendSMS201ResponseDto> t) {
       super(t);
     }
@@ -58,8 +61,11 @@ public class SendSMS201ResponseDto extends AbstractOpenApiSchema {
     }
   }
 
-  public static class SendSMS201ResponseDtoDeserializer
+  public static final class SendSMS201ResponseDtoDeserializer
       extends StdDeserializer<SendSMS201ResponseDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public SendSMS201ResponseDtoDeserializer() {
       this(SendSMS201ResponseDto.class);
     }

@@ -27,6 +27,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class FieldViolationDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_FIELD = "field";
   private String field;
   private boolean fieldDefined = false;

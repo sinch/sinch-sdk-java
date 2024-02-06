@@ -32,6 +32,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class GetQueryNumberNumberDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_COUNTRY_ID = "countryId";
   private String countryId;
   private boolean countryIdDefined = false;

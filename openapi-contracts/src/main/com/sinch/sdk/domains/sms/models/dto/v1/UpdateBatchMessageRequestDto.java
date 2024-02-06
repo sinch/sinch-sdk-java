@@ -39,11 +39,13 @@ import java.util.logging.Logger;
 @JsonDeserialize(
     using = UpdateBatchMessageRequestDto.UpdateBatchMessageRequestDtoDeserializer.class)
 @JsonSerialize(using = UpdateBatchMessageRequestDto.UpdateBatchMessageRequestDtoSerializer.class)
-public class UpdateBatchMessageRequestDto extends AbstractOpenApiSchema {
+public final class UpdateBatchMessageRequestDto extends AbstractOpenApiSchema {
   private static final Logger log = Logger.getLogger(UpdateBatchMessageRequestDto.class.getName());
 
-  public static class UpdateBatchMessageRequestDtoSerializer
+  public static final class UpdateBatchMessageRequestDtoSerializer
       extends StdSerializer<UpdateBatchMessageRequestDto> {
+    private static final long serialVersionUID = 1L;
+
     public UpdateBatchMessageRequestDtoSerializer(Class<UpdateBatchMessageRequestDto> t) {
       super(t);
     }
@@ -60,8 +62,11 @@ public class UpdateBatchMessageRequestDto extends AbstractOpenApiSchema {
     }
   }
 
-  public static class UpdateBatchMessageRequestDtoDeserializer
+  public static final class UpdateBatchMessageRequestDtoDeserializer
       extends StdDeserializer<UpdateBatchMessageRequestDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public UpdateBatchMessageRequestDtoDeserializer() {
       this(UpdateBatchMessageRequestDto.class);
     }

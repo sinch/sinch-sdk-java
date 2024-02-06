@@ -43,12 +43,14 @@ import java.util.logging.Logger;
     using =
         InitiateVerificationResponseSeamlessDto.InitiateVerificationResponseSeamlessDtoSerializer
             .class)
-public class InitiateVerificationResponseSeamlessDto extends AbstractOpenApiSchema {
+public final class InitiateVerificationResponseSeamlessDto extends AbstractOpenApiSchema {
   private static final Logger log =
       Logger.getLogger(InitiateVerificationResponseSeamlessDto.class.getName());
 
-  public static class InitiateVerificationResponseSeamlessDtoSerializer
+  public static final class InitiateVerificationResponseSeamlessDtoSerializer
       extends StdSerializer<InitiateVerificationResponseSeamlessDto> {
+    private static final long serialVersionUID = 1L;
+
     public InitiateVerificationResponseSeamlessDtoSerializer(
         Class<InitiateVerificationResponseSeamlessDto> t) {
       super(t);
@@ -68,8 +70,11 @@ public class InitiateVerificationResponseSeamlessDto extends AbstractOpenApiSche
     }
   }
 
-  public static class InitiateVerificationResponseSeamlessDtoDeserializer
+  public static final class InitiateVerificationResponseSeamlessDtoDeserializer
       extends StdDeserializer<InitiateVerificationResponseSeamlessDto> {
+
+    private static final long serialVersionUID = 1L;
+
     public InitiateVerificationResponseSeamlessDtoDeserializer() {
       this(InitiateVerificationResponseSeamlessDto.class);
     }

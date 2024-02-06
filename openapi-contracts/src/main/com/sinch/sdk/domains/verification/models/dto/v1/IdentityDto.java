@@ -24,6 +24,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class IdentityDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_TYPE = "type";
   private String type;
   private boolean typeDefined = false;

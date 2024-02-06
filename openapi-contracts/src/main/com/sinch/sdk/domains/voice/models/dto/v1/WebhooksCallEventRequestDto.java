@@ -29,6 +29,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class WebhooksCallEventRequestDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_TIMESTAMP = "timestamp";
   private OffsetDateTime timestamp;
   private boolean timestampDefined = false;

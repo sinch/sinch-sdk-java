@@ -27,6 +27,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class RentAnyNumberRequestSmsConfigurationDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_SERVICE_PLAN_ID = "servicePlanId";
   private String servicePlanId;
   private boolean servicePlanIdDefined = false;

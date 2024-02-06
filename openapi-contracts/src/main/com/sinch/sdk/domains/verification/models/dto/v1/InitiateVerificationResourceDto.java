@@ -36,6 +36,7 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class InitiateVerificationResourceDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_IDENTITY = "identity";
   private InitiateVerificationResourceIdentityDto identity;
   private boolean identityDefined = false;

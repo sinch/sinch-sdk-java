@@ -32,6 +32,7 @@ import java.util.Set;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class MessageDeliveryStatusDto {
+  private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_CODE = "code";
   private Integer code;
   private boolean codeDefined = false;

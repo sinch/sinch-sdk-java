@@ -259,7 +259,9 @@ public class HttpMapperTest {
 
   @JsonFilter("uninitializedFilter")
   @JsonInclude(value = JsonInclude.Include.CUSTOM)
-  public static class HashMapSerialization extends HashMap<String, Object> {}
+  public static class HashMapSerialization extends HashMap<String, Object> {
+    private static final long serialVersionUID = 1L;
+  }
 
   public static class DefaultSerialization {
 
