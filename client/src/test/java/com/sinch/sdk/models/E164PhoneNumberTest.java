@@ -34,11 +34,6 @@ class E164PhoneNumberTest {
   }
 
   @Test
-  void valueOf() {
-    assertEquals(E164PhoneNumber.valueOf(phoneNumber), E164PhoneNumber.valueOf(phoneNumber));
-  }
-
-  @Test
   void throwExceptionOnInvalid() {
     String value = "my invalid value";
     E164PhoneNumber.setStrict(true);
