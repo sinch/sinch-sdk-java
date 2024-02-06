@@ -63,6 +63,9 @@ public class E164PhoneNumber {
    * @return TRUE/FALSE
    */
   public static boolean validate(String value) {
+    if (null == value) {
+      return false;
+    }
     // don't worry about spaces
     Matcher matcher = PATTERN.matcher(value.replaceAll("\\s+", ""));
     return matcher.matches();

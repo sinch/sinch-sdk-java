@@ -1,6 +1,8 @@
 package com.sinch.sdk.domains.verification.models;
 
-/** Identity based onto a number */
+import com.sinch.sdk.models.E164PhoneNumber;
+
+/** Identity based onto a phone number */
 public class NumberIdentity extends Identity {
 
   private final String endpoint;
@@ -27,6 +29,28 @@ public class NumberIdentity extends Identity {
   @Override
   public String toString() {
     return "NumberIdentity{" + "endpoint='" + endpoint + '\'' + "} " + super.toString();
+  }
+
+  /**
+   * Create a NumberIdentity from a phone number as a String
+   *
+   * @param phoneNumber String representation of phone number
+   * @return Instance of NumberIdentity
+   * @since 1.0
+   */
+  public static NumberIdentity valueOf(String phoneNumber) {
+    return builder().setEndpoint(phoneNumber).build();
+  }
+
+  /**
+   * Create a NumberIdentity from a phone number as a E164PhoneNumber
+   *
+   * @param phoneNumber E164PhoneNumber representation of phone number
+   * @return Instance of NumberIdentity
+   * @since 1.0
+   */
+  public static NumberIdentity valueOf(E164PhoneNumber phoneNumber) {
+    return builder().setEndpoint(phoneNumber.stringValue()).build();
   }
 
   /**
