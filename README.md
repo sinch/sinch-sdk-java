@@ -65,7 +65,7 @@ Sinch client provides access to the following Sinch products:
 - Numbers [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/numbers/package-summary.html)
 - SMS [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/sms/package-summary.html)
 - Verification [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/verification/package-summary.html)
-- Voice _(WIP)_
+- Voice [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/voice/package-summary.html)
 - additional products coming soon!
 
 ## Logging
