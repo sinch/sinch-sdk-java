@@ -1,7 +1,13 @@
 package com.sinch.sdk.domains.conversation.models;
 
 import com.sinch.sdk.domains.conversation.models.requests.AppRequestParameters;
+import com.sinch.sdk.domains.conversation.models.requests.ContactCreateRequestParameters;
+import com.sinch.sdk.domains.conversation.models.requests.ContactListRequestParameters;
+import com.sinch.sdk.domains.conversation.models.requests.ContactUpdateRequestParameters;
+import com.sinch.sdk.domains.conversation.models.requests.GetChannelProfileByChannelRequestParameters;
+import com.sinch.sdk.domains.conversation.models.requests.GetChannelProfileByContactRequestParameters;
 import com.sinch.sdk.domains.conversation.models.responses.App;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class BuildersDelegation {
@@ -37,6 +43,38 @@ public class BuildersDelegation {
     public static final Supplier<App.Builder> APP_BUILDER =
         com.sinch.sdk.domains.conversation.adapters.AppBuilders::AppBuilder;
 
+    public static final Function<ContactListRequestParameters, ContactListRequestParameters.Builder>
+        CONTACT_LIST_REQUEST_PARAMETERS_BUILDER =
+            com.sinch.sdk.domains.conversation.adapters.ContactBuilders
+                ::ContactListRequestParametersBuilder;
+
+    public static final Supplier<Contact.Builder> CONTACT_CONTACT_BUILDER =
+        com.sinch.sdk.domains.conversation.adapters.ContactBuilders::ContactBuilder;
+
+    public static final Supplier<ContactCreateRequestParameters.Builder>
+        CONTACT_CONTACT_CREATE_BUILDER =
+            com.sinch.sdk.domains.conversation.adapters.ContactBuilders::ContactCreateBuilder;
+    public static final Supplier<ChannelIdentity.Builder<?, ?>> CHANNEL_IDENTITY_BUILDER =
+        com.sinch.sdk.domains.conversation.adapters.ContactBuilders::ChannelIdentityBuilder;
+
+    public static final Supplier<ChannelIdentityRecipient.Builder<?>>
+        CHANNEL_IDENTITY_RECIPIENT_BUILDER =
+            com.sinch.sdk.domains.conversation.adapters.ContactBuilders
+                ::ChannelIdentityRecipientBuilder;
+
+    public static final Supplier<ContactUpdateRequestParameters.Builder>
+        CONTACT_CONTACT_UPDATE_BUILDER =
+            com.sinch.sdk.domains.conversation.adapters.ContactBuilders::ContactUpdateBuilder;
+
+    public static final Supplier<GetChannelProfileByContactRequestParameters.Builder>
+        CONTACT_GET_CHANNEL_PROFILE_BY_CONTACT_BUILDER =
+            com.sinch.sdk.domains.conversation.adapters.ContactBuilders
+                ::ContactGetChannelProfileByContactRequestParametersBuilder;
+
+    public static final Supplier<GetChannelProfileByChannelRequestParameters.Builder>
+        CONTACT_GET_CHANNEL_PROFILE_BY_CHANNEL_BUILDER =
+            com.sinch.sdk.domains.conversation.adapters.ContactBuilders
+                ::ContactGetChannelProfileByChannelRequestParametersBuilder;
   }
 
   static RetentionPolicy.Builder RetentionPolicyBuilder() {
@@ -83,50 +121,38 @@ public class BuildersDelegation {
     return LazyHolder.APP_BUILDER.get();
   }
 
-  public interface AppBuilders {
+  public static ContactListRequestParameters.Builder ContactListRequestParametersBuilder(
+      ContactListRequestParameters parameters) {
+    return LazyHolder.CONTACT_LIST_REQUEST_PARAMETERS_BUILDER.apply(parameters);
+  }
 
-    static RetentionPolicy.Builder RetentionPolicyBuilder() {
-      return null;
-    }
+  public static Contact.Builder ContactBuilder() {
+    return LazyHolder.CONTACT_CONTACT_BUILDER.get();
+  }
 
-    static SmartConversation.Builder SmartConversationBuilder() {
-      return null;
-    }
+  public static ContactCreateRequestParameters.Builder ContactCreateBuilder() {
+    return LazyHolder.CONTACT_CONTACT_CREATE_BUILDER.get();
+  }
 
-    static RateLimits.Builder RateLimitsBuilder() {
-      return null;
-    }
+  public static ChannelIdentity.Builder<?, ?> ChannelIdentityBuilder() {
+    return LazyHolder.CHANNEL_IDENTITY_BUILDER.get();
+  }
 
-    static QueueStats.Builder QueueStatsBuilder() {
-      return null;
-    }
+  public static ChannelIdentityRecipient.Builder<?> ChannelIdentityRecipientBuilder() {
+    return LazyHolder.CHANNEL_IDENTITY_RECIPIENT_BUILDER.get();
+  }
 
-    static PersistMessageStatus.Builder PersistMessageStatusBuilder() {
-      return null;
-    }
+  public static ContactUpdateRequestParameters.Builder ContactUpdateBuilder() {
+    return LazyHolder.CONTACT_CONTACT_UPDATE_BUILDER.get();
+  }
 
-    static MessageSearch.Builder MessageSearchBuilder() {
-      return null;
-    }
+  public static GetChannelProfileByContactRequestParameters.Builder
+      ContactGetChannelProfileByContactRequestParametersBuilder() {
+    return LazyHolder.CONTACT_GET_CHANNEL_PROFILE_BY_CONTACT_BUILDER.get();
+  }
 
-    static DispatchRetentionPolicy.Builder DispatchRetentionPolicyBuilder() {
-      return null;
-    }
-
-    static DeliveryReportBasedFallback.Builder DeliveryReportBasedFallbackBuilder() {
-      return null;
-    }
-
-    static CallbackSettings.Builder CallbackSettingsBuilder() {
-      return null;
-    }
-
-    static AppRequestParameters.Builder AppRequestParametersBuilder() {
-      return null;
-    }
-
-    static App.Builder AppBuilder() {
-      return null;
-    }
+  public static GetChannelProfileByChannelRequestParameters.Builder
+      ContactGetChannelProfileByChannelRequestParametersBuilder() {
+    return LazyHolder.CONTACT_GET_CHANNEL_PROFILE_BY_CHANNEL_BUILDER.get();
   }
 }

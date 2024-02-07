@@ -66,6 +66,7 @@ public interface AppService {
    *
    * <p>You can create an app for one or more channels at once.
    *
+   * @param parameters Creation parameters
    * @return Created application
    */
   App create(AppRequestParameters parameters);

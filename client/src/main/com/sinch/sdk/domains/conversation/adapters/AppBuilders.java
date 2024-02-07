@@ -11,7 +11,6 @@ import com.sinch.sdk.domains.conversation.adapters.models.RetentionPolicyImpl;
 import com.sinch.sdk.domains.conversation.adapters.models.SmartConversationImpl;
 import com.sinch.sdk.domains.conversation.adapters.models.requests.AppRequestParametersImpl;
 import com.sinch.sdk.domains.conversation.adapters.models.responses.AppImpl;
-import com.sinch.sdk.domains.conversation.models.BuildersDelegation;
 import com.sinch.sdk.domains.conversation.models.CallbackSettings;
 import com.sinch.sdk.domains.conversation.models.DeliveryReportBasedFallback;
 import com.sinch.sdk.domains.conversation.models.DispatchRetentionPolicy;
@@ -24,7 +23,7 @@ import com.sinch.sdk.domains.conversation.models.SmartConversation;
 import com.sinch.sdk.domains.conversation.models.requests.AppRequestParameters;
 import com.sinch.sdk.domains.conversation.models.responses.App;
 
-public class AppBuilders implements BuildersDelegation.AppBuilders {
+public class AppBuilders {
 
   public static RetentionPolicy.Builder RetentionPolicyBuilder() {
     return new RetentionPolicyImpl.Builder();
