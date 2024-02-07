@@ -20,7 +20,7 @@ public class VerificationResponseActionType
   public static final VerificationResponseActionType ALLOW =
       new VerificationResponseActionType("allow");
 
-  /** >Action is denied */
+  /** Action is denied */
   public static final VerificationResponseActionType DENY =
       new VerificationResponseActionType("deny");
 
