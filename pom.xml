@@ -3,7 +3,7 @@
 
     <groupId>com.sinch.sdk</groupId>
     <artifactId>sinch-sdk-java</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.4-alpha</version>
 
     <name>Sinch Java SDK</name>
     <description>
@@ -36,7 +36,7 @@
         <url>https://github.com/sinch/sinch-sdk-java.git</url>
         <connection>scm:git:${project.scm.url}</connection>
         <developerConnection>scm:git:${project.scm.url}</developerConnection>
-      <tag>HEAD</tag>
+      <tag>v0.0.4-alpha</tag>
   </scm>
 
     <issueManagement>
