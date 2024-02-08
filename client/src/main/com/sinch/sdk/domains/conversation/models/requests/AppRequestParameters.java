@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.conversation.models.requests;
 
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.BuildersDelegation;
 import com.sinch.sdk.domains.conversation.models.CallbackSettings;
 import com.sinch.sdk.domains.conversation.models.ConversationMetadataReportViewType;
 import com.sinch.sdk.domains.conversation.models.DispatchRetentionPolicy;

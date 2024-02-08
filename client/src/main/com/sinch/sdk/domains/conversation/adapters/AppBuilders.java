@@ -10,8 +10,9 @@ import com.sinch.sdk.domains.conversation.adapters.models.RateLimitsImpl;
 import com.sinch.sdk.domains.conversation.adapters.models.RetentionPolicyImpl;
 import com.sinch.sdk.domains.conversation.adapters.models.SmartConversationImpl;
 import com.sinch.sdk.domains.conversation.adapters.models.requests.AppRequestParametersImpl;
+import com.sinch.sdk.domains.conversation.models.BuildersDelegation;
 
-public class AppBuilders {
+public class AppBuilders implements BuildersDelegation.AppBuilders {
 
   public static RetentionPolicyImpl.Builder RetentionPolicyBuilder() {
     return new RetentionPolicyImpl.Builder();

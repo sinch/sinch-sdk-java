@@ -136,6 +136,7 @@
                         <sourceFileExcludes>
                             <sourceFileExclude>**/pagination/Page*.java</sourceFileExclude>
                             <sourceFileExclude>**/AbstractOpenApiSchema.java</sourceFileExclude>
+                            <sourceFileExclude>**/BuildersDelegation.java</sourceFileExclude>
                         </sourceFileExcludes>
                         <groups>
                             <group>
