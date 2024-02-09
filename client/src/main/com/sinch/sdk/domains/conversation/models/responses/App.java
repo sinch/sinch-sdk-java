@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.conversation.models.responses;
 
+import com.sinch.sdk.domains.conversation.models.BuildersDelegation;
 import com.sinch.sdk.domains.conversation.models.CallbackSettings;
 import com.sinch.sdk.domains.conversation.models.ConversationMetadataReportViewType;
 import com.sinch.sdk.domains.conversation.models.DeliveryReportBasedFallback;
@@ -14,256 +15,70 @@ import com.sinch.sdk.domains.conversation.models.SmartConversation;
 import com.sinch.sdk.domains.conversation.models.credentials.ConversationChannel;
 import java.util.Collection;
 
-public class App {
+public interface App {
 
-  private final Collection<ConversationChannel> channelCredentials;
-  private final ConversationMetadataReportViewType metadataReportView;
-  private final String displayName;
-  private final String id;
-  private final RateLimits rateLimits;
-  private final RetentionPolicy retentionPolicy;
-  private final DispatchRetentionPolicy dispatchRetentionPolicy;
-  private final ProcessingModeType processingMode;
-  private final SmartConversation smartConversation;
-  private final QueueStats queueStats;
-  private final PersistMessageStatus persistMessageStatus;
-  private final MessageSearch messageSearch;
-  private final CallbackSettings callbackSettings;
-  private final DeliveryReportBasedFallback deliveryReportBasedFallback;
+  Collection<ConversationChannel> getChannelCredentials();
 
-  // TODO private final MessageRetrySettings messageRetrySettings;
+  ConversationMetadataReportViewType getMetadataReportView();
 
-  private App(
-      Collection<ConversationChannel> channelCredentials,
-      ConversationMetadataReportViewType metadataReportView,
-      String displayName,
-      String id,
-      RateLimits rateLimits,
-      RetentionPolicy retentionPolicy,
-      DispatchRetentionPolicy dispatchRetentionPolicy,
-      ProcessingModeType processingMode,
-      SmartConversation smartConversation,
-      QueueStats queueStats,
-      PersistMessageStatus persistMessageStatus,
-      MessageSearch messageSearch,
-      CallbackSettings callbackSettings,
-      DeliveryReportBasedFallback deliveryReportBasedFallback) {
-    this.channelCredentials = channelCredentials;
-    this.metadataReportView = metadataReportView;
-    this.displayName = displayName;
-    this.id = id;
-    this.rateLimits = rateLimits;
-    this.retentionPolicy = retentionPolicy;
-    this.dispatchRetentionPolicy = dispatchRetentionPolicy;
-    this.processingMode = processingMode;
-    this.smartConversation = smartConversation;
-    this.queueStats = queueStats;
-    this.persistMessageStatus = persistMessageStatus;
-    this.messageSearch = messageSearch;
-    this.callbackSettings = callbackSettings;
-    this.deliveryReportBasedFallback = deliveryReportBasedFallback;
+  String getDisplayName();
+
+  String getId();
+
+  RateLimits getRateLimits();
+
+  RetentionPolicy getRetentionPolicy();
+
+  DispatchRetentionPolicy getDispatchRetentionPolicy();
+
+  ProcessingModeType getProcessingMode();
+
+  SmartConversation getSmartConversation();
+
+  QueueStats getQueueStats();
+
+  PersistMessageStatus getPersistMessageStatus();
+
+  MessageSearch getMessageSearch();
+
+  CallbackSettings getCallbackSettings();
+
+  DeliveryReportBasedFallback getDeliveryReportBasedFallback();
+
+  static Builder builder() {
+    return BuildersDelegation.AppBuilder();
   }
 
-  public Collection<ConversationChannel> getChannelCredentials() {
-    return channelCredentials;
-  }
+  interface Builder {
 
-  public ConversationMetadataReportViewType getMetadataReportView() {
-    return metadataReportView;
-  }
+    Builder setChannelCredentials(Collection<ConversationChannel> channelCredentials);
 
-  public String getDisplayName() {
-    return displayName;
-  }
+    Builder setMetadataReportView(ConversationMetadataReportViewType metadataReportView);
 
-  public String getId() {
-    return id;
-  }
+    Builder setDisplayName(String displayName);
 
-  public RateLimits getRateLimits() {
-    return rateLimits;
-  }
+    Builder setId(String id);
 
-  public RetentionPolicy getRetentionPolicy() {
-    return retentionPolicy;
-  }
+    Builder setRateLimits(RateLimits rateLimits);
 
-  public DispatchRetentionPolicy getDispatchRetentionPolicy() {
-    return dispatchRetentionPolicy;
-  }
+    Builder setRetentionPolicy(RetentionPolicy retentionPolicy);
 
-  public ProcessingModeType getProcessingMode() {
-    return processingMode;
-  }
+    Builder setDispatchRetentionPolicy(DispatchRetentionPolicy dispatchRetentionPolicy);
 
-  public SmartConversation getSmartConversation() {
-    return smartConversation;
-  }
+    Builder setProcessingMode(ProcessingModeType processingMode);
 
-  public QueueStats getQueueStats() {
-    return queueStats;
-  }
+    Builder setSmartConversation(SmartConversation smartConversation);
 
-  public PersistMessageStatus getPersistMessageStatus() {
-    return persistMessageStatus;
-  }
+    Builder setQueueStats(QueueStats queueStats);
 
-  public MessageSearch getMessageSearch() {
-    return messageSearch;
-  }
+    Builder setPersistMessageStatus(PersistMessageStatus persistMessageStatus);
 
-  public CallbackSettings getCallbackSettings() {
-    return callbackSettings;
-  }
+    Builder setMessageSearch(MessageSearch messageSearch);
 
-  public DeliveryReportBasedFallback getDeliveryReportBasedFallback() {
-    return deliveryReportBasedFallback;
-  }
+    Builder setCallbackSettings(CallbackSettings callbackSettings);
 
-  @Override
-  public String toString() {
-    return "App{"
-        + "channelCredentials="
-        + channelCredentials
-        + ", metadataReportView="
-        + metadataReportView
-        + ", displayName='"
-        + displayName
-        + '\''
-        + ", id='"
-        + id
-        + '\''
-        + ", rateLimits="
-        + rateLimits
-        + ", retentionPolicy="
-        + retentionPolicy
-        + ", dispatchRetentionPolicy="
-        + dispatchRetentionPolicy
-        + ", processingMode="
-        + processingMode
-        + ", smartConversation="
-        + smartConversation
-        + ", queueStats="
-        + queueStats
-        + ", persistMessageStatus="
-        + persistMessageStatus
-        + ", messageSearch="
-        + messageSearch
-        + ", callbackSettings="
-        + callbackSettings
-        + ", deliveryReportBasedFallback="
-        + deliveryReportBasedFallback
-        + '}';
-  }
+    Builder setDeliveryReportBasedFallback(DeliveryReportBasedFallback deliveryReportBasedFallback);
 
-  public static Builder builder() {
-    return new Builder();
-  }
-
-  public static class Builder {
-
-    Collection<ConversationChannel> channelCredentials;
-    ConversationMetadataReportViewType metadataReportView;
-    String displayName;
-    String id;
-    RateLimits rateLimits;
-    RetentionPolicy retentionPolicy;
-    DispatchRetentionPolicy dispatchRetentionPolicy;
-    ProcessingModeType processingMode;
-    SmartConversation smartConversation;
-    QueueStats queueStats;
-    PersistMessageStatus persistMessageStatus;
-    MessageSearch messageSearch;
-    CallbackSettings callbackSettings;
-    DeliveryReportBasedFallback deliveryReportBasedFallback;
-
-    public Builder setChannelCredentials(Collection<ConversationChannel> channelCredentials) {
-      this.channelCredentials = channelCredentials;
-      return this;
-    }
-
-    public Builder setMetadataReportView(ConversationMetadataReportViewType metadataReportView) {
-      this.metadataReportView = metadataReportView;
-      return this;
-    }
-
-    public Builder setDisplayName(String displayName) {
-      this.displayName = displayName;
-      return this;
-    }
-
-    public Builder setId(String id) {
-      this.id = id;
-      return this;
-    }
-
-    public Builder setRateLimits(RateLimits rateLimits) {
-      this.rateLimits = rateLimits;
-      return this;
-    }
-
-    public Builder setRetentionPolicy(RetentionPolicy retentionPolicy) {
-      this.retentionPolicy = retentionPolicy;
-      return this;
-    }
-
-    public Builder setDispatchRetentionPolicy(DispatchRetentionPolicy dispatchRetentionPolicy) {
-      this.dispatchRetentionPolicy = dispatchRetentionPolicy;
-      return this;
-    }
-
-    public Builder setProcessingMode(ProcessingModeType processingMode) {
-      this.processingMode = processingMode;
-      return this;
-    }
-
-    public Builder setSmartConversation(SmartConversation smartConversation) {
-      this.smartConversation = smartConversation;
-      return this;
-    }
-
-    public Builder setQueueStats(QueueStats queueStats) {
-      this.queueStats = queueStats;
-      return this;
-    }
-
-    public Builder setPersistMessageStatus(PersistMessageStatus persistMessageStatus) {
-      this.persistMessageStatus = persistMessageStatus;
-      return this;
-    }
-
-    public Builder setMessageSearch(MessageSearch messageSearch) {
-      this.messageSearch = messageSearch;
-      return this;
-    }
-
-    public Builder setCallbackSettings(CallbackSettings callbackSettings) {
-      this.callbackSettings = callbackSettings;
-      return this;
-    }
-
-    public Builder setDeliveryReportBasedFallback(
-        DeliveryReportBasedFallback deliveryReportBasedFallback) {
-      this.deliveryReportBasedFallback = deliveryReportBasedFallback;
-      return this;
-    }
-
-    public App build() {
-      return new App(
-          channelCredentials,
-          metadataReportView,
-          displayName,
-          id,
-          rateLimits,
-          retentionPolicy,
-          dispatchRetentionPolicy,
-          processingMode,
-          smartConversation,
-          queueStats,
-          persistMessageStatus,
-          messageSearch,
-          callbackSettings,
-          deliveryReportBasedFallback);
-    }
+    App build();
   }
 }

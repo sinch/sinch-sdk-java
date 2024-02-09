@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.conversation.models;
 
 import com.sinch.sdk.domains.conversation.models.requests.AppRequestParameters;
+import com.sinch.sdk.domains.conversation.models.responses.App;
 import java.util.function.Supplier;
 
 public class BuildersDelegation {
@@ -33,6 +34,9 @@ public class BuildersDelegation {
 
     public static final Supplier<AppRequestParameters.Builder> APP_REQUEST_PARAMETERS_BUILDER =
         com.sinch.sdk.domains.conversation.adapters.AppBuilders::AppRequestParametersBuilder;
+    public static final Supplier<App.Builder> APP_BUILDER =
+        com.sinch.sdk.domains.conversation.adapters.AppBuilders::AppBuilder;
+
   }
 
   static RetentionPolicy.Builder RetentionPolicyBuilder() {
@@ -75,6 +79,10 @@ public class BuildersDelegation {
     return LazyHolder.APP_REQUEST_PARAMETERS_BUILDER.get();
   }
 
+  public static App.Builder AppBuilder() {
+    return LazyHolder.APP_BUILDER.get();
+  }
+
   public interface AppBuilders {
 
     static RetentionPolicy.Builder RetentionPolicyBuilder() {
@@ -114,6 +122,10 @@ public class BuildersDelegation {
     }
 
     static AppRequestParameters.Builder AppRequestParametersBuilder() {
+      return null;
+    }
+
+    static App.Builder AppBuilder() {
       return null;
     }
   }
