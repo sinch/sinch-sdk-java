@@ -1,9 +1,11 @@
 package com.sinch.sdk.domains.verification.models;
 
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSRequestParameters;
+
 /**
  * Verification report related to a {@link
- * com.sinch.sdk.domains.verification.VerificationsService#start(StartVerificationRequestParameters)
- * VerificationsService#start()} of type {@link
+ * com.sinch.sdk.domains.verification.VerificationsService#startSms(StartVerificationSMSRequestParameters)}
+ * of type {@link
  * com.sinch.sdk.domains.verification.models.requests.VerificationReportSMSRequestParameters
  * VerificationReportSMSRequestParameters}
  *

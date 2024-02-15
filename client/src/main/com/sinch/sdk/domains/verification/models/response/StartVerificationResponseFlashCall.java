@@ -6,7 +6,7 @@ import java.util.Collection;
 
 /**
  * Dedicated response type for a flash call verification started with {@link
- * com.sinch.sdk.domains.verification.VerificationsService#start(StartVerificationRequestParameters)
+ * com.sinch.sdk.domains.verification.VerificationsService#startFlashCall}
  * VerificationsService#start()} initiated wit method {@link
  * com.sinch.sdk.domains.verification.models.VerificationMethodType#FLASH_CALL FLASH_CALL}
  *

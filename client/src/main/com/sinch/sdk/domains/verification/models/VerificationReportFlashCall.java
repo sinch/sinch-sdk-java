@@ -1,11 +1,11 @@
 package com.sinch.sdk.domains.verification.models;
 
-import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlashCallRequestParameters;
 
 /**
  * Verification report related to a {@link
- * com.sinch.sdk.domains.verification.VerificationsService#start(StartVerificationRequestParameters)
- * VerificationsService#start()} of type {@link
+ * com.sinch.sdk.domains.verification.VerificationsService#startFlashCall(StartVerificationFlashCallRequestParameters)}
+ * of type {@link
  * com.sinch.sdk.domains.verification.models.requests.VerificationReportFlashCallRequestParameters
  * VerificationReportFlashCallRequestParameters}
  *

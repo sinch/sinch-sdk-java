@@ -27,7 +27,7 @@ public interface VerificationService {
    *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-status/">Documentation</a>
    * @since 1.0
    */
-  StatusService status();
+  VerificationStatusService verificationStatus();
 
   /**
    * Webhooks helpers instance

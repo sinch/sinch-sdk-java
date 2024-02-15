@@ -27,7 +27,7 @@ public class GetByReference extends BaseApplication {
 
     LOGGER.info("Get status by reference for: '" + reference + "'");
 
-    VerificationReport response = client.verification().status().get(reference);
+    VerificationReport response = client.verification().verificationStatus().get(reference);
     LOGGER.info("Response :" + response);
   }
 }

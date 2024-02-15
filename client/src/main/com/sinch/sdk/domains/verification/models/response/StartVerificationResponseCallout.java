@@ -2,12 +2,13 @@ package com.sinch.sdk.domains.verification.models.response;
 
 import com.sinch.sdk.domains.verification.models.Link;
 import com.sinch.sdk.domains.verification.models.VerificationId;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutRequestParameters;
 import java.util.Collection;
 
 /**
  * Dedicated response type for a callout verification started with {@link
- * com.sinch.sdk.domains.verification.VerificationsService#start(StartVerificationRequestParameters)
- * VerificationsService#start()} initiated wit method {@link
+ * com.sinch.sdk.domains.verification.VerificationsService#startCallout(StartVerificationCalloutRequestParameters)}
+ * initiated wit method {@link
  * com.sinch.sdk.domains.verification.models.VerificationMethodType#CALLOUT CALLOUT}
  *
  * @since 1.0

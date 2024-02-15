@@ -6,7 +6,6 @@ import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.VerificationReport;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportCalloutRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportFlashCallRequestParameters;
-import com.sinch.sdk.domains.verification.models.requests.VerificationReportRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportSMSRequestParameters;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -34,19 +33,36 @@ public class ReportById extends BaseApplication {
 
     VerificationMethodType method = VerificationMethodType.CALLOUT;
 
-    VerificationReportRequestParameters.Builder<?> builder;
+    VerificationReport response;
 
     if (method == VerificationMethodType.FLASH_CALL) {
-      builder = VerificationReportFlashCallRequestParameters.builder().setCli("+19799770634");
+      response =
+          client
+              .verification()
+              .verifications()
+              .reportFlashCallById(
+                  id,
+                  VerificationReportFlashCallRequestParameters.builder()
+                      .setCli("+19799770634")
+                      .build());
     } else if (method == VerificationMethodType.SMS) {
-      builder = VerificationReportSMSRequestParameters.builder().setCode("4511");
+      response =
+          client
+              .verification()
+              .verifications()
+              .reportSmsById(
+                  id, VerificationReportSMSRequestParameters.builder().setCode("4511").build());
     } else if (method == VerificationMethodType.CALLOUT) {
-      builder = VerificationReportCalloutRequestParameters.builder().setCode("5762");
+      response =
+          client
+              .verification()
+              .verifications()
+              .reportCalloutById(
+                  id, VerificationReportCalloutRequestParameters.builder().setCode("5762").build());
     } else {
       throw new UnsupportedOperationException("Unknown method " + method);
     }
 
-    VerificationReport response = client.verification().verifications().report(id, builder.build());
     LOGGER.info("Response :" + response);
   }
 }
