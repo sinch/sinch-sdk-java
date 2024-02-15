@@ -8,12 +8,20 @@ import com.sinch.sdk.domains.verification.adapters.converters.VerificationsDtoCo
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationReport;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlashCallRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationSeamlessRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportCalloutRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportFlashCallRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportSMSRequestParameters;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponse;
+import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseCallout;
+import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseFlashCall;
+import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSMS;
+import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSeamless;
 import com.sinch.sdk.models.Configuration;
 import java.util.Map;
 
@@ -33,7 +41,26 @@ public class VerificationsService
     return this.api;
   }
 
-  public StartVerificationResponse start(StartVerificationRequestParameters parameters) {
+  public StartVerificationResponseSMS startSms(StartVerificationSMSRequestParameters parameters) {
+    return (StartVerificationResponseSMS) start(parameters);
+  }
+
+  public StartVerificationResponseFlashCall startFlashCall(
+      StartVerificationFlashCallRequestParameters parameters) {
+    return (StartVerificationResponseFlashCall) start(parameters);
+  }
+
+  public StartVerificationResponseCallout startCallout(
+      StartVerificationCalloutRequestParameters parameters) {
+    return (StartVerificationResponseCallout) start(parameters);
+  }
+
+  public StartVerificationResponseSeamless startSeamless(
+      StartVerificationSeamlessRequestParameters parameters) {
+    return (StartVerificationResponseSeamless) start(parameters);
+  }
+
+  private StartVerificationResponse start(StartVerificationRequestParameters parameters) {
     return VerificationsDtoConverter.convert(
         getApi().startVerification(VerificationsDtoConverter.convert(parameters)));
   }

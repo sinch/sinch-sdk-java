@@ -88,7 +88,7 @@ public class VerificationsSampleFlowInteractive {
             .build();
     echo("Sending verification request onto '%s'".formatted(phoneNumber.stringValue()));
 
-    var response = service.start(parameters);
+    var response = service.startSms(parameters);
     echo("Verification started with ID '%s'".formatted(response.getId()));
     return response.getId();
   }

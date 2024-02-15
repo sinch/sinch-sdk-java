@@ -1,13 +1,6 @@
 package com.sinch.sdk.domains.verification.models;
 
-import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
-
-/**
- * Verification reference related to a Verification request
- *
- * <p>Verification reference value have to be set when starting a verification with {@link
- * com.sinch.sdk.domains.verification.VerificationsService#start(StartVerificationRequestParameters)}}
- */
+/** Verification reference related to a Verification request */
 public class VerificationReference {
 
   private final String reference;
