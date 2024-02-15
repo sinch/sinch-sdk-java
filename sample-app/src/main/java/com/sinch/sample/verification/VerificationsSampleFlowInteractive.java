@@ -104,7 +104,7 @@ public class VerificationsSampleFlowInteractive {
     var parameters = VerificationReportSMSRequestParameters.builder().setCode(code).build();
 
     echo("Requesting report for '%s'".formatted(id.getId()));
-    var response = service.report(id, parameters);
+    var response = service.reportSmsById(id, parameters);
     echo("Report response: %s".formatted(response));
   }
 

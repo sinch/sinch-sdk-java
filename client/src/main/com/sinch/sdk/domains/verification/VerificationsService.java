@@ -4,7 +4,9 @@ import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationReport;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
-import com.sinch.sdk.domains.verification.models.requests.VerificationReportRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.VerificationReportCalloutRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.VerificationReportFlashCallRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.VerificationReportSMSRequestParameters;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponse;
 
 /**
@@ -13,7 +15,7 @@ import com.sinch.sdk.domains.verification.models.response.StartVerificationRespo
  * <p>Start new verification requests and report on existing verification requests.
  *
  * @see <a
- *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verifications///">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verifications///</a>
+ * href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verifications">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verifications</a>
  * @since 1.0
  */
 public interface VerificationsService {
@@ -31,29 +33,76 @@ public interface VerificationsService {
   StartVerificationResponse start(StartVerificationRequestParameters parameters);
 
   /**
-   * Report a verification using Identity
+   * Report a verification using {@link com.sinch.sdk.domains.verification.models.VerificationMethodType#SMS SMS} &amp; Identity
    *
-   * <p>Report the received verification code to verify it, using the identity of the user (in most
-   * cases, the phone number). For an SMS PIN verification or Phone Call verification, this is the
-   * OTP code. For flashcalls, this is the CLI.
-   *
-   * @param identity Currently <b>Only</b> {@link
-   *     com.sinch.sdk.domains.verification.models.NumberIdentity NumberIdentity} is supported
+   * <p>Report the received verification code to verify it, using the identity of the user
+   * @param identity   Currently <b>Only</b>
+   *                   {@link com.sinch.sdk.domains.verification.models.NumberIdentity
+   *                   NumberIdentity} is supported
    * @param parameters Parameters to be used to get report
    * @return Verification report response
    * @since 1.0
    */
-  VerificationReport report(
-      NumberIdentity identity, VerificationReportRequestParameters parameters);
+  VerificationReport reportSmsByIdentity(
+      NumberIdentity identity, VerificationReportSMSRequestParameters parameters);
+
+  /**
+   * Report a verification using {@link com.sinch.sdk.domains.verification.models.VerificationMethodType#FLASH_CALL FLASH_CALL} &amp; Identity
+   *
+   * <p>Report the received verification code to verify it, using the identity of the user
+   * @param identity   Currently <b>Only</b>
+   *                   {@link com.sinch.sdk.domains.verification.models.NumberIdentity
+   *                   NumberIdentity} is supported
+   * @param parameters Parameters to be used to get report
+   * @return Verification report response
+   * @since 1.0
+   */ VerificationReport reportFlashCallByIdentity(
+      NumberIdentity identity, VerificationReportFlashCallRequestParameters parameters);
+
+  /**
+   * Report a verification using {@link com.sinch.sdk.domains.verification.models.VerificationMethodType#CALLOUT CALLOUT} &amp; Identity
+   *
+   * <p>Report the received verification code to verify it, using the identity of the user
+   * @param identity   Currently <b>Only</b>
+   *                   {@link com.sinch.sdk.domains.verification.models.NumberIdentity
+   *                   NumberIdentity} is supported
+   * @param parameters Parameters to be used to get report
+   * @return Verification report response
+   * @since 1.0
+   */ VerificationReport reportCalloutByIdentity(
+      NumberIdentity identity, VerificationReportCalloutRequestParameters parameters);
 
   /**
    * Report the received verification code to verify it, using the Verification ID of the
-   * Verification request
+   * {@link com.sinch.sdk.domains.verification.models.VerificationMethodType#SMS SMS} Verification request
    *
-   * @param id Id returned from start verification
+   * @param id         ID returned from start verification
    * @param parameters Parameters to be used to get report
    * @return Verification report response
    * @since 1.0
    */
-  VerificationReport report(VerificationId id, VerificationReportRequestParameters parameters);
+  VerificationReport reportSmsById(
+      VerificationId id, VerificationReportSMSRequestParameters parameters);
+
+  /**
+   * Report the received verification code to verify it, using the Verification ID of the
+   * {@link com.sinch.sdk.domains.verification.models.VerificationMethodType#FLASH_CALL FLASH_CALL} Verification request
+   *
+   * @param id         ID returned from start verification
+   * @param parameters Parameters to be used to get report
+   * @return Verification report response
+   * @since 1.0
+   */VerificationReport reportFlashCallById(
+      VerificationId id, VerificationReportFlashCallRequestParameters parameters);
+
+  /**
+   * Report the received verification code to verify it, using the Verification ID of the
+   * {@link com.sinch.sdk.domains.verification.models.VerificationMethodType#CALLOUT CALLOUT} Verification request
+   *
+   * @param id         ID returned from start verification
+   * @param parameters Parameters to be used to get report
+   * @return Verification report response
+   * @since 1.0
+   */ VerificationReport reportCalloutById(
+      VerificationId id, VerificationReportCalloutRequestParameters parameters);
 }

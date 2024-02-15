@@ -30,7 +30,7 @@ public class Start extends BaseApplication {
 
     LOGGER.info("Start verification for : " + phoneNumber);
 
-    var identity = NumberIdentity.builder().setEndpoint(phoneNumber).build();
+    var identity = NumberIdentity.valueOf(phoneNumber);
 
     var method = VerificationMethodType.SMS;
 

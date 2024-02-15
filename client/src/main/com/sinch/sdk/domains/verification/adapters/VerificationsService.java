@@ -9,7 +9,10 @@ import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationReport;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.VerificationReportCalloutRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.VerificationReportFlashCallRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.VerificationReportSMSRequestParameters;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponse;
 import com.sinch.sdk.models.Configuration;
 import java.util.Map;
@@ -35,7 +38,22 @@ public class VerificationsService
         getApi().startVerification(VerificationsDtoConverter.convert(parameters)));
   }
 
-  public VerificationReport report(
+  public VerificationReport reportSmsByIdentity(
+      NumberIdentity identity, VerificationReportSMSRequestParameters parameters) {
+    return report(identity, parameters);
+  }
+
+  public VerificationReport reportFlashCallByIdentity(
+      NumberIdentity identity, VerificationReportFlashCallRequestParameters parameters) {
+    return report(identity, parameters);
+  }
+
+  public VerificationReport reportCalloutByIdentity(
+      NumberIdentity identity, VerificationReportCalloutRequestParameters parameters) {
+    return report(identity, parameters);
+  }
+
+  private VerificationReport report(
       NumberIdentity identity, VerificationReportRequestParameters parameters) {
 
     return VerificationsDtoConverter.convert(
@@ -44,7 +62,22 @@ public class VerificationsService
                 "number", identity.getEndpoint(), VerificationsDtoConverter.convert(parameters)));
   }
 
-  public VerificationReport report(
+  public VerificationReport reportSmsById(
+      VerificationId id, VerificationReportSMSRequestParameters parameters) {
+    return report(id, parameters);
+  }
+
+  public VerificationReport reportFlashCallById(
+      VerificationId id, VerificationReportFlashCallRequestParameters parameters) {
+    return report(id, parameters);
+  }
+
+  public VerificationReport reportCalloutById(
+      VerificationId id, VerificationReportCalloutRequestParameters parameters) {
+    return report(id, parameters);
+  }
+
+  private VerificationReport report(
       VerificationId id, VerificationReportRequestParameters parameters) {
 
     return VerificationsDtoConverter.convert(
