@@ -35,20 +35,20 @@ public class Update extends BaseApplication {
                 Arrays.asList(
                     ChannelIdentity.builder()
                         .setChannel(ChannelType.MESSENGER)
-                        .setIdentity("+33123456789")
+                        .setIdentity("a MESSENGER identity")
                         .setAppId(conversationAppId)
                         .build(),
                     ChannelIdentity.builder()
                         .setChannel(ChannelType.MMS)
-                        .setIdentity("+33123456789")
+                        .setIdentity("a MMS identity")
                         .build(),
                     ChannelIdentity.builder()
                         .setChannel(ChannelType.KAKAO_TALK)
-                        .setIdentity("+33234567890")
+                        .setIdentity("a KAKAO_TALK identity")
                         .build(),
                     ChannelIdentity.builder()
                         .setChannel(ChannelType.INSTAGRAM)
-                        .setIdentity("+33234567890")
+                        .setIdentity("a INSTAGRAM identity")
                         .setAppId(conversationAppId)
                         .build()))
             .setChannelPriority(Arrays.asList(ChannelType.MMS, ChannelType.KAKAO_TALK))

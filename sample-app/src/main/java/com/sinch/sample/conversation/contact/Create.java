@@ -34,11 +34,11 @@ public class Create extends BaseApplication {
                 Arrays.asList(
                     ChannelIdentity.builder()
                         .setChannel(ChannelType.MMS)
-                        .setIdentity("+33123456789")
+                        .setIdentity("a MMS identity")
                         .build(),
                     ChannelIdentity.builder()
                         .setChannel(ChannelType.MESSENGER)
-                        .setIdentity("+33987654321")
+                        .setIdentity("a MESSENGER identity")
                         .setAppId("app id")
                         .build()))
             .setChannelPriority(Arrays.asList(ChannelType.MMS, ChannelType.MESSENGER))
