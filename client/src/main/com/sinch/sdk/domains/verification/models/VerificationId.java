@@ -1,13 +1,6 @@
 package com.sinch.sdk.domains.verification.models;
 
-import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
-
-/**
- * Verification ID related to a Verification request
- *
- * <p>Verification ID a returned by {@link
- * com.sinch.sdk.domains.verification.VerificationsService#start(StartVerificationRequestParameters)}}
- */
+/** Verification ID related to a Verification request */
 public class VerificationId {
 
   private final String id;

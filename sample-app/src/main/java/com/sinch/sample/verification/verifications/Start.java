@@ -5,9 +5,9 @@ import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlashCallRequestParameters;
-import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationSeamlessRequestParameters;
+import com.sinch.sdk.domains.verification.models.response.StartVerificationResponse;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -30,28 +30,49 @@ public class Start extends BaseApplication {
 
     LOGGER.info("Start verification for : " + phoneNumber);
 
-    var identity = NumberIdentity.builder().setEndpoint(phoneNumber).build();
+    var identity = NumberIdentity.valueOf(phoneNumber);
 
     var method = VerificationMethodType.SMS;
 
-    StartVerificationRequestParameters.Builder<?> builder;
-
+    StartVerificationResponse response;
     if (method == VerificationMethodType.CALLOUT) {
-      builder = StartVerificationCalloutRequestParameters.builder();
+      response =
+          client
+              .verification()
+              .verifications()
+              .startCallout(
+                  StartVerificationCalloutRequestParameters.builder()
+                      .setIdentity(identity)
+                      .build());
     } else if (method == VerificationMethodType.SMS) {
-      builder = StartVerificationSMSRequestParameters.builder();
+      response =
+          client
+              .verification()
+              .verifications()
+              .startSms(
+                  StartVerificationSMSRequestParameters.builder().setIdentity(identity).build());
     } else if (method == VerificationMethodType.SEAMLESS) {
-      builder = StartVerificationSeamlessRequestParameters.builder();
+      response =
+          client
+              .verification()
+              .verifications()
+              .startSeamless(
+                  StartVerificationSeamlessRequestParameters.builder()
+                      .setIdentity(identity)
+                      .build());
     } else if (method == VerificationMethodType.FLASH_CALL) {
-      builder = StartVerificationFlashCallRequestParameters.builder().setDialTimeOut(17);
+      response =
+          client
+              .verification()
+              .verifications()
+              .startFlashCall(
+                  StartVerificationFlashCallRequestParameters.builder()
+                      .setDialTimeOut(17)
+                      .setIdentity(identity)
+                      .build());
     } else {
       throw new IllegalArgumentException("Unexpected method type '%s'".formatted(method));
     }
-
-    // process common properties
-    builder.setIdentity(identity);
-
-    var response = client.verification().verifications().start(builder.build());
 
     LOGGER.info("Response :" + response);
   }

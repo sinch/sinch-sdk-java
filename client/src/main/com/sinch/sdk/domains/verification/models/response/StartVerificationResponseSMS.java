@@ -2,13 +2,14 @@ package com.sinch.sdk.domains.verification.models.response;
 
 import com.sinch.sdk.domains.verification.models.Link;
 import com.sinch.sdk.domains.verification.models.VerificationId;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSRequestParameters;
 import java.util.Collection;
 
 /**
  * Dedicated response type for a SMS call verification started with {@link
- * com.sinch.sdk.domains.verification.VerificationsService#start(StartVerificationRequestParameters)
- * VerificationsService#start()} initiated wit method {@link
- * com.sinch.sdk.domains.verification.models.VerificationMethodType#SMS SMS}
+ * com.sinch.sdk.domains.verification.VerificationsService#startSms(StartVerificationSMSRequestParameters)}
+ * initiated wit method {@link com.sinch.sdk.domains.verification.models.VerificationMethodType#SMS
+ * SMS}
  *
  * @since 1.0
  */

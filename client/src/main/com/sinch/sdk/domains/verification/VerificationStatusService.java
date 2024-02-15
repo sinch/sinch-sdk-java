@@ -16,7 +16,7 @@ import com.sinch.sdk.domains.verification.models.VerificationReport;
  *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-status">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-status</a>
  * @since 1.0
  */
-public interface StatusService {
+public interface VerificationStatusService {
 
   /**
    * Queries the verification result by sending the verification Identity (usually a phone number)
