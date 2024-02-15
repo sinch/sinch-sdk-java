@@ -19,16 +19,26 @@ public class ContactListResponse extends ListResponse<Contact> {
   private final Page<ContactListRequestParameters, Contact, String> page;
   private final ContactService service;
 
+  /**
+   * Create paginated list response for Contacts
+   *
+   * @param service Service to be used to paginate across responses
+   * @param page Page content
+   */
   public ContactListResponse(
       ContactService service, Page<ContactListRequestParameters, Contact, String> page) {
     this.service = service;
     this.page = page;
   }
 
+  /** {@inheritDoc} */
+  @Override
   public boolean hasNextPage() {
     return (null != page.getNextPageToken() && !StringUtil.isEmpty(page.getNextPageToken()));
   }
 
+  /** {@inheritDoc} */
+  @Override
   public ContactListResponse nextPage() {
     if (!hasNextPage()) {
       throw new NoSuchElementException("Reached the last page of the API response");
@@ -39,6 +49,8 @@ public class ContactListResponse extends ListResponse<Contact> {
     return service.list(newParameters.build());
   }
 
+  /** {@inheritDoc} */
+  @Override
   public Collection<Contact> getContent() {
     return page.getEntities();
   }

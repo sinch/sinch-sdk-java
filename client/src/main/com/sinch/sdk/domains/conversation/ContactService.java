@@ -23,7 +23,7 @@ import com.sinch.sdk.domains.conversation.models.responses.ContactListResponse;
  * <p>However, you can also use API calls to manually manage your contacts.
  *
  * @see <a
- *     href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/App/">https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/App/</a>
+ *     href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/Contact">https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/Contact</a>
  * @since 1.0
  */
 public interface ContactService {

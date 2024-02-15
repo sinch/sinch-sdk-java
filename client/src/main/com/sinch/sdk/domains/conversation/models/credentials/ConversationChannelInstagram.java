@@ -5,6 +5,8 @@ import com.sinch.sdk.domains.conversation.models.ChannelType;
 /**
  * Instagram channel description
  *
+ * @see <a href="https://developers.sinch.com/docs/conversation/channel-support/instagram">Instagram
+ *     Channel</a>
  * @since 1.0
  */
 public class ConversationChannelInstagram extends ConversationChannel<InstagramCredentials> {
@@ -36,6 +38,7 @@ public class ConversationChannelInstagram extends ConversationChannel<InstagramC
 
     private Builder() {}
 
+    /** {@inheritDoc} */
     public ConversationChannelInstagram build() {
       return new ConversationChannelInstagram(credentials, callbackSecret, state, channelKnownId);
     }

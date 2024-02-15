@@ -84,8 +84,6 @@ public interface AppService {
    * the existing channel_credentials list, append your new configuration to that list, and include
    * the updated channel_credentials list in this update call.
    *
-   * <p>Note: display_name is a required field
-   *
    * @param appId The unique ID of the app to be updated
    * @param parameters Fields to be updated. Only fields filled within the parameters will be
    *     updated

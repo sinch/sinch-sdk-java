@@ -24,6 +24,12 @@ public class ConversationChannel<T extends Credentials> {
     this.channelKnownId = channelKnownId;
   }
 
+  /**
+   * The identifier of the channel
+   *
+   * @return Channel type
+   * @since 1.0
+   */
   public ChannelType getChannel() {
     return channel;
   }
@@ -38,14 +44,35 @@ public class ConversationChannel<T extends Credentials> {
     return credentials;
   }
 
+  /**
+   * @return
+   * @since 1.0
+   */
   public CredentialState getState() {
     return state;
   }
 
+  /**
+   * The secret used to verify the channel callbacks for channels which support callback
+   * verification.
+   *
+   * <p>The callback verification is not needed for Sinch-managed channels because the callbacks are
+   * not leaving Sinch internal networks.
+   *
+   * <p>Max length is 256 characters. <b>Note</b>: leaving callback secret empty for channels with
+   * callback verification will disable the verification.
+   *
+   * @return secret value
+   * @since 1.0
+   */
   public String getCallbackSecret() {
     return callbackSecret;
   }
 
+  /**
+   * @return
+   * @since 1.0
+   */
   public String getChannelKnownId() {
     return channelKnownId;
   }
@@ -78,6 +105,16 @@ public class ConversationChannel<T extends Credentials> {
     CredentialState state;
     String channelKnownId;
 
+    protected Builder() {}
+
+    /**
+     * see getter
+     *
+     * @param callbackSecret see getter
+     * @return Current builder
+     * @see #getCallbackSecret()
+     * @since 1.0
+     */
     public B setCallbackSecret(String callbackSecret) {
       this.callbackSecret = callbackSecret;
       return self();
@@ -96,11 +133,27 @@ public class ConversationChannel<T extends Credentials> {
       return self();
     }
 
+    /**
+     * see getter
+     *
+     * @param state see getter
+     * @return Current builder
+     * @see #getState()
+     * @since 1.0
+     */
     public B setState(CredentialState state) {
       this.state = state;
       return self();
     }
 
+    /**
+     * see getter
+     *
+     * @param channelKnownId see getter
+     * @return Current builder
+     * @see #getChannelKnownId()
+     * @since 1.0
+     */
     public B setChannelKnownId(String channelKnownId) {
       this.channelKnownId = channelKnownId;
       return self();
