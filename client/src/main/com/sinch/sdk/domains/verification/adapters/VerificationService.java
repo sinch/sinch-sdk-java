@@ -6,7 +6,7 @@ import com.sinch.sdk.core.exceptions.ApiAuthException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.utils.StringUtil;
-import com.sinch.sdk.domains.verification.StatusService;
+import com.sinch.sdk.domains.verification.VerificationStatusService;
 import com.sinch.sdk.domains.verification.VerificationsService;
 import com.sinch.sdk.domains.verification.WebHooksService;
 import com.sinch.sdk.models.Configuration;
@@ -24,7 +24,7 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
   private final Configuration configuration;
   private final HttpClient httpClient;
   private VerificationsService verifications;
-  private StatusService status;
+  private VerificationStatusService verificationStatus;
   private WebHooksService webhooks;
   private Map<String, AuthManager> clientAuthManagers;
   private Map<String, AuthManager> webhooksAuthManagers;
@@ -78,14 +78,14 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
     return this.verifications;
   }
 
-  public StatusService status() {
-    if (null == this.status) {
+  public VerificationStatusService verificationStatus() {
+    if (null == this.verificationStatus) {
       checkCredentials();
-      this.status =
-          new com.sinch.sdk.domains.verification.adapters.StatusService(
+      this.verificationStatus =
+          new com.sinch.sdk.domains.verification.adapters.VerificationStatusService(
               configuration, httpClient, clientAuthManagers);
     }
-    return this.status;
+    return this.verificationStatus;
   }
 
   public WebHooksService webhooks() {
