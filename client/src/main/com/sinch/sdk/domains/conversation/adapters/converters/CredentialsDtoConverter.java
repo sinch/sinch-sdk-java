@@ -48,7 +48,7 @@ public class CredentialsDtoConverter {
 
   private static final Logger LOGGER = Logger.getLogger(CredentialsDtoConverter.class.getName());
 
-  public static Collection<ConversationChannel> convert(
+  public static Collection<ConversationChannel<?>> convert(
       Collection<ConversationChannelCredentialDto> dto) {
     if (null == dto) {
       return null;
@@ -57,19 +57,19 @@ public class CredentialsDtoConverter {
   }
 
   public static Collection<ConversationChannelCredentialDto> convertToDto(
-      Collection<ConversationChannel> client) {
+      Collection<ConversationChannel<?>> client) {
     if (null == client) {
       return null;
     }
     return client.stream().map(CredentialsDtoConverter::convert).collect(Collectors.toList());
   }
 
-  public static ConversationChannel convert(ConversationChannelCredentialDto dto) {
+  public static ConversationChannel<?> convert(ConversationChannelCredentialDto dto) {
     if (null == dto || null == dto.getChannel()) {
       return null;
     }
 
-    ConversationChannel.Builder<?> builder;
+    ConversationChannel.Builder<?, ?> builder;
 
     switch (dto.getChannel()) {
       case WHATSAPP:
@@ -135,7 +135,7 @@ public class CredentialsDtoConverter {
     return builder.build();
   }
 
-  public static ConversationChannelCredentialDto convert(ConversationChannel client) {
+  public static ConversationChannelCredentialDto convert(ConversationChannel<?> client) {
     if (null == client) {
       return null;
     }

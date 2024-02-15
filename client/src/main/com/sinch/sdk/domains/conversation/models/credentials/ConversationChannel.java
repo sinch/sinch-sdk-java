@@ -2,17 +2,18 @@ package com.sinch.sdk.domains.conversation.models.credentials;
 
 import com.sinch.sdk.domains.conversation.models.ChannelType;
 
-public class ConversationChannel {
+/** Conversation Channel Credential definition */
+public class ConversationChannel<T extends Credentials> {
 
   private final ChannelType channel;
-  private final Credentials credentials;
+  private final T credentials;
   private final String callbackSecret;
   private final CredentialState state;
   private final String channelKnownId;
 
   protected ConversationChannel(
       ChannelType channel,
-      Credentials credentials,
+      T credentials,
       String callbackSecret,
       CredentialState state,
       String channelKnownId) {
@@ -27,7 +28,13 @@ public class ConversationChannel {
     return channel;
   }
 
-  public Credentials getCredentials() {
+  /**
+   * Credentials related to channel
+   *
+   * @return credentials value
+   * @since 1.0
+   */
+  public T getCredentials() {
     return credentials;
   }
 
@@ -59,38 +66,57 @@ public class ConversationChannel {
         + '}';
   }
 
-  public abstract static class Builder<T extends Builder<?>> {
+  /**
+   * Dedicated Builder
+   *
+   * @since 1.0
+   */
+  public abstract static class Builder<T extends Credentials, B extends Builder<?, ?>> {
 
     String callbackSecret;
-    Credentials credentials;
+    T credentials;
     CredentialState state;
     String channelKnownId;
 
-    public T setCallbackSecret(String callbackSecret) {
+    public B setCallbackSecret(String callbackSecret) {
       this.callbackSecret = callbackSecret;
       return self();
     }
 
-    protected T setCredentials(Credentials credentials) {
+    /**
+     * see getter
+     *
+     * @param credentials see getter
+     * @return Current builder
+     * @see #getCredentials()
+     * @since 1.0
+     */
+    public B setCredentials(T credentials) {
       this.credentials = credentials;
       return self();
     }
 
-    public T setState(CredentialState state) {
+    public B setState(CredentialState state) {
       this.state = state;
       return self();
     }
 
-    public Builder<T> setChannelKnownId(String channelKnownId) {
+    public B setChannelKnownId(String channelKnownId) {
       this.channelKnownId = channelKnownId;
-      return this;
+      return self();
     }
 
-    public abstract ConversationChannel build();
+    /**
+     * Create instance
+     *
+     * @return The instance build with current builder values
+     * @since 1.0
+     */
+    public abstract ConversationChannel<T> build();
 
     @SuppressWarnings("unchecked")
-    protected T self() {
-      return (T) this;
+    protected B self() {
+      return (B) this;
     }
   }
 }

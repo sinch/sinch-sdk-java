@@ -2,7 +2,7 @@ package com.sinch.sdk.domains.conversation.models.credentials;
 
 import com.sinch.sdk.domains.conversation.models.ChannelType;
 
-public class ConversationChannelMMS extends ConversationChannel {
+public class ConversationChannelMMS extends ConversationChannel<MMSCredentials> {
 
   private ConversationChannelMMS(
       MMSCredentials credentials,
@@ -12,31 +12,16 @@ public class ConversationChannelMMS extends ConversationChannel {
     super(ChannelType.MMS, credentials, callbackSecret, state, channelKnownId);
   }
 
-  @Override
-  public MMSCredentials getCredentials() {
-    return (MMSCredentials) super.getCredentials();
-  }
-
   public static Builder builder() {
     return new Builder();
   }
 
-  public static class Builder extends ConversationChannel.Builder<Builder> {
+  public static class Builder extends ConversationChannel.Builder<MMSCredentials, Builder> {
 
-    MMSCredentials credentials;
-
-    public Builder setCredentials(MMSCredentials credentials) {
-      this.credentials = credentials;
-      return this;
-    }
+    private Builder() {}
 
     public ConversationChannelMMS build() {
       return new ConversationChannelMMS(credentials, callbackSecret, state, channelKnownId);
-    }
-
-    @Override
-    protected Builder self() {
-      return this;
     }
   }
 }

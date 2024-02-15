@@ -9,11 +9,20 @@ import com.sinch.sdk.domains.conversation.models.ProcessingModeType;
 import com.sinch.sdk.domains.conversation.models.RetentionPolicy;
 import com.sinch.sdk.domains.conversation.models.SmartConversation;
 import com.sinch.sdk.domains.conversation.models.credentials.ConversationChannel;
+import com.sinch.sdk.domains.conversation.models.credentials.Credentials;
+import com.sinch.sdk.domains.conversation.models.responses.App;
 import java.util.Collection;
 
 public interface AppRequestParameters {
 
-  OptionalValue<Collection<ConversationChannel>> getChannelCredentials();
+  /**
+   * App channel credentials
+   *
+   * @return Channel credential list
+   * @since 1.0
+   * @see App#getChannelCredentials()
+   */
+  OptionalValue<Collection<ConversationChannel<? extends Credentials>>> getChannelCredentials();
 
   OptionalValue<ConversationMetadataReportViewType> getMetadataReportView();
 
@@ -35,7 +44,16 @@ public interface AppRequestParameters {
 
   interface Builder {
 
-    Builder setChannelCredentials(Collection<ConversationChannel> channelCredentials);
+    /**
+     * see getter
+     *
+     * @param channelCredentials see getter
+     * @return Current builder
+     * @see #getChannelCredentials()
+     * @since 1.0
+     */
+    Builder setChannelCredentials(
+        Collection<ConversationChannel<? extends Credentials>> channelCredentials);
 
     Builder setMetadataReportView(ConversationMetadataReportViewType metadataReportView);
 

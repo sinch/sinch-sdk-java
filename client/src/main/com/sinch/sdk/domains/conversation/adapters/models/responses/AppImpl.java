@@ -17,7 +17,7 @@ import java.util.Collection;
 
 public class AppImpl implements App {
 
-  private final Collection<ConversationChannel> channelCredentials;
+  private final Collection<ConversationChannel<?>> channelCredentials;
   private final ConversationMetadataReportViewType metadataReportView;
   private final String displayName;
   private final String id;
@@ -35,7 +35,7 @@ public class AppImpl implements App {
   // TODO private final MessageRetrySettings messageRetrySettings;
 
   private AppImpl(
-      Collection<ConversationChannel> channelCredentials,
+      Collection<ConversationChannel<?>> channelCredentials,
       ConversationMetadataReportViewType metadataReportView,
       String displayName,
       String id,
@@ -65,7 +65,7 @@ public class AppImpl implements App {
     this.deliveryReportBasedFallback = deliveryReportBasedFallback;
   }
 
-  public Collection<ConversationChannel> getChannelCredentials() {
+  public Collection<ConversationChannel<?>> getChannelCredentials() {
     return channelCredentials;
   }
 
@@ -163,7 +163,7 @@ public class AppImpl implements App {
 
   public static class Builder implements App.Builder {
 
-    Collection<ConversationChannel> channelCredentials;
+    Collection<ConversationChannel<?>> channelCredentials;
     ConversationMetadataReportViewType metadataReportView;
     String displayName;
     String id;
@@ -178,7 +178,7 @@ public class AppImpl implements App {
     CallbackSettings callbackSettings;
     DeliveryReportBasedFallback deliveryReportBasedFallback;
 
-    public Builder setChannelCredentials(Collection<ConversationChannel> channelCredentials) {
+    public Builder setChannelCredentials(Collection<ConversationChannel<?>> channelCredentials) {
       this.channelCredentials = channelCredentials;
       return this;
     }

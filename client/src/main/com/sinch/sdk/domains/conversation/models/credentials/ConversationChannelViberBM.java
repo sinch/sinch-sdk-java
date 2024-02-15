@@ -2,7 +2,7 @@ package com.sinch.sdk.domains.conversation.models.credentials;
 
 import com.sinch.sdk.domains.conversation.models.ChannelType;
 
-public class ConversationChannelViberBM extends ConversationChannel {
+public class ConversationChannelViberBM extends ConversationChannel<StaticBearerCredentials> {
 
   private ConversationChannelViberBM(
       StaticBearerCredentials credentials,
@@ -12,31 +12,17 @@ public class ConversationChannelViberBM extends ConversationChannel {
     super(ChannelType.VIBERBM, credentials, callbackSecret, state, channelKnownId);
   }
 
-  @Override
-  public StaticBearerCredentials getCredentials() {
-    return (StaticBearerCredentials) super.getCredentials();
-  }
-
   public static Builder builder() {
     return new Builder();
   }
 
-  public static class Builder extends ConversationChannel.Builder<Builder> {
+  public static class Builder
+      extends ConversationChannel.Builder<StaticBearerCredentials, Builder> {
 
-    StaticBearerCredentials credentials;
-
-    public Builder setCredentials(StaticBearerCredentials credentials) {
-      this.credentials = credentials;
-      return this;
-    }
+    private Builder() {}
 
     public ConversationChannelViberBM build() {
       return new ConversationChannelViberBM(credentials, callbackSecret, state, channelKnownId);
-    }
-
-    @Override
-    protected Builder self() {
-      return this;
     }
   }
 }

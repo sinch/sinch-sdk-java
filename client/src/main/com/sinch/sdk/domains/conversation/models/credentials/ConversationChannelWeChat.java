@@ -2,7 +2,7 @@ package com.sinch.sdk.domains.conversation.models.credentials;
 
 import com.sinch.sdk.domains.conversation.models.ChannelType;
 
-public class ConversationChannelWeChat extends ConversationChannel {
+public class ConversationChannelWeChat extends ConversationChannel<WeChatCredentials> {
 
   private ConversationChannelWeChat(
       WeChatCredentials credentials,
@@ -12,31 +12,16 @@ public class ConversationChannelWeChat extends ConversationChannel {
     super(ChannelType.WECHAT, credentials, callbackSecret, state, channelKnownId);
   }
 
-  @Override
-  public WeChatCredentials getCredentials() {
-    return (WeChatCredentials) super.getCredentials();
-  }
-
   public static Builder builder() {
     return new Builder();
   }
 
-  public static class Builder extends ConversationChannel.Builder<Builder> {
+  public static class Builder extends ConversationChannel.Builder<WeChatCredentials, Builder> {
 
-    WeChatCredentials credentials;
-
-    public Builder setCredentials(WeChatCredentials credentials) {
-      this.credentials = credentials;
-      return this;
-    }
+    private Builder() {}
 
     public ConversationChannelWeChat build() {
       return new ConversationChannelWeChat(credentials, callbackSecret, state, channelKnownId);
-    }
-
-    @Override
-    protected Builder self() {
-      return this;
     }
   }
 }

@@ -13,11 +13,20 @@ import com.sinch.sdk.domains.conversation.models.RateLimits;
 import com.sinch.sdk.domains.conversation.models.RetentionPolicy;
 import com.sinch.sdk.domains.conversation.models.SmartConversation;
 import com.sinch.sdk.domains.conversation.models.credentials.ConversationChannel;
+import com.sinch.sdk.domains.conversation.models.credentials.Credentials;
 import java.util.Collection;
 
 public interface App {
 
-  Collection<ConversationChannel> getChannelCredentials();
+  /**
+   * An array of channel credentials.
+   *
+   * <p>The order of the credentials defines the app channel priority.
+   *
+   * @return Channel credentials list
+   * @since 1.0
+   */
+  Collection<ConversationChannel<? extends Credentials>> getChannelCredentials();
 
   ConversationMetadataReportViewType getMetadataReportView();
 
@@ -51,7 +60,16 @@ public interface App {
 
   interface Builder {
 
-    Builder setChannelCredentials(Collection<ConversationChannel> channelCredentials);
+    /**
+     * see getter
+     *
+     * @param channelCredentials see getter
+     * @return Current builder
+     * @see App#getChannelCredentials()
+     * @since 1.0
+     */
+    Builder setChannelCredentials(
+        Collection<ConversationChannel<? extends Credentials>> channelCredentials);
 
     Builder setMetadataReportView(ConversationMetadataReportViewType metadataReportView);
 
