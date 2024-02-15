@@ -13,11 +13,12 @@ import com.sinch.sdk.domains.verification.models.VerificationReport;
 import com.sinch.sdk.models.Configuration;
 import java.util.Map;
 
-public class StatusService implements com.sinch.sdk.domains.verification.StatusService {
+public class VerificationStatusService
+    implements com.sinch.sdk.domains.verification.VerificationStatusService {
 
   private final QueryVerificationsApi api;
 
-  public StatusService(
+  public VerificationStatusService(
       Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManagers) {
     this.api =
         new QueryVerificationsApi(

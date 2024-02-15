@@ -26,18 +26,18 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 @TestWithResources
-public class StatusServiceTest extends BaseTest {
+public class VerificationStatusServiceTest extends BaseTest {
 
   @Mock QueryVerificationsApi api;
   @Mock Configuration configuration;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
 
-  StatusService service;
+  VerificationStatusService service;
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new StatusService(configuration, httpClient, authManagers));
+    service = spy(new VerificationStatusService(configuration, httpClient, authManagers));
     doReturn(api).when(service).getApi();
   }
 

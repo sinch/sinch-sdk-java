@@ -27,7 +27,7 @@ Add to your `pom.xml` file the dependency to SDK:
 <dependencies>
     <dependency>
       <groupId>com.sinch.sdk</groupId>
-      <artifactId>sinch-java-sdk</artifactId>
+      <artifactId>sinch-sdk-java</artifactId>
       <version>${sdk.version}</version>
     </dependency>
     ...

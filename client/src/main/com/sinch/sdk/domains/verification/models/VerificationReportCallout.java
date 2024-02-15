@@ -1,12 +1,12 @@
 package com.sinch.sdk.domains.verification.models;
 
 import com.sinch.sdk.domains.verification.models.NumberIdentity.Builder;
-import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutRequestParameters;
 
 /**
  * Verification report related to a {@link
- * com.sinch.sdk.domains.verification.VerificationsService#start(StartVerificationRequestParameters)
- * VerificationsService#start()} of type {@link
+ * com.sinch.sdk.domains.verification.VerificationsService#startCallout(StartVerificationCalloutRequestParameters)}
+ * of type {@link
  * com.sinch.sdk.domains.verification.models.requests.VerificationReportCalloutRequestParameters
  * VerificationReportCalloutRequestParameters}
  *

@@ -17,7 +17,6 @@ import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportDtoTes
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportRequestDtoTest;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlashCallRequestParameters;
-import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationSeamlessRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportCalloutRequestParameters;
@@ -32,7 +31,7 @@ import org.junit.jupiter.api.Test;
 
 public class VerificationsDtoConverterTest extends BaseTest {
 
-  public static StartVerificationRequestParameters startVerificationCalloutRequest =
+  public static StartVerificationCalloutRequestParameters startVerificationCalloutRequest =
       StartVerificationCalloutRequestParameters.builder()
           .setCustom("a custom")
           .setReference(VerificationReference.valueOf("a reference"))
@@ -45,7 +44,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
           .setLinks(LinkDtoConverterTest.linksClient)
           .build();
 
-  public static StartVerificationRequestParameters startVerificationFlashCallRequest =
+  public static StartVerificationFlashCallRequestParameters startVerificationFlashCallRequest =
       StartVerificationFlashCallRequestParameters.builder()
           .setCustom("a custom")
           .setReference(VerificationReference.valueOf("a reference"))
@@ -61,7 +60,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
           .setReportTimeout(75)
           .setDenyCallAfter(0)
           .build();
-  public static StartVerificationRequestParameters startVerificationSeamlessRequest =
+  public static StartVerificationSeamlessRequestParameters startVerificationSeamlessRequest =
       StartVerificationSeamlessRequestParameters.builder()
           .setCustom("a custom")
           .setReference(VerificationReference.valueOf("a reference"))
@@ -73,7 +72,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
           .setLinks(LinkDtoConverterTest.linksClient)
           .setTargetUri("target URI")
           .build();
-  public static StartVerificationRequestParameters startVerificationSMSRequest =
+  public static StartVerificationSMSRequestParameters startVerificationSMSRequest =
       StartVerificationSMSRequestParameters.builder()
           .setCustom("a custom")
           .setReference(VerificationReference.valueOf("a reference"))

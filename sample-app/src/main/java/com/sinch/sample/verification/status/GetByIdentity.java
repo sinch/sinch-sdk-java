@@ -30,7 +30,7 @@ public class GetByIdentity extends BaseApplication {
 
     VerificationMethodType method = VerificationMethodType.SMS;
 
-    VerificationReport response = client.verification().status().get(identity, method);
+    VerificationReport response = client.verification().verificationStatus().get(identity, method);
     LOGGER.info("Response :" + response);
   }
 }

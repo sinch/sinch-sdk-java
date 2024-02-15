@@ -2,12 +2,13 @@ package com.sinch.sdk.domains.verification.models.response;
 
 import com.sinch.sdk.domains.verification.models.Link;
 import com.sinch.sdk.domains.verification.models.VerificationId;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationSeamlessRequestParameters;
 import java.util.Collection;
 
 /**
  * Dedicated response type for a seamless call verification started with {@link
- * com.sinch.sdk.domains.verification.VerificationsService#start(StartVerificationRequestParameters)
- * VerificationsService#start()} initiated wit method {@link
+ * com.sinch.sdk.domains.verification.VerificationsService#startSeamless(StartVerificationSeamlessRequestParameters)}
+ * initiated wit method {@link
  * com.sinch.sdk.domains.verification.models.VerificationMethodType#SEAMLESS SEAMLESS}
  *
  * @since 1.0
