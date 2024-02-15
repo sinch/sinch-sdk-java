@@ -41,10 +41,11 @@ public class ContactDtoConverterTest {
 
   public static final Pair<Collection<ContactImpl>, TokenPageNavigator> contactListPage0 =
       new Pair<>(
-          Collections.singletonList(contact), new TokenPageNavigator("the next page token value"));
+          Collections.singletonList(contact),
+          TokenPageNavigator.valueOf("the next page token value"));
 
   public static final Pair<Collection<Contact>, TokenPageNavigator> contactListPage1 =
-      new Pair<>(Collections.emptyList(), new TokenPageNavigator(""));
+      new Pair<>(Collections.emptyList(), TokenPageNavigator.valueOf(""));
 
   public static final ContactCreateRequestParametersImpl contactCreateRequest =
       ContactCreateRequestParametersImpl.builder()

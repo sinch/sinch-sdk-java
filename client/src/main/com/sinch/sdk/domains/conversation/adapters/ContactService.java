@@ -7,7 +7,6 @@ import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.core.models.pagination.TokenPageNavigator;
 import com.sinch.sdk.core.utils.Pair;
-import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.conversation.adapters.api.v1.ContactApi;
 import com.sinch.sdk.domains.conversation.adapters.converters.ChannelTypeDtoConverter;
 import com.sinch.sdk.domains.conversation.adapters.converters.ContactDtoConverter;
@@ -74,8 +73,7 @@ public class ContactService implements com.sinch.sdk.domains.conversation.Contac
 
     Pair<Collection<Contact>, TokenPageNavigator> content = ContactDtoConverter.convert(response);
 
-    return new ContactListResponse(
-        this, new Page<>(client, content.getLeft(), handleEmptyPageToken(content.getRight())));
+    return new ContactListResponse(this, new Page<>(client, content.getLeft(), content.getRight()));
   }
 
   public Contact get(String contactId) {
@@ -149,12 +147,5 @@ public class ContactService implements com.sinch.sdk.domains.conversation.Contac
               "Invalid channel value '%s'. Channel has to be in list '%s'",
               client.getChannel(), supportedChannelForGetProfile));
     }
-  }
-
-  private TokenPageNavigator handleEmptyPageToken(TokenPageNavigator token) {
-    if (null == token || StringUtil.isEmpty(token.getToken())) {
-      return null;
-    }
-    return token;
   }
 }

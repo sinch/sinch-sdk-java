@@ -45,7 +45,7 @@ public class ContactDtoConverter {
     if (null != list) {
       pageContent = list.stream().map(ContactDtoConverter::convert).collect(Collectors.toList());
     }
-    return new Pair<>(pageContent, new TokenPageNavigator(nextPageToken));
+    return new Pair<>(pageContent, TokenPageNavigator.valueOf(nextPageToken));
   }
 
   public static ContactImpl convert(ContactDto dto) {
