@@ -4,9 +4,9 @@ import com.sinch.sdk.domains.conversation.models.ChannelType;
 
 /**
  * Common class for {@link
- * com.sinch.sdk.domains.conversation.ContactService#getChannelProfileByChannel(GetChannelProfileByChannelRequestParameters)}
+ * com.sinch.sdk.domains.conversation.ContactService#getChannelProfileByChannelIdentity(GetChannelProfileByChannelRequestParameters)}
  * and {@link
- * com.sinch.sdk.domains.conversation.ContactService#getChannelProfileByContact(GetChannelProfileByContactRequestParameters)}
+ * com.sinch.sdk.domains.conversation.ContactService#getChannelProfileByContactId(GetChannelProfileByContactRequestParameters)}
  * request parameters
  */
 public interface BaseGetChannelProfileRequestParameters {

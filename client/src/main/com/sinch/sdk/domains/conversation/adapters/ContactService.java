@@ -118,7 +118,7 @@ public class ContactService implements com.sinch.sdk.domains.conversation.Contac
                 new MergeContactRequestDto().sourceId(sourceId)));
   }
 
-  public String getChannelProfileByContact(GetChannelProfileByContactRequestParameters iclient) {
+  public String getChannelProfileByContactId(GetChannelProfileByContactRequestParameters iclient) {
     GetChannelProfileByContactRequestParametersImpl client =
         (GetChannelProfileByContactRequestParametersImpl) iclient;
 
@@ -129,7 +129,8 @@ public class ContactService implements com.sinch.sdk.domains.conversation.Contac
                 configuration.getProjectId(), ContactDtoConverter.convert(client)));
   }
 
-  public String getChannelProfileByChannel(GetChannelProfileByChannelRequestParameters iclient) {
+  public String getChannelProfileByChannelIdentity(
+      GetChannelProfileByChannelRequestParameters iclient) {
     GetChannelProfileByChannelRequestParametersImpl client =
         (GetChannelProfileByChannelRequestParametersImpl) iclient;
 
@@ -145,7 +146,7 @@ public class ContactService implements com.sinch.sdk.domains.conversation.Contac
     if (null != client && !supportedChannelForGetProfile.contains(client.getChannel())) {
       throw new IllegalArgumentException(
           String.format(
-              "Invalid channel value '%s'. Channel have to be in list '%s'",
+              "Invalid channel value '%s'. Channel has to be in list '%s'",
               client.getChannel(), supportedChannelForGetProfile));
     }
   }

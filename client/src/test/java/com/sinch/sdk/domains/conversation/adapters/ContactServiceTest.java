@@ -139,7 +139,7 @@ class ContactServiceTest extends BaseTest {
         .thenReturn(ContactDtoTest.expectedChannelProfileResponseDto);
 
     String response =
-        service.getChannelProfileByContact(
+        service.getChannelProfileByContactId(
             ContactDtoConverterTest.contactGetChannelProfileByContactRequest);
 
     Assertions.assertThat(response)
@@ -155,7 +155,7 @@ class ContactServiceTest extends BaseTest {
         .thenReturn(ContactDtoTest.expectedChannelProfileResponseDto);
 
     String response =
-        service.getChannelProfileByChannel(
+        service.getChannelProfileByChannelIdentity(
             ContactDtoConverterTest.contactGetChannelProfileByChannelRequest);
 
     Assertions.assertThat(response)

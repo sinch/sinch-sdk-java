@@ -130,7 +130,7 @@ public interface ContactService {
    * @return The profile name
    * @since 1,0
    */
-  String getChannelProfileByContact(GetChannelProfileByContactRequestParameters parameters);
+  String getChannelProfileByContactId(GetChannelProfileByContactRequestParameters parameters);
 
   /**
    * Get user profile from a specific channel by channel identity.
@@ -150,5 +150,5 @@ public interface ContactService {
    * @return The profile name
    * @since 1,0
    */
-  String getChannelProfileByChannel(GetChannelProfileByChannelRequestParameters parameters);
+  String getChannelProfileByChannelIdentity(GetChannelProfileByChannelRequestParameters parameters);
 }
