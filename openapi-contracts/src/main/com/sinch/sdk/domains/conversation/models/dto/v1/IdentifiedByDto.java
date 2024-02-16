@@ -26,12 +26,12 @@ import java.util.Objects;
 public class IdentifiedByDto {
   private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_IDENTIFIED_BY = "identified_by";
-  private IdentifiedByDto identifiedBy;
+  private ChannelIdentitiesDto identifiedBy;
   private boolean identifiedByDefined = false;
 
   public IdentifiedByDto() {}
 
-  public IdentifiedByDto identifiedBy(IdentifiedByDto identifiedBy) {
+  public IdentifiedByDto identifiedBy(ChannelIdentitiesDto identifiedBy) {
     this.identifiedBy = identifiedBy;
     this.identifiedByDefined = true;
     return this;
@@ -44,7 +44,7 @@ public class IdentifiedByDto {
    */
   @JsonProperty(JSON_PROPERTY_IDENTIFIED_BY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public IdentifiedByDto getIdentifiedBy() {
+  public ChannelIdentitiesDto getIdentifiedBy() {
     return identifiedBy;
   }
 
@@ -55,7 +55,7 @@ public class IdentifiedByDto {
 
   @JsonProperty(JSON_PROPERTY_IDENTIFIED_BY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setIdentifiedBy(IdentifiedByDto identifiedBy) {
+  public void setIdentifiedBy(ChannelIdentitiesDto identifiedBy) {
     this.identifiedBy = identifiedBy;
     this.identifiedByDefined = true;
   }

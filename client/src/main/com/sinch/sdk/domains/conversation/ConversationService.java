@@ -16,4 +16,12 @@ public interface ConversationService {
    * @since 1.0
    */
   AppService app();
+
+  /**
+   * Contact Service instance
+   *
+   * @return service instance for project
+   * @since 1.0
+   */
+  ContactService contact();
 }

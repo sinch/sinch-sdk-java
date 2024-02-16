@@ -107,7 +107,7 @@ public class AppConverterTest {
   @Test
   void convertAppResponseList() {
 
-    Assertions.assertThat(AppConverter.convert(AppDtoTest.expectedListAppsResponseDto))
+    Assertions.assertThat(AppDtoConverter.convert(AppDtoTest.expectedListAppsResponseDto))
         .usingRecursiveComparison()
         .isEqualTo(expectedAppList);
   }
@@ -115,7 +115,7 @@ public class AppConverterTest {
   @Test
   void convertAppCreateRequest() {
 
-    Assertions.assertThat(AppConverter.convertForCreate(appRequest))
+    Assertions.assertThat(AppDtoConverter.convertForCreate(appRequest))
         .usingRecursiveComparison()
         .isEqualTo(AppDtoTest.appCreateRequestDto);
   }
@@ -123,7 +123,7 @@ public class AppConverterTest {
   @Test
   void convertAppUpdateRequest() {
 
-    Assertions.assertThat(AppConverter.convertForUpdate(appRequest))
+    Assertions.assertThat(AppDtoConverter.convertForUpdate(appRequest))
         .usingRecursiveComparison()
         .isEqualTo(AppDtoTest.appCreateRequestDto);
   }

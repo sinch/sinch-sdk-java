@@ -1,0 +1,14 @@
+{
+  "app_id": "an app id",
+  "recipient": {
+    "identified_by": {
+      "channel_identities": [
+        {
+          "channel": "MESSENGER",
+          "identity": "an identity"
+        }
+      ]
+    }
+  },
+  "channel": "MESSENGER"
+}

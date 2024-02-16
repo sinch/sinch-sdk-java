@@ -2,7 +2,14 @@ package com.sinch.sdk.domains.conversation.models.credentials;
 
 import com.sinch.sdk.domains.conversation.models.ChannelType;
 
-public class ConversationChannelWeChat extends ConversationChannel {
+/**
+ * WeChat Channel description
+ *
+ * @see <a href="https://developers.sinch.com/docs/conversation/channel-support/wechat">WeChat
+ *     Channel</a>
+ * @since 1.0
+ */
+public class ConversationChannelWeChat extends ConversationChannel<WeChatCredentials> {
 
   private ConversationChannelWeChat(
       WeChatCredentials credentials,
@@ -12,31 +19,28 @@ public class ConversationChannelWeChat extends ConversationChannel {
     super(ChannelType.WECHAT, credentials, callbackSecret, state, channelKnownId);
   }
 
-  @Override
-  public WeChatCredentials getCredentials() {
-    return (WeChatCredentials) super.getCredentials();
-  }
-
+  /**
+   * Getting builder
+   *
+   * @return New Builder instance
+   * @since 1.0
+   */
   public static Builder builder() {
     return new Builder();
   }
 
-  public static class Builder extends ConversationChannel.Builder<Builder> {
+  /**
+   * Dedicated Builder
+   *
+   * @since 1.0
+   */
+  public static class Builder extends ConversationChannel.Builder<WeChatCredentials, Builder> {
 
-    WeChatCredentials credentials;
+    private Builder() {}
 
-    public Builder setCredentials(WeChatCredentials credentials) {
-      this.credentials = credentials;
-      return this;
-    }
-
+    /** {@inheritDoc} */
     public ConversationChannelWeChat build() {
       return new ConversationChannelWeChat(credentials, callbackSecret, state, channelKnownId);
-    }
-
-    @Override
-    protected Builder self() {
-      return this;
     }
   }
 }
