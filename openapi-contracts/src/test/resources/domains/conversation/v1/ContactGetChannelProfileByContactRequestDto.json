@@ -1,0 +1,7 @@
+{
+  "app_id": "an app id",
+  "recipient": {
+    "contact_id": "a contact ID"
+  },
+  "channel": "MESSENGER"
+}

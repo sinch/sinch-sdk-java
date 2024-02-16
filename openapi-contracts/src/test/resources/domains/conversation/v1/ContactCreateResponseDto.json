@@ -1,0 +1,23 @@
+{
+  "id": "my created contact ID",
+  "channel_identities": [
+    {
+      "channel": "MMS",
+      "identity": "33987654321"
+    },
+    {
+      "channel": "MESSENGER",
+      "identity": "+33987654321",
+      "app_id": "my MESSENGER app id"
+    }
+  ],
+  "channel_priority": [
+    "MMS",
+    "MESSENGER"
+  ],
+  "display_name": "created from Java SDK",
+  "email": "foo@foo.com",
+  "external_id": "external id value",
+  "metadata": "metadata value",
+  "language": "AR"
+}
