@@ -18,7 +18,7 @@ import java.util.Collections;
 
 public class AppRequestParametersImpl implements AppRequestParameters {
 
-  private final OptionalValue<Collection<ConversationChannel>> channelCredentials;
+  private final OptionalValue<Collection<ConversationChannel<?>>> channelCredentials;
   private final OptionalValue<ConversationMetadataReportViewType> metadataReportView;
   private final OptionalValue<String> displayName;
   private final OptionalValue<RetentionPolicyImpl> retentionPolicy;
@@ -28,7 +28,7 @@ public class AppRequestParametersImpl implements AppRequestParameters {
   private final OptionalValue<CallbackSettingsImpl> callbackSettings;
 
   private AppRequestParametersImpl(
-      OptionalValue<Collection<ConversationChannel>> channelCredentials,
+      OptionalValue<Collection<ConversationChannel<?>>> channelCredentials,
       OptionalValue<ConversationMetadataReportViewType> metadataReportView,
       OptionalValue<String> displayName,
       OptionalValue<RetentionPolicyImpl> retentionPolicy,
@@ -46,7 +46,7 @@ public class AppRequestParametersImpl implements AppRequestParameters {
     this.callbackSettings = callbackSettings;
   }
 
-  public OptionalValue<Collection<ConversationChannel>> getChannelCredentials() {
+  public OptionalValue<Collection<ConversationChannel<?>>> getChannelCredentials() {
     return channelCredentials;
   }
 
@@ -106,7 +106,7 @@ public class AppRequestParametersImpl implements AppRequestParameters {
 
   public static class Builder implements AppRequestParameters.Builder {
 
-    OptionalValue<Collection<ConversationChannel>> channelCredentials = OptionalValue.empty();
+    OptionalValue<Collection<ConversationChannel<?>>> channelCredentials = OptionalValue.empty();
     OptionalValue<ConversationMetadataReportViewType> metadataReportView = OptionalValue.empty();
     OptionalValue<String> displayName = OptionalValue.empty();
     OptionalValue<RetentionPolicyImpl> retentionPolicy = OptionalValue.empty();
@@ -115,7 +115,7 @@ public class AppRequestParametersImpl implements AppRequestParameters {
     OptionalValue<SmartConversationImpl> smartConversation = OptionalValue.empty();
     OptionalValue<CallbackSettingsImpl> callbackSettings = OptionalValue.empty();
 
-    public Builder setChannelCredentials(Collection<ConversationChannel> channelCredentials) {
+    public Builder setChannelCredentials(Collection<ConversationChannel<?>> channelCredentials) {
       this.channelCredentials =
           OptionalValue.of(
               null != channelCredentials

@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 public class ApiExceptionBuilder {
 
   private ApiExceptionBuilder() {}
-  ;
 
   /**
    * Consume Unqualified Map of fields received from an API error into a dedicated Exception

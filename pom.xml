@@ -144,6 +144,7 @@
                             <sourceFileExclude>**/pagination/Page*.java</sourceFileExclude>
                             <sourceFileExclude>**/AbstractOpenApiSchema.java</sourceFileExclude>
                             <sourceFileExclude>**/*Impl.java</sourceFileExclude>
+                            <sourceFileExclude>**/BuildersDelegation.java</sourceFileExclude>
                             <!-- Transition period -->
                             <sourceFileExclude>com/sinch/sdk/domains/verification/models/*.java</sourceFileExclude>
                             <sourceFileExclude>com/sinch/sdk/domains/verification/VerificationsService.java</sourceFileExclude>

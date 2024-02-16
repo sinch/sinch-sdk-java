@@ -2,7 +2,14 @@ package com.sinch.sdk.domains.conversation.models.credentials;
 
 import com.sinch.sdk.domains.conversation.models.ChannelType;
 
-public class ConversationChannelInstagram extends ConversationChannel {
+/**
+ * Instagram channel description
+ *
+ * @see <a href="https://developers.sinch.com/docs/conversation/channel-support/instagram">Instagram
+ *     Channel</a>
+ * @since 1.0
+ */
+public class ConversationChannelInstagram extends ConversationChannel<InstagramCredentials> {
 
   private ConversationChannelInstagram(
       InstagramCredentials credentials,
@@ -12,31 +19,28 @@ public class ConversationChannelInstagram extends ConversationChannel {
     super(ChannelType.INSTAGRAM, credentials, callbackSecret, state, channelKnownId);
   }
 
-  @Override
-  public InstagramCredentials getCredentials() {
-    return (InstagramCredentials) super.getCredentials();
-  }
-
+  /**
+   * Getting builder
+   *
+   * @return New Builder instance
+   * @since 1.0
+   */
   public static Builder builder() {
     return new Builder();
   }
 
-  public static class Builder extends ConversationChannel.Builder<Builder> {
+  /**
+   * Dedicated Builder
+   *
+   * @since 1.0
+   */
+  public static class Builder extends ConversationChannel.Builder<InstagramCredentials, Builder> {
 
-    InstagramCredentials credentials;
+    private Builder() {}
 
-    public Builder setCredentials(InstagramCredentials credentials) {
-      this.credentials = credentials;
-      return this;
-    }
-
+    /** {@inheritDoc} */
     public ConversationChannelInstagram build() {
       return new ConversationChannelInstagram(credentials, callbackSecret, state, channelKnownId);
-    }
-
-    @Override
-    protected Builder self() {
-      return this;
     }
   }
 }

@@ -2,7 +2,14 @@ package com.sinch.sdk.domains.conversation.models.credentials;
 
 import com.sinch.sdk.domains.conversation.models.ChannelType;
 
-public class ConversationChannelLine extends ConversationChannel {
+/**
+ * Line channel description
+ *
+ * @see <a href="https://developers.sinch.com/docs/conversation/channel-support/line">Conversation
+ *     API LINE</a>
+ * @since 1.0
+ */
+public class ConversationChannelLine extends ConversationChannel<LineCredentials> {
 
   private ConversationChannelLine(
       LineCredentials credentials,
@@ -12,31 +19,28 @@ public class ConversationChannelLine extends ConversationChannel {
     super(ChannelType.LINE, credentials, callbackSecret, state, channelKnownId);
   }
 
-  @Override
-  public LineCredentials getCredentials() {
-    return (LineCredentials) super.getCredentials();
-  }
-
+  /**
+   * Getting builder
+   *
+   * @return New Builder instance
+   * @since 1.0
+   */
   public static Builder builder() {
     return new Builder();
   }
 
-  public static class Builder extends ConversationChannel.Builder<Builder> {
+  /**
+   * Dedicated Builder
+   *
+   * @since 1.0
+   */
+  public static class Builder extends ConversationChannel.Builder<LineCredentials, Builder> {
 
-    LineCredentials credentials;
+    private Builder() {}
 
-    public Builder setCredentials(LineCredentials credentials) {
-      this.credentials = credentials;
-      return this;
-    }
-
+    /** {@inheritDoc} */
     public ConversationChannelLine build() {
       return new ConversationChannelLine(credentials, callbackSecret, state, channelKnownId);
-    }
-
-    @Override
-    protected Builder self() {
-      return this;
     }
   }
 }

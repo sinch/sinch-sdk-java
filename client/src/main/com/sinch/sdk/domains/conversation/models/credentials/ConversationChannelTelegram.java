@@ -3,7 +3,15 @@ package com.sinch.sdk.domains.conversation.models.credentials;
 import com.sinch.sdk.domains.conversation.models.ChannelType;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseCallout.Builder;
 
-public class ConversationChannelTelegram extends ConversationChannel {
+/**
+ * Telegram channel description
+ *
+ * @see <a
+ *     href="https://developers.sinch.com/docs/conversation/channel-support/instagram">Conversation
+ *     API Telegram Bot Support</a>
+ * @since 1.0
+ */
+public class ConversationChannelTelegram extends ConversationChannel<TelegramCredentials> {
 
   private ConversationChannelTelegram(
       TelegramCredentials credentials,
@@ -13,31 +21,28 @@ public class ConversationChannelTelegram extends ConversationChannel {
     super(ChannelType.TELEGRAM, credentials, callbackSecret, state, channelKnownId);
   }
 
-  @Override
-  public TelegramCredentials getCredentials() {
-    return (TelegramCredentials) super.getCredentials();
-  }
-
+  /**
+   * Getting builder
+   *
+   * @return New Builder instance
+   * @since 1.0
+   */
   public static Builder builder() {
     return new Builder();
   }
 
-  public static class Builder extends ConversationChannel.Builder<Builder> {
+  /**
+   * Dedicated Builder
+   *
+   * @since 1.0
+   */
+  public static class Builder extends ConversationChannel.Builder<TelegramCredentials, Builder> {
 
-    TelegramCredentials credentials;
+    private Builder() {}
 
-    public Builder setCredentials(TelegramCredentials credentials) {
-      this.credentials = credentials;
-      return this;
-    }
-
+    /** {@inheritDoc} */
     public ConversationChannelTelegram build() {
       return new ConversationChannelTelegram(credentials, callbackSecret, state, channelKnownId);
-    }
-
-    @Override
-    protected Builder self() {
-      return this;
     }
   }
 }
