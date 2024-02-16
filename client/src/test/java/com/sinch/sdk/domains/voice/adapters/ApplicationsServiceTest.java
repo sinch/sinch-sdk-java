@@ -99,8 +99,8 @@ public class ApplicationsServiceTest extends BaseTest {
 
   @Test
   void updateNumbers() {
-    service.updateNumbers(
-        ApplicationsDtoConverterTest.expectedApplicationsUpdateNumbersRequestParameters);
+    service.assignNumbers(
+        ApplicationsDtoConverterTest.expectedApplicationsAssignNumbersRequestParameters);
 
     verify(api).configurationUpdateNumbers(updateNumbersDtoCaptor.capture());
 
@@ -108,7 +108,7 @@ public class ApplicationsServiceTest extends BaseTest {
     Assertions.assertThat(body)
         .isEqualTo(
             ApplicationsDtoConverter.convert(
-                ApplicationsDtoConverterTest.expectedApplicationsUpdateNumbersRequestParameters));
+                ApplicationsDtoConverterTest.expectedApplicationsAssignNumbersRequestParameters));
   }
 
   @Test

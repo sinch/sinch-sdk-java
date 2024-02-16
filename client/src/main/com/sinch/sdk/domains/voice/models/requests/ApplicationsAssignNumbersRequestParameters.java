@@ -10,13 +10,13 @@ import java.util.Collection;
  *
  * @since 1.0
  */
-public class ApplicationsUpdateNumbersRequestParameters {
+public class ApplicationsAssignNumbersRequestParameters {
 
   private final OptionalValue<Collection<E164PhoneNumber>> numbers;
   private final OptionalValue<String> applicationKey;
   private final OptionalValue<CapabilityType> capability;
 
-  private ApplicationsUpdateNumbersRequestParameters(
+  private ApplicationsAssignNumbersRequestParameters(
       OptionalValue<Collection<E164PhoneNumber>> numbers,
       OptionalValue<String> applicationKey,
       OptionalValue<CapabilityType> capability) {
@@ -60,7 +60,7 @@ public class ApplicationsUpdateNumbersRequestParameters {
 
   @Override
   public String toString() {
-    return "ApplicationsUpdateNumbersRequestParameters{"
+    return "ApplicationsAssignNumbersRequestParameters{"
         + "numbers="
         + numbers
         + ", applicationKey='"
@@ -126,8 +126,8 @@ public class ApplicationsUpdateNumbersRequestParameters {
       return this;
     }
 
-    public ApplicationsUpdateNumbersRequestParameters build() {
-      return new ApplicationsUpdateNumbersRequestParameters(numbers, applicationKey, capability);
+    public ApplicationsAssignNumbersRequestParameters build() {
+      return new ApplicationsAssignNumbersRequestParameters(numbers, applicationKey, capability);
     }
   }
 }

@@ -14,7 +14,7 @@ import com.sinch.sdk.domains.voice.models.dto.v1.ApplicationsGetNumbersResponseD
 import com.sinch.sdk.domains.voice.models.dto.v1.ApplicationsQueryNumberResponseDtoTest;
 import com.sinch.sdk.domains.voice.models.dto.v1.ApplicationsUnassignNumberRequestDtoTest;
 import com.sinch.sdk.domains.voice.models.dto.v1.ApplicationsUpdateNumberRequestDtoTest;
-import com.sinch.sdk.domains.voice.models.requests.ApplicationsUpdateNumbersRequestParameters;
+import com.sinch.sdk.domains.voice.models.requests.ApplicationsAssignNumbersRequestParameters;
 import com.sinch.sdk.domains.voice.models.response.AssignedNumbers;
 import com.sinch.sdk.models.E164PhoneNumber;
 import java.util.Arrays;
@@ -58,9 +58,9 @@ public class ApplicationsDtoConverterTest extends BaseTest {
           .setRate(Price.builder().setCurrencyId("USD").setAmount(0.1850F).build())
           .build();
 
-  public static ApplicationsUpdateNumbersRequestParameters
-      expectedApplicationsUpdateNumbersRequestParameters =
-          ApplicationsUpdateNumbersRequestParameters.builder()
+  public static ApplicationsAssignNumbersRequestParameters
+      expectedApplicationsAssignNumbersRequestParameters =
+          ApplicationsAssignNumbersRequestParameters.builder()
               .setNumbers(Collections.singletonList(E164PhoneNumber.valueOf("+12073091712")))
               .setApplicationKey("an app key")
               .setCapability(CapabilityType.VOICE)
@@ -100,7 +100,7 @@ public class ApplicationsDtoConverterTest extends BaseTest {
   @Test
   void convertApplicationsUpdateNumberRequestParameters() {
     Assertions.assertThat(
-            ApplicationsDtoConverter.convert(expectedApplicationsUpdateNumbersRequestParameters))
+            ApplicationsDtoConverter.convert(expectedApplicationsAssignNumbersRequestParameters))
         .usingRecursiveComparison()
         .isEqualTo(ApplicationsUpdateNumberRequestDtoTest.updateNumbersDto);
   }
