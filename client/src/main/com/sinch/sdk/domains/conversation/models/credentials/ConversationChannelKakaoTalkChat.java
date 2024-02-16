@@ -2,7 +2,13 @@ package com.sinch.sdk.domains.conversation.models.credentials;
 
 import com.sinch.sdk.domains.conversation.models.ChannelType;
 
-public class ConversationChannelKakaoTalkChat extends ConversationChannel {
+/**
+ * KakaoTalkChat channel description
+ *
+ * @since 1.0
+ */
+public class ConversationChannelKakaoTalkChat
+    extends ConversationChannel<KakaoTalkChatCredentials> {
 
   private ConversationChannelKakaoTalkChat(
       KakaoTalkChatCredentials credentials,
@@ -12,32 +18,33 @@ public class ConversationChannelKakaoTalkChat extends ConversationChannel {
     super(ChannelType.KAKAO_TALK_CHAT, credentials, callbackSecret, state, channelKnownId);
   }
 
-  @Override
-  public KakaoTalkChatCredentials getCredentials() {
-    return (KakaoTalkChatCredentials) super.getCredentials();
-  }
-
+  /**
+   * Getting builder
+   *
+   * @return New Builder instance
+   * @since 1.0
+   */
   public static Builder builder() {
     return new Builder();
   }
 
-  public static class Builder extends ConversationChannel.Builder<Builder> {
+  /**
+   * Dedicated Builder
+   *
+   * @see <a
+   *     href="https://developers.sinch.com/docs/conversation/channel-support/kakaotalk">Conversation
+   *     API KakaoTalk</a>
+   * @since 1.0
+   */
+  public static class Builder
+      extends ConversationChannel.Builder<KakaoTalkChatCredentials, Builder> {
 
-    KakaoTalkChatCredentials credentials;
+    private Builder() {}
 
-    public Builder setCredentials(KakaoTalkChatCredentials credentials) {
-      this.credentials = credentials;
-      return this;
-    }
-
+    /** {@inheritDoc} */
     public ConversationChannelKakaoTalkChat build() {
       return new ConversationChannelKakaoTalkChat(
           credentials, callbackSecret, state, channelKnownId);
-    }
-
-    @Override
-    protected Builder self() {
-      return this;
     }
   }
 }
