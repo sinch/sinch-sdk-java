@@ -41,13 +41,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
-public class AppConverter {
+public class AppDtoConverter {
 
   public static Collection<App> convert(ListAppsResponseDto dto) {
     if (null == dto) {
       return null;
     }
-    return dto.getApps().stream().map(AppConverter::convert).collect(Collectors.toList());
+    return dto.getApps().stream().map(AppDtoConverter::convert).collect(Collectors.toList());
   }
 
   public static App convert(AppResponseDto dto) {

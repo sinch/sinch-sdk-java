@@ -2,7 +2,13 @@ package com.sinch.sdk.domains.conversation.models.credentials;
 
 import com.sinch.sdk.domains.conversation.models.ChannelType;
 
-public class ConversationChannelMMS extends ConversationChannel {
+/**
+ * MMS Channel description
+ *
+ * @see <a href="https://developers.sinch.com/docs/conversation/channel-support/mms">MMS Channel</a>
+ * @since 1.0
+ */
+public class ConversationChannelMMS extends ConversationChannel<MMSCredentials> {
 
   private ConversationChannelMMS(
       MMSCredentials credentials,
@@ -12,31 +18,28 @@ public class ConversationChannelMMS extends ConversationChannel {
     super(ChannelType.MMS, credentials, callbackSecret, state, channelKnownId);
   }
 
-  @Override
-  public MMSCredentials getCredentials() {
-    return (MMSCredentials) super.getCredentials();
-  }
-
+  /**
+   * Getting builder
+   *
+   * @return New Builder instance
+   * @since 1.0
+   */
   public static Builder builder() {
     return new Builder();
   }
 
-  public static class Builder extends ConversationChannel.Builder<Builder> {
+  /**
+   * Dedicated Builder
+   *
+   * @since 1.0
+   */
+  public static class Builder extends ConversationChannel.Builder<MMSCredentials, Builder> {
 
-    MMSCredentials credentials;
+    private Builder() {}
 
-    public Builder setCredentials(MMSCredentials credentials) {
-      this.credentials = credentials;
-      return this;
-    }
-
+    /** {@inheritDoc} */
     public ConversationChannelMMS build() {
       return new ConversationChannelMMS(credentials, callbackSecret, state, channelKnownId);
-    }
-
-    @Override
-    protected Builder self() {
-      return this;
     }
   }
 }

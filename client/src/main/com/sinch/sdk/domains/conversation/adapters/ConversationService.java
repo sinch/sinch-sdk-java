@@ -18,6 +18,7 @@ public class ConversationService implements com.sinch.sdk.domains.conversation.C
   private final Configuration configuration;
   private final HttpClient httpClient;
   private AppService app;
+  private ContactService contact;
 
   private final Map<String, AuthManager> authManagers;
 
@@ -44,5 +45,12 @@ public class ConversationService implements com.sinch.sdk.domains.conversation.C
       this.app = new AppService(configuration, httpClient, authManagers);
     }
     return this.app;
+  }
+
+  public ContactService contact() {
+    if (null == this.contact) {
+      this.contact = new ContactService(configuration, httpClient, authManagers);
+    }
+    return this.contact;
   }
 }

@@ -5,7 +5,7 @@ import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.domains.conversation.adapters.api.v1.AppApi;
-import com.sinch.sdk.domains.conversation.adapters.converters.AppConverter;
+import com.sinch.sdk.domains.conversation.adapters.converters.AppDtoConverter;
 import com.sinch.sdk.domains.conversation.models.requests.AppRequestParameters;
 import com.sinch.sdk.domains.conversation.models.responses.App;
 import com.sinch.sdk.models.Configuration;
@@ -30,11 +30,11 @@ public class AppService implements com.sinch.sdk.domains.conversation.AppService
   }
 
   public Collection<App> list() throws ApiException {
-    return AppConverter.convert(getApi().appListApps(configuration.getProjectId()));
+    return AppDtoConverter.convert(getApi().appListApps(configuration.getProjectId()));
   }
 
   public App get(String appId) {
-    return AppConverter.convert(getApi().appGetApp(configuration.getProjectId(), appId));
+    return AppDtoConverter.convert(getApi().appGetApp(configuration.getProjectId(), appId));
   }
 
   public void delete(String appId) {
@@ -43,19 +43,19 @@ public class AppService implements com.sinch.sdk.domains.conversation.AppService
 
   public App create(AppRequestParameters parameters) {
 
-    return AppConverter.convert(
+    return AppDtoConverter.convert(
         getApi()
             .appCreateApp(
-                this.configuration.getProjectId(), AppConverter.convertForCreate(parameters)));
+                this.configuration.getProjectId(), AppDtoConverter.convertForCreate(parameters)));
   }
 
   public App update(String appId, AppRequestParameters parameters) {
-    return AppConverter.convert(
+    return AppDtoConverter.convert(
         getApi()
             .appUpdateApp(
                 this.configuration.getProjectId(),
                 appId,
-                AppConverter.convertForUpdate(parameters),
+                AppDtoConverter.convertForUpdate(parameters),
                 null));
   }
 }

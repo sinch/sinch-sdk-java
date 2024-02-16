@@ -2,7 +2,15 @@ package com.sinch.sdk.domains.conversation.models.credentials;
 
 import com.sinch.sdk.domains.conversation.models.ChannelType;
 
-public class ConversationChannelMessenger extends ConversationChannel {
+/**
+ * Facebook Messenger channel description
+ *
+ * @see <a
+ *     href="https://developers.sinch.com/docs/conversation/channel-support/facebook-messenger">Facebook
+ *     Messenger Channel</a>
+ * @since 1.0
+ */
+public class ConversationChannelMessenger extends ConversationChannel<StaticTokenCredentials> {
 
   private ConversationChannelMessenger(
       StaticTokenCredentials credentials,
@@ -12,31 +20,28 @@ public class ConversationChannelMessenger extends ConversationChannel {
     super(ChannelType.MESSENGER, credentials, callbackSecret, state, channelKnownId);
   }
 
-  @Override
-  public StaticTokenCredentials getCredentials() {
-    return (StaticTokenCredentials) super.getCredentials();
-  }
-
+  /**
+   * Getting builder
+   *
+   * @return New Builder instance
+   * @since 1.0
+   */
   public static Builder builder() {
     return new Builder();
   }
 
-  public static class Builder extends ConversationChannel.Builder<Builder> {
+  /**
+   * Dedicated Builder
+   *
+   * @since 1.0
+   */
+  public static class Builder extends ConversationChannel.Builder<StaticTokenCredentials, Builder> {
 
-    StaticTokenCredentials credentials;
+    private Builder() {}
 
-    public Builder setCredentials(StaticTokenCredentials credentials) {
-      this.credentials = credentials;
-      return this;
-    }
-
+    /** {@inheritDoc} */
     public ConversationChannelMessenger build() {
       return new ConversationChannelMessenger(credentials, callbackSecret, state, channelKnownId);
-    }
-
-    @Override
-    protected Builder self() {
-      return this;
     }
   }
 }
