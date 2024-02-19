@@ -141,7 +141,7 @@ See https://developers.sinch.com for details about these parameters
 |              | QueryNumber        | [com.sinch.sample.voice.applications.QueryNumber](src/main/java/com/sinch/sample/voice/applications/QueryNumber.java)               | Require `PHONE_NUMBER` parameter                          | 
 |              | UnassignNumber     | [com.sinch.sample.voice.applications.UnassignNumber](src/main/java/com/sinch/sample/voice/applications/UnassignNumber.java)         | Require `APPLICATION_API_KEY` & `PHONE_NUMBER` parameters | 
 |              | UpdateCallbackUrls | [com.sinch.sample.voice.applications.UpdateCallbackUrls](src/main/java/com/sinch/sample/voice/applications/UpdateCallbackUrls.java) | Require `APPLICATION_API_KEY` parameter                   | 
-|              | UpdateNumbers      | [com.sinch.sample.voice.applications.UpdateNumbers](src/main/java/com/sinch/sample/voice/applications/UpdateNumbers.java)           | Require `APPLICATION_API_KEY` & `PHONE_NUMBER` parameters | 
+|              | AssignNumbers      | [com.sinch.sample.voice.applications.AssignNumbers](src/main/java/com/sinch/sample/voice/applications/AssignNumbers.java)           | Require `APPLICATION_API_KEY` & `PHONE_NUMBER` parameters | 
 
 ### Dedicated webhooks feature samples
 #### How to run webhooks sample application

@@ -13,7 +13,7 @@ import com.sinch.sdk.domains.voice.models.dto.v1.GetQueryNumberDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.GetQueryNumberNumberDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.UnassignNumbersDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.UpdateNumbersDto;
-import com.sinch.sdk.domains.voice.models.requests.ApplicationsUpdateNumbersRequestParameters;
+import com.sinch.sdk.domains.voice.models.requests.ApplicationsAssignNumbersRequestParameters;
 import com.sinch.sdk.domains.voice.models.response.AssignedNumbers;
 import com.sinch.sdk.models.E164PhoneNumber;
 import java.util.List;
@@ -69,7 +69,7 @@ public class ApplicationsDtoConverter {
         .build();
   }
 
-  public static UpdateNumbersDto convert(ApplicationsUpdateNumbersRequestParameters client) {
+  public static UpdateNumbersDto convert(ApplicationsAssignNumbersRequestParameters client) {
     if (null == client) {
       return null;
     }

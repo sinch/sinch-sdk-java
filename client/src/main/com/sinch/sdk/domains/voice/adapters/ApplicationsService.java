@@ -7,7 +7,7 @@ import com.sinch.sdk.domains.voice.adapters.api.v1.ApplicationsApi;
 import com.sinch.sdk.domains.voice.adapters.converters.ApplicationsDtoConverter;
 import com.sinch.sdk.domains.voice.models.CallbackUrls;
 import com.sinch.sdk.domains.voice.models.NumberInformation;
-import com.sinch.sdk.domains.voice.models.requests.ApplicationsUpdateNumbersRequestParameters;
+import com.sinch.sdk.domains.voice.models.requests.ApplicationsAssignNumbersRequestParameters;
 import com.sinch.sdk.domains.voice.models.response.AssignedNumbers;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.E164PhoneNumber;
@@ -51,7 +51,7 @@ public class ApplicationsService implements com.sinch.sdk.domains.voice.Applicat
     return ApplicationsDtoConverter.convert(getApi().callingQueryNumber(number.stringValue()));
   }
 
-  public void updateNumbers(ApplicationsUpdateNumbersRequestParameters parameters) {
+  public void assignNumbers(ApplicationsAssignNumbersRequestParameters parameters) {
     getApi().configurationUpdateNumbers(ApplicationsDtoConverter.convert(parameters));
   }
 

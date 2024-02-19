@@ -2,7 +2,7 @@ package com.sinch.sdk.domains.voice;
 
 import com.sinch.sdk.domains.voice.models.CallbackUrls;
 import com.sinch.sdk.domains.voice.models.NumberInformation;
-import com.sinch.sdk.domains.voice.models.requests.ApplicationsUpdateNumbersRequestParameters;
+import com.sinch.sdk.domains.voice.models.requests.ApplicationsAssignNumbersRequestParameters;
 import com.sinch.sdk.domains.voice.models.response.AssignedNumbers;
 import com.sinch.sdk.models.E164PhoneNumber;
 
@@ -42,7 +42,7 @@ public interface ApplicationsService {
    * @param parameters Request parameters
    * @since 1.0
    */
-  void updateNumbers(ApplicationsUpdateNumbersRequestParameters parameters);
+  void assignNumbers(ApplicationsAssignNumbersRequestParameters parameters);
 
   /**
    * Un-assign a number from an application.
