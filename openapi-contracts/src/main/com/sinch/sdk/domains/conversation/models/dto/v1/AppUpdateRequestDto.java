@@ -23,9 +23,9 @@ import java.util.Objects;
 
 /** The request sent to the API endpoint to update the configuration of an app. */
 @JsonPropertyOrder({
-  AppUpdateRequestDto.JSON_PROPERTY_DISPLAY_NAME,
   AppUpdateRequestDto.JSON_PROPERTY_CHANNEL_CREDENTIALS,
   AppUpdateRequestDto.JSON_PROPERTY_CONVERSATION_METADATA_REPORT_VIEW,
+  AppUpdateRequestDto.JSON_PROPERTY_DISPLAY_NAME,
   AppUpdateRequestDto.JSON_PROPERTY_RETENTION_POLICY,
   AppUpdateRequestDto.JSON_PROPERTY_DISPATCH_RETENTION_POLICY,
   AppUpdateRequestDto.JSON_PROPERTY_PROCESSING_MODE,
@@ -36,10 +36,6 @@ import java.util.Objects;
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class AppUpdateRequestDto {
   private static final long serialVersionUID = 1L;
-  public static final String JSON_PROPERTY_DISPLAY_NAME = "display_name";
-  private String displayName;
-  private boolean displayNameDefined = false;
-
   public static final String JSON_PROPERTY_CHANNEL_CREDENTIALS = "channel_credentials";
   private List<ConversationChannelCredentialDto> channelCredentials;
   private boolean channelCredentialsDefined = false;
@@ -48,6 +44,10 @@ public class AppUpdateRequestDto {
       "conversation_metadata_report_view";
   private ConversationMetadataReportViewDto conversationMetadataReportView;
   private boolean conversationMetadataReportViewDefined = false;
+
+  public static final String JSON_PROPERTY_DISPLAY_NAME = "display_name";
+  private String displayName;
+  private boolean displayNameDefined = false;
 
   public static final String JSON_PROPERTY_RETENTION_POLICY = "retention_policy";
   private RetentionPolicyDto retentionPolicy;
@@ -70,35 +70,6 @@ public class AppUpdateRequestDto {
   private boolean callbackSettingsDefined = false;
 
   public AppUpdateRequestDto() {}
-
-  public AppUpdateRequestDto displayName(String displayName) {
-    this.displayName = displayName;
-    this.displayNameDefined = true;
-    return this;
-  }
-
-  /**
-   * The display name for the app.
-   *
-   * @return displayName
-   */
-  @JsonProperty(JSON_PROPERTY_DISPLAY_NAME)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public String getDisplayName() {
-    return displayName;
-  }
-
-  @JsonIgnore
-  public boolean getDisplayNameDefined() {
-    return displayNameDefined;
-  }
-
-  @JsonProperty(JSON_PROPERTY_DISPLAY_NAME)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setDisplayName(String displayName) {
-    this.displayName = displayName;
-    this.displayNameDefined = true;
-  }
 
   public AppUpdateRequestDto channelCredentials(
       List<ConversationChannelCredentialDto> channelCredentials) {
@@ -169,6 +140,35 @@ public class AppUpdateRequestDto {
       ConversationMetadataReportViewDto conversationMetadataReportView) {
     this.conversationMetadataReportView = conversationMetadataReportView;
     this.conversationMetadataReportViewDefined = true;
+  }
+
+  public AppUpdateRequestDto displayName(String displayName) {
+    this.displayName = displayName;
+    this.displayNameDefined = true;
+    return this;
+  }
+
+  /**
+   * The display name for the app.
+   *
+   * @return displayName
+   */
+  @JsonProperty(JSON_PROPERTY_DISPLAY_NAME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public String getDisplayName() {
+    return displayName;
+  }
+
+  @JsonIgnore
+  public boolean getDisplayNameDefined() {
+    return displayNameDefined;
+  }
+
+  @JsonProperty(JSON_PROPERTY_DISPLAY_NAME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setDisplayName(String displayName) {
+    this.displayName = displayName;
+    this.displayNameDefined = true;
   }
 
   public AppUpdateRequestDto retentionPolicy(RetentionPolicyDto retentionPolicy) {
@@ -327,10 +327,10 @@ public class AppUpdateRequestDto {
       return false;
     }
     AppUpdateRequestDto appUpdateRequest = (AppUpdateRequestDto) o;
-    return Objects.equals(this.displayName, appUpdateRequest.displayName)
-        && Objects.equals(this.channelCredentials, appUpdateRequest.channelCredentials)
+    return Objects.equals(this.channelCredentials, appUpdateRequest.channelCredentials)
         && Objects.equals(
             this.conversationMetadataReportView, appUpdateRequest.conversationMetadataReportView)
+        && Objects.equals(this.displayName, appUpdateRequest.displayName)
         && Objects.equals(this.retentionPolicy, appUpdateRequest.retentionPolicy)
         && Objects.equals(this.dispatchRetentionPolicy, appUpdateRequest.dispatchRetentionPolicy)
         && Objects.equals(this.processingMode, appUpdateRequest.processingMode)
@@ -341,9 +341,9 @@ public class AppUpdateRequestDto {
   @Override
   public int hashCode() {
     return Objects.hash(
-        displayName,
         channelCredentials,
         conversationMetadataReportView,
+        displayName,
         retentionPolicy,
         dispatchRetentionPolicy,
         processingMode,
@@ -355,11 +355,11 @@ public class AppUpdateRequestDto {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class AppUpdateRequestDto {\n");
-    sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
     sb.append("    channelCredentials: ").append(toIndentedString(channelCredentials)).append("\n");
     sb.append("    conversationMetadataReportView: ")
         .append(toIndentedString(conversationMetadataReportView))
         .append("\n");
+    sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
     sb.append("    retentionPolicy: ").append(toIndentedString(retentionPolicy)).append("\n");
     sb.append("    dispatchRetentionPolicy: ")
         .append(toIndentedString(dispatchRetentionPolicy))
