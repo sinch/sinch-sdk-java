@@ -54,6 +54,7 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
 
     this.httpClient = httpClient;
     setApplicationCredentials(credentials);
+
     LOGGER.fine(
         "Activate verification API with server='" + context.getVerificationServer().getUrl() + "'");
   }

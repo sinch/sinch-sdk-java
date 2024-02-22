@@ -21,8 +21,8 @@ import com.sinch.sdk.domains.voice.models.dto.v1.CallbacksDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.UnassignNumbersDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.UpdateNumbersDto;
 import com.sinch.sdk.domains.voice.models.response.AssignedNumbers;
-import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.E164PhoneNumber;
+import com.sinch.sdk.models.VoiceContext;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +35,7 @@ import org.mockito.Mock;
 public class ApplicationsServiceTest extends BaseTest {
 
   @Mock ApplicationsApi api;
-  @Mock Configuration configuration;
+  @Mock VoiceContext context;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
 
@@ -48,7 +48,7 @@ public class ApplicationsServiceTest extends BaseTest {
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new ApplicationsService(configuration, httpClient, authManagers));
+    service = spy(new ApplicationsService(context, httpClient, authManagers));
     doReturn(api).when(service).getApi();
   }
 

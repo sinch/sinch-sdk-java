@@ -13,9 +13,7 @@ public class Configuration {
   private final SMSRegion smsRegion;
   private final String smsUrl;
   private final VerificationContext verificationContext;
-  private final VoiceRegion voiceRegion;
-  private final String voiceUrl;
-  private final String voiceApplicationManagementUrl;
+  private final VoiceContext voiceContext;
 
   private Configuration(
       UnifiedCredentials unifiedCredentials,
@@ -25,19 +23,15 @@ public class Configuration {
       SMSRegion smsRegion,
       String smsUrl,
       VerificationContext verificationContext,
-      VoiceRegion voiceRegion,
-      String voiceUrl,
-      String voiceApplicationManagementUrl) {
+      VoiceContext voiceContext) {
     this.unifiedCredentials = unifiedCredentials;
     this.applicationCredentials = applicationCredentials;
     this.oauthUrl = oauthUrl;
     this.numbersContext = numbersContext;
+    this.voiceContext = voiceContext;
     this.smsRegion = null == smsRegion ? SMSRegion.US : smsRegion;
     this.smsUrl = smsUrl;
     this.verificationContext = verificationContext;
-    this.voiceRegion = voiceRegion;
-    this.voiceUrl = voiceUrl;
-    this.voiceApplicationManagementUrl = voiceApplicationManagementUrl;
   }
 
   @Override
@@ -57,14 +51,8 @@ public class Configuration {
         + ", verificationContext='"
         + verificationContext
         + '\''
-        + ", voiceRegion="
-        + voiceRegion
-        + ", voiceUrl='"
-        + voiceUrl
-        + '\''
-        + ", voiceApplicationMngmtUrl='"
-        + voiceApplicationManagementUrl
-        + '\''
+        + ", verificationContext="
+        + verificationContext
         + '}';
   }
 
@@ -185,53 +173,13 @@ public class Configuration {
   }
 
   /**
-   * Voice region
+   * Get Voice domain related execution context
    *
-   * @return Selected Voice Region
+   * @return Current Voice context
    * @since 1.0
    */
-  public VoiceRegion getVoiceRegion() {
-    return voiceRegion;
-  }
-
-  /**
-   * Voice URL
-   *
-   * @return Voice Server URL
-   * @since 1.0
-   */
-  public String getVoiceUrl() {
-    return voiceUrl;
-  }
-
-  /**
-   * Voice Server Configuration
-   *
-   * @return Voice Server configuration to be used
-   * @since 1.0
-   */
-  public ServerConfiguration getVoiceServer() {
-    return new ServerConfiguration(getVoiceUrl());
-  }
-
-  /**
-   * Voice Application Management URL
-   *
-   * @return Voice Application Management URL
-   * @since 1.0
-   */
-  public String getVoiceApplicationManagementUrl() {
-    return voiceApplicationManagementUrl;
-  }
-
-  /**
-   * Voice Application Management Configuration
-   *
-   * @return Voice Application Management to be used
-   * @since 1.0
-   */
-  public ServerConfiguration getVoiceApplicationManagementServer() {
-    return new ServerConfiguration(getVoiceApplicationManagementUrl());
+  public Optional<VoiceContext> getVoiceContext() {
+    return Optional.ofNullable(voiceContext);
   }
 
   /**
@@ -282,9 +230,7 @@ public class Configuration {
     SMSRegion smsRegion;
     String smsUrl;
     VerificationContext.Builder verificationContext;
-    VoiceRegion voiceRegion;
-    String voiceUrl;
-    String voiceApplicationMngmtUrl;
+    VoiceContext.Builder voiceContext;
 
     protected Builder() {}
 
@@ -309,10 +255,7 @@ public class Configuration {
       this.smsUrl = configuration.getSmsUrl();
       this.verificationContext =
           configuration.getVerificationContext().map(VerificationContext::builder).orElse(null);
-
-      this.voiceRegion = configuration.getVoiceRegion();
-      this.voiceUrl = configuration.getVoiceUrl();
-      this.voiceApplicationMngmtUrl = configuration.getVoiceApplicationManagementUrl();
+      this.voiceContext = configuration.getVoiceContext().map(VoiceContext::builder).orElse(null);
     }
 
     /**
@@ -456,63 +399,30 @@ public class Configuration {
     }
 
     /**
-     * Set region to be used for Vioce service
+     * Set Voice related region
      *
-     * @param voiceRegion The regino
+     * @param region {@link VoiceContext#getVoiceRegion() getter}
      * @return Current builder
      * @since 1.0
      */
-    public Builder setVoiceRegion(VoiceRegion voiceRegion) {
-      this.voiceRegion = voiceRegion;
+    public Builder setVoiceRegion(VoiceRegion region) {
+      if (null == this.voiceContext) {
+        this.voiceContext = VoiceContext.builder();
+      }
+      this.voiceContext.setVoiceRegion(region);
       return this;
     }
 
     /**
-     * Set Voice URL to be used
+     * Set Voice related context
      *
-     * @param voiceUrl Voice URL
+     * @param context {@link #getVoiceContext() getter}
      * @return Current builder
      * @since 1.0
      */
-    public Builder setVoiceUrl(String voiceUrl) {
-      this.voiceUrl = voiceUrl;
+    public Builder setVoiceContext(VoiceContext context) {
+      this.voiceContext = null != context ? VoiceContext.builder(context) : null;
       return this;
-    }
-
-    /**
-     * Set URL dedicated to Voice Application management to be used
-     *
-     * @param voiceApplicationMngmtUrl Voice Application Management URL
-     * @return Current builder
-     * @since 1.0
-     */
-    public Builder setVoiceApplicationMngmtUrl(String voiceApplicationMngmtUrl) {
-      this.voiceApplicationMngmtUrl = voiceApplicationMngmtUrl;
-      return this;
-    }
-
-    /**
-     * Setter
-     *
-     * <p>See {@link Configuration#getVoiceRegion()} getter
-     *
-     * @return Current builder
-     * @since 1.0
-     */
-    public VoiceRegion getVoiceRegion() {
-      return voiceRegion;
-    }
-
-    /**
-     * Setter
-     *
-     * <p>See {@link Configuration#getVoiceUrl()} getter
-     *
-     * @return Current builder
-     * @since 1.0
-     */
-    public String getVoiceUrl() {
-      return voiceUrl;
     }
 
     /**
@@ -531,9 +441,7 @@ public class Configuration {
           smsRegion,
           smsUrl,
           null != verificationContext ? verificationContext.build() : null,
-          voiceRegion,
-          voiceUrl,
-          voiceApplicationMngmtUrl);
+          null != voiceContext ? voiceContext.build() : null);
     }
   }
 }

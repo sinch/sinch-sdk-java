@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.models.ApplicationCredentials;
 import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.VoiceContext;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
@@ -22,6 +23,23 @@ class VoiceServiceTest {
             IllegalArgumentException.class, () -> new VoiceService(configuration, httpClient));
 
     assertTrue(exception.getMessage().contains("Application credentials must be defined"));
+  }
+
+  @Test
+  void doNotAcceptEmptyVoiceContext() {
+    ApplicationCredentials credentials =
+        ApplicationCredentials.builder()
+            .setApplicationKey("Zm9vIGtleQo=")
+            .setApplicationSecret("foo secret")
+            .build();
+    Configuration configuration =
+        Configuration.builder().setApplicationCredentials(credentials).build();
+
+    Exception exception =
+        assertThrows(
+            IllegalArgumentException.class, () -> new VoiceService(configuration, httpClient));
+
+    assertTrue(exception.getMessage().contains("Voice context must be defined"));
   }
 
   @Test
@@ -43,7 +61,10 @@ class VoiceServiceTest {
             .setApplicationSecret("foo secret")
             .build();
     Configuration configuration =
-        Configuration.builder().setApplicationCredentials(credentials).build();
+        Configuration.builder()
+            .setApplicationCredentials(credentials)
+            .setVoiceContext(VoiceContext.builder().build())
+            .build();
 
     Exception exception =
         assertThrows(
@@ -59,8 +80,12 @@ class VoiceServiceTest {
             .setApplicationKey("foo key")
             .setApplicationSecret(null)
             .build();
+
     Configuration configuration =
-        Configuration.builder().setApplicationCredentials(credentials).build();
+        Configuration.builder()
+            .setApplicationCredentials(credentials)
+            .setVoiceContext(VoiceContext.builder().build())
+            .build();
 
     Exception exception =
         assertThrows(

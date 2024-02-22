@@ -9,8 +9,8 @@ import com.sinch.sdk.domains.voice.models.CallbackUrls;
 import com.sinch.sdk.domains.voice.models.NumberInformation;
 import com.sinch.sdk.domains.voice.models.requests.ApplicationsAssignNumbersRequestParameters;
 import com.sinch.sdk.domains.voice.models.response.AssignedNumbers;
-import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.E164PhoneNumber;
+import com.sinch.sdk.models.VoiceContext;
 import java.util.Map;
 
 public class ApplicationsService implements com.sinch.sdk.domains.voice.ApplicationsService {
@@ -18,11 +18,11 @@ public class ApplicationsService implements com.sinch.sdk.domains.voice.Applicat
   private final ApplicationsApi api;
 
   public ApplicationsService(
-      Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManagers) {
+      VoiceContext context, HttpClient httpClient, Map<String, AuthManager> authManagers) {
     this.api =
         new ApplicationsApi(
             httpClient,
-            configuration.getVoiceApplicationManagementServer(),
+            context.getVoiceApplicationManagementServer(),
             authManagers,
             new HttpMapper());
   }

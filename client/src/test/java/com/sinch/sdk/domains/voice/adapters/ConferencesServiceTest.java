@@ -21,7 +21,7 @@ import com.sinch.sdk.domains.voice.models.dto.v1.ManageConferenceParticipantRequ
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConferenceTest;
 import com.sinch.sdk.domains.voice.models.requests.ConferenceManageParticipantRequestParametersTest;
 import com.sinch.sdk.domains.voice.models.response.ConferenceParticipant;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.VoiceContext;
 import java.util.Collection;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -35,7 +35,7 @@ import org.mockito.Mock;
 public class ConferencesServiceTest extends BaseTest {
 
   @Mock ConferencesApi api;
-  @Mock Configuration configuration;
+  @Mock VoiceContext context;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
 
@@ -46,7 +46,7 @@ public class ConferencesServiceTest extends BaseTest {
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new ConferencesService(configuration, httpClient, authManagers));
+    service = spy(new ConferencesService(context, httpClient, authManagers));
     doReturn(api).when(service).getApi();
   }
 

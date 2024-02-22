@@ -18,7 +18,7 @@ import com.sinch.sdk.domains.voice.models.dto.v1.CallsResponseDtoTest;
 import com.sinch.sdk.domains.voice.models.dto.v1.SVAMLRequestBodyDto;
 import com.sinch.sdk.domains.voice.models.response.CallInformation;
 import com.sinch.sdk.domains.voice.models.svaml.SVAMLControlTest;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.VoiceContext;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +31,7 @@ import org.mockito.Mock;
 public class CallsServiceTest extends BaseTest {
 
   @Mock CallsApi api;
-  @Mock Configuration configuration;
+  @Mock VoiceContext context;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
 
@@ -42,7 +42,7 @@ public class CallsServiceTest extends BaseTest {
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new CallsService(configuration, httpClient, authManagers));
+    service = spy(new CallsService(context, httpClient, authManagers));
     doReturn(api).when(service).getApi();
   }
 

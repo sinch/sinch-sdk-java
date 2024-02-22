@@ -9,7 +9,7 @@ import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParameters;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConference;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersCustom;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersTTS;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.VoiceContext;
 import java.util.Map;
 
 public class CalloutsService implements com.sinch.sdk.domains.voice.CalloutsService {
@@ -17,9 +17,9 @@ public class CalloutsService implements com.sinch.sdk.domains.voice.CalloutsServ
   private final CalloutsApi api;
 
   public CalloutsService(
-      Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManagers) {
+      VoiceContext context, HttpClient httpClient, Map<String, AuthManager> authManagers) {
     this.api =
-        new CalloutsApi(httpClient, configuration.getVoiceServer(), authManagers, new HttpMapper());
+        new CalloutsApi(httpClient, context.getVoiceServer(), authManagers, new HttpMapper());
   }
 
   protected CalloutsApi getApi() {

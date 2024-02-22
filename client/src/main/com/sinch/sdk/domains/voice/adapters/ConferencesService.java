@@ -9,7 +9,7 @@ import com.sinch.sdk.domains.voice.adapters.converters.ConferencesDtoConverter;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConference;
 import com.sinch.sdk.domains.voice.models.requests.ConferenceManageParticipantRequestParameters;
 import com.sinch.sdk.domains.voice.models.response.ConferenceParticipant;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.VoiceContext;
 import java.util.Collection;
 import java.util.Map;
 
@@ -18,10 +18,9 @@ public class ConferencesService implements com.sinch.sdk.domains.voice.Conferenc
   private final ConferencesApi api;
 
   public ConferencesService(
-      Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManagers) {
+      VoiceContext context, HttpClient httpClient, Map<String, AuthManager> authManagers) {
     this.api =
-        new ConferencesApi(
-            httpClient, configuration.getVoiceServer(), authManagers, new HttpMapper());
+        new ConferencesApi(httpClient, context.getVoiceServer(), authManagers, new HttpMapper());
   }
 
   protected ConferencesApi getApi() {
