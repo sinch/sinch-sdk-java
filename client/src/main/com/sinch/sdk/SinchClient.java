@@ -9,13 +9,14 @@ import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.SMSRegion;
+import com.sinch.sdk.models.SmsContext;
 import com.sinch.sdk.models.VerificationContext;
 import com.sinch.sdk.models.VoiceContext;
 import com.sinch.sdk.models.VoiceRegion;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -106,11 +107,19 @@ public class SinchClient {
   private void handleDefaultSmsSettings(
       Configuration configuration, Properties props, Configuration.Builder builder) {
 
-    if (null == configuration.getSmsUrl() && props.containsKey(SMS_SERVER_KEY)) {
-      builder.setSmsUrl(props.getProperty(SMS_SERVER_KEY));
+    String smsUrl = configuration.getSmsContext().map(SmsContext::getSmsUrl).orElse(null);
+
+    SMSRegion smsRegion = configuration.getSmsContext().map(SmsContext::getSmsRegion).orElse(null);
+
+    if (null == smsUrl && props.containsKey(SMS_SERVER_KEY)) {
+      smsUrl = props.getProperty(SMS_SERVER_KEY);
     }
-    if (null == configuration.getSmsRegion() && props.containsKey(SMS_REGION_KEY)) {
-      builder.setSmsRegion(SMSRegion.from(props.getProperty(SMS_REGION_KEY)));
+    if (null == smsRegion && props.containsKey(SMS_REGION_KEY)) {
+      smsRegion = SMSRegion.from(props.getProperty(SMS_REGION_KEY));
+    }
+
+    if (null != smsUrl || null != smsRegion) {
+      builder.setSmsContext(SmsContext.builder().setSmsRegion(smsRegion).setSmsUrl(smsUrl).build());
     }
   }
 
@@ -245,7 +254,6 @@ public class SinchClient {
 
   private void checkConfiguration(Configuration configuration) throws NullPointerException {
     Objects.requireNonNull(configuration.getOAuthUrl(), "'oauthUrl' cannot be null");
-    Objects.requireNonNull(configuration.getSmsUrl(), "'smsUrl' cannot be null");
   }
 
   private NumbersService numbersInit() {
@@ -254,8 +262,7 @@ public class SinchClient {
   }
 
   private SMSService smsInit() {
-    LOGGER.fine(
-        "Activate SMS API with server='" + getConfiguration().getSmsServer().getUrl() + "'");
+
     return new com.sinch.sdk.domains.sms.adapters.SMSService(getConfiguration(), getHttpClient());
   }
 
@@ -310,7 +317,7 @@ public class SinchClient {
 
   private String formatAuxiliaryFlag(String auxiliaryFlag) {
 
-    Collection<String> values = Arrays.asList(System.getProperty("java.vendor"));
+    Collection<String> values = Collections.singletonList(System.getProperty("java.vendor"));
 
     if (!StringUtil.isEmpty(auxiliaryFlag)) {
       values.add(auxiliaryFlag);

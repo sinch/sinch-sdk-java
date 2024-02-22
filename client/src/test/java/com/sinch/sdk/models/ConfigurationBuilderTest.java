@@ -23,8 +23,8 @@ class ConfigurationBuilderTest {
             .setProjectId(PROJECT)
             .setOAuthUrl(OAUTH_URL)
             .setNumbersContext(NumbersContext.builder().setNumbersUrl(NUMBERS_SERVER).build())
-            .setSmsRegion(SMS_REGION)
-            .setSmsUrl(SMS_SERVER)
+            .setSmsContext(
+                SmsContext.builder().setSmsRegion(SMS_REGION).setSmsUrl(SMS_SERVER).build())
             .build();
     assertEquals(KEY, builder.getKeyId());
     assertEquals(SECRET, builder.getKeySecret());
@@ -33,10 +33,10 @@ class ConfigurationBuilderTest {
     Assertions.assertEquals(
         NUMBERS_SERVER, builder.getNumbersContext().get().getNumbersServer().getUrl());
     Assertions.assertTrue(
-        builder.getSmsServer().getUrl().contains(SMS_REGION.value()),
+        builder.getSmsContext().get().getSmsRegion().toString().contains(SMS_REGION.value()),
         "SMS Region present within SMS server URL");
     Assertions.assertTrue(
-        builder.getSmsServer().getUrl().contains("fooSMS_SERVER"),
+        builder.getSmsContext().get().getSmsServer().getUrl().contains("fooSMS_SERVER"),
         "SMS server present within SMS server URL");
   }
 }

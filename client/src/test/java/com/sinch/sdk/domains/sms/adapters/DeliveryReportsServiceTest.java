@@ -2,12 +2,16 @@ package com.sinch.sdk.domains.sms.adapters;
 
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.core.http.AuthManager;
+import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.domains.sms.adapters.api.v1.DeliveryReportsApi;
 import com.sinch.sdk.domains.sms.adapters.converters.DeliveryReportDtoConverter;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatch;
@@ -25,21 +29,27 @@ import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportListDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.RecipientDeliveryReportDto;
 import com.sinch.sdk.domains.sms.models.requests.DeliveryReportBatchGetRequestParameters;
 import com.sinch.sdk.domains.sms.models.responses.DeliveryReportsListResponse;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.SmsContext;
+import com.sinch.sdk.models.UnifiedCredentials;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Map;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 @TestWithResources
 class DeliveryReportsServiceTest extends BaseTest {
 
-  @Mock Configuration configuration;
+  @Mock UnifiedCredentials credentials;
+  @Mock SmsContext context;
+  @Mock HttpClient httpClient;
+  @Mock Map<String, AuthManager> authManagers;
+
   @Mock DeliveryReportsApi api;
-  @InjectMocks DeliveryReportsService service;
+  DeliveryReportsService service;
 
   @GivenJsonResource("/domains/sms/v1/DeliveryReportBatchSMSDto.json")
   DeliveryReportDto deliveryReportBatchSMSDto;
@@ -62,11 +72,17 @@ class DeliveryReportsServiceTest extends BaseTest {
   @GivenJsonResource("/domains/sms/v1/ListDeliveryReportResponseDtoPage2.json")
   DeliveryReportListDto listDeliveryReportResponseDtoPage2;
 
+  @BeforeEach
+  public void initMocks() {
+    service = spy(new DeliveryReportsService(credentials, context, httpClient, authManagers));
+    doReturn(api).when(service).getApi();
+  }
+
   @Test
   void getDeliveryReportBatchSMS() throws ApiException {
 
     when(api.getDeliveryReportByBatchId(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq("foo binary batch id"),
             eq("foo type"),
             eq("foo status1,Cancelled"),
@@ -94,7 +110,7 @@ class DeliveryReportsServiceTest extends BaseTest {
   void getDeliveryReportBatchMMS() throws ApiException {
 
     when(api.getDeliveryReportByBatchId(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq("foo binary batch id"),
             eq("foo type"),
             eq("foo status1,Cancelled"),
@@ -122,7 +138,7 @@ class DeliveryReportsServiceTest extends BaseTest {
   void getDeliveryReportRecipientSMS() throws ApiException {
 
     when(api.getDeliveryReportByPhoneNumber(
-            eq(configuration.getProjectId()), eq("foo binary batch id"), eq("foo number")))
+            eq(credentials.getProjectId()), eq("foo binary batch id"), eq("foo number")))
         .thenReturn(deliveryReportRecipientSMSDto);
 
     DeliveryReportRecipient response = service.getForNumber("foo binary batch id", "foo number");
@@ -137,7 +153,7 @@ class DeliveryReportsServiceTest extends BaseTest {
   void getDeliveryReportRecipientMMS() throws ApiException {
 
     when(api.getDeliveryReportByPhoneNumber(
-            eq(configuration.getProjectId()), eq("foo binary batch id"), eq("foo number")))
+            eq(credentials.getProjectId()), eq("foo binary batch id"), eq("foo number")))
         .thenReturn(deliveryReportRecipientMMSDto);
 
     DeliveryReportRecipient response = service.getForNumber("foo binary batch id", "foo number");
@@ -152,7 +168,7 @@ class DeliveryReportsServiceTest extends BaseTest {
   void list() throws ApiException {
 
     when(api.getDeliveryReports(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq(null),
             eq(null),
             eq(null),
@@ -162,7 +178,7 @@ class DeliveryReportsServiceTest extends BaseTest {
             eq(null)))
         .thenReturn(listDeliveryReportResponseDtoPage0);
     when(api.getDeliveryReports(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq(1),
             eq(null),
             eq(null),
@@ -172,7 +188,7 @@ class DeliveryReportsServiceTest extends BaseTest {
             eq(null)))
         .thenReturn(listDeliveryReportResponseDtoPage1);
     when(api.getDeliveryReports(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq(2),
             eq(null),
             eq(null),

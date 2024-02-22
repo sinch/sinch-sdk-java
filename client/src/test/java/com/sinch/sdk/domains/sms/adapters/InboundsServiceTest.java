@@ -2,12 +2,16 @@ package com.sinch.sdk.domains.sms.adapters;
 
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.core.http.AuthManager;
+import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.domains.sms.adapters.api.v1.InboundsApi;
 import com.sinch.sdk.domains.sms.adapters.converters.InboundsDtoConverter;
 import com.sinch.sdk.domains.sms.models.Inbound;
@@ -16,20 +20,25 @@ import com.sinch.sdk.domains.sms.models.InboundText;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiInboundListDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.InboundDto;
 import com.sinch.sdk.domains.sms.models.responses.InboundsListResponse;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.SmsContext;
+import com.sinch.sdk.models.UnifiedCredentials;
 import java.time.Instant;
 import java.util.Iterator;
+import java.util.Map;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 @TestWithResources
 class InboundsServiceTest extends BaseTest {
 
-  @Mock Configuration configuration;
+  @Mock UnifiedCredentials credentials;
+  @Mock SmsContext context;
+  @Mock HttpClient httpClient;
+  @Mock Map<String, AuthManager> authManagers;
   @Mock InboundsApi api;
-  @InjectMocks InboundsService service;
+  InboundsService service;
 
   @GivenJsonResource("/domains/sms/v1/MOBinaryDto.json")
   InboundDto binary;
@@ -46,10 +55,16 @@ class InboundsServiceTest extends BaseTest {
   @GivenJsonResource("/domains/sms/v1/InboundsListResponseDtoPage2.json")
   ApiInboundListDto inboundsLisResponseDtoPage2;
 
+  @BeforeEach
+  public void initMocks() {
+    service = spy(new InboundsService(credentials, context, httpClient, authManagers));
+    doReturn(api).when(service).getApi();
+  }
+
   @Test
   void getBinary() throws ApiException {
 
-    when(api.retrieveInboundMessage(eq(configuration.getProjectId()), eq("foo inbound ID")))
+    when(api.retrieveInboundMessage(eq(credentials.getProjectId()), eq("foo inbound ID")))
         .thenReturn(binary);
 
     Inbound<?> response = service.get("foo inbound ID");
@@ -63,7 +78,7 @@ class InboundsServiceTest extends BaseTest {
   @Test
   void getText() throws ApiException {
 
-    when(api.retrieveInboundMessage(eq(configuration.getProjectId()), eq("foo inbound ID")))
+    when(api.retrieveInboundMessage(eq(credentials.getProjectId()), eq("foo inbound ID")))
         .thenReturn(text);
 
     Inbound<?> response = service.get("foo inbound ID");
@@ -78,7 +93,7 @@ class InboundsServiceTest extends BaseTest {
   void list() throws ApiException {
 
     when(api.listInboundMessages(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq(null),
             eq(null),
             eq(null),
@@ -87,7 +102,7 @@ class InboundsServiceTest extends BaseTest {
             eq(null)))
         .thenReturn(inboundsLisResponseDtoPage0);
     when(api.listInboundMessages(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq(1),
             eq(null),
             eq(null),
@@ -96,7 +111,7 @@ class InboundsServiceTest extends BaseTest {
             eq(null)))
         .thenReturn(inboundsLisResponseDtoPage1);
     when(api.listInboundMessages(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq(2),
             eq(null),
             eq(null),

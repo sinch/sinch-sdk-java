@@ -10,8 +10,7 @@ public class Configuration {
   private final ApplicationCredentials applicationCredentials;
   private final String oauthUrl;
   private final NumbersContext numbersContext;
-  private final SMSRegion smsRegion;
-  private final String smsUrl;
+  private final SmsContext smsContext;
   private final VerificationContext verificationContext;
   private final VoiceContext voiceContext;
 
@@ -20,17 +19,15 @@ public class Configuration {
       ApplicationCredentials applicationCredentials,
       String oauthUrl,
       NumbersContext numbersContext,
-      SMSRegion smsRegion,
-      String smsUrl,
+      SmsContext smsContext,
       VerificationContext verificationContext,
       VoiceContext voiceContext) {
     this.unifiedCredentials = unifiedCredentials;
     this.applicationCredentials = applicationCredentials;
     this.oauthUrl = oauthUrl;
     this.numbersContext = numbersContext;
+    this.smsContext = smsContext;
     this.voiceContext = voiceContext;
-    this.smsRegion = null == smsRegion ? SMSRegion.US : smsRegion;
-    this.smsUrl = smsUrl;
     this.verificationContext = verificationContext;
   }
 
@@ -40,19 +37,14 @@ public class Configuration {
         + "oauthUrl='"
         + oauthUrl
         + '\''
-        + ", numbersContext='"
+        + ", numbersContext="
         + numbersContext
-        + '\''
-        + ", smsRegion="
-        + smsRegion
-        + ", smsUrl='"
-        + smsUrl
-        + '\''
-        + ", verificationContext='"
-        + verificationContext
-        + '\''
+        + ", smsContext="
+        + smsContext
         + ", verificationContext="
         + verificationContext
+        + ", voiceContext="
+        + voiceContext
         + '}';
   }
 
@@ -131,35 +123,13 @@ public class Configuration {
   }
 
   /**
-   * SMS Server Configuration
+   * Get SMS domain related execution context
    *
-   * @return SMS Server configuration to be used
+   * @return Current SMS context
    * @since 1.0
    */
-  public ServerConfiguration getSmsServer() {
-    return new ServerConfiguration(String.format(getSmsUrl(), getSmsRegion()));
-  }
-
-  /**
-   * SMS Region
-   *
-   * @return SMS region
-   * @see <a
-   *     href="https://developers.sinch.com/docs/sms/api-reference/#base-url/">https://developers.sinch.com/docs/sms/api-reference/#base-url/</a>
-   * @since 1.0
-   */
-  public SMSRegion getSmsRegion() {
-    return smsRegion;
-  }
-
-  /**
-   * SMS URL
-   *
-   * @return SMS Server URL
-   * @since 1.0
-   */
-  public String getSmsUrl() {
-    return smsUrl;
+  public Optional<SmsContext> getSmsContext() {
+    return Optional.ofNullable(smsContext);
   }
 
   /**
@@ -227,8 +197,7 @@ public class Configuration {
     ApplicationCredentials.Builder applicationCredentials;
     String oauthUrl;
     NumbersContext.Builder numbersContext;
-    SMSRegion smsRegion;
-    String smsUrl;
+    SmsContext.Builder smsContext;
     VerificationContext.Builder verificationContext;
     VoiceContext.Builder voiceContext;
 
@@ -251,8 +220,7 @@ public class Configuration {
       this.oauthUrl = configuration.getOAuthUrl();
       this.numbersContext =
           configuration.getNumbersContext().map(NumbersContext::builder).orElse(null);
-      this.smsRegion = configuration.getSmsRegion();
-      this.smsUrl = configuration.getSmsUrl();
+      this.smsContext = configuration.getSmsContext().map(SmsContext::builder).orElse(null);
       this.verificationContext =
           configuration.getVerificationContext().map(VerificationContext::builder).orElse(null);
       this.voiceContext = configuration.getVoiceContext().map(VoiceContext::builder).orElse(null);
@@ -363,26 +331,29 @@ public class Configuration {
     }
 
     /**
-     * Set SMS region
+     * Set SMS related region
      *
-     * @param smsRegion SMS region
+     * @param region {@link SmsContext#getSmsRegion()} () getter}
      * @return Current builder
      * @since 1.0
      */
-    public Builder setSmsRegion(SMSRegion smsRegion) {
-      this.smsRegion = smsRegion;
+    public Builder setSmsRegion(SMSRegion region) {
+      if (null == this.smsContext) {
+        this.smsContext = SmsContext.builder();
+      }
+      this.smsContext.setSmsRegion(region);
       return this;
     }
 
     /**
-     * Set SMS API URL
+     * Set Sms related context
      *
-     * @param smsUrl SMS API URL
+     * @param context {@link #getSmsContext()} ()} () getter}
      * @return Current builder
      * @since 1.0
      */
-    public Builder setSmsUrl(String smsUrl) {
-      this.smsUrl = smsUrl;
+    public Builder setSmsContext(SmsContext context) {
+      this.smsContext = null != context ? SmsContext.builder(context) : null;
       return this;
     }
 
@@ -438,8 +409,7 @@ public class Configuration {
           null != applicationCredentials ? applicationCredentials.build() : null,
           oauthUrl,
           null != numbersContext ? numbersContext.build() : null,
-          smsRegion,
-          smsUrl,
+          null != smsContext ? smsContext.build() : null,
           null != verificationContext ? verificationContext.build() : null,
           null != voiceContext ? voiceContext.build() : null);
     }

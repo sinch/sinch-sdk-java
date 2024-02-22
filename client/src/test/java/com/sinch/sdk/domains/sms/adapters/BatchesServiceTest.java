@@ -1,6 +1,8 @@
 package com.sinch.sdk.domains.sms.adapters;
 
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -8,6 +10,8 @@ import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.core.http.AuthManager;
+import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.sms.adapters.api.v1.BatchesApi;
 import com.sinch.sdk.domains.sms.adapters.converters.BatchDtoConverter;
@@ -33,18 +37,20 @@ import com.sinch.sdk.domains.sms.models.requests.UpdateSmsBatchBinaryRequest;
 import com.sinch.sdk.domains.sms.models.requests.UpdateSmsBatchMediaRequest;
 import com.sinch.sdk.domains.sms.models.requests.UpdateSmsBatchTextRequest;
 import com.sinch.sdk.domains.sms.models.responses.BatchesListResponse;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.SmsContext;
+import com.sinch.sdk.models.UnifiedCredentials;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 @TestWithResources
@@ -263,16 +269,25 @@ public class BatchesServiceTest extends BaseTest {
   @GivenJsonResource("/domains/sms/v1/ListBatchesResponseDtoPage2.json")
   ApiBatchListDto listBatchesResponseDtoPage2;
 
-  @Mock Configuration configuration;
+  @Mock UnifiedCredentials credentials;
+  @Mock SmsContext context;
+  @Mock HttpClient httpClient;
+  @Mock Map<String, AuthManager> authManagers;
   @Mock BatchesApi api;
-  @InjectMocks BatchesService service;
+  BatchesService service;
 
   @Captor ArgumentCaptor<ApiDeliveryFeedbackDto> recipientsCaptor;
+
+  @BeforeEach
+  public void initMocks() {
+    service = spy(new BatchesService(credentials, context, httpClient, authManagers));
+    doReturn(api).when(service).getApi();
+  }
 
   @Test
   void getBinary() throws ApiException {
 
-    when(api.getBatchMessage(eq(configuration.getProjectId()), eq("foo binary batch id")))
+    when(api.getBatchMessage(eq(credentials.getProjectId()), eq("foo binary batch id")))
         .thenReturn(binaryResponseDto);
 
     Batch<?> response = service.get("foo binary batch id");
@@ -283,7 +298,7 @@ public class BatchesServiceTest extends BaseTest {
   @Test
   void getMedia() throws ApiException {
 
-    when(api.getBatchMessage(eq(configuration.getProjectId()), eq("foo media batch id")))
+    when(api.getBatchMessage(eq(credentials.getProjectId()), eq("foo media batch id")))
         .thenReturn(mediaResponseDto);
 
     Batch<?> response = service.get("foo media batch id");
@@ -294,7 +309,7 @@ public class BatchesServiceTest extends BaseTest {
   @Test
   void getText() throws ApiException {
 
-    when(api.getBatchMessage(eq(configuration.getProjectId()), eq("foo text batch id")))
+    when(api.getBatchMessage(eq(credentials.getProjectId()), eq("foo text batch id")))
         .thenReturn(textResponseDto);
 
     Batch<?> response = service.get("foo text batch id");
@@ -306,7 +321,7 @@ public class BatchesServiceTest extends BaseTest {
   void sendBinary() throws ApiException {
 
     when(api.sendSMS(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq(BatchDtoConverter.convert(sendSmsBatchBinaryRequest))))
         .thenReturn(binaryResponseDto);
 
@@ -319,7 +334,7 @@ public class BatchesServiceTest extends BaseTest {
   void sendMedia() throws ApiException {
 
     when(api.sendSMS(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq(BatchDtoConverter.convert(sendSmsBatchMediaRequest))))
         .thenReturn(mediaResponseDto);
 
@@ -332,8 +347,7 @@ public class BatchesServiceTest extends BaseTest {
   void sendText() throws ApiException {
 
     when(api.sendSMS(
-            eq(configuration.getProjectId()),
-            eq(BatchDtoConverter.convert(sendSmsBatchTextRequest))))
+            eq(credentials.getProjectId()), eq(BatchDtoConverter.convert(sendSmsBatchTextRequest))))
         .thenReturn(textResponseDto);
 
     Batch<?> response = service.send(sendSmsBatchTextRequest);
@@ -345,7 +359,7 @@ public class BatchesServiceTest extends BaseTest {
   void dryRun() throws ApiException {
 
     when(api.dryRun(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq(true),
             eq(456),
             eq(BatchDtoConverter.convert(sendSmsBatchTextRequest))))
@@ -362,7 +376,7 @@ public class BatchesServiceTest extends BaseTest {
   void list() throws ApiException {
 
     when(api.listBatches(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq(null),
             eq(null),
             eq(null),
@@ -371,7 +385,7 @@ public class BatchesServiceTest extends BaseTest {
             eq(null)))
         .thenReturn(listBatchesResponseDtoPage0);
     when(api.listBatches(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq(1),
             eq(null),
             eq(null),
@@ -380,7 +394,7 @@ public class BatchesServiceTest extends BaseTest {
             eq(null)))
         .thenReturn(listBatchesResponseDtoPage1);
     when(api.listBatches(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq(2),
             eq(null),
             eq(null),
@@ -451,7 +465,7 @@ public class BatchesServiceTest extends BaseTest {
   void updateText() throws ApiException {
 
     when(api.updateBatchMessage(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq("foo text batch id"),
             eq(BatchDtoConverter.convert(updateSmsBatchTextRequest))))
         .thenReturn(textResponseDto);
@@ -465,7 +479,7 @@ public class BatchesServiceTest extends BaseTest {
   void updateMedia() throws ApiException {
 
     when(api.updateBatchMessage(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq("foo text batch id"),
             eq(BatchDtoConverter.convert(updateSmsBatchMediaRequest))))
         .thenReturn(mediaResponseDto);
@@ -479,7 +493,7 @@ public class BatchesServiceTest extends BaseTest {
   void updateBinary() throws ApiException {
 
     when(api.updateBatchMessage(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq("foo text batch id"),
             eq(BatchDtoConverter.convert(updateSmsBatchBinaryRequest))))
         .thenReturn(binaryResponseDto);
@@ -493,7 +507,7 @@ public class BatchesServiceTest extends BaseTest {
   void replaceBinary() throws ApiException {
 
     when(api.replaceBatch(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq("foo text batch id"),
             eq(BatchDtoConverter.convert(sendSmsBatchBinaryRequest))))
         .thenReturn(binaryResponseDto);
@@ -507,7 +521,7 @@ public class BatchesServiceTest extends BaseTest {
   void replaceMedia() throws ApiException {
 
     when(api.replaceBatch(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq("foo text batch id"),
             eq(BatchDtoConverter.convert(sendSmsBatchMediaRequest))))
         .thenReturn(mediaResponseDto);
@@ -521,7 +535,7 @@ public class BatchesServiceTest extends BaseTest {
   void replaceText() throws ApiException {
 
     when(api.replaceBatch(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq("foo text batch id"),
             eq(BatchDtoConverter.convert(sendSmsBatchTextRequest))))
         .thenReturn(textResponseDto);
@@ -534,7 +548,7 @@ public class BatchesServiceTest extends BaseTest {
   @Test
   void cancelBatch() throws ApiException {
 
-    when(api.cancelBatchMessage(eq(configuration.getProjectId()), eq("foo text batch id")))
+    when(api.cancelBatchMessage(eq(credentials.getProjectId()), eq("foo text batch id")))
         .thenReturn(textResponseDto);
 
     Batch<?> response = service.cancel("foo text batch id");
@@ -550,7 +564,7 @@ public class BatchesServiceTest extends BaseTest {
 
     verify(api)
         .deliveryFeedback(
-            eq(configuration.getProjectId()), eq("foo text batch id"), recipientsCaptor.capture());
+            eq(credentials.getProjectId()), eq("foo text batch id"), recipientsCaptor.capture());
 
     ApiDeliveryFeedbackDto dto = recipientsCaptor.getValue();
     Assertions.assertThat(dto.getRecipients()).usingRecursiveComparison().isEqualTo(recipients);

@@ -31,7 +31,7 @@ class SinchClientTest {
     Configuration configuration =
         Configuration.builder().setKeyId("foo").setKeySecret("foo").setProjectId("foo").build();
     SinchClient client = new SinchClient(configuration);
-    assertNotNull(client.getConfiguration().getSmsUrl());
+    assertNotNull(client.getConfiguration().getSmsContext().get().getSmsUrl());
   }
 
   @Test

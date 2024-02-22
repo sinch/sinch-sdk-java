@@ -16,31 +16,32 @@ import com.sinch.sdk.domains.sms.models.requests.GroupReplaceRequestParameters;
 import com.sinch.sdk.domains.sms.models.requests.GroupUpdateRequestParameters;
 import com.sinch.sdk.domains.sms.models.requests.GroupsListRequestParameters;
 import com.sinch.sdk.domains.sms.models.responses.GroupsListResponse;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.SmsContext;
+import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.Collection;
 import java.util.Map;
 
 public class GroupsService implements com.sinch.sdk.domains.sms.GroupsService {
 
-  private Configuration configuration;
-  private GroupsApi api;
+  private final UnifiedCredentials credentials;
+  private final GroupsApi api;
 
-  public GroupsService() {}
-
-  private GroupsApi getApi() {
+  protected GroupsApi getApi() {
     return this.api;
   }
 
   public GroupsService(
-      Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManagers) {
-    this.configuration = configuration;
-    this.api =
-        new GroupsApi(httpClient, configuration.getSmsServer(), authManagers, new HttpMapper());
+      UnifiedCredentials credentials,
+      SmsContext context,
+      HttpClient httpClient,
+      Map<String, AuthManager> authManagers) {
+    this.credentials = credentials;
+    this.api = new GroupsApi(httpClient, context.getSmsServer(), authManagers, new HttpMapper());
   }
 
   public Group get(String groupId) throws ApiException {
 
-    CreateGroupResponseDto response = getApi().retrieveGroup(configuration.getProjectId(), groupId);
+    CreateGroupResponseDto response = getApi().retrieveGroup(credentials.getProjectId(), groupId);
     return GroupsDtoConverter.convert(response);
   }
 
@@ -54,7 +55,7 @@ public class GroupsService implements com.sinch.sdk.domains.sms.GroupsService {
 
     CreateGroupResponseDto response =
         getApi()
-            .createGroup(configuration.getProjectId(), GroupsDtoConverter.convert(guardParameters));
+            .createGroup(credentials.getProjectId(), GroupsDtoConverter.convert(guardParameters));
     return GroupsDtoConverter.convert(response);
   }
 
@@ -69,7 +70,7 @@ public class GroupsService implements com.sinch.sdk.domains.sms.GroupsService {
     ApiGroupListDto response =
         getApi()
             .listGroups(
-                configuration.getProjectId(),
+                credentials.getProjectId(),
                 guardParameters.getPage().orElse(null),
                 guardParameters.getPageSize().orElse(null));
 
@@ -88,7 +89,7 @@ public class GroupsService implements com.sinch.sdk.domains.sms.GroupsService {
     CreateGroupResponseDto response =
         getApi()
             .replaceGroup(
-                configuration.getProjectId(), groupId, GroupsDtoConverter.convert(guardParameters));
+                credentials.getProjectId(), groupId, GroupsDtoConverter.convert(guardParameters));
     return GroupsDtoConverter.convert(response);
   }
 
@@ -99,15 +100,15 @@ public class GroupsService implements com.sinch.sdk.domains.sms.GroupsService {
     CreateGroupResponseDto response =
         getApi()
             .updateGroup(
-                configuration.getProjectId(), groupId, GroupsDtoConverter.convert(guardParameters));
+                credentials.getProjectId(), groupId, GroupsDtoConverter.convert(guardParameters));
     return GroupsDtoConverter.convert(response);
   }
 
   public void delete(String groupId) throws ApiException {
-    getApi().deleteGroup(configuration.getProjectId(), groupId);
+    getApi().deleteGroup(credentials.getProjectId(), groupId);
   }
 
   public Collection<String> listMembers(String groupId) throws ApiException {
-    return getApi().getMembers(configuration.getProjectId(), groupId);
+    return getApi().getMembers(credentials.getProjectId(), groupId);
   }
 }

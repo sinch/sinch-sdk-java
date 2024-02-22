@@ -1,6 +1,8 @@
 package com.sinch.sdk.domains.sms.adapters;
 
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -8,6 +10,8 @@ import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.core.http.AuthManager;
+import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.domains.sms.adapters.api.v1.GroupsApi;
 import com.sinch.sdk.domains.sms.adapters.converters.GroupsDtoConverter;
 import com.sinch.sdk.domains.sms.models.Group;
@@ -21,25 +25,30 @@ import com.sinch.sdk.domains.sms.models.dto.v1.UpdateGroupRequestDto;
 import com.sinch.sdk.domains.sms.models.requests.GroupReplaceRequestParameters;
 import com.sinch.sdk.domains.sms.models.requests.GroupUpdateRequestParameters;
 import com.sinch.sdk.domains.sms.models.responses.GroupsListResponse;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.SmsContext;
+import com.sinch.sdk.models.UnifiedCredentials;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.Map;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 @TestWithResources
 class GroupsServiceTest extends BaseTest {
 
-  @Mock Configuration configuration;
+  @Mock UnifiedCredentials credentials;
+  @Mock SmsContext context;
+  @Mock HttpClient httpClient;
+  @Mock Map<String, AuthManager> authManagers;
   @Mock GroupsApi api;
-  @InjectMocks GroupsService service;
+  GroupsService service;
 
   @Captor ArgumentCaptor<String> groupIdCaptor;
 
@@ -55,10 +64,16 @@ class GroupsServiceTest extends BaseTest {
   @GivenJsonResource("/domains/sms/v1/GroupsListResponseDtoPage2.json")
   ApiGroupListDto groupsListResponseDtoPage2;
 
+  @BeforeEach
+  public void initMocks() {
+    service = spy(new GroupsService(credentials, context, httpClient, authManagers));
+    doReturn(api).when(service).getApi();
+  }
+
   @Test
   void get() throws ApiException {
 
-    when(api.retrieveGroup(eq(configuration.getProjectId()), eq("foo group ID")))
+    when(api.retrieveGroup(eq(credentials.getProjectId()), eq("foo group ID")))
         .thenReturn(createGroupResponseDto);
 
     Group response = service.get("foo group ID");
@@ -71,7 +86,7 @@ class GroupsServiceTest extends BaseTest {
   @Test
   void create() throws ApiException {
 
-    when(api.createGroup(eq(configuration.getProjectId()), eq(new GroupObjectDto())))
+    when(api.createGroup(eq(credentials.getProjectId()), eq(new GroupObjectDto())))
         .thenReturn(createGroupResponseDto);
 
     Group response = service.create(null);
@@ -84,11 +99,11 @@ class GroupsServiceTest extends BaseTest {
   @Test
   void list() throws ApiException {
 
-    when(api.listGroups(eq(configuration.getProjectId()), eq(null), eq(null)))
+    when(api.listGroups(eq(credentials.getProjectId()), eq(null), eq(null)))
         .thenReturn(groupsListResponseDtoPage0);
-    when(api.listGroups(eq(configuration.getProjectId()), eq(1), eq(null)))
+    when(api.listGroups(eq(credentials.getProjectId()), eq(1), eq(null)))
         .thenReturn(groupsListResponseDtoPage1);
-    when(api.listGroups(eq(configuration.getProjectId()), eq(2), eq(null)))
+    when(api.listGroups(eq(credentials.getProjectId()), eq(2), eq(null)))
         .thenReturn(groupsListResponseDtoPage2);
 
     GroupsListResponse response = service.list(null);
@@ -162,7 +177,7 @@ class GroupsServiceTest extends BaseTest {
   void replace() throws ApiException {
 
     when(api.replaceGroup(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq("group id"),
             eq(
                 new ReplaceGroupRequestDto()
@@ -187,7 +202,7 @@ class GroupsServiceTest extends BaseTest {
   void update() throws ApiException {
 
     when(api.updateGroup(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq("group id"),
             eq(new UpdateGroupRequestDto().name("foo name"))))
         .thenReturn(createGroupResponseDto);
@@ -206,7 +221,7 @@ class GroupsServiceTest extends BaseTest {
 
     service.delete("foo group id");
 
-    verify(api).deleteGroup(eq(configuration.getProjectId()), groupIdCaptor.capture());
+    verify(api).deleteGroup(eq(credentials.getProjectId()), groupIdCaptor.capture());
 
     String parameter = groupIdCaptor.getValue();
     Assertions.assertThat(parameter).isEqualTo("foo group id");
@@ -215,7 +230,7 @@ class GroupsServiceTest extends BaseTest {
   @Test
   void listMembers() throws ApiException {
 
-    when(api.getMembers(eq(configuration.getProjectId()), eq("group id")))
+    when(api.getMembers(eq(credentials.getProjectId()), eq("group id")))
         .thenReturn(Arrays.asList("entry 1", "entry 2"));
 
     Collection<String> response = service.listMembers("group id");

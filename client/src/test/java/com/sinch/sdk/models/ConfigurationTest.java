@@ -2,6 +2,7 @@ package com.sinch.sdk.models;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.sinch.sdk.models.Configuration.Builder;
 import org.junit.jupiter.api.Test;
 
 class ConfigurationTest {
@@ -23,8 +24,8 @@ class ConfigurationTest {
           .setProjectId(PROJECT)
           .setOAuthUrl(OAUTH_URL)
           .setNumbersContext(NumbersContext.builder().setNumbersUrl(NUMBERS_SERVER).build())
-          .setSmsRegion(SMS_REGION)
-          .setSmsUrl(SMS_SERVER)
+          .setSmsContext(
+              SmsContext.builder().setSmsRegion(SMS_REGION).setSmsUrl(SMS_SERVER).build())
           .setApplicationCredentials(
               ApplicationCredentials.builder()
                   .setApplicationKey(APPLICATION_KEY)
@@ -75,14 +76,14 @@ class ConfigurationTest {
   @Test
   void defaultUSForSmSRegion() {
     Configuration configuration =
-        new Configuration.Builder()
+        new Builder()
             .setKeyId(KEY)
             .setKeySecret(SECRET)
             .setProjectId(PROJECT)
             .setOAuthUrl(OAUTH_URL)
             .setNumbersContext(NumbersContext.builder().setNumbersUrl(NUMBERS_SERVER).build())
-            .setSmsUrl(SMS_SERVER)
+            .setSmsContext(SmsContext.builder().setSmsUrl(SMS_SERVER).build())
             .build();
-    assertEquals(configuration.getSmsRegion(), SMSRegion.US);
+    assertEquals(configuration.getSmsContext().get().getSmsRegion(), SMSRegion.US);
   }
 }
