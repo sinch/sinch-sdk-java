@@ -109,7 +109,7 @@ public class InboundsListRequestParameters {
      * @param clientReference Using a client reference in inbound messages requires additional setup
      *     on your account. Contact your account manager to enable this feature. Only list inbound
      *     messages that are in response to messages with a previously provided client reference.
-     *     * @return current builder
+     * @return current builder
      */
     public Builder setClientReference(String clientReference) {
       this.clientReference = OptionalValue.of(clientReference);

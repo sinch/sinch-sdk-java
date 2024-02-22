@@ -43,7 +43,8 @@ public class UpdateSmsBatchTextRequest extends UpdateBaseBatchRequest<String> {
 
     /**
      * @param parameters Contains the parameters that will be used for customizing the message for
-     *     each recipient. * @return current builder
+     *     each recipient.
+     * @return current builder
      */
     public Builder setParameters(Parameters parameters) {
       this.parameters = OptionalValue.of(parameters);

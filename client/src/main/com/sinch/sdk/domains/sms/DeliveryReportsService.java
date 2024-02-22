@@ -8,7 +8,7 @@ import com.sinch.sdk.domains.sms.models.requests.DeliveryReportListRequestParame
 import com.sinch.sdk.domains.sms.models.responses.DeliveryReportsListResponse;
 
 /**
- * Delivery reports Service
+ * Delivery reports Service.
  *
  * <p>The REST API uses message statuses and error codes in delivery reports, which refer to the
  * state of the batch and can be present in either <a
@@ -22,9 +22,10 @@ import com.sinch.sdk.domains.sms.models.responses.DeliveryReportsListResponse;
 public interface DeliveryReportsService {
 
   /**
-   * Retrieve a batch delivery report <br>
-   * Delivery reports can be retrieved even if no callback was requested. The difference between a
-   * summary and a full report is only that the full report contains the phone numbers in <a
+   * Retrieve a batch delivery report.
+   *
+   * <p>Delivery reports can be retrieved even if no callback was requested. The difference between
+   * a summary and a full report is only that the full report contains the phone numbers in <a
    * href="https://community.sinch.com/t5/Glossary/E-164/ta-p/7537">E.164</a> format for each status
    * code.
    *
@@ -40,8 +41,9 @@ public interface DeliveryReportsService {
       throws ApiException;
 
   /**
-   * Retrieve a recipient delivery report <br>
-   * A recipient delivery report contains the message status for a single recipient phone number.
+   * Retrieve a recipient delivery report.
+   *
+   * <p>A recipient delivery report contains the message status for a single recipient phone number.
    *
    * @param batchId The batch ID you received from sending a message param type param status param
    *     code
@@ -54,8 +56,9 @@ public interface DeliveryReportsService {
   DeliveryReportRecipient getForNumber(String batchId, String recipient) throws ApiException;
 
   /**
-   * Get a list of finished delivery reports.<br>
-   * This operation supports pagination.
+   * Get a list of finished delivery reports.
+   *
+   * <p>This operation supports pagination.
    *
    * @param parameters Filtering parameters
    * @return Delivery report related to batchId according to filters
