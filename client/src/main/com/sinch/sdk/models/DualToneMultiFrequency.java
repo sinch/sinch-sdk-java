@@ -21,25 +21,25 @@ public class DualToneMultiFrequency {
   private static final Logger LOGGER = Logger.getLogger(DualToneMultiFrequency.class.getName());
   private static final Pattern PATTERN = Pattern.compile("([0-9#w])*");
   private static final AtomicBoolean STRICT = new AtomicBoolean(true);
-  private final String dtfm;
+  private final String dtmf;
 
   /**
    * Create an instance of DualToneMultiFrequency
    *
-   * @param dtfm The dtfm value. Valid characters in the string are "0"-"9", "#" and "w"
+   * @param dtmf The dtmf value. Valid characters in the string are "0"-"9", "#" and "w"
    * @throws IllegalArgumentException Throw an exception if value contains invalid characters
    */
-  public DualToneMultiFrequency(String dtfm) throws IllegalArgumentException {
+  public DualToneMultiFrequency(String dtmf) throws IllegalArgumentException {
 
-    if (!validate(dtfm)) {
-      String message = String.format("Invalid DTFM format for '%s' number", dtfm);
+    if (!validate(dtmf)) {
+      String message = String.format("Invalid DTMF format: '%s'", dtmf);
 
       if (STRICT.get()) {
         throw new IllegalArgumentException(message);
       }
       LOGGER.warning(message);
     }
-    this.dtfm = dtfm;
+    this.dtmf = dtmf;
   }
 
   /**
@@ -62,7 +62,7 @@ public class DualToneMultiFrequency {
   }
 
   /**
-   * Validate string against authorized values for DTFM value
+   * Validate string against authorized values for DTMF value
    *
    * @param value The value to be validated
    * @return Is string valid or not
@@ -72,17 +72,17 @@ public class DualToneMultiFrequency {
   }
 
   /**
-   * Get the DTFM value
+   * Get the DTMF value
    *
-   * @return The dtfm value
+   * @return The dtmf value
    */
   public String stringValue() {
-    return dtfm;
+    return dtmf;
   }
 
   @Override
   public String toString() {
-    return "DualToneMultiFrequency{" + "dtfm='" + dtfm + '\'' + '}';
+    return "DualToneMultiFrequency{" + "dtmf='" + dtmf + '\'' + '}';
   }
 
   @Override
@@ -94,11 +94,11 @@ public class DualToneMultiFrequency {
       return false;
     }
     DualToneMultiFrequency that = (DualToneMultiFrequency) o;
-    return Objects.equals(dtfm, that.dtfm);
+    return Objects.equals(dtmf, that.dtmf);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(dtfm);
+    return Objects.hash(dtmf);
   }
 }
