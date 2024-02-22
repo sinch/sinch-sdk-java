@@ -5,6 +5,7 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.verification.WebHooksService;
+import com.sinch.sdk.models.ApplicationCredentials;
 import com.sinch.sdk.models.Configuration;
 import java.io.IOException;
 import java.util.AbstractMap;
@@ -47,11 +48,11 @@ public class WebhooksServiceTest extends BaseTest {
 
     Configuration configuration =
         Configuration.builder()
-            .setProjectId("unused")
-            .setKeyId("unused")
-            .setKeySecret("unused")
-            .setApplicationKey("789")
-            .setApplicationSecret("9876543210")
+            .setApplicationCredentials(
+                ApplicationCredentials.builder()
+                    .setApplicationKey("789")
+                    .setApplicationSecret("9876543210")
+                    .build())
             .build();
 
     webHooksService = new SinchClient(configuration).verification().webhooks();

@@ -49,7 +49,16 @@ public class Utils {
 
   public static Configuration loadConfiguration(Logger logger) {
     Properties properties = loadProperties(logger);
+    Configuration.Builder builder = Configuration.builder();
 
+    manageUnifiedCredentials(properties, builder);
+    manageApplicationCredentials(properties, builder);
+
+    return builder.build();
+  }
+
+  private static void manageUnifiedCredentials(
+      Properties properties, Configuration.Builder builder) {
     String keyId =
         null != System.getenv(SINCH_KEY_ID)
             ? System.getenv(SINCH_KEY_ID)
@@ -63,22 +72,31 @@ public class Utils {
             ? System.getenv(SINCH_PROJECT_ID)
             : properties.getProperty(SINCH_PROJECT_ID);
 
+    if (null != keyId || null != keySecret || null != projectId) {
+      builder.setKeyId(keyId).setKeySecret(keySecret).setProjectId(projectId);
+    }
+  }
+
+  private static void manageApplicationCredentials(
+      Properties properties, Configuration.Builder builder) {
+
     String verificationApiKey =
         null != System.getenv(APPLICATION_API_KEY)
             ? System.getenv(APPLICATION_API_KEY)
             : properties.getProperty(APPLICATION_API_KEY);
+
+    if (null != verificationApiKey) {
+      builder.setApplicationKey(verificationApiKey);
+    }
+
     String verificationApiSecret =
         null != System.getenv(APPLICATION_API_SECRET)
             ? System.getenv(APPLICATION_API_SECRET)
             : properties.getProperty(APPLICATION_API_SECRET);
 
-    return Configuration.builder()
-        .setKeyId(keyId)
-        .setKeySecret(keySecret)
-        .setProjectId(projectId)
-        .setApplicationKey(verificationApiKey)
-        .setApplicationSecret(verificationApiSecret)
-        .build();
+    if (null != verificationApiSecret) {
+      builder.setApplicationSecret(verificationApiSecret);
+    }
   }
 
   public static void echoStep(int step, String text) {

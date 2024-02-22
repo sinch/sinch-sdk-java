@@ -9,6 +9,7 @@ import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.verification.VerificationStatusService;
 import com.sinch.sdk.domains.verification.VerificationsService;
 import com.sinch.sdk.domains.verification.WebHooksService;
+import com.sinch.sdk.models.ApplicationCredentials;
 import com.sinch.sdk.models.Configuration;
 import java.util.Map;
 import java.util.TreeMap;
@@ -33,21 +34,27 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
 
     // Currently, we are not supporting unified credentials: ensure application credentials are
     // defined
+    ApplicationCredentials credentials =
+        configuration
+            .getApplicationCredentials()
+            .orElseThrow(
+                () -> new IllegalArgumentException("Application credentials must be defined"));
+    StringUtil.requireNonEmpty(credentials.getApplicationKey(), "'applicationKey' must be defined");
     StringUtil.requireNonEmpty(
-        configuration.getApplicationKey(), "'applicationKey' must be defined");
-    StringUtil.requireNonEmpty(
-        configuration.getApplicationSecret(), "'applicationSecret' must be defined");
+        credentials.getApplicationSecret(), "'applicationSecret' must be defined");
 
     this.configuration = configuration;
     this.httpClient = httpClient;
-    setApplicationCredentials(
-        configuration.getApplicationKey(), configuration.getApplicationSecret());
+    setApplicationCredentials(credentials);
   }
 
-  private void setApplicationCredentials(String key, String secret) {
+  private void setApplicationCredentials(ApplicationCredentials credentials) {
 
-    AuthManager basicAuthManager = new BasicAuthManager(key, secret);
-    AuthManager applicationAuthManager = new ApplicationAuthManager(key, secret);
+    AuthManager basicAuthManager =
+        new BasicAuthManager(credentials.getApplicationKey(), credentials.getApplicationSecret());
+    AuthManager applicationAuthManager =
+        new ApplicationAuthManager(
+            credentials.getApplicationKey(), credentials.getApplicationSecret());
 
     boolean useApplicationAuth = true;
     // to handle request from client we can only have "Basic" keyword behind the auth managers

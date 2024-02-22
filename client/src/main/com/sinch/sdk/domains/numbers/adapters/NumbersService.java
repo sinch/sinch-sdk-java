@@ -5,6 +5,7 @@ import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -25,9 +26,13 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.NumbersServ
 
   public NumbersService(Configuration configuration, HttpClient httpClient) {
 
-    StringUtil.requireNonEmpty(configuration.getKeyId(), "'keyId' must be defined");
-    StringUtil.requireNonEmpty(configuration.getKeySecret(), "'keySecret' must be defined");
-    StringUtil.requireNonEmpty(configuration.getProjectId(), "'projectId' must be defined");
+    UnifiedCredentials credentials =
+        configuration
+            .getUnifiedCredentials()
+            .orElseThrow(() -> new IllegalArgumentException("Unified credentials must be defined"));
+    StringUtil.requireNonEmpty(credentials.getKeyId(), "'keyId' must be defined");
+    StringUtil.requireNonEmpty(credentials.getKeySecret(), "'keySecret' must be defined");
+    StringUtil.requireNonEmpty(credentials.getProjectId(), "'projectId' must be defined");
 
     this.configuration = configuration;
     this.httpClient = httpClient;

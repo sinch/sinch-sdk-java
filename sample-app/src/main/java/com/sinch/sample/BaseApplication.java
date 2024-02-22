@@ -1,6 +1,7 @@
 package com.sinch.sample;
 
 import com.sinch.sdk.SinchClient;
+import com.sinch.sdk.models.ApplicationCredentials;
 import com.sinch.sdk.models.Configuration;
 import java.io.IOException;
 import java.util.Properties;
@@ -51,7 +52,11 @@ public abstract class BaseApplication {
     String webhooksUrl = getConfigValue(WEBHOOKS_URL_KEY);
     webhooksVoicePath = String.format("%s%s", webhooksUrl, getConfigValue(WEBHOOKS_VOICE_PATH_KEY));
 
-    applicationKey = configuration.getApplicationKey();
+    applicationKey =
+        configuration
+            .getApplicationCredentials()
+            .map(ApplicationCredentials::getApplicationKey)
+            .orElse(null);
     client = new SinchClient(configuration);
   }
 

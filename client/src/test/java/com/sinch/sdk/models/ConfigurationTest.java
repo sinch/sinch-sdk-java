@@ -25,8 +25,11 @@ class ConfigurationTest {
           .setNumbersUrl(NUMBERS_SERVER)
           .setSmsRegion(SMS_REGION)
           .setSmsUrl(SMS_SERVER)
-          .setApplicationKey(APPLICATION_KEY)
-          .setApplicationSecret(APPLICATION_SECRET)
+          .setApplicationCredentials(
+              ApplicationCredentials.builder()
+                  .setApplicationKey(APPLICATION_KEY)
+                  .setApplicationSecret(APPLICATION_SECRET)
+                  .build())
           .build();
 
   @Test
@@ -55,6 +58,18 @@ class ConfigurationTest {
   @Test
   void getProjectId() {
     assertEquals(PROJECT, configuration.getProjectId());
+  }
+
+  @Test
+  void getApplicationKey() {
+    assertEquals(
+        APPLICATION_KEY, configuration.getApplicationCredentials().get().getApplicationKey());
+  }
+
+  @Test
+  void getApplicationSecret() {
+    assertEquals(
+        APPLICATION_SECRET, configuration.getApplicationCredentials().get().getApplicationSecret());
   }
 
   @Test

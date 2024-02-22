@@ -1,13 +1,13 @@
 package com.sinch.sdk.models;
 
 import com.sinch.sdk.core.models.ServerConfiguration;
+import java.util.Optional;
 
 /** Configuration used by Sinch Client */
 public class Configuration {
 
-  private final String keyId;
-  private final String keySecret;
-  private final String projectId;
+  private final UnifiedCredentials unifiedCredentials;
+  private final ApplicationCredentials applicationCredentials;
   private final String oauthUrl;
   private final String numbersUrl;
   private final SMSRegion smsRegion;
@@ -17,13 +17,9 @@ public class Configuration {
   private final String voiceUrl;
   private final String voiceApplicationManagementUrl;
 
-  private final String applicationKey;
-  private final String applicationSecret;
-
   private Configuration(
-      String keyId,
-      String keySecret,
-      String projectId,
+      UnifiedCredentials unifiedCredentials,
+      ApplicationCredentials applicationCredentials,
       String oauthUrl,
       String numbersUrl,
       SMSRegion smsRegion,
@@ -31,12 +27,9 @@ public class Configuration {
       String verificationUrl,
       VoiceRegion voiceRegion,
       String voiceUrl,
-      String voiceApplicationManagementUrl,
-      String applicationKey,
-      String applicationSecret) {
-    this.keyId = keyId;
-    this.keySecret = keySecret;
-    this.projectId = projectId;
+      String voiceApplicationManagementUrl) {
+    this.unifiedCredentials = unifiedCredentials;
+    this.applicationCredentials = applicationCredentials;
     this.oauthUrl = oauthUrl;
     this.numbersUrl = numbersUrl;
     this.smsRegion = null == smsRegion ? SMSRegion.US : smsRegion;
@@ -45,8 +38,6 @@ public class Configuration {
     this.voiceRegion = voiceRegion;
     this.voiceUrl = voiceUrl;
     this.voiceApplicationManagementUrl = voiceApplicationManagementUrl;
-    this.applicationKey = applicationKey;
-    this.applicationSecret = applicationSecret;
   }
 
   @Override
@@ -81,33 +72,44 @@ public class Configuration {
    * Get Key ID
    *
    * @return key id.
-   * @see <a href="https://developers.sinch.com/">https://developers.sinch.com/</a>
+   * @see UnifiedCredentials#getKeyId()
    * @since 1.0
    */
   public String getKeyId() {
-    return keyId;
+    return null != unifiedCredentials ? unifiedCredentials.getKeyId() : null;
   }
 
   /**
    * Get key ID
    *
    * @return key secret.
-   * @see <a href="https://developers.sinch.com/">https://developers.sinch.com/</a>
+   * @see UnifiedCredentials#getKeySecret()
    * @since 1.0
    */
   public String getKeySecret() {
-    return keySecret;
+    return null != unifiedCredentials ? unifiedCredentials.getKeySecret() : null;
   }
 
   /**
    * Get Project ID
    *
    * @return Project id.
-   * @see <a href="https://developers.sinch.com/">https://developers.sinch.com/</a>
+   * @see UnifiedCredentials#getProjectId()
    * @since 1.0
    */
   public String getProjectId() {
-    return projectId;
+    return null != unifiedCredentials ? unifiedCredentials.getProjectId() : null;
+  }
+
+  /**
+   * Get Sinch unified credentials
+   *
+   * @return Credentials
+   * @see <a href="https://developers.sinch.com/">https://developers.sinch.com/</a>
+   * @since 1.0
+   */
+  public Optional<UnifiedCredentials> getUnifiedCredentials() {
+    return Optional.ofNullable(unifiedCredentials);
   }
 
   /**
@@ -253,35 +255,16 @@ public class Configuration {
   }
 
   /**
-   * Application key to be used for Verification and Voice services
+   * Credentials to be used for Verification and Voice services
    *
-   * <p>Use application secret in place of unified configuration for authentication (see Sinch
-   * dashboard for details) These credentials are related to Verification &amp; Voice Apps
-   *
-   * @return Application key
+   * @return Application credentials
    * @see <a
    *     href="https://developers.sinch.com/docs/verification/api-reference/authentication/">Sinch
    *     Documentation</a>
    * @since 1.0
    */
-  public String getApplicationKey() {
-    return applicationKey;
-  }
-
-  /**
-   * Application secret to be used for Verification and Voice services
-   *
-   * <p>Use application secret in place of unified configuration for authentication (see Sinch
-   * dashboard for details) These credentials are related to Verification &amp; Voice Apps
-   *
-   * @return Application key
-   * @see <a
-   *     href="https://developers.sinch.com/docs/verification/api-reference/authentication/">Sinch
-   *     Documentation</a>
-   * @since 1.0
-   */
-  public String getApplicationSecret() {
-    return applicationSecret;
+  public Optional<ApplicationCredentials> getApplicationCredentials() {
+    return Optional.ofNullable(applicationCredentials);
   }
 
   /**
@@ -312,16 +295,13 @@ public class Configuration {
    */
   public static class Builder {
 
-    String keyId;
-    String keySecret;
-    String projectId;
+    UnifiedCredentials.Builder unifiedCredentials;
+    ApplicationCredentials.Builder applicationCredentials;
     String oauthUrl;
     String numbersUrl;
     SMSRegion smsRegion;
     String smsUrl;
     String verificationUrl;
-    String applicationKey;
-    String applicationSecret;
     VoiceRegion voiceRegion;
     String voiceUrl;
     String voiceApplicationMngmtUrl;
@@ -335,16 +315,18 @@ public class Configuration {
      * @since 1.0
      */
     protected Builder(Configuration configuration) {
-      this.keyId = configuration.getKeyId();
-      this.keySecret = configuration.getKeySecret();
-      this.projectId = configuration.getProjectId();
+      this.unifiedCredentials =
+          configuration.getUnifiedCredentials().map(UnifiedCredentials::builder).orElse(null);
+      this.applicationCredentials =
+          configuration
+              .getApplicationCredentials()
+              .map(ApplicationCredentials::builder)
+              .orElse(null);
       this.oauthUrl = configuration.getOAuthUrl();
       this.numbersUrl = configuration.getNumbersUrl();
       this.smsRegion = configuration.getSmsRegion();
       this.smsUrl = configuration.getSmsUrl();
       this.verificationUrl = configuration.getVerificationUrl();
-      this.applicationKey = configuration.getApplicationKey();
-      this.applicationSecret = configuration.getApplicationSecret();
       this.voiceRegion = configuration.getVoiceRegion();
       this.voiceUrl = configuration.getVoiceUrl();
       this.voiceApplicationMngmtUrl = configuration.getVoiceApplicationManagementUrl();
@@ -355,10 +337,14 @@ public class Configuration {
      *
      * @param keyId key ID
      * @return Current builder
+     * @see UnifiedCredentials#getKeyId() getter
      * @since 1.0
      */
     public Builder setKeyId(String keyId) {
-      this.keyId = keyId;
+      if (null == this.unifiedCredentials) {
+        this.unifiedCredentials = UnifiedCredentials.builder();
+      }
+      this.unifiedCredentials.setKeyId(keyId);
       return this;
     }
 
@@ -367,10 +353,14 @@ public class Configuration {
      *
      * @param keySecret key secret
      * @return Current builder
+     * @see UnifiedCredentials#getKeySecret() getter
      * @since 1.0
      */
     public Builder setKeySecret(String keySecret) {
-      this.keySecret = keySecret;
+      if (null == this.unifiedCredentials) {
+        this.unifiedCredentials = UnifiedCredentials.builder();
+      }
+      this.unifiedCredentials.setKeySecret(keySecret);
       return this;
     }
 
@@ -379,10 +369,46 @@ public class Configuration {
      *
      * @param projectId Project ID
      * @return Current builder
+     * @see UnifiedCredentials#getProjectId() getter
      * @since 1.0
      */
     public Builder setProjectId(String projectId) {
-      this.projectId = projectId;
+      if (null == this.unifiedCredentials) {
+        this.unifiedCredentials = UnifiedCredentials.builder();
+      }
+      this.unifiedCredentials.setProjectId(projectId);
+      return this;
+    }
+
+    /**
+     * Set Application key
+     *
+     * @param applicationKey key
+     * @return Current builder
+     * @see ApplicationCredentials#getApplicationKey() getter
+     * @since 1.0
+     */
+    public Builder setApplicationKey(String applicationKey) {
+      if (null == this.applicationCredentials) {
+        this.applicationCredentials = ApplicationCredentials.builder();
+      }
+      this.applicationCredentials.setApplicationKey(applicationKey);
+      return this;
+    }
+
+    /**
+     * Set Application secret
+     *
+     * @param applicationSecret key
+     * @return Current builder
+     * @see ApplicationCredentials#getApplicationSecret() () getter
+     * @since 1.0
+     */
+    public Builder setApplicationSecret(String applicationSecret) {
+      if (null == this.applicationCredentials) {
+        this.applicationCredentials = ApplicationCredentials.builder();
+      }
+      this.applicationCredentials.setApplicationSecret(applicationSecret);
       return this;
     }
 
@@ -483,30 +509,6 @@ public class Configuration {
     }
 
     /**
-     * Set Application secret
-     *
-     * @param applicationKey Application key to be used
-     * @return Current builder
-     * @since 1.0
-     */
-    public Builder setApplicationKey(String applicationKey) {
-      this.applicationKey = applicationKey;
-      return this;
-    }
-
-    /**
-     * Set Application secret
-     *
-     * @param applicationSecret Application secret to be used
-     * @return Current builder
-     * @since 1.0
-     */
-    public Builder setApplicationSecret(String applicationSecret) {
-      this.applicationSecret = applicationSecret;
-      return this;
-    }
-
-    /**
      * Setter
      *
      * <p>See {@link Configuration#getVoiceRegion()} getter
@@ -537,10 +539,10 @@ public class Configuration {
      * @since 1.0
      */
     public Configuration build() {
+
       return new Configuration(
-          keyId,
-          keySecret,
-          projectId,
+          null != unifiedCredentials ? unifiedCredentials.build() : null,
+          null != applicationCredentials ? applicationCredentials.build() : null,
           oauthUrl,
           numbersUrl,
           smsRegion,
@@ -548,9 +550,7 @@ public class Configuration {
           verificationUrl,
           voiceRegion,
           voiceUrl,
-          voiceApplicationMngmtUrl,
-          applicationKey,
-          applicationSecret);
+          voiceApplicationMngmtUrl);
     }
   }
 }

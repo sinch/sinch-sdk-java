@@ -10,6 +10,7 @@ import com.sinch.sdk.domains.sms.DeliveryReportsService;
 import com.sinch.sdk.domains.sms.InboundsService;
 import com.sinch.sdk.domains.sms.WebHooksService;
 import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,9 +32,13 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
 
     // Currently, we are only supporting  unified credentials: ensure credentials are
     // defined
-    StringUtil.requireNonEmpty(configuration.getKeyId(), "'keyId' must be defined");
-    StringUtil.requireNonEmpty(configuration.getKeySecret(), "'keySecret' must be defined");
-    StringUtil.requireNonEmpty(configuration.getProjectId(), "'projectId' must be defined");
+    UnifiedCredentials credentials =
+        configuration
+            .getUnifiedCredentials()
+            .orElseThrow(() -> new IllegalArgumentException("Unified credentials must be defined"));
+    StringUtil.requireNonEmpty(credentials.getKeyId(), "'keyId' must be defined");
+    StringUtil.requireNonEmpty(credentials.getKeySecret(), "'keySecret' must be defined");
+    StringUtil.requireNonEmpty(credentials.getProjectId(), "'projectId' must be defined");
 
     this.configuration = configuration;
     this.httpClient = httpClient;
