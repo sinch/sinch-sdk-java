@@ -9,7 +9,7 @@ public class Configuration {
   private final UnifiedCredentials unifiedCredentials;
   private final ApplicationCredentials applicationCredentials;
   private final String oauthUrl;
-  private final String numbersUrl;
+  private final NumbersContext numbersContext;
   private final SMSRegion smsRegion;
   private final String smsUrl;
   private final String verificationUrl;
@@ -21,7 +21,7 @@ public class Configuration {
       UnifiedCredentials unifiedCredentials,
       ApplicationCredentials applicationCredentials,
       String oauthUrl,
-      String numbersUrl,
+      NumbersContext numbersContext,
       SMSRegion smsRegion,
       String smsUrl,
       String verificationUrl,
@@ -31,7 +31,7 @@ public class Configuration {
     this.unifiedCredentials = unifiedCredentials;
     this.applicationCredentials = applicationCredentials;
     this.oauthUrl = oauthUrl;
-    this.numbersUrl = numbersUrl;
+    this.numbersContext = numbersContext;
     this.smsRegion = null == smsRegion ? SMSRegion.US : smsRegion;
     this.smsUrl = smsUrl;
     this.verificationUrl = verificationUrl;
@@ -46,8 +46,8 @@ public class Configuration {
         + "oauthUrl='"
         + oauthUrl
         + '\''
-        + ", numbersUrl='"
-        + numbersUrl
+        + ", numbersContext='"
+        + numbersContext
         + '\''
         + ", smsRegion="
         + smsRegion
@@ -133,23 +133,13 @@ public class Configuration {
   }
 
   /**
-   * Numbers Server Configuration
+   * Get Numbers domain related execution context
    *
-   * @return Numbers Server configuration to be used
+   * @return Current Numbers context
    * @since 1.0
    */
-  public ServerConfiguration getNumbersServer() {
-    return new ServerConfiguration(getNumbersUrl());
-  }
-
-  /**
-   * Numbers URL
-   *
-   * @return Numbers Server URL
-   * @since 1.0
-   */
-  public String getNumbersUrl() {
-    return numbersUrl;
+  public Optional<NumbersContext> getNumbersContext() {
+    return Optional.ofNullable(numbersContext);
   }
 
   /**
@@ -298,7 +288,7 @@ public class Configuration {
     UnifiedCredentials.Builder unifiedCredentials;
     ApplicationCredentials.Builder applicationCredentials;
     String oauthUrl;
-    String numbersUrl;
+    NumbersContext.Builder numbersContext;
     SMSRegion smsRegion;
     String smsUrl;
     String verificationUrl;
@@ -323,7 +313,8 @@ public class Configuration {
               .map(ApplicationCredentials::builder)
               .orElse(null);
       this.oauthUrl = configuration.getOAuthUrl();
-      this.numbersUrl = configuration.getNumbersUrl();
+      this.numbersContext =
+          configuration.getNumbersContext().map(NumbersContext::builder).orElse(null);
       this.smsRegion = configuration.getSmsRegion();
       this.smsUrl = configuration.getSmsUrl();
       this.verificationUrl = configuration.getVerificationUrl();
@@ -425,14 +416,14 @@ public class Configuration {
     }
 
     /**
-     * Set Numbers API URL
+     * Set Numbers related context
      *
-     * @param numbersUrl Numbers API URL
+     * @param context {@link #getNumbersContext()} () getter}
      * @return Current builder
      * @since 1.0
      */
-    public Builder setNumbersUrl(String numbersUrl) {
-      this.numbersUrl = numbersUrl;
+    public Builder setNumbersContext(NumbersContext context) {
+      this.numbersContext = null != context ? NumbersContext.builder(context) : null;
       return this;
     }
 
@@ -544,7 +535,7 @@ public class Configuration {
           null != unifiedCredentials ? unifiedCredentials.build() : null,
           null != applicationCredentials ? applicationCredentials.build() : null,
           oauthUrl,
-          numbersUrl,
+          null != numbersContext ? numbersContext.build() : null,
           smsRegion,
           smsUrl,
           verificationUrl,

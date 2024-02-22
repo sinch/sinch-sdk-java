@@ -7,6 +7,7 @@ import com.sinch.sdk.domains.verification.VerificationService;
 import com.sinch.sdk.domains.voice.VoiceService;
 import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.SMSRegion;
 import com.sinch.sdk.models.VoiceRegion;
 import java.io.IOException;
@@ -92,8 +93,11 @@ public class SinchClient {
   private void handleDefaultNumbersSettings(
       Configuration configuration, Properties props, Configuration.Builder builder) {
 
-    if (null == configuration.getNumbersUrl() && props.containsKey(NUMBERS_SERVER_KEY)) {
-      builder.setNumbersUrl(props.getProperty(NUMBERS_SERVER_KEY));
+    String url = configuration.getNumbersContext().map(NumbersContext::getNumbersUrl).orElse(null);
+
+    if (null == url && props.containsKey(NUMBERS_SERVER_KEY)) {
+      builder.setNumbersContext(
+          NumbersContext.builder().setNumbersUrl(props.getProperty(NUMBERS_SERVER_KEY)).build());
     }
   }
 
@@ -212,16 +216,11 @@ public class SinchClient {
 
   private void checkConfiguration(Configuration configuration) throws NullPointerException {
     Objects.requireNonNull(configuration.getOAuthUrl(), "'oauthUrl' cannot be null");
-    Objects.requireNonNull(configuration.getNumbersUrl(), "'numbersUrl' cannot be null");
     Objects.requireNonNull(configuration.getSmsUrl(), "'smsUrl' cannot be null");
     Objects.requireNonNull(configuration.getVerificationUrl(), "'verificationUrl' cannot be null");
   }
 
   private NumbersService numbersInit() {
-    LOGGER.fine(
-        "Activate numbers API with server='"
-            + getConfiguration().getNumbersServer().getUrl()
-            + "'");
     return new com.sinch.sdk.domains.numbers.adapters.NumbersService(
         getConfiguration(), getHttpClient());
   }

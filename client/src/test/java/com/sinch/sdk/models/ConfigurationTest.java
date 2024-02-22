@@ -22,7 +22,7 @@ class ConfigurationTest {
           .setKeySecret(SECRET)
           .setProjectId(PROJECT)
           .setOAuthUrl(OAUTH_URL)
-          .setNumbersUrl(NUMBERS_SERVER)
+          .setNumbersContext(NumbersContext.builder().setNumbersUrl(NUMBERS_SERVER).build())
           .setSmsRegion(SMS_REGION)
           .setSmsUrl(SMS_SERVER)
           .setApplicationCredentials(
@@ -80,7 +80,7 @@ class ConfigurationTest {
             .setKeySecret(SECRET)
             .setProjectId(PROJECT)
             .setOAuthUrl(OAUTH_URL)
-            .setNumbersUrl(NUMBERS_SERVER)
+            .setNumbersContext(NumbersContext.builder().setNumbersUrl(NUMBERS_SERVER).build())
             .setSmsUrl(SMS_SERVER)
             .build();
     assertEquals(configuration.getSmsRegion(), SMSRegion.US);

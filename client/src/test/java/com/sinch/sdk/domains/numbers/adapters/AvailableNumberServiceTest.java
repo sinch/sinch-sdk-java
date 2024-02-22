@@ -4,12 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.core.http.AuthManager;
+import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.domains.numbers.adapters.api.v1.AvailableNumberApi;
 import com.sinch.sdk.domains.numbers.models.*;
 import com.sinch.sdk.domains.numbers.models.dto.v1.ActiveNumberDto;
@@ -17,16 +21,18 @@ import com.sinch.sdk.domains.numbers.models.dto.v1.AvailableNumberDto;
 import com.sinch.sdk.domains.numbers.models.dto.v1.AvailableNumbersResponseDto;
 import com.sinch.sdk.domains.numbers.models.requests.*;
 import com.sinch.sdk.domains.numbers.models.responses.AvailableNumberListResponse;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.NumbersContext;
+import com.sinch.sdk.models.UnifiedCredentials;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 @TestWithResources
@@ -41,15 +47,24 @@ class AvailableNumberServiceTest extends BaseTest {
   @GivenJsonResource("/domains/numbers/v1/rent-response.json")
   ActiveNumberDto rentNumberDto;
 
-  @Mock Configuration configuration;
+  @Mock UnifiedCredentials credentials;
+  @Mock NumbersContext context;
+  @Mock HttpClient httpClient;
+  @Mock Map<String, AuthManager> authManagers;
   @Mock AvailableNumberApi api;
-  @InjectMocks AvailableNumberService service;
+  AvailableNumberService service;
+
+  @BeforeEach
+  public void initMocks() {
+    service = spy(new AvailableNumberService(credentials, context, httpClient, authManagers));
+    doReturn(api).when(service).getApi();
+  }
 
   @Test
   void list() throws ApiException {
 
     when(api.numberServiceListAvailableNumbers(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq("region"),
             ArgumentMatchers.eq(NumberType.MOBILE.value()),
             eq(null),
@@ -88,7 +103,7 @@ class AvailableNumberServiceTest extends BaseTest {
   void listWithParameters() throws ApiException {
 
     when(api.numberServiceListAvailableNumbers(
-            eq(configuration.getProjectId()),
+            eq(credentials.getProjectId()),
             eq("another region"),
             ArgumentMatchers.eq(NumberType.TOLL_FREE.value()),
             eq("pattern value"),
@@ -133,7 +148,7 @@ class AvailableNumberServiceTest extends BaseTest {
   @Test
   void get() {
 
-    when(api.numberServiceGetAvailableNumber(eq(configuration.getProjectId()), eq("foo")))
+    when(api.numberServiceGetAvailableNumber(eq(credentials.getProjectId()), eq("foo")))
         .thenReturn(getNumberDto);
 
     AvailableNumber response = service.checkAvailability("foo");
@@ -156,7 +171,7 @@ class AvailableNumberServiceTest extends BaseTest {
   @Test
   void rent() {
 
-    when(api.numberServiceRentNumber(eq(configuration.getProjectId()), eq("foo"), any()))
+    when(api.numberServiceRentNumber(eq(credentials.getProjectId()), eq("foo"), any()))
         .thenReturn(rentNumberDto);
 
     ActiveNumber response =
@@ -221,7 +236,7 @@ class AvailableNumberServiceTest extends BaseTest {
   @Test
   void rentAny() {
 
-    when(api.numberServiceRentAnyNumber(eq(configuration.getProjectId()), any()))
+    when(api.numberServiceRentAnyNumber(eq(credentials.getProjectId()), any()))
         .thenReturn(rentNumberDto);
 
     AvailableNumberRentAnyRequestParameters parameters =

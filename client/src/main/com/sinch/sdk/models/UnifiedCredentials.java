@@ -91,7 +91,7 @@ public class UnifiedCredentials {
    *
    * @since 1.0
    */
-  static class Builder {
+  public static class Builder {
 
     String keyId;
     String keySecret;

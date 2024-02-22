@@ -22,7 +22,7 @@ class SinchClientTest {
     Configuration configuration =
         Configuration.builder().setKeyId("foo").setKeySecret("foo").setProjectId("foo").build();
     SinchClient client = new SinchClient(configuration);
-    assertNotNull(client.getConfiguration().getNumbersUrl());
+    assertNotNull(client.getConfiguration().getNumbersContext().get().getNumbersUrl());
   }
 
   @Test
