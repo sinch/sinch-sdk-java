@@ -9,6 +9,7 @@ import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.SMSRegion;
+import com.sinch.sdk.models.VerificationContext;
 import com.sinch.sdk.models.VoiceRegion;
 import java.io.IOException;
 import java.io.InputStream;
@@ -115,8 +116,17 @@ public class SinchClient {
   private void handleDefaultVerificationSettings(
       Configuration configuration, Properties props, Configuration.Builder builder) {
 
-    if (null == configuration.getVerificationUrl() && props.containsKey(VERIFICATION_SERVER_KEY)) {
-      builder.setVerificationUrl(props.getProperty(VERIFICATION_SERVER_KEY));
+    String url =
+        configuration
+            .getVerificationContext()
+            .map(VerificationContext::getVerificationUrl)
+            .orElse(null);
+
+    if (null == url && props.containsKey(VERIFICATION_SERVER_KEY)) {
+      builder.setVerificationContext(
+          VerificationContext.builder()
+              .setVerificationUrl(props.getProperty(VERIFICATION_SERVER_KEY))
+              .build());
     }
   }
 
@@ -217,7 +227,6 @@ public class SinchClient {
   private void checkConfiguration(Configuration configuration) throws NullPointerException {
     Objects.requireNonNull(configuration.getOAuthUrl(), "'oauthUrl' cannot be null");
     Objects.requireNonNull(configuration.getSmsUrl(), "'smsUrl' cannot be null");
-    Objects.requireNonNull(configuration.getVerificationUrl(), "'verificationUrl' cannot be null");
   }
 
   private NumbersService numbersInit() {
@@ -232,10 +241,6 @@ public class SinchClient {
   }
 
   private VerificationService verificationInit() {
-    LOGGER.fine(
-        "Activate verification API with server='"
-            + getConfiguration().getVerificationServer().getUrl()
-            + "'");
     return new com.sinch.sdk.domains.verification.adapters.VerificationService(
         getConfiguration(), getHttpClient());
   }

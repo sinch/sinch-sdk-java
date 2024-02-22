@@ -11,18 +11,21 @@ import com.sinch.sdk.domains.verification.VerificationsService;
 import com.sinch.sdk.domains.verification.WebHooksService;
 import com.sinch.sdk.models.ApplicationCredentials;
 import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.logging.Logger;
 
 public class VerificationService implements com.sinch.sdk.domains.verification.VerificationService {
 
+  private static final Logger LOGGER = Logger.getLogger(VerificationService.class.getName());
   // FIXME: Verification OAS file claim it support "Basic" but miss the "Application" definition
   // trick to adapt the mapping of "Basic" keyword to the dedicated "Application" auth manager
   private static final String BASIC_SECURITY_SCHEME_KEYWORD_VERIFICATION = "Basic";
 
   private static final String APPLICATION_SECURITY_SCHEME_KEYWORD_VERIFICATION = "Application";
 
-  private final Configuration configuration;
+  private final VerificationContext context;
   private final HttpClient httpClient;
   private VerificationsService verifications;
   private VerificationStatusService verificationStatus;
@@ -39,13 +42,20 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
             .getApplicationCredentials()
             .orElseThrow(
                 () -> new IllegalArgumentException("Application credentials must be defined"));
+    context =
+        configuration
+            .getVerificationContext()
+            .orElseThrow(
+                () -> new IllegalArgumentException("Verification context must be defined"));
     StringUtil.requireNonEmpty(credentials.getApplicationKey(), "'applicationKey' must be defined");
     StringUtil.requireNonEmpty(
         credentials.getApplicationSecret(), "'applicationSecret' must be defined");
+    StringUtil.requireNonEmpty(context.getVerificationUrl(), "'verificationUrl' must be defined");
 
-    this.configuration = configuration;
     this.httpClient = httpClient;
     setApplicationCredentials(credentials);
+    LOGGER.fine(
+        "Activate verification API with server='" + context.getVerificationServer().getUrl() + "'");
   }
 
   private void setApplicationCredentials(ApplicationCredentials credentials) {
@@ -80,7 +90,7 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
       checkCredentials();
       this.verifications =
           new com.sinch.sdk.domains.verification.adapters.VerificationsService(
-              configuration, httpClient, clientAuthManagers);
+              context, httpClient, clientAuthManagers);
     }
     return this.verifications;
   }
@@ -90,7 +100,7 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
       checkCredentials();
       this.verificationStatus =
           new com.sinch.sdk.domains.verification.adapters.VerificationStatusService(
-              configuration, httpClient, clientAuthManagers);
+              context, httpClient, clientAuthManagers);
     }
     return this.verificationStatus;
   }

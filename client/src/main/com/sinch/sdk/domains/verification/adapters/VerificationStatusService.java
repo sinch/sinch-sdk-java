@@ -10,7 +10,7 @@ import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.VerificationReference;
 import com.sinch.sdk.domains.verification.models.VerificationReport;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
 
 public class VerificationStatusService
@@ -19,10 +19,10 @@ public class VerificationStatusService
   private final QueryVerificationsApi api;
 
   public VerificationStatusService(
-      Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManagers) {
+      VerificationContext context, HttpClient httpClient, Map<String, AuthManager> authManagers) {
     this.api =
         new QueryVerificationsApi(
-            httpClient, configuration.getVerificationServer(), authManagers, new HttpMapper());
+            httpClient, context.getVerificationServer(), authManagers, new HttpMapper());
   }
 
   protected QueryVerificationsApi getApi() {

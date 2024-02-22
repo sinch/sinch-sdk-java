@@ -12,7 +12,7 @@ public class Configuration {
   private final NumbersContext numbersContext;
   private final SMSRegion smsRegion;
   private final String smsUrl;
-  private final String verificationUrl;
+  private final VerificationContext verificationContext;
   private final VoiceRegion voiceRegion;
   private final String voiceUrl;
   private final String voiceApplicationManagementUrl;
@@ -24,7 +24,7 @@ public class Configuration {
       NumbersContext numbersContext,
       SMSRegion smsRegion,
       String smsUrl,
-      String verificationUrl,
+      VerificationContext verificationContext,
       VoiceRegion voiceRegion,
       String voiceUrl,
       String voiceApplicationManagementUrl) {
@@ -34,7 +34,7 @@ public class Configuration {
     this.numbersContext = numbersContext;
     this.smsRegion = null == smsRegion ? SMSRegion.US : smsRegion;
     this.smsUrl = smsUrl;
-    this.verificationUrl = verificationUrl;
+    this.verificationContext = verificationContext;
     this.voiceRegion = voiceRegion;
     this.voiceUrl = voiceUrl;
     this.voiceApplicationManagementUrl = voiceApplicationManagementUrl;
@@ -54,8 +54,8 @@ public class Configuration {
         + ", smsUrl='"
         + smsUrl
         + '\''
-        + ", verificationUrl='"
-        + verificationUrl
+        + ", verificationContext='"
+        + verificationContext
         + '\''
         + ", voiceRegion="
         + voiceRegion
@@ -175,23 +175,13 @@ public class Configuration {
   }
 
   /**
-   * Verification Server Configuration
+   * Get Verification domain related execution context
    *
-   * @return Verification Server configuration to be used
+   * @return Current Verification context
    * @since 1.0
    */
-  public ServerConfiguration getVerificationServer() {
-    return new ServerConfiguration(getVerificationUrl());
-  }
-
-  /**
-   * Verification URL
-   *
-   * @return Verification Server URL
-   * @since 1.0
-   */
-  public String getVerificationUrl() {
-    return verificationUrl;
+  public Optional<VerificationContext> getVerificationContext() {
+    return Optional.ofNullable(verificationContext);
   }
 
   /**
@@ -291,7 +281,7 @@ public class Configuration {
     NumbersContext.Builder numbersContext;
     SMSRegion smsRegion;
     String smsUrl;
-    String verificationUrl;
+    VerificationContext.Builder verificationContext;
     VoiceRegion voiceRegion;
     String voiceUrl;
     String voiceApplicationMngmtUrl;
@@ -317,7 +307,9 @@ public class Configuration {
           configuration.getNumbersContext().map(NumbersContext::builder).orElse(null);
       this.smsRegion = configuration.getSmsRegion();
       this.smsUrl = configuration.getSmsUrl();
-      this.verificationUrl = configuration.getVerificationUrl();
+      this.verificationContext =
+          configuration.getVerificationContext().map(VerificationContext::builder).orElse(null);
+
       this.voiceRegion = configuration.getVoiceRegion();
       this.voiceUrl = configuration.getVoiceUrl();
       this.voiceApplicationMngmtUrl = configuration.getVoiceApplicationManagementUrl();
@@ -452,14 +444,14 @@ public class Configuration {
     }
 
     /**
-     * Set Verification API URL
+     * Set Verification related context
      *
-     * @param verificationUrl Verification API URL
+     * @param context {@link #getVerificationContext() getter}
      * @return Current builder
      * @since 1.0
      */
-    public Builder setVerificationUrl(String verificationUrl) {
-      this.verificationUrl = verificationUrl;
+    public Builder setVerificationContext(VerificationContext context) {
+      this.verificationContext = null != context ? VerificationContext.builder(context) : null;
       return this;
     }
 
@@ -538,7 +530,7 @@ public class Configuration {
           null != numbersContext ? numbersContext.build() : null,
           smsRegion,
           smsUrl,
-          verificationUrl,
+          null != verificationContext ? verificationContext.build() : null,
           voiceRegion,
           voiceUrl,
           voiceApplicationMngmtUrl);
