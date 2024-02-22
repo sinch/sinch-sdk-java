@@ -10,18 +10,17 @@ import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.exceptions.ApiMappingException;
 import com.sinch.sdk.domains.sms.adapters.converters.DeliveryReportDtoConverter;
 import com.sinch.sdk.domains.sms.adapters.converters.InboundsDtoConverter;
-import com.sinch.sdk.domains.sms.models.BaseDeliveryReport;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatchMMS;
 import com.sinch.sdk.domains.sms.models.DeliveryReportBatchSMS;
 import com.sinch.sdk.domains.sms.models.DeliveryReportRecipientMMS;
 import com.sinch.sdk.domains.sms.models.DeliveryReportRecipientSMS;
-import com.sinch.sdk.domains.sms.models.Inbound;
 import com.sinch.sdk.domains.sms.models.InboundBinary;
 import com.sinch.sdk.domains.sms.models.InboundText;
 import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportBatchDtoTest;
 import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportRecipientDtoTest;
 import com.sinch.sdk.domains.sms.models.dto.v1.MOBinaryDtoTest;
 import com.sinch.sdk.domains.sms.models.dto.v1.MOTextDtoTest;
+import com.sinch.sdk.domains.sms.models.webhooks.WebhooksEvent;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -52,7 +51,7 @@ public class WebHooksServiceTest extends BaseTest {
   @Test
   void incomingSMSBinary() throws ApiException {
 
-    Inbound<?> response = service.incomingSMS(incomingSMSBinaryJsonString);
+    WebhooksEvent response = service.parse(incomingSMSBinaryJsonString);
 
     Assertions.assertThat(response).isInstanceOf(InboundBinary.class);
     Assertions.assertThat(response)
@@ -63,7 +62,7 @@ public class WebHooksServiceTest extends BaseTest {
   @Test
   void incomingSMSText() throws ApiException {
 
-    Inbound<?> response = service.incomingSMS(incomingSMSTextJsonString);
+    WebhooksEvent response = service.parse(incomingSMSTextJsonString);
 
     Assertions.assertThat(response).isInstanceOf(InboundText.class);
     Assertions.assertThat(response)
@@ -76,14 +75,14 @@ public class WebHooksServiceTest extends BaseTest {
 
     String jsonPayload = incomingSMSBinaryJsonString.replace("mo_binary", "foo type");
     ApiMappingException thrown =
-        assertThrows(ApiMappingException.class, () -> service.incomingSMS(jsonPayload));
+        assertThrows(ApiMappingException.class, () -> service.parse(jsonPayload));
     assertTrue(thrown.getMessage().contains(jsonPayload));
   }
 
   @Test
   void deliveryReportRecipientDeliveryReportSms() throws ApiException {
 
-    BaseDeliveryReport response = service.deliveryReport(deliveryReportRecipientSMSJsonString);
+    WebhooksEvent response = service.parse(deliveryReportRecipientSMSJsonString);
 
     Assertions.assertThat(response).isInstanceOf(DeliveryReportRecipientSMS.class);
     Assertions.assertThat(response)
@@ -96,7 +95,7 @@ public class WebHooksServiceTest extends BaseTest {
   @Test
   void deliveryReportRecipientDeliveryReportMms() throws ApiException {
 
-    BaseDeliveryReport response = service.deliveryReport(deliveryReportRecipientMMSJsonString);
+    WebhooksEvent response = service.parse(deliveryReportRecipientMMSJsonString);
 
     Assertions.assertThat(response).isInstanceOf(DeliveryReportRecipientMMS.class);
     Assertions.assertThat(response)
@@ -109,7 +108,7 @@ public class WebHooksServiceTest extends BaseTest {
   @Test
   void deliveryReportBatchDeliveryReportSms() throws ApiException {
 
-    BaseDeliveryReport response = service.deliveryReport(deliveryReportBatchSMSJsonString);
+    WebhooksEvent response = service.parse(deliveryReportBatchSMSJsonString);
 
     Assertions.assertThat(response).isInstanceOf(DeliveryReportBatchSMS.class);
     Assertions.assertThat(response)
@@ -121,7 +120,7 @@ public class WebHooksServiceTest extends BaseTest {
   @Test
   void deliveryReportBatchDeliveryReportMms() throws ApiException {
 
-    BaseDeliveryReport response = service.deliveryReport(deliveryReportBatchMMSJsonString);
+    WebhooksEvent response = service.parse(deliveryReportBatchMMSJsonString);
 
     Assertions.assertThat(response).isInstanceOf(DeliveryReportBatchMMS.class);
     Assertions.assertThat(response)
@@ -136,7 +135,7 @@ public class WebHooksServiceTest extends BaseTest {
     String jsonPayload =
         deliveryReportRecipientMMSJsonString.replace("recipient_delivery_report_mms", "foo type");
     ApiMappingException thrown =
-        assertThrows(ApiMappingException.class, () -> service.deliveryReport(jsonPayload));
+        assertThrows(ApiMappingException.class, () -> service.parse(jsonPayload));
     assertTrue(thrown.getMessage().contains(jsonPayload));
   }
 }

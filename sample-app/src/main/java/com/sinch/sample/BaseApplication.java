@@ -8,6 +8,7 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 public abstract class BaseApplication {
+
   private static final String BATCH_ID_KEY = "BATCH_ID";
   public static final String PHONE_NUMBER_KEY = "PHONE_NUMBER";
   private static final String VIRTUAL_PHONE_NUMBER_KEY = "VIRTUAL_PHONE_NUMBER";
@@ -17,6 +18,7 @@ public abstract class BaseApplication {
 
   public static final String WEBHOOKS_URL_KEY = "WEBHOOKS_URL";
   public static final String WEBHOOKS_VOICE_PATH_KEY = "WEBHOOKS_VOICE_PATH";
+  public static final String WEBHOOKS_SMS_PATH_KEY = "WEBHOOKS_SMS_PATH";
 
   protected static final Logger LOGGER = Utils.initializeLogger(BaseApplication.class.getName());
 
@@ -31,6 +33,7 @@ public abstract class BaseApplication {
 
   protected String applicationKey;
   protected String webhooksVoicePath;
+  protected String webhooksSmsPath;
 
   Properties properties;
 
@@ -48,9 +51,12 @@ public abstract class BaseApplication {
     callId = getConfigValue(CALL_ID_KEY);
     verificationId = getConfigValue(VERIFICATION_ID_KEY);
     virtualPhoneNumber = getConfigValue(VIRTUAL_PHONE_NUMBER_KEY);
-
     String webhooksUrl = getConfigValue(WEBHOOKS_URL_KEY);
-    webhooksVoicePath = String.format("%s%s", webhooksUrl, getConfigValue(WEBHOOKS_VOICE_PATH_KEY));
+    if (null != webhooksUrl) {
+      webhooksVoicePath =
+          String.format("%s%s", webhooksUrl, getConfigValue(WEBHOOKS_VOICE_PATH_KEY));
+      webhooksSmsPath = String.format("%s%s", webhooksUrl, getConfigValue(WEBHOOKS_SMS_PATH_KEY));
+    }
 
     applicationKey =
         configuration

@@ -1,8 +1,7 @@
 package com.sinch.sdk.domains.sms;
 
 import com.sinch.sdk.core.exceptions.ApiMappingException;
-import com.sinch.sdk.domains.sms.models.BaseDeliveryReport;
-import com.sinch.sdk.domains.sms.models.Inbound;
+import com.sinch.sdk.domains.sms.models.webhooks.WebhooksEvent;
 
 /**
  * WebHooks
@@ -40,6 +39,8 @@ import com.sinch.sdk.domains.sms.models.Inbound;
  */
 public interface WebHooksService {
 
+  WebhooksEvent parse(String jsonPayload) throws ApiMappingException;
+
   /**
    * Incoming SMS WebHook
    *
@@ -53,7 +54,6 @@ public interface WebHooksService {
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Webhooks/#tag/Webhooks/operation/incomingSMS">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Webhooks/#tag/Webhooks/operation/incomingSMS</a>
    * @since 1.0
    */
-  Inbound<?> incomingSMS(String jsonPayload) throws ApiMappingException;
 
   /**
    * Delivery Report WebHook
@@ -99,5 +99,4 @@ public interface WebHooksService {
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Webhooks/#tag/Webhooks/operation/deliveryReport">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Webhooks/#tag/Webhooks/operation/deliveryReport</a>
    * @since 1.0
    */
-  BaseDeliveryReport deliveryReport(String jsonPayload) throws ApiMappingException;
 }

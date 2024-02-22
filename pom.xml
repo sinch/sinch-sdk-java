@@ -297,7 +297,8 @@
                             <include>**/*.java</include>
                         </includes>
                       <excludes>
-                          <!-- java 21 style not yet supported -->
+                        <!-- java 21 style not yet supported -->
+                        <exclude>sample-app/src/main/java/com/sinch/sample/webhooks/sms/SmsController.java</exclude>
                         <exclude>sample-app/src/main/java/com/sinch/sample/webhooks/verification/VerificationController.java</exclude>
                         <exclude>sample-app/src/main/java/com/sinch/sample/webhooks/voice/VoiceController.java</exclude>
                       </excludes>
