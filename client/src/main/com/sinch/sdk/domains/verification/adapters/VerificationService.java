@@ -10,9 +10,9 @@ import com.sinch.sdk.domains.verification.VerificationStatusService;
 import com.sinch.sdk.domains.verification.VerificationsService;
 import com.sinch.sdk.domains.verification.WebHooksService;
 import com.sinch.sdk.models.ApplicationCredentials;
-import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 import java.util.logging.Logger;
 
@@ -33,30 +33,24 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
   private Map<String, AuthManager> clientAuthManagers;
   private Map<String, AuthManager> webhooksAuthManagers;
 
-  public VerificationService(Configuration configuration, HttpClient httpClient) {
+  public VerificationService(
+      ApplicationCredentials credentials, VerificationContext context, HttpClient httpClient) {
 
     // Currently, we are not supporting unified credentials: ensure application credentials are
     // defined
-    ApplicationCredentials credentials =
-        configuration
-            .getApplicationCredentials()
-            .orElseThrow(
-                () -> new IllegalArgumentException("Application credentials must be defined"));
-    context =
-        configuration
-            .getVerificationContext()
-            .orElseThrow(
-                () -> new IllegalArgumentException("Verification context must be defined"));
+    Objects.requireNonNull(credentials, "Credentials must be defined");
+    Objects.requireNonNull(context, "Context must be defined");
     StringUtil.requireNonEmpty(credentials.getApplicationKey(), "'applicationKey' must be defined");
     StringUtil.requireNonEmpty(
         credentials.getApplicationSecret(), "'applicationSecret' must be defined");
     StringUtil.requireNonEmpty(context.getVerificationUrl(), "'verificationUrl' must be defined");
 
-    this.httpClient = httpClient;
-    setApplicationCredentials(credentials);
-
     LOGGER.fine(
         "Activate verification API with server='" + context.getVerificationServer().getUrl() + "'");
+
+    this.context = context;
+    this.httpClient = httpClient;
+    setApplicationCredentials(credentials);
   }
 
   private void setApplicationCredentials(ApplicationCredentials credentials) {

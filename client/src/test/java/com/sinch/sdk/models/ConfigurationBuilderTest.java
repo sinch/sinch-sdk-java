@@ -1,7 +1,5 @@
 package com.sinch.sdk.models;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -26,9 +24,6 @@ class ConfigurationBuilderTest {
             .setSmsContext(
                 SmsContext.builder().setSmsRegion(SMS_REGION).setSmsUrl(SMS_SERVER).build())
             .build();
-    assertEquals(KEY, builder.getKeyId());
-    assertEquals(SECRET, builder.getKeySecret());
-    assertEquals(PROJECT, builder.getProjectId());
     Assertions.assertEquals(OAUTH_URL, builder.getOAuthServer().getUrl());
     Assertions.assertEquals(
         NUMBERS_SERVER, builder.getNumbersContext().get().getNumbersServer().getUrl());

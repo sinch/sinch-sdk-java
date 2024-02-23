@@ -2,11 +2,10 @@ package com.sinch.sdk.domains.verification.adapters;
 
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
-import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.verification.WebHooksService;
 import com.sinch.sdk.models.ApplicationCredentials;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.VerificationContext;
 import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.Map;
@@ -46,15 +45,12 @@ public class WebhooksServiceTest extends BaseTest {
   @BeforeEach
   public void setUp() throws IOException {
 
-    Configuration configuration =
-        Configuration.builder()
-            .setApplicationCredentials(
-                ApplicationCredentials.builder()
-                    .setApplicationKey("789")
-                    .setApplicationSecret("9876543210")
-                    .build())
+    ApplicationCredentials credentials =
+        ApplicationCredentials.builder()
+            .setApplicationKey("789")
+            .setApplicationSecret("9876543210")
             .build();
-
-    webHooksService = new SinchClient(configuration).verification().webhooks();
+    VerificationContext context = VerificationContext.builder().setVerificationUrl("foo").build();
+    webHooksService = new VerificationService(credentials, context, null).webhooks();
   }
 }

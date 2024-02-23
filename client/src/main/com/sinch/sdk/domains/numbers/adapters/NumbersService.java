@@ -4,11 +4,11 @@ import com.sinch.sdk.auth.adapters.BasicAuthManager;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.utils.StringUtil;
-import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -28,28 +28,28 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.NumbersServ
 
   private final Map<String, AuthManager> authManagers;
 
-  public NumbersService(Configuration configuration, HttpClient httpClient) {
+  public NumbersService(
+      UnifiedCredentials credentials, NumbersContext context, HttpClient httpClient) {
 
-    credentials =
-        configuration
-            .getUnifiedCredentials()
-            .orElseThrow(() -> new IllegalArgumentException("Unified credentials must be defined"));
-    context =
-        configuration
-            .getNumbersContext()
-            .orElseThrow(() -> new IllegalArgumentException("Numbers context must be defined"));
+    Objects.requireNonNull(credentials, "Credentials must be defined");
+    Objects.requireNonNull(context, "Context must be defined");
     StringUtil.requireNonEmpty(credentials.getKeyId(), "'keyId' must be defined");
     StringUtil.requireNonEmpty(credentials.getKeySecret(), "'keySecret' must be defined");
     StringUtil.requireNonEmpty(credentials.getProjectId(), "'projectId' must be defined");
     StringUtil.requireNonEmpty(context.getNumbersUrl(), "'numbersUrl' must be defined");
 
+    LOGGER.fine("Activate numbers API with server='" + context.getNumbersServer().getUrl() + "'");
+
+    this.credentials = credentials;
+    this.context = context;
     this.httpClient = httpClient;
-    AuthManager basicAuthManager = new BasicAuthManager(configuration);
+
+    AuthManager basicAuthManager =
+        new BasicAuthManager(credentials.getKeyId(), credentials.getKeySecret());
 
     authManagers =
         Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_NUMBERS, basicAuthManager))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-    LOGGER.fine("Activate numbers API with server='" + context.getNumbersServer().getUrl() + "'");
   }
 
   public AvailableNumberService available() {

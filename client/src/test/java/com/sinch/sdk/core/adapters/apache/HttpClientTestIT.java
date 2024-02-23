@@ -16,7 +16,7 @@ import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.http.HttpClientApache;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.UnifiedCredentials;
 import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.Collections;
@@ -38,14 +38,13 @@ class HttpClientTestIT extends BaseTest {
   String jsonResponse;
 
   String serverUrl = String.format("http://localhost:%s", mockBackEnd.getPort());
-  Configuration configuration =
-      Configuration.builder().setOAuthUrl(String.format("%s/auth", serverUrl)).build();
-
+  UnifiedCredentials credentials = UnifiedCredentials.builder().build();
+  ServerConfiguration server = new ServerConfiguration(String.format("%s/auth", serverUrl));
   HttpClientApache httpClient = new HttpClientApache();
 
-  AuthManager basicAuthManager = new BasicAuthManager(configuration);
+  AuthManager basicAuthManager = new BasicAuthManager(credentials);
   BearerAuthManager bearerAuthManager =
-      new BearerAuthManager(configuration, new HttpMapper(), httpClient);
+      new BearerAuthManager(credentials, server, new HttpMapper(), httpClient);
 
   Map<String, AuthManager> authManagers =
       Stream.of(basicAuthManager, bearerAuthManager)

@@ -4,16 +4,17 @@ import com.sinch.sdk.auth.adapters.BearerAuthManager;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.sms.BatchesService;
 import com.sinch.sdk.domains.sms.DeliveryReportsService;
 import com.sinch.sdk.domains.sms.InboundsService;
 import com.sinch.sdk.domains.sms.WebHooksService;
-import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.SmsContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -33,18 +34,16 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
   private GroupsService groups;
   private final Map<String, AuthManager> authManagers;
 
-  public SMSService(Configuration configuration, HttpClient httpClient) {
+  public SMSService(
+      UnifiedCredentials credentials,
+      SmsContext context,
+      ServerConfiguration oAuthServer,
+      HttpClient httpClient) {
 
     // Currently, we are only supporting  unified credentials: ensure credentials are
     // defined
-    credentials =
-        configuration
-            .getUnifiedCredentials()
-            .orElseThrow(() -> new IllegalArgumentException("Unified credentials must be defined"));
-    context =
-        configuration
-            .getSmsContext()
-            .orElseThrow(() -> new IllegalArgumentException("SMS context must be defined"));
+    Objects.requireNonNull(credentials, "Credentials must be defined");
+    Objects.requireNonNull(context, "Context must be defined");
     StringUtil.requireNonEmpty(credentials.getKeyId(), "'keyId' must be defined");
     StringUtil.requireNonEmpty(credentials.getKeySecret(), "'keySecret' must be defined");
     StringUtil.requireNonEmpty(credentials.getProjectId(), "'projectId' must be defined");
@@ -52,10 +51,12 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
 
     LOGGER.fine("Activate SMS API with server='" + context.getSmsServer().getUrl() + "'");
 
+    this.credentials = credentials;
+    this.context = context;
     this.httpClient = httpClient;
 
     BearerAuthManager bearerAuthManager =
-        new BearerAuthManager(configuration, new HttpMapper(), httpClient);
+        new BearerAuthManager(credentials, oAuthServer, new HttpMapper(), httpClient);
 
     authManagers =
         Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_SMS, bearerAuthManager))

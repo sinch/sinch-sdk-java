@@ -10,6 +10,7 @@ import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.SMSRegion;
 import com.sinch.sdk.models.SmsContext;
+import com.sinch.sdk.models.UnifiedCredentials;
 import com.sinch.sdk.models.VerificationContext;
 import com.sinch.sdk.models.VoiceContext;
 import com.sinch.sdk.models.VoiceRegion;
@@ -90,7 +91,10 @@ public class SinchClient {
             "%s (%s) started with projectId '%s'",
             versionProperties.getProperty(PROJECT_NAME_KEY),
             versionProperties.getProperty(PROJECT_VERSION_KEY),
-            configuration.getProjectId()));
+            this.configuration
+                .getUnifiedCredentials()
+                .map(UnifiedCredentials::getProjectId)
+                .orElse("<undefined>")));
   }
 
   private void handleDefaultNumbersSettings(
@@ -258,22 +262,32 @@ public class SinchClient {
 
   private NumbersService numbersInit() {
     return new com.sinch.sdk.domains.numbers.adapters.NumbersService(
-        getConfiguration(), getHttpClient());
+        getConfiguration().getUnifiedCredentials().orElse(null),
+        configuration.getNumbersContext().orElse(null),
+        getHttpClient());
   }
 
   private SMSService smsInit() {
 
-    return new com.sinch.sdk.domains.sms.adapters.SMSService(getConfiguration(), getHttpClient());
+    return new com.sinch.sdk.domains.sms.adapters.SMSService(
+        getConfiguration().getUnifiedCredentials().orElse(null),
+        getConfiguration().getSmsContext().orElse(null),
+        configuration.getOAuthServer(),
+        getHttpClient());
   }
 
   private VerificationService verificationInit() {
     return new com.sinch.sdk.domains.verification.adapters.VerificationService(
-        getConfiguration(), getHttpClient());
+        getConfiguration().getApplicationCredentials().orElse(null),
+        getConfiguration().getVerificationContext().orElse(null),
+        getHttpClient());
   }
 
   private VoiceService voiceInit() {
     return new com.sinch.sdk.domains.voice.adapters.VoiceService(
-        getConfiguration(), getHttpClient());
+        getConfiguration().getApplicationCredentials().orElse(null),
+        getConfiguration().getVoiceContext().orElse(null),
+        getHttpClient());
   }
 
   private Properties handlePropertiesFile(String fileName) {

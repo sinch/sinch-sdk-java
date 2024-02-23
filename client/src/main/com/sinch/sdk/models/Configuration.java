@@ -49,39 +49,6 @@ public class Configuration {
   }
 
   /**
-   * Get Key ID
-   *
-   * @return key id.
-   * @see UnifiedCredentials#getKeyId()
-   * @since 1.0
-   */
-  public String getKeyId() {
-    return null != unifiedCredentials ? unifiedCredentials.getKeyId() : null;
-  }
-
-  /**
-   * Get key ID
-   *
-   * @return key secret.
-   * @see UnifiedCredentials#getKeySecret()
-   * @since 1.0
-   */
-  public String getKeySecret() {
-    return null != unifiedCredentials ? unifiedCredentials.getKeySecret() : null;
-  }
-
-  /**
-   * Get Project ID
-   *
-   * @return Project id.
-   * @see UnifiedCredentials#getProjectId()
-   * @since 1.0
-   */
-  public String getProjectId() {
-    return null != unifiedCredentials ? unifiedCredentials.getProjectId() : null;
-  }
-
-  /**
    * Get Sinch unified credentials
    *
    * @return Credentials

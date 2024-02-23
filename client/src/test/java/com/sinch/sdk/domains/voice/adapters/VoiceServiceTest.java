@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.models.ApplicationCredentials;
-import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.VoiceContext;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -15,42 +14,23 @@ class VoiceServiceTest {
   @Mock HttpClient httpClient;
 
   @Test
-  void doNotAcceptEmptyApplicationCredentials() {
-    Configuration configuration = Configuration.builder().build();
-
-    Exception exception =
-        assertThrows(
-            IllegalArgumentException.class, () -> new VoiceService(configuration, httpClient));
-
-    assertTrue(exception.getMessage().contains("Application credentials must be defined"));
-  }
-
-  @Test
-  void doNotAcceptEmptyVoiceContext() {
-    ApplicationCredentials credentials =
-        ApplicationCredentials.builder()
-            .setApplicationKey("Zm9vIGtleQo=")
-            .setApplicationSecret("foo secret")
-            .build();
-    Configuration configuration =
-        Configuration.builder().setApplicationCredentials(credentials).build();
-
-    Exception exception =
-        assertThrows(
-            IllegalArgumentException.class, () -> new VoiceService(configuration, httpClient));
-
-    assertTrue(exception.getMessage().contains("Voice context must be defined"));
-  }
-
-  @Test
   void doNotAcceptNullApplicationCredentials() {
-    Configuration configuration = Configuration.builder().setApplicationCredentials(null).build();
+    VoiceContext context = VoiceContext.builder().build();
+    Exception exception =
+        assertThrows(NullPointerException.class, () -> new VoiceService(null, context, httpClient));
+
+    assertTrue(exception.getMessage().contains("Credentials must be defined"));
+  }
+
+  @Test
+  void doNotAcceptNullContext() {
+    ApplicationCredentials credentials = ApplicationCredentials.builder().build();
 
     Exception exception =
         assertThrows(
-            IllegalArgumentException.class, () -> new VoiceService(configuration, httpClient));
+            NullPointerException.class, () -> new VoiceService(credentials, null, httpClient));
 
-    assertTrue(exception.getMessage().contains("Application credentials must be defined"));
+    assertTrue(exception.getMessage().contains("Context must be defined"));
   }
 
   @Test
@@ -60,15 +40,12 @@ class VoiceServiceTest {
             .setApplicationKey(null)
             .setApplicationSecret("foo secret")
             .build();
-    Configuration configuration =
-        Configuration.builder()
-            .setApplicationCredentials(credentials)
-            .setVoiceContext(VoiceContext.builder().build())
-            .build();
+    VoiceContext context = VoiceContext.builder().build();
 
     Exception exception =
         assertThrows(
-            IllegalArgumentException.class, () -> new VoiceService(configuration, httpClient));
+            IllegalArgumentException.class,
+            () -> new VoiceService(credentials, context, httpClient));
 
     assertTrue(exception.getMessage().contains("applicationKey"));
   }
@@ -80,16 +57,12 @@ class VoiceServiceTest {
             .setApplicationKey("foo key")
             .setApplicationSecret(null)
             .build();
-
-    Configuration configuration =
-        Configuration.builder()
-            .setApplicationCredentials(credentials)
-            .setVoiceContext(VoiceContext.builder().build())
-            .build();
+    VoiceContext context = VoiceContext.builder().build();
 
     Exception exception =
         assertThrows(
-            IllegalArgumentException.class, () -> new VoiceService(configuration, httpClient));
+            IllegalArgumentException.class,
+            () -> new VoiceService(credentials, context, httpClient));
 
     assertTrue(exception.getMessage().contains("applicationSecret"));
   }

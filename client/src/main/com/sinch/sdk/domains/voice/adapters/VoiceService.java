@@ -10,9 +10,9 @@ import com.sinch.sdk.domains.voice.ApplicationsService;
 import com.sinch.sdk.domains.voice.CalloutsService;
 import com.sinch.sdk.domains.voice.WebHooksService;
 import com.sinch.sdk.models.ApplicationCredentials;
-import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.VoiceContext;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 import java.util.logging.Logger;
 
@@ -36,27 +36,22 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
   private Map<String, AuthManager> clientAuthManagers;
   private Map<String, AuthManager> webhooksAuthManagers;
 
-  public VoiceService(Configuration configuration, HttpClient httpClient) {
+  public VoiceService(
+      ApplicationCredentials credentials, VoiceContext context, HttpClient httpClient) {
 
     // Currently, we are not supporting unified credentials: ensure application credentials are
     // defined
-    ApplicationCredentials credentials =
-        configuration
-            .getApplicationCredentials()
-            .orElseThrow(
-                () -> new IllegalArgumentException("Application credentials must be defined"));
-    context =
-        configuration
-            .getVoiceContext()
-            .orElseThrow(() -> new IllegalArgumentException("Voice context must be defined"));
+    Objects.requireNonNull(credentials, "Credentials must be defined");
+    Objects.requireNonNull(context, "Context must be defined");
     StringUtil.requireNonEmpty(credentials.getApplicationKey(), "'applicationKey' must be defined");
     StringUtil.requireNonEmpty(
         credentials.getApplicationSecret(), "'applicationSecret' must be defined");
 
+    LOGGER.fine("Activate voice API with server='" + context.getVoiceServer().getUrl() + "'");
+
+    this.context = context;
     this.httpClient = httpClient;
     setApplicationCredentials(credentials);
-
-    LOGGER.fine("Activate voice API with server='" + context.getVoiceServer().getUrl() + "'");
   }
 
   private void setApplicationCredentials(ApplicationCredentials credentials) {

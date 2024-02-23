@@ -52,17 +52,7 @@ public class UnifiedCredentials {
 
   @Override
   public String toString() {
-    return "UnifiedCredentials{"
-        + "keyId='"
-        + keyId
-        + '\''
-        + ", keySecret='"
-        + keySecret
-        + '\''
-        + ", projectId='"
-        + projectId
-        + '\''
-        + '}';
+    return "UnifiedCredentials{" + "keyId='***'" + ", keySecret='***'" + ", projectId='***'" + '}';
   }
 
   /**
@@ -71,7 +61,7 @@ public class UnifiedCredentials {
    * @return New Builder instance
    * @since 1.0
    */
-  static Builder builder() {
+  public static Builder builder() {
     return new Builder();
   }
 

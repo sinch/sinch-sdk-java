@@ -11,7 +11,7 @@ import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.Pair;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
 import java.util.Collection;
 import java.util.Collections;
@@ -34,17 +34,21 @@ public class BearerAuthManager implements AuthManager {
   private final Map<String, AuthManager> authManagers;
   private String token;
 
-  public BearerAuthManager(Configuration configuration, HttpMapper mapper, HttpClient httpClient) {
-    this(configuration.getKeyId(), configuration.getKeySecret(), configuration, mapper, httpClient);
+  public BearerAuthManager(
+      UnifiedCredentials credentials,
+      ServerConfiguration oAuthServer,
+      HttpMapper mapper,
+      HttpClient httpClient) {
+    this(credentials.getKeyId(), credentials.getKeySecret(), oAuthServer, mapper, httpClient);
   }
 
   public BearerAuthManager(
       String keyId,
       String keySecret,
-      Configuration configuration,
+      ServerConfiguration oAuthServer,
       HttpMapper mapper,
       HttpClient httpClient) {
-    this.oAuthServer = configuration.getOAuthServer();
+    this.oAuthServer = oAuthServer;
     this.mapper = mapper;
     this.httpClient = httpClient;
 

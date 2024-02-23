@@ -2,7 +2,7 @@ package com.sinch.sdk.auth.adapters;
 
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.utils.Pair;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.UnifiedCredentials;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Collection;
@@ -18,8 +18,8 @@ public class BasicAuthManager implements AuthManager {
   private final String keyId;
   private final String keySecret;
 
-  public BasicAuthManager(Configuration configuration) {
-    this(configuration.getKeyId(), configuration.getKeySecret());
+  public BasicAuthManager(UnifiedCredentials credentials) {
+    this(credentials.getKeyId(), credentials.getKeySecret());
   }
 
   public BasicAuthManager(String keyId, String keySecret) {
