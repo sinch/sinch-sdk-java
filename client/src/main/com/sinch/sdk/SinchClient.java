@@ -34,6 +34,7 @@ public class SinchClient {
   private static final String NUMBERS_SERVER_KEY = "numbers-server";
   private static final String SMS_REGION_KEY = "sms-region";
   private static final String SMS_SERVER_KEY = "sms-server";
+  private static final String SMS_SERVER_SERVICE_PLAN_KEY = "sms-server-service-plan";
 
   private static final String VOICE_REGION_KEY = "voice-region";
   private static final String VOICE_APPLICATION_MANAGEMENT_SERVER_KEY =
@@ -115,9 +116,16 @@ public class SinchClient {
 
     SMSRegion smsRegion = configuration.getSmsContext().map(SmsContext::getSmsRegion).orElse(null);
 
-    if (null == smsUrl && props.containsKey(SMS_SERVER_KEY)) {
-      smsUrl = props.getProperty(SMS_SERVER_KEY);
+    // service plan ID activated: use dedicate server
+    String serverKey =
+        configuration
+            .getSmsServicePlanCredentials()
+            .map(unused -> SMS_SERVER_SERVICE_PLAN_KEY)
+            .orElse(SMS_SERVER_KEY);
+    if (null == smsUrl && props.containsKey(serverKey)) {
+      smsUrl = props.getProperty(serverKey);
     }
+
     if (null == smsRegion && props.containsKey(SMS_REGION_KEY)) {
       smsRegion = SMSRegion.from(props.getProperty(SMS_REGION_KEY));
     }
@@ -269,11 +277,19 @@ public class SinchClient {
 
   private SMSService smsInit() {
 
-    return new com.sinch.sdk.domains.sms.adapters.SMSService(
-        getConfiguration().getUnifiedCredentials().orElse(null),
-        getConfiguration().getSmsContext().orElse(null),
-        configuration.getOAuthServer(),
-        getHttpClient());
+    return getConfiguration()
+        .getSmsServicePlanCredentials()
+        .map(
+            f ->
+                new com.sinch.sdk.domains.sms.adapters.SMSService(
+                    f, getConfiguration().getSmsContext().orElse(null), getHttpClient()))
+        .orElseGet(
+            () ->
+                new com.sinch.sdk.domains.sms.adapters.SMSService(
+                    getConfiguration().getUnifiedCredentials().orElse(null),
+                    getConfiguration().getSmsContext().orElse(null),
+                    configuration.getOAuthServer(),
+                    getHttpClient()));
   }
 
   private VerificationService verificationInit() {

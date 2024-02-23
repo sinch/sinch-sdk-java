@@ -17,6 +17,10 @@ public class Utils {
   private static final String APPLICATION_API_KEY = "APPLICATION_API_KEY";
   private static final String APPLICATION_API_SECRET = "APPLICATION_API_SECRET";
 
+  // can super sed unified Sinch credentials if SMS service plan ID defined
+  private static final String SMS_SERVICE_PLAN_ID = "SMS_SERVICE_PLAN_ID";
+  private static final String SMS_SERVICE_PLAN_TOKEN = "SMS_SERVICE_PLAN_TOKEN";
+
   public static Logger initializeLogger(String className) {
     try (InputStream logConfigInputStream =
         Utils.class.getClassLoader().getResourceAsStream("logging.properties")) {
@@ -53,6 +57,7 @@ public class Utils {
 
     manageUnifiedCredentials(properties, builder);
     manageApplicationCredentials(properties, builder);
+    manageSmsServicePlanCredentials(properties, builder);
 
     return builder.build();
   }
@@ -96,6 +101,28 @@ public class Utils {
 
     if (null != verificationApiSecret) {
       builder.setApplicationSecret(verificationApiSecret);
+    }
+  }
+
+  private static void manageSmsServicePlanCredentials(
+      Properties properties, Configuration.Builder builder) {
+
+    String smsServicePlanId =
+        null != System.getenv(SMS_SERVICE_PLAN_ID)
+            ? System.getenv(SMS_SERVICE_PLAN_ID)
+            : properties.getProperty(SMS_SERVICE_PLAN_ID);
+
+    if (null != smsServicePlanId) {
+      builder.setSmsServicePlanId(smsServicePlanId);
+    }
+
+    String smsServicePlanToken =
+        null != System.getenv(SMS_SERVICE_PLAN_TOKEN)
+            ? System.getenv(SMS_SERVICE_PLAN_TOKEN)
+            : properties.getProperty(SMS_SERVICE_PLAN_TOKEN);
+
+    if (null != smsServicePlanToken) {
+      builder.setSmsApiToken(smsServicePlanToken);
     }
   }
 

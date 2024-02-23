@@ -17,22 +17,21 @@ import com.sinch.sdk.domains.sms.models.requests.BatchesListRequestParameters;
 import com.sinch.sdk.domains.sms.models.requests.UpdateBaseBatchRequest;
 import com.sinch.sdk.domains.sms.models.responses.BatchesListResponse;
 import com.sinch.sdk.models.SmsContext;
-import com.sinch.sdk.models.UnifiedCredentials;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Map;
 
 public class BatchesService implements com.sinch.sdk.domains.sms.BatchesService {
 
-  private final UnifiedCredentials credentials;
+  private final String uriPathID;
   private final BatchesApi api;
 
   public BatchesService(
-      UnifiedCredentials credentials,
+      String uriPathID,
       SmsContext context,
       HttpClient httpClient,
       Map<String, AuthManager> authManagers) {
-    this.credentials = credentials;
+    this.uriPathID = uriPathID;
     this.api = new BatchesApi(httpClient, context.getSmsServer(), authManagers, new HttpMapper());
   }
 
@@ -41,22 +40,17 @@ public class BatchesService implements com.sinch.sdk.domains.sms.BatchesService 
   }
 
   public <T extends Batch<?>> T get(String batchId) throws ApiException {
-    return BatchDtoConverter.convert(getApi().getBatchMessage(credentials.getProjectId(), batchId));
+    return BatchDtoConverter.convert(getApi().getBatchMessage(uriPathID, batchId));
   }
 
   public <T extends Batch<?>> T send(BaseBatch<?> batch) throws ApiException {
-    return BatchDtoConverter.convert(
-        getApi().sendSMS(credentials.getProjectId(), BatchDtoConverter.convert(batch)));
+    return BatchDtoConverter.convert(getApi().sendSMS(uriPathID, BatchDtoConverter.convert(batch)));
   }
 
   public DryRun dryRun(boolean perRecipient, int numberOfRecipient, BaseBatch<?> batch) {
     return DryRunDtoConverter.convert(
         getApi()
-            .dryRun(
-                credentials.getProjectId(),
-                perRecipient,
-                numberOfRecipient,
-                BatchDtoConverter.convert(batch)));
+            .dryRun(uriPathID, perRecipient, numberOfRecipient, BatchDtoConverter.convert(batch)));
   }
 
   public BatchesListResponse list() throws ApiException {
@@ -71,7 +65,7 @@ public class BatchesService implements com.sinch.sdk.domains.sms.BatchesService 
     ApiBatchListDto response =
         getApi()
             .listBatches(
-                credentials.getProjectId(),
+                uriPathID,
                 guardParameters.getPage().orElse(null),
                 guardParameters.getPageSize().orElse(null),
                 guardParameters.getFrom().orElse(null),
@@ -89,26 +83,20 @@ public class BatchesService implements com.sinch.sdk.domains.sms.BatchesService 
   public <T extends Batch<?>> T update(String batchId, UpdateBaseBatchRequest<?> batch)
       throws ApiException {
     return BatchDtoConverter.convert(
-        getApi()
-            .updateBatchMessage(
-                credentials.getProjectId(), batchId, BatchDtoConverter.convert(batch)));
+        getApi().updateBatchMessage(uriPathID, batchId, BatchDtoConverter.convert(batch)));
   }
 
   public <T extends Batch<?>> T replace(String batchId, BaseBatch<?> batch) throws ApiException {
     return BatchDtoConverter.convert(
-        getApi()
-            .replaceBatch(credentials.getProjectId(), batchId, BatchDtoConverter.convert(batch)));
+        getApi().replaceBatch(uriPathID, batchId, BatchDtoConverter.convert(batch)));
   }
 
   public <T extends Batch<?>> T cancel(String batchId) throws ApiException {
-    return BatchDtoConverter.convert(
-        getApi().cancelBatchMessage(credentials.getProjectId(), batchId));
+    return BatchDtoConverter.convert(getApi().cancelBatchMessage(uriPathID, batchId));
   }
 
   public void sendDeliveryFeedback(String batchId, Collection<String> recipients)
       throws ApiException {
-    getApi()
-        .deliveryFeedback(
-            credentials.getProjectId(), batchId, BatchDtoConverter.convert(recipients));
+    getApi().deliveryFeedback(uriPathID, batchId, BatchDtoConverter.convert(recipients));
   }
 }

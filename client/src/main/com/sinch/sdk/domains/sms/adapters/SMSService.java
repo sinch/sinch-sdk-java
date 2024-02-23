@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.sms.adapters;
 
+import com.sinch.sdk.auth.adapters.BearerAuthManager;
 import com.sinch.sdk.auth.adapters.OAuthManager;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
@@ -11,6 +12,7 @@ import com.sinch.sdk.domains.sms.DeliveryReportsService;
 import com.sinch.sdk.domains.sms.InboundsService;
 import com.sinch.sdk.domains.sms.WebHooksService;
 import com.sinch.sdk.models.SmsContext;
+import com.sinch.sdk.models.SmsServicePlanCredentials;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
 import java.util.Map;
@@ -24,7 +26,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
   private static final Logger LOGGER = Logger.getLogger(SMSService.class.getName());
 
   private static final String SECURITY_SCHEME_KEYWORD_SMS = "BearerAuth";
-  private final UnifiedCredentials credentials;
+  private final String uriPathID;
   private final SmsContext context;
   private final HttpClient httpClient;
   private BatchesService batches;
@@ -40,8 +42,6 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
       ServerConfiguration oAuthServer,
       HttpClient httpClient) {
 
-    // Currently, we are only supporting  unified credentials: ensure credentials are
-    // defined
     Objects.requireNonNull(credentials, "Credentials must be defined");
     Objects.requireNonNull(context, "Context must be defined");
     StringUtil.requireNonEmpty(credentials.getKeyId(), "'keyId' must be defined");
@@ -51,15 +51,37 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
 
     LOGGER.fine("Activate SMS API with server='" + context.getSmsServer().getUrl() + "'");
 
-    this.credentials = credentials;
-    this.context = context;
-    this.httpClient = httpClient;
-
     OAuthManager oAuthManager =
         new OAuthManager(credentials, oAuthServer, new HttpMapper(), httpClient);
 
-    authManagers =
+    this.uriPathID = credentials.getProjectId();
+    this.context = context;
+    this.httpClient = httpClient;
+    this.authManagers =
         Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_SMS, oAuthManager))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+  }
+
+  public SMSService(
+      SmsServicePlanCredentials credentials, SmsContext context, HttpClient httpClient) {
+
+    Objects.requireNonNull(credentials, "Credentials must be defined");
+    Objects.requireNonNull(context, "Context must be defined");
+    StringUtil.requireNonEmpty(credentials.getServicePlanId(), "'servicePlanId' must be defined");
+    StringUtil.requireNonEmpty(credentials.getApiToken(), "'apiToken' must be defined");
+
+    LOGGER.fine(
+        "Activate SMS API with service plan ID support and server='"
+            + context.getSmsServer().getUrl()
+            + "'");
+
+    BearerAuthManager authManager = new BearerAuthManager(credentials.getApiToken());
+
+    this.uriPathID = credentials.getServicePlanId();
+    this.context = context;
+    this.httpClient = httpClient;
+    this.authManagers =
+        Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_SMS, authManager))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 
@@ -68,7 +90,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
     if (null == this.batches) {
       this.batches =
           new com.sinch.sdk.domains.sms.adapters.BatchesService(
-              credentials, context, httpClient, authManagers);
+              uriPathID, context, httpClient, authManagers);
     }
     return this.batches;
   }
@@ -86,7 +108,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
     if (null == this.deliveryReports) {
       this.deliveryReports =
           new com.sinch.sdk.domains.sms.adapters.DeliveryReportsService(
-              credentials, context, httpClient, authManagers);
+              uriPathID, context, httpClient, authManagers);
     }
     return this.deliveryReports;
   }
@@ -96,7 +118,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
     if (null == this.inbounds) {
       this.inbounds =
           new com.sinch.sdk.domains.sms.adapters.InboundsService(
-              credentials, context, httpClient, authManagers);
+              uriPathID, context, httpClient, authManagers);
     }
     return this.inbounds;
   }
@@ -106,7 +128,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
     if (null == this.groups) {
       this.groups =
           new com.sinch.sdk.domains.sms.adapters.GroupsService(
-              credentials, context, httpClient, authManagers);
+              uriPathID, context, httpClient, authManagers);
     }
     return this.groups;
   }

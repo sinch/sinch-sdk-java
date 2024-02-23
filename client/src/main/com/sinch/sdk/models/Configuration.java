@@ -8,6 +8,7 @@ public class Configuration {
 
   private final UnifiedCredentials unifiedCredentials;
   private final ApplicationCredentials applicationCredentials;
+  private final SmsServicePlanCredentials smsServicePlanCredentials;
   private final String oauthUrl;
   private final NumbersContext numbersContext;
   private final SmsContext smsContext;
@@ -17,6 +18,7 @@ public class Configuration {
   private Configuration(
       UnifiedCredentials unifiedCredentials,
       ApplicationCredentials applicationCredentials,
+      SmsServicePlanCredentials smsServicePlanCredentials,
       String oauthUrl,
       NumbersContext numbersContext,
       SmsContext smsContext,
@@ -24,6 +26,7 @@ public class Configuration {
       VoiceContext voiceContext) {
     this.unifiedCredentials = unifiedCredentials;
     this.applicationCredentials = applicationCredentials;
+    this.smsServicePlanCredentials = smsServicePlanCredentials;
     this.oauthUrl = oauthUrl;
     this.numbersContext = numbersContext;
     this.smsContext = smsContext;
@@ -57,6 +60,16 @@ public class Configuration {
    */
   public Optional<UnifiedCredentials> getUnifiedCredentials() {
     return Optional.ofNullable(unifiedCredentials);
+  }
+
+  /**
+   * Get SMS service plan ID credentials
+   *
+   * @return Credentials
+   * @since 1.0
+   */
+  public Optional<SmsServicePlanCredentials> getSmsServicePlanCredentials() {
+    return Optional.ofNullable(smsServicePlanCredentials);
   }
 
   /**
@@ -162,6 +175,7 @@ public class Configuration {
 
     UnifiedCredentials.Builder unifiedCredentials;
     ApplicationCredentials.Builder applicationCredentials;
+    SmsServicePlanCredentials.Builder smsServicePlanCredentials;
     String oauthUrl;
     NumbersContext.Builder numbersContext;
     SmsContext.Builder smsContext;
@@ -183,6 +197,11 @@ public class Configuration {
           configuration
               .getApplicationCredentials()
               .map(ApplicationCredentials::builder)
+              .orElse(null);
+      this.smsServicePlanCredentials =
+          configuration
+              .getSmsServicePlanCredentials()
+              .map(SmsServicePlanCredentials::builder)
               .orElse(null);
       this.oauthUrl = configuration.getOAuthUrl();
       this.numbersContext =
@@ -298,6 +317,36 @@ public class Configuration {
     }
 
     /**
+     * Set SMS related service plan ID
+     *
+     * @param servicePlanId {@link SmsServicePlanCredentials#getServicePlanId() getter}
+     * @return Current builder
+     * @since 1.0
+     */
+    public Builder setSmsServicePlanId(String servicePlanId) {
+      if (null == this.smsServicePlanCredentials) {
+        this.smsServicePlanCredentials = SmsServicePlanCredentials.builder();
+      }
+      this.smsServicePlanCredentials.setServicePlanId(servicePlanId);
+      return this;
+    }
+
+    /**
+     * Set SMS related service plan token
+     *
+     * @param token {@link SmsServicePlanCredentials#getApiToken()} () getter}
+     * @return Current builder
+     * @since 1.0
+     */
+    public Builder setSmsApiToken(String token) {
+      if (null == this.smsServicePlanCredentials) {
+        this.smsServicePlanCredentials = SmsServicePlanCredentials.builder();
+      }
+      this.smsServicePlanCredentials.setApiToken(token);
+      return this;
+    }
+
+    /**
      * Set SMS related region
      *
      * @param region {@link SmsContext#getSmsRegion()} () getter}
@@ -374,6 +423,7 @@ public class Configuration {
       return new Configuration(
           null != unifiedCredentials ? unifiedCredentials.build() : null,
           null != applicationCredentials ? applicationCredentials.build() : null,
+          null != smsServicePlanCredentials ? smsServicePlanCredentials.build() : null,
           oauthUrl,
           null != numbersContext ? numbersContext.build() : null,
           null != smsContext ? smsContext.build() : null,

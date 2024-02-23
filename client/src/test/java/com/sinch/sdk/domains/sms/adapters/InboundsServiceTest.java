@@ -21,7 +21,6 @@ import com.sinch.sdk.domains.sms.models.dto.v1.ApiInboundListDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.InboundDto;
 import com.sinch.sdk.domains.sms.models.responses.InboundsListResponse;
 import com.sinch.sdk.models.SmsContext;
-import com.sinch.sdk.models.UnifiedCredentials;
 import java.time.Instant;
 import java.util.Iterator;
 import java.util.Map;
@@ -33,12 +32,13 @@ import org.mockito.Mock;
 @TestWithResources
 class InboundsServiceTest extends BaseTest {
 
-  @Mock UnifiedCredentials credentials;
   @Mock SmsContext context;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
   @Mock InboundsApi api;
   InboundsService service;
+
+  String uriPartID = "foovalue";
 
   @GivenJsonResource("/domains/sms/v1/MOBinaryDto.json")
   InboundDto binary;
@@ -57,15 +57,14 @@ class InboundsServiceTest extends BaseTest {
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new InboundsService(credentials, context, httpClient, authManagers));
+    service = spy(new InboundsService(uriPartID, context, httpClient, authManagers));
     doReturn(api).when(service).getApi();
   }
 
   @Test
   void getBinary() throws ApiException {
 
-    when(api.retrieveInboundMessage(eq(credentials.getProjectId()), eq("foo inbound ID")))
-        .thenReturn(binary);
+    when(api.retrieveInboundMessage(eq(uriPartID), eq("foo inbound ID"))).thenReturn(binary);
 
     Inbound<?> response = service.get("foo inbound ID");
 
@@ -78,8 +77,7 @@ class InboundsServiceTest extends BaseTest {
   @Test
   void getText() throws ApiException {
 
-    when(api.retrieveInboundMessage(eq(credentials.getProjectId()), eq("foo inbound ID")))
-        .thenReturn(text);
+    when(api.retrieveInboundMessage(eq(uriPartID), eq("foo inbound ID"))).thenReturn(text);
 
     Inbound<?> response = service.get("foo inbound ID");
 
@@ -93,31 +91,13 @@ class InboundsServiceTest extends BaseTest {
   void list() throws ApiException {
 
     when(api.listInboundMessages(
-            eq(credentials.getProjectId()),
-            eq(null),
-            eq(null),
-            eq(null),
-            eq(null),
-            eq(null),
-            eq(null)))
+            eq(uriPartID), eq(null), eq(null), eq(null), eq(null), eq(null), eq(null)))
         .thenReturn(inboundsLisResponseDtoPage0);
     when(api.listInboundMessages(
-            eq(credentials.getProjectId()),
-            eq(1),
-            eq(null),
-            eq(null),
-            eq(null),
-            eq(null),
-            eq(null)))
+            eq(uriPartID), eq(1), eq(null), eq(null), eq(null), eq(null), eq(null)))
         .thenReturn(inboundsLisResponseDtoPage1);
     when(api.listInboundMessages(
-            eq(credentials.getProjectId()),
-            eq(2),
-            eq(null),
-            eq(null),
-            eq(null),
-            eq(null),
-            eq(null)))
+            eq(uriPartID), eq(2), eq(null), eq(null), eq(null), eq(null), eq(null)))
         .thenReturn(inboundsLisResponseDtoPage2);
     InboundsListResponse response = service.list(null);
 

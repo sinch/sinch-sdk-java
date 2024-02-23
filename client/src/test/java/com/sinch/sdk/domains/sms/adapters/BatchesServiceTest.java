@@ -38,7 +38,6 @@ import com.sinch.sdk.domains.sms.models.requests.UpdateSmsBatchMediaRequest;
 import com.sinch.sdk.domains.sms.models.requests.UpdateSmsBatchTextRequest;
 import com.sinch.sdk.domains.sms.models.responses.BatchesListResponse;
 import com.sinch.sdk.models.SmsContext;
-import com.sinch.sdk.models.UnifiedCredentials;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collection;
@@ -269,25 +268,25 @@ public class BatchesServiceTest extends BaseTest {
   @GivenJsonResource("/domains/sms/v1/ListBatchesResponseDtoPage2.json")
   ApiBatchListDto listBatchesResponseDtoPage2;
 
-  @Mock UnifiedCredentials credentials;
   @Mock SmsContext context;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
   @Mock BatchesApi api;
   BatchesService service;
+  String uriPartID = "foovalue";
 
   @Captor ArgumentCaptor<ApiDeliveryFeedbackDto> recipientsCaptor;
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new BatchesService(credentials, context, httpClient, authManagers));
+    service = spy(new BatchesService(uriPartID, context, httpClient, authManagers));
     doReturn(api).when(service).getApi();
   }
 
   @Test
   void getBinary() throws ApiException {
 
-    when(api.getBatchMessage(eq(credentials.getProjectId()), eq("foo binary batch id")))
+    when(api.getBatchMessage(eq(uriPartID), eq("foo binary batch id")))
         .thenReturn(binaryResponseDto);
 
     Batch<?> response = service.get("foo binary batch id");
@@ -298,8 +297,7 @@ public class BatchesServiceTest extends BaseTest {
   @Test
   void getMedia() throws ApiException {
 
-    when(api.getBatchMessage(eq(credentials.getProjectId()), eq("foo media batch id")))
-        .thenReturn(mediaResponseDto);
+    when(api.getBatchMessage(eq(uriPartID), eq("foo media batch id"))).thenReturn(mediaResponseDto);
 
     Batch<?> response = service.get("foo media batch id");
 
@@ -309,8 +307,7 @@ public class BatchesServiceTest extends BaseTest {
   @Test
   void getText() throws ApiException {
 
-    when(api.getBatchMessage(eq(credentials.getProjectId()), eq("foo text batch id")))
-        .thenReturn(textResponseDto);
+    when(api.getBatchMessage(eq(uriPartID), eq("foo text batch id"))).thenReturn(textResponseDto);
 
     Batch<?> response = service.get("foo text batch id");
 
@@ -320,9 +317,7 @@ public class BatchesServiceTest extends BaseTest {
   @Test
   void sendBinary() throws ApiException {
 
-    when(api.sendSMS(
-            eq(credentials.getProjectId()),
-            eq(BatchDtoConverter.convert(sendSmsBatchBinaryRequest))))
+    when(api.sendSMS(eq(uriPartID), eq(BatchDtoConverter.convert(sendSmsBatchBinaryRequest))))
         .thenReturn(binaryResponseDto);
 
     Batch<?> response = service.send(sendSmsBatchBinaryRequest);
@@ -333,9 +328,7 @@ public class BatchesServiceTest extends BaseTest {
   @Test
   void sendMedia() throws ApiException {
 
-    when(api.sendSMS(
-            eq(credentials.getProjectId()),
-            eq(BatchDtoConverter.convert(sendSmsBatchMediaRequest))))
+    when(api.sendSMS(eq(uriPartID), eq(BatchDtoConverter.convert(sendSmsBatchMediaRequest))))
         .thenReturn(mediaResponseDto);
 
     Batch<?> response = service.send(sendSmsBatchMediaRequest);
@@ -346,8 +339,7 @@ public class BatchesServiceTest extends BaseTest {
   @Test
   void sendText() throws ApiException {
 
-    when(api.sendSMS(
-            eq(credentials.getProjectId()), eq(BatchDtoConverter.convert(sendSmsBatchTextRequest))))
+    when(api.sendSMS(eq(uriPartID), eq(BatchDtoConverter.convert(sendSmsBatchTextRequest))))
         .thenReturn(textResponseDto);
 
     Batch<?> response = service.send(sendSmsBatchTextRequest);
@@ -359,7 +351,7 @@ public class BatchesServiceTest extends BaseTest {
   void dryRun() throws ApiException {
 
     when(api.dryRun(
-            eq(credentials.getProjectId()),
+            eq(uriPartID),
             eq(true),
             eq(456),
             eq(BatchDtoConverter.convert(sendSmsBatchTextRequest))))
@@ -375,32 +367,11 @@ public class BatchesServiceTest extends BaseTest {
   @Test
   void list() throws ApiException {
 
-    when(api.listBatches(
-            eq(credentials.getProjectId()),
-            eq(null),
-            eq(null),
-            eq(null),
-            eq(null),
-            eq(null),
-            eq(null)))
+    when(api.listBatches(eq(uriPartID), eq(null), eq(null), eq(null), eq(null), eq(null), eq(null)))
         .thenReturn(listBatchesResponseDtoPage0);
-    when(api.listBatches(
-            eq(credentials.getProjectId()),
-            eq(1),
-            eq(null),
-            eq(null),
-            eq(null),
-            eq(null),
-            eq(null)))
+    when(api.listBatches(eq(uriPartID), eq(1), eq(null), eq(null), eq(null), eq(null), eq(null)))
         .thenReturn(listBatchesResponseDtoPage1);
-    when(api.listBatches(
-            eq(credentials.getProjectId()),
-            eq(2),
-            eq(null),
-            eq(null),
-            eq(null),
-            eq(null),
-            eq(null)))
+    when(api.listBatches(eq(uriPartID), eq(2), eq(null), eq(null), eq(null), eq(null), eq(null)))
         .thenReturn(listBatchesResponseDtoPage2);
     BatchesListResponse response = service.list(null);
 
@@ -465,7 +436,7 @@ public class BatchesServiceTest extends BaseTest {
   void updateText() throws ApiException {
 
     when(api.updateBatchMessage(
-            eq(credentials.getProjectId()),
+            eq(uriPartID),
             eq("foo text batch id"),
             eq(BatchDtoConverter.convert(updateSmsBatchTextRequest))))
         .thenReturn(textResponseDto);
@@ -479,7 +450,7 @@ public class BatchesServiceTest extends BaseTest {
   void updateMedia() throws ApiException {
 
     when(api.updateBatchMessage(
-            eq(credentials.getProjectId()),
+            eq(uriPartID),
             eq("foo text batch id"),
             eq(BatchDtoConverter.convert(updateSmsBatchMediaRequest))))
         .thenReturn(mediaResponseDto);
@@ -493,7 +464,7 @@ public class BatchesServiceTest extends BaseTest {
   void updateBinary() throws ApiException {
 
     when(api.updateBatchMessage(
-            eq(credentials.getProjectId()),
+            eq(uriPartID),
             eq("foo text batch id"),
             eq(BatchDtoConverter.convert(updateSmsBatchBinaryRequest))))
         .thenReturn(binaryResponseDto);
@@ -507,7 +478,7 @@ public class BatchesServiceTest extends BaseTest {
   void replaceBinary() throws ApiException {
 
     when(api.replaceBatch(
-            eq(credentials.getProjectId()),
+            eq(uriPartID),
             eq("foo text batch id"),
             eq(BatchDtoConverter.convert(sendSmsBatchBinaryRequest))))
         .thenReturn(binaryResponseDto);
@@ -521,7 +492,7 @@ public class BatchesServiceTest extends BaseTest {
   void replaceMedia() throws ApiException {
 
     when(api.replaceBatch(
-            eq(credentials.getProjectId()),
+            eq(uriPartID),
             eq("foo text batch id"),
             eq(BatchDtoConverter.convert(sendSmsBatchMediaRequest))))
         .thenReturn(mediaResponseDto);
@@ -535,7 +506,7 @@ public class BatchesServiceTest extends BaseTest {
   void replaceText() throws ApiException {
 
     when(api.replaceBatch(
-            eq(credentials.getProjectId()),
+            eq(uriPartID),
             eq("foo text batch id"),
             eq(BatchDtoConverter.convert(sendSmsBatchTextRequest))))
         .thenReturn(textResponseDto);
@@ -548,7 +519,7 @@ public class BatchesServiceTest extends BaseTest {
   @Test
   void cancelBatch() throws ApiException {
 
-    when(api.cancelBatchMessage(eq(credentials.getProjectId()), eq("foo text batch id")))
+    when(api.cancelBatchMessage(eq(uriPartID), eq("foo text batch id")))
         .thenReturn(textResponseDto);
 
     Batch<?> response = service.cancel("foo text batch id");
@@ -563,8 +534,7 @@ public class BatchesServiceTest extends BaseTest {
     service.sendDeliveryFeedback("foo text batch id", recipients);
 
     verify(api)
-        .deliveryFeedback(
-            eq(credentials.getProjectId()), eq("foo text batch id"), recipientsCaptor.capture());
+        .deliveryFeedback(eq(uriPartID), eq("foo text batch id"), recipientsCaptor.capture());
 
     ApiDeliveryFeedbackDto dto = recipientsCaptor.getValue();
     Assertions.assertThat(dto.getRecipients()).usingRecursiveComparison().isEqualTo(recipients);
