@@ -22,7 +22,6 @@ import com.sinch.sdk.domains.numbers.models.dto.v1.AvailableNumbersResponseDto;
 import com.sinch.sdk.domains.numbers.models.requests.*;
 import com.sinch.sdk.domains.numbers.models.responses.AvailableNumberListResponse;
 import com.sinch.sdk.models.NumbersContext;
-import com.sinch.sdk.models.UnifiedCredentials;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
@@ -47,16 +46,17 @@ class AvailableNumberServiceTest extends BaseTest {
   @GivenJsonResource("/domains/numbers/v1/rent-response.json")
   ActiveNumberDto rentNumberDto;
 
-  @Mock UnifiedCredentials credentials;
   @Mock NumbersContext context;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
   @Mock AvailableNumberApi api;
   AvailableNumberService service;
 
+  String uriUUID = "foo";
+
   @BeforeEach
   public void initMocks() {
-    service = spy(new AvailableNumberService(credentials, context, httpClient, authManagers));
+    service = spy(new AvailableNumberService(uriUUID, context, httpClient, authManagers));
     doReturn(api).when(service).getApi();
   }
 
@@ -64,7 +64,7 @@ class AvailableNumberServiceTest extends BaseTest {
   void list() throws ApiException {
 
     when(api.numberServiceListAvailableNumbers(
-            eq(credentials.getProjectId()),
+            eq(uriUUID),
             eq("region"),
             ArgumentMatchers.eq(NumberType.MOBILE.value()),
             eq(null),
@@ -103,7 +103,7 @@ class AvailableNumberServiceTest extends BaseTest {
   void listWithParameters() throws ApiException {
 
     when(api.numberServiceListAvailableNumbers(
-            eq(credentials.getProjectId()),
+            eq(uriUUID),
             eq("another region"),
             ArgumentMatchers.eq(NumberType.TOLL_FREE.value()),
             eq("pattern value"),
@@ -148,8 +148,7 @@ class AvailableNumberServiceTest extends BaseTest {
   @Test
   void get() {
 
-    when(api.numberServiceGetAvailableNumber(eq(credentials.getProjectId()), eq("foo")))
-        .thenReturn(getNumberDto);
+    when(api.numberServiceGetAvailableNumber(eq(uriUUID), eq("foo"))).thenReturn(getNumberDto);
 
     AvailableNumber response = service.checkAvailability("foo");
 
@@ -171,8 +170,7 @@ class AvailableNumberServiceTest extends BaseTest {
   @Test
   void rent() {
 
-    when(api.numberServiceRentNumber(eq(credentials.getProjectId()), eq("foo"), any()))
-        .thenReturn(rentNumberDto);
+    when(api.numberServiceRentNumber(eq(uriUUID), eq("foo"), any())).thenReturn(rentNumberDto);
 
     ActiveNumber response =
         service.rent(
@@ -236,8 +234,7 @@ class AvailableNumberServiceTest extends BaseTest {
   @Test
   void rentAny() {
 
-    when(api.numberServiceRentAnyNumber(eq(credentials.getProjectId()), any()))
-        .thenReturn(rentNumberDto);
+    when(api.numberServiceRentAnyNumber(eq(uriUUID), any())).thenReturn(rentNumberDto);
 
     AvailableNumberRentAnyRequestParameters parameters =
         AvailableNumberRentAnyRequestParameters.builder()

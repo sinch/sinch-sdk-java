@@ -26,7 +26,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
   private static final Logger LOGGER = Logger.getLogger(SMSService.class.getName());
 
   private static final String SECURITY_SCHEME_KEYWORD_SMS = "BearerAuth";
-  private final String uriPathID;
+  private final String uriUUID;
   private final SmsContext context;
   private final HttpClient httpClient;
   private BatchesService batches;
@@ -54,7 +54,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
     OAuthManager oAuthManager =
         new OAuthManager(credentials, oAuthServer, new HttpMapper(), httpClient);
 
-    this.uriPathID = credentials.getProjectId();
+    this.uriUUID = credentials.getProjectId();
     this.context = context;
     this.httpClient = httpClient;
     this.authManagers =
@@ -77,7 +77,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
 
     BearerAuthManager authManager = new BearerAuthManager(credentials.getApiToken());
 
-    this.uriPathID = credentials.getServicePlanId();
+    this.uriUUID = credentials.getServicePlanId();
     this.context = context;
     this.httpClient = httpClient;
     this.authManagers =
@@ -90,7 +90,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
     if (null == this.batches) {
       this.batches =
           new com.sinch.sdk.domains.sms.adapters.BatchesService(
-              uriPathID, context, httpClient, authManagers);
+              uriUUID, context, httpClient, authManagers);
     }
     return this.batches;
   }
@@ -108,7 +108,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
     if (null == this.deliveryReports) {
       this.deliveryReports =
           new com.sinch.sdk.domains.sms.adapters.DeliveryReportsService(
-              uriPathID, context, httpClient, authManagers);
+              uriUUID, context, httpClient, authManagers);
     }
     return this.deliveryReports;
   }
@@ -118,7 +118,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
     if (null == this.inbounds) {
       this.inbounds =
           new com.sinch.sdk.domains.sms.adapters.InboundsService(
-              uriPathID, context, httpClient, authManagers);
+              uriUUID, context, httpClient, authManagers);
     }
     return this.inbounds;
   }
@@ -128,7 +128,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
     if (null == this.groups) {
       this.groups =
           new com.sinch.sdk.domains.sms.adapters.GroupsService(
-              uriPathID, context, httpClient, authManagers);
+              uriUUID, context, httpClient, authManagers);
     }
     return this.groups;
   }

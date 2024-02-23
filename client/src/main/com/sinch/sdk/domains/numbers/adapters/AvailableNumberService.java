@@ -24,7 +24,6 @@ import com.sinch.sdk.domains.numbers.models.requests.AvailableNumberRentAnyReque
 import com.sinch.sdk.domains.numbers.models.requests.AvailableNumberRentRequestParameters;
 import com.sinch.sdk.domains.numbers.models.responses.AvailableNumberListResponse;
 import com.sinch.sdk.models.NumbersContext;
-import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -33,15 +32,15 @@ import java.util.stream.Collectors;
 public class AvailableNumberService
     implements com.sinch.sdk.domains.numbers.AvailableNumberService {
 
-  private final UnifiedCredentials credentials;
+  private final String uriUUID;
   private final AvailableNumberApi api;
 
   public AvailableNumberService(
-      UnifiedCredentials credentials,
+      String uriUUID,
       NumbersContext context,
       HttpClient httpClient,
       Map<String, AuthManager> authManagers) {
-    this.credentials = credentials;
+    this.uriUUID = uriUUID;
     this.api =
         new AvailableNumberApi(
             httpClient, context.getNumbersServer(), authManagers, new HttpMapper());
@@ -78,7 +77,7 @@ public class AvailableNumberService
     AvailableNumbersResponseDto response =
         getApi()
             .numberServiceListAvailableNumbers(
-                credentials.getProjectId(),
+                uriUUID,
                 regionCode,
                 type.value(),
                 patternPattern,
@@ -91,8 +90,7 @@ public class AvailableNumberService
   }
 
   public AvailableNumber checkAvailability(String phoneNumber) throws ApiException {
-    AvailableNumberDto response =
-        getApi().numberServiceGetAvailableNumber(credentials.getProjectId(), phoneNumber);
+    AvailableNumberDto response = getApi().numberServiceGetAvailableNumber(uriUUID, phoneNumber);
     return AvailableNumberDtoConverter.convert(response);
   }
 
@@ -105,7 +103,7 @@ public class AvailableNumberService
     ActiveNumberDto response =
         getApi()
             .numberServiceRentNumber(
-                credentials.getProjectId(),
+                uriUUID,
                 phoneNumber,
                 AvailableRentRequestParametersDtoConverter.convert(guardParameters));
     return ActiveNumberDtoConverter.convert(response);
@@ -117,8 +115,7 @@ public class AvailableNumberService
     ActiveNumberDto response =
         getApi()
             .numberServiceRentAnyNumber(
-                credentials.getProjectId(),
-                AvailableRentAnyRequestParametersDtoConverter.convert(parameters));
+                uriUUID, AvailableRentAnyRequestParametersDtoConverter.convert(parameters));
     return ActiveNumberDtoConverter.convert(response);
   }
 }

@@ -17,7 +17,6 @@ import com.sinch.sdk.domains.numbers.models.dto.v1.CallbackConfigurationDto;
 import com.sinch.sdk.domains.numbers.models.dto.v1.CallbackConfigurationUpdateDto;
 import com.sinch.sdk.domains.numbers.models.requests.CallbackConfigurationUpdateRequestParameters;
 import com.sinch.sdk.models.NumbersContext;
-import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,24 +29,24 @@ class CallbackConfigurationServiceTest extends BaseTest {
   @GivenJsonResource("/domains/numbers/v1/callback-configuration.json")
   CallbackConfigurationDto callbackConfigurationDto;
 
-  @Mock UnifiedCredentials credentials;
   @Mock NumbersContext context;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
   @Mock CallbacksApi api;
   CallbackConfigurationService service;
 
+  String uriUUID = "foo";
+
   @BeforeEach
   public void initMocks() {
-    service = spy(new CallbackConfigurationService(credentials, context, httpClient, authManagers));
+    service = spy(new CallbackConfigurationService(uriUUID, context, httpClient, authManagers));
     doReturn(api).when(service).getApi();
   }
 
   @Test
   void get() throws ApiException {
 
-    when(api.getCallbackConfiguration(eq(credentials.getProjectId())))
-        .thenReturn(callbackConfigurationDto);
+    when(api.getCallbackConfiguration(eq(uriUUID))).thenReturn(callbackConfigurationDto);
 
     CallbackConfiguration response = service.get();
 
@@ -68,7 +67,7 @@ class CallbackConfigurationServiceTest extends BaseTest {
     CallbackConfigurationUpdateRequestParameters parameters =
         CallbackConfigurationUpdateRequestParameters.builder().setHMACSecret("hmac value").build();
 
-    when(api.updateCallbackConfiguration(eq(credentials.getProjectId()), eq(dtoParameters)))
+    when(api.updateCallbackConfiguration(eq(uriUUID), eq(dtoParameters)))
         .thenReturn(callbackConfigurationDto);
 
     CallbackConfiguration response = service.update(parameters);

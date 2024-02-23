@@ -24,7 +24,6 @@ import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberUpdateSMSConfig
 import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberUpdateVoiceConfigurationRequestParameters;
 import com.sinch.sdk.domains.numbers.models.responses.ActiveNumberListResponse;
 import com.sinch.sdk.models.NumbersContext;
-import com.sinch.sdk.models.UnifiedCredentials;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
@@ -47,16 +46,17 @@ class ActiveNumberServiceTest extends BaseTest {
   @GivenJsonResource("/domains/numbers/v1/active-numbers-get.json")
   ActiveNumberDto activeGetResponseDto;
 
-  @Mock UnifiedCredentials credentials;
   @Mock NumbersContext context;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
   @Mock ActiveNumberApi api;
   ActiveNumberService service;
 
+  String uriUUID = "foo";
+
   @BeforeEach
   public void initMocks() {
-    service = spy(new ActiveNumberService(credentials, context, httpClient, authManagers));
+    service = spy(new ActiveNumberService(uriUUID, context, httpClient, authManagers));
     doReturn(api).when(service).getApi();
   }
 
@@ -64,7 +64,7 @@ class ActiveNumberServiceTest extends BaseTest {
   void list() throws ApiException {
 
     when(api.numberServiceListActiveNumbers(
-            eq(credentials.getProjectId()),
+            eq(uriUUID),
             eq("region"),
             eq(NumberType.MOBILE.value()),
             eq(null),
@@ -114,7 +114,7 @@ class ActiveNumberServiceTest extends BaseTest {
   void listWithParameters() throws ApiException {
 
     when(api.numberServiceListActiveNumbers(
-            eq(credentials.getProjectId()),
+            eq(uriUUID),
             eq("another region"),
             eq(NumberType.TOLL_FREE.value()),
             eq("pattern value"),
@@ -199,7 +199,7 @@ class ActiveNumberServiceTest extends BaseTest {
   @Test
   void get() throws ApiException {
 
-    when(api.numberServiceGetActiveNumber(eq(credentials.getProjectId()), eq("foo phone number")))
+    when(api.numberServiceGetActiveNumber(eq(uriUUID), eq("foo phone number")))
         .thenReturn(activeGetResponseDto);
 
     ActiveNumber expected =
@@ -243,7 +243,7 @@ class ActiveNumberServiceTest extends BaseTest {
   @Test
   void release() throws ApiException {
 
-    when(api.numberServiceReleaseNumber(eq(credentials.getProjectId()), eq("foo phone number")))
+    when(api.numberServiceReleaseNumber(eq(uriUUID), eq("foo phone number")))
         .thenReturn(activeGetResponseDto);
 
     ActiveNumber expected =
@@ -304,7 +304,7 @@ class ActiveNumberServiceTest extends BaseTest {
             .build();
 
     when(api.numberServiceUpdateActiveNumber(
-            eq(credentials.getProjectId()),
+            eq(uriUUID),
             eq("foo phone number"),
             ArgumentMatchers.eq(
                 ActiveNumberUpdateRequestParametersDtoConverter.convert(parameters))))

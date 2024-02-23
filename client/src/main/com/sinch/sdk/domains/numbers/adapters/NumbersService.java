@@ -17,7 +17,7 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.NumbersServ
   private static final Logger LOGGER = Logger.getLogger(NumbersService.class.getName());
   private static final String SECURITY_SCHEME_KEYWORD_NUMBERS = "BasicAuth";
 
-  private final UnifiedCredentials credentials;
+  private final String uriUUID;
   private final NumbersContext context;
   private final HttpClient httpClient;
   private AvailableNumberService available;
@@ -40,7 +40,7 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.NumbersServ
 
     LOGGER.fine("Activate numbers API with server='" + context.getNumbersServer().getUrl() + "'");
 
-    this.credentials = credentials;
+    this.uriUUID = credentials.getProjectId();
     this.context = context;
     this.httpClient = httpClient;
 
@@ -54,29 +54,28 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.NumbersServ
 
   public AvailableNumberService available() {
     if (null == this.available) {
-      this.available = new AvailableNumberService(credentials, context, httpClient, authManagers);
+      this.available = new AvailableNumberService(uriUUID, context, httpClient, authManagers);
     }
     return this.available;
   }
 
   public AvailableRegionService regions() {
     if (null == this.regions) {
-      this.regions = new AvailableRegionService(credentials, context, httpClient, authManagers);
+      this.regions = new AvailableRegionService(uriUUID, context, httpClient, authManagers);
     }
     return this.regions;
   }
 
   public ActiveNumberService active() {
     if (null == this.active) {
-      this.active = new ActiveNumberService(credentials, context, httpClient, authManagers);
+      this.active = new ActiveNumberService(uriUUID, context, httpClient, authManagers);
     }
     return this.active;
   }
 
   public CallbackConfigurationService callback() {
     if (null == this.callback) {
-      this.callback =
-          new CallbackConfigurationService(credentials, context, httpClient, authManagers);
+      this.callback = new CallbackConfigurationService(uriUUID, context, httpClient, authManagers);
     }
     return this.callback;
   }

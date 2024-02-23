@@ -18,7 +18,6 @@ import com.sinch.sdk.domains.numbers.models.dto.v1.ListAvailableRegionsResponseD
 import com.sinch.sdk.domains.numbers.models.requests.AvailableRegionListAllRequestParameters;
 import com.sinch.sdk.domains.numbers.models.responses.AvailableRegionListResponse;
 import com.sinch.sdk.models.NumbersContext;
-import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -34,16 +33,17 @@ class RegionServiceTest extends BaseTest {
   ListAvailableRegionsResponseDto availableRegionsListDto;
 
   @Mock AvailableRegionsApi api;
-  @Mock UnifiedCredentials credentials;
   @Mock NumbersContext context;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
 
   AvailableRegionService service;
 
+  String uriUUID = "foo";
+
   @BeforeEach
   public void initMocks() {
-    service = spy(new AvailableRegionService(credentials, context, httpClient, authManagers));
+    service = spy(new AvailableRegionService(uriUUID, context, httpClient, authManagers));
     doReturn(api).when(service).getApi();
   }
 
@@ -51,7 +51,7 @@ class RegionServiceTest extends BaseTest {
   void list() throws ApiException {
 
     when(api.numberServiceListAvailableRegions(
-            eq(credentials.getProjectId()), eq(Collections.singletonList("MOBILE"))))
+            eq(uriUUID), eq(Collections.singletonList("MOBILE"))))
         .thenReturn(availableRegionsListDto);
 
     AvailableRegionListResponse response =

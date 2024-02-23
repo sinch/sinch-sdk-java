@@ -12,7 +12,6 @@ import com.sinch.sdk.domains.numbers.models.dto.v1.ListAvailableRegionsResponseD
 import com.sinch.sdk.domains.numbers.models.requests.AvailableRegionListAllRequestParameters;
 import com.sinch.sdk.domains.numbers.models.responses.AvailableRegionListResponse;
 import com.sinch.sdk.models.NumbersContext;
-import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -21,15 +20,15 @@ import java.util.stream.Collectors;
 public class AvailableRegionService
     implements com.sinch.sdk.domains.numbers.AvailableRegionService {
 
-  private final UnifiedCredentials credentials;
+  private final String uriUUID;
   private final AvailableRegionsApi api;
 
   public AvailableRegionService(
-      UnifiedCredentials credentials,
+      String uriUUID,
       NumbersContext context,
       HttpClient httpClient,
       Map<String, AuthManager> authManagers) {
-    this.credentials = credentials;
+    this.uriUUID = uriUUID;
     this.api =
         new AvailableRegionsApi(
             httpClient, context.getNumbersServer(), authManagers, new HttpMapper());
@@ -49,7 +48,7 @@ public class AvailableRegionService
     }
 
     ListAvailableRegionsResponseDto response =
-        getApi().numberServiceListAvailableRegions(credentials.getProjectId(), types);
+        getApi().numberServiceListAvailableRegions(uriUUID, types);
     Collection<Region> entities = AvailableRegionsDtoConverter.convert(response);
 
     return new AvailableRegionListResponse(entities);

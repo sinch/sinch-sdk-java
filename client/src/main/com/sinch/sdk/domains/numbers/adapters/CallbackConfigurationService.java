@@ -11,21 +11,20 @@ import com.sinch.sdk.domains.numbers.models.CallbackConfiguration;
 import com.sinch.sdk.domains.numbers.models.dto.v1.CallbackConfigurationDto;
 import com.sinch.sdk.domains.numbers.models.requests.CallbackConfigurationUpdateRequestParameters;
 import com.sinch.sdk.models.NumbersContext;
-import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.Map;
 
 public class CallbackConfigurationService
     implements com.sinch.sdk.domains.numbers.CallbackConfigurationService {
 
-  private final UnifiedCredentials credentials;
+  private final String uriUUID;
   private final CallbacksApi api;
 
   public CallbackConfigurationService(
-      UnifiedCredentials credentials,
+      String uriUUID,
       NumbersContext context,
       HttpClient httpClient,
       Map<String, AuthManager> authManagers) {
-    this.credentials = credentials;
+    this.uriUUID = uriUUID;
     this.api =
         new CallbacksApi(httpClient, context.getNumbersServer(), authManagers, new HttpMapper());
   }
@@ -35,8 +34,7 @@ public class CallbackConfigurationService
   }
 
   public CallbackConfiguration get() throws ApiException {
-    CallbackConfigurationDto response =
-        getApi().getCallbackConfiguration(credentials.getProjectId());
+    CallbackConfigurationDto response = getApi().getCallbackConfiguration(uriUUID);
     return CallbackConfigurationDtoConverter.convert(response);
   }
 
@@ -46,7 +44,7 @@ public class CallbackConfigurationService
     CallbackConfigurationDto response =
         getApi()
             .updateCallbackConfiguration(
-                credentials.getProjectId(),
+                uriUUID,
                 CallbackConfigurationUpdateRequestParametersDtoConverter.convert(parameters));
     return CallbackConfigurationDtoConverter.convert(response);
   }
