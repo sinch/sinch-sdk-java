@@ -1,12 +1,16 @@
 package com.sinch.sdk.domains.numbers.adapters;
 
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.core.http.AuthManager;
+import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.core.models.pagination.TokenPageNavigator;
 import com.sinch.sdk.domains.numbers.adapters.api.v1.ActiveNumberApi;
@@ -19,14 +23,15 @@ import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberUpdateRequestPa
 import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberUpdateSMSConfigurationRequestParameters;
 import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberUpdateVoiceConfigurationRequestParameters;
 import com.sinch.sdk.domains.numbers.models.responses.ActiveNumberListResponse;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.NumbersContext;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Map;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 @TestWithResources
@@ -41,15 +46,25 @@ class ActiveNumberServiceTest extends BaseTest {
   @GivenJsonResource("/domains/numbers/v1/active-numbers-get.json")
   ActiveNumberDto activeGetResponseDto;
 
-  @Mock Configuration configuration;
+  @Mock NumbersContext context;
+  @Mock HttpClient httpClient;
+  @Mock Map<String, AuthManager> authManagers;
   @Mock ActiveNumberApi api;
-  @InjectMocks ActiveNumberService service;
+  ActiveNumberService service;
+
+  String uriUUID = "foo";
+
+  @BeforeEach
+  public void initMocks() {
+    service = spy(new ActiveNumberService(uriUUID, context, httpClient, authManagers));
+    doReturn(api).when(service).getApi();
+  }
 
   @Test
   void list() throws ApiException {
 
     when(api.numberServiceListActiveNumbers(
-            eq(configuration.getProjectId()),
+            eq(uriUUID),
             eq("region"),
             eq(NumberType.MOBILE.value()),
             eq(null),
@@ -99,7 +114,7 @@ class ActiveNumberServiceTest extends BaseTest {
   void listWithParameters() throws ApiException {
 
     when(api.numberServiceListActiveNumbers(
-            eq(configuration.getProjectId()),
+            eq(uriUUID),
             eq("another region"),
             eq(NumberType.TOLL_FREE.value()),
             eq("pattern value"),
@@ -184,7 +199,7 @@ class ActiveNumberServiceTest extends BaseTest {
   @Test
   void get() throws ApiException {
 
-    when(api.numberServiceGetActiveNumber(eq(configuration.getProjectId()), eq("foo phone number")))
+    when(api.numberServiceGetActiveNumber(eq(uriUUID), eq("foo phone number")))
         .thenReturn(activeGetResponseDto);
 
     ActiveNumber expected =
@@ -228,7 +243,7 @@ class ActiveNumberServiceTest extends BaseTest {
   @Test
   void release() throws ApiException {
 
-    when(api.numberServiceReleaseNumber(eq(configuration.getProjectId()), eq("foo phone number")))
+    when(api.numberServiceReleaseNumber(eq(uriUUID), eq("foo phone number")))
         .thenReturn(activeGetResponseDto);
 
     ActiveNumber expected =
@@ -289,7 +304,7 @@ class ActiveNumberServiceTest extends BaseTest {
             .build();
 
     when(api.numberServiceUpdateActiveNumber(
-            eq(configuration.getProjectId()),
+            eq(uriUUID),
             eq("foo phone number"),
             ArgumentMatchers.eq(
                 ActiveNumberUpdateRequestParametersDtoConverter.convert(parameters))))

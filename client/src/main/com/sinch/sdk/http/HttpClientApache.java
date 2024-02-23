@@ -1,11 +1,11 @@
 package com.sinch.sdk.http;
 
-import static com.sinch.sdk.auth.adapters.BearerAuthManager.BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD;
-import static com.sinch.sdk.auth.adapters.BearerAuthManager.BEARER_EXPIRED_KEYWORD;
+import static com.sinch.sdk.auth.adapters.OAuthManager.BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD;
+import static com.sinch.sdk.auth.adapters.OAuthManager.BEARER_EXPIRED_KEYWORD;
 import static com.sinch.sdk.core.http.HttpContentType.CONTENT_TYPE_HEADER;
 import static com.sinch.sdk.core.http.URLParameterUtils.encodeParametersAsString;
 
-import com.sinch.sdk.auth.adapters.BearerAuthManager;
+import com.sinch.sdk.auth.adapters.OAuthManager;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpMethod;
@@ -159,7 +159,7 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
             .map(authManager -> new AbstractMap.SimpleEntry<>(authManager.getSchema(), authManager))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a1, a2) -> a1));
     AuthManager bearerAuthManager =
-        authManagersByAuthSchemes.get(BearerAuthManager.SCHEMA_KEYWORD_BEARER);
+        authManagersByAuthSchemes.get(OAuthManager.SCHEMA_KEYWORD_BEARER);
     if (null == bearerAuthManager) {
       // no bearer manager registered
       return false;
@@ -174,7 +174,7 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
                         && authManagersByOasSecuritySchemes
                             .get(f)
                             .getSchema()
-                            .equals(BearerAuthManager.SCHEMA_KEYWORD_BEARER))
+                            .equals(OAuthManager.SCHEMA_KEYWORD_BEARER))
             .findFirst();
 
     if (!requestSupportBearerAuthentication.isPresent()) {

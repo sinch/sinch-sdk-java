@@ -15,7 +15,7 @@ import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.Pair;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.UnifiedCredentials;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Collections;
@@ -27,7 +27,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 
 @TestWithResources
-public class BearerAuthManagerTest extends BaseTest {
+public class OAuthManagerTest extends BaseTest {
   static final String KEY = "fooKey";
   static final String SECRET = "fooSecret";
   static final String PROJECT = "fooProject";
@@ -38,19 +38,16 @@ public class BearerAuthManagerTest extends BaseTest {
   @Mock HttpClient httpClient;
   @Captor ArgumentCaptor<ServerConfiguration> serverConfigurationCaptor;
   @Captor ArgumentCaptor<HttpRequest> httpRequestCaptor;
-  Configuration configuration =
-      Configuration.builder()
-          .setKeyId(KEY)
-          .setKeySecret(SECRET)
-          .setProjectId(PROJECT)
-          .setOAuthUrl("OAuth url")
-          .build();
+  UnifiedCredentials credentials =
+      UnifiedCredentials.builder().setKeyId(KEY).setKeySecret(SECRET).setProjectId(PROJECT).build();
 
   AuthManager authManager;
 
   @BeforeEach
   public void initEach() {
-    authManager = new BearerAuthManager(configuration, new HttpMapper(), httpClient);
+    authManager =
+        new OAuthManager(
+            credentials, new ServerConfiguration("OAuth url"), new HttpMapper(), httpClient);
   }
 
   @Test

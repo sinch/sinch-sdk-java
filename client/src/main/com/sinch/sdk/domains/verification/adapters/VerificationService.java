@@ -9,19 +9,23 @@ import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.verification.VerificationStatusService;
 import com.sinch.sdk.domains.verification.VerificationsService;
 import com.sinch.sdk.domains.verification.WebHooksService;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.ApplicationCredentials;
+import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
+import java.util.logging.Logger;
 
 public class VerificationService implements com.sinch.sdk.domains.verification.VerificationService {
 
+  private static final Logger LOGGER = Logger.getLogger(VerificationService.class.getName());
   // FIXME: Verification OAS file claim it support "Basic" but miss the "Application" definition
   // trick to adapt the mapping of "Basic" keyword to the dedicated "Application" auth manager
   private static final String BASIC_SECURITY_SCHEME_KEYWORD_VERIFICATION = "Basic";
 
   private static final String APPLICATION_SECURITY_SCHEME_KEYWORD_VERIFICATION = "Application";
 
-  private final Configuration configuration;
+  private final VerificationContext context;
   private final HttpClient httpClient;
   private VerificationsService verifications;
   private VerificationStatusService verificationStatus;
@@ -29,25 +33,33 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
   private Map<String, AuthManager> clientAuthManagers;
   private Map<String, AuthManager> webhooksAuthManagers;
 
-  public VerificationService(Configuration configuration, HttpClient httpClient) {
+  public VerificationService(
+      ApplicationCredentials credentials, VerificationContext context, HttpClient httpClient) {
 
     // Currently, we are not supporting unified credentials: ensure application credentials are
     // defined
+    Objects.requireNonNull(credentials, "Credentials must be defined");
+    Objects.requireNonNull(context, "Context must be defined");
+    StringUtil.requireNonEmpty(credentials.getApplicationKey(), "'applicationKey' must be defined");
     StringUtil.requireNonEmpty(
-        configuration.getApplicationKey(), "'applicationKey' must be defined");
-    StringUtil.requireNonEmpty(
-        configuration.getApplicationSecret(), "'applicationSecret' must be defined");
+        credentials.getApplicationSecret(), "'applicationSecret' must be defined");
+    StringUtil.requireNonEmpty(context.getVerificationUrl(), "'verificationUrl' must be defined");
 
-    this.configuration = configuration;
+    LOGGER.fine(
+        "Activate verification API with server='" + context.getVerificationServer().getUrl() + "'");
+
+    this.context = context;
     this.httpClient = httpClient;
-    setApplicationCredentials(
-        configuration.getApplicationKey(), configuration.getApplicationSecret());
+    setApplicationCredentials(credentials);
   }
 
-  private void setApplicationCredentials(String key, String secret) {
+  private void setApplicationCredentials(ApplicationCredentials credentials) {
 
-    AuthManager basicAuthManager = new BasicAuthManager(key, secret);
-    AuthManager applicationAuthManager = new ApplicationAuthManager(key, secret);
+    AuthManager basicAuthManager =
+        new BasicAuthManager(credentials.getApplicationKey(), credentials.getApplicationSecret());
+    AuthManager applicationAuthManager =
+        new ApplicationAuthManager(
+            credentials.getApplicationKey(), credentials.getApplicationSecret());
 
     boolean useApplicationAuth = true;
     // to handle request from client we can only have "Basic" keyword behind the auth managers
@@ -73,7 +85,7 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
       checkCredentials();
       this.verifications =
           new com.sinch.sdk.domains.verification.adapters.VerificationsService(
-              configuration, httpClient, clientAuthManagers);
+              context, httpClient, clientAuthManagers);
     }
     return this.verifications;
   }
@@ -83,7 +95,7 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
       checkCredentials();
       this.verificationStatus =
           new com.sinch.sdk.domains.verification.adapters.VerificationStatusService(
-              configuration, httpClient, clientAuthManagers);
+              context, httpClient, clientAuthManagers);
     }
     return this.verificationStatus;
   }

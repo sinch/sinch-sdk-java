@@ -7,7 +7,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.auth.adapters.BasicAuthManager;
-import com.sinch.sdk.auth.adapters.BearerAuthManager;
+import com.sinch.sdk.auth.adapters.OAuthManager;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpMapper;
@@ -16,7 +16,7 @@ import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.http.HttpClientApache;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.UnifiedCredentials;
 import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.Collections;
@@ -38,17 +38,15 @@ class HttpClientTestIT extends BaseTest {
   String jsonResponse;
 
   String serverUrl = String.format("http://localhost:%s", mockBackEnd.getPort());
-  Configuration configuration =
-      Configuration.builder().setOAuthUrl(String.format("%s/auth", serverUrl)).build();
-
+  UnifiedCredentials credentials = UnifiedCredentials.builder().build();
+  ServerConfiguration server = new ServerConfiguration(String.format("%s/auth", serverUrl));
   HttpClientApache httpClient = new HttpClientApache();
 
-  AuthManager basicAuthManager = new BasicAuthManager(configuration);
-  BearerAuthManager bearerAuthManager =
-      new BearerAuthManager(configuration, new HttpMapper(), httpClient);
+  AuthManager basicAuthManager = new BasicAuthManager(credentials);
+  OAuthManager oAuthManager = new OAuthManager(credentials, server, new HttpMapper(), httpClient);
 
   Map<String, AuthManager> authManagers =
-      Stream.of(basicAuthManager, bearerAuthManager)
+      Stream.of(basicAuthManager, oAuthManager)
           .map(e -> new AbstractMap.SimpleEntry<>(e.getSchema(), e))
           .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
@@ -104,7 +102,7 @@ class HttpClientTestIT extends BaseTest {
             null,
             null,
             null,
-            Collections.singletonList(bearerAuthManager.getSchema())));
+            Collections.singletonList(oAuthManager.getSchema())));
 
     RecordedRequest recordedRequest = mockBackEnd.takeRequest();
 
@@ -147,7 +145,7 @@ class HttpClientTestIT extends BaseTest {
               null,
               null,
               null,
-              Collections.singletonList(bearerAuthManager.getSchema())));
+              Collections.singletonList(oAuthManager.getSchema())));
     } catch (ApiException ae) {
       // noop
     }

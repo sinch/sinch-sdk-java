@@ -18,7 +18,7 @@ import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.VerificationReference;
 import com.sinch.sdk.domains.verification.models.VerificationReport;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportDtoTest;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +29,7 @@ import org.mockito.Mock;
 public class VerificationStatusServiceTest extends BaseTest {
 
   @Mock QueryVerificationsApi api;
-  @Mock Configuration configuration;
+  @Mock VerificationContext context;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
 
@@ -37,7 +37,7 @@ public class VerificationStatusServiceTest extends BaseTest {
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new VerificationStatusService(configuration, httpClient, authManagers));
+    service = spy(new VerificationStatusService(context, httpClient, authManagers));
     doReturn(api).when(service).getApi();
   }
 

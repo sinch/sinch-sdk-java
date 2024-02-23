@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.utils.Pair;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.UnifiedCredentials;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Collection;
@@ -18,10 +18,10 @@ class BasicAuthManagerTest {
   static final String SECRET = "fooSecret";
   static final String PROJECT = "fooProject";
 
-  Configuration configuration =
-      Configuration.builder().setKeyId(KEY).setKeySecret(SECRET).setProjectId(PROJECT).build();
+  UnifiedCredentials credentials =
+      UnifiedCredentials.builder().setKeyId(KEY).setKeySecret(SECRET).setProjectId(PROJECT).build();
 
-  AuthManager authManager = new BasicAuthManager(configuration);
+  AuthManager authManager = new BasicAuthManager(credentials);
 
   @Test
   void getSchema() {
@@ -38,7 +38,7 @@ class BasicAuthManagerTest {
                 "Basic "
                     + Base64.getEncoder()
                         .encodeToString(
-                            (configuration.getKeyId() + ":" + configuration.getKeySecret())
+                            (credentials.getKeyId() + ":" + credentials.getKeySecret())
                                 .getBytes(StandardCharsets.UTF_8))));
 
     Collection<Pair<String, String>> headers =

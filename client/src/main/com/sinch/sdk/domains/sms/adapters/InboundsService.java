@@ -13,27 +13,27 @@ import com.sinch.sdk.domains.sms.models.dto.v1.ApiInboundListDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.InboundDto;
 import com.sinch.sdk.domains.sms.models.requests.InboundsListRequestParameters;
 import com.sinch.sdk.domains.sms.models.responses.InboundsListResponse;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.SmsContext;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Map;
 
 public class InboundsService implements com.sinch.sdk.domains.sms.InboundsService {
 
-  private Configuration configuration;
-  private InboundsApi api;
+  private final String uriPathID;
+  private final InboundsApi api;
 
-  public InboundsService() {}
-
-  private InboundsApi getApi() {
+  protected InboundsApi getApi() {
     return this.api;
   }
 
   public InboundsService(
-      Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManagers) {
-    this.configuration = configuration;
-    this.api =
-        new InboundsApi(httpClient, configuration.getSmsServer(), authManagers, new HttpMapper());
+      String uriPathID,
+      SmsContext context,
+      HttpClient httpClient,
+      Map<String, AuthManager> authManagers) {
+    this.uriPathID = uriPathID;
+    this.api = new InboundsApi(httpClient, context.getSmsServer(), authManagers, new HttpMapper());
   }
 
   public InboundsListResponse list() throws ApiException {
@@ -47,7 +47,7 @@ public class InboundsService implements com.sinch.sdk.domains.sms.InboundsServic
     ApiInboundListDto response =
         getApi()
             .listInboundMessages(
-                configuration.getProjectId(),
+                uriPathID,
                 guardParameters.getPage().orElse(null),
                 guardParameters.getPageSize().orElse(null),
                 guardParameters.getTo().map(f -> String.join(",", f)).orElse(null),
@@ -64,7 +64,7 @@ public class InboundsService implements com.sinch.sdk.domains.sms.InboundsServic
 
   public Inbound<?> get(String inboundId) throws ApiException {
 
-    InboundDto response = getApi().retrieveInboundMessage(configuration.getProjectId(), inboundId);
+    InboundDto response = getApi().retrieveInboundMessage(uriPathID, inboundId);
     return InboundsDtoConverter.convert(response);
   }
 }

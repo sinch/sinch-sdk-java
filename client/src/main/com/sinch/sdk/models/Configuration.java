@@ -1,52 +1,37 @@
 package com.sinch.sdk.models;
 
 import com.sinch.sdk.core.models.ServerConfiguration;
+import java.util.Optional;
 
 /** Configuration used by Sinch Client */
 public class Configuration {
 
-  private final String keyId;
-  private final String keySecret;
-  private final String projectId;
+  private final UnifiedCredentials unifiedCredentials;
+  private final ApplicationCredentials applicationCredentials;
+  private final SmsServicePlanCredentials smsServicePlanCredentials;
   private final String oauthUrl;
-  private final String numbersUrl;
-  private final SMSRegion smsRegion;
-  private final String smsUrl;
-  private final String verificationUrl;
-  private final VoiceRegion voiceRegion;
-  private final String voiceUrl;
-  private final String voiceApplicationManagementUrl;
-
-  private final String applicationKey;
-  private final String applicationSecret;
+  private final NumbersContext numbersContext;
+  private final SmsContext smsContext;
+  private final VerificationContext verificationContext;
+  private final VoiceContext voiceContext;
 
   private Configuration(
-      String keyId,
-      String keySecret,
-      String projectId,
+      UnifiedCredentials unifiedCredentials,
+      ApplicationCredentials applicationCredentials,
+      SmsServicePlanCredentials smsServicePlanCredentials,
       String oauthUrl,
-      String numbersUrl,
-      SMSRegion smsRegion,
-      String smsUrl,
-      String verificationUrl,
-      VoiceRegion voiceRegion,
-      String voiceUrl,
-      String voiceApplicationManagementUrl,
-      String applicationKey,
-      String applicationSecret) {
-    this.keyId = keyId;
-    this.keySecret = keySecret;
-    this.projectId = projectId;
+      NumbersContext numbersContext,
+      SmsContext smsContext,
+      VerificationContext verificationContext,
+      VoiceContext voiceContext) {
+    this.unifiedCredentials = unifiedCredentials;
+    this.applicationCredentials = applicationCredentials;
+    this.smsServicePlanCredentials = smsServicePlanCredentials;
     this.oauthUrl = oauthUrl;
-    this.numbersUrl = numbersUrl;
-    this.smsRegion = null == smsRegion ? SMSRegion.US : smsRegion;
-    this.smsUrl = smsUrl;
-    this.verificationUrl = verificationUrl;
-    this.voiceRegion = voiceRegion;
-    this.voiceUrl = voiceUrl;
-    this.voiceApplicationManagementUrl = voiceApplicationManagementUrl;
-    this.applicationKey = applicationKey;
-    this.applicationSecret = applicationSecret;
+    this.numbersContext = numbersContext;
+    this.smsContext = smsContext;
+    this.voiceContext = voiceContext;
+    this.verificationContext = verificationContext;
   }
 
   @Override
@@ -55,59 +40,36 @@ public class Configuration {
         + "oauthUrl='"
         + oauthUrl
         + '\''
-        + ", numbersUrl='"
-        + numbersUrl
-        + '\''
-        + ", smsRegion="
-        + smsRegion
-        + ", smsUrl='"
-        + smsUrl
-        + '\''
-        + ", verificationUrl='"
-        + verificationUrl
-        + '\''
-        + ", voiceRegion="
-        + voiceRegion
-        + ", voiceUrl='"
-        + voiceUrl
-        + '\''
-        + ", voiceApplicationMngmtUrl='"
-        + voiceApplicationManagementUrl
-        + '\''
+        + ", numbersContext="
+        + numbersContext
+        + ", smsContext="
+        + smsContext
+        + ", verificationContext="
+        + verificationContext
+        + ", voiceContext="
+        + voiceContext
         + '}';
   }
 
   /**
-   * Get Key ID
+   * Get Sinch unified credentials
    *
-   * @return key id.
+   * @return Credentials
    * @see <a href="https://developers.sinch.com/">https://developers.sinch.com/</a>
    * @since 1.0
    */
-  public String getKeyId() {
-    return keyId;
+  public Optional<UnifiedCredentials> getUnifiedCredentials() {
+    return Optional.ofNullable(unifiedCredentials);
   }
 
   /**
-   * Get key ID
+   * Get SMS service plan ID credentials
    *
-   * @return key secret.
-   * @see <a href="https://developers.sinch.com/">https://developers.sinch.com/</a>
+   * @return Credentials
    * @since 1.0
    */
-  public String getKeySecret() {
-    return keySecret;
-  }
-
-  /**
-   * Get Project ID
-   *
-   * @return Project id.
-   * @see <a href="https://developers.sinch.com/">https://developers.sinch.com/</a>
-   * @since 1.0
-   */
-  public String getProjectId() {
-    return projectId;
+  public Optional<SmsServicePlanCredentials> getSmsServicePlanCredentials() {
+    return Optional.ofNullable(smsServicePlanCredentials);
   }
 
   /**
@@ -131,157 +93,56 @@ public class Configuration {
   }
 
   /**
-   * Numbers Server Configuration
+   * Get Numbers domain related execution context
    *
-   * @return Numbers Server configuration to be used
+   * @return Current Numbers context
    * @since 1.0
    */
-  public ServerConfiguration getNumbersServer() {
-    return new ServerConfiguration(getNumbersUrl());
+  public Optional<NumbersContext> getNumbersContext() {
+    return Optional.ofNullable(numbersContext);
   }
 
   /**
-   * Numbers URL
+   * Get SMS domain related execution context
    *
-   * @return Numbers Server URL
+   * @return Current SMS context
    * @since 1.0
    */
-  public String getNumbersUrl() {
-    return numbersUrl;
+  public Optional<SmsContext> getSmsContext() {
+    return Optional.ofNullable(smsContext);
   }
 
   /**
-   * SMS Server Configuration
+   * Get Verification domain related execution context
    *
-   * @return SMS Server configuration to be used
+   * @return Current Verification context
    * @since 1.0
    */
-  public ServerConfiguration getSmsServer() {
-    return new ServerConfiguration(String.format(getSmsUrl(), getSmsRegion()));
+  public Optional<VerificationContext> getVerificationContext() {
+    return Optional.ofNullable(verificationContext);
   }
 
   /**
-   * SMS Region
+   * Get Voice domain related execution context
    *
-   * @return SMS region
-   * @see <a
-   *     href="https://developers.sinch.com/docs/sms/api-reference/#base-url/">https://developers.sinch.com/docs/sms/api-reference/#base-url/</a>
+   * @return Current Voice context
    * @since 1.0
    */
-  public SMSRegion getSmsRegion() {
-    return smsRegion;
+  public Optional<VoiceContext> getVoiceContext() {
+    return Optional.ofNullable(voiceContext);
   }
 
   /**
-   * SMS URL
+   * Credentials to be used for Verification and Voice services
    *
-   * @return SMS Server URL
-   * @since 1.0
-   */
-  public String getSmsUrl() {
-    return smsUrl;
-  }
-
-  /**
-   * Verification Server Configuration
-   *
-   * @return Verification Server configuration to be used
-   * @since 1.0
-   */
-  public ServerConfiguration getVerificationServer() {
-    return new ServerConfiguration(getVerificationUrl());
-  }
-
-  /**
-   * Verification URL
-   *
-   * @return Verification Server URL
-   * @since 1.0
-   */
-  public String getVerificationUrl() {
-    return verificationUrl;
-  }
-
-  /**
-   * Voice region
-   *
-   * @return Selected Voice Region
-   * @since 1.0
-   */
-  public VoiceRegion getVoiceRegion() {
-    return voiceRegion;
-  }
-
-  /**
-   * Voice URL
-   *
-   * @return Voice Server URL
-   * @since 1.0
-   */
-  public String getVoiceUrl() {
-    return voiceUrl;
-  }
-
-  /**
-   * Voice Server Configuration
-   *
-   * @return Voice Server configuration to be used
-   * @since 1.0
-   */
-  public ServerConfiguration getVoiceServer() {
-    return new ServerConfiguration(getVoiceUrl());
-  }
-
-  /**
-   * Voice Application Management URL
-   *
-   * @return Voice Application Management URL
-   * @since 1.0
-   */
-  public String getVoiceApplicationManagementUrl() {
-    return voiceApplicationManagementUrl;
-  }
-
-  /**
-   * Voice Application Management Configuration
-   *
-   * @return Voice Application Management to be used
-   * @since 1.0
-   */
-  public ServerConfiguration getVoiceApplicationManagementServer() {
-    return new ServerConfiguration(getVoiceApplicationManagementUrl());
-  }
-
-  /**
-   * Application key to be used for Verification and Voice services
-   *
-   * <p>Use application secret in place of unified configuration for authentication (see Sinch
-   * dashboard for details) These credentials are related to Verification &amp; Voice Apps
-   *
-   * @return Application key
+   * @return Application credentials
    * @see <a
    *     href="https://developers.sinch.com/docs/verification/api-reference/authentication/">Sinch
    *     Documentation</a>
    * @since 1.0
    */
-  public String getApplicationKey() {
-    return applicationKey;
-  }
-
-  /**
-   * Application secret to be used for Verification and Voice services
-   *
-   * <p>Use application secret in place of unified configuration for authentication (see Sinch
-   * dashboard for details) These credentials are related to Verification &amp; Voice Apps
-   *
-   * @return Application key
-   * @see <a
-   *     href="https://developers.sinch.com/docs/verification/api-reference/authentication/">Sinch
-   *     Documentation</a>
-   * @since 1.0
-   */
-  public String getApplicationSecret() {
-    return applicationSecret;
+  public Optional<ApplicationCredentials> getApplicationCredentials() {
+    return Optional.ofNullable(applicationCredentials);
   }
 
   /**
@@ -312,19 +173,14 @@ public class Configuration {
    */
   public static class Builder {
 
-    String keyId;
-    String keySecret;
-    String projectId;
+    UnifiedCredentials.Builder unifiedCredentials;
+    ApplicationCredentials.Builder applicationCredentials;
+    SmsServicePlanCredentials.Builder smsServicePlanCredentials;
     String oauthUrl;
-    String numbersUrl;
-    SMSRegion smsRegion;
-    String smsUrl;
-    String verificationUrl;
-    String applicationKey;
-    String applicationSecret;
-    VoiceRegion voiceRegion;
-    String voiceUrl;
-    String voiceApplicationMngmtUrl;
+    NumbersContext.Builder numbersContext;
+    SmsContext.Builder smsContext;
+    VerificationContext.Builder verificationContext;
+    VoiceContext.Builder voiceContext;
 
     protected Builder() {}
 
@@ -335,19 +191,25 @@ public class Configuration {
      * @since 1.0
      */
     protected Builder(Configuration configuration) {
-      this.keyId = configuration.getKeyId();
-      this.keySecret = configuration.getKeySecret();
-      this.projectId = configuration.getProjectId();
+      this.unifiedCredentials =
+          configuration.getUnifiedCredentials().map(UnifiedCredentials::builder).orElse(null);
+      this.applicationCredentials =
+          configuration
+              .getApplicationCredentials()
+              .map(ApplicationCredentials::builder)
+              .orElse(null);
+      this.smsServicePlanCredentials =
+          configuration
+              .getSmsServicePlanCredentials()
+              .map(SmsServicePlanCredentials::builder)
+              .orElse(null);
       this.oauthUrl = configuration.getOAuthUrl();
-      this.numbersUrl = configuration.getNumbersUrl();
-      this.smsRegion = configuration.getSmsRegion();
-      this.smsUrl = configuration.getSmsUrl();
-      this.verificationUrl = configuration.getVerificationUrl();
-      this.applicationKey = configuration.getApplicationKey();
-      this.applicationSecret = configuration.getApplicationSecret();
-      this.voiceRegion = configuration.getVoiceRegion();
-      this.voiceUrl = configuration.getVoiceUrl();
-      this.voiceApplicationMngmtUrl = configuration.getVoiceApplicationManagementUrl();
+      this.numbersContext =
+          configuration.getNumbersContext().map(NumbersContext::builder).orElse(null);
+      this.smsContext = configuration.getSmsContext().map(SmsContext::builder).orElse(null);
+      this.verificationContext =
+          configuration.getVerificationContext().map(VerificationContext::builder).orElse(null);
+      this.voiceContext = configuration.getVoiceContext().map(VoiceContext::builder).orElse(null);
     }
 
     /**
@@ -355,10 +217,14 @@ public class Configuration {
      *
      * @param keyId key ID
      * @return Current builder
+     * @see UnifiedCredentials#getKeyId() getter
      * @since 1.0
      */
     public Builder setKeyId(String keyId) {
-      this.keyId = keyId;
+      if (null == this.unifiedCredentials) {
+        this.unifiedCredentials = UnifiedCredentials.builder();
+      }
+      this.unifiedCredentials.setKeyId(keyId);
       return this;
     }
 
@@ -367,10 +233,14 @@ public class Configuration {
      *
      * @param keySecret key secret
      * @return Current builder
+     * @see UnifiedCredentials#getKeySecret() getter
      * @since 1.0
      */
     public Builder setKeySecret(String keySecret) {
-      this.keySecret = keySecret;
+      if (null == this.unifiedCredentials) {
+        this.unifiedCredentials = UnifiedCredentials.builder();
+      }
+      this.unifiedCredentials.setKeySecret(keySecret);
       return this;
     }
 
@@ -379,10 +249,46 @@ public class Configuration {
      *
      * @param projectId Project ID
      * @return Current builder
+     * @see UnifiedCredentials#getProjectId() getter
      * @since 1.0
      */
     public Builder setProjectId(String projectId) {
-      this.projectId = projectId;
+      if (null == this.unifiedCredentials) {
+        this.unifiedCredentials = UnifiedCredentials.builder();
+      }
+      this.unifiedCredentials.setProjectId(projectId);
+      return this;
+    }
+
+    /**
+     * Set Application key
+     *
+     * @param applicationKey key
+     * @return Current builder
+     * @see ApplicationCredentials#getApplicationKey() getter
+     * @since 1.0
+     */
+    public Builder setApplicationKey(String applicationKey) {
+      if (null == this.applicationCredentials) {
+        this.applicationCredentials = ApplicationCredentials.builder();
+      }
+      this.applicationCredentials.setApplicationKey(applicationKey);
+      return this;
+    }
+
+    /**
+     * Set Application secret
+     *
+     * @param applicationSecret key
+     * @return Current builder
+     * @see ApplicationCredentials#getApplicationSecret() () getter
+     * @since 1.0
+     */
+    public Builder setApplicationSecret(String applicationSecret) {
+      if (null == this.applicationCredentials) {
+        this.applicationCredentials = ApplicationCredentials.builder();
+      }
+      this.applicationCredentials.setApplicationSecret(applicationSecret);
       return this;
     }
 
@@ -399,135 +305,111 @@ public class Configuration {
     }
 
     /**
-     * Set Numbers API URL
+     * Set Numbers related context
      *
-     * @param numbersUrl Numbers API URL
+     * @param context {@link #getNumbersContext()} () getter}
      * @return Current builder
      * @since 1.0
      */
-    public Builder setNumbersUrl(String numbersUrl) {
-      this.numbersUrl = numbersUrl;
+    public Builder setNumbersContext(NumbersContext context) {
+      this.numbersContext = null != context ? NumbersContext.builder(context) : null;
       return this;
     }
 
     /**
-     * Set SMS region
+     * Set SMS related service plan ID
      *
-     * @param smsRegion SMS region
+     * @param servicePlanId {@link SmsServicePlanCredentials#getServicePlanId() getter}
      * @return Current builder
      * @since 1.0
      */
-    public Builder setSmsRegion(SMSRegion smsRegion) {
-      this.smsRegion = smsRegion;
+    public Builder setSmsServicePlanId(String servicePlanId) {
+      if (null == this.smsServicePlanCredentials) {
+        this.smsServicePlanCredentials = SmsServicePlanCredentials.builder();
+      }
+      this.smsServicePlanCredentials.setServicePlanId(servicePlanId);
       return this;
     }
 
     /**
-     * Set SMS API URL
+     * Set SMS related service plan token
      *
-     * @param smsUrl SMS API URL
+     * @param token {@link SmsServicePlanCredentials#getApiToken()} () getter}
      * @return Current builder
      * @since 1.0
      */
-    public Builder setSmsUrl(String smsUrl) {
-      this.smsUrl = smsUrl;
+    public Builder setSmsApiToken(String token) {
+      if (null == this.smsServicePlanCredentials) {
+        this.smsServicePlanCredentials = SmsServicePlanCredentials.builder();
+      }
+      this.smsServicePlanCredentials.setApiToken(token);
       return this;
     }
 
     /**
-     * Set Verification API URL
+     * Set SMS related region
      *
-     * @param verificationUrl Verification API URL
+     * @param region {@link SmsContext#getSmsRegion()} () getter}
      * @return Current builder
      * @since 1.0
      */
-    public Builder setVerificationUrl(String verificationUrl) {
-      this.verificationUrl = verificationUrl;
+    public Builder setSmsRegion(SMSRegion region) {
+      if (null == this.smsContext) {
+        this.smsContext = SmsContext.builder();
+      }
+      this.smsContext.setSmsRegion(region);
       return this;
     }
 
     /**
-     * Set region to be used for Vioce service
+     * Set Sms related context
      *
-     * @param voiceRegion The regino
+     * @param context {@link #getSmsContext()} ()} () getter}
      * @return Current builder
      * @since 1.0
      */
-    public Builder setVoiceRegion(VoiceRegion voiceRegion) {
-      this.voiceRegion = voiceRegion;
+    public Builder setSmsContext(SmsContext context) {
+      this.smsContext = null != context ? SmsContext.builder(context) : null;
       return this;
     }
 
     /**
-     * Set Voice URL to be used
+     * Set Verification related context
      *
-     * @param voiceUrl Voice URL
+     * @param context {@link #getVerificationContext() getter}
      * @return Current builder
      * @since 1.0
      */
-    public Builder setVoiceUrl(String voiceUrl) {
-      this.voiceUrl = voiceUrl;
+    public Builder setVerificationContext(VerificationContext context) {
+      this.verificationContext = null != context ? VerificationContext.builder(context) : null;
       return this;
     }
 
     /**
-     * Set URL dedicated to Voice Application management to be used
+     * Set Voice related region
      *
-     * @param voiceApplicationMngmtUrl Voice Application Management URL
+     * @param region {@link VoiceContext#getVoiceRegion() getter}
      * @return Current builder
      * @since 1.0
      */
-    public Builder setVoiceApplicationMngmtUrl(String voiceApplicationMngmtUrl) {
-      this.voiceApplicationMngmtUrl = voiceApplicationMngmtUrl;
+    public Builder setVoiceRegion(VoiceRegion region) {
+      if (null == this.voiceContext) {
+        this.voiceContext = VoiceContext.builder();
+      }
+      this.voiceContext.setVoiceRegion(region);
       return this;
     }
 
     /**
-     * Set Application secret
+     * Set Voice related context
      *
-     * @param applicationKey Application key to be used
+     * @param context {@link #getVoiceContext() getter}
      * @return Current builder
      * @since 1.0
      */
-    public Builder setApplicationKey(String applicationKey) {
-      this.applicationKey = applicationKey;
+    public Builder setVoiceContext(VoiceContext context) {
+      this.voiceContext = null != context ? VoiceContext.builder(context) : null;
       return this;
-    }
-
-    /**
-     * Set Application secret
-     *
-     * @param applicationSecret Application secret to be used
-     * @return Current builder
-     * @since 1.0
-     */
-    public Builder setApplicationSecret(String applicationSecret) {
-      this.applicationSecret = applicationSecret;
-      return this;
-    }
-
-    /**
-     * Setter
-     *
-     * <p>See {@link Configuration#getVoiceRegion()} getter
-     *
-     * @return Current builder
-     * @since 1.0
-     */
-    public VoiceRegion getVoiceRegion() {
-      return voiceRegion;
-    }
-
-    /**
-     * Setter
-     *
-     * <p>See {@link Configuration#getVoiceUrl()} getter
-     *
-     * @return Current builder
-     * @since 1.0
-     */
-    public String getVoiceUrl() {
-      return voiceUrl;
     }
 
     /**
@@ -537,20 +419,16 @@ public class Configuration {
      * @since 1.0
      */
     public Configuration build() {
+
       return new Configuration(
-          keyId,
-          keySecret,
-          projectId,
+          null != unifiedCredentials ? unifiedCredentials.build() : null,
+          null != applicationCredentials ? applicationCredentials.build() : null,
+          null != smsServicePlanCredentials ? smsServicePlanCredentials.build() : null,
           oauthUrl,
-          numbersUrl,
-          smsRegion,
-          smsUrl,
-          verificationUrl,
-          voiceRegion,
-          voiceUrl,
-          voiceApplicationMngmtUrl,
-          applicationKey,
-          applicationSecret);
+          null != numbersContext ? numbersContext.build() : null,
+          null != smsContext ? smsContext.build() : null,
+          null != verificationContext ? verificationContext.build() : null,
+          null != voiceContext ? voiceContext.build() : null);
     }
   }
 }

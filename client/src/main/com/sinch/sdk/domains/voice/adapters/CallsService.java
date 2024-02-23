@@ -8,7 +8,7 @@ import com.sinch.sdk.domains.voice.adapters.converters.CallsDtoConverter;
 import com.sinch.sdk.domains.voice.models.CallLegType;
 import com.sinch.sdk.domains.voice.models.response.CallInformation;
 import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.VoiceContext;
 import java.util.Map;
 
 public class CallsService implements com.sinch.sdk.domains.voice.CallsService {
@@ -16,9 +16,8 @@ public class CallsService implements com.sinch.sdk.domains.voice.CallsService {
   private final CallsApi api;
 
   public CallsService(
-      Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManagers) {
-    this.api =
-        new CallsApi(httpClient, configuration.getVoiceServer(), authManagers, new HttpMapper());
+      VoiceContext context, HttpClient httpClient, Map<String, AuthManager> authManagers) {
+    this.api = new CallsApi(httpClient, context.getVoiceServer(), authManagers, new HttpMapper());
   }
 
   protected CallsApi getApi() {

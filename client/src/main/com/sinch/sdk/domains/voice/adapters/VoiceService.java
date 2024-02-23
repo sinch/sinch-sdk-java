@@ -9,11 +9,15 @@ import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.voice.ApplicationsService;
 import com.sinch.sdk.domains.voice.CalloutsService;
 import com.sinch.sdk.domains.voice.WebHooksService;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.ApplicationCredentials;
+import com.sinch.sdk.models.VoiceContext;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
+import java.util.logging.Logger;
 
 public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
+  private static final Logger LOGGER = Logger.getLogger(VoiceService.class.getName());
 
   private static final String SECURITY_SCHEME_KEYWORD = "Signed";
 
@@ -21,7 +25,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
 
   private static final String APPLICATION_SECURITY_SCHEME_KEYWORD = "Application";
 
-  private final Configuration configuration;
+  private final VoiceContext context;
   private final HttpClient httpClient;
   private CalloutsService callouts;
   private ConferencesService conferences;
@@ -32,25 +36,31 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
   private Map<String, AuthManager> clientAuthManagers;
   private Map<String, AuthManager> webhooksAuthManagers;
 
-  public VoiceService(Configuration configuration, HttpClient httpClient) {
+  public VoiceService(
+      ApplicationCredentials credentials, VoiceContext context, HttpClient httpClient) {
 
     // Currently, we are not supporting unified credentials: ensure application credentials are
     // defined
+    Objects.requireNonNull(credentials, "Credentials must be defined");
+    Objects.requireNonNull(context, "Context must be defined");
+    StringUtil.requireNonEmpty(credentials.getApplicationKey(), "'applicationKey' must be defined");
     StringUtil.requireNonEmpty(
-        configuration.getApplicationKey(), "'applicationKey' must be defined");
-    StringUtil.requireNonEmpty(
-        configuration.getApplicationSecret(), "'applicationSecret' must be defined");
+        credentials.getApplicationSecret(), "'applicationSecret' must be defined");
 
-    this.configuration = configuration;
+    LOGGER.fine("Activate voice API with server='" + context.getVoiceServer().getUrl() + "'");
+
+    this.context = context;
     this.httpClient = httpClient;
-    setApplicationCredentials(
-        configuration.getApplicationKey(), configuration.getApplicationSecret());
+    setApplicationCredentials(credentials);
   }
 
-  private void setApplicationCredentials(String key, String secret) {
+  private void setApplicationCredentials(ApplicationCredentials credentials) {
 
-    AuthManager basicAuthManager = new BasicAuthManager(key, secret);
-    AuthManager applicationAuthManager = new ApplicationAuthManager(key, secret);
+    AuthManager basicAuthManager =
+        new BasicAuthManager(credentials.getApplicationKey(), credentials.getApplicationSecret());
+    AuthManager applicationAuthManager =
+        new ApplicationAuthManager(
+            credentials.getApplicationKey(), credentials.getApplicationSecret());
 
     clientAuthManagers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     clientAuthManagers.put(SECURITY_SCHEME_KEYWORD, applicationAuthManager);
@@ -67,7 +77,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
       checkCredentials();
       this.callouts =
           new com.sinch.sdk.domains.voice.adapters.CalloutsService(
-              configuration, httpClient, clientAuthManagers);
+              context, httpClient, clientAuthManagers);
     }
     return this.callouts;
   }
@@ -77,7 +87,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
       checkCredentials();
       this.conferences =
           new com.sinch.sdk.domains.voice.adapters.ConferencesService(
-              configuration, httpClient, clientAuthManagers);
+              context, httpClient, clientAuthManagers);
     }
     return this.conferences;
   }
@@ -87,7 +97,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
       checkCredentials();
       this.calls =
           new com.sinch.sdk.domains.voice.adapters.CallsService(
-              configuration, httpClient, clientAuthManagers);
+              context, httpClient, clientAuthManagers);
     }
     return this.calls;
   }
@@ -97,7 +107,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
       checkCredentials();
       this.applications =
           new com.sinch.sdk.domains.voice.adapters.ApplicationsService(
-              configuration, httpClient, clientAuthManagers);
+              context, httpClient, clientAuthManagers);
     }
     return this.applications;
   }

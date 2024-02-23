@@ -25,7 +25,7 @@ import com.sinch.sdk.domains.verification.models.response.StartVerificationRespo
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSMS;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSeamless;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
 
 public class VerificationsService
@@ -34,10 +34,10 @@ public class VerificationsService
   private final SendingAndReportingVerificationsApi api;
 
   public VerificationsService(
-      Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManagers) {
+      VerificationContext context, HttpClient httpClient, Map<String, AuthManager> authManagers) {
     this.api =
         new SendingAndReportingVerificationsApi(
-            httpClient, configuration.getVerificationServer(), authManagers, new HttpMapper());
+            httpClient, context.getVerificationServer(), authManagers, new HttpMapper());
   }
 
   protected SendingAndReportingVerificationsApi getApi() {

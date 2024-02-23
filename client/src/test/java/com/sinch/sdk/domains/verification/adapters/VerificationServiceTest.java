@@ -4,7 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.ApplicationCredentials;
+import com.sinch.sdk.models.VerificationContext;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
@@ -12,25 +13,76 @@ class VerificationServiceTest {
 
   @Mock HttpClient httpClient;
 
+  VerificationContext context = VerificationContext.builder().setVerificationUrl("foo url").build();
+
+  @Test
+  void doNotAcceptNullApplicationCredentials() {
+
+    Exception exception =
+        assertThrows(
+            NullPointerException.class, () -> new VerificationService(null, context, httpClient));
+
+    assertTrue(exception.getMessage().contains("Credentials must be defined"));
+  }
+
   @Test
   void doNotAcceptNullApplicationKey() {
-    Configuration configuration =
-        Configuration.builder().setApplicationKey(null).setApplicationSecret("foo secret").build();
+    ApplicationCredentials credentials =
+        ApplicationCredentials.builder()
+            .setApplicationKey(null)
+            .setApplicationSecret("foo secret")
+            .build();
+
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
-            () -> new VerificationService(configuration, httpClient));
+            () -> new VerificationService(credentials, context, httpClient));
+
     assertTrue(exception.getMessage().contains("applicationKey"));
   }
 
   @Test
   void doNotAcceptNullApplicationSecret() {
-    Configuration configuration =
-        Configuration.builder().setApplicationKey("foo key").setApplicationSecret(null).build();
+    ApplicationCredentials credentials =
+        ApplicationCredentials.builder()
+            .setApplicationKey("foo key")
+            .setApplicationSecret(null)
+            .build();
+
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
-            () -> new VerificationService(configuration, httpClient));
+            () -> new VerificationService(credentials, context, httpClient));
+
     assertTrue(exception.getMessage().contains("applicationSecret"));
+  }
+
+  @Test
+  void doNotAcceptNullContext() {
+    ApplicationCredentials credentials =
+        ApplicationCredentials.builder()
+            .setApplicationKey("foo key")
+            .setApplicationSecret("foo secret")
+            .build();
+    Exception exception =
+        assertThrows(
+            NullPointerException.class,
+            () -> new VerificationService(credentials, null, httpClient));
+    assertTrue(exception.getMessage().contains("Context must be defined"));
+  }
+
+  @Test
+  void doNotAcceptNullVerificationUrl() {
+    ApplicationCredentials credentials =
+        ApplicationCredentials.builder()
+            .setApplicationKey("foo key")
+            .setApplicationSecret("foo secret")
+            .build();
+    VerificationContext context = VerificationContext.builder().build();
+    Exception exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> new VerificationService(credentials, context, httpClient));
+    assertTrue(exception.getMessage().contains("verificationUrl"));
   }
 }

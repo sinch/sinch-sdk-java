@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.NumbersContext;
 import java.io.IOException;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -23,7 +24,7 @@ class SinchClientTestIT extends BaseTest {
           .setKeyId("foo")
           .setKeySecret("foo")
           .setProjectId("foo")
-          .setNumbersUrl(serverUrl)
+          .setNumbersContext(NumbersContext.builder().setNumbersUrl(serverUrl).build())
           .build();
 
   SinchClient sinchClient = new SinchClient(configuration);

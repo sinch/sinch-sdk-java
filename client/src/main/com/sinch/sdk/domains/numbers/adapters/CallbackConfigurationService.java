@@ -10,32 +10,31 @@ import com.sinch.sdk.domains.numbers.adapters.converters.CallbackConfigurationUp
 import com.sinch.sdk.domains.numbers.models.CallbackConfiguration;
 import com.sinch.sdk.domains.numbers.models.dto.v1.CallbackConfigurationDto;
 import com.sinch.sdk.domains.numbers.models.requests.CallbackConfigurationUpdateRequestParameters;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.NumbersContext;
 import java.util.Map;
 
 public class CallbackConfigurationService
     implements com.sinch.sdk.domains.numbers.CallbackConfigurationService {
 
-  private Configuration configuration;
-  private CallbacksApi api;
-
-  public CallbackConfigurationService() {}
+  private final String uriUUID;
+  private final CallbacksApi api;
 
   public CallbackConfigurationService(
-      Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManagers) {
-    this.configuration = configuration;
+      String uriUUID,
+      NumbersContext context,
+      HttpClient httpClient,
+      Map<String, AuthManager> authManagers) {
+    this.uriUUID = uriUUID;
     this.api =
-        new CallbacksApi(
-            httpClient, configuration.getNumbersServer(), authManagers, new HttpMapper());
+        new CallbacksApi(httpClient, context.getNumbersServer(), authManagers, new HttpMapper());
   }
 
-  private CallbacksApi getApi() {
+  protected CallbacksApi getApi() {
     return this.api;
   }
 
   public CallbackConfiguration get() throws ApiException {
-    CallbackConfigurationDto response =
-        getApi().getCallbackConfiguration(configuration.getProjectId());
+    CallbackConfigurationDto response = getApi().getCallbackConfiguration(uriUUID);
     return CallbackConfigurationDtoConverter.convert(response);
   }
 
@@ -45,7 +44,7 @@ public class CallbackConfigurationService
     CallbackConfigurationDto response =
         getApi()
             .updateCallbackConfiguration(
-                configuration.getProjectId(),
+                uriUUID,
                 CallbackConfigurationUpdateRequestParametersDtoConverter.convert(parameters));
     return CallbackConfigurationDtoConverter.convert(response);
   }

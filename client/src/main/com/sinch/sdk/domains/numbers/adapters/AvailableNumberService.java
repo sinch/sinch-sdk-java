@@ -11,7 +11,11 @@ import com.sinch.sdk.domains.numbers.adapters.converters.ActiveNumberDtoConverte
 import com.sinch.sdk.domains.numbers.adapters.converters.AvailableNumberDtoConverter;
 import com.sinch.sdk.domains.numbers.adapters.converters.AvailableRentAnyRequestParametersDtoConverter;
 import com.sinch.sdk.domains.numbers.adapters.converters.AvailableRentRequestParametersDtoConverter;
-import com.sinch.sdk.domains.numbers.models.*;
+import com.sinch.sdk.domains.numbers.models.ActiveNumber;
+import com.sinch.sdk.domains.numbers.models.AvailableNumber;
+import com.sinch.sdk.domains.numbers.models.NumberPattern;
+import com.sinch.sdk.domains.numbers.models.NumberType;
+import com.sinch.sdk.domains.numbers.models.SearchPattern;
 import com.sinch.sdk.domains.numbers.models.dto.v1.ActiveNumberDto;
 import com.sinch.sdk.domains.numbers.models.dto.v1.AvailableNumberDto;
 import com.sinch.sdk.domains.numbers.models.dto.v1.AvailableNumbersResponseDto;
@@ -19,7 +23,7 @@ import com.sinch.sdk.domains.numbers.models.requests.AvailableNumberListAllReque
 import com.sinch.sdk.domains.numbers.models.requests.AvailableNumberRentAnyRequestParameters;
 import com.sinch.sdk.domains.numbers.models.requests.AvailableNumberRentRequestParameters;
 import com.sinch.sdk.domains.numbers.models.responses.AvailableNumberListResponse;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.NumbersContext;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -28,20 +32,21 @@ import java.util.stream.Collectors;
 public class AvailableNumberService
     implements com.sinch.sdk.domains.numbers.AvailableNumberService {
 
-  private Configuration configuration;
-  private AvailableNumberApi api;
-
-  public AvailableNumberService() {}
+  private final String uriUUID;
+  private final AvailableNumberApi api;
 
   public AvailableNumberService(
-      Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManagers) {
-    this.configuration = configuration;
+      String uriUUID,
+      NumbersContext context,
+      HttpClient httpClient,
+      Map<String, AuthManager> authManagers) {
+    this.uriUUID = uriUUID;
     this.api =
         new AvailableNumberApi(
-            httpClient, configuration.getNumbersServer(), authManagers, new HttpMapper());
+            httpClient, context.getNumbersServer(), authManagers, new HttpMapper());
   }
 
-  private AvailableNumberApi getApi() {
+  protected AvailableNumberApi getApi() {
     return this.api;
   }
 
@@ -72,7 +77,7 @@ public class AvailableNumberService
     AvailableNumbersResponseDto response =
         getApi()
             .numberServiceListAvailableNumbers(
-                configuration.getProjectId(),
+                uriUUID,
                 regionCode,
                 type.value(),
                 patternPattern,
@@ -85,8 +90,7 @@ public class AvailableNumberService
   }
 
   public AvailableNumber checkAvailability(String phoneNumber) throws ApiException {
-    AvailableNumberDto response =
-        getApi().numberServiceGetAvailableNumber(configuration.getProjectId(), phoneNumber);
+    AvailableNumberDto response = getApi().numberServiceGetAvailableNumber(uriUUID, phoneNumber);
     return AvailableNumberDtoConverter.convert(response);
   }
 
@@ -99,7 +103,7 @@ public class AvailableNumberService
     ActiveNumberDto response =
         getApi()
             .numberServiceRentNumber(
-                configuration.getProjectId(),
+                uriUUID,
                 phoneNumber,
                 AvailableRentRequestParametersDtoConverter.convert(guardParameters));
     return ActiveNumberDtoConverter.convert(response);
@@ -111,8 +115,7 @@ public class AvailableNumberService
     ActiveNumberDto response =
         getApi()
             .numberServiceRentAnyNumber(
-                configuration.getProjectId(),
-                AvailableRentAnyRequestParametersDtoConverter.convert(parameters));
+                uriUUID, AvailableRentAnyRequestParametersDtoConverter.convert(parameters));
     return ActiveNumberDtoConverter.convert(response);
   }
 }

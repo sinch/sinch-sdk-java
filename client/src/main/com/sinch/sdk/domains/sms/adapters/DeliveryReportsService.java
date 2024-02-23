@@ -16,7 +16,7 @@ import com.sinch.sdk.domains.sms.models.dto.v1.DeliveryReportListDto;
 import com.sinch.sdk.domains.sms.models.requests.DeliveryReportBatchGetRequestParameters;
 import com.sinch.sdk.domains.sms.models.requests.DeliveryReportListRequestParameters;
 import com.sinch.sdk.domains.sms.models.responses.DeliveryReportsListResponse;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.SmsContext;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Map;
@@ -36,21 +36,21 @@ import java.util.stream.Collectors;
  */
 public class DeliveryReportsService implements com.sinch.sdk.domains.sms.DeliveryReportsService {
 
-  private Configuration configuration;
-  private DeliveryReportsApi api;
+  private final String uriPathID;
+  private final DeliveryReportsApi api;
 
-  public DeliveryReportsService() {}
-
-  private DeliveryReportsApi getApi() {
+  protected DeliveryReportsApi getApi() {
     return this.api;
   }
 
   public DeliveryReportsService(
-      Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManagers) {
-    this.configuration = configuration;
+      String uriPathID,
+      SmsContext context,
+      HttpClient httpClient,
+      Map<String, AuthManager> authManagers) {
+    this.uriPathID = uriPathID;
     this.api =
-        new DeliveryReportsApi(
-            httpClient, configuration.getSmsServer(), authManagers, new HttpMapper());
+        new DeliveryReportsApi(httpClient, context.getSmsServer(), authManagers, new HttpMapper());
   }
 
   public DeliveryReportBatch get(String batchId, DeliveryReportBatchGetRequestParameters parameters)
@@ -62,7 +62,7 @@ public class DeliveryReportsService implements com.sinch.sdk.domains.sms.Deliver
     return DeliveryReportDtoConverter.convert(
         getApi()
             .getDeliveryReportByBatchId(
-                configuration.getProjectId(),
+                uriPathID,
                 batchId,
                 guardParameters.getType().map(DeliveryReportType::value).orElse(null),
                 guardParameters
@@ -78,7 +78,7 @@ public class DeliveryReportsService implements com.sinch.sdk.domains.sms.Deliver
   public DeliveryReportRecipient getForNumber(String batchId, String recipient)
       throws ApiException {
     return DeliveryReportDtoConverter.convert(
-        getApi().getDeliveryReportByPhoneNumber(configuration.getProjectId(), batchId, recipient));
+        getApi().getDeliveryReportByPhoneNumber(uriPathID, batchId, recipient));
   }
 
   public DeliveryReportsListResponse list() throws ApiException {
@@ -93,7 +93,7 @@ public class DeliveryReportsService implements com.sinch.sdk.domains.sms.Deliver
     DeliveryReportListDto response =
         getApi()
             .getDeliveryReports(
-                configuration.getProjectId(),
+                uriPathID,
                 guardParameters.getPage().orElse(null),
                 guardParameters.getPageSize().orElse(null),
                 guardParameters.getStartDate().map(Instant::toString).orElse(null),

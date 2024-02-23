@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.VoiceContext;
 import com.sinch.sdk.models.VoiceRegion;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +23,7 @@ class SinchClientTest {
     Configuration configuration =
         Configuration.builder().setKeyId("foo").setKeySecret("foo").setProjectId("foo").build();
     SinchClient client = new SinchClient(configuration);
-    assertNotNull(client.getConfiguration().getNumbersUrl());
+    assertNotNull(client.getConfiguration().getNumbersContext().get().getNumbersUrl());
   }
 
   @Test
@@ -30,7 +31,7 @@ class SinchClientTest {
     Configuration configuration =
         Configuration.builder().setKeyId("foo").setKeySecret("foo").setProjectId("foo").build();
     SinchClient client = new SinchClient(configuration);
-    assertNotNull(client.getConfiguration().getSmsUrl());
+    assertNotNull(client.getConfiguration().getSmsContext().get().getSmsUrl());
   }
 
   @Test
@@ -38,7 +39,7 @@ class SinchClientTest {
     Configuration configuration =
         Configuration.builder().setKeyId("foo").setKeySecret("foo").setProjectId("foo").build();
     SinchClient client = new SinchClient(configuration);
-    assertNotNull(client.getConfiguration().getVerificationUrl());
+    assertNotNull(client.getConfiguration().getVerificationContext().get().getVerificationUrl());
   }
 
   @Test
@@ -46,7 +47,8 @@ class SinchClientTest {
     Configuration configuration =
         Configuration.builder().setKeyId("foo").setKeySecret("foo").setProjectId("foo").build();
     SinchClient client = new SinchClient(configuration);
-    assertFalse(StringUtil.isEmpty(client.getConfiguration().getVoiceUrl()));
+    assertFalse(
+        StringUtil.isEmpty(client.getConfiguration().getVoiceContext().get().getVoiceUrl()));
   }
 
   @Test
@@ -54,7 +56,9 @@ class SinchClientTest {
     Configuration configuration =
         Configuration.builder().setKeyId("foo").setKeySecret("foo").setProjectId("foo").build();
     SinchClient client = new SinchClient(configuration);
-    assertFalse(StringUtil.isEmpty(client.getConfiguration().getVoiceApplicationManagementUrl()));
+    assertFalse(
+        StringUtil.isEmpty(
+            client.getConfiguration().getVoiceContext().get().getVoiceApplicationManagementUrl()));
   }
 
   @Test
@@ -64,10 +68,12 @@ class SinchClientTest {
             .setKeyId("foo")
             .setKeySecret("foo")
             .setProjectId("foo")
-            .setVoiceRegion(VoiceRegion.EUROPE)
+            .setVoiceContext(VoiceContext.builder().setVoiceRegion(VoiceRegion.EUROPE).build())
             .build();
     SinchClient client = new SinchClient(configuration);
-    assertEquals(client.getConfiguration().getVoiceUrl(), "https://calling-euc1.api.sinch.com");
+    assertEquals(
+        client.getConfiguration().getVoiceContext().get().getVoiceUrl(),
+        "https://calling-euc1.api.sinch.com");
   }
 
   @Test
@@ -77,12 +83,16 @@ class SinchClientTest {
             .setKeyId("foo")
             .setKeySecret("foo")
             .setProjectId("foo")
-            .setVoiceRegion(VoiceRegion.EUROPE)
-            .setVoiceUrl("my foo url")
+            .setVoiceContext(
+                VoiceContext.builder()
+                    .setVoiceRegion(VoiceRegion.EUROPE)
+                    .setVoiceUrl("my foo url")
+                    .build())
             .build();
     SinchClient client = new SinchClient(configuration);
-    assertEquals(client.getConfiguration().getVoiceRegion(), VoiceRegion.EUROPE);
-    assertEquals(client.getConfiguration().getVoiceUrl(), "my foo url");
+    assertEquals(
+        client.getConfiguration().getVoiceContext().get().getVoiceRegion(), VoiceRegion.EUROPE);
+    assertEquals(client.getConfiguration().getVoiceContext().get().getVoiceUrl(), "my foo url");
   }
 
   @Test
@@ -92,9 +102,12 @@ class SinchClientTest {
             .setKeyId("foo")
             .setKeySecret("foo")
             .setProjectId("foo")
-            .setVoiceApplicationMngmtUrl("my foo url")
+            .setVoiceContext(
+                VoiceContext.builder().setVoiceApplicationMngmtUrl("my foo url").build())
             .build();
     SinchClient client = new SinchClient(configuration);
-    assertEquals(client.getConfiguration().getVoiceApplicationManagementUrl(), "my foo url");
+    assertEquals(
+        client.getConfiguration().getVoiceContext().get().getVoiceApplicationManagementUrl(),
+        "my foo url");
   }
 }

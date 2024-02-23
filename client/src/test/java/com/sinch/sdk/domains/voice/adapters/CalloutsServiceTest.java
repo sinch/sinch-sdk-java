@@ -16,7 +16,7 @@ import com.sinch.sdk.domains.voice.models.dto.v1.CalloutResponseDtoTest;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConferenceTest;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersCustomTest;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersTTSTest;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.VoiceContext;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +27,7 @@ import org.mockito.Mock;
 public class CalloutsServiceTest extends BaseTest {
 
   @Mock CalloutsApi api;
-  @Mock Configuration configuration;
+  @Mock VoiceContext context;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
 
@@ -35,7 +35,7 @@ public class CalloutsServiceTest extends BaseTest {
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new CalloutsService(configuration, httpClient, authManagers));
+    service = spy(new CalloutsService(context, httpClient, authManagers));
     doReturn(api).when(service).getApi();
   }
 

@@ -21,7 +21,7 @@ import com.sinch.sdk.domains.numbers.models.dto.v1.ActiveNumbersResponseDto;
 import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberListRequestParameters;
 import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberUpdateRequestParameters;
 import com.sinch.sdk.domains.numbers.models.responses.ActiveNumberListResponse;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.NumbersContext;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -29,20 +29,20 @@ import java.util.stream.Collectors;
 
 public class ActiveNumberService implements com.sinch.sdk.domains.numbers.ActiveNumberService {
 
-  private Configuration configuration;
-  private ActiveNumberApi api;
-
-  public ActiveNumberService() {}
+  private final String uriUUID;
+  private final ActiveNumberApi api;
 
   public ActiveNumberService(
-      Configuration configuration, HttpClient httpClient, Map<String, AuthManager> authManagers) {
-    this.configuration = configuration;
+      String uriUUID,
+      NumbersContext context,
+      HttpClient httpClient,
+      Map<String, AuthManager> authManagers) {
+    this.uriUUID = uriUUID;
     this.api =
-        new ActiveNumberApi(
-            httpClient, configuration.getNumbersServer(), authManagers, new HttpMapper());
+        new ActiveNumberApi(httpClient, context.getNumbersServer(), authManagers, new HttpMapper());
   }
 
-  private ActiveNumberApi getApi() {
+  protected ActiveNumberApi getApi() {
     return this.api;
   }
 
@@ -80,7 +80,7 @@ public class ActiveNumberService implements com.sinch.sdk.domains.numbers.Active
     ActiveNumbersResponseDto response =
         getApi()
             .numberServiceListActiveNumbers(
-                configuration.getProjectId(),
+                uriUUID,
                 regionCode,
                 type.value(),
                 patternPattern,
@@ -96,14 +96,12 @@ public class ActiveNumberService implements com.sinch.sdk.domains.numbers.Active
   }
 
   public ActiveNumber get(String phoneNumber) throws ApiException {
-    ActiveNumberDto response =
-        getApi().numberServiceGetActiveNumber(configuration.getProjectId(), phoneNumber);
+    ActiveNumberDto response = getApi().numberServiceGetActiveNumber(uriUUID, phoneNumber);
     return ActiveNumberDtoConverter.convert(response);
   }
 
   public ActiveNumber release(String phoneNumber) throws ApiException {
-    ActiveNumberDto response =
-        getApi().numberServiceReleaseNumber(configuration.getProjectId(), phoneNumber);
+    ActiveNumberDto response = getApi().numberServiceReleaseNumber(uriUUID, phoneNumber);
     return ActiveNumberDtoConverter.convert(response);
   }
 
@@ -112,7 +110,7 @@ public class ActiveNumberService implements com.sinch.sdk.domains.numbers.Active
     ActiveNumberDto response =
         getApi()
             .numberServiceUpdateActiveNumber(
-                configuration.getProjectId(),
+                uriUUID,
                 phoneNumber,
                 ActiveNumberUpdateRequestParametersDtoConverter.convert(parameters));
     return ActiveNumberDtoConverter.convert(response);

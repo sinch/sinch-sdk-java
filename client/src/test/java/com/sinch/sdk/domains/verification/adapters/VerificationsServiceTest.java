@@ -26,7 +26,7 @@ import com.sinch.sdk.domains.verification.models.response.StartVerificationRespo
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSMS;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSeamless;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,7 +58,7 @@ public class VerificationsServiceTest extends BaseTest {
   public VerificationReportRequestResourceDto verificationReportSMSRequestDto;
 
   @Mock SendingAndReportingVerificationsApi api;
-  @Mock Configuration configuration;
+  @Mock VerificationContext context;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
 
@@ -66,7 +66,7 @@ public class VerificationsServiceTest extends BaseTest {
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new VerificationsService(configuration, httpClient, authManagers));
+    service = spy(new VerificationsService(context, httpClient, authManagers));
     doReturn(api).when(service).getApi();
   }
 

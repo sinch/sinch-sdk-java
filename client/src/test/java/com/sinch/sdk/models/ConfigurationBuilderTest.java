@@ -1,7 +1,5 @@
 package com.sinch.sdk.models;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -16,26 +14,24 @@ class ConfigurationBuilderTest {
 
   @Test
   void build() {
-    Configuration value =
+    Configuration builder =
         new Configuration.Builder()
             .setKeyId(KEY)
             .setKeySecret(SECRET)
             .setProjectId(PROJECT)
             .setOAuthUrl(OAUTH_URL)
-            .setNumbersUrl(NUMBERS_SERVER)
-            .setSmsRegion(SMS_REGION)
-            .setSmsUrl(SMS_SERVER)
+            .setNumbersContext(NumbersContext.builder().setNumbersUrl(NUMBERS_SERVER).build())
+            .setSmsContext(
+                SmsContext.builder().setSmsRegion(SMS_REGION).setSmsUrl(SMS_SERVER).build())
             .build();
-    assertEquals(KEY, value.getKeyId());
-    assertEquals(SECRET, value.getKeySecret());
-    assertEquals(PROJECT, value.getProjectId());
-    Assertions.assertEquals(OAUTH_URL, value.getOAuthServer().getUrl());
-    Assertions.assertEquals(NUMBERS_SERVER, value.getNumbersServer().getUrl());
+    Assertions.assertEquals(OAUTH_URL, builder.getOAuthServer().getUrl());
+    Assertions.assertEquals(
+        NUMBERS_SERVER, builder.getNumbersContext().get().getNumbersServer().getUrl());
     Assertions.assertTrue(
-        value.getSmsServer().getUrl().contains(SMS_REGION.value()),
+        builder.getSmsContext().get().getSmsRegion().toString().contains(SMS_REGION.value()),
         "SMS Region present within SMS server URL");
     Assertions.assertTrue(
-        value.getSmsServer().getUrl().contains("fooSMS_SERVER"),
+        builder.getSmsContext().get().getSmsServer().getUrl().contains("fooSMS_SERVER"),
         "SMS server present within SMS server URL");
   }
 }

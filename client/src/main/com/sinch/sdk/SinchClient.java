@@ -7,12 +7,16 @@ import com.sinch.sdk.domains.verification.VerificationService;
 import com.sinch.sdk.domains.voice.VoiceService;
 import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.SMSRegion;
+import com.sinch.sdk.models.SmsContext;
+import com.sinch.sdk.models.VerificationContext;
+import com.sinch.sdk.models.VoiceContext;
 import com.sinch.sdk.models.VoiceRegion;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -29,6 +33,7 @@ public class SinchClient {
   private static final String NUMBERS_SERVER_KEY = "numbers-server";
   private static final String SMS_REGION_KEY = "sms-region";
   private static final String SMS_SERVER_KEY = "sms-server";
+  private static final String SMS_SERVER_SERVICE_PLAN_KEY = "sms-server-service-plan";
 
   private static final String VOICE_REGION_KEY = "voice-region";
   private static final String VOICE_APPLICATION_MANAGEMENT_SERVER_KEY =
@@ -83,60 +88,104 @@ public class SinchClient {
     versionProperties = handlePropertiesFile(VERSION_PROPERTIES_FILE_NAME);
     LOGGER.fine(
         String.format(
-            "%s (%s) started with projectId '%s'",
+            "%s (%s) started",
             versionProperties.getProperty(PROJECT_NAME_KEY),
-            versionProperties.getProperty(PROJECT_VERSION_KEY),
-            configuration.getProjectId()));
+            versionProperties.getProperty(PROJECT_VERSION_KEY)));
   }
 
   private void handleDefaultNumbersSettings(
       Configuration configuration, Properties props, Configuration.Builder builder) {
 
-    if (null == configuration.getNumbersUrl() && props.containsKey(NUMBERS_SERVER_KEY)) {
-      builder.setNumbersUrl(props.getProperty(NUMBERS_SERVER_KEY));
+    String url = configuration.getNumbersContext().map(NumbersContext::getNumbersUrl).orElse(null);
+
+    if (null == url && props.containsKey(NUMBERS_SERVER_KEY)) {
+      builder.setNumbersContext(
+          NumbersContext.builder().setNumbersUrl(props.getProperty(NUMBERS_SERVER_KEY)).build());
     }
   }
 
   private void handleDefaultSmsSettings(
       Configuration configuration, Properties props, Configuration.Builder builder) {
 
-    if (null == configuration.getSmsUrl() && props.containsKey(SMS_SERVER_KEY)) {
-      builder.setSmsUrl(props.getProperty(SMS_SERVER_KEY));
+    String smsUrl = configuration.getSmsContext().map(SmsContext::getSmsUrl).orElse(null);
+
+    SMSRegion smsRegion = configuration.getSmsContext().map(SmsContext::getSmsRegion).orElse(null);
+
+    // service plan ID activated: use dedicated server
+    String serverKey =
+        configuration
+            .getSmsServicePlanCredentials()
+            .map(unused -> SMS_SERVER_SERVICE_PLAN_KEY)
+            .orElse(SMS_SERVER_KEY);
+    if (null == smsUrl && props.containsKey(serverKey)) {
+      smsUrl = props.getProperty(serverKey);
     }
-    if (null == configuration.getSmsRegion() && props.containsKey(SMS_REGION_KEY)) {
-      builder.setSmsRegion(SMSRegion.from(props.getProperty(SMS_REGION_KEY)));
+
+    if (null == smsRegion && props.containsKey(SMS_REGION_KEY)) {
+      smsRegion = SMSRegion.from(props.getProperty(SMS_REGION_KEY));
+    }
+
+    if (null != smsUrl || null != smsRegion) {
+      builder.setSmsContext(SmsContext.builder().setSmsRegion(smsRegion).setSmsUrl(smsUrl).build());
     }
   }
 
   private void handleDefaultVerificationSettings(
       Configuration configuration, Properties props, Configuration.Builder builder) {
 
-    if (null == configuration.getVerificationUrl() && props.containsKey(VERIFICATION_SERVER_KEY)) {
-      builder.setVerificationUrl(props.getProperty(VERIFICATION_SERVER_KEY));
+    String url =
+        configuration
+            .getVerificationContext()
+            .map(VerificationContext::getVerificationUrl)
+            .orElse(null);
+
+    if (null == url && props.containsKey(VERIFICATION_SERVER_KEY)) {
+      builder.setVerificationContext(
+          VerificationContext.builder()
+              .setVerificationUrl(props.getProperty(VERIFICATION_SERVER_KEY))
+              .build());
     }
   }
 
   private void handleDefaultVoiceSettings(
       Configuration configuration, Properties props, Configuration.Builder builder) {
-    if (null == configuration.getVoiceRegion() && props.containsKey(VOICE_REGION_KEY)) {
-      builder.setVoiceRegion(VoiceRegion.from(props.getProperty(VOICE_REGION_KEY)));
+
+    VoiceRegion region =
+        configuration.getVoiceContext().map(VoiceContext::getVoiceRegion).orElse(null);
+
+    String voiceUrl = configuration.getVoiceContext().map(VoiceContext::getVoiceUrl).orElse(null);
+
+    String voiceApplicationManagementUrl =
+        configuration
+            .getVoiceContext()
+            .map(VoiceContext::getVoiceApplicationManagementUrl)
+            .orElse(null);
+
+    // default region to be used ?
+    if (null == region && props.containsKey(VOICE_REGION_KEY)) {
+      region = VoiceRegion.from(props.getProperty(VOICE_REGION_KEY));
     }
 
     // server is not defined: use the region to set to an existing one and use "global" as a default
     // fallback
-    if (StringUtil.isEmpty(builder.getVoiceUrl())) {
-      VoiceRegion region =
-          StringUtil.isEmpty(builder.getVoiceRegion().value())
-              ? VoiceRegion.GLOBAL
-              : builder.getVoiceRegion();
-      builder.setVoiceUrl(props.getProperty(String.format("voice-server-%s", region.value())));
+    if (StringUtil.isEmpty(voiceUrl)) {
+      VoiceRegion regionForFormat = null == region ? VoiceRegion.GLOBAL : region;
+      voiceUrl = props.getProperty(String.format("voice-server-%s", regionForFormat.value()));
     }
 
     // application management server
-    if (null == configuration.getVoiceApplicationManagementUrl()
+    if (StringUtil.isEmpty(voiceApplicationManagementUrl)
         && props.containsKey(VOICE_APPLICATION_MANAGEMENT_SERVER_KEY)) {
-      builder.setVoiceApplicationMngmtUrl(
-          props.getProperty(VOICE_APPLICATION_MANAGEMENT_SERVER_KEY));
+      voiceApplicationManagementUrl = props.getProperty(VOICE_APPLICATION_MANAGEMENT_SERVER_KEY);
+    }
+
+    if (null != region || null != voiceUrl || null != voiceApplicationManagementUrl) {
+      builder.setVoiceContext(
+          VoiceContext.builder()
+              .setVoiceRegion(region)
+              .setVoiceUrl(voiceUrl)
+              .setVoiceApplicationMngmtUrl(voiceApplicationManagementUrl)
+              .build());
     }
   }
 
@@ -212,40 +261,44 @@ public class SinchClient {
 
   private void checkConfiguration(Configuration configuration) throws NullPointerException {
     Objects.requireNonNull(configuration.getOAuthUrl(), "'oauthUrl' cannot be null");
-    Objects.requireNonNull(configuration.getNumbersUrl(), "'numbersUrl' cannot be null");
-    Objects.requireNonNull(configuration.getSmsUrl(), "'smsUrl' cannot be null");
-    Objects.requireNonNull(configuration.getVerificationUrl(), "'verificationUrl' cannot be null");
   }
 
   private NumbersService numbersInit() {
-    LOGGER.fine(
-        "Activate numbers API with server='"
-            + getConfiguration().getNumbersServer().getUrl()
-            + "'");
     return new com.sinch.sdk.domains.numbers.adapters.NumbersService(
-        getConfiguration(), getHttpClient());
+        getConfiguration().getUnifiedCredentials().orElse(null),
+        configuration.getNumbersContext().orElse(null),
+        getHttpClient());
   }
 
   private SMSService smsInit() {
-    LOGGER.fine(
-        "Activate SMS API with server='" + getConfiguration().getSmsServer().getUrl() + "'");
-    return new com.sinch.sdk.domains.sms.adapters.SMSService(getConfiguration(), getHttpClient());
+
+    return getConfiguration()
+        .getSmsServicePlanCredentials()
+        .map(
+            f ->
+                new com.sinch.sdk.domains.sms.adapters.SMSService(
+                    f, getConfiguration().getSmsContext().orElse(null), getHttpClient()))
+        .orElseGet(
+            () ->
+                new com.sinch.sdk.domains.sms.adapters.SMSService(
+                    getConfiguration().getUnifiedCredentials().orElse(null),
+                    getConfiguration().getSmsContext().orElse(null),
+                    configuration.getOAuthServer(),
+                    getHttpClient()));
   }
 
   private VerificationService verificationInit() {
-    LOGGER.fine(
-        "Activate verification API with server='"
-            + getConfiguration().getVerificationServer().getUrl()
-            + "'");
     return new com.sinch.sdk.domains.verification.adapters.VerificationService(
-        getConfiguration(), getHttpClient());
+        getConfiguration().getApplicationCredentials().orElse(null),
+        getConfiguration().getVerificationContext().orElse(null),
+        getHttpClient());
   }
 
   private VoiceService voiceInit() {
-    LOGGER.fine(
-        "Activate voice API with server='" + getConfiguration().getVoiceServer().getUrl() + "'");
     return new com.sinch.sdk.domains.voice.adapters.VoiceService(
-        getConfiguration(), getHttpClient());
+        getConfiguration().getApplicationCredentials().orElse(null),
+        getConfiguration().getVoiceContext().orElse(null),
+        getHttpClient());
   }
 
   private Properties handlePropertiesFile(String fileName) {
@@ -289,7 +342,7 @@ public class SinchClient {
 
   private String formatAuxiliaryFlag(String auxiliaryFlag) {
 
-    Collection<String> values = Arrays.asList(System.getProperty("java.vendor"));
+    Collection<String> values = Collections.singletonList(System.getProperty("java.vendor"));
 
     if (!StringUtil.isEmpty(auxiliaryFlag)) {
       values.add(auxiliaryFlag);
