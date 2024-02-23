@@ -10,7 +10,6 @@ import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.SMSRegion;
 import com.sinch.sdk.models.SmsContext;
-import com.sinch.sdk.models.UnifiedCredentials;
 import com.sinch.sdk.models.VerificationContext;
 import com.sinch.sdk.models.VoiceContext;
 import com.sinch.sdk.models.VoiceRegion;
@@ -89,13 +88,9 @@ public class SinchClient {
     versionProperties = handlePropertiesFile(VERSION_PROPERTIES_FILE_NAME);
     LOGGER.fine(
         String.format(
-            "%s (%s) started with projectId '%s'",
+            "%s (%s) started",
             versionProperties.getProperty(PROJECT_NAME_KEY),
-            versionProperties.getProperty(PROJECT_VERSION_KEY),
-            this.configuration
-                .getUnifiedCredentials()
-                .map(UnifiedCredentials::getProjectId)
-                .orElse("<undefined>")));
+            versionProperties.getProperty(PROJECT_VERSION_KEY)));
   }
 
   private void handleDefaultNumbersSettings(
@@ -116,7 +111,7 @@ public class SinchClient {
 
     SMSRegion smsRegion = configuration.getSmsContext().map(SmsContext::getSmsRegion).orElse(null);
 
-    // service plan ID activated: use dedicate server
+    // service plan ID activated: use dedicated server
     String serverKey =
         configuration
             .getSmsServicePlanCredentials()

@@ -19,7 +19,7 @@ public class BearerAuthManager implements AuthManager {
   }
 
   public String getSchema() {
-    return SCHEMA_KEYWORD_BASIC;
+    return SCHEMA_KEYWORD_BEARER;
   }
 
   @Override
