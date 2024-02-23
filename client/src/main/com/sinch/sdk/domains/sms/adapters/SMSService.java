@@ -1,6 +1,6 @@
 package com.sinch.sdk.domains.sms.adapters;
 
-import com.sinch.sdk.auth.adapters.BearerAuthManager;
+import com.sinch.sdk.auth.adapters.OAuthManager;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
@@ -55,11 +55,11 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
     this.context = context;
     this.httpClient = httpClient;
 
-    BearerAuthManager bearerAuthManager =
-        new BearerAuthManager(credentials, oAuthServer, new HttpMapper(), httpClient);
+    OAuthManager oAuthManager =
+        new OAuthManager(credentials, oAuthServer, new HttpMapper(), httpClient);
 
     authManagers =
-        Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_SMS, bearerAuthManager))
+        Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_SMS, oAuthManager))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 

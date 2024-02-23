@@ -21,11 +21,11 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class BearerAuthManager implements AuthManager {
+public class OAuthManager implements AuthManager {
 
   public static final String BEARER_EXPIRED_KEYWORD = "expired";
   public static final String BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD = "www-authenticate";
-  private static final Logger LOGGER = Logger.getLogger(BearerAuthManager.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(OAuthManager.class.getName());
   private static final String AUTH_KEYWORD = "Bearer";
   private static final int maxRefreshAttempt = 5;
   private final ServerConfiguration oAuthServer;
@@ -34,7 +34,7 @@ public class BearerAuthManager implements AuthManager {
   private final Map<String, AuthManager> authManagers;
   private String token;
 
-  public BearerAuthManager(
+  public OAuthManager(
       UnifiedCredentials credentials,
       ServerConfiguration oAuthServer,
       HttpMapper mapper,
@@ -42,7 +42,7 @@ public class BearerAuthManager implements AuthManager {
     this(credentials.getKeyId(), credentials.getKeySecret(), oAuthServer, mapper, httpClient);
   }
 
-  public BearerAuthManager(
+  public OAuthManager(
       String keyId,
       String keySecret,
       ServerConfiguration oAuthServer,

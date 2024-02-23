@@ -27,7 +27,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 
 @TestWithResources
-public class BearerAuthManagerTest extends BaseTest {
+public class OAuthManagerTest extends BaseTest {
   static final String KEY = "fooKey";
   static final String SECRET = "fooSecret";
   static final String PROJECT = "fooProject";
@@ -46,7 +46,7 @@ public class BearerAuthManagerTest extends BaseTest {
   @BeforeEach
   public void initEach() {
     authManager =
-        new BearerAuthManager(
+        new OAuthManager(
             credentials, new ServerConfiguration("OAuth url"), new HttpMapper(), httpClient);
   }
 
