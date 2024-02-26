@@ -58,11 +58,11 @@ public class WebHooksService implements com.sinch.sdk.domains.sms.WebHooksServic
       return DeliveryReportDtoConverter.convert(recipient);
     }
 
-    DeliveryReportDto batch = Mapper.getInstance().readValue(jsonPayload, DeliveryReportDto.class);
-    if (null != batch
-        && (Objects.equals(batch.getType(), TypeEnum.MMS.getValue())
-            || Objects.equals(batch.getType(), TypeEnum.SMS.getValue()))) {
-      return DeliveryReportDtoConverter.convert(batch);
+    DeliveryReportDto deliveryReport = Mapper.getInstance().readValue(jsonPayload, DeliveryReportDto.class);
+    if (null != deliveryReport
+        && (Objects.equals(deliveryReport.getType(), TypeEnum.MMS.getValue())
+            || Objects.equals(deliveryReport.getType(), TypeEnum.SMS.getValue()))) {
+      return DeliveryReportDtoConverter.convert(deliveryReport);
     }
     return null;
   }
