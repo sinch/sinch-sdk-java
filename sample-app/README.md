@@ -109,8 +109,6 @@ See https://developers.sinch.com for details about these parameters
 |                | Update               | [com.sinch.sample.sms.groups.Update](src/main/java/com/sinch/sample/sms/groups/Update.java)                               |                                                   |
 | Inbounds       | Get                  | [com.sinch.sample.sms.inbounds.Get](src/main/java/com/sinch/sample/sms/inbounds/Get.java)                                 |                                                   |
 |                | List                 | [com.sinch.sample.sms.inbounds.List](src/main/java/com/sinch/sample/sms/inbounds/List.java)                               |                                                   |
-| WebHooks       | DeliveryReport       | [com.sinch.sample.sms.webhooks.DeliveryReport](src/main/java/com/sinch/sample/sms/webhooks/DeliveryReport.java)           |                                                   |
-|                | IncomingSMSReport    | [com.sinch.sample.sms.webhooks.IncomingSMS](src/main/java/com/sinch/sample/sms/webhooks/IncomingSMS.java)                 |                                                   |
 
 #### Verification
 
@@ -165,6 +163,7 @@ Check your dashboard to retrieve Application credentials values
 | API          | Package                                                                                        | Notes |
 |--------------|------------------------------------------------------------------------------------------------|-------|
 | Numbers      | [com.sinch.sample.webhooks.numbers](src/main/java/com/sinch/sample/webhooks/numbers)           |       |
+| SMS          | [com.sinch.sample.webhooks.sms](src/main/java/com/sinch/sample/webhooks/sms)                   |       |
 | Verification | [com.sinch.sample.webhooks.verification](src/main/java/com/sinch/sample/webhooks/verification) |       |
 | Voice        | [com.sinch.sample.webhooks.voice](src/main/java/com/sinch/sample/webhooks/voice)               |       |
 

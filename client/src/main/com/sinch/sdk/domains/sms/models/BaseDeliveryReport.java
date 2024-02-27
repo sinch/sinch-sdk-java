@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.sms.models;
 
+import com.sinch.sdk.domains.sms.models.webhooks.WebhooksEvent;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -8,7 +9,7 @@ import java.util.Optional;
  *
  * @since 1.0
  */
-public abstract class BaseDeliveryReport {
+public abstract class BaseDeliveryReport implements WebhooksEvent {
 
   private final String batchId;
   private final String clientReference;

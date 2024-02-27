@@ -19,8 +19,9 @@ import java.util.Collection;
 public interface BatchesService {
 
   /**
-   * Get a batch message <br>
-   * This operation returns a specific batch that matches the provided batch ID.
+   * Get a batch message.
+   *
+   * <p>This operation returns a specific batch that matches the provided batch ID.
    *
    * @param batchId The batch ID you received from sending a message
    * @param <T> A type of Batch
@@ -32,9 +33,10 @@ public interface BatchesService {
   <T extends Batch<?>> T get(String batchId) throws ApiException;
 
   /**
-   * Send a message or a batch of messages <br>
-   * Depending on the length of the body, one message might be split into multiple parts and charged
-   * accordingly. <br>
+   * Send a message or a batch of messages.
+   *
+   * <p>Depending on the length of the body, one message might be split into multiple parts and
+   * charged accordingly. <br>
    * Any groups targeted in a scheduled batch will be evaluated at the time of sending. If a group
    * is deleted between batch creation and scheduled date, it will be considered empty. <br>
    * Be sure to use the correct region in the server URL.
@@ -49,8 +51,9 @@ public interface BatchesService {
   <T extends Batch<?>> T send(BaseBatch<?> batch) throws ApiException;
 
   /**
-   * Dry run <br>
-   * This operation will perform a dry run of a batch which calculates the bodies and number of
+   * Dry run.
+   *
+   * <p>This operation will perform a dry run of a batch which calculates the bodies and number of
    * parts for all messages in the batch without actually sending any messages.
    *
    * @param perRecipient Whether to include per recipient details in the response
@@ -66,9 +69,10 @@ public interface BatchesService {
       throws ApiException;
 
   /**
-   * List Batches <br>
-   * With the list operation you can list batch messages created in the last 14 days that you have
-   * created. This operation supports pagination.
+   * List Batches.
+   *
+   * <p>With the list operation you can list batch messages created in the last 14 days that you
+   * have created. This operation supports pagination.
    *
    * @param parameters Query parameters filtering returned batches
    * @return Paginated list of Batches
@@ -79,8 +83,10 @@ public interface BatchesService {
   BatchesListResponse list(BatchesListRequestParameters parameters) throws ApiException;
 
   /**
-   * Update a Batch message <br>
-   * This operation updates all specified parameters of a batch that matches the provided batch ID.
+   * Update a Batch message.
+   *
+   * <p>This operation updates all specified parameters of a batch that matches the provided batch
+   * ID.
    *
    * @param batchId The batch ID you received from sending a message
    * @param batch Batch parameters to be updated
@@ -94,9 +100,10 @@ public interface BatchesService {
       throws ApiException;
 
   /**
-   * Replace a batch <br>
-   * This operation will replace all the parameters of a batch with the provided values. It is the
-   * same as cancelling a batch and sending a new one instead.
+   * Replace a batch .
+   *
+   * <p>This operation will replace all the parameters of a batch with the provided values. It is
+   * the same as cancelling a batch and sending a new one instead.
    *
    * @param batchId The batch ID you received from sending a message
    * @param batch Batch parameters to be used
@@ -109,8 +116,9 @@ public interface BatchesService {
   <T extends Batch<?>> T replace(String batchId, BaseBatch<?> batch) throws ApiException;
 
   /**
-   * Cancel a batch message <br>
-   * A batch can be canceled at any point. If a batch is canceled while it's currently being
+   * Cancel a batch message.
+   *
+   * <p>A batch can be canceled at any point. If a batch is canceled while it's currently being
    * delivered some messages currently being processed might still be delivered. The delivery report
    * will indicate which messages were canceled and which weren't. <br>
    * Canceling a batch scheduled in the future will result in an empty delivery report while
@@ -126,7 +134,7 @@ public interface BatchesService {
   <T extends Batch<?>> T cancel(String batchId) throws ApiException;
 
   /**
-   * Send delivery feedback for a message
+   * Send delivery feedback for a message.
    *
    * <p>Send feedback if your system can confirm successful message delivery.
    *

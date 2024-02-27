@@ -23,7 +23,7 @@ import java.util.Collection;
 public interface GroupsService {
 
   /**
-   * Retrieve a group
+   * Retrieve a group.
    *
    * <p>This operation retrieves a specific group with the provided group ID.
    *
@@ -36,7 +36,7 @@ public interface GroupsService {
   Group get(String groupId) throws ApiException;
 
   /**
-   * Create a group
+   * Create a group.
    *
    * <p>A group is a set of phone numbers (MSISDNs) that can be used as a target in the <code>
    * send_batch_msg</code> operation. An MSISDN can only occur once in a group and any attempts to
@@ -50,6 +50,12 @@ public interface GroupsService {
    */
   Group create(GroupCreateRequestParameters parameters) throws ApiException;
 
+  /**
+   * Create an unnamed and empty group
+   *
+   * @return See {@link #create(GroupCreateRequestParameters)}
+   * @since 1.0
+   */
   Group create() throws ApiException;
 
   /**
@@ -68,6 +74,12 @@ public interface GroupsService {
    */
   GroupsListResponse list(GroupsListRequestParameters parameters) throws ApiException;
 
+  /**
+   * List groups with default parameters
+   *
+   * @return See {@link #list(GroupsListRequestParameters)}
+   * @since 1.0
+   */
   GroupsListResponse list() throws ApiException;
 
   /**

@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.sms.models;
 
+import com.sinch.sdk.domains.sms.models.webhooks.WebhooksEvent;
 import java.time.Instant;
 import java.util.Optional;
 
@@ -9,7 +10,7 @@ import java.util.Optional;
  * @param <T> Type of body
  * @since 1.0
  */
-public abstract class Inbound<T> {
+public abstract class Inbound<T> implements WebhooksEvent {
 
   private final T body;
   private final String from;
