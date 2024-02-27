@@ -24,7 +24,6 @@ public class ConversationService implements com.sinch.sdk.domains.conversation.C
   private final HttpClient httpClient;
   private AppService app;
   private ContactService contact;
-
   private final Map<String, AuthManager> authManagers;
 
   public ConversationService(

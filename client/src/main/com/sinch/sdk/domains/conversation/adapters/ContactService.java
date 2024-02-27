@@ -33,7 +33,7 @@ import java.util.Map;
 
 public class ContactService implements com.sinch.sdk.domains.conversation.ContactService {
 
-  private final String uriPathID;
+  private final String uriUUID;
   private final ContactApi api;
 
   private final Collection<ChannelType> supportedChannelForGetProfile =
@@ -41,11 +41,11 @@ public class ContactService implements com.sinch.sdk.domains.conversation.Contac
           ChannelType.INSTAGRAM, ChannelType.MESSENGER, ChannelType.VIBER, ChannelType.LINE);
 
   public ContactService(
-      String uriPathID,
+      String uriUUID,
       ConversationContext context,
       HttpClient httpClient,
       Map<String, AuthManager> authManagers) {
-    this.uriPathID = uriPathID;
+    this.uriUUID = uriUUID;
     this.api = new ContactApi(httpClient, context.getServer(), authManagers, new HttpMapper());
   }
 
@@ -68,7 +68,7 @@ public class ContactService implements com.sinch.sdk.domains.conversation.Contac
     String pageToken = client.getPageToken().orElse(null);
 
     ListContactsResponseDto response =
-        getApi().contactListContacts(uriPathID, pageSize, pageToken, externalId, channel, identity);
+        getApi().contactListContacts(uriUUID, pageSize, pageToken, externalId, channel, identity);
 
     Pair<Collection<Contact>, TokenPageNavigator> content = ContactDtoConverter.convert(response);
 
@@ -76,19 +76,19 @@ public class ContactService implements com.sinch.sdk.domains.conversation.Contac
   }
 
   public Contact get(String contactId) {
-    return ContactDtoConverter.convert(getApi().contactGetContact(uriPathID, contactId));
+    return ContactDtoConverter.convert(getApi().contactGetContact(uriUUID, contactId));
   }
 
   public Contact create(ContactCreateRequestParameters iclient) {
     ContactCreateRequestParametersImpl client = (ContactCreateRequestParametersImpl) iclient;
 
     return ContactDtoConverter.convert(
-        getApi().contactCreateContact(uriPathID, ContactDtoConverter.convertForCreate(client)));
+        getApi().contactCreateContact(uriUUID, ContactDtoConverter.convertForCreate(client)));
   }
 
   public void delete(String contactId) {
 
-    getApi().contactDeleteContact(uriPathID, contactId);
+    getApi().contactDeleteContact(uriUUID, contactId);
   }
 
   public Contact update(Contact iclient) {
@@ -97,14 +97,14 @@ public class ContactService implements com.sinch.sdk.domains.conversation.Contac
     return ContactDtoConverter.convert(
         getApi()
             .contactUpdateContact(
-                uriPathID, client.getId(), ContactDtoConverter.convert(client), null));
+                uriUUID, client.getId(), ContactDtoConverter.convert(client), null));
   }
 
   public Contact mergeContact(String destinationId, String sourceId) {
     return ContactDtoConverter.convert(
         getApi()
             .contactMergeContact(
-                uriPathID, destinationId, new MergeContactRequestDto().sourceId(sourceId)));
+                uriUUID, destinationId, new MergeContactRequestDto().sourceId(sourceId)));
   }
 
   public String getChannelProfileByContactId(GetChannelProfileByContactRequestParameters iclient) {
@@ -113,7 +113,7 @@ public class ContactService implements com.sinch.sdk.domains.conversation.Contac
 
     checkGetChannelProfileChannelType(client);
     return ContactDtoConverter.convert(
-        getApi().contactGetChannelProfile(uriPathID, ContactDtoConverter.convert(client)));
+        getApi().contactGetChannelProfile(uriUUID, ContactDtoConverter.convert(client)));
   }
 
   public String getChannelProfileByChannelIdentity(
@@ -123,7 +123,7 @@ public class ContactService implements com.sinch.sdk.domains.conversation.Contac
 
     checkGetChannelProfileChannelType(client);
     return ContactDtoConverter.convert(
-        getApi().contactGetChannelProfile(uriPathID, ContactDtoConverter.convert(client)));
+        getApi().contactGetChannelProfile(uriUUID, ContactDtoConverter.convert(client)));
   }
 
   private void checkGetChannelProfileChannelType(BaseGetChannelProfileRequestParameters client) {

@@ -14,15 +14,15 @@ import java.util.Map;
 
 public class AppService implements com.sinch.sdk.domains.conversation.AppService {
 
-  private final String uriPathID;
+  private final String uriUUID;
   private final AppApi api;
 
   public AppService(
-      String uriPathID,
+      String uriUUID,
       ConversationContext context,
       HttpClient httpClient,
       Map<String, AuthManager> authManagers) {
-    this.uriPathID = uriPathID;
+    this.uriUUID = uriUUID;
     this.api = new AppApi(httpClient, context.getServer(), authManagers, new HttpMapper());
   }
 
@@ -31,26 +31,25 @@ public class AppService implements com.sinch.sdk.domains.conversation.AppService
   }
 
   public Collection<App> list() throws ApiException {
-    return AppDtoConverter.convert(getApi().appListApps(uriPathID));
+    return AppDtoConverter.convert(getApi().appListApps(uriUUID));
   }
 
   public App get(String appId) {
-    return AppDtoConverter.convert(getApi().appGetApp(uriPathID, appId));
+    return AppDtoConverter.convert(getApi().appGetApp(uriUUID, appId));
   }
 
   public void delete(String appId) {
-    getApi().appDeleteApp(uriPathID, appId);
+    getApi().appDeleteApp(uriUUID, appId);
   }
 
   public App create(AppRequestParameters parameters) {
 
     return AppDtoConverter.convert(
-        getApi().appCreateApp(uriPathID, AppDtoConverter.convertForCreate(parameters)));
+        getApi().appCreateApp(uriUUID, AppDtoConverter.convertForCreate(parameters)));
   }
 
   public App update(String appId, AppRequestParameters parameters) {
     return AppDtoConverter.convert(
-        getApi()
-            .appUpdateApp(uriPathID, appId, AppDtoConverter.convertForUpdate(parameters), null));
+        getApi().appUpdateApp(uriUUID, appId, AppDtoConverter.convertForUpdate(parameters), null));
   }
 }
