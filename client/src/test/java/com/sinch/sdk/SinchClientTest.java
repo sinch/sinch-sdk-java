@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.SMSRegion;
 import com.sinch.sdk.models.VoiceContext;
 import com.sinch.sdk.models.VoiceRegion;
 import org.junit.jupiter.api.Test;
@@ -36,11 +37,9 @@ class SinchClientTest {
 
   @Test
   void defaultSmsRegion() {
-    Configuration configuration =
-        Configuration.builder().setKeyId("foo").setKeySecret("foo").setProjectId("foo").build();
+    Configuration configuration = Configuration.builder().build();
     SinchClient client = new SinchClient(configuration);
-    System.out.println(client.getConfiguration().getSmsContext().get().getSmsRegion());
-    assertNotNull(client.getConfiguration().getSmsContext().get().getSmsRegion());
+    assertEquals(SMSRegion.US, client.getConfiguration().getSmsContext().get().getSmsRegion());
   }
 
   @Test
@@ -49,6 +48,14 @@ class SinchClientTest {
         Configuration.builder().setKeyId("foo").setKeySecret("foo").setProjectId("foo").build();
     SinchClient client = new SinchClient(configuration);
     assertNotNull(client.getConfiguration().getVerificationContext().get().getVerificationUrl());
+  }
+
+  @Test
+  void defaultVoiceRegion() {
+    Configuration configuration = Configuration.builder().build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(
+        VoiceRegion.GLOBAL, client.getConfiguration().getVoiceContext().get().getVoiceRegion());
   }
 
   @Test
