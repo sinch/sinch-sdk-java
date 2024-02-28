@@ -14,10 +14,7 @@ public class Configuration {
   private final SmsContext smsContext;
   private final VerificationContext verificationContext;
   private final VoiceContext voiceContext;
-
-  private final ConversationRegion conversationRegion;
-  private final String conversationUrl;
-  private final String conversationTemplateManagementUrl;
+  private final ConversationContext conversationContext;
 
   private Configuration(
       UnifiedCredentials unifiedCredentials,
@@ -28,9 +25,7 @@ public class Configuration {
       SmsContext smsContext,
       VerificationContext verificationContext,
       VoiceContext voiceContext,
-      ConversationRegion conversationRegion,
-      String conversationUrl,
-      String conversationTemplateManagementUrl) {
+      ConversationContext conversationContext) {
     this.unifiedCredentials = unifiedCredentials;
     this.applicationCredentials = applicationCredentials;
     this.smsServicePlanCredentials = smsServicePlanCredentials;
@@ -39,10 +34,7 @@ public class Configuration {
     this.smsContext = smsContext;
     this.voiceContext = voiceContext;
     this.verificationContext = verificationContext;
-    this.conversationRegion =
-        null == conversationRegion ? ConversationRegion.US : conversationRegion;
-    this.conversationUrl = conversationUrl;
-    this.conversationTemplateManagementUrl = conversationTemplateManagementUrl;
+    this.conversationContext = conversationContext;
   }
 
   @Override
@@ -60,13 +52,9 @@ public class Configuration {
         + ", voiceContext="
         + voiceContext
         + ", conversationRegion="
-        + conversationRegion
-        + ", conversationUrl='"
-        + conversationUrl
-        + '\''
-        + ", conversationTemplateManagementUrl='"
-        + conversationTemplateManagementUrl
-        + '\''
+        + conversationContext
+        + ", conversationContext="
+        + conversationContext
         + "}";
   }
 
@@ -165,53 +153,13 @@ public class Configuration {
   }
 
   /**
-   * Conversation Region to be used for Conversation service
+   * Get Voice domain related execution context
    *
-   * @return Conversation region
+   * @return Current Voice context
    * @since 1.0
    */
-  public ConversationRegion getConversationRegion() {
-    return conversationRegion;
-  }
-
-  /**
-   * Conversation Server Configuration
-   *
-   * @return Conversation Server configuration to be used
-   * @since 1.0
-   */
-  public ServerConfiguration getConversationServer() {
-    return new ServerConfiguration(getConversationUrl());
-  }
-
-  /**
-   * Conversation URL
-   *
-   * @return Conversation Server URL
-   * @since 1.0
-   */
-  public String getConversationUrl() {
-    return conversationUrl;
-  }
-
-  /**
-   * Conversation Template Server Configuration
-   *
-   * @return Conversation Server configuration to be used
-   * @since 1.0
-   */
-  public ServerConfiguration getConversationTemplateManagementUrlServer() {
-    return new ServerConfiguration(getConversationTemplateManagementUrl());
-  }
-
-  /**
-   * Conversation Template Management URL
-   *
-   * @return Conversation Server URL
-   * @since 1.0
-   */
-  public String getConversationTemplateManagementUrl() {
-    return conversationTemplateManagementUrl;
+  public Optional<ConversationContext> getConversationContext() {
+    return Optional.ofNullable(conversationContext);
   }
 
   /**
@@ -250,10 +198,7 @@ public class Configuration {
     SmsContext.Builder smsContext;
     VerificationContext.Builder verificationContext;
     VoiceContext.Builder voiceContext;
-
-    public ConversationRegion conversationRegion;
-    public String conversationUrl;
-    public String conversationTemplateManagementUrl;
+    ConversationContext.Builder conversationContext;
 
     protected Builder() {}
 
@@ -283,10 +228,8 @@ public class Configuration {
       this.verificationContext =
           configuration.getVerificationContext().map(VerificationContext::builder).orElse(null);
       this.voiceContext = configuration.getVoiceContext().map(VoiceContext::builder).orElse(null);
-
-      this.conversationRegion = configuration.getConversationRegion();
-      this.conversationUrl = configuration.getConversationUrl();
-      this.conversationTemplateManagementUrl = configuration.getConversationTemplateManagementUrl();
+      this.conversationContext =
+          configuration.getConversationContext().map(ConversationContext::builder).orElse(null);
     }
 
     /**
@@ -497,7 +440,10 @@ public class Configuration {
      * @since 1.0
      */
     public Builder setConversationRegion(ConversationRegion conversationRegion) {
-      this.conversationRegion = conversationRegion;
+      if (null == this.conversationContext) {
+        this.conversationContext = ConversationContext.builder();
+      }
+      this.conversationContext.setRegion(conversationRegion);
       return this;
     }
 
@@ -509,7 +455,10 @@ public class Configuration {
      * @since 1.0
      */
     public Builder setConversationUrl(String conversationUrl) {
-      this.conversationUrl = conversationUrl;
+      if (null == this.conversationContext) {
+        this.conversationContext = ConversationContext.builder();
+      }
+      this.conversationContext.setUrl(conversationUrl);
       return this;
     }
 
@@ -520,7 +469,22 @@ public class Configuration {
      * @return Current builder * @since 1.0
      */
     public Builder setConversationTemplateManagementUrl(String conversationTemplateManagementUrl) {
-      this.conversationTemplateManagementUrl = conversationTemplateManagementUrl;
+      if (null == this.conversationContext) {
+        this.conversationContext = ConversationContext.builder();
+      }
+      this.conversationContext.setTemplateManagementUrl(conversationTemplateManagementUrl);
+      return this;
+    }
+
+    /**
+     * Set Conversation related context
+     *
+     * @param context {@link #getConversationContext() getter}
+     * @return Current builder
+     * @since 1.0
+     */
+    public Builder setConversationContext(ConversationContext context) {
+      this.conversationContext = null != context ? ConversationContext.builder(context) : null;
       return this;
     }
 
@@ -541,9 +505,7 @@ public class Configuration {
           null != smsContext ? smsContext.build() : null,
           null != verificationContext ? verificationContext.build() : null,
           null != voiceContext ? voiceContext.build() : null,
-          conversationRegion,
-          conversationUrl,
-          conversationTemplateManagementUrl);
+          null != conversationContext ? conversationContext.build() : null);
     }
   }
 }
