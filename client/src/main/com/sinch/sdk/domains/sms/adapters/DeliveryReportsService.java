@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
  */
 public class DeliveryReportsService implements com.sinch.sdk.domains.sms.DeliveryReportsService {
 
-  private final String uriPathID;
+  private final String uriUUID;
   private final DeliveryReportsApi api;
 
   protected DeliveryReportsApi getApi() {
@@ -44,11 +44,11 @@ public class DeliveryReportsService implements com.sinch.sdk.domains.sms.Deliver
   }
 
   public DeliveryReportsService(
-      String uriPathID,
+      String uriUUID,
       SmsContext context,
       HttpClient httpClient,
       Map<String, AuthManager> authManagers) {
-    this.uriPathID = uriPathID;
+    this.uriUUID = uriUUID;
     this.api =
         new DeliveryReportsApi(httpClient, context.getSmsServer(), authManagers, new HttpMapper());
   }
@@ -62,7 +62,7 @@ public class DeliveryReportsService implements com.sinch.sdk.domains.sms.Deliver
     return DeliveryReportDtoConverter.convert(
         getApi()
             .getDeliveryReportByBatchId(
-                uriPathID,
+                uriUUID,
                 batchId,
                 guardParameters.getType().map(DeliveryReportType::value).orElse(null),
                 guardParameters
@@ -78,7 +78,7 @@ public class DeliveryReportsService implements com.sinch.sdk.domains.sms.Deliver
   public DeliveryReportRecipient getForNumber(String batchId, String recipient)
       throws ApiException {
     return DeliveryReportDtoConverter.convert(
-        getApi().getDeliveryReportByPhoneNumber(uriPathID, batchId, recipient));
+        getApi().getDeliveryReportByPhoneNumber(uriUUID, batchId, recipient));
   }
 
   public DeliveryReportsListResponse list() throws ApiException {
@@ -93,7 +93,7 @@ public class DeliveryReportsService implements com.sinch.sdk.domains.sms.Deliver
     DeliveryReportListDto response =
         getApi()
             .getDeliveryReports(
-                uriPathID,
+                uriUUID,
                 guardParameters.getPage().orElse(null),
                 guardParameters.getPageSize().orElse(null),
                 guardParameters.getStartDate().map(Instant::toString).orElse(null),
