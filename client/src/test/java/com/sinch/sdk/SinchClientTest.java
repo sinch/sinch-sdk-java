@@ -35,6 +35,15 @@ class SinchClientTest {
   }
 
   @Test
+  void defaultSmsRegion() {
+    Configuration configuration =
+        Configuration.builder().setKeyId("foo").setKeySecret("foo").setProjectId("foo").build();
+    SinchClient client = new SinchClient(configuration);
+    System.out.println(client.getConfiguration().getSmsContext().get().getSmsRegion());
+    assertNotNull(client.getConfiguration().getSmsContext().get().getSmsRegion());
+  }
+
+  @Test
   void defaultVerificationUrlAvailable() {
     Configuration configuration =
         Configuration.builder().setKeyId("foo").setKeySecret("foo").setProjectId("foo").build();

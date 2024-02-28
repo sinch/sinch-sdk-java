@@ -9,8 +9,8 @@ public class SmsContext {
   private final SMSRegion smsRegion;
   private final String smsUrl;
 
-  public SmsContext(SMSRegion smsRegion, String smsUrl) {
-    this.smsRegion = null == smsRegion ? SMSRegion.US : smsRegion;
+  private SmsContext(SMSRegion smsRegion, String smsUrl) {
+    this.smsRegion = smsRegion;
     this.smsUrl = smsUrl;
   }
 
