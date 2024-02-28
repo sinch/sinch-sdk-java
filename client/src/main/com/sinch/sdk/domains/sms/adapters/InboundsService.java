@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class InboundsService implements com.sinch.sdk.domains.sms.InboundsService {
 
-  private final String uriPathID;
+  private final String uriUUID;
   private final InboundsApi api;
 
   protected InboundsApi getApi() {
@@ -28,11 +28,11 @@ public class InboundsService implements com.sinch.sdk.domains.sms.InboundsServic
   }
 
   public InboundsService(
-      String uriPathID,
+      String uriUUID,
       SmsContext context,
       HttpClient httpClient,
       Map<String, AuthManager> authManagers) {
-    this.uriPathID = uriPathID;
+    this.uriUUID = uriUUID;
     this.api = new InboundsApi(httpClient, context.getSmsServer(), authManagers, new HttpMapper());
   }
 
@@ -47,7 +47,7 @@ public class InboundsService implements com.sinch.sdk.domains.sms.InboundsServic
     ApiInboundListDto response =
         getApi()
             .listInboundMessages(
-                uriPathID,
+                uriUUID,
                 guardParameters.getPage().orElse(null),
                 guardParameters.getPageSize().orElse(null),
                 guardParameters.getTo().map(f -> String.join(",", f)).orElse(null),
@@ -64,7 +64,7 @@ public class InboundsService implements com.sinch.sdk.domains.sms.InboundsServic
 
   public Inbound<?> get(String inboundId) throws ApiException {
 
-    InboundDto response = getApi().retrieveInboundMessage(uriPathID, inboundId);
+    InboundDto response = getApi().retrieveInboundMessage(uriUUID, inboundId);
     return InboundsDtoConverter.convert(response);
   }
 }

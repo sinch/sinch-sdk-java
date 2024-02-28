@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class GroupsService implements com.sinch.sdk.domains.sms.GroupsService {
 
-  private final String uriPathID;
+  private final String uriUUID;
   private final GroupsApi api;
 
   protected GroupsApi getApi() {
@@ -30,17 +30,17 @@ public class GroupsService implements com.sinch.sdk.domains.sms.GroupsService {
   }
 
   public GroupsService(
-      String uriPathID,
+      String uriUUID,
       SmsContext context,
       HttpClient httpClient,
       Map<String, AuthManager> authManagers) {
-    this.uriPathID = uriPathID;
+    this.uriUUID = uriUUID;
     this.api = new GroupsApi(httpClient, context.getSmsServer(), authManagers, new HttpMapper());
   }
 
   public Group get(String groupId) throws ApiException {
 
-    CreateGroupResponseDto response = getApi().retrieveGroup(uriPathID, groupId);
+    CreateGroupResponseDto response = getApi().retrieveGroup(uriUUID, groupId);
     return GroupsDtoConverter.convert(response);
   }
 
@@ -53,7 +53,7 @@ public class GroupsService implements com.sinch.sdk.domains.sms.GroupsService {
         null != parameters ? parameters : GroupCreateRequestParameters.builder().build();
 
     CreateGroupResponseDto response =
-        getApi().createGroup(uriPathID, GroupsDtoConverter.convert(guardParameters));
+        getApi().createGroup(uriUUID, GroupsDtoConverter.convert(guardParameters));
     return GroupsDtoConverter.convert(response);
   }
 
@@ -68,7 +68,7 @@ public class GroupsService implements com.sinch.sdk.domains.sms.GroupsService {
     ApiGroupListDto response =
         getApi()
             .listGroups(
-                uriPathID,
+                uriUUID,
                 guardParameters.getPage().orElse(null),
                 guardParameters.getPageSize().orElse(null));
 
@@ -85,7 +85,7 @@ public class GroupsService implements com.sinch.sdk.domains.sms.GroupsService {
         null != parameters ? parameters : GroupReplaceRequestParameters.builder().build();
 
     CreateGroupResponseDto response =
-        getApi().replaceGroup(uriPathID, groupId, GroupsDtoConverter.convert(guardParameters));
+        getApi().replaceGroup(uriUUID, groupId, GroupsDtoConverter.convert(guardParameters));
     return GroupsDtoConverter.convert(response);
   }
 
@@ -94,15 +94,15 @@ public class GroupsService implements com.sinch.sdk.domains.sms.GroupsService {
         null != parameters ? parameters : GroupUpdateRequestParameters.builder().build();
 
     CreateGroupResponseDto response =
-        getApi().updateGroup(uriPathID, groupId, GroupsDtoConverter.convert(guardParameters));
+        getApi().updateGroup(uriUUID, groupId, GroupsDtoConverter.convert(guardParameters));
     return GroupsDtoConverter.convert(response);
   }
 
   public void delete(String groupId) throws ApiException {
-    getApi().deleteGroup(uriPathID, groupId);
+    getApi().deleteGroup(uriUUID, groupId);
   }
 
   public Collection<String> listMembers(String groupId) throws ApiException {
-    return getApi().getMembers(uriPathID, groupId);
+    return getApi().getMembers(uriUUID, groupId);
   }
 }
