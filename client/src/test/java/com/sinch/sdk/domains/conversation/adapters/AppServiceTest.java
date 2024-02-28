@@ -14,7 +14,7 @@ import com.sinch.sdk.domains.conversation.adapters.api.v1.AppApi;
 import com.sinch.sdk.domains.conversation.adapters.converters.AppConverterTest;
 import com.sinch.sdk.domains.conversation.models.dto.v1.AppDtoTest;
 import com.sinch.sdk.domains.conversation.models.responses.App;
-import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.ConversationContext;
 import java.util.Collection;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -25,24 +25,24 @@ import org.mockito.Mock;
 @TestWithResources
 public class AppServiceTest extends BaseTest {
 
+  @Mock ConversationContext context;
   @Mock AppApi api;
-  Configuration configuration = Configuration.builder().setProjectId("").build();
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
 
   AppService service;
+  String uriPartID = "foovalue";
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new AppService(configuration, httpClient, authManagers));
+    service = spy(new AppService(uriPartID, context, httpClient, authManagers));
     doReturn(api).when(service).getApi();
   }
 
   @Test
   void list() throws ApiException {
 
-    when(api.appListApps(eq(configuration.getUnifiedCredentials().get().getProjectId())))
-        .thenReturn(AppDtoTest.expectedListAppsResponseDto);
+    when(api.appListApps(eq(uriPartID))).thenReturn(AppDtoTest.expectedListAppsResponseDto);
 
     Collection<App> response = service.list();
 
@@ -54,9 +54,7 @@ public class AppServiceTest extends BaseTest {
   @Test
   void get() throws ApiException {
 
-    when(api.appGetApp(
-            eq(configuration.getUnifiedCredentials().get().getProjectId()),
-            eq(AppDtoTest.expectedAppsResponseDto.getId())))
+    when(api.appGetApp(eq(uriPartID), eq(AppDtoTest.expectedAppsResponseDto.getId())))
         .thenReturn(AppDtoTest.expectedAppsResponseDto);
 
     App response = service.get(AppDtoTest.expectedAppsResponseDto.getId());
@@ -69,9 +67,7 @@ public class AppServiceTest extends BaseTest {
   @Test
   void create() throws ApiException {
 
-    when(api.appCreateApp(
-            eq(configuration.getUnifiedCredentials().get().getProjectId()),
-            eq(AppDtoTest.appCreateRequestDto)))
+    when(api.appCreateApp(eq(uriPartID), eq(AppDtoTest.appCreateRequestDto)))
         .thenReturn(AppDtoTest.expectedAppsResponseDto);
 
     App response = service.create(AppConverterTest.appRequest);
@@ -85,7 +81,7 @@ public class AppServiceTest extends BaseTest {
   void update() throws ApiException {
 
     when(api.appUpdateApp(
-            eq(configuration.getUnifiedCredentials().get().getProjectId()),
+            eq(uriPartID),
             eq(AppConverterTest.expectedAPPResponse.getId()),
             eq(AppDtoTest.appUpdateRequestDto),
             eq(null)))

@@ -8,6 +8,7 @@ import com.sinch.sdk.domains.verification.VerificationService;
 import com.sinch.sdk.domains.voice.VoiceService;
 import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.ConversationRegion;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.SMSRegion;
@@ -200,26 +201,38 @@ public class SinchClient {
 
   private void handleDefaultConversationSettings(
       Configuration configuration, Properties props, Configuration.Builder builder) {
-    if (null == configuration.getConversationRegion()
-        && props.containsKey(CONVERSATION_REGION_KEY)) {
-      builder.setConversationRegion(
-          ConversationRegion.from(props.getProperty(CONVERSATION_REGION_KEY)));
+
+    ConversationRegion region =
+        configuration.getConversationContext().map(ConversationContext::getRegion).orElse(null);
+
+    String url =
+        configuration.getConversationContext().map(ConversationContext::getUrl).orElse(null);
+
+    String templateManagementUrl =
+        configuration
+            .getConversationContext()
+            .map(ConversationContext::getTemplateManagementUrl)
+            .orElse(null);
+
+    if (null == region && props.containsKey(CONVERSATION_REGION_KEY)) {
+      String value = props.getProperty(CONVERSATION_REGION_KEY);
+      if (!StringUtil.isEmpty(value)) {
+        region = ConversationRegion.from(value);
+      }
     }
 
-    // server is not defined: use the region to set to an existing one and use "us" as a default
+    // region is not defined: use the region to set to an existing one and use "us" as a default
     // fallback
-    ConversationRegion region =
-        (null == builder.conversationRegion
-                || StringUtil.isEmpty(builder.conversationRegion.value()))
-            ? ConversationRegion.US
-            : builder.conversationRegion;
+    region = null == region ? ConversationRegion.US : region;
 
-    if (StringUtil.isEmpty(builder.conversationUrl)) {
+    builder.setConversationRegion(region);
+
+    if (StringUtil.isEmpty(url)) {
       builder.setConversationUrl(
           String.format(props.getProperty(CONVERSATION_SERVER_KEY), region.value()));
     }
 
-    if (StringUtil.isEmpty(builder.conversationTemplateManagementUrl)) {
+    if (StringUtil.isEmpty(templateManagementUrl)) {
       builder.setConversationTemplateManagementUrl(
           String.format(props.getProperty(CONVERSATION_TEMPLATE_SERVER_KEY), region.value()));
     }
@@ -354,7 +367,10 @@ public class SinchClient {
 
   private ConversationService conversationInit() {
     return new com.sinch.sdk.domains.conversation.adapters.ConversationService(
-        getConfiguration(), getHttpClient());
+        getConfiguration().getUnifiedCredentials().orElse(null),
+        getConfiguration().getConversationContext().orElse(null),
+        getConfiguration().getOAuthServer(),
+        getHttpClient());
   }
 
   private Properties handlePropertiesFile(String fileName) {
