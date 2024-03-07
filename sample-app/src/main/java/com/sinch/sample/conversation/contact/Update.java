@@ -1,12 +1,7 @@
 package com.sinch.sample.conversation.contact;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.conversation.models.ChannelIdentity;
-import com.sinch.sdk.domains.conversation.models.ChannelType;
-import com.sinch.sdk.domains.conversation.models.Contact;
-import com.sinch.sdk.domains.conversation.models.LanguageType;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class Update extends BaseApplication {
@@ -27,7 +22,8 @@ public class Update extends BaseApplication {
   public void run() {
 
     LOGGER.info("Update contact '%s'".formatted(conversationContactId));
-
+    throw new RuntimeException("TODO");
+    /*
     var contact =
         Contact.builder()
             .setId(conversationContactId)
@@ -61,6 +57,6 @@ public class Update extends BaseApplication {
 
     var result = client.conversation().contact().update(contact);
 
-    LOGGER.info("Response: " + result);
+    LOGGER.info("Response: " + result);*/
   }
 }

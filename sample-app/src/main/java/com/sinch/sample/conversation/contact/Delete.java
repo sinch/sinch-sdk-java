@@ -22,7 +22,8 @@ public class Delete extends BaseApplication {
   public void run() {
 
     LOGGER.info("Delete conversation contact: " + conversationContactId);
+    throw new RuntimeException("TODO");
 
-    client.conversation().contact().delete(conversationContactId);
+    //    client.conversation().contact().delete(conversationContactId);
   }
 }

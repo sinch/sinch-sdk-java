@@ -1,12 +1,7 @@
 package com.sinch.sample.conversation.contact;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.conversation.models.ChannelIdentityRecipient;
-import com.sinch.sdk.domains.conversation.models.ChannelType;
-import com.sinch.sdk.domains.conversation.models.requests.GetChannelProfileByChannelRequestParameters;
-import com.sinch.sdk.domains.conversation.models.requests.GetChannelProfileByContactRequestParameters;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.logging.Logger;
 
 public class GetChannelProfile extends BaseApplication {
@@ -25,7 +20,8 @@ public class GetChannelProfile extends BaseApplication {
   }
 
   public void run() {
-
+    throw new RuntimeException("TODO");
+    /*
     var parametersByContactId =
         GetChannelProfileByContactRequestParameters.builder()
             .setAppId(conversationAppId)
@@ -54,6 +50,6 @@ public class GetChannelProfile extends BaseApplication {
             .contact()
             .getChannelProfileByChannelIdentity(parametersByChannelIdentity);
 
-    LOGGER.info("Response: " + result);
+    LOGGER.info("Response: " + result);*/
   }
 }

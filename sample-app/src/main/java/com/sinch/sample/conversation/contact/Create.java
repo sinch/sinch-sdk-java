@@ -1,12 +1,7 @@
 package com.sinch.sample.conversation.contact;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.conversation.models.ChannelIdentity;
-import com.sinch.sdk.domains.conversation.models.ChannelType;
-import com.sinch.sdk.domains.conversation.models.LanguageType;
-import com.sinch.sdk.domains.conversation.models.requests.ContactCreateRequestParameters;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class Create extends BaseApplication {
@@ -27,7 +22,8 @@ public class Create extends BaseApplication {
   public void run() {
 
     LOGGER.info("Create contact");
-
+    throw new RuntimeException("TODO");
+    /*
     var contact =
         ContactCreateRequestParameters.builder()
             .setChannelIdentities(
@@ -51,6 +47,6 @@ public class Create extends BaseApplication {
 
     var result = client.conversation().contact().create(contact);
 
-    LOGGER.info("Response: " + result);
+    LOGGER.info("Response: " + result);*/
   }
 }
