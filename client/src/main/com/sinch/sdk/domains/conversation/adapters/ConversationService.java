@@ -64,10 +64,17 @@ public class ConversationService implements com.sinch.sdk.domains.conversation.C
     return this.app;
   }
 
-  public ContactService contact() {
+  /* public ContactService contact() {
     if (null == this.contact) {
       this.contact = new ContactService(uriUUID, context, httpClient, authManagers);
     }
     return this.contact;
-  }
+  }*/
+
+  /*public com.sinch.sdk.domains.conversation.MessagesService messages() {
+    if (null == this.messages) {
+      this.messages = new MessagesService(uriUUID, context, httpClient, authManagers);
+    }
+    return this.messages;
+  }*/
 }

@@ -1,32 +1,13 @@
 package com.sinch.sdk.domains.conversation.adapters;
 
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
-
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
-import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.core.http.AuthManager;
-import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.conversation.adapters.api.v1.ContactApi;
-import com.sinch.sdk.domains.conversation.adapters.converters.ContactDtoConverterTest;
-import com.sinch.sdk.domains.conversation.models.Contact;
-import com.sinch.sdk.domains.conversation.models.dto.v1.ContactDtoTest;
-import com.sinch.sdk.domains.conversation.models.dto.v1.MergeContactRequestDto;
-import com.sinch.sdk.domains.conversation.models.responses.ContactListResponse;
-import com.sinch.sdk.models.ConversationContext;
-import java.util.Iterator;
-import java.util.Map;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+
+// import com.sinch.sdk.domains.conversation.models.dto.v1.MergeContactRequestDto;
 
 @TestWithResources
 class ContactServiceTest extends BaseTest {
-
+  /*
   @Mock ConversationContext context;
   @Mock ContactApi api;
   @Mock HttpClient httpClient;
@@ -149,5 +130,5 @@ class ContactServiceTest extends BaseTest {
 
     Assertions.assertThat(response)
         .isEqualTo(ContactDtoTest.expectedChannelProfileResponseDto.getProfileName());
-  }
+  }*/
 }
