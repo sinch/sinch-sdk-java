@@ -1,7 +1,6 @@
 package com.sinch.sdk.domains.conversation;
 
-import com.sinch.sdk.domains.conversation.models.requests.AppRequestParameters;
-import com.sinch.sdk.domains.conversation.models.responses.App;
+import com.sinch.sdk.domains.conversation.models.v1.AppResponse;
 import com.sinch.sdk.models.ConversationRegion;
 import java.util.Collection;
 
@@ -32,7 +31,7 @@ public interface AppService {
    *     com.sinch.sdk.models.Configuration.Builder#setConversationRegion(ConversationRegion)})
    * @since 1.0
    */
-  Collection<App> list();
+  Collection<AppResponse> list();
 
   /**
    * Get an app
@@ -43,7 +42,7 @@ public interface AppService {
    * @return App information details
    * @since 1.0
    */
-  App get(String appId);
+  AppResponse get(String appId);
 
   /**
    * Delete an app
@@ -69,7 +68,7 @@ public interface AppService {
    * @param parameters Creation parameters
    * @return Created application
    */
-  App create(AppRequestParameters parameters);
+  // App create(AppRequestParameters parameters);
 
   /**
    * Update a Conversation application
@@ -89,5 +88,5 @@ public interface AppService {
    *     updated
    * @return Updated application
    */
-  App update(String appId, AppRequestParameters parameters);
+  // App update(String appId, AppRequestParameters parameters);
 }
