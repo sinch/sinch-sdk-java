@@ -1,7 +1,6 @@
 package com.sinch.sample.conversation.contact;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.conversation.models.requests.ContactListRequestParameters;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -24,13 +23,14 @@ public class List extends BaseApplication {
 
     LOGGER.info("List");
 
-    var result =
+    throw new RuntimeException("TODO");
+    /*    var result =
         client.conversation().contact().list(ContactListRequestParameters.builder().build());
 
     LOGGER.info("Response: ");
     result
         .iterator()
         .forEachRemaining(
-            f -> LOGGER.info(String.format("- %s (%s) : %s", f.getDisplayName(), f.getId(), f)));
+            f -> LOGGER.info(String.format("- %s (%s) : %s", f.getDisplayName(), f.getId(), f)));*/
   }
 }

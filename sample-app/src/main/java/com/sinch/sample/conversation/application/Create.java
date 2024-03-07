@@ -1,32 +1,7 @@
 package com.sinch.sample.conversation.application;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.conversation.models.credentials.BasicAuthCredentials;
-import com.sinch.sdk.domains.conversation.models.credentials.ConversationChannelInstagram;
-import com.sinch.sdk.domains.conversation.models.credentials.ConversationChannelKakaoTalk;
-import com.sinch.sdk.domains.conversation.models.credentials.ConversationChannelKakaoTalkChat;
-import com.sinch.sdk.domains.conversation.models.credentials.ConversationChannelLine;
-import com.sinch.sdk.domains.conversation.models.credentials.ConversationChannelMMS;
-import com.sinch.sdk.domains.conversation.models.credentials.ConversationChannelMessenger;
-import com.sinch.sdk.domains.conversation.models.credentials.ConversationChannelRCS;
-import com.sinch.sdk.domains.conversation.models.credentials.ConversationChannelSMS;
-import com.sinch.sdk.domains.conversation.models.credentials.ConversationChannelTelegram;
-import com.sinch.sdk.domains.conversation.models.credentials.ConversationChannelViber;
-import com.sinch.sdk.domains.conversation.models.credentials.ConversationChannelViberBM;
-import com.sinch.sdk.domains.conversation.models.credentials.ConversationChannelWeChat;
-import com.sinch.sdk.domains.conversation.models.credentials.ConversationChannelWhatsApp;
-import com.sinch.sdk.domains.conversation.models.credentials.InstagramCredentials;
-import com.sinch.sdk.domains.conversation.models.credentials.KakaoTalkChatCredentials;
-import com.sinch.sdk.domains.conversation.models.credentials.KakaoTalkCredentials;
-import com.sinch.sdk.domains.conversation.models.credentials.LineCredentials;
-import com.sinch.sdk.domains.conversation.models.credentials.MMSCredentials;
-import com.sinch.sdk.domains.conversation.models.credentials.StaticBearerCredentials;
-import com.sinch.sdk.domains.conversation.models.credentials.StaticTokenCredentials;
-import com.sinch.sdk.domains.conversation.models.credentials.TelegramCredentials;
-import com.sinch.sdk.domains.conversation.models.credentials.WeChatCredentials;
-import com.sinch.sdk.domains.conversation.models.requests.AppRequestParameters;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class Create extends BaseApplication {
@@ -47,7 +22,9 @@ public class Create extends BaseApplication {
   public void run() {
 
     LOGGER.info("Create conversation Application");
+    throw new RuntimeException("TODO");
 
+    /*
     var instagramChannel =
         ConversationChannelInstagram.builder()
             .setCredentials(
@@ -183,6 +160,6 @@ public class Create extends BaseApplication {
             .build();
     var result = client.conversation().app().create(parameters);
 
-    LOGGER.info("Response: " + result);
+    LOGGER.info("Response: " + result);*/
   }
 }
