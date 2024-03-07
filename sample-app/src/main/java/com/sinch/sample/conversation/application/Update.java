@@ -1,8 +1,6 @@
 package com.sinch.sample.conversation.application;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.conversation.models.CallbackSettings;
-import com.sinch.sdk.domains.conversation.models.requests.AppRequestParameters;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -24,8 +22,8 @@ public class Update extends BaseApplication {
   public void run() {
 
     LOGGER.info(String.format("Updating application '%s'", conversationAppId));
-
-    var parameters =
+    throw new RuntimeException("TODO");
+    /*   var parameters =
         AppRequestParameters.builder()
             .setDisplayName("Updated from Java SDK")
             .setCallbackSettings(
@@ -33,6 +31,6 @@ public class Update extends BaseApplication {
             .build();
     var result = client.conversation().app().update(conversationAppId, parameters);
 
-    LOGGER.info("Response: " + result);
+    LOGGER.info("Response: " + result);*/
   }
 }

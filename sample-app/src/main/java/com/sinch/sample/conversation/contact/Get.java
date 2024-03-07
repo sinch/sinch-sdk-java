@@ -23,8 +23,9 @@ public class Get extends BaseApplication {
 
     LOGGER.info("Get contact details: " + conversationContactId);
 
-    var result = client.conversation().contact().get(conversationContactId);
+    throw new RuntimeException("TODO");
+    /*var result = client.conversation().contact().get(conversationContactId);
 
-    LOGGER.info("Response: " + result);
+    LOGGER.info("Response: " + result);*/
   }
 }
