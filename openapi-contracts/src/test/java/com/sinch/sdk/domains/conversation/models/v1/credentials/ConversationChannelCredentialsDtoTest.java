@@ -5,6 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.domains.conversation.models.v1.ChannelIntegrationStatus;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
@@ -21,7 +22,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
           .setChannelKnownId("channel id")
           .setState(
               ChannelIntegrationState.builder()
-                  .setStatus("PENDING")
+                  .setStatus(ChannelIntegrationStatus.PENDING)
                   .setDescription("description value")
                   .build())
           .setInstagramCredentials(
@@ -48,7 +49,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
           .setChannelKnownId("channel id")
           .setState(
               ChannelIntegrationState.builder()
-                  .setStatus("PENDING")
+                  .setStatus(ChannelIntegrationStatus.PENDING)
                   .setDescription("description value")
                   .build())
           .setKakaotalkCredentials(
@@ -75,7 +76,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
           .setChannelKnownId("channel id")
           .setState(
               ChannelIntegrationState.builder()
-                  .setStatus("PENDING")
+                  .setStatus(ChannelIntegrationStatus.PENDING)
                   .setDescription("description value")
                   .build())
           .setKakaotalkchatCredentials(
@@ -102,7 +103,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
           .setChannelKnownId("channel id")
           .setState(
               ChannelIntegrationState.builder()
-                  .setStatus("PENDING")
+                  .setStatus(ChannelIntegrationStatus.PENDING)
                   .setDescription("description value")
                   .build())
           .setLineCredentials(
@@ -129,7 +130,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
           .setChannelKnownId("channel id")
           .setState(
               ChannelIntegrationState.builder()
-                  .setStatus("PENDING")
+                  .setStatus(ChannelIntegrationStatus.PENDING)
                   .setDescription("description value")
                   .build())
           .setStaticToken(
@@ -151,7 +152,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
           .setChannelKnownId("channel id")
           .setState(
               ChannelIntegrationState.builder()
-                  .setStatus("PENDING")
+                  .setStatus(ChannelIntegrationStatus.PENDING)
                   .setDescription("description value")
                   .build())
           .setMmsCredentials(
@@ -190,7 +191,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
           .setChannelKnownId("channel id")
           .setState(
               ChannelIntegrationState.builder()
-                  .setStatus("PENDING")
+                  .setStatus(ChannelIntegrationStatus.PENDING)
                   .setDescription("description value")
                   .build())
           .setStaticBearer(
@@ -217,7 +218,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
           .setChannelKnownId("channel id")
           .setState(
               ChannelIntegrationState.builder()
-                  .setStatus("PENDING")
+                  .setStatus(ChannelIntegrationStatus.PENDING)
                   .setDescription("description value")
                   .build())
           .setStaticBearer(
@@ -245,7 +246,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
           .setChannelKnownId("channel id")
           .setState(
               ChannelIntegrationState.builder()
-                  .setStatus("PENDING")
+                  .setStatus(ChannelIntegrationStatus.PENDING)
                   .setDescription("description value")
                   .build())
           .setTelegramCredentials(
@@ -266,7 +267,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
           .setChannelKnownId("channel id")
           .setState(
               ChannelIntegrationState.builder()
-                  .setStatus("PENDING")
+                  .setStatus(ChannelIntegrationStatus.PENDING)
                   .setDescription("description value")
                   .build())
           .setStaticToken(StaticTokenCredentials.builder().setToken("viberChannel token").build())
@@ -285,7 +286,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
           .setChannelKnownId("channel id")
           .setState(
               ChannelIntegrationState.builder()
-                  .setStatus("PENDING")
+                  .setStatus(ChannelIntegrationStatus.PENDING)
                   .setDescription("description value")
                   .build())
           .setStaticBearer(
@@ -312,7 +313,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
           .setChannelKnownId("channel id")
           .setState(
               ChannelIntegrationState.builder()
-                  .setStatus("PENDING")
+                  .setStatus(ChannelIntegrationStatus.PENDING)
                   .setDescription("description value")
                   .build())
           .setWechatCredentials(
@@ -343,7 +344,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
           .setChannelKnownId("channel id")
           .setState(
               ChannelIntegrationState.builder()
-                  .setStatus("PENDING")
+                  .setStatus(ChannelIntegrationStatus.PENDING)
                   .setDescription("description value")
                   .build())
           .setStaticBearer(
