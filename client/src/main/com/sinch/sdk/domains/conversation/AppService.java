@@ -1,6 +1,8 @@
 package com.sinch.sdk.domains.conversation;
 
+import com.sinch.sdk.domains.conversation.models.v1.AppCreateRequest;
 import com.sinch.sdk.domains.conversation.models.v1.AppResponse;
+import com.sinch.sdk.domains.conversation.models.v1.AppUpdateRequest;
 import com.sinch.sdk.models.ConversationRegion;
 import java.util.Collection;
 
@@ -68,7 +70,7 @@ public interface AppService {
    * @param parameters Creation parameters
    * @return Created application
    */
-  // App create(AppRequestParameters parameters);
+  AppResponse create(AppCreateRequest parameters);
 
   /**
    * Update a Conversation application
@@ -88,5 +90,5 @@ public interface AppService {
    *     updated
    * @return Updated application
    */
-  // App update(String appId, AppRequestParameters parameters);
+  AppResponse update(String appId, AppUpdateRequest parameters);
 }
