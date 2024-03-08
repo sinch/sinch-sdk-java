@@ -1,5 +1,12 @@
 package com.sinch.sdk.domains.conversation;
 
+import com.sinch.sdk.domains.conversation.models.v1.Contact;
+import com.sinch.sdk.domains.conversation.models.v1.ContactCreateRequest;
+import com.sinch.sdk.domains.conversation.models.v1.ContactGetChannelProfileByChannelIdentityRequest;
+import com.sinch.sdk.domains.conversation.models.v1.ContactGetChannelProfileByContactIdRequest;
+import com.sinch.sdk.domains.conversation.models.v1.ContactListRequest;
+import com.sinch.sdk.domains.conversation.models.v1.ContactListResponse;
+
 /**
  * Contact related service
  *
@@ -33,7 +40,7 @@ public interface ContactService {
    * @return List of contacts according to search criteria
    * @since 1.0
    */
-  // ContactListResponse list(ContactListRequestParameters parameters);
+  ContactListResponse list(ContactListRequest parameters);
 
   /**
    * Get a Contact
@@ -47,7 +54,7 @@ public interface ContactService {
    * @return Contact information
    * @since 1.0
    */
-  //  Contact get(String contactId);
+  Contact get(String contactId);
 
   /**
    * Create a Contact
@@ -61,7 +68,7 @@ public interface ContactService {
    * @return Contact information
    * @since 1.0
    */
-  // Contact create(ContactCreateRequestParameters contact);
+  Contact create(ContactCreateRequest contact);
 
   /**
    * Delete a contact as specified by the contact ID.
@@ -69,7 +76,7 @@ public interface ContactService {
    * @param contactId Contact's Id
    * @since 1.0
    */
-  // void delete(String contactId);
+  void delete(String contactId);
 
   /**
    * Updates a contact as specified by the contact ID.
@@ -79,7 +86,7 @@ public interface ContactService {
    * @return Updated contact information
    * @since 1,0
    */
-  // Contact update(Contact contact);
+  Contact update(Contact contact);
 
   /**
    * Merge two Contacts.
@@ -104,15 +111,16 @@ public interface ContactService {
    * @return The merged contact details
    * @since 1,0
    */
-  //// Contact mergeContact(String destinationId, String sourceId);
+  Contact mergeContact(String destinationId, String sourceId);
 
   /**
    * Get user profile from a specific channel by contact ID.
    *
-   * <p>Only supported on {@link com.sinch.sdk.domains.conversation.models.ChannelType#MESSENGER
-   * MESSENGER}, {@link com.sinch.sdk.domains.conversation.models.ChannelType#INSTAGRAM INSTAGRAM},
-   * {@link com.sinch.sdk.domains.conversation.models.ChannelType#VIBER VIBER} and {@link
-   * com.sinch.sdk.domains.conversation.models.ChannelType#LINE LINE} channels.
+   * <p>Only supported on {@link
+   * com.sinch.sdk.domains.conversation.models.v1.ConversationChannel#MESSENGER MESSENGER}, {@link
+   * com.sinch.sdk.domains.conversation.models.v1.ConversationChannel#INSTAGRAM INSTAGRAM}, {@link
+   * com.sinch.sdk.domains.conversation.models.v1.ConversationChannel#VIBER VIBER} and {@link
+   * com.sinch.sdk.domains.conversation.models.v1.ConversationChannel#LINE LINE} channels.
    *
    * <p>Note that, in order to retrieve a WhatsApp display name, you can use the Get a Contact or
    * List Contacts operations, which will populate the display_name field of each returned contact
@@ -123,15 +131,16 @@ public interface ContactService {
    * @return The profile name
    * @since 1,0
    */
-  // String getChannelProfileByContactId(GetChannelProfileByContactRequestParameters parameters);
+  String getChannelProfileByContactId(ContactGetChannelProfileByContactIdRequest parameters);
 
   /**
    * Get user profile from a specific channel by channel identity.
    *
-   * <p>Only supported on {@link com.sinch.sdk.domains.conversation.models.ChannelType#MESSENGER
-   * MESSENGER}, {@link com.sinch.sdk.domains.conversation.models.ChannelType#INSTAGRAM INSTAGRAM},
-   * {@link com.sinch.sdk.domains.conversation.models.ChannelType#VIBER VIBER} and {@link
-   * com.sinch.sdk.domains.conversation.models.ChannelType#LINE LINE} channels.
+   * <p>Only supported on {@link
+   * com.sinch.sdk.domains.conversation.models.v1.ConversationChannel#MESSENGER MESSENGER}, {@link
+   * com.sinch.sdk.domains.conversation.models.v1.ConversationChannel#INSTAGRAM INSTAGRAM}, {@link
+   * com.sinch.sdk.domains.conversation.models.v1.ConversationChannel#VIBER VIBER} and {@link
+   * com.sinch.sdk.domains.conversation.models.v1.ConversationChannel#LINE LINE} channels.
    *
    * <p>Note that, in order to retrieve a WhatsApp display name, you can use the Get a Contact or
    * List Contacts operations, which will populate the display_name field of each returned contact
@@ -143,6 +152,6 @@ public interface ContactService {
    * @return The profile name
    * @since 1,0
    */
-  //  String getChannelProfileByChannelIdentity(GetChannelProfileByChannelRequestParameters
-  // parameters);
+  String getChannelProfileByChannelIdentity(
+      ContactGetChannelProfileByChannelIdentityRequest parameters);
 }

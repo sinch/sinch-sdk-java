@@ -1,7 +1,11 @@
 package com.sinch.sample.conversation.contact;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
+import com.sinch.sdk.domains.conversation.models.v1.ContactCreateRequest;
+import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class Create extends BaseApplication {
@@ -22,31 +26,31 @@ public class Create extends BaseApplication {
   public void run() {
 
     LOGGER.info("Create contact");
-    throw new RuntimeException("TODO");
-    /*
+
     var contact =
-        ContactCreateRequestParameters.builder()
+        ContactCreateRequest.builder()
             .setChannelIdentities(
                 Arrays.asList(
                     ChannelIdentity.builder()
-                        .setChannel(ChannelType.MMS)
-                        .setIdentity("a MMS identity")
+                        .setChannel(ConversationChannel.MMS)
+                        .setIdentity("+33628254417") // phonenumber
                         .build(),
                     ChannelIdentity.builder()
-                        .setChannel(ChannelType.MESSENGER)
+                        .setChannel(ConversationChannel.MESSENGER)
                         .setIdentity("a MESSENGER identity")
-                        .setAppId("app id")
+                        .setAppId("01HRF157EEQ7F2F3QC2AJGYPK0")
                         .build()))
-            .setChannelPriority(Arrays.asList(ChannelType.MMS, ChannelType.MESSENGER))
+            .setChannelPriority(
+                Arrays.asList(ConversationChannel.MMS, ConversationChannel.MESSENGER))
             .setDisplayName("created from Java SDK")
             .setEmail("foo@foo.com")
             .setExternalId("external id value")
             .setMetadata("metadata value")
-            .setLanguage(LanguageType.AR)
+            .setLanguage("AR")
             .build();
 
     var result = client.conversation().contact().create(contact);
 
-    LOGGER.info("Response: " + result);*/
+    LOGGER.info("Response: " + result);
   }
 }

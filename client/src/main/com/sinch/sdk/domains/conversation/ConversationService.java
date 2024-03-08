@@ -23,7 +23,5 @@ public interface ConversationService {
    * @return service instance for project
    * @since 1.0
    */
-
-  // ContactService contact();
-
+  ContactService contact();
 }
