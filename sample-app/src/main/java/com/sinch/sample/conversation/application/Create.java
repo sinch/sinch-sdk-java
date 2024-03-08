@@ -1,8 +1,8 @@
 package com.sinch.sample.conversation.application;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.conversation.models.ConversationChannelCredentialsRequestBuilderFactory;
-import com.sinch.sdk.domains.conversation.models.v1.AppCreateRequest;
+import com.sinch.sdk.domains.conversation.models.v1.app.request.AppCreateRequest;
+import com.sinch.sdk.domains.conversation.models.v1.app.request.ConversationChannelCredentialsRequestBuilderFactory;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.AppleBcCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.BasicAuthCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.InstagramCredentials;

@@ -2,8 +2,8 @@ package com.sinch.sample.conversation.contact;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
-import com.sinch.sdk.domains.conversation.models.v1.ContactCreateRequest;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
+import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactCreateRequest;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.logging.Logger;

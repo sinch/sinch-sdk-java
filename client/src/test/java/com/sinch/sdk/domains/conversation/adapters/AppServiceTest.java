@@ -12,7 +12,7 @@ import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.domains.conversation.api.v1.AppApi;
 import com.sinch.sdk.domains.conversation.models.v1.AppDtoTest;
-import com.sinch.sdk.domains.conversation.models.v1.AppResponse;
+import com.sinch.sdk.domains.conversation.models.v1.app.response.AppResponse;
 import com.sinch.sdk.models.ConversationContext;
 import java.util.Collection;
 import java.util.Map;

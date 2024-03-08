@@ -1,7 +1,7 @@
 package com.sinch.sample.conversation.contact;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.conversation.models.v1.ContactListRequest;
+import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactListRequest;
 import java.io.IOException;
 import java.util.logging.Logger;
 
