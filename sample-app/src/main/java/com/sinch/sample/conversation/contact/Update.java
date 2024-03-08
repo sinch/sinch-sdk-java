@@ -1,7 +1,11 @@
 package com.sinch.sample.conversation.contact;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
+import com.sinch.sdk.domains.conversation.models.v1.Contact;
+import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class Update extends BaseApplication {
@@ -22,41 +26,41 @@ public class Update extends BaseApplication {
   public void run() {
 
     LOGGER.info("Update contact '%s'".formatted(conversationContactId));
-    throw new RuntimeException("TODO");
-    /*
+
     var contact =
         Contact.builder()
             .setId(conversationContactId)
             .setChannelIdentities(
                 Arrays.asList(
                     ChannelIdentity.builder()
-                        .setChannel(ChannelType.MESSENGER)
-                        .setIdentity("a MESSENGER identity")
+                        .setChannel(ConversationChannel.MESSENGER)
+                        .setIdentity("+33451234567")
                         .setAppId(conversationAppId)
                         .build(),
                     ChannelIdentity.builder()
-                        .setChannel(ChannelType.MMS)
-                        .setIdentity("a MMS identity")
+                        .setChannel(ConversationChannel.MMS)
+                        .setIdentity("+33461234567")
                         .build(),
                     ChannelIdentity.builder()
-                        .setChannel(ChannelType.KAKAO_TALK)
-                        .setIdentity("a KAKAO_TALK identity")
+                        .setChannel(ConversationChannel.KAKAOTALK)
+                        .setIdentity("+33471234567")
                         .build(),
                     ChannelIdentity.builder()
-                        .setChannel(ChannelType.INSTAGRAM)
-                        .setIdentity("a INSTAGRAM identity")
+                        .setChannel(ConversationChannel.INSTAGRAM)
+                        .setIdentity("+3348234567")
                         .setAppId(conversationAppId)
                         .build()))
-            .setChannelPriority(Arrays.asList(ChannelType.MMS, ChannelType.KAKAO_TALK))
+            .setChannelPriority(
+                Arrays.asList(ConversationChannel.MMS, ConversationChannel.KAKAOTALK))
             .setDisplayName("updated from Java SDK")
             .setEmail("foo-toto@foo.com")
             .setExternalId("external id value updated")
             .setMetadata("metadata value updated")
-            .setLanguage(LanguageType.BG)
+            .setLanguage("BG")
             .build();
 
     var result = client.conversation().contact().update(contact);
 
-    LOGGER.info("Response: " + result);*/
+    LOGGER.info("Response: " + result);
   }
 }

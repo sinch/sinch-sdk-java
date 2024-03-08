@@ -1,7 +1,13 @@
 package com.sinch.sample.conversation.contact;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentity;
+import com.sinch.sdk.domains.conversation.models.v1.ContactGetChannelProfileByChannelIdentityRequest;
+import com.sinch.sdk.domains.conversation.models.v1.ContactGetChannelProfileByContactIdRequest;
+import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
+import com.sinch.sdk.domains.conversation.models.v1.GetChannelProfileConversationChannel;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.logging.Logger;
 
 public class GetChannelProfile extends BaseApplication {
@@ -20,36 +26,32 @@ public class GetChannelProfile extends BaseApplication {
   }
 
   public void run() {
-    throw new RuntimeException("TODO");
-    /*
+
     var parametersByContactId =
-        GetChannelProfileByContactRequestParameters.builder()
+        ContactGetChannelProfileByContactIdRequest.builder()
             .setAppId(conversationAppId)
-            .setChannel(ChannelType.MESSENGER)
-            .setContactId("a messenger contact identity")
+            .setChannel(GetChannelProfileConversationChannel.MESSENGER)
+            .setContactId("+33123456789")
             .build();
 
     var parametersByChannelIdentity =
-        GetChannelProfileByChannelRequestParameters.builder()
-            .setAppId("an app id")
-            .setChannel(ChannelType.MESSENGER)
+        ContactGetChannelProfileByChannelIdentityRequest.builder()
+            .setAppId(conversationAppId)
+            .setChannel(GetChannelProfileConversationChannel.MESSENGER)
             .setChannelIdentities(
                 Collections.singletonList(
-                    ChannelIdentityRecipient.builder()
-                        .setChannel(ChannelType.MESSENGER)
-                        .setIdentity("a messenger channel identity")
+                    ChannelRecipientIdentity.builder()
+                        .setChannel(ConversationChannel.MESSENGER)
+                        .setIdentity("+33123456789")
                         .build()))
             .build();
 
     LOGGER.info("Get channel profile: " + conversationContactId);
 
-    var result =
-        // client.conversation().contact().getChannelProfileByContactId(parametersByContactId)
-        client
-            .conversation()
-            .contact()
-            .getChannelProfileByChannelIdentity(parametersByChannelIdentity);
+    var result = client.conversation().contact().getChannelProfileByContactId(parametersByContactId)
+        //            .getChannelProfileByChannelIdentity(parametersByChannelIdentity)
+        ;
 
-    LOGGER.info("Response: " + result);*/
+    LOGGER.info("Response: " + result);
   }
 }

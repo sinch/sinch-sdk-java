@@ -25,12 +25,10 @@ public class Merge extends BaseApplication {
     String destinationContactId = "destination contact ID";
 
     LOGGER.info("Merge contact '%s' onto '%s'".formatted(sourceContactId, destinationContactId));
-    throw new RuntimeException("TODO");
 
-    /*
     var result =
         client.conversation().contact().mergeContact(destinationContactId, sourceContactId);
 
-    LOGGER.info("Response: " + result);*/
+    LOGGER.info("Response: " + result);
   }
 }
