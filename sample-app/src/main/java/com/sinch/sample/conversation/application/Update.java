@@ -1,8 +1,8 @@
 package com.sinch.sample.conversation.application;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.conversation.models.v1.AppUpdateRequest;
 import com.sinch.sdk.domains.conversation.models.v1.CallbackSettings;
+import com.sinch.sdk.domains.conversation.models.v1.app.request.AppUpdateRequest;
 import java.io.IOException;
 import java.util.logging.Logger;
 

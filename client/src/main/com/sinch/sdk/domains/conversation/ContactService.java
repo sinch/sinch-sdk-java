@@ -1,11 +1,11 @@
 package com.sinch.sdk.domains.conversation;
 
-import com.sinch.sdk.domains.conversation.models.v1.Contact;
-import com.sinch.sdk.domains.conversation.models.v1.ContactCreateRequest;
-import com.sinch.sdk.domains.conversation.models.v1.ContactGetChannelProfileByChannelIdentityRequest;
-import com.sinch.sdk.domains.conversation.models.v1.ContactGetChannelProfileByContactIdRequest;
-import com.sinch.sdk.domains.conversation.models.v1.ContactListRequest;
-import com.sinch.sdk.domains.conversation.models.v1.ContactListResponse;
+import com.sinch.sdk.domains.conversation.models.v1.contact.Contact;
+import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactCreateRequest;
+import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactGetChannelProfileByChannelIdentityRequest;
+import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactGetChannelProfileByContactIdRequest;
+import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactListRequest;
+import com.sinch.sdk.domains.conversation.models.v1.contact.response.ContactListResponse;
 
 /**
  * Contact related service

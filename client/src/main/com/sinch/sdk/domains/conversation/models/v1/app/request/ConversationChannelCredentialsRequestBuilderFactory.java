@@ -1,7 +1,6 @@
-package com.sinch.sdk.domains.conversation.models;
+package com.sinch.sdk.domains.conversation.models.v1.app.request;
 
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
-import com.sinch.sdk.domains.conversation.models.v1.ConversationChannelCredentialRequest;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.AppleBcCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.InstagramCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.KakaoTalkChatCredentials;

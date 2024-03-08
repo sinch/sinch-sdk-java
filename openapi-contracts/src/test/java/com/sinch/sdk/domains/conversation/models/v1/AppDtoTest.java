@@ -4,6 +4,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.domains.conversation.models.v1.app.response.AppResponse;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.ChannelIntegrationState;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.ConversationChannelCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.StaticTokenCredentials;
