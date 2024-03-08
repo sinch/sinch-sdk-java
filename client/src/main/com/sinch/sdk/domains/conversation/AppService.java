@@ -1,8 +1,8 @@
 package com.sinch.sdk.domains.conversation;
 
-import com.sinch.sdk.domains.conversation.models.v1.AppCreateRequest;
-import com.sinch.sdk.domains.conversation.models.v1.AppResponse;
-import com.sinch.sdk.domains.conversation.models.v1.AppUpdateRequest;
+import com.sinch.sdk.domains.conversation.models.v1.app.request.AppCreateRequest;
+import com.sinch.sdk.domains.conversation.models.v1.app.request.AppUpdateRequest;
+import com.sinch.sdk.domains.conversation.models.v1.app.response.AppResponse;
 import com.sinch.sdk.models.ConversationRegion;
 import java.util.Collection;
 

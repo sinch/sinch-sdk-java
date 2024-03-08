@@ -2,10 +2,10 @@ package com.sinch.sample.conversation.contact;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentity;
-import com.sinch.sdk.domains.conversation.models.v1.ContactGetChannelProfileByChannelIdentityRequest;
-import com.sinch.sdk.domains.conversation.models.v1.ContactGetChannelProfileByContactIdRequest;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.GetChannelProfileConversationChannel;
+import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactGetChannelProfileByChannelIdentityRequest;
+import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactGetChannelProfileByContactIdRequest;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.logging.Logger;

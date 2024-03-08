@@ -1,9 +1,11 @@
-package com.sinch.sdk.domains.conversation.models.v1;
+package com.sinch.sdk.domains.conversation.models.v1.contact.response;
 
 import com.sinch.sdk.core.models.pagination.ListResponse;
 import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.conversation.ContactService;
+import com.sinch.sdk.domains.conversation.models.v1.contact.Contact;
+import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactListRequest;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
