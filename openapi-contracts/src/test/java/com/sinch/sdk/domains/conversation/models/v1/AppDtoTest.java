@@ -34,7 +34,7 @@ public class AppDtoTest extends BaseTest {
                       .setCallbackSecret("foo value")
                       .setState(
                           ChannelIntegrationState.builder()
-                              .setStatus("ACTIVE")
+                              .setStatus(ChannelIntegrationStatus.from("ACTIVE"))
                               .setDescription("")
                               .build())
                       .setChannelKnownId("a channel id")
