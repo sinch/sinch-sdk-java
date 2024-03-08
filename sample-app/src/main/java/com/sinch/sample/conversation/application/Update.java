@@ -26,7 +26,7 @@ public class Update extends BaseApplication {
     LOGGER.info(String.format("Updating application '%s'", conversationAppId));
     var parameters =
         AppUpdateRequest.builder()
-             .setDisplayName("Updated from Java SDK")
+            .setDisplayName("Updated from Java SDK")
             .setCallbackSettings(
                 CallbackSettings.builder().setSecretForOverriddenCallbackUrls("foo secret").build())
             .build();
