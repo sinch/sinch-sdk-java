@@ -3,28 +3,27 @@ package com.sinch.sdk.domains.conversation.models.v1;
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.domains.conversation.models.v1.app.request.AppCreateRequest;
+import com.sinch.sdk.domains.conversation.models.v1.app.request.AppUpdateRequest;
+import com.sinch.sdk.domains.conversation.models.v1.app.request.ConversationChannelCredentialRequest;
 import com.sinch.sdk.domains.conversation.models.v1.app.response.AppResponse;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.ChannelIntegrationState;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.ConversationChannelCredentials;
+import com.sinch.sdk.domains.conversation.models.v1.credentials.StaticBearerCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.StaticTokenCredentials;
+import java.util.Arrays;
 import java.util.Collections;
 import org.assertj.core.api.Assertions;
+import org.json.JSONException;
 import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
 public class AppDtoTest extends BaseTest {
 
-  @GivenJsonResource("/domains/conversation/v1/AppListResponseDto.json")
-  ListAppsResponse loadedListAppsResponseDto;
-
-  @GivenTextResource("/domains/conversation/v1/AppCreateRequestDto.json")
-  String jsonAppCreateRequestDto;
-
-  @GivenTextResource("/domains/conversation/v1/AppUpdateRequestDto.json")
-  String jsonAppUpdateRequestDto;
-
-  public static AppResponse expectedAppsResponseDto =
+  public static AppResponse expectedAppResponseDto =
       AppResponse.builder()
           .setId("an app id")
           .setChannelCredentials(
@@ -68,74 +67,92 @@ public class AppDtoTest extends BaseTest {
                   .build())
           .setMessageRetrySettings(null)
           .build();
-
   public static ListAppsResponse expectedListAppsResponseDto =
-      ListAppsResponse.builder()
-          .setApps(Collections.singletonList(expectedAppsResponseDto))
+      ListAppsResponse.builder().setApps(Collections.singletonList(expectedAppResponseDto)).build();
+  public static AppCreateRequest appCreateRequestDto =
+      AppCreateRequest.builder()
+          .setChannelCredentials(
+              Arrays.asList(
+                  ConversationChannelCredentialRequest.builder()
+                      .setChannel(ConversationChannel.MESSENGER)
+                      .setStaticToken(StaticTokenCredentials.builder().setToken("my token").build())
+                      .setCallbackSecret("foo value")
+                      .setChannelKnownId("a channel id")
+                      .build(),
+                  ConversationChannelCredentialRequest.builder()
+                      .setChannel(ConversationChannel.SMS)
+                      .setStaticBearer(
+                          StaticBearerCredentials.builder()
+                              .setClaimedIdentity("my identity")
+                              .setToken("sms token")
+                              .build())
+                      .setCallbackSecret("")
+                      .setChannelKnownId("")
+                      .build()))
+          .setConversationMetadataReportView(ConversationMetadataReportView.NONE)
+          .setDisplayName("Brazil App")
+          .setRetentionPolicy(
+              RetentionPolicy.builder()
+                  .setRetentionType("CONVERSATION_EXPIRE_POLICY")
+                  .setTtlDays(180L)
+                  .build())
+          .setProcessingMode("DISPATCH")
+          .setDispatchRetentionPolicy(
+              DispatchRetentionPolicy.builder()
+                  .setRetentionType(DispatchRetentionPolicyType.MESSAGE_EXPIRE_POLICY)
+                  .setTtlDays(0L)
+                  .build())
+          .setSmartConversation(SmartConversation.builder().setEnabled(true).build())
+          .setCallbackSettings(
+              CallbackSettings.builder().setSecretForOverriddenCallbackUrls("my secret").build())
+          .build();
+  public static AppUpdateRequest appUpdateRequestDto =
+      AppUpdateRequest.builder()
+          .setChannelCredentials(
+              Arrays.asList(
+                  ConversationChannelCredentialRequest.builder()
+                      .setChannel(ConversationChannel.MESSENGER)
+                      .setStaticToken(StaticTokenCredentials.builder().setToken("my token").build())
+                      .setCallbackSecret("foo value")
+                      .setChannelKnownId("a channel id")
+                      .build(),
+                  ConversationChannelCredentialRequest.builder()
+                      .setChannel(ConversationChannel.SMS)
+                      .setStaticBearer(
+                          StaticBearerCredentials.builder()
+                              .setClaimedIdentity("my identity")
+                              .setToken("sms token")
+                              .build())
+                      .setCallbackSecret("")
+                      .setChannelKnownId("")
+                      .build()))
+          .setConversationMetadataReportView(ConversationMetadataReportView.NONE)
+          .setDisplayName("Brazil App")
+          .setRetentionPolicy(
+              RetentionPolicy.builder()
+                  .setRetentionType("CONVERSATION_EXPIRE_POLICY")
+                  .setTtlDays(180L)
+                  .build())
+          .setProcessingMode("DISPATCH")
+          .setDispatchRetentionPolicy(
+              DispatchRetentionPolicy.builder()
+                  .setRetentionType(DispatchRetentionPolicyType.MESSAGE_EXPIRE_POLICY)
+                  .setTtlDays(0L)
+                  .build())
+          .setSmartConversation(SmartConversation.builder().setEnabled(true).build())
+          .setCallbackSettings(
+              CallbackSettings.builder().setSecretForOverriddenCallbackUrls("my secret").build())
           .build();
 
-  /*  public static AppCreateRequestDto appCreateRequestDto =
-        new AppCreateRequestDto()
-            .channelCredentials(
-                Arrays.asList(
-                    new ConversationChannelCredentialDto()
-                        .channel(ConversationChannelDto.MESSENGER)
-                        .staticToken(new StaticTokenCredentialDto().token("my token"))
-                        .callbackSecret("foo value")
-                        .channelKnownId("a channel id"),
-                    new ConversationChannelCredentialDto()
-                        .channel(ConversationChannelDto.SMS)
-                        .staticBearer(
-                            new StaticBearerCredentialDto()
-                                .claimedIdentity("my identity")
-                                .token("sms token"))
-                        .callbackSecret("")
-                        .channelKnownId("")))
-            .conversationMetadataReportView(ConversationMetadataReportViewDto.NONE)
-            .displayName("Brazil App")
-            .retentionPolicy(
-                new RetentionPolicyDto()
-                    .retentionType(RetentionPolicyTypeDto.CONVERSATION_EXPIRE_POLICY)
-                    .ttlDays(180L))
-            .processingMode(ProcessingModeDto.DISPATCH)
-            .dispatchRetentionPolicy(
-                new DispatchRetentionPolicyDto()
-                    .retentionType(DispatchRetentionPolicyTypeDto.MESSAGE_EXPIRE_POLICY)
-                    .ttlDays(0L))
-            .smartConversation(new SmartConversationDto().enabled(true))
-            .callbackSettings(new CallbackSettingsDto().secretForOverriddenCallbackUrls("my secret"));
+  @GivenJsonResource("/domains/conversation/v1/AppListResponseDto.json")
+  ListAppsResponse loadedListAppsResponseDto;
 
-    public static AppUpdateRequestDto appUpdateRequestDto =
-        new AppUpdateRequestDto()
-            .channelCredentials(
-                Arrays.asList(
-                    new ConversationChannelCredentialDto()
-                        .channel(ConversationChannelDto.MESSENGER)
-                        .staticToken(new StaticTokenCredentialDto().token("my token"))
-                        .callbackSecret("foo value")
-                        .channelKnownId("a channel id"),
-                    new ConversationChannelCredentialDto()
-                        .channel(ConversationChannelDto.SMS)
-                        .staticBearer(
-                            new StaticBearerCredentialDto()
-                                .claimedIdentity("my identity")
-                                .token("sms token"))
-                        .callbackSecret("")
-                        .channelKnownId("")))
-            .conversationMetadataReportView(ConversationMetadataReportViewDto.NONE)
-            .displayName("Brazil App")
-            .retentionPolicy(
-                new RetentionPolicyDto()
-                    .retentionType(RetentionPolicyTypeDto.CONVERSATION_EXPIRE_POLICY)
-                    .ttlDays(180L))
-            .processingMode(ProcessingModeDto.DISPATCH)
-            .dispatchRetentionPolicy(
-                new DispatchRetentionPolicyDto()
-                    .retentionType(DispatchRetentionPolicyTypeDto.MESSAGE_EXPIRE_POLICY)
-                    .ttlDays(0L))
-            .smartConversation(new SmartConversationDto().enabled(true))
-            .callbackSettings(new CallbackSettingsDto().secretForOverriddenCallbackUrls("my secret"));
-  */
+  @GivenTextResource("/domains/conversation/v1/AppCreateRequestDto.json")
+  String jsonAppCreateRequestDto;
+
+  @GivenTextResource("/domains/conversation/v1/AppUpdateRequestDto.json")
+  String jsonAppUpdateRequestDto;
+
   @Test
   void deserializeListAppsResponseDto() {
     Assertions.assertThat(loadedListAppsResponseDto)
@@ -143,7 +160,7 @@ public class AppDtoTest extends BaseTest {
         .isEqualTo(expectedListAppsResponseDto);
   }
 
-  /* @Test
+  @Test
   void serializeAppCreateRequestDto() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(appCreateRequestDto);
 
@@ -155,5 +172,5 @@ public class AppDtoTest extends BaseTest {
     String serializedString = objectMapper.writeValueAsString(appUpdateRequestDto);
 
     JSONAssert.assertEquals(jsonAppUpdateRequestDto, serializedString, true);
-  }*/
+  }
 }

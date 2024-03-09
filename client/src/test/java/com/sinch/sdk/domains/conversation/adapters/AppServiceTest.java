@@ -53,27 +53,27 @@ public class AppServiceTest extends BaseTest {
   @Test
   void get() throws ApiException {
 
-    when(api.appGetApp(eq(uriPartID), eq(AppDtoTest.expectedAppsResponseDto.getId())))
-        .thenReturn(AppDtoTest.expectedAppsResponseDto);
+    when(api.appGetApp(eq(uriPartID), eq(AppDtoTest.expectedAppResponseDto.getId())))
+        .thenReturn(AppDtoTest.expectedAppResponseDto);
 
-    AppResponse response = service.get(AppDtoTest.expectedAppsResponseDto.getId());
+    AppResponse response = service.get(AppDtoTest.expectedAppResponseDto.getId());
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(AppDtoTest.expectedAppsResponseDto);
+        .isEqualTo(AppDtoTest.expectedAppResponseDto);
   }
 
-  /*@Test
+  @Test
   void create() throws ApiException {
 
     when(api.appCreateApp(eq(uriPartID), eq(AppDtoTest.appCreateRequestDto)))
-        .thenReturn(AppDtoTest.expectedAppsResponseDto);
+        .thenReturn(AppDtoTest.expectedAppResponseDto);
 
-    App response = service.create(AppConverterTest.appRequest);
+    AppResponse response = service.create(AppDtoTest.appCreateRequestDto);
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(AppConverterTest.expectedAPPResponse);
+        .isEqualTo(AppDtoTest.expectedAppResponseDto);
   }
 
   @Test
@@ -81,16 +81,16 @@ public class AppServiceTest extends BaseTest {
 
     when(api.appUpdateApp(
             eq(uriPartID),
-            eq(AppConverterTest.expectedAPPResponse.getId()),
+            eq(AppDtoTest.expectedAppResponseDto.getId()),
             eq(AppDtoTest.appUpdateRequestDto),
             eq(null)))
-        .thenReturn(AppDtoTest.expectedAppsResponseDto);
+        .thenReturn(AppDtoTest.expectedAppResponseDto);
 
-    App response =
-        service.update(AppConverterTest.expectedAPPResponse.getId(), AppConverterTest.appRequest);
+    AppResponse response =
+        service.update(AppDtoTest.expectedAppResponseDto.getId(), AppDtoTest.appUpdateRequestDto);
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(AppConverterTest.expectedAPPResponse);
-  }*/
+        .isEqualTo(AppDtoTest.expectedAppResponseDto);
+  }
 }

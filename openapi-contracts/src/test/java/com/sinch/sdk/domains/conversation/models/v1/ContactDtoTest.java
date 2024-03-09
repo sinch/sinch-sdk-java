@@ -1,22 +1,34 @@
 package com.sinch.sdk.domains.conversation.models.v1;
 
+import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
+import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.domains.conversation.models.v1.contact.Contact;
+import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactCreateRequest;
+import com.sinch.sdk.domains.conversation.models.v1.contact.request.GetChannelProfileRequest;
+import java.util.Arrays;
+import java.util.Collections;
+import org.assertj.core.api.Assertions;
+import org.json.JSONException;
+import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
 public class ContactDtoTest extends BaseTest {
-  /*
+
   @GivenJsonResource("/domains/conversation/v1/ContactListResponseDtoPage0.json")
-  ListContactsResponseDto loadedContactListResponseDtoPage0;
+  ListContactsResponse loadedContactListResponseDtoPage0;
 
   @GivenJsonResource("/domains/conversation/v1/ContactListResponseDtoPage1.json")
-  ListContactsResponseDto loadedContactListResponseDtoPage1;
+  ListContactsResponse loadedContactListResponseDtoPage1;
 
   @GivenTextResource("/domains/conversation/v1/ContactCreateRequestDto.json")
   String jsonContactCreateRequestDto;
 
   @GivenJsonResource("/domains/conversation/v1/ContactCreateResponseDto.json")
-  ContactDto loadedContactCreateResponseDto;
+  Contact loadedContactCreateResponseDto;
 
   @GivenTextResource("/domains/conversation/v1/ContactGetChannelProfileByChannelRequestDto.json")
   String jsonContactGetChannelProfileByChannelRequestDto;
@@ -25,109 +37,126 @@ public class ContactDtoTest extends BaseTest {
   String jsonContactGetChannelProfileByContactRequestDto;
 
   @GivenJsonResource("/domains/conversation/v1/ContactGetChannelResponseDto.json")
-  GetChannelProfileResponseDto loadedContactGetChannelResponseDto;
+  GetChannelProfileResponse loadedContactGetChannelResponseDto;
 
-  public static ContactDto expectedContactUpdateRequestDto =
-      new ContactDto()
-          .channelIdentities(
+  public static Contact updateContactRequestDto =
+      Contact.builder()
+          .setChannelIdentities(
               Collections.singletonList(
-                  new ChannelIdentityDto()
-                      .channel(ConversationChannelDto.SMS)
-                      .identity("a channel identity")
-                      .appId("an app id")))
-          .channelPriority(Collections.singletonList(ConversationChannelDto.SMS))
-          .displayName("a display name")
-          .email("an email")
-          .externalId("an external id")
-          .metadata("metadata value")
-          .language("UNSPECIFIED");
-  public static ContactDto expectedContactResponseDto =
-      new ContactDto()
-          .id("a contact id")
-          .channelIdentities(
+                  ChannelIdentity.builder()
+                      .setChannel(ConversationChannel.SMS)
+                      .setIdentity("a channel identity")
+                      .setAppId("an app id")
+                      .build()))
+          .setChannelPriority(Collections.singletonList(ConversationChannel.SMS))
+          .setDisplayName("a display name")
+          .setEmail("an email")
+          .setExternalId("an external id")
+          .setMetadata("metadata value")
+          .setLanguage("UNSPECIFIED")
+          .build();
+
+  public static Contact expectedContactResponseDto =
+      Contact.builder()
+          .setId("a contact id")
+          .setChannelIdentities(
               Collections.singletonList(
-                  new ChannelIdentityDto()
-                      .channel(ConversationChannelDto.SMS)
-                      .identity("a channel identity")
-                      .appId("an app id")))
-          .channelPriority(Collections.singletonList(ConversationChannelDto.SMS))
-          .displayName("a display name")
-          .email("an email")
-          .externalId("an external id")
-          .metadata("metadata value")
-          .language("UNSPECIFIED");
+                  ChannelIdentity.builder()
+                      .setChannel(ConversationChannel.SMS)
+                      .setIdentity("a channel identity")
+                      .setAppId("an app id")
+                      .build()))
+          .setChannelPriority(Collections.singletonList(ConversationChannel.SMS))
+          .setDisplayName("a display name")
+          .setEmail("an email")
+          .setExternalId("an external id")
+          .setMetadata("metadata value")
+          .setLanguage("UNSPECIFIED")
+          .build();
 
-  public static ContactCreateRequestDto createContactRequestDto =
-      new ContactCreateRequestDto()
-          .channelIdentities(
+  public static ContactCreateRequest createContactRequestDto =
+      ContactCreateRequest.builder()
+          .setChannelIdentities(
               Arrays.asList(
-                  new ChannelIdentityDto()
-                      .channel(ConversationChannelDto.MMS)
-                      .identity("+33987654321"),
-                  new ChannelIdentityDto()
-                      .channel(ConversationChannelDto.MESSENGER)
-                      .identity("+33987654321")
-                      .appId("my MESSENGER app id")))
-          .channelPriority(
-              Arrays.asList(ConversationChannelDto.MMS, ConversationChannelDto.MESSENGER))
-          .displayName("created from Java SDK")
-          .email("foo@foo.com")
-          .externalId("external id value")
-          .metadata("metadata value")
-          .language("AR");
-  public static ContactDto expectedCreatedContactResponseDto =
-      new ContactDto()
-          .id("my created contact ID")
-          .channelIdentities(
+                  ChannelIdentity.builder()
+                      .setChannel(ConversationChannel.MMS)
+                      .setIdentity("+33987654321")
+                      .build(),
+                  ChannelIdentity.builder()
+                      .setChannel(ConversationChannel.MESSENGER)
+                      .setIdentity("+33987654321")
+                      .setAppId("my MESSENGER app id")
+                      .build()))
+          .setChannelPriority(Arrays.asList(ConversationChannel.MMS, ConversationChannel.MESSENGER))
+          .setDisplayName("created from Java SDK")
+          .setEmail("foo@foo.com")
+          .setExternalId("external id value")
+          .setMetadata("metadata value")
+          .setLanguage("AR")
+          .build();
+
+  public static Contact expectedCreatedContactResponseDto =
+      Contact.builder()
+          .setId("my created contact ID")
+          .setChannelIdentities(
               Arrays.asList(
-                  new ChannelIdentityDto()
-                      .channel(ConversationChannelDto.MMS)
-                      .identity("33987654321"),
-                  new ChannelIdentityDto()
-                      .channel(ConversationChannelDto.MESSENGER)
-                      .identity("+33987654321")
-                      .appId("my MESSENGER app id")))
-          .channelPriority(
-              Arrays.asList(ConversationChannelDto.MMS, ConversationChannelDto.MESSENGER))
-          .displayName("created from Java SDK")
-          .email("foo@foo.com")
-          .externalId("external id value")
-          .metadata("metadata value")
-          .language("AR");
+                  ChannelIdentity.builder()
+                      .setChannel(ConversationChannel.MMS)
+                      .setIdentity("33987654321")
+                      .build(),
+                  ChannelIdentity.builder()
+                      .setChannel(ConversationChannel.MESSENGER)
+                      .setIdentity("+33987654321")
+                      .setAppId("my MESSENGER app id")
+                      .build()))
+          .setChannelPriority(Arrays.asList(ConversationChannel.MMS, ConversationChannel.MESSENGER))
+          .setDisplayName("created from Java SDK")
+          .setEmail("foo@foo.com")
+          .setExternalId("external id value")
+          .setMetadata("metadata value")
+          .setLanguage("AR")
+          .build();
 
-  public static ListContactsResponseDto expectedContactListResponseDtoPage0 =
-      new ListContactsResponseDto()
-          .contacts(Collections.singletonList(expectedContactResponseDto))
-          .nextPageToken("the next page token value");
+  public static ListContactsResponse expectedContactListResponseDtoPage0 =
+      ListContactsResponse.builder()
+          .setContacts(Collections.singletonList(expectedContactResponseDto))
+          .setNextPageToken("the next page token value")
+          .build();
 
-  public static ListContactsResponseDto expectedContactListResponseDtoPage1 =
-      new ListContactsResponseDto().contacts(Collections.emptyList()).nextPageToken("");
+  public static ListContactsResponse expectedContactListResponseDtoPage1 =
+      ListContactsResponse.builder()
+          .setContacts(Collections.emptyList())
+          .setNextPageToken("")
+          .build();
 
-  public static GetChannelProfileRequestDto contactGetChannelProfileByChannelRequestDto =
-      new GetChannelProfileRequestDto()
-          .appId("an app id")
-          .channel(GetChannelProfileConversationChannelDto.MESSENGER)
-          .recipient(
-              new GetChannelProfileRequestRecipientDto(
-                  new IdentifiedByDto()
-                      .identifiedBy(
-                          new ChannelIdentitiesDto()
-                              .channelIdentities(
-                                  Collections.singletonList(
-                                      new ChannelRecipientIdentityDto()
-                                          .channel(ConversationChannelDto.MESSENGER)
-                                          .identity("an identity"))))));
+  public static GetChannelProfileRequest contactGetChannelProfileByChannelRequestDto =
+      GetChannelProfileRequest.builder()
+          .setAppId("an app id")
+          .setChannel(GetChannelProfileConversationChannel.MESSENGER)
+          .setRecipient(
+              GetChannelProfileRequestRecipient.builder()
+                  .setIdentifiedBy(
+                      IdentifiedBy.builder()
+                          .setChannelIdentities(
+                              Collections.singletonList(
+                                  ChannelRecipientIdentity.builder()
+                                      .setChannel(ConversationChannel.MESSENGER)
+                                      .setIdentity("an identity")
+                                      .build()))
+                          .build())
+                  .build())
+          .build();
 
-  public static GetChannelProfileRequestDto contactGetChannelProfileByContactRequestDto =
-      new GetChannelProfileRequestDto()
-          .appId("an app id")
-          .channel(GetChannelProfileConversationChannelDto.MESSENGER)
-          .recipient(
-              new GetChannelProfileRequestRecipientDto(
-                  new ContactIdDto().contactId("a contact ID")));
+  public static GetChannelProfileRequest contactGetChannelProfileByContactRequestDto =
+      GetChannelProfileRequest.builder()
+          .setAppId("an app id")
+          .setChannel(GetChannelProfileConversationChannel.MESSENGER)
+          .setRecipient(
+              GetChannelProfileRequestRecipient.builder().setContactId("a contact ID").build())
+          .build();
 
-  public static GetChannelProfileResponseDto expectedChannelProfileResponseDto =
-      new GetChannelProfileResponseDto().profileName("a profile name");
+  public static GetChannelProfileResponse expectedChannelProfileResponseDto =
+      GetChannelProfileResponse.builder().setProfileName("a profile name").build();
 
   @Test
   void deserializeContactListResponseDtoPage0() {
@@ -182,5 +211,5 @@ public class ContactDtoTest extends BaseTest {
     Assertions.assertThat(loadedContactGetChannelResponseDto)
         .usingRecursiveComparison()
         .isEqualTo(expectedChannelProfileResponseDto);
-  }*/
+  }
 }

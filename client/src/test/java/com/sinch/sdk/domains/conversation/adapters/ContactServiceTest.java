@@ -1,13 +1,34 @@
 package com.sinch.sdk.domains.conversation.adapters;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
+
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
-
-// import com.sinch.sdk.domains.conversation.models.dto.v1.MergeContactRequestDto;
+import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.core.http.AuthManager;
+import com.sinch.sdk.core.http.HttpClient;
+import com.sinch.sdk.domains.conversation.api.v1.ContactApi;
+import com.sinch.sdk.domains.conversation.models.v1.ContactDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.MergeContactRequest;
+import com.sinch.sdk.domains.conversation.models.v1.contact.Contact;
+import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactGetChannelProfileByChannelIdentityRequest;
+import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactGetChannelProfileByContactIdRequest;
+import com.sinch.sdk.domains.conversation.models.v1.contact.response.ContactListResponse;
+import com.sinch.sdk.models.ConversationContext;
+import java.util.Iterator;
+import java.util.Map;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 @TestWithResources
 class ContactServiceTest extends BaseTest {
-  /*
+
   @Mock ConversationContext context;
   @Mock ContactApi api;
   @Mock HttpClient httpClient;
@@ -39,7 +60,7 @@ class ContactServiceTest extends BaseTest {
     Contact item = iterator.next();
     Assertions.assertThat(item)
         .usingRecursiveComparison()
-        .isEqualTo(ContactDtoConverterTest.contact);
+        .isEqualTo(ContactDtoTest.expectedContactResponseDto);
 
     Assertions.assertThat(iterator.hasNext()).isEqualTo(false);
   }
@@ -50,11 +71,11 @@ class ContactServiceTest extends BaseTest {
     when(api.contactCreateContact(eq(uriPartID), eq(ContactDtoTest.createContactRequestDto)))
         .thenReturn(ContactDtoTest.expectedCreatedContactResponseDto);
 
-    Contact response = service.create(ContactDtoConverterTest.contactCreateRequest);
+    Contact response = service.create(ContactDtoTest.createContactRequestDto);
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(ContactDtoConverterTest.contactCreateResponse);
+        .isEqualTo(ContactDtoTest.expectedCreatedContactResponseDto);
   }
 
   @Test
@@ -64,11 +85,11 @@ class ContactServiceTest extends BaseTest {
             eq(uriPartID), eq(ContactDtoTest.expectedContactResponseDto.getId())))
         .thenReturn(ContactDtoTest.expectedContactResponseDto);
 
-    Contact response = service.get(ContactDtoConverterTest.contact.getId());
+    Contact response = service.get(ContactDtoTest.expectedContactResponseDto.getId());
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(ContactDtoConverterTest.contact);
+        .isEqualTo(ContactDtoTest.expectedContactResponseDto);
   }
 
   @Test
@@ -77,58 +98,73 @@ class ContactServiceTest extends BaseTest {
     when(api.contactUpdateContact(
             eq(uriPartID),
             eq(ContactDtoTest.expectedContactResponseDto.getId()),
-            eq(ContactDtoTest.expectedContactUpdateRequestDto),
+            eq(ContactDtoTest.expectedContactResponseDto),
             eq(null)))
         .thenReturn(ContactDtoTest.expectedContactResponseDto);
 
-    Contact response = service.update(ContactDtoConverterTest.contact);
+    Contact response = service.update(ContactDtoTest.expectedContactResponseDto);
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(ContactDtoConverterTest.contact);
+        .isEqualTo(ContactDtoTest.expectedContactResponseDto);
   }
 
   @Test
   void merge() throws ApiException {
 
     when(api.contactMergeContact(
-            eq(uriPartID), eq("foo 1"), eq(new MergeContactRequestDto().sourceId("foo 2"))))
+            eq(uriPartID),
+            eq("foo 1"),
+            eq(MergeContactRequest.builder().setSourceId("foo 2").build())))
         .thenReturn(ContactDtoTest.expectedContactResponseDto);
 
     Contact response = service.mergeContact("foo 1", "foo 2");
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(ContactDtoConverterTest.contact);
+        .isEqualTo(ContactDtoTest.expectedContactResponseDto);
   }
 
   @Test
-  void channelProfileByContact() throws ApiException {
+  void channelProfileByContactId() throws ApiException {
 
-    when(api.contactGetChannelProfile(
-            eq(uriPartID), eq(ContactDtoTest.contactGetChannelProfileByContactRequestDto)))
+    when(api.contactGetChannelProfile(eq(uriPartID), any()))
         .thenReturn(ContactDtoTest.expectedChannelProfileResponseDto);
 
     String response =
         service.getChannelProfileByContactId(
-            ContactDtoConverterTest.contactGetChannelProfileByContactRequest);
+            ContactGetChannelProfileByContactIdRequest.builder()
+                .setChannel(ContactDtoTest.contactGetChannelProfileByContactRequestDto.getChannel())
+                .setContactId(
+                    ContactDtoTest.contactGetChannelProfileByContactRequestDto
+                        .getRecipient()
+                        .getContactId())
+                .setAppId(ContactDtoTest.contactGetChannelProfileByContactRequestDto.getAppId())
+                .build());
 
     Assertions.assertThat(response)
         .isEqualTo(ContactDtoTest.expectedChannelProfileResponseDto.getProfileName());
   }
 
   @Test
-  void channelProfileByChannel() throws ApiException {
+  void channelProfileByChannelIdentity() throws ApiException {
 
-    when(api.contactGetChannelProfile(
-            eq(uriPartID), eq(ContactDtoTest.contactGetChannelProfileByChannelRequestDto)))
+    when(api.contactGetChannelProfile(eq(uriPartID), any()))
         .thenReturn(ContactDtoTest.expectedChannelProfileResponseDto);
 
     String response =
         service.getChannelProfileByChannelIdentity(
-            ContactDtoConverterTest.contactGetChannelProfileByChannelRequest);
+            ContactGetChannelProfileByChannelIdentityRequest.builder()
+                .setChannelIdentities(
+                    ContactDtoTest.contactGetChannelProfileByChannelRequestDto
+                        .getRecipient()
+                        .getIdentifiedBy()
+                        .getChannelIdentities())
+                .setChannel(ContactDtoTest.contactGetChannelProfileByChannelRequestDto.getChannel())
+                .setAppId(ContactDtoTest.contactGetChannelProfileByChannelRequestDto.getAppId())
+                .build());
 
     Assertions.assertThat(response)
         .isEqualTo(ContactDtoTest.expectedChannelProfileResponseDto.getProfileName());
-  }*/
+  }
 }
