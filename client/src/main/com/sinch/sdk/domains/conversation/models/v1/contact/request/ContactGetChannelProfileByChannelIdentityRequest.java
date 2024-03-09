@@ -22,16 +22,17 @@ public class ContactGetChannelProfileByChannelIdentityRequest extends GetChannel
         OptionalValue.of(channel));
   }
 
+  public static Builder builder() {
+    return new Builder();
+  }
+
   @Override
   public String toString() {
     return "ContactGetChannelProfileByChannelIdentityRequest{" + "} " + super.toString();
   }
 
-  public static Builder builder() {
-    return new Builder();
-  }
-
   public static class Builder {
+
     String appId;
     GetChannelProfileConversationChannel channel;
     List<ChannelRecipientIdentity> identities;
