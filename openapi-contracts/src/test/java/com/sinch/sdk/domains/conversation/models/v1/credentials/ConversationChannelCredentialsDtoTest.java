@@ -5,7 +5,6 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
-import com.sinch.sdk.domains.conversation.models.v1.ChannelIntegrationStatus;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
