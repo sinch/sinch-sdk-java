@@ -15,6 +15,14 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class ConversationChannelCredentialsDtoTest extends BaseTest {
 
+  @GivenTextResource(
+      "/domains/conversation/v1/credentials/ConversationChannelInstagramRequestDto.json")
+  String jsonConversationChannelInstagramRequestDto;
+
+  @GivenJsonResource(
+      "/domains/conversation/v1/credentials/ConversationChannelInstagramResponseDto.json")
+  ConversationChannelCredentials loadedConversationChannelInstagramDto;
+
   public static ConversationChannelCredentials conversationChannelInstagramResponseDto =
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.INSTAGRAM)
@@ -42,6 +50,15 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setBusinessAccountId("instagramChannel business account id")
                   .build())
           .build();
+
+  @GivenTextResource(
+      "/domains/conversation/v1/credentials/ConversationChannelKakaoTalkRequestDto.json")
+  String jsonConversationChannelKakaoTalkRequestDto;
+
+  @GivenJsonResource(
+      "/domains/conversation/v1/credentials/ConversationChannelKakaoTalkResponseDto.json")
+  ConversationChannelCredentials loadedConversationChannelKakaoTalkDto;
+
   public static ConversationChannelCredentials conversationChannelKakaoTalkResponseDto =
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.KAKAOTALK)
@@ -69,6 +86,15 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setKakaotalkSenderKey("kakaoTalkChannel a sender key")
                   .build())
           .build();
+
+  @GivenTextResource(
+      "/domains/conversation/v1/credentials/ConversationChannelKakaoTalkChatRequestDto.json")
+  String jsonConversationChannelKakaoTalkChatRequestDto;
+
+  @GivenJsonResource(
+      "/domains/conversation/v1/credentials/ConversationChannelKakaoTalkChatResponseDto.json")
+  ConversationChannelCredentials loadedConversationChannelKakaoTalkChatDto;
+
   public static ConversationChannelCredentials conversationChannelKakaoTalkChatResponseDto =
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.KAKAOTALKCHAT)
@@ -96,6 +122,13 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setApiKey("")
                   .build())
           .build();
+
+  @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelLineRequestDto.json")
+  String jsonConversationChannelLineRequestDto;
+
+  @GivenJsonResource("/domains/conversation/v1/credentials/ConversationChannelLineResponseDto.json")
+  ConversationChannelCredentials loadedConversationChannelLineDto;
+
   public static ConversationChannelCredentials conversationChannelLineResponseDto =
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.LINE)
@@ -123,6 +156,15 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setSecret("lineChannel a secret value")
                   .build())
           .build();
+
+  @GivenTextResource(
+      "/domains/conversation/v1/credentials/ConversationChannelMessengerRequestDto.json")
+  String jsonConversationChannelMessengerRequestDto;
+
+  @GivenJsonResource(
+      "/domains/conversation/v1/credentials/ConversationChannelMessengerResponseDto.json")
+  ConversationChannelCredentials loadedConversationChannelMessengerDto;
+
   public static ConversationChannelCredentials conversationChannelMessengerResponseDto =
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.MESSENGER)
@@ -144,6 +186,12 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
           .setStaticToken(
               StaticTokenCredentials.builder().setToken("messengerChannel a token value").build())
           .build();
+
+  @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelMMSRequestDto.json")
+  String jsonConversationChannelMMSRequestDto;
+
+  @GivenJsonResource("/domains/conversation/v1/credentials/ConversationChannelMMSResponseDto.json")
+  ConversationChannelCredentials loadedConversationChannelMMSDto;
 
   public static ConversationChannelCredentials conversationChannelMMSResponseDto =
       ConversationChannelCredentials.builder()
@@ -184,6 +232,13 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   // TODO ? .setDefaultSender("mmsChannel default sender")
                   .build())
           .build();
+
+  @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelRCSRequestDto.json")
+  String jsonConversationChannelRCSRequestDto;
+
+  @GivenJsonResource("/domains/conversation/v1/credentials/ConversationChannelRCSResponseDto.json")
+  ConversationChannelCredentials loadedConversationChannelRCSDto;
+
   public static ConversationChannelCredentials conversationChannelRCSResponseDto =
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.RCS)
@@ -211,6 +266,13 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setToken("rcsChannel my token")
                   .build())
           .build();
+
+  @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelSMSRequestDto.json")
+  String jsonConversationChannelSMSRequestDto;
+
+  @GivenJsonResource("/domains/conversation/v1/credentials/ConversationChannelSMSResponseDto.json")
+  ConversationChannelCredentials loadedConversationChannelSMSDto;
+
   public static ConversationChannelCredentials conversationChannelSMSResponseDto =
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.SMS)
@@ -239,6 +301,14 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .build())
           .build();
 
+  @GivenTextResource(
+      "/domains/conversation/v1/credentials/ConversationChannelTelegramRequestDto.json")
+  String jsonConversationChannelTelegramRequestDto;
+
+  @GivenJsonResource(
+      "/domains/conversation/v1/credentials/ConversationChannelTelegramResponseDto.json")
+  ConversationChannelCredentials loadedConversationChannelTelegramDto;
+
   public static ConversationChannelCredentials conversationChannelTelegramResponseDto =
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.TELEGRAM)
@@ -260,6 +330,14 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
           .setTelegramCredentials(
               TelegramCredentials.builder().setToken("telegramChannel token").build())
           .build();
+
+  @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelViberRequestDto.json")
+  String jsonConversationChannelViberRequestDto;
+
+  @GivenJsonResource(
+      "/domains/conversation/v1/credentials/ConversationChannelViberResponseDto.json")
+  ConversationChannelCredentials loadedConversationChannelViberDto;
+
   public static ConversationChannelCredentials conversationChannelViberResponseDto =
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.VIBER)
@@ -279,6 +357,15 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
           .setChannelKnownId("channel id")
           .setStaticToken(StaticTokenCredentials.builder().setToken("viberChannel token").build())
           .build();
+
+  @GivenTextResource(
+      "/domains/conversation/v1/credentials/ConversationChannelViberBmRequestDto.json")
+  String jsonConversationChannelViberBmRequestDto;
+
+  @GivenJsonResource(
+      "/domains/conversation/v1/credentials/ConversationChannelViberBmResponseDto.json")
+  ConversationChannelCredentials loadedConversationChannelViberBmDto;
+
   public static ConversationChannelCredentials conversationChannelViberBmResponseDto =
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.VIBERBM)
@@ -306,6 +393,15 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setToken("viberBMChannel my token")
                   .build())
           .build();
+
+  @GivenTextResource(
+      "/domains/conversation/v1/credentials/ConversationChannelWeChatRequestDto.json")
+  String jsonConversationChannelWeChatRequestDto;
+
+  @GivenJsonResource(
+      "/domains/conversation/v1/credentials/ConversationChannelWeChatResponseDto.json")
+  ConversationChannelCredentials loadedConversationChannelWeChatDto;
+
   public static ConversationChannelCredentials conversationChannelWeChatResponseDto =
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.WECHAT)
@@ -337,6 +433,15 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setAesKey("wechatChannel AES key")
                   .build())
           .build();
+
+  @GivenTextResource(
+      "/domains/conversation/v1/credentials/ConversationChannelWhatsAppRequestDto.json")
+  String jsonConversationChannelWhatsAppRequestDto;
+
+  @GivenJsonResource(
+      "/domains/conversation/v1/credentials/ConversationChannelWhatsAppResponseDto.json")
+  ConversationChannelCredentials loadedConversationChannelWhatsAppDto;
+
   public static ConversationChannelCredentials conversationChannelWhatsAppResponseDto =
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.WHATSAPP)
@@ -365,92 +470,12 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .build())
           .build();
 
-  @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelInstagramDto.json")
-  String jsonConversationChannelInstagramDto;
-
-  @GivenJsonResource("/domains/conversation/v1/credentials/ConversationChannelInstagramDto.json")
-  ConversationChannelCredentials loadedConversationChannelInstagramDto;
-
-  @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelKakaoTalkDto.json")
-  String jsonConversationChannelKakaoTalkDto;
-
-  @GivenJsonResource("/domains/conversation/v1/credentials/ConversationChannelKakaoTalkDto.json")
-  ConversationChannelCredentials loadedConversationChannelKakaoTalkDto;
-
-  @GivenTextResource(
-      "/domains/conversation/v1/credentials/ConversationChannelKakaoTalkChatDto.json")
-  String jsonConversationChannelKakaoTalkChatDto;
-
-  @GivenJsonResource(
-      "/domains/conversation/v1/credentials/ConversationChannelKakaoTalkChatDto.json")
-  ConversationChannelCredentials loadedConversationChannelKakaoTalkChatDto;
-
-  @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelLineDto.json")
-  String jsonConversationChannelLineDto;
-
-  @GivenJsonResource("/domains/conversation/v1/credentials/ConversationChannelLineDto.json")
-  ConversationChannelCredentials loadedConversationChannelLineDto;
-
-  @GivenJsonResource("/domains/conversation/v1/credentials/ConversationChannelMessengerDto.json")
-  ConversationChannelCredentials loadedConversationChannelMessengerDto;
-
-  @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelMessengerDto.json")
-  String jsonConversationChannelMessengerDto;
-
-  @GivenJsonResource("/domains/conversation/v1/credentials/ConversationChannelMMSDto.json")
-  ConversationChannelCredentials loadedConversationChannelMMSDto;
-
-  @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelMMSDto.json")
-  String jsonConversationChannelMMSDto;
-
-  @GivenJsonResource("/domains/conversation/v1/credentials/ConversationChannelRCSDto.json")
-  ConversationChannelCredentials loadedConversationChannelRCSDto;
-
-  @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelRCSDto.json")
-  String jsonConversationChannelRCSDto;
-
-  @GivenJsonResource("/domains/conversation/v1/credentials/ConversationChannelSMSDto.json")
-  ConversationChannelCredentials loadedConversationChannelSMSDto;
-
-  @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelSMSDto.json")
-  String jsonConversationChannelSMSDto;
-
-  @GivenJsonResource("/domains/conversation/v1/credentials/ConversationChannelTelegramDto.json")
-  ConversationChannelCredentials loadedConversationChannelTelegramDto;
-
-  @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelTelegramDto.json")
-  String jsonConversationChannelTelegramDto;
-
-  @GivenJsonResource("/domains/conversation/v1/credentials/ConversationChannelViberDto.json")
-  ConversationChannelCredentials loadedConversationChannelViberDto;
-
-  @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelViberDto.json")
-  String jsonConversationChannelViberDto;
-
-  @GivenJsonResource("/domains/conversation/v1/credentials/ConversationChannelViberBmDto.json")
-  ConversationChannelCredentials loadedConversationChannelViberBmDto;
-
-  @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelViberBmDto.json")
-  String jsonConversationChannelViberBmDto;
-
-  @GivenJsonResource("/domains/conversation/v1/credentials/ConversationChannelWeChatDto.json")
-  ConversationChannelCredentials loadedConversationChannelWeChatDto;
-
-  @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelWeChatDto.json")
-  String jsonConversationChannelWeChatDto;
-
-  @GivenJsonResource("/domains/conversation/v1/credentials/ConversationChannelWhatsAppDto.json")
-  ConversationChannelCredentials loadedConversationChannelWhatsAppDto;
-
-  @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelWhatsAppDto.json")
-  String jsonConversationChannelWhatsAppDto;
-
   @Test
   void serializeConversationChannelInstagramDto() throws JsonProcessingException, JSONException {
     String serializedString =
-        objectMapper.writeValueAsString(conversationChannelInstagramResponseDto);
+        objectMapper.writeValueAsString(conversationChannelInstagramRequestDto);
 
-    JSONAssert.assertEquals(jsonConversationChannelInstagramDto, serializedString, true);
+    JSONAssert.assertEquals(jsonConversationChannelInstagramRequestDto, serializedString, true);
   }
 
   @Test
@@ -463,9 +488,9 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
   @Test
   void serializeConversationChannelKakaoTalkDto() throws JsonProcessingException, JSONException {
     String serializedString =
-        objectMapper.writeValueAsString(conversationChannelKakaoTalkResponseDto);
+        objectMapper.writeValueAsString(conversationChannelKakaoTalkRequestDto);
 
-    JSONAssert.assertEquals(jsonConversationChannelKakaoTalkDto, serializedString, true);
+    JSONAssert.assertEquals(jsonConversationChannelKakaoTalkRequestDto, serializedString, true);
   }
 
   @Test
@@ -479,9 +504,9 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
   void serializeConversationChannelKakaoTalkChatDto()
       throws JsonProcessingException, JSONException {
     String serializedString =
-        objectMapper.writeValueAsString(conversationChannelKakaoTalkChatResponseDto);
+        objectMapper.writeValueAsString(conversationChannelKakaoTalkChatRequestDto);
 
-    JSONAssert.assertEquals(jsonConversationChannelKakaoTalkChatDto, serializedString, true);
+    JSONAssert.assertEquals(jsonConversationChannelKakaoTalkChatRequestDto, serializedString, true);
   }
 
   @Test
@@ -493,9 +518,9 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
 
   @Test
   void serializeConversationChannelLineDto() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(conversationChannelLineResponseDto);
+    String serializedString = objectMapper.writeValueAsString(conversationChannelLineRequestDto);
 
-    JSONAssert.assertEquals(jsonConversationChannelLineDto, serializedString, true);
+    JSONAssert.assertEquals(jsonConversationChannelLineRequestDto, serializedString, true);
   }
 
   @Test
@@ -508,9 +533,9 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
   @Test
   void serializeConversationChannelMessengerDto() throws JsonProcessingException, JSONException {
     String serializedString =
-        objectMapper.writeValueAsString(conversationChannelMessengerResponseDto);
+        objectMapper.writeValueAsString(conversationChannelMessengerRequestDto);
 
-    JSONAssert.assertEquals(jsonConversationChannelMessengerDto, serializedString, true);
+    JSONAssert.assertEquals(jsonConversationChannelMessengerRequestDto, serializedString, true);
   }
 
   @Test
@@ -522,9 +547,9 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
 
   @Test
   void serializeConversationChannelMMSDto() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(conversationChannelMMSResponseDto);
+    String serializedString = objectMapper.writeValueAsString(conversationChannelMMSRequestDto);
 
-    JSONAssert.assertEquals(jsonConversationChannelMMSDto, serializedString, true);
+    JSONAssert.assertEquals(jsonConversationChannelMMSRequestDto, serializedString, true);
   }
 
   @Test
@@ -536,9 +561,9 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
 
   @Test
   void serializeConversationChannelRCSDto() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(conversationChannelRCSResponseDto);
+    String serializedString = objectMapper.writeValueAsString(conversationChannelRCSRequestDto);
 
-    JSONAssert.assertEquals(jsonConversationChannelRCSDto, serializedString, true);
+    JSONAssert.assertEquals(jsonConversationChannelRCSRequestDto, serializedString, true);
   }
 
   @Test
@@ -550,9 +575,9 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
 
   @Test
   void serializeConversationChannelSMSDto() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(conversationChannelSMSResponseDto);
+    String serializedString = objectMapper.writeValueAsString(conversationChannelSMSRequestDto);
 
-    JSONAssert.assertEquals(jsonConversationChannelSMSDto, serializedString, true);
+    JSONAssert.assertEquals(jsonConversationChannelSMSRequestDto, serializedString, true);
   }
 
   @Test
@@ -565,9 +590,9 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
   @Test
   void serializeConversationChannelTelegramDto() throws JsonProcessingException, JSONException {
     String serializedString =
-        objectMapper.writeValueAsString(conversationChannelTelegramResponseDto);
+        objectMapper.writeValueAsString(conversationChannelTelegramRequestDto);
 
-    JSONAssert.assertEquals(jsonConversationChannelTelegramDto, serializedString, true);
+    JSONAssert.assertEquals(jsonConversationChannelTelegramRequestDto, serializedString, true);
   }
 
   @Test
@@ -579,9 +604,9 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
 
   @Test
   void serializeConversationChannelViberDto() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(conversationChannelViberResponseDto);
+    String serializedString = objectMapper.writeValueAsString(conversationChannelViberRequestDto);
 
-    JSONAssert.assertEquals(jsonConversationChannelViberDto, serializedString, true);
+    JSONAssert.assertEquals(jsonConversationChannelViberRequestDto, serializedString, true);
   }
 
   @Test
@@ -593,10 +618,9 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
 
   @Test
   void serializeConversationChannelViberBmDto() throws JsonProcessingException, JSONException {
-    String serializedString =
-        objectMapper.writeValueAsString(conversationChannelViberBmResponseDto);
+    String serializedString = objectMapper.writeValueAsString(conversationChannelViberBmRequestDto);
 
-    JSONAssert.assertEquals(jsonConversationChannelViberBmDto, serializedString, true);
+    JSONAssert.assertEquals(jsonConversationChannelViberBmRequestDto, serializedString, true);
   }
 
   @Test
@@ -608,9 +632,9 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
 
   @Test
   void serializeConversationChannelWeChatDto() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(conversationChannelWeChatResponseDto);
+    String serializedString = objectMapper.writeValueAsString(conversationChannelWeChatRequestDto);
 
-    JSONAssert.assertEquals(jsonConversationChannelWeChatDto, serializedString, true);
+    JSONAssert.assertEquals(jsonConversationChannelWeChatRequestDto, serializedString, true);
   }
 
   @Test
@@ -623,9 +647,9 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
   @Test
   void serializeConversationChannelWhatsAppDto() throws JsonProcessingException, JSONException {
     String serializedString =
-        objectMapper.writeValueAsString(conversationChannelWhatsAppResponseDto);
+        objectMapper.writeValueAsString(conversationChannelWhatsAppRequestDto);
 
-    JSONAssert.assertEquals(jsonConversationChannelWhatsAppDto, serializedString, true);
+    JSONAssert.assertEquals(jsonConversationChannelWhatsAppRequestDto, serializedString, true);
   }
 
   @Test
