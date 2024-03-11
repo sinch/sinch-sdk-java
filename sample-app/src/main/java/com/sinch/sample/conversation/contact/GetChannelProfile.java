@@ -48,9 +48,12 @@ public class GetChannelProfile extends BaseApplication {
 
     LOGGER.info("Get channel profile: " + conversationContactId);
 
-    var result = client.conversation().contact().getChannelProfileByContactId(parametersByContactId)
-        //            .getChannelProfileByChannelIdentity(parametersByChannelIdentity)
-        ;
+    var result =
+        client
+            .conversation()
+            .contact()
+            // .getChannelProfileByContactId(parametersByContactId)
+            .getChannelProfileByChannelIdentity(parametersByChannelIdentity);
 
     LOGGER.info("Response: " + result);
   }
