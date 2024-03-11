@@ -16,6 +16,47 @@ import org.skyscreamer.jsonassert.JSONAssert;
 public class ConversationChannelCredentialsDtoTest extends BaseTest {
 
   @GivenTextResource(
+      "/domains/conversation/v1/credentials/ConversationChannelAppleBcRequestDto.json")
+  String jsonConversationChannelAppleBcRequestDto;
+
+  @GivenJsonResource(
+      "/domains/conversation/v1/credentials/ConversationChannelAppleBcResponseDto.json")
+  ConversationChannelCredentials loadedConversationChannelAppleBcDto;
+
+  public static ConversationChannelCredentials conversationChannelAppleBcResponseDto =
+      ConversationChannelCredentials.builder()
+          .setChannel(ConversationChannel.APPLEBC)
+          .setCallbackSecret("callback secret")
+          .setChannelKnownId("channel id")
+          .setState(
+              ChannelIntegrationState.builder()
+                  .setStatus(ChannelIntegrationStatus.PENDING)
+                  .setDescription("description value")
+                  .build())
+          .setApplebcCredentials(
+              AppleBcCredentials.builder()
+                  .setBusinessChatAccountId("appleBc business_chat_account_id value")
+                  .setMerchantId("appleBc merchant_id value")
+                  .setApplePayCertificateReference("appleBc apple_pay_certificate_reference value")
+                  .setApplePayCertificatePassword("appleBc apple_pay_certificate_password value")
+                  .build())
+          .build();
+
+  public static ConversationChannelCredentials conversationChannelAppleBcRequestDto =
+      ConversationChannelCredentials.builder()
+          .setChannel(ConversationChannel.APPLEBC)
+          .setCallbackSecret("callback secret")
+          .setChannelKnownId("channel id")
+          .setApplebcCredentials(
+              AppleBcCredentials.builder()
+                  .setBusinessChatAccountId("appleBc business_chat_account_id value")
+                  .setMerchantId("appleBc merchant_id value")
+                  .setApplePayCertificateReference("appleBc apple_pay_certificate_reference value")
+                  .setApplePayCertificatePassword("appleBc apple_pay_certificate_password value")
+                  .build())
+          .build();
+
+  @GivenTextResource(
       "/domains/conversation/v1/credentials/ConversationChannelInstagramRequestDto.json")
   String jsonConversationChannelInstagramRequestDto;
 
@@ -469,6 +510,20 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setToken("whatsAppChannel my token")
                   .build())
           .build();
+
+  @Test
+  void serializeConversationChannelAppleBcDto() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(conversationChannelAppleBcRequestDto);
+
+    JSONAssert.assertEquals(jsonConversationChannelAppleBcRequestDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeConversationChannelAppleBcDto() {
+    Assertions.assertThat(loadedConversationChannelAppleBcDto)
+        .usingRecursiveComparison()
+        .isEqualTo(conversationChannelAppleBcResponseDto);
+  }
 
   @Test
   void serializeConversationChannelInstagramDto() throws JsonProcessingException, JSONException {
