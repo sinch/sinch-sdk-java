@@ -5,8 +5,7 @@
       "static_token": {
         "token": "my token"
       },
-      "callback_secret": "foo value",
-      "channel_known_id": "a channel id"
+      "callback_secret": "foo value"
     },
     {
       "channel": "SMS",
@@ -14,8 +13,7 @@
         "claimed_identity": "my identity",
         "token": "sms token"
       },
-      "callback_secret": "",
-      "channel_known_id": ""
+      "callback_secret": ""
     }
   ],
   "conversation_metadata_report_view": "NONE",

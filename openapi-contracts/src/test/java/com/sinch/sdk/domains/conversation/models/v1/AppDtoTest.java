@@ -88,7 +88,6 @@ public class AppDtoTest extends BaseTest {
                       .setChannel(ConversationChannel.MESSENGER)
                       .setStaticToken(StaticTokenCredentials.builder().setToken("my token").build())
                       .setCallbackSecret("foo value")
-                      .setChannelKnownId("a channel id")
                       .build(),
                   ConversationChannelCredentialRequest.builder()
                       .setChannel(ConversationChannel.SMS)
@@ -98,7 +97,6 @@ public class AppDtoTest extends BaseTest {
                               .setToken("sms token")
                               .build())
                       .setCallbackSecret("")
-                      .setChannelKnownId("")
                       .build()))
           .setConversationMetadataReportView(ConversationMetadataReportView.NONE)
           .setDisplayName("Brazil App")
@@ -125,7 +123,6 @@ public class AppDtoTest extends BaseTest {
                       .setChannel(ConversationChannel.MESSENGER)
                       .setStaticToken(StaticTokenCredentials.builder().setToken("my token").build())
                       .setCallbackSecret("foo value")
-                      .setChannelKnownId("a channel id")
                       .build(),
                   ConversationChannelCredentialRequest.builder()
                       .setChannel(ConversationChannel.SMS)
@@ -135,7 +132,6 @@ public class AppDtoTest extends BaseTest {
                               .setToken("sms token")
                               .build())
                       .setCallbackSecret("")
-                      .setChannelKnownId("")
                       .build()))
           .setConversationMetadataReportView(ConversationMetadataReportView.NONE)
           .setDisplayName("Brazil App")
