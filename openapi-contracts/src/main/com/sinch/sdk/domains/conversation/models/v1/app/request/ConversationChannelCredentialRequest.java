@@ -118,13 +118,6 @@ public interface ConversationChannelCredentialRequest {
   ConversationChannel getChannel();
 
   /**
-   * Additional identifier set by the channel that represents an specific id used by the channel.
-   *
-   * @return channelKnownId
-   */
-  String getChannelKnownId();
-
-  /**
    * Getting builder
    *
    * @return New Builder instance
@@ -243,15 +236,6 @@ public interface ConversationChannelCredentialRequest {
      * @see #getChannel
      */
     Builder setChannel(ConversationChannel channel);
-
-    /**
-     * see getter
-     *
-     * @param channelKnownId see getter
-     * @return Current builder
-     * @see #getChannelKnownId
-     */
-    Builder setChannelKnownId(String channelKnownId);
 
     /**
      * Create instance
