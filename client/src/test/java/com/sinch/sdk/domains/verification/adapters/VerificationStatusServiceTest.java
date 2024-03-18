@@ -48,7 +48,7 @@ public class VerificationStatusServiceTest extends BaseTest {
         .thenReturn(VerificationReportDtoTest.expectedVerificationCalloutDto);
 
     VerificationReport response =
-        service.get(
+        service.getByIdentity(
             NumberIdentity.builder().setEndpoint("endpoint string").build(),
             VerificationMethodType.SMS);
 
@@ -63,7 +63,7 @@ public class VerificationStatusServiceTest extends BaseTest {
     when(api.verificationStatusById(eq("the id")))
         .thenReturn(VerificationReportDtoTest.expectedVerificationCalloutDto);
 
-    VerificationReport response = service.get(VerificationId.valueOf("the id"));
+    VerificationReport response = service.getById(VerificationId.valueOf("the id"));
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
@@ -76,7 +76,8 @@ public class VerificationStatusServiceTest extends BaseTest {
     when(api.verificationStatusByReference(eq("the reference")))
         .thenReturn(VerificationReportDtoTest.expectedVerificationCalloutDto);
 
-    VerificationReport response = service.get(VerificationReference.valueOf("the reference"));
+    VerificationReport response =
+        service.getByReference(VerificationReference.valueOf("the reference"));
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()

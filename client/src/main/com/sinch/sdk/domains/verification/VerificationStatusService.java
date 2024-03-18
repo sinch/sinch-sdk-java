@@ -28,7 +28,7 @@ public interface VerificationStatusService {
    * @return Verification report response
    * @since 1.0
    */
-  VerificationReport get(NumberIdentity identity, VerificationMethodType method);
+  VerificationReport getByIdentity(NumberIdentity identity, VerificationMethodType method);
 
   /**
    * Queries the verification result by sending the verification ID. With this query you can get the
@@ -38,7 +38,7 @@ public interface VerificationStatusService {
    * @return Verification report response
    * @since 1.0
    */
-  VerificationReport get(VerificationId id);
+  VerificationReport getById(VerificationId id);
 
   /**
    * Queries the verification result by sending the verification Reference. With this query you can
@@ -48,5 +48,5 @@ public interface VerificationStatusService {
    * @return Verification report response
    * @since 1.0
    */
-  VerificationReport get(VerificationReference reference);
+  VerificationReport getByReference(VerificationReference reference);
 }

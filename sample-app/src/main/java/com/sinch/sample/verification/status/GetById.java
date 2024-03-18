@@ -27,7 +27,7 @@ public class GetById extends BaseApplication {
 
     LOGGER.info("Get status by id for  : " + id);
 
-    VerificationReport response = client.verification().verificationStatus().get(id);
+    VerificationReport response = client.verification().verificationStatus().getById(id);
     LOGGER.info("Response :" + response);
   }
 }
