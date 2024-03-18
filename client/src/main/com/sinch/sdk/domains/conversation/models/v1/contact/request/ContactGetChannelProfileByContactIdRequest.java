@@ -2,7 +2,6 @@ package com.sinch.sdk.domains.conversation.models.v1.contact.request;
 
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.GetChannelProfileConversationChannel;
-import com.sinch.sdk.domains.conversation.models.v1.GetChannelProfileRequestRecipient;
 
 public class ContactGetChannelProfileByContactIdRequest extends GetChannelProfileRequestImpl {
 
