@@ -4,15 +4,15 @@ import com.sinch.sample.BaseApplication;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-public class GetNumbers extends BaseApplication {
+public class ListNumbers extends BaseApplication {
 
-  private static final Logger LOGGER = Logger.getLogger(GetNumbers.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ListNumbers.class.getName());
 
-  public GetNumbers() throws IOException {}
+  public ListNumbers() throws IOException {}
 
   public static void main(String[] args) {
     try {
-      new GetNumbers().run();
+      new ListNumbers().run();
     } catch (Exception e) {
       LOGGER.severe(e.getMessage());
       e.printStackTrace();
@@ -23,7 +23,7 @@ public class GetNumbers extends BaseApplication {
 
     LOGGER.info("Get assigned numbers");
 
-    var response = client.voice().applications().getNumbers();
+    var response = client.voice().applications().listNumbers();
 
     LOGGER.info("Response: " + response);
   }

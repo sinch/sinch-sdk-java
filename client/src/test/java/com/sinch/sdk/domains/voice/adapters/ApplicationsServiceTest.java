@@ -57,7 +57,7 @@ public class ApplicationsServiceTest extends BaseTest {
 
     when(api.configurationGetNumbers()).thenReturn(ApplicationsGetNumbersResponseDtoTest.expected);
 
-    AssignedNumbers response = service.getNumbers();
+    AssignedNumbers response = service.listNumbers();
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
