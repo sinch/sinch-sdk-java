@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.GetChannelProfileConversationChannel;
-import com.sinch.sdk.domains.conversation.models.v1.GetChannelProfileRequestRecipient;
 import java.util.Objects;
 
 @JsonPropertyOrder({
