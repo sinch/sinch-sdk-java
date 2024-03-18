@@ -10,9 +10,10 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1;
+package com.sinch.sdk.domains.conversation.models.v1.contact.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.conversation.models.v1.IdentifiedBy;
 
 /**
  * The recipient to check profile information. Requires either &#x60;contact_id&#x60; or
