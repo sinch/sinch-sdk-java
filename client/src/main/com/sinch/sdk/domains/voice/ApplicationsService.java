@@ -18,7 +18,7 @@ public interface ApplicationsService {
    * @return Your numbers
    * @since 1.0
    */
-  AssignedNumbers getNumbers();
+  AssignedNumbers listNumbers();
 
   /**
    * Returns any callback URLs configured for the specified application

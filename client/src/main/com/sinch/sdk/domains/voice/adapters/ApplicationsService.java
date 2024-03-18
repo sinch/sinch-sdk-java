@@ -31,7 +31,7 @@ public class ApplicationsService implements com.sinch.sdk.domains.voice.Applicat
     return this.api;
   }
 
-  public AssignedNumbers getNumbers() {
+  public AssignedNumbers listNumbers() {
 
     return ApplicationsDtoConverter.convert(getApi().configurationGetNumbers());
   }
