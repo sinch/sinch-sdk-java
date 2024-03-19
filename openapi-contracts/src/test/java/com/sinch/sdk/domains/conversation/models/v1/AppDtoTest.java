@@ -10,8 +10,6 @@ import com.sinch.sdk.domains.conversation.models.v1.app.ConversationMetadataRepo
 import com.sinch.sdk.domains.conversation.models.v1.app.DeliveryReportBasedFallback;
 import com.sinch.sdk.domains.conversation.models.v1.app.DispatchRetentionPolicy;
 import com.sinch.sdk.domains.conversation.models.v1.app.DispatchRetentionPolicyType;
-import com.sinch.sdk.domains.conversation.models.v1.app.QueueStats;
-import com.sinch.sdk.domains.conversation.models.v1.app.RateLimits;
 import com.sinch.sdk.domains.conversation.models.v1.app.RetentionPolicy;
 import com.sinch.sdk.domains.conversation.models.v1.app.SmartConversation;
 import com.sinch.sdk.domains.conversation.models.v1.app.request.AppCreateRequest;
@@ -19,6 +17,8 @@ import com.sinch.sdk.domains.conversation.models.v1.app.request.AppUpdateRequest
 import com.sinch.sdk.domains.conversation.models.v1.app.request.ConversationChannelCredentialRequest;
 import com.sinch.sdk.domains.conversation.models.v1.app.response.AppResponse;
 import com.sinch.sdk.domains.conversation.models.v1.app.response.ListAppsResponse;
+import com.sinch.sdk.domains.conversation.models.v1.app.response.QueueStats;
+import com.sinch.sdk.domains.conversation.models.v1.app.response.RateLimits;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.ChannelIntegrationState;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.ChannelIntegrationStatus;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.ConversationChannelCredentials;

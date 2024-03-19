@@ -10,20 +10,31 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.credentials;
+package com.sinch.sdk.domains.conversation.models.v1.contact.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.conversation.models.v1.IdentifiedBy;
 
-/** declaration */
-@JsonDeserialize(builder = WeChatCredentialsFieldImpl.Builder.class)
-public interface WeChatCredentialsField {
+/**
+ * The recipient to check profile information. Requires either &#x60;contact_id&#x60; or
+ * &#x60;identified_by&#x60;.
+ */
+@JsonDeserialize(builder = GetChannelProfileRequestRecipientImpl.Builder.class)
+public interface GetChannelProfileRequestRecipient {
 
   /**
-   * Get wechatCredentials
+   * The ID of the contact.
    *
-   * @return wechatCredentials
+   * @return contactId
    */
-  WeChatCredentials getWechatCredentials();
+  String getContactId();
+
+  /**
+   * Get identifiedBy
+   *
+   * @return identifiedBy
+   */
+  IdentifiedBy getIdentifiedBy();
 
   /**
    * Getting builder
@@ -31,7 +42,7 @@ public interface WeChatCredentialsField {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new WeChatCredentialsFieldImpl.Builder();
+    return new GetChannelProfileRequestRecipientImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -40,17 +51,26 @@ public interface WeChatCredentialsField {
     /**
      * see getter
      *
-     * @param wechatCredentials see getter
+     * @param contactId see getter
      * @return Current builder
-     * @see #getWechatCredentials
+     * @see #getContactId
      */
-    Builder setWechatCredentials(WeChatCredentials wechatCredentials);
+    Builder setContactId(String contactId);
+
+    /**
+     * see getter
+     *
+     * @param identifiedBy see getter
+     * @return Current builder
+     * @see #getIdentifiedBy
+     */
+    Builder setIdentifiedBy(IdentifiedBy identifiedBy);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    WeChatCredentialsField build();
+    GetChannelProfileRequestRecipient build();
   }
 }

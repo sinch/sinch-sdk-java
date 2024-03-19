@@ -12,8 +12,6 @@ import com.sinch.sdk.domains.conversation.models.v1.app.ConversationMetadataRepo
 import com.sinch.sdk.domains.conversation.models.v1.app.DeliveryReportBasedFallback;
 import com.sinch.sdk.domains.conversation.models.v1.app.DispatchRetentionPolicy;
 import com.sinch.sdk.domains.conversation.models.v1.app.MessageRetrySettings;
-import com.sinch.sdk.domains.conversation.models.v1.app.QueueStats;
-import com.sinch.sdk.domains.conversation.models.v1.app.RateLimits;
 import com.sinch.sdk.domains.conversation.models.v1.app.RetentionPolicy;
 import com.sinch.sdk.domains.conversation.models.v1.app.SmartConversation;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.ConversationChannelCredentials;

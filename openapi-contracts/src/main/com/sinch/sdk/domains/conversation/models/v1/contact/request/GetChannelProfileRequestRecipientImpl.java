@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1;
+package com.sinch.sdk.domains.conversation.models.v1.contact.request;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.IdentifiedBy;
 import java.util.Objects;
 
 @JsonPropertyOrder({
@@ -56,7 +57,7 @@ public class GetChannelProfileRequestRecipientImpl implements GetChannelProfileR
     return identifiedBy;
   }
 
-  /** Return true if this GetChannelProfileRequest_recipient object is equal to o. */
+  /** Return true if this GetChannelProfileRequestRecipient object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {

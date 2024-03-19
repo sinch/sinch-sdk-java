@@ -311,10 +311,14 @@ public class ContactApi {
   }
 
   /**
-   * Get a Contact Returns a specific contact as specified by the contact ID. Note that, if a
-   * WhatsApp contact is returned, the &#x60;display_name&#x60; field of that contact may be
+   * Get a Contact Returns a specific contact as specified by the contact ID. Note the following: -
+   * If a WhatsApp contact is returned, the &#x60;display_name&#x60; field of that contact may be
    * populated with the WhatsApp display name (if the name is already stored on the server and the
-   * &#x60;display_name&#x60; field has not been overwritten by the user).
+   * &#x60;display_name&#x60; field has not been overwritten by the user). - If you receive an
+   * Inbound Message callback for an MO message on the Instagram channel, the corresponding payload
+   * will not include the Instagram username. You may use the &#x60;contact_id&#x60; and
+   * &#x60;channel_identity&#x60; values included in the callback to retreive the username (detailed
+   * in the &#x60;display_name&#x60; field) with this Conversation API operation.
    *
    * @param projectId The unique ID of the project. You can find this on the [Sinch
    *     Dashboard](https://dashboard.sinch.com/convapi/apps). (required)

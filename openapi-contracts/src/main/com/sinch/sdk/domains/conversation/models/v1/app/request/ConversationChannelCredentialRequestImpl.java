@@ -32,8 +32,7 @@ import java.util.Objects;
   ConversationChannelCredentialRequestImpl.JSON_PROPERTY_APPLEBC_CREDENTIALS,
   ConversationChannelCredentialRequestImpl.JSON_PROPERTY_KAKAOTALKCHAT_CREDENTIALS,
   ConversationChannelCredentialRequestImpl.JSON_PROPERTY_CALLBACK_SECRET,
-  ConversationChannelCredentialRequestImpl.JSON_PROPERTY_CHANNEL,
-  ConversationChannelCredentialRequestImpl.JSON_PROPERTY_CHANNEL_KNOWN_ID
+  ConversationChannelCredentialRequestImpl.JSON_PROPERTY_CHANNEL
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
@@ -89,10 +88,6 @@ public class ConversationChannelCredentialRequestImpl
 
   private OptionalValue<ConversationChannel> channel;
 
-  public static final String JSON_PROPERTY_CHANNEL_KNOWN_ID = "channel_known_id";
-
-  private OptionalValue<String> channelKnownId;
-
   public ConversationChannelCredentialRequestImpl() {}
 
   protected ConversationChannelCredentialRequestImpl(
@@ -107,8 +102,7 @@ public class ConversationChannelCredentialRequestImpl
       OptionalValue<AppleBcCredentials> applebcCredentials,
       OptionalValue<KakaoTalkChatCredentials> kakaotalkchatCredentials,
       OptionalValue<String> callbackSecret,
-      OptionalValue<ConversationChannel> channel,
-      OptionalValue<String> channelKnownId) {
+      OptionalValue<ConversationChannel> channel) {
     this.staticBearer = staticBearer;
     this.staticToken = staticToken;
     this.mmsCredentials = mmsCredentials;
@@ -121,7 +115,6 @@ public class ConversationChannelCredentialRequestImpl
     this.kakaotalkchatCredentials = kakaotalkchatCredentials;
     this.callbackSecret = callbackSecret;
     this.channel = channel;
-    this.channelKnownId = channelKnownId;
   }
 
   @JsonIgnore
@@ -256,17 +249,6 @@ public class ConversationChannelCredentialRequestImpl
     return channel;
   }
 
-  @JsonIgnore
-  public String getChannelKnownId() {
-    return channelKnownId.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_CHANNEL_KNOWN_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> channelKnownId() {
-    return channelKnownId;
-  }
-
   /** Return true if this ConversationChannelCredentialRequest object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -297,8 +279,7 @@ public class ConversationChannelCredentialRequestImpl
             this.kakaotalkchatCredentials,
             conversationChannelCredentialRequest.kakaotalkchatCredentials)
         && Objects.equals(this.callbackSecret, conversationChannelCredentialRequest.callbackSecret)
-        && Objects.equals(this.channel, conversationChannelCredentialRequest.channel)
-        && Objects.equals(this.channelKnownId, conversationChannelCredentialRequest.channelKnownId);
+        && Objects.equals(this.channel, conversationChannelCredentialRequest.channel);
   }
 
   @Override
@@ -315,8 +296,7 @@ public class ConversationChannelCredentialRequestImpl
         applebcCredentials,
         kakaotalkchatCredentials,
         callbackSecret,
-        channel,
-        channelKnownId);
+        channel);
   }
 
   @Override
@@ -343,7 +323,6 @@ public class ConversationChannelCredentialRequestImpl
         .append("\n");
     sb.append("    callbackSecret: ").append(toIndentedString(callbackSecret)).append("\n");
     sb.append("    channel: ").append(toIndentedString(channel)).append("\n");
-    sb.append("    channelKnownId: ").append(toIndentedString(channelKnownId)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -372,7 +351,6 @@ public class ConversationChannelCredentialRequestImpl
     OptionalValue<KakaoTalkChatCredentials> kakaotalkchatCredentials = OptionalValue.empty();
     OptionalValue<String> callbackSecret = OptionalValue.empty();
     OptionalValue<ConversationChannel> channel = OptionalValue.empty();
-    OptionalValue<String> channelKnownId = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_STATIC_BEARER)
     public Builder setStaticBearer(StaticBearerCredentials staticBearer) {
@@ -446,12 +424,6 @@ public class ConversationChannelCredentialRequestImpl
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_CHANNEL_KNOWN_ID)
-    public Builder setChannelKnownId(String channelKnownId) {
-      this.channelKnownId = OptionalValue.of(channelKnownId);
-      return this;
-    }
-
     public ConversationChannelCredentialRequest build() {
       return new ConversationChannelCredentialRequestImpl(
           staticBearer,
@@ -465,8 +437,7 @@ public class ConversationChannelCredentialRequestImpl
           applebcCredentials,
           kakaotalkchatCredentials,
           callbackSecret,
-          channel,
-          channelKnownId);
+          channel);
     }
   }
 }
