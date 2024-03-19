@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.app;
+package com.sinch.sdk.domains.conversation.models.v1.app.response;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;

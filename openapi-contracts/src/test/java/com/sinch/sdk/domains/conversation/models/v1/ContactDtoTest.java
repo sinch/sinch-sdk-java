@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.Contact;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactCreateRequest;
+import com.sinch.sdk.domains.conversation.models.v1.contact.request.GetChannelProfileConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.GetChannelProfileRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.GetChannelProfileRequestRecipient;
 import com.sinch.sdk.domains.conversation.models.v1.contact.response.GetChannelProfileResponse;
