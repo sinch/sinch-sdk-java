@@ -1,8 +1,8 @@
 package com.sinch.sdk.domains.conversation.models.v1.contact.request;
 
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentity;
-import com.sinch.sdk.domains.conversation.models.v1.IdentifiedBy;
+import com.sinch.sdk.domains.conversation.models.v1.request.ChannelRecipientIdentity;
+import com.sinch.sdk.domains.conversation.models.v1.request.IdentifiedBy;
 import java.util.List;
 
 public class ContactGetChannelProfileByChannelIdentityRequest extends GetChannelProfileRequestImpl {

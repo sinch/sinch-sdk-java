@@ -1,11 +1,11 @@
 package com.sinch.sample.conversation.contact;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactGetChannelProfileByChannelIdentityRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactGetChannelProfileByContactIdRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.GetChannelProfileConversationChannel;
+import com.sinch.sdk.domains.conversation.models.v1.request.ChannelRecipientIdentity;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.logging.Logger;

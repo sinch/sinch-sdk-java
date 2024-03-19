@@ -363,15 +363,12 @@ public class AppApi {
    * @param appId The unique ID of the app. You can find this on the [Sinch
    *     Dashboard](https://dashboard.sinch.com/convapi/apps). (required)
    * @param appUpdateRequest The updated app. (required)
-   * @param updateMaskPaths The set of field mask paths. (optional
+   * @param updateMask The set of field mask paths. (optional
    * @return AppResponse
    * @throws ApiException if fails to make API call
    */
   public AppResponse appUpdateApp(
-      String projectId,
-      String appId,
-      AppUpdateRequest appUpdateRequest,
-      List<String> updateMaskPaths)
+      String projectId, String appId, AppUpdateRequest appUpdateRequest, List<String> updateMask)
       throws ApiException {
 
     LOGGER.finest(
@@ -386,11 +383,11 @@ public class AppApi {
             + "appUpdateRequest: "
             + appUpdateRequest
             + ", "
-            + "updateMaskPaths: "
-            + updateMaskPaths);
+            + "updateMask: "
+            + updateMask);
 
     HttpRequest httpRequest =
-        appUpdateAppRequestBuilder(projectId, appId, appUpdateRequest, updateMaskPaths);
+        appUpdateAppRequestBuilder(projectId, appId, appUpdateRequest, updateMask);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -409,10 +406,7 @@ public class AppApi {
   }
 
   private HttpRequest appUpdateAppRequestBuilder(
-      String projectId,
-      String appId,
-      AppUpdateRequest appUpdateRequest,
-      List<String> updateMaskPaths)
+      String projectId, String appId, AppUpdateRequest appUpdateRequest, List<String> updateMask)
       throws ApiException {
     // verify the required parameter 'projectId' is set
     if (projectId == null) {
@@ -437,13 +431,10 @@ public class AppApi {
             .replaceAll("\\{" + "app_id" + "\\}", URLPathUtils.encodePathSegment(appId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
-    if (null != updateMaskPaths) {
+    if (null != updateMask) {
       localVarQueryParams.add(
           new URLParameter(
-              "update_mask.paths",
-              updateMaskPaths,
-              URLParameter.STYLE.valueOf("form".toUpperCase()),
-              true));
+              "update_mask", updateMask, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
 
     Map<String, String> localVarHeaderParams = new HashMap<>();

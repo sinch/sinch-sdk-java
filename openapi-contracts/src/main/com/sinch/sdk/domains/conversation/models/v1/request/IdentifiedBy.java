@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1;
+package com.sinch.sdk.domains.conversation.models.v1.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
