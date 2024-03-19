@@ -3,6 +3,7 @@ package com.sinch.sample;
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.models.ApplicationCredentials;
 import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.SmsServicePlanCredentials;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -34,7 +35,8 @@ public abstract class BaseApplication {
   protected String verificationId;
   protected String conversationAppId;
   protected String conversationContactId;
-
+  protected String smsServicePlanId;
+  protected String smsApiToken;
   protected String applicationKey;
   protected String webhooksVoicePath;
   protected String webhooksSmsPath;
@@ -77,6 +79,19 @@ public abstract class BaseApplication {
             .getApplicationCredentials()
             .map(ApplicationCredentials::getApplicationKey)
             .orElse(null);
+
+    smsServicePlanId =
+        configuration
+            .getSmsServicePlanCredentials()
+            .map(SmsServicePlanCredentials::getServicePlanId)
+            .orElse(null);
+
+    smsApiToken =
+        configuration
+            .getSmsServicePlanCredentials()
+            .map(SmsServicePlanCredentials::getApiToken)
+            .orElse(null);
+
     client = new SinchClient(configuration);
   }
 
