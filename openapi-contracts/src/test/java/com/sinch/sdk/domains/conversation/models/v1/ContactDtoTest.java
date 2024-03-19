@@ -12,6 +12,8 @@ import com.sinch.sdk.domains.conversation.models.v1.contact.request.GetChannelPr
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.GetChannelProfileRequestRecipient;
 import com.sinch.sdk.domains.conversation.models.v1.contact.response.GetChannelProfileResponse;
 import com.sinch.sdk.domains.conversation.models.v1.contact.response.ListContactsResponse;
+import com.sinch.sdk.domains.conversation.models.v1.request.ChannelRecipientIdentity;
+import com.sinch.sdk.domains.conversation.models.v1.request.IdentifiedBy;
 import java.util.Arrays;
 import java.util.Collections;
 import org.assertj.core.api.Assertions;
