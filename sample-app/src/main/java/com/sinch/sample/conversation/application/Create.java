@@ -109,8 +109,8 @@ public class Create extends BaseApplication {
     var smsChannel =
         ConversationChannelCredentialsRequestBuilderFactory.sms(
                 StaticBearerCredentials.builder()
-                    .setClaimedIdentity("smsChannel my claimed identity")
-                    .setToken("smsChannel my token")
+                    .setClaimedIdentity(smsServicePlanId)
+                    .setToken(smsApiToken)
                     .build())
             .build();
 
