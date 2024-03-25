@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.contact.request;
+package com.sinch.sdk.domains.conversation.models.v1;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,16 +7,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.conversation.models.v1.request.IdentifiedBy;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  GetChannelProfileRequestRecipientImpl.JSON_PROPERTY_CONTACT_ID,
-  GetChannelProfileRequestRecipientImpl.JSON_PROPERTY_IDENTIFIED_BY
+  RecipientImpl.JSON_PROPERTY_CONTACT_ID,
+  RecipientImpl.JSON_PROPERTY_IDENTIFIED_BY
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class GetChannelProfileRequestRecipientImpl implements GetChannelProfileRequestRecipient {
+public class RecipientImpl implements Recipient {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CONTACT_ID = "contact_id";
@@ -27,9 +26,9 @@ public class GetChannelProfileRequestRecipientImpl implements GetChannelProfileR
 
   private OptionalValue<IdentifiedBy> identifiedBy;
 
-  public GetChannelProfileRequestRecipientImpl() {}
+  public RecipientImpl() {}
 
-  protected GetChannelProfileRequestRecipientImpl(
+  protected RecipientImpl(
       OptionalValue<String> contactId, OptionalValue<IdentifiedBy> identifiedBy) {
     this.contactId = contactId;
     this.identifiedBy = identifiedBy;
@@ -57,7 +56,7 @@ public class GetChannelProfileRequestRecipientImpl implements GetChannelProfileR
     return identifiedBy;
   }
 
-  /** Return true if this GetChannelProfileRequest_recipient object is equal to o. */
+  /** Return true if this Recipient object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -66,10 +65,9 @@ public class GetChannelProfileRequestRecipientImpl implements GetChannelProfileR
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    GetChannelProfileRequestRecipientImpl getChannelProfileRequestRecipient =
-        (GetChannelProfileRequestRecipientImpl) o;
-    return Objects.equals(this.contactId, getChannelProfileRequestRecipient.contactId)
-        && Objects.equals(this.identifiedBy, getChannelProfileRequestRecipient.identifiedBy);
+    RecipientImpl recipient = (RecipientImpl) o;
+    return Objects.equals(this.contactId, recipient.contactId)
+        && Objects.equals(this.identifiedBy, recipient.identifiedBy);
   }
 
   @Override
@@ -80,7 +78,7 @@ public class GetChannelProfileRequestRecipientImpl implements GetChannelProfileR
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class GetChannelProfileRequestRecipientImpl {\n");
+    sb.append("class RecipientImpl {\n");
     sb.append("    contactId: ").append(toIndentedString(contactId)).append("\n");
     sb.append("    identifiedBy: ").append(toIndentedString(identifiedBy)).append("\n");
     sb.append("}");
@@ -98,7 +96,7 @@ public class GetChannelProfileRequestRecipientImpl implements GetChannelProfileR
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements GetChannelProfileRequestRecipient.Builder {
+  static class Builder implements Recipient.Builder {
     OptionalValue<String> contactId = OptionalValue.empty();
     OptionalValue<IdentifiedBy> identifiedBy = OptionalValue.empty();
 
@@ -114,8 +112,8 @@ public class GetChannelProfileRequestRecipientImpl implements GetChannelProfileR
       return this;
     }
 
-    public GetChannelProfileRequestRecipient build() {
-      return new GetChannelProfileRequestRecipientImpl(contactId, identifiedBy);
+    public Recipient build() {
+      return new RecipientImpl(contactId, identifiedBy);
     }
   }
 }

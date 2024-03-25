@@ -10,17 +10,13 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.contact.request;
+package com.sinch.sdk.domains.conversation.models.v1;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.conversation.models.v1.request.IdentifiedBy;
 
-/**
- * The recipient to check profile information. Requires either &#x60;contact_id&#x60; or
- * &#x60;identified_by&#x60;.
- */
-@JsonDeserialize(builder = GetChannelProfileRequestRecipientImpl.Builder.class)
-public interface GetChannelProfileRequestRecipient {
+/** Identifies the recipient of the message. */
+@JsonDeserialize(builder = RecipientImpl.Builder.class)
+public interface Recipient {
 
   /**
    * The ID of the contact.
@@ -42,7 +38,7 @@ public interface GetChannelProfileRequestRecipient {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new GetChannelProfileRequestRecipientImpl.Builder();
+    return new RecipientImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -71,6 +67,6 @@ public interface GetChannelProfileRequestRecipient {
      *
      * @return The instance build with current builder values
      */
-    GetChannelProfileRequestRecipient build();
+    Recipient build();
   }
 }

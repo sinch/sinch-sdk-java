@@ -13,6 +13,7 @@
 package com.sinch.sdk.domains.conversation.models.v1.contact.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.conversation.models.v1.Recipient;
 
 /** declaration */
 @JsonDeserialize(builder = GetChannelProfileRequestImpl.Builder.class)
@@ -30,7 +31,7 @@ public interface GetChannelProfileRequest {
    *
    * @return recipient
    */
-  GetChannelProfileRequestRecipient getRecipient();
+  Recipient getRecipient();
 
   /**
    * Get channel
@@ -67,7 +68,7 @@ public interface GetChannelProfileRequest {
      * @return Current builder
      * @see #getRecipient
      */
-    Builder setRecipient(GetChannelProfileRequestRecipient recipient);
+    Builder setRecipient(Recipient recipient);
 
     /**
      * see getter
