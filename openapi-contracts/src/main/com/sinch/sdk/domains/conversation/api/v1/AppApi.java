@@ -146,10 +146,9 @@ public class AppApi {
    *     Dashboard](https://dashboard.sinch.com/convapi/apps). (required)
    * @param appId The unique ID of the app. You can find this on the [Sinch
    *     Dashboard](https://dashboard.sinch.com/convapi/apps). (required)
-   * @return Object
    * @throws ApiException if fails to make API call
    */
-  public Object appDeleteApp(String projectId, String appId) throws ApiException {
+  public void appDeleteApp(String projectId, String appId) throws ApiException {
 
     LOGGER.finest("[appDeleteApp]" + " " + "projectId: " + projectId + ", " + "appId: " + appId);
 
@@ -159,8 +158,7 @@ public class AppApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<Object> localVarReturnType = new TypeReference<Object>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return;
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

@@ -26,7 +26,7 @@ public interface RetentionPolicy {
    *
    * @return retentionType
    */
-  String getRetentionType();
+  RetentionPolicyType getRetentionType();
 
   /**
    * Optional. The days before a message or conversation is eligible for deletion. Default value is
@@ -58,7 +58,7 @@ public interface RetentionPolicy {
      * @return Current builder
      * @see #getRetentionType
      */
-    Builder setRetentionType(String retentionType);
+    Builder setRetentionType(RetentionPolicyType retentionType);
 
     /**
      * see getter

@@ -71,10 +71,9 @@ public class MessagesApi {
    *     Used for operations on messages in Dispatch Mode. For more information, see [Processing
    *     Modes](../../../../../conversation/processing-modes/). (optional, default to
    *     CONVERSATION_SOURCE)
-   * @return Object
    * @throws ApiException if fails to make API call
    */
-  public Object messagesDeleteMessage(String projectId, String messageId, String messagesSource)
+  public void messagesDeleteMessage(String projectId, String messageId, String messagesSource)
       throws ApiException {
 
     LOGGER.finest(
@@ -96,8 +95,7 @@ public class MessagesApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<Object> localVarReturnType = new TypeReference<Object>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return;
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

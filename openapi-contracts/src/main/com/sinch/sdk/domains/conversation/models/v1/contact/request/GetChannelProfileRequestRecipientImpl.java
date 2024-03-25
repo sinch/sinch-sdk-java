@@ -57,7 +57,7 @@ public class GetChannelProfileRequestRecipientImpl implements GetChannelProfileR
     return identifiedBy;
   }
 
-  /** Return true if this GetChannelProfileRequestRecipient object is equal to o. */
+  /** Return true if this GetChannelProfileRequest_recipient object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {

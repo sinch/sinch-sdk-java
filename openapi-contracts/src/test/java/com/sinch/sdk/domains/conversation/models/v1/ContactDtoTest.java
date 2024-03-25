@@ -6,6 +6,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.Contact;
+import com.sinch.sdk.domains.conversation.models.v1.contact.ContactLanguage;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactCreateRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.GetChannelProfileConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.GetChannelProfileRequest;
@@ -59,7 +60,7 @@ public class ContactDtoTest extends BaseTest {
           .setEmail("an email")
           .setExternalId("an external id")
           .setMetadata("metadata value")
-          .setLanguage("UNSPECIFIED")
+          .setLanguage(ContactLanguage.from("UNSPECIFIED"))
           .build();
 
   public static Contact expectedContactResponseDto =
@@ -77,7 +78,7 @@ public class ContactDtoTest extends BaseTest {
           .setEmail("an email")
           .setExternalId("an external id")
           .setMetadata("metadata value")
-          .setLanguage("UNSPECIFIED")
+          .setLanguage(ContactLanguage.from("UNSPECIFIED"))
           .build();
 
   public static ContactCreateRequest createContactRequestDto =
@@ -98,7 +99,7 @@ public class ContactDtoTest extends BaseTest {
           .setEmail("foo@foo.com")
           .setExternalId("external id value")
           .setMetadata("metadata value")
-          .setLanguage("AR")
+          .setLanguage(ContactLanguage.AR)
           .build();
 
   public static Contact expectedCreatedContactResponseDto =
@@ -120,7 +121,7 @@ public class ContactDtoTest extends BaseTest {
           .setEmail("foo@foo.com")
           .setExternalId("external id value")
           .setMetadata("metadata value")
-          .setLanguage("AR")
+          .setLanguage(ContactLanguage.AR)
           .build();
 
   public static ListContactsResponse expectedContactListResponseDtoPage0 =
