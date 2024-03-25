@@ -13,8 +13,11 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.conversation.models.v1.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
+import com.sinch.sdk.domains.conversation.models.v1.Recipient;
+import com.sinch.sdk.domains.conversation.models.v1.request.MessageQueue;
+import com.sinch.sdk.domains.conversation.models.v1.request.MetadataUpdateStrategy;
 import java.util.List;
 import java.util.Map;
 
@@ -111,7 +114,7 @@ public interface SendMessageRequest {
    *
    * @return recipient
    */
-  SendMessageRequestRecipient getRecipient();
+  Recipient getRecipient();
 
   /**
    * The timeout allotted for sending the message, expressed in seconds. Passed to channels which
@@ -123,15 +126,14 @@ public interface SendMessageRequest {
    *
    * @return ttl
    */
-  String getTtl();
+  Integer getTtl();
 
   /**
-   * Overrides the app&#39;s [Processing Mode](../../../../../conversation/processing-modes/).
-   * Default value is &#x60;DEFAULT&#x60;.
+   * Get processingStrategy
    *
    * @return processingStrategy
    */
-  String getProcessingStrategy();
+  ProcessingStrategy getProcessingStrategy();
 
   /**
    * An arbitrary identifier that will be propagated to callbacks related to this message, including
@@ -143,11 +145,11 @@ public interface SendMessageRequest {
   String getCorrelationId();
 
   /**
-   * Update strategy for the &#x60;conversation_metadata&#x60; field.
+   * Get conversationMetadataUpdateStrategy
    *
    * @return conversationMetadataUpdateStrategy
    */
-  String getConversationMetadataUpdateStrategy();
+  MetadataUpdateStrategy getConversationMetadataUpdateStrategy();
 
   /**
    * Getting builder
@@ -240,7 +242,7 @@ public interface SendMessageRequest {
      * @return Current builder
      * @see #getRecipient
      */
-    Builder setRecipient(SendMessageRequestRecipient recipient);
+    Builder setRecipient(Recipient recipient);
 
     /**
      * see getter
@@ -249,7 +251,7 @@ public interface SendMessageRequest {
      * @return Current builder
      * @see #getTtl
      */
-    Builder setTtl(String ttl);
+    Builder setTtl(Integer ttl);
 
     /**
      * see getter
@@ -258,7 +260,7 @@ public interface SendMessageRequest {
      * @return Current builder
      * @see #getProcessingStrategy
      */
-    Builder setProcessingStrategy(String processingStrategy);
+    Builder setProcessingStrategy(ProcessingStrategy processingStrategy);
 
     /**
      * see getter
@@ -276,7 +278,8 @@ public interface SendMessageRequest {
      * @return Current builder
      * @see #getConversationMetadataUpdateStrategy
      */
-    Builder setConversationMetadataUpdateStrategy(String conversationMetadataUpdateStrategy);
+    Builder setConversationMetadataUpdateStrategy(
+        MetadataUpdateStrategy conversationMetadataUpdateStrategy);
 
     /**
      * Create instance

@@ -7,8 +7,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
+import com.sinch.sdk.domains.conversation.models.v1.Recipient;
+import com.sinch.sdk.domains.conversation.models.v1.request.MessageQueue;
+import com.sinch.sdk.domains.conversation.models.v1.request.MetadataUpdateStrategy;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -67,15 +70,15 @@ public class SendMessageRequestImpl implements SendMessageRequest {
 
   public static final String JSON_PROPERTY_RECIPIENT = "recipient";
 
-  private OptionalValue<SendMessageRequestRecipient> recipient;
+  private OptionalValue<Recipient> recipient;
 
   public static final String JSON_PROPERTY_TTL = "ttl";
 
-  private OptionalValue<String> ttl;
+  private OptionalValue<Integer> ttl;
 
   public static final String JSON_PROPERTY_PROCESSING_STRATEGY = "processing_strategy";
 
-  private OptionalValue<String> processingStrategy;
+  private OptionalValue<ProcessingStrategy> processingStrategy;
 
   public static final String JSON_PROPERTY_CORRELATION_ID = "correlation_id";
 
@@ -84,7 +87,7 @@ public class SendMessageRequestImpl implements SendMessageRequest {
   public static final String JSON_PROPERTY_CONVERSATION_METADATA_UPDATE_STRATEGY =
       "conversation_metadata_update_strategy";
 
-  private OptionalValue<String> conversationMetadataUpdateStrategy;
+  private OptionalValue<MetadataUpdateStrategy> conversationMetadataUpdateStrategy;
 
   public SendMessageRequestImpl() {}
 
@@ -97,11 +100,11 @@ public class SendMessageRequestImpl implements SendMessageRequest {
       OptionalValue<String> messageMetadata,
       OptionalValue<Object> conversationMetadata,
       OptionalValue<MessageQueue> queue,
-      OptionalValue<SendMessageRequestRecipient> recipient,
-      OptionalValue<String> ttl,
-      OptionalValue<String> processingStrategy,
+      OptionalValue<Recipient> recipient,
+      OptionalValue<Integer> ttl,
+      OptionalValue<ProcessingStrategy> processingStrategy,
       OptionalValue<String> correlationId,
-      OptionalValue<String> conversationMetadataUpdateStrategy) {
+      OptionalValue<MetadataUpdateStrategy> conversationMetadataUpdateStrategy) {
     this.appId = appId;
     this.callbackUrl = callbackUrl;
     this.channelPriorityOrder = channelPriorityOrder;
@@ -206,35 +209,35 @@ public class SendMessageRequestImpl implements SendMessageRequest {
   }
 
   @JsonIgnore
-  public SendMessageRequestRecipient getRecipient() {
+  public Recipient getRecipient() {
     return recipient.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_RECIPIENT)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<SendMessageRequestRecipient> recipient() {
+  public OptionalValue<Recipient> recipient() {
     return recipient;
   }
 
   @JsonIgnore
-  public String getTtl() {
+  public Integer getTtl() {
     return ttl.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_TTL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> ttl() {
+  public OptionalValue<Integer> ttl() {
     return ttl;
   }
 
   @JsonIgnore
-  public String getProcessingStrategy() {
+  public ProcessingStrategy getProcessingStrategy() {
     return processingStrategy.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_PROCESSING_STRATEGY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> processingStrategy() {
+  public OptionalValue<ProcessingStrategy> processingStrategy() {
     return processingStrategy;
   }
 
@@ -250,13 +253,13 @@ public class SendMessageRequestImpl implements SendMessageRequest {
   }
 
   @JsonIgnore
-  public String getConversationMetadataUpdateStrategy() {
+  public MetadataUpdateStrategy getConversationMetadataUpdateStrategy() {
     return conversationMetadataUpdateStrategy.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CONVERSATION_METADATA_UPDATE_STRATEGY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> conversationMetadataUpdateStrategy() {
+  public OptionalValue<MetadataUpdateStrategy> conversationMetadataUpdateStrategy() {
     return conversationMetadataUpdateStrategy;
   }
 
@@ -352,11 +355,12 @@ public class SendMessageRequestImpl implements SendMessageRequest {
     OptionalValue<String> messageMetadata = OptionalValue.empty();
     OptionalValue<Object> conversationMetadata = OptionalValue.empty();
     OptionalValue<MessageQueue> queue = OptionalValue.empty();
-    OptionalValue<SendMessageRequestRecipient> recipient = OptionalValue.empty();
-    OptionalValue<String> ttl = OptionalValue.empty();
-    OptionalValue<String> processingStrategy = OptionalValue.empty();
+    OptionalValue<Recipient> recipient = OptionalValue.empty();
+    OptionalValue<Integer> ttl = OptionalValue.empty();
+    OptionalValue<ProcessingStrategy> processingStrategy = OptionalValue.empty();
     OptionalValue<String> correlationId = OptionalValue.empty();
-    OptionalValue<String> conversationMetadataUpdateStrategy = OptionalValue.empty();
+    OptionalValue<MetadataUpdateStrategy> conversationMetadataUpdateStrategy =
+        OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_APP_ID)
     public Builder setAppId(String appId) {
@@ -407,19 +411,19 @@ public class SendMessageRequestImpl implements SendMessageRequest {
     }
 
     @JsonProperty(JSON_PROPERTY_RECIPIENT)
-    public Builder setRecipient(SendMessageRequestRecipient recipient) {
+    public Builder setRecipient(Recipient recipient) {
       this.recipient = OptionalValue.of(recipient);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_TTL)
-    public Builder setTtl(String ttl) {
+    public Builder setTtl(Integer ttl) {
       this.ttl = OptionalValue.of(ttl);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_PROCESSING_STRATEGY)
-    public Builder setProcessingStrategy(String processingStrategy) {
+    public Builder setProcessingStrategy(ProcessingStrategy processingStrategy) {
       this.processingStrategy = OptionalValue.of(processingStrategy);
       return this;
     }
@@ -432,7 +436,7 @@ public class SendMessageRequestImpl implements SendMessageRequest {
 
     @JsonProperty(JSON_PROPERTY_CONVERSATION_METADATA_UPDATE_STRATEGY)
     public Builder setConversationMetadataUpdateStrategy(
-        String conversationMetadataUpdateStrategy) {
+        MetadataUpdateStrategy conversationMetadataUpdateStrategy) {
       this.conversationMetadataUpdateStrategy =
           OptionalValue.of(conversationMetadataUpdateStrategy);
       return this;
