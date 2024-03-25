@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
 import com.sinch.sdk.domains.conversation.models.v1.app.CallbackSettings;
 import com.sinch.sdk.domains.conversation.models.v1.app.ConversationMetadataReportView;
 import com.sinch.sdk.domains.conversation.models.v1.app.DeliveryReportBasedFallback;
@@ -69,7 +70,7 @@ public class AppResponseImpl implements AppResponse {
 
   public static final String JSON_PROPERTY_PROCESSING_MODE = "processing_mode";
 
-  private OptionalValue<String> processingMode;
+  private OptionalValue<ProcessingMode> processingMode;
 
   public static final String JSON_PROPERTY_SMART_CONVERSATION = "smart_conversation";
 
@@ -102,7 +103,7 @@ public class AppResponseImpl implements AppResponse {
       OptionalValue<RateLimits> rateLimits,
       OptionalValue<RetentionPolicy> retentionPolicy,
       OptionalValue<DispatchRetentionPolicy> dispatchRetentionPolicy,
-      OptionalValue<String> processingMode,
+      OptionalValue<ProcessingMode> processingMode,
       OptionalValue<SmartConversation> smartConversation,
       OptionalValue<QueueStats> queueStats,
       OptionalValue<CallbackSettings> callbackSettings,
@@ -201,13 +202,13 @@ public class AppResponseImpl implements AppResponse {
   }
 
   @JsonIgnore
-  public String getProcessingMode() {
+  public ProcessingMode getProcessingMode() {
     return processingMode.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_PROCESSING_MODE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> processingMode() {
+  public OptionalValue<ProcessingMode> processingMode() {
     return processingMode;
   }
 
@@ -359,7 +360,7 @@ public class AppResponseImpl implements AppResponse {
     OptionalValue<RateLimits> rateLimits = OptionalValue.empty();
     OptionalValue<RetentionPolicy> retentionPolicy = OptionalValue.empty();
     OptionalValue<DispatchRetentionPolicy> dispatchRetentionPolicy = OptionalValue.empty();
-    OptionalValue<String> processingMode = OptionalValue.empty();
+    OptionalValue<ProcessingMode> processingMode = OptionalValue.empty();
     OptionalValue<SmartConversation> smartConversation = OptionalValue.empty();
     OptionalValue<QueueStats> queueStats = OptionalValue.empty();
     OptionalValue<CallbackSettings> callbackSettings = OptionalValue.empty();
@@ -410,7 +411,7 @@ public class AppResponseImpl implements AppResponse {
     }
 
     @JsonProperty(JSON_PROPERTY_PROCESSING_MODE)
-    public Builder setProcessingMode(String processingMode) {
+    public Builder setProcessingMode(ProcessingMode processingMode) {
       this.processingMode = OptionalValue.of(processingMode);
       return this;
     }

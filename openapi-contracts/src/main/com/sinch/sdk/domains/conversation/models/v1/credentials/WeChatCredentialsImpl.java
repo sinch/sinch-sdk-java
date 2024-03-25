@@ -93,7 +93,7 @@ public class WeChatCredentialsImpl implements WeChatCredentials {
     return aesKey;
   }
 
-  /** Return true if this WeChatCredentials object is equal to o. */
+  /** Return true if this WeChat_Credentials object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {

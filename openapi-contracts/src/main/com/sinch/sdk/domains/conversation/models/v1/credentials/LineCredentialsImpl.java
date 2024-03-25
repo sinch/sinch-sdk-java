@@ -55,7 +55,7 @@ public class LineCredentialsImpl implements LineCredentials {
     return secret;
   }
 
-  /** Return true if this LineCredentials object is equal to o. */
+  /** Return true if this LINE_Credentials object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -64,9 +64,9 @@ public class LineCredentialsImpl implements LineCredentials {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    LineCredentialsImpl lineCredentials = (LineCredentialsImpl) o;
-    return Objects.equals(this.token, lineCredentials.token)
-        && Objects.equals(this.secret, lineCredentials.secret);
+    LineCredentialsImpl liNECredentials = (LineCredentialsImpl) o;
+    return Objects.equals(this.token, liNECredentials.token)
+        && Objects.equals(this.secret, liNECredentials.secret);
   }
 
   @Override

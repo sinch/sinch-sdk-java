@@ -148,10 +148,9 @@ public class ContactApi {
    * @param projectId The unique ID of the project. You can find this on the [Sinch
    *     Dashboard](https://dashboard.sinch.com/convapi/apps). (required)
    * @param contactId The unique ID of the contact. (required)
-   * @return Object
    * @throws ApiException if fails to make API call
    */
-  public Object contactDeleteContact(String projectId, String contactId) throws ApiException {
+  public void contactDeleteContact(String projectId, String contactId) throws ApiException {
 
     LOGGER.finest(
         "[contactDeleteContact]"
@@ -168,8 +167,7 @@ public class ContactApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<Object> localVarReturnType = new TypeReference<Object>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return;
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

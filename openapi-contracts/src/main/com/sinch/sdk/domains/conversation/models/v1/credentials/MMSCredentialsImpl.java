@@ -75,7 +75,7 @@ public class MMSCredentialsImpl implements MMSCredentials {
     return basicAuth;
   }
 
-  /** Return true if this MMSCredentials object is equal to o. */
+  /** Return true if this MMS_Credentials object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {

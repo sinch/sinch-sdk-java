@@ -36,7 +36,7 @@ public class TelegramCredentialsImpl implements TelegramCredentials {
     return token;
   }
 
-  /** Return true if this TelegramCredentials object is equal to o. */
+  /** Return true if this Telegram_Credentials object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {

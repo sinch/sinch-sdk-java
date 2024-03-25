@@ -11,6 +11,7 @@ import com.sinch.sdk.domains.conversation.models.v1.app.DeliveryReportBasedFallb
 import com.sinch.sdk.domains.conversation.models.v1.app.DispatchRetentionPolicy;
 import com.sinch.sdk.domains.conversation.models.v1.app.DispatchRetentionPolicyType;
 import com.sinch.sdk.domains.conversation.models.v1.app.RetentionPolicy;
+import com.sinch.sdk.domains.conversation.models.v1.app.RetentionPolicyType;
 import com.sinch.sdk.domains.conversation.models.v1.app.SmartConversation;
 import com.sinch.sdk.domains.conversation.models.v1.app.request.AppCreateRequest;
 import com.sinch.sdk.domains.conversation.models.v1.app.request.AppUpdateRequest;
@@ -56,10 +57,10 @@ public class AppDtoTest extends BaseTest {
               RateLimits.builder().setInbound(100L).setOutbound(20L).setWebhooks(200L).build())
           .setRetentionPolicy(
               RetentionPolicy.builder()
-                  .setRetentionType("CONVERSATION_EXPIRE_POLICY")
+                  .setRetentionType(RetentionPolicyType.CONVERSATION_EXPIRE_POLICY)
                   .setTtlDays(180L)
                   .build())
-          .setProcessingMode("DISPATCH")
+          .setProcessingMode(ProcessingMode.DISPATCH)
           .setDispatchRetentionPolicy(
               DispatchRetentionPolicy.builder()
                   .setRetentionType(DispatchRetentionPolicyType.MESSAGE_EXPIRE_POLICY)
@@ -102,10 +103,10 @@ public class AppDtoTest extends BaseTest {
           .setDisplayName("Brazil App")
           .setRetentionPolicy(
               RetentionPolicy.builder()
-                  .setRetentionType("CONVERSATION_EXPIRE_POLICY")
+                  .setRetentionType(RetentionPolicyType.CONVERSATION_EXPIRE_POLICY)
                   .setTtlDays(180L)
                   .build())
-          .setProcessingMode("DISPATCH")
+          .setProcessingMode(ProcessingMode.DISPATCH)
           .setDispatchRetentionPolicy(
               DispatchRetentionPolicy.builder()
                   .setRetentionType(DispatchRetentionPolicyType.MESSAGE_EXPIRE_POLICY)
@@ -137,10 +138,10 @@ public class AppDtoTest extends BaseTest {
           .setDisplayName("Brazil App")
           .setRetentionPolicy(
               RetentionPolicy.builder()
-                  .setRetentionType("CONVERSATION_EXPIRE_POLICY")
+                  .setRetentionType(RetentionPolicyType.CONVERSATION_EXPIRE_POLICY)
                   .setTtlDays(180L)
                   .build())
-          .setProcessingMode("DISPATCH")
+          .setProcessingMode(ProcessingMode.DISPATCH)
           .setDispatchRetentionPolicy(
               DispatchRetentionPolicy.builder()
                   .setRetentionType(DispatchRetentionPolicyType.MESSAGE_EXPIRE_POLICY)

@@ -56,7 +56,7 @@ public class InstagramCredentialsImpl implements InstagramCredentials {
     return businessAccountId;
   }
 
-  /** Return true if this InstagramCredentials object is equal to o. */
+  /** Return true if this Instagram_Credentials object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {

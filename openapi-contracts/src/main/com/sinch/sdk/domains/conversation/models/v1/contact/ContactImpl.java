@@ -53,7 +53,7 @@ public class ContactImpl implements Contact {
 
   public static final String JSON_PROPERTY_LANGUAGE = "language";
 
-  private OptionalValue<String> language;
+  private OptionalValue<ContactLanguage> language;
 
   public static final String JSON_PROPERTY_METADATA = "metadata";
 
@@ -68,7 +68,7 @@ public class ContactImpl implements Contact {
       OptionalValue<String> email,
       OptionalValue<String> externalId,
       OptionalValue<String> id,
-      OptionalValue<String> language,
+      OptionalValue<ContactLanguage> language,
       OptionalValue<String> metadata) {
     this.channelIdentities = channelIdentities;
     this.channelPriority = channelPriority;
@@ -147,13 +147,13 @@ public class ContactImpl implements Contact {
   }
 
   @JsonIgnore
-  public String getLanguage() {
+  public ContactLanguage getLanguage() {
     return language.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_LANGUAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> language() {
+  public OptionalValue<ContactLanguage> language() {
     return language;
   }
 
@@ -228,7 +228,7 @@ public class ContactImpl implements Contact {
     OptionalValue<String> email = OptionalValue.empty();
     OptionalValue<String> externalId = OptionalValue.empty();
     OptionalValue<String> id = OptionalValue.empty();
-    OptionalValue<String> language = OptionalValue.empty();
+    OptionalValue<ContactLanguage> language = OptionalValue.empty();
     OptionalValue<String> metadata = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CHANNEL_IDENTITIES)
@@ -268,7 +268,7 @@ public class ContactImpl implements Contact {
     }
 
     @JsonProperty(JSON_PROPERTY_LANGUAGE)
-    public Builder setLanguage(String language) {
+    public Builder setLanguage(ContactLanguage language) {
       this.language = OptionalValue.of(language);
       return this;
     }

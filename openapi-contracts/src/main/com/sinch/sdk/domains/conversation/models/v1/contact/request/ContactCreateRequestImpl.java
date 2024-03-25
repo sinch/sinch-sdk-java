@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
+import com.sinch.sdk.domains.conversation.models.v1.contact.ContactLanguage;
 import java.util.List;
 import java.util.Objects;
 
@@ -48,7 +49,7 @@ public class ContactCreateRequestImpl implements ContactCreateRequest {
 
   public static final String JSON_PROPERTY_LANGUAGE = "language";
 
-  private OptionalValue<String> language;
+  private OptionalValue<ContactLanguage> language;
 
   public static final String JSON_PROPERTY_METADATA = "metadata";
 
@@ -62,7 +63,7 @@ public class ContactCreateRequestImpl implements ContactCreateRequest {
       OptionalValue<String> displayName,
       OptionalValue<String> email,
       OptionalValue<String> externalId,
-      OptionalValue<String> language,
+      OptionalValue<ContactLanguage> language,
       OptionalValue<String> metadata) {
     this.channelIdentities = channelIdentities;
     this.channelPriority = channelPriority;
@@ -129,13 +130,13 @@ public class ContactCreateRequestImpl implements ContactCreateRequest {
   }
 
   @JsonIgnore
-  public String getLanguage() {
+  public ContactLanguage getLanguage() {
     return language.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_LANGUAGE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<String> language() {
+  public OptionalValue<ContactLanguage> language() {
     return language;
   }
 
@@ -207,7 +208,7 @@ public class ContactCreateRequestImpl implements ContactCreateRequest {
     OptionalValue<String> displayName = OptionalValue.empty();
     OptionalValue<String> email = OptionalValue.empty();
     OptionalValue<String> externalId = OptionalValue.empty();
-    OptionalValue<String> language = OptionalValue.empty();
+    OptionalValue<ContactLanguage> language = OptionalValue.empty();
     OptionalValue<String> metadata = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CHANNEL_IDENTITIES)
@@ -241,7 +242,7 @@ public class ContactCreateRequestImpl implements ContactCreateRequest {
     }
 
     @JsonProperty(JSON_PROPERTY_LANGUAGE)
-    public Builder setLanguage(String language) {
+    public Builder setLanguage(ContactLanguage language) {
       this.language = OptionalValue.of(language);
       return this;
     }
