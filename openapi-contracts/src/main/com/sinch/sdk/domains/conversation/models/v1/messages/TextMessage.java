@@ -14,16 +14,16 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** A message containing only text. */
+/** declaration */
 @JsonDeserialize(builder = TextMessageImpl.Builder.class)
 public interface TextMessage {
 
   /**
-   * Get textMessage
+   * The text to be sent.
    *
-   * @return textMessage
+   * @return text
    */
-  TextMessageTextMessage getTextMessage();
+  String getText();
 
   /**
    * Getting builder
@@ -40,11 +40,11 @@ public interface TextMessage {
     /**
      * see getter
      *
-     * @param textMessage see getter
+     * @param text see getter
      * @return Current builder
-     * @see #getTextMessage
+     * @see #getText
      */
-    Builder setTextMessage(TextMessageTextMessage textMessage);
+    Builder setText(String text);
 
     /**
      * Create instance

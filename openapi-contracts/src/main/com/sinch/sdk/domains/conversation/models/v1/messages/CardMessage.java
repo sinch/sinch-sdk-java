@@ -13,17 +13,46 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.List;
 
-/** Message containing text, media and choices. */
+/** declaration */
 @JsonDeserialize(builder = CardMessageImpl.Builder.class)
 public interface CardMessage {
 
   /**
-   * Get cardMessage
+   * You may include choices in your Card Message. The number of choices is limited to 10.
    *
-   * @return cardMessage
+   * @return choices
    */
-  CardMessageCardMessage getCardMessage();
+  List<Choice> getChoices();
+
+  /**
+   * This is an optional description field that is displayed below the title on the card.
+   *
+   * @return description
+   */
+  String getDescription();
+
+  /**
+   * Get height
+   *
+   * @return height
+   */
+  CardHeight getHeight();
+
+  /**
+   * Get mediaMessage
+   *
+   * @return mediaMessage
+   */
+  CardMessageMediaMessage getMediaMessage();
+
+  /**
+   * The title of the card message.
+   *
+   * @return title
+   */
+  String getTitle();
 
   /**
    * Getting builder
@@ -40,11 +69,47 @@ public interface CardMessage {
     /**
      * see getter
      *
-     * @param cardMessage see getter
+     * @param choices see getter
      * @return Current builder
-     * @see #getCardMessage
+     * @see #getChoices
      */
-    Builder setCardMessage(CardMessageCardMessage cardMessage);
+    Builder setChoices(List<Choice> choices);
+
+    /**
+     * see getter
+     *
+     * @param description see getter
+     * @return Current builder
+     * @see #getDescription
+     */
+    Builder setDescription(String description);
+
+    /**
+     * see getter
+     *
+     * @param height see getter
+     * @return Current builder
+     * @see #getHeight
+     */
+    Builder setHeight(CardHeight height);
+
+    /**
+     * see getter
+     *
+     * @param mediaMessage see getter
+     * @return Current builder
+     * @see #getMediaMessage
+     */
+    Builder setMediaMessage(CardMessageMediaMessage mediaMessage);
+
+    /**
+     * see getter
+     *
+     * @param title see getter
+     * @return Current builder
+     * @see #getTitle
+     */
+    Builder setTitle(String title);
 
     /**
      * Create instance

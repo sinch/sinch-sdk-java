@@ -14,16 +14,31 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** Message containing geographic location. */
+/** declaration */
 @JsonDeserialize(builder = LocationMessageImpl.Builder.class)
 public interface LocationMessage {
 
   /**
-   * Get locationMessage
+   * Get coordinates
    *
-   * @return locationMessage
+   * @return coordinates
    */
-  LocationMessageLocationMessage getLocationMessage();
+  Coordinates getCoordinates();
+
+  /**
+   * Label or name for the position.
+   *
+   * @return label
+   */
+  String getLabel();
+
+  /**
+   * The title is shown close to the button or link that leads to a map showing the location. The
+   * title can be clickable in some cases.
+   *
+   * @return title
+   */
+  String getTitle();
 
   /**
    * Getting builder
@@ -40,11 +55,29 @@ public interface LocationMessage {
     /**
      * see getter
      *
-     * @param locationMessage see getter
+     * @param coordinates see getter
      * @return Current builder
-     * @see #getLocationMessage
+     * @see #getCoordinates
      */
-    Builder setLocationMessage(LocationMessageLocationMessage locationMessage);
+    Builder setCoordinates(Coordinates coordinates);
+
+    /**
+     * see getter
+     *
+     * @param label see getter
+     * @return Current builder
+     * @see #getLabel
+     */
+    Builder setLabel(String label);
+
+    /**
+     * see getter
+     *
+     * @param title see getter
+     * @return Current builder
+     * @see #getTitle
+     */
+    Builder setTitle(String title);
 
     /**
      * Create instance

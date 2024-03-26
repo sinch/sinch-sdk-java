@@ -14,16 +14,48 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** declaration */
+/**
+ * A choice is an action the user can take such as buttons for quick replies or other call to
+ * actions.
+ */
 @JsonDeserialize(builder = ChoiceImpl.Builder.class)
 public interface Choice {
 
   /**
-   * Get choice
+   * Get callMessage
    *
-   * @return choice
+   * @return callMessage
    */
-  ChoiceItem getChoice();
+  CallMessage getCallMessage();
+
+  /**
+   * Get locationMessage
+   *
+   * @return locationMessage
+   */
+  LocationMessage getLocationMessage();
+
+  /**
+   * Get textMessage
+   *
+   * @return textMessage
+   */
+  TextMessage getTextMessage();
+
+  /**
+   * Get urlMessage
+   *
+   * @return urlMessage
+   */
+  URLMessage getUrlMessage();
+
+  /**
+   * An optional field. This data will be returned in the ChoiceResponseMessage. The default is
+   * message_id_{text, title}.
+   *
+   * @return postbackData
+   */
+  Object getPostbackData();
 
   /**
    * Getting builder
@@ -40,11 +72,47 @@ public interface Choice {
     /**
      * see getter
      *
-     * @param choice see getter
+     * @param callMessage see getter
      * @return Current builder
-     * @see #getChoice
+     * @see #getCallMessage
      */
-    Builder setChoice(ChoiceItem choice);
+    Builder setCallMessage(CallMessage callMessage);
+
+    /**
+     * see getter
+     *
+     * @param locationMessage see getter
+     * @return Current builder
+     * @see #getLocationMessage
+     */
+    Builder setLocationMessage(LocationMessage locationMessage);
+
+    /**
+     * see getter
+     *
+     * @param textMessage see getter
+     * @return Current builder
+     * @see #getTextMessage
+     */
+    Builder setTextMessage(TextMessage textMessage);
+
+    /**
+     * see getter
+     *
+     * @param urlMessage see getter
+     * @return Current builder
+     * @see #getUrlMessage
+     */
+    Builder setUrlMessage(URLMessage urlMessage);
+
+    /**
+     * see getter
+     *
+     * @param postbackData see getter
+     * @return Current builder
+     * @see #getPostbackData
+     */
+    Builder setPostbackData(Object postbackData);
 
     /**
      * Create instance

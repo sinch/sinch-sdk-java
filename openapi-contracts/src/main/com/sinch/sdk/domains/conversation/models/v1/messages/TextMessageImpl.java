@@ -9,34 +9,34 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
-@JsonPropertyOrder({TextMessageImpl.JSON_PROPERTY_TEXT_MESSAGE})
+@JsonPropertyOrder({TextMessageImpl.JSON_PROPERTY_TEXT})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class TextMessageImpl implements TextMessage {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_TEXT_MESSAGE = "text_message";
+  public static final String JSON_PROPERTY_TEXT = "text";
 
-  private OptionalValue<TextMessageTextMessage> textMessage;
+  private OptionalValue<String> text;
 
   public TextMessageImpl() {}
 
-  protected TextMessageImpl(OptionalValue<TextMessageTextMessage> textMessage) {
-    this.textMessage = textMessage;
+  protected TextMessageImpl(OptionalValue<String> text) {
+    this.text = text;
   }
 
   @JsonIgnore
-  public TextMessageTextMessage getTextMessage() {
-    return textMessage.orElse(null);
+  public String getText() {
+    return text.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_TEXT_MESSAGE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<TextMessageTextMessage> textMessage() {
-    return textMessage;
+  @JsonProperty(JSON_PROPERTY_TEXT)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<String> text() {
+    return text;
   }
 
-  /** Return true if this TextMessage object is equal to o. */
+  /** Return true if this Text_Message object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -46,19 +46,19 @@ public class TextMessageImpl implements TextMessage {
       return false;
     }
     TextMessageImpl textMessage = (TextMessageImpl) o;
-    return Objects.equals(this.textMessage, textMessage.textMessage);
+    return Objects.equals(this.text, textMessage.text);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(textMessage);
+    return Objects.hash(text);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class TextMessageImpl {\n");
-    sb.append("    textMessage: ").append(toIndentedString(textMessage)).append("\n");
+    sb.append("    text: ").append(toIndentedString(text)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -75,16 +75,16 @@ public class TextMessageImpl implements TextMessage {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements TextMessage.Builder {
-    OptionalValue<TextMessageTextMessage> textMessage = OptionalValue.empty();
+    OptionalValue<String> text = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_TEXT_MESSAGE)
-    public Builder setTextMessage(TextMessageTextMessage textMessage) {
-      this.textMessage = OptionalValue.of(textMessage);
+    @JsonProperty(JSON_PROPERTY_TEXT)
+    public Builder setText(String text) {
+      this.text = OptionalValue.of(text);
       return this;
     }
 
     public TextMessage build() {
-      return new TextMessageImpl(textMessage);
+      return new TextMessageImpl(text);
     }
   }
 }

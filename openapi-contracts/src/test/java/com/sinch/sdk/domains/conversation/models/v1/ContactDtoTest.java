@@ -10,11 +10,8 @@ import com.sinch.sdk.domains.conversation.models.v1.contact.ContactLanguage;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactCreateRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.GetChannelProfileConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.GetChannelProfileRequest;
-import com.sinch.sdk.domains.conversation.models.v1.contact.request.GetChannelProfileRequestRecipient;
 import com.sinch.sdk.domains.conversation.models.v1.contact.response.GetChannelProfileResponse;
 import com.sinch.sdk.domains.conversation.models.v1.contact.response.ListContactsResponse;
-import com.sinch.sdk.domains.conversation.models.v1.request.ChannelRecipientIdentity;
-import com.sinch.sdk.domains.conversation.models.v1.request.IdentifiedBy;
 import java.util.Arrays;
 import java.util.Collections;
 import org.assertj.core.api.Assertions;
@@ -24,27 +21,6 @@ import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
 public class ContactDtoTest extends BaseTest {
-
-  @GivenJsonResource("/domains/conversation/v1/ContactListResponseDtoPage0.json")
-  ListContactsResponse loadedContactListResponseDtoPage0;
-
-  @GivenJsonResource("/domains/conversation/v1/ContactListResponseDtoPage1.json")
-  ListContactsResponse loadedContactListResponseDtoPage1;
-
-  @GivenTextResource("/domains/conversation/v1/ContactCreateRequestDto.json")
-  String jsonContactCreateRequestDto;
-
-  @GivenJsonResource("/domains/conversation/v1/ContactCreateResponseDto.json")
-  Contact loadedContactCreateResponseDto;
-
-  @GivenTextResource("/domains/conversation/v1/ContactGetChannelProfileByChannelRequestDto.json")
-  String jsonContactGetChannelProfileByChannelRequestDto;
-
-  @GivenTextResource("/domains/conversation/v1/ContactGetChannelProfileByContactRequestDto.json")
-  String jsonContactGetChannelProfileByContactRequestDto;
-
-  @GivenJsonResource("/domains/conversation/v1/ContactGetChannelResponseDto.json")
-  GetChannelProfileResponse loadedContactGetChannelResponseDto;
 
   public static Contact updateContactRequestDto =
       Contact.builder()
@@ -62,7 +38,6 @@ public class ContactDtoTest extends BaseTest {
           .setMetadata("metadata value")
           .setLanguage(ContactLanguage.from("UNSPECIFIED"))
           .build();
-
   public static Contact expectedContactResponseDto =
       Contact.builder()
           .setId("a contact id")
@@ -80,7 +55,6 @@ public class ContactDtoTest extends BaseTest {
           .setMetadata("metadata value")
           .setLanguage(ContactLanguage.from("UNSPECIFIED"))
           .build();
-
   public static ContactCreateRequest createContactRequestDto =
       ContactCreateRequest.builder()
           .setChannelIdentities(
@@ -101,7 +75,6 @@ public class ContactDtoTest extends BaseTest {
           .setMetadata("metadata value")
           .setLanguage(ContactLanguage.AR)
           .build();
-
   public static Contact expectedCreatedContactResponseDto =
       Contact.builder()
           .setId("my created contact ID")
@@ -123,25 +96,22 @@ public class ContactDtoTest extends BaseTest {
           .setMetadata("metadata value")
           .setLanguage(ContactLanguage.AR)
           .build();
-
   public static ListContactsResponse expectedContactListResponseDtoPage0 =
       ListContactsResponse.builder()
           .setContacts(Collections.singletonList(expectedContactResponseDto))
           .setNextPageToken("the next page token value")
           .build();
-
   public static ListContactsResponse expectedContactListResponseDtoPage1 =
       ListContactsResponse.builder()
           .setContacts(Collections.emptyList())
           .setNextPageToken("")
           .build();
-
   public static GetChannelProfileRequest contactGetChannelProfileByChannelRequestDto =
       GetChannelProfileRequest.builder()
           .setAppId("an app id")
           .setChannel(GetChannelProfileConversationChannel.MESSENGER)
           .setRecipient(
-              GetChannelProfileRequestRecipient.builder()
+              Recipient.builder()
                   .setIdentifiedBy(
                       IdentifiedBy.builder()
                           .setChannelIdentities(
@@ -153,17 +123,35 @@ public class ContactDtoTest extends BaseTest {
                           .build())
                   .build())
           .build();
-
   public static GetChannelProfileRequest contactGetChannelProfileByContactRequestDto =
       GetChannelProfileRequest.builder()
           .setAppId("an app id")
           .setChannel(GetChannelProfileConversationChannel.MESSENGER)
-          .setRecipient(
-              GetChannelProfileRequestRecipient.builder().setContactId("a contact ID").build())
+          .setRecipient(Recipient.builder().setContactId("a contact ID").build())
           .build();
-
   public static GetChannelProfileResponse expectedChannelProfileResponseDto =
       GetChannelProfileResponse.builder().setProfileName("a profile name").build();
+
+  @GivenJsonResource("/domains/conversation/v1/ContactListResponseDtoPage0.json")
+  ListContactsResponse loadedContactListResponseDtoPage0;
+
+  @GivenJsonResource("/domains/conversation/v1/ContactListResponseDtoPage1.json")
+  ListContactsResponse loadedContactListResponseDtoPage1;
+
+  @GivenTextResource("/domains/conversation/v1/ContactCreateRequestDto.json")
+  String jsonContactCreateRequestDto;
+
+  @GivenJsonResource("/domains/conversation/v1/ContactCreateResponseDto.json")
+  Contact loadedContactCreateResponseDto;
+
+  @GivenTextResource("/domains/conversation/v1/ContactGetChannelProfileByChannelRequestDto.json")
+  String jsonContactGetChannelProfileByChannelRequestDto;
+
+  @GivenTextResource("/domains/conversation/v1/ContactGetChannelProfileByContactRequestDto.json")
+  String jsonContactGetChannelProfileByContactRequestDto;
+
+  @GivenJsonResource("/domains/conversation/v1/ContactGetChannelResponseDto.json")
+  GetChannelProfileResponse loadedContactGetChannelResponseDto;
 
   @Test
   void deserializeContactListResponseDtoPage0() {

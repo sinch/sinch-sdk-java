@@ -14,16 +14,30 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** A message containing a media component, such as an image, document, or video. */
+/** declaration */
 @JsonDeserialize(builder = MediaMessageImpl.Builder.class)
 public interface MediaMessage {
 
   /**
-   * Get mediaMessage
+   * An optional parameter. Will be used where it is natively supported.
    *
-   * @return mediaMessage
+   * @return thumbnailUrl
    */
-  MediaMessageMediaMessage getMediaMessage();
+  String getThumbnailUrl();
+
+  /**
+   * Url to the media file.
+   *
+   * @return url
+   */
+  String getUrl();
+
+  /**
+   * Overrides the media file name.
+   *
+   * @return filenameOverride
+   */
+  String getFilenameOverride();
 
   /**
    * Getting builder
@@ -40,11 +54,29 @@ public interface MediaMessage {
     /**
      * see getter
      *
-     * @param mediaMessage see getter
+     * @param thumbnailUrl see getter
      * @return Current builder
-     * @see #getMediaMessage
+     * @see #getThumbnailUrl
      */
-    Builder setMediaMessage(MediaMessageMediaMessage mediaMessage);
+    Builder setThumbnailUrl(String thumbnailUrl);
+
+    /**
+     * see getter
+     *
+     * @param url see getter
+     * @return Current builder
+     * @see #getUrl
+     */
+    Builder setUrl(String url);
+
+    /**
+     * see getter
+     *
+     * @param filenameOverride see getter
+     * @return Current builder
+     * @see #getFilenameOverride
+     */
+    Builder setFilenameOverride(String filenameOverride);
 
     /**
      * Create instance

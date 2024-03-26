@@ -13,6 +13,7 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.conversation.models.v1.ProductItem;
 
 /** Item information */
 @JsonDeserialize(builder = ListItemItemImpl.Builder.class)
@@ -23,7 +24,7 @@ public interface ListItemItem {
    *
    * @return choice
    */
-  ChoiceItem getChoice();
+  ListItemChoice getChoice();
 
   /**
    * Get product
@@ -51,7 +52,7 @@ public interface ListItemItem {
      * @return Current builder
      * @see #getChoice
      */
-    Builder setChoice(ChoiceItem choice);
+    Builder setChoice(ListItemChoice choice);
 
     /**
      * see getter

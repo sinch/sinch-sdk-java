@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.ProductItem;
 import java.util.Objects;
 
 @JsonPropertyOrder({ListItemItemImpl.JSON_PROPERTY_CHOICE, ListItemItemImpl.JSON_PROPERTY_PRODUCT})
@@ -17,7 +18,7 @@ public class ListItemItemImpl implements ListItemItem {
 
   public static final String JSON_PROPERTY_CHOICE = "choice";
 
-  private OptionalValue<ChoiceItem> choice;
+  private OptionalValue<ListItemChoice> choice;
 
   public static final String JSON_PROPERTY_PRODUCT = "product";
 
@@ -25,19 +26,20 @@ public class ListItemItemImpl implements ListItemItem {
 
   public ListItemItemImpl() {}
 
-  protected ListItemItemImpl(OptionalValue<ChoiceItem> choice, OptionalValue<ProductItem> product) {
+  protected ListItemItemImpl(
+      OptionalValue<ListItemChoice> choice, OptionalValue<ProductItem> product) {
     this.choice = choice;
     this.product = product;
   }
 
   @JsonIgnore
-  public ChoiceItem getChoice() {
+  public ListItemChoice getChoice() {
     return choice.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CHOICE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<ChoiceItem> choice() {
+  public OptionalValue<ListItemChoice> choice() {
     return choice;
   }
 
@@ -93,11 +95,11 @@ public class ListItemItemImpl implements ListItemItem {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements ListItemItem.Builder {
-    OptionalValue<ChoiceItem> choice = OptionalValue.empty();
+    OptionalValue<ListItemChoice> choice = OptionalValue.empty();
     OptionalValue<ProductItem> product = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CHOICE)
-    public Builder setChoice(ChoiceItem choice) {
+    public Builder setChoice(ListItemChoice choice) {
       this.choice = OptionalValue.of(choice);
       return this;
     }
