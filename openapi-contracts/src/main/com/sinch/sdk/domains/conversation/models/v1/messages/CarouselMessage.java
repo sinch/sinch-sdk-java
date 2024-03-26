@@ -13,20 +13,25 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.List;
 
-/**
- * Message containing a list of cards often rendered horizontally on supported channels. Supported
- * types for media are only images, such as .png, .jpg, .jpeg extensions.
- */
+/** declaration */
 @JsonDeserialize(builder = CarouselMessageImpl.Builder.class)
 public interface CarouselMessage {
 
   /**
-   * Get carouselMessage
+   * A list of up to 10 cards.
    *
-   * @return carouselMessage
+   * @return cards
    */
-  CarouselMessageCarouselMessage getCarouselMessage();
+  List<CardMessageItem> getCards();
+
+  /**
+   * Optional. Outer choices on the carousel level. The number of outer choices is limited to 3.
+   *
+   * @return choices
+   */
+  List<Choice> getChoices();
 
   /**
    * Getting builder
@@ -43,11 +48,20 @@ public interface CarouselMessage {
     /**
      * see getter
      *
-     * @param carouselMessage see getter
+     * @param cards see getter
      * @return Current builder
-     * @see #getCarouselMessage
+     * @see #getCards
      */
-    Builder setCarouselMessage(CarouselMessageCarouselMessage carouselMessage);
+    Builder setCards(List<CardMessageItem> cards);
+
+    /**
+     * see getter
+     *
+     * @param choices see getter
+     * @return Current builder
+     * @see #getChoices
+     */
+    Builder setChoices(List<Choice> choices);
 
     /**
      * Create instance

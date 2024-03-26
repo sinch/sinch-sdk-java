@@ -13,17 +13,39 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.List;
 
-/** A message containing a list of options to choose from */
+/** declaration */
 @JsonDeserialize(builder = ListMessageImpl.Builder.class)
 public interface ListMessage {
 
   /**
-   * Get listMessage
+   * A title for the message that is displayed near the products or choices.
    *
-   * @return listMessage
+   * @return title
    */
-  ListMessageListMessage getListMessage();
+  String getTitle();
+
+  /**
+   * This is an optional field, containing a description for the message.
+   *
+   * @return description
+   */
+  String getDescription();
+
+  /**
+   * List of ListSection objects containing choices to be presented in the list message.
+   *
+   * @return sections
+   */
+  List<ListSection> getSections();
+
+  /**
+   * Get messageProperties
+   *
+   * @return messageProperties
+   */
+  ListMessageMessageProperties getMessageProperties();
 
   /**
    * Getting builder
@@ -40,11 +62,38 @@ public interface ListMessage {
     /**
      * see getter
      *
-     * @param listMessage see getter
+     * @param title see getter
      * @return Current builder
-     * @see #getListMessage
+     * @see #getTitle
      */
-    Builder setListMessage(ListMessageListMessage listMessage);
+    Builder setTitle(String title);
+
+    /**
+     * see getter
+     *
+     * @param description see getter
+     * @return Current builder
+     * @see #getDescription
+     */
+    Builder setDescription(String description);
+
+    /**
+     * see getter
+     *
+     * @param sections see getter
+     * @return Current builder
+     * @see #getSections
+     */
+    Builder setSections(List<ListSection> sections);
+
+    /**
+     * see getter
+     *
+     * @param messageProperties see getter
+     * @return Current builder
+     * @see #getMessageProperties
+     */
+    Builder setMessageProperties(ListMessageMessageProperties messageProperties);
 
     /**
      * Create instance

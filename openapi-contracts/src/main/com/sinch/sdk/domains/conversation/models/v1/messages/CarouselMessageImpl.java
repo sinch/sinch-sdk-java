@@ -7,36 +7,57 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import java.util.List;
 import java.util.Objects;
 
-@JsonPropertyOrder({CarouselMessageImpl.JSON_PROPERTY_CAROUSEL_MESSAGE})
+@JsonPropertyOrder({
+  CarouselMessageImpl.JSON_PROPERTY_CARDS,
+  CarouselMessageImpl.JSON_PROPERTY_CHOICES
+})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class CarouselMessageImpl implements CarouselMessage {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_CAROUSEL_MESSAGE = "carousel_message";
+  public static final String JSON_PROPERTY_CARDS = "cards";
 
-  private OptionalValue<CarouselMessageCarouselMessage> carouselMessage;
+  private OptionalValue<List<CardMessageItem>> cards;
+
+  public static final String JSON_PROPERTY_CHOICES = "choices";
+
+  private OptionalValue<List<Choice>> choices;
 
   public CarouselMessageImpl() {}
 
-  protected CarouselMessageImpl(OptionalValue<CarouselMessageCarouselMessage> carouselMessage) {
-    this.carouselMessage = carouselMessage;
+  protected CarouselMessageImpl(
+      OptionalValue<List<CardMessageItem>> cards, OptionalValue<List<Choice>> choices) {
+    this.cards = cards;
+    this.choices = choices;
   }
 
   @JsonIgnore
-  public CarouselMessageCarouselMessage getCarouselMessage() {
-    return carouselMessage.orElse(null);
+  public List<CardMessageItem> getCards() {
+    return cards.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_CAROUSEL_MESSAGE)
+  @JsonProperty(JSON_PROPERTY_CARDS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<List<CardMessageItem>> cards() {
+    return cards;
+  }
+
+  @JsonIgnore
+  public List<Choice> getChoices() {
+    return choices.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CHOICES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<CarouselMessageCarouselMessage> carouselMessage() {
-    return carouselMessage;
+  public OptionalValue<List<Choice>> choices() {
+    return choices;
   }
 
-  /** Return true if this CarouselMessage object is equal to o. */
+  /** Return true if this Carousel_Message object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -46,19 +67,21 @@ public class CarouselMessageImpl implements CarouselMessage {
       return false;
     }
     CarouselMessageImpl carouselMessage = (CarouselMessageImpl) o;
-    return Objects.equals(this.carouselMessage, carouselMessage.carouselMessage);
+    return Objects.equals(this.cards, carouselMessage.cards)
+        && Objects.equals(this.choices, carouselMessage.choices);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(carouselMessage);
+    return Objects.hash(cards, choices);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CarouselMessageImpl {\n");
-    sb.append("    carouselMessage: ").append(toIndentedString(carouselMessage)).append("\n");
+    sb.append("    cards: ").append(toIndentedString(cards)).append("\n");
+    sb.append("    choices: ").append(toIndentedString(choices)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -75,16 +98,23 @@ public class CarouselMessageImpl implements CarouselMessage {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements CarouselMessage.Builder {
-    OptionalValue<CarouselMessageCarouselMessage> carouselMessage = OptionalValue.empty();
+    OptionalValue<List<CardMessageItem>> cards = OptionalValue.empty();
+    OptionalValue<List<Choice>> choices = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_CAROUSEL_MESSAGE)
-    public Builder setCarouselMessage(CarouselMessageCarouselMessage carouselMessage) {
-      this.carouselMessage = OptionalValue.of(carouselMessage);
+    @JsonProperty(JSON_PROPERTY_CARDS)
+    public Builder setCards(List<CardMessageItem> cards) {
+      this.cards = OptionalValue.of(cards);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_CHOICES)
+    public Builder setChoices(List<Choice> choices) {
+      this.choices = OptionalValue.of(choices);
       return this;
     }
 
     public CarouselMessage build() {
-      return new CarouselMessageImpl(carouselMessage);
+      return new CarouselMessageImpl(cards, choices);
     }
   }
 }

@@ -13,17 +13,61 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.time.LocalDate;
+import java.util.List;
 
-/** Message containing contact information. */
+/** declaration */
 @JsonDeserialize(builder = ContactInfoMessageImpl.Builder.class)
 public interface ContactInfoMessage {
 
   /**
-   * Get contactInfoMessage
+   * Get name
    *
-   * @return contactInfoMessage
+   * @return name
    */
-  ContactInfoMessageContactInfoMessage getContactInfoMessage();
+  NameInfo getName();
+
+  /**
+   * Phone numbers of the contact
+   *
+   * @return phoneNumbers
+   */
+  List<PhoneNumberInfo> getPhoneNumbers();
+
+  /**
+   * Physical addresses of the contact
+   *
+   * @return addresses
+   */
+  List<AddressInfo> getAddresses();
+
+  /**
+   * Email addresses of the contact
+   *
+   * @return emailAddresses
+   */
+  List<EmailInfo> getEmailAddresses();
+
+  /**
+   * Get organization
+   *
+   * @return organization
+   */
+  OrganizationInfo getOrganization();
+
+  /**
+   * URLs/websites associated with the contact
+   *
+   * @return urls
+   */
+  List<UrlInfo> getUrls();
+
+  /**
+   * Date of birth in YYYY-MM-DD format.
+   *
+   * @return birthday
+   */
+  LocalDate getBirthday();
 
   /**
    * Getting builder
@@ -40,11 +84,65 @@ public interface ContactInfoMessage {
     /**
      * see getter
      *
-     * @param contactInfoMessage see getter
+     * @param name see getter
      * @return Current builder
-     * @see #getContactInfoMessage
+     * @see #getName
      */
-    Builder setContactInfoMessage(ContactInfoMessageContactInfoMessage contactInfoMessage);
+    Builder setName(NameInfo name);
+
+    /**
+     * see getter
+     *
+     * @param phoneNumbers see getter
+     * @return Current builder
+     * @see #getPhoneNumbers
+     */
+    Builder setPhoneNumbers(List<PhoneNumberInfo> phoneNumbers);
+
+    /**
+     * see getter
+     *
+     * @param addresses see getter
+     * @return Current builder
+     * @see #getAddresses
+     */
+    Builder setAddresses(List<AddressInfo> addresses);
+
+    /**
+     * see getter
+     *
+     * @param emailAddresses see getter
+     * @return Current builder
+     * @see #getEmailAddresses
+     */
+    Builder setEmailAddresses(List<EmailInfo> emailAddresses);
+
+    /**
+     * see getter
+     *
+     * @param organization see getter
+     * @return Current builder
+     * @see #getOrganization
+     */
+    Builder setOrganization(OrganizationInfo organization);
+
+    /**
+     * see getter
+     *
+     * @param urls see getter
+     * @return Current builder
+     * @see #getUrls
+     */
+    Builder setUrls(List<UrlInfo> urls);
+
+    /**
+     * see getter
+     *
+     * @param birthday see getter
+     * @return Current builder
+     * @see #getBirthday
+     */
+    Builder setBirthday(LocalDate birthday);
 
     /**
      * Create instance

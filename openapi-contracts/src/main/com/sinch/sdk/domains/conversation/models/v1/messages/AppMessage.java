@@ -13,17 +13,111 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.conversation.models.v1.Agent;
+import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
+import java.util.Map;
 
-/** declaration */
+/** Message originating from an app */
 @JsonDeserialize(builder = AppMessageImpl.Builder.class)
 public interface AppMessage {
 
   /**
-   * Get appMessage
+   * Get cardMessage
    *
-   * @return appMessage
+   * @return cardMessage
    */
-  AppMessage getAppMessage();
+  CardMessage getCardMessage();
+
+  /**
+   * Get carouselMessage
+   *
+   * @return carouselMessage
+   */
+  CarouselMessage getCarouselMessage();
+
+  /**
+   * Get choiceMessage
+   *
+   * @return choiceMessage
+   */
+  ChoiceMessage getChoiceMessage();
+
+  /**
+   * Get locationMessage
+   *
+   * @return locationMessage
+   */
+  LocationMessage getLocationMessage();
+
+  /**
+   * Get mediaMessage
+   *
+   * @return mediaMessage
+   */
+  MediaMessage getMediaMessage();
+
+  /**
+   * Get templateMessage
+   *
+   * @return templateMessage
+   */
+  TemplateMessage getTemplateMessage();
+
+  /**
+   * Get textMessage
+   *
+   * @return textMessage
+   */
+  TextMessage getTextMessage();
+
+  /**
+   * Get listMessage
+   *
+   * @return listMessage
+   */
+  ListMessage getListMessage();
+
+  /**
+   * Get contactInfoMessage
+   *
+   * @return contactInfoMessage
+   */
+  ContactInfoMessage getContactInfoMessage();
+
+  /**
+   * Channel specific messages, overriding any transcoding. The key in the map must point to a valid
+   * conversation channel as defined in the enum &#x60;ConversationChannel&#x60;.
+   *
+   * @return explicitChannelMessage
+   */
+  Map<ConversationChannel, Object> getExplicitChannelMessage();
+
+  /**
+   * The option to override the omni-channel template configuration with a channel-specific template
+   * (for channels on which channel-specific templates can be created. For more information, see
+   * [Channel Specific
+   * Templates](../../../../../conversation/templates/#channel-specific-templates)).
+   *
+   * @return explicitChannelOmniMessage
+   */
+  Map<ConversationChannel, OmniMessageOverride> getExplicitChannelOmniMessage();
+
+  /**
+   * Channel specific messages, overriding any transcoding. The structure of this property is more
+   * well-defined than the open structure of the &#x60;explicit_channel_message&#x60; property, and
+   * may be easier to use. The key in the map must point to a valid conversation channel as defined
+   * in the enum &#x60;ConversationChannel&#x60;.
+   *
+   * @return channelSpecificMessage
+   */
+  Map<ConversationChannel, ChannelSpecificMessage> getChannelSpecificMessage();
+
+  /**
+   * Get agent
+   *
+   * @return agent
+   */
+  Agent getAgent();
 
   /**
    * Getting builder
@@ -40,11 +134,121 @@ public interface AppMessage {
     /**
      * see getter
      *
-     * @param appMessage see getter
+     * @param cardMessage see getter
      * @return Current builder
-     * @see #getAppMessage
+     * @see #getCardMessage
      */
-    Builder setAppMessage(AppMessage appMessage);
+    Builder setCardMessage(CardMessage cardMessage);
+
+    /**
+     * see getter
+     *
+     * @param carouselMessage see getter
+     * @return Current builder
+     * @see #getCarouselMessage
+     */
+    Builder setCarouselMessage(CarouselMessage carouselMessage);
+
+    /**
+     * see getter
+     *
+     * @param choiceMessage see getter
+     * @return Current builder
+     * @see #getChoiceMessage
+     */
+    Builder setChoiceMessage(ChoiceMessage choiceMessage);
+
+    /**
+     * see getter
+     *
+     * @param locationMessage see getter
+     * @return Current builder
+     * @see #getLocationMessage
+     */
+    Builder setLocationMessage(LocationMessage locationMessage);
+
+    /**
+     * see getter
+     *
+     * @param mediaMessage see getter
+     * @return Current builder
+     * @see #getMediaMessage
+     */
+    Builder setMediaMessage(MediaMessage mediaMessage);
+
+    /**
+     * see getter
+     *
+     * @param templateMessage see getter
+     * @return Current builder
+     * @see #getTemplateMessage
+     */
+    Builder setTemplateMessage(TemplateMessage templateMessage);
+
+    /**
+     * see getter
+     *
+     * @param textMessage see getter
+     * @return Current builder
+     * @see #getTextMessage
+     */
+    Builder setTextMessage(TextMessage textMessage);
+
+    /**
+     * see getter
+     *
+     * @param listMessage see getter
+     * @return Current builder
+     * @see #getListMessage
+     */
+    Builder setListMessage(ListMessage listMessage);
+
+    /**
+     * see getter
+     *
+     * @param contactInfoMessage see getter
+     * @return Current builder
+     * @see #getContactInfoMessage
+     */
+    Builder setContactInfoMessage(ContactInfoMessage contactInfoMessage);
+
+    /**
+     * see getter
+     *
+     * @param explicitChannelMessage see getter
+     * @return Current builder
+     * @see #getExplicitChannelMessage
+     */
+    Builder setExplicitChannelMessage(Map<ConversationChannel, Object> explicitChannelMessage);
+
+    /**
+     * see getter
+     *
+     * @param explicitChannelOmniMessage see getter
+     * @return Current builder
+     * @see #getExplicitChannelOmniMessage
+     */
+    Builder setExplicitChannelOmniMessage(
+        Map<ConversationChannel, OmniMessageOverride> explicitChannelOmniMessage);
+
+    /**
+     * see getter
+     *
+     * @param channelSpecificMessage see getter
+     * @return Current builder
+     * @see #getChannelSpecificMessage
+     */
+    Builder setChannelSpecificMessage(
+        Map<ConversationChannel, ChannelSpecificMessage> channelSpecificMessage);
+
+    /**
+     * see getter
+     *
+     * @param agent see getter
+     * @return Current builder
+     * @see #getAgent
+     */
+    Builder setAgent(Agent agent);
 
     /**
      * Create instance

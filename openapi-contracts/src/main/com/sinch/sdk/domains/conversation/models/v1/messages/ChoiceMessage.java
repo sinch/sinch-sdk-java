@@ -13,17 +13,25 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.List;
 
-/** Message containing choices/actions. */
+/** declaration */
 @JsonDeserialize(builder = ChoiceMessageImpl.Builder.class)
 public interface ChoiceMessage {
 
   /**
-   * Get choiceMessage
+   * The number of choices is limited to 10.
    *
-   * @return choiceMessage
+   * @return choices
    */
-  ChoiceMessageChoiceMessage getChoiceMessage();
+  List<Choice> getChoices();
+
+  /**
+   * Get textMessage
+   *
+   * @return textMessage
+   */
+  TextMessage getTextMessage();
 
   /**
    * Getting builder
@@ -40,11 +48,20 @@ public interface ChoiceMessage {
     /**
      * see getter
      *
-     * @param choiceMessage see getter
+     * @param choices see getter
      * @return Current builder
-     * @see #getChoiceMessage
+     * @see #getChoices
      */
-    Builder setChoiceMessage(ChoiceMessageChoiceMessage choiceMessage);
+    Builder setChoices(List<Choice> choices);
+
+    /**
+     * see getter
+     *
+     * @param textMessage see getter
+     * @return Current builder
+     * @see #getTextMessage
+     */
+    Builder setTextMessage(TextMessage textMessage);
 
     /**
      * Create instance

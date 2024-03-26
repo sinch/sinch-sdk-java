@@ -9,34 +9,73 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
-@JsonPropertyOrder({LocationMessageImpl.JSON_PROPERTY_LOCATION_MESSAGE})
+@JsonPropertyOrder({
+  LocationMessageImpl.JSON_PROPERTY_COORDINATES,
+  LocationMessageImpl.JSON_PROPERTY_LABEL,
+  LocationMessageImpl.JSON_PROPERTY_TITLE
+})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class LocationMessageImpl implements LocationMessage {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_LOCATION_MESSAGE = "location_message";
+  public static final String JSON_PROPERTY_COORDINATES = "coordinates";
 
-  private OptionalValue<LocationMessageLocationMessage> locationMessage;
+  private OptionalValue<Coordinates> coordinates;
+
+  public static final String JSON_PROPERTY_LABEL = "label";
+
+  private OptionalValue<String> label;
+
+  public static final String JSON_PROPERTY_TITLE = "title";
+
+  private OptionalValue<String> title;
 
   public LocationMessageImpl() {}
 
-  protected LocationMessageImpl(OptionalValue<LocationMessageLocationMessage> locationMessage) {
-    this.locationMessage = locationMessage;
+  protected LocationMessageImpl(
+      OptionalValue<Coordinates> coordinates,
+      OptionalValue<String> label,
+      OptionalValue<String> title) {
+    this.coordinates = coordinates;
+    this.label = label;
+    this.title = title;
   }
 
   @JsonIgnore
-  public LocationMessageLocationMessage getLocationMessage() {
-    return locationMessage.orElse(null);
+  public Coordinates getCoordinates() {
+    return coordinates.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_LOCATION_MESSAGE)
+  @JsonProperty(JSON_PROPERTY_COORDINATES)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<Coordinates> coordinates() {
+    return coordinates;
+  }
+
+  @JsonIgnore
+  public String getLabel() {
+    return label.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_LABEL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<LocationMessageLocationMessage> locationMessage() {
-    return locationMessage;
+  public OptionalValue<String> label() {
+    return label;
   }
 
-  /** Return true if this LocationMessage object is equal to o. */
+  @JsonIgnore
+  public String getTitle() {
+    return title.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_TITLE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<String> title() {
+    return title;
+  }
+
+  /** Return true if this Location_Message object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -46,19 +85,23 @@ public class LocationMessageImpl implements LocationMessage {
       return false;
     }
     LocationMessageImpl locationMessage = (LocationMessageImpl) o;
-    return Objects.equals(this.locationMessage, locationMessage.locationMessage);
+    return Objects.equals(this.coordinates, locationMessage.coordinates)
+        && Objects.equals(this.label, locationMessage.label)
+        && Objects.equals(this.title, locationMessage.title);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(locationMessage);
+    return Objects.hash(coordinates, label, title);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class LocationMessageImpl {\n");
-    sb.append("    locationMessage: ").append(toIndentedString(locationMessage)).append("\n");
+    sb.append("    coordinates: ").append(toIndentedString(coordinates)).append("\n");
+    sb.append("    label: ").append(toIndentedString(label)).append("\n");
+    sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -75,16 +118,30 @@ public class LocationMessageImpl implements LocationMessage {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements LocationMessage.Builder {
-    OptionalValue<LocationMessageLocationMessage> locationMessage = OptionalValue.empty();
+    OptionalValue<Coordinates> coordinates = OptionalValue.empty();
+    OptionalValue<String> label = OptionalValue.empty();
+    OptionalValue<String> title = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_LOCATION_MESSAGE)
-    public Builder setLocationMessage(LocationMessageLocationMessage locationMessage) {
-      this.locationMessage = OptionalValue.of(locationMessage);
+    @JsonProperty(JSON_PROPERTY_COORDINATES)
+    public Builder setCoordinates(Coordinates coordinates) {
+      this.coordinates = OptionalValue.of(coordinates);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_LABEL)
+    public Builder setLabel(String label) {
+      this.label = OptionalValue.of(label);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_TITLE)
+    public Builder setTitle(String title) {
+      this.title = OptionalValue.of(title);
       return this;
     }
 
     public LocationMessage build() {
-      return new LocationMessageImpl(locationMessage);
+      return new LocationMessageImpl(coordinates, label, title);
     }
   }
 }

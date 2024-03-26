@@ -13,6 +13,7 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages.response;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.conversation.models.v1.response.ConversationMessage;
 import java.util.List;
 
 /** declaration */
