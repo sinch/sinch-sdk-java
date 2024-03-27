@@ -137,9 +137,7 @@ public class AppleBusinessChatCredentialsImpl implements AppleBusinessChatCreden
     sb.append("    applePayCertificateReference: ")
         .append(toIndentedString(applePayCertificateReference))
         .append("\n");
-    sb.append("    applePayCertificatePassword: ")
-        .append(toIndentedString(applePayCertificatePassword))
-        .append("\n");
+    sb.append("    applePayCertificatePassword: ").append(toIndentedString("***")).append("\n");
     sb.append("}");
     return sb.toString();
   }
