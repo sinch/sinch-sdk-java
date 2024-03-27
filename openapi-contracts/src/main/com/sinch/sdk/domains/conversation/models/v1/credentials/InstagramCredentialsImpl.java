@@ -79,7 +79,7 @@ public class InstagramCredentialsImpl implements InstagramCredentials {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class InstagramCredentialsImpl {\n");
-    sb.append("    token: ").append(toIndentedString(token)).append("\n");
+    sb.append("    token: ").append(toIndentedString("***")).append("\n");
     sb.append("    businessAccountId: ").append(toIndentedString(businessAccountId)).append("\n");
     sb.append("}");
     return sb.toString();

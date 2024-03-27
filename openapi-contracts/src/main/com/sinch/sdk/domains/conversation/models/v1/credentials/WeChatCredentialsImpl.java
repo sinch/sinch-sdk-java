@@ -119,7 +119,7 @@ public class WeChatCredentialsImpl implements WeChatCredentials {
     StringBuilder sb = new StringBuilder();
     sb.append("class WeChatCredentialsImpl {\n");
     sb.append("    appId: ").append(toIndentedString(appId)).append("\n");
-    sb.append("    appSecret: ").append(toIndentedString(appSecret)).append("\n");
+    sb.append("    appSecret: ").append(toIndentedString("***")).append("\n");
     sb.append("    token: ").append(toIndentedString(token)).append("\n");
     sb.append("    aesKey: ").append(toIndentedString(aesKey)).append("\n");
     sb.append("}");

@@ -58,7 +58,7 @@ public class TelegramCredentialsImpl implements TelegramCredentials {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class TelegramCredentialsImpl {\n");
-    sb.append("    token: ").append(toIndentedString(token)).append("\n");
+    sb.append("    token: ").append(toIndentedString("***")).append("\n");
     sb.append("}");
     return sb.toString();
   }

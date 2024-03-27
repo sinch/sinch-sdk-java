@@ -347,7 +347,7 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
     sb.append("    kakaotalkchatCredentials: ")
         .append(toIndentedString(kakaotalkchatCredentials))
         .append("\n");
-    sb.append("    callbackSecret: ").append(toIndentedString(callbackSecret)).append("\n");
+    sb.append("    callbackSecret: ").append(toIndentedString("***")).append("\n");
     sb.append("    channel: ").append(toIndentedString(channel)).append("\n");
     sb.append("    state: ").append(toIndentedString(state)).append("\n");
     sb.append("    channelKnownId: ").append(toIndentedString(channelKnownId)).append("\n");

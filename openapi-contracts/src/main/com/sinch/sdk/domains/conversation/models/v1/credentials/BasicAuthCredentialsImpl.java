@@ -79,7 +79,7 @@ public class BasicAuthCredentialsImpl implements BasicAuthCredentials {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class BasicAuthCredentialsImpl {\n");
-    sb.append("    password: ").append(toIndentedString(password)).append("\n");
+    sb.append("    password: ").append(toIndentedString("***")).append("\n");
     sb.append("    username: ").append(toIndentedString(username)).append("\n");
     sb.append("}");
     return sb.toString();

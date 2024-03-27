@@ -80,7 +80,7 @@ public class StaticBearerCredentialsImpl implements StaticBearerCredentials {
     StringBuilder sb = new StringBuilder();
     sb.append("class StaticBearerCredentialsImpl {\n");
     sb.append("    claimedIdentity: ").append(toIndentedString(claimedIdentity)).append("\n");
-    sb.append("    token: ").append(toIndentedString(token)).append("\n");
+    sb.append("    token: ").append(toIndentedString("***")).append("\n");
     sb.append("}");
     return sb.toString();
   }

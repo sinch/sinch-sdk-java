@@ -79,7 +79,7 @@ public class LineCredentialsImpl implements LineCredentials {
     StringBuilder sb = new StringBuilder();
     sb.append("class LineCredentialsImpl {\n");
     sb.append("    token: ").append(toIndentedString(token)).append("\n");
-    sb.append("    secret: ").append(toIndentedString(secret)).append("\n");
+    sb.append("    secret: ").append(toIndentedString("***")).append("\n");
     sb.append("}");
     return sb.toString();
   }
