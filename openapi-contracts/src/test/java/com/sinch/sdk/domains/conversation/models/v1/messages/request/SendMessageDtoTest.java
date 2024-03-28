@@ -53,8 +53,8 @@ public class SendMessageDtoTest extends BaseTest {
           .build();
 
   static {
-    // register mixin
-    SendMessageRequestMapper unnused = new SendMessageRequestMapper();
+    // init dedicated mapper
+    SendMessageRequestMapper.initMapper();
   }
 
   @GivenTextResource("/domains/conversation/v1/messages/request/SendTextMessageRequestDto.json")
