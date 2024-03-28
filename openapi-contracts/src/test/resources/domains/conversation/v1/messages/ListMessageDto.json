@@ -1,0 +1,42 @@
+{
+  "title": "a list message title value",
+  "sections": [
+    {
+      "title": "a list section title value",
+      "items": [
+        {
+          "item": {
+            "choice": {
+              "title": "choice title",
+              "description": "description value",
+              "media": {
+                "media_message": {
+                  "url": "an url value",
+                  "thumbnail_url": "another url",
+                  "filename_override": "filename override value"
+                }
+              },
+              "postback_data": "postback value"
+            }
+          }
+        },
+        {
+          "item": {
+            "product": {
+              "id": "product ID value",
+              "marketplace": "marketplace value",
+              "quantity": 4,
+              "item_price": 3.14159,
+              "currency": "currency value"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "description": "description value",
+  "message_properties": {
+    "catalog_id": "catalog ID value",
+    "menu": "menu value"
+  }
+}
