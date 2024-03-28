@@ -1,0 +1,13 @@
+{
+  "text_message": {
+    "text": "This is a text message."
+  },
+  "choices": [
+    {
+      "call_message": {
+        "title": "title value",
+        "phone_number": "phone number value"
+      }
+    }
+  ]
+}
