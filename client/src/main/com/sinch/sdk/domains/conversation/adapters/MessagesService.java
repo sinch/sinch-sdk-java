@@ -10,6 +10,7 @@ import com.sinch.sdk.domains.conversation.api.v1.MessagesApi;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequestImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
+import com.sinch.sdk.domains.conversation.models.v1.response.ConversationMessage;
 import com.sinch.sdk.models.ConversationContext;
 import java.util.Map;
 
@@ -37,6 +38,10 @@ public class MessagesService implements com.sinch.sdk.domains.conversation.Messa
 
   public SendMessageResponse send(SendMessageRequest request) throws ApiException {
     return getApi().messagesSendMessage(uriUUID, request);
+  }
+
+  public ConversationMessage get(String messageId) {
+    return getApi().messagesGetMessage(uriUUID, messageId, null);
   }
 
   static final class LocalLazyInit {

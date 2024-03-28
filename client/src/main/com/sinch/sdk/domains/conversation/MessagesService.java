@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.conversation;
 
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
+import com.sinch.sdk.domains.conversation.models.v1.response.ConversationMessage;
 
 /**
  * Messages related service
@@ -34,4 +35,8 @@ public interface MessagesService {
    * @since 1.0
    */
   SendMessageResponse send(SendMessageRequest request);
+
+  ConversationMessage get(String messageId);
+
+  // ConversationMessage get(String messageId, MessageSource );
 }
