@@ -18,8 +18,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  * If you are including the AppleBC channel in the &#x60;channel_identifier&#x60; property, you must
  * include this object.
  */
-@JsonDeserialize(builder = AppleBcCredentialsImpl.Builder.class)
-public interface AppleBcCredentials {
+@JsonDeserialize(builder = AppleBusinessChatCredentialsImpl.Builder.class)
+public interface AppleBusinessChatCredentials {
 
   /**
    * The ID that identifies a Business Chat Account (BCA).
@@ -55,7 +55,7 @@ public interface AppleBcCredentials {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new AppleBcCredentialsImpl.Builder();
+    return new AppleBusinessChatCredentialsImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -102,6 +102,6 @@ public interface AppleBcCredentials {
      *
      * @return The instance build with current builder values
      */
-    AppleBcCredentials build();
+    AppleBusinessChatCredentials build();
   }
 }

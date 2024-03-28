@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.Recipient;
 import java.util.Objects;
 
 @JsonPropertyOrder({
@@ -25,7 +26,7 @@ public class GetChannelProfileRequestImpl implements GetChannelProfileRequest {
 
   public static final String JSON_PROPERTY_RECIPIENT = "recipient";
 
-  private OptionalValue<GetChannelProfileRequestRecipient> recipient;
+  private OptionalValue<Recipient> recipient;
 
   public static final String JSON_PROPERTY_CHANNEL = "channel";
 
@@ -35,7 +36,7 @@ public class GetChannelProfileRequestImpl implements GetChannelProfileRequest {
 
   protected GetChannelProfileRequestImpl(
       OptionalValue<String> appId,
-      OptionalValue<GetChannelProfileRequestRecipient> recipient,
+      OptionalValue<Recipient> recipient,
       OptionalValue<GetChannelProfileConversationChannel> channel) {
     this.appId = appId;
     this.recipient = recipient;
@@ -54,13 +55,13 @@ public class GetChannelProfileRequestImpl implements GetChannelProfileRequest {
   }
 
   @JsonIgnore
-  public GetChannelProfileRequestRecipient getRecipient() {
+  public Recipient getRecipient() {
     return recipient.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_RECIPIENT)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<GetChannelProfileRequestRecipient> recipient() {
+  public OptionalValue<Recipient> recipient() {
     return recipient;
   }
 
@@ -119,7 +120,7 @@ public class GetChannelProfileRequestImpl implements GetChannelProfileRequest {
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements GetChannelProfileRequest.Builder {
     OptionalValue<String> appId = OptionalValue.empty();
-    OptionalValue<GetChannelProfileRequestRecipient> recipient = OptionalValue.empty();
+    OptionalValue<Recipient> recipient = OptionalValue.empty();
     OptionalValue<GetChannelProfileConversationChannel> channel = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_APP_ID)
@@ -129,7 +130,7 @@ public class GetChannelProfileRequestImpl implements GetChannelProfileRequest {
     }
 
     @JsonProperty(JSON_PROPERTY_RECIPIENT)
-    public Builder setRecipient(GetChannelProfileRequestRecipient recipient) {
+    public Builder setRecipient(Recipient recipient) {
       this.recipient = OptionalValue.of(recipient);
       return this;
     }

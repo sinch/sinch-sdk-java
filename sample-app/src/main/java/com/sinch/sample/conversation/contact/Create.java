@@ -3,6 +3,7 @@ package com.sinch.sample.conversation.contact;
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
+import com.sinch.sdk.domains.conversation.models.v1.contact.ContactLanguage;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactCreateRequest;
 import java.io.IOException;
 import java.util.Arrays;
@@ -46,7 +47,7 @@ public class Create extends BaseApplication {
             .setEmail("foo@foo.com")
             .setExternalId("external id value")
             .setMetadata("metadata value")
-            .setLanguage("AR")
+            .setLanguage(ContactLanguage.AR)
             .build();
 
     var result = client.conversation().contact().create(contact);

@@ -4,6 +4,7 @@ import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.contact.Contact;
+import com.sinch.sdk.domains.conversation.models.v1.contact.ContactLanguage;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.logging.Logger;
@@ -56,7 +57,7 @@ public class Update extends BaseApplication {
             .setEmail("foo-toto@foo.com")
             .setExternalId("external id value updated")
             .setMetadata("metadata value updated")
-            .setLanguage("BG")
+            .setLanguage(ContactLanguage.BG)
             .build();
 
     var result = client.conversation().contact().update(contact);

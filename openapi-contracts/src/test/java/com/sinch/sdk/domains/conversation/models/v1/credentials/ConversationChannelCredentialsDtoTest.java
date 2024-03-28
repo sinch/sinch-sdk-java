@@ -15,11 +15,11 @@ import org.skyscreamer.jsonassert.JSONAssert;
 public class ConversationChannelCredentialsDtoTest extends BaseTest {
 
   @GivenTextResource(
-      "/domains/conversation/v1/credentials/ConversationChannelAppleBcRequestDto.json")
+      "/domains/conversation/v1/credentials/ConversationChannelAppleBusinessChatRequestDto.json")
   String jsonConversationChannelAppleBcRequestDto;
 
   @GivenJsonResource(
-      "/domains/conversation/v1/credentials/ConversationChannelAppleBcResponseDto.json")
+      "/domains/conversation/v1/credentials/ConversationChannelAppleBusinessChatResponseDto.json")
   ConversationChannelCredentials loadedConversationChannelAppleBcDto;
 
   public static ConversationChannelCredentials conversationChannelAppleBcResponseDto =
@@ -33,7 +33,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setDescription("description value")
                   .build())
           .setApplebcCredentials(
-              AppleBcCredentials.builder()
+              AppleBusinessChatCredentials.builder()
                   .setBusinessChatAccountId("appleBc business_chat_account_id value")
                   .setMerchantId("appleBc merchant_id value")
                   .setApplePayCertificateReference("appleBc apple_pay_certificate_reference value")
@@ -47,7 +47,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
           .setCallbackSecret("callback secret")
           .setChannelKnownId("channel id")
           .setApplebcCredentials(
-              AppleBcCredentials.builder()
+              AppleBusinessChatCredentials.builder()
                   .setBusinessChatAccountId("appleBc business_chat_account_id value")
                   .setMerchantId("appleBc merchant_id value")
                   .setApplePayCertificateReference("appleBc apple_pay_certificate_reference value")

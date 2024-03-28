@@ -56,7 +56,7 @@ public class InstagramCredentialsImpl implements InstagramCredentials {
     return businessAccountId;
   }
 
-  /** Return true if this InstagramCredentials object is equal to o. */
+  /** Return true if this Instagram_Credentials object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -79,7 +79,7 @@ public class InstagramCredentialsImpl implements InstagramCredentials {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class InstagramCredentialsImpl {\n");
-    sb.append("    token: ").append(toIndentedString(token)).append("\n");
+    sb.append("    token: ").append(toIndentedString("***")).append("\n");
     sb.append("    businessAccountId: ").append(toIndentedString(businessAccountId)).append("\n");
     sb.append("}");
     return sb.toString();

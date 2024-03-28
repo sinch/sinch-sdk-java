@@ -71,7 +71,7 @@ public interface Contact {
    *
    * @return language
    */
-  String getLanguage();
+  ContactLanguage getLanguage();
 
   /**
    * Metadata associated with the contact. Up to 1024 characters long.
@@ -153,7 +153,7 @@ public interface Contact {
      * @return Current builder
      * @see #getLanguage
      */
-    Builder setLanguage(String language);
+    Builder setLanguage(ContactLanguage language);
 
     /**
      * see getter

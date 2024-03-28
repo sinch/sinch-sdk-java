@@ -13,6 +13,7 @@
 package com.sinch.sdk.domains.conversation.models.v1.app.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
 import com.sinch.sdk.domains.conversation.models.v1.app.CallbackSettings;
 import com.sinch.sdk.domains.conversation.models.v1.app.ConversationMetadataReportView;
 import com.sinch.sdk.domains.conversation.models.v1.app.DeliveryReportBasedFallback;
@@ -62,12 +63,11 @@ public interface AppCreateRequest {
   DispatchRetentionPolicy getDispatchRetentionPolicy();
 
   /**
-   * Whether or not Conversation API should store contacts and conversations for the app. For more
-   * information, see [Processing Modes](../../../../../conversation/processing-modes/).
+   * Get processingMode
    *
    * @return processingMode
    */
-  String getProcessingMode();
+  ProcessingMode getProcessingMode();
 
   /**
    * Get smartConversation
@@ -162,7 +162,7 @@ public interface AppCreateRequest {
      * @return Current builder
      * @see #getProcessingMode
      */
-    Builder setProcessingMode(String processingMode);
+    Builder setProcessingMode(ProcessingMode processingMode);
 
     /**
      * see getter

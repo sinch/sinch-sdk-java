@@ -56,7 +56,7 @@ public class KakaoTalkChatCredentialsImpl implements KakaoTalkChatCredentials {
     return apiKey;
   }
 
-  /** Return true if this KakaoTalkChatCredentials object is equal to o. */
+  /** Return true if this KakaoTalkChat_Credentials object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {

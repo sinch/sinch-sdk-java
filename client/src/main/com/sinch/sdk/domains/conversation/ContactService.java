@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.conversation;
 
+import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.contact.Contact;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactCreateRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactGetChannelProfileByChannelIdentityRequest;
@@ -116,11 +117,9 @@ public interface ContactService {
   /**
    * Get user profile from a specific channel by contact ID.
    *
-   * <p>Only supported on {@link
-   * com.sinch.sdk.domains.conversation.models.v1.ConversationChannel#MESSENGER MESSENGER}, {@link
-   * com.sinch.sdk.domains.conversation.models.v1.ConversationChannel#INSTAGRAM INSTAGRAM}, {@link
-   * com.sinch.sdk.domains.conversation.models.v1.ConversationChannel#VIBER VIBER} and {@link
-   * com.sinch.sdk.domains.conversation.models.v1.ConversationChannel#LINE LINE} channels.
+   * <p>Only supported on {@link ConversationChannel#MESSENGER MESSENGER}, {@link
+   * ConversationChannel#INSTAGRAM INSTAGRAM}, {@link ConversationChannel#VIBER VIBER} and {@link
+   * ConversationChannel#LINE LINE} channels.
    *
    * <p>Note that, in order to retrieve a WhatsApp display name, you can use the Get a Contact or
    * List Contacts operations, which will populate the display_name field of each returned contact
@@ -136,11 +135,9 @@ public interface ContactService {
   /**
    * Get user profile from a specific channel by channel identity.
    *
-   * <p>Only supported on {@link
-   * com.sinch.sdk.domains.conversation.models.v1.ConversationChannel#MESSENGER MESSENGER}, {@link
-   * com.sinch.sdk.domains.conversation.models.v1.ConversationChannel#INSTAGRAM INSTAGRAM}, {@link
-   * com.sinch.sdk.domains.conversation.models.v1.ConversationChannel#VIBER VIBER} and {@link
-   * com.sinch.sdk.domains.conversation.models.v1.ConversationChannel#LINE LINE} channels.
+   * <p>Only supported on {@link ConversationChannel#MESSENGER MESSENGER}, {@link
+   * ConversationChannel#INSTAGRAM INSTAGRAM}, {@link ConversationChannel#VIBER VIBER} and {@link
+   * ConversationChannel#LINE LINE} channels.
    *
    * <p>Note that, in order to retrieve a WhatsApp display name, you can use the Get a Contact or
    * List Contacts operations, which will populate the display_name field of each returned contact

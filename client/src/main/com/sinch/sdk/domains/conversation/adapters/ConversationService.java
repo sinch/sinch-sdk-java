@@ -16,15 +16,17 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ConversationService implements com.sinch.sdk.domains.conversation.ConversationService {
+
   private static final Logger LOGGER = Logger.getLogger(ConversationService.class.getName());
   private static final String SECURITY_SCHEME_KEYWORD_ = "oAuth2";
 
   private final String uriUUID;
   private final ConversationContext context;
   private final HttpClient httpClient;
+  private final Map<String, AuthManager> authManagers;
   private AppService app;
   private ContactService contact;
-  private final Map<String, AuthManager> authManagers;
+  private MessagesService messages;
 
   public ConversationService(
       UnifiedCredentials credentials,
@@ -71,10 +73,10 @@ public class ConversationService implements com.sinch.sdk.domains.conversation.C
     return this.contact;
   }
 
-  /*public com.sinch.sdk.domains.conversation.MessagesService messages() {
+  public MessagesService messages() {
     if (null == this.messages) {
       this.messages = new MessagesService(uriUUID, context, httpClient, authManagers);
     }
     return this.messages;
-  }*/
+  }
 }

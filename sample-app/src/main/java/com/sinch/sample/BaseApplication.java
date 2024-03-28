@@ -3,6 +3,7 @@ package com.sinch.sample;
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.models.ApplicationCredentials;
 import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.SmsServicePlanCredentials;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -17,6 +18,7 @@ public abstract class BaseApplication {
   private static final String VERIFICATION_ID_KEY = "VERIFICATION_ID";
   private static final String CONVERSATION_APP_ID_KEY = "CONVERSATION_APP_ID";
   private static final String CONVERSATION_CONTACT_ID_KEY = "CONVERSATION_CONTACT_ID";
+  private static final String CONVERSATION_MESSAGE_ID_KEY = "CONVERSATION_MESSAGE_ID";
 
   public static final String WEBHOOKS_URL_KEY = "WEBHOOKS_URL";
   public static final String WEBHOOKS_VOICE_PATH_KEY = "WEBHOOKS_VOICE_PATH";
@@ -34,7 +36,9 @@ public abstract class BaseApplication {
   protected String verificationId;
   protected String conversationAppId;
   protected String conversationContactId;
-
+  protected String conversationMessageId;
+  protected String smsServicePlanId;
+  protected String smsApiToken;
   protected String applicationKey;
   protected String webhooksVoicePath;
   protected String webhooksSmsPath;
@@ -64,6 +68,7 @@ public abstract class BaseApplication {
     // Conversation related settings
     conversationAppId = getConfigValue(CONVERSATION_APP_ID_KEY);
     conversationContactId = getConfigValue(CONVERSATION_CONTACT_ID_KEY);
+    conversationMessageId = getConfigValue(CONVERSATION_MESSAGE_ID_KEY);
 
     String webhooksUrl = getConfigValue(WEBHOOKS_URL_KEY);
     if (null != webhooksUrl) {
@@ -77,6 +82,19 @@ public abstract class BaseApplication {
             .getApplicationCredentials()
             .map(ApplicationCredentials::getApplicationKey)
             .orElse(null);
+
+    smsServicePlanId =
+        configuration
+            .getSmsServicePlanCredentials()
+            .map(SmsServicePlanCredentials::getServicePlanId)
+            .orElse(null);
+
+    smsApiToken =
+        configuration
+            .getSmsServicePlanCredentials()
+            .map(SmsServicePlanCredentials::getApiToken)
+            .orElse(null);
+
     client = new SinchClient(configuration);
   }
 

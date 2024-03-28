@@ -60,9 +60,7 @@ public class CallbackSettingsImpl implements CallbackSettings {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CallbackSettingsImpl {\n");
-    sb.append("    secretForOverriddenCallbackUrls: ")
-        .append(toIndentedString(secretForOverriddenCallbackUrls))
-        .append("\n");
+    sb.append("    secretForOverriddenCallbackUrls: ").append(toIndentedString("***")).append("\n");
     sb.append("}");
     return sb.toString();
   }

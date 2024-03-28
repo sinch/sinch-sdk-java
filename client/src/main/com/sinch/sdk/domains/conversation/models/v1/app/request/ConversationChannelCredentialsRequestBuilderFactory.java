@@ -1,7 +1,7 @@
 package com.sinch.sdk.domains.conversation.models.v1.app.request;
 
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
-import com.sinch.sdk.domains.conversation.models.v1.credentials.AppleBcCredentials;
+import com.sinch.sdk.domains.conversation.models.v1.credentials.AppleBusinessChatCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.InstagramCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.KakaoTalkChatCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.KakaoTalkCredentials;
@@ -15,7 +15,7 @@ import com.sinch.sdk.domains.conversation.models.v1.credentials.WeChatCredential
 public class ConversationChannelCredentialsRequestBuilderFactory {
 
   public static ConversationChannelCredentialRequest.Builder appleBc(
-      AppleBcCredentials credentials) {
+      AppleBusinessChatCredentials credentials) {
     return ConversationChannelCredentialRequest.builder()
         .setChannel(ConversationChannel.APPLEBC)
         .setApplebcCredentials(credentials);

@@ -36,7 +36,7 @@ public class StaticTokenCredentialsImpl implements StaticTokenCredentials {
     return token;
   }
 
-  /** Return true if this StaticTokenCredential object is equal to o. */
+  /** Return true if this Static_Token_Credentials object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -45,8 +45,8 @@ public class StaticTokenCredentialsImpl implements StaticTokenCredentials {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StaticTokenCredentialsImpl staticTokenCredential = (StaticTokenCredentialsImpl) o;
-    return Objects.equals(this.token, staticTokenCredential.token);
+    StaticTokenCredentialsImpl staticTokenCredentials = (StaticTokenCredentialsImpl) o;
+    return Objects.equals(this.token, staticTokenCredentials.token);
   }
 
   @Override
@@ -58,7 +58,7 @@ public class StaticTokenCredentialsImpl implements StaticTokenCredentials {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class StaticTokenCredentialsImpl {\n");
-    sb.append("    token: ").append(toIndentedString(token)).append("\n");
+    sb.append("    token: ").append(toIndentedString("***")).append("\n");
     sb.append("}");
     return sb.toString();
   }

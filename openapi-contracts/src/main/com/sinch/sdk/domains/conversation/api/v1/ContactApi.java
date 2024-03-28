@@ -148,10 +148,9 @@ public class ContactApi {
    * @param projectId The unique ID of the project. You can find this on the [Sinch
    *     Dashboard](https://dashboard.sinch.com/convapi/apps). (required)
    * @param contactId The unique ID of the contact. (required)
-   * @return Object
    * @throws ApiException if fails to make API call
    */
-  public Object contactDeleteContact(String projectId, String contactId) throws ApiException {
+  public void contactDeleteContact(String projectId, String contactId) throws ApiException {
 
     LOGGER.finest(
         "[contactDeleteContact]"
@@ -168,8 +167,7 @@ public class ContactApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<Object> localVarReturnType = new TypeReference<Object>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return;
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -642,12 +640,12 @@ public class ContactApi {
    *     Dashboard](https://dashboard.sinch.com/convapi/apps). (required)
    * @param contactId The unique ID of the contact. (required)
    * @param contact The contact to be updated (required)
-   * @param updateMaskPaths The set of field mask paths. (optional
+   * @param updateMask The set of field mask paths. (optional
    * @return Contact
    * @throws ApiException if fails to make API call
    */
   public Contact contactUpdateContact(
-      String projectId, String contactId, Contact contact, List<String> updateMaskPaths)
+      String projectId, String contactId, Contact contact, List<String> updateMask)
       throws ApiException {
 
     LOGGER.finest(
@@ -662,11 +660,11 @@ public class ContactApi {
             + "contact: "
             + contact
             + ", "
-            + "updateMaskPaths: "
-            + updateMaskPaths);
+            + "updateMask: "
+            + updateMask);
 
     HttpRequest httpRequest =
-        contactUpdateContactRequestBuilder(projectId, contactId, contact, updateMaskPaths);
+        contactUpdateContactRequestBuilder(projectId, contactId, contact, updateMask);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -685,7 +683,7 @@ public class ContactApi {
   }
 
   private HttpRequest contactUpdateContactRequestBuilder(
-      String projectId, String contactId, Contact contact, List<String> updateMaskPaths)
+      String projectId, String contactId, Contact contact, List<String> updateMask)
       throws ApiException {
     // verify the required parameter 'projectId' is set
     if (projectId == null) {
@@ -711,13 +709,10 @@ public class ContactApi {
                 "\\{" + "contact_id" + "\\}", URLPathUtils.encodePathSegment(contactId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
-    if (null != updateMaskPaths) {
+    if (null != updateMask) {
       localVarQueryParams.add(
           new URLParameter(
-              "update_mask.paths",
-              updateMaskPaths,
-              URLParameter.STYLE.valueOf("form".toUpperCase()),
-              true));
+              "update_mask", updateMask, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
 
     Map<String, String> localVarHeaderParams = new HashMap<>();

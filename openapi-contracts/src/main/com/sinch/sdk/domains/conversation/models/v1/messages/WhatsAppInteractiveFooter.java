@@ -10,31 +10,20 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.contact.request;
+package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.conversation.models.v1.IdentifiedBy;
 
-/**
- * The recipient to check profile information. Requires either &#x60;contact_id&#x60; or
- * &#x60;identified_by&#x60;.
- */
-@JsonDeserialize(builder = GetChannelProfileRequestRecipientImpl.Builder.class)
-public interface GetChannelProfileRequestRecipient {
+/** Footer of the interactive message. */
+@JsonDeserialize(builder = WhatsAppInteractiveFooterImpl.Builder.class)
+public interface WhatsAppInteractiveFooter {
 
   /**
-   * The ID of the contact.
+   * The footer content (60 characters maximum). Emojis, Markdown and links are supported.
    *
-   * @return contactId
+   * @return text
    */
-  String getContactId();
-
-  /**
-   * Get identifiedBy
-   *
-   * @return identifiedBy
-   */
-  IdentifiedBy getIdentifiedBy();
+  String getText();
 
   /**
    * Getting builder
@@ -42,7 +31,7 @@ public interface GetChannelProfileRequestRecipient {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new GetChannelProfileRequestRecipientImpl.Builder();
+    return new WhatsAppInteractiveFooterImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -51,26 +40,17 @@ public interface GetChannelProfileRequestRecipient {
     /**
      * see getter
      *
-     * @param contactId see getter
+     * @param text see getter
      * @return Current builder
-     * @see #getContactId
+     * @see #getText
      */
-    Builder setContactId(String contactId);
-
-    /**
-     * see getter
-     *
-     * @param identifiedBy see getter
-     * @return Current builder
-     * @see #getIdentifiedBy
-     */
-    Builder setIdentifiedBy(IdentifiedBy identifiedBy);
+    Builder setText(String text);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    GetChannelProfileRequestRecipient build();
+    WhatsAppInteractiveFooter build();
   }
 }
