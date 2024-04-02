@@ -45,7 +45,7 @@ public class ListMessageDtoTest extends BaseTest {
                           .build())
                   .build())
           .build();
-  public static ListMessage listMessageDto =
+  public static ListMessage listMessageChoiceDto =
       ListMessage.builder()
           .setTitle("a list message title value")
           .setDescription("description value")
@@ -58,17 +58,44 @@ public class ListMessageDtoTest extends BaseTest {
               Collections.singletonList(
                   ListSection.builder()
                       .setTitle("a list section title value")
-                      .setItems(Arrays.asList(itemChoice, itemProduct))
+                      .setItems(Arrays.asList(itemChoice))
                       .build()))
           .build();
 
-  @GivenTextResource("/domains/conversation/v1/messages/ListMessageDto.json")
-  String jsonListMessageDto;
+  public static ListMessage listMessageProductDto =
+      ListMessage.builder()
+          .setTitle("a list message title value")
+          .setDescription("description value")
+          .setMessageProperties(
+              ListMessageMessageProperties.builder()
+                  .setCatalogId("catalog ID value")
+                  .setMenu("menu value")
+                  .build())
+          .setSections(
+              Collections.singletonList(
+                  ListSection.builder()
+                      .setTitle("a list section title value")
+                      .setItems(Arrays.asList(itemProduct))
+                      .build()))
+          .build();
+
+  @GivenTextResource("/domains/conversation/v1/messages/ListMessageChoiceDto.json")
+  String jsonListMessageChoiceDto;
+
+  @GivenTextResource("/domains/conversation/v1/messages/ListMessageProductDto.json")
+  String jsonListMessageProductDto;
 
   @Test
-  void serializeMessageDto() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(listMessageDto);
+  void serializeMessageChoiceDto() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(listMessageChoiceDto);
 
-    JSONAssert.assertEquals(jsonListMessageDto, serializedString, true);
+    JSONAssert.assertEquals(jsonListMessageChoiceDto, serializedString, true);
+  }
+
+  @Test
+  void serializeMessageProductDto() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(listMessageProductDto);
+
+    JSONAssert.assertEquals(jsonListMessageProductDto, serializedString, true);
   }
 }
