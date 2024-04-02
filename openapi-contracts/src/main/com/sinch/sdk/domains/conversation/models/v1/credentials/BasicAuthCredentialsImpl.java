@@ -56,7 +56,7 @@ public class BasicAuthCredentialsImpl implements BasicAuthCredentials {
     return username;
   }
 
-  /** Return true if this BasicAuthCredential object is equal to o. */
+  /** Return true if this BasicAuthCredentials object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -65,9 +65,9 @@ public class BasicAuthCredentialsImpl implements BasicAuthCredentials {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BasicAuthCredentialsImpl basicAuthCredential = (BasicAuthCredentialsImpl) o;
-    return Objects.equals(this.password, basicAuthCredential.password)
-        && Objects.equals(this.username, basicAuthCredential.username);
+    BasicAuthCredentialsImpl basicAuthCredentials = (BasicAuthCredentialsImpl) o;
+    return Objects.equals(this.password, basicAuthCredentials.password)
+        && Objects.equals(this.username, basicAuthCredentials.username);
   }
 
   @Override
@@ -79,7 +79,7 @@ public class BasicAuthCredentialsImpl implements BasicAuthCredentials {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class BasicAuthCredentialsImpl {\n");
-    sb.append("    password: ").append(toIndentedString(password)).append("\n");
+    sb.append("    password: ").append(toIndentedString("***")).append("\n");
     sb.append("    username: ").append(toIndentedString(username)).append("\n");
     sb.append("}");
     return sb.toString();

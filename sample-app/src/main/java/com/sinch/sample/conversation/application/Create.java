@@ -3,7 +3,7 @@ package com.sinch.sample.conversation.application;
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.conversation.models.v1.app.request.AppCreateRequest;
 import com.sinch.sdk.domains.conversation.models.v1.app.request.ConversationChannelCredentialsRequestBuilderFactory;
-import com.sinch.sdk.domains.conversation.models.v1.credentials.AppleBcCredentials;
+import com.sinch.sdk.domains.conversation.models.v1.credentials.AppleBusinessChatCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.BasicAuthCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.InstagramCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.KakaoTalkChatCredentials;
@@ -39,7 +39,7 @@ public class Create extends BaseApplication {
 
     var appleBcChannel =
         ConversationChannelCredentialsRequestBuilderFactory.appleBc(
-                AppleBcCredentials.builder()
+                AppleBusinessChatCredentials.builder()
                     .setApplePayCertificatePassword("appleBc password")
                     .setApplePayCertificateReference("appleBc certificate reference")
                     .setMerchantId("appleBc merchant ID")
@@ -109,8 +109,8 @@ public class Create extends BaseApplication {
     var smsChannel =
         ConversationChannelCredentialsRequestBuilderFactory.sms(
                 StaticBearerCredentials.builder()
-                    .setClaimedIdentity("smsChannel my claimed identity")
-                    .setToken("smsChannel my token")
+                    .setClaimedIdentity(smsServicePlanId)
+                    .setToken(smsApiToken)
                     .build())
             .build();
 

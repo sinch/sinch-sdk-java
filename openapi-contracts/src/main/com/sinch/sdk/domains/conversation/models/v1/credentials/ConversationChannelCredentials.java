@@ -80,7 +80,7 @@ public interface ConversationChannelCredentials {
    *
    * @return applebcCredentials
    */
-  AppleBcCredentials getApplebcCredentials();
+  AppleBusinessChatCredentials getApplebcCredentials();
 
   /**
    * Get kakaotalkchatCredentials
@@ -212,7 +212,7 @@ public interface ConversationChannelCredentials {
      * @return Current builder
      * @see #getApplebcCredentials
      */
-    Builder setApplebcCredentials(AppleBcCredentials applebcCredentials);
+    Builder setApplebcCredentials(AppleBusinessChatCredentials applebcCredentials);
 
     /**
      * see getter

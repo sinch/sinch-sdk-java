@@ -65,7 +65,7 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
 
   public static final String JSON_PROPERTY_APPLEBC_CREDENTIALS = "applebc_credentials";
 
-  private OptionalValue<AppleBcCredentials> applebcCredentials;
+  private OptionalValue<AppleBusinessChatCredentials> applebcCredentials;
 
   public static final String JSON_PROPERTY_KAKAOTALKCHAT_CREDENTIALS = "kakaotalkchat_credentials";
 
@@ -98,7 +98,7 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
       OptionalValue<LineCredentials> lineCredentials,
       OptionalValue<WeChatCredentials> wechatCredentials,
       OptionalValue<InstagramCredentials> instagramCredentials,
-      OptionalValue<AppleBcCredentials> applebcCredentials,
+      OptionalValue<AppleBusinessChatCredentials> applebcCredentials,
       OptionalValue<KakaoTalkChatCredentials> kakaotalkchatCredentials,
       OptionalValue<String> callbackSecret,
       OptionalValue<ConversationChannel> channel,
@@ -209,13 +209,13 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
   }
 
   @JsonIgnore
-  public AppleBcCredentials getApplebcCredentials() {
+  public AppleBusinessChatCredentials getApplebcCredentials() {
     return applebcCredentials.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_APPLEBC_CREDENTIALS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<AppleBcCredentials> applebcCredentials() {
+  public OptionalValue<AppleBusinessChatCredentials> applebcCredentials() {
     return applebcCredentials;
   }
 
@@ -274,7 +274,7 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
     return channelKnownId;
   }
 
-  /** Return true if this ConversationChannelCredential object is equal to o. */
+  /** Return true if this ConversationChannelCredentials object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -283,26 +283,27 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ConversationChannelCredentialsImpl conversationChannelCredential =
+    ConversationChannelCredentialsImpl conversationChannelCredentials =
         (ConversationChannelCredentialsImpl) o;
-    return Objects.equals(this.staticBearer, conversationChannelCredential.staticBearer)
-        && Objects.equals(this.staticToken, conversationChannelCredential.staticToken)
-        && Objects.equals(this.mmsCredentials, conversationChannelCredential.mmsCredentials)
+    return Objects.equals(this.staticBearer, conversationChannelCredentials.staticBearer)
+        && Objects.equals(this.staticToken, conversationChannelCredentials.staticToken)
+        && Objects.equals(this.mmsCredentials, conversationChannelCredentials.mmsCredentials)
         && Objects.equals(
-            this.kakaotalkCredentials, conversationChannelCredential.kakaotalkCredentials)
+            this.kakaotalkCredentials, conversationChannelCredentials.kakaotalkCredentials)
         && Objects.equals(
-            this.telegramCredentials, conversationChannelCredential.telegramCredentials)
-        && Objects.equals(this.lineCredentials, conversationChannelCredential.lineCredentials)
-        && Objects.equals(this.wechatCredentials, conversationChannelCredential.wechatCredentials)
+            this.telegramCredentials, conversationChannelCredentials.telegramCredentials)
+        && Objects.equals(this.lineCredentials, conversationChannelCredentials.lineCredentials)
+        && Objects.equals(this.wechatCredentials, conversationChannelCredentials.wechatCredentials)
         && Objects.equals(
-            this.instagramCredentials, conversationChannelCredential.instagramCredentials)
-        && Objects.equals(this.applebcCredentials, conversationChannelCredential.applebcCredentials)
+            this.instagramCredentials, conversationChannelCredentials.instagramCredentials)
         && Objects.equals(
-            this.kakaotalkchatCredentials, conversationChannelCredential.kakaotalkchatCredentials)
-        && Objects.equals(this.callbackSecret, conversationChannelCredential.callbackSecret)
-        && Objects.equals(this.channel, conversationChannelCredential.channel)
-        && Objects.equals(this.state, conversationChannelCredential.state)
-        && Objects.equals(this.channelKnownId, conversationChannelCredential.channelKnownId);
+            this.applebcCredentials, conversationChannelCredentials.applebcCredentials)
+        && Objects.equals(
+            this.kakaotalkchatCredentials, conversationChannelCredentials.kakaotalkchatCredentials)
+        && Objects.equals(this.callbackSecret, conversationChannelCredentials.callbackSecret)
+        && Objects.equals(this.channel, conversationChannelCredentials.channel)
+        && Objects.equals(this.state, conversationChannelCredentials.state)
+        && Objects.equals(this.channelKnownId, conversationChannelCredentials.channelKnownId);
   }
 
   @Override
@@ -346,7 +347,7 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
     sb.append("    kakaotalkchatCredentials: ")
         .append(toIndentedString(kakaotalkchatCredentials))
         .append("\n");
-    sb.append("    callbackSecret: ").append(toIndentedString(callbackSecret)).append("\n");
+    sb.append("    callbackSecret: ").append(toIndentedString("***")).append("\n");
     sb.append("    channel: ").append(toIndentedString(channel)).append("\n");
     sb.append("    state: ").append(toIndentedString(state)).append("\n");
     sb.append("    channelKnownId: ").append(toIndentedString(channelKnownId)).append("\n");
@@ -374,7 +375,7 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
     OptionalValue<LineCredentials> lineCredentials = OptionalValue.empty();
     OptionalValue<WeChatCredentials> wechatCredentials = OptionalValue.empty();
     OptionalValue<InstagramCredentials> instagramCredentials = OptionalValue.empty();
-    OptionalValue<AppleBcCredentials> applebcCredentials = OptionalValue.empty();
+    OptionalValue<AppleBusinessChatCredentials> applebcCredentials = OptionalValue.empty();
     OptionalValue<KakaoTalkChatCredentials> kakaotalkchatCredentials = OptionalValue.empty();
     OptionalValue<String> callbackSecret = OptionalValue.empty();
     OptionalValue<ConversationChannel> channel = OptionalValue.empty();
@@ -430,7 +431,7 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
     }
 
     @JsonProperty(JSON_PROPERTY_APPLEBC_CREDENTIALS)
-    public Builder setApplebcCredentials(AppleBcCredentials applebcCredentials) {
+    public Builder setApplebcCredentials(AppleBusinessChatCredentials applebcCredentials) {
       this.applebcCredentials = OptionalValue.of(applebcCredentials);
       return this;
     }

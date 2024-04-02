@@ -15,6 +15,7 @@ package com.sinch.sdk.domains.conversation.models.v1.contact.request;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
+import com.sinch.sdk.domains.conversation.models.v1.contact.ContactLanguage;
 import java.util.List;
 
 /**
@@ -65,7 +66,7 @@ public interface ContactCreateRequest {
    *
    * @return language
    */
-  String getLanguage();
+  ContactLanguage getLanguage();
 
   /**
    * Metadata associated with the contact. Up to 1024 characters long.
@@ -138,7 +139,7 @@ public interface ContactCreateRequest {
      * @return Current builder
      * @see #getLanguage
      */
-    Builder setLanguage(String language);
+    Builder setLanguage(ContactLanguage language);
 
     /**
      * see getter

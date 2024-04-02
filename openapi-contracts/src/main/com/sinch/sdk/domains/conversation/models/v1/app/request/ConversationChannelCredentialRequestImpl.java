@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
-import com.sinch.sdk.domains.conversation.models.v1.credentials.AppleBcCredentials;
+import com.sinch.sdk.domains.conversation.models.v1.credentials.AppleBusinessChatCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.InstagramCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.KakaoTalkChatCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.KakaoTalkCredentials;
@@ -74,7 +74,7 @@ public class ConversationChannelCredentialRequestImpl
 
   public static final String JSON_PROPERTY_APPLEBC_CREDENTIALS = "applebc_credentials";
 
-  private OptionalValue<AppleBcCredentials> applebcCredentials;
+  private OptionalValue<AppleBusinessChatCredentials> applebcCredentials;
 
   public static final String JSON_PROPERTY_KAKAOTALKCHAT_CREDENTIALS = "kakaotalkchat_credentials";
 
@@ -99,7 +99,7 @@ public class ConversationChannelCredentialRequestImpl
       OptionalValue<LineCredentials> lineCredentials,
       OptionalValue<WeChatCredentials> wechatCredentials,
       OptionalValue<InstagramCredentials> instagramCredentials,
-      OptionalValue<AppleBcCredentials> applebcCredentials,
+      OptionalValue<AppleBusinessChatCredentials> applebcCredentials,
       OptionalValue<KakaoTalkChatCredentials> kakaotalkchatCredentials,
       OptionalValue<String> callbackSecret,
       OptionalValue<ConversationChannel> channel) {
@@ -206,13 +206,13 @@ public class ConversationChannelCredentialRequestImpl
   }
 
   @JsonIgnore
-  public AppleBcCredentials getApplebcCredentials() {
+  public AppleBusinessChatCredentials getApplebcCredentials() {
     return applebcCredentials.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_APPLEBC_CREDENTIALS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<AppleBcCredentials> applebcCredentials() {
+  public OptionalValue<AppleBusinessChatCredentials> applebcCredentials() {
     return applebcCredentials;
   }
 
@@ -321,7 +321,7 @@ public class ConversationChannelCredentialRequestImpl
     sb.append("    kakaotalkchatCredentials: ")
         .append(toIndentedString(kakaotalkchatCredentials))
         .append("\n");
-    sb.append("    callbackSecret: ").append(toIndentedString(callbackSecret)).append("\n");
+    sb.append("    callbackSecret: ").append(toIndentedString("***")).append("\n");
     sb.append("    channel: ").append(toIndentedString(channel)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -347,7 +347,7 @@ public class ConversationChannelCredentialRequestImpl
     OptionalValue<LineCredentials> lineCredentials = OptionalValue.empty();
     OptionalValue<WeChatCredentials> wechatCredentials = OptionalValue.empty();
     OptionalValue<InstagramCredentials> instagramCredentials = OptionalValue.empty();
-    OptionalValue<AppleBcCredentials> applebcCredentials = OptionalValue.empty();
+    OptionalValue<AppleBusinessChatCredentials> applebcCredentials = OptionalValue.empty();
     OptionalValue<KakaoTalkChatCredentials> kakaotalkchatCredentials = OptionalValue.empty();
     OptionalValue<String> callbackSecret = OptionalValue.empty();
     OptionalValue<ConversationChannel> channel = OptionalValue.empty();
@@ -401,7 +401,7 @@ public class ConversationChannelCredentialRequestImpl
     }
 
     @JsonProperty(JSON_PROPERTY_APPLEBC_CREDENTIALS)
-    public Builder setApplebcCredentials(AppleBcCredentials applebcCredentials) {
+    public Builder setApplebcCredentials(AppleBusinessChatCredentials applebcCredentials) {
       this.applebcCredentials = OptionalValue.of(applebcCredentials);
       return this;
     }

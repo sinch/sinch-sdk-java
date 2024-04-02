@@ -37,7 +37,7 @@ public class IdentifiedByImpl implements IdentifiedBy {
     return channelIdentities;
   }
 
-  /** Return true if this Identified_By object is equal to o. */
+  /** Return true if this IdentifiedBy object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {

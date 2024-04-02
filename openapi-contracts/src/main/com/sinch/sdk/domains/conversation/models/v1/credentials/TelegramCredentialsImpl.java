@@ -36,7 +36,7 @@ public class TelegramCredentialsImpl implements TelegramCredentials {
     return token;
   }
 
-  /** Return true if this TelegramCredentials object is equal to o. */
+  /** Return true if this Telegram_Credentials object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -58,7 +58,7 @@ public class TelegramCredentialsImpl implements TelegramCredentials {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class TelegramCredentialsImpl {\n");
-    sb.append("    token: ").append(toIndentedString(token)).append("\n");
+    sb.append("    token: ").append(toIndentedString("***")).append("\n");
     sb.append("}");
     return sb.toString();
   }

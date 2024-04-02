@@ -56,7 +56,7 @@ public class StaticBearerCredentialsImpl implements StaticBearerCredentials {
     return token;
   }
 
-  /** Return true if this StaticBearerCredential object is equal to o. */
+  /** Return true if this Static_Bearer_Credentials object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -65,9 +65,9 @@ public class StaticBearerCredentialsImpl implements StaticBearerCredentials {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StaticBearerCredentialsImpl staticBearerCredential = (StaticBearerCredentialsImpl) o;
-    return Objects.equals(this.claimedIdentity, staticBearerCredential.claimedIdentity)
-        && Objects.equals(this.token, staticBearerCredential.token);
+    StaticBearerCredentialsImpl staticBearerCredentials = (StaticBearerCredentialsImpl) o;
+    return Objects.equals(this.claimedIdentity, staticBearerCredentials.claimedIdentity)
+        && Objects.equals(this.token, staticBearerCredentials.token);
   }
 
   @Override
@@ -80,7 +80,7 @@ public class StaticBearerCredentialsImpl implements StaticBearerCredentials {
     StringBuilder sb = new StringBuilder();
     sb.append("class StaticBearerCredentialsImpl {\n");
     sb.append("    claimedIdentity: ").append(toIndentedString(claimedIdentity)).append("\n");
-    sb.append("    token: ").append(toIndentedString(token)).append("\n");
+    sb.append("    token: ").append(toIndentedString("***")).append("\n");
     sb.append("}");
     return sb.toString();
   }

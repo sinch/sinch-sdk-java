@@ -93,7 +93,7 @@ public class WeChatCredentialsImpl implements WeChatCredentials {
     return aesKey;
   }
 
-  /** Return true if this WeChatCredentials object is equal to o. */
+  /** Return true if this WeChat_Credentials object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -119,7 +119,7 @@ public class WeChatCredentialsImpl implements WeChatCredentials {
     StringBuilder sb = new StringBuilder();
     sb.append("class WeChatCredentialsImpl {\n");
     sb.append("    appId: ").append(toIndentedString(appId)).append("\n");
-    sb.append("    appSecret: ").append(toIndentedString(appSecret)).append("\n");
+    sb.append("    appSecret: ").append(toIndentedString("***")).append("\n");
     sb.append("    token: ").append(toIndentedString(token)).append("\n");
     sb.append("    aesKey: ").append(toIndentedString(aesKey)).append("\n");
     sb.append("}");

@@ -20,7 +20,7 @@ public class RetentionPolicyImpl implements RetentionPolicy {
 
   public static final String JSON_PROPERTY_RETENTION_TYPE = "retention_type";
 
-  private OptionalValue<String> retentionType;
+  private OptionalValue<RetentionPolicyType> retentionType;
 
   public static final String JSON_PROPERTY_TTL_DAYS = "ttl_days";
 
@@ -28,19 +28,20 @@ public class RetentionPolicyImpl implements RetentionPolicy {
 
   public RetentionPolicyImpl() {}
 
-  protected RetentionPolicyImpl(OptionalValue<String> retentionType, OptionalValue<Long> ttlDays) {
+  protected RetentionPolicyImpl(
+      OptionalValue<RetentionPolicyType> retentionType, OptionalValue<Long> ttlDays) {
     this.retentionType = retentionType;
     this.ttlDays = ttlDays;
   }
 
   @JsonIgnore
-  public String getRetentionType() {
+  public RetentionPolicyType getRetentionType() {
     return retentionType.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_RETENTION_TYPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> retentionType() {
+  public OptionalValue<RetentionPolicyType> retentionType() {
     return retentionType;
   }
 
@@ -96,11 +97,11 @@ public class RetentionPolicyImpl implements RetentionPolicy {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements RetentionPolicy.Builder {
-    OptionalValue<String> retentionType = OptionalValue.empty();
+    OptionalValue<RetentionPolicyType> retentionType = OptionalValue.empty();
     OptionalValue<Long> ttlDays = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_RETENTION_TYPE)
-    public Builder setRetentionType(String retentionType) {
+    public Builder setRetentionType(RetentionPolicyType retentionType) {
       this.retentionType = OptionalValue.of(retentionType);
       return this;
     }

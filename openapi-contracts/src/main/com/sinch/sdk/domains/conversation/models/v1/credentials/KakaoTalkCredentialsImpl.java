@@ -56,7 +56,7 @@ public class KakaoTalkCredentialsImpl implements KakaoTalkCredentials {
     return kakaotalkSenderKey;
   }
 
-  /** Return true if this KakaoTalkCredentials object is equal to o. */
+  /** Return true if this KakaoTalk_Credentials object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {

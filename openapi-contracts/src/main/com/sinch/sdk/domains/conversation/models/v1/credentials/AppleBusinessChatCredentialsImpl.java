@@ -10,14 +10,14 @@ import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  AppleBcCredentialsImpl.JSON_PROPERTY_BUSINESS_CHAT_ACCOUNT_ID,
-  AppleBcCredentialsImpl.JSON_PROPERTY_MERCHANT_ID,
-  AppleBcCredentialsImpl.JSON_PROPERTY_APPLE_PAY_CERTIFICATE_REFERENCE,
-  AppleBcCredentialsImpl.JSON_PROPERTY_APPLE_PAY_CERTIFICATE_PASSWORD
+  AppleBusinessChatCredentialsImpl.JSON_PROPERTY_BUSINESS_CHAT_ACCOUNT_ID,
+  AppleBusinessChatCredentialsImpl.JSON_PROPERTY_MERCHANT_ID,
+  AppleBusinessChatCredentialsImpl.JSON_PROPERTY_APPLE_PAY_CERTIFICATE_REFERENCE,
+  AppleBusinessChatCredentialsImpl.JSON_PROPERTY_APPLE_PAY_CERTIFICATE_PASSWORD
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class AppleBcCredentialsImpl implements AppleBcCredentials {
+public class AppleBusinessChatCredentialsImpl implements AppleBusinessChatCredentials {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_BUSINESS_CHAT_ACCOUNT_ID = "business_chat_account_id";
@@ -38,9 +38,9 @@ public class AppleBcCredentialsImpl implements AppleBcCredentials {
 
   private OptionalValue<String> applePayCertificatePassword;
 
-  public AppleBcCredentialsImpl() {}
+  public AppleBusinessChatCredentialsImpl() {}
 
-  protected AppleBcCredentialsImpl(
+  protected AppleBusinessChatCredentialsImpl(
       OptionalValue<String> businessChatAccountId,
       OptionalValue<String> merchantId,
       OptionalValue<String> applePayCertificateReference,
@@ -95,7 +95,7 @@ public class AppleBcCredentialsImpl implements AppleBcCredentials {
     return applePayCertificatePassword;
   }
 
-  /** Return true if this AppleBcCredentials object is equal to o. */
+  /** Return true if this Apple_Business_Chat_Credentials object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -104,13 +104,17 @@ public class AppleBcCredentialsImpl implements AppleBcCredentials {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AppleBcCredentialsImpl appleBcCredentials = (AppleBcCredentialsImpl) o;
-    return Objects.equals(this.businessChatAccountId, appleBcCredentials.businessChatAccountId)
-        && Objects.equals(this.merchantId, appleBcCredentials.merchantId)
+    AppleBusinessChatCredentialsImpl appleBusinessChatCredentials =
+        (AppleBusinessChatCredentialsImpl) o;
+    return Objects.equals(
+            this.businessChatAccountId, appleBusinessChatCredentials.businessChatAccountId)
+        && Objects.equals(this.merchantId, appleBusinessChatCredentials.merchantId)
         && Objects.equals(
-            this.applePayCertificateReference, appleBcCredentials.applePayCertificateReference)
+            this.applePayCertificateReference,
+            appleBusinessChatCredentials.applePayCertificateReference)
         && Objects.equals(
-            this.applePayCertificatePassword, appleBcCredentials.applePayCertificatePassword);
+            this.applePayCertificatePassword,
+            appleBusinessChatCredentials.applePayCertificatePassword);
   }
 
   @Override
@@ -125,7 +129,7 @@ public class AppleBcCredentialsImpl implements AppleBcCredentials {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AppleBcCredentialsImpl {\n");
+    sb.append("class AppleBusinessChatCredentialsImpl {\n");
     sb.append("    businessChatAccountId: ")
         .append(toIndentedString(businessChatAccountId))
         .append("\n");
@@ -133,9 +137,7 @@ public class AppleBcCredentialsImpl implements AppleBcCredentials {
     sb.append("    applePayCertificateReference: ")
         .append(toIndentedString(applePayCertificateReference))
         .append("\n");
-    sb.append("    applePayCertificatePassword: ")
-        .append(toIndentedString(applePayCertificatePassword))
-        .append("\n");
+    sb.append("    applePayCertificatePassword: ").append(toIndentedString("***")).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -151,7 +153,7 @@ public class AppleBcCredentialsImpl implements AppleBcCredentials {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements AppleBcCredentials.Builder {
+  static class Builder implements AppleBusinessChatCredentials.Builder {
     OptionalValue<String> businessChatAccountId = OptionalValue.empty();
     OptionalValue<String> merchantId = OptionalValue.empty();
     OptionalValue<String> applePayCertificateReference = OptionalValue.empty();
@@ -181,8 +183,8 @@ public class AppleBcCredentialsImpl implements AppleBcCredentials {
       return this;
     }
 
-    public AppleBcCredentials build() {
-      return new AppleBcCredentialsImpl(
+    public AppleBusinessChatCredentials build() {
+      return new AppleBusinessChatCredentialsImpl(
           businessChatAccountId,
           merchantId,
           applePayCertificateReference,

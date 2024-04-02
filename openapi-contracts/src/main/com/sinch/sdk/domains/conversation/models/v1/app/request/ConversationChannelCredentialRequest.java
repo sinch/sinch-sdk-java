@@ -14,7 +14,7 @@ package com.sinch.sdk.domains.conversation.models.v1.app.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
-import com.sinch.sdk.domains.conversation.models.v1.credentials.AppleBcCredentials;
+import com.sinch.sdk.domains.conversation.models.v1.credentials.AppleBusinessChatCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.InstagramCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.KakaoTalkChatCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.KakaoTalkCredentials;
@@ -90,7 +90,7 @@ public interface ConversationChannelCredentialRequest {
    *
    * @return applebcCredentials
    */
-  AppleBcCredentials getApplebcCredentials();
+  AppleBusinessChatCredentials getApplebcCredentials();
 
   /**
    * Get kakaotalkchatCredentials
@@ -208,7 +208,7 @@ public interface ConversationChannelCredentialRequest {
      * @return Current builder
      * @see #getApplebcCredentials
      */
-    Builder setApplebcCredentials(AppleBcCredentials applebcCredentials);
+    Builder setApplebcCredentials(AppleBusinessChatCredentials applebcCredentials);
 
     /**
      * see getter
