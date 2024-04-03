@@ -25,7 +25,7 @@ public interface InjectMessageRequestMessage {
    *
    * @return appMessage
    */
-  AppMessage getAppMessage();
+  AppMessage<?> getAppMessage();
 
   /**
    * Get contactMessage
@@ -53,7 +53,7 @@ public interface InjectMessageRequestMessage {
      * @return Current builder
      * @see #getAppMessage
      */
-    Builder setAppMessage(AppMessage appMessage);
+    Builder setAppMessage(AppMessage<?> appMessage);
 
     /**
      * see getter
