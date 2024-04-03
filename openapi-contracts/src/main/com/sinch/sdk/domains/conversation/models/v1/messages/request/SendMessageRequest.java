@@ -72,7 +72,7 @@ public interface SendMessageRequest {
    *
    * @return message
    */
-  AppMessage getMessage();
+  AppMessage<?> getMessage();
 
   /**
    * Metadata that should be associated with the message. Returned in the &#x60;metadata&#x60; field
@@ -206,7 +206,7 @@ public interface SendMessageRequest {
      * @return Current builder
      * @see #getMessage
      */
-    Builder setMessage(AppMessage message);
+    Builder setMessage(AppMessage<?> message);
 
     /**
      * see getter

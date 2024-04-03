@@ -10,16 +10,27 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.messages;
+package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.Agent;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
+import com.sinch.sdk.domains.conversation.models.v1.messages.CardMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.CarouselMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ChannelSpecificMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ChoiceMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ContactInfoMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ListMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.LocationMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.MediaMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride;
+import com.sinch.sdk.domains.conversation.models.v1.messages.TemplateMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessage;
 import java.util.Map;
 
 /** Message originating from an app */
-@JsonDeserialize(builder = AppMessageImpl.Builder.class)
-public interface AppMessage {
+@JsonDeserialize(builder = AppMessageInternalImpl.Builder.class)
+public interface AppMessageInternal {
 
   /**
    * Get cardMessage
@@ -125,7 +136,7 @@ public interface AppMessage {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new AppMessageImpl.Builder();
+    return new AppMessageInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -255,6 +266,6 @@ public interface AppMessage {
      *
      * @return The instance build with current builder values
      */
-    AppMessage build();
+    AppMessageInternal build();
   }
 }

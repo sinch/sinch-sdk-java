@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.messages;
+package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -9,27 +9,38 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.Agent;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
+import com.sinch.sdk.domains.conversation.models.v1.messages.CardMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.CarouselMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ChannelSpecificMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ChoiceMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ContactInfoMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ListMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.LocationMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.MediaMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride;
+import com.sinch.sdk.domains.conversation.models.v1.messages.TemplateMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessage;
 import java.util.Map;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  AppMessageImpl.JSON_PROPERTY_CARD_MESSAGE,
-  AppMessageImpl.JSON_PROPERTY_CAROUSEL_MESSAGE,
-  AppMessageImpl.JSON_PROPERTY_CHOICE_MESSAGE,
-  AppMessageImpl.JSON_PROPERTY_LOCATION_MESSAGE,
-  AppMessageImpl.JSON_PROPERTY_MEDIA_MESSAGE,
-  AppMessageImpl.JSON_PROPERTY_TEMPLATE_MESSAGE,
-  AppMessageImpl.JSON_PROPERTY_TEXT_MESSAGE,
-  AppMessageImpl.JSON_PROPERTY_LIST_MESSAGE,
-  AppMessageImpl.JSON_PROPERTY_CONTACT_INFO_MESSAGE,
-  AppMessageImpl.JSON_PROPERTY_EXPLICIT_CHANNEL_MESSAGE,
-  AppMessageImpl.JSON_PROPERTY_EXPLICIT_CHANNEL_OMNI_MESSAGE,
-  AppMessageImpl.JSON_PROPERTY_CHANNEL_SPECIFIC_MESSAGE,
-  AppMessageImpl.JSON_PROPERTY_AGENT
+  AppMessageInternalImpl.JSON_PROPERTY_CARD_MESSAGE,
+  AppMessageInternalImpl.JSON_PROPERTY_CAROUSEL_MESSAGE,
+  AppMessageInternalImpl.JSON_PROPERTY_CHOICE_MESSAGE,
+  AppMessageInternalImpl.JSON_PROPERTY_LOCATION_MESSAGE,
+  AppMessageInternalImpl.JSON_PROPERTY_MEDIA_MESSAGE,
+  AppMessageInternalImpl.JSON_PROPERTY_TEMPLATE_MESSAGE,
+  AppMessageInternalImpl.JSON_PROPERTY_TEXT_MESSAGE,
+  AppMessageInternalImpl.JSON_PROPERTY_LIST_MESSAGE,
+  AppMessageInternalImpl.JSON_PROPERTY_CONTACT_INFO_MESSAGE,
+  AppMessageInternalImpl.JSON_PROPERTY_EXPLICIT_CHANNEL_MESSAGE,
+  AppMessageInternalImpl.JSON_PROPERTY_EXPLICIT_CHANNEL_OMNI_MESSAGE,
+  AppMessageInternalImpl.JSON_PROPERTY_CHANNEL_SPECIFIC_MESSAGE,
+  AppMessageInternalImpl.JSON_PROPERTY_AGENT
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class AppMessageImpl implements AppMessage {
+public class AppMessageInternalImpl implements AppMessageInternal {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CARD_MESSAGE = "card_message";
@@ -85,9 +96,9 @@ public class AppMessageImpl implements AppMessage {
 
   private OptionalValue<Agent> agent;
 
-  public AppMessageImpl() {}
+  public AppMessageInternalImpl() {}
 
-  protected AppMessageImpl(
+  protected AppMessageInternalImpl(
       OptionalValue<CardMessage> cardMessage,
       OptionalValue<CarouselMessage> carouselMessage,
       OptionalValue<ChoiceMessage> choiceMessage,
@@ -268,7 +279,7 @@ public class AppMessageImpl implements AppMessage {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AppMessageImpl appMessage = (AppMessageImpl) o;
+    AppMessageInternalImpl appMessage = (AppMessageInternalImpl) o;
     return Objects.equals(this.cardMessage, appMessage.cardMessage)
         && Objects.equals(this.carouselMessage, appMessage.carouselMessage)
         && Objects.equals(this.choiceMessage, appMessage.choiceMessage)
@@ -305,7 +316,7 @@ public class AppMessageImpl implements AppMessage {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AppMessageImpl {\n");
+    sb.append("class AppMessageInternalImpl {\n");
     sb.append("    cardMessage: ").append(toIndentedString(cardMessage)).append("\n");
     sb.append("    carouselMessage: ").append(toIndentedString(carouselMessage)).append("\n");
     sb.append("    choiceMessage: ").append(toIndentedString(choiceMessage)).append("\n");
@@ -340,7 +351,7 @@ public class AppMessageImpl implements AppMessage {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements AppMessage.Builder {
+  static class Builder implements AppMessageInternal.Builder {
     OptionalValue<CardMessage> cardMessage = OptionalValue.empty();
     OptionalValue<CarouselMessage> carouselMessage = OptionalValue.empty();
     OptionalValue<ChoiceMessage> choiceMessage = OptionalValue.empty();
@@ -438,8 +449,8 @@ public class AppMessageImpl implements AppMessage {
       return this;
     }
 
-    public AppMessage build() {
-      return new AppMessageImpl(
+    public AppMessageInternal build() {
+      return new AppMessageInternalImpl(
           cardMessage,
           carouselMessage,
           choiceMessage,

@@ -54,7 +54,7 @@ public class SendMessageRequestImpl implements SendMessageRequest {
 
   public static final String JSON_PROPERTY_MESSAGE = "message";
 
-  private OptionalValue<AppMessage> message;
+  private OptionalValue<AppMessage<?>> message;
 
   public static final String JSON_PROPERTY_MESSAGE_METADATA = "message_metadata";
 
@@ -96,7 +96,7 @@ public class SendMessageRequestImpl implements SendMessageRequest {
       OptionalValue<String> callbackUrl,
       OptionalValue<List<ConversationChannel>> channelPriorityOrder,
       OptionalValue<Map<String, String>> channelProperties,
-      OptionalValue<AppMessage> message,
+      OptionalValue<AppMessage<?>> message,
       OptionalValue<String> messageMetadata,
       OptionalValue<Object> conversationMetadata,
       OptionalValue<MessageQueue> queue,
@@ -165,13 +165,13 @@ public class SendMessageRequestImpl implements SendMessageRequest {
   }
 
   @JsonIgnore
-  public AppMessage getMessage() {
+  public AppMessage<?> getMessage() {
     return message.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<AppMessage> message() {
+  public OptionalValue<AppMessage<?>> message() {
     return message;
   }
 
@@ -351,7 +351,7 @@ public class SendMessageRequestImpl implements SendMessageRequest {
     OptionalValue<String> callbackUrl = OptionalValue.empty();
     OptionalValue<List<ConversationChannel>> channelPriorityOrder = OptionalValue.empty();
     OptionalValue<Map<String, String>> channelProperties = OptionalValue.empty();
-    OptionalValue<AppMessage> message = OptionalValue.empty();
+    OptionalValue<AppMessage<?>> message = OptionalValue.empty();
     OptionalValue<String> messageMetadata = OptionalValue.empty();
     OptionalValue<Object> conversationMetadata = OptionalValue.empty();
     OptionalValue<MessageQueue> queue = OptionalValue.empty();
@@ -387,7 +387,7 @@ public class SendMessageRequestImpl implements SendMessageRequest {
     }
 
     @JsonProperty(JSON_PROPERTY_MESSAGE)
-    public Builder setMessage(AppMessage message) {
+    public Builder setMessage(AppMessage<?> message) {
       this.message = OptionalValue.of(message);
       return this;
     }
