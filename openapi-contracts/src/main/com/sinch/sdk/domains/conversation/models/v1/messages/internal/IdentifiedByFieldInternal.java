@@ -10,21 +10,21 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1;
+package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.util.List;
+import com.sinch.sdk.domains.conversation.models.v1.IdentifiedBy;
 
-/** The identity as specified by the channel. */
-@JsonDeserialize(builder = IdentifiedByImpl.Builder.class)
-public interface IdentifiedBy extends com.sinch.sdk.domains.conversation.models.v1.Recipient {
+/** declaration */
+@JsonDeserialize(builder = IdentifiedByFieldInternalImpl.Builder.class)
+public interface IdentifiedByFieldInternal {
 
   /**
-   * Get channelIdentities
+   * Get identifiedBy
    *
-   * @return channelIdentities
+   * @return identifiedBy
    */
-  List<ChannelRecipientIdentity> getChannelIdentities();
+  IdentifiedBy getIdentifiedBy();
 
   /**
    * Getting builder
@@ -32,7 +32,7 @@ public interface IdentifiedBy extends com.sinch.sdk.domains.conversation.models.
    * @return New Builder instance
    */
   static Builder builder() {
-    return new IdentifiedByImpl.Builder();
+    return new IdentifiedByFieldInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -41,17 +41,17 @@ public interface IdentifiedBy extends com.sinch.sdk.domains.conversation.models.
     /**
      * see getter
      *
-     * @param channelIdentities see getter
+     * @param identifiedBy see getter
      * @return Current builder
-     * @see #getChannelIdentities
+     * @see #getIdentifiedBy
      */
-    Builder setChannelIdentities(List<ChannelRecipientIdentity> channelIdentities);
+    Builder setIdentifiedBy(IdentifiedBy identifiedBy);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    IdentifiedBy build();
+    IdentifiedByFieldInternal build();
   }
 }

@@ -3,7 +3,6 @@ package com.sinch.sdk.domains.conversation.models.v1.contact.request;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.IdentifiedBy;
-import com.sinch.sdk.domains.conversation.models.v1.Recipient;
 import java.util.List;
 
 public class ContactGetChannelProfileByChannelIdentityRequest extends GetChannelProfileRequestImpl {
@@ -14,10 +13,7 @@ public class ContactGetChannelProfileByChannelIdentityRequest extends GetChannel
       List<ChannelRecipientIdentity> identities) {
     super(
         OptionalValue.of(appId),
-        OptionalValue.of(
-            Recipient.builder()
-                .setIdentifiedBy(IdentifiedBy.builder().setChannelIdentities(identities).build())
-                .build()),
+        OptionalValue.of(IdentifiedBy.builder().setChannelIdentities(identities).build()),
         OptionalValue.of(channel));
   }
 

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.domains.conversation.adapters.messages.SendMessageRequestMapper;
 import com.sinch.sdk.domains.conversation.models.v1.AgentDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.ContactId;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.Recipient;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppCardMessage;
@@ -74,7 +75,7 @@ public class SendMessageDtoTest extends BaseTest {
   private static final SendMessageRequest.Builder commonBuilder =
       SendMessageRequest.builder()
           .setAppId("my app ID")
-          .setRecipient(Recipient.builder().setContactId("my contact ID").build())
+          .setRecipient(ContactId.builder().setContactId("my contact ID").build())
           .setCallbackUrl("callback URL value")
           .setChannelPriorityOrder(Collections.singletonList(ConversationChannel.LINE))
           .setChannelProperties(createChannelProperties())
