@@ -1,7 +1,7 @@
 package com.sinch.sdk.domains.conversation.models.v1.contact.request;
 
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.conversation.models.v1.Recipient;
+import com.sinch.sdk.domains.conversation.models.v1.ContactId;
 
 public class ContactGetChannelProfileByContactIdRequest extends GetChannelProfileRequestImpl {
 
@@ -9,7 +9,7 @@ public class ContactGetChannelProfileByContactIdRequest extends GetChannelProfil
       String appId, GetChannelProfileConversationChannel channel, String contactId) {
     super(
         OptionalValue.of(appId),
-        OptionalValue.of(Recipient.builder().setContactId(contactId).build()),
+        OptionalValue.of(ContactId.builder().setContactId(contactId).build()),
         OptionalValue.of(channel));
   }
 

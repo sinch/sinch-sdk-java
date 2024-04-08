@@ -13,7 +13,8 @@ import java.util.Objects;
 @JsonPropertyOrder({IdentifiedByImpl.JSON_PROPERTY_CHANNEL_IDENTITIES})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class IdentifiedByImpl implements IdentifiedBy {
+public class IdentifiedByImpl
+    implements IdentifiedBy, com.sinch.sdk.domains.conversation.models.v1.Recipient {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CHANNEL_IDENTITIES = "channel_identities";

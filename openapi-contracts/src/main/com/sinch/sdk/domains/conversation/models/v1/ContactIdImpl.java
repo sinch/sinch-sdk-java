@@ -9,29 +9,21 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
-@JsonPropertyOrder({
-  RecipientImpl.JSON_PROPERTY_CONTACT_ID,
-  RecipientImpl.JSON_PROPERTY_IDENTIFIED_BY
-})
+@JsonPropertyOrder({ContactIdImpl.JSON_PROPERTY_CONTACT_ID})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class RecipientImpl implements Recipient {
+public class ContactIdImpl
+    implements ContactId, com.sinch.sdk.domains.conversation.models.v1.Recipient {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CONTACT_ID = "contact_id";
 
   private OptionalValue<String> contactId;
 
-  public static final String JSON_PROPERTY_IDENTIFIED_BY = "identified_by";
+  public ContactIdImpl() {}
 
-  private OptionalValue<IdentifiedBy> identifiedBy;
-
-  public RecipientImpl() {}
-
-  protected RecipientImpl(
-      OptionalValue<String> contactId, OptionalValue<IdentifiedBy> identifiedBy) {
+  protected ContactIdImpl(OptionalValue<String> contactId) {
     this.contactId = contactId;
-    this.identifiedBy = identifiedBy;
   }
 
   @JsonIgnore
@@ -45,18 +37,7 @@ public class RecipientImpl implements Recipient {
     return contactId;
   }
 
-  @JsonIgnore
-  public IdentifiedBy getIdentifiedBy() {
-    return identifiedBy.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_IDENTIFIED_BY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<IdentifiedBy> identifiedBy() {
-    return identifiedBy;
-  }
-
-  /** Return true if this Recipient object is equal to o. */
+  /** Return true if this ContactIDField object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -65,22 +46,20 @@ public class RecipientImpl implements Recipient {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    RecipientImpl recipient = (RecipientImpl) o;
-    return Objects.equals(this.contactId, recipient.contactId)
-        && Objects.equals(this.identifiedBy, recipient.identifiedBy);
+    ContactIdImpl contactIDField = (ContactIdImpl) o;
+    return Objects.equals(this.contactId, contactIDField.contactId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(contactId, identifiedBy);
+    return Objects.hash(contactId);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class RecipientImpl {\n");
+    sb.append("class ContactIdImpl {\n");
     sb.append("    contactId: ").append(toIndentedString(contactId)).append("\n");
-    sb.append("    identifiedBy: ").append(toIndentedString(identifiedBy)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -96,9 +75,8 @@ public class RecipientImpl implements Recipient {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements Recipient.Builder {
+  static class Builder implements ContactId.Builder {
     OptionalValue<String> contactId = OptionalValue.empty();
-    OptionalValue<IdentifiedBy> identifiedBy = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CONTACT_ID)
     public Builder setContactId(String contactId) {
@@ -106,14 +84,8 @@ public class RecipientImpl implements Recipient {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_IDENTIFIED_BY)
-    public Builder setIdentifiedBy(IdentifiedBy identifiedBy) {
-      this.identifiedBy = OptionalValue.of(identifiedBy);
-      return this;
-    }
-
-    public Recipient build() {
-      return new RecipientImpl(contactId, identifiedBy);
+    public ContactId build() {
+      return new ContactIdImpl(contactId);
     }
   }
 }

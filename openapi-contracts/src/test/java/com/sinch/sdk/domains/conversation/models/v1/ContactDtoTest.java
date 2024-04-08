@@ -4,7 +4,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.domains.conversation.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.Contact;
 import com.sinch.sdk.domains.conversation.models.v1.contact.ContactLanguage;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactCreateRequest;
@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-public class ContactDtoTest extends BaseTest {
+public class ContactDtoTest extends ConversationBaseTest {
 
   public static Contact updateContactRequestDto =
       Contact.builder()
@@ -111,23 +111,20 @@ public class ContactDtoTest extends BaseTest {
           .setAppId("an app id")
           .setChannel(GetChannelProfileConversationChannel.MESSENGER)
           .setRecipient(
-              Recipient.builder()
-                  .setIdentifiedBy(
-                      IdentifiedBy.builder()
-                          .setChannelIdentities(
-                              Collections.singletonList(
-                                  ChannelRecipientIdentity.builder()
-                                      .setChannel(ConversationChannel.MESSENGER)
-                                      .setIdentity("an identity")
-                                      .build()))
-                          .build())
+              IdentifiedBy.builder()
+                  .setChannelIdentities(
+                      Collections.singletonList(
+                          ChannelRecipientIdentity.builder()
+                              .setChannel(ConversationChannel.MESSENGER)
+                              .setIdentity("an identity")
+                              .build()))
                   .build())
           .build();
   public static GetChannelProfileRequest contactGetChannelProfileByContactRequestDto =
       GetChannelProfileRequest.builder()
           .setAppId("an app id")
           .setChannel(GetChannelProfileConversationChannel.MESSENGER)
-          .setRecipient(Recipient.builder().setContactId("a contact ID").build())
+          .setRecipient(ContactId.builder().setContactId("a contact ID").build())
           .build();
   public static GetChannelProfileResponse expectedChannelProfileResponseDto =
       GetChannelProfileResponse.builder().setProfileName("a profile name").build();

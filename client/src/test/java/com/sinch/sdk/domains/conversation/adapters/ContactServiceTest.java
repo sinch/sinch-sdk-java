@@ -13,6 +13,8 @@ import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.domains.conversation.api.v1.ContactApi;
 import com.sinch.sdk.domains.conversation.models.v1.ContactDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.ContactId;
+import com.sinch.sdk.domains.conversation.models.v1.IdentifiedBy;
 import com.sinch.sdk.domains.conversation.models.v1.contact.Contact;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactGetChannelProfileByChannelIdentityRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactGetChannelProfileByContactIdRequest;
@@ -131,14 +133,13 @@ class ContactServiceTest extends BaseTest {
     when(api.contactGetChannelProfile(eq(uriPartID), any()))
         .thenReturn(ContactDtoTest.expectedChannelProfileResponseDto);
 
+    ContactId contactId =
+        (ContactId) ContactDtoTest.contactGetChannelProfileByContactRequestDto.getRecipient();
     String response =
         service.getChannelProfileByContactId(
             ContactGetChannelProfileByContactIdRequest.builder()
                 .setChannel(ContactDtoTest.contactGetChannelProfileByContactRequestDto.getChannel())
-                .setContactId(
-                    ContactDtoTest.contactGetChannelProfileByContactRequestDto
-                        .getRecipient()
-                        .getContactId())
+                .setContactId(contactId.getContactId())
                 .setAppId(ContactDtoTest.contactGetChannelProfileByContactRequestDto.getAppId())
                 .build());
 
@@ -152,14 +153,12 @@ class ContactServiceTest extends BaseTest {
     when(api.contactGetChannelProfile(eq(uriPartID), any()))
         .thenReturn(ContactDtoTest.expectedChannelProfileResponseDto);
 
+    IdentifiedBy identifiedBy =
+        (IdentifiedBy) ContactDtoTest.contactGetChannelProfileByChannelRequestDto.getRecipient();
     String response =
         service.getChannelProfileByChannelIdentity(
             ContactGetChannelProfileByChannelIdentityRequest.builder()
-                .setChannelIdentities(
-                    ContactDtoTest.contactGetChannelProfileByChannelRequestDto
-                        .getRecipient()
-                        .getIdentifiedBy()
-                        .getChannelIdentities())
+                .setChannelIdentities(identifiedBy.getChannelIdentities())
                 .setChannel(ContactDtoTest.contactGetChannelProfileByChannelRequestDto.getChannel())
                 .setAppId(ContactDtoTest.contactGetChannelProfileByChannelRequestDto.getAppId())
                 .build());

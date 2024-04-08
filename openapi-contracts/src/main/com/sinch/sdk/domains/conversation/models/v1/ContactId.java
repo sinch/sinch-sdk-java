@@ -14,9 +14,9 @@ package com.sinch.sdk.domains.conversation.models.v1;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** Identifies the recipient of the message. */
-@JsonDeserialize(builder = RecipientImpl.Builder.class)
-public interface Recipient {
+/** declaration */
+@JsonDeserialize(builder = ContactIdImpl.Builder.class)
+public interface ContactId extends com.sinch.sdk.domains.conversation.models.v1.Recipient {
 
   /**
    * The ID of the contact.
@@ -26,19 +26,12 @@ public interface Recipient {
   String getContactId();
 
   /**
-   * Get identifiedBy
-   *
-   * @return identifiedBy
-   */
-  IdentifiedBy getIdentifiedBy();
-
-  /**
    * Getting builder
    *
    * @return New Builder instance
    */
   static Builder builder() {
-    return new RecipientImpl.Builder();
+    return new ContactIdImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -54,19 +47,10 @@ public interface Recipient {
     Builder setContactId(String contactId);
 
     /**
-     * see getter
-     *
-     * @param identifiedBy see getter
-     * @return Current builder
-     * @see #getIdentifiedBy
-     */
-    Builder setIdentifiedBy(IdentifiedBy identifiedBy);
-
-    /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    Recipient build();
+    ContactId build();
   }
 }
