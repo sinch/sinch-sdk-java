@@ -1,21 +1,22 @@
-package com.sinch.sdk.domains.conversation.models.v1.messages;
+package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.domains.conversation.adapters.ConversationBaseTest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessageDtoTest;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-public class TextMessageDtoTest extends ConversationBaseTest {
+public class TextMessageFieldInternalDtoTest extends ConversationBaseTest {
 
-  public static TextMessage textMessageDto =
-      TextMessage.builder().setText("This is a text message.").build();
+  public static TextMessageFieldInternal textMessageDto =
+      TextMessageFieldInternal.builder().setTextMessage(TextMessageDtoTest.textMessageDto).build();
 
-  @GivenTextResource("/domains/conversation/v1/messages/TextMessageDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/internal/TextMessageFieldInternalDto.json")
   String jsonUrlMessageDto;
 
   @Test
@@ -27,7 +28,7 @@ public class TextMessageDtoTest extends ConversationBaseTest {
 
   @Test
   void deserializeMessageDto() throws JsonProcessingException {
-    Object deserialized = objectMapper.readValue(jsonUrlMessageDto, TextMessage.class);
+    Object deserialized = objectMapper.readValue(jsonUrlMessageDto, textMessageDto.getClass());
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(textMessageDto);
   }
