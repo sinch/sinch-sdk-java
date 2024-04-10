@@ -1,26 +1,25 @@
-package com.sinch.sdk.domains.conversation.models.v1.messages;
+package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.domains.conversation.adapters.ConversationBaseTest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.LocationMessageDtoTest;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-public class LocationMessageDtoTest extends ConversationBaseTest {
+public class LocationMessageFieldInternalDtoTest extends ConversationBaseTest {
 
-  public static LocationMessage locationMessageDto =
-      LocationMessage.builder()
-          .setCoordinates(
-              Coordinates.builder().setLatitude(47.627980F).setLongitude(-2.822915F).build())
-          .setTitle("title value")
-          .setLabel("label value")
+  public static LocationMessageFieldInternal locationMessageDto =
+      LocationMessageFieldInternal.builder()
+          .setLocationMessage(LocationMessageDtoTest.locationMessageDto)
           .build();
 
-  @GivenTextResource("/domains/conversation/v1/messages/LocationMessageDto.json")
+  @GivenTextResource(
+      "/domains/conversation/v1/messages/internal/LocationMessageFieldInternalDto.json")
   String jsonLocationMessageDto;
 
   @Test
@@ -32,7 +31,8 @@ public class LocationMessageDtoTest extends ConversationBaseTest {
 
   @Test
   void deserializeMessageDto() throws JsonProcessingException {
-    Object deserialized = objectMapper.readValue(jsonLocationMessageDto, LocationMessage.class);
+    Object deserialized =
+        objectMapper.readValue(jsonLocationMessageDto, locationMessageDto.getClass());
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(locationMessageDto);
   }
