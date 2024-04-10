@@ -12,7 +12,9 @@ import java.util.Objects;
 @JsonPropertyOrder({TextMessageImpl.JSON_PROPERTY_TEXT})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class TextMessageImpl implements TextMessage {
+public class TextMessageImpl
+    implements TextMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverrideMessage {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_TEXT = "text";

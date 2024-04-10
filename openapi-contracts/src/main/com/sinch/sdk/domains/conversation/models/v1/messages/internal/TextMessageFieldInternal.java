@@ -10,21 +10,21 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.messages;
+package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessage;
 
-/** declaration */
-@JsonDeserialize(builder = TextMessageImpl.Builder.class)
-public interface TextMessage
-    extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverrideMessage {
+/** A message containing only text. */
+@JsonDeserialize(builder = TextMessageFieldInternalImpl.Builder.class)
+public interface TextMessageFieldInternal {
 
   /**
-   * The text to be sent.
+   * Get textMessage
    *
-   * @return text
+   * @return textMessage
    */
-  String getText();
+  TextMessage getTextMessage();
 
   /**
    * Getting builder
@@ -32,7 +32,7 @@ public interface TextMessage
    * @return New Builder instance
    */
   static Builder builder() {
-    return new TextMessageImpl.Builder();
+    return new TextMessageFieldInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -41,17 +41,17 @@ public interface TextMessage
     /**
      * see getter
      *
-     * @param text see getter
+     * @param textMessage see getter
      * @return Current builder
-     * @see #getText
+     * @see #getTextMessage
      */
-    Builder setText(String text);
+    Builder setTextMessage(TextMessage textMessage);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    TextMessage build();
+    TextMessageFieldInternal build();
   }
 }
