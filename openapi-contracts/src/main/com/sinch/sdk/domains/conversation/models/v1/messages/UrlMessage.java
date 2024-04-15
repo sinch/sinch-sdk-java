@@ -15,8 +15,8 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /** declaration */
-@JsonDeserialize(builder = URLMessageImpl.Builder.class)
-public interface URLMessage {
+@JsonDeserialize(builder = UrlMessageImpl.Builder.class)
+public interface UrlMessage {
 
   /**
    * The title shown close to the URL. The title can be clickable in some cases.
@@ -38,7 +38,7 @@ public interface URLMessage {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new URLMessageImpl.Builder();
+    return new UrlMessageImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -67,6 +67,6 @@ public interface URLMessage {
      *
      * @return The instance build with current builder values
      */
-    URLMessage build();
+    UrlMessage build();
   }
 }

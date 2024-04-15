@@ -9,10 +9,10 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
-@JsonPropertyOrder({URLMessageImpl.JSON_PROPERTY_TITLE, URLMessageImpl.JSON_PROPERTY_URL})
+@JsonPropertyOrder({UrlMessageImpl.JSON_PROPERTY_TITLE, UrlMessageImpl.JSON_PROPERTY_URL})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class URLMessageImpl implements URLMessage {
+public class UrlMessageImpl implements UrlMessage {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_TITLE = "title";
@@ -23,9 +23,9 @@ public class URLMessageImpl implements URLMessage {
 
   private OptionalValue<String> url;
 
-  public URLMessageImpl() {}
+  public UrlMessageImpl() {}
 
-  protected URLMessageImpl(OptionalValue<String> title, OptionalValue<String> url) {
+  protected UrlMessageImpl(OptionalValue<String> title, OptionalValue<String> url) {
     this.title = title;
     this.url = url;
   }
@@ -61,7 +61,7 @@ public class URLMessageImpl implements URLMessage {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    URLMessageImpl urLMessage = (URLMessageImpl) o;
+    UrlMessageImpl urLMessage = (UrlMessageImpl) o;
     return Objects.equals(this.title, urLMessage.title) && Objects.equals(this.url, urLMessage.url);
   }
 
@@ -73,7 +73,7 @@ public class URLMessageImpl implements URLMessage {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class URLMessageImpl {\n");
+    sb.append("class UrlMessageImpl {\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    url: ").append(toIndentedString(url)).append("\n");
     sb.append("}");
@@ -91,7 +91,7 @@ public class URLMessageImpl implements URLMessage {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements URLMessage.Builder {
+  static class Builder implements UrlMessage.Builder {
     OptionalValue<String> title = OptionalValue.empty();
     OptionalValue<String> url = OptionalValue.empty();
 
@@ -107,8 +107,8 @@ public class URLMessageImpl implements URLMessage {
       return this;
     }
 
-    public URLMessage build() {
-      return new URLMessageImpl(title, url);
+    public UrlMessage build() {
+      return new UrlMessageImpl(title, url);
     }
   }
 }
