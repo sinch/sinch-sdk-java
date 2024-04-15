@@ -10,13 +10,14 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1;
+package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /** A message component for interactive messages, containing a product. */
 @JsonDeserialize(builder = ProductItemImpl.Builder.class)
-public interface ProductItem {
+public interface ProductItem
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.ListItem {
 
   /**
    * Required parameter. The ID for the product.
