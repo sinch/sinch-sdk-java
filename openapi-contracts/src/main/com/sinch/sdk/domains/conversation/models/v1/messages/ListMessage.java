@@ -38,7 +38,7 @@ public interface ListMessage {
    *
    * @return sections
    */
-  List<ListSection> getSections();
+  List<ListSection<?>> getSections();
 
   /**
    * Get messageProperties
@@ -84,7 +84,7 @@ public interface ListMessage {
      * @return Current builder
      * @see #getSections
      */
-    Builder setSections(List<ListSection> sections);
+    Builder setSections(List<ListSection<?>> sections);
 
     /**
      * see getter

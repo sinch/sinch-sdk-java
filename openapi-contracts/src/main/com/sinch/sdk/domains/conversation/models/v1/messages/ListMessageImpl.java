@@ -31,7 +31,7 @@ public class ListMessageImpl implements ListMessage {
 
   public static final String JSON_PROPERTY_SECTIONS = "sections";
 
-  private OptionalValue<List<ListSection>> sections;
+  private OptionalValue<List<ListSection<?>>> sections;
 
   public static final String JSON_PROPERTY_MESSAGE_PROPERTIES = "message_properties";
 
@@ -42,7 +42,7 @@ public class ListMessageImpl implements ListMessage {
   protected ListMessageImpl(
       OptionalValue<String> title,
       OptionalValue<String> description,
-      OptionalValue<List<ListSection>> sections,
+      OptionalValue<List<ListSection<?>>> sections,
       OptionalValue<ListMessageMessageProperties> messageProperties) {
     this.title = title;
     this.description = description;
@@ -73,13 +73,13 @@ public class ListMessageImpl implements ListMessage {
   }
 
   @JsonIgnore
-  public List<ListSection> getSections() {
+  public List<ListSection<?>> getSections() {
     return sections.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_SECTIONS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<List<ListSection>> sections() {
+  public OptionalValue<List<ListSection<?>>> sections() {
     return sections;
   }
 
@@ -141,7 +141,7 @@ public class ListMessageImpl implements ListMessage {
   static class Builder implements ListMessage.Builder {
     OptionalValue<String> title = OptionalValue.empty();
     OptionalValue<String> description = OptionalValue.empty();
-    OptionalValue<List<ListSection>> sections = OptionalValue.empty();
+    OptionalValue<List<ListSection<?>>> sections = OptionalValue.empty();
     OptionalValue<ListMessageMessageProperties> messageProperties = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_TITLE)
@@ -157,7 +157,7 @@ public class ListMessageImpl implements ListMessage {
     }
 
     @JsonProperty(JSON_PROPERTY_SECTIONS)
-    public Builder setSections(List<ListSection> sections) {
+    public Builder setSections(List<ListSection<?>> sections) {
       this.sections = OptionalValue.of(sections);
       return this;
     }

@@ -17,7 +17,7 @@ import java.util.List;
 
 /** Section for interactive WhatsApp messages containing ListItem */
 @JsonDeserialize(builder = ListSectionImpl.Builder.class)
-public interface ListSection {
+public interface ListSection<T> {
 
   /**
    * Optional parameter. Title for list section.
@@ -31,19 +31,19 @@ public interface ListSection {
    *
    * @return items
    */
-  List<ListItem> getItems();
+  List<ListItem<T>> getItems();
 
   /**
    * Getting builder
    *
    * @return New Builder instance
    */
-  static Builder builder() {
-    return new ListSectionImpl.Builder();
+  static <T> Builder<T> builder() {
+    return new ListSectionImpl.Builder<>();
   }
 
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder<T> {
 
     /**
      * see getter
@@ -52,7 +52,7 @@ public interface ListSection {
      * @return Current builder
      * @see #getTitle
      */
-    Builder setTitle(String title);
+    Builder<T> setTitle(String title);
 
     /**
      * see getter
@@ -61,13 +61,13 @@ public interface ListSection {
      * @return Current builder
      * @see #getItems
      */
-    Builder setItems(List<ListItem> items);
+    Builder<T> setItems(List<ListItem<T>> items);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    ListSection build();
+    ListSection<T> build();
   }
 }

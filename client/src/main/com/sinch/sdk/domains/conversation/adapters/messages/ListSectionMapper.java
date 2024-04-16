@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @JsonFilter("uninitializedFilter")
-public class ListSectionMapper extends ListSectionImpl {
+public class ListSectionMapper<T> extends ListSectionImpl<T> {
 
   private static final Logger LOGGER = Logger.getLogger(ListSectionMapper.class.getName());
 
@@ -33,11 +33,11 @@ public class ListSectionMapper extends ListSectionImpl {
 
   @Override
   @JsonSerialize(using = ListSectionSerializer.class)
-  public OptionalValue<List<ListItem>> items() {
+  public OptionalValue<List<ListItem<T>>> items() {
     return super.items();
   }
 
-  static class ListSectionSerializer extends JsonSerializer<OptionalValue<List<ListItem>>> {
+  static class ListSectionSerializer<T> extends JsonSerializer<OptionalValue<List<ListItem<T>>>> {
 
     public ListSectionSerializer() {
       super();
@@ -45,7 +45,7 @@ public class ListSectionMapper extends ListSectionImpl {
 
     @Override
     public void serialize(
-        OptionalValue<List<ListItem>> optional, JsonGenerator jgen, SerializerProvider provider)
+        OptionalValue<List<ListItem<T>>> optional, JsonGenerator jgen, SerializerProvider provider)
         throws IOException {
 
       if (!optional.isPresent()) {
@@ -53,7 +53,7 @@ public class ListSectionMapper extends ListSectionImpl {
       }
 
       jgen.writeStartArray();
-      for (ListItem item : optional.get()) {
+      for (ListItem<?> item : optional.get()) {
         ListItemOneOfInternalImpl internal = new ListItemOneOfInternalImpl();
 
         if (item instanceof ChoiceItem) {

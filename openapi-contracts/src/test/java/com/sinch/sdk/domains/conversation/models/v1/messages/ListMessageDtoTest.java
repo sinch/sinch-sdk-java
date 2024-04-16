@@ -13,7 +13,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class ListMessageDtoTest extends ConversationBaseTest {
 
-  public static ListItem itemChoice =
+  public static ListItem<ChoiceItem> itemChoice =
       ChoiceItem.builder()
           .setTitle("choice title")
           .setDescription("description value")
@@ -21,7 +21,7 @@ public class ListMessageDtoTest extends ConversationBaseTest {
           .setPostbackData("postback value")
           .build();
 
-  public static ListItem itemProduct =
+  public static ListItem<ProductItem> itemProduct =
       ProductItem.builder()
           .setId("product ID value")
           .setMarketplace("marketplace value")
@@ -40,7 +40,7 @@ public class ListMessageDtoTest extends ConversationBaseTest {
                   .build())
           .setSections(
               Collections.singletonList(
-                  ListSection.builder()
+                  ListSection.<ChoiceItem>builder()
                       .setTitle("a list section title value")
                       .setItems(Arrays.asList(itemChoice))
                       .build()))
@@ -57,7 +57,7 @@ public class ListMessageDtoTest extends ConversationBaseTest {
                   .build())
           .setSections(
               Collections.singletonList(
-                  ListSection.builder()
+                  ListSection.<ProductItem>builder()
                       .setTitle("a list section title value")
                       .setItems(Arrays.asList(itemProduct))
                       .build()))
