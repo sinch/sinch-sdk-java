@@ -5,7 +5,6 @@
       "title": "a list section title value",
       "items": [
         {
-          "item": {
             "choice": {
               "title": "choice title",
               "description": "description value",
@@ -18,7 +17,6 @@
               },
               "postback_data": "postback value"
             }
-          }
         }
       ]
     }

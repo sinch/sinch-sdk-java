@@ -48,7 +48,7 @@ public class ListSectionImpl implements ListSection {
   }
 
   @JsonProperty(JSON_PROPERTY_ITEMS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<List<ListItem>> items() {
     return items;
   }

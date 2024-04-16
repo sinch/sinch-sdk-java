@@ -5,7 +5,6 @@
       "title": "a list section title value",
       "items": [
         {
-          "item": {
             "product": {
               "id": "product ID value",
               "marketplace": "marketplace value",
@@ -14,7 +13,7 @@
               "currency": "currency value"
             }
           }
-        }
+
       ]
     }
   ],

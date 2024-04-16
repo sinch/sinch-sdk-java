@@ -3,8 +3,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.sinch.sdk.BaseTest;
-import com.sinch.sdk.domains.conversation.models.v1.ProductItem;
+import com.sinch.sdk.domains.conversation.adapters.ConversationBaseTest;
 import java.util.Arrays;
 import java.util.Collections;
 import org.json.JSONException;
@@ -12,38 +11,23 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-public class ListMessageDtoTest extends BaseTest {
+public class ListMessageDtoTest extends ConversationBaseTest {
 
-  static ListItem itemChoice =
-      ListItem.builder()
-          .setItem(
-              ListItemItem.builder()
-                  .setChoice(
-                      ListItemChoice.builder()
-                          .setTitle("choice title")
-                          .setDescription("description value")
-                          .setMedia(
-                              ListItemMediaMessage.builder()
-                                  .setMediaMessage(MediaMessageDtoTest.mediaMessageDto)
-                                  .build())
-                          .setPostbackData("postback value")
-                          .build())
-                  .build())
+  public static ListItem itemChoice =
+      ChoiceItem.builder()
+          .setTitle("choice title")
+          .setDescription("description value")
+          .setMedia(MediaMessageDtoTest.mediaMessageDto)
+          .setPostbackData("postback value")
           .build();
 
-  static ListItem itemProduct =
-      ListItem.builder()
-          .setItem(
-              ListItemItem.builder()
-                  .setProduct(
-                      ProductItem.builder()
-                          .setId("product ID value")
-                          .setMarketplace("marketplace value")
-                          .setQuantity(4)
-                          .setItemPrice(3.14159F)
-                          .setCurrency("currency value")
-                          .build())
-                  .build())
+  public static ListItem itemProduct =
+      ProductItem.builder()
+          .setId("product ID value")
+          .setMarketplace("marketplace value")
+          .setQuantity(4)
+          .setItemPrice(3.14159F)
+          .setCurrency("currency value")
           .build();
   public static ListMessage listMessageChoiceDto =
       ListMessage.builder()

@@ -10,21 +10,14 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.messages;
+package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.conversation.models.v1.ProductItem;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ProductItem;
 
-/** Item information */
-@JsonDeserialize(builder = ListItemItemImpl.Builder.class)
-public interface ListItemItem {
-
-  /**
-   * Get choice
-   *
-   * @return choice
-   */
-  ListItemChoice getChoice();
+/** declaration */
+@JsonDeserialize(builder = ListItemOneOfProductInternalImpl.Builder.class)
+public interface ListItemOneOfProductInternal {
 
   /**
    * Get product
@@ -39,20 +32,11 @@ public interface ListItemItem {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ListItemItemImpl.Builder();
+    return new ListItemOneOfProductInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
   interface Builder {
-
-    /**
-     * see getter
-     *
-     * @param choice see getter
-     * @return Current builder
-     * @see #getChoice
-     */
-    Builder setChoice(ListItemChoice choice);
 
     /**
      * see getter
@@ -68,6 +52,6 @@ public interface ListItemItem {
      *
      * @return The instance build with current builder values
      */
-    ListItemItem build();
+    ListItemOneOfProductInternal build();
   }
 }
