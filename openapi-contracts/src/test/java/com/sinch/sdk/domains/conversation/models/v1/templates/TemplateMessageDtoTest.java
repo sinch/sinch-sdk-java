@@ -1,19 +1,20 @@
-package com.sinch.sdk.domains.conversation.models.v1.messages;
+package com.sinch.sdk.domains.conversation.models.v1.templates;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.domains.conversation.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-public class TemplateMessageDtoTest extends BaseTest {
+public class TemplateMessageDtoTest extends ConversationBaseTest {
 
   private static final Map<ConversationChannel, TemplateReference> channelTemplate =
       createChannelTemplate();
@@ -23,9 +24,6 @@ public class TemplateMessageDtoTest extends BaseTest {
           .setChannelTemplate(channelTemplate)
           .setOmniTemplate(omniTemplate)
           .build();
-
-  @GivenTextResource("/domains/conversation/v1/messages/TemplateMessageDto.json")
-  String jsonTemplateMessageDto;
 
   private static Map<ConversationChannel, TemplateReference> createChannelTemplate() {
     Map<ConversationChannel, TemplateReference> map = new HashMap<>();
@@ -53,10 +51,20 @@ public class TemplateMessageDtoTest extends BaseTest {
         .build();
   }
 
+  @GivenTextResource("/domains/conversation/v1/templates/TemplateMessageDto.json")
+  String jsonTemplateMessageDto;
+
   @Test
   void serializeMessageDto() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(templateMessageDto);
 
     JSONAssert.assertEquals(jsonTemplateMessageDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeMessageDto() throws JsonProcessingException {
+    Object deserialized = objectMapper.readValue(jsonTemplateMessageDto, TemplateMessage.class);
+
+    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(templateMessageDto);
   }
 }
