@@ -2,9 +2,14 @@ package com.sinch.sdk.domains.conversation.adapters.messages;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.databind.Mapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ChoiceItem;
@@ -28,7 +33,11 @@ public class ListSectionMapper<T> extends ListSectionImpl<T> {
   }
 
   public static void initMapper() {
-    Mapper.getInstance().addMixIn(ListSectionImpl.class, ListSectionMapper.class);
+    SimpleModule module = new SimpleModule();
+    module.addDeserializer(ListItem.class, new ListSectionDeserializer());
+    Mapper.getInstance()
+        .addMixIn(ListSectionImpl.class, ListSectionMapper.class)
+        .registerModule(module);
   }
 
   @Override
@@ -68,6 +77,35 @@ public class ListSectionMapper<T> extends ListSectionImpl<T> {
         jgen.writeObject(internal);
       }
       jgen.writeEndArray();
+    }
+  }
+
+  static final class ListSectionDeserializer extends StdDeserializer<ListItem> {
+
+    private static final long serialVersionUID = 1L;
+
+    public ListSectionDeserializer() {
+      this(ListItem.class);
+    }
+
+    public ListSectionDeserializer(Class<?> vc) {
+      super(vc);
+    }
+
+    @Override
+    public ListItem<?> deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+
+      JsonNode tree = jp.readValueAsTree();
+
+      JsonNode element = tree.get("choice");
+      if (null != element) {
+        return element.traverse(jp.getCodec()).readValueAs(ChoiceItem.class);
+      }
+      element = tree.get("product");
+      if (null != element) {
+        return element.traverse(jp.getCodec()).readValueAs(ProductItem.class);
+      }
+      return null;
     }
   }
 }

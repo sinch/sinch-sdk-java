@@ -4,8 +4,8 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.domains.conversation.adapters.ConversationBaseTest;
-import java.util.Arrays;
 import java.util.Collections;
+import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -42,7 +42,7 @@ public class ListMessageDtoTest extends ConversationBaseTest {
               Collections.singletonList(
                   ListSection.<ChoiceItem>builder()
                       .setTitle("a list section title value")
-                      .setItems(Arrays.asList(itemChoice))
+                      .setItems(Collections.singletonList(itemChoice))
                       .build()))
           .build();
 
@@ -59,7 +59,7 @@ public class ListMessageDtoTest extends ConversationBaseTest {
               Collections.singletonList(
                   ListSection.<ProductItem>builder()
                       .setTitle("a list section title value")
-                      .setItems(Arrays.asList(itemProduct))
+                      .setItems(Collections.singletonList(itemProduct))
                       .build()))
           .build();
 
@@ -77,9 +77,23 @@ public class ListMessageDtoTest extends ConversationBaseTest {
   }
 
   @Test
+  void deserializeMessageChoiceDto() throws JsonProcessingException {
+    Object deserialized = objectMapper.readValue(jsonListMessageChoiceDto, ListMessage.class);
+
+    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(listMessageChoiceDto);
+  }
+
+  @Test
   void serializeMessageProductDto() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(listMessageProductDto);
 
     JSONAssert.assertEquals(jsonListMessageProductDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeMessageProductDto() throws JsonProcessingException {
+    Object deserialized = objectMapper.readValue(jsonListMessageProductDto, ListMessage.class);
+
+    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(listMessageProductDto);
   }
 }
