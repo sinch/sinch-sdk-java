@@ -16,7 +16,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /** A message component for interactive messages, containing a choice. */
 @JsonDeserialize(builder = ChoiceItemImpl.Builder.class)
-public interface ChoiceItem extends com.sinch.sdk.domains.conversation.models.v1.messages.ListItem {
+public interface ChoiceItem
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.ListItem<ChoiceItem> {
 
   /**
    * Required parameter. Title for the choice item.

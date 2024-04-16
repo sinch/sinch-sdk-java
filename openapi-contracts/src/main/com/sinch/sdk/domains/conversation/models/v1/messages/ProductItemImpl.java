@@ -19,7 +19,8 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ProductItemImpl
-    implements ProductItem, com.sinch.sdk.domains.conversation.models.v1.messages.ListItem {
+    implements ProductItem,
+        com.sinch.sdk.domains.conversation.models.v1.messages.ListItem<ProductItem> {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ID = "id";
