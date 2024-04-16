@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.messages;
+package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,40 +7,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.conversation.models.v1.ProductItem;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ProductItem;
 import java.util.Objects;
 
-@JsonPropertyOrder({ListItemItemImpl.JSON_PROPERTY_CHOICE, ListItemItemImpl.JSON_PROPERTY_PRODUCT})
+@JsonPropertyOrder({ListItemOneOfProductInternalImpl.JSON_PROPERTY_PRODUCT})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class ListItemItemImpl implements ListItemItem {
+public class ListItemOneOfProductInternalImpl implements ListItemOneOfProductInternal {
   private static final long serialVersionUID = 1L;
-
-  public static final String JSON_PROPERTY_CHOICE = "choice";
-
-  private OptionalValue<ListItemChoice> choice;
 
   public static final String JSON_PROPERTY_PRODUCT = "product";
 
   private OptionalValue<ProductItem> product;
 
-  public ListItemItemImpl() {}
+  public ListItemOneOfProductInternalImpl() {}
 
-  protected ListItemItemImpl(
-      OptionalValue<ListItemChoice> choice, OptionalValue<ProductItem> product) {
-    this.choice = choice;
+  protected ListItemOneOfProductInternalImpl(OptionalValue<ProductItem> product) {
     this.product = product;
-  }
-
-  @JsonIgnore
-  public ListItemChoice getChoice() {
-    return choice.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_CHOICE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<ListItemChoice> choice() {
-    return choice;
   }
 
   @JsonIgnore
@@ -54,7 +37,7 @@ public class ListItemItemImpl implements ListItemItem {
     return product;
   }
 
-  /** Return true if this ListItem_item object is equal to o. */
+  /** Return true if this Product object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -63,21 +46,19 @@ public class ListItemItemImpl implements ListItemItem {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ListItemItemImpl listItemItem = (ListItemItemImpl) o;
-    return Objects.equals(this.choice, listItemItem.choice)
-        && Objects.equals(this.product, listItemItem.product);
+    ListItemOneOfProductInternalImpl product = (ListItemOneOfProductInternalImpl) o;
+    return Objects.equals(this.product, product.product);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(choice, product);
+    return Objects.hash(product);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ListItemItemImpl {\n");
-    sb.append("    choice: ").append(toIndentedString(choice)).append("\n");
+    sb.append("class ListItemOneOfProductInternalImpl {\n");
     sb.append("    product: ").append(toIndentedString(product)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -94,15 +75,8 @@ public class ListItemItemImpl implements ListItemItem {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements ListItemItem.Builder {
-    OptionalValue<ListItemChoice> choice = OptionalValue.empty();
+  static class Builder implements ListItemOneOfProductInternal.Builder {
     OptionalValue<ProductItem> product = OptionalValue.empty();
-
-    @JsonProperty(JSON_PROPERTY_CHOICE)
-    public Builder setChoice(ListItemChoice choice) {
-      this.choice = OptionalValue.of(choice);
-      return this;
-    }
 
     @JsonProperty(JSON_PROPERTY_PRODUCT)
     public Builder setProduct(ProductItem product) {
@@ -110,8 +84,8 @@ public class ListItemItemImpl implements ListItemItem {
       return this;
     }
 
-    public ListItemItem build() {
-      return new ListItemItemImpl(choice, product);
+    public ListItemOneOfProductInternal build() {
+      return new ListItemOneOfProductInternalImpl(product);
     }
   }
 }
