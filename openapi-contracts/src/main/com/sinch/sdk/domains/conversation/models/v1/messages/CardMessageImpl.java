@@ -19,12 +19,14 @@ import java.util.Objects;
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class CardMessageImpl implements CardMessage {
+public class CardMessageImpl
+    implements CardMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverrideMessage {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CHOICES = "choices";
 
-  private OptionalValue<List<Choice>> choices;
+  private OptionalValue<List<Choice<?>>> choices;
 
   public static final String JSON_PROPERTY_DESCRIPTION = "description";
 
@@ -45,7 +47,7 @@ public class CardMessageImpl implements CardMessage {
   public CardMessageImpl() {}
 
   protected CardMessageImpl(
-      OptionalValue<List<Choice>> choices,
+      OptionalValue<List<Choice<?>>> choices,
       OptionalValue<String> description,
       OptionalValue<CardHeight> height,
       OptionalValue<CardMessageMediaMessage> mediaMessage,
@@ -58,13 +60,13 @@ public class CardMessageImpl implements CardMessage {
   }
 
   @JsonIgnore
-  public List<Choice> getChoices() {
+  public List<Choice<?>> getChoices() {
     return choices.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CHOICES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<List<Choice>> choices() {
+  public OptionalValue<List<Choice<?>>> choices() {
     return choices;
   }
 
@@ -112,7 +114,7 @@ public class CardMessageImpl implements CardMessage {
     return title;
   }
 
-  /** Return true if this Card_Message object is equal to o. */
+  /** Return true if this CardMessage object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -159,14 +161,14 @@ public class CardMessageImpl implements CardMessage {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements CardMessage.Builder {
-    OptionalValue<List<Choice>> choices = OptionalValue.empty();
+    OptionalValue<List<Choice<?>>> choices = OptionalValue.empty();
     OptionalValue<String> description = OptionalValue.empty();
     OptionalValue<CardHeight> height = OptionalValue.empty();
     OptionalValue<CardMessageMediaMessage> mediaMessage = OptionalValue.empty();
     OptionalValue<String> title = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CHOICES)
-    public Builder setChoices(List<Choice> choices) {
+    public Builder setChoices(List<Choice<?>> choices) {
       this.choices = OptionalValue.of(choices);
       return this;
     }

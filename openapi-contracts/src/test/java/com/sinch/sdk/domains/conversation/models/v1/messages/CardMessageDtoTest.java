@@ -5,6 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import java.util.Arrays;
+import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -20,20 +21,20 @@ public class CardMessageDtoTest extends BaseTest {
           .setHeight(CardHeight.MEDIUM)
           .setChoices(
               Arrays.asList(
-                  Choice.builder()
-                      .setTextMessage(TextMessageDtoTest.textMessageDto)
+                  ChoiceTextMessage.builder()
+                      .setMessage(TextMessageDtoTest.textMessageDto)
                       .setPostbackData("postback_data text")
                       .build(),
-                  Choice.builder()
-                      .setCallMessage(CallMessageDtoTest.callMessageDto)
+                  ChoiceCallMessage.builder()
+                      .setMessage(CallMessageDtoTest.callMessageDto)
                       .setPostbackData("postback_data call")
                       .build(),
-                  Choice.builder()
-                      .setLocationMessage(LocationMessageDtoTest.locationMessageDto)
+                  ChoiceLocationMessage.builder()
+                      .setMessage(LocationMessageDtoTest.locationMessageDto)
                       .setPostbackData("postback_data location")
                       .build(),
-                  Choice.builder()
-                      .setUrlMessage(URLMessageDtoTest.urlMessageDto)
+                  ChoiceURLMessage.builder()
+                      .setMessage(UrlMessageDtoTest.urlMessageDto)
                       .setPostbackData("postback_data url")
                       .build()))
           .build();
@@ -46,5 +47,12 @@ public class CardMessageDtoTest extends BaseTest {
     String serializedString = objectMapper.writeValueAsString(cardMessageDto);
 
     JSONAssert.assertEquals(jsonCardMessageDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeMessageDto() throws JsonProcessingException {
+    Object deserialized = objectMapper.readValue(jsonCardMessageDto, cardMessageDto.getClass());
+
+    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(cardMessageDto);
   }
 }

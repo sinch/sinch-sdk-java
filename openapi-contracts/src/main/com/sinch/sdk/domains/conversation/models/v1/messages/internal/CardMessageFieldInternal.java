@@ -10,13 +10,14 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.messages;
+package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.conversation.models.v1.messages.CardMessage;
 
-/** Message containing text, media and choices. */
-@JsonDeserialize(builder = CardMessageItemImpl.Builder.class)
-public interface CardMessageItem {
+/** Field containing a Card Message */
+@JsonDeserialize(builder = CardMessageFieldInternalImpl.Builder.class)
+public interface CardMessageFieldInternal {
 
   /**
    * Get cardMessage
@@ -31,7 +32,7 @@ public interface CardMessageItem {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new CardMessageItemImpl.Builder();
+    return new CardMessageFieldInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -51,6 +52,6 @@ public interface CardMessageItem {
      *
      * @return The instance build with current builder values
      */
-    CardMessageItem build();
+    CardMessageFieldInternal build();
   }
 }
