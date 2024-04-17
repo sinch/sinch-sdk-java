@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.messages;
+package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,21 +7,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.messages.CardMessage;
 import java.util.Objects;
 
-@JsonPropertyOrder({CardMessageItemImpl.JSON_PROPERTY_CARD_MESSAGE})
+@JsonPropertyOrder({CardMessageFieldInternalImpl.JSON_PROPERTY_CARD_MESSAGE})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class CardMessageItemImpl implements CardMessageItem {
+public class CardMessageFieldInternalImpl implements CardMessageFieldInternal {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CARD_MESSAGE = "card_message";
 
   private OptionalValue<CardMessage> cardMessage;
 
-  public CardMessageItemImpl() {}
+  public CardMessageFieldInternalImpl() {}
 
-  protected CardMessageItemImpl(OptionalValue<CardMessage> cardMessage) {
+  protected CardMessageFieldInternalImpl(OptionalValue<CardMessage> cardMessage) {
     this.cardMessage = cardMessage;
   }
 
@@ -45,7 +46,7 @@ public class CardMessageItemImpl implements CardMessageItem {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CardMessageItemImpl cardMessageField = (CardMessageItemImpl) o;
+    CardMessageFieldInternalImpl cardMessageField = (CardMessageFieldInternalImpl) o;
     return Objects.equals(this.cardMessage, cardMessageField.cardMessage);
   }
 
@@ -57,7 +58,7 @@ public class CardMessageItemImpl implements CardMessageItem {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CardMessageItemImpl {\n");
+    sb.append("class CardMessageFieldInternalImpl {\n");
     sb.append("    cardMessage: ").append(toIndentedString(cardMessage)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -74,7 +75,7 @@ public class CardMessageItemImpl implements CardMessageItem {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements CardMessageItem.Builder {
+  static class Builder implements CardMessageFieldInternal.Builder {
     OptionalValue<CardMessage> cardMessage = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CARD_MESSAGE)
@@ -83,8 +84,8 @@ public class CardMessageItemImpl implements CardMessageItem {
       return this;
     }
 
-    public CardMessageItem build() {
-      return new CardMessageItemImpl(cardMessage);
+    public CardMessageFieldInternal build() {
+      return new CardMessageFieldInternalImpl(cardMessage);
     }
   }
 }
