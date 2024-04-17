@@ -16,12 +16,14 @@ import java.util.Objects;
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class ChoiceMessageImpl implements ChoiceMessage {
+public class ChoiceMessageImpl
+    implements ChoiceMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverrideMessage {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CHOICES = "choices";
 
-  private OptionalValue<List<Choice>> choices;
+  private OptionalValue<List<Choice<?>>> choices;
 
   public static final String JSON_PROPERTY_TEXT_MESSAGE = "text_message";
 
@@ -30,19 +32,19 @@ public class ChoiceMessageImpl implements ChoiceMessage {
   public ChoiceMessageImpl() {}
 
   protected ChoiceMessageImpl(
-      OptionalValue<List<Choice>> choices, OptionalValue<TextMessage> textMessage) {
+      OptionalValue<List<Choice<?>>> choices, OptionalValue<TextMessage> textMessage) {
     this.choices = choices;
     this.textMessage = textMessage;
   }
 
   @JsonIgnore
-  public List<Choice> getChoices() {
+  public List<Choice<?>> getChoices() {
     return choices.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CHOICES)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<List<Choice>> choices() {
+  public OptionalValue<List<Choice<?>>> choices() {
     return choices;
   }
 
@@ -98,11 +100,11 @@ public class ChoiceMessageImpl implements ChoiceMessage {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements ChoiceMessage.Builder {
-    OptionalValue<List<Choice>> choices = OptionalValue.empty();
+    OptionalValue<List<Choice<?>>> choices = OptionalValue.empty();
     OptionalValue<TextMessage> textMessage = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CHOICES)
-    public Builder setChoices(List<Choice> choices) {
+    public Builder setChoices(List<Choice<?>> choices) {
       this.choices = OptionalValue.of(choices);
       return this;
     }
