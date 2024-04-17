@@ -10,29 +10,24 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.messages;
+package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.util.List;
+import com.sinch.sdk.domains.conversation.models.v1.messages.CarouselMessage;
 
-/** declaration */
-@JsonDeserialize(builder = CarouselMessageImpl.Builder.class)
-public interface CarouselMessage
-    extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverrideMessage {
-
-  /**
-   * A list of up to 10 cards.
-   *
-   * @return cards
-   */
-  List<CardMessage> getCards();
+/**
+ * Message containing a list of cards often rendered horizontally on supported channels. Supported
+ * types for media are only images, such as .png, .jpg, .jpeg extensions.
+ */
+@JsonDeserialize(builder = CarouselMessageFieldInternalImpl.Builder.class)
+public interface CarouselMessageFieldInternal {
 
   /**
-   * Optional. Outer choices on the carousel level. The number of outer choices is limited to 3.
+   * Get carouselMessage
    *
-   * @return choices
+   * @return carouselMessage
    */
-  List<Choice<?>> getChoices();
+  CarouselMessage getCarouselMessage();
 
   /**
    * Getting builder
@@ -40,7 +35,7 @@ public interface CarouselMessage
    * @return New Builder instance
    */
   static Builder builder() {
-    return new CarouselMessageImpl.Builder();
+    return new CarouselMessageFieldInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -49,26 +44,17 @@ public interface CarouselMessage
     /**
      * see getter
      *
-     * @param cards see getter
+     * @param carouselMessage see getter
      * @return Current builder
-     * @see #getCards
+     * @see #getCarouselMessage
      */
-    Builder setCards(List<CardMessage> cards);
-
-    /**
-     * see getter
-     *
-     * @param choices see getter
-     * @return Current builder
-     * @see #getChoices
-     */
-    Builder setChoices(List<Choice<?>> choices);
+    Builder setCarouselMessage(CarouselMessage carouselMessage);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    CarouselMessage build();
+    CarouselMessageFieldInternal build();
   }
 }
