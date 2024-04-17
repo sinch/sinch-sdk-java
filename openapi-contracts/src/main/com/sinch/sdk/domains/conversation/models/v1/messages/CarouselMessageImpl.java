@@ -16,44 +16,46 @@ import java.util.Objects;
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class CarouselMessageImpl implements CarouselMessage {
+public class CarouselMessageImpl
+    implements CarouselMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverrideMessage {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CARDS = "cards";
 
-  private OptionalValue<List<CardMessageItem>> cards;
+  private OptionalValue<List<CardMessage>> cards;
 
   public static final String JSON_PROPERTY_CHOICES = "choices";
 
-  private OptionalValue<List<Choice>> choices;
+  private OptionalValue<List<Choice<?>>> choices;
 
   public CarouselMessageImpl() {}
 
   protected CarouselMessageImpl(
-      OptionalValue<List<CardMessageItem>> cards, OptionalValue<List<Choice>> choices) {
+      OptionalValue<List<CardMessage>> cards, OptionalValue<List<Choice<?>>> choices) {
     this.cards = cards;
     this.choices = choices;
   }
 
   @JsonIgnore
-  public List<CardMessageItem> getCards() {
+  public List<CardMessage> getCards() {
     return cards.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CARDS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<List<CardMessageItem>> cards() {
+  public OptionalValue<List<CardMessage>> cards() {
     return cards;
   }
 
   @JsonIgnore
-  public List<Choice> getChoices() {
+  public List<Choice<?>> getChoices() {
     return choices.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CHOICES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<List<Choice>> choices() {
+  public OptionalValue<List<Choice<?>>> choices() {
     return choices;
   }
 
@@ -98,17 +100,17 @@ public class CarouselMessageImpl implements CarouselMessage {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements CarouselMessage.Builder {
-    OptionalValue<List<CardMessageItem>> cards = OptionalValue.empty();
-    OptionalValue<List<Choice>> choices = OptionalValue.empty();
+    OptionalValue<List<CardMessage>> cards = OptionalValue.empty();
+    OptionalValue<List<Choice<?>>> choices = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CARDS)
-    public Builder setCards(List<CardMessageItem> cards) {
+    public Builder setCards(List<CardMessage> cards) {
       this.cards = OptionalValue.of(cards);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_CHOICES)
-    public Builder setChoices(List<Choice> choices) {
+    public Builder setChoices(List<Choice<?>> choices) {
       this.choices = OptionalValue.of(choices);
       return this;
     }
