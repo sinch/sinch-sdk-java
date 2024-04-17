@@ -10,29 +10,21 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.messages;
+package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.util.List;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ChoiceMessage;
 
-/** declaration */
-@JsonDeserialize(builder = ChoiceMessageImpl.Builder.class)
-public interface ChoiceMessage
-    extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverrideMessage {
-
-  /**
-   * The number of choices is limited to 10.
-   *
-   * @return choices
-   */
-  List<Choice<?>> getChoices();
+/** Message containing choices/actions. */
+@JsonDeserialize(builder = ChoiceMessageFieldInternalImpl.Builder.class)
+public interface ChoiceMessageFieldInternal {
 
   /**
-   * Get textMessage
+   * Get choiceMessage
    *
-   * @return textMessage
+   * @return choiceMessage
    */
-  TextMessage getTextMessage();
+  ChoiceMessage getChoiceMessage();
 
   /**
    * Getting builder
@@ -40,7 +32,7 @@ public interface ChoiceMessage
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ChoiceMessageImpl.Builder();
+    return new ChoiceMessageFieldInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -49,26 +41,17 @@ public interface ChoiceMessage
     /**
      * see getter
      *
-     * @param choices see getter
+     * @param choiceMessage see getter
      * @return Current builder
-     * @see #getChoices
+     * @see #getChoiceMessage
      */
-    Builder setChoices(List<Choice<?>> choices);
-
-    /**
-     * see getter
-     *
-     * @param textMessage see getter
-     * @return Current builder
-     * @see #getTextMessage
-     */
-    Builder setTextMessage(TextMessage textMessage);
+    Builder setChoiceMessage(ChoiceMessage choiceMessage);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    ChoiceMessage build();
+    ChoiceMessageFieldInternal build();
   }
 }

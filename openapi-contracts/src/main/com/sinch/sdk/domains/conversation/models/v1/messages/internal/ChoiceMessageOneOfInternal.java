@@ -10,16 +10,20 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.messages;
+package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.conversation.models.v1.messages.CallMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.LocationMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.UrlMessage;
 
 /**
  * A choice is an action the user can take such as buttons for quick replies or other call to
  * actions.
  */
-@JsonDeserialize(builder = ChoiceImpl.Builder.class)
-public interface Choice {
+@JsonDeserialize(builder = ChoiceMessageOneOfInternalImpl.Builder.class)
+public interface ChoiceMessageOneOfInternal {
 
   /**
    * Get callMessage
@@ -47,7 +51,7 @@ public interface Choice {
    *
    * @return urlMessage
    */
-  URLMessage getUrlMessage();
+  UrlMessage getUrlMessage();
 
   /**
    * An optional field. This data will be returned in the ChoiceResponseMessage. The default is
@@ -63,7 +67,7 @@ public interface Choice {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ChoiceImpl.Builder();
+    return new ChoiceMessageOneOfInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -103,7 +107,7 @@ public interface Choice {
      * @return Current builder
      * @see #getUrlMessage
      */
-    Builder setUrlMessage(URLMessage urlMessage);
+    Builder setUrlMessage(UrlMessage urlMessage);
 
     /**
      * see getter
@@ -119,6 +123,6 @@ public interface Choice {
      *
      * @return The instance build with current builder values
      */
-    Choice build();
+    ChoiceMessageOneOfInternal build();
   }
 }
