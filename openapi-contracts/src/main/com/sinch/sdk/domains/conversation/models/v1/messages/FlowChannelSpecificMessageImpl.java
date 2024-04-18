@@ -10,19 +10,21 @@ import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  ChannelSpecificMessageMessageImpl.JSON_PROPERTY_HEADER,
-  ChannelSpecificMessageMessageImpl.JSON_PROPERTY_BODY,
-  ChannelSpecificMessageMessageImpl.JSON_PROPERTY_FOOTER,
-  ChannelSpecificMessageMessageImpl.JSON_PROPERTY_FLOW_ID,
-  ChannelSpecificMessageMessageImpl.JSON_PROPERTY_FLOW_TOKEN,
-  ChannelSpecificMessageMessageImpl.JSON_PROPERTY_FLOW_MODE,
-  ChannelSpecificMessageMessageImpl.JSON_PROPERTY_FLOW_CTA,
-  ChannelSpecificMessageMessageImpl.JSON_PROPERTY_FLOW_ACTION,
-  ChannelSpecificMessageMessageImpl.JSON_PROPERTY_FLOW_ACTION_PAYLOAD
+  FlowChannelSpecificMessageImpl.JSON_PROPERTY_HEADER,
+  FlowChannelSpecificMessageImpl.JSON_PROPERTY_BODY,
+  FlowChannelSpecificMessageImpl.JSON_PROPERTY_FOOTER,
+  FlowChannelSpecificMessageImpl.JSON_PROPERTY_FLOW_ID,
+  FlowChannelSpecificMessageImpl.JSON_PROPERTY_FLOW_TOKEN,
+  FlowChannelSpecificMessageImpl.JSON_PROPERTY_FLOW_MODE,
+  FlowChannelSpecificMessageImpl.JSON_PROPERTY_FLOW_CTA,
+  FlowChannelSpecificMessageImpl.JSON_PROPERTY_FLOW_ACTION,
+  FlowChannelSpecificMessageImpl.JSON_PROPERTY_FLOW_ACTION_PAYLOAD
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class ChannelSpecificMessageMessageImpl implements ChannelSpecificMessageMessage {
+public class FlowChannelSpecificMessageImpl
+    implements FlowChannelSpecificMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.ChannelSpecificMessage {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_HEADER = "header";
@@ -61,9 +63,9 @@ public class ChannelSpecificMessageMessageImpl implements ChannelSpecificMessage
 
   private OptionalValue<FlowChannelSpecificMessageFlowActionPayload> flowActionPayload;
 
-  public ChannelSpecificMessageMessageImpl() {}
+  public FlowChannelSpecificMessageImpl() {}
 
-  protected ChannelSpecificMessageMessageImpl(
+  protected FlowChannelSpecificMessageImpl(
       OptionalValue<FlowChannelSpecificMessageHeader> header,
       OptionalValue<WhatsAppInteractiveBody> body,
       OptionalValue<WhatsAppInteractiveFooter> footer,
@@ -183,7 +185,7 @@ public class ChannelSpecificMessageMessageImpl implements ChannelSpecificMessage
     return flowActionPayload;
   }
 
-  /** Return true if this ChannelSpecificMessage_message object is equal to o. */
+  /** Return true if this FlowChannelSpecificMessage object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -192,17 +194,16 @@ public class ChannelSpecificMessageMessageImpl implements ChannelSpecificMessage
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ChannelSpecificMessageMessageImpl channelSpecificMessageMessage =
-        (ChannelSpecificMessageMessageImpl) o;
-    return Objects.equals(this.header, channelSpecificMessageMessage.header)
-        && Objects.equals(this.body, channelSpecificMessageMessage.body)
-        && Objects.equals(this.footer, channelSpecificMessageMessage.footer)
-        && Objects.equals(this.flowId, channelSpecificMessageMessage.flowId)
-        && Objects.equals(this.flowToken, channelSpecificMessageMessage.flowToken)
-        && Objects.equals(this.flowMode, channelSpecificMessageMessage.flowMode)
-        && Objects.equals(this.flowCta, channelSpecificMessageMessage.flowCta)
-        && Objects.equals(this.flowAction, channelSpecificMessageMessage.flowAction)
-        && Objects.equals(this.flowActionPayload, channelSpecificMessageMessage.flowActionPayload);
+    FlowChannelSpecificMessageImpl flowChannelSpecificMessage = (FlowChannelSpecificMessageImpl) o;
+    return Objects.equals(this.header, flowChannelSpecificMessage.header)
+        && Objects.equals(this.body, flowChannelSpecificMessage.body)
+        && Objects.equals(this.footer, flowChannelSpecificMessage.footer)
+        && Objects.equals(this.flowId, flowChannelSpecificMessage.flowId)
+        && Objects.equals(this.flowToken, flowChannelSpecificMessage.flowToken)
+        && Objects.equals(this.flowMode, flowChannelSpecificMessage.flowMode)
+        && Objects.equals(this.flowCta, flowChannelSpecificMessage.flowCta)
+        && Objects.equals(this.flowAction, flowChannelSpecificMessage.flowAction)
+        && Objects.equals(this.flowActionPayload, flowChannelSpecificMessage.flowActionPayload);
   }
 
   @Override
@@ -214,7 +215,7 @@ public class ChannelSpecificMessageMessageImpl implements ChannelSpecificMessage
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ChannelSpecificMessageMessageImpl {\n");
+    sb.append("class FlowChannelSpecificMessageImpl {\n");
     sb.append("    header: ").append(toIndentedString(header)).append("\n");
     sb.append("    body: ").append(toIndentedString(body)).append("\n");
     sb.append("    footer: ").append(toIndentedString(footer)).append("\n");
@@ -239,7 +240,7 @@ public class ChannelSpecificMessageMessageImpl implements ChannelSpecificMessage
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements ChannelSpecificMessageMessage.Builder {
+  static class Builder implements FlowChannelSpecificMessage.Builder {
     OptionalValue<FlowChannelSpecificMessageHeader> header = OptionalValue.empty();
     OptionalValue<WhatsAppInteractiveBody> body = OptionalValue.empty();
     OptionalValue<WhatsAppInteractiveFooter> footer = OptionalValue.empty();
@@ -306,8 +307,8 @@ public class ChannelSpecificMessageMessageImpl implements ChannelSpecificMessage
       return this;
     }
 
-    public ChannelSpecificMessageMessage build() {
-      return new ChannelSpecificMessageMessageImpl(
+    public FlowChannelSpecificMessage build() {
+      return new FlowChannelSpecificMessageImpl(
           header,
           body,
           footer,

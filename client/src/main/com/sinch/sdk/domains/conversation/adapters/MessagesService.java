@@ -9,6 +9,7 @@ import com.sinch.sdk.domains.conversation.adapters.messages.ChoiceItemMapper;
 import com.sinch.sdk.domains.conversation.adapters.messages.ChoiceMapper;
 import com.sinch.sdk.domains.conversation.adapters.messages.ListSectionMapper;
 import com.sinch.sdk.domains.conversation.adapters.messages.SendMessageRequestMapper;
+import com.sinch.sdk.domains.conversation.adapters.messages.WhatsAppInteractiveHeaderMapper;
 import com.sinch.sdk.domains.conversation.api.v1.MessagesApi;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequestImpl;
@@ -54,6 +55,7 @@ public class MessagesService implements com.sinch.sdk.domains.conversation.Messa
       ChoiceItemMapper.initMapper();
       ChoiceMapper.initMapper();
       ListSectionMapper.initMapper();
+      WhatsAppInteractiveHeaderMapper.initMapper();
     }
 
     public static LocalLazyInit init() {

@@ -10,27 +10,49 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.messages;
+package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.utils.EnumDynamic;
+import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import com.sinch.sdk.domains.conversation.models.v1.messages.WhatsAppInteractiveHeaderMedia;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
-/** declaration */
-@JsonDeserialize(builder = FlowChannelSpecificMessageHeaderImpl.Builder.class)
-public interface FlowChannelSpecificMessageHeader {
+/** Header of the interactive message with image. */
+@JsonDeserialize(builder = WhatsAppInteractiveImageHeaderInternalImpl.Builder.class)
+public interface WhatsAppInteractiveImageHeaderInternal {
+
+  /** Gets or Sets type */
+  public class TypeEnum extends EnumDynamic<String, TypeEnum> {
+    public static final TypeEnum IMAGE = new TypeEnum("image");
+
+    private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =
+        new EnumSupportDynamic<>(TypeEnum.class, TypeEnum::new, Arrays.asList(IMAGE));
+
+    private TypeEnum(String value) {
+      super(value);
+    }
+
+    public static Stream<TypeEnum> values() {
+      return ENUM_SUPPORT.values();
+    }
+
+    public static TypeEnum from(String value) {
+      return ENUM_SUPPORT.from(value);
+    }
+
+    public static String valueOf(TypeEnum e) {
+      return ENUM_SUPPORT.valueOf(e);
+    }
+  }
 
   /**
-   * Must be set to video.
+   * Get type
    *
    * @return type
    */
-  String getType();
-
-  /**
-   * Text for the header. Formatting allows emojis, but not Markdown.
-   *
-   * @return text
-   */
-  String getText();
+  TypeEnum getType();
 
   /**
    * Get image
@@ -40,26 +62,12 @@ public interface FlowChannelSpecificMessageHeader {
   WhatsAppInteractiveHeaderMedia getImage();
 
   /**
-   * Get document
-   *
-   * @return document
-   */
-  WhatsAppInteractiveHeaderMedia getDocument();
-
-  /**
-   * Get video
-   *
-   * @return video
-   */
-  WhatsAppInteractiveHeaderMedia getVideo();
-
-  /**
    * Getting builder
    *
    * @return New Builder instance
    */
   static Builder builder() {
-    return new FlowChannelSpecificMessageHeaderImpl.Builder();
+    return new WhatsAppInteractiveImageHeaderInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -72,16 +80,7 @@ public interface FlowChannelSpecificMessageHeader {
      * @return Current builder
      * @see #getType
      */
-    Builder setType(String type);
-
-    /**
-     * see getter
-     *
-     * @param text see getter
-     * @return Current builder
-     * @see #getText
-     */
-    Builder setText(String text);
+    Builder setType(TypeEnum type);
 
     /**
      * see getter
@@ -93,28 +92,10 @@ public interface FlowChannelSpecificMessageHeader {
     Builder setImage(WhatsAppInteractiveHeaderMedia image);
 
     /**
-     * see getter
-     *
-     * @param document see getter
-     * @return Current builder
-     * @see #getDocument
-     */
-    Builder setDocument(WhatsAppInteractiveHeaderMedia document);
-
-    /**
-     * see getter
-     *
-     * @param video see getter
-     * @return Current builder
-     * @see #getVideo
-     */
-    Builder setVideo(WhatsAppInteractiveHeaderMedia video);
-
-    /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    FlowChannelSpecificMessageHeader build();
+    WhatsAppInteractiveImageHeaderInternal build();
   }
 }
