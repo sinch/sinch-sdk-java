@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.messages;
+package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,15 +7,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ChannelSpecificMessage;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  ChannelSpecificMessageImpl.JSON_PROPERTY_MESSAGE_TYPE,
-  ChannelSpecificMessageImpl.JSON_PROPERTY_MESSAGE
+  ChannelSpecificMessageInternalImpl.JSON_PROPERTY_MESSAGE_TYPE,
+  ChannelSpecificMessageInternalImpl.JSON_PROPERTY_MESSAGE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class ChannelSpecificMessageImpl implements ChannelSpecificMessage {
+public class ChannelSpecificMessageInternalImpl implements ChannelSpecificMessageInternal {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_MESSAGE_TYPE = "message_type";
@@ -24,13 +25,12 @@ public class ChannelSpecificMessageImpl implements ChannelSpecificMessage {
 
   public static final String JSON_PROPERTY_MESSAGE = "message";
 
-  private OptionalValue<ChannelSpecificMessageMessage> message;
+  private OptionalValue<ChannelSpecificMessage> message;
 
-  public ChannelSpecificMessageImpl() {}
+  public ChannelSpecificMessageInternalImpl() {}
 
-  protected ChannelSpecificMessageImpl(
-      OptionalValue<MessageTypeEnum> messageType,
-      OptionalValue<ChannelSpecificMessageMessage> message) {
+  protected ChannelSpecificMessageInternalImpl(
+      OptionalValue<MessageTypeEnum> messageType, OptionalValue<ChannelSpecificMessage> message) {
     this.messageType = messageType;
     this.message = message;
   }
@@ -47,13 +47,13 @@ public class ChannelSpecificMessageImpl implements ChannelSpecificMessage {
   }
 
   @JsonIgnore
-  public ChannelSpecificMessageMessage getMessage() {
+  public ChannelSpecificMessage getMessage() {
     return message.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<ChannelSpecificMessageMessage> message() {
+  public OptionalValue<ChannelSpecificMessage> message() {
     return message;
   }
 
@@ -66,7 +66,8 @@ public class ChannelSpecificMessageImpl implements ChannelSpecificMessage {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ChannelSpecificMessageImpl channelSpecificMessage = (ChannelSpecificMessageImpl) o;
+    ChannelSpecificMessageInternalImpl channelSpecificMessage =
+        (ChannelSpecificMessageInternalImpl) o;
     return Objects.equals(this.messageType, channelSpecificMessage.messageType)
         && Objects.equals(this.message, channelSpecificMessage.message);
   }
@@ -79,7 +80,7 @@ public class ChannelSpecificMessageImpl implements ChannelSpecificMessage {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ChannelSpecificMessageImpl {\n");
+    sb.append("class ChannelSpecificMessageInternalImpl {\n");
     sb.append("    messageType: ").append(toIndentedString(messageType)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("}");
@@ -97,9 +98,9 @@ public class ChannelSpecificMessageImpl implements ChannelSpecificMessage {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements ChannelSpecificMessage.Builder {
+  static class Builder implements ChannelSpecificMessageInternal.Builder {
     OptionalValue<MessageTypeEnum> messageType = OptionalValue.empty();
-    OptionalValue<ChannelSpecificMessageMessage> message = OptionalValue.empty();
+    OptionalValue<ChannelSpecificMessage> message = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_MESSAGE_TYPE)
     public Builder setMessageType(MessageTypeEnum messageType) {
@@ -108,13 +109,13 @@ public class ChannelSpecificMessageImpl implements ChannelSpecificMessage {
     }
 
     @JsonProperty(JSON_PROPERTY_MESSAGE)
-    public Builder setMessage(ChannelSpecificMessageMessage message) {
+    public Builder setMessage(ChannelSpecificMessage message) {
       this.message = OptionalValue.of(message);
       return this;
     }
 
-    public ChannelSpecificMessage build() {
-      return new ChannelSpecificMessageImpl(messageType, message);
+    public ChannelSpecificMessageInternal build() {
+      return new ChannelSpecificMessageInternalImpl(messageType, message);
     }
   }
 }

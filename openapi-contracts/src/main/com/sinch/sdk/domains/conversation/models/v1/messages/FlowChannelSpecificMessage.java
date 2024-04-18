@@ -18,9 +18,10 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** declaration */
-@JsonDeserialize(builder = ChannelSpecificMessageMessageImpl.Builder.class)
-public interface ChannelSpecificMessageMessage {
+/** A message type for sending WhatsApp Flows. */
+@JsonDeserialize(builder = FlowChannelSpecificMessageImpl.Builder.class)
+public interface FlowChannelSpecificMessage
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.ChannelSpecificMessage {
 
   /**
    * Get header
@@ -144,7 +145,7 @@ public interface ChannelSpecificMessageMessage {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ChannelSpecificMessageMessageImpl.Builder();
+    return new FlowChannelSpecificMessageImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -236,6 +237,6 @@ public interface ChannelSpecificMessageMessage {
      *
      * @return The instance build with current builder values
      */
-    ChannelSpecificMessageMessage build();
+    FlowChannelSpecificMessage build();
   }
 }

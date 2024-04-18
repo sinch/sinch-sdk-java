@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.messages;
+package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
@@ -18,47 +18,47 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** A message containing a channel specific message (not supported by OMNI types). */
-@JsonDeserialize(builder = ChannelSpecificMessageImpl.Builder.class)
-public interface ChannelSpecificMessage {
+/** Header of the interactive message with text. */
+@JsonDeserialize(builder = WhatsAppInteractiveTextHeaderInternalImpl.Builder.class)
+public interface WhatsAppInteractiveTextHeaderInternal {
 
-  /** Gets or Sets messageType */
-  public class MessageTypeEnum extends EnumDynamic<String, MessageTypeEnum> {
-    public static final MessageTypeEnum FLOWS = new MessageTypeEnum("FLOWS");
+  /** Gets or Sets type */
+  public class TypeEnum extends EnumDynamic<String, TypeEnum> {
+    public static final TypeEnum TEXT = new TypeEnum("text");
 
-    private static final EnumSupportDynamic<String, MessageTypeEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(MessageTypeEnum.class, MessageTypeEnum::new, Arrays.asList(FLOWS));
+    private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =
+        new EnumSupportDynamic<>(TypeEnum.class, TypeEnum::new, Arrays.asList(TEXT));
 
-    private MessageTypeEnum(String value) {
+    private TypeEnum(String value) {
       super(value);
     }
 
-    public static Stream<MessageTypeEnum> values() {
+    public static Stream<TypeEnum> values() {
       return ENUM_SUPPORT.values();
     }
 
-    public static MessageTypeEnum from(String value) {
+    public static TypeEnum from(String value) {
       return ENUM_SUPPORT.from(value);
     }
 
-    public static String valueOf(MessageTypeEnum e) {
+    public static String valueOf(TypeEnum e) {
       return ENUM_SUPPORT.valueOf(e);
     }
   }
 
   /**
-   * Get messageType
+   * Get type
    *
-   * @return messageType
+   * @return type
    */
-  MessageTypeEnum getMessageType();
+  TypeEnum getType();
 
   /**
-   * Get message
+   * Text for the header. Formatting allows emojis, but not Markdown.
    *
-   * @return message
+   * @return text
    */
-  ChannelSpecificMessageMessage getMessage();
+  String getText();
 
   /**
    * Getting builder
@@ -66,7 +66,7 @@ public interface ChannelSpecificMessage {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ChannelSpecificMessageImpl.Builder();
+    return new WhatsAppInteractiveTextHeaderInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -75,26 +75,26 @@ public interface ChannelSpecificMessage {
     /**
      * see getter
      *
-     * @param messageType see getter
+     * @param type see getter
      * @return Current builder
-     * @see #getMessageType
+     * @see #getType
      */
-    Builder setMessageType(MessageTypeEnum messageType);
+    Builder setType(TypeEnum type);
 
     /**
      * see getter
      *
-     * @param message see getter
+     * @param text see getter
      * @return Current builder
-     * @see #getMessage
+     * @see #getText
      */
-    Builder setMessage(ChannelSpecificMessageMessage message);
+    Builder setText(String text);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    ChannelSpecificMessage build();
+    WhatsAppInteractiveTextHeaderInternal build();
   }
 }
