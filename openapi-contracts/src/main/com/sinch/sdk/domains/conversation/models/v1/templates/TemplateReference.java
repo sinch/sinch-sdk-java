@@ -21,7 +21,8 @@ import java.util.Map;
  * Template.
  */
 @JsonDeserialize(builder = TemplateReferenceImpl.Builder.class)
-public interface TemplateReference {
+public interface TemplateReference
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride {
 
   /**
    * The BCP-47 language code, such as &#x60;en-US&#x60; or &#x60;sr-Latn&#x60;. For more

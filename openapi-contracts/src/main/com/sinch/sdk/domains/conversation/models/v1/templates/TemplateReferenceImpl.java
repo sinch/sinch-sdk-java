@@ -18,7 +18,9 @@ import java.util.Objects;
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class TemplateReferenceImpl implements TemplateReference {
+public class TemplateReferenceImpl
+    implements TemplateReference,
+        com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_LANGUAGE_CODE = "language_code";

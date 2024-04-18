@@ -1,0 +1,40 @@
+{
+  "choice_message": {
+    "text_message": {
+      "text": "This is a text message."
+    },
+    "choices": [
+      {
+        "call_message": {
+          "title": "title value",
+          "phone_number": "phone number value"
+        },
+        "postback_data": "postback call_message data value"
+      },
+      {
+        "location_message": {
+          "coordinates": {
+            "latitude": 47.627980,
+            "longitude": -2.822915
+          },
+          "title": "title value",
+          "label": "label value"
+        },
+        "postback_data": "postback location_message data value"
+      },
+      {
+        "text_message": {
+          "text": "This is a text message."
+        },
+        "postback_data": "postback text_message data value"
+      },
+      {
+        "url_message": {
+          "title": "title value",
+          "url": "an url value"
+        },
+        "postback_data": "postback url_message data value"
+      }
+    ]
+  }
+}
