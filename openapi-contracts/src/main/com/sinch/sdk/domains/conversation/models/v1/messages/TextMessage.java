@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 /** declaration */
 @JsonDeserialize(builder = TextMessageImpl.Builder.class)
 public interface TextMessage
-    extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverrideMessage {
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride {
 
   /**
    * The text to be sent.

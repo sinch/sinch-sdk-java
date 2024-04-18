@@ -18,7 +18,7 @@ import java.util.List;
 /** Message containing text, media and choices. */
 @JsonDeserialize(builder = CardMessageImpl.Builder.class)
 public interface CardMessage
-    extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverrideMessage {
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride {
 
   /**
    * You may include choices in your Card Message. The number of choices is limited to 10.
