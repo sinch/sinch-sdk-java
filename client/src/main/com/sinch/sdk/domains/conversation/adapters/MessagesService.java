@@ -4,7 +4,6 @@ import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
-import com.sinch.sdk.core.utils.databind.Mapper;
 import com.sinch.sdk.domains.conversation.adapters.messages.AppMessageRequestMapper;
 import com.sinch.sdk.domains.conversation.adapters.messages.ChoiceItemMapper;
 import com.sinch.sdk.domains.conversation.adapters.messages.ChoiceMapper;
@@ -12,10 +11,19 @@ import com.sinch.sdk.domains.conversation.adapters.messages.ListSectionMapper;
 import com.sinch.sdk.domains.conversation.adapters.messages.SendMessageRequestMapper;
 import com.sinch.sdk.domains.conversation.adapters.messages.WhatsAppInteractiveHeaderMapper;
 import com.sinch.sdk.domains.conversation.api.v1.MessagesApi;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.CardMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.CarouselMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ChoiceMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ContactInfoMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ListMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.LocationMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.MediaMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
-import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequestImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
 import com.sinch.sdk.domains.conversation.models.v1.response.ConversationMessage;
+import com.sinch.sdk.domains.conversation.models.v1.templates.TemplateMessage;
 import com.sinch.sdk.models.ConversationContext;
 import java.util.Map;
 
@@ -41,8 +49,46 @@ public class MessagesService implements com.sinch.sdk.domains.conversation.Messa
     return this.api;
   }
 
-  public SendMessageResponse send(SendMessageRequest request) throws ApiException {
+  <T extends AppMessageMessage> SendMessageResponse send(SendMessageRequest<T> request)
+      throws ApiException {
     return getApi().messagesSendMessage(uriUUID, request);
+  }
+
+  public SendMessageResponse sendCardMessage(SendMessageRequest<CardMessage> request) {
+    return send(request);
+  }
+
+  public SendMessageResponse sendCarouselMessage(SendMessageRequest<CarouselMessage> request) {
+    return send(request);
+  }
+
+  public SendMessageResponse sendChoiceMessage(SendMessageRequest<ChoiceMessage> request) {
+    return send(request);
+  }
+
+  public SendMessageResponse sendCContactInfoMessage(
+      SendMessageRequest<ContactInfoMessage> request) {
+    return send(request);
+  }
+
+  public SendMessageResponse sendListMessage(SendMessageRequest<ListMessage> request) {
+    return send(request);
+  }
+
+  public SendMessageResponse sendLocationMessage(SendMessageRequest<LocationMessage> request) {
+    return send(request);
+  }
+
+  public SendMessageResponse sendMediaMessage(SendMessageRequest<MediaMessage> request) {
+    return send(request);
+  }
+
+  public SendMessageResponse sendTemplateMessage(SendMessageRequest<TemplateMessage> request) {
+    return send(request);
+  }
+
+  public SendMessageResponse sendTextMessage(SendMessageRequest<TextMessage> request) {
+    return send(request);
   }
 
   public ConversationMessage get(String messageId) {
@@ -52,11 +98,11 @@ public class MessagesService implements com.sinch.sdk.domains.conversation.Messa
   static final class LocalLazyInit {
 
     private LocalLazyInit() {
-      Mapper.getInstance().addMixIn(SendMessageRequestImpl.class, SendMessageRequestMapper.class);
       AppMessageRequestMapper.initMapper();
       ChoiceItemMapper.initMapper();
       ChoiceMapper.initMapper();
       ListSectionMapper.initMapper();
+      SendMessageRequestMapper.initMapper();
       WhatsAppInteractiveHeaderMapper.initMapper();
     }
 

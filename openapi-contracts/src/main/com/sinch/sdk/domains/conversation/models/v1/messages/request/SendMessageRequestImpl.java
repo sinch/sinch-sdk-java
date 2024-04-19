@@ -10,6 +10,7 @@ import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.Recipient;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage;
 import com.sinch.sdk.domains.conversation.models.v1.request.MessageQueue;
 import com.sinch.sdk.domains.conversation.models.v1.request.MetadataUpdateStrategy;
 import java.util.List;
@@ -33,7 +34,7 @@ import java.util.Objects;
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class SendMessageRequestImpl implements SendMessageRequest {
+public class SendMessageRequestImpl<T extends AppMessageMessage> implements SendMessageRequest<T> {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_APP_ID = "app_id";
@@ -54,7 +55,7 @@ public class SendMessageRequestImpl implements SendMessageRequest {
 
   public static final String JSON_PROPERTY_MESSAGE = "message";
 
-  private OptionalValue<AppMessage<?>> message;
+  private OptionalValue<AppMessage<T>> message;
 
   public static final String JSON_PROPERTY_MESSAGE_METADATA = "message_metadata";
 
@@ -96,7 +97,7 @@ public class SendMessageRequestImpl implements SendMessageRequest {
       OptionalValue<String> callbackUrl,
       OptionalValue<List<ConversationChannel>> channelPriorityOrder,
       OptionalValue<Map<String, String>> channelProperties,
-      OptionalValue<AppMessage<?>> message,
+      OptionalValue<AppMessage<T>> message,
       OptionalValue<String> messageMetadata,
       OptionalValue<Object> conversationMetadata,
       OptionalValue<MessageQueue> queue,
@@ -165,13 +166,13 @@ public class SendMessageRequestImpl implements SendMessageRequest {
   }
 
   @JsonIgnore
-  public AppMessage<?> getMessage() {
+  public AppMessage<T> getMessage() {
     return message.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<AppMessage<?>> message() {
+  public OptionalValue<AppMessage<T>> message() {
     return message;
   }
 
@@ -346,12 +347,12 @@ public class SendMessageRequestImpl implements SendMessageRequest {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements SendMessageRequest.Builder {
+  static class Builder<T extends AppMessageMessage> implements SendMessageRequest.Builder<T> {
     OptionalValue<String> appId = OptionalValue.empty();
     OptionalValue<String> callbackUrl = OptionalValue.empty();
     OptionalValue<List<ConversationChannel>> channelPriorityOrder = OptionalValue.empty();
     OptionalValue<Map<String, String>> channelProperties = OptionalValue.empty();
-    OptionalValue<AppMessage<?>> message = OptionalValue.empty();
+    OptionalValue<AppMessage<T>> message = OptionalValue.empty();
     OptionalValue<String> messageMetadata = OptionalValue.empty();
     OptionalValue<Object> conversationMetadata = OptionalValue.empty();
     OptionalValue<MessageQueue> queue = OptionalValue.empty();
@@ -363,87 +364,87 @@ public class SendMessageRequestImpl implements SendMessageRequest {
         OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_APP_ID)
-    public Builder setAppId(String appId) {
+    public Builder<T> setAppId(String appId) {
       this.appId = OptionalValue.of(appId);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
-    public Builder setCallbackUrl(String callbackUrl) {
+    public Builder<T> setCallbackUrl(String callbackUrl) {
       this.callbackUrl = OptionalValue.of(callbackUrl);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_CHANNEL_PRIORITY_ORDER)
-    public Builder setChannelPriorityOrder(List<ConversationChannel> channelPriorityOrder) {
+    public Builder<T> setChannelPriorityOrder(List<ConversationChannel> channelPriorityOrder) {
       this.channelPriorityOrder = OptionalValue.of(channelPriorityOrder);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_CHANNEL_PROPERTIES)
-    public Builder setChannelProperties(Map<String, String> channelProperties) {
+    public Builder<T> setChannelProperties(Map<String, String> channelProperties) {
       this.channelProperties = OptionalValue.of(channelProperties);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_MESSAGE)
-    public Builder setMessage(AppMessage<?> message) {
+    public Builder<T> setMessage(AppMessage<T> message) {
       this.message = OptionalValue.of(message);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_MESSAGE_METADATA)
-    public Builder setMessageMetadata(String messageMetadata) {
+    public Builder<T> setMessageMetadata(String messageMetadata) {
       this.messageMetadata = OptionalValue.of(messageMetadata);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_CONVERSATION_METADATA)
-    public Builder setConversationMetadata(Object conversationMetadata) {
+    public Builder<T> setConversationMetadata(Object conversationMetadata) {
       this.conversationMetadata = OptionalValue.of(conversationMetadata);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_QUEUE)
-    public Builder setQueue(MessageQueue queue) {
+    public Builder<T> setQueue(MessageQueue queue) {
       this.queue = OptionalValue.of(queue);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_RECIPIENT)
-    public Builder setRecipient(Recipient recipient) {
+    public Builder<T> setRecipient(Recipient recipient) {
       this.recipient = OptionalValue.of(recipient);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_TTL)
-    public Builder setTtl(Integer ttl) {
+    public Builder<T> setTtl(Integer ttl) {
       this.ttl = OptionalValue.of(ttl);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_PROCESSING_STRATEGY)
-    public Builder setProcessingStrategy(ProcessingStrategy processingStrategy) {
+    public Builder<T> setProcessingStrategy(ProcessingStrategy processingStrategy) {
       this.processingStrategy = OptionalValue.of(processingStrategy);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_CORRELATION_ID)
-    public Builder setCorrelationId(String correlationId) {
+    public Builder<T> setCorrelationId(String correlationId) {
       this.correlationId = OptionalValue.of(correlationId);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_CONVERSATION_METADATA_UPDATE_STRATEGY)
-    public Builder setConversationMetadataUpdateStrategy(
+    public Builder<T> setConversationMetadataUpdateStrategy(
         MetadataUpdateStrategy conversationMetadataUpdateStrategy) {
       this.conversationMetadataUpdateStrategy =
           OptionalValue.of(conversationMetadataUpdateStrategy);
       return this;
     }
 
-    public SendMessageRequest build() {
-      return new SendMessageRequestImpl(
+    public SendMessageRequest<T> build() {
+      return new SendMessageRequestImpl<T>(
           appId,
           callbackUrl,
           channelPriorityOrder,
