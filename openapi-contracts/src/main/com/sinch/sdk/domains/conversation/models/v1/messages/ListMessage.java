@@ -18,7 +18,8 @@ import java.util.List;
 /** declaration */
 @JsonDeserialize(builder = ListMessageImpl.Builder.class)
 public interface ListMessage
-    extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride {
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage {
 
   /**
    * A title for the message that is displayed near the products or choices.

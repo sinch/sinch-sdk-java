@@ -17,7 +17,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 /** declaration */
 @JsonDeserialize(builder = LocationMessageImpl.Builder.class)
 public interface LocationMessage
-    extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride {
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage {
 
   /**
    * Get coordinates

@@ -17,7 +17,9 @@ import java.util.Objects;
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class TemplateMessageImpl implements TemplateMessage {
+public class TemplateMessageImpl
+    implements TemplateMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CHANNEL_TEMPLATE = "channel_template";

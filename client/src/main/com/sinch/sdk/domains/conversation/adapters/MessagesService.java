@@ -5,6 +5,7 @@ import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.utils.databind.Mapper;
+import com.sinch.sdk.domains.conversation.adapters.messages.AppMessageRequestMapper;
 import com.sinch.sdk.domains.conversation.adapters.messages.ChoiceItemMapper;
 import com.sinch.sdk.domains.conversation.adapters.messages.ChoiceMapper;
 import com.sinch.sdk.domains.conversation.adapters.messages.ListSectionMapper;
@@ -52,6 +53,7 @@ public class MessagesService implements com.sinch.sdk.domains.conversation.Messa
 
     private LocalLazyInit() {
       Mapper.getInstance().addMixIn(SendMessageRequestImpl.class, SendMessageRequestMapper.class);
+      AppMessageRequestMapper.initMapper();
       ChoiceItemMapper.initMapper();
       ChoiceMapper.initMapper();
       ListSectionMapper.initMapper();
