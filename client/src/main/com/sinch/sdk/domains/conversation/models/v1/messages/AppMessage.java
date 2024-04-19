@@ -4,7 +4,7 @@ import com.sinch.sdk.domains.conversation.models.v1.Agent;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import java.util.Map;
 
-public interface AppMessage<T> {
+public interface AppMessage<T extends AppMessageMessage> {
 
   T getMessage();
 
@@ -24,7 +24,8 @@ public interface AppMessage<T> {
    *
    * @return explicitChannelOmniMessage
    */
-  Map<ConversationChannel, OmniMessageOverride> getExplicitChannelOmniMessage();
+  Map<OmniMessageOverride.ChannelSpecificTemplate, OmniMessageOverride>
+      getExplicitChannelOmniMessage();
 
   /**
    * Channel specific messages, overriding any transcoding. The structure of this property is more
@@ -43,8 +44,18 @@ public interface AppMessage<T> {
    */
   Agent getAgent();
 
+  /**
+   * Getting Builder
+   *
+   * @return New Builder instance
+   * @since 1.0
+   */
+  static <T extends AppMessageMessage> Builder<T> builder() {
+    return new AppMessageImpl.Builder<>();
+  }
+
   /** Dedicated Builder */
-  interface Builder<T> {
+  interface Builder<T extends AppMessageMessage> {
 
     Builder<T> setMessage(T message);
 
@@ -65,7 +76,8 @@ public interface AppMessage<T> {
      * @see #getExplicitChannelOmniMessage
      */
     Builder<T> setExplicitChannelOmniMessage(
-        Map<ConversationChannel, OmniMessageOverride> explicitChannelOmniMessage);
+        Map<OmniMessageOverride.ChannelSpecificTemplate, OmniMessageOverride>
+            explicitChannelOmniMessage);
 
     /**
      * see getter

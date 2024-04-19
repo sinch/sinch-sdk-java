@@ -1,9 +1,9 @@
 package com.sinch.sample.conversation.messages;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.conversation.models.v1.ContactId;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessage;
-import com.sinch.sdk.domains.conversation.models.v1.ContactId;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -32,7 +32,7 @@ public class Send extends BaseApplication {
             .setAppId(conversationAppId)
             .setMessage(
                 AppMessage.builder()
-                    .setTextMessage(TextMessage.builder().setText("My text from jpp").build())
+                    .setMessage(TextMessage.builder().setText("My text from jpp").build())
                     .build())
             .setRecipient(ContactId.builder().setContactId(conversationContactId).build())
             .setTtl(25)

@@ -24,8 +24,8 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.ListMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.LocationMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.MediaMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride;
-import com.sinch.sdk.domains.conversation.models.v1.messages.TemplateMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessage;
+import com.sinch.sdk.domains.conversation.models.v1.templates.TemplateMessage;
 import java.util.Map;
 
 /** Message originating from an app */
@@ -111,7 +111,8 @@ public interface AppMessageInternal {
    *
    * @return explicitChannelOmniMessage
    */
-  Map<ConversationChannel, OmniMessageOverride> getExplicitChannelOmniMessage();
+  Map<OmniMessageOverride.ChannelSpecificTemplate, OmniMessageOverride>
+      getExplicitChannelOmniMessage();
 
   /**
    * Channel specific messages, overriding any transcoding. The structure of this property is more
@@ -240,7 +241,8 @@ public interface AppMessageInternal {
      * @see #getExplicitChannelOmniMessage
      */
     Builder setExplicitChannelOmniMessage(
-        Map<ConversationChannel, OmniMessageOverride> explicitChannelOmniMessage);
+        Map<OmniMessageOverride.ChannelSpecificTemplate, OmniMessageOverride>
+            explicitChannelOmniMessage);
 
     /**
      * see getter

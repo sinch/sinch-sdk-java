@@ -3,14 +3,13 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.Agent;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
-import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutRequestParameters.Builder;
 import java.util.Map;
 
-public class AppMessageImpl<T> implements AppMessage<T> {
+public class AppMessageImpl<T extends AppMessageMessage> implements AppMessage<T> {
 
   private final OptionalValue<T> message;
   private final OptionalValue<Map<ConversationChannel, Object>> explicitChannelMessage;
-  private final OptionalValue<Map<ConversationChannel, OmniMessageOverride>>
+  private final OptionalValue<Map<OmniMessageOverride.ChannelSpecificTemplate, OmniMessageOverride>>
       explicitChannelOmniMessage;
   private final OptionalValue<Map<ConversationChannel, ChannelSpecificMessage>>
       channelSpecificMessage;
@@ -19,7 +18,8 @@ public class AppMessageImpl<T> implements AppMessage<T> {
   public AppMessageImpl(
       OptionalValue<T> message,
       OptionalValue<Map<ConversationChannel, Object>> explicitChannelMessage,
-      OptionalValue<Map<ConversationChannel, OmniMessageOverride>> explicitChannelOmniMessage,
+      OptionalValue<Map<OmniMessageOverride.ChannelSpecificTemplate, OmniMessageOverride>>
+          explicitChannelOmniMessage,
       OptionalValue<Map<ConversationChannel, ChannelSpecificMessage>> channelSpecificMessage,
       OptionalValue<Agent> agent) {
     this.message = message;
@@ -45,11 +45,13 @@ public class AppMessageImpl<T> implements AppMessage<T> {
     return explicitChannelMessage;
   }
 
-  public Map<ConversationChannel, OmniMessageOverride> getExplicitChannelOmniMessage() {
+  public Map<OmniMessageOverride.ChannelSpecificTemplate, OmniMessageOverride>
+      getExplicitChannelOmniMessage() {
     return explicitChannelOmniMessage.orElse(null);
   }
 
-  public OptionalValue<Map<ConversationChannel, OmniMessageOverride>> explicitChannelOmniMessage() {
+  public OptionalValue<Map<OmniMessageOverride.ChannelSpecificTemplate, OmniMessageOverride>>
+      explicitChannelOmniMessage() {
     return explicitChannelOmniMessage;
   }
 
@@ -86,12 +88,12 @@ public class AppMessageImpl<T> implements AppMessage<T> {
   }
 
   /** Dedicated Builder */
-  static class Builder<T> implements AppMessage.Builder<T> {
+  static class Builder<T extends AppMessageMessage> implements AppMessage.Builder<T> {
 
     OptionalValue<T> message = OptionalValue.empty();
     OptionalValue<Map<ConversationChannel, Object>> explicitChannelMessage = OptionalValue.empty();
-    OptionalValue<Map<ConversationChannel, OmniMessageOverride>> explicitChannelOmniMessage =
-        OptionalValue.empty();
+    OptionalValue<Map<OmniMessageOverride.ChannelSpecificTemplate, OmniMessageOverride>>
+        explicitChannelOmniMessage = OptionalValue.empty();
     OptionalValue<Map<ConversationChannel, ChannelSpecificMessage>> channelSpecificMessage =
         OptionalValue.empty();
     OptionalValue<Agent> agent = OptionalValue.empty();
@@ -108,7 +110,8 @@ public class AppMessageImpl<T> implements AppMessage<T> {
     }
 
     public Builder<T> setExplicitChannelOmniMessage(
-        Map<ConversationChannel, OmniMessageOverride> explicitChannelOmniMessage) {
+        Map<OmniMessageOverride.ChannelSpecificTemplate, OmniMessageOverride>
+            explicitChannelOmniMessage) {
       this.explicitChannelOmniMessage = OptionalValue.of(explicitChannelOmniMessage);
       return this;
     }

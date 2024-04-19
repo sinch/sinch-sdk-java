@@ -18,7 +18,8 @@ import java.util.List;
 /** declaration */
 @JsonDeserialize(builder = CarouselMessageImpl.Builder.class)
 public interface CarouselMessage
-    extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride {
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage {
 
   /**
    * A list of up to 10 cards.
