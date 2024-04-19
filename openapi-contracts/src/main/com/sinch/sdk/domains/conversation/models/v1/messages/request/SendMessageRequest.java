@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.Recipient;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage;
 import com.sinch.sdk.domains.conversation.models.v1.request.MessageQueue;
 import com.sinch.sdk.domains.conversation.models.v1.request.MetadataUpdateStrategy;
 import java.util.List;
@@ -26,7 +27,7 @@ import java.util.Map;
  * &#x60;message&#x60; are all required fields.
  */
 @JsonDeserialize(builder = SendMessageRequestImpl.Builder.class)
-public interface SendMessageRequest {
+public interface SendMessageRequest<T extends AppMessageMessage> {
 
   /**
    * The ID of the app sending the message.
@@ -72,7 +73,7 @@ public interface SendMessageRequest {
    *
    * @return message
    */
-  AppMessage<?> getMessage();
+  AppMessage<T> getMessage();
 
   /**
    * Metadata that should be associated with the message. Returned in the &#x60;metadata&#x60; field
@@ -156,12 +157,12 @@ public interface SendMessageRequest {
    *
    * @return New Builder instance
    */
-  static Builder builder() {
-    return new SendMessageRequestImpl.Builder();
+  static <T extends AppMessageMessage> Builder<T> builder() {
+    return new SendMessageRequestImpl.Builder<>();
   }
 
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder<T extends AppMessageMessage> {
 
     /**
      * see getter
@@ -170,7 +171,7 @@ public interface SendMessageRequest {
      * @return Current builder
      * @see #getAppId
      */
-    Builder setAppId(String appId);
+    Builder<T> setAppId(String appId);
 
     /**
      * see getter
@@ -179,7 +180,7 @@ public interface SendMessageRequest {
      * @return Current builder
      * @see #getCallbackUrl
      */
-    Builder setCallbackUrl(String callbackUrl);
+    Builder<T> setCallbackUrl(String callbackUrl);
 
     /**
      * see getter
@@ -188,7 +189,7 @@ public interface SendMessageRequest {
      * @return Current builder
      * @see #getChannelPriorityOrder
      */
-    Builder setChannelPriorityOrder(List<ConversationChannel> channelPriorityOrder);
+    Builder<T> setChannelPriorityOrder(List<ConversationChannel> channelPriorityOrder);
 
     /**
      * see getter
@@ -197,7 +198,7 @@ public interface SendMessageRequest {
      * @return Current builder
      * @see #getChannelProperties
      */
-    Builder setChannelProperties(Map<String, String> channelProperties);
+    Builder<T> setChannelProperties(Map<String, String> channelProperties);
 
     /**
      * see getter
@@ -206,7 +207,7 @@ public interface SendMessageRequest {
      * @return Current builder
      * @see #getMessage
      */
-    Builder setMessage(AppMessage<?> message);
+    Builder<T> setMessage(AppMessage<T> message);
 
     /**
      * see getter
@@ -215,7 +216,7 @@ public interface SendMessageRequest {
      * @return Current builder
      * @see #getMessageMetadata
      */
-    Builder setMessageMetadata(String messageMetadata);
+    Builder<T> setMessageMetadata(String messageMetadata);
 
     /**
      * see getter
@@ -224,7 +225,7 @@ public interface SendMessageRequest {
      * @return Current builder
      * @see #getConversationMetadata
      */
-    Builder setConversationMetadata(Object conversationMetadata);
+    Builder<T> setConversationMetadata(Object conversationMetadata);
 
     /**
      * see getter
@@ -233,7 +234,7 @@ public interface SendMessageRequest {
      * @return Current builder
      * @see #getQueue
      */
-    Builder setQueue(MessageQueue queue);
+    Builder<T> setQueue(MessageQueue queue);
 
     /**
      * see getter
@@ -242,7 +243,7 @@ public interface SendMessageRequest {
      * @return Current builder
      * @see #getRecipient
      */
-    Builder setRecipient(Recipient recipient);
+    Builder<T> setRecipient(Recipient recipient);
 
     /**
      * see getter
@@ -251,7 +252,7 @@ public interface SendMessageRequest {
      * @return Current builder
      * @see #getTtl
      */
-    Builder setTtl(Integer ttl);
+    Builder<T> setTtl(Integer ttl);
 
     /**
      * see getter
@@ -260,7 +261,7 @@ public interface SendMessageRequest {
      * @return Current builder
      * @see #getProcessingStrategy
      */
-    Builder setProcessingStrategy(ProcessingStrategy processingStrategy);
+    Builder<T> setProcessingStrategy(ProcessingStrategy processingStrategy);
 
     /**
      * see getter
@@ -269,7 +270,7 @@ public interface SendMessageRequest {
      * @return Current builder
      * @see #getCorrelationId
      */
-    Builder setCorrelationId(String correlationId);
+    Builder<T> setCorrelationId(String correlationId);
 
     /**
      * see getter
@@ -278,7 +279,7 @@ public interface SendMessageRequest {
      * @return Current builder
      * @see #getConversationMetadataUpdateStrategy
      */
-    Builder setConversationMetadataUpdateStrategy(
+    Builder<T> setConversationMetadataUpdateStrategy(
         MetadataUpdateStrategy conversationMetadataUpdateStrategy);
 
     /**
@@ -286,6 +287,6 @@ public interface SendMessageRequest {
      *
      * @return The instance build with current builder values
      */
-    SendMessageRequest build();
+    SendMessageRequest<T> build();
   }
 }

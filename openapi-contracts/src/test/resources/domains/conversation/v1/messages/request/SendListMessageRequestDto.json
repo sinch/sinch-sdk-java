@@ -11,14 +11,17 @@
           "title": "a list section title value",
           "items": [
             {
-              "item": {
-                "product": {
-                  "id": "product ID value",
-                  "marketplace": "marketplace value",
-                  "quantity": 4,
-                  "item_price": 3.14159,
-                  "currency": "currency value"
-                }
+              "choice": {
+                "title": "choice title",
+                "description": "description value",
+                "media": {
+                  "media_message": {
+                    "url": "an url value",
+                    "thumbnail_url": "another url",
+                    "filename_override": "filename override value"
+                  }
+                },
+                "postback_data": "postback value"
               }
             }
           ]
@@ -34,48 +37,70 @@
       "KAKAOTALK": "foo value"
     },
     "explicit_channel_omni_message": {
-      "MESSENGER": {
-        "message": {
-          "card_message": {
-            "title": "title value",
-            "description": "description value",
-            "media_message": {
-              "url": "url value"
+      "KAKAOTALK": {
+        "choice_message": {
+          "text_message": {
+            "text": "This is a text message."
+          },
+          "choices": [
+            {
+              "call_message": {
+                "title": "title value",
+                "phone_number": "phone number value"
+              },
+              "postback_data": "postback call_message data value"
             },
-            "height": "MEDIUM",
-            "choices": [
-              {
-                "text_message": {
-                  "text": "This is a text message."
+            {
+              "location_message": {
+                "coordinates": {
+                  "latitude": 47.627980,
+                  "longitude": -2.822915
                 },
-                "postback_data": "postback_data text"
+                "title": "title value",
+                "label": "label value"
               },
-              {
-                "call_message": {
-                  "title": "title value",
-                  "phone_number": "phone number value"
-                },
-                "postback_data": "postback_data call"
+              "postback_data": "postback location_message data value"
+            },
+            {
+              "text_message": {
+                "text": "This is a text message."
               },
-              {
-                "location_message": {
-                  "coordinates": {
-                    "latitude": 47.627980,
-                    "longitude": -2.822915
-                  },
-                  "title": "title value",
-                  "label": "label value"
-                },
-                "postback_data": "postback_data location"
+              "postback_data": "postback text_message data value"
+            },
+            {
+              "url_message": {
+                "title": "title value",
+                "url": "an url value"
               },
-              {
-                "url_message": {
-                  "title": "title value",
-                  "url": "an url value"
-                },
-                "postback_data": "postback_data url"
-              }
-            ]
+              "postback_data": "postback url_message data value"
+            }
+          ]
+        }
+      }
+    },
+    "channel_specific_message": {
+      "MESSENGER": {
+        "flow_id": "1",
+        "flow_cta": "Book!",
+        "header": {
+          "type": "text",
+          "text": "text header value"
+        },
+        "body": {
+          "text": "Flow message body"
+        },
+        "footer": {
+          "text": "Flow message footer"
+        },
+        "flow_token": "AQAAAAACS5FpgQ_cAAAAAD0QI3s.",
+        "flow_mode": "draft",
+        "flow_action": "navigate",
+        "flow_action_payload": {
+          "screen": "<SCREEN_NAME>",
+          "data": {
+            "product_name": "name",
+            "product_description": "description",
+            "product_price": 100
           }
         }
       }
