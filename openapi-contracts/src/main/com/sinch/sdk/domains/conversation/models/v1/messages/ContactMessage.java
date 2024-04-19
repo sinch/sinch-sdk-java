@@ -13,125 +13,17 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.core.utils.EnumDynamic;
-import com.sinch.sdk.core.utils.EnumSupportDynamic;
-import com.sinch.sdk.domains.conversation.models.v1.ProductItem;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
 
-/** Message originating from a contact */
+/** declaration */
 @JsonDeserialize(builder = ContactMessageImpl.Builder.class)
 public interface ContactMessage {
 
   /**
-   * Get choiceResponseMessage
+   * Get contactMessage
    *
-   * @return choiceResponseMessage
+   * @return contactMessage
    */
-  ChoiceResponseMessage getChoiceResponseMessage();
-
-  /**
-   * Get fallbackMessage
-   *
-   * @return fallbackMessage
-   */
-  FallbackMessage getFallbackMessage();
-
-  /**
-   * Get locationMessage
-   *
-   * @return locationMessage
-   */
-  LocationMessage getLocationMessage();
-
-  /**
-   * Get mediaCardMessage
-   *
-   * @return mediaCardMessage
-   */
-  MediaCardMessage getMediaCardMessage();
-
-  /**
-   * Get mediaMessage
-   *
-   * @return mediaMessage
-   */
-  MediaMessage getMediaMessage();
-
-  /**
-   * Get replyTo
-   *
-   * @return replyTo
-   */
-  ReplyToMessage getReplyTo();
-
-  /**
-   * Get textMessage
-   *
-   * @return textMessage
-   */
-  TextMessage getTextMessage();
-
-  /**
-   * The selected products.
-   *
-   * @return products
-   */
-  List<ProductItem> getProducts();
-
-  /**
-   * Optional parameter. Text that may be sent with selected products.
-   *
-   * @return title
-   */
-  String getTitle();
-
-  /**
-   * Optional parameter. The catalog id that the selected products belong to.
-   *
-   * @return catalogId
-   */
-  String getCatalogId();
-
-  /** The message type. */
-  public class MessageTypeEnum extends EnumDynamic<String, MessageTypeEnum> {
-    public static final MessageTypeEnum NFM_REPLY = new MessageTypeEnum("nfm_reply");
-
-    private static final EnumSupportDynamic<String, MessageTypeEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(
-            MessageTypeEnum.class, MessageTypeEnum::new, Arrays.asList(NFM_REPLY));
-
-    private MessageTypeEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<MessageTypeEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static MessageTypeEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(MessageTypeEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
-
-  /**
-   * The message type.
-   *
-   * @return messageType
-   */
-  MessageTypeEnum getMessageType();
-
-  /**
-   * Get message
-   *
-   * @return message
-   */
-  ChannelSpecificContactMessageMessage getMessage();
+  ContactMessage getContactMessage();
 
   /**
    * Getting builder
@@ -148,110 +40,11 @@ public interface ContactMessage {
     /**
      * see getter
      *
-     * @param choiceResponseMessage see getter
+     * @param contactMessage see getter
      * @return Current builder
-     * @see #getChoiceResponseMessage
+     * @see #getContactMessage
      */
-    Builder setChoiceResponseMessage(ChoiceResponseMessage choiceResponseMessage);
-
-    /**
-     * see getter
-     *
-     * @param fallbackMessage see getter
-     * @return Current builder
-     * @see #getFallbackMessage
-     */
-    Builder setFallbackMessage(FallbackMessage fallbackMessage);
-
-    /**
-     * see getter
-     *
-     * @param locationMessage see getter
-     * @return Current builder
-     * @see #getLocationMessage
-     */
-    Builder setLocationMessage(LocationMessage locationMessage);
-
-    /**
-     * see getter
-     *
-     * @param mediaCardMessage see getter
-     * @return Current builder
-     * @see #getMediaCardMessage
-     */
-    Builder setMediaCardMessage(MediaCardMessage mediaCardMessage);
-
-    /**
-     * see getter
-     *
-     * @param mediaMessage see getter
-     * @return Current builder
-     * @see #getMediaMessage
-     */
-    Builder setMediaMessage(MediaMessage mediaMessage);
-
-    /**
-     * see getter
-     *
-     * @param replyTo see getter
-     * @return Current builder
-     * @see #getReplyTo
-     */
-    Builder setReplyTo(ReplyToMessage replyTo);
-
-    /**
-     * see getter
-     *
-     * @param textMessage see getter
-     * @return Current builder
-     * @see #getTextMessage
-     */
-    Builder setTextMessage(TextMessage textMessage);
-
-    /**
-     * see getter
-     *
-     * @param products see getter
-     * @return Current builder
-     * @see #getProducts
-     */
-    Builder setProducts(List<ProductItem> products);
-
-    /**
-     * see getter
-     *
-     * @param title see getter
-     * @return Current builder
-     * @see #getTitle
-     */
-    Builder setTitle(String title);
-
-    /**
-     * see getter
-     *
-     * @param catalogId see getter
-     * @return Current builder
-     * @see #getCatalogId
-     */
-    Builder setCatalogId(String catalogId);
-
-    /**
-     * see getter
-     *
-     * @param messageType see getter
-     * @return Current builder
-     * @see #getMessageType
-     */
-    Builder setMessageType(MessageTypeEnum messageType);
-
-    /**
-     * see getter
-     *
-     * @param message see getter
-     * @return Current builder
-     * @see #getMessage
-     */
-    Builder setMessage(ChannelSpecificContactMessageMessage message);
+    Builder setContactMessage(ContactMessage contactMessage);
 
     /**
      * Create instance
