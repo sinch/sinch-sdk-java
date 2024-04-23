@@ -23,9 +23,9 @@ public class Config {
 
     var configuration =
         Configuration.builder()
+            .setProjectId(projectId)
             .setKeyId(keyId)
             .setKeySecret(keySecret)
-            .setProjectId(projectId)
             .build();
 
     return new SinchClient(configuration).sms();

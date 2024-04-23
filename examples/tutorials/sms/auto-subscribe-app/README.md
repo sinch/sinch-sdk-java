@@ -17,9 +17,9 @@ Application settings is using the SpringBoot configuration file: [`application.y
 
 #### Sinch credentials
 Located in `credentials` section:
+- `project-id`: YOUR_project_id
 - `key-id`: YOUR_access_key
 - `key-secret`: YOUR_access_secret
-- `project-id`: YOUR_project_id
 
 #### Server port
 Located in `server` section:
