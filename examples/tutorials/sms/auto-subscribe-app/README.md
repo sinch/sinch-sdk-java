@@ -3,7 +3,7 @@
 This directory contains sample related to Java SDK tutorials: [](https://developers.sinch.com/docs/sms/tutorials/sms/tutorials/java-sdk/auto-subscribe)
 
 ## Requirements
--
+
 - JDK 21 or later
 - [Maven](https://maven.apache.org/)
 - [ngrok](https://ngrok.com/docs)
@@ -16,10 +16,10 @@ This directory contains sample related to Java SDK tutorials: [](https://develop
 Application settings is using the SpringBoot configuration file: [`application.yaml`](src/main/resources/application.yaml) file and set:
 
 #### Sinch credentials
-Located in `credentials` section:
+Located in `credentials` section (*you can find all of the credentials you need on your [Sinch dashboard](https://dashboard.sinch.com)*):
 - `project-id`: YOUR_project_id
-- `key-id`: YOUR_access_key
-- `key-secret`: YOUR_access_secret
+- `key-id`: YOUR_access_key_id
+- `key-secret`: YOUR_access_key_secret
 
 #### Server port
 Located in `server` section:
