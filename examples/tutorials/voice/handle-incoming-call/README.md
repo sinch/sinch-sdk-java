@@ -30,7 +30,7 @@ Located in `server` section:
 
 ### Starting server locally
 
-Compile and run the application as server onto you localhost.
+Compile and run the application as server on your localhost.
 ```bash
 mvn spring-boot:run
 ```
