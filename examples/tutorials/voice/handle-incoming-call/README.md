@@ -26,7 +26,7 @@ Located in `voice` section you can modify:
 
 #### Server port
 Located in `server` section:
-- port: The port to be used to listen incoming request. <em>Default: 8090</em>
+- port: The port to be used for listening for incoming requests. <em>Default: 8090</em>
 
 ### Starting server locally
 
