@@ -1,4 +1,4 @@
-# Handle Inconing Call webhook application sample
+# Handle Incoming Call webhook application sample
 
 This directory contains sample related to Java SDK tutorial: [Handle incoming call](https://developers.sinch.com/docs/voice/getting-started/java/incoming-call)
 
