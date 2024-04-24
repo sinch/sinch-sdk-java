@@ -63,7 +63,7 @@ Contains `https://0e64-78-117-86-140.ngrok-free.app` value.
 
 You have now a local web server responding to `/voice` path and `ngrok` instance running providing a bridge from `https://0e64-78-117-86-140.ngrok-free.app` onto local webserver.
 
-Last step is now to configure your dashboard to set Voice application callback to point your local webserver.
+Last step is now to configure your dashboard to set Voice application callback to point towards your local webserver.
 
 The callback to be called by sinch will be in form of: `<bridge host>`/`<web server controller path>`
 
