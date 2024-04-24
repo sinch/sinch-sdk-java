@@ -45,7 +45,7 @@ Forwarding request to same `8090` port used above:
 ngrok http 8090
 ```
 
-ngrok output will contains output like:
+ngrok output will contain output like the following:
 ```
 ngrok                                                                                                                                                                                                                          (Ctrl+C to quit)
 
