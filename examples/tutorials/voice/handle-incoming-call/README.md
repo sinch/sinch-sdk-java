@@ -8,6 +8,7 @@ This directory contains sample related to Java SDK tutorial: [Handle incoming ca
 - [Maven](https://maven.apache.org/)
 - [ngrok](https://ngrok.com/docs)
 - [Sinch account](https://dashboard.sinch.com)
+- Having a [Sinch phone number attached to your account](https://developers.sinch.com/docs/voice/getting-started/#3-assign-your-number)
 
 ## Usage
 
@@ -16,9 +17,9 @@ This directory contains sample related to Java SDK tutorial: [Handle incoming ca
 Application settings is using the SpringBoot configuration file: [`application.yaml`](src/main/resources/application.yaml) file and set:
 
 #### Sinch credentials
-Located in `credentials` section (*you can find Voice application credentials you need on your [Sinch dashboard](https://dashboard.sinch.com/voice/apps)*):
-- `api-id`: YOUR_Voice_Application_Id
-- `api-secret`: YOUR_Voice_Application_Secret
+Located in `credentials.application` section (*you can find Voice application credentials you need on your [Sinch dashboard](https://dashboard.sinch.com/voice/apps)*):
+- `id`: YOUR_Voice_Application_Id
+- `secret`: YOUR_Voice_Application_Secret
 
 #### Webhook controller path
 Located in `voice` section you can modify: 
@@ -73,4 +74,6 @@ e.g. According to previous sample values: https://0e64-78-117-86-140.ngrok-free.
 2. Edit the application setting related to the Application ID set from config file (see [Sinch credentials](#configure-application-settings))
 3. Fill `Callback URL` field with *https://0e64-78-117-86-140.ngrok-free.app/voice*
 
-You can now perform a to your number, the webhook will be called and serve response to callee.
+You can now place a call to Sinch number attached to your Voice app (see [documentation](https://developers.sinch.com/docs/voice/getting-started/#3-assign-your-number)
+
+When calling your Sinch number attached to application, the Sinch platform will trigger an `Incoming Call Event (ICE)` toward your server your response will be served to the callee.

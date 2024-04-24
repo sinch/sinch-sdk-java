@@ -9,8 +9,8 @@ server:
 
 credentials:
   application:
-      api-key:
-      api-secret: 
+      key:
+      secret: 
 
 voice:
   controller-path: /voice

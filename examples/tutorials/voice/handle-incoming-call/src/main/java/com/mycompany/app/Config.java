@@ -9,11 +9,11 @@ import org.springframework.context.annotation.Bean;
 @org.springframework.context.annotation.Configuration
 public class Config {
 
-  @Value("${credentials.application.api-key}")
-  String applicationApiKey;
+  @Value("${credentials.application.key}")
+  String applicationKey;
 
-  @Value("${credentials.application.api-secret}")
-  String applicationApiSecret;
+  @Value("${credentials.application.secret}")
+  String applicationSecret;
 
   @Value("${voice.controller-path}")
   private String controllerPath;
@@ -23,8 +23,8 @@ public class Config {
 
     var configuration =
         Configuration.builder()
-            .setApplicationKey(applicationApiKey)
-            .setApplicationSecret(applicationApiSecret)
+            .setApplicationKey(applicationKey)
+            .setApplicationSecret(applicationSecret)
             .build();
 
     return new SinchClient(configuration).voice();
