@@ -7,6 +7,6 @@ public interface WhatsAppInteractiveHeaderMediaBase {
   /** Dedicated Builder */
   interface Builder<B extends Builder<B>> {
 
-    B setMedia(WhatsAppInteractiveHeaderMedia text);
+    B setMedia(WhatsAppInteractiveHeaderMedia media);
   }
 }
