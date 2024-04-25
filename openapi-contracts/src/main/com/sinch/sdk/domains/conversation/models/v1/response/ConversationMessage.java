@@ -15,8 +15,9 @@ package com.sinch.sdk.domains.conversation.models.v1.response;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationDirection;
-import com.sinch.sdk.domains.conversation.models.v1.InjectMessageRequestMessage;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.internal.AppMessageInternal;
 import java.time.Instant;
 
 /** A message on a particular channel. */
@@ -24,11 +25,18 @@ import java.time.Instant;
 public interface ConversationMessage {
 
   /**
-   * Get message
+   * Get appMessage
    *
-   * @return message
+   * @return appMessage
    */
-  InjectMessageRequestMessage getMessage();
+  AppMessageInternal getAppMessage();
+
+  /**
+   * Get contactMessage
+   *
+   * @return contactMessage
+   */
+  ContactMessage getContactMessage();
 
   /**
    * The time Conversation API processed the message.
@@ -116,11 +124,20 @@ public interface ConversationMessage {
     /**
      * see getter
      *
-     * @param message see getter
+     * @param appMessage see getter
      * @return Current builder
-     * @see #getMessage
+     * @see #getAppMessage
      */
-    Builder setMessage(InjectMessageRequestMessage message);
+    Builder setAppMessage(AppMessageInternal appMessage);
+
+    /**
+     * see getter
+     *
+     * @param contactMessage see getter
+     * @return Current builder
+     * @see #getContactMessage
+     */
+    Builder setContactMessage(ContactMessage contactMessage);
 
     /**
      * see getter
