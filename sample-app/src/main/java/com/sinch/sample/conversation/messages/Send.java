@@ -1,7 +1,9 @@
 package com.sinch.sample.conversation.messages;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.conversation.models.v1.Recipient;
+import com.sinch.sdk.domains.conversation.models.v1.Agent;
+import com.sinch.sdk.domains.conversation.models.v1.AgentType;
+import com.sinch.sdk.domains.conversation.models.v1.ContactId;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
@@ -28,17 +30,25 @@ public class Send extends BaseApplication {
     LOGGER.info("Send message with Conversation");
 
     var parameters =
-        SendMessageRequest.builder()
+        SendMessageRequest.<TextMessage>builder()
             .setAppId(conversationAppId)
             .setMessage(
-                AppMessage.builder()
-                    .setTextMessage(TextMessage.builder().setText("My text from jpp").build())
+                AppMessage.<TextMessage>builder()
+                    .setMessage(
+                        TextMessage.builder()
+                            .setText("[Java SDK: Conversation Message] Sample text message")
+                            .build())
+                    .setAgent(
+                        Agent.builder()
+                            .setType(AgentType.HUMAN)
+                            .setDisplayName("Agent Name")
+                            .build())
                     .build())
-            .setRecipient(Recipient.builder().setContactId(conversationContactId).build())
+            .setRecipient(ContactId.builder().setContactId(conversationContactId).build())
             .setTtl(25)
             .build();
 
-    var result = client.conversation().messages().send(parameters);
+    var result = client.conversation().messages().sendTextMessage(parameters);
 
     LOGGER.info("Response: " + result);
   }

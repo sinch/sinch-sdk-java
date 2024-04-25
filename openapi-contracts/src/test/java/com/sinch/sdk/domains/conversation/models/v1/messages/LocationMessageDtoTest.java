@@ -3,13 +3,14 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.domains.conversation.adapters.ConversationBaseTest;
+import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-public class LocationMessageDtoTest extends BaseTest {
+public class LocationMessageDtoTest extends ConversationBaseTest {
 
   public static LocationMessage locationMessageDto =
       LocationMessage.builder()
@@ -27,5 +28,12 @@ public class LocationMessageDtoTest extends BaseTest {
     String serializedString = objectMapper.writeValueAsString(locationMessageDto);
 
     JSONAssert.assertEquals(jsonLocationMessageDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeMessageDto() throws JsonProcessingException {
+    Object deserialized = objectMapper.readValue(jsonLocationMessageDto, LocationMessage.class);
+
+    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(locationMessageDto);
   }
 }

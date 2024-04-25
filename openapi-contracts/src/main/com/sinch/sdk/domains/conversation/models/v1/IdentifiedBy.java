@@ -17,7 +17,7 @@ import java.util.List;
 
 /** The identity as specified by the channel. */
 @JsonDeserialize(builder = IdentifiedByImpl.Builder.class)
-public interface IdentifiedBy {
+public interface IdentifiedBy extends com.sinch.sdk.domains.conversation.models.v1.Recipient {
 
   /**
    * Get channelIdentities

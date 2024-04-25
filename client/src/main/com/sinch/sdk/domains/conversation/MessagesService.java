@@ -1,8 +1,17 @@
 package com.sinch.sdk.domains.conversation;
 
+import com.sinch.sdk.domains.conversation.models.v1.messages.CardMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.CarouselMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ChoiceMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ContactInfoMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ListMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.LocationMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.MediaMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
 import com.sinch.sdk.domains.conversation.models.v1.response.ConversationMessage;
+import com.sinch.sdk.domains.conversation.models.v1.templates.TemplateMessage;
 
 /**
  * Messages related service
@@ -34,7 +43,23 @@ public interface MessagesService {
    *     com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse})
    * @since 1.0
    */
-  SendMessageResponse send(SendMessageRequest request);
+  SendMessageResponse sendCardMessage(SendMessageRequest<CardMessage> request);
+
+  SendMessageResponse sendCarouselMessage(SendMessageRequest<CarouselMessage> request);
+
+  SendMessageResponse sendChoiceMessage(SendMessageRequest<ChoiceMessage> request);
+
+  SendMessageResponse sendContactInfoMessage(SendMessageRequest<ContactInfoMessage> request);
+
+  SendMessageResponse sendListMessage(SendMessageRequest<ListMessage> request);
+
+  SendMessageResponse sendLocationMessage(SendMessageRequest<LocationMessage> request);
+
+  SendMessageResponse sendMediaMessage(SendMessageRequest<MediaMessage> request);
+
+  SendMessageResponse sendTemplateMessage(SendMessageRequest<TemplateMessage> request);
+
+  SendMessageResponse sendTextMessage(SendMessageRequest<TextMessage> request);
 
   ConversationMessage get(String messageId);
 

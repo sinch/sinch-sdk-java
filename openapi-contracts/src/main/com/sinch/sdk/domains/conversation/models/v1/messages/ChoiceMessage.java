@@ -17,14 +17,16 @@ import java.util.List;
 
 /** declaration */
 @JsonDeserialize(builder = ChoiceMessageImpl.Builder.class)
-public interface ChoiceMessage {
+public interface ChoiceMessage
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage {
 
   /**
    * The number of choices is limited to 10.
    *
    * @return choices
    */
-  List<Choice> getChoices();
+  List<Choice<?>> getChoices();
 
   /**
    * Get textMessage
@@ -52,7 +54,7 @@ public interface ChoiceMessage {
      * @return Current builder
      * @see #getChoices
      */
-    Builder setChoices(List<Choice> choices);
+    Builder setChoices(List<Choice<?>> choices);
 
     /**
      * see getter

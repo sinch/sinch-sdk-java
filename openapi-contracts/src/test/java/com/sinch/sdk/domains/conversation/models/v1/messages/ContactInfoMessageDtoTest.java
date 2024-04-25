@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import java.time.LocalDate;
 import java.util.Collections;
+import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -32,5 +33,13 @@ public class ContactInfoMessageDtoTest extends BaseTest {
     String serializedString = objectMapper.writeValueAsString(contactInfoMessageDto);
 
     JSONAssert.assertEquals(jsonContactInfoMessageDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeMessageDto() throws JsonProcessingException {
+    Object deserialized =
+        objectMapper.readValue(jsonContactInfoMessageDto, ContactInfoMessage.class);
+
+    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(contactInfoMessageDto);
   }
 }

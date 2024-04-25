@@ -17,7 +17,9 @@ import java.util.List;
 
 /** declaration */
 @JsonDeserialize(builder = ListMessageImpl.Builder.class)
-public interface ListMessage {
+public interface ListMessage
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage {
 
   /**
    * A title for the message that is displayed near the products or choices.
@@ -38,7 +40,7 @@ public interface ListMessage {
    *
    * @return sections
    */
-  List<ListSection> getSections();
+  List<ListSection<?>> getSections();
 
   /**
    * Get messageProperties
@@ -84,7 +86,7 @@ public interface ListMessage {
      * @return Current builder
      * @see #getSections
      */
-    Builder setSections(List<ListSection> sections);
+    Builder setSections(List<ListSection<?>> sections);
 
     /**
      * see getter

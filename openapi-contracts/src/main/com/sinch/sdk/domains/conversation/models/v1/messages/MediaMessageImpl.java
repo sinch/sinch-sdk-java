@@ -16,7 +16,10 @@ import java.util.Objects;
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class MediaMessageImpl implements MediaMessage {
+public class MediaMessageImpl
+    implements MediaMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_THUMBNAIL_URL = "thumbnail_url";

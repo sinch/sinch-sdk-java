@@ -13,7 +13,7 @@ import java.util.Objects;
 @JsonPropertyOrder({ListSectionImpl.JSON_PROPERTY_TITLE, ListSectionImpl.JSON_PROPERTY_ITEMS})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class ListSectionImpl implements ListSection {
+public class ListSectionImpl<T> implements ListSection<T> {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_TITLE = "title";
@@ -22,11 +22,11 @@ public class ListSectionImpl implements ListSection {
 
   public static final String JSON_PROPERTY_ITEMS = "items";
 
-  private OptionalValue<List<ListItem>> items;
+  private OptionalValue<List<ListItem<T>>> items;
 
   public ListSectionImpl() {}
 
-  protected ListSectionImpl(OptionalValue<String> title, OptionalValue<List<ListItem>> items) {
+  protected ListSectionImpl(OptionalValue<String> title, OptionalValue<List<ListItem<T>>> items) {
     this.title = title;
     this.items = items;
   }
@@ -43,13 +43,13 @@ public class ListSectionImpl implements ListSection {
   }
 
   @JsonIgnore
-  public List<ListItem> getItems() {
+  public List<ListItem<T>> getItems() {
     return items.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_ITEMS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<List<ListItem>> items() {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<List<ListItem<T>>> items() {
     return items;
   }
 
@@ -93,24 +93,24 @@ public class ListSectionImpl implements ListSection {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements ListSection.Builder {
+  static class Builder<T> implements ListSection.Builder<T> {
     OptionalValue<String> title = OptionalValue.empty();
-    OptionalValue<List<ListItem>> items = OptionalValue.empty();
+    OptionalValue<List<ListItem<T>>> items = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_TITLE)
-    public Builder setTitle(String title) {
+    public Builder<T> setTitle(String title) {
       this.title = OptionalValue.of(title);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_ITEMS)
-    public Builder setItems(List<ListItem> items) {
+    public Builder<T> setItems(List<ListItem<T>> items) {
       this.items = OptionalValue.of(items);
       return this;
     }
 
-    public ListSection build() {
-      return new ListSectionImpl(title, items);
+    public ListSection<T> build() {
+      return new ListSectionImpl<T>(title, items);
     }
   }
 }

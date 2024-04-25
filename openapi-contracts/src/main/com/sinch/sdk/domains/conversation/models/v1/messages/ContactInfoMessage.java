@@ -18,7 +18,9 @@ import java.util.List;
 
 /** declaration */
 @JsonDeserialize(builder = ContactInfoMessageImpl.Builder.class)
-public interface ContactInfoMessage {
+public interface ContactInfoMessage
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage {
 
   /**
    * Get name

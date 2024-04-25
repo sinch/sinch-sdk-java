@@ -15,16 +15,18 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 
-/** declaration */
+/** Message containing text, media and choices. */
 @JsonDeserialize(builder = CardMessageImpl.Builder.class)
-public interface CardMessage {
+public interface CardMessage
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage {
 
   /**
    * You may include choices in your Card Message. The number of choices is limited to 10.
    *
    * @return choices
    */
-  List<Choice> getChoices();
+  List<Choice<?>> getChoices();
 
   /**
    * This is an optional description field that is displayed below the title on the card.
@@ -73,7 +75,7 @@ public interface CardMessage {
      * @return Current builder
      * @see #getChoices
      */
-    Builder setChoices(List<Choice> choices);
+    Builder setChoices(List<Choice<?>> choices);
 
     /**
      * see getter

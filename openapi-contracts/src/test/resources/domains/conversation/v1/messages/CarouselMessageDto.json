@@ -1,47 +1,45 @@
 {
   "cards": [
     {
-      "card_message": {
-        "title": "title value",
-        "description": "description value",
-        "media_message": {
-          "url": "url value"
+      "title": "title value",
+      "description": "description value",
+      "media_message": {
+        "url": "url value"
+      },
+      "height": "MEDIUM",
+      "choices": [
+        {
+          "text_message": {
+            "text": "This is a text message."
+          },
+          "postback_data": "postback_data text"
         },
-        "height": "MEDIUM",
-        "choices": [
-          {
-            "text_message": {
-              "text": "This is a text message."
-            },
-            "postback_data": "postback_data text"
+        {
+          "call_message": {
+            "title": "title value",
+            "phone_number": "phone number value"
           },
-          {
-            "call_message": {
-              "title": "title value",
-              "phone_number": "phone number value"
+          "postback_data": "postback_data call"
+        },
+        {
+          "location_message": {
+            "coordinates": {
+              "latitude": 47.627980,
+              "longitude": -2.822915
             },
-            "postback_data": "postback_data call"
+            "title": "title value",
+            "label": "label value"
           },
-          {
-            "location_message": {
-              "coordinates": {
-                "latitude": 47.627980,
-                "longitude": -2.822915
-              },
-              "title": "title value",
-              "label": "label value"
-            },
-            "postback_data": "postback_data location"
+          "postback_data": "postback_data location"
+        },
+        {
+          "url_message": {
+            "title": "title value",
+            "url": "an url value"
           },
-          {
-            "url_message": {
-              "title": "title value",
-              "url": "an url value"
-            },
-            "postback_data": "postback_data url"
-          }
-        ]
-      }
+          "postback_data": "postback_data url"
+        }
+      ]
     }
   ],
   "choices": [
@@ -49,7 +47,32 @@
       "call_message": {
         "title": "title value",
         "phone_number": "phone number value"
-      }
+      },
+      "postback_data": "postback call_message data value"
+    },
+    {
+      "location_message": {
+        "coordinates": {
+          "latitude": 47.627980,
+          "longitude": -2.822915
+        },
+        "title": "title value",
+        "label": "label value"
+      },
+      "postback_data": "postback location_message data value"
+    },
+    {
+      "text_message": {
+        "text": "This is a text message."
+      },
+      "postback_data": "postback text_message data value"
+    },
+    {
+      "url_message": {
+        "title": "title value",
+        "url": "an url value"
+      },
+      "postback_data": "postback url_message data value"
     }
   ]
 }

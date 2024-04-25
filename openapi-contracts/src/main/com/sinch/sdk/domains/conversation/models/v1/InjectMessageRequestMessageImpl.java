@@ -22,7 +22,7 @@ public class InjectMessageRequestMessageImpl implements InjectMessageRequestMess
 
   public static final String JSON_PROPERTY_APP_MESSAGE = "app_message";
 
-  private OptionalValue<AppMessage> appMessage;
+  private OptionalValue<AppMessage<?>> appMessage;
 
   public static final String JSON_PROPERTY_CONTACT_MESSAGE = "contact_message";
 
@@ -31,19 +31,19 @@ public class InjectMessageRequestMessageImpl implements InjectMessageRequestMess
   public InjectMessageRequestMessageImpl() {}
 
   protected InjectMessageRequestMessageImpl(
-      OptionalValue<AppMessage> appMessage, OptionalValue<ContactMessage> contactMessage) {
+      OptionalValue<AppMessage<?>> appMessage, OptionalValue<ContactMessage> contactMessage) {
     this.appMessage = appMessage;
     this.contactMessage = contactMessage;
   }
 
   @JsonIgnore
-  public AppMessage getAppMessage() {
+  public AppMessage<?> getAppMessage() {
     return appMessage.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_APP_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<AppMessage> appMessage() {
+  public OptionalValue<AppMessage<?>> appMessage() {
     return appMessage;
   }
 
@@ -100,11 +100,11 @@ public class InjectMessageRequestMessageImpl implements InjectMessageRequestMess
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements InjectMessageRequestMessage.Builder {
-    OptionalValue<AppMessage> appMessage = OptionalValue.empty();
+    OptionalValue<AppMessage<?>> appMessage = OptionalValue.empty();
     OptionalValue<ContactMessage> contactMessage = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_APP_MESSAGE)
-    public Builder setAppMessage(AppMessage appMessage) {
+    public Builder setAppMessage(AppMessage<?> appMessage) {
       this.appMessage = OptionalValue.of(appMessage);
       return this;
     }

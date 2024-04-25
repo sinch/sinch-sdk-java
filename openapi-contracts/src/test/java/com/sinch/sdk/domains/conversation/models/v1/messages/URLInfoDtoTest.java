@@ -4,6 +4,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
+import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -22,5 +23,12 @@ public class URLInfoDtoTest extends BaseTest {
     String serializedString = objectMapper.writeValueAsString(urlInfoDto);
 
     JSONAssert.assertEquals(jsonURLInfoDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeMessageDto() throws JsonProcessingException {
+    Object deserialized = objectMapper.readValue(jsonURLInfoDto, urlInfoDto.getClass());
+
+    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(urlInfoDto);
   }
 }

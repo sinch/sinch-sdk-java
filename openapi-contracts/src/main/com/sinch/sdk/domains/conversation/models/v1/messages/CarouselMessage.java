@@ -17,21 +17,23 @@ import java.util.List;
 
 /** declaration */
 @JsonDeserialize(builder = CarouselMessageImpl.Builder.class)
-public interface CarouselMessage {
+public interface CarouselMessage
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage {
 
   /**
    * A list of up to 10 cards.
    *
    * @return cards
    */
-  List<CardMessageItem> getCards();
+  List<CardMessage> getCards();
 
   /**
    * Optional. Outer choices on the carousel level. The number of outer choices is limited to 3.
    *
    * @return choices
    */
-  List<Choice> getChoices();
+  List<Choice<?>> getChoices();
 
   /**
    * Getting builder
@@ -52,7 +54,7 @@ public interface CarouselMessage {
      * @return Current builder
      * @see #getCards
      */
-    Builder setCards(List<CardMessageItem> cards);
+    Builder setCards(List<CardMessage> cards);
 
     /**
      * see getter
@@ -61,7 +63,7 @@ public interface CarouselMessage {
      * @return Current builder
      * @see #getChoices
      */
-    Builder setChoices(List<Choice> choices);
+    Builder setChoices(List<Choice<?>> choices);
 
     /**
      * Create instance
