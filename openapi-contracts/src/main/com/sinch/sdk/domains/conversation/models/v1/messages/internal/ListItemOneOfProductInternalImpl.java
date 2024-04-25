@@ -32,7 +32,7 @@ public class ListItemOneOfProductInternalImpl implements ListItemOneOfProductInt
   }
 
   @JsonProperty(JSON_PROPERTY_PRODUCT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<ProductItem> product() {
     return product;
   }

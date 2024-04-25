@@ -95,7 +95,6 @@ public class ListItemOneOfInternalImpl extends AbstractOpenApiSchema {
             attemptParsing |=
                 (ListItemOneOfChoiceInternalImpl.class.equals(String.class)
                     && token == JsonToken.VALUE_STRING);
-            attemptParsing |= (token == JsonToken.VALUE_NULL);
           }
         }
         if (attemptParsing) {
@@ -139,7 +138,6 @@ public class ListItemOneOfInternalImpl extends AbstractOpenApiSchema {
             attemptParsing |=
                 (ListItemOneOfProductInternalImpl.class.equals(String.class)
                     && token == JsonToken.VALUE_STRING);
-            attemptParsing |= (token == JsonToken.VALUE_NULL);
           }
         }
         if (attemptParsing) {
@@ -173,7 +171,7 @@ public class ListItemOneOfInternalImpl extends AbstractOpenApiSchema {
     @Override
     public ListItemOneOfInternalImpl getNullValue(DeserializationContext ctxt)
         throws JsonMappingException {
-      return null;
+      throw new JsonMappingException(ctxt.getParser(), "ListItemOneOfInternalImpl cannot be null");
     }
   }
 
@@ -181,16 +179,16 @@ public class ListItemOneOfInternalImpl extends AbstractOpenApiSchema {
   public static final Map<String, Class<?>> schemas = new HashMap<>();
 
   public ListItemOneOfInternalImpl() {
-    super("oneOf", Boolean.TRUE);
+    super("oneOf", Boolean.FALSE);
   }
 
   public ListItemOneOfInternalImpl(ListItemOneOfChoiceInternalImpl o) {
-    super("oneOf", Boolean.TRUE);
+    super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
   public ListItemOneOfInternalImpl(ListItemOneOfProductInternalImpl o) {
-    super("oneOf", Boolean.TRUE);
+    super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
@@ -216,11 +214,6 @@ public class ListItemOneOfInternalImpl extends AbstractOpenApiSchema {
    */
   @Override
   public void setActualInstance(Object instance) {
-    if (instance == null) {
-      super.setActualInstance(instance);
-      return;
-    }
-
     if (JSONNavigator.isInstanceOf(
         ListItemOneOfChoiceInternalImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
