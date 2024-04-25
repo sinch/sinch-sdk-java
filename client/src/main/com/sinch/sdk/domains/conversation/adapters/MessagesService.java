@@ -66,7 +66,7 @@ public class MessagesService implements com.sinch.sdk.domains.conversation.Messa
     return send(request);
   }
 
-  public SendMessageResponse sendCContactInfoMessage(
+  public SendMessageResponse sendContactInfoMessage(
       SendMessageRequest<ContactInfoMessage> request) {
     return send(request);
   }

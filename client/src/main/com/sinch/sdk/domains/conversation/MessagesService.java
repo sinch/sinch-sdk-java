@@ -49,7 +49,7 @@ public interface MessagesService {
 
   SendMessageResponse sendChoiceMessage(SendMessageRequest<ChoiceMessage> request);
 
-  SendMessageResponse sendCContactInfoMessage(SendMessageRequest<ContactInfoMessage> request);
+  SendMessageResponse sendContactInfoMessage(SendMessageRequest<ContactInfoMessage> request);
 
   SendMessageResponse sendListMessage(SendMessageRequest<ListMessage> request);
 
