@@ -32,7 +32,7 @@ public class ListItemOneOfChoiceInternalImpl implements ListItemOneOfChoiceInter
   }
 
   @JsonProperty(JSON_PROPERTY_CHOICE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<ChoiceItem> choice() {
     return choice;
   }

@@ -9,13 +9,15 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationDirection;
-import com.sinch.sdk.domains.conversation.models.v1.InjectMessageRequestMessage;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.internal.AppMessageInternal;
 import java.time.Instant;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  ConversationMessageImpl.JSON_PROPERTY_MESSAGE,
+  ConversationMessageImpl.JSON_PROPERTY_APP_MESSAGE,
+  ConversationMessageImpl.JSON_PROPERTY_CONTACT_MESSAGE,
   ConversationMessageImpl.JSON_PROPERTY_ACCEPT_TIME,
   ConversationMessageImpl.JSON_PROPERTY_CHANNEL_IDENTITY,
   ConversationMessageImpl.JSON_PROPERTY_CONTACT_ID,
@@ -32,9 +34,13 @@ import java.util.Objects;
 public class ConversationMessageImpl implements ConversationMessage {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_MESSAGE = "message";
+  public static final String JSON_PROPERTY_APP_MESSAGE = "app_message";
 
-  private OptionalValue<InjectMessageRequestMessage> message;
+  private OptionalValue<AppMessageInternal> appMessage;
+
+  public static final String JSON_PROPERTY_CONTACT_MESSAGE = "contact_message";
+
+  private OptionalValue<ContactMessage> contactMessage;
 
   public static final String JSON_PROPERTY_ACCEPT_TIME = "accept_time";
 
@@ -79,7 +85,8 @@ public class ConversationMessageImpl implements ConversationMessage {
   public ConversationMessageImpl() {}
 
   protected ConversationMessageImpl(
-      OptionalValue<InjectMessageRequestMessage> message,
+      OptionalValue<AppMessageInternal> appMessage,
+      OptionalValue<ContactMessage> contactMessage,
       OptionalValue<Instant> acceptTime,
       OptionalValue<ChannelIdentity> channelIdentity,
       OptionalValue<String> contactId,
@@ -90,7 +97,8 @@ public class ConversationMessageImpl implements ConversationMessage {
       OptionalValue<Boolean> injected,
       OptionalValue<String> senderId,
       OptionalValue<ProcessingMode> processingMode) {
-    this.message = message;
+    this.appMessage = appMessage;
+    this.contactMessage = contactMessage;
     this.acceptTime = acceptTime;
     this.channelIdentity = channelIdentity;
     this.contactId = contactId;
@@ -104,14 +112,25 @@ public class ConversationMessageImpl implements ConversationMessage {
   }
 
   @JsonIgnore
-  public InjectMessageRequestMessage getMessage() {
-    return message.orElse(null);
+  public AppMessageInternal getAppMessage() {
+    return appMessage.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_MESSAGE)
+  @JsonProperty(JSON_PROPERTY_APP_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<InjectMessageRequestMessage> message() {
-    return message;
+  public OptionalValue<AppMessageInternal> appMessage() {
+    return appMessage;
+  }
+
+  @JsonIgnore
+  public ContactMessage getContactMessage() {
+    return contactMessage.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CONTACT_MESSAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<ContactMessage> contactMessage() {
+    return contactMessage;
   }
 
   @JsonIgnore
@@ -234,7 +253,8 @@ public class ConversationMessageImpl implements ConversationMessage {
       return false;
     }
     ConversationMessageImpl conversationMessage = (ConversationMessageImpl) o;
-    return Objects.equals(this.message, conversationMessage.message)
+    return Objects.equals(this.appMessage, conversationMessage.appMessage)
+        && Objects.equals(this.contactMessage, conversationMessage.contactMessage)
         && Objects.equals(this.acceptTime, conversationMessage.acceptTime)
         && Objects.equals(this.channelIdentity, conversationMessage.channelIdentity)
         && Objects.equals(this.contactId, conversationMessage.contactId)
@@ -250,7 +270,8 @@ public class ConversationMessageImpl implements ConversationMessage {
   @Override
   public int hashCode() {
     return Objects.hash(
-        message,
+        appMessage,
+        contactMessage,
         acceptTime,
         channelIdentity,
         contactId,
@@ -267,7 +288,8 @@ public class ConversationMessageImpl implements ConversationMessage {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ConversationMessageImpl {\n");
-    sb.append("    message: ").append(toIndentedString(message)).append("\n");
+    sb.append("    appMessage: ").append(toIndentedString(appMessage)).append("\n");
+    sb.append("    contactMessage: ").append(toIndentedString(contactMessage)).append("\n");
     sb.append("    acceptTime: ").append(toIndentedString(acceptTime)).append("\n");
     sb.append("    channelIdentity: ").append(toIndentedString(channelIdentity)).append("\n");
     sb.append("    contactId: ").append(toIndentedString(contactId)).append("\n");
@@ -294,7 +316,8 @@ public class ConversationMessageImpl implements ConversationMessage {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements ConversationMessage.Builder {
-    OptionalValue<InjectMessageRequestMessage> message = OptionalValue.empty();
+    OptionalValue<AppMessageInternal> appMessage = OptionalValue.empty();
+    OptionalValue<ContactMessage> contactMessage = OptionalValue.empty();
     OptionalValue<Instant> acceptTime = OptionalValue.empty();
     OptionalValue<ChannelIdentity> channelIdentity = OptionalValue.empty();
     OptionalValue<String> contactId = OptionalValue.empty();
@@ -306,9 +329,15 @@ public class ConversationMessageImpl implements ConversationMessage {
     OptionalValue<String> senderId = OptionalValue.empty();
     OptionalValue<ProcessingMode> processingMode = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_MESSAGE)
-    public Builder setMessage(InjectMessageRequestMessage message) {
-      this.message = OptionalValue.of(message);
+    @JsonProperty(JSON_PROPERTY_APP_MESSAGE)
+    public Builder setAppMessage(AppMessageInternal appMessage) {
+      this.appMessage = OptionalValue.of(appMessage);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_CONTACT_MESSAGE)
+    public Builder setContactMessage(ContactMessage contactMessage) {
+      this.contactMessage = OptionalValue.of(contactMessage);
       return this;
     }
 
@@ -374,7 +403,8 @@ public class ConversationMessageImpl implements ConversationMessage {
 
     public ConversationMessage build() {
       return new ConversationMessageImpl(
-          message,
+          appMessage,
+          contactMessage,
           acceptTime,
           channelIdentity,
           contactId,
