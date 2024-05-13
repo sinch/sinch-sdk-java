@@ -10,29 +10,21 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1;
+package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
-import com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.FallbackMessage;
 
-/** The content of the message */
-@JsonDeserialize(builder = InjectMessageRequestMessageImpl.Builder.class)
-public interface InjectMessageRequestMessage {
-
-  /**
-   * Get appMessage
-   *
-   * @return appMessage
-   */
-  AppMessage<?> getAppMessage();
+/** Fallback message. Used when original contact message can not be handled. */
+@JsonDeserialize(builder = FallbackMessageFieldInternalImpl.Builder.class)
+public interface FallbackMessageFieldInternal {
 
   /**
-   * Get contactMessage
+   * Get fallbackMessage
    *
-   * @return contactMessage
+   * @return fallbackMessage
    */
-  ContactMessage getContactMessage();
+  FallbackMessage getFallbackMessage();
 
   /**
    * Getting builder
@@ -40,7 +32,7 @@ public interface InjectMessageRequestMessage {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new InjectMessageRequestMessageImpl.Builder();
+    return new FallbackMessageFieldInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -49,26 +41,17 @@ public interface InjectMessageRequestMessage {
     /**
      * see getter
      *
-     * @param appMessage see getter
+     * @param fallbackMessage see getter
      * @return Current builder
-     * @see #getAppMessage
+     * @see #getFallbackMessage
      */
-    Builder setAppMessage(AppMessage<?> appMessage);
-
-    /**
-     * see getter
-     *
-     * @param contactMessage see getter
-     * @return Current builder
-     * @see #getContactMessage
-     */
-    Builder setContactMessage(ContactMessage contactMessage);
+    Builder setFallbackMessage(FallbackMessage fallbackMessage);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    InjectMessageRequestMessage build();
+    FallbackMessageFieldInternal build();
   }
 }

@@ -10,20 +10,21 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.messages;
+package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ChoiceResponseMessage;
 
-/** declaration */
-@JsonDeserialize(builder = ContactMessageImpl.Builder.class)
-public interface ContactMessage {
+/** Represents a response to a choice message. */
+@JsonDeserialize(builder = ChoiceResponseMessageFieldInternalImpl.Builder.class)
+public interface ChoiceResponseMessageFieldInternal {
 
   /**
-   * Get contactMessage
+   * Get choiceResponseMessage
    *
-   * @return contactMessage
+   * @return choiceResponseMessage
    */
-  ContactMessage getContactMessage();
+  ChoiceResponseMessage getChoiceResponseMessage();
 
   /**
    * Getting builder
@@ -31,7 +32,7 @@ public interface ContactMessage {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ContactMessageImpl.Builder();
+    return new ChoiceResponseMessageFieldInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -40,17 +41,17 @@ public interface ContactMessage {
     /**
      * see getter
      *
-     * @param contactMessage see getter
+     * @param choiceResponseMessage see getter
      * @return Current builder
-     * @see #getContactMessage
+     * @see #getChoiceResponseMessage
      */
-    Builder setContactMessage(ContactMessage contactMessage);
+    Builder setChoiceResponseMessage(ChoiceResponseMessage choiceResponseMessage);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    ContactMessage build();
+    ChoiceResponseMessageFieldInternal build();
   }
 }
