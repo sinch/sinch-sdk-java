@@ -30,6 +30,7 @@ import java.util.Map;
 public class MessagesService implements com.sinch.sdk.domains.conversation.MessagesService {
 
   static {
+    ConversationService.LocalLazyInit.init();
     LocalLazyInit.init();
   }
 

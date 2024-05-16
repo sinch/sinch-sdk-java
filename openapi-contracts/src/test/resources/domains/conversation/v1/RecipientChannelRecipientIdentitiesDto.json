@@ -1,0 +1,10 @@
+{
+  "identified_by": {
+    "channel_identities": [
+      {
+        "channel": "SMS",
+        "identity": "a channel identity"
+      }
+    ]
+  }
+}

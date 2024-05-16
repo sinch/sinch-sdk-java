@@ -12,9 +12,9 @@ import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.domains.conversation.api.v1.ContactApi;
+import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentities;
 import com.sinch.sdk.domains.conversation.models.v1.ContactDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.ContactId;
-import com.sinch.sdk.domains.conversation.models.v1.IdentifiedBy;
 import com.sinch.sdk.domains.conversation.models.v1.contact.Contact;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactGetChannelProfileByChannelIdentityRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactGetChannelProfileByContactIdRequest;
@@ -153,12 +153,13 @@ class ContactServiceTest extends BaseTest {
     when(api.contactGetChannelProfile(eq(uriPartID), any()))
         .thenReturn(ContactDtoTest.expectedChannelProfileResponseDto);
 
-    IdentifiedBy identifiedBy =
-        (IdentifiedBy) ContactDtoTest.contactGetChannelProfileByChannelRequestDto.getRecipient();
+    ChannelRecipientIdentities channelIdentities =
+        (ChannelRecipientIdentities)
+            ContactDtoTest.contactGetChannelProfileByChannelRequestDto.getRecipient();
     String response =
         service.getChannelProfileByChannelIdentity(
             ContactGetChannelProfileByChannelIdentityRequest.builder()
-                .setChannelIdentities(identifiedBy.getChannelIdentities())
+                .setChannelIdentities(channelIdentities)
                 .setChannel(ContactDtoTest.contactGetChannelProfileByChannelRequestDto.getChannel())
                 .setAppId(ContactDtoTest.contactGetChannelProfileByChannelRequestDto.getAppId())
                 .build());

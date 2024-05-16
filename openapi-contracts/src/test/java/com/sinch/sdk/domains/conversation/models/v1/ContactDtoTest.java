@@ -111,14 +111,11 @@ public class ContactDtoTest extends ConversationBaseTest {
           .setAppId("an app id")
           .setChannel(GetChannelProfileConversationChannel.MESSENGER)
           .setRecipient(
-              IdentifiedBy.builder()
-                  .setChannelIdentities(
-                      Collections.singletonList(
-                          ChannelRecipientIdentity.builder()
-                              .setChannel(ConversationChannel.MESSENGER)
-                              .setIdentity("an identity")
-                              .build()))
-                  .build())
+              ChannelRecipientIdentities.of(
+                  ChannelRecipientIdentity.builder()
+                      .setChannel(ConversationChannel.MESSENGER)
+                      .setIdentity("an identity")
+                      .build()))
           .build();
   public static GetChannelProfileRequest contactGetChannelProfileByContactRequestDto =
       GetChannelProfileRequest.builder()
