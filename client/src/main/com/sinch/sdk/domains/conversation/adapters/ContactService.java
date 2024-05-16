@@ -7,7 +7,6 @@ import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.core.models.pagination.TokenPageNavigator;
 import com.sinch.sdk.core.utils.Pair;
-import com.sinch.sdk.domains.conversation.adapters.contact.IdentifiedByMapper;
 import com.sinch.sdk.domains.conversation.api.v1.ContactApi;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.contact.Contact;
@@ -27,10 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ContactService implements com.sinch.sdk.domains.conversation.ContactService {
-
-  static {
-    MessagesService.LocalLazyInit.init();
-  }
 
   private final String uriUUID;
   private final ContactApi api;
@@ -123,21 +118,6 @@ public class ContactService implements com.sinch.sdk.domains.conversation.Contac
           String.format(
               "Invalid channel value '%s'. Channel has to be in list '%s'",
               client.getChannel(), supportedChannelForGetProfile));
-    }
-  }
-
-  static final class LocalLazyInit {
-
-    private LocalLazyInit() {
-      IdentifiedByMapper.initMapper();
-    }
-
-    public static LocalLazyInit init() {
-      return LocalLazyInit.LazyHolder.INSTANCE;
-    }
-
-    private static class LazyHolder {
-      public static final LocalLazyInit INSTANCE = new LocalLazyInit();
     }
   }
 }
