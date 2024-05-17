@@ -13,18 +13,18 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.conversation.models.v1.IdentifiedBy;
+import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentities;
 
 /** declaration */
 @JsonDeserialize(builder = IdentifiedByFieldInternalImpl.Builder.class)
 public interface IdentifiedByFieldInternal {
 
   /**
-   * Get identifiedBy
+   * The identity as specified by the channel.
    *
    * @return identifiedBy
    */
-  IdentifiedBy getIdentifiedBy();
+  ChannelRecipientIdentities getIdentifiedBy();
 
   /**
    * Getting builder
@@ -45,7 +45,7 @@ public interface IdentifiedByFieldInternal {
      * @return Current builder
      * @see #getIdentifiedBy
      */
-    Builder setIdentifiedBy(IdentifiedBy identifiedBy);
+    Builder setIdentifiedBy(ChannelRecipientIdentities identifiedBy);
 
     /**
      * Create instance
