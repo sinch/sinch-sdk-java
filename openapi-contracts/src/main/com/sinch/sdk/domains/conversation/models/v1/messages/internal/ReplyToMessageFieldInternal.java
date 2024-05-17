@@ -13,18 +13,21 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentities;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ReplyToMessage;
 
-/** declaration */
-@JsonDeserialize(builder = IdentifiedByFieldInternalImpl.Builder.class)
-public interface IdentifiedByFieldInternal {
+/**
+ * If the contact message was a response to a previous App message then this field contains
+ * information about that.
+ */
+@JsonDeserialize(builder = ReplyToMessageFieldInternalImpl.Builder.class)
+public interface ReplyToMessageFieldInternal {
 
   /**
-   * The identity as specified by the channel.
+   * Get replyTo
    *
-   * @return identifiedBy
+   * @return replyTo
    */
-  ChannelRecipientIdentities getIdentifiedBy();
+  ReplyToMessage getReplyTo();
 
   /**
    * Getting builder
@@ -32,7 +35,7 @@ public interface IdentifiedByFieldInternal {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new IdentifiedByFieldInternalImpl.Builder();
+    return new ReplyToMessageFieldInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -41,17 +44,17 @@ public interface IdentifiedByFieldInternal {
     /**
      * see getter
      *
-     * @param identifiedBy see getter
+     * @param replyTo see getter
      * @return Current builder
-     * @see #getIdentifiedBy
+     * @see #getReplyTo
      */
-    Builder setIdentifiedBy(ChannelRecipientIdentities identifiedBy);
+    Builder setReplyTo(ReplyToMessage replyTo);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    IdentifiedByFieldInternal build();
+    ReplyToMessageFieldInternal build();
   }
 }

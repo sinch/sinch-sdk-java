@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.conversation.models.v1.IdentifiedBy;
+import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentities;
 import java.util.Objects;
 
 @JsonPropertyOrder({IdentifiedByFieldInternalImpl.JSON_PROPERTY_IDENTIFIED_BY})
@@ -18,22 +18,22 @@ public class IdentifiedByFieldInternalImpl implements IdentifiedByFieldInternal 
 
   public static final String JSON_PROPERTY_IDENTIFIED_BY = "identified_by";
 
-  private OptionalValue<IdentifiedBy> identifiedBy;
+  private OptionalValue<ChannelRecipientIdentities> identifiedBy;
 
   public IdentifiedByFieldInternalImpl() {}
 
-  protected IdentifiedByFieldInternalImpl(OptionalValue<IdentifiedBy> identifiedBy) {
+  protected IdentifiedByFieldInternalImpl(OptionalValue<ChannelRecipientIdentities> identifiedBy) {
     this.identifiedBy = identifiedBy;
   }
 
   @JsonIgnore
-  public IdentifiedBy getIdentifiedBy() {
+  public ChannelRecipientIdentities getIdentifiedBy() {
     return identifiedBy.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_IDENTIFIED_BY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<IdentifiedBy> identifiedBy() {
+  public OptionalValue<ChannelRecipientIdentities> identifiedBy() {
     return identifiedBy;
   }
 
@@ -76,10 +76,10 @@ public class IdentifiedByFieldInternalImpl implements IdentifiedByFieldInternal 
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements IdentifiedByFieldInternal.Builder {
-    OptionalValue<IdentifiedBy> identifiedBy = OptionalValue.empty();
+    OptionalValue<ChannelRecipientIdentities> identifiedBy = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_IDENTIFIED_BY)
-    public Builder setIdentifiedBy(IdentifiedBy identifiedBy) {
+    public Builder setIdentifiedBy(ChannelRecipientIdentities identifiedBy) {
       this.identifiedBy = OptionalValue.of(identifiedBy);
       return this;
     }

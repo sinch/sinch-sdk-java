@@ -1,20 +1,17 @@
 package com.sinch.sdk.domains.conversation.models.v1.contact.request;
 
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentities;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentity;
-import com.sinch.sdk.domains.conversation.models.v1.IdentifiedBy;
-import java.util.List;
+import java.util.Collection;
 
 public class ContactGetChannelProfileByChannelIdentityRequest extends GetChannelProfileRequestImpl {
 
   ContactGetChannelProfileByChannelIdentityRequest(
       String appId,
       GetChannelProfileConversationChannel channel,
-      List<ChannelRecipientIdentity> identities) {
-    super(
-        OptionalValue.of(appId),
-        OptionalValue.of(IdentifiedBy.builder().setChannelIdentities(identities).build()),
-        OptionalValue.of(channel));
+      ChannelRecipientIdentities identities) {
+    super(OptionalValue.of(appId), OptionalValue.of(identities), OptionalValue.of(channel));
   }
 
   public static Builder builder() {
@@ -30,7 +27,7 @@ public class ContactGetChannelProfileByChannelIdentityRequest extends GetChannel
 
     String appId;
     GetChannelProfileConversationChannel channel;
-    List<ChannelRecipientIdentity> identities;
+    ChannelRecipientIdentities identities;
 
     public Builder setAppId(String appId) {
       this.appId = appId;
@@ -42,8 +39,13 @@ public class ContactGetChannelProfileByChannelIdentityRequest extends GetChannel
       return this;
     }
 
-    public Builder setChannelIdentities(List<ChannelRecipientIdentity> identities) {
+    public Builder setChannelIdentities(ChannelRecipientIdentities identities) {
       this.identities = identities;
+      return this;
+    }
+
+    public Builder setChannelIdentities(Collection<ChannelRecipientIdentity> identities) {
+      this.identities = new ChannelRecipientIdentities(identities);
       return this;
     }
 

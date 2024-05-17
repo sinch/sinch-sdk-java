@@ -13,18 +13,18 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentities;
+import com.sinch.sdk.domains.conversation.models.v1.messages.MediaCardMessage;
 
-/** declaration */
-@JsonDeserialize(builder = IdentifiedByFieldInternalImpl.Builder.class)
-public interface IdentifiedByFieldInternal {
+/** A message containing a media component, such as an image or video. */
+@JsonDeserialize(builder = MediaCardMessageFieldInternalImpl.Builder.class)
+public interface MediaCardMessageFieldInternal {
 
   /**
-   * The identity as specified by the channel.
+   * Get mediaCardMessage
    *
-   * @return identifiedBy
+   * @return mediaCardMessage
    */
-  ChannelRecipientIdentities getIdentifiedBy();
+  MediaCardMessage getMediaCardMessage();
 
   /**
    * Getting builder
@@ -32,7 +32,7 @@ public interface IdentifiedByFieldInternal {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new IdentifiedByFieldInternalImpl.Builder();
+    return new MediaCardMessageFieldInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -41,17 +41,17 @@ public interface IdentifiedByFieldInternal {
     /**
      * see getter
      *
-     * @param identifiedBy see getter
+     * @param mediaCardMessage see getter
      * @return Current builder
-     * @see #getIdentifiedBy
+     * @see #getMediaCardMessage
      */
-    Builder setIdentifiedBy(ChannelRecipientIdentities identifiedBy);
+    Builder setMediaCardMessage(MediaCardMessage mediaCardMessage);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    IdentifiedByFieldInternal build();
+    MediaCardMessageFieldInternal build();
   }
 }

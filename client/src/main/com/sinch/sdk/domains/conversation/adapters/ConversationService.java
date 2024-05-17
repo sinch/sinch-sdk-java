@@ -28,6 +28,10 @@ public class ConversationService implements com.sinch.sdk.domains.conversation.C
   private ContactService contact;
   private MessagesService messages;
 
+  static {
+    LocalLazyInit.init();
+  }
+
   public ConversationService(
       UnifiedCredentials credentials,
       ConversationContext context,
@@ -78,5 +82,21 @@ public class ConversationService implements com.sinch.sdk.domains.conversation.C
       this.messages = new MessagesService(uriUUID, context, httpClient, authManagers);
     }
     return this.messages;
+  }
+
+  static final class LocalLazyInit {
+
+    private LocalLazyInit() {
+      RecipientMapper.initMapper();
+    }
+
+    public static LocalLazyInit init() {
+      return LocalLazyInit.LazyHolder.INSTANCE;
+    }
+
+    private static class LazyHolder {
+
+      public static final LocalLazyInit INSTANCE = new LocalLazyInit();
+    }
   }
 }

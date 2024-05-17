@@ -3,7 +3,9 @@ package com.sinch.sample.conversation.messages;
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.conversation.models.v1.Agent;
 import com.sinch.sdk.domains.conversation.models.v1.AgentType;
-import com.sinch.sdk.domains.conversation.models.v1.ContactId;
+import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentities;
+import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentity;
+import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
@@ -44,7 +46,12 @@ public class Send extends BaseApplication {
                             .setDisplayName("Agent Name")
                             .build())
                     .build())
-            .setRecipient(ContactId.builder().setContactId(conversationContactId).build())
+            .setRecipient(
+                ChannelRecipientIdentities.of(
+                    ChannelRecipientIdentity.builder()
+                        .setChannel(ConversationChannel.SMS)
+                        .setIdentity(phoneNumber)
+                        .build()))
             .setTtl(25)
             .build();
 
