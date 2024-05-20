@@ -88,8 +88,7 @@ public class VerificationsService
 
     return VerificationsDtoConverter.convert(
         getApi()
-            .reportVerificationByIdentity(
-                "number", identity.getEndpoint(), VerificationsDtoConverter.convert(parameters)));
+            .reportVerificationByIdentity(identity.getEndpoint(), VerificationsDtoConverter.convert(parameters)));
   }
 
   public VerificationReportSMS reportSmsById(
