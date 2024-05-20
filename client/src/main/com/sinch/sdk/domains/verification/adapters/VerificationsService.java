@@ -7,6 +7,10 @@ import com.sinch.sdk.domains.verification.adapters.api.v1.VerificationsApi;
 import com.sinch.sdk.domains.verification.adapters.converters.VerificationsDtoConverter;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
+import com.sinch.sdk.domains.verification.models.VerificationReport;
+import com.sinch.sdk.domains.verification.models.VerificationReportCallout;
+import com.sinch.sdk.domains.verification.models.VerificationReportFlashCall;
+import com.sinch.sdk.domains.verification.models.VerificationReportSMS;
 import com.sinch.sdk.domains.verification.models.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.VerificationStatusCallout;
 import com.sinch.sdk.domains.verification.models.VerificationStatusFlashCall;
@@ -68,22 +72,22 @@ public class VerificationsService
         getApi().startVerification(VerificationsDtoConverter.convert(parameters)));
   }
 
-  public VerificationStatusSMS reportSmsByIdentity(
+  public VerificationReportSMS reportSmsByIdentity(
       NumberIdentity identity, VerificationReportSMSRequestParameters parameters) {
-    return (VerificationStatusSMS) report(identity, parameters);
+    return (VerificationReportSMS) report(identity, parameters);
   }
 
-  public VerificationStatusFlashCall reportFlashCallByIdentity(
+  public VerificationReportFlashCall reportFlashCallByIdentity(
       NumberIdentity identity, VerificationReportFlashCallRequestParameters parameters) {
-    return (VerificationStatusFlashCall) report(identity, parameters);
+    return (VerificationReportFlashCall) report(identity, parameters);
   }
 
-  public VerificationStatusCallout reportCalloutByIdentity(
+  public VerificationReportCallout reportCalloutByIdentity(
       NumberIdentity identity, VerificationReportCalloutRequestParameters parameters) {
-    return (VerificationStatusCallout) report(identity, parameters);
+    return (VerificationReportCallout) report(identity, parameters);
   }
 
-  private VerificationStatus report(
+  private VerificationReport report(
       NumberIdentity identity, VerificationReportRequestParameters parameters) {
 
     return VerificationsDtoConverter.convert(
@@ -91,22 +95,22 @@ public class VerificationsService
             .reportVerificationByIdentity(identity.getEndpoint(), VerificationsDtoConverter.convert(parameters)));
   }
 
-  public VerificationStatusSMS reportSmsById(
+  public VerificationReportSMS reportSmsById(
       VerificationId id, VerificationReportSMSRequestParameters parameters) {
-    return (VerificationStatusSMS) report(id, parameters);
+    return (VerificationReportSMS) report(id, parameters);
   }
 
-  public VerificationStatusFlashCall reportFlashCallById(
+  public VerificationReportFlashCall reportFlashCallById(
       VerificationId id, VerificationReportFlashCallRequestParameters parameters) {
-    return (VerificationStatusFlashCall) report(id, parameters);
+    return (VerificationReportFlashCall) report(id, parameters);
   }
 
-  public VerificationStatusCallout reportCalloutById(
+  public VerificationReportCallout reportCalloutById(
       VerificationId id, VerificationReportCalloutRequestParameters parameters) {
-    return (VerificationStatusCallout) report(id, parameters);
+    return (VerificationReportCallout) report(id, parameters);
   }
 
-  private VerificationStatus report(
+  private VerificationReport report(
       VerificationId id, VerificationReportRequestParameters parameters) {
 
     return VerificationsDtoConverter.convert(

@@ -7,6 +7,10 @@ import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.VerificationReference;
+import com.sinch.sdk.domains.verification.models.VerificationReport;
+import com.sinch.sdk.domains.verification.models.VerificationReportCallout;
+import com.sinch.sdk.domains.verification.models.VerificationReportFlashCall;
+import com.sinch.sdk.domains.verification.models.VerificationReportSMS;
 import com.sinch.sdk.domains.verification.models.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.VerificationStatusCallout;
 import com.sinch.sdk.domains.verification.models.VerificationStatusFlashCall;
@@ -39,6 +43,7 @@ import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportReques
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportRequestResourceDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportRequestResourceFlashcallDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportRequestResourceSmsDto;
+import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportResponseDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationResponseDto;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlashCallRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
@@ -51,8 +56,11 @@ import com.sinch.sdk.domains.verification.models.response.StartVerificationRespo
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSMS;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSeamless;
+import java.util.logging.Logger;
 
 public class VerificationsDtoConverter {
+
+  private static final Logger LOGGER = Logger.getLogger(VerificationsDtoConverter.class.getName());
 
   private static final String IDENTITY_TYPE_NUMBER = "number";
 
@@ -214,9 +222,21 @@ public class VerificationsDtoConverter {
     return dto;
   }
 
-  /*public static VerificationStatus convert(VerificationReportResponseDto dto) {
+  public static VerificationReport convert(VerificationReportResponseDto dto) {
+    switch (dto.getMethod()) {
+      case SMS:
+        return  VerificationReportSMS.builder().build();
+      case  FLASHCALL:
+        return  VerificationReportFlashCall.builder().build();
+      case CALLOUT:
+        return  VerificationReportCallout.builder().build();
+      default:
+        LOGGER.severe(String.format("Unexpected value '%s'", dto.getMethod()));
+        return  VerificationReport.builder().build();
+    }
   }
-  */
+
+
     public static VerificationStatus convert(VerificationResponseDto dto) {
     VerificationStatus.Builder<?> builder;
 

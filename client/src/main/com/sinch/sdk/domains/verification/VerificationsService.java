@@ -2,9 +2,9 @@ package com.sinch.sdk.domains.verification;
 
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
-import com.sinch.sdk.domains.verification.models.VerificationStatusCallout;
-import com.sinch.sdk.domains.verification.models.VerificationStatusFlashCall;
-import com.sinch.sdk.domains.verification.models.VerificationStatusSMS;
+import com.sinch.sdk.domains.verification.models.VerificationReportCallout;
+import com.sinch.sdk.domains.verification.models.VerificationReportFlashCall;
+import com.sinch.sdk.domains.verification.models.VerificationReportSMS;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlashCallRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSRequestParameters;
@@ -95,7 +95,7 @@ public interface VerificationsService {
    * @return Verification report response
    * @since 1.0
    */
-  VerificationStatusSMS reportSmsByIdentity(
+  VerificationReportSMS reportSmsByIdentity(
       NumberIdentity identity, VerificationReportSMSRequestParameters parameters);
 
   /**
@@ -111,7 +111,7 @@ public interface VerificationsService {
    * @return Verification report response
    * @since 1.0
    */
-  VerificationStatusFlashCall reportFlashCallByIdentity(
+  VerificationReportFlashCall reportFlashCallByIdentity(
       NumberIdentity identity, VerificationReportFlashCallRequestParameters parameters);
 
   /**
@@ -127,7 +127,7 @@ public interface VerificationsService {
    * @return Verification report response
    * @since 1.0
    */
-  VerificationStatusCallout reportCalloutByIdentity(
+  VerificationReportCallout reportCalloutByIdentity(
       NumberIdentity identity, VerificationReportCalloutRequestParameters parameters);
 
   /**
@@ -139,7 +139,7 @@ public interface VerificationsService {
    * @return Verification report response
    * @since 1.0
    */
-  VerificationStatusSMS reportSmsById(
+  VerificationReportSMS reportSmsById(
       VerificationId id, VerificationReportSMSRequestParameters parameters);
 
   /**
@@ -152,7 +152,7 @@ public interface VerificationsService {
    * @return Verification report response
    * @since 1.0
    */
-  VerificationStatusFlashCall reportFlashCallById(
+  VerificationReportFlashCall reportFlashCallById(
       VerificationId id, VerificationReportFlashCallRequestParameters parameters);
 
   /**
@@ -165,6 +165,6 @@ public interface VerificationsService {
    * @return Verification report response
    * @since 1.0
    */
-  VerificationStatusCallout reportCalloutById(
+  VerificationReportCallout reportCalloutById(
       VerificationId id, VerificationReportCalloutRequestParameters parameters);
 }
