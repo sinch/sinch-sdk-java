@@ -2,8 +2,8 @@ package com.sinch.sdk.domains.verification.models.webhooks;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sinch.sdk.domains.verification.models.VerificationReportReasonType;
-import com.sinch.sdk.domains.verification.models.VerificationReportStatusType;
+import com.sinch.sdk.domains.verification.models.VerificationStatusReasonType;
+import com.sinch.sdk.domains.verification.models.VerificationStatusType;
 import com.sinch.sdk.domains.verification.models.VerificationSourceType;
 import java.util.Optional;
 
@@ -15,8 +15,8 @@ import java.util.Optional;
  */
 public class VerificationResultEvent extends VerificationEvent {
 
-  private final VerificationReportStatusType status;
-  private final VerificationReportReasonType reason;
+  private final VerificationStatusType status;
+  private final VerificationStatusReasonType reason;
   private final VerificationSourceType source;
 
   @JsonCreator
@@ -32,8 +32,8 @@ public class VerificationResultEvent extends VerificationEvent {
       @JsonProperty("source") String source) {
     super(id, event, method, identity, reference, custom);
 
-    this.status = VerificationReportStatusType.from(status);
-    this.reason = null != reason ? VerificationReportReasonType.from(reason) : null;
+    this.status = VerificationStatusType.from(status);
+    this.reason = null != reason ? VerificationStatusReasonType.from(reason) : null;
     this.source = null != source ? VerificationSourceType.from(source) : null;
   }
 
@@ -43,7 +43,7 @@ public class VerificationResultEvent extends VerificationEvent {
    * @return Status value
    * @since 1.0
    */
-  public VerificationReportStatusType getStatus() {
+  public VerificationStatusType getStatus() {
     return status;
   }
 
@@ -53,7 +53,7 @@ public class VerificationResultEvent extends VerificationEvent {
    * @return reason value
    * @since 1.0
    */
-  public Optional<VerificationReportReasonType> getReason() {
+  public Optional<VerificationStatusReasonType> getReason() {
     return Optional.ofNullable(reason);
   }
 

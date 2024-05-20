@@ -11,15 +11,15 @@ import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSRe
  *
  * @since 1.0
  */
-public class VerificationReportSMS extends VerificationReport {
+public class VerificationStatusSMS extends VerificationStatus {
 
   private final Price verificationPrice;
   private final VerificationSourceType source;
 
-  private VerificationReportSMS(
+  private VerificationStatusSMS(
       VerificationId id,
-      VerificationReportStatusType status,
-      VerificationReportReasonType reason,
+      VerificationStatusType status,
+      VerificationStatusReasonType reason,
       VerificationReference reference,
       Price verificationPrice,
       VerificationSourceType source) {
@@ -32,7 +32,7 @@ public class VerificationReportSMS extends VerificationReport {
    * The maximum price charged for this verification process.
    *
    * <p>This property will appear in the body of the response with a delay. It will become visible
-   * only when the verification status is other than {@link VerificationReportStatusType#PENDING
+   * only when the verification status is other than {@link VerificationStatusType#PENDING
    * PENDING}
    *
    * @return Verification price object
@@ -55,7 +55,7 @@ public class VerificationReportSMS extends VerificationReport {
   /** {@inheritDoc} */
   @Override
   public String toString() {
-    return "VerificationReportSMS{"
+    return "VerificationStatusSMS{"
         + "verificationPrice="
         + verificationPrice
         + ", source='"
@@ -76,7 +76,7 @@ public class VerificationReportSMS extends VerificationReport {
   }
 
   /** Dedicated Builder */
-  public static class Builder extends VerificationReport.Builder<Builder> {
+  public static class Builder extends VerificationStatus.Builder<Builder> {
 
     Price verificationPrice;
     VerificationSourceType source;
@@ -84,7 +84,7 @@ public class VerificationReportSMS extends VerificationReport {
     private Builder() {}
 
     /**
-     * See {@link VerificationReportSMS#getVerificationPrice() getter}
+     * See {@link VerificationStatusSMS#getVerificationPrice() getter}
      *
      * @param verificationPrice Price object value
      * @return Current builder
@@ -96,7 +96,7 @@ public class VerificationReportSMS extends VerificationReport {
     }
 
     /**
-     * See {@link VerificationReportSMS#getSource() getter}
+     * See {@link VerificationStatusSMS#getSource() getter}
      *
      * @param source Source to be set
      * @return Current builder
@@ -113,8 +113,8 @@ public class VerificationReportSMS extends VerificationReport {
      * @return The instance build with current builder values
      * @since 1.0
      */
-    public VerificationReportSMS build() {
-      return new VerificationReportSMS(id, status, reason, reference, verificationPrice, source);
+    public VerificationStatusSMS build() {
+      return new VerificationStatusSMS(id, status, reason, reference, verificationPrice, source);
     }
 
     @Override

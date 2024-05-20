@@ -7,19 +7,18 @@ import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.VerificationReference;
-import com.sinch.sdk.domains.verification.models.VerificationReport;
-import com.sinch.sdk.domains.verification.models.VerificationReportCallout;
-import com.sinch.sdk.domains.verification.models.VerificationReportFlashCall;
-import com.sinch.sdk.domains.verification.models.VerificationReportReasonType;
-import com.sinch.sdk.domains.verification.models.VerificationReportSMS;
-import com.sinch.sdk.domains.verification.models.VerificationReportStatusType;
+import com.sinch.sdk.domains.verification.models.VerificationStatus;
+import com.sinch.sdk.domains.verification.models.VerificationStatusCallout;
+import com.sinch.sdk.domains.verification.models.VerificationStatusFlashCall;
+import com.sinch.sdk.domains.verification.models.VerificationStatusReasonType;
+import com.sinch.sdk.domains.verification.models.VerificationStatusSMS;
+import com.sinch.sdk.domains.verification.models.VerificationStatusType;
 import com.sinch.sdk.domains.verification.models.VerificationSourceType;
 import com.sinch.sdk.domains.verification.models.dto.v1.CalloutVerificationReportRequestCalloutDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.CalloutVerificationReportRequestDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.FlashCallInitiateVerificationResponseDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.FlashcallOptionsDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.FlashcallVerificationReportRequestDto;
-import com.sinch.sdk.domains.verification.models.dto.v1.FlashcallVerificationReportRequestDto.MethodEnum;
 import com.sinch.sdk.domains.verification.models.dto.v1.FlashcallVerificationReportRequestFlashCallDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.IdentityDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.InitiateVerificationResourceDto;
@@ -40,7 +39,6 @@ import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportReques
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportRequestResourceDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportRequestResourceFlashcallDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportRequestResourceSmsDto;
-import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportResponseDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationResponseDto;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlashCallRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
@@ -216,13 +214,16 @@ public class VerificationsDtoConverter {
     return dto;
   }
 
-  public static VerificationReport convert(VerificationResponseDto dto) {
-    VerificationReport.Builder<?> builder;
+  /*public static VerificationStatus convert(VerificationReportResponseDto dto) {
+  }
+  */
+    public static VerificationStatus convert(VerificationResponseDto dto) {
+    VerificationStatus.Builder<?> builder;
 
     switch (dto.getMethod()) {
       case FLASHCALL:
         {
-          VerificationReportFlashCall.Builder abuilder = VerificationReportFlashCall.builder();
+          VerificationStatusFlashCall.Builder abuilder = VerificationStatusFlashCall.builder();
 
           if (null != dto.getSource()) {
             abuilder.setSource(VerificationSourceType.from(dto.getSource()));
@@ -242,7 +243,7 @@ public class VerificationsDtoConverter {
         }
       case SMS:
         {
-          VerificationReportSMS.Builder abuilder = VerificationReportSMS.builder();
+          VerificationStatusSMS.Builder abuilder = VerificationStatusSMS.builder();
           if (null != dto.getSource()) {
             abuilder.setSource(VerificationSourceType.from(dto.getSource()));
           }
@@ -258,8 +259,8 @@ public class VerificationsDtoConverter {
         }
       case CALLOUT:
         {
-          VerificationReportCallout.Builder abuilder =
-              VerificationReportCallout.builder().setCallComplete(dto.getCallComplete());
+          VerificationStatusCallout.Builder abuilder =
+              VerificationStatusCallout.builder().setCallComplete(dto.getCallComplete());
           if (null != dto.getPrice()
               && null != dto.getPrice().getVerificationPriceInformationDto()) {
             VerificationPriceInformationDto price =
@@ -278,8 +279,8 @@ public class VerificationsDtoConverter {
     }
     return builder
         .setId(VerificationId.valueOf(dto.getId()))
-        .setReason(VerificationReportReasonType.from(dto.getReason()))
-        .setStatus(VerificationReportStatusType.from(dto.getStatus()))
+        .setReason(VerificationStatusReasonType.from(dto.getReason()))
+        .setStatus(VerificationStatusType.from(dto.getStatus()))
         .setReference(VerificationReference.valueOf(dto.getReference()))
         .build();
   }

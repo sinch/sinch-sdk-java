@@ -7,9 +7,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
-public class VerificationReportDtoTest extends BaseTest {
+public class VerificationStatusDtoTest extends BaseTest {
 
-  @GivenJsonResource("/domains/verification/v1/VerificationReportCalloutResponseDto.json")
+  @GivenJsonResource("/domains/verification/v1/VerificationStatusCalloutResponseDto.json")
   VerificationResponseDto loadedVerificationCalloutDto;
 
   public static VerificationResponseDto expectedVerificationCalloutDto =
@@ -35,7 +35,7 @@ public class VerificationReportDtoTest extends BaseTest {
                                   .amount(6.626070F)))
                       .billableDuration(34)));
 
-  @GivenJsonResource("/domains/verification/v1/VerificationReportFlashCallResponseDto.json")
+  @GivenJsonResource("/domains/verification/v1/VerificationStatusFlashCallResponseDto.json")
   VerificationResponseDto loadedVerificationFlashCallDto;
 
   public static VerificationResponseDto expectedVerificationFlashCallDto =
@@ -47,7 +47,7 @@ public class VerificationReportDtoTest extends BaseTest {
           .reference("my reference")
           .source("manual");
 
-  @GivenJsonResource("/domains/verification/v1/VerificationReportSMSResponseDto.json")
+  @GivenJsonResource("/domains/verification/v1/VerificationStatusSMSResponseDto.json")
   VerificationResponseDto loadedVerificationSMSDto;
 
   public static VerificationResponseDto expectedVerificationSMSDto =

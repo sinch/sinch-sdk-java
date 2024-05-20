@@ -4,7 +4,7 @@ import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class VerificationReportSMSRequestParametersTest {
+class VerificationStatusSMSRequestParametersTest {
 
   final String code = "foo code";
   final String cli = "foo cli";

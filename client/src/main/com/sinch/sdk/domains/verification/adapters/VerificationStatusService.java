@@ -9,7 +9,7 @@ import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.VerificationReference;
-import com.sinch.sdk.domains.verification.models.VerificationReport;
+import com.sinch.sdk.domains.verification.models.VerificationStatus;
 import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
 
@@ -29,18 +29,18 @@ public class VerificationStatusService
     return this.api;
   }
 
-  public VerificationReport getByIdentity(NumberIdentity identity, VerificationMethodType method) {
+  public VerificationStatus getByIdentity(NumberIdentity identity, VerificationMethodType method) {
 
     return VerificationsDtoConverter.convert(
         getApi().verificationStatusByIdentity("number", identity.getEndpoint(), method.value()));
   }
 
-  public VerificationReport getById(VerificationId id) {
+  public VerificationStatus getById(VerificationId id) {
 
     return VerificationsDtoConverter.convert(getApi().verificationStatusById(id.getId()));
   }
 
-  public VerificationReport getByReference(VerificationReference reference) {
+  public VerificationStatus getByReference(VerificationReference reference) {
 
     return VerificationsDtoConverter.convert(
         getApi().verificationStatusByReference(reference.getReference()));

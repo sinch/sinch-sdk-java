@@ -1,44 +1,44 @@
 package com.sinch.sdk.domains.verification.models;
 
-import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlashCallRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutRequestParameters;
 
 /**
  * Verification report related to a {@link
- * com.sinch.sdk.domains.verification.VerificationsService#startFlashCall(StartVerificationFlashCallRequestParameters)}
+ * com.sinch.sdk.domains.verification.VerificationsService#startCallout(StartVerificationCalloutRequestParameters)}
  * of type {@link
- * com.sinch.sdk.domains.verification.models.requests.VerificationReportFlashCallRequestParameters
- * VerificationReportFlashCallRequestParameters}
+ * com.sinch.sdk.domains.verification.models.requests.VerificationReportCalloutRequestParameters
+ * VerificationReportCalloutRequestParameters}
  *
  * @since 1.0
  */
-public class VerificationReportFlashCall extends VerificationReport {
+public class VerificationStatusCallout extends VerificationStatus {
 
   private final Price verificationPrice;
   private final Price terminationPrice;
   private final Integer billableDuration;
-  private final VerificationSourceType source;
+  private final Boolean callComplete;
 
-  private VerificationReportFlashCall(
+  private VerificationStatusCallout(
       VerificationId id,
-      VerificationReportStatusType status,
-      VerificationReportReasonType reason,
+      VerificationStatusType status,
+      VerificationStatusReasonType reason,
       VerificationReference reference,
       Price verificationPrice,
       Price terminationPrice,
       Integer billableDuration,
-      VerificationSourceType source) {
+      Boolean callComplete) {
     super(id, status, reason, reference);
     this.verificationPrice = verificationPrice;
     this.terminationPrice = terminationPrice;
     this.billableDuration = billableDuration;
-    this.source = source;
+    this.callComplete = callComplete;
   }
 
   /**
    * The maximum price charged for this verification process.
    *
    * <p>This property will appear in the body of the response with a delay. It will become visible
-   * only when the verification status is other than {@link VerificationReportStatusType#PENDING
+   * only when the verification status is other than {@link VerificationStatusType#PENDING
    * PENDING}
    *
    * @return Verification price object
@@ -79,27 +79,27 @@ public class VerificationReportFlashCall extends VerificationReport {
   }
 
   /**
-   * Free text that the client is sending, used to show if the call/SMS was intercepted or not.
+   * Shows whether the call is complete or not.
    *
-   * @return source value
+   * @return TRUE.FALSE
+   * @since 1.0
    */
-  public VerificationSourceType getSource() {
-    return source;
+  public Boolean getCallComplete() {
+    return callComplete;
   }
 
   /** {@inheritDoc} */
   @Override
   public String toString() {
-    return "VerificationReportFlashCall{"
+    return "VerificationStatusCallout{"
         + "verificationPrice="
         + verificationPrice
         + ", terminationPrice="
         + terminationPrice
         + ", billableDuration="
         + billableDuration
-        + ", source='"
-        + source
-        + '\''
+        + ", callComplete="
+        + callComplete
         + "} "
         + super.toString();
   }
@@ -115,17 +115,17 @@ public class VerificationReportFlashCall extends VerificationReport {
   }
 
   /** Dedicated Builder */
-  public static class Builder extends VerificationReport.Builder<Builder> {
+  public static class Builder extends VerificationStatus.Builder<Builder> {
 
     Price verificationPrice;
     Price terminationPrice;
     Integer billableDuration;
-    VerificationSourceType source;
+    Boolean callComplete;
 
     private Builder() {}
 
     /**
-     * See {@link VerificationReportFlashCall#getVerificationPrice()} getter
+     * See {@link VerificationStatusCallout#getVerificationPrice()} getter
      *
      * @param verificationPrice See getter
      * @return Current builder
@@ -137,7 +137,7 @@ public class VerificationReportFlashCall extends VerificationReport {
     }
 
     /**
-     * See {@link VerificationReportFlashCall#getTerminationPrice()} getter
+     * See {@link VerificationStatusCallout#getTerminationPrice()} getter
      *
      * @param terminationPrice See getter
      * @return Current builder
@@ -149,7 +149,7 @@ public class VerificationReportFlashCall extends VerificationReport {
     }
 
     /**
-     * See {@link VerificationReportFlashCall#getBillableDuration()} getter
+     * See {@link VerificationStatusCallout#getBillableDuration()} getter
      *
      * @param billableDuration See getter
      * @return Current builder
@@ -161,14 +161,14 @@ public class VerificationReportFlashCall extends VerificationReport {
     }
 
     /**
-     * See {@link VerificationReportFlashCall#getSource()} getter
+     * See {@link VerificationStatusCallout#getCallComplete()} getter
      *
-     * @param source See getter
+     * @param callComplete See getter
      * @return Current builder
      * @since 1.0
      */
-    public Builder setSource(VerificationSourceType source) {
-      this.source = source;
+    public Builder setCallComplete(Boolean callComplete) {
+      this.callComplete = callComplete;
       return this;
     }
 
@@ -178,8 +178,8 @@ public class VerificationReportFlashCall extends VerificationReport {
      * @return The instance build with current builder values
      * @since 1.0
      */
-    public VerificationReportFlashCall build() {
-      return new VerificationReportFlashCall(
+    public VerificationStatusCallout build() {
+      return new VerificationStatusCallout(
           id,
           status,
           reason,
@@ -187,7 +187,7 @@ public class VerificationReportFlashCall extends VerificationReport {
           verificationPrice,
           terminationPrice,
           billableDuration,
-          source);
+          callComplete);
     }
 
     @Override

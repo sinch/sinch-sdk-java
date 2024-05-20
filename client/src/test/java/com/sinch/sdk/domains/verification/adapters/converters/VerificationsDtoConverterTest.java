@@ -5,15 +5,15 @@ import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.Price;
 import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationReference;
-import com.sinch.sdk.domains.verification.models.VerificationReportCallout;
-import com.sinch.sdk.domains.verification.models.VerificationReportFlashCall;
-import com.sinch.sdk.domains.verification.models.VerificationReportReasonType;
-import com.sinch.sdk.domains.verification.models.VerificationReportSMS;
-import com.sinch.sdk.domains.verification.models.VerificationReportStatusType;
+import com.sinch.sdk.domains.verification.models.VerificationStatusCallout;
+import com.sinch.sdk.domains.verification.models.VerificationStatusFlashCall;
+import com.sinch.sdk.domains.verification.models.VerificationStatusReasonType;
+import com.sinch.sdk.domains.verification.models.VerificationStatusSMS;
+import com.sinch.sdk.domains.verification.models.VerificationStatusType;
 import com.sinch.sdk.domains.verification.models.VerificationSourceType;
 import com.sinch.sdk.domains.verification.models.dto.v1.StartVerificationRequestDtoTest;
 import com.sinch.sdk.domains.verification.models.dto.v1.StartVerificationResponseDtoTest;
-import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportDtoTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.VerificationStatusDtoTest;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportRequestDtoTest;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlashCallRequestParameters;
@@ -161,11 +161,11 @@ public class VerificationsDtoConverterTest extends BaseTest {
   public static VerificationReportCalloutRequestParameters verificationReportCalloutRequest =
       VerificationReportCalloutRequestParameters.builder().setCode("foo code").build();
 
-  public static VerificationReportCallout expectedVerificationReportCalloutResponse =
-      VerificationReportCallout.builder()
+  public static VerificationStatusCallout expectedVerificationReportCalloutResponse =
+      VerificationStatusCallout.builder()
           .setId(VerificationId.valueOf("the id"))
-          .setStatus(VerificationReportStatusType.FAIL)
-          .setReason(VerificationReportReasonType.FRAUD)
+          .setStatus(VerificationStatusType.FAIL)
+          .setReason(VerificationStatusReasonType.FRAUD)
           .setCallComplete(true)
           .setReference(VerificationReference.valueOf("my reference"))
           .setVerificationPrice(
@@ -194,7 +194,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     Assertions.assertThat(
             VerificationsDtoConverter.convert(
-                VerificationReportDtoTest.expectedVerificationCalloutDto))
+                VerificationStatusDtoTest.expectedVerificationCalloutDto))
         .usingRecursiveComparison()
         .isEqualTo(expectedVerificationReportCalloutResponse);
   }
@@ -202,11 +202,11 @@ public class VerificationsDtoConverterTest extends BaseTest {
   public static VerificationReportFlashCallRequestParameters verificationReportFlashCallRequest =
       VerificationReportFlashCallRequestParameters.builder().setCli("foo cli").build();
 
-  public static VerificationReportFlashCall expectedVerificationReportFlashCallResponse =
-      VerificationReportFlashCall.builder()
+  public static VerificationStatusFlashCall expectedVerificationReportFlashCallResponse =
+      VerificationStatusFlashCall.builder()
           .setId(VerificationId.valueOf("the id"))
-          .setStatus(VerificationReportStatusType.FAIL)
-          .setReason(VerificationReportReasonType.FRAUD)
+          .setStatus(VerificationStatusType.FAIL)
+          .setReason(VerificationStatusReasonType.FRAUD)
           .setReference(VerificationReference.valueOf("my reference"))
           .setSource(VerificationSourceType.MANUAL)
           .build();
@@ -224,7 +224,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     Assertions.assertThat(
             VerificationsDtoConverter.convert(
-                VerificationReportDtoTest.expectedVerificationFlashCallDto))
+                VerificationStatusDtoTest.expectedVerificationFlashCallDto))
         .usingRecursiveComparison()
         .isEqualTo(expectedVerificationReportFlashCallResponse);
   }
@@ -235,11 +235,11 @@ public class VerificationsDtoConverterTest extends BaseTest {
           .setCli("foo cli")
           .build();
 
-  public static VerificationReportSMS expectedVerificationReportSMSResponse =
-      VerificationReportSMS.builder()
+  public static VerificationStatusSMS expectedVerificationStatusSMSResponse =
+      VerificationStatusSMS.builder()
           .setId(VerificationId.valueOf("the id"))
-          .setStatus(VerificationReportStatusType.FAIL)
-          .setReason(VerificationReportReasonType.FRAUD)
+          .setStatus(VerificationStatusType.FAIL)
+          .setReason(VerificationStatusReasonType.FRAUD)
           .setReference(VerificationReference.valueOf("my reference"))
           .setSource(VerificationSourceType.INTERCEPTED)
           .setVerificationPrice(
@@ -261,8 +261,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
   void convertReportSMSResponse() {
 
     Assertions.assertThat(
-            VerificationsDtoConverter.convert(VerificationReportDtoTest.expectedVerificationSMSDto))
+            VerificationsDtoConverter.convert(VerificationStatusDtoTest.expectedVerificationSMSDto))
         .usingRecursiveComparison()
-        .isEqualTo(expectedVerificationReportSMSResponse);
+        .isEqualTo(expectedVerificationStatusSMSResponse);
   }
 }

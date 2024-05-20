@@ -5,17 +5,17 @@ package com.sinch.sdk.domains.verification.models;
  *
  * @since 1.0
  */
-public class VerificationReport {
+public class VerificationStatus {
 
   private final VerificationId id;
-  private final VerificationReportStatusType status;
-  private final VerificationReportReasonType reason;
+  private final VerificationStatusType status;
+  private final VerificationStatusReasonType reason;
   private final VerificationReference reference;
 
-  protected VerificationReport(
+  protected VerificationStatus(
       VerificationId id,
-      VerificationReportStatusType status,
-      VerificationReportReasonType reason,
+      VerificationStatusType status,
+      VerificationStatusReasonType reason,
       VerificationReference reference) {
     this.id = id;
     this.status = status;
@@ -39,19 +39,19 @@ public class VerificationReport {
    * @return The status value
    * @since 1.0
    */
-  public VerificationReportStatusType getStatus() {
+  public VerificationStatusType getStatus() {
     return status;
   }
 
   /**
-   * The reason why a verification has {@link VerificationReportStatusType#FAIL FAIL}, was {@link
-   * VerificationReportStatusType#DENIED DENIED}, or was {@link VerificationReportStatusType#ABORTED
+   * The reason why a verification has {@link VerificationStatusType#FAIL FAIL}, was {@link
+   * VerificationStatusType#DENIED DENIED}, or was {@link VerificationStatusType#ABORTED
    * ABORTED}.
    *
    * @return The reason value
    * @since 1.0
    */
-  public VerificationReportReasonType getReason() {
+  public VerificationStatusReasonType getReason() {
     return reason;
   }
 
@@ -67,7 +67,7 @@ public class VerificationReport {
   /** {@inheritDoc} */
   @Override
   public String toString() {
-    return "VerificationReport{"
+    return "VerificationStatus{"
         + "id='"
         + id
         + '\''
@@ -94,8 +94,8 @@ public class VerificationReport {
   public static class Builder<B extends Builder<B>> {
 
     VerificationId id;
-    VerificationReportStatusType status;
-    VerificationReportReasonType reason;
+    VerificationStatusType status;
+    VerificationStatusReasonType reason;
     VerificationReference reference;
 
     protected Builder() {}
@@ -103,7 +103,7 @@ public class VerificationReport {
     /**
      * Setter
      *
-     * <p>See {@link VerificationReport#getId()} getter
+     * <p>See {@link VerificationStatus#getId()} getter
      *
      * @param id See getter
      * @return Current builder
@@ -117,13 +117,13 @@ public class VerificationReport {
     /**
      * Setter
      *
-     * <p>See {@link VerificationReport#getStatus()} getter
+     * <p>See {@link VerificationStatus#getStatus()} getter
      *
      * @param status See getter
      * @return Current builder
      * @since 1.0
      */
-    public B setStatus(VerificationReportStatusType status) {
+    public B setStatus(VerificationStatusType status) {
       this.status = status;
       return self();
     }
@@ -131,13 +131,13 @@ public class VerificationReport {
     /**
      * Setter
      *
-     * <p>See {@link VerificationReport#getReason()} getter
+     * <p>See {@link VerificationStatus#getReason()} getter
      *
      * @param reason See getter
      * @return Current builder
      * @since 1.0
      */
-    public B setReason(VerificationReportReasonType reason) {
+    public B setReason(VerificationStatusReasonType reason) {
       this.reason = reason;
       return self();
     }
@@ -145,7 +145,7 @@ public class VerificationReport {
     /**
      * Setter
      *
-     * <p>See {@link VerificationReport#getReference()} getter
+     * <p>See {@link VerificationStatus#getReference()} getter
      *
      * @param reference See getter
      * @return Current builder
@@ -162,8 +162,8 @@ public class VerificationReport {
      * @return The instance build with current builder values
      * @since 1.0
      */
-    public VerificationReport build() {
-      return new VerificationReport(id, status, reason, reference);
+    public VerificationStatus build() {
+      return new VerificationStatus(id, status, reason, reference);
     }
 
     @SuppressWarnings("unchecked")

@@ -10,41 +10,41 @@ import java.util.stream.Stream;
  *
  * @since 1.0
  */
-public class VerificationReportStatusType
-    extends EnumDynamic<String, VerificationReportStatusType> {
+public class VerificationStatusType
+    extends EnumDynamic<String, VerificationStatusType> {
 
   /** The verification is ongoing */
-  public static final VerificationReportStatusType PENDING =
-      new VerificationReportStatusType("PENDING");
+  public static final VerificationStatusType PENDING =
+      new VerificationStatusType("PENDING");
 
   /** The verification was successful */
-  public static final VerificationReportStatusType SUCCESSFUL =
-      new VerificationReportStatusType("SUCCESSFUL");
+  public static final VerificationStatusType SUCCESSFUL =
+      new VerificationStatusType("SUCCESSFUL");
 
   /** The verification attempt was made, but the number wasn't verified */
-  public static final VerificationReportStatusType FAIL = new VerificationReportStatusType("FAIL");
+  public static final VerificationStatusType FAIL = new VerificationStatusType("FAIL");
 
   /** The verification attempt was denied by Sinch or your backend */
-  public static final VerificationReportStatusType DENIED =
-      new VerificationReportStatusType("DENIED");
+  public static final VerificationStatusType DENIED =
+      new VerificationStatusType("DENIED");
 
   /** The verification attempt was aborted by requesting a new verification */
-  public static final VerificationReportStatusType ABORTED =
-      new VerificationReportStatusType("ABORTED");
+  public static final VerificationStatusType ABORTED =
+      new VerificationStatusType("ABORTED");
 
   /**
    * The verification couldn't be completed due to a network error or the number being unreachable
    */
-  public static final VerificationReportStatusType ERROR =
-      new VerificationReportStatusType("ERROR");
+  public static final VerificationStatusType ERROR =
+      new VerificationStatusType("ERROR");
 
-  private static final EnumSupportDynamic<String, VerificationReportStatusType> ENUM_SUPPORT =
+  private static final EnumSupportDynamic<String, VerificationStatusType> ENUM_SUPPORT =
       new EnumSupportDynamic<>(
-          VerificationReportStatusType.class,
-          VerificationReportStatusType::new,
+          VerificationStatusType.class,
+          VerificationStatusType::new,
           Arrays.asList(PENDING, SUCCESSFUL, FAIL, DENIED, ABORTED, ERROR));
 
-  private VerificationReportStatusType(String value) {
+  private VerificationStatusType(String value) {
     super(value);
   }
 
@@ -53,7 +53,7 @@ public class VerificationReportStatusType
    *
    * @return Stream of values
    */
-  public static Stream<VerificationReportStatusType> values() {
+  public static Stream<VerificationStatusType> values() {
     return ENUM_SUPPORT.values();
   }
 
@@ -63,7 +63,7 @@ public class VerificationReportStatusType
    * @param value String identifier
    * @return Dynamic enum from value. A new enum is created if value is not yet registered
    */
-  public static VerificationReportStatusType from(String value) {
+  public static VerificationStatusType from(String value) {
     return ENUM_SUPPORT.from(value);
   }
 
@@ -73,7 +73,7 @@ public class VerificationReportStatusType
    * @param e The enum identifier
    * @return String identifier of the enum value
    */
-  public static String valueOf(VerificationReportStatusType e) {
+  public static String valueOf(VerificationStatusType e) {
     return ENUM_SUPPORT.valueOf(e);
   }
 }

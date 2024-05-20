@@ -6,8 +6,8 @@ import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.VerificationReference;
-import com.sinch.sdk.domains.verification.models.VerificationReportReasonType;
-import com.sinch.sdk.domains.verification.models.VerificationReportStatusType;
+import com.sinch.sdk.domains.verification.models.VerificationStatusReasonType;
+import com.sinch.sdk.domains.verification.models.VerificationStatusType;
 import com.sinch.sdk.domains.verification.models.VerificationSourceType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -57,12 +57,12 @@ class VerificationResultEventTest {
 
   @Test
   void getStatus() {
-    Assertions.assertThat(dto.getStatus()).isEqualTo(VerificationReportStatusType.DENIED);
+    Assertions.assertThat(dto.getStatus()).isEqualTo(VerificationStatusType.DENIED);
   }
 
   @Test
   void getReason() {
-    Assertions.assertThat(dto.getReason().get()).isEqualTo(VerificationReportReasonType.FRAUD);
+    Assertions.assertThat(dto.getReason().get()).isEqualTo(VerificationStatusReasonType.FRAUD);
   }
 
   @Test
