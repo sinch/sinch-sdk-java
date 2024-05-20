@@ -14,10 +14,13 @@ import com.sinch.sdk.domains.verification.models.VerificationReportReasonType;
 import com.sinch.sdk.domains.verification.models.VerificationReportSMS;
 import com.sinch.sdk.domains.verification.models.VerificationReportStatusType;
 import com.sinch.sdk.domains.verification.models.VerificationSourceType;
+import com.sinch.sdk.domains.verification.models.dto.v1.CalloutVerificationReportRequestCalloutDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.CalloutVerificationReportRequestDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.FlashCallInitiateVerificationResponseDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.FlashcallOptionsDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.FlashcallVerificationReportRequestDto;
+import com.sinch.sdk.domains.verification.models.dto.v1.FlashcallVerificationReportRequestDto.MethodEnum;
+import com.sinch.sdk.domains.verification.models.dto.v1.FlashcallVerificationReportRequestFlashCallDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.IdentityDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.InitiateVerificationResourceDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.InitiateVerificationResourceFlashCallOptionsDto;
@@ -30,12 +33,14 @@ import com.sinch.sdk.domains.verification.models.dto.v1.InitiateVerificationResp
 import com.sinch.sdk.domains.verification.models.dto.v1.SeamlessInitiateVerificationResponseDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.SmsInitiateVerificationResponseDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.SmsVerificationReportRequestDto;
+import com.sinch.sdk.domains.verification.models.dto.v1.SmsVerificationReportRequestSmsDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationMethodDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationPriceInformationDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportRequestResourceCalloutDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportRequestResourceDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportRequestResourceFlashcallDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportRequestResourceSmsDto;
+import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportResponseDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationResponseDto;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlashCallRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
@@ -157,52 +162,58 @@ public class VerificationsDtoConverter {
 
     VerificationReportRequestResourceDto dto = new VerificationReportRequestResourceDto();
 
-    client
-        .getMethod()
-        .ifPresent(
-            f -> dto.method(VerificationMethodDto.fromValue(EnumDynamicConverter.convert(f))));
-
     if (client instanceof VerificationReportFlashCallRequestParameters) {
       VerificationReportFlashCallRequestParameters typedClient =
           (VerificationReportFlashCallRequestParameters) client;
-      dto.flashcall(convert(typedClient));
+      dto.setActualInstance(convert(typedClient));
     } else if (client instanceof VerificationReportSMSRequestParameters) {
       VerificationReportSMSRequestParameters typedClient =
           (VerificationReportSMSRequestParameters) client;
-      dto.sms(convert(typedClient));
+      dto.setActualInstance(convert(typedClient));
     } else if (client instanceof VerificationReportCalloutRequestParameters) {
       VerificationReportCalloutRequestParameters typedClient =
           (VerificationReportCalloutRequestParameters) client;
-      dto.callout(convert(typedClient));
+      dto.setActualInstance(convert(typedClient));
     }
     return dto;
   }
 
-  private static VerificationReportRequestResourceFlashcallDto convert(
+  private static FlashcallVerificationReportRequestDto convert(
       VerificationReportFlashCallRequestParameters client) {
 
-    FlashcallVerificationReportRequestDto dto = new FlashcallVerificationReportRequestDto();
+    FlashcallVerificationReportRequestFlashCallDto subfield = new  FlashcallVerificationReportRequestFlashCallDto();
+    client.getCli().ifPresent(subfield::cli);
 
-    client.getCli().ifPresent(dto::cli);
-    return new VerificationReportRequestResourceFlashcallDto(dto);
+    FlashcallVerificationReportRequestDto dto = new FlashcallVerificationReportRequestDto()
+        .method(FlashcallVerificationReportRequestDto.MethodEnum.FLASHCALL.getValue())
+        .flashCall(subfield);
+        return dto;
   }
 
-  private static VerificationReportRequestResourceSmsDto convert(
+
+  private static SmsVerificationReportRequestDto convert(
       VerificationReportSMSRequestParameters client) {
 
-    SmsVerificationReportRequestDto dto = new SmsVerificationReportRequestDto();
-    client.getCode().ifPresent(dto::code);
-    client.getCli().ifPresent(dto::cli);
-    return new VerificationReportRequestResourceSmsDto(dto);
+    SmsVerificationReportRequestSmsDto subfield = new SmsVerificationReportRequestSmsDto();
+    client.getCode().ifPresent(subfield::code);
+    client.getCli().ifPresent(subfield::cli);
+
+    SmsVerificationReportRequestDto dto = new SmsVerificationReportRequestDto()
+        .method(SmsVerificationReportRequestDto.MethodEnum.SMS.getValue())
+        .sms(subfield);
+        return dto;
   }
 
-  private static VerificationReportRequestResourceCalloutDto convert(
+  private static CalloutVerificationReportRequestDto convert(
       VerificationReportCalloutRequestParameters client) {
 
-    CalloutVerificationReportRequestDto dto = new CalloutVerificationReportRequestDto();
-    client.getCode().ifPresent(dto::code);
+    CalloutVerificationReportRequestCalloutDto subfield = new CalloutVerificationReportRequestCalloutDto();
+    client.getCode().ifPresent(subfield::code);
 
-    return new VerificationReportRequestResourceCalloutDto(dto);
+    CalloutVerificationReportRequestDto dto = new CalloutVerificationReportRequestDto()
+        .method(CalloutVerificationReportRequestDto.MethodEnum.CALLOUT.getValue())
+        .callout(subfield);
+    return dto;
   }
 
   public static VerificationReport convert(VerificationResponseDto dto) {
