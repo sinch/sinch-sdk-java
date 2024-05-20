@@ -3,7 +3,7 @@ package com.sinch.sdk.domains.verification.adapters;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
-import com.sinch.sdk.domains.verification.adapters.api.v1.QueryVerificationsApi;
+import com.sinch.sdk.domains.verification.adapters.api.v1.VerificationStatusApi;
 import com.sinch.sdk.domains.verification.adapters.converters.VerificationsDtoConverter;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
@@ -16,16 +16,16 @@ import java.util.Map;
 public class VerificationStatusService
     implements com.sinch.sdk.domains.verification.VerificationStatusService {
 
-  private final QueryVerificationsApi api;
+  private final VerificationStatusApi api;
 
   public VerificationStatusService(
       VerificationContext context, HttpClient httpClient, Map<String, AuthManager> authManagers) {
     this.api =
-        new QueryVerificationsApi(
+        new VerificationStatusApi(
             httpClient, context.getVerificationServer(), authManagers, new HttpMapper());
   }
 
-  protected QueryVerificationsApi getApi() {
+  protected VerificationStatusApi getApi() {
     return this.api;
   }
 

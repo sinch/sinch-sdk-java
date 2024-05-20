@@ -3,7 +3,7 @@ package com.sinch.sdk.domains.verification.adapters;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
-import com.sinch.sdk.domains.verification.adapters.api.v1.SendingAndReportingVerificationsApi;
+import com.sinch.sdk.domains.verification.adapters.api.v1.VerificationsApi;
 import com.sinch.sdk.domains.verification.adapters.converters.VerificationsDtoConverter;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
@@ -31,16 +31,16 @@ import java.util.Map;
 public class VerificationsService
     implements com.sinch.sdk.domains.verification.VerificationsService {
 
-  private final SendingAndReportingVerificationsApi api;
+  private final VerificationsApi api;
 
   public VerificationsService(
       VerificationContext context, HttpClient httpClient, Map<String, AuthManager> authManagers) {
     this.api =
-        new SendingAndReportingVerificationsApi(
+        new VerificationsApi(
             httpClient, context.getVerificationServer(), authManagers, new HttpMapper());
   }
 
-  protected SendingAndReportingVerificationsApi getApi() {
+  protected VerificationsApi getApi() {
     return this.api;
   }
 
