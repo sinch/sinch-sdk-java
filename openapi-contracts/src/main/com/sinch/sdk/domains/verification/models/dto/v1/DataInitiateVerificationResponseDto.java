@@ -21,16 +21,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** FlashCallInitiateVerificationResponseDto */
+/** DataInitiateVerificationResponseDto */
 @JsonPropertyOrder({
-  FlashCallInitiateVerificationResponseDto.JSON_PROPERTY_ID,
-  FlashCallInitiateVerificationResponseDto.JSON_PROPERTY_METHOD,
-  FlashCallInitiateVerificationResponseDto.JSON_PROPERTY_FLASH_CALL,
-  FlashCallInitiateVerificationResponseDto.JSON_PROPERTY_LINKS
+  DataInitiateVerificationResponseDto.JSON_PROPERTY_ID,
+  DataInitiateVerificationResponseDto.JSON_PROPERTY_METHOD,
+  DataInitiateVerificationResponseDto.JSON_PROPERTY_SEAMLESS,
+  DataInitiateVerificationResponseDto.JSON_PROPERTY_LINKS
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class FlashCallInitiateVerificationResponseDto {
+public class DataInitiateVerificationResponseDto {
   private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_ID = "id";
   private String id;
@@ -40,17 +40,17 @@ public class FlashCallInitiateVerificationResponseDto {
   private String method;
   private boolean methodDefined = false;
 
-  public static final String JSON_PROPERTY_FLASH_CALL = "flashCall";
-  private FlashCallInitiateVerificationResponseFlashCallDto flashCall;
-  private boolean flashCallDefined = false;
+  public static final String JSON_PROPERTY_SEAMLESS = "seamless";
+  private DataInitiateVerificationResponseSeamlessDto seamless;
+  private boolean seamlessDefined = false;
 
   public static final String JSON_PROPERTY_LINKS = "_links";
   private List<LinksObjectDto> links;
   private boolean linksDefined = false;
 
-  public FlashCallInitiateVerificationResponseDto() {}
+  public DataInitiateVerificationResponseDto() {}
 
-  public FlashCallInitiateVerificationResponseDto id(String id) {
+  public DataInitiateVerificationResponseDto id(String id) {
     this.id = id;
     this.idDefined = true;
     return this;
@@ -62,7 +62,7 @@ public class FlashCallInitiateVerificationResponseDto {
    * @return id
    */
   @JsonProperty(JSON_PROPERTY_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getId() {
     return id;
   }
@@ -73,21 +73,21 @@ public class FlashCallInitiateVerificationResponseDto {
   }
 
   @JsonProperty(JSON_PROPERTY_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setId(String id) {
     this.id = id;
     this.idDefined = true;
   }
 
-  public FlashCallInitiateVerificationResponseDto method(String method) {
+  public DataInitiateVerificationResponseDto method(String method) {
     this.method = method;
     this.methodDefined = true;
     return this;
   }
 
   /**
-   * The value of the method used for the Verification. For Flashcall Verifications, this will
-   * always be &#x60;flashCall&#x60;.
+   * The value of the method used for the Verification. For Data Verifications, this will always be
+   * &#x60;seamless&#x60;.
    *
    * @return method
    */
@@ -109,43 +109,43 @@ public class FlashCallInitiateVerificationResponseDto {
     this.methodDefined = true;
   }
 
-  public FlashCallInitiateVerificationResponseDto flashCall(
-      FlashCallInitiateVerificationResponseFlashCallDto flashCall) {
-    this.flashCall = flashCall;
-    this.flashCallDefined = true;
+  public DataInitiateVerificationResponseDto seamless(
+      DataInitiateVerificationResponseSeamlessDto seamless) {
+    this.seamless = seamless;
+    this.seamlessDefined = true;
     return this;
   }
 
   /**
-   * Get flashCall
+   * Get seamless
    *
-   * @return flashCall
+   * @return seamless
    */
-  @JsonProperty(JSON_PROPERTY_FLASH_CALL)
+  @JsonProperty(JSON_PROPERTY_SEAMLESS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public FlashCallInitiateVerificationResponseFlashCallDto getFlashCall() {
-    return flashCall;
+  public DataInitiateVerificationResponseSeamlessDto getSeamless() {
+    return seamless;
   }
 
   @JsonIgnore
-  public boolean getFlashCallDefined() {
-    return flashCallDefined;
+  public boolean getSeamlessDefined() {
+    return seamlessDefined;
   }
 
-  @JsonProperty(JSON_PROPERTY_FLASH_CALL)
+  @JsonProperty(JSON_PROPERTY_SEAMLESS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setFlashCall(FlashCallInitiateVerificationResponseFlashCallDto flashCall) {
-    this.flashCall = flashCall;
-    this.flashCallDefined = true;
+  public void setSeamless(DataInitiateVerificationResponseSeamlessDto seamless) {
+    this.seamless = seamless;
+    this.seamlessDefined = true;
   }
 
-  public FlashCallInitiateVerificationResponseDto links(List<LinksObjectDto> links) {
+  public DataInitiateVerificationResponseDto links(List<LinksObjectDto> links) {
     this.links = links;
     this.linksDefined = true;
     return this;
   }
 
-  public FlashCallInitiateVerificationResponseDto addLinksItem(LinksObjectDto linksItem) {
+  public DataInitiateVerificationResponseDto addLinksItem(LinksObjectDto linksItem) {
     if (this.links == null) {
       this.links = new ArrayList<>();
     }
@@ -177,7 +177,7 @@ public class FlashCallInitiateVerificationResponseDto {
     this.linksDefined = true;
   }
 
-  /** Return true if this FlashCallInitiateVerificationResponse object is equal to o. */
+  /** Return true if this DataInitiateVerificationResponse object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -186,26 +186,26 @@ public class FlashCallInitiateVerificationResponseDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    FlashCallInitiateVerificationResponseDto flashCallInitiateVerificationResponse =
-        (FlashCallInitiateVerificationResponseDto) o;
-    return Objects.equals(this.id, flashCallInitiateVerificationResponse.id)
-        && Objects.equals(this.method, flashCallInitiateVerificationResponse.method)
-        && Objects.equals(this.flashCall, flashCallInitiateVerificationResponse.flashCall)
-        && Objects.equals(this.links, flashCallInitiateVerificationResponse.links);
+    DataInitiateVerificationResponseDto dataInitiateVerificationResponse =
+        (DataInitiateVerificationResponseDto) o;
+    return Objects.equals(this.id, dataInitiateVerificationResponse.id)
+        && Objects.equals(this.method, dataInitiateVerificationResponse.method)
+        && Objects.equals(this.seamless, dataInitiateVerificationResponse.seamless)
+        && Objects.equals(this.links, dataInitiateVerificationResponse.links);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, method, flashCall, links);
+    return Objects.hash(id, method, seamless, links);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class FlashCallInitiateVerificationResponseDto {\n");
+    sb.append("class DataInitiateVerificationResponseDto {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    method: ").append(toIndentedString(method)).append("\n");
-    sb.append("    flashCall: ").append(toIndentedString(flashCall)).append("\n");
+    sb.append("    seamless: ").append(toIndentedString(seamless)).append("\n");
     sb.append("    links: ").append(toIndentedString(links)).append("\n");
     sb.append("}");
     return sb.toString();

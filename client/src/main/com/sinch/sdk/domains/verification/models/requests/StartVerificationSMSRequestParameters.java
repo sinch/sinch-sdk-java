@@ -12,16 +12,18 @@ import com.sinch.sdk.domains.verification.models.VerificationReference;
  */
 public class StartVerificationSMSRequestParameters extends StartVerificationRequestParameters {
 
+  private final OptionalValue<String> acceptLanguage;
+  private final OptionalValue<StartVerificationSMSOptions> options;
+
   private StartVerificationSMSRequestParameters(
+      OptionalValue<String> acceptLanguage,
       OptionalValue<Identity> identity,
       OptionalValue<VerificationReference> reference,
-      OptionalValue<String> custom) {
+      OptionalValue<String> custom,
+      OptionalValue<StartVerificationSMSOptions> options) {
     super(identity, VerificationMethodType.SMS, reference, custom);
-  }
-
-  @Override
-  public String toString() {
-    return "StartVerificationSMSRequestParameters{} " + super.toString();
+    this.acceptLanguage = acceptLanguage;
+    this.options = options;
   }
 
   /**
@@ -34,6 +36,19 @@ public class StartVerificationSMSRequestParameters extends StartVerificationRequ
     return new Builder();
   }
 
+  public OptionalValue<String> getAcceptLanguage() {
+    return acceptLanguage;
+  }
+
+  public OptionalValue<StartVerificationSMSOptions> getOptions() {
+    return options;
+  }
+
+  @Override
+  public String toString() {
+    return "StartVerificationSMSRequestParameters{} " + super.toString();
+  }
+
   /**
    * Dedicated Builder
    *
@@ -41,7 +56,38 @@ public class StartVerificationSMSRequestParameters extends StartVerificationRequ
    */
   public static class Builder extends StartVerificationRequestParameters.Builder<Builder> {
 
-    private Builder() {}
+    OptionalValue<String> acceptLanguage = OptionalValue.empty();
+    OptionalValue<StartVerificationSMSOptions> options = OptionalValue.empty();
+
+    private Builder() {
+    }
+
+    /**
+     * Value of <a
+     * href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language">Accept-Language</a>
+     * header is used to determine the language of an SMS message.
+     *
+     * @param acceptLanguage Specifies accept language value to be used
+     * @return current builder
+     * @since 1.0
+     */
+    public Builder setAcceptLanguage(String acceptLanguage) {
+      this.acceptLanguage = OptionalValue.of(acceptLanguage);
+      return self();
+    }
+
+    /**
+     * SMS options to be used
+     *
+     * @param options Specifies options
+     * @return current builder
+     * @since 1.0
+     */
+    public Builder setOptions(StartVerificationSMSOptions options) {
+      this.options = OptionalValue.of(options);
+      return self();
+    }
+
 
     /**
      * Create instance
@@ -51,7 +97,8 @@ public class StartVerificationSMSRequestParameters extends StartVerificationRequ
      */
     @Override
     public StartVerificationSMSRequestParameters build() {
-      return new StartVerificationSMSRequestParameters(identity, reference, custom);
+      return new StartVerificationSMSRequestParameters(acceptLanguage, identity, reference, custom,
+          options);
     }
 
     @Override

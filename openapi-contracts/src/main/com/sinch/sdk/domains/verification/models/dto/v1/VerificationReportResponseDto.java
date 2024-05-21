@@ -12,13 +12,11 @@
 
 package com.sinch.sdk.domains.verification.models.dto.v1;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Objects;
 
 /** VerificationReportResponseDto */
@@ -39,51 +37,8 @@ public class VerificationReportResponseDto {
   private VerificationMethodDto method;
   private boolean methodDefined = false;
 
-  /** The status of the verification request. */
-  public enum StatusEnum {
-    PENDING("PENDING"),
-
-    SUCCESSFUL("SUCCESSFUL"),
-
-    FAIL("FAIL"),
-
-    DENIED("DENIED"),
-
-    ABORTED("ABORTED"),
-
-    ERROR("ERROR"),
-
-    UNKNOWN_DEFAULT_OPEN_API("unknown_default_open_api");
-
-    private String value;
-
-    StatusEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static StatusEnum fromValue(String value) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      return UNKNOWN_DEFAULT_OPEN_API;
-    }
-  }
-
   public static final String JSON_PROPERTY_STATUS = "status";
-  private String status;
+  private VerificationStatusDto status;
   private boolean statusDefined = false;
 
   public VerificationReportResponseDto() {}
@@ -146,20 +101,20 @@ public class VerificationReportResponseDto {
     this.methodDefined = true;
   }
 
-  public VerificationReportResponseDto status(String status) {
+  public VerificationReportResponseDto status(VerificationStatusDto status) {
     this.status = status;
     this.statusDefined = true;
     return this;
   }
 
   /**
-   * The status of the verification request.
+   * Get status
    *
    * @return status
    */
   @JsonProperty(JSON_PROPERTY_STATUS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getStatus() {
+  public VerificationStatusDto getStatus() {
     return status;
   }
 
@@ -170,7 +125,7 @@ public class VerificationReportResponseDto {
 
   @JsonProperty(JSON_PROPERTY_STATUS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setStatus(String status) {
+  public void setStatus(VerificationStatusDto status) {
     this.status = status;
     this.statusDefined = true;
   }

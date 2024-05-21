@@ -21,16 +21,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** FlashCallInitiateVerificationResponseDto */
+/** SMSInitiateVerificationResponseDto */
 @JsonPropertyOrder({
-  FlashCallInitiateVerificationResponseDto.JSON_PROPERTY_ID,
-  FlashCallInitiateVerificationResponseDto.JSON_PROPERTY_METHOD,
-  FlashCallInitiateVerificationResponseDto.JSON_PROPERTY_FLASH_CALL,
-  FlashCallInitiateVerificationResponseDto.JSON_PROPERTY_LINKS
+  SMSInitiateVerificationResponseDto.JSON_PROPERTY_ID,
+  SMSInitiateVerificationResponseDto.JSON_PROPERTY_METHOD,
+  SMSInitiateVerificationResponseDto.JSON_PROPERTY_SMS,
+  SMSInitiateVerificationResponseDto.JSON_PROPERTY_LINKS
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class FlashCallInitiateVerificationResponseDto {
+public class SMSInitiateVerificationResponseDto {
   private static final long serialVersionUID = 1L;
   public static final String JSON_PROPERTY_ID = "id";
   private String id;
@@ -40,17 +40,17 @@ public class FlashCallInitiateVerificationResponseDto {
   private String method;
   private boolean methodDefined = false;
 
-  public static final String JSON_PROPERTY_FLASH_CALL = "flashCall";
-  private FlashCallInitiateVerificationResponseFlashCallDto flashCall;
-  private boolean flashCallDefined = false;
+  public static final String JSON_PROPERTY_SMS = "sms";
+  private SMSInitiateVerificationResponseSmsDto sms;
+  private boolean smsDefined = false;
 
   public static final String JSON_PROPERTY_LINKS = "_links";
   private List<LinksObjectDto> links;
   private boolean linksDefined = false;
 
-  public FlashCallInitiateVerificationResponseDto() {}
+  public SMSInitiateVerificationResponseDto() {}
 
-  public FlashCallInitiateVerificationResponseDto id(String id) {
+  public SMSInitiateVerificationResponseDto id(String id) {
     this.id = id;
     this.idDefined = true;
     return this;
@@ -79,15 +79,15 @@ public class FlashCallInitiateVerificationResponseDto {
     this.idDefined = true;
   }
 
-  public FlashCallInitiateVerificationResponseDto method(String method) {
+  public SMSInitiateVerificationResponseDto method(String method) {
     this.method = method;
     this.methodDefined = true;
     return this;
   }
 
   /**
-   * The value of the method used for the Verification. For Flashcall Verifications, this will
-   * always be &#x60;flashCall&#x60;.
+   * The value of the method used for the Verification. For SMS Verifications, this will always be
+   * &#x60;sms&#x60;.
    *
    * @return method
    */
@@ -109,43 +109,42 @@ public class FlashCallInitiateVerificationResponseDto {
     this.methodDefined = true;
   }
 
-  public FlashCallInitiateVerificationResponseDto flashCall(
-      FlashCallInitiateVerificationResponseFlashCallDto flashCall) {
-    this.flashCall = flashCall;
-    this.flashCallDefined = true;
+  public SMSInitiateVerificationResponseDto sms(SMSInitiateVerificationResponseSmsDto sms) {
+    this.sms = sms;
+    this.smsDefined = true;
     return this;
   }
 
   /**
-   * Get flashCall
+   * Get sms
    *
-   * @return flashCall
+   * @return sms
    */
-  @JsonProperty(JSON_PROPERTY_FLASH_CALL)
+  @JsonProperty(JSON_PROPERTY_SMS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public FlashCallInitiateVerificationResponseFlashCallDto getFlashCall() {
-    return flashCall;
+  public SMSInitiateVerificationResponseSmsDto getSms() {
+    return sms;
   }
 
   @JsonIgnore
-  public boolean getFlashCallDefined() {
-    return flashCallDefined;
+  public boolean getSmsDefined() {
+    return smsDefined;
   }
 
-  @JsonProperty(JSON_PROPERTY_FLASH_CALL)
+  @JsonProperty(JSON_PROPERTY_SMS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setFlashCall(FlashCallInitiateVerificationResponseFlashCallDto flashCall) {
-    this.flashCall = flashCall;
-    this.flashCallDefined = true;
+  public void setSms(SMSInitiateVerificationResponseSmsDto sms) {
+    this.sms = sms;
+    this.smsDefined = true;
   }
 
-  public FlashCallInitiateVerificationResponseDto links(List<LinksObjectDto> links) {
+  public SMSInitiateVerificationResponseDto links(List<LinksObjectDto> links) {
     this.links = links;
     this.linksDefined = true;
     return this;
   }
 
-  public FlashCallInitiateVerificationResponseDto addLinksItem(LinksObjectDto linksItem) {
+  public SMSInitiateVerificationResponseDto addLinksItem(LinksObjectDto linksItem) {
     if (this.links == null) {
       this.links = new ArrayList<>();
     }
@@ -177,7 +176,7 @@ public class FlashCallInitiateVerificationResponseDto {
     this.linksDefined = true;
   }
 
-  /** Return true if this FlashCallInitiateVerificationResponse object is equal to o. */
+  /** Return true if this SMSInitiateVerificationResponse object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -186,26 +185,26 @@ public class FlashCallInitiateVerificationResponseDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    FlashCallInitiateVerificationResponseDto flashCallInitiateVerificationResponse =
-        (FlashCallInitiateVerificationResponseDto) o;
-    return Objects.equals(this.id, flashCallInitiateVerificationResponse.id)
-        && Objects.equals(this.method, flashCallInitiateVerificationResponse.method)
-        && Objects.equals(this.flashCall, flashCallInitiateVerificationResponse.flashCall)
-        && Objects.equals(this.links, flashCallInitiateVerificationResponse.links);
+    SMSInitiateVerificationResponseDto smSInitiateVerificationResponse =
+        (SMSInitiateVerificationResponseDto) o;
+    return Objects.equals(this.id, smSInitiateVerificationResponse.id)
+        && Objects.equals(this.method, smSInitiateVerificationResponse.method)
+        && Objects.equals(this.sms, smSInitiateVerificationResponse.sms)
+        && Objects.equals(this.links, smSInitiateVerificationResponse.links);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, method, flashCall, links);
+    return Objects.hash(id, method, sms, links);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class FlashCallInitiateVerificationResponseDto {\n");
+    sb.append("class SMSInitiateVerificationResponseDto {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    method: ").append(toIndentedString(method)).append("\n");
-    sb.append("    flashCall: ").append(toIndentedString(flashCall)).append("\n");
+    sb.append("    sms: ").append(toIndentedString(sms)).append("\n");
     sb.append("    links: ").append(toIndentedString(links)).append("\n");
     sb.append("}");
     return sb.toString();

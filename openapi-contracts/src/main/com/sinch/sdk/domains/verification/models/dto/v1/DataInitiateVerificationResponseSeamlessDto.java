@@ -19,52 +19,48 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.Objects;
 
-/**
- * An optional object for Phone Call Verification, with default values assumed for all contained
- * values if not provided.
- */
-@JsonPropertyOrder({InitiateVerificationResourceCalloutOptionsDto.JSON_PROPERTY_SPEECH})
+/** The response contains the target URI. */
+@JsonPropertyOrder({DataInitiateVerificationResponseSeamlessDto.JSON_PROPERTY_TARGET_URI})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class InitiateVerificationResourceCalloutOptionsDto {
+public class DataInitiateVerificationResponseSeamlessDto {
   private static final long serialVersionUID = 1L;
-  public static final String JSON_PROPERTY_SPEECH = "speech";
-  private InitiateVerificationResourceCalloutOptionsSpeechDto speech;
-  private boolean speechDefined = false;
+  public static final String JSON_PROPERTY_TARGET_URI = "targetUri";
+  private String targetUri;
+  private boolean targetUriDefined = false;
 
-  public InitiateVerificationResourceCalloutOptionsDto() {}
+  public DataInitiateVerificationResponseSeamlessDto() {}
 
-  public InitiateVerificationResourceCalloutOptionsDto speech(
-      InitiateVerificationResourceCalloutOptionsSpeechDto speech) {
-    this.speech = speech;
-    this.speechDefined = true;
+  public DataInitiateVerificationResponseSeamlessDto targetUri(String targetUri) {
+    this.targetUri = targetUri;
+    this.targetUriDefined = true;
     return this;
   }
 
   /**
-   * Get speech
+   * The target URI.
    *
-   * @return speech
+   * @return targetUri
    */
-  @JsonProperty(JSON_PROPERTY_SPEECH)
+  @JsonProperty(JSON_PROPERTY_TARGET_URI)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public InitiateVerificationResourceCalloutOptionsSpeechDto getSpeech() {
-    return speech;
+  public String getTargetUri() {
+    return targetUri;
   }
 
   @JsonIgnore
-  public boolean getSpeechDefined() {
-    return speechDefined;
+  public boolean getTargetUriDefined() {
+    return targetUriDefined;
   }
 
-  @JsonProperty(JSON_PROPERTY_SPEECH)
+  @JsonProperty(JSON_PROPERTY_TARGET_URI)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setSpeech(InitiateVerificationResourceCalloutOptionsSpeechDto speech) {
-    this.speech = speech;
-    this.speechDefined = true;
+  public void setTargetUri(String targetUri) {
+    this.targetUri = targetUri;
+    this.targetUriDefined = true;
   }
 
-  /** Return true if this InitiateVerificationResource_calloutOptions object is equal to o. */
+  /** Return true if this DataInitiateVerificationResponse_seamless object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -73,21 +69,21 @@ public class InitiateVerificationResourceCalloutOptionsDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    InitiateVerificationResourceCalloutOptionsDto initiateVerificationResourceCalloutOptions =
-        (InitiateVerificationResourceCalloutOptionsDto) o;
-    return Objects.equals(this.speech, initiateVerificationResourceCalloutOptions.speech);
+    DataInitiateVerificationResponseSeamlessDto dataInitiateVerificationResponseSeamless =
+        (DataInitiateVerificationResponseSeamlessDto) o;
+    return Objects.equals(this.targetUri, dataInitiateVerificationResponseSeamless.targetUri);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(speech);
+    return Objects.hash(targetUri);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class InitiateVerificationResourceCalloutOptionsDto {\n");
-    sb.append("    speech: ").append(toIndentedString(speech)).append("\n");
+    sb.append("class DataInitiateVerificationResponseSeamlessDto {\n");
+    sb.append("    targetUri: ").append(toIndentedString(targetUri)).append("\n");
     sb.append("}");
     return sb.toString();
   }

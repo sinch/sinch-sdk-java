@@ -12,16 +12,15 @@ import com.sinch.sdk.domains.verification.models.VerificationReference;
  */
 public class StartVerificationCalloutRequestParameters extends StartVerificationRequestParameters {
 
+  private final OptionalValue<StartVerificationCalloutOptions> options;
+
   private StartVerificationCalloutRequestParameters(
       OptionalValue<Identity> identity,
       OptionalValue<VerificationReference> reference,
-      OptionalValue<String> custom) {
+      OptionalValue<String> custom,
+      OptionalValue<StartVerificationCalloutOptions> options) {
     super(identity, VerificationMethodType.CALLOUT, reference, custom);
-  }
-
-  @Override
-  public String toString() {
-    return "StartVerificationCalloutRequestParameters{} " + super.toString();
+    this.options = options;
   }
 
   /**
@@ -34,6 +33,15 @@ public class StartVerificationCalloutRequestParameters extends StartVerification
     return new Builder();
   }
 
+  public OptionalValue<StartVerificationCalloutOptions> getOptions() {
+    return options;
+  }
+
+  @Override
+  public String toString() {
+    return "StartVerificationCalloutRequestParameters{} " + super.toString();
+  }
+
   /**
    * Dedicated Builder
    *
@@ -41,7 +49,22 @@ public class StartVerificationCalloutRequestParameters extends StartVerification
    */
   public static class Builder extends StartVerificationRequestParameters.Builder<Builder> {
 
-    private Builder() {}
+    OptionalValue<StartVerificationCalloutOptions> options = OptionalValue.empty();
+
+    private Builder() {
+    }
+
+    /**
+     * Callout options to be used
+     *
+     * @param options Specifies options
+     * @return current builder
+     * @since 1.0
+     */
+    public Builder setOptions(StartVerificationCalloutOptions options) {
+      this.options = OptionalValue.of(options);
+      return this;
+    }
 
     /**
      * Create instance
@@ -51,7 +74,7 @@ public class StartVerificationCalloutRequestParameters extends StartVerification
      */
     @Override
     public StartVerificationCalloutRequestParameters build() {
-      return new StartVerificationCalloutRequestParameters(identity, reference, custom);
+      return new StartVerificationCalloutRequestParameters(identity, reference, custom, options);
     }
 
     @Override

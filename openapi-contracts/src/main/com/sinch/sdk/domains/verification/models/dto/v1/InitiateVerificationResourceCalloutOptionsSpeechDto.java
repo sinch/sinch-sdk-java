@@ -19,52 +19,52 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.Objects;
 
-/**
- * An optional object for Phone Call Verification, with default values assumed for all contained
- * values if not provided.
- */
-@JsonPropertyOrder({InitiateVerificationResourceCalloutOptionsDto.JSON_PROPERTY_SPEECH})
+/** Text-To-Speech engine settings */
+@JsonPropertyOrder({InitiateVerificationResourceCalloutOptionsSpeechDto.JSON_PROPERTY_LOCALE})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class InitiateVerificationResourceCalloutOptionsDto {
+public class InitiateVerificationResourceCalloutOptionsSpeechDto {
   private static final long serialVersionUID = 1L;
-  public static final String JSON_PROPERTY_SPEECH = "speech";
-  private InitiateVerificationResourceCalloutOptionsSpeechDto speech;
-  private boolean speechDefined = false;
+  public static final String JSON_PROPERTY_LOCALE = "locale";
+  private String locale;
+  private boolean localeDefined = false;
 
-  public InitiateVerificationResourceCalloutOptionsDto() {}
+  public InitiateVerificationResourceCalloutOptionsSpeechDto() {}
 
-  public InitiateVerificationResourceCalloutOptionsDto speech(
-      InitiateVerificationResourceCalloutOptionsSpeechDto speech) {
-    this.speech = speech;
-    this.speechDefined = true;
+  public InitiateVerificationResourceCalloutOptionsSpeechDto locale(String locale) {
+    this.locale = locale;
+    this.localeDefined = true;
     return this;
   }
 
   /**
-   * Get speech
+   * A &#x60;language-region&#x60; identifier according to
+   * [IANA](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry).
+   * Only a subset of those identifiers is accepted.
    *
-   * @return speech
+   * @return locale
    */
-  @JsonProperty(JSON_PROPERTY_SPEECH)
+  @JsonProperty(JSON_PROPERTY_LOCALE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public InitiateVerificationResourceCalloutOptionsSpeechDto getSpeech() {
-    return speech;
+  public String getLocale() {
+    return locale;
   }
 
   @JsonIgnore
-  public boolean getSpeechDefined() {
-    return speechDefined;
+  public boolean getLocaleDefined() {
+    return localeDefined;
   }
 
-  @JsonProperty(JSON_PROPERTY_SPEECH)
+  @JsonProperty(JSON_PROPERTY_LOCALE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setSpeech(InitiateVerificationResourceCalloutOptionsSpeechDto speech) {
-    this.speech = speech;
-    this.speechDefined = true;
+  public void setLocale(String locale) {
+    this.locale = locale;
+    this.localeDefined = true;
   }
 
-  /** Return true if this InitiateVerificationResource_calloutOptions object is equal to o. */
+  /**
+   * Return true if this InitiateVerificationResource_calloutOptions_speech object is equal to o.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -73,21 +73,22 @@ public class InitiateVerificationResourceCalloutOptionsDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    InitiateVerificationResourceCalloutOptionsDto initiateVerificationResourceCalloutOptions =
-        (InitiateVerificationResourceCalloutOptionsDto) o;
-    return Objects.equals(this.speech, initiateVerificationResourceCalloutOptions.speech);
+    InitiateVerificationResourceCalloutOptionsSpeechDto
+        initiateVerificationResourceCalloutOptionsSpeech =
+            (InitiateVerificationResourceCalloutOptionsSpeechDto) o;
+    return Objects.equals(this.locale, initiateVerificationResourceCalloutOptionsSpeech.locale);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(speech);
+    return Objects.hash(locale);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class InitiateVerificationResourceCalloutOptionsDto {\n");
-    sb.append("    speech: ").append(toIndentedString(speech)).append("\n");
+    sb.append("class InitiateVerificationResourceCalloutOptionsSpeechDto {\n");
+    sb.append("    locale: ").append(toIndentedString(locale)).append("\n");
     sb.append("}");
     return sb.toString();
   }
