@@ -59,8 +59,7 @@ public class StartVerificationSMSRequestParameters extends StartVerificationRequ
     OptionalValue<String> acceptLanguage = OptionalValue.empty();
     OptionalValue<StartVerificationSMSOptions> options = OptionalValue.empty();
 
-    private Builder() {
-    }
+    private Builder() {}
 
     /**
      * Value of <a
@@ -88,7 +87,6 @@ public class StartVerificationSMSRequestParameters extends StartVerificationRequ
       return self();
     }
 
-
     /**
      * Create instance
      *
@@ -97,8 +95,8 @@ public class StartVerificationSMSRequestParameters extends StartVerificationRequ
      */
     @Override
     public StartVerificationSMSRequestParameters build() {
-      return new StartVerificationSMSRequestParameters(acceptLanguage, identity, reference, custom,
-          options);
+      return new StartVerificationSMSRequestParameters(
+          acceptLanguage, identity, reference, custom, options);
     }
 
     @Override

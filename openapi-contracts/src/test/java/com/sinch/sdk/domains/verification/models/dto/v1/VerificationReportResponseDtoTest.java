@@ -44,14 +44,14 @@ public class VerificationReportResponseDtoTest extends BaseTest {
   }
 
   @Test
-  void deserializeFlashCall()   {
+  void deserializeFlashCall() {
     Assertions.assertThat(verificationReportFlashCallDto)
         .usingRecursiveComparison()
         .isEqualTo(expectedVerificationReportFlashCall);
   }
 
   @Test
-  void serializeSMS()  {
+  void serializeSMS() {
     Assertions.assertThat(verificationReportSMSDto)
         .usingRecursiveComparison()
         .isEqualTo(expectedVerificationReportSMS);

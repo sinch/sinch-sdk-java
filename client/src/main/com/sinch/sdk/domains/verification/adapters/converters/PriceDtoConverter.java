@@ -9,9 +9,6 @@ public class PriceDtoConverter {
     if (null == dto) {
       return Price.builder().build();
     }
-    return Price.builder()
-        .setCurrencyId(dto.getCurrencyId())
-        .setAmount(dto.getAmount())
-        .build();
+    return Price.builder().setCurrencyId(dto.getCurrencyId()).setAmount(dto.getAmount()).build();
   }
 }

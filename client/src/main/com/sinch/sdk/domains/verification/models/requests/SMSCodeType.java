@@ -18,7 +18,8 @@ public class SMSCodeType extends EnumDynamic<String, SMSCodeType> {
 
   public static final SMSCodeType ALPHANUMERIC = new SMSCodeType("Alphanumeric");
   private static final EnumSupportDynamic<String, SMSCodeType> ENUM_SUPPORT =
-      new EnumSupportDynamic<>(SMSCodeType.class, SMSCodeType::new, Arrays.asList(NUMERIC, ALPHA, ALPHANUMERIC));
+      new EnumSupportDynamic<>(
+          SMSCodeType.class, SMSCodeType::new, Arrays.asList(NUMERIC, ALPHA, ALPHANUMERIC));
 
   private SMSCodeType(String value) {
     super(value);

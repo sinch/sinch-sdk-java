@@ -35,9 +35,7 @@ public class VerificationReportSMS extends VerificationReport {
   /** Dedicated Builder */
   public static class Builder extends VerificationReport.Builder<Builder> {
 
-
     private Builder() {}
-
 
     /**
      * Create instance
@@ -46,9 +44,7 @@ public class VerificationReportSMS extends VerificationReport {
      * @since 1.0
      */
     public VerificationReportSMS build() {
-      return new VerificationReportSMS(
-          id,
-          status);
+      return new VerificationReportSMS(id, status);
     }
 
     @Override

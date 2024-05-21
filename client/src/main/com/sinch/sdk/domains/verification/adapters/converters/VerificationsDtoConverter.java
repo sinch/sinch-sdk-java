@@ -10,13 +10,13 @@ import com.sinch.sdk.domains.verification.models.VerificationReport;
 import com.sinch.sdk.domains.verification.models.VerificationReportCallout;
 import com.sinch.sdk.domains.verification.models.VerificationReportFlashCall;
 import com.sinch.sdk.domains.verification.models.VerificationReportSMS;
+import com.sinch.sdk.domains.verification.models.VerificationSourceType;
 import com.sinch.sdk.domains.verification.models.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.VerificationStatusCallout;
 import com.sinch.sdk.domains.verification.models.VerificationStatusFlashCall;
 import com.sinch.sdk.domains.verification.models.VerificationStatusReasonType;
 import com.sinch.sdk.domains.verification.models.VerificationStatusSMS;
 import com.sinch.sdk.domains.verification.models.VerificationStatusType;
-import com.sinch.sdk.domains.verification.models.VerificationSourceType;
 import com.sinch.sdk.domains.verification.models.dto.v1.CalloutInitiateVerificationResponseDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.CalloutVerificationReportRequestCalloutDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.CalloutVerificationReportRequestDto;
@@ -88,42 +88,41 @@ public class VerificationsDtoConverter {
           .ifPresent(
               f ->
                   dto.flashCallOptions(
-                      new InitiateVerificationResourceFlashCallOptionsDto()
-                          .dialTimeout(f)));
-    }else if (client instanceof StartVerificationSMSRequestParameters) {
+                      new InitiateVerificationResourceFlashCallOptionsDto().dialTimeout(f)));
+    } else if (client instanceof StartVerificationSMSRequestParameters) {
       StartVerificationSMSRequestParameters options =
           (StartVerificationSMSRequestParameters) client;
-      options
-          .getOptions()
-          .ifPresent(f -> dto.smsOptions(convert(f)));
-    }else if (client instanceof StartVerificationCalloutRequestParameters) {
+      options.getOptions().ifPresent(f -> dto.smsOptions(convert(f)));
+    } else if (client instanceof StartVerificationCalloutRequestParameters) {
       StartVerificationCalloutRequestParameters options =
           (StartVerificationCalloutRequestParameters) client;
-      options
-          .getOptions()
-          .ifPresent(f -> dto.calloutOptions(convert(f)));
+      options.getOptions().ifPresent(f -> dto.calloutOptions(convert(f)));
     } else {
       LOGGER.severe(String.format("Unexpected class '%s'", client.getClass()));
     }
     return dto;
   }
 
-  static InitiateVerificationResourceSmsOptionsDto convert (StartVerificationSMSOptions client) {
+  static InitiateVerificationResourceSmsOptionsDto convert(StartVerificationSMSOptions client) {
     InitiateVerificationResourceSmsOptionsDto dto = new InitiateVerificationResourceSmsOptionsDto();
     client.getExpiry().ifPresent(dto::setExpiry);
-  client.getCodeType().ifPresent(f -> dto.setCodeType(f.value()));
-            client.getTemplate().ifPresent(dto::setTemplate);
+    client.getCodeType().ifPresent(f -> dto.setCodeType(f.value()));
+    client.getTemplate().ifPresent(dto::setTemplate);
     return dto;
   }
 
-  static InitiateVerificationResourceCalloutOptionsDto convert (StartVerificationCalloutOptions client) {
-    InitiateVerificationResourceCalloutOptionsDto dto = new InitiateVerificationResourceCalloutOptionsDto();
+  static InitiateVerificationResourceCalloutOptionsDto convert(
+      StartVerificationCalloutOptions client) {
+    InitiateVerificationResourceCalloutOptionsDto dto =
+        new InitiateVerificationResourceCalloutOptionsDto();
     client.getSpeech().ifPresent(f -> dto.setSpeech(convert(f)));
     return dto;
   }
 
-  static InitiateVerificationResourceCalloutOptionsSpeechDto convert (StartVerificationCalloutSpeechOptions client) {
-    InitiateVerificationResourceCalloutOptionsSpeechDto dto = new InitiateVerificationResourceCalloutOptionsSpeechDto();
+  static InitiateVerificationResourceCalloutOptionsSpeechDto convert(
+      StartVerificationCalloutSpeechOptions client) {
+    InitiateVerificationResourceCalloutOptionsSpeechDto dto =
+        new InitiateVerificationResourceCalloutOptionsSpeechDto();
     client.getLocale().ifPresent(dto::setLocale);
     return dto;
   }
@@ -147,23 +146,24 @@ public class VerificationsDtoConverter {
     }
     return identity;
   }
-  public static  VerificationMethodDto convert(VerificationMethodType client) {
+
+  public static VerificationMethodDto convert(VerificationMethodType client) {
     VerificationMethodDto dto =
         VerificationMethodDto.fromValue(EnumDynamicConverter.convert(client));
-    return   VerificationMethodDto.valueOf(dto.getValue());
+    return VerificationMethodDto.valueOf(dto.getValue());
   }
 
   public static StartVerificationResponse convert(InitiateVerificationResponseDto dto) {
     StartVerificationResponse.Builder<?> builder;
 
     if (dto.getActualInstance() instanceof SMSInitiateVerificationResponseDto) {
-      builder = convert( dto.getSMSInitiateVerificationResponseDto());
-    } else if   (dto.getActualInstance() instanceof FlashCallInitiateVerificationResponseDto) {
-      builder = convert( dto.getFlashCallInitiateVerificationResponseDto());
-    } else if   (dto.getActualInstance() instanceof CalloutInitiateVerificationResponseDto) {
-      builder = convert( dto.getCalloutInitiateVerificationResponseDto());
-    } else if   (dto.getActualInstance() instanceof DataInitiateVerificationResponseDto) {
-      builder = convert( dto.getDataInitiateVerificationResponseDto());
+      builder = convert(dto.getSMSInitiateVerificationResponseDto());
+    } else if (dto.getActualInstance() instanceof FlashCallInitiateVerificationResponseDto) {
+      builder = convert(dto.getFlashCallInitiateVerificationResponseDto());
+    } else if (dto.getActualInstance() instanceof CalloutInitiateVerificationResponseDto) {
+      builder = convert(dto.getCalloutInitiateVerificationResponseDto());
+    } else if (dto.getActualInstance() instanceof DataInitiateVerificationResponseDto) {
+      builder = convert(dto.getDataInitiateVerificationResponseDto());
     } else {
       LOGGER.severe(String.format("Unexpected class '%s'", dto.getActualInstance()));
       builder = StartVerificationResponse.builder();
@@ -171,32 +171,34 @@ public class VerificationsDtoConverter {
     return builder.build();
   }
 
-  static StartVerificationResponseSMS.Builder convert (SMSInitiateVerificationResponseDto dto) {
-      StartVerificationResponseSMS.Builder builder = StartVerificationResponseSMS.builder();
+  static StartVerificationResponseSMS.Builder convert(SMSInitiateVerificationResponseDto dto) {
+    StartVerificationResponseSMS.Builder builder = StartVerificationResponseSMS.builder();
 
-      if (dto.getIdDefined()) {
-        builder.setId(VerificationId.valueOf(dto.getId()));
-      }
+    if (dto.getIdDefined()) {
+      builder.setId(VerificationId.valueOf(dto.getId()));
+    }
     if (dto.getLinksDefined()) {
       builder.setLinks(LinkDtoConverter.convert((dto.getLinks())));
     }
 
-      if (dto.getSmsDefined()) {
-        SMSInitiateVerificationResponseSmsDto sms = dto.getSms();
-        if (sms.getTemplateDefined()) {
-          builder.setTemplate(sms.getTemplate());
-        }
-        if (sms.getInterceptionTimeoutDefined()) {
-          builder.setInterceptionTimeOut(Integer.valueOf(sms.getInterceptionTimeout()));
-        }
+    if (dto.getSmsDefined()) {
+      SMSInitiateVerificationResponseSmsDto sms = dto.getSms();
+      if (sms.getTemplateDefined()) {
+        builder.setTemplate(sms.getTemplate());
       }
+      if (sms.getInterceptionTimeoutDefined()) {
+        builder.setInterceptionTimeOut(Integer.valueOf(sms.getInterceptionTimeout()));
+      }
+    }
 
     return builder;
   }
 
-  static StartVerificationResponseFlashCall.Builder convert (FlashCallInitiateVerificationResponseDto dto) {
+  static StartVerificationResponseFlashCall.Builder convert(
+      FlashCallInitiateVerificationResponseDto dto) {
 
-    StartVerificationResponseFlashCall.Builder builder = StartVerificationResponseFlashCall.builder();
+    StartVerificationResponseFlashCall.Builder builder =
+        StartVerificationResponseFlashCall.builder();
 
     if (dto.getIdDefined()) {
       builder.setId(VerificationId.valueOf(dto.getId()));
@@ -223,7 +225,8 @@ public class VerificationsDtoConverter {
     return builder;
   }
 
-  static StartVerificationResponseCallout.Builder convert (CalloutInitiateVerificationResponseDto dto) {
+  static StartVerificationResponseCallout.Builder convert(
+      CalloutInitiateVerificationResponseDto dto) {
 
     StartVerificationResponseCallout.Builder builder = StartVerificationResponseCallout.builder();
 
@@ -236,7 +239,8 @@ public class VerificationsDtoConverter {
     return builder;
   }
 
-  static StartVerificationResponseSeamless.Builder convert (DataInitiateVerificationResponseDto dto) {
+  static StartVerificationResponseSeamless.Builder convert(
+      DataInitiateVerificationResponseDto dto) {
 
     StartVerificationResponseSeamless.Builder builder = StartVerificationResponseSeamless.builder();
 
@@ -280,14 +284,14 @@ public class VerificationsDtoConverter {
   private static FlashcallVerificationReportRequestDto convert(
       VerificationReportFlashCallRequestParameters client) {
 
-    FlashcallVerificationReportRequestFlashCallDto subfield = new  FlashcallVerificationReportRequestFlashCallDto();
+    FlashcallVerificationReportRequestFlashCallDto subfield =
+        new FlashcallVerificationReportRequestFlashCallDto();
     client.getCli().ifPresent(subfield::cli);
 
     return new FlashcallVerificationReportRequestDto()
         .method(FlashcallVerificationReportRequestDto.MethodEnum.FLASHCALL.getValue())
         .flashCall(subfield);
   }
-
 
   private static SmsVerificationReportRequestDto convert(
       VerificationReportSMSRequestParameters client) {
@@ -302,9 +306,10 @@ public class VerificationsDtoConverter {
   }
 
   private static CalloutVerificationReportRequestDto convert(
-    VerificationReportCalloutRequestParameters client) {
+      VerificationReportCalloutRequestParameters client) {
 
-    CalloutVerificationReportRequestCalloutDto subfield = new CalloutVerificationReportRequestCalloutDto();
+    CalloutVerificationReportRequestCalloutDto subfield =
+        new CalloutVerificationReportRequestCalloutDto();
     client.getCode().ifPresent(subfield::code);
 
     return new CalloutVerificationReportRequestDto()
@@ -316,7 +321,7 @@ public class VerificationsDtoConverter {
     switch (dto.getMethod()) {
       case SMS:
         return VerificationReportSMS.builder().build();
-      case  FLASHCALL:
+      case FLASHCALL:
         return VerificationReportFlashCall.builder().build();
       case CALLOUT:
         return VerificationReportCallout.builder().build();
@@ -335,14 +340,14 @@ public class VerificationsDtoConverter {
       builder = convert(dto.getSMSVerificationStatusResponseDto());
     } else if (dto.getActualInstance() instanceof CalloutVerificationStatusResponseDto) {
       builder = convert(dto.getCalloutVerificationStatusResponseDto());
-    }else {
+    } else {
       LOGGER.severe(String.format("Unexpected class '%s'", dto));
       builder = VerificationStatus.builder();
     }
     return builder.build();
   }
 
-  static VerificationStatusFlashCall.Builder convert (FlashcallVerificationStatusResponseDto dto) {
+  static VerificationStatusFlashCall.Builder convert(FlashcallVerificationStatusResponseDto dto) {
 
     VerificationStatusFlashCall.Builder builder = VerificationStatusFlashCall.builder();
 
@@ -371,7 +376,7 @@ public class VerificationsDtoConverter {
     if (dto.getSourceDefined()) {
       builder.setSource(VerificationSourceType.from(dto.getSource()));
     }
-    if (dto.getPriceDefined()){
+    if (dto.getPriceDefined()) {
       FlashcallVerificationStatusResponseAllOfPriceDto price = dto.getPrice();
       if (price.getVerificationPriceDefined()) {
         builder.setVerificationPrice(PriceDtoConverter.convert(price.getVerificationPrice()));
@@ -386,7 +391,7 @@ public class VerificationsDtoConverter {
     return builder;
   }
 
-  static VerificationStatusSMS.Builder convert (SMSVerificationStatusResponseDto dto) {
+  static VerificationStatusSMS.Builder convert(SMSVerificationStatusResponseDto dto) {
 
     VerificationStatusSMS.Builder builder = VerificationStatusSMS.builder();
 
@@ -415,7 +420,7 @@ public class VerificationsDtoConverter {
     if (dto.getSourceDefined()) {
       builder.setSource(VerificationSourceType.from(dto.getSource()));
     }
-    if (dto.getPriceDefined()){
+    if (dto.getPriceDefined()) {
       SMSVerificationStatusResponseAllOfPriceDto price = dto.getPrice();
       if (price.getVerificationPriceDefined()) {
         builder.setVerificationPrice(PriceDtoConverter.convert(price.getVerificationPrice()));
@@ -424,7 +429,7 @@ public class VerificationsDtoConverter {
     return builder;
   }
 
-  static VerificationStatusCallout.Builder convert (CalloutVerificationStatusResponseDto dto) {
+  static VerificationStatusCallout.Builder convert(CalloutVerificationStatusResponseDto dto) {
 
     VerificationStatusCallout.Builder builder = VerificationStatusCallout.builder();
 
@@ -450,10 +455,10 @@ public class VerificationsDtoConverter {
       builder.setVerificationTimeStamp(Instant.parse(dto.getVerificationTimestamp()));
     }
 
-    if (dto.getCallCompleteDefined()){
-        builder.setCallComplete(dto.getCallComplete());
+    if (dto.getCallCompleteDefined()) {
+      builder.setCallComplete(dto.getCallComplete());
     }
-    if (dto.getPriceDefined()){
+    if (dto.getPriceDefined()) {
       FlashcallVerificationStatusResponseAllOfPriceDto price = dto.getPrice();
       if (price.getVerificationPriceDefined()) {
         builder.setVerificationPrice(PriceDtoConverter.convert(price.getVerificationPrice()));

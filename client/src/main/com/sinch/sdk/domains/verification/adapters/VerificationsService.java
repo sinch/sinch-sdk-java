@@ -11,10 +11,6 @@ import com.sinch.sdk.domains.verification.models.VerificationReport;
 import com.sinch.sdk.domains.verification.models.VerificationReportCallout;
 import com.sinch.sdk.domains.verification.models.VerificationReportFlashCall;
 import com.sinch.sdk.domains.verification.models.VerificationReportSMS;
-import com.sinch.sdk.domains.verification.models.VerificationStatus;
-import com.sinch.sdk.domains.verification.models.VerificationStatusCallout;
-import com.sinch.sdk.domains.verification.models.VerificationStatusFlashCall;
-import com.sinch.sdk.domains.verification.models.VerificationStatusSMS;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlashCallRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
@@ -55,7 +51,7 @@ public class VerificationsService
 
   public StartVerificationResponseFlashCall startFlashCall(
       StartVerificationFlashCallRequestParameters parameters) {
-    return (StartVerificationResponseFlashCall) start(parameters,  null);
+    return (StartVerificationResponseFlashCall) start(parameters, null);
   }
 
   public StartVerificationResponseCallout startCallout(
@@ -68,7 +64,8 @@ public class VerificationsService
     return (StartVerificationResponseSeamless) start(parameters, null);
   }
 
-  private StartVerificationResponse start(StartVerificationRequestParameters parameters, String acceptLanguage) {
+  private StartVerificationResponse start(
+      StartVerificationRequestParameters parameters, String acceptLanguage) {
     return VerificationsDtoConverter.convert(
         getApi().startVerification(VerificationsDtoConverter.convert(parameters), acceptLanguage));
   }
@@ -93,7 +90,8 @@ public class VerificationsService
 
     return VerificationsDtoConverter.convert(
         getApi()
-            .reportVerificationByIdentity(identity.getEndpoint(), VerificationsDtoConverter.convert(parameters)));
+            .reportVerificationByIdentity(
+                identity.getEndpoint(), VerificationsDtoConverter.convert(parameters)));
   }
 
   public VerificationReportSMS reportSmsById(

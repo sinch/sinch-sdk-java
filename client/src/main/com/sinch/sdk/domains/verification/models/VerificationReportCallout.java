@@ -35,9 +35,7 @@ public class VerificationReportCallout extends VerificationReport {
   /** Dedicated Builder */
   public static class Builder extends VerificationReport.Builder<Builder> {
 
-
     private Builder() {}
-
 
     /**
      * Create instance
@@ -46,9 +44,7 @@ public class VerificationReportCallout extends VerificationReport {
      * @since 1.0
      */
     public VerificationReportCallout build() {
-      return new VerificationReportCallout(
-          id,
-          status);
+      return new VerificationReportCallout(id, status);
     }
 
     @Override

@@ -10,33 +10,27 @@ import java.util.stream.Stream;
  *
  * @since 1.0
  */
-public class VerificationStatusType
-    extends EnumDynamic<String, VerificationStatusType> {
+public class VerificationStatusType extends EnumDynamic<String, VerificationStatusType> {
 
   /** The verification is ongoing */
-  public static final VerificationStatusType PENDING =
-      new VerificationStatusType("PENDING");
+  public static final VerificationStatusType PENDING = new VerificationStatusType("PENDING");
 
   /** The verification was successful */
-  public static final VerificationStatusType SUCCESSFUL =
-      new VerificationStatusType("SUCCESSFUL");
+  public static final VerificationStatusType SUCCESSFUL = new VerificationStatusType("SUCCESSFUL");
 
   /** The verification attempt was made, but the number wasn't verified */
   public static final VerificationStatusType FAIL = new VerificationStatusType("FAIL");
 
   /** The verification attempt was denied by Sinch or your backend */
-  public static final VerificationStatusType DENIED =
-      new VerificationStatusType("DENIED");
+  public static final VerificationStatusType DENIED = new VerificationStatusType("DENIED");
 
   /** The verification attempt was aborted by requesting a new verification */
-  public static final VerificationStatusType ABORTED =
-      new VerificationStatusType("ABORTED");
+  public static final VerificationStatusType ABORTED = new VerificationStatusType("ABORTED");
 
   /**
    * The verification couldn't be completed due to a network error or the number being unreachable
    */
-  public static final VerificationStatusType ERROR =
-      new VerificationStatusType("ERROR");
+  public static final VerificationStatusType ERROR = new VerificationStatusType("ERROR");
 
   private static final EnumSupportDynamic<String, VerificationStatusType> ENUM_SUPPORT =
       new EnumSupportDynamic<>(

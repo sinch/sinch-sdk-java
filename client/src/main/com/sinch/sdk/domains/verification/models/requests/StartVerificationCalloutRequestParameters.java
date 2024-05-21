@@ -51,8 +51,7 @@ public class StartVerificationCalloutRequestParameters extends StartVerification
 
     OptionalValue<StartVerificationCalloutOptions> options = OptionalValue.empty();
 
-    private Builder() {
-    }
+    private Builder() {}
 
     /**
      * Callout options to be used

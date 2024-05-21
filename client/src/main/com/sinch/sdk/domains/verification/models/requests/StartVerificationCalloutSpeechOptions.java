@@ -4,9 +4,9 @@ import com.sinch.sdk.core.models.OptionalValue;
 
 /**
  * Text-To-Speech engine settings
- * <p></p>
- * Dedicated options related to
- * {@link StartVerificationCalloutOptions StartVerificationCalloutOptions}
+ *
+ * <p>Dedicated options related to {@link StartVerificationCalloutOptions
+ * StartVerificationCalloutOptions}
  *
  * @since 1.0
  */
@@ -14,9 +14,7 @@ public class StartVerificationCalloutSpeechOptions {
 
   private final OptionalValue<String> locale;
 
-
-  private StartVerificationCalloutSpeechOptions(
-      OptionalValue<String> locale) {
+  private StartVerificationCalloutSpeechOptions(OptionalValue<String> locale) {
     this.locale = locale;
   }
 
@@ -41,11 +39,9 @@ public class StartVerificationCalloutSpeechOptions {
    */
   public static class Builder {
 
-
     private OptionalValue<String> locale = OptionalValue.empty();
 
-    private Builder() {
-    }
+    private Builder() {}
 
     /**
      * A language-region identifier according to IANA. Only a subset of those identifiers is
@@ -60,7 +56,6 @@ public class StartVerificationCalloutSpeechOptions {
       return this;
     }
 
-
     /**
      * Create instance
      *
@@ -70,6 +65,5 @@ public class StartVerificationCalloutSpeechOptions {
     public StartVerificationCalloutSpeechOptions build() {
       return new StartVerificationCalloutSpeechOptions(locale);
     }
-
   }
 }

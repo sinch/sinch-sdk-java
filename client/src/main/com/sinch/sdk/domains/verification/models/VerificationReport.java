@@ -10,9 +10,7 @@ public class VerificationReport {
   private final VerificationId id;
   private final VerificationStatusType status;
 
-  protected VerificationReport(
-      VerificationId id,
-      VerificationStatusType status) {
+  protected VerificationReport(VerificationId id, VerificationStatusType status) {
     this.id = id;
     this.status = status;
   }
@@ -37,17 +35,10 @@ public class VerificationReport {
     return status;
   }
 
-
   /** {@inheritDoc} */
   @Override
   public String toString() {
-    return "VerificationStatus{"
-        + "id='"
-        + id
-        + '\''
-        + ", status="
-        + status
-        + '}';
+    return "VerificationStatus{" + "id='" + id + '\'' + ", status=" + status + '}';
   }
 
   public static Builder<?> builder() {

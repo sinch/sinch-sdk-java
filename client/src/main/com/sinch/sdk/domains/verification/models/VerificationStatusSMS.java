@@ -36,8 +36,7 @@ public class VerificationStatusSMS extends VerificationStatus {
    * The maximum price charged for this verification process.
    *
    * <p>This property will appear in the body of the response with a delay. It will become visible
-   * only when the verification status is other than {@link VerificationStatusType#PENDING
-   * PENDING}
+   * only when the verification status is other than {@link VerificationStatusType#PENDING PENDING}
    *
    * @return Verification price object
    * @since 1.0
@@ -118,7 +117,8 @@ public class VerificationStatusSMS extends VerificationStatus {
      * @since 1.0
      */
     public VerificationStatusSMS build() {
-      return new VerificationStatusSMS(id,
+      return new VerificationStatusSMS(
+          id,
           status,
           reason,
           reference,

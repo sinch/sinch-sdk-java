@@ -3,8 +3,8 @@ package com.sinch.sdk.domains.verification.models.requests;
 import com.sinch.sdk.core.models.OptionalValue;
 
 /**
- * Dedicated options related to
- * {@link StartVerificationCalloutRequestParameters StartVerificationCalloutRequestParameters}
+ * Dedicated options related to {@link StartVerificationCalloutRequestParameters
+ * StartVerificationCalloutRequestParameters}
  *
  * @since 1.0
  */
@@ -38,11 +38,9 @@ public class StartVerificationCalloutOptions {
    */
   public static class Builder {
 
-
     OptionalValue<StartVerificationCalloutSpeechOptions> speech = OptionalValue.empty();
 
-    private Builder() {
-    }
+    private Builder() {}
 
     /**
      * Speech settings
@@ -56,7 +54,6 @@ public class StartVerificationCalloutOptions {
       return this;
     }
 
-
     /**
      * Create instance
      *
@@ -66,6 +63,5 @@ public class StartVerificationCalloutOptions {
     public StartVerificationCalloutOptions build() {
       return new StartVerificationCalloutOptions(speech);
     }
-
   }
 }

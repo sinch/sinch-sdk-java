@@ -3,11 +3,12 @@ package com.sinch.sdk.domains.verification.models.requests;
 import com.sinch.sdk.core.models.OptionalValue;
 
 /**
- * Dedicated options related to {@link StartVerificationSMSRequestParameters StartVerificationSMSRequestParameters}
+ * Dedicated options related to {@link StartVerificationSMSRequestParameters
+ * StartVerificationSMSRequestParameters}
  *
  * @since 1.0
  */
-public class StartVerificationSMSOptions  {
+public class StartVerificationSMSOptions {
 
   private final OptionalValue<String> expiry;
   private final OptionalValue<SMSCodeType> codeType;
@@ -17,9 +18,9 @@ public class StartVerificationSMSOptions  {
       OptionalValue<String> expiry,
       OptionalValue<SMSCodeType> codeType,
       OptionalValue<String> template) {
-    this.expiry= expiry;
-    this.codeType=codeType;
-    this.template=template;
+    this.expiry = expiry;
+    this.codeType = codeType;
+    this.template = template;
   }
 
   public OptionalValue<String> getExpiry() {
@@ -51,10 +52,9 @@ public class StartVerificationSMSOptions  {
    */
   public static class Builder {
 
-
-    private  OptionalValue<String> expiry= OptionalValue.empty();
-    private  OptionalValue<SMSCodeType> codeType= OptionalValue.empty();
-    private  OptionalValue<String> template= OptionalValue.empty();
+    private OptionalValue<String> expiry = OptionalValue.empty();
+    private OptionalValue<SMSCodeType> codeType = OptionalValue.empty();
+    private OptionalValue<String> template = OptionalValue.empty();
 
     private Builder() {}
 
@@ -83,7 +83,8 @@ public class StartVerificationSMSOptions  {
     }
 
     /**
-     * The SMS template must include a placeholder {{CODE}} where the verification code will be inserted, and it can otherwise be customized as desired
+     * The SMS template must include a placeholder {{CODE}} where the verification code will be
+     * inserted, and it can otherwise be customized as desired
      *
      * @param template Template string
      * @return current builder
@@ -94,7 +95,6 @@ public class StartVerificationSMSOptions  {
       return this;
     }
 
-
     /**
      * Create instance
      *
@@ -102,8 +102,7 @@ public class StartVerificationSMSOptions  {
      * @since 1.0
      */
     public StartVerificationSMSOptions build() {
-      return new StartVerificationSMSOptions( expiry, codeType, template);
+      return new StartVerificationSMSOptions(expiry, codeType, template);
     }
-
   }
 }

@@ -35,9 +35,7 @@ public class VerificationReportFlashCall extends VerificationReport {
   /** Dedicated Builder */
   public static class Builder extends VerificationReport.Builder<Builder> {
 
-
     private Builder() {}
-
 
     /**
      * Create instance
@@ -46,9 +44,7 @@ public class VerificationReportFlashCall extends VerificationReport {
      * @since 1.0
      */
     public VerificationReportFlashCall build() {
-      return new VerificationReportFlashCall(
-          id,
-          status);
+      return new VerificationReportFlashCall(id, status);
     }
 
     @Override

@@ -56,8 +56,7 @@ public class VerificationStatus {
 
   /**
    * The reason why a verification has {@link VerificationStatusType#FAIL FAIL}, was {@link
-   * VerificationStatusType#DENIED DENIED}, or was {@link VerificationStatusType#ABORTED
-   * ABORTED}.
+   * VerificationStatusType#DENIED DENIED}, or was {@link VerificationStatusType#ABORTED ABORTED}.
    *
    * @return The reason value
    * @since 1.0
@@ -85,6 +84,7 @@ public class VerificationStatus {
 
   /**
    * The ID of the country to which the verification was sent
+   *
    * @return Country ID value
    */
   public String getCountryId() {
@@ -93,26 +93,33 @@ public class VerificationStatus {
 
   /**
    * Verification time stamp
+   *
    * @return Verification timestamp value
    */
   public Instant getVerificationTimeStamp() {
     return verificationTimeStamp;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
   public String toString() {
-    return "VerificationStatus{" +
-        "id=" + id +
-        ", status=" + status +
-        ", reason=" + reason +
-        ", reference=" + reference +
-        ", identity=" + identity +
-        ", countryId='" + countryId + '\'' +
-        ", verificationTimeStamp=" + verificationTimeStamp +
-        '}';
+    return "VerificationStatus{"
+        + "id="
+        + id
+        + ", status="
+        + status
+        + ", reason="
+        + reason
+        + ", reference="
+        + reference
+        + ", identity="
+        + identity
+        + ", countryId='"
+        + countryId
+        + '\''
+        + ", verificationTimeStamp="
+        + verificationTimeStamp
+        + '}';
   }
 
   public static Builder<?> builder() {
@@ -134,6 +141,7 @@ public class VerificationStatus {
     Identity identity;
     String countryId;
     Instant verificationTimeStamp;
+
     protected Builder() {}
 
     /**
@@ -241,7 +249,8 @@ public class VerificationStatus {
      * @since 1.0
      */
     public VerificationStatus build() {
-      return new VerificationStatus(id, status, reason, reference, identity, countryId, verificationTimeStamp);
+      return new VerificationStatus(
+          id, status, reason, reference, identity, countryId, verificationTimeStamp);
     }
 
     @SuppressWarnings("unchecked")
