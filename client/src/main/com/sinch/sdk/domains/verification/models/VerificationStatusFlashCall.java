@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.verification.models;
 
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlashCallRequestParameters;
+import java.time.Instant;
 
 /**
  * Verification report related to a {@link
@@ -23,11 +24,14 @@ public class VerificationStatusFlashCall extends VerificationStatus {
       VerificationStatusType status,
       VerificationStatusReasonType reason,
       VerificationReference reference,
+      Identity identity,
+      String countryId,
+      Instant verificationTimeStamp,
       Price verificationPrice,
       Price terminationPrice,
       Integer billableDuration,
       VerificationSourceType source) {
-    super(id, status, reason, reference);
+    super(id, status, reason, reference, identity, countryId, verificationTimeStamp);
     this.verificationPrice = verificationPrice;
     this.terminationPrice = terminationPrice;
     this.billableDuration = billableDuration;
@@ -184,6 +188,9 @@ public class VerificationStatusFlashCall extends VerificationStatus {
           status,
           reason,
           reference,
+          identity,
+          countryId,
+          verificationTimeStamp,
           verificationPrice,
           terminationPrice,
           billableDuration,

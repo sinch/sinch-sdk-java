@@ -32,7 +32,7 @@ public class VerificationStatusService
   public VerificationStatus getByIdentity(NumberIdentity identity, VerificationMethodType method) {
 
     return VerificationsDtoConverter.convert(
-        getApi().verificationStatusByIdentity("number", identity.getEndpoint(), method.value()));
+        getApi().verificationStatusByIdentity(identity.getEndpoint(), method.value()));
   }
 
   public VerificationStatus getById(VerificationId id) {

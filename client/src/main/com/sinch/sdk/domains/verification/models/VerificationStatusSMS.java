@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.verification.models;
 
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSRequestParameters;
+import java.time.Instant;
 
 /**
  * Verification report related to a {@link
@@ -21,9 +22,12 @@ public class VerificationStatusSMS extends VerificationStatus {
       VerificationStatusType status,
       VerificationStatusReasonType reason,
       VerificationReference reference,
+      Identity identity,
+      String countryId,
+      Instant verificationTimeStamp,
       Price verificationPrice,
       VerificationSourceType source) {
-    super(id, status, reason, reference);
+    super(id, status, reason, reference, identity, countryId, verificationTimeStamp);
     this.verificationPrice = verificationPrice;
     this.source = source;
   }
@@ -114,7 +118,15 @@ public class VerificationStatusSMS extends VerificationStatus {
      * @since 1.0
      */
     public VerificationStatusSMS build() {
-      return new VerificationStatusSMS(id, status, reason, reference, verificationPrice, source);
+      return new VerificationStatusSMS(id,
+          status,
+          reason,
+          reference,
+          identity,
+          countryId,
+          verificationTimeStamp,
+          verificationPrice,
+          source);
     }
 
     @Override
