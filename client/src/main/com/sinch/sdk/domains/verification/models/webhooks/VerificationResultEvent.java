@@ -1,7 +1,8 @@
 package com.sinch.sdk.domains.verification.models.webhooks;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sinch.sdk.domains.verification.models.Identity;
+import com.sinch.sdk.domains.verification.models.VerificationMethodType;
+import com.sinch.sdk.domains.verification.models.VerificationReference;
 import com.sinch.sdk.domains.verification.models.VerificationSourceType;
 import com.sinch.sdk.domains.verification.models.VerificationStatusReasonType;
 import com.sinch.sdk.domains.verification.models.VerificationStatusType;
@@ -19,22 +20,20 @@ public class VerificationResultEvent extends VerificationEvent {
   private final VerificationStatusReasonType reason;
   private final VerificationSourceType source;
 
-  @JsonCreator
-  VerificationResultEvent(
-      @JsonProperty("id") String id,
-      @JsonProperty("event") String event,
-      @JsonProperty("method") String method,
-      @JsonProperty("identity") jsonIdentity identity,
-      @JsonProperty("reference") String reference,
-      @JsonProperty("custom") String custom,
-      @JsonProperty("status") String status,
-      @JsonProperty("reason") String reason,
-      @JsonProperty("source") String source) {
-    super(id, event, method, identity, reference, custom);
+  public VerificationResultEvent(
+      String id,
+      VerificationMethodType method,
+      Identity identity,
+      VerificationReference reference,
+      String custom,
+      VerificationStatusType status,
+      VerificationStatusReasonType reason,
+      VerificationSourceType source) {
+    super(id, method, identity, reference, custom);
 
-    this.status = VerificationStatusType.from(status);
-    this.reason = null != reason ? VerificationStatusReasonType.from(reason) : null;
-    this.source = null != source ? VerificationSourceType.from(source) : null;
+    this.status = status;
+    this.reason = reason;
+    this.source = source;
   }
 
   /**

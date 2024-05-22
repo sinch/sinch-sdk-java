@@ -1,9 +1,5 @@
 package com.sinch.sdk.domains.verification.models.webhooks;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
@@ -17,40 +13,23 @@ import java.util.Optional;
  * @see <a
  *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks</a>
  */
-@JsonTypeInfo(
-    use = JsonTypeInfo.Id.NAME,
-    include = JsonTypeInfo.As.EXISTING_PROPERTY,
-    property = "event",
-    visible = true)
-@JsonSubTypes({
-  @JsonSubTypes.Type(value = VerificationRequestEvent.class, name = "VerificationRequestEvent"),
-  @JsonSubTypes.Type(value = VerificationResultEvent.class, name = "VerificationResultEvent")
-})
 public class VerificationEvent {
   private final VerificationId id;
-  private final String event;
   private final VerificationMethodType method;
   private final Identity identity;
   private final VerificationReference reference;
   private final String custom;
 
-  @JsonCreator
-  VerificationEvent(
-      @JsonProperty("id") String id,
-      @JsonProperty("event") String event,
-      @JsonProperty("method") String method,
-      @JsonProperty("identity") jsonIdentity identity,
-      @JsonProperty("reference") String reference,
-      @JsonProperty("custom") String custom) {
+  public VerificationEvent(
+      String id,
+      VerificationMethodType method,
+      Identity identity,
+      VerificationReference reference,
+      String custom) {
     this.id = VerificationId.valueOf(id);
-    this.event = event;
-    this.method = VerificationMethodType.from(method);
-    this.identity = NumberIdentity.builder().setEndpoint(identity.endpoint).build();
-    if (null != reference) {
-      this.reference = VerificationReference.valueOf(reference);
-    } else {
-      this.reference = null;
-    }
+    this.method = method;
+    this.identity = identity;
+    this.reference = reference;
     this.custom = custom;
   }
 
@@ -62,16 +41,6 @@ public class VerificationEvent {
    */
   public VerificationId getId() {
     return id;
-  }
-
-  /**
-   * The type of the event
-   *
-   * @return event value
-   * @since 1.0
-   */
-  public String getEvent() {
-    return event;
   }
 
   /**
@@ -120,9 +89,6 @@ public class VerificationEvent {
     return "VerificationEvent{"
         + "id="
         + id
-        + ", event='"
-        + event
-        + '\''
         + ", method="
         + method
         + ", identity="
@@ -133,17 +99,5 @@ public class VerificationEvent {
         + custom
         + '\''
         + '}';
-  }
-
-  static class jsonIdentity {
-    String type;
-    String endpoint;
-
-    @JsonCreator
-    public jsonIdentity(
-        @JsonProperty("type") String type, @JsonProperty("endpoint") String endpoint) {
-      this.type = type;
-      this.endpoint = endpoint;
-    }
   }
 }
