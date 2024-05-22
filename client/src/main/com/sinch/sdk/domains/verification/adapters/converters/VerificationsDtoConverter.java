@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.verification.adapters.converters;
 
+import com.sinch.sdk.core.utils.DateUtil;
 import com.sinch.sdk.domains.common.adapters.converters.EnumDynamicConverter;
 import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
@@ -63,7 +64,6 @@ import com.sinch.sdk.domains.verification.models.response.StartVerificationRespo
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSMS;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSeamless;
-import java.time.Instant;
 import java.util.logging.Logger;
 
 public class VerificationsDtoConverter {
@@ -380,7 +380,8 @@ public class VerificationsDtoConverter {
       builder.setCountryId(dto.getCountryId());
     }
     if (dto.getVerificationTimestampDefined()) {
-      builder.setVerificationTimeStamp(Instant.parse(dto.getVerificationTimestamp()));
+      builder.setVerificationTimeStamp(
+          DateUtil.failSafeTimeStampToInstant(dto.getVerificationTimestamp()));
     }
 
     if (dto.getSourceDefined()) {
@@ -424,7 +425,8 @@ public class VerificationsDtoConverter {
       builder.setCountryId(dto.getCountryId());
     }
     if (dto.getVerificationTimestampDefined()) {
-      builder.setVerificationTimeStamp(Instant.parse(dto.getVerificationTimestamp()));
+      builder.setVerificationTimeStamp(
+          DateUtil.failSafeTimeStampToInstant(dto.getVerificationTimestamp()));
     }
 
     if (dto.getSourceDefined()) {
@@ -462,7 +464,8 @@ public class VerificationsDtoConverter {
       builder.setCountryId(dto.getCountryId());
     }
     if (dto.getVerificationTimestampDefined()) {
-      builder.setVerificationTimeStamp(Instant.parse(dto.getVerificationTimestamp()));
+      builder.setVerificationTimeStamp(
+          DateUtil.failSafeTimeStampToInstant(dto.getVerificationTimestamp()));
     }
 
     if (dto.getCallCompleteDefined()) {
