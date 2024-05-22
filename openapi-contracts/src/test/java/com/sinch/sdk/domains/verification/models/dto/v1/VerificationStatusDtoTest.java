@@ -13,59 +13,57 @@ public class VerificationStatusDtoTest extends BaseTest {
   VerificationResponseDto loadedVerificationCalloutDto;
 
   public static VerificationResponseDto expectedVerificationCalloutDto =
-      new VerificationResponseDto()
-          .id("the id")
-          .method(VerificationMethodDto.CALLOUT)
-          .status("FAIL")
-          .reason("Fraud")
-          .callComplete(true)
-          .reference("my reference")
-          .price(
-              new VerificationResponsePriceDto(
-                  new VerificationPriceInformationDto()
+      new VerificationResponseDto(
+          new CalloutVerificationStatusResponseDto()
+              .id("the id")
+              .method(VerificationMethodDto.CALLOUT.getValue())
+              .status(VerificationStatusDto.FAIL)
+              .reason(VerificationStatusReasonDto.FRAUD)
+              .callComplete(true)
+              .reference("my reference")
+              .price(
+                  new FlashcallVerificationStatusResponseAllOfPriceDto()
                       .verificationPrice(
-                          new VerificationPriceInformationVerificationPriceDto(
-                              new MoneyDto()
-                                  .currencyId("verificationPrice currency id")
-                                  .amount(3.141516F)))
+                          new PriceDto()
+                              .currencyId("verificationPrice currency id")
+                              .amount(3.141516F))
                       .terminationPrice(
-                          new VerificationPriceInformationTerminationPriceDto(
-                              new MoneyDto()
-                                  .currencyId("terminationPrice currency id")
-                                  .amount(6.626070F)))
+                          new PriceDto()
+                              .currencyId("terminationPrice currency id")
+                              .amount(6.626070F))
                       .billableDuration(34)));
 
   @GivenJsonResource("/domains/verification/v1/VerificationStatusFlashCallResponseDto.json")
   VerificationResponseDto loadedVerificationFlashCallDto;
 
   public static VerificationResponseDto expectedVerificationFlashCallDto =
-      new VerificationResponseDto()
-          .id("the id")
-          .method(VerificationMethodDto.FLASHCALL)
-          .status("FAIL")
-          .reason("Fraud")
-          .reference("my reference")
-          .source("manual");
+      new VerificationResponseDto(
+          new FlashcallVerificationStatusResponseDto()
+              .id("the id")
+              .method(VerificationMethodDto.FLASHCALL.getValue())
+              .status(VerificationStatusDto.FAIL)
+              .reason(VerificationStatusReasonDto.FRAUD)
+              .reference("my reference")
+              .source("manual"));
 
   @GivenJsonResource("/domains/verification/v1/VerificationStatusSMSResponseDto.json")
   VerificationResponseDto loadedVerificationSMSDto;
 
   public static VerificationResponseDto expectedVerificationSMSDto =
-      new VerificationResponseDto()
-          .id("the id")
-          .method(VerificationMethodDto.SMS)
-          .status("FAIL")
-          .reason("Fraud")
-          .reference("my reference")
-          .source("intercepted")
-          .price(
-              new VerificationResponsePriceDto(
-                  new VerificationPriceInformationDto()
+      new VerificationResponseDto(
+          new SMSVerificationStatusResponseDto()
+              .id("the id")
+              .method(VerificationMethodDto.SMS.getValue())
+              .status(VerificationStatusDto.FAIL)
+              .reason(VerificationStatusReasonDto.FRAUD)
+              .reference("my reference")
+              .source("intercepted")
+              .price(
+                  new SMSVerificationStatusResponseAllOfPriceDto()
                       .verificationPrice(
-                          new VerificationPriceInformationVerificationPriceDto(
-                              new MoneyDto()
-                                  .currencyId("verificationPrice currency id")
-                                  .amount(3.141516F)))));
+                          new PriceDto()
+                              .currencyId("verificationPrice currency id")
+                              .amount(3.141516F))));
 
   @Test
   void deserializeCallout() {

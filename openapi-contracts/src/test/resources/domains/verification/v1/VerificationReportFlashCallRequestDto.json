@@ -1,6 +1,6 @@
 {
   "method": "flashcall",
-  "flashcall": {
+  "flashCall": {
     "cli": "foo cli"
   }
 }

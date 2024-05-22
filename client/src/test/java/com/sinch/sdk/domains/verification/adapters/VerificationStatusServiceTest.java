@@ -10,7 +10,7 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.verification.adapters.api.v1.QueryVerificationsApi;
+import com.sinch.sdk.domains.verification.adapters.api.v1.VerificationStatusApi;
 import com.sinch.sdk.domains.verification.adapters.converters.VerificationsDtoConverterTest;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
@@ -28,7 +28,7 @@ import org.mockito.Mock;
 @TestWithResources
 public class VerificationStatusServiceTest extends BaseTest {
 
-  @Mock QueryVerificationsApi api;
+  @Mock VerificationStatusApi api;
   @Mock VerificationContext context;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
@@ -44,7 +44,7 @@ public class VerificationStatusServiceTest extends BaseTest {
   @Test
   void getByIdentity() throws ApiException {
 
-    when(api.verificationStatusByIdentity(eq("number"), eq("endpoint string"), eq("sms")))
+    when(api.verificationStatusByIdentity(eq("endpoint string"), eq("sms")))
         .thenReturn(VerificationStatusDtoTest.expectedVerificationCalloutDto);
 
     VerificationStatus response =

@@ -25,7 +25,7 @@ public class VerificationReportResponseDtoTest extends BaseTest {
       new VerificationReportResponseDto()
           .method(VerificationMethodDto.FLASHCALL)
           .id("the id")
-          .status(VerificationStatusDto.ERROR);
+          .status(VerificationStatusDto.FAIL);
 
   @GivenJsonResource("/domains/verification/v1/VerificationReportSMSResponseDto.json")
   VerificationReportResponseDto expectedVerificationReportSMS;

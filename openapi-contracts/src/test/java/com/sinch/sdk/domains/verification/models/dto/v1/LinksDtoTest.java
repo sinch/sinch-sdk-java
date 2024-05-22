@@ -12,12 +12,12 @@ import org.junit.jupiter.api.Test;
 @TestWithResources
 public class LinksDtoTest extends BaseTest {
   @GivenJsonResource("/domains/verification/v1/LinksDto.json")
-  static Collection<VerificationResourceLinkDto> linksDto;
+  static Collection<LinksObjectDto> linksDto;
 
-  public static List<VerificationResourceLinkDto> expectedLinks =
+  public static List<LinksObjectDto> expectedLinks =
       Arrays.asList(
-          new VerificationResourceLinkDto().rel("status").href("an href for status").method("GET"),
-          new VerificationResourceLinkDto().rel("report").href("an href for report").method("PUT"));
+          new LinksObjectDto().rel("status").href("an href for status").method("GET"),
+          new LinksObjectDto().rel("report").href("an href for report").method("PUT"));
 
   @Test
   void deserialize() {

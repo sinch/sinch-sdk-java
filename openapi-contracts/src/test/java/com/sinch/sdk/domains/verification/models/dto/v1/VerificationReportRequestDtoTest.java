@@ -11,35 +11,30 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class VerificationReportRequestDtoTest extends BaseTest {
 
+  public static VerificationReportRequestResourceDto verificationReportCalloutDto =
+      new VerificationReportRequestResourceDto(
+          new CalloutVerificationReportRequestDto()
+              .method(VerificationMethodDto.CALLOUT.getValue())
+              .callout(new CalloutVerificationReportRequestCalloutDto().code("foo code")));
+  public static VerificationReportRequestResourceDto verificationReportFlashCallDto =
+      new VerificationReportRequestResourceDto(
+          new FlashcallVerificationReportRequestDto()
+              .method(VerificationMethodDto.FLASHCALL.getValue())
+              .flashCall(new FlashcallVerificationReportRequestFlashCallDto().cli("foo cli")));
+  public static VerificationReportRequestResourceDto verificationReportSMSDto =
+      new VerificationReportRequestResourceDto(
+          new SmsVerificationReportRequestDto()
+              .method(VerificationMethodDto.SMS.getValue())
+              .sms(new SmsVerificationReportRequestSmsDto().code("foo code").cli("foo cli")));
+
   @GivenTextResource("/domains/verification/v1/VerificationReportCalloutRequestDto.json")
   String jsonVerificationReportCallout;
-
-  public static VerificationReportRequestResourceDto verificationReportCalloutDto =
-      new VerificationReportRequestResourceDto()
-          .method(VerificationMethodDto.CALLOUT)
-          .callout(
-              new VerificationReportRequestResourceCalloutDto(
-                  new CalloutVerificationReportRequestDto().code("foo code")));
 
   @GivenTextResource("/domains/verification/v1/VerificationReportFlashCallRequestDto.json")
   String jsonVerificationReportFlashCall;
 
-  public static VerificationReportRequestResourceDto verificationReportFlashCallDto =
-      new VerificationReportRequestResourceDto()
-          .method(VerificationMethodDto.FLASHCALL)
-          .flashcall(
-              new VerificationReportRequestResourceFlashcallDto(
-                  new FlashcallVerificationReportRequestDto().cli("foo cli")));
-
   @GivenTextResource("/domains/verification/v1/VerificationReportSMSRequestDto.json")
   String jsonVerificationReportSMS;
-
-  public static VerificationReportRequestResourceDto verificationReportSMSDto =
-      new VerificationReportRequestResourceDto()
-          .method(VerificationMethodDto.SMS)
-          .sms(
-              new VerificationReportRequestResourceSmsDto(
-                  new SmsVerificationReportRequestDto().code("foo code").cli("foo cli")));
 
   @Test
   void serializeCallout() throws JsonProcessingException, JSONException {

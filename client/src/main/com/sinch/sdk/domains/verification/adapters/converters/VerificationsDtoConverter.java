@@ -148,9 +148,7 @@ public class VerificationsDtoConverter {
   }
 
   public static VerificationMethodDto convert(VerificationMethodType client) {
-    VerificationMethodDto dto =
-        VerificationMethodDto.fromValue(EnumDynamicConverter.convert(client));
-    return VerificationMethodDto.valueOf(dto.getValue());
+    return VerificationMethodDto.fromValue(EnumDynamicConverter.convert(client));
   }
 
   public static StartVerificationResponse convert(InitiateVerificationResponseDto dto) {
@@ -318,17 +316,29 @@ public class VerificationsDtoConverter {
   }
 
   public static VerificationReport convert(VerificationReportResponseDto dto) {
+    VerificationReport.Builder<?> builder;
     switch (dto.getMethod()) {
       case SMS:
-        return VerificationReportSMS.builder().build();
+        builder = VerificationReportSMS.builder();
+        break;
       case FLASHCALL:
-        return VerificationReportFlashCall.builder().build();
+        builder = VerificationReportFlashCall.builder();
+        break;
       case CALLOUT:
-        return VerificationReportCallout.builder().build();
+        builder = VerificationReportCallout.builder();
+        break;
       default:
         LOGGER.severe(String.format("Unexpected value '%s'", dto.getMethod()));
         return VerificationReport.builder().build();
     }
+
+    if (dto.getIdDefined()) {
+      builder.setId(VerificationId.valueOf(dto.getId()));
+    }
+    if (dto.getStatusDefined()) {
+      builder.setStatus(VerificationStatusType.from(dto.getStatus().getValue()));
+    }
+    return builder.build();
   }
 
   public static VerificationStatus convert(VerificationResponseDto dto) {
@@ -462,6 +472,12 @@ public class VerificationsDtoConverter {
       FlashcallVerificationStatusResponseAllOfPriceDto price = dto.getPrice();
       if (price.getVerificationPriceDefined()) {
         builder.setVerificationPrice(PriceDtoConverter.convert(price.getVerificationPrice()));
+      }
+      if (price.getTerminationPriceDefined()) {
+        builder.setTerminationPrice(PriceDtoConverter.convert(price.getTerminationPrice()));
+      }
+      if (price.getBillableDurationDefined()) {
+        builder.setBillableDuration(price.getBillableDuration());
       }
     }
     return builder;

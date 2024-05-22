@@ -13,56 +13,52 @@ public class StartVerificationResponseDtoTest extends BaseTest {
   InitiateVerificationResponseDto loadedStartVerificationCalloutDto;
 
   public static InitiateVerificationResponseDto expectedStartVerificationCalloutDto =
-      new InitiateVerificationResponseDto()
-          .id("the id")
-          .method(VerificationMethodDto.CALLOUT)
-          .links(LinksDtoTest.expectedLinks)
-          .callout(
-              new InitiateVerificationResponseCalloutDto(
-                  new CalloutInitiateVerificationResponseDto()));
+      new InitiateVerificationResponseDto(
+          new CalloutInitiateVerificationResponseDto()
+              .id("the id")
+              .method(VerificationMethodDto.CALLOUT.getValue())
+              .links(LinksDtoTest.expectedLinks));
 
   @GivenJsonResource("/domains/verification/v1/StartVerificationFlashCallResponseDto.json")
   InitiateVerificationResponseDto loadedStartVerificationFlashCallDto;
 
   public static InitiateVerificationResponseDto expectedStartVerificationFlashCallDto =
-      new InitiateVerificationResponseDto()
-          .id("the id")
-          .method(VerificationMethodDto.FLASHCALL)
-          .links(LinksDtoTest.expectedLinks)
-          .flashCall(
-              new InitiateVerificationResponseFlashCallDto(
-                  new FlashCallInitiateVerificationResponseDto()
+      new InitiateVerificationResponseDto(
+          new FlashCallInitiateVerificationResponseDto()
+              .id("the id")
+              .method(VerificationMethodDto.FLASHCALL.getValue())
+              .links(LinksDtoTest.expectedLinks)
+              .flashCall(
+                  new FlashCallInitiateVerificationResponseFlashCallDto()
                       .cliFilter("(.*)5312(.*)")
                       .interceptionTimeout(45)
                       .reportTimeout(75)
-                      .denyCallAfter(0)
-                      .callId("a call id")));
+                      .denyCallAfter(0)));
 
   @GivenJsonResource("/domains/verification/v1/StartVerificationSeamlessResponseDto.json")
   InitiateVerificationResponseDto loadedStartVerificationSeamlessDto;
 
   public static InitiateVerificationResponseDto expectedStartVerificationSeamlessDto =
-      new InitiateVerificationResponseDto()
-          .id("the id")
-          .method(VerificationMethodDto.SEAMLESS)
-          .links(LinksDtoTest.expectedLinks)
-          .seamless(
-              new InitiateVerificationResponseSeamlessDto(
-                  new SeamlessInitiateVerificationResponseDto().targetUri("target URI")));
+      new InitiateVerificationResponseDto(
+          new DataInitiateVerificationResponseDto()
+              .id("the id")
+              .method(VerificationMethodDto.SEAMLESS.getValue())
+              .links(LinksDtoTest.expectedLinks)
+              .seamless(new DataInitiateVerificationResponseSeamlessDto().targetUri("target URI")));
 
   @GivenJsonResource("/domains/verification/v1/StartVerificationSMSResponseDto.json")
   InitiateVerificationResponseDto loadedStartVerificationSMSDto;
 
   public static InitiateVerificationResponseDto expectedStartVerificationSMSDto =
-      new InitiateVerificationResponseDto()
-          .id("the id")
-          .method(VerificationMethodDto.SMS)
-          .links(LinksDtoTest.expectedLinks)
-          .sms(
-              new InitiateVerificationResponseSmsDto(
-                  new SmsInitiateVerificationResponseDto()
+      new InitiateVerificationResponseDto(
+          new SMSInitiateVerificationResponseDto()
+              .id("the id")
+              .method(VerificationMethodDto.SMS.getValue())
+              .links(LinksDtoTest.expectedLinks)
+              .sms(
+                  new SMSInitiateVerificationResponseSmsDto()
                       .template("Your verification code is {{CODE}}. Verified by Sinch")
-                      .interceptionTimeout(298)));
+                      .interceptionTimeout(String.valueOf(298))));
 
   @Test
   void deserializeStartCallout() {

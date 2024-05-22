@@ -11,17 +11,17 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.verification.adapters.api.v1.SendingAndReportingVerificationsApi;
+import com.sinch.sdk.domains.verification.adapters.api.v1.VerificationsApi;
 import com.sinch.sdk.domains.verification.adapters.converters.VerificationsDtoConverterTest;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
-import com.sinch.sdk.domains.verification.models.VerificationStatusCallout;
-import com.sinch.sdk.domains.verification.models.VerificationStatusFlashCall;
-import com.sinch.sdk.domains.verification.models.VerificationStatusSMS;
+import com.sinch.sdk.domains.verification.models.VerificationReportCallout;
+import com.sinch.sdk.domains.verification.models.VerificationReportFlashCall;
+import com.sinch.sdk.domains.verification.models.VerificationReportSMS;
 import com.sinch.sdk.domains.verification.models.dto.v1.InitiateVerificationResourceDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.StartVerificationResponseDtoTest;
-import com.sinch.sdk.domains.verification.models.dto.v1.VerificationStatusDtoTest;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportRequestResourceDto;
+import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportResponseDtoTest;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseCallout;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSMS;
@@ -57,7 +57,7 @@ public class VerificationsServiceTest extends BaseTest {
   @GivenJsonResource("/domains/verification/v1/VerificationReportSMSRequestDto.json")
   public VerificationReportRequestResourceDto verificationReportSMSRequestDto;
 
-  @Mock SendingAndReportingVerificationsApi api;
+  @Mock VerificationsApi api;
   @Mock VerificationContext context;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
@@ -73,7 +73,7 @@ public class VerificationsServiceTest extends BaseTest {
   @Test
   void startSms() throws ApiException {
 
-    when(api.startVerification(eq(startVerificationSMSRequestDto)))
+    when(api.startVerification(eq(startVerificationSMSRequestDto), eq(null)))
         .thenReturn(StartVerificationResponseDtoTest.expectedStartVerificationSMSDto);
 
     StartVerificationResponseSMS response =
@@ -87,7 +87,7 @@ public class VerificationsServiceTest extends BaseTest {
   @Test
   void startFlashCall() throws ApiException {
 
-    when(api.startVerification(eq(startVerificationFlashCallRequestDto)))
+    when(api.startVerification(eq(startVerificationFlashCallRequestDto), eq(null)))
         .thenReturn(StartVerificationResponseDtoTest.expectedStartVerificationFlashCallDto);
 
     StartVerificationResponseFlashCall response =
@@ -101,7 +101,7 @@ public class VerificationsServiceTest extends BaseTest {
   @Test
   void startCallout() throws ApiException {
 
-    when(api.startVerification(eq(startVerificationCalloutRequestDto)))
+    when(api.startVerification(eq(startVerificationCalloutRequestDto), eq(null)))
         .thenReturn(StartVerificationResponseDtoTest.expectedStartVerificationCalloutDto);
 
     StartVerificationResponseCallout response =
@@ -115,7 +115,7 @@ public class VerificationsServiceTest extends BaseTest {
   @Test
   void startSeamless() throws ApiException {
 
-    when(api.startVerification(eq(startVerificationSeamlessRequestDto)))
+    when(api.startVerification(eq(startVerificationSeamlessRequestDto), eq(null)))
         .thenReturn(StartVerificationResponseDtoTest.expectedStartVerificationSeamlessDto);
 
     StartVerificationResponseSeamless response =
@@ -130,10 +130,10 @@ public class VerificationsServiceTest extends BaseTest {
   void reportSmsByIdentity() throws ApiException {
 
     when(api.reportVerificationByIdentity(
-            eq("number"), eq("endpoint string"), eq(verificationReportSMSRequestDto)))
-        .thenReturn(VerificationStatusDtoTest.expectedVerificationSMSDto);
+            eq("endpoint string"), eq(verificationReportSMSRequestDto)))
+        .thenReturn(VerificationReportResponseDtoTest.verificationReportSMSDto);
 
-    VerificationStatusSMS response =
+    VerificationReportSMS response =
         service.reportSmsByIdentity(
             NumberIdentity.builder().setEndpoint("endpoint string").build(),
             VerificationsDtoConverterTest.verificationReportSMSRequest);
@@ -147,10 +147,10 @@ public class VerificationsServiceTest extends BaseTest {
   void reportFlashCallByIdentity() throws ApiException {
 
     when(api.reportVerificationByIdentity(
-            eq("number"), eq("endpoint string"), eq(verificationReportFlashCallRequestDto)))
-        .thenReturn(VerificationStatusDtoTest.expectedVerificationFlashCallDto);
+            eq("endpoint string"), eq(verificationReportFlashCallRequestDto)))
+        .thenReturn(VerificationReportResponseDtoTest.verificationReportFlashCallDto);
 
-    VerificationStatusFlashCall response =
+    VerificationReportFlashCall response =
         service.reportFlashCallByIdentity(
             NumberIdentity.builder().setEndpoint("endpoint string").build(),
             VerificationsDtoConverterTest.verificationReportFlashCallRequest);
@@ -164,10 +164,10 @@ public class VerificationsServiceTest extends BaseTest {
   void reportCalloutByIdentity() throws ApiException {
 
     when(api.reportVerificationByIdentity(
-            eq("number"), eq("endpoint string"), eq(verificationReportCalloutRequestDto)))
-        .thenReturn(VerificationStatusDtoTest.expectedVerificationCalloutDto);
+            eq("endpoint string"), eq(verificationReportCalloutRequestDto)))
+        .thenReturn(VerificationReportResponseDtoTest.verificationReportCalloutDto);
 
-    VerificationStatusCallout response =
+    VerificationReportCallout response =
         service.reportCalloutByIdentity(
             NumberIdentity.builder().setEndpoint("endpoint string").build(),
             VerificationsDtoConverterTest.verificationReportCalloutRequest);
@@ -181,9 +181,9 @@ public class VerificationsServiceTest extends BaseTest {
   void reportSmsById() throws ApiException {
 
     when(api.reportVerificationById(eq("the id"), eq(verificationReportSMSRequestDto)))
-        .thenReturn(VerificationStatusDtoTest.expectedVerificationSMSDto);
+        .thenReturn(VerificationReportResponseDtoTest.verificationReportSMSDto);
 
-    VerificationStatusSMS response =
+    VerificationReportSMS response =
         service.reportSmsById(
             VerificationId.valueOf("the id"),
             VerificationsDtoConverterTest.verificationReportSMSRequest);
@@ -197,9 +197,9 @@ public class VerificationsServiceTest extends BaseTest {
   void reportFlashCallById() throws ApiException {
 
     when(api.reportVerificationById(eq("the id"), eq(verificationReportFlashCallRequestDto)))
-        .thenReturn(VerificationStatusDtoTest.expectedVerificationFlashCallDto);
+        .thenReturn(VerificationReportResponseDtoTest.verificationReportFlashCallDto);
 
-    VerificationStatusFlashCall response =
+    VerificationReportFlashCall response =
         service.reportFlashCallById(
             VerificationId.valueOf("the id"),
             VerificationsDtoConverterTest.verificationReportFlashCallRequest);
@@ -213,9 +213,9 @@ public class VerificationsServiceTest extends BaseTest {
   void reportCalloutById() throws ApiException {
 
     when(api.reportVerificationById(eq("the id"), eq(verificationReportCalloutRequestDto)))
-        .thenReturn(VerificationStatusDtoTest.expectedVerificationCalloutDto);
+        .thenReturn(VerificationReportResponseDtoTest.verificationReportCalloutDto);
 
-    VerificationStatusCallout response =
+    VerificationReportCallout response =
         service.reportCalloutById(
             VerificationId.valueOf("the id"),
             VerificationsDtoConverterTest.verificationReportCalloutRequest);
