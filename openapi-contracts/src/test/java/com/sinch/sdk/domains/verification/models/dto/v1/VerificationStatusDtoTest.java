@@ -31,7 +31,10 @@ public class VerificationStatusDtoTest extends BaseTest {
                           new PriceDto()
                               .currencyId("terminationPrice currency id")
                               .amount(6.626070F))
-                      .billableDuration(34)));
+                      .billableDuration(34))
+              .identity(new IdentityDto().type("number").endpoint("endpoint value"))
+              .countryId("es-ES")
+              .verificationTimestamp("2024-05-22T09:38:59.5590437"));
 
   @GivenJsonResource("/domains/verification/v1/VerificationStatusFlashCallResponseDto.json")
   VerificationResponseDto loadedVerificationFlashCallDto;
@@ -44,7 +47,21 @@ public class VerificationStatusDtoTest extends BaseTest {
               .status(VerificationStatusDto.FAIL)
               .reason(VerificationStatusReasonDto.FRAUD)
               .reference("my reference")
-              .source("manual"));
+              .price(
+                  new FlashcallVerificationStatusResponseAllOfPriceDto()
+                      .verificationPrice(
+                          new PriceDto()
+                              .currencyId("verificationPrice currency id")
+                              .amount(3.141516F))
+                      .terminationPrice(
+                          new PriceDto()
+                              .currencyId("terminationPrice currency id")
+                              .amount(6.626070F))
+                      .billableDuration(34))
+              .source("manual")
+              .identity(new IdentityDto().type("number").endpoint("endpoint value"))
+              .countryId("es-ES")
+              .verificationTimestamp("2024-05-22T09:38:59.5590437"));
 
   @GivenJsonResource("/domains/verification/v1/VerificationStatusSMSResponseDto.json")
   VerificationResponseDto loadedVerificationSMSDto;
@@ -63,7 +80,10 @@ public class VerificationStatusDtoTest extends BaseTest {
                       .verificationPrice(
                           new PriceDto()
                               .currencyId("verificationPrice currency id")
-                              .amount(3.141516F))));
+                              .amount(3.141516F)))
+              .identity(new IdentityDto().type("number").endpoint("endpoint value"))
+              .countryId("es-ES")
+              .verificationTimestamp("2024-05-22T09:38:59.5590437"));
 
   @Test
   void deserializeCallout() {

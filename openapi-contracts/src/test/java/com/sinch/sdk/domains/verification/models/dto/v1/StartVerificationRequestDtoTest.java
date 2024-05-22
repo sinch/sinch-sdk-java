@@ -16,7 +16,11 @@ public class StartVerificationRequestDtoTest extends BaseTest {
           .method(VerificationMethodDto.CALLOUT)
           .custom("a custom")
           .reference("a reference")
-          .identity(new IdentityDto().type("number").endpoint("+endpoint"));
+          .identity(new IdentityDto().type("number").endpoint("+endpoint"))
+          .calloutOptions(
+              new InitiateVerificationResourceCalloutOptionsDto()
+                  .speech(
+                      new InitiateVerificationResourceCalloutOptionsSpeechDto().locale("fr-FR")));
   public static InitiateVerificationResourceDto startVerificationFlashCallDto =
       new InitiateVerificationResourceDto()
           .method(VerificationMethodDto.FLASHCALL)
@@ -35,7 +39,14 @@ public class StartVerificationRequestDtoTest extends BaseTest {
           .method(VerificationMethodDto.SMS)
           .custom("a custom")
           .reference("a reference")
-          .identity(new IdentityDto().type("number").endpoint("+endpoint"));
+          .identity(new IdentityDto().type("number").endpoint("+endpoint"))
+          .smsOptions(
+              new InitiateVerificationResourceSmsOptionsDto()
+                  .expiry("01:02:03")
+                  .codeType(
+                      InitiateVerificationResourceSmsOptionsDto.CodeTypeEnum.ALPHANUMERIC
+                          .toString())
+                  .template("My template require to use '{{CODE}}' code"));
 
   @GivenTextResource("/domains/verification/v1/StartVerificationCalloutRequestDto.json")
   String jsonStartVerificationCallout;

@@ -15,8 +15,12 @@ import com.sinch.sdk.domains.verification.models.dto.v1.StartVerificationRequest
 import com.sinch.sdk.domains.verification.models.dto.v1.StartVerificationResponseDtoTest;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportRequestDtoTest;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationStatusDtoTest;
+import com.sinch.sdk.domains.verification.models.requests.SMSCodeType;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutOptions;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutSpeechOptions;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlashCallRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSOptions;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationSeamlessRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportCalloutRequestParameters;
@@ -26,6 +30,7 @@ import com.sinch.sdk.domains.verification.models.response.StartVerificationRespo
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSMS;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSeamless;
+import java.time.Instant;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -36,6 +41,11 @@ public class VerificationsDtoConverterTest extends BaseTest {
           .setCustom("a custom")
           .setReference(VerificationReference.valueOf("a reference"))
           .setIdentity(NumberIdentity.builder().setEndpoint("+endpoint").build())
+          .setOptions(
+              StartVerificationCalloutOptions.builder()
+                  .setSpeech(
+                      StartVerificationCalloutSpeechOptions.builder().setLocale("fr-FR").build())
+                  .build())
           .build();
 
   public static StartVerificationResponseCallout expectedStartVerificationCalloutResponse =
@@ -77,6 +87,12 @@ public class VerificationsDtoConverterTest extends BaseTest {
           .setCustom("a custom")
           .setReference(VerificationReference.valueOf("a reference"))
           .setIdentity(NumberIdentity.builder().setEndpoint("+endpoint").build())
+          .setOptions(
+              StartVerificationSMSOptions.builder()
+                  .setExpiry("01:02:03")
+                  .setCodeType(SMSCodeType.ALPHANUMERIC)
+                  .setTemplate("My template require to use '{{CODE}}' code")
+                  .build())
           .build();
   public static StartVerificationResponseSMS expectedStartVerificationSMSResponse =
       StartVerificationResponseSMS.builder()
@@ -166,6 +182,9 @@ public class VerificationsDtoConverterTest extends BaseTest {
           .setId(VerificationId.valueOf("the id"))
           .setStatus(VerificationStatusType.FAIL)
           .setReason(VerificationStatusReasonType.FRAUD)
+          .setIdentity(NumberIdentity.valueOf("endpoint value"))
+          .setCountryId("es-ES")
+          .setVerificationTimeStamp(Instant.parse("2024-05-22T09:38:59.559043700Z"))
           .setCallComplete(true)
           .setReference(VerificationReference.valueOf("my reference"))
           .setVerificationPrice(
@@ -207,8 +226,22 @@ public class VerificationsDtoConverterTest extends BaseTest {
           .setId(VerificationId.valueOf("the id"))
           .setStatus(VerificationStatusType.FAIL)
           .setReason(VerificationStatusReasonType.FRAUD)
+          .setIdentity(NumberIdentity.valueOf("endpoint value"))
+          .setCountryId("es-ES")
+          .setVerificationTimeStamp(Instant.parse("2024-05-22T09:38:59.559043700Z"))
           .setReference(VerificationReference.valueOf("my reference"))
           .setSource(VerificationSourceType.MANUAL)
+          .setVerificationPrice(
+              Price.builder()
+                  .setCurrencyId("verificationPrice currency id")
+                  .setAmount(3.141516F)
+                  .build())
+          .setTerminationPrice(
+              Price.builder()
+                  .setCurrencyId("terminationPrice currency id")
+                  .setAmount(6.626070F)
+                  .build())
+          .setBillableDuration(34)
           .build();
 
   @Test
@@ -241,6 +274,9 @@ public class VerificationsDtoConverterTest extends BaseTest {
           .setStatus(VerificationStatusType.FAIL)
           .setReason(VerificationStatusReasonType.FRAUD)
           .setReference(VerificationReference.valueOf("my reference"))
+          .setIdentity(NumberIdentity.valueOf("endpoint value"))
+          .setCountryId("es-ES")
+          .setVerificationTimeStamp(Instant.parse("2024-05-22T09:38:59.559043700Z"))
           .setSource(VerificationSourceType.INTERCEPTED)
           .setVerificationPrice(
               Price.builder()

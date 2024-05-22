@@ -4,6 +4,12 @@
   "status": "FAIL",
   "reason": "Fraud",
   "reference": "my reference",
+  "identity": {
+    "type": "number",
+    "endpoint": "endpoint value"
+  },
+  "countryId": "es-ES",
+  "verificationTimestamp": "2024-05-22T09:38:59.5590437",
   "source": "intercepted",
   "price": {
     "verificationPrice": {
