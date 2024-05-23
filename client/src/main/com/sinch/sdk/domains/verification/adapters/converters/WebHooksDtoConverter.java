@@ -73,6 +73,9 @@ public class WebHooksDtoConverter {
 
   public static Object convert(VerificationResponse client) {
 
+    if (null == client) {
+      return null;
+    }
     if (client instanceof VerificationResponseCallout) {
       return convert((VerificationResponseCallout) client);
     } else if (client instanceof VerificationResponseFlashCall) {
