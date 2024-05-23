@@ -17,9 +17,9 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 public class VerificationController {
 
+  private static final Logger LOGGER = Logger.getLogger(VerificationController.class.getName());
   private final SinchClient sinchClient;
   private final VerificationService service;
-  private static final Logger LOGGER = Logger.getLogger(VerificationController.class.getName());
 
   @Autowired
   public VerificationController(SinchClient sinchClient, VerificationService service) {
@@ -34,7 +34,7 @@ public class VerificationController {
   public String VerificationEvent(
       @RequestHeader Map<String, String> headers, @RequestBody String body) {
 
-    LOGGER.finest("Received body:" + body);
+    LOGGER.finest("Received body: " + body);
     LOGGER.finest("Received headers: " + headers);
 
     // ensure valid authentication to handle request
@@ -70,9 +70,7 @@ public class VerificationController {
       default -> throw new IllegalStateException("Unexpected value: " + event);
     };
 
-    var serializedResponse =// null != response ?
-        sinchClient.verification().webhooks().serializeResponse(response);
-  //  : "";
+    var serializedResponse = sinchClient.verification().webhooks().serializeResponse(response);
 
     LOGGER.finest("JSON response: " + serializedResponse);
 

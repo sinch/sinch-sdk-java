@@ -63,7 +63,7 @@ public class WebHooksService implements com.sinch.sdk.domains.verification.WebHo
   @Override
   public String serializeResponse(VerificationResponse response) throws ApiMappingException {
     try {
-      return Mapper.getInstance().writeValueAsString(response);
+      return Mapper.getInstance().writeValueAsString(WebHooksDtoConverter.convert(response));
     } catch (JsonProcessingException e) {
       throw new ApiMappingException(response.toString(), e);
     }
