@@ -12,17 +12,14 @@ import com.sinch.sdk.domains.verification.models.VerificationReference;
  */
 public class StartVerificationSMSRequestParameters extends StartVerificationRequestParameters {
 
-  private final OptionalValue<String> acceptLanguage;
   private final OptionalValue<StartVerificationSMSOptions> options;
 
   private StartVerificationSMSRequestParameters(
-      OptionalValue<String> acceptLanguage,
       OptionalValue<Identity> identity,
       OptionalValue<VerificationReference> reference,
       OptionalValue<String> custom,
       OptionalValue<StartVerificationSMSOptions> options) {
     super(identity, VerificationMethodType.SMS, reference, custom);
-    this.acceptLanguage = acceptLanguage;
     this.options = options;
   }
 
@@ -34,10 +31,6 @@ public class StartVerificationSMSRequestParameters extends StartVerificationRequ
    */
   public static Builder builder() {
     return new Builder();
-  }
-
-  public OptionalValue<String> getAcceptLanguage() {
-    return acceptLanguage;
   }
 
   public OptionalValue<StartVerificationSMSOptions> getOptions() {
@@ -62,20 +55,6 @@ public class StartVerificationSMSRequestParameters extends StartVerificationRequ
     private Builder() {}
 
     /**
-     * Value of <a
-     * href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language">Accept-Language</a>
-     * header is used to determine the language of an SMS message.
-     *
-     * @param acceptLanguage Specifies accept language value to be used
-     * @return current builder
-     * @since 1.0
-     */
-    public Builder setAcceptLanguage(String acceptLanguage) {
-      this.acceptLanguage = OptionalValue.of(acceptLanguage);
-      return self();
-    }
-
-    /**
      * SMS options to be used
      *
      * @param options Specifies options
@@ -95,8 +74,7 @@ public class StartVerificationSMSRequestParameters extends StartVerificationRequ
      */
     @Override
     public StartVerificationSMSRequestParameters build() {
-      return new StartVerificationSMSRequestParameters(
-          acceptLanguage, identity, reference, custom, options);
+      return new StartVerificationSMSRequestParameters(identity, reference, custom, options);
     }
 
     @Override

@@ -13,14 +13,27 @@ public class StartVerificationSMSOptions {
   private final OptionalValue<String> expiry;
   private final OptionalValue<SMSCodeType> codeType;
   private final OptionalValue<String> template;
+  private final OptionalValue<String> acceptLanguage;
 
   private StartVerificationSMSOptions(
       OptionalValue<String> expiry,
       OptionalValue<SMSCodeType> codeType,
-      OptionalValue<String> template) {
+      OptionalValue<String> template,
+      OptionalValue<String> acceptLanguage) {
     this.expiry = expiry;
     this.codeType = codeType;
     this.template = template;
+    this.acceptLanguage = acceptLanguage;
+  }
+
+  /**
+   * Getting Builder
+   *
+   * @return New Builder instance
+   * @since 1.1
+   */
+  public static Builder builder() {
+    return new Builder();
   }
 
   public OptionalValue<String> getExpiry() {
@@ -35,14 +48,8 @@ public class StartVerificationSMSOptions {
     return template;
   }
 
-  /**
-   * Getting Builder
-   *
-   * @return New Builder instance
-   * @since 1.1
-   */
-  public static Builder builder() {
-    return new Builder();
+  public OptionalValue<String> getAcceptLanguage() {
+    return acceptLanguage;
   }
 
   /**
@@ -55,6 +62,7 @@ public class StartVerificationSMSOptions {
     private OptionalValue<String> expiry = OptionalValue.empty();
     private OptionalValue<SMSCodeType> codeType = OptionalValue.empty();
     private OptionalValue<String> template = OptionalValue.empty();
+    private OptionalValue<String> acceptLanguage = OptionalValue.empty();
 
     private Builder() {}
 
@@ -96,13 +104,25 @@ public class StartVerificationSMSOptions {
     }
 
     /**
+     * Value of accept language is used to determine the language of an SMS message
+     *
+     * @param acceptLanguage locale string
+     * @return current builder
+     * @since 1.1
+     */
+    public Builder setAcceptLanguage(String acceptLanguage) {
+      this.acceptLanguage = OptionalValue.of(acceptLanguage);
+      return this;
+    }
+
+    /**
      * Create instance
      *
      * @return The instance build with current builder values
      * @since 1.1
      */
     public StartVerificationSMSOptions build() {
-      return new StartVerificationSMSOptions(expiry, codeType, template);
+      return new StartVerificationSMSOptions(expiry, codeType, template, acceptLanguage);
     }
   }
 }

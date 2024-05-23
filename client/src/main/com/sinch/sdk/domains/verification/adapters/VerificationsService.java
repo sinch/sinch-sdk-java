@@ -45,23 +45,32 @@ public class VerificationsService
   }
 
   public StartVerificationResponseSMS startSms(StartVerificationSMSRequestParameters parameters) {
-    String acceptLanguage = parameters.getAcceptLanguage().orElse(null);
+    String acceptLanguage = null;
+    if (parameters.getOptions().isPresent()
+        && parameters.getOptions().get().getAcceptLanguage().isPresent()) {
+      acceptLanguage = parameters.getOptions().get().getAcceptLanguage().get();
+    }
     return (StartVerificationResponseSMS) start(parameters, acceptLanguage);
   }
 
   public StartVerificationResponseFlashCall startFlashCall(
       StartVerificationFlashCallRequestParameters parameters) {
-    return (StartVerificationResponseFlashCall) start(parameters, null);
+    return (StartVerificationResponseFlashCall) start(parameters);
   }
 
   public StartVerificationResponseCallout startCallout(
       StartVerificationCalloutRequestParameters parameters) {
-    return (StartVerificationResponseCallout) start(parameters, null);
+    return (StartVerificationResponseCallout) start(parameters);
   }
 
   public StartVerificationResponseSeamless startSeamless(
       StartVerificationSeamlessRequestParameters parameters) {
-    return (StartVerificationResponseSeamless) start(parameters, null);
+    return (StartVerificationResponseSeamless) start(parameters);
+  }
+
+  private StartVerificationResponse start(StartVerificationRequestParameters parameters) {
+    return VerificationsDtoConverter.convert(
+        getApi().startVerification(VerificationsDtoConverter.convert(parameters), null));
   }
 
   private StartVerificationResponse start(
