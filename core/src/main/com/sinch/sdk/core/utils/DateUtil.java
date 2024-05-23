@@ -37,6 +37,7 @@ public class DateUtil {
    *
    * @param value A nearly IS08601 compliant string
    * @return Extracted Instant value
+   * @since 1.1
    */
   public static Instant failSafeTimeStampToInstant(String value) {
 

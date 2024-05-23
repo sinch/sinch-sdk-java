@@ -6,7 +6,7 @@ import com.sinch.sdk.core.models.OptionalValue;
  * Dedicated options related to {@link StartVerificationCalloutRequestParameters
  * StartVerificationCalloutRequestParameters}
  *
- * @since 1.0
+ * @since 1.1
  */
 public class StartVerificationCalloutOptions {
 

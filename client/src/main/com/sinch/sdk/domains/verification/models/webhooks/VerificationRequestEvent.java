@@ -8,7 +8,9 @@ import java.util.Collection;
 import java.util.Optional;
 
 /**
- * This event is received onto a POST request to the specified verification callback URL and is
+ * Event received onto verification request
+ *
+ * <p>This event is received onto a POST request to the specified verification callback URL and is
  * triggered when a new verification request is made from the SDK client or the Verification Request
  * API. This callback event is only triggered when a verification callback URL is specified in your
  * dashboard.

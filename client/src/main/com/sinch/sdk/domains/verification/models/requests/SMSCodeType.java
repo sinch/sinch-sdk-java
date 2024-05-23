@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 /**
  * Accepted values for the type of code to be generated are Numeric, Alpha, and Alphanumeric.
  *
- * @since 1.0
+ * @since 1.1
  */
 public class SMSCodeType extends EnumDynamic<String, SMSCodeType> {
 

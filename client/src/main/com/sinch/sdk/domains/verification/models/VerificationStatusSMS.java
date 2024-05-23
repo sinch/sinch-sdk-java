@@ -1,14 +1,10 @@
 package com.sinch.sdk.domains.verification.models;
 
-import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSRequestParameters;
 import java.time.Instant;
 
 /**
  * Verification report related to a {@link
- * com.sinch.sdk.domains.verification.VerificationsService#startSms(StartVerificationSMSRequestParameters)}
- * of type {@link
- * com.sinch.sdk.domains.verification.models.requests.VerificationReportSMSRequestParameters
- * VerificationReportSMSRequestParameters}
+ * com.sinch.sdk.domains.verification.VerificationsService#startSms}
  *
  * @since 1.0
  */

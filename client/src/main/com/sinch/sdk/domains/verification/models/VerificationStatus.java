@@ -69,6 +69,7 @@ public class VerificationStatus {
    * The reference value that was optionally passed together with the verification request.
    *
    * @return The reference value
+   * @since 1.0
    */
   public VerificationReference getReference() {
     return reference;
@@ -77,6 +78,7 @@ public class VerificationStatus {
   /**
    * @see Identity
    * @return The identity
+   * @since 1.1
    */
   public Identity getIdentity() {
     return identity;
@@ -86,6 +88,7 @@ public class VerificationStatus {
    * The ID of the country to which the verification was sent
    *
    * @return Country ID value
+   * @since 1.1
    */
   public String getCountryId() {
     return countryId;
@@ -95,6 +98,7 @@ public class VerificationStatus {
    * Verification time stamp
    *
    * @return Verification timestamp value
+   * @since 1.1
    */
   public Instant getVerificationTimeStamp() {
     return verificationTimeStamp;
@@ -207,7 +211,7 @@ public class VerificationStatus {
      *
      * @param identity See getter
      * @return Current builder
-     * @since 1.0
+     * @since 1.1
      */
     public B setIdentity(Identity identity) {
       this.identity = identity;
@@ -221,7 +225,7 @@ public class VerificationStatus {
      *
      * @param countryId See getter
      * @return Current builder
-     * @since 1.0
+     * @since 1.1
      */
     public B setCountryId(String countryId) {
       this.countryId = countryId;
@@ -235,7 +239,7 @@ public class VerificationStatus {
      *
      * @param verificationTimeStamp See getter
      * @return Current builder
-     * @since 1.0
+     * @since 1.1
      */
     public B setVerificationTimeStamp(Instant verificationTimeStamp) {
       this.verificationTimeStamp = verificationTimeStamp;

@@ -35,7 +35,7 @@ public class VerificationResponseSMS extends VerificationResponse {
   }
 
   /**
-   * The SMS verification content language. Set in the verification request.
+   * The SMS verification content languages. Set in the verification request.
    *
    * @return Accepted languages list
    */

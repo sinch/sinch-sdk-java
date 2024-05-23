@@ -8,7 +8,7 @@ import com.sinch.sdk.core.models.OptionalValue;
  * <p>Dedicated options related to {@link StartVerificationCalloutOptions
  * StartVerificationCalloutOptions}
  *
- * @since 1.0
+ * @since 1.1
  */
 public class StartVerificationCalloutSpeechOptions {
 
@@ -22,7 +22,7 @@ public class StartVerificationCalloutSpeechOptions {
    * Getting Builder
    *
    * @return New Builder instance
-   * @since 1.0
+   * @since 1.1
    */
   public static Builder builder() {
     return new Builder();
@@ -35,7 +35,7 @@ public class StartVerificationCalloutSpeechOptions {
   /**
    * Dedicated Builder
    *
-   * @since 1.0
+   * @since 1.1
    */
   public static class Builder {
 
@@ -49,7 +49,7 @@ public class StartVerificationCalloutSpeechOptions {
      *
      * @param locale Specifies expiry time
      * @return current builder
-     * @since 1.0
+     * @since 1.1
      */
     public Builder setLocale(String locale) {
       this.locale = OptionalValue.of(locale);
@@ -60,7 +60,7 @@ public class StartVerificationCalloutSpeechOptions {
      * Create instance
      *
      * @return The instance build with current builder values
-     * @since 1.0
+     * @since 1.1
      */
     public StartVerificationCalloutSpeechOptions build() {
       return new StartVerificationCalloutSpeechOptions(locale);

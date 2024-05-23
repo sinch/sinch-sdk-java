@@ -1,15 +1,13 @@
 package com.sinch.sdk.domains.verification.models;
 
-import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutRequestParameters;
-
 /**
- * Verification report related to a {@link
- * com.sinch.sdk.domains.verification.VerificationsService#startCallout(StartVerificationCalloutRequestParameters)}
- * of type {@link
- * com.sinch.sdk.domains.verification.models.requests.VerificationReportCalloutRequestParameters
- * VerificationReportCalloutRequestParameters}
+ * Dedicated report type for a SMS verification
  *
- * @since 1.0
+ * <p>Verification report when using {@link
+ * com.sinch.sdk.domains.verification.VerificationsService#reportSmsById} or {@link
+ * com.sinch.sdk.domains.verification.VerificationsService#reportSmsByIdentity}
+ *
+ * @since 1.1
  */
 public class VerificationReportSMS extends VerificationReport {
 
@@ -26,7 +24,7 @@ public class VerificationReportSMS extends VerificationReport {
    * Getting Builder
    *
    * @return New Builder instance
-   * @since 1.0
+   * @since 1.1
    */
   public static Builder builder() {
     return new Builder();
@@ -41,7 +39,7 @@ public class VerificationReportSMS extends VerificationReport {
      * Create instance
      *
      * @return The instance build with current builder values
-     * @since 1.0
+     * @since 1.1
      */
     public VerificationReportSMS build() {
       return new VerificationReportSMS(id, status);

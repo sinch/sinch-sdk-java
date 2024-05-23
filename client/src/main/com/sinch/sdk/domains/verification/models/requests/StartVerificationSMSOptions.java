@@ -6,7 +6,7 @@ import com.sinch.sdk.core.models.OptionalValue;
  * Dedicated options related to {@link StartVerificationSMSRequestParameters
  * StartVerificationSMSRequestParameters}
  *
- * @since 1.0
+ * @since 1.1
  */
 public class StartVerificationSMSOptions {
 
@@ -39,7 +39,7 @@ public class StartVerificationSMSOptions {
    * Getting Builder
    *
    * @return New Builder instance
-   * @since 1.0
+   * @since 1.1
    */
   public static Builder builder() {
     return new Builder();
@@ -48,7 +48,7 @@ public class StartVerificationSMSOptions {
   /**
    * Dedicated Builder
    *
-   * @since 1.0
+   * @since 1.1
    */
   public static class Builder {
 
@@ -63,7 +63,7 @@ public class StartVerificationSMSOptions {
      *
      * @param expiry Specifies expiry time
      * @return current builder
-     * @since 1.0
+     * @since 1.1
      */
     public Builder setExpiry(String expiry) {
       this.expiry = OptionalValue.of(expiry);
@@ -75,7 +75,7 @@ public class StartVerificationSMSOptions {
      *
      * @param codeType Specifies code type
      * @return current builder
-     * @since 1.0
+     * @since 1.1
      */
     public Builder setCodeType(SMSCodeType codeType) {
       this.codeType = OptionalValue.of(codeType);
@@ -88,7 +88,7 @@ public class StartVerificationSMSOptions {
      *
      * @param template Template string
      * @return current builder
-     * @since 1.0
+     * @since 1.1
      */
     public Builder setTemplate(String template) {
       this.template = OptionalValue.of(template);
@@ -99,7 +99,7 @@ public class StartVerificationSMSOptions {
      * Create instance
      *
      * @return The instance build with current builder values
-     * @since 1.0
+     * @since 1.1
      */
     public StartVerificationSMSOptions build() {
       return new StartVerificationSMSOptions(expiry, codeType, template);

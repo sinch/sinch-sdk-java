@@ -16,11 +16,11 @@ public class VerificationResponseCalloutSpeech {
   }
 
   /**
-   * see SpeechResponse Constructor
+   * Indicates the language that should be used for the text-to-speech message. Currently, only
+   * en-US is supported.
    *
-   * @return see {@link VerificationResponseCalloutSpeech#VerificationResponseCalloutSpeech(String)
-   *     constructor}
-   * @since 1.0
+   * @return locale value
+   * @since 1.1
    */
   public String getLocale() {
     return locale;
@@ -35,7 +35,7 @@ public class VerificationResponseCalloutSpeech {
    * Getting Builder
    *
    * @return New Builder instance
-   * @since 1.0
+   * @since 1.1
    */
   public static Builder builder() {
     return new Builder();
@@ -44,7 +44,7 @@ public class VerificationResponseCalloutSpeech {
   /**
    * Dedicated Builder
    *
-   * @since 1.0
+   * @since 1.1
    */
   public static class Builder {
 
@@ -58,7 +58,7 @@ public class VerificationResponseCalloutSpeech {
      *
      * @param locale see constructor
      * @return The current builder
-     * @since 1.0
+     * @since 1.1
      */
     public Builder setLocale(String locale) {
       this.locale = locale;
@@ -69,7 +69,7 @@ public class VerificationResponseCalloutSpeech {
      * Create instance
      *
      * @return The instance build with current builder values
-     * @since 1.0
+     * @since 1.1
      */
     public VerificationResponseCalloutSpeech build() {
       return new VerificationResponseCalloutSpeech(locale);

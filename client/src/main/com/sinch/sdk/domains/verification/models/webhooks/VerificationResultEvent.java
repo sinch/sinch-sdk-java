@@ -9,7 +9,9 @@ import com.sinch.sdk.domains.verification.models.VerificationStatusType;
 import java.util.Optional;
 
 /**
- * This event is received onto a POST request to the specified verification callback URL and
+ * Event received when a verification has been completed
+ *
+ * <p>This event is received onto a POST request to the specified verification callback URL and
  * triggered when a verification has been completed and the result is known. It's used to report the
  * verification result to the developer's backend application. This callback event is only triggered
  * when the verification callback URL is specified in your dashboard.

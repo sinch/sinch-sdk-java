@@ -1,14 +1,10 @@
 package com.sinch.sdk.domains.verification.models;
 
-import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutRequestParameters;
 import java.time.Instant;
 
 /**
  * Verification report related to a {@link
- * com.sinch.sdk.domains.verification.VerificationsService#startCallout(StartVerificationCalloutRequestParameters)}
- * of type {@link
- * com.sinch.sdk.domains.verification.models.requests.VerificationReportCalloutRequestParameters
- * VerificationReportCalloutRequestParameters}
+ * com.sinch.sdk.domains.verification.VerificationsService#startCallout}
  *
  * @since 1.0
  */

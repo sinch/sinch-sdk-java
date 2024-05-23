@@ -1,14 +1,10 @@
 package com.sinch.sdk.domains.verification.models;
 
-import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlashCallRequestParameters;
 import java.time.Instant;
 
 /**
  * Verification report related to a {@link
- * com.sinch.sdk.domains.verification.VerificationsService#startFlashCall(StartVerificationFlashCallRequestParameters)}
- * of type {@link
- * com.sinch.sdk.domains.verification.models.requests.VerificationReportFlashCallRequestParameters
- * VerificationReportFlashCallRequestParameters}
+ * com.sinch.sdk.domains.verification.VerificationsService#startFlashCall}
  *
  * @since 1.0
  */

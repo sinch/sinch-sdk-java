@@ -3,7 +3,7 @@ package com.sinch.sdk.domains.verification.models;
 /**
  * Common class to all verification report responses
  *
- * @since 1.0
+ * @since 1.1
  */
 public class VerificationReport {
 
@@ -19,7 +19,7 @@ public class VerificationReport {
    * ID related to verification request
    *
    * @return Verification ID
-   * @since 1.0
+   * @since 1.1
    */
   public VerificationId getId() {
     return id;
@@ -29,7 +29,7 @@ public class VerificationReport {
    * Current verification status
    *
    * @return The status value
-   * @since 1.0
+   * @since 1.1
    */
   public VerificationStatusType getStatus() {
     return status;
@@ -38,7 +38,7 @@ public class VerificationReport {
   /** {@inheritDoc} */
   @Override
   public String toString() {
-    return "VerificationStatus{" + "id='" + id + '\'' + ", status=" + status + '}';
+    return "VerificationReport{" + "id=" + id + ", status=" + status + '}';
   }
 
   public static Builder<?> builder() {
@@ -49,7 +49,7 @@ public class VerificationReport {
    * Dedicated Builder
    *
    * @param <B> Builder
-   * @since 1.0
+   * @since 1.1
    */
   public static class Builder<B extends Builder<B>> {
 
@@ -65,7 +65,7 @@ public class VerificationReport {
      *
      * @param id See getter
      * @return Current builder
-     * @since 1.0
+     * @since 1.1
      */
     public B setId(VerificationId id) {
       this.id = id;
@@ -79,7 +79,7 @@ public class VerificationReport {
      *
      * @param status See getter
      * @return Current builder
-     * @since 1.0
+     * @since 1.1
      */
     public B setStatus(VerificationStatusType status) {
       this.status = status;
@@ -90,7 +90,7 @@ public class VerificationReport {
      * Create instance
      *
      * @return The instance build with current builder values
-     * @since 1.0
+     * @since 1.1
      */
     public VerificationReport build() {
       return new VerificationReport(id, status);
