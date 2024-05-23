@@ -83,7 +83,7 @@ public class VerificationRequestEventDto {
   public enum MethodEnum {
     SMS("sms"),
 
-    FLASHCALL("flashCall"),
+    FLASHCALL("flashcall"),
 
     CALLOUT("callout"),
 

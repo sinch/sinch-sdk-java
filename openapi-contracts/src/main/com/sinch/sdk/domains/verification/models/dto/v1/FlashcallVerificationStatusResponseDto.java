@@ -66,7 +66,7 @@ public class FlashcallVerificationStatusResponseDto {
   private String verificationTimestamp;
   private boolean verificationTimestampDefined = false;
 
-  /** The method of the verification request. This will always be &#x60;flashCall&#x60;. */
+  /** The method of the verification request. This will always be &#x60;flashcall&#x60;. */
   public enum MethodEnum {
     FLASHCALL("flashcall"),
 
@@ -363,7 +363,7 @@ public class FlashcallVerificationStatusResponseDto {
   }
 
   /**
-   * The method of the verification request. This will always be &#x60;flashCall&#x60;.
+   * The method of the verification request. This will always be &#x60;flashcall&#x60;.
    *
    * @return method
    */

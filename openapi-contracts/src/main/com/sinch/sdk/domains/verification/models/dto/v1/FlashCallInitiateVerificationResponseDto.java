@@ -87,7 +87,7 @@ public class FlashCallInitiateVerificationResponseDto {
 
   /**
    * The value of the method used for the Verification. For Flashcall Verifications, this will
-   * always be &#x60;flashCall&#x60;.
+   * always be &#x60;flashcall&#x60;.
    *
    * @return method
    */
