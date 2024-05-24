@@ -59,13 +59,15 @@ SinchClient client = new SinchClient(configuration);
 
 ## Products
 
-Sinch client provides access to the following Sinch products:
+Here is the list of the Sinch products and their level of support by the Java SDK:
 
-- Numbers [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/numbers/package-summary.html)
-- SMS [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/sms/package-summary.html)
-- Verification [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/verification/package-summary.html)
-- Voice [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/voice/package-summary.html)
-- additional products coming soon!
+| API Category           | API Name                          | Status |
+|------------------------|-----------------------------------|:------:|
+| Messaging              | SMS API [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/sms/package-summary.html)                          |   ✅   |
+| Voice and Video        | Voice API [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/voice/package-summary.html)                      |   ✅   |
+| Numbers & Connectivity | Numbers API [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/numbers/package-summary.html)                  |   ✅   |
+| Verification           | Verification API [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/verification/package-summary.html)        |   ✅   |
+
 
 ## Logging
 
@@ -80,25 +82,13 @@ java.util.logging.ConsoleHandler.formatter = java.util.logging.SimpleFormatter
 java.util.logging.SimpleFormatter.format=[%1$tF %1$tT] [%4$-7s %2$s] %5$s %n
 ```
 
-## Sample apps
+## Onboarding
 
-The following sections detail how to build the SDK locally and how to use the included sample apps.
-
-#### Numbers product usage sample
-Usage example of the `numbers` product:
-
-```java
-AvailableNumberListResponse response = client
-                                        .numbers()
-                                        .available()
-                                        .list(AvailableNumberListAllRequestParameters.builder()
-                                                                                    .setRegionCode("US")
-                                                                                    .setType(NumberType.LOCAL)
-                                                                                    .build());
-```
-
-#### Onboarding/Examples
-A dedicated [sample-app](sample-app/README.md) directory contains ready to use samples and can be used to start your own applications based onto Sinch SDK.
+To improve onboarding experience, following resources are available:
+- Sinch developpers online doucmentation: https://developers.sinch.com 
+- A dedicated Java SDK quickstart repository with tutorials and templates enabling to start quickly a new project: https://github.com/sinch/sinch-sdk-java-quickstart
+- A dedicated Java SDK sippets repository with basic code snippets: https://github.com/sinch/sinch-sdk-java-snippets
+- Java SDK online javdoc: https://developers.sinch.com/java-sdk/apidocs
 
 
 ## License
