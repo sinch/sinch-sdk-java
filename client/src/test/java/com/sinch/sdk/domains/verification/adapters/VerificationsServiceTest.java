@@ -11,21 +11,21 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.verification.adapters.api.v1.VerificationsApi;
 import com.sinch.sdk.domains.verification.adapters.converters.VerificationsDtoConverterTest;
+import com.sinch.sdk.domains.verification.api.v1.internal.VerificationsApi;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationReportCallout;
 import com.sinch.sdk.domains.verification.models.VerificationReportFlashCall;
 import com.sinch.sdk.domains.verification.models.VerificationReportSMS;
-import com.sinch.sdk.domains.verification.models.dto.v1.InitiateVerificationResourceDto;
-import com.sinch.sdk.domains.verification.models.dto.v1.StartVerificationResponseDtoTest;
-import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportRequestResourceDto;
-import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportResponseDtoTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.report.VerificationReportResponseDtoTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.start.StartVerificationResponseTest;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseCallout;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSMS;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSeamless;
+import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestParametersInternal;
+import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationRequestParameters;
 import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -36,26 +36,26 @@ import org.mockito.Mock;
 @TestWithResources
 public class VerificationsServiceTest extends BaseTest {
 
-  @GivenJsonResource("/domains/verification/v1/StartVerificationCalloutRequestDto.json")
-  public InitiateVerificationResourceDto startVerificationCalloutRequestDto;
+  @GivenJsonResource("/domains/verification/v1/start/StartVerificationCalloutRequestDto.json")
+  public StartVerificationRequestParameters startVerificationCalloutRequestDto;
 
-  @GivenJsonResource("/domains/verification/v1/StartVerificationFlashCallRequestDto.json")
-  public InitiateVerificationResourceDto startVerificationFlashCallRequestDto;
+  @GivenJsonResource("/domains/verification/v1/start/StartVerificationFlashCallRequestDto.json")
+  public StartVerificationRequestParameters startVerificationFlashCallRequestDto;
 
-  @GivenJsonResource("/domains/verification/v1/StartVerificationSeamlessRequestDto.json")
-  public InitiateVerificationResourceDto startVerificationSeamlessRequestDto;
+  @GivenJsonResource("/domains/verification/v1/start/StartVerificationSeamlessRequestDto.json")
+  public StartVerificationRequestParameters startVerificationSeamlessRequestDto;
 
-  @GivenJsonResource("/domains/verification/v1/StartVerificationSMSRequestDto.json")
-  public InitiateVerificationResourceDto startVerificationSMSRequestDto;
+  @GivenJsonResource("/domains/verification/v1/start/StartVerificationSMSRequestDto.json")
+  public StartVerificationRequestParameters startVerificationSMSRequestDto;
 
-  @GivenJsonResource("/domains/verification/v1/VerificationReportCalloutRequestDto.json")
-  public VerificationReportRequestResourceDto verificationReportCalloutRequestDto;
+  @GivenJsonResource("/domains/verification/v1/report/VerificationReportCalloutRequestDto.json")
+  public VerificationReportRequestParametersInternal verificationReportCalloutRequestDto;
 
-  @GivenJsonResource("/domains/verification/v1/VerificationReportFlashCallRequestDto.json")
-  public VerificationReportRequestResourceDto verificationReportFlashCallRequestDto;
+  @GivenJsonResource("/domains/verification/v1/report/VerificationReportFlashCallRequestDto.json")
+  public VerificationReportRequestParametersInternal verificationReportFlashCallRequestDto;
 
-  @GivenJsonResource("/domains/verification/v1/VerificationReportSMSRequestDto.json")
-  public VerificationReportRequestResourceDto verificationReportSMSRequestDto;
+  @GivenJsonResource("/domains/verification/v1/report/VerificationReportSMSRequestDto.json")
+  public VerificationReportRequestParametersInternal verificationReportSMSRequestDto;
 
   @Mock VerificationsApi api;
   @Mock VerificationContext context;
@@ -74,7 +74,7 @@ public class VerificationsServiceTest extends BaseTest {
   void startSms() throws ApiException {
 
     when(api.startVerification(eq(startVerificationSMSRequestDto), eq(null)))
-        .thenReturn(StartVerificationResponseDtoTest.expectedStartVerificationSMSDto);
+        .thenReturn(StartVerificationResponseTest.expectedStartVerificationSMSDto);
 
     StartVerificationResponseSMS response =
         service.startSms(VerificationsDtoConverterTest.startVerificationSMSRequest);
@@ -88,7 +88,7 @@ public class VerificationsServiceTest extends BaseTest {
   void startFlashCall() throws ApiException {
 
     when(api.startVerification(eq(startVerificationFlashCallRequestDto), eq(null)))
-        .thenReturn(StartVerificationResponseDtoTest.expectedStartVerificationFlashCallDto);
+        .thenReturn(StartVerificationResponseTest.expectedStartVerificationFlashCallDto);
 
     StartVerificationResponseFlashCall response =
         service.startFlashCall(VerificationsDtoConverterTest.startVerificationFlashCallRequest);
@@ -102,7 +102,7 @@ public class VerificationsServiceTest extends BaseTest {
   void startCallout() throws ApiException {
 
     when(api.startVerification(eq(startVerificationCalloutRequestDto), eq(null)))
-        .thenReturn(StartVerificationResponseDtoTest.expectedStartVerificationCalloutDto);
+        .thenReturn(StartVerificationResponseTest.expectedStartVerificationCalloutDto);
 
     StartVerificationResponseCallout response =
         service.startCallout(VerificationsDtoConverterTest.startVerificationCalloutRequest);
@@ -116,7 +116,7 @@ public class VerificationsServiceTest extends BaseTest {
   void startSeamless() throws ApiException {
 
     when(api.startVerification(eq(startVerificationSeamlessRequestDto), eq(null)))
-        .thenReturn(StartVerificationResponseDtoTest.expectedStartVerificationSeamlessDto);
+        .thenReturn(StartVerificationResponseTest.expectedStartVerificationSeamlessDto);
 
     StartVerificationResponseSeamless response =
         service.startSeamless(VerificationsDtoConverterTest.startVerificationSeamlessRequest);

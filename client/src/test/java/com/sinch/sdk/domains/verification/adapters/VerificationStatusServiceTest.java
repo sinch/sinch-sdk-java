@@ -10,14 +10,14 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.verification.adapters.api.v1.VerificationStatusApi;
 import com.sinch.sdk.domains.verification.adapters.converters.VerificationsDtoConverterTest;
+import com.sinch.sdk.domains.verification.api.v1.internal.VerificationStatusApi;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.VerificationReference;
 import com.sinch.sdk.domains.verification.models.VerificationStatus;
-import com.sinch.sdk.domains.verification.models.dto.v1.VerificationStatusDtoTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.status.VerificationStatusResponseInternalTest;
 import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -45,7 +45,7 @@ public class VerificationStatusServiceTest extends BaseTest {
   void getByIdentity() throws ApiException {
 
     when(api.verificationStatusByIdentity(eq("endpoint string"), eq("sms")))
-        .thenReturn(VerificationStatusDtoTest.expectedVerificationCalloutDto);
+        .thenReturn(VerificationStatusResponseInternalTest.expectedVerificationCalloutDto);
 
     VerificationStatus response =
         service.getByIdentity(
@@ -61,7 +61,7 @@ public class VerificationStatusServiceTest extends BaseTest {
   void getById() throws ApiException {
 
     when(api.verificationStatusById(eq("the id")))
-        .thenReturn(VerificationStatusDtoTest.expectedVerificationCalloutDto);
+        .thenReturn(VerificationStatusResponseInternalTest.expectedVerificationCalloutDto);
 
     VerificationStatus response = service.getById(VerificationId.valueOf("the id"));
 
@@ -74,7 +74,7 @@ public class VerificationStatusServiceTest extends BaseTest {
   void getByReference() throws ApiException {
 
     when(api.verificationStatusByReference(eq("the reference")))
-        .thenReturn(VerificationStatusDtoTest.expectedVerificationCalloutDto);
+        .thenReturn(VerificationStatusResponseInternalTest.expectedVerificationCalloutDto);
 
     VerificationStatus response =
         service.getByReference(VerificationReference.valueOf("the reference"));

@@ -11,10 +11,10 @@ import com.sinch.sdk.domains.verification.models.VerificationStatusFlashCall;
 import com.sinch.sdk.domains.verification.models.VerificationStatusReasonType;
 import com.sinch.sdk.domains.verification.models.VerificationStatusSMS;
 import com.sinch.sdk.domains.verification.models.VerificationStatusType;
-import com.sinch.sdk.domains.verification.models.dto.v1.StartVerificationRequestDtoTest;
-import com.sinch.sdk.domains.verification.models.dto.v1.StartVerificationResponseDtoTest;
-import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportRequestDtoTest;
-import com.sinch.sdk.domains.verification.models.dto.v1.VerificationStatusDtoTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.report.VerificationReportRequestDtoTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.start.StartVerificationRequestTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.start.StartVerificationResponseTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.status.VerificationStatusResponseInternalTest;
 import com.sinch.sdk.domains.verification.models.requests.SMSCodeType;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutOptions;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutRequestParameters;
@@ -107,7 +107,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     Assertions.assertThat(VerificationsDtoConverter.convert(startVerificationCalloutRequest))
         .usingRecursiveComparison()
-        .isEqualTo(StartVerificationRequestDtoTest.startVerificationCalloutDto);
+        .isEqualTo(StartVerificationRequestTest.startVerificationCalloutDto);
   }
 
   @Test
@@ -115,7 +115,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     Assertions.assertThat(VerificationsDtoConverter.convert(startVerificationFlashCallRequest))
         .usingRecursiveComparison()
-        .isEqualTo(StartVerificationRequestDtoTest.startVerificationFlashCallDto);
+        .isEqualTo(StartVerificationRequestTest.startVerificationFlashCallDto);
   }
 
   @Test
@@ -123,7 +123,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     Assertions.assertThat(VerificationsDtoConverter.convert(startVerificationSeamlessRequest))
         .usingRecursiveComparison()
-        .isEqualTo(StartVerificationRequestDtoTest.startVerificationSeamlessDto);
+        .isEqualTo(StartVerificationRequestTest.startVerificationSeamlessDto);
   }
 
   @Test
@@ -131,7 +131,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     Assertions.assertThat(VerificationsDtoConverter.convert(startVerificationSMSRequest))
         .usingRecursiveComparison()
-        .isEqualTo(StartVerificationRequestDtoTest.startVerificationSMSDto);
+        .isEqualTo(StartVerificationRequestTest.startVerificationSMSDto);
   }
 
   @Test
@@ -139,7 +139,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     Assertions.assertThat(
             VerificationsDtoConverter.convert(
-                StartVerificationResponseDtoTest.expectedStartVerificationCalloutDto))
+                StartVerificationResponseTest.expectedStartVerificationCalloutDto))
         .usingRecursiveComparison()
         .isEqualTo(expectedStartVerificationCalloutResponse);
   }
@@ -149,7 +149,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     Assertions.assertThat(
             VerificationsDtoConverter.convert(
-                StartVerificationResponseDtoTest.expectedStartVerificationFlashCallDto))
+                StartVerificationResponseTest.expectedStartVerificationFlashCallDto))
         .usingRecursiveComparison()
         .isEqualTo(expectedStartVerificationFlashCallResponse);
   }
@@ -159,7 +159,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     Assertions.assertThat(
             VerificationsDtoConverter.convert(
-                StartVerificationResponseDtoTest.expectedStartVerificationSeamlessDto))
+                StartVerificationResponseTest.expectedStartVerificationSeamlessDto))
         .usingRecursiveComparison()
         .isEqualTo(expectedStartVerificationSeamlessResponse);
   }
@@ -169,7 +169,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     Assertions.assertThat(
             VerificationsDtoConverter.convert(
-                StartVerificationResponseDtoTest.expectedStartVerificationSMSDto))
+                StartVerificationResponseTest.expectedStartVerificationSMSDto))
         .usingRecursiveComparison()
         .isEqualTo(expectedStartVerificationSMSResponse);
   }
@@ -212,8 +212,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
   void convertReportCalloutResponse() {
 
     Assertions.assertThat(
-            VerificationsDtoConverter.convert(
-                VerificationStatusDtoTest.expectedVerificationCalloutDto))
+            StatusDtoConverter.convert(
+                VerificationStatusResponseInternalTest.expectedVerificationCalloutDto))
         .usingRecursiveComparison()
         .isEqualTo(expectedVerificationReportCalloutResponse);
   }
@@ -256,8 +256,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
   void convertReportFlashCallResponse() {
 
     Assertions.assertThat(
-            VerificationsDtoConverter.convert(
-                VerificationStatusDtoTest.expectedVerificationFlashCallDto))
+            StatusDtoConverter.convert(
+                VerificationStatusResponseInternalTest.expectedVerificationFlashCallDto))
         .usingRecursiveComparison()
         .isEqualTo(expectedVerificationReportFlashCallResponse);
   }
@@ -297,7 +297,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
   void convertReportSMSResponse() {
 
     Assertions.assertThat(
-            VerificationsDtoConverter.convert(VerificationStatusDtoTest.expectedVerificationSMSDto))
+            StatusDtoConverter.convert(
+                VerificationStatusResponseInternalTest.expectedVerificationSMSDto))
         .usingRecursiveComparison()
         .isEqualTo(expectedVerificationStatusSMSResponse);
   }
