@@ -1,0 +1,109 @@
+package com.sinch.sdk.domains.verification.models.dto.v1.start;
+
+import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
+import com.adelean.inject.resources.junit.jupiter.TestWithResources;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
+import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal.TypeEnum;
+import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationCalloutOptions;
+import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationCalloutOptionsSpeech;
+import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationFlashCallOptions;
+import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationRequestParameters;
+import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSMSOptions;
+import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSMSOptions.CodeTypeEnum;
+import org.json.JSONException;
+import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
+
+@TestWithResources
+public class StartVerificationRequestTest extends BaseTest {
+
+  public static StartVerificationRequestParameters startVerificationCalloutDto =
+      StartVerificationRequestParameters.builder()
+          .setMethod(VerificationMethod.CALLOUT)
+          .setCustom("a custom")
+          .setReference("a reference")
+          .setIdentity(
+              IdentityInternal.builder().setType(TypeEnum.NUMBER).setEndpoint("+endpoint").build())
+          .setCalloutOptions(
+              StartVerificationCalloutOptions.builder()
+                  .setSpeech(
+                      StartVerificationCalloutOptionsSpeech.builder().setLocale("fr-FR").build())
+                  .build())
+          .build();
+
+  public static StartVerificationRequestParameters startVerificationFlashCallDto =
+      StartVerificationRequestParameters.builder()
+          .setMethod(VerificationMethod.FLASHCALL)
+          .setCustom("a custom")
+          .setReference("a reference")
+          .setIdentity(
+              IdentityInternal.builder().setType(TypeEnum.NUMBER).setEndpoint("+endpoint").build())
+          .setFlashCallOptions(
+              StartVerificationFlashCallOptions.builder().setDialTimeout(17).build())
+          .build();
+  public static StartVerificationRequestParameters startVerificationSeamlessDto =
+      StartVerificationRequestParameters.builder()
+          .setMethod(VerificationMethod.SEAMLESS)
+          .setCustom("a custom")
+          .setReference("a reference")
+          .setIdentity(
+              IdentityInternal.builder().setType(TypeEnum.NUMBER).setEndpoint("+endpoint").build())
+          .build();
+  public static StartVerificationRequestParameters startVerificationSMSDto =
+      StartVerificationRequestParameters.builder()
+          .setMethod(VerificationMethod.SMS)
+          .setCustom("a custom")
+          .setReference("a reference")
+          .setIdentity(
+              IdentityInternal.builder().setType(TypeEnum.NUMBER).setEndpoint("+endpoint").build())
+          .setSmsOptions(
+              StartVerificationSMSOptions.builder()
+                  .setExpiry("01:02:03")
+                  .setCodeType(CodeTypeEnum.ALPHANUMERIC)
+                  .setTemplate("My template require to use '{{CODE}}' code")
+                  .build())
+          .build();
+
+  @GivenTextResource("/domains/verification/v1/start/StartVerificationCalloutRequestDto.json")
+  String jsonStartVerificationCallout;
+
+  @GivenTextResource("/domains/verification/v1/start/StartVerificationFlashCallRequestDto.json")
+  String jsonStartVerificationFlashCall;
+
+  @GivenTextResource("/domains/verification/v1/start/StartVerificationSeamlessRequestDto.json")
+  String jsonStartVerificationSeamless;
+
+  @GivenTextResource("/domains/verification/v1/start/StartVerificationSMSRequestDto.json")
+  String jsonStartVerificationSMS;
+
+  @Test
+  void serializeStartCallout() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(startVerificationCalloutDto);
+
+    JSONAssert.assertEquals(jsonStartVerificationCallout, serializedString, true);
+  }
+
+  @Test
+  void serializeStartFlashCall() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(startVerificationFlashCallDto);
+
+    JSONAssert.assertEquals(jsonStartVerificationFlashCall, serializedString, true);
+  }
+
+  @Test
+  void serializeSeamlessCall() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(startVerificationSeamlessDto);
+
+    JSONAssert.assertEquals(jsonStartVerificationSeamless, serializedString, true);
+  }
+
+  @Test
+  void serializeSMSCall() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(startVerificationSMSDto);
+
+    JSONAssert.assertEquals(jsonStartVerificationSMS, serializedString, true);
+  }
+}

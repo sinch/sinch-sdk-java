@@ -4,14 +4,14 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
-import com.sinch.sdk.domains.verification.models.dto.v1.CalloutRequestEventResponseCalloutDto;
-import com.sinch.sdk.domains.verification.models.dto.v1.CalloutRequestEventResponseCalloutSpeechDto;
-import com.sinch.sdk.domains.verification.models.dto.v1.CalloutRequestEventResponseDto;
-import com.sinch.sdk.domains.verification.models.dto.v1.FlashCallRequestEventResponseDto;
-import com.sinch.sdk.domains.verification.models.dto.v1.FlashCallRequestEventResponseFlashCallDto;
-import com.sinch.sdk.domains.verification.models.dto.v1.SMSRequestEventResponseDto;
-import com.sinch.sdk.domains.verification.models.dto.v1.SMSRequestEventResponseSmsDto;
-import com.sinch.sdk.domains.verification.models.dto.v1.VerificationEventResponseActionDto;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.CalloutRequestEventResponse;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.CalloutRequestEventResponseCalloutContent;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.CalloutRequestEventResponseCalloutSpeechContent;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.FlashCallRequestEventResponse;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.FlashCallRequestEventResponseFlashCallContent;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.SMSRequestEventResponse;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.SMSRequestEventResponseSMSContent;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEventResponseAction;
 import java.util.Collections;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
@@ -20,25 +20,36 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class VerificationResponseEventDtoTest extends BaseTest {
 
-  public static CalloutRequestEventResponseDto expectedCalloutRequestEventResponseDto =
-      new CalloutRequestEventResponseDto()
-          .action(VerificationEventResponseActionDto.DENY)
-          .callout(
-              new CalloutRequestEventResponseCalloutDto()
-                  .code("4567")
-                  .speech(new CalloutRequestEventResponseCalloutSpeechDto().locale("the locale")));
-  public static FlashCallRequestEventResponseDto expectedFlashCallRequestEventResponseDto =
-      new FlashCallRequestEventResponseDto()
-          .action(VerificationEventResponseActionDto.DENY)
-          .flashCall(
-              new FlashCallRequestEventResponseFlashCallDto().cli("cli code").dialTimeout(123));
-  public static SMSRequestEventResponseDto expectedSMSRequestEventResponseDto =
-      new SMSRequestEventResponseDto()
-          .action(VerificationEventResponseActionDto.DENY)
-          .sms(
-              new SMSRequestEventResponseSmsDto()
-                  .code("5666")
-                  .acceptLanguage(Collections.singletonList("a language")));
+  public static CalloutRequestEventResponse expectedCalloutRequestEventResponseDto =
+      CalloutRequestEventResponse.builder()
+          .setAction(VerificationEventResponseAction.DENY)
+          .setCallout(
+              CalloutRequestEventResponseCalloutContent.builder()
+                  .setCode("4567")
+                  .setSpeech(
+                      CalloutRequestEventResponseCalloutSpeechContent.builder()
+                          .setLocale("the locale")
+                          .build())
+                  .build())
+          .build();
+  public static FlashCallRequestEventResponse expectedFlashCallRequestEventResponseDto =
+      FlashCallRequestEventResponse.builder()
+          .setAction(VerificationEventResponseAction.DENY)
+          .setFlashCall(
+              FlashCallRequestEventResponseFlashCallContent.builder()
+                  .setCli("cli code")
+                  .setDialTimeout(123)
+                  .build())
+          .build();
+  public static SMSRequestEventResponse expectedSMSRequestEventResponseDto =
+      SMSRequestEventResponse.builder()
+          .setAction(VerificationEventResponseAction.DENY)
+          .setSms(
+              SMSRequestEventResponseSMSContent.builder()
+                  .setCode("5666")
+                  .setAcceptLanguage(Collections.singletonList("a language"))
+                  .build())
+          .build();
 
   @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseSMS.json")
   String jsonResponseSMS;
@@ -71,8 +82,8 @@ public class VerificationResponseEventDtoTest extends BaseTest {
   @Test
   void serializeSMSResponseEmptySms() throws JsonProcessingException, JSONException {
 
-    FlashCallRequestEventResponseDto value =
-        new FlashCallRequestEventResponseDto().action(VerificationEventResponseActionDto.ALLOW);
+    SMSRequestEventResponse value =
+        SMSRequestEventResponse.builder().setAction(VerificationEventResponseAction.ALLOW).build();
 
     String serializedString = objectMapper.writeValueAsString(value);
 
@@ -91,8 +102,10 @@ public class VerificationResponseEventDtoTest extends BaseTest {
   @Test
   void serializeFlashCallResponseEmptyFlashCall() throws JsonProcessingException, JSONException {
 
-    FlashCallRequestEventResponseDto value =
-        new FlashCallRequestEventResponseDto().action(VerificationEventResponseActionDto.ALLOW);
+    FlashCallRequestEventResponse value =
+        FlashCallRequestEventResponse.builder()
+            .setAction(VerificationEventResponseAction.ALLOW)
+            .build();
 
     String serializedString = objectMapper.writeValueAsString(value);
 
@@ -111,8 +124,10 @@ public class VerificationResponseEventDtoTest extends BaseTest {
   @Test
   void serializeCalloutResponseEmptyCallout() throws JsonProcessingException, JSONException {
 
-    CalloutRequestEventResponseDto value =
-        new CalloutRequestEventResponseDto().action(VerificationEventResponseActionDto.ALLOW);
+    CalloutRequestEventResponse value =
+        CalloutRequestEventResponse.builder()
+            .setAction(VerificationEventResponseAction.ALLOW)
+            .build();
 
     String serializedString = objectMapper.writeValueAsString(value);
 
