@@ -2,7 +2,7 @@ package com.sinch.sample.verification.status;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.verification.models.VerificationReference;
-import com.sinch.sdk.domains.verification.models.VerificationReport;
+import com.sinch.sdk.domains.verification.models.VerificationStatus;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -27,7 +27,7 @@ public class GetByReference extends BaseApplication {
 
     LOGGER.info("Get status by reference for: '" + reference + "'");
 
-    VerificationReport response =
+    VerificationStatus response =
         client.verification().verificationStatus().getByReference(reference);
     LOGGER.info("Response :" + response);
   }

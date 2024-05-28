@@ -1,7 +1,5 @@
 package com.sinch.sdk.domains.verification.models.webhooks;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 /**
  * Base class for verification callback response
  *
@@ -9,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class VerificationResponse {
 
-  @JsonProperty("action")
   private final VerificationResponseActionType action;
 
   VerificationResponse(VerificationResponseActionType action) {
@@ -28,7 +25,7 @@ public class VerificationResponse {
 
   @Override
   public String toString() {
-    return "VerificationResponse{" + "action=" + action + '}';
+    return "VerificationResponseActionType{" + "action=" + action + '}';
   }
 
   /**

@@ -28,20 +28,17 @@ public class VerificationService {
 
   public VerificationResponse verificationEvent(VerificationRequestEvent event) {
 
-    LOGGER.info("decoded event :" + event);
+    LOGGER.info("decoded event: " + event);
 
     VerificationResponse.Builder<?> builder;
     var method = event.getMethod();
 
     if (method == VerificationMethodType.SMS) {
-      builder = VerificationResponseSMS.builder().setCode(1234);
+      builder = VerificationResponseSMS.builder().setCode("1234");
     } else if (method == VerificationMethodType.FLASH_CALL) {
       builder = VerificationResponseFlashCall.builder().setDialTimeout(12);
     } else if (method == VerificationMethodType.CALLOUT) {
-      builder = VerificationResponseCallout.builder().setCode(4567)
-      // only "en-US" is supported, not mandatory to set it
-      // .setLocale("en-US")
-      ;
+      builder = VerificationResponseCallout.builder().setCode("4567");
     } else {
       throw new ApiException("Unexpected methode value: '" + method + "'");
     }
@@ -49,12 +46,12 @@ public class VerificationService {
     builder.setAction(VerificationResponseActionType.ALLOW);
 
     var response = builder.build();
-    LOGGER.info("Response :" + response);
+    LOGGER.info("Response: " + response);
     return response;
   }
 
   public void verificationEvent(VerificationResultEvent event) {
 
-    LOGGER.info("Handle event :" + event);
+    LOGGER.info("Handle event: " + event);
   }
 }

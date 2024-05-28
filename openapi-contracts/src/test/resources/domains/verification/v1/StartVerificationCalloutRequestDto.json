@@ -5,5 +5,10 @@
   },
   "reference": "a reference",
   "custom": "a custom",
-  "method": "callout"
+  "method": "callout",
+  "calloutOptions": {
+    "speech": {
+      "locale": "fr-FR"
+    }
+  }
 }

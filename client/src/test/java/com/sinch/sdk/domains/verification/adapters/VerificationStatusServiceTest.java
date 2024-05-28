@@ -10,14 +10,14 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.verification.adapters.api.v1.QueryVerificationsApi;
+import com.sinch.sdk.domains.verification.adapters.api.v1.VerificationStatusApi;
 import com.sinch.sdk.domains.verification.adapters.converters.VerificationsDtoConverterTest;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.VerificationReference;
-import com.sinch.sdk.domains.verification.models.VerificationReport;
-import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportDtoTest;
+import com.sinch.sdk.domains.verification.models.VerificationStatus;
+import com.sinch.sdk.domains.verification.models.dto.v1.VerificationStatusDtoTest;
 import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -28,7 +28,7 @@ import org.mockito.Mock;
 @TestWithResources
 public class VerificationStatusServiceTest extends BaseTest {
 
-  @Mock QueryVerificationsApi api;
+  @Mock VerificationStatusApi api;
   @Mock VerificationContext context;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
@@ -44,10 +44,10 @@ public class VerificationStatusServiceTest extends BaseTest {
   @Test
   void getByIdentity() throws ApiException {
 
-    when(api.verificationStatusByIdentity(eq("number"), eq("endpoint string"), eq("sms")))
-        .thenReturn(VerificationReportDtoTest.expectedVerificationCalloutDto);
+    when(api.verificationStatusByIdentity(eq("endpoint string"), eq("sms")))
+        .thenReturn(VerificationStatusDtoTest.expectedVerificationCalloutDto);
 
-    VerificationReport response =
+    VerificationStatus response =
         service.getByIdentity(
             NumberIdentity.builder().setEndpoint("endpoint string").build(),
             VerificationMethodType.SMS);
@@ -61,9 +61,9 @@ public class VerificationStatusServiceTest extends BaseTest {
   void getById() throws ApiException {
 
     when(api.verificationStatusById(eq("the id")))
-        .thenReturn(VerificationReportDtoTest.expectedVerificationCalloutDto);
+        .thenReturn(VerificationStatusDtoTest.expectedVerificationCalloutDto);
 
-    VerificationReport response = service.getById(VerificationId.valueOf("the id"));
+    VerificationStatus response = service.getById(VerificationId.valueOf("the id"));
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
@@ -74,9 +74,9 @@ public class VerificationStatusServiceTest extends BaseTest {
   void getByReference() throws ApiException {
 
     when(api.verificationStatusByReference(eq("the reference")))
-        .thenReturn(VerificationReportDtoTest.expectedVerificationCalloutDto);
+        .thenReturn(VerificationStatusDtoTest.expectedVerificationCalloutDto);
 
-    VerificationReport response =
+    VerificationStatus response =
         service.getByReference(VerificationReference.valueOf("the reference"));
 
     Assertions.assertThat(response)

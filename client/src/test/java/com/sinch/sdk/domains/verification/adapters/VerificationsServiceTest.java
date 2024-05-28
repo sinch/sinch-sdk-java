@@ -11,7 +11,7 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.verification.adapters.api.v1.SendingAndReportingVerificationsApi;
+import com.sinch.sdk.domains.verification.adapters.api.v1.VerificationsApi;
 import com.sinch.sdk.domains.verification.adapters.converters.VerificationsDtoConverterTest;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
@@ -20,8 +20,8 @@ import com.sinch.sdk.domains.verification.models.VerificationReportFlashCall;
 import com.sinch.sdk.domains.verification.models.VerificationReportSMS;
 import com.sinch.sdk.domains.verification.models.dto.v1.InitiateVerificationResourceDto;
 import com.sinch.sdk.domains.verification.models.dto.v1.StartVerificationResponseDtoTest;
-import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportDtoTest;
 import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportRequestResourceDto;
+import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportResponseDtoTest;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseCallout;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSMS;
@@ -57,7 +57,7 @@ public class VerificationsServiceTest extends BaseTest {
   @GivenJsonResource("/domains/verification/v1/VerificationReportSMSRequestDto.json")
   public VerificationReportRequestResourceDto verificationReportSMSRequestDto;
 
-  @Mock SendingAndReportingVerificationsApi api;
+  @Mock VerificationsApi api;
   @Mock VerificationContext context;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
@@ -73,7 +73,7 @@ public class VerificationsServiceTest extends BaseTest {
   @Test
   void startSms() throws ApiException {
 
-    when(api.startVerification(eq(startVerificationSMSRequestDto)))
+    when(api.startVerification(eq(startVerificationSMSRequestDto), eq(null)))
         .thenReturn(StartVerificationResponseDtoTest.expectedStartVerificationSMSDto);
 
     StartVerificationResponseSMS response =
@@ -87,7 +87,7 @@ public class VerificationsServiceTest extends BaseTest {
   @Test
   void startFlashCall() throws ApiException {
 
-    when(api.startVerification(eq(startVerificationFlashCallRequestDto)))
+    when(api.startVerification(eq(startVerificationFlashCallRequestDto), eq(null)))
         .thenReturn(StartVerificationResponseDtoTest.expectedStartVerificationFlashCallDto);
 
     StartVerificationResponseFlashCall response =
@@ -101,7 +101,7 @@ public class VerificationsServiceTest extends BaseTest {
   @Test
   void startCallout() throws ApiException {
 
-    when(api.startVerification(eq(startVerificationCalloutRequestDto)))
+    when(api.startVerification(eq(startVerificationCalloutRequestDto), eq(null)))
         .thenReturn(StartVerificationResponseDtoTest.expectedStartVerificationCalloutDto);
 
     StartVerificationResponseCallout response =
@@ -115,7 +115,7 @@ public class VerificationsServiceTest extends BaseTest {
   @Test
   void startSeamless() throws ApiException {
 
-    when(api.startVerification(eq(startVerificationSeamlessRequestDto)))
+    when(api.startVerification(eq(startVerificationSeamlessRequestDto), eq(null)))
         .thenReturn(StartVerificationResponseDtoTest.expectedStartVerificationSeamlessDto);
 
     StartVerificationResponseSeamless response =
@@ -130,8 +130,8 @@ public class VerificationsServiceTest extends BaseTest {
   void reportSmsByIdentity() throws ApiException {
 
     when(api.reportVerificationByIdentity(
-            eq("number"), eq("endpoint string"), eq(verificationReportSMSRequestDto)))
-        .thenReturn(VerificationReportDtoTest.expectedVerificationSMSDto);
+            eq("endpoint string"), eq(verificationReportSMSRequestDto)))
+        .thenReturn(VerificationReportResponseDtoTest.verificationReportSMSDto);
 
     VerificationReportSMS response =
         service.reportSmsByIdentity(
@@ -140,15 +140,15 @@ public class VerificationsServiceTest extends BaseTest {
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationReportSMSResponse);
+        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationStatusSMSResponse);
   }
 
   @Test
   void reportFlashCallByIdentity() throws ApiException {
 
     when(api.reportVerificationByIdentity(
-            eq("number"), eq("endpoint string"), eq(verificationReportFlashCallRequestDto)))
-        .thenReturn(VerificationReportDtoTest.expectedVerificationFlashCallDto);
+            eq("endpoint string"), eq(verificationReportFlashCallRequestDto)))
+        .thenReturn(VerificationReportResponseDtoTest.verificationReportFlashCallDto);
 
     VerificationReportFlashCall response =
         service.reportFlashCallByIdentity(
@@ -164,8 +164,8 @@ public class VerificationsServiceTest extends BaseTest {
   void reportCalloutByIdentity() throws ApiException {
 
     when(api.reportVerificationByIdentity(
-            eq("number"), eq("endpoint string"), eq(verificationReportCalloutRequestDto)))
-        .thenReturn(VerificationReportDtoTest.expectedVerificationCalloutDto);
+            eq("endpoint string"), eq(verificationReportCalloutRequestDto)))
+        .thenReturn(VerificationReportResponseDtoTest.verificationReportCalloutDto);
 
     VerificationReportCallout response =
         service.reportCalloutByIdentity(
@@ -181,7 +181,7 @@ public class VerificationsServiceTest extends BaseTest {
   void reportSmsById() throws ApiException {
 
     when(api.reportVerificationById(eq("the id"), eq(verificationReportSMSRequestDto)))
-        .thenReturn(VerificationReportDtoTest.expectedVerificationSMSDto);
+        .thenReturn(VerificationReportResponseDtoTest.verificationReportSMSDto);
 
     VerificationReportSMS response =
         service.reportSmsById(
@@ -190,14 +190,14 @@ public class VerificationsServiceTest extends BaseTest {
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationReportSMSResponse);
+        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationStatusSMSResponse);
   }
 
   @Test
   void reportFlashCallById() throws ApiException {
 
     when(api.reportVerificationById(eq("the id"), eq(verificationReportFlashCallRequestDto)))
-        .thenReturn(VerificationReportDtoTest.expectedVerificationFlashCallDto);
+        .thenReturn(VerificationReportResponseDtoTest.verificationReportFlashCallDto);
 
     VerificationReportFlashCall response =
         service.reportFlashCallById(
@@ -213,7 +213,7 @@ public class VerificationsServiceTest extends BaseTest {
   void reportCalloutById() throws ApiException {
 
     when(api.reportVerificationById(eq("the id"), eq(verificationReportCalloutRequestDto)))
-        .thenReturn(VerificationReportDtoTest.expectedVerificationCalloutDto);
+        .thenReturn(VerificationReportResponseDtoTest.verificationReportCalloutDto);
 
     VerificationReportCallout response =
         service.reportCalloutById(

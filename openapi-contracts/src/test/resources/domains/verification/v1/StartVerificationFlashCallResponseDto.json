@@ -5,8 +5,7 @@
     "cliFilter": "(.*)5312(.*)",
     "interceptionTimeout": 45,
     "reportTimeout": 75,
-    "denyCallAfter": 0,
-    "callId": "a call id"
+    "denyCallAfter": 0
   },
   "_links": [
     {

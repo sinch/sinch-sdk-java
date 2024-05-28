@@ -3,7 +3,7 @@ package com.sinch.sample.verification.status;
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
-import com.sinch.sdk.domains.verification.models.VerificationReport;
+import com.sinch.sdk.domains.verification.models.VerificationStatus;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -30,7 +30,7 @@ public class GetByIdentity extends BaseApplication {
 
     VerificationMethodType method = VerificationMethodType.SMS;
 
-    VerificationReport response =
+    VerificationStatus response =
         client.verification().verificationStatus().getByIdentity(identity, method);
     LOGGER.info("Response :" + response);
   }

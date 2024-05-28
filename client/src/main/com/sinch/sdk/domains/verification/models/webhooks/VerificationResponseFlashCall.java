@@ -1,95 +1,63 @@
 package com.sinch.sdk.domains.verification.models.webhooks;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-/** Verification response related to flash call */
+/** Verification response related to a flash call */
 public class VerificationResponseFlashCall extends VerificationResponse {
 
-  @JsonProperty("flashcall")
-  private final FlashCallResponse flashCall;
+  private final String cli;
+
+  private final Integer dialTimeout;
 
   /**
+   * Flash call response related information
+   *
    * @param action Determines whether the verification can be executed.
-   * @param flashCall Flash call related information
+   * @param cli see {@link #getCli() getter}
+   * @param dialTimeout see {@link #getDialTimeout() getter}
    */
-  VerificationResponseFlashCall(
-      VerificationResponseActionType action, FlashCallResponse flashCall) {
+  public VerificationResponseFlashCall(
+      VerificationResponseActionType action, String cli, Integer dialTimeout) {
     super(action);
-    this.flashCall = flashCall;
+    this.cli = cli;
+    this.dialTimeout = dialTimeout;
   }
 
   /**
-   * Flash call Response related information
+   * The phone number that will be displayed to the user when the flashcall is received on the
+   * user's phone. By default, the Sinch dashboard will randomly select the CLI that will be
+   * displayed during a flashcall from a pool of numbers. If you want to set your own CLI, you can
+   * specify it in the response to the Verification Request Event.
    *
-   * @return Flash call related information
+   * @return CLI value
    * @since 1.0
    */
-  public FlashCallResponse getFlashCall() {
-    return flashCall;
+  public String getCli() {
+    return cli;
+  }
+
+  /**
+   * The maximum time that a flashcall verification will be active and can be completed. If the
+   * phone number hasn't been verified successfully during this time, then the verification request
+   * will fail. By default, the Sinch dashboard will automatically optimize dial time out during a
+   * flashcall. If you want to set your own dial time out for the flashcall, you can specify it in
+   * the response to the Verification Request Event.
+   *
+   * @return The dial timeout value
+   * @since 1.0
+   */
+  public Integer getDialTimeout() {
+    return dialTimeout;
   }
 
   @Override
   public String toString() {
-    return "VerificationResponseFlashCall{" + "flashCall=" + flashCall + "} " + super.toString();
-  }
-
-  /**
-   * Flash call related information for flach call verification callback See <a
-   * href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post!c=200&amp;path=1/flashCall&amp;t=response">callout
-   * response documentation</a>
-   *
-   * @since 1.0
-   */
-  public static class FlashCallResponse {
-
-    @JsonProperty("cli")
-    private final String cli;
-
-    @JsonProperty("dialTimeout")
-    private final Integer dialTimeout;
-
-    /**
-     * Flash call response related information
-     *
-     * @param cli The phone number that will be displayed to the user when the flashcall is received
-     *     on the user's phone. By default, the Sinch dashboard will randomly select the CLI that
-     *     will be displayed during a flashcall from a pool of numbers. If you want to set your own
-     *     CLI, you can specify it in the response to the Verification Request Event.
-     * @param dialTimeout The maximum time that a flashcall verification will be active and can be
-     *     completed. If the phone number hasn't been verified successfully during this time, then
-     *     the verification request will fail. By default, the Sinch dashboard will automatically
-     *     optimize dial time out during a flashcall. If you want to set your own dial time out for
-     *     the flashcall, you can specify it in the response to the Verification Request Event.
-     */
-    public FlashCallResponse(String cli, Integer dialTimeout) {
-      this.cli = cli;
-      this.dialTimeout = dialTimeout;
-    }
-
-    /**
-     * See constructor
-     *
-     * @return See {@link FlashCallResponse#FlashCallResponse(String, Integer) FlashCallResponse}
-     * @since 1.0
-     */
-    public String getCli() {
-      return cli;
-    }
-
-    /**
-     * See constructor
-     *
-     * @return See {@link FlashCallResponse#FlashCallResponse(String, Integer) FlashCallResponse}
-     * @since 1.0
-     */
-    public Integer getDialTimeout() {
-      return dialTimeout;
-    }
-
-    @Override
-    public String toString() {
-      return "FlashCallResponse{" + "cli='" + cli + '\'' + ", dialTimeout=" + dialTimeout + '}';
-    }
+    return "VerificationResponseFlashCall{"
+        + "cli='"
+        + cli
+        + '\''
+        + ", dialTimeout="
+        + dialTimeout
+        + "} "
+        + super.toString();
   }
 
   /**
@@ -116,11 +84,9 @@ public class VerificationResponseFlashCall extends VerificationResponse {
     private Builder() {}
 
     /**
-     * See {@link
-     * VerificationResponseFlashCall#VerificationResponseFlashCall(VerificationResponseActionType,
-     * FlashCallResponse) constructor}
+     * See {@link VerificationResponseFlashCall#getCli()}
      *
-     * @param cli see constructor
+     * @param cli See {@link VerificationResponseFlashCall#getCli()}
      * @return The current builder
      * @since 1.0
      */
@@ -130,11 +96,9 @@ public class VerificationResponseFlashCall extends VerificationResponse {
     }
 
     /**
-     * See {@link
-     * VerificationResponseFlashCall#VerificationResponseFlashCall(VerificationResponseActionType,
-     * FlashCallResponse) constructor}
+     * See {@link VerificationResponseFlashCall#getDialTimeout()}
      *
-     * @param dialTimeout see constructor
+     * @param dialTimeout See {@link VerificationResponseFlashCall#getDialTimeout()}
      * @return The current builder
      * @since 1.0
      */
@@ -150,7 +114,7 @@ public class VerificationResponseFlashCall extends VerificationResponse {
      * @since 1.0
      */
     public VerificationResponseFlashCall build() {
-      return new VerificationResponseFlashCall(action, new FlashCallResponse(cli, dialTimeout));
+      return new VerificationResponseFlashCall(action, cli, dialTimeout);
     }
 
     @Override

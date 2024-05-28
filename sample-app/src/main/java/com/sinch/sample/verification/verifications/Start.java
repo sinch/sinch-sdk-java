@@ -3,8 +3,10 @@ package com.sinch.sample.verification.verifications;
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
+import com.sinch.sdk.domains.verification.models.requests.SMSCodeType;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlashCallRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSOptions;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationSeamlessRequestParameters;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponse;
@@ -50,7 +52,14 @@ public class Start extends BaseApplication {
               .verification()
               .verifications()
               .startSms(
-                  StartVerificationSMSRequestParameters.builder().setIdentity(identity).build());
+                  StartVerificationSMSRequestParameters.builder()
+                      .setIdentity(identity)
+                      .setOptions(
+                          StartVerificationSMSOptions.builder()
+                              .setCodeType(SMSCodeType.ALPHANUMERIC)
+                              .setAcceptLanguage("es-ES")
+                              .build())
+                      .build());
     } else if (method == VerificationMethodType.SEAMLESS) {
       response =
           client

@@ -11,56 +11,54 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class StartVerificationRequestDtoTest extends BaseTest {
 
-  @GivenTextResource("/domains/verification/v1/StartVerificationCalloutRequestDto.json")
-  String jsonStartVerificationCallout;
-
   public static InitiateVerificationResourceDto startVerificationCalloutDto =
       new InitiateVerificationResourceDto()
-          .method(new InitiateVerificationResourceMethodDto(VerificationMethodDto.CALLOUT))
+          .method(VerificationMethodDto.CALLOUT)
           .custom("a custom")
           .reference("a reference")
-          .identity(
-              new InitiateVerificationResourceIdentityDto(
-                  new IdentityDto().type("number").endpoint("+endpoint")));
+          .identity(new IdentityDto().type("number").endpoint("+endpoint"))
+          .calloutOptions(
+              new InitiateVerificationResourceCalloutOptionsDto()
+                  .speech(
+                      new InitiateVerificationResourceCalloutOptionsSpeechDto().locale("fr-FR")));
+  public static InitiateVerificationResourceDto startVerificationFlashCallDto =
+      new InitiateVerificationResourceDto()
+          .method(VerificationMethodDto.FLASHCALL)
+          .custom("a custom")
+          .reference("a reference")
+          .identity(new IdentityDto().type("number").endpoint("+endpoint"))
+          .flashCallOptions(new InitiateVerificationResourceFlashCallOptionsDto().dialTimeout(17));
+  public static InitiateVerificationResourceDto startVerificationSeamlessDto =
+      new InitiateVerificationResourceDto()
+          .method(VerificationMethodDto.SEAMLESS)
+          .custom("a custom")
+          .reference("a reference")
+          .identity(new IdentityDto().type("number").endpoint("+endpoint"));
+  public static InitiateVerificationResourceDto startVerificationSMSDto =
+      new InitiateVerificationResourceDto()
+          .method(VerificationMethodDto.SMS)
+          .custom("a custom")
+          .reference("a reference")
+          .identity(new IdentityDto().type("number").endpoint("+endpoint"))
+          .smsOptions(
+              new InitiateVerificationResourceSmsOptionsDto()
+                  .expiry("01:02:03")
+                  .codeType(
+                      InitiateVerificationResourceSmsOptionsDto.CodeTypeEnum.ALPHANUMERIC
+                          .toString())
+                  .template("My template require to use '{{CODE}}' code"));
+
+  @GivenTextResource("/domains/verification/v1/StartVerificationCalloutRequestDto.json")
+  String jsonStartVerificationCallout;
 
   @GivenTextResource("/domains/verification/v1/StartVerificationFlashCallRequestDto.json")
   String jsonStartVerificationFlashCall;
 
-  public static InitiateVerificationResourceDto startVerificationFlashCallDto =
-      new InitiateVerificationResourceDto()
-          .method(new InitiateVerificationResourceMethodDto(VerificationMethodDto.FLASHCALL))
-          .custom("a custom")
-          .reference("a reference")
-          .identity(
-              new InitiateVerificationResourceIdentityDto(
-                  new IdentityDto().type("number").endpoint("+endpoint")))
-          .flashCallOptions(
-              new InitiateVerificationResourceFlashCallOptionsDto(
-                  new FlashcallOptionsDto().dialTimeout(17)));
-
   @GivenTextResource("/domains/verification/v1/StartVerificationSeamlessRequestDto.json")
   String jsonStartVerificationSeamless;
 
-  public static InitiateVerificationResourceDto startVerificationSeamlessDto =
-      new InitiateVerificationResourceDto()
-          .method(new InitiateVerificationResourceMethodDto(VerificationMethodDto.SEAMLESS))
-          .custom("a custom")
-          .reference("a reference")
-          .identity(
-              new InitiateVerificationResourceIdentityDto(
-                  new IdentityDto().type("number").endpoint("+endpoint")));
-
   @GivenTextResource("/domains/verification/v1/StartVerificationSMSRequestDto.json")
   String jsonStartVerificationSMS;
-
-  public static InitiateVerificationResourceDto startVerificationSMSDto =
-      new InitiateVerificationResourceDto()
-          .method(new InitiateVerificationResourceMethodDto(VerificationMethodDto.SMS))
-          .custom("a custom")
-          .reference("a reference")
-          .identity(
-              new InitiateVerificationResourceIdentityDto(
-                  new IdentityDto().type("number").endpoint("+endpoint")));
 
   @Test
   void serializeStartCallout() throws JsonProcessingException, JSONException {

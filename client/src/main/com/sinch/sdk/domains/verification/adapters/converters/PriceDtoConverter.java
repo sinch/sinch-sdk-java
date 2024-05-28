@@ -1,11 +1,11 @@
 package com.sinch.sdk.domains.verification.adapters.converters;
 
 import com.sinch.sdk.domains.verification.models.Price;
-import com.sinch.sdk.domains.verification.models.dto.v1.MoneyDto;
+import com.sinch.sdk.domains.verification.models.dto.v1.PriceDto;
 
 public class PriceDtoConverter {
 
-  public static Price convert(MoneyDto dto) {
+  public static Price convert(PriceDto dto) {
     if (null == dto) {
       return Price.builder().build();
     }

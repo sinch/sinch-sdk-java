@@ -3,7 +3,7 @@ package com.sinch.sdk.domains.verification.adapters;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
-import com.sinch.sdk.domains.verification.adapters.api.v1.SendingAndReportingVerificationsApi;
+import com.sinch.sdk.domains.verification.adapters.api.v1.VerificationsApi;
 import com.sinch.sdk.domains.verification.adapters.converters.VerificationsDtoConverter;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
@@ -31,21 +31,26 @@ import java.util.Map;
 public class VerificationsService
     implements com.sinch.sdk.domains.verification.VerificationsService {
 
-  private final SendingAndReportingVerificationsApi api;
+  private final VerificationsApi api;
 
   public VerificationsService(
       VerificationContext context, HttpClient httpClient, Map<String, AuthManager> authManagers) {
     this.api =
-        new SendingAndReportingVerificationsApi(
+        new VerificationsApi(
             httpClient, context.getVerificationServer(), authManagers, new HttpMapper());
   }
 
-  protected SendingAndReportingVerificationsApi getApi() {
+  protected VerificationsApi getApi() {
     return this.api;
   }
 
   public StartVerificationResponseSMS startSms(StartVerificationSMSRequestParameters parameters) {
-    return (StartVerificationResponseSMS) start(parameters);
+    String acceptLanguage = null;
+    if (parameters.getOptions().isPresent()
+        && parameters.getOptions().get().getAcceptLanguage().isPresent()) {
+      acceptLanguage = parameters.getOptions().get().getAcceptLanguage().get();
+    }
+    return (StartVerificationResponseSMS) start(parameters, acceptLanguage);
   }
 
   public StartVerificationResponseFlashCall startFlashCall(
@@ -65,7 +70,13 @@ public class VerificationsService
 
   private StartVerificationResponse start(StartVerificationRequestParameters parameters) {
     return VerificationsDtoConverter.convert(
-        getApi().startVerification(VerificationsDtoConverter.convert(parameters)));
+        getApi().startVerification(VerificationsDtoConverter.convert(parameters), null));
+  }
+
+  private StartVerificationResponse start(
+      StartVerificationRequestParameters parameters, String acceptLanguage) {
+    return VerificationsDtoConverter.convert(
+        getApi().startVerification(VerificationsDtoConverter.convert(parameters), acceptLanguage));
   }
 
   public VerificationReportSMS reportSmsByIdentity(
@@ -89,7 +100,7 @@ public class VerificationsService
     return VerificationsDtoConverter.convert(
         getApi()
             .reportVerificationByIdentity(
-                "number", identity.getEndpoint(), VerificationsDtoConverter.convert(parameters)));
+                identity.getEndpoint(), VerificationsDtoConverter.convert(parameters)));
   }
 
   public VerificationReportSMS reportSmsById(

@@ -1,9 +1,0 @@
-{
-  "sms": {
-    "code": 5666,
-    "acceptLanguage": [
-      "a language"
-    ]
-  },
-  "action": "deny"
-}

@@ -1,7 +1,6 @@
 {
   "id": "the id",
   "method": "callout",
-  "callout": {},
   "_links": [
     {
       "rel": "status",

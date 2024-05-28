@@ -1,9 +1,11 @@
 package com.sinch.sdk.domains.verification.adapters;
 
+import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.verification.WebHooksService;
+import com.sinch.sdk.domains.verification.adapters.converters.WebhooksDtoConverterTest;
 import com.sinch.sdk.models.ApplicationCredentials;
 import com.sinch.sdk.models.VerificationContext;
 import java.io.IOException;
@@ -12,14 +14,31 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
+import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
 public class WebhooksServiceTest extends BaseTest {
 
-  public String request =
+  String request =
       "{\"id\":\"018c25e1-7163-5677-b8fb-467d7b1cffa5\",\"event\":\"VerificationResultEvent\",\"method\":\"sms\",\"identity\":{\"verified\":false,\"type\":\"number\",\"endpoint\":\"+33628254417\"},\"status\":\"FAIL\",\"reason\":\"Expired\"}";
+
+  @GivenTextResource("/domains/verification/v1/webhooks/VerificationRequestEventDto.json")
+  static String jsonVerificationRequestEventDto;
+
+  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResultEventDto.json")
+  static String jsonVerificationResultEventDto;
+
+  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseCallout.json")
+  String jsonResponseCallout;
+
+  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseFlashCall.json")
+  String jsonResponseFlashCall;
+
+  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseSMS.json")
+  String jsonResponseSMS;
 
   WebHooksService webHooksService;
 
@@ -40,6 +59,49 @@ public class WebhooksServiceTest extends BaseTest {
             "POST", "/VerificationRequestEvent", headers, request);
 
     Assertions.assertThat(authenticationResult).isEqualTo(true);
+  }
+
+  @Test
+  void checkParseEventVerificationRequestEventDto() throws ApiException {
+
+    Assertions.assertThat(webHooksService.parseEvent(jsonVerificationRequestEventDto))
+        .usingRecursiveComparison()
+        .isEqualTo(WebhooksDtoConverterTest.verificationRequestEvent);
+  }
+
+  @Test
+  void checkParseEventVerificationResultEventDto() throws ApiException {
+
+    Assertions.assertThat(webHooksService.parseEvent(jsonVerificationResultEventDto))
+        .usingRecursiveComparison()
+        .isEqualTo(WebhooksDtoConverterTest.verificationResultEvent);
+  }
+
+  @Test
+  void checkSerializeResponseCallOut() throws JSONException {
+
+    JSONAssert.assertEquals(
+        webHooksService.serializeResponse(WebhooksDtoConverterTest.verificationResponseCallout),
+        jsonResponseCallout,
+        true);
+  }
+
+  @Test
+  void checkSerializeResponseFlashCall() throws JSONException {
+
+    JSONAssert.assertEquals(
+        webHooksService.serializeResponse(WebhooksDtoConverterTest.verificationResponseFlashCall),
+        jsonResponseFlashCall,
+        true);
+  }
+
+  @Test
+  void checkSerializeResponseSMS() throws JSONException {
+
+    JSONAssert.assertEquals(
+        webHooksService.serializeResponse(WebhooksDtoConverterTest.verificationResponseSMS),
+        jsonResponseSMS,
+        true);
   }
 
   @BeforeEach

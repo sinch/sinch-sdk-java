@@ -1,13 +1,16 @@
 package com.sinch.sdk.domains.verification.models.webhooks;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.Price;
+import com.sinch.sdk.domains.verification.models.VerificationMethodType;
+import com.sinch.sdk.domains.verification.models.VerificationReference;
 import java.util.Collection;
 import java.util.Optional;
 
 /**
- * This event is received onto a POST request to the specified verification callback URL and is
+ * Event received onto verification request
+ *
+ * <p>This event is received onto a POST request to the specified verification callback URL and is
  * triggered when a new verification request is made from the SDK client or the Verification Request
  * API. This callback event is only triggered when a verification callback URL is specified in your
  * dashboard.
@@ -17,23 +20,16 @@ public class VerificationRequestEvent extends VerificationEvent {
   private final Price price;
   private final Collection<String> acceptLanguage;
 
-  @JsonCreator
-  VerificationRequestEvent(
-      @JsonProperty("id") String id,
-      @JsonProperty("event") String event,
-      @JsonProperty("method") String method,
-      @JsonProperty("identity") jsonIdentity identity,
-      @JsonProperty("price") jsonPrice price,
-      @JsonProperty("reference") String reference,
-      @JsonProperty("custom") String custom,
-      @JsonProperty("acceptLanguage") Collection<String> acceptLanguage) {
-    super(id, event, method, identity, reference, custom);
-
-    if (null != price) {
-      this.price = Price.builder().setAmount(price.amount).setCurrencyId(price.currencyId).build();
-    } else {
-      this.price = null;
-    }
+  public VerificationRequestEvent(
+      String id,
+      VerificationMethodType method,
+      Identity identity,
+      Price price,
+      VerificationReference reference,
+      String custom,
+      Collection<String> acceptLanguage) {
+    super(id, method, identity, reference, custom);
+    this.price = price;
     this.acceptLanguage = acceptLanguage;
   }
 
@@ -70,17 +66,5 @@ public class VerificationRequestEvent extends VerificationEvent {
         + acceptLanguage
         + "} "
         + super.toString();
-  }
-
-  static class jsonPrice {
-    private final Float amount;
-    private final String currencyId;
-
-    @JsonCreator
-    public jsonPrice(
-        @JsonProperty("amount") Float amount, @JsonProperty("currencyId") String currencyId) {
-      this.amount = amount;
-      this.currencyId = currencyId;
-    }
   }
 }

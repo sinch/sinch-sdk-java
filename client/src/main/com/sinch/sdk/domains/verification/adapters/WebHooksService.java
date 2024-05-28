@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.exceptions.ApiMappingException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.utils.databind.Mapper;
+import com.sinch.sdk.domains.verification.adapters.converters.WebHooksDtoConverter;
+import com.sinch.sdk.domains.verification.models.dto.v1.VerificationEventDto;
 import com.sinch.sdk.domains.verification.models.webhooks.VerificationEvent;
 import com.sinch.sdk.domains.verification.models.webhooks.VerificationResponse;
 import java.util.Map;
@@ -50,7 +52,9 @@ public class WebHooksService implements com.sinch.sdk.domains.verification.WebHo
   @Override
   public VerificationEvent parseEvent(String jsonPayload) throws ApiMappingException {
     try {
-      return Mapper.getInstance().readValue(jsonPayload, VerificationEvent.class);
+      VerificationEventDto dto =
+          Mapper.getInstance().readValue(jsonPayload, VerificationEventDto.class);
+      return WebHooksDtoConverter.convert(dto);
     } catch (JsonProcessingException e) {
       throw new ApiMappingException(jsonPayload, e);
     }
@@ -59,7 +63,7 @@ public class WebHooksService implements com.sinch.sdk.domains.verification.WebHo
   @Override
   public String serializeResponse(VerificationResponse response) throws ApiMappingException {
     try {
-      return Mapper.getInstance().writeValueAsString(response);
+      return Mapper.getInstance().writeValueAsString(WebHooksDtoConverter.convert(response));
     } catch (JsonProcessingException e) {
       throw new ApiMappingException(response.toString(), e);
     }
