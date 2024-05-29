@@ -30,7 +30,7 @@ public interface StartVerificationResponseSMSContent {
    *
    * @return interceptionTimeout
    */
-  String getInterceptionTimeout();
+  Integer getInterceptionTimeout();
 
   /**
    * Getting builder
@@ -60,7 +60,7 @@ public interface StartVerificationResponseSMSContent {
      * @return Current builder
      * @see #getInterceptionTimeout
      */
-    Builder setInterceptionTimeout(String interceptionTimeout);
+    Builder setInterceptionTimeout(Integer interceptionTimeout);
 
     /**
      * Create instance

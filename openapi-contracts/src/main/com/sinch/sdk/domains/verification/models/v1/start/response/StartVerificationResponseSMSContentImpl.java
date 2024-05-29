@@ -25,12 +25,12 @@ public class StartVerificationResponseSMSContentImpl
 
   public static final String JSON_PROPERTY_INTERCEPTION_TIMEOUT = "interceptionTimeout";
 
-  private OptionalValue<String> interceptionTimeout;
+  private OptionalValue<Integer> interceptionTimeout;
 
   public StartVerificationResponseSMSContentImpl() {}
 
   protected StartVerificationResponseSMSContentImpl(
-      OptionalValue<String> template, OptionalValue<String> interceptionTimeout) {
+      OptionalValue<String> template, OptionalValue<Integer> interceptionTimeout) {
     this.template = template;
     this.interceptionTimeout = interceptionTimeout;
   }
@@ -47,13 +47,13 @@ public class StartVerificationResponseSMSContentImpl
   }
 
   @JsonIgnore
-  public String getInterceptionTimeout() {
+  public Integer getInterceptionTimeout() {
     return interceptionTimeout.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_INTERCEPTION_TIMEOUT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> interceptionTimeout() {
+  public OptionalValue<Integer> interceptionTimeout() {
     return interceptionTimeout;
   }
 
@@ -103,7 +103,7 @@ public class StartVerificationResponseSMSContentImpl
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements StartVerificationResponseSMSContent.Builder {
     OptionalValue<String> template = OptionalValue.empty();
-    OptionalValue<String> interceptionTimeout = OptionalValue.empty();
+    OptionalValue<Integer> interceptionTimeout = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_TEMPLATE)
     public Builder setTemplate(String template) {
@@ -112,7 +112,7 @@ public class StartVerificationResponseSMSContentImpl
     }
 
     @JsonProperty(JSON_PROPERTY_INTERCEPTION_TIMEOUT)
-    public Builder setInterceptionTimeout(String interceptionTimeout) {
+    public Builder setInterceptionTimeout(Integer interceptionTimeout) {
       this.interceptionTimeout = OptionalValue.of(interceptionTimeout);
       return this;
     }

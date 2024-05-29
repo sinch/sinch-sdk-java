@@ -83,7 +83,7 @@ public class StartVerificationResponseTest extends BaseTest {
                   .setSms(
                       StartVerificationResponseSMSContent.builder()
                           .setTemplate("Your verification code is {{CODE}}. Verified by Sinch")
-                          .setInterceptionTimeout(String.valueOf(298))
+                          .setInterceptionTimeout(298)
                           .build())
                   .build());
 
