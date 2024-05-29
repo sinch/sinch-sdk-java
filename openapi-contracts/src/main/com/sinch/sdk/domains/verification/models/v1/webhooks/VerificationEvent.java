@@ -12,4 +12,7 @@
 
 package com.sinch.sdk.domains.verification.models.v1.webhooks;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(using = VerificationEventImpl.VerificationEventImplDeserializer.class)
 public interface VerificationEvent {}

@@ -12,4 +12,10 @@
 
 package com.sinch.sdk.domains.verification.models.v1.report.request.internal;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(
+    using =
+        VerificationReportRequestParametersInternalImpl
+            .VerificationReportRequestParametersInternalImplDeserializer.class)
 public interface VerificationReportRequestParametersInternal {}

@@ -12,4 +12,10 @@
 
 package com.sinch.sdk.domains.verification.models.v1.status.response.internal;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(
+    using =
+        VerificationStatusResponseInternalImpl.VerificationStatusResponseInternalImplDeserializer
+            .class)
 public interface VerificationStatusResponseInternal {}

@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 public class StartVerificationResponseTest extends BaseTest {
 
   @GivenJsonResource("/domains/verification/v1/start/StartVerificationCalloutResponseDto.json")
-  StartVerificationResponseInternalImpl loadedStartVerificationCalloutDto;
+  StartVerificationResponseInternal loadedStartVerificationCalloutDto;
 
   public static StartVerificationResponseInternal expectedStartVerificationCalloutDto =
       new StartVerificationResponseInternalImpl(
@@ -36,9 +36,9 @@ public class StartVerificationResponseTest extends BaseTest {
                   .build());
 
   @GivenJsonResource("/domains/verification/v1/start/StartVerificationFlashCallResponseDto.json")
-  StartVerificationResponseInternalImpl loadedStartVerificationFlashCallDto;
+  StartVerificationResponseInternal loadedStartVerificationFlashCallDto;
 
-  public static StartVerificationResponseInternalImpl expectedStartVerificationFlashCallDto =
+  public static StartVerificationResponseInternal expectedStartVerificationFlashCallDto =
       new StartVerificationResponseInternalImpl(
           (StartVerificationResponseFlashCallImpl)
               StartVerificationResponseFlashCall.builder()
@@ -55,9 +55,9 @@ public class StartVerificationResponseTest extends BaseTest {
                   .build());
 
   @GivenJsonResource("/domains/verification/v1/start/StartVerificationSeamlessResponseDto.json")
-  StartVerificationResponseInternalImpl loadedStartVerificationSeamlessDto;
+  StartVerificationResponseInternal loadedStartVerificationSeamlessDto;
 
-  public static StartVerificationResponseInternalImpl expectedStartVerificationSeamlessDto =
+  public static StartVerificationResponseInternal expectedStartVerificationSeamlessDto =
       new StartVerificationResponseInternalImpl(
           (StartVerificationResponseSeamlessImpl)
               StartVerificationResponseSeamless.builder()
@@ -67,12 +67,13 @@ public class StartVerificationResponseTest extends BaseTest {
                   .setSeamless(
                       StartVerificationResponseSeamlessContent.builder()
                           .setTargetUri("target URI")
-                          .build()));
+                          .build())
+                  .build());
 
   @GivenJsonResource("/domains/verification/v1/start/StartVerificationSMSResponseDto.json")
-  StartVerificationResponseInternalImpl loadedStartVerificationSMSDto;
+  StartVerificationResponseInternal loadedStartVerificationSMSDto;
 
-  public static StartVerificationResponseInternalImpl expectedStartVerificationSMSDto =
+  public static StartVerificationResponseInternal expectedStartVerificationSMSDto =
       new StartVerificationResponseInternalImpl(
           (StartVerificationResponseSMSImpl)
               StartVerificationResponseSMS.builder()
@@ -83,7 +84,8 @@ public class StartVerificationResponseTest extends BaseTest {
                       StartVerificationResponseSMSContent.builder()
                           .setTemplate("Your verification code is {{CODE}}. Verified by Sinch")
                           .setInterceptionTimeout(String.valueOf(298))
-                          .build()));
+                          .build())
+                  .build());
 
   @Test
   void deserializeStartCallout() {

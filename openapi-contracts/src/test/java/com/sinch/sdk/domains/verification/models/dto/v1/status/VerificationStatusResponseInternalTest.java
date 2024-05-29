@@ -87,7 +87,8 @@ public class VerificationStatusResponseInternalTest extends BaseTest {
                           .setEndpoint("endpoint value")
                           .build())
                   .setCountryId("es-ES")
-                  .setVerificationTimestamp("2024-05-22T09:38:59.5590437"));
+                  .setVerificationTimestamp("2024-05-22T09:38:59.5590437")
+                  .build());
   public static VerificationStatusResponseInternal expectedVerificationSMSDto =
       new VerificationStatusResponseInternalImpl(
           (SMSVerificationStatusResponseImpl)
@@ -95,6 +96,8 @@ public class VerificationStatusResponseInternalTest extends BaseTest {
                   .setId("the id")
                   .setMethod(SMSVerificationStatusResponse.MethodEnum.SMS)
                   .setReference("my reference")
+                  .setStatus(VerificationStatus.FAIL)
+                  .setReason(VerificationStatusReason.FRAUD)
                   .setSource(SMSVerificationStatusResponse.SourceEnum.INTERCEPTED)
                   .setPrice(
                       SMSVerificationStatusResponsePrice.builder()
@@ -110,7 +113,8 @@ public class VerificationStatusResponseInternalTest extends BaseTest {
                           .setEndpoint("endpoint value")
                           .build())
                   .setCountryId("es-ES")
-                  .setVerificationTimestamp("2024-05-22T09:38:59.5590437"));
+                  .setVerificationTimestamp("2024-05-22T09:38:59.5590437")
+                  .build());
 
   @GivenJsonResource("/domains/verification/v1/status/VerificationStatusCalloutResponseDto.json")
   VerificationStatusResponseInternal loadedVerificationCalloutDto;
