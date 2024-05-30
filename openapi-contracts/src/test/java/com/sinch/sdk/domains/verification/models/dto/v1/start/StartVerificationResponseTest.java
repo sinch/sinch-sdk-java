@@ -4,17 +4,17 @@ import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseCallout;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseCalloutImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCallContent;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCallImpl;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSMS;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSMSContent;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSMSImpl;
+import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponsePhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponsePhoneCallImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSeamless;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSeamlessContent;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSeamlessImpl;
+import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSms;
+import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSmsContent;
+import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSmsImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.StartVerificationResponseInternal;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.StartVerificationResponseInternalImpl;
 import org.assertj.core.api.Assertions;
@@ -28,8 +28,8 @@ public class StartVerificationResponseTest extends BaseTest {
 
   public static StartVerificationResponseInternal expectedStartVerificationCalloutDto =
       new StartVerificationResponseInternalImpl(
-          (StartVerificationResponseCalloutImpl)
-              StartVerificationResponseCallout.builder()
+          (StartVerificationResponsePhoneCallImpl)
+              StartVerificationResponsePhoneCall.builder()
                   .setId("the id")
                   .setMethod(VerificationMethod.CALLOUT.value())
                   .setLinks(LinkTest.expectedLinks)
@@ -75,13 +75,13 @@ public class StartVerificationResponseTest extends BaseTest {
 
   public static StartVerificationResponseInternal expectedStartVerificationSMSDto =
       new StartVerificationResponseInternalImpl(
-          (StartVerificationResponseSMSImpl)
-              StartVerificationResponseSMS.builder()
+          (StartVerificationResponseSmsImpl)
+              StartVerificationResponseSms.builder()
                   .setId("the id")
                   .setMethod(VerificationMethod.SMS.value())
                   .setLinks(LinkTest.expectedLinks)
                   .setSms(
-                      StartVerificationResponseSMSContent.builder()
+                      StartVerificationResponseSmsContent.builder()
                           .setTemplate("Your verification code is {{CODE}}. Verified by Sinch")
                           .setInterceptionTimeout(298)
                           .build())

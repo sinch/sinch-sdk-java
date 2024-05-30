@@ -28,22 +28,22 @@ import com.sinch.sdk.domains.verification.models.response.StartVerificationRespo
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSeamless;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersCallout;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersCalloutOptions;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersFlashCallOptions;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersSMS;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersSMSOptions;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersPhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersPhoneCallOptions;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersSms;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersSmsOptions;
 import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestParametersInternal;
 import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestParametersInternalImpl;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponse;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseImpl;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationCalloutOptionsSpeech;
+import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationFlashCallOptions;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSMSOptions.CodeTypeEnum;
+import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsOptions;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCallContentImpl;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSMSContentImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSeamlessContentImpl;
+import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSmsContentImpl;
 import java.util.logging.Logger;
 
 public class VerificationsDtoConverter {
@@ -87,33 +87,34 @@ public class VerificationsDtoConverter {
     return dto.build();
   }
 
-  static com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSMSOptions
+  static com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsOptions
       convert(StartVerificationSMSOptions client) {
-    com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSMSOptions.Builder
+    com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsOptions.Builder
         dto =
-            com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSMSOptions
+            com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsOptions
                 .builder();
     client.getExpiry().ifPresent(dto::setExpiry);
-    client.getCodeType().ifPresent(f -> dto.setCodeType(CodeTypeEnum.from(f.value())));
+    client
+        .getCodeType()
+        .ifPresent(f -> dto.setCodeType(StartVerificationSmsOptions.CodeTypeEnum.from(f.value())));
     client.getTemplate().ifPresent(dto::setTemplate);
     return dto.build();
   }
 
-  static com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationCalloutOptions
+  static com.sinch.sdk.domains.verification.models.v1.start.request
+          .StartVerificationPhoneCallOptions
       convert(StartVerificationCalloutOptions client) {
-    com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationCalloutOptions
+    com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationPhoneCallOptions
             .Builder
         dto =
             com.sinch.sdk.domains.verification.models.v1.start.request
-                .StartVerificationCalloutOptions.builder();
+                .StartVerificationPhoneCallOptions.builder();
     client.getSpeech().ifPresent(f -> dto.setSpeech(convert(f)));
     return dto.build();
   }
 
-  static StartVerificationCalloutOptionsSpeech convert(
-      StartVerificationCalloutSpeechOptions client) {
-    StartVerificationCalloutOptionsSpeech.Builder dto =
-        StartVerificationCalloutOptionsSpeech.builder();
+  static PhoneCallSpeech convert(StartVerificationCalloutSpeechOptions client) {
+    PhoneCallSpeech.Builder dto = PhoneCallSpeech.builder();
     client.getLocale().ifPresent(dto::setLocale);
     return dto.build();
   }
@@ -158,8 +159,8 @@ public class VerificationsDtoConverter {
 
     if (dto.getActualInstance()
         instanceof
-        com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSMS) {
-      builder = convert(dto.getStartVerificationResponseSMSImpl());
+        com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSms) {
+      builder = convert(dto.getStartVerificationResponseSmsImpl());
     } else if (dto.getActualInstance()
         instanceof
         com.sinch.sdk.domains.verification.models.v1.start.response
@@ -168,8 +169,8 @@ public class VerificationsDtoConverter {
     } else if (dto.getActualInstance()
         instanceof
         com.sinch.sdk.domains.verification.models.v1.start.response
-            .StartVerificationResponseCallout) {
-      builder = convert(dto.getStartVerificationResponseCalloutImpl());
+            .StartVerificationResponsePhoneCall) {
+      builder = convert(dto.getStartVerificationResponsePhoneCallImpl());
     } else if (dto.getActualInstance()
         instanceof
         com.sinch.sdk.domains.verification.models.v1.start.response
@@ -183,7 +184,7 @@ public class VerificationsDtoConverter {
   }
 
   static StartVerificationResponseSMS.Builder convert(
-      com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSMSImpl
+      com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSmsImpl
           dto) {
     StartVerificationResponseSMS.Builder builder = StartVerificationResponseSMS.builder();
 
@@ -193,8 +194,8 @@ public class VerificationsDtoConverter {
     dto.sms()
         .ifPresent(
             _sms -> {
-              StartVerificationResponseSMSContentImpl sms =
-                  (StartVerificationResponseSMSContentImpl) _sms;
+              StartVerificationResponseSmsContentImpl sms =
+                  (StartVerificationResponseSmsContentImpl) _sms;
               sms.template().ifPresent(builder::setTemplate);
               sms.interceptionTimeout()
                   .ifPresent(f -> builder.setInterceptionTimeOut(Integer.valueOf(f)));
@@ -229,7 +230,7 @@ public class VerificationsDtoConverter {
 
   static StartVerificationResponseCallout.Builder convert(
       com.sinch.sdk.domains.verification.models.v1.start.response
-              .StartVerificationResponseCalloutImpl
+              .StartVerificationResponsePhoneCallImpl
           dto) {
 
     StartVerificationResponseCallout.Builder builder = StartVerificationResponseCallout.builder();
@@ -295,29 +296,29 @@ public class VerificationsDtoConverter {
         .build();
   }
 
-  private static VerificationReportRequestParametersSMS convert(
+  private static VerificationReportRequestParametersSms convert(
       VerificationReportSMSRequestParameters client) {
 
-    VerificationReportRequestParametersSMSOptions.Builder subfield =
-        VerificationReportRequestParametersSMSOptions.builder();
+    VerificationReportRequestParametersSmsOptions.Builder subfield =
+        VerificationReportRequestParametersSmsOptions.builder();
     client.getCode().ifPresent(subfield::setCode);
     client.getCli().ifPresent(subfield::setCli);
 
-    return VerificationReportRequestParametersSMS.builder()
-        .setMethod(VerificationReportRequestParametersSMS.MethodEnum.SMS)
+    return VerificationReportRequestParametersSms.builder()
+        .setMethod(VerificationReportRequestParametersSms.MethodEnum.SMS)
         .setSms(subfield.build())
         .build();
   }
 
-  private static VerificationReportRequestParametersCallout convert(
+  private static VerificationReportRequestParametersPhoneCall convert(
       VerificationReportCalloutRequestParameters client) {
 
-    VerificationReportRequestParametersCalloutOptions.Builder subfield =
-        VerificationReportRequestParametersCalloutOptions.builder();
+    VerificationReportRequestParametersPhoneCallOptions.Builder subfield =
+        VerificationReportRequestParametersPhoneCallOptions.builder();
     client.getCode().ifPresent(subfield::setCode);
 
-    return VerificationReportRequestParametersCallout.builder()
-        .setMethod(VerificationReportRequestParametersCallout.MethodEnum.CALLOUT)
+    return VerificationReportRequestParametersPhoneCall.builder()
+        .setMethod(VerificationReportRequestParametersPhoneCall.MethodEnum.CALLOUT)
         .setCallout(subfield.build())
         .build();
   }

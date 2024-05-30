@@ -6,8 +6,9 @@ import com.sinch.sdk.domains.verification.models.VerificationReference;
 import com.sinch.sdk.domains.verification.models.VerificationSourceType;
 import com.sinch.sdk.domains.verification.models.VerificationStatusReasonType;
 import com.sinch.sdk.domains.verification.models.VerificationStatusType;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.CalloutRequestEventResponse;
+import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.FlashCallRequestEventResponse;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.PhoneCallRequestEventResponse;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEventResponseAction;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventImpl;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationResultEventImpl;
@@ -84,21 +85,21 @@ public class WebHooksDtoConverter {
     }
   }
 
-  static CalloutRequestEventResponse convert(VerificationResponseCallout client) {
-    CalloutRequestEventResponse.Builder dto = CalloutRequestEventResponse.builder();
+  static PhoneCallRequestEventResponse convert(VerificationResponseCallout client) {
+    PhoneCallRequestEventResponse.Builder dto = PhoneCallRequestEventResponse.builder();
 
     if (null != client.getAction()) {
       dto.setAction(VerificationEventResponseAction.from(client.getAction().getValue()));
     }
-    com.sinch.sdk.domains.verification.models.v1.webhooks.CalloutRequestEventResponseCalloutContent
-            .Builder
+    com.sinch.sdk.domains.verification.models.v1.webhooks
+            .PhoneCallRequestEventResponsePhoneCallContent.Builder
         calloutDto = null;
 
     if (null != client.getCode()) {
       if (null == calloutDto) {
         calloutDto =
             com.sinch.sdk.domains.verification.models.v1.webhooks
-                .CalloutRequestEventResponseCalloutContent.builder();
+                .PhoneCallRequestEventResponsePhoneCallContent.builder();
       }
       calloutDto.setCode(client.getCode());
     }
@@ -107,7 +108,7 @@ public class WebHooksDtoConverter {
       if (null == calloutDto) {
         calloutDto =
             com.sinch.sdk.domains.verification.models.v1.webhooks
-                .CalloutRequestEventResponseCalloutContent.builder();
+                .PhoneCallRequestEventResponsePhoneCallContent.builder();
       }
       calloutDto.setSpeech(convert(client.getSpeech()));
     }
@@ -117,16 +118,11 @@ public class WebHooksDtoConverter {
     return dto.build();
   }
 
-  static com.sinch.sdk.domains.verification.models.v1.webhooks
-          .CalloutRequestEventResponseCalloutSpeechContent
-      convert(VerificationResponseCalloutSpeech client) {
+  static PhoneCallSpeech convert(VerificationResponseCalloutSpeech client) {
     if (null == client) {
       return null;
     }
-    return com.sinch.sdk.domains.verification.models.v1.webhooks
-        .CalloutRequestEventResponseCalloutSpeechContent.builder()
-        .setLocale(client.getLocale())
-        .build();
+    return PhoneCallSpeech.builder().setLocale(client.getLocale()).build();
   }
 
   static com.sinch.sdk.domains.verification.models.v1.webhooks.FlashCallRequestEventResponse
@@ -165,21 +161,21 @@ public class WebHooksDtoConverter {
     return dto.build();
   }
 
-  static com.sinch.sdk.domains.verification.models.v1.webhooks.SMSRequestEventResponse convert(
+  static com.sinch.sdk.domains.verification.models.v1.webhooks.SmsRequestEventResponse convert(
       VerificationResponseSMS client) {
-    com.sinch.sdk.domains.verification.models.v1.webhooks.SMSRequestEventResponse.Builder dto =
-        com.sinch.sdk.domains.verification.models.v1.webhooks.SMSRequestEventResponse.builder();
+    com.sinch.sdk.domains.verification.models.v1.webhooks.SmsRequestEventResponse.Builder dto =
+        com.sinch.sdk.domains.verification.models.v1.webhooks.SmsRequestEventResponse.builder();
 
     if (null != client.getAction()) {
       dto.setAction(VerificationEventResponseAction.from(client.getAction().getValue()));
     }
-    com.sinch.sdk.domains.verification.models.v1.webhooks.SMSRequestEventResponseSMSContent.Builder
+    com.sinch.sdk.domains.verification.models.v1.webhooks.SmsRequestEventResponseSmsContent.Builder
         smsDto = null;
 
     if (null != client.getCode()) {
       if (null == smsDto) {
         smsDto =
-            com.sinch.sdk.domains.verification.models.v1.webhooks.SMSRequestEventResponseSMSContent
+            com.sinch.sdk.domains.verification.models.v1.webhooks.SmsRequestEventResponseSmsContent
                 .builder();
       }
       smsDto.setCode(client.getCode());
@@ -188,7 +184,7 @@ public class WebHooksDtoConverter {
     if (null != client.getAcceptLanguage()) {
       if (null == smsDto) {
         smsDto =
-            com.sinch.sdk.domains.verification.models.v1.webhooks.SMSRequestEventResponseSMSContent
+            com.sinch.sdk.domains.verification.models.v1.webhooks.SmsRequestEventResponseSmsContent
                 .builder();
       }
       smsDto.setAcceptLanguage(new ArrayList<>(client.getAcceptLanguage()));

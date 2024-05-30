@@ -4,15 +4,15 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersCallout;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersCalloutImpl;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersCalloutOptions;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersFlashCallImpl;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersFlashCallOptions;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersSMS;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersSMSImpl;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersSMSOptions;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersPhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersPhoneCallImpl;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersPhoneCallOptions;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersSms;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersSmsImpl;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersSmsOptions;
 import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestParametersInternal;
 import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestParametersInternalImpl;
 import org.json.JSONException;
@@ -24,11 +24,11 @@ public class VerificationReportRequestDtoTest extends BaseTest {
 
   public static VerificationReportRequestParametersInternal verificationReportCalloutDto =
       new VerificationReportRequestParametersInternalImpl(
-          (VerificationReportRequestParametersCalloutImpl)
-              VerificationReportRequestParametersCallout.builder()
-                  .setMethod(VerificationReportRequestParametersCallout.MethodEnum.CALLOUT)
+          (VerificationReportRequestParametersPhoneCallImpl)
+              VerificationReportRequestParametersPhoneCall.builder()
+                  .setMethod(VerificationReportRequestParametersPhoneCall.MethodEnum.CALLOUT)
                   .setCallout(
-                      VerificationReportRequestParametersCalloutOptions.builder()
+                      VerificationReportRequestParametersPhoneCallOptions.builder()
                           .setCode("foo code")
                           .build())
                   .build());
@@ -44,11 +44,11 @@ public class VerificationReportRequestDtoTest extends BaseTest {
                   .build());
   public static VerificationReportRequestParametersInternal verificationReportSMSDto =
       new VerificationReportRequestParametersInternalImpl(
-          (VerificationReportRequestParametersSMSImpl)
-              VerificationReportRequestParametersSMS.builder()
-                  .setMethod(VerificationReportRequestParametersSMS.MethodEnum.SMS)
+          (VerificationReportRequestParametersSmsImpl)
+              VerificationReportRequestParametersSms.builder()
+                  .setMethod(VerificationReportRequestParametersSms.MethodEnum.SMS)
                   .setSms(
-                      VerificationReportRequestParametersSMSOptions.builder()
+                      VerificationReportRequestParametersSmsOptions.builder()
                           .setCode("foo code")
                           .setCli("foo cli")
                           .build())

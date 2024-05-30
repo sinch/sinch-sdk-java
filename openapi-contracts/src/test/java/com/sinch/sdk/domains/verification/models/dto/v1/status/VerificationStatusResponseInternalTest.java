@@ -8,15 +8,14 @@ import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
 import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
 import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal.TypeEnum;
-import com.sinch.sdk.domains.verification.models.v1.status.response.CalloutVerificationStatusResponse;
-import com.sinch.sdk.domains.verification.models.v1.status.response.CalloutVerificationStatusResponseImpl;
-import com.sinch.sdk.domains.verification.models.v1.status.response.FlashcallVerificationStatusResponse;
-import com.sinch.sdk.domains.verification.models.v1.status.response.FlashcallVerificationStatusResponse.SourceEnum;
-import com.sinch.sdk.domains.verification.models.v1.status.response.FlashcallVerificationStatusResponseImpl;
-import com.sinch.sdk.domains.verification.models.v1.status.response.FlashcallVerificationStatusResponsePrice;
-import com.sinch.sdk.domains.verification.models.v1.status.response.SMSVerificationStatusResponse;
-import com.sinch.sdk.domains.verification.models.v1.status.response.SMSVerificationStatusResponseImpl;
-import com.sinch.sdk.domains.verification.models.v1.status.response.SMSVerificationStatusResponsePrice;
+import com.sinch.sdk.domains.verification.models.v1.status.StatusPrice;
+import com.sinch.sdk.domains.verification.models.v1.status.response.FlashCallVerificationStatusResponse;
+import com.sinch.sdk.domains.verification.models.v1.status.response.FlashCallVerificationStatusResponseImpl;
+import com.sinch.sdk.domains.verification.models.v1.status.response.PhoneCallVerificationStatusResponse;
+import com.sinch.sdk.domains.verification.models.v1.status.response.PhoneCallVerificationStatusResponseImpl;
+import com.sinch.sdk.domains.verification.models.v1.status.response.SmsVerificationStatusResponse;
+import com.sinch.sdk.domains.verification.models.v1.status.response.SmsVerificationStatusResponseImpl;
+import com.sinch.sdk.domains.verification.models.v1.status.response.SmsVerificationStatusResponsePrice;
 import com.sinch.sdk.domains.verification.models.v1.status.response.internal.VerificationStatusResponseInternal;
 import com.sinch.sdk.domains.verification.models.v1.status.response.internal.VerificationStatusResponseInternalImpl;
 import org.assertj.core.api.Assertions;
@@ -27,16 +26,16 @@ public class VerificationStatusResponseInternalTest extends BaseTest {
 
   public static VerificationStatusResponseInternal expectedVerificationCalloutDto =
       new VerificationStatusResponseInternalImpl(
-          (CalloutVerificationStatusResponseImpl)
-              CalloutVerificationStatusResponse.builder()
+          (PhoneCallVerificationStatusResponseImpl)
+              PhoneCallVerificationStatusResponse.builder()
                   .setId("the id")
-                  .setMethod(CalloutVerificationStatusResponse.MethodEnum.CALLOUT)
+                  .setMethod(PhoneCallVerificationStatusResponse.MethodEnum.CALLOUT)
                   .setStatus(VerificationStatus.FAIL)
                   .setReason(VerificationStatusReason.FRAUD)
                   .setCallComplete(true)
                   .setReference("my reference")
                   .setPrice(
-                      FlashcallVerificationStatusResponsePrice.builder()
+                      StatusPrice.builder()
                           .setVerificationPrice(
                               Price.builder()
                                   .setCurrencyId("verificationPrice currency id")
@@ -59,15 +58,15 @@ public class VerificationStatusResponseInternalTest extends BaseTest {
                   .build());
   public static VerificationStatusResponseInternal expectedVerificationFlashCallDto =
       new VerificationStatusResponseInternalImpl(
-          (FlashcallVerificationStatusResponseImpl)
-              FlashcallVerificationStatusResponse.builder()
+          (FlashCallVerificationStatusResponseImpl)
+              FlashCallVerificationStatusResponse.builder()
                   .setId("the id")
-                  .setMethod(FlashcallVerificationStatusResponse.MethodEnum.FLASHCALL)
+                  .setMethod(FlashCallVerificationStatusResponse.MethodEnum.FLASHCALL)
                   .setStatus(VerificationStatus.FAIL)
                   .setReason(VerificationStatusReason.FRAUD)
                   .setReference("my reference")
                   .setPrice(
-                      FlashcallVerificationStatusResponsePrice.builder()
+                      StatusPrice.builder()
                           .setVerificationPrice(
                               Price.builder()
                                   .setCurrencyId("verificationPrice currency id")
@@ -80,7 +79,7 @@ public class VerificationStatusResponseInternalTest extends BaseTest {
                                   .build())
                           .setBillableDuration(34)
                           .build())
-                  .setSource(SourceEnum.MANUAL)
+                  .setSource(FlashCallVerificationStatusResponse.SourceEnum.MANUAL)
                   .setIdentity(
                       IdentityInternal.builder()
                           .setType(TypeEnum.NUMBER)
@@ -91,16 +90,16 @@ public class VerificationStatusResponseInternalTest extends BaseTest {
                   .build());
   public static VerificationStatusResponseInternal expectedVerificationSMSDto =
       new VerificationStatusResponseInternalImpl(
-          (SMSVerificationStatusResponseImpl)
-              SMSVerificationStatusResponse.builder()
+          (SmsVerificationStatusResponseImpl)
+              SmsVerificationStatusResponse.builder()
                   .setId("the id")
-                  .setMethod(SMSVerificationStatusResponse.MethodEnum.SMS)
+                  .setMethod(SmsVerificationStatusResponse.MethodEnum.SMS)
                   .setReference("my reference")
                   .setStatus(VerificationStatus.FAIL)
                   .setReason(VerificationStatusReason.FRAUD)
-                  .setSource(SMSVerificationStatusResponse.SourceEnum.INTERCEPTED)
+                  .setSource(SmsVerificationStatusResponse.SourceEnum.INTERCEPTED)
                   .setPrice(
-                      SMSVerificationStatusResponsePrice.builder()
+                      SmsVerificationStatusResponsePrice.builder()
                           .setVerificationPrice(
                               Price.builder()
                                   .setCurrencyId("verificationPrice currency id")

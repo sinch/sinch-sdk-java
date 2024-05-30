@@ -7,12 +7,11 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
 import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal.TypeEnum;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationCalloutOptions;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationCalloutOptionsSpeech;
+import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationFlashCallOptions;
+import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationPhoneCallOptions;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationRequestParameters;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSMSOptions;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSMSOptions.CodeTypeEnum;
+import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsOptions;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -28,9 +27,8 @@ public class StartVerificationRequestTest extends BaseTest {
           .setIdentity(
               IdentityInternal.builder().setType(TypeEnum.NUMBER).setEndpoint("+endpoint").build())
           .setCalloutOptions(
-              StartVerificationCalloutOptions.builder()
-                  .setSpeech(
-                      StartVerificationCalloutOptionsSpeech.builder().setLocale("fr-FR").build())
+              StartVerificationPhoneCallOptions.builder()
+                  .setSpeech(PhoneCallSpeech.builder().setLocale("fr-FR").build())
                   .build())
           .build();
 
@@ -60,9 +58,9 @@ public class StartVerificationRequestTest extends BaseTest {
           .setIdentity(
               IdentityInternal.builder().setType(TypeEnum.NUMBER).setEndpoint("+endpoint").build())
           .setSmsOptions(
-              StartVerificationSMSOptions.builder()
+              StartVerificationSmsOptions.builder()
                   .setExpiry("01:02:03")
-                  .setCodeType(CodeTypeEnum.ALPHANUMERIC)
+                  .setCodeType(StartVerificationSmsOptions.CodeTypeEnum.ALPHANUMERIC)
                   .setTemplate("My template require to use '{{CODE}}' code")
                   .build())
           .build();
