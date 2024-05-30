@@ -15,24 +15,22 @@ package com.sinch.sdk.domains.verification.models.v1.webhooks;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /** declaration */
-@JsonDeserialize(builder = CalloutRequestEventResponseCalloutContentImpl.Builder.class)
-public interface CalloutRequestEventResponseCalloutContent {
+@JsonDeserialize(builder = PhoneCallRequestEventResponseImpl.Builder.class)
+public interface PhoneCallRequestEventResponse {
 
   /**
-   * The Phone Call PIN that should be entered by the user. Sinch servers automatically generate PIN
-   * codes for Phone Call verification. If you want to set your own code, you can specify it in the
-   * response to the Verification Request Event.
+   * Get action
    *
-   * @return code
+   * @return action
    */
-  String getCode();
+  VerificationEventResponseAction getAction();
 
   /**
-   * Get speech
+   * Get callout
    *
-   * @return speech
+   * @return callout
    */
-  CalloutRequestEventResponseCalloutSpeechContent getSpeech();
+  PhoneCallRequestEventResponsePhoneCallContent getCallout();
 
   /**
    * Getting builder
@@ -40,7 +38,7 @@ public interface CalloutRequestEventResponseCalloutContent {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new CalloutRequestEventResponseCalloutContentImpl.Builder();
+    return new PhoneCallRequestEventResponseImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -49,26 +47,26 @@ public interface CalloutRequestEventResponseCalloutContent {
     /**
      * see getter
      *
-     * @param code see getter
+     * @param action see getter
      * @return Current builder
-     * @see #getCode
+     * @see #getAction
      */
-    Builder setCode(String code);
+    Builder setAction(VerificationEventResponseAction action);
 
     /**
      * see getter
      *
-     * @param speech see getter
+     * @param callout see getter
      * @return Current builder
-     * @see #getSpeech
+     * @see #getCallout
      */
-    Builder setSpeech(CalloutRequestEventResponseCalloutSpeechContent speech);
+    Builder setCallout(PhoneCallRequestEventResponsePhoneCallContent callout);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    CalloutRequestEventResponseCalloutContent build();
+    PhoneCallRequestEventResponse build();
   }
 }

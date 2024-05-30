@@ -15,8 +15,8 @@ package com.sinch.sdk.domains.verification.models.v1.start.response;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /** The response contains the &#x60;template&#x60; of the SMS to be expected and intercepted. */
-@JsonDeserialize(builder = StartVerificationResponseSMSContentImpl.Builder.class)
-public interface StartVerificationResponseSMSContent {
+@JsonDeserialize(builder = StartVerificationResponseSmsContentImpl.Builder.class)
+public interface StartVerificationResponseSmsContent {
 
   /**
    * The expected template for the SMS response.
@@ -38,7 +38,7 @@ public interface StartVerificationResponseSMSContent {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new StartVerificationResponseSMSContentImpl.Builder();
+    return new StartVerificationResponseSmsContentImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -67,6 +67,6 @@ public interface StartVerificationResponseSMSContent {
      *
      * @return The instance build with current builder values
      */
-    StartVerificationResponseSMSContent build();
+    StartVerificationResponseSmsContent build();
   }
 }

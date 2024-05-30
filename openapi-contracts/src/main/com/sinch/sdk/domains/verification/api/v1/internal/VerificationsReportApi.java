@@ -27,8 +27,6 @@ import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestParametersInternal;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponse;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationRequestParameters;
-import com.sinch.sdk.domains.verification.models.v1.start.response.internal.StartVerificationResponseInternal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -37,15 +35,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class VerificationsApi {
+public class VerificationsReportApi {
 
-  private static final Logger LOGGER = Logger.getLogger(VerificationsApi.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(VerificationsReportApi.class.getName());
   private HttpClient httpClient;
   private ServerConfiguration serverConfiguration;
   private Map<String, AuthManager> authManagersByOasSecuritySchemes;
   private HttpMapper mapper;
 
-  public VerificationsApi(
+  public VerificationsReportApi(
       HttpClient httpClient,
       ServerConfiguration serverConfiguration,
       Map<String, AuthManager> authManagersByOasSecuritySchemes,
@@ -146,7 +144,7 @@ public class VerificationsApi {
   /**
    * Report a verification using Identity Report the received verification code to verify it, using
    * the identity of the user (in most cases, the phone number). For an SMS PIN verification or
-   * Phone Call verification, this is the OTP code. For flashcalls, this is the CLI.
+   * Phone Call verification, this is the OTP code. For phone calls, this is the CLI.
    *
    * @param endpoint For type &#x60;number&#x60; use a
    *     [E.164](https://community.sinch.com/t5/Glossary/E-164/ta-p/7537)-compatible phone number.
@@ -228,88 +226,6 @@ public class VerificationsApi {
     return new HttpRequest(
         localVarPath,
         HttpMethod.PUT,
-        localVarQueryParams,
-        serializedBody,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  /**
-   * Start verification This method is used by the mobile and web Verification SDKs to start a
-   * verification. It can also be used to request a verification from your backend, by making an
-   * request.
-   *
-   * @param startVerificationRequestParameters (required)
-   * @param acceptLanguage In SMS Verification, value of
-   *     [Accept-Language](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language)
-   *     header is used to determine the languge of an SMS message. (optional)
-   * @return StartVerificationResponseInternal
-   * @throws ApiException if fails to make API call
-   */
-  public StartVerificationResponseInternal startVerification(
-      StartVerificationRequestParameters startVerificationRequestParameters, String acceptLanguage)
-      throws ApiException {
-
-    LOGGER.finest(
-        "[startVerification]"
-            + " "
-            + "startVerificationRequestParameters: "
-            + startVerificationRequestParameters
-            + ", "
-            + "acceptLanguage: "
-            + acceptLanguage);
-
-    HttpRequest httpRequest =
-        startVerificationRequestBuilder(startVerificationRequestParameters, acceptLanguage);
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<StartVerificationResponseInternal> localVarReturnType =
-          new TypeReference<StartVerificationResponseInternal>() {};
-      return mapper.deserialize(response, localVarReturnType);
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest startVerificationRequestBuilder(
-      StartVerificationRequestParameters startVerificationRequestParameters, String acceptLanguage)
-      throws ApiException {
-    // verify the required parameter 'startVerificationRequestParameters' is set
-    if (startVerificationRequestParameters == null) {
-      throw new ApiException(
-          400,
-          "Missing the required parameter 'startVerificationRequestParameters' when calling"
-              + " startVerification");
-    }
-
-    String localVarPath = "/verification/v1/verifications";
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-    if (acceptLanguage != null) localVarHeaderParams.put("Accept-Language", acceptLanguage);
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-
-    final Collection<String> localVarContentTypes = Arrays.asList("application/json");
-
-    final Collection<String> localVarAuthNames = Arrays.asList("Basic", "Application");
-    final String serializedBody =
-        mapper.serialize(localVarContentTypes, startVerificationRequestParameters);
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.POST,
         localVarQueryParams,
         serializedBody,
         localVarHeaderParams,

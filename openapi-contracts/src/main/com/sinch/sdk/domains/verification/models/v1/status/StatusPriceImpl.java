@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.verification.models.v1.status.response;
+package com.sinch.sdk.domains.verification.models.v1.status;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,14 +11,13 @@ import com.sinch.sdk.domains.verification.models.v1.Price;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  FlashcallVerificationStatusResponsePriceImpl.JSON_PROPERTY_VERIFICATION_PRICE,
-  FlashcallVerificationStatusResponsePriceImpl.JSON_PROPERTY_TERMINATION_PRICE,
-  FlashcallVerificationStatusResponsePriceImpl.JSON_PROPERTY_BILLABLE_DURATION
+  StatusPriceImpl.JSON_PROPERTY_VERIFICATION_PRICE,
+  StatusPriceImpl.JSON_PROPERTY_TERMINATION_PRICE,
+  StatusPriceImpl.JSON_PROPERTY_BILLABLE_DURATION
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class FlashcallVerificationStatusResponsePriceImpl
-    implements FlashcallVerificationStatusResponsePrice {
+public class StatusPriceImpl implements StatusPrice {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_VERIFICATION_PRICE = "verificationPrice";
@@ -33,9 +32,9 @@ public class FlashcallVerificationStatusResponsePriceImpl
 
   private OptionalValue<Integer> billableDuration;
 
-  public FlashcallVerificationStatusResponsePriceImpl() {}
+  public StatusPriceImpl() {}
 
-  protected FlashcallVerificationStatusResponsePriceImpl(
+  protected StatusPriceImpl(
       OptionalValue<Price> verificationPrice,
       OptionalValue<Price> terminationPrice,
       OptionalValue<Integer> billableDuration) {
@@ -77,7 +76,7 @@ public class FlashcallVerificationStatusResponsePriceImpl
     return billableDuration;
   }
 
-  /** Return true if this FlashcallVerificationStatusResponse_allOf_price object is equal to o. */
+  /** Return true if this StatusPrice object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -86,14 +85,10 @@ public class FlashcallVerificationStatusResponsePriceImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    FlashcallVerificationStatusResponsePriceImpl flashcallVerificationStatusResponseAllOfPrice =
-        (FlashcallVerificationStatusResponsePriceImpl) o;
-    return Objects.equals(
-            this.verificationPrice, flashcallVerificationStatusResponseAllOfPrice.verificationPrice)
-        && Objects.equals(
-            this.terminationPrice, flashcallVerificationStatusResponseAllOfPrice.terminationPrice)
-        && Objects.equals(
-            this.billableDuration, flashcallVerificationStatusResponseAllOfPrice.billableDuration);
+    StatusPriceImpl statusPrice = (StatusPriceImpl) o;
+    return Objects.equals(this.verificationPrice, statusPrice.verificationPrice)
+        && Objects.equals(this.terminationPrice, statusPrice.terminationPrice)
+        && Objects.equals(this.billableDuration, statusPrice.billableDuration);
   }
 
   @Override
@@ -104,7 +99,7 @@ public class FlashcallVerificationStatusResponsePriceImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class FlashcallVerificationStatusResponsePriceImpl {\n");
+    sb.append("class StatusPriceImpl {\n");
     sb.append("    verificationPrice: ").append(toIndentedString(verificationPrice)).append("\n");
     sb.append("    terminationPrice: ").append(toIndentedString(terminationPrice)).append("\n");
     sb.append("    billableDuration: ").append(toIndentedString(billableDuration)).append("\n");
@@ -123,7 +118,7 @@ public class FlashcallVerificationStatusResponsePriceImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements FlashcallVerificationStatusResponsePrice.Builder {
+  static class Builder implements StatusPrice.Builder {
     OptionalValue<Price> verificationPrice = OptionalValue.empty();
     OptionalValue<Price> terminationPrice = OptionalValue.empty();
     OptionalValue<Integer> billableDuration = OptionalValue.empty();
@@ -146,9 +141,8 @@ public class FlashcallVerificationStatusResponsePriceImpl
       return this;
     }
 
-    public FlashcallVerificationStatusResponsePrice build() {
-      return new FlashcallVerificationStatusResponsePriceImpl(
-          verificationPrice, terminationPrice, billableDuration);
+    public StatusPrice build() {
+      return new StatusPriceImpl(verificationPrice, terminationPrice, billableDuration);
     }
   }
 }

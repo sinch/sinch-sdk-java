@@ -11,14 +11,14 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  StartVerificationResponseCalloutImpl.JSON_PROPERTY_ID,
-  StartVerificationResponseCalloutImpl.JSON_PROPERTY_METHOD,
-  StartVerificationResponseCalloutImpl.JSON_PROPERTY_LINKS
+  StartVerificationResponsePhoneCallImpl.JSON_PROPERTY_ID,
+  StartVerificationResponsePhoneCallImpl.JSON_PROPERTY_METHOD,
+  StartVerificationResponsePhoneCallImpl.JSON_PROPERTY_LINKS
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class StartVerificationResponseCalloutImpl
-    implements StartVerificationResponseCallout,
+public class StartVerificationResponsePhoneCallImpl
+    implements StartVerificationResponsePhoneCall,
         com.sinch.sdk.domains.verification.models.v1.response.StartVerificationResponse {
   private static final long serialVersionUID = 1L;
 
@@ -34,9 +34,9 @@ public class StartVerificationResponseCalloutImpl
 
   private OptionalValue<List<Link>> links;
 
-  public StartVerificationResponseCalloutImpl() {}
+  public StartVerificationResponsePhoneCallImpl() {}
 
-  protected StartVerificationResponseCalloutImpl(
+  protected StartVerificationResponsePhoneCallImpl(
       OptionalValue<String> id, OptionalValue<String> method, OptionalValue<List<Link>> links) {
     this.id = id;
     this.method = method;
@@ -76,7 +76,7 @@ public class StartVerificationResponseCalloutImpl
     return links;
   }
 
-  /** Return true if this CalloutInitiateVerificationResponse object is equal to o. */
+  /** Return true if this PhoneCallInitiateVerificationResponse object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -85,11 +85,11 @@ public class StartVerificationResponseCalloutImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StartVerificationResponseCalloutImpl calloutInitiateVerificationResponse =
-        (StartVerificationResponseCalloutImpl) o;
-    return Objects.equals(this.id, calloutInitiateVerificationResponse.id)
-        && Objects.equals(this.method, calloutInitiateVerificationResponse.method)
-        && Objects.equals(this.links, calloutInitiateVerificationResponse.links);
+    StartVerificationResponsePhoneCallImpl phoneCallInitiateVerificationResponse =
+        (StartVerificationResponsePhoneCallImpl) o;
+    return Objects.equals(this.id, phoneCallInitiateVerificationResponse.id)
+        && Objects.equals(this.method, phoneCallInitiateVerificationResponse.method)
+        && Objects.equals(this.links, phoneCallInitiateVerificationResponse.links);
   }
 
   @Override
@@ -100,7 +100,7 @@ public class StartVerificationResponseCalloutImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class StartVerificationResponseCalloutImpl {\n");
+    sb.append("class StartVerificationResponsePhoneCallImpl {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    method: ").append(toIndentedString(method)).append("\n");
     sb.append("    links: ").append(toIndentedString(links)).append("\n");
@@ -119,7 +119,7 @@ public class StartVerificationResponseCalloutImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements StartVerificationResponseCallout.Builder {
+  static class Builder implements StartVerificationResponsePhoneCall.Builder {
     OptionalValue<String> id = OptionalValue.empty();
     OptionalValue<String> method = OptionalValue.empty();
     OptionalValue<List<Link>> links = OptionalValue.empty();
@@ -142,8 +142,8 @@ public class StartVerificationResponseCalloutImpl
       return this;
     }
 
-    public StartVerificationResponseCallout build() {
-      return new StartVerificationResponseCalloutImpl(id, method, links);
+    public StartVerificationResponsePhoneCall build() {
+      return new StartVerificationResponsePhoneCallImpl(id, method, links);
     }
   }
 }

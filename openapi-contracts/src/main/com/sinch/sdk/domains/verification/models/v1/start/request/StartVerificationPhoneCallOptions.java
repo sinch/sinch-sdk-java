@@ -14,18 +14,19 @@ package com.sinch.sdk.domains.verification.models.v1.start.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** Text-To-Speech engine settings */
-@JsonDeserialize(builder = StartVerificationCalloutOptionsSpeechImpl.Builder.class)
-public interface StartVerificationCalloutOptionsSpeech {
+/**
+ * An optional object for Phone Call Verification, with default values assumed for all contained
+ * values if not provided.
+ */
+@JsonDeserialize(builder = StartVerificationPhoneCallOptionsImpl.Builder.class)
+public interface StartVerificationPhoneCallOptions {
 
   /**
-   * A &#x60;language-region&#x60; identifier according to
-   * [IANA](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry).
-   * Only a subset of those identifiers is accepted.
+   * Get speech
    *
-   * @return locale
+   * @return speech
    */
-  String getLocale();
+  PhoneCallSpeech getSpeech();
 
   /**
    * Getting builder
@@ -33,7 +34,7 @@ public interface StartVerificationCalloutOptionsSpeech {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new StartVerificationCalloutOptionsSpeechImpl.Builder();
+    return new StartVerificationPhoneCallOptionsImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -42,17 +43,17 @@ public interface StartVerificationCalloutOptionsSpeech {
     /**
      * see getter
      *
-     * @param locale see getter
+     * @param speech see getter
      * @return Current builder
-     * @see #getLocale
+     * @see #getSpeech
      */
-    Builder setLocale(String locale);
+    Builder setSpeech(PhoneCallSpeech speech);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    StartVerificationCalloutOptionsSpeech build();
+    StartVerificationPhoneCallOptions build();
   }
 }

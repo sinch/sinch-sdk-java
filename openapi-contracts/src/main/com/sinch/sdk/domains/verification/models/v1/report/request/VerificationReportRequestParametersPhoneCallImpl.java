@@ -10,13 +10,13 @@ import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  VerificationReportRequestParametersCalloutImpl.JSON_PROPERTY_METHOD,
-  VerificationReportRequestParametersCalloutImpl.JSON_PROPERTY_CALLOUT
+  VerificationReportRequestParametersPhoneCallImpl.JSON_PROPERTY_METHOD,
+  VerificationReportRequestParametersPhoneCallImpl.JSON_PROPERTY_CALLOUT
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class VerificationReportRequestParametersCalloutImpl
-    implements VerificationReportRequestParametersCallout {
+public class VerificationReportRequestParametersPhoneCallImpl
+    implements VerificationReportRequestParametersPhoneCall {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_METHOD = "method";
@@ -25,13 +25,13 @@ public class VerificationReportRequestParametersCalloutImpl
 
   public static final String JSON_PROPERTY_CALLOUT = "callout";
 
-  private OptionalValue<VerificationReportRequestParametersCalloutOptions> callout;
+  private OptionalValue<VerificationReportRequestParametersPhoneCallOptions> callout;
 
-  public VerificationReportRequestParametersCalloutImpl() {}
+  public VerificationReportRequestParametersPhoneCallImpl() {}
 
-  protected VerificationReportRequestParametersCalloutImpl(
+  protected VerificationReportRequestParametersPhoneCallImpl(
       OptionalValue<MethodEnum> method,
-      OptionalValue<VerificationReportRequestParametersCalloutOptions> callout) {
+      OptionalValue<VerificationReportRequestParametersPhoneCallOptions> callout) {
     this.method = method;
     this.callout = callout;
   }
@@ -48,17 +48,17 @@ public class VerificationReportRequestParametersCalloutImpl
   }
 
   @JsonIgnore
-  public VerificationReportRequestParametersCalloutOptions getCallout() {
+  public VerificationReportRequestParametersPhoneCallOptions getCallout() {
     return callout.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CALLOUT)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<VerificationReportRequestParametersCalloutOptions> callout() {
+  public OptionalValue<VerificationReportRequestParametersPhoneCallOptions> callout() {
     return callout;
   }
 
-  /** Return true if this CalloutVerificationReportRequest object is equal to o. */
+  /** Return true if this PhoneCallVerificationReportRequest object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -67,10 +67,10 @@ public class VerificationReportRequestParametersCalloutImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerificationReportRequestParametersCalloutImpl calloutVerificationReportRequest =
-        (VerificationReportRequestParametersCalloutImpl) o;
-    return Objects.equals(this.method, calloutVerificationReportRequest.method)
-        && Objects.equals(this.callout, calloutVerificationReportRequest.callout);
+    VerificationReportRequestParametersPhoneCallImpl phoneCallVerificationReportRequest =
+        (VerificationReportRequestParametersPhoneCallImpl) o;
+    return Objects.equals(this.method, phoneCallVerificationReportRequest.method)
+        && Objects.equals(this.callout, phoneCallVerificationReportRequest.callout);
   }
 
   @Override
@@ -81,7 +81,7 @@ public class VerificationReportRequestParametersCalloutImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VerificationReportRequestParametersCalloutImpl {\n");
+    sb.append("class VerificationReportRequestParametersPhoneCallImpl {\n");
     sb.append("    method: ").append(toIndentedString(method)).append("\n");
     sb.append("    callout: ").append(toIndentedString(callout)).append("\n");
     sb.append("}");
@@ -99,9 +99,9 @@ public class VerificationReportRequestParametersCalloutImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements VerificationReportRequestParametersCallout.Builder {
+  static class Builder implements VerificationReportRequestParametersPhoneCall.Builder {
     OptionalValue<MethodEnum> method = OptionalValue.empty();
-    OptionalValue<VerificationReportRequestParametersCalloutOptions> callout =
+    OptionalValue<VerificationReportRequestParametersPhoneCallOptions> callout =
         OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_METHOD)
@@ -111,13 +111,13 @@ public class VerificationReportRequestParametersCalloutImpl
     }
 
     @JsonProperty(JSON_PROPERTY_CALLOUT)
-    public Builder setCallout(VerificationReportRequestParametersCalloutOptions callout) {
+    public Builder setCallout(VerificationReportRequestParametersPhoneCallOptions callout) {
       this.callout = OptionalValue.of(callout);
       return this;
     }
 
-    public VerificationReportRequestParametersCallout build() {
-      return new VerificationReportRequestParametersCalloutImpl(method, callout);
+    public VerificationReportRequestParametersPhoneCall build() {
+      return new VerificationReportRequestParametersPhoneCallImpl(method, callout);
     }
   }
 }

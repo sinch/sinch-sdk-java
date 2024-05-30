@@ -9,20 +9,20 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
-@JsonPropertyOrder({VerificationReportRequestParametersCalloutOptionsImpl.JSON_PROPERTY_CODE})
+@JsonPropertyOrder({VerificationReportRequestParametersPhoneCallOptionsImpl.JSON_PROPERTY_CODE})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class VerificationReportRequestParametersCalloutOptionsImpl
-    implements VerificationReportRequestParametersCalloutOptions {
+public class VerificationReportRequestParametersPhoneCallOptionsImpl
+    implements VerificationReportRequestParametersPhoneCallOptions {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CODE = "code";
 
   private OptionalValue<String> code;
 
-  public VerificationReportRequestParametersCalloutOptionsImpl() {}
+  public VerificationReportRequestParametersPhoneCallOptionsImpl() {}
 
-  protected VerificationReportRequestParametersCalloutOptionsImpl(OptionalValue<String> code) {
+  protected VerificationReportRequestParametersPhoneCallOptionsImpl(OptionalValue<String> code) {
     this.code = code;
   }
 
@@ -37,7 +37,7 @@ public class VerificationReportRequestParametersCalloutOptionsImpl
     return code;
   }
 
-  /** Return true if this CalloutVerificationReportRequest_callout object is equal to o. */
+  /** Return true if this PhoneCallVerificationReportRequest_callout object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -46,9 +46,10 @@ public class VerificationReportRequestParametersCalloutOptionsImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerificationReportRequestParametersCalloutOptionsImpl calloutVerificationReportRequestCallout =
-        (VerificationReportRequestParametersCalloutOptionsImpl) o;
-    return Objects.equals(this.code, calloutVerificationReportRequestCallout.code);
+    VerificationReportRequestParametersPhoneCallOptionsImpl
+        phoneCallVerificationReportRequestCallout =
+            (VerificationReportRequestParametersPhoneCallOptionsImpl) o;
+    return Objects.equals(this.code, phoneCallVerificationReportRequestCallout.code);
   }
 
   @Override
@@ -59,7 +60,7 @@ public class VerificationReportRequestParametersCalloutOptionsImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VerificationReportRequestParametersCalloutOptionsImpl {\n");
+    sb.append("class VerificationReportRequestParametersPhoneCallOptionsImpl {\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -76,7 +77,7 @@ public class VerificationReportRequestParametersCalloutOptionsImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements VerificationReportRequestParametersCalloutOptions.Builder {
+  static class Builder implements VerificationReportRequestParametersPhoneCallOptions.Builder {
     OptionalValue<String> code = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CODE)
@@ -85,8 +86,8 @@ public class VerificationReportRequestParametersCalloutOptionsImpl
       return this;
     }
 
-    public VerificationReportRequestParametersCalloutOptions build() {
-      return new VerificationReportRequestParametersCalloutOptionsImpl(code);
+    public VerificationReportRequestParametersPhoneCallOptions build() {
+      return new VerificationReportRequestParametersPhoneCallOptionsImpl(code);
     }
   }
 }

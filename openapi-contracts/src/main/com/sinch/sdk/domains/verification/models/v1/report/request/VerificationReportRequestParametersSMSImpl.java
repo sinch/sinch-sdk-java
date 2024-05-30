@@ -10,13 +10,13 @@ import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  VerificationReportRequestParametersSMSImpl.JSON_PROPERTY_METHOD,
-  VerificationReportRequestParametersSMSImpl.JSON_PROPERTY_SMS
+  VerificationReportRequestParametersSmsImpl.JSON_PROPERTY_METHOD,
+  VerificationReportRequestParametersSmsImpl.JSON_PROPERTY_SMS
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class VerificationReportRequestParametersSMSImpl
-    implements VerificationReportRequestParametersSMS {
+public class VerificationReportRequestParametersSmsImpl
+    implements VerificationReportRequestParametersSms {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_METHOD = "method";
@@ -25,13 +25,13 @@ public class VerificationReportRequestParametersSMSImpl
 
   public static final String JSON_PROPERTY_SMS = "sms";
 
-  private OptionalValue<VerificationReportRequestParametersSMSOptions> sms;
+  private OptionalValue<VerificationReportRequestParametersSmsOptions> sms;
 
-  public VerificationReportRequestParametersSMSImpl() {}
+  public VerificationReportRequestParametersSmsImpl() {}
 
-  protected VerificationReportRequestParametersSMSImpl(
+  protected VerificationReportRequestParametersSmsImpl(
       OptionalValue<MethodEnum> method,
-      OptionalValue<VerificationReportRequestParametersSMSOptions> sms) {
+      OptionalValue<VerificationReportRequestParametersSmsOptions> sms) {
     this.method = method;
     this.sms = sms;
   }
@@ -48,13 +48,13 @@ public class VerificationReportRequestParametersSMSImpl
   }
 
   @JsonIgnore
-  public VerificationReportRequestParametersSMSOptions getSms() {
+  public VerificationReportRequestParametersSmsOptions getSms() {
     return sms.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_SMS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<VerificationReportRequestParametersSMSOptions> sms() {
+  public OptionalValue<VerificationReportRequestParametersSmsOptions> sms() {
     return sms;
   }
 
@@ -67,8 +67,8 @@ public class VerificationReportRequestParametersSMSImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerificationReportRequestParametersSMSImpl smsVerificationReportRequest =
-        (VerificationReportRequestParametersSMSImpl) o;
+    VerificationReportRequestParametersSmsImpl smsVerificationReportRequest =
+        (VerificationReportRequestParametersSmsImpl) o;
     return Objects.equals(this.method, smsVerificationReportRequest.method)
         && Objects.equals(this.sms, smsVerificationReportRequest.sms);
   }
@@ -81,7 +81,7 @@ public class VerificationReportRequestParametersSMSImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VerificationReportRequestParametersSMSImpl {\n");
+    sb.append("class VerificationReportRequestParametersSmsImpl {\n");
     sb.append("    method: ").append(toIndentedString(method)).append("\n");
     sb.append("    sms: ").append(toIndentedString(sms)).append("\n");
     sb.append("}");
@@ -99,9 +99,9 @@ public class VerificationReportRequestParametersSMSImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements VerificationReportRequestParametersSMS.Builder {
+  static class Builder implements VerificationReportRequestParametersSms.Builder {
     OptionalValue<MethodEnum> method = OptionalValue.empty();
-    OptionalValue<VerificationReportRequestParametersSMSOptions> sms = OptionalValue.empty();
+    OptionalValue<VerificationReportRequestParametersSmsOptions> sms = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_METHOD)
     public Builder setMethod(MethodEnum method) {
@@ -110,13 +110,13 @@ public class VerificationReportRequestParametersSMSImpl
     }
 
     @JsonProperty(JSON_PROPERTY_SMS)
-    public Builder setSms(VerificationReportRequestParametersSMSOptions sms) {
+    public Builder setSms(VerificationReportRequestParametersSmsOptions sms) {
       this.sms = OptionalValue.of(sms);
       return this;
     }
 
-    public VerificationReportRequestParametersSMS build() {
-      return new VerificationReportRequestParametersSMSImpl(method, sms);
+    public VerificationReportRequestParametersSms build() {
+      return new VerificationReportRequestParametersSmsImpl(method, sms);
     }
   }
 }

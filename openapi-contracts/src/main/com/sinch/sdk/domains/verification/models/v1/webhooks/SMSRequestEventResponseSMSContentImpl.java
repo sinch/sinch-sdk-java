@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  SMSRequestEventResponseSMSContentImpl.JSON_PROPERTY_CODE,
-  SMSRequestEventResponseSMSContentImpl.JSON_PROPERTY_ACCEPT_LANGUAGE
+  SmsRequestEventResponseSmsContentImpl.JSON_PROPERTY_CODE,
+  SmsRequestEventResponseSmsContentImpl.JSON_PROPERTY_ACCEPT_LANGUAGE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class SMSRequestEventResponseSMSContentImpl implements SMSRequestEventResponseSMSContent {
+public class SmsRequestEventResponseSmsContentImpl implements SmsRequestEventResponseSmsContent {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CODE = "code";
@@ -27,9 +27,9 @@ public class SMSRequestEventResponseSMSContentImpl implements SMSRequestEventRes
 
   private OptionalValue<List<String>> acceptLanguage;
 
-  public SMSRequestEventResponseSMSContentImpl() {}
+  public SmsRequestEventResponseSmsContentImpl() {}
 
-  protected SMSRequestEventResponseSMSContentImpl(
+  protected SmsRequestEventResponseSmsContentImpl(
       OptionalValue<String> code, OptionalValue<List<String>> acceptLanguage) {
     this.code = code;
     this.acceptLanguage = acceptLanguage;
@@ -57,7 +57,7 @@ public class SMSRequestEventResponseSMSContentImpl implements SMSRequestEventRes
     return acceptLanguage;
   }
 
-  /** Return true if this SMSRequestEventResponse_sms object is equal to o. */
+  /** Return true if this SmsRequestEventResponse_sms object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -66,10 +66,10 @@ public class SMSRequestEventResponseSMSContentImpl implements SMSRequestEventRes
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SMSRequestEventResponseSMSContentImpl smSRequestEventResponseSms =
-        (SMSRequestEventResponseSMSContentImpl) o;
-    return Objects.equals(this.code, smSRequestEventResponseSms.code)
-        && Objects.equals(this.acceptLanguage, smSRequestEventResponseSms.acceptLanguage);
+    SmsRequestEventResponseSmsContentImpl smsRequestEventResponseSms =
+        (SmsRequestEventResponseSmsContentImpl) o;
+    return Objects.equals(this.code, smsRequestEventResponseSms.code)
+        && Objects.equals(this.acceptLanguage, smsRequestEventResponseSms.acceptLanguage);
   }
 
   @Override
@@ -80,7 +80,7 @@ public class SMSRequestEventResponseSMSContentImpl implements SMSRequestEventRes
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SMSRequestEventResponseSMSContentImpl {\n");
+    sb.append("class SmsRequestEventResponseSmsContentImpl {\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    acceptLanguage: ").append(toIndentedString(acceptLanguage)).append("\n");
     sb.append("}");
@@ -98,7 +98,7 @@ public class SMSRequestEventResponseSMSContentImpl implements SMSRequestEventRes
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements SMSRequestEventResponseSMSContent.Builder {
+  static class Builder implements SmsRequestEventResponseSmsContent.Builder {
     OptionalValue<String> code = OptionalValue.empty();
     OptionalValue<List<String>> acceptLanguage = OptionalValue.empty();
 
@@ -114,8 +114,8 @@ public class SMSRequestEventResponseSMSContentImpl implements SMSRequestEventRes
       return this;
     }
 
-    public SMSRequestEventResponseSMSContent build() {
-      return new SMSRequestEventResponseSMSContentImpl(code, acceptLanguage);
+    public SmsRequestEventResponseSmsContent build() {
+      return new SmsRequestEventResponseSmsContentImpl(code, acceptLanguage);
     }
   }
 }

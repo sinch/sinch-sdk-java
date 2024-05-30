@@ -22,8 +22,8 @@ import java.util.stream.Stream;
  * An optional object for SMS Verification, with default values assumed for all contained values if
  * not provided.
  */
-@JsonDeserialize(builder = StartVerificationSMSOptionsImpl.Builder.class)
-public interface StartVerificationSMSOptions {
+@JsonDeserialize(builder = StartVerificationSmsOptionsImpl.Builder.class)
+public interface StartVerificationSmsOptions {
 
   /**
    * The expiration time for a verification process is represented in the format
@@ -81,7 +81,7 @@ public interface StartVerificationSMSOptions {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new StartVerificationSMSOptionsImpl.Builder();
+    return new StartVerificationSmsOptionsImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -119,6 +119,6 @@ public interface StartVerificationSMSOptions {
      *
      * @return The instance build with current builder values
      */
-    StartVerificationSMSOptions build();
+    StartVerificationSmsOptions build();
   }
 }

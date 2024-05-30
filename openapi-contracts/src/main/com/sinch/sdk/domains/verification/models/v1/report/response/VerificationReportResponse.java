@@ -15,6 +15,7 @@ package com.sinch.sdk.domains.verification.models.v1.report.response;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
+import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
 
 /** declaration */
 @JsonDeserialize(builder = VerificationReportResponseImpl.Builder.class)
@@ -40,6 +41,21 @@ public interface VerificationReportResponse {
    * @return status
    */
   VerificationStatus getStatus();
+
+  /**
+   * Get reason
+   *
+   * @return reason
+   */
+  VerificationStatusReason getReason();
+
+  /**
+   * If the Verification method type is &#x60;callout&#x60; or &#x60;flashcall&#x60;, this displays
+   * if the call was completed successfully.
+   *
+   * @return callComplete
+   */
+  Boolean getCallComplete();
 
   /**
    * Getting builder
@@ -79,6 +95,24 @@ public interface VerificationReportResponse {
      * @see #getStatus
      */
     Builder setStatus(VerificationStatus status);
+
+    /**
+     * see getter
+     *
+     * @param reason see getter
+     * @return Current builder
+     * @see #getReason
+     */
+    Builder setReason(VerificationStatusReason reason);
+
+    /**
+     * see getter
+     *
+     * @param callComplete see getter
+     * @return Current builder
+     * @see #getCallComplete
+     */
+    Builder setCallComplete(Boolean callComplete);
 
     /**
      * Create instance

@@ -10,13 +10,13 @@ import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  StartVerificationResponseSMSContentImpl.JSON_PROPERTY_TEMPLATE,
-  StartVerificationResponseSMSContentImpl.JSON_PROPERTY_INTERCEPTION_TIMEOUT
+  StartVerificationResponseSmsContentImpl.JSON_PROPERTY_TEMPLATE,
+  StartVerificationResponseSmsContentImpl.JSON_PROPERTY_INTERCEPTION_TIMEOUT
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class StartVerificationResponseSMSContentImpl
-    implements StartVerificationResponseSMSContent {
+public class StartVerificationResponseSmsContentImpl
+    implements StartVerificationResponseSmsContent {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_TEMPLATE = "template";
@@ -27,9 +27,9 @@ public class StartVerificationResponseSMSContentImpl
 
   private OptionalValue<Integer> interceptionTimeout;
 
-  public StartVerificationResponseSMSContentImpl() {}
+  public StartVerificationResponseSmsContentImpl() {}
 
-  protected StartVerificationResponseSMSContentImpl(
+  protected StartVerificationResponseSmsContentImpl(
       OptionalValue<String> template, OptionalValue<Integer> interceptionTimeout) {
     this.template = template;
     this.interceptionTimeout = interceptionTimeout;
@@ -57,7 +57,7 @@ public class StartVerificationResponseSMSContentImpl
     return interceptionTimeout;
   }
 
-  /** Return true if this SMSInitiateVerificationResponse_sms object is equal to o. */
+  /** Return true if this SmsInitiateVerificationResponse_sms object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -66,11 +66,11 @@ public class StartVerificationResponseSMSContentImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StartVerificationResponseSMSContentImpl smSInitiateVerificationResponseSms =
-        (StartVerificationResponseSMSContentImpl) o;
-    return Objects.equals(this.template, smSInitiateVerificationResponseSms.template)
+    StartVerificationResponseSmsContentImpl smsInitiateVerificationResponseSms =
+        (StartVerificationResponseSmsContentImpl) o;
+    return Objects.equals(this.template, smsInitiateVerificationResponseSms.template)
         && Objects.equals(
-            this.interceptionTimeout, smSInitiateVerificationResponseSms.interceptionTimeout);
+            this.interceptionTimeout, smsInitiateVerificationResponseSms.interceptionTimeout);
   }
 
   @Override
@@ -81,7 +81,7 @@ public class StartVerificationResponseSMSContentImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class StartVerificationResponseSMSContentImpl {\n");
+    sb.append("class StartVerificationResponseSmsContentImpl {\n");
     sb.append("    template: ").append(toIndentedString(template)).append("\n");
     sb.append("    interceptionTimeout: ")
         .append(toIndentedString(interceptionTimeout))
@@ -101,7 +101,7 @@ public class StartVerificationResponseSMSContentImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements StartVerificationResponseSMSContent.Builder {
+  static class Builder implements StartVerificationResponseSmsContent.Builder {
     OptionalValue<String> template = OptionalValue.empty();
     OptionalValue<Integer> interceptionTimeout = OptionalValue.empty();
 
@@ -117,8 +117,8 @@ public class StartVerificationResponseSMSContentImpl
       return this;
     }
 
-    public StartVerificationResponseSMSContent build() {
-      return new StartVerificationResponseSMSContentImpl(template, interceptionTimeout);
+    public StartVerificationResponseSmsContent build() {
+      return new StartVerificationResponseSmsContentImpl(template, interceptionTimeout);
     }
   }
 }

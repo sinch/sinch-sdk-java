@@ -10,12 +10,12 @@ import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  CalloutRequestEventResponseImpl.JSON_PROPERTY_ACTION,
-  CalloutRequestEventResponseImpl.JSON_PROPERTY_CALLOUT
+  PhoneCallRequestEventResponseImpl.JSON_PROPERTY_ACTION,
+  PhoneCallRequestEventResponseImpl.JSON_PROPERTY_CALLOUT
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class CalloutRequestEventResponseImpl implements CalloutRequestEventResponse {
+public class PhoneCallRequestEventResponseImpl implements PhoneCallRequestEventResponse {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ACTION = "action";
@@ -24,13 +24,13 @@ public class CalloutRequestEventResponseImpl implements CalloutRequestEventRespo
 
   public static final String JSON_PROPERTY_CALLOUT = "callout";
 
-  private OptionalValue<CalloutRequestEventResponseCalloutContent> callout;
+  private OptionalValue<PhoneCallRequestEventResponsePhoneCallContent> callout;
 
-  public CalloutRequestEventResponseImpl() {}
+  public PhoneCallRequestEventResponseImpl() {}
 
-  protected CalloutRequestEventResponseImpl(
+  protected PhoneCallRequestEventResponseImpl(
       OptionalValue<VerificationEventResponseAction> action,
-      OptionalValue<CalloutRequestEventResponseCalloutContent> callout) {
+      OptionalValue<PhoneCallRequestEventResponsePhoneCallContent> callout) {
     this.action = action;
     this.callout = callout;
   }
@@ -47,17 +47,17 @@ public class CalloutRequestEventResponseImpl implements CalloutRequestEventRespo
   }
 
   @JsonIgnore
-  public CalloutRequestEventResponseCalloutContent getCallout() {
+  public PhoneCallRequestEventResponsePhoneCallContent getCallout() {
     return callout.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CALLOUT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<CalloutRequestEventResponseCalloutContent> callout() {
+  public OptionalValue<PhoneCallRequestEventResponsePhoneCallContent> callout() {
     return callout;
   }
 
-  /** Return true if this CalloutRequestEventResponse object is equal to o. */
+  /** Return true if this PhoneCallRequestEventResponse object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -66,10 +66,10 @@ public class CalloutRequestEventResponseImpl implements CalloutRequestEventRespo
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CalloutRequestEventResponseImpl calloutRequestEventResponse =
-        (CalloutRequestEventResponseImpl) o;
-    return Objects.equals(this.action, calloutRequestEventResponse.action)
-        && Objects.equals(this.callout, calloutRequestEventResponse.callout);
+    PhoneCallRequestEventResponseImpl phoneCallRequestEventResponse =
+        (PhoneCallRequestEventResponseImpl) o;
+    return Objects.equals(this.action, phoneCallRequestEventResponse.action)
+        && Objects.equals(this.callout, phoneCallRequestEventResponse.callout);
   }
 
   @Override
@@ -80,7 +80,7 @@ public class CalloutRequestEventResponseImpl implements CalloutRequestEventRespo
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CalloutRequestEventResponseImpl {\n");
+    sb.append("class PhoneCallRequestEventResponseImpl {\n");
     sb.append("    action: ").append(toIndentedString(action)).append("\n");
     sb.append("    callout: ").append(toIndentedString(callout)).append("\n");
     sb.append("}");
@@ -98,9 +98,9 @@ public class CalloutRequestEventResponseImpl implements CalloutRequestEventRespo
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements CalloutRequestEventResponse.Builder {
+  static class Builder implements PhoneCallRequestEventResponse.Builder {
     OptionalValue<VerificationEventResponseAction> action = OptionalValue.empty();
-    OptionalValue<CalloutRequestEventResponseCalloutContent> callout = OptionalValue.empty();
+    OptionalValue<PhoneCallRequestEventResponsePhoneCallContent> callout = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_ACTION)
     public Builder setAction(VerificationEventResponseAction action) {
@@ -109,13 +109,13 @@ public class CalloutRequestEventResponseImpl implements CalloutRequestEventRespo
     }
 
     @JsonProperty(JSON_PROPERTY_CALLOUT)
-    public Builder setCallout(CalloutRequestEventResponseCalloutContent callout) {
+    public Builder setCallout(PhoneCallRequestEventResponsePhoneCallContent callout) {
       this.callout = OptionalValue.of(callout);
       return this;
     }
 
-    public CalloutRequestEventResponse build() {
-      return new CalloutRequestEventResponseImpl(action, callout);
+    public PhoneCallRequestEventResponse build() {
+      return new PhoneCallRequestEventResponseImpl(action, callout);
     }
   }
 }

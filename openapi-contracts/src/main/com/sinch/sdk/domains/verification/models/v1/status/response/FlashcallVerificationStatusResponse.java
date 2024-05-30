@@ -18,12 +18,14 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
 import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
+import com.sinch.sdk.domains.verification.models.v1.status.StatusCall;
+import com.sinch.sdk.domains.verification.models.v1.status.StatusPrice;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
 /** declaration */
-@JsonDeserialize(builder = FlashcallVerificationStatusResponseImpl.Builder.class)
-public interface FlashcallVerificationStatusResponse {
+@JsonDeserialize(builder = FlashCallVerificationStatusResponseImpl.Builder.class)
+public interface FlashCallVerificationStatusResponse {
 
   /**
    * The unique ID of the verification request.
@@ -110,11 +112,25 @@ public interface FlashcallVerificationStatusResponse {
   MethodEnum getMethod();
 
   /**
+   * Shows whether the call is complete or not.
+   *
+   * @return callComplete
+   */
+  Boolean getCallComplete();
+
+  /**
+   * Get callResult
+   *
+   * @return callResult
+   */
+  StatusCall getCallResult();
+
+  /**
    * Get price
    *
    * @return price
    */
-  FlashcallVerificationStatusResponsePrice getPrice();
+  StatusPrice getPrice();
 
   /** Free text that the client is sending, used to show if the call/SMS was intercepted or not. */
   public class SourceEnum extends EnumDynamic<String, SourceEnum> {
@@ -155,7 +171,7 @@ public interface FlashcallVerificationStatusResponse {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new FlashcallVerificationStatusResponseImpl.Builder();
+    return new FlashCallVerificationStatusResponseImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -236,11 +252,29 @@ public interface FlashcallVerificationStatusResponse {
     /**
      * see getter
      *
+     * @param callComplete see getter
+     * @return Current builder
+     * @see #getCallComplete
+     */
+    Builder setCallComplete(Boolean callComplete);
+
+    /**
+     * see getter
+     *
+     * @param callResult see getter
+     * @return Current builder
+     * @see #getCallResult
+     */
+    Builder setCallResult(StatusCall callResult);
+
+    /**
+     * see getter
+     *
      * @param price see getter
      * @return Current builder
      * @see #getPrice
      */
-    Builder setPrice(FlashcallVerificationStatusResponsePrice price);
+    Builder setPrice(StatusPrice price);
 
     /**
      * see getter
@@ -256,6 +290,6 @@ public interface FlashcallVerificationStatusResponse {
      *
      * @return The instance build with current builder values
      */
-    FlashcallVerificationStatusResponse build();
+    FlashCallVerificationStatusResponse build();
   }
 }

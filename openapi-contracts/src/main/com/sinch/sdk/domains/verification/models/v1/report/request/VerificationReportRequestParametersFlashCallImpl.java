@@ -58,7 +58,7 @@ public class VerificationReportRequestParametersFlashCallImpl
     return flashCall;
   }
 
-  /** Return true if this FlashcallVerificationReportRequest object is equal to o. */
+  /** Return true if this FlashCallVerificationReportRequest object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -67,10 +67,10 @@ public class VerificationReportRequestParametersFlashCallImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerificationReportRequestParametersFlashCallImpl flashcallVerificationReportRequest =
+    VerificationReportRequestParametersFlashCallImpl flashCallVerificationReportRequest =
         (VerificationReportRequestParametersFlashCallImpl) o;
-    return Objects.equals(this.method, flashcallVerificationReportRequest.method)
-        && Objects.equals(this.flashCall, flashcallVerificationReportRequest.flashCall);
+    return Objects.equals(this.method, flashCallVerificationReportRequest.method)
+        && Objects.equals(this.flashCall, flashCallVerificationReportRequest.flashCall);
   }
 
   @Override

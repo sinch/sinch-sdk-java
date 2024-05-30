@@ -9,20 +9,19 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
-@JsonPropertyOrder({StartVerificationCalloutOptionsSpeechImpl.JSON_PROPERTY_LOCALE})
+@JsonPropertyOrder({PhoneCallSpeechImpl.JSON_PROPERTY_LOCALE})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class StartVerificationCalloutOptionsSpeechImpl
-    implements StartVerificationCalloutOptionsSpeech {
+public class PhoneCallSpeechImpl implements PhoneCallSpeech {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_LOCALE = "locale";
 
   private OptionalValue<String> locale;
 
-  public StartVerificationCalloutOptionsSpeechImpl() {}
+  public PhoneCallSpeechImpl() {}
 
-  protected StartVerificationCalloutOptionsSpeechImpl(OptionalValue<String> locale) {
+  protected PhoneCallSpeechImpl(OptionalValue<String> locale) {
     this.locale = locale;
   }
 
@@ -37,9 +36,7 @@ public class StartVerificationCalloutOptionsSpeechImpl
     return locale;
   }
 
-  /**
-   * Return true if this InitiateVerificationResource_calloutOptions_speech object is equal to o.
-   */
+  /** Return true if this PhoneCallSpeech object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -48,9 +45,8 @@ public class StartVerificationCalloutOptionsSpeechImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StartVerificationCalloutOptionsSpeechImpl initiateVerificationResourceCalloutOptionsSpeech =
-        (StartVerificationCalloutOptionsSpeechImpl) o;
-    return Objects.equals(this.locale, initiateVerificationResourceCalloutOptionsSpeech.locale);
+    PhoneCallSpeechImpl phoneCallSpeech = (PhoneCallSpeechImpl) o;
+    return Objects.equals(this.locale, phoneCallSpeech.locale);
   }
 
   @Override
@@ -61,7 +57,7 @@ public class StartVerificationCalloutOptionsSpeechImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class StartVerificationCalloutOptionsSpeechImpl {\n");
+    sb.append("class PhoneCallSpeechImpl {\n");
     sb.append("    locale: ").append(toIndentedString(locale)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -78,7 +74,7 @@ public class StartVerificationCalloutOptionsSpeechImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements StartVerificationCalloutOptionsSpeech.Builder {
+  static class Builder implements PhoneCallSpeech.Builder {
     OptionalValue<String> locale = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_LOCALE)
@@ -87,8 +83,8 @@ public class StartVerificationCalloutOptionsSpeechImpl
       return this;
     }
 
-    public StartVerificationCalloutOptionsSpeech build() {
-      return new StartVerificationCalloutOptionsSpeechImpl(locale);
+    public PhoneCallSpeech build() {
+      return new PhoneCallSpeechImpl(locale);
     }
   }
 }

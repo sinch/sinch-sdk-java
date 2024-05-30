@@ -19,8 +19,8 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 /** declaration */
-@JsonDeserialize(builder = VerificationReportRequestParametersCalloutImpl.Builder.class)
-public interface VerificationReportRequestParametersCallout {
+@JsonDeserialize(builder = VerificationReportRequestParametersPhoneCallImpl.Builder.class)
+public interface VerificationReportRequestParametersPhoneCall {
 
   /** The type of verification. */
   public class MethodEnum extends EnumDynamic<String, MethodEnum> {
@@ -58,7 +58,7 @@ public interface VerificationReportRequestParametersCallout {
    *
    * @return callout
    */
-  VerificationReportRequestParametersCalloutOptions getCallout();
+  VerificationReportRequestParametersPhoneCallOptions getCallout();
 
   /**
    * Getting builder
@@ -66,7 +66,7 @@ public interface VerificationReportRequestParametersCallout {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationReportRequestParametersCalloutImpl.Builder();
+    return new VerificationReportRequestParametersPhoneCallImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -88,13 +88,13 @@ public interface VerificationReportRequestParametersCallout {
      * @return Current builder
      * @see #getCallout
      */
-    Builder setCallout(VerificationReportRequestParametersCalloutOptions callout);
+    Builder setCallout(VerificationReportRequestParametersPhoneCallOptions callout);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    VerificationReportRequestParametersCallout build();
+    VerificationReportRequestParametersPhoneCall build();
   }
 }

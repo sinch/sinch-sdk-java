@@ -60,14 +60,14 @@ public interface StartVerificationRequestParameters {
    *
    * @return smsOptions
    */
-  StartVerificationSMSOptions getSmsOptions();
+  StartVerificationSmsOptions getSmsOptions();
 
   /**
    * Get calloutOptions
    *
    * @return calloutOptions
    */
-  StartVerificationCalloutOptions getCalloutOptions();
+  StartVerificationPhoneCallOptions getCalloutOptions();
 
   /**
    * Getting builder
@@ -133,7 +133,7 @@ public interface StartVerificationRequestParameters {
      * @return Current builder
      * @see #getSmsOptions
      */
-    Builder setSmsOptions(StartVerificationSMSOptions smsOptions);
+    Builder setSmsOptions(StartVerificationSmsOptions smsOptions);
 
     /**
      * see getter
@@ -142,7 +142,7 @@ public interface StartVerificationRequestParameters {
      * @return Current builder
      * @see #getCalloutOptions
      */
-    Builder setCalloutOptions(StartVerificationCalloutOptions calloutOptions);
+    Builder setCalloutOptions(StartVerificationPhoneCallOptions calloutOptions);
 
     /**
      * Create instance

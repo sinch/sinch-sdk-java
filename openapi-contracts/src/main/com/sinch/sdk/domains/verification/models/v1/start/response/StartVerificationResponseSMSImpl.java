@@ -11,15 +11,15 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  StartVerificationResponseSMSImpl.JSON_PROPERTY_ID,
-  StartVerificationResponseSMSImpl.JSON_PROPERTY_METHOD,
-  StartVerificationResponseSMSImpl.JSON_PROPERTY_SMS,
-  StartVerificationResponseSMSImpl.JSON_PROPERTY_LINKS
+  StartVerificationResponseSmsImpl.JSON_PROPERTY_ID,
+  StartVerificationResponseSmsImpl.JSON_PROPERTY_METHOD,
+  StartVerificationResponseSmsImpl.JSON_PROPERTY_SMS,
+  StartVerificationResponseSmsImpl.JSON_PROPERTY_LINKS
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class StartVerificationResponseSMSImpl
-    implements StartVerificationResponseSMS,
+public class StartVerificationResponseSmsImpl
+    implements StartVerificationResponseSms,
         com.sinch.sdk.domains.verification.models.v1.response.StartVerificationResponse {
   private static final long serialVersionUID = 1L;
 
@@ -33,18 +33,18 @@ public class StartVerificationResponseSMSImpl
 
   public static final String JSON_PROPERTY_SMS = "sms";
 
-  private OptionalValue<StartVerificationResponseSMSContent> sms;
+  private OptionalValue<StartVerificationResponseSmsContent> sms;
 
   public static final String JSON_PROPERTY_LINKS = "_links";
 
   private OptionalValue<List<Link>> links;
 
-  public StartVerificationResponseSMSImpl() {}
+  public StartVerificationResponseSmsImpl() {}
 
-  protected StartVerificationResponseSMSImpl(
+  protected StartVerificationResponseSmsImpl(
       OptionalValue<String> id,
       OptionalValue<String> method,
-      OptionalValue<StartVerificationResponseSMSContent> sms,
+      OptionalValue<StartVerificationResponseSmsContent> sms,
       OptionalValue<List<Link>> links) {
     this.id = id;
     this.method = method;
@@ -75,13 +75,13 @@ public class StartVerificationResponseSMSImpl
   }
 
   @JsonIgnore
-  public StartVerificationResponseSMSContent getSms() {
+  public StartVerificationResponseSmsContent getSms() {
     return sms.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_SMS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<StartVerificationResponseSMSContent> sms() {
+  public OptionalValue<StartVerificationResponseSmsContent> sms() {
     return sms;
   }
 
@@ -96,7 +96,7 @@ public class StartVerificationResponseSMSImpl
     return links;
   }
 
-  /** Return true if this SMSInitiateVerificationResponse object is equal to o. */
+  /** Return true if this SmsInitiateVerificationResponse object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -105,12 +105,12 @@ public class StartVerificationResponseSMSImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StartVerificationResponseSMSImpl smSInitiateVerificationResponse =
-        (StartVerificationResponseSMSImpl) o;
-    return Objects.equals(this.id, smSInitiateVerificationResponse.id)
-        && Objects.equals(this.method, smSInitiateVerificationResponse.method)
-        && Objects.equals(this.sms, smSInitiateVerificationResponse.sms)
-        && Objects.equals(this.links, smSInitiateVerificationResponse.links);
+    StartVerificationResponseSmsImpl smsInitiateVerificationResponse =
+        (StartVerificationResponseSmsImpl) o;
+    return Objects.equals(this.id, smsInitiateVerificationResponse.id)
+        && Objects.equals(this.method, smsInitiateVerificationResponse.method)
+        && Objects.equals(this.sms, smsInitiateVerificationResponse.sms)
+        && Objects.equals(this.links, smsInitiateVerificationResponse.links);
   }
 
   @Override
@@ -121,7 +121,7 @@ public class StartVerificationResponseSMSImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class StartVerificationResponseSMSImpl {\n");
+    sb.append("class StartVerificationResponseSmsImpl {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    method: ").append(toIndentedString(method)).append("\n");
     sb.append("    sms: ").append(toIndentedString(sms)).append("\n");
@@ -141,10 +141,10 @@ public class StartVerificationResponseSMSImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements StartVerificationResponseSMS.Builder {
+  static class Builder implements StartVerificationResponseSms.Builder {
     OptionalValue<String> id = OptionalValue.empty();
     OptionalValue<String> method = OptionalValue.empty();
-    OptionalValue<StartVerificationResponseSMSContent> sms = OptionalValue.empty();
+    OptionalValue<StartVerificationResponseSmsContent> sms = OptionalValue.empty();
     OptionalValue<List<Link>> links = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_ID)
@@ -160,7 +160,7 @@ public class StartVerificationResponseSMSImpl
     }
 
     @JsonProperty(JSON_PROPERTY_SMS)
-    public Builder setSms(StartVerificationResponseSMSContent sms) {
+    public Builder setSms(StartVerificationResponseSmsContent sms) {
       this.sms = OptionalValue.of(sms);
       return this;
     }
@@ -171,8 +171,8 @@ public class StartVerificationResponseSMSImpl
       return this;
     }
 
-    public StartVerificationResponseSMS build() {
-      return new StartVerificationResponseSMSImpl(id, method, sms, links);
+    public StartVerificationResponseSms build() {
+      return new StartVerificationResponseSmsImpl(id, method, sms, links);
     }
   }
 }

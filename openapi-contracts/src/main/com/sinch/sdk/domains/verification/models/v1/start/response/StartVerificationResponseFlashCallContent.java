@@ -21,14 +21,14 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface StartVerificationResponseFlashCallContent {
 
   /**
-   * Filter that should be applied for incoming calls to intercept the Flashcall.
+   * Filter that should be applied for incoming calls to intercept the flash call.
    *
    * @return cliFilter
    */
   String getCliFilter();
 
   /**
-   * Amount of seconds client should wait for the Flashcall.
+   * Amount of seconds client should wait for the flash call.
    *
    * @return interceptionTimeout
    */
@@ -42,7 +42,7 @@ public interface StartVerificationResponseFlashCallContent {
   Integer getReportTimeout();
 
   /**
-   * Used by the SDKs, this setting makes the handset deny the flashcall after the set time in
+   * Used by the SDKs, this setting makes the handset deny the flash call after the set time in
    * seconds.
    *
    * @return denyCallAfter

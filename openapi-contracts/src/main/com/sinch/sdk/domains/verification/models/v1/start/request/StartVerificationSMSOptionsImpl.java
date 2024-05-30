@@ -10,13 +10,13 @@ import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  StartVerificationSMSOptionsImpl.JSON_PROPERTY_EXPIRY,
-  StartVerificationSMSOptionsImpl.JSON_PROPERTY_CODE_TYPE,
-  StartVerificationSMSOptionsImpl.JSON_PROPERTY_TEMPLATE
+  StartVerificationSmsOptionsImpl.JSON_PROPERTY_EXPIRY,
+  StartVerificationSmsOptionsImpl.JSON_PROPERTY_CODE_TYPE,
+  StartVerificationSmsOptionsImpl.JSON_PROPERTY_TEMPLATE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class StartVerificationSMSOptionsImpl implements StartVerificationSMSOptions {
+public class StartVerificationSmsOptionsImpl implements StartVerificationSmsOptions {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_EXPIRY = "expiry";
@@ -31,9 +31,9 @@ public class StartVerificationSMSOptionsImpl implements StartVerificationSMSOpti
 
   private OptionalValue<String> template;
 
-  public StartVerificationSMSOptionsImpl() {}
+  public StartVerificationSmsOptionsImpl() {}
 
-  protected StartVerificationSMSOptionsImpl(
+  protected StartVerificationSmsOptionsImpl(
       OptionalValue<String> expiry,
       OptionalValue<CodeTypeEnum> codeType,
       OptionalValue<String> template) {
@@ -84,8 +84,8 @@ public class StartVerificationSMSOptionsImpl implements StartVerificationSMSOpti
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StartVerificationSMSOptionsImpl initiateVerificationResourceSmsOptions =
-        (StartVerificationSMSOptionsImpl) o;
+    StartVerificationSmsOptionsImpl initiateVerificationResourceSmsOptions =
+        (StartVerificationSmsOptionsImpl) o;
     return Objects.equals(this.expiry, initiateVerificationResourceSmsOptions.expiry)
         && Objects.equals(this.codeType, initiateVerificationResourceSmsOptions.codeType)
         && Objects.equals(this.template, initiateVerificationResourceSmsOptions.template);
@@ -99,7 +99,7 @@ public class StartVerificationSMSOptionsImpl implements StartVerificationSMSOpti
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class StartVerificationSMSOptionsImpl {\n");
+    sb.append("class StartVerificationSmsOptionsImpl {\n");
     sb.append("    expiry: ").append(toIndentedString(expiry)).append("\n");
     sb.append("    codeType: ").append(toIndentedString(codeType)).append("\n");
     sb.append("    template: ").append(toIndentedString(template)).append("\n");
@@ -118,7 +118,7 @@ public class StartVerificationSMSOptionsImpl implements StartVerificationSMSOpti
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements StartVerificationSMSOptions.Builder {
+  static class Builder implements StartVerificationSmsOptions.Builder {
     OptionalValue<String> expiry = OptionalValue.empty();
     OptionalValue<CodeTypeEnum> codeType = OptionalValue.empty();
     OptionalValue<String> template = OptionalValue.empty();
@@ -141,8 +141,8 @@ public class StartVerificationSMSOptionsImpl implements StartVerificationSMSOpti
       return this;
     }
 
-    public StartVerificationSMSOptions build() {
-      return new StartVerificationSMSOptionsImpl(expiry, codeType, template);
+    public StartVerificationSmsOptions build() {
+      return new StartVerificationSmsOptionsImpl(expiry, codeType, template);
     }
   }
 }

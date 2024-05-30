@@ -18,12 +18,14 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
 import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
+import com.sinch.sdk.domains.verification.models.v1.status.StatusCall;
+import com.sinch.sdk.domains.verification.models.v1.status.StatusPrice;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
 /** declaration */
-@JsonDeserialize(builder = CalloutVerificationStatusResponseImpl.Builder.class)
-public interface CalloutVerificationStatusResponse {
+@JsonDeserialize(builder = PhoneCallVerificationStatusResponseImpl.Builder.class)
+public interface PhoneCallVerificationStatusResponse {
 
   /**
    * The unique ID of the verification request.
@@ -117,11 +119,18 @@ public interface CalloutVerificationStatusResponse {
   Boolean getCallComplete();
 
   /**
+   * Get callResult
+   *
+   * @return callResult
+   */
+  StatusCall getCallResult();
+
+  /**
    * Get price
    *
    * @return price
    */
-  FlashcallVerificationStatusResponsePrice getPrice();
+  StatusPrice getPrice();
 
   /**
    * Getting builder
@@ -129,7 +138,7 @@ public interface CalloutVerificationStatusResponse {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new CalloutVerificationStatusResponseImpl.Builder();
+    return new PhoneCallVerificationStatusResponseImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -219,17 +228,26 @@ public interface CalloutVerificationStatusResponse {
     /**
      * see getter
      *
+     * @param callResult see getter
+     * @return Current builder
+     * @see #getCallResult
+     */
+    Builder setCallResult(StatusCall callResult);
+
+    /**
+     * see getter
+     *
      * @param price see getter
      * @return Current builder
      * @see #getPrice
      */
-    Builder setPrice(FlashcallVerificationStatusResponsePrice price);
+    Builder setPrice(StatusPrice price);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    CalloutVerificationStatusResponse build();
+    PhoneCallVerificationStatusResponse build();
   }
 }

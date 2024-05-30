@@ -15,8 +15,8 @@ package com.sinch.sdk.domains.verification.models.v1.webhooks;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /** declaration */
-@JsonDeserialize(builder = SMSRequestEventResponseImpl.Builder.class)
-public interface SMSRequestEventResponse {
+@JsonDeserialize(builder = SmsRequestEventResponseImpl.Builder.class)
+public interface SmsRequestEventResponse {
 
   /**
    * Get action
@@ -30,7 +30,7 @@ public interface SMSRequestEventResponse {
    *
    * @return sms
    */
-  SMSRequestEventResponseSMSContent getSms();
+  SmsRequestEventResponseSmsContent getSms();
 
   /**
    * Getting builder
@@ -38,7 +38,7 @@ public interface SMSRequestEventResponse {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new SMSRequestEventResponseImpl.Builder();
+    return new SmsRequestEventResponseImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -60,13 +60,13 @@ public interface SMSRequestEventResponse {
      * @return Current builder
      * @see #getSms
      */
-    Builder setSms(SMSRequestEventResponseSMSContent sms);
+    Builder setSms(SmsRequestEventResponseSmsContent sms);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    SMSRequestEventResponse build();
+    SmsRequestEventResponse build();
   }
 }

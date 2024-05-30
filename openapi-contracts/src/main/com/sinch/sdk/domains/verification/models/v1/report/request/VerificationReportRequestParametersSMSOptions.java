@@ -15,8 +15,8 @@ package com.sinch.sdk.domains.verification.models.v1.report.request;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /** A configuration object containing settings specific to SMS verifications. */
-@JsonDeserialize(builder = VerificationReportRequestParametersSMSOptionsImpl.Builder.class)
-public interface VerificationReportRequestParametersSMSOptions {
+@JsonDeserialize(builder = VerificationReportRequestParametersSmsOptionsImpl.Builder.class)
+public interface VerificationReportRequestParametersSmsOptions {
 
   /**
    * The code which was received by the user submitting the SMS verification.
@@ -38,7 +38,7 @@ public interface VerificationReportRequestParametersSMSOptions {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationReportRequestParametersSMSOptionsImpl.Builder();
+    return new VerificationReportRequestParametersSmsOptionsImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -67,6 +67,6 @@ public interface VerificationReportRequestParametersSMSOptions {
      *
      * @return The instance build with current builder values
      */
-    VerificationReportRequestParametersSMSOptions build();
+    VerificationReportRequestParametersSmsOptions build();
   }
 }

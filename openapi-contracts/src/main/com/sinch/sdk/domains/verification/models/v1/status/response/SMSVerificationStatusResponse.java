@@ -22,8 +22,8 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 /** declaration */
-@JsonDeserialize(builder = SMSVerificationStatusResponseImpl.Builder.class)
-public interface SMSVerificationStatusResponse {
+@JsonDeserialize(builder = SmsVerificationStatusResponseImpl.Builder.class)
+public interface SmsVerificationStatusResponse {
 
   /**
    * The unique ID of the verification request.
@@ -114,7 +114,7 @@ public interface SMSVerificationStatusResponse {
    *
    * @return price
    */
-  SMSVerificationStatusResponsePrice getPrice();
+  SmsVerificationStatusResponsePrice getPrice();
 
   /** Free text that the client is sending, used to show if the call/SMS was intercepted or not. */
   public class SourceEnum extends EnumDynamic<String, SourceEnum> {
@@ -155,7 +155,7 @@ public interface SMSVerificationStatusResponse {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new SMSVerificationStatusResponseImpl.Builder();
+    return new SmsVerificationStatusResponseImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -240,7 +240,7 @@ public interface SMSVerificationStatusResponse {
      * @return Current builder
      * @see #getPrice
      */
-    Builder setPrice(SMSVerificationStatusResponsePrice price);
+    Builder setPrice(SmsVerificationStatusResponsePrice price);
 
     /**
      * see getter
@@ -256,6 +256,6 @@ public interface SMSVerificationStatusResponse {
      *
      * @return The instance build with current builder values
      */
-    SMSVerificationStatusResponse build();
+    SmsVerificationStatusResponse build();
   }
 }

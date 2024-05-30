@@ -19,9 +19,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface FlashCallRequestEventResponseFlashCallContent {
 
   /**
-   * The phone number that will be displayed to the user when the flashcall is received on the
+   * The phone number that will be displayed to the user when the phone call is received on the
    * user&#39;s phone. By default, the Sinch dashboard will randomly select the CLI that will be
-   * displayed during a flashcall from a pool of numbers. If you want to set your own CLI, you can
+   * displayed during a phone call from a pool of numbers. If you want to set your own CLI, you can
    * specify it in the response to the Verification Request Event.
    *
    * @return cli
@@ -29,10 +29,10 @@ public interface FlashCallRequestEventResponseFlashCallContent {
   String getCli();
 
   /**
-   * The maximum time that a flashcall verification will be active and can be completed. If the
+   * The maximum time that a phone call verification will be active and can be completed. If the
    * phone number hasn&#39;t been verified successfully during this time, then the verification
    * request will fail. By default, the Sinch dashboard will automatically optimize dial time out
-   * during a flashcall. If you want to set your own dial time out for the flashcall, you can
+   * during a phone call. If you want to set your own dial time out for the phone call, you can
    * specify it in the response to the Verification Request Event.
    *
    * @return dialTimeout

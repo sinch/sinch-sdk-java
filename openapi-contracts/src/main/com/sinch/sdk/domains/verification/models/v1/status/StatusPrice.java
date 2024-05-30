@@ -10,14 +10,14 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.verification.models.v1.status.response;
+package com.sinch.sdk.domains.verification.models.v1.status;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.verification.models.v1.Price;
 
 /** Prices associated with this verification */
-@JsonDeserialize(builder = FlashcallVerificationStatusResponsePriceImpl.Builder.class)
-public interface FlashcallVerificationStatusResponsePrice {
+@JsonDeserialize(builder = StatusPriceImpl.Builder.class)
+public interface StatusPrice {
 
   /**
    * Get verificationPrice
@@ -48,7 +48,7 @@ public interface FlashcallVerificationStatusResponsePrice {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new FlashcallVerificationStatusResponsePriceImpl.Builder();
+    return new StatusPriceImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -86,6 +86,6 @@ public interface FlashcallVerificationStatusResponsePrice {
      *
      * @return The instance build with current builder values
      */
-    FlashcallVerificationStatusResponsePrice build();
+    StatusPrice build();
   }
 }

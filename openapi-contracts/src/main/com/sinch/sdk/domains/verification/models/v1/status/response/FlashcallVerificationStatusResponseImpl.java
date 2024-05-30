@@ -10,24 +10,28 @@ import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
 import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
+import com.sinch.sdk.domains.verification.models.v1.status.StatusCall;
+import com.sinch.sdk.domains.verification.models.v1.status.StatusPrice;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  FlashcallVerificationStatusResponseImpl.JSON_PROPERTY_ID,
-  FlashcallVerificationStatusResponseImpl.JSON_PROPERTY_STATUS,
-  FlashcallVerificationStatusResponseImpl.JSON_PROPERTY_REASON,
-  FlashcallVerificationStatusResponseImpl.JSON_PROPERTY_REFERENCE,
-  FlashcallVerificationStatusResponseImpl.JSON_PROPERTY_IDENTITY,
-  FlashcallVerificationStatusResponseImpl.JSON_PROPERTY_COUNTRY_ID,
-  FlashcallVerificationStatusResponseImpl.JSON_PROPERTY_VERIFICATION_TIMESTAMP,
-  FlashcallVerificationStatusResponseImpl.JSON_PROPERTY_METHOD,
-  FlashcallVerificationStatusResponseImpl.JSON_PROPERTY_PRICE,
-  FlashcallVerificationStatusResponseImpl.JSON_PROPERTY_SOURCE
+  FlashCallVerificationStatusResponseImpl.JSON_PROPERTY_ID,
+  FlashCallVerificationStatusResponseImpl.JSON_PROPERTY_STATUS,
+  FlashCallVerificationStatusResponseImpl.JSON_PROPERTY_REASON,
+  FlashCallVerificationStatusResponseImpl.JSON_PROPERTY_REFERENCE,
+  FlashCallVerificationStatusResponseImpl.JSON_PROPERTY_IDENTITY,
+  FlashCallVerificationStatusResponseImpl.JSON_PROPERTY_COUNTRY_ID,
+  FlashCallVerificationStatusResponseImpl.JSON_PROPERTY_VERIFICATION_TIMESTAMP,
+  FlashCallVerificationStatusResponseImpl.JSON_PROPERTY_METHOD,
+  FlashCallVerificationStatusResponseImpl.JSON_PROPERTY_CALL_COMPLETE,
+  FlashCallVerificationStatusResponseImpl.JSON_PROPERTY_CALL_RESULT,
+  FlashCallVerificationStatusResponseImpl.JSON_PROPERTY_PRICE,
+  FlashCallVerificationStatusResponseImpl.JSON_PROPERTY_SOURCE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class FlashcallVerificationStatusResponseImpl
-    implements FlashcallVerificationStatusResponse {
+public class FlashCallVerificationStatusResponseImpl
+    implements FlashCallVerificationStatusResponse {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ID = "id";
@@ -62,17 +66,25 @@ public class FlashcallVerificationStatusResponseImpl
 
   private OptionalValue<MethodEnum> method;
 
+  public static final String JSON_PROPERTY_CALL_COMPLETE = "callComplete";
+
+  private OptionalValue<Boolean> callComplete;
+
+  public static final String JSON_PROPERTY_CALL_RESULT = "callResult";
+
+  private OptionalValue<StatusCall> callResult;
+
   public static final String JSON_PROPERTY_PRICE = "price";
 
-  private OptionalValue<FlashcallVerificationStatusResponsePrice> price;
+  private OptionalValue<StatusPrice> price;
 
   public static final String JSON_PROPERTY_SOURCE = "source";
 
   private OptionalValue<SourceEnum> source;
 
-  public FlashcallVerificationStatusResponseImpl() {}
+  public FlashCallVerificationStatusResponseImpl() {}
 
-  protected FlashcallVerificationStatusResponseImpl(
+  protected FlashCallVerificationStatusResponseImpl(
       OptionalValue<String> id,
       OptionalValue<VerificationStatus> status,
       OptionalValue<VerificationStatusReason> reason,
@@ -81,7 +93,9 @@ public class FlashcallVerificationStatusResponseImpl
       OptionalValue<String> countryId,
       OptionalValue<String> verificationTimestamp,
       OptionalValue<MethodEnum> method,
-      OptionalValue<FlashcallVerificationStatusResponsePrice> price,
+      OptionalValue<Boolean> callComplete,
+      OptionalValue<StatusCall> callResult,
+      OptionalValue<StatusPrice> price,
       OptionalValue<SourceEnum> source) {
     this.id = id;
     this.status = status;
@@ -91,6 +105,8 @@ public class FlashcallVerificationStatusResponseImpl
     this.countryId = countryId;
     this.verificationTimestamp = verificationTimestamp;
     this.method = method;
+    this.callComplete = callComplete;
+    this.callResult = callResult;
     this.price = price;
     this.source = source;
   }
@@ -184,13 +200,35 @@ public class FlashcallVerificationStatusResponseImpl
   }
 
   @JsonIgnore
-  public FlashcallVerificationStatusResponsePrice getPrice() {
+  public Boolean getCallComplete() {
+    return callComplete.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CALL_COMPLETE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<Boolean> callComplete() {
+    return callComplete;
+  }
+
+  @JsonIgnore
+  public StatusCall getCallResult() {
+    return callResult.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CALL_RESULT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<StatusCall> callResult() {
+    return callResult;
+  }
+
+  @JsonIgnore
+  public StatusPrice getPrice() {
     return price.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_PRICE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<FlashcallVerificationStatusResponsePrice> price() {
+  public OptionalValue<StatusPrice> price() {
     return price;
   }
 
@@ -205,7 +243,7 @@ public class FlashcallVerificationStatusResponseImpl
     return source;
   }
 
-  /** Return true if this FlashcallVerificationStatusResponse object is equal to o. */
+  /** Return true if this FlashCallVerificationStatusResponse object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -214,19 +252,21 @@ public class FlashcallVerificationStatusResponseImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    FlashcallVerificationStatusResponseImpl flashcallVerificationStatusResponse =
-        (FlashcallVerificationStatusResponseImpl) o;
-    return Objects.equals(this.id, flashcallVerificationStatusResponse.id)
-        && Objects.equals(this.status, flashcallVerificationStatusResponse.status)
-        && Objects.equals(this.reason, flashcallVerificationStatusResponse.reason)
-        && Objects.equals(this.reference, flashcallVerificationStatusResponse.reference)
-        && Objects.equals(this.identity, flashcallVerificationStatusResponse.identity)
-        && Objects.equals(this.countryId, flashcallVerificationStatusResponse.countryId)
+    FlashCallVerificationStatusResponseImpl flashCallVerificationStatusResponse =
+        (FlashCallVerificationStatusResponseImpl) o;
+    return Objects.equals(this.id, flashCallVerificationStatusResponse.id)
+        && Objects.equals(this.status, flashCallVerificationStatusResponse.status)
+        && Objects.equals(this.reason, flashCallVerificationStatusResponse.reason)
+        && Objects.equals(this.reference, flashCallVerificationStatusResponse.reference)
+        && Objects.equals(this.identity, flashCallVerificationStatusResponse.identity)
+        && Objects.equals(this.countryId, flashCallVerificationStatusResponse.countryId)
         && Objects.equals(
-            this.verificationTimestamp, flashcallVerificationStatusResponse.verificationTimestamp)
-        && Objects.equals(this.method, flashcallVerificationStatusResponse.method)
-        && Objects.equals(this.price, flashcallVerificationStatusResponse.price)
-        && Objects.equals(this.source, flashcallVerificationStatusResponse.source);
+            this.verificationTimestamp, flashCallVerificationStatusResponse.verificationTimestamp)
+        && Objects.equals(this.method, flashCallVerificationStatusResponse.method)
+        && Objects.equals(this.callComplete, flashCallVerificationStatusResponse.callComplete)
+        && Objects.equals(this.callResult, flashCallVerificationStatusResponse.callResult)
+        && Objects.equals(this.price, flashCallVerificationStatusResponse.price)
+        && Objects.equals(this.source, flashCallVerificationStatusResponse.source);
   }
 
   @Override
@@ -240,6 +280,8 @@ public class FlashcallVerificationStatusResponseImpl
         countryId,
         verificationTimestamp,
         method,
+        callComplete,
+        callResult,
         price,
         source);
   }
@@ -247,7 +289,7 @@ public class FlashcallVerificationStatusResponseImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class FlashcallVerificationStatusResponseImpl {\n");
+    sb.append("class FlashCallVerificationStatusResponseImpl {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    reason: ").append(toIndentedString(reason)).append("\n");
@@ -258,6 +300,8 @@ public class FlashcallVerificationStatusResponseImpl
         .append(toIndentedString(verificationTimestamp))
         .append("\n");
     sb.append("    method: ").append(toIndentedString(method)).append("\n");
+    sb.append("    callComplete: ").append(toIndentedString(callComplete)).append("\n");
+    sb.append("    callResult: ").append(toIndentedString(callResult)).append("\n");
     sb.append("    price: ").append(toIndentedString(price)).append("\n");
     sb.append("    source: ").append(toIndentedString(source)).append("\n");
     sb.append("}");
@@ -275,7 +319,7 @@ public class FlashcallVerificationStatusResponseImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements FlashcallVerificationStatusResponse.Builder {
+  static class Builder implements FlashCallVerificationStatusResponse.Builder {
     OptionalValue<String> id = OptionalValue.empty();
     OptionalValue<VerificationStatus> status = OptionalValue.empty();
     OptionalValue<VerificationStatusReason> reason = OptionalValue.empty();
@@ -284,7 +328,9 @@ public class FlashcallVerificationStatusResponseImpl
     OptionalValue<String> countryId = OptionalValue.empty();
     OptionalValue<String> verificationTimestamp = OptionalValue.empty();
     OptionalValue<MethodEnum> method = OptionalValue.empty();
-    OptionalValue<FlashcallVerificationStatusResponsePrice> price = OptionalValue.empty();
+    OptionalValue<Boolean> callComplete = OptionalValue.empty();
+    OptionalValue<StatusCall> callResult = OptionalValue.empty();
+    OptionalValue<StatusPrice> price = OptionalValue.empty();
     OptionalValue<SourceEnum> source = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_ID)
@@ -335,8 +381,20 @@ public class FlashcallVerificationStatusResponseImpl
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_CALL_COMPLETE)
+    public Builder setCallComplete(Boolean callComplete) {
+      this.callComplete = OptionalValue.of(callComplete);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_CALL_RESULT)
+    public Builder setCallResult(StatusCall callResult) {
+      this.callResult = OptionalValue.of(callResult);
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_PRICE)
-    public Builder setPrice(FlashcallVerificationStatusResponsePrice price) {
+    public Builder setPrice(StatusPrice price) {
       this.price = OptionalValue.of(price);
       return this;
     }
@@ -347,8 +405,8 @@ public class FlashcallVerificationStatusResponseImpl
       return this;
     }
 
-    public FlashcallVerificationStatusResponse build() {
-      return new FlashcallVerificationStatusResponseImpl(
+    public FlashCallVerificationStatusResponse build() {
+      return new FlashCallVerificationStatusResponseImpl(
           id,
           status,
           reason,
@@ -357,6 +415,8 @@ public class FlashcallVerificationStatusResponseImpl
           countryId,
           verificationTimestamp,
           method,
+          callComplete,
+          callResult,
           price,
           source);
     }

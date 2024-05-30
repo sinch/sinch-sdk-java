@@ -16,8 +16,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 
 /** declaration */
-@JsonDeserialize(builder = StartVerificationResponseCalloutImpl.Builder.class)
-public interface StartVerificationResponseCallout
+@JsonDeserialize(builder = StartVerificationResponsePhoneCallImpl.Builder.class)
+public interface StartVerificationResponsePhoneCall
     extends com.sinch.sdk.domains.verification.models.v1.response.StartVerificationResponse {
 
   /**
@@ -48,7 +48,7 @@ public interface StartVerificationResponseCallout
    * @return New Builder instance
    */
   static Builder builder() {
-    return new StartVerificationResponseCalloutImpl.Builder();
+    return new StartVerificationResponsePhoneCallImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -86,6 +86,6 @@ public interface StartVerificationResponseCallout
      *
      * @return The instance build with current builder values
      */
-    StartVerificationResponseCallout build();
+    StartVerificationResponsePhoneCall build();
   }
 }

@@ -10,21 +10,20 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.verification.models.v1.webhooks;
+package com.sinch.sdk.domains.verification.models.v1.report.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** An object defining various properties for the text-to-speech message. */
-@JsonDeserialize(builder = CalloutRequestEventResponseCalloutSpeechContentImpl.Builder.class)
-public interface CalloutRequestEventResponseCalloutSpeechContent {
+/** A configuration object containing settings specific to Phone Call verifications. */
+@JsonDeserialize(builder = VerificationReportRequestParametersPhoneCallOptionsImpl.Builder.class)
+public interface VerificationReportRequestParametersPhoneCallOptions {
 
   /**
-   * Indicates the language that should be used for the text-to-speech message. Currently, only
-   * &#x60;en-US&#x60; is supported.
+   * The code which was received by the user submitting the Phone Call verification.
    *
-   * @return locale
+   * @return code
    */
-  String getLocale();
+  String getCode();
 
   /**
    * Getting builder
@@ -32,7 +31,7 @@ public interface CalloutRequestEventResponseCalloutSpeechContent {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new CalloutRequestEventResponseCalloutSpeechContentImpl.Builder();
+    return new VerificationReportRequestParametersPhoneCallOptionsImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -41,17 +40,17 @@ public interface CalloutRequestEventResponseCalloutSpeechContent {
     /**
      * see getter
      *
-     * @param locale see getter
+     * @param code see getter
      * @return Current builder
-     * @see #getLocale
+     * @see #getCode
      */
-    Builder setLocale(String locale);
+    Builder setCode(String code);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    CalloutRequestEventResponseCalloutSpeechContent build();
+    VerificationReportRequestParametersPhoneCallOptions build();
   }
 }

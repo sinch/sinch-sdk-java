@@ -16,8 +16,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 
 /** declaration */
-@JsonDeserialize(builder = SMSRequestEventResponseSMSContentImpl.Builder.class)
-public interface SMSRequestEventResponseSMSContent {
+@JsonDeserialize(builder = SmsRequestEventResponseSmsContentImpl.Builder.class)
+public interface SmsRequestEventResponseSmsContent {
 
   /**
    * The SMS PIN that should be used. By default, the Sinch dashboard will automatically generate
@@ -41,7 +41,7 @@ public interface SMSRequestEventResponseSMSContent {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new SMSRequestEventResponseSMSContentImpl.Builder();
+    return new SmsRequestEventResponseSmsContentImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -70,6 +70,6 @@ public interface SMSRequestEventResponseSMSContent {
      *
      * @return The instance build with current builder values
      */
-    SMSRequestEventResponseSMSContent build();
+    SmsRequestEventResponseSmsContent build();
   }
 }

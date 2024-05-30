@@ -10,23 +10,27 @@ import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
 import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
+import com.sinch.sdk.domains.verification.models.v1.status.StatusCall;
+import com.sinch.sdk.domains.verification.models.v1.status.StatusPrice;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  CalloutVerificationStatusResponseImpl.JSON_PROPERTY_ID,
-  CalloutVerificationStatusResponseImpl.JSON_PROPERTY_STATUS,
-  CalloutVerificationStatusResponseImpl.JSON_PROPERTY_REASON,
-  CalloutVerificationStatusResponseImpl.JSON_PROPERTY_REFERENCE,
-  CalloutVerificationStatusResponseImpl.JSON_PROPERTY_IDENTITY,
-  CalloutVerificationStatusResponseImpl.JSON_PROPERTY_COUNTRY_ID,
-  CalloutVerificationStatusResponseImpl.JSON_PROPERTY_VERIFICATION_TIMESTAMP,
-  CalloutVerificationStatusResponseImpl.JSON_PROPERTY_METHOD,
-  CalloutVerificationStatusResponseImpl.JSON_PROPERTY_CALL_COMPLETE,
-  CalloutVerificationStatusResponseImpl.JSON_PROPERTY_PRICE
+  PhoneCallVerificationStatusResponseImpl.JSON_PROPERTY_ID,
+  PhoneCallVerificationStatusResponseImpl.JSON_PROPERTY_STATUS,
+  PhoneCallVerificationStatusResponseImpl.JSON_PROPERTY_REASON,
+  PhoneCallVerificationStatusResponseImpl.JSON_PROPERTY_REFERENCE,
+  PhoneCallVerificationStatusResponseImpl.JSON_PROPERTY_IDENTITY,
+  PhoneCallVerificationStatusResponseImpl.JSON_PROPERTY_COUNTRY_ID,
+  PhoneCallVerificationStatusResponseImpl.JSON_PROPERTY_VERIFICATION_TIMESTAMP,
+  PhoneCallVerificationStatusResponseImpl.JSON_PROPERTY_METHOD,
+  PhoneCallVerificationStatusResponseImpl.JSON_PROPERTY_CALL_COMPLETE,
+  PhoneCallVerificationStatusResponseImpl.JSON_PROPERTY_CALL_RESULT,
+  PhoneCallVerificationStatusResponseImpl.JSON_PROPERTY_PRICE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class CalloutVerificationStatusResponseImpl implements CalloutVerificationStatusResponse {
+public class PhoneCallVerificationStatusResponseImpl
+    implements PhoneCallVerificationStatusResponse {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ID = "id";
@@ -65,13 +69,17 @@ public class CalloutVerificationStatusResponseImpl implements CalloutVerificatio
 
   private OptionalValue<Boolean> callComplete;
 
+  public static final String JSON_PROPERTY_CALL_RESULT = "callResult";
+
+  private OptionalValue<StatusCall> callResult;
+
   public static final String JSON_PROPERTY_PRICE = "price";
 
-  private OptionalValue<FlashcallVerificationStatusResponsePrice> price;
+  private OptionalValue<StatusPrice> price;
 
-  public CalloutVerificationStatusResponseImpl() {}
+  public PhoneCallVerificationStatusResponseImpl() {}
 
-  protected CalloutVerificationStatusResponseImpl(
+  protected PhoneCallVerificationStatusResponseImpl(
       OptionalValue<String> id,
       OptionalValue<VerificationStatus> status,
       OptionalValue<VerificationStatusReason> reason,
@@ -81,7 +89,8 @@ public class CalloutVerificationStatusResponseImpl implements CalloutVerificatio
       OptionalValue<String> verificationTimestamp,
       OptionalValue<MethodEnum> method,
       OptionalValue<Boolean> callComplete,
-      OptionalValue<FlashcallVerificationStatusResponsePrice> price) {
+      OptionalValue<StatusCall> callResult,
+      OptionalValue<StatusPrice> price) {
     this.id = id;
     this.status = status;
     this.reason = reason;
@@ -91,6 +100,7 @@ public class CalloutVerificationStatusResponseImpl implements CalloutVerificatio
     this.verificationTimestamp = verificationTimestamp;
     this.method = method;
     this.callComplete = callComplete;
+    this.callResult = callResult;
     this.price = price;
   }
 
@@ -194,17 +204,28 @@ public class CalloutVerificationStatusResponseImpl implements CalloutVerificatio
   }
 
   @JsonIgnore
-  public FlashcallVerificationStatusResponsePrice getPrice() {
+  public StatusCall getCallResult() {
+    return callResult.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CALL_RESULT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<StatusCall> callResult() {
+    return callResult;
+  }
+
+  @JsonIgnore
+  public StatusPrice getPrice() {
     return price.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_PRICE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<FlashcallVerificationStatusResponsePrice> price() {
+  public OptionalValue<StatusPrice> price() {
     return price;
   }
 
-  /** Return true if this CalloutVerificationStatusResponse object is equal to o. */
+  /** Return true if this PhoneCallVerificationStatusResponse object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -213,19 +234,20 @@ public class CalloutVerificationStatusResponseImpl implements CalloutVerificatio
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CalloutVerificationStatusResponseImpl calloutVerificationStatusResponse =
-        (CalloutVerificationStatusResponseImpl) o;
-    return Objects.equals(this.id, calloutVerificationStatusResponse.id)
-        && Objects.equals(this.status, calloutVerificationStatusResponse.status)
-        && Objects.equals(this.reason, calloutVerificationStatusResponse.reason)
-        && Objects.equals(this.reference, calloutVerificationStatusResponse.reference)
-        && Objects.equals(this.identity, calloutVerificationStatusResponse.identity)
-        && Objects.equals(this.countryId, calloutVerificationStatusResponse.countryId)
+    PhoneCallVerificationStatusResponseImpl phoneCallVerificationStatusResponse =
+        (PhoneCallVerificationStatusResponseImpl) o;
+    return Objects.equals(this.id, phoneCallVerificationStatusResponse.id)
+        && Objects.equals(this.status, phoneCallVerificationStatusResponse.status)
+        && Objects.equals(this.reason, phoneCallVerificationStatusResponse.reason)
+        && Objects.equals(this.reference, phoneCallVerificationStatusResponse.reference)
+        && Objects.equals(this.identity, phoneCallVerificationStatusResponse.identity)
+        && Objects.equals(this.countryId, phoneCallVerificationStatusResponse.countryId)
         && Objects.equals(
-            this.verificationTimestamp, calloutVerificationStatusResponse.verificationTimestamp)
-        && Objects.equals(this.method, calloutVerificationStatusResponse.method)
-        && Objects.equals(this.callComplete, calloutVerificationStatusResponse.callComplete)
-        && Objects.equals(this.price, calloutVerificationStatusResponse.price);
+            this.verificationTimestamp, phoneCallVerificationStatusResponse.verificationTimestamp)
+        && Objects.equals(this.method, phoneCallVerificationStatusResponse.method)
+        && Objects.equals(this.callComplete, phoneCallVerificationStatusResponse.callComplete)
+        && Objects.equals(this.callResult, phoneCallVerificationStatusResponse.callResult)
+        && Objects.equals(this.price, phoneCallVerificationStatusResponse.price);
   }
 
   @Override
@@ -240,13 +262,14 @@ public class CalloutVerificationStatusResponseImpl implements CalloutVerificatio
         verificationTimestamp,
         method,
         callComplete,
+        callResult,
         price);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CalloutVerificationStatusResponseImpl {\n");
+    sb.append("class PhoneCallVerificationStatusResponseImpl {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    reason: ").append(toIndentedString(reason)).append("\n");
@@ -258,6 +281,7 @@ public class CalloutVerificationStatusResponseImpl implements CalloutVerificatio
         .append("\n");
     sb.append("    method: ").append(toIndentedString(method)).append("\n");
     sb.append("    callComplete: ").append(toIndentedString(callComplete)).append("\n");
+    sb.append("    callResult: ").append(toIndentedString(callResult)).append("\n");
     sb.append("    price: ").append(toIndentedString(price)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -274,7 +298,7 @@ public class CalloutVerificationStatusResponseImpl implements CalloutVerificatio
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements CalloutVerificationStatusResponse.Builder {
+  static class Builder implements PhoneCallVerificationStatusResponse.Builder {
     OptionalValue<String> id = OptionalValue.empty();
     OptionalValue<VerificationStatus> status = OptionalValue.empty();
     OptionalValue<VerificationStatusReason> reason = OptionalValue.empty();
@@ -284,7 +308,8 @@ public class CalloutVerificationStatusResponseImpl implements CalloutVerificatio
     OptionalValue<String> verificationTimestamp = OptionalValue.empty();
     OptionalValue<MethodEnum> method = OptionalValue.empty();
     OptionalValue<Boolean> callComplete = OptionalValue.empty();
-    OptionalValue<FlashcallVerificationStatusResponsePrice> price = OptionalValue.empty();
+    OptionalValue<StatusCall> callResult = OptionalValue.empty();
+    OptionalValue<StatusPrice> price = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_ID)
     public Builder setId(String id) {
@@ -340,14 +365,20 @@ public class CalloutVerificationStatusResponseImpl implements CalloutVerificatio
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_CALL_RESULT)
+    public Builder setCallResult(StatusCall callResult) {
+      this.callResult = OptionalValue.of(callResult);
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_PRICE)
-    public Builder setPrice(FlashcallVerificationStatusResponsePrice price) {
+    public Builder setPrice(StatusPrice price) {
       this.price = OptionalValue.of(price);
       return this;
     }
 
-    public CalloutVerificationStatusResponse build() {
-      return new CalloutVerificationStatusResponseImpl(
+    public PhoneCallVerificationStatusResponse build() {
+      return new PhoneCallVerificationStatusResponseImpl(
           id,
           status,
           reason,
@@ -357,6 +388,7 @@ public class CalloutVerificationStatusResponseImpl implements CalloutVerificatio
           verificationTimestamp,
           method,
           callComplete,
+          callResult,
           price);
     }
   }

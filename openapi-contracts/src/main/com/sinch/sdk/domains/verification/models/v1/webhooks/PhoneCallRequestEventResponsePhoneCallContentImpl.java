@@ -7,16 +7,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  CalloutRequestEventResponseCalloutContentImpl.JSON_PROPERTY_CODE,
-  CalloutRequestEventResponseCalloutContentImpl.JSON_PROPERTY_SPEECH
+  PhoneCallRequestEventResponsePhoneCallContentImpl.JSON_PROPERTY_CODE,
+  PhoneCallRequestEventResponsePhoneCallContentImpl.JSON_PROPERTY_SPEECH
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class CalloutRequestEventResponseCalloutContentImpl
-    implements CalloutRequestEventResponseCalloutContent {
+public class PhoneCallRequestEventResponsePhoneCallContentImpl
+    implements PhoneCallRequestEventResponsePhoneCallContent {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CODE = "code";
@@ -25,13 +26,12 @@ public class CalloutRequestEventResponseCalloutContentImpl
 
   public static final String JSON_PROPERTY_SPEECH = "speech";
 
-  private OptionalValue<CalloutRequestEventResponseCalloutSpeechContent> speech;
+  private OptionalValue<PhoneCallSpeech> speech;
 
-  public CalloutRequestEventResponseCalloutContentImpl() {}
+  public PhoneCallRequestEventResponsePhoneCallContentImpl() {}
 
-  protected CalloutRequestEventResponseCalloutContentImpl(
-      OptionalValue<String> code,
-      OptionalValue<CalloutRequestEventResponseCalloutSpeechContent> speech) {
+  protected PhoneCallRequestEventResponsePhoneCallContentImpl(
+      OptionalValue<String> code, OptionalValue<PhoneCallSpeech> speech) {
     this.code = code;
     this.speech = speech;
   }
@@ -48,17 +48,17 @@ public class CalloutRequestEventResponseCalloutContentImpl
   }
 
   @JsonIgnore
-  public CalloutRequestEventResponseCalloutSpeechContent getSpeech() {
+  public PhoneCallSpeech getSpeech() {
     return speech.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_SPEECH)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<CalloutRequestEventResponseCalloutSpeechContent> speech() {
+  public OptionalValue<PhoneCallSpeech> speech() {
     return speech;
   }
 
-  /** Return true if this CalloutRequestEventResponse_callout object is equal to o. */
+  /** Return true if this PhoneCallRequestEventResponse_callout object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -67,10 +67,10 @@ public class CalloutRequestEventResponseCalloutContentImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CalloutRequestEventResponseCalloutContentImpl calloutRequestEventResponseCallout =
-        (CalloutRequestEventResponseCalloutContentImpl) o;
-    return Objects.equals(this.code, calloutRequestEventResponseCallout.code)
-        && Objects.equals(this.speech, calloutRequestEventResponseCallout.speech);
+    PhoneCallRequestEventResponsePhoneCallContentImpl phoneCallRequestEventResponseCallout =
+        (PhoneCallRequestEventResponsePhoneCallContentImpl) o;
+    return Objects.equals(this.code, phoneCallRequestEventResponseCallout.code)
+        && Objects.equals(this.speech, phoneCallRequestEventResponseCallout.speech);
   }
 
   @Override
@@ -81,7 +81,7 @@ public class CalloutRequestEventResponseCalloutContentImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CalloutRequestEventResponseCalloutContentImpl {\n");
+    sb.append("class PhoneCallRequestEventResponsePhoneCallContentImpl {\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    speech: ").append(toIndentedString(speech)).append("\n");
     sb.append("}");
@@ -99,9 +99,9 @@ public class CalloutRequestEventResponseCalloutContentImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements CalloutRequestEventResponseCalloutContent.Builder {
+  static class Builder implements PhoneCallRequestEventResponsePhoneCallContent.Builder {
     OptionalValue<String> code = OptionalValue.empty();
-    OptionalValue<CalloutRequestEventResponseCalloutSpeechContent> speech = OptionalValue.empty();
+    OptionalValue<PhoneCallSpeech> speech = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CODE)
     public Builder setCode(String code) {
@@ -110,13 +110,13 @@ public class CalloutRequestEventResponseCalloutContentImpl
     }
 
     @JsonProperty(JSON_PROPERTY_SPEECH)
-    public Builder setSpeech(CalloutRequestEventResponseCalloutSpeechContent speech) {
+    public Builder setSpeech(PhoneCallSpeech speech) {
       this.speech = OptionalValue.of(speech);
       return this;
     }
 
-    public CalloutRequestEventResponseCalloutContent build() {
-      return new CalloutRequestEventResponseCalloutContentImpl(code, speech);
+    public PhoneCallRequestEventResponsePhoneCallContent build() {
+      return new PhoneCallRequestEventResponsePhoneCallContentImpl(code, speech);
     }
   }
 }

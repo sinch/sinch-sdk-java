@@ -10,13 +10,13 @@ import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  VerificationReportRequestParametersSMSOptionsImpl.JSON_PROPERTY_CODE,
-  VerificationReportRequestParametersSMSOptionsImpl.JSON_PROPERTY_CLI
+  VerificationReportRequestParametersSmsOptionsImpl.JSON_PROPERTY_CODE,
+  VerificationReportRequestParametersSmsOptionsImpl.JSON_PROPERTY_CLI
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class VerificationReportRequestParametersSMSOptionsImpl
-    implements VerificationReportRequestParametersSMSOptions {
+public class VerificationReportRequestParametersSmsOptionsImpl
+    implements VerificationReportRequestParametersSmsOptions {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CODE = "code";
@@ -27,9 +27,9 @@ public class VerificationReportRequestParametersSMSOptionsImpl
 
   private OptionalValue<String> cli;
 
-  public VerificationReportRequestParametersSMSOptionsImpl() {}
+  public VerificationReportRequestParametersSmsOptionsImpl() {}
 
-  protected VerificationReportRequestParametersSMSOptionsImpl(
+  protected VerificationReportRequestParametersSmsOptionsImpl(
       OptionalValue<String> code, OptionalValue<String> cli) {
     this.code = code;
     this.cli = cli;
@@ -66,8 +66,8 @@ public class VerificationReportRequestParametersSMSOptionsImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerificationReportRequestParametersSMSOptionsImpl smsVerificationReportRequestSms =
-        (VerificationReportRequestParametersSMSOptionsImpl) o;
+    VerificationReportRequestParametersSmsOptionsImpl smsVerificationReportRequestSms =
+        (VerificationReportRequestParametersSmsOptionsImpl) o;
     return Objects.equals(this.code, smsVerificationReportRequestSms.code)
         && Objects.equals(this.cli, smsVerificationReportRequestSms.cli);
   }
@@ -80,7 +80,7 @@ public class VerificationReportRequestParametersSMSOptionsImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VerificationReportRequestParametersSMSOptionsImpl {\n");
+    sb.append("class VerificationReportRequestParametersSmsOptionsImpl {\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    cli: ").append(toIndentedString(cli)).append("\n");
     sb.append("}");
@@ -98,7 +98,7 @@ public class VerificationReportRequestParametersSMSOptionsImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements VerificationReportRequestParametersSMSOptions.Builder {
+  static class Builder implements VerificationReportRequestParametersSmsOptions.Builder {
     OptionalValue<String> code = OptionalValue.empty();
     OptionalValue<String> cli = OptionalValue.empty();
 
@@ -114,8 +114,8 @@ public class VerificationReportRequestParametersSMSOptionsImpl
       return this;
     }
 
-    public VerificationReportRequestParametersSMSOptions build() {
-      return new VerificationReportRequestParametersSMSOptionsImpl(code, cli);
+    public VerificationReportRequestParametersSmsOptions build() {
+      return new VerificationReportRequestParametersSmsOptionsImpl(code, cli);
     }
   }
 }

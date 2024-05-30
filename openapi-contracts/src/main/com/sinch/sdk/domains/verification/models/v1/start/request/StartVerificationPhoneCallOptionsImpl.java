@@ -9,31 +9,30 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
-@JsonPropertyOrder({StartVerificationCalloutOptionsImpl.JSON_PROPERTY_SPEECH})
+@JsonPropertyOrder({StartVerificationPhoneCallOptionsImpl.JSON_PROPERTY_SPEECH})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class StartVerificationCalloutOptionsImpl implements StartVerificationCalloutOptions {
+public class StartVerificationPhoneCallOptionsImpl implements StartVerificationPhoneCallOptions {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_SPEECH = "speech";
 
-  private OptionalValue<StartVerificationCalloutOptionsSpeech> speech;
+  private OptionalValue<PhoneCallSpeech> speech;
 
-  public StartVerificationCalloutOptionsImpl() {}
+  public StartVerificationPhoneCallOptionsImpl() {}
 
-  protected StartVerificationCalloutOptionsImpl(
-      OptionalValue<StartVerificationCalloutOptionsSpeech> speech) {
+  protected StartVerificationPhoneCallOptionsImpl(OptionalValue<PhoneCallSpeech> speech) {
     this.speech = speech;
   }
 
   @JsonIgnore
-  public StartVerificationCalloutOptionsSpeech getSpeech() {
+  public PhoneCallSpeech getSpeech() {
     return speech.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_SPEECH)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<StartVerificationCalloutOptionsSpeech> speech() {
+  public OptionalValue<PhoneCallSpeech> speech() {
     return speech;
   }
 
@@ -46,8 +45,8 @@ public class StartVerificationCalloutOptionsImpl implements StartVerificationCal
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StartVerificationCalloutOptionsImpl initiateVerificationResourceCalloutOptions =
-        (StartVerificationCalloutOptionsImpl) o;
+    StartVerificationPhoneCallOptionsImpl initiateVerificationResourceCalloutOptions =
+        (StartVerificationPhoneCallOptionsImpl) o;
     return Objects.equals(this.speech, initiateVerificationResourceCalloutOptions.speech);
   }
 
@@ -59,7 +58,7 @@ public class StartVerificationCalloutOptionsImpl implements StartVerificationCal
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class StartVerificationCalloutOptionsImpl {\n");
+    sb.append("class StartVerificationPhoneCallOptionsImpl {\n");
     sb.append("    speech: ").append(toIndentedString(speech)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -76,17 +75,17 @@ public class StartVerificationCalloutOptionsImpl implements StartVerificationCal
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements StartVerificationCalloutOptions.Builder {
-    OptionalValue<StartVerificationCalloutOptionsSpeech> speech = OptionalValue.empty();
+  static class Builder implements StartVerificationPhoneCallOptions.Builder {
+    OptionalValue<PhoneCallSpeech> speech = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_SPEECH)
-    public Builder setSpeech(StartVerificationCalloutOptionsSpeech speech) {
+    public Builder setSpeech(PhoneCallSpeech speech) {
       this.speech = OptionalValue.of(speech);
       return this;
     }
 
-    public StartVerificationCalloutOptions build() {
-      return new StartVerificationCalloutOptionsImpl(speech);
+    public StartVerificationPhoneCallOptions build() {
+      return new StartVerificationPhoneCallOptionsImpl(speech);
     }
   }
 }

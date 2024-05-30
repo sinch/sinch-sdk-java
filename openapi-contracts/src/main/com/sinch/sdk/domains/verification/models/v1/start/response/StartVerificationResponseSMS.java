@@ -16,8 +16,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 
 /** declaration */
-@JsonDeserialize(builder = StartVerificationResponseSMSImpl.Builder.class)
-public interface StartVerificationResponseSMS
+@JsonDeserialize(builder = StartVerificationResponseSmsImpl.Builder.class)
+public interface StartVerificationResponseSms
     extends com.sinch.sdk.domains.verification.models.v1.response.StartVerificationResponse {
 
   /**
@@ -40,7 +40,7 @@ public interface StartVerificationResponseSMS
    *
    * @return sms
    */
-  StartVerificationResponseSMSContent getSms();
+  StartVerificationResponseSmsContent getSms();
 
   /**
    * Get links
@@ -55,7 +55,7 @@ public interface StartVerificationResponseSMS
    * @return New Builder instance
    */
   static Builder builder() {
-    return new StartVerificationResponseSMSImpl.Builder();
+    return new StartVerificationResponseSmsImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -86,7 +86,7 @@ public interface StartVerificationResponseSMS
      * @return Current builder
      * @see #getSms
      */
-    Builder setSms(StartVerificationResponseSMSContent sms);
+    Builder setSms(StartVerificationResponseSmsContent sms);
 
     /**
      * see getter
@@ -102,6 +102,6 @@ public interface StartVerificationResponseSMS
      *
      * @return The instance build with current builder values
      */
-    StartVerificationResponseSMS build();
+    StartVerificationResponseSms build();
   }
 }

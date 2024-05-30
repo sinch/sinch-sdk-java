@@ -16,8 +16,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.verification.models.v1.Price;
 
 /** Prices associated with this verification */
-@JsonDeserialize(builder = SMSVerificationStatusResponsePriceImpl.Builder.class)
-public interface SMSVerificationStatusResponsePrice {
+@JsonDeserialize(builder = SmsVerificationStatusResponsePriceImpl.Builder.class)
+public interface SmsVerificationStatusResponsePrice {
 
   /**
    * Get verificationPrice
@@ -32,7 +32,7 @@ public interface SMSVerificationStatusResponsePrice {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new SMSVerificationStatusResponsePriceImpl.Builder();
+    return new SmsVerificationStatusResponsePriceImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -52,6 +52,6 @@ public interface SMSVerificationStatusResponsePrice {
      *
      * @return The instance build with current builder values
      */
-    SMSVerificationStatusResponsePrice build();
+    SmsVerificationStatusResponsePrice build();
   }
 }

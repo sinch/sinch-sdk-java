@@ -14,12 +14,12 @@ package com.sinch.sdk.domains.verification.models.v1.report.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** A configuration object containing settings specific to FlashCall verifications. */
+/** A configuration object containing settings specific to flash call verifications. */
 @JsonDeserialize(builder = VerificationReportRequestParametersFlashCallOptionsImpl.Builder.class)
 public interface VerificationReportRequestParametersFlashCallOptions {
 
   /**
-   * The caller ID of the FlashCall.
+   * The caller ID of the flash call.
    *
    * @return cli
    */

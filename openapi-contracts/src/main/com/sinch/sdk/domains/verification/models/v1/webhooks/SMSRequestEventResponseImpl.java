@@ -10,12 +10,12 @@ import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  SMSRequestEventResponseImpl.JSON_PROPERTY_ACTION,
-  SMSRequestEventResponseImpl.JSON_PROPERTY_SMS
+  SmsRequestEventResponseImpl.JSON_PROPERTY_ACTION,
+  SmsRequestEventResponseImpl.JSON_PROPERTY_SMS
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class SMSRequestEventResponseImpl implements SMSRequestEventResponse {
+public class SmsRequestEventResponseImpl implements SmsRequestEventResponse {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ACTION = "action";
@@ -24,13 +24,13 @@ public class SMSRequestEventResponseImpl implements SMSRequestEventResponse {
 
   public static final String JSON_PROPERTY_SMS = "sms";
 
-  private OptionalValue<SMSRequestEventResponseSMSContent> sms;
+  private OptionalValue<SmsRequestEventResponseSmsContent> sms;
 
-  public SMSRequestEventResponseImpl() {}
+  public SmsRequestEventResponseImpl() {}
 
-  protected SMSRequestEventResponseImpl(
+  protected SmsRequestEventResponseImpl(
       OptionalValue<VerificationEventResponseAction> action,
-      OptionalValue<SMSRequestEventResponseSMSContent> sms) {
+      OptionalValue<SmsRequestEventResponseSmsContent> sms) {
     this.action = action;
     this.sms = sms;
   }
@@ -47,17 +47,17 @@ public class SMSRequestEventResponseImpl implements SMSRequestEventResponse {
   }
 
   @JsonIgnore
-  public SMSRequestEventResponseSMSContent getSms() {
+  public SmsRequestEventResponseSmsContent getSms() {
     return sms.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_SMS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<SMSRequestEventResponseSMSContent> sms() {
+  public OptionalValue<SmsRequestEventResponseSmsContent> sms() {
     return sms;
   }
 
-  /** Return true if this SMSRequestEventResponse object is equal to o. */
+  /** Return true if this SmsRequestEventResponse object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -66,9 +66,9 @@ public class SMSRequestEventResponseImpl implements SMSRequestEventResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SMSRequestEventResponseImpl smSRequestEventResponse = (SMSRequestEventResponseImpl) o;
-    return Objects.equals(this.action, smSRequestEventResponse.action)
-        && Objects.equals(this.sms, smSRequestEventResponse.sms);
+    SmsRequestEventResponseImpl smsRequestEventResponse = (SmsRequestEventResponseImpl) o;
+    return Objects.equals(this.action, smsRequestEventResponse.action)
+        && Objects.equals(this.sms, smsRequestEventResponse.sms);
   }
 
   @Override
@@ -79,7 +79,7 @@ public class SMSRequestEventResponseImpl implements SMSRequestEventResponse {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SMSRequestEventResponseImpl {\n");
+    sb.append("class SmsRequestEventResponseImpl {\n");
     sb.append("    action: ").append(toIndentedString(action)).append("\n");
     sb.append("    sms: ").append(toIndentedString(sms)).append("\n");
     sb.append("}");
@@ -97,9 +97,9 @@ public class SMSRequestEventResponseImpl implements SMSRequestEventResponse {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements SMSRequestEventResponse.Builder {
+  static class Builder implements SmsRequestEventResponse.Builder {
     OptionalValue<VerificationEventResponseAction> action = OptionalValue.empty();
-    OptionalValue<SMSRequestEventResponseSMSContent> sms = OptionalValue.empty();
+    OptionalValue<SmsRequestEventResponseSmsContent> sms = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_ACTION)
     public Builder setAction(VerificationEventResponseAction action) {
@@ -108,13 +108,13 @@ public class SMSRequestEventResponseImpl implements SMSRequestEventResponse {
     }
 
     @JsonProperty(JSON_PROPERTY_SMS)
-    public Builder setSms(SMSRequestEventResponseSMSContent sms) {
+    public Builder setSms(SmsRequestEventResponseSmsContent sms) {
       this.sms = OptionalValue.of(sms);
       return this;
     }
 
-    public SMSRequestEventResponse build() {
-      return new SMSRequestEventResponseImpl(action, sms);
+    public SmsRequestEventResponse build() {
+      return new SmsRequestEventResponseImpl(action, sms);
     }
   }
 }
