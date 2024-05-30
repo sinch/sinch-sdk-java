@@ -10,30 +10,30 @@ import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  VerificationReportRequestParametersFlashCallImpl.JSON_PROPERTY_METHOD,
-  VerificationReportRequestParametersFlashCallImpl.JSON_PROPERTY_FLASH_CALL
+  VerificationReportRequestParametersSmsImpl.JSON_PROPERTY_METHOD,
+  VerificationReportRequestParametersSmsImpl.JSON_PROPERTY_SMS
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class VerificationReportRequestParametersFlashCallImpl
-    implements VerificationReportRequestParametersFlashCall {
+public class VerificationReportRequestParametersSmsImpl
+    implements VerificationReportRequestParametersSms {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_METHOD = "method";
 
   private OptionalValue<MethodEnum> method;
 
-  public static final String JSON_PROPERTY_FLASH_CALL = "flashCall";
+  public static final String JSON_PROPERTY_SMS = "sms";
 
-  private OptionalValue<VerificationReportRequestParametersFlashCallOptions> flashCall;
+  private OptionalValue<VerificationReportRequestParametersSmsOptions> sms;
 
-  public VerificationReportRequestParametersFlashCallImpl() {}
+  public VerificationReportRequestParametersSmsImpl() {}
 
-  protected VerificationReportRequestParametersFlashCallImpl(
+  protected VerificationReportRequestParametersSmsImpl(
       OptionalValue<MethodEnum> method,
-      OptionalValue<VerificationReportRequestParametersFlashCallOptions> flashCall) {
+      OptionalValue<VerificationReportRequestParametersSmsOptions> sms) {
     this.method = method;
-    this.flashCall = flashCall;
+    this.sms = sms;
   }
 
   @JsonIgnore
@@ -48,17 +48,17 @@ public class VerificationReportRequestParametersFlashCallImpl
   }
 
   @JsonIgnore
-  public VerificationReportRequestParametersFlashCallOptions getFlashCall() {
-    return flashCall.orElse(null);
+  public VerificationReportRequestParametersSmsOptions getSms() {
+    return sms.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_FLASH_CALL)
+  @JsonProperty(JSON_PROPERTY_SMS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<VerificationReportRequestParametersFlashCallOptions> flashCall() {
-    return flashCall;
+  public OptionalValue<VerificationReportRequestParametersSmsOptions> sms() {
+    return sms;
   }
 
-  /** Return true if this FlashCallVerificationReportRequest object is equal to o. */
+  /** Return true if this SmsVerificationReportRequest object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -67,23 +67,23 @@ public class VerificationReportRequestParametersFlashCallImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerificationReportRequestParametersFlashCallImpl flashCallVerificationReportRequest =
-        (VerificationReportRequestParametersFlashCallImpl) o;
-    return Objects.equals(this.method, flashCallVerificationReportRequest.method)
-        && Objects.equals(this.flashCall, flashCallVerificationReportRequest.flashCall);
+    VerificationReportRequestParametersSmsImpl smsVerificationReportRequest =
+        (VerificationReportRequestParametersSmsImpl) o;
+    return Objects.equals(this.method, smsVerificationReportRequest.method)
+        && Objects.equals(this.sms, smsVerificationReportRequest.sms);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(method, flashCall);
+    return Objects.hash(method, sms);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VerificationReportRequestParametersFlashCallImpl {\n");
+    sb.append("class VerificationReportRequestParametersSmsImpl {\n");
     sb.append("    method: ").append(toIndentedString(method)).append("\n");
-    sb.append("    flashCall: ").append(toIndentedString(flashCall)).append("\n");
+    sb.append("    sms: ").append(toIndentedString(sms)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -99,10 +99,9 @@ public class VerificationReportRequestParametersFlashCallImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements VerificationReportRequestParametersFlashCall.Builder {
+  static class Builder implements VerificationReportRequestParametersSms.Builder {
     OptionalValue<MethodEnum> method = OptionalValue.empty();
-    OptionalValue<VerificationReportRequestParametersFlashCallOptions> flashCall =
-        OptionalValue.empty();
+    OptionalValue<VerificationReportRequestParametersSmsOptions> sms = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_METHOD)
     public Builder setMethod(MethodEnum method) {
@@ -110,14 +109,14 @@ public class VerificationReportRequestParametersFlashCallImpl
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_FLASH_CALL)
-    public Builder setFlashCall(VerificationReportRequestParametersFlashCallOptions flashCall) {
-      this.flashCall = OptionalValue.of(flashCall);
+    @JsonProperty(JSON_PROPERTY_SMS)
+    public Builder setSms(VerificationReportRequestParametersSmsOptions sms) {
+      this.sms = OptionalValue.of(sms);
       return this;
     }
 
-    public VerificationReportRequestParametersFlashCall build() {
-      return new VerificationReportRequestParametersFlashCallImpl(method, flashCall);
+    public VerificationReportRequestParametersSms build() {
+      return new VerificationReportRequestParametersSmsImpl(method, sms);
     }
   }
 }

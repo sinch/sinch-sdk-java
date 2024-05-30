@@ -14,12 +14,19 @@ package com.sinch.sdk.domains.verification.models.v1.report.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** A configuration object containing settings specific to flash call verifications. */
-@JsonDeserialize(builder = VerificationReportRequestParametersFlashCallOptionsImpl.Builder.class)
-public interface VerificationReportRequestParametersFlashCallOptions {
+/** A configuration object containing settings specific to SMS verifications. */
+@JsonDeserialize(builder = VerificationReportRequestParametersSmsOptionsImpl.Builder.class)
+public interface VerificationReportRequestParametersSmsOptions {
 
   /**
-   * The caller ID of the flash call.
+   * The code which was received by the user submitting the SMS verification.
+   *
+   * @return code
+   */
+  String getCode();
+
+  /**
+   * The sender ID of the SMS.
    *
    * @return cli
    */
@@ -31,11 +38,20 @@ public interface VerificationReportRequestParametersFlashCallOptions {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationReportRequestParametersFlashCallOptionsImpl.Builder();
+    return new VerificationReportRequestParametersSmsOptionsImpl.Builder();
   }
 
   /** Dedicated Builder */
   interface Builder {
+
+    /**
+     * see getter
+     *
+     * @param code see getter
+     * @return Current builder
+     * @see #getCode
+     */
+    Builder setCode(String code);
 
     /**
      * see getter
@@ -51,6 +67,6 @@ public interface VerificationReportRequestParametersFlashCallOptions {
      *
      * @return The instance build with current builder values
      */
-    VerificationReportRequestParametersFlashCallOptions build();
+    VerificationReportRequestParametersSmsOptions build();
   }
 }

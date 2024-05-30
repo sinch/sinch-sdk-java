@@ -10,24 +10,20 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.verification.models.v1.start.request;
+package com.sinch.sdk.domains.verification.models.v1.report.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/**
- * An optional object for Flash Call Verification, considered only when the verification request
- * originates from your backend (not an SDK client) via an [Application signed
- * request](/docs/voice/api-reference/authentication/signed-request).
- */
-@JsonDeserialize(builder = StartVerificationFlashCallOptionsImpl.Builder.class)
-public interface StartVerificationFlashCallOptions {
+/** A configuration object containing settings specific to Phone Call verifications. */
+@JsonDeserialize(builder = VerificationReportRequestParametersPhoneCallOptionsImpl.Builder.class)
+public interface VerificationReportRequestParametersPhoneCallOptions {
 
   /**
-   * The dial timeout in seconds.
+   * The code which was received by the user submitting the Phone Call verification.
    *
-   * @return dialTimeout
+   * @return code
    */
-  Integer getDialTimeout();
+  String getCode();
 
   /**
    * Getting builder
@@ -35,7 +31,7 @@ public interface StartVerificationFlashCallOptions {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new StartVerificationFlashCallOptionsImpl.Builder();
+    return new VerificationReportRequestParametersPhoneCallOptionsImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -44,17 +40,17 @@ public interface StartVerificationFlashCallOptions {
     /**
      * see getter
      *
-     * @param dialTimeout see getter
+     * @param code see getter
      * @return Current builder
-     * @see #getDialTimeout
+     * @see #getCode
      */
-    Builder setDialTimeout(Integer dialTimeout);
+    Builder setCode(String code);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    StartVerificationFlashCallOptions build();
+    VerificationReportRequestParametersPhoneCallOptions build();
   }
 }

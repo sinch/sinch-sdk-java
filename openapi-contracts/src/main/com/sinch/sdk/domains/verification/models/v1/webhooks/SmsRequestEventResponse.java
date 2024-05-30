@@ -10,24 +10,27 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.verification.models.v1.start.request;
+package com.sinch.sdk.domains.verification.models.v1.webhooks;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/**
- * An optional object for Flash Call Verification, considered only when the verification request
- * originates from your backend (not an SDK client) via an [Application signed
- * request](/docs/voice/api-reference/authentication/signed-request).
- */
-@JsonDeserialize(builder = StartVerificationFlashCallOptionsImpl.Builder.class)
-public interface StartVerificationFlashCallOptions {
+/** declaration */
+@JsonDeserialize(builder = SmsRequestEventResponseImpl.Builder.class)
+public interface SmsRequestEventResponse {
 
   /**
-   * The dial timeout in seconds.
+   * Get action
    *
-   * @return dialTimeout
+   * @return action
    */
-  Integer getDialTimeout();
+  VerificationEventResponseAction getAction();
+
+  /**
+   * Get sms
+   *
+   * @return sms
+   */
+  SmsRequestEventResponseSmsContent getSms();
 
   /**
    * Getting builder
@@ -35,7 +38,7 @@ public interface StartVerificationFlashCallOptions {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new StartVerificationFlashCallOptionsImpl.Builder();
+    return new SmsRequestEventResponseImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -44,17 +47,26 @@ public interface StartVerificationFlashCallOptions {
     /**
      * see getter
      *
-     * @param dialTimeout see getter
+     * @param action see getter
      * @return Current builder
-     * @see #getDialTimeout
+     * @see #getAction
      */
-    Builder setDialTimeout(Integer dialTimeout);
+    Builder setAction(VerificationEventResponseAction action);
+
+    /**
+     * see getter
+     *
+     * @param sms see getter
+     * @return Current builder
+     * @see #getSms
+     */
+    Builder setSms(SmsRequestEventResponseSmsContent sms);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    StartVerificationFlashCallOptions build();
+    SmsRequestEventResponse build();
   }
 }

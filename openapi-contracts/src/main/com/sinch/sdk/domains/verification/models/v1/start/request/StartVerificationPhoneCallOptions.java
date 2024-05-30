@@ -15,19 +15,18 @@ package com.sinch.sdk.domains.verification.models.v1.start.request;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
- * An optional object for Flash Call Verification, considered only when the verification request
- * originates from your backend (not an SDK client) via an [Application signed
- * request](/docs/voice/api-reference/authentication/signed-request).
+ * An optional object for Phone Call Verification, with default values assumed for all contained
+ * values if not provided.
  */
-@JsonDeserialize(builder = StartVerificationFlashCallOptionsImpl.Builder.class)
-public interface StartVerificationFlashCallOptions {
+@JsonDeserialize(builder = StartVerificationPhoneCallOptionsImpl.Builder.class)
+public interface StartVerificationPhoneCallOptions {
 
   /**
-   * The dial timeout in seconds.
+   * Get speech
    *
-   * @return dialTimeout
+   * @return speech
    */
-  Integer getDialTimeout();
+  PhoneCallSpeech getSpeech();
 
   /**
    * Getting builder
@@ -35,7 +34,7 @@ public interface StartVerificationFlashCallOptions {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new StartVerificationFlashCallOptionsImpl.Builder();
+    return new StartVerificationPhoneCallOptionsImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -44,17 +43,17 @@ public interface StartVerificationFlashCallOptions {
     /**
      * see getter
      *
-     * @param dialTimeout see getter
+     * @param speech see getter
      * @return Current builder
-     * @see #getDialTimeout
+     * @see #getSpeech
      */
-    Builder setDialTimeout(Integer dialTimeout);
+    Builder setSpeech(PhoneCallSpeech speech);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    StartVerificationFlashCallOptions build();
+    StartVerificationPhoneCallOptions build();
   }
 }

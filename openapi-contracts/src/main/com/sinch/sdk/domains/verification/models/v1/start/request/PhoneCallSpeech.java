@@ -14,20 +14,18 @@ package com.sinch.sdk.domains.verification.models.v1.start.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/**
- * An optional object for Flash Call Verification, considered only when the verification request
- * originates from your backend (not an SDK client) via an [Application signed
- * request](/docs/voice/api-reference/authentication/signed-request).
- */
-@JsonDeserialize(builder = StartVerificationFlashCallOptionsImpl.Builder.class)
-public interface StartVerificationFlashCallOptions {
+/** Text-To-Speech engine settings */
+@JsonDeserialize(builder = PhoneCallSpeechImpl.Builder.class)
+public interface PhoneCallSpeech {
 
   /**
-   * The dial timeout in seconds.
+   * A &#x60;language-region&#x60; identifier according to
+   * [IANA](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry).
+   * Only a subset of those identifiers is accepted.
    *
-   * @return dialTimeout
+   * @return locale
    */
-  Integer getDialTimeout();
+  String getLocale();
 
   /**
    * Getting builder
@@ -35,7 +33,7 @@ public interface StartVerificationFlashCallOptions {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new StartVerificationFlashCallOptionsImpl.Builder();
+    return new PhoneCallSpeechImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -44,17 +42,17 @@ public interface StartVerificationFlashCallOptions {
     /**
      * see getter
      *
-     * @param dialTimeout see getter
+     * @param locale see getter
      * @return Current builder
-     * @see #getDialTimeout
+     * @see #getLocale
      */
-    Builder setDialTimeout(Integer dialTimeout);
+    Builder setLocale(String locale);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    StartVerificationFlashCallOptions build();
+    PhoneCallSpeech build();
   }
 }

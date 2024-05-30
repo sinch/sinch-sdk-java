@@ -16,8 +16,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 
 /** declaration */
-@JsonDeserialize(builder = StartVerificationResponseFlashCallImpl.Builder.class)
-public interface StartVerificationResponseFlashCall
+@JsonDeserialize(builder = StartVerificationResponseSmsImpl.Builder.class)
+public interface StartVerificationResponseSms
     extends com.sinch.sdk.domains.verification.models.v1.response.StartVerificationResponse {
 
   /**
@@ -28,19 +28,19 @@ public interface StartVerificationResponseFlashCall
   String getId();
 
   /**
-   * The value of the method used for the Verification. For flash call Verifications, this will
-   * always be &#x60;flashcall&#x60;.
+   * The value of the method used for the Verification. For SMS Verifications, this will always be
+   * &#x60;sms&#x60;.
    *
    * @return method
    */
   String getMethod();
 
   /**
-   * Get flashCall
+   * Get sms
    *
-   * @return flashCall
+   * @return sms
    */
-  StartVerificationResponseFlashCallContent getFlashCall();
+  StartVerificationResponseSmsContent getSms();
 
   /**
    * Get links
@@ -55,7 +55,7 @@ public interface StartVerificationResponseFlashCall
    * @return New Builder instance
    */
   static Builder builder() {
-    return new StartVerificationResponseFlashCallImpl.Builder();
+    return new StartVerificationResponseSmsImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -82,11 +82,11 @@ public interface StartVerificationResponseFlashCall
     /**
      * see getter
      *
-     * @param flashCall see getter
+     * @param sms see getter
      * @return Current builder
-     * @see #getFlashCall
+     * @see #getSms
      */
-    Builder setFlashCall(StartVerificationResponseFlashCallContent flashCall);
+    Builder setSms(StartVerificationResponseSmsContent sms);
 
     /**
      * see getter
@@ -102,6 +102,6 @@ public interface StartVerificationResponseFlashCall
      *
      * @return The instance build with current builder values
      */
-    StartVerificationResponseFlashCall build();
+    StartVerificationResponseSms build();
   }
 }

@@ -47,11 +47,11 @@ public class StartVerificationRequestParametersImpl implements StartVerification
 
   public static final String JSON_PROPERTY_SMS_OPTIONS = "smsOptions";
 
-  private OptionalValue<StartVerificationSMSOptions> smsOptions;
+  private OptionalValue<StartVerificationSmsOptions> smsOptions;
 
   public static final String JSON_PROPERTY_CALLOUT_OPTIONS = "calloutOptions";
 
-  private OptionalValue<StartVerificationCalloutOptions> calloutOptions;
+  private OptionalValue<StartVerificationPhoneCallOptions> calloutOptions;
 
   public StartVerificationRequestParametersImpl() {}
 
@@ -61,8 +61,8 @@ public class StartVerificationRequestParametersImpl implements StartVerification
       OptionalValue<String> reference,
       OptionalValue<String> custom,
       OptionalValue<StartVerificationFlashCallOptions> flashCallOptions,
-      OptionalValue<StartVerificationSMSOptions> smsOptions,
-      OptionalValue<StartVerificationCalloutOptions> calloutOptions) {
+      OptionalValue<StartVerificationSmsOptions> smsOptions,
+      OptionalValue<StartVerificationPhoneCallOptions> calloutOptions) {
     this.identity = identity;
     this.method = method;
     this.reference = reference;
@@ -128,24 +128,24 @@ public class StartVerificationRequestParametersImpl implements StartVerification
   }
 
   @JsonIgnore
-  public StartVerificationSMSOptions getSmsOptions() {
+  public StartVerificationSmsOptions getSmsOptions() {
     return smsOptions.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_SMS_OPTIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<StartVerificationSMSOptions> smsOptions() {
+  public OptionalValue<StartVerificationSmsOptions> smsOptions() {
     return smsOptions;
   }
 
   @JsonIgnore
-  public StartVerificationCalloutOptions getCalloutOptions() {
+  public StartVerificationPhoneCallOptions getCalloutOptions() {
     return calloutOptions.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CALLOUT_OPTIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<StartVerificationCalloutOptions> calloutOptions() {
+  public OptionalValue<StartVerificationPhoneCallOptions> calloutOptions() {
     return calloutOptions;
   }
 
@@ -207,8 +207,8 @@ public class StartVerificationRequestParametersImpl implements StartVerification
     OptionalValue<String> reference = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
     OptionalValue<StartVerificationFlashCallOptions> flashCallOptions = OptionalValue.empty();
-    OptionalValue<StartVerificationSMSOptions> smsOptions = OptionalValue.empty();
-    OptionalValue<StartVerificationCalloutOptions> calloutOptions = OptionalValue.empty();
+    OptionalValue<StartVerificationSmsOptions> smsOptions = OptionalValue.empty();
+    OptionalValue<StartVerificationPhoneCallOptions> calloutOptions = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_IDENTITY)
     public Builder setIdentity(IdentityInternal identity) {
@@ -241,13 +241,13 @@ public class StartVerificationRequestParametersImpl implements StartVerification
     }
 
     @JsonProperty(JSON_PROPERTY_SMS_OPTIONS)
-    public Builder setSmsOptions(StartVerificationSMSOptions smsOptions) {
+    public Builder setSmsOptions(StartVerificationSmsOptions smsOptions) {
       this.smsOptions = OptionalValue.of(smsOptions);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_CALLOUT_OPTIONS)
-    public Builder setCalloutOptions(StartVerificationCalloutOptions calloutOptions) {
+    public Builder setCalloutOptions(StartVerificationPhoneCallOptions calloutOptions) {
       this.calloutOptions = OptionalValue.of(calloutOptions);
       return this;
     }

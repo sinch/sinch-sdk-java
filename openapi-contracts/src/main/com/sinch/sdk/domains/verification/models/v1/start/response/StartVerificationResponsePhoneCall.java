@@ -16,8 +16,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 
 /** declaration */
-@JsonDeserialize(builder = StartVerificationResponseFlashCallImpl.Builder.class)
-public interface StartVerificationResponseFlashCall
+@JsonDeserialize(builder = StartVerificationResponsePhoneCallImpl.Builder.class)
+public interface StartVerificationResponsePhoneCall
     extends com.sinch.sdk.domains.verification.models.v1.response.StartVerificationResponse {
 
   /**
@@ -28,19 +28,12 @@ public interface StartVerificationResponseFlashCall
   String getId();
 
   /**
-   * The value of the method used for the Verification. For flash call Verifications, this will
-   * always be &#x60;flashcall&#x60;.
+   * The value of the method used for the Verification. For Phone Call Verifications, this will
+   * always be &#x60;callout&#x60;.
    *
    * @return method
    */
   String getMethod();
-
-  /**
-   * Get flashCall
-   *
-   * @return flashCall
-   */
-  StartVerificationResponseFlashCallContent getFlashCall();
 
   /**
    * Get links
@@ -55,7 +48,7 @@ public interface StartVerificationResponseFlashCall
    * @return New Builder instance
    */
   static Builder builder() {
-    return new StartVerificationResponseFlashCallImpl.Builder();
+    return new StartVerificationResponsePhoneCallImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -82,15 +75,6 @@ public interface StartVerificationResponseFlashCall
     /**
      * see getter
      *
-     * @param flashCall see getter
-     * @return Current builder
-     * @see #getFlashCall
-     */
-    Builder setFlashCall(StartVerificationResponseFlashCallContent flashCall);
-
-    /**
-     * see getter
-     *
      * @param links see getter
      * @return Current builder
      * @see #getLinks
@@ -102,6 +86,6 @@ public interface StartVerificationResponseFlashCall
      *
      * @return The instance build with current builder values
      */
-    StartVerificationResponseFlashCall build();
+    StartVerificationResponsePhoneCall build();
   }
 }

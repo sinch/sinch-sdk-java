@@ -10,30 +10,30 @@ import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  VerificationReportRequestParametersFlashCallImpl.JSON_PROPERTY_METHOD,
-  VerificationReportRequestParametersFlashCallImpl.JSON_PROPERTY_FLASH_CALL
+  VerificationReportRequestParametersPhoneCallImpl.JSON_PROPERTY_METHOD,
+  VerificationReportRequestParametersPhoneCallImpl.JSON_PROPERTY_CALLOUT
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class VerificationReportRequestParametersFlashCallImpl
-    implements VerificationReportRequestParametersFlashCall {
+public class VerificationReportRequestParametersPhoneCallImpl
+    implements VerificationReportRequestParametersPhoneCall {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_METHOD = "method";
 
   private OptionalValue<MethodEnum> method;
 
-  public static final String JSON_PROPERTY_FLASH_CALL = "flashCall";
+  public static final String JSON_PROPERTY_CALLOUT = "callout";
 
-  private OptionalValue<VerificationReportRequestParametersFlashCallOptions> flashCall;
+  private OptionalValue<VerificationReportRequestParametersPhoneCallOptions> callout;
 
-  public VerificationReportRequestParametersFlashCallImpl() {}
+  public VerificationReportRequestParametersPhoneCallImpl() {}
 
-  protected VerificationReportRequestParametersFlashCallImpl(
+  protected VerificationReportRequestParametersPhoneCallImpl(
       OptionalValue<MethodEnum> method,
-      OptionalValue<VerificationReportRequestParametersFlashCallOptions> flashCall) {
+      OptionalValue<VerificationReportRequestParametersPhoneCallOptions> callout) {
     this.method = method;
-    this.flashCall = flashCall;
+    this.callout = callout;
   }
 
   @JsonIgnore
@@ -48,17 +48,17 @@ public class VerificationReportRequestParametersFlashCallImpl
   }
 
   @JsonIgnore
-  public VerificationReportRequestParametersFlashCallOptions getFlashCall() {
-    return flashCall.orElse(null);
+  public VerificationReportRequestParametersPhoneCallOptions getCallout() {
+    return callout.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_FLASH_CALL)
+  @JsonProperty(JSON_PROPERTY_CALLOUT)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<VerificationReportRequestParametersFlashCallOptions> flashCall() {
-    return flashCall;
+  public OptionalValue<VerificationReportRequestParametersPhoneCallOptions> callout() {
+    return callout;
   }
 
-  /** Return true if this FlashCallVerificationReportRequest object is equal to o. */
+  /** Return true if this PhoneCallVerificationReportRequest object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -67,23 +67,23 @@ public class VerificationReportRequestParametersFlashCallImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerificationReportRequestParametersFlashCallImpl flashCallVerificationReportRequest =
-        (VerificationReportRequestParametersFlashCallImpl) o;
-    return Objects.equals(this.method, flashCallVerificationReportRequest.method)
-        && Objects.equals(this.flashCall, flashCallVerificationReportRequest.flashCall);
+    VerificationReportRequestParametersPhoneCallImpl phoneCallVerificationReportRequest =
+        (VerificationReportRequestParametersPhoneCallImpl) o;
+    return Objects.equals(this.method, phoneCallVerificationReportRequest.method)
+        && Objects.equals(this.callout, phoneCallVerificationReportRequest.callout);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(method, flashCall);
+    return Objects.hash(method, callout);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VerificationReportRequestParametersFlashCallImpl {\n");
+    sb.append("class VerificationReportRequestParametersPhoneCallImpl {\n");
     sb.append("    method: ").append(toIndentedString(method)).append("\n");
-    sb.append("    flashCall: ").append(toIndentedString(flashCall)).append("\n");
+    sb.append("    callout: ").append(toIndentedString(callout)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -99,9 +99,9 @@ public class VerificationReportRequestParametersFlashCallImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements VerificationReportRequestParametersFlashCall.Builder {
+  static class Builder implements VerificationReportRequestParametersPhoneCall.Builder {
     OptionalValue<MethodEnum> method = OptionalValue.empty();
-    OptionalValue<VerificationReportRequestParametersFlashCallOptions> flashCall =
+    OptionalValue<VerificationReportRequestParametersPhoneCallOptions> callout =
         OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_METHOD)
@@ -110,14 +110,14 @@ public class VerificationReportRequestParametersFlashCallImpl
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_FLASH_CALL)
-    public Builder setFlashCall(VerificationReportRequestParametersFlashCallOptions flashCall) {
-      this.flashCall = OptionalValue.of(flashCall);
+    @JsonProperty(JSON_PROPERTY_CALLOUT)
+    public Builder setCallout(VerificationReportRequestParametersPhoneCallOptions callout) {
+      this.callout = OptionalValue.of(callout);
       return this;
     }
 
-    public VerificationReportRequestParametersFlashCall build() {
-      return new VerificationReportRequestParametersFlashCallImpl(method, flashCall);
+    public VerificationReportRequestParametersPhoneCall build() {
+      return new VerificationReportRequestParametersPhoneCallImpl(method, callout);
     }
   }
 }
