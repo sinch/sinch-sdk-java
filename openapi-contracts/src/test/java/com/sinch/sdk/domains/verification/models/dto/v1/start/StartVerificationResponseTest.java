@@ -54,10 +54,10 @@ public class StartVerificationResponseTest extends BaseTest {
                           .build())
                   .build());
 
-  @GivenJsonResource("/domains/verification/v1/start/StartVerificationSeamlessResponseDto.json")
-  StartVerificationResponseInternal loadedStartVerificationSeamlessDto;
+  @GivenJsonResource("/domains/verification/v1/start/StartVerificationDataResponseDto.json")
+  StartVerificationResponseInternal loadedStartVerificationDataDto;
 
-  public static StartVerificationResponseInternal expectedStartVerificationSeamlessDto =
+  public static StartVerificationResponseInternal expectedStartVerificationDataDto =
       new StartVerificationResponseInternalImpl(
           (StartVerificationResponseSeamlessImpl)
               StartVerificationResponseSeamless.builder()
@@ -102,10 +102,10 @@ public class StartVerificationResponseTest extends BaseTest {
   }
 
   @Test
-  void deserializeStartSeamless() {
-    Assertions.assertThat(loadedStartVerificationSeamlessDto)
+  void deserializeStartData() {
+    Assertions.assertThat(loadedStartVerificationDataDto)
         .usingRecursiveComparison()
-        .isEqualTo(expectedStartVerificationSeamlessDto);
+        .isEqualTo(expectedStartVerificationDataDto);
   }
 
   @Test

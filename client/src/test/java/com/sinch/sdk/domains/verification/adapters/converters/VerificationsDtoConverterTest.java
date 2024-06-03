@@ -123,7 +123,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     Assertions.assertThat(VerificationsDtoConverter.convert(startVerificationSeamlessRequest))
         .usingRecursiveComparison()
-        .isEqualTo(StartVerificationRequestTest.startVerificationSeamlessDto);
+        .isEqualTo(StartVerificationRequestTest.startVerificationDataDto);
   }
 
   @Test
@@ -159,7 +159,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     Assertions.assertThat(
             VerificationsDtoConverter.convert(
-                StartVerificationResponseTest.expectedStartVerificationSeamlessDto))
+                StartVerificationResponseTest.expectedStartVerificationDataDto))
         .usingRecursiveComparison()
         .isEqualTo(expectedStartVerificationSeamlessResponse);
   }

@@ -35,7 +35,7 @@ public class VerificationsStartServiceTest extends BaseTest {
   @GivenJsonResource("/domains/verification/v1/start/StartVerificationFlashCallRequestDto.json")
   public StartVerificationRequestParameters startVerificationFlashCallRequestDto;
 
-  @GivenJsonResource("/domains/verification/v1/start/StartVerificationSeamlessRequestDto.json")
+  @GivenJsonResource("/domains/verification/v1/start/StartVerificationDataRequestDto.json")
   public StartVerificationRequestParameters startVerificationSeamlessRequestDto;
 
   @GivenJsonResource("/domains/verification/v1/start/StartVerificationSmsRequestDto.json")
@@ -100,7 +100,7 @@ public class VerificationsStartServiceTest extends BaseTest {
   void startSeamless() throws ApiException {
 
     when(api.startVerification(eq(startVerificationSeamlessRequestDto), eq(null)))
-        .thenReturn(StartVerificationResponseTest.expectedStartVerificationSeamlessDto);
+        .thenReturn(StartVerificationResponseTest.expectedStartVerificationDataDto);
 
     StartVerificationResponseSeamless response =
         service.startSeamless(VerificationsDtoConverterTest.startVerificationSeamlessRequest);

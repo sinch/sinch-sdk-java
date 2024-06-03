@@ -42,7 +42,7 @@ public class StartVerificationRequestTest extends BaseTest {
           .setFlashCallOptions(
               StartVerificationFlashCallOptions.builder().setDialTimeout(17).build())
           .build();
-  public static StartVerificationRequestParameters startVerificationSeamlessDto =
+  public static StartVerificationRequestParameters startVerificationDataDto =
       StartVerificationRequestParameters.builder()
           .setMethod(VerificationMethod.SEAMLESS)
           .setCustom("a custom")
@@ -71,8 +71,8 @@ public class StartVerificationRequestTest extends BaseTest {
   @GivenTextResource("/domains/verification/v1/start/StartVerificationFlashCallRequestDto.json")
   String jsonStartVerificationFlashCall;
 
-  @GivenTextResource("/domains/verification/v1/start/StartVerificationSeamlessRequestDto.json")
-  String jsonStartVerificationSeamless;
+  @GivenTextResource("/domains/verification/v1/start/StartVerificationDataRequestDto.json")
+  String jsonStartVerificationData;
 
   @GivenTextResource("/domains/verification/v1/start/StartVerificationSmsRequestDto.json")
   String jsonStartVerificationSms;
@@ -92,10 +92,10 @@ public class StartVerificationRequestTest extends BaseTest {
   }
 
   @Test
-  void serializeSeamlessCall() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(startVerificationSeamlessDto);
+  void serializeDataCall() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(startVerificationDataDto);
 
-    JSONAssert.assertEquals(jsonStartVerificationSeamless, serializedString, true);
+    JSONAssert.assertEquals(jsonStartVerificationData, serializedString, true);
   }
 
   @Test
