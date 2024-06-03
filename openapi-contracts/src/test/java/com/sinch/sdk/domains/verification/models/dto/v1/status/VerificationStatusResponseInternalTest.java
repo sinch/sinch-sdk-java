@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 @TestWithResources
 public class VerificationStatusResponseInternalTest extends BaseTest {
 
-  public static VerificationStatusResponseInternal expectedVerificationCalloutDto =
+  public static VerificationStatusResponseInternal expectedVerificationPhoneCallDto =
       new VerificationStatusResponseInternalImpl(
           (PhoneCallVerificationStatusResponseImpl)
               PhoneCallVerificationStatusResponse.builder()
@@ -115,8 +115,8 @@ public class VerificationStatusResponseInternalTest extends BaseTest {
                   .setVerificationTimestamp("2024-05-22T09:38:59.5590437")
                   .build());
 
-  @GivenJsonResource("/domains/verification/v1/status/VerificationStatusCalloutResponseDto.json")
-  VerificationStatusResponseInternal loadedVerificationCalloutDto;
+  @GivenJsonResource("/domains/verification/v1/status/VerificationStatusPhoneCallResponseDto.json")
+  VerificationStatusResponseInternal loadedVerificationPhoneCallDto;
 
   @GivenJsonResource("/domains/verification/v1/status/VerificationStatusFlashCallResponseDto.json")
   VerificationStatusResponseInternal loadedVerificationFlashCallDto;
@@ -125,10 +125,10 @@ public class VerificationStatusResponseInternalTest extends BaseTest {
   VerificationStatusResponseInternal loadedVerificationSmsDto;
 
   @Test
-  void deserializeCallout() {
-    Assertions.assertThat(loadedVerificationCalloutDto)
+  void deserializePhoneCall() {
+    Assertions.assertThat(loadedVerificationPhoneCallDto)
         .usingRecursiveComparison()
-        .isEqualTo(expectedVerificationCalloutDto);
+        .isEqualTo(expectedVerificationPhoneCallDto);
   }
 
   @Test

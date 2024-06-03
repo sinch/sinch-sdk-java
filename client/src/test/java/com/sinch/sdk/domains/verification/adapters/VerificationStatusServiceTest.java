@@ -45,7 +45,7 @@ public class VerificationStatusServiceTest extends BaseTest {
   void getByIdentity() throws ApiException {
 
     when(api.verificationStatusByIdentity(eq("endpoint string"), eq("sms")))
-        .thenReturn(VerificationStatusResponseInternalTest.expectedVerificationCalloutDto);
+        .thenReturn(VerificationStatusResponseInternalTest.expectedVerificationPhoneCallDto);
 
     VerificationStatus response =
         service.getByIdentity(
@@ -61,7 +61,7 @@ public class VerificationStatusServiceTest extends BaseTest {
   void getById() throws ApiException {
 
     when(api.verificationStatusById(eq("the id")))
-        .thenReturn(VerificationStatusResponseInternalTest.expectedVerificationCalloutDto);
+        .thenReturn(VerificationStatusResponseInternalTest.expectedVerificationPhoneCallDto);
 
     VerificationStatus response = service.getById(VerificationId.valueOf("the id"));
 
@@ -74,7 +74,7 @@ public class VerificationStatusServiceTest extends BaseTest {
   void getByReference() throws ApiException {
 
     when(api.verificationStatusByReference(eq("the reference")))
-        .thenReturn(VerificationStatusResponseInternalTest.expectedVerificationCalloutDto);
+        .thenReturn(VerificationStatusResponseInternalTest.expectedVerificationPhoneCallDto);
 
     VerificationStatus response =
         service.getByReference(VerificationReference.valueOf("the reference"));

@@ -23,10 +23,10 @@ import org.junit.jupiter.api.Test;
 @TestWithResources
 public class StartVerificationResponseTest extends BaseTest {
 
-  @GivenJsonResource("/domains/verification/v1/start/StartVerificationCalloutResponseDto.json")
-  StartVerificationResponseInternal loadedStartVerificationCalloutDto;
+  @GivenJsonResource("/domains/verification/v1/start/StartVerificationPhoneCallResponseDto.json")
+  StartVerificationResponseInternal loadedStartVerificationPhoneCallDto;
 
-  public static StartVerificationResponseInternal expectedStartVerificationCalloutDto =
+  public static StartVerificationResponseInternal expectedStartVerificationPhoneCallDto =
       new StartVerificationResponseInternalImpl(
           (StartVerificationResponsePhoneCallImpl)
               StartVerificationResponsePhoneCall.builder()
@@ -88,10 +88,10 @@ public class StartVerificationResponseTest extends BaseTest {
                   .build());
 
   @Test
-  void deserializeStartCallout() {
-    Assertions.assertThat(loadedStartVerificationCalloutDto)
+  void deserializeStartPhoneCall() {
+    Assertions.assertThat(loadedStartVerificationPhoneCallDto)
         .usingRecursiveComparison()
-        .isEqualTo(expectedStartVerificationCalloutDto);
+        .isEqualTo(expectedStartVerificationPhoneCallDto);
   }
 
   @Test

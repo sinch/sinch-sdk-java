@@ -20,7 +20,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class VerificationResponseEventDtoTest extends BaseTest {
 
-  public static PhoneCallRequestEventResponse expectedCalloutRequestEventResponseDto =
+  public static PhoneCallRequestEventResponse expectedPhoneCallRequestEventResponseDto =
       PhoneCallRequestEventResponse.builder()
           .setAction(VerificationEventResponseAction.DENY)
           .setCallout(
@@ -61,12 +61,12 @@ public class VerificationResponseEventDtoTest extends BaseTest {
       "/domains/verification/v1/webhooks/VerificationResponseFlashCallEmptyFlashCall.json")
   String jsonResponseFlashCallEmptyFlashCall;
 
-  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseCallout.json")
-  String jsonResponseCallout;
+  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponsePhoneCall.json")
+  String jsonResponsePhoneCall;
 
   @GivenTextResource(
-      "/domains/verification/v1/webhooks/VerificationResponseCalloutEmptyCallout.json")
-  String jsonResponseCalloutEmptyCallout;
+      "/domains/verification/v1/webhooks/VerificationResponsePhoneCallEmptyCallout.json")
+  String jsonResponsePhoneCallEmptyCallout;
 
   @Test
   void serializeSmsResponse() throws JsonProcessingException, JSONException {
@@ -110,16 +110,16 @@ public class VerificationResponseEventDtoTest extends BaseTest {
   }
 
   @Test
-  void serializeCalloutResponse() throws JsonProcessingException, JSONException {
+  void serializePhoneCallResponse() throws JsonProcessingException, JSONException {
 
     String serializedString =
-        objectMapper.writeValueAsString(expectedCalloutRequestEventResponseDto);
+        objectMapper.writeValueAsString(expectedPhoneCallRequestEventResponseDto);
 
-    JSONAssert.assertEquals(jsonResponseCallout, serializedString, true);
+    JSONAssert.assertEquals(jsonResponsePhoneCall, serializedString, true);
   }
 
   @Test
-  void serializeCalloutResponseEmptyCallout() throws JsonProcessingException, JSONException {
+  void serializePhoneCallResponseEmptyCallout() throws JsonProcessingException, JSONException {
 
     PhoneCallRequestEventResponse value =
         PhoneCallRequestEventResponse.builder()
@@ -128,6 +128,6 @@ public class VerificationResponseEventDtoTest extends BaseTest {
 
     String serializedString = objectMapper.writeValueAsString(value);
 
-    JSONAssert.assertEquals(jsonResponseCalloutEmptyCallout, serializedString, true);
+    JSONAssert.assertEquals(jsonResponsePhoneCallEmptyCallout, serializedString, true);
   }
 }

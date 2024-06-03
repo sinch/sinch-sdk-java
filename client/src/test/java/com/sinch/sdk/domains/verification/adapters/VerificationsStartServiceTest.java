@@ -29,7 +29,7 @@ import org.mockito.Mock;
 @TestWithResources
 public class VerificationsStartServiceTest extends BaseTest {
 
-  @GivenJsonResource("/domains/verification/v1/start/StartVerificationCalloutRequestDto.json")
+  @GivenJsonResource("/domains/verification/v1/start/StartVerificationPhoneCallRequestDto.json")
   public StartVerificationRequestParameters startVerificationCalloutRequestDto;
 
   @GivenJsonResource("/domains/verification/v1/start/StartVerificationFlashCallRequestDto.json")
@@ -86,7 +86,7 @@ public class VerificationsStartServiceTest extends BaseTest {
   void startCallout() throws ApiException {
 
     when(api.startVerification(eq(startVerificationCalloutRequestDto), eq(null)))
-        .thenReturn(StartVerificationResponseTest.expectedStartVerificationCalloutDto);
+        .thenReturn(StartVerificationResponseTest.expectedStartVerificationPhoneCallDto);
 
     StartVerificationResponseCallout response =
         service.startCallout(VerificationsDtoConverterTest.startVerificationCalloutRequest);

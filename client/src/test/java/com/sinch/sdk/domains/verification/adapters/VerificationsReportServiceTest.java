@@ -30,7 +30,7 @@ import org.mockito.Mock;
 @TestWithResources
 public class VerificationsReportServiceTest extends BaseTest {
 
-  @GivenJsonResource("/domains/verification/v1/report/VerificationReportCalloutRequestDto.json")
+  @GivenJsonResource("/domains/verification/v1/report/VerificationReportPhoneCallRequestDto.json")
   public VerificationReportRequestParametersInternal verificationReportCalloutRequestDto;
 
   @GivenJsonResource("/domains/verification/v1/report/VerificationReportFlashCallRequestDto.json")
@@ -91,7 +91,7 @@ public class VerificationsReportServiceTest extends BaseTest {
 
     when(api.reportVerificationByIdentity(
             eq("endpoint string"), eq(verificationReportCalloutRequestDto)))
-        .thenReturn(VerificationReportResponseDtoTest.verificationReportCalloutDto);
+        .thenReturn(VerificationReportResponseDtoTest.verificationReportPhoneCallDto);
 
     VerificationReportCallout response =
         service.reportCalloutByIdentity(
@@ -139,7 +139,7 @@ public class VerificationsReportServiceTest extends BaseTest {
   void reportCalloutById() throws ApiException {
 
     when(api.reportVerificationById(eq("the id"), eq(verificationReportCalloutRequestDto)))
-        .thenReturn(VerificationReportResponseDtoTest.verificationReportCalloutDto);
+        .thenReturn(VerificationReportResponseDtoTest.verificationReportPhoneCallDto);
 
     VerificationReportCallout response =
         service.reportCalloutById(

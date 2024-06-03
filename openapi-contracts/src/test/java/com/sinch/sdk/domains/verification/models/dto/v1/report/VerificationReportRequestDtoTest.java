@@ -54,7 +54,7 @@ public class VerificationReportRequestDtoTest extends BaseTest {
                           .build())
                   .build());
 
-  @GivenTextResource("/domains/verification/v1/report/VerificationReportCalloutRequestDto.json")
+  @GivenTextResource("/domains/verification/v1/report/VerificationReportPhoneCallRequestDto.json")
   String jsonVerificationReportCallout;
 
   @GivenTextResource("/domains/verification/v1/report/VerificationReportFlashCallRequestDto.json")

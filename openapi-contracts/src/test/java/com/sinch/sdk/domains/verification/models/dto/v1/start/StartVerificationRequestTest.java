@@ -19,7 +19,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class StartVerificationRequestTest extends BaseTest {
 
-  public static StartVerificationRequestParameters startVerificationCalloutDto =
+  public static StartVerificationRequestParameters startVerificationPhoneCallDto =
       StartVerificationRequestParameters.builder()
           .setMethod(VerificationMethod.CALLOUT)
           .setCustom("a custom")
@@ -65,8 +65,8 @@ public class StartVerificationRequestTest extends BaseTest {
                   .build())
           .build();
 
-  @GivenTextResource("/domains/verification/v1/start/StartVerificationCalloutRequestDto.json")
-  String jsonStartVerificationCallout;
+  @GivenTextResource("/domains/verification/v1/start/StartVerificationPhoneCallRequestDto.json")
+  String jsonStartVerificationPhoneCall;
 
   @GivenTextResource("/domains/verification/v1/start/StartVerificationFlashCallRequestDto.json")
   String jsonStartVerificationFlashCall;
@@ -78,10 +78,10 @@ public class StartVerificationRequestTest extends BaseTest {
   String jsonStartVerificationSms;
 
   @Test
-  void serializeStartCallout() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(startVerificationCalloutDto);
+  void serializeStartPhoneCall() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(startVerificationPhoneCallDto);
 
-    JSONAssert.assertEquals(jsonStartVerificationCallout, serializedString, true);
+    JSONAssert.assertEquals(jsonStartVerificationPhoneCall, serializedString, true);
   }
 
   @Test

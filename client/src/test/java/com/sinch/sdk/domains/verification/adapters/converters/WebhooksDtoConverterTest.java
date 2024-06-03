@@ -87,7 +87,7 @@ public class WebhooksDtoConverterTest extends BaseTest {
 
   @Test
   void convertVerificationCalloutResponse() {
-    Assertions.assertThat(VerificationResponseEventDtoTest.expectedCalloutRequestEventResponseDto)
+    Assertions.assertThat(VerificationResponseEventDtoTest.expectedPhoneCallRequestEventResponseDto)
         .usingRecursiveComparison()
         .isEqualTo(WebHooksDtoConverter.convert(verificationResponseCallout));
   }

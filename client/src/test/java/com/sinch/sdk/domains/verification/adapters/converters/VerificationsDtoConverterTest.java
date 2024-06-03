@@ -107,7 +107,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     Assertions.assertThat(VerificationsDtoConverter.convert(startVerificationCalloutRequest))
         .usingRecursiveComparison()
-        .isEqualTo(StartVerificationRequestTest.startVerificationCalloutDto);
+        .isEqualTo(StartVerificationRequestTest.startVerificationPhoneCallDto);
   }
 
   @Test
@@ -139,7 +139,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     Assertions.assertThat(
             VerificationsDtoConverter.convert(
-                StartVerificationResponseTest.expectedStartVerificationCalloutDto))
+                StartVerificationResponseTest.expectedStartVerificationPhoneCallDto))
         .usingRecursiveComparison()
         .isEqualTo(expectedStartVerificationCalloutResponse);
   }
@@ -213,7 +213,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     Assertions.assertThat(
             StatusDtoConverter.convert(
-                VerificationStatusResponseInternalTest.expectedVerificationCalloutDto))
+                VerificationStatusResponseInternalTest.expectedVerificationPhoneCallDto))
         .usingRecursiveComparison()
         .isEqualTo(expectedVerificationReportCalloutResponse);
   }

@@ -12,10 +12,10 @@ import org.junit.jupiter.api.Test;
 @TestWithResources
 public class VerificationReportResponseDtoTest extends BaseTest {
 
-  @GivenJsonResource("/domains/verification/v1/report/VerificationReportCalloutResponseDto.json")
-  VerificationReportResponse expectedVerificationReportCallout;
+  @GivenJsonResource("/domains/verification/v1/report/VerificationReportPhoneCallResponseDto.json")
+  VerificationReportResponse expectedVerificationReportPhoneCall;
 
-  public static VerificationReportResponse verificationReportCalloutDto =
+  public static VerificationReportResponse verificationReportPhoneCallDto =
       VerificationReportResponse.builder()
           .setMethod(VerificationMethod.CALLOUT)
           .setId("the id")
@@ -43,10 +43,10 @@ public class VerificationReportResponseDtoTest extends BaseTest {
           .build();
 
   @Test
-  void deserializeCallout() {
-    Assertions.assertThat(verificationReportCalloutDto)
+  void deserializePhoneCall() {
+    Assertions.assertThat(verificationReportPhoneCallDto)
         .usingRecursiveComparison()
-        .isEqualTo(expectedVerificationReportCallout);
+        .isEqualTo(expectedVerificationReportPhoneCall);
   }
 
   @Test
