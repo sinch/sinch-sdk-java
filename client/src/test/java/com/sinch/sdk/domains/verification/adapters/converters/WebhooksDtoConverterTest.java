@@ -101,7 +101,7 @@ public class WebhooksDtoConverterTest extends BaseTest {
 
   @Test
   void convertVerificationSMSResponse() {
-    Assertions.assertThat(VerificationResponseEventDtoTest.expectedSMSRequestEventResponseDto)
+    Assertions.assertThat(VerificationResponseEventDtoTest.expectedSmsRequestEventResponseDto)
         .usingRecursiveComparison()
         .isEqualTo(WebHooksDtoConverter.convert(verificationResponseSMS));
   }

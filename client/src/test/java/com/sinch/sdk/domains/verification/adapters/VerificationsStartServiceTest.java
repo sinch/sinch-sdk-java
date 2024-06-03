@@ -38,7 +38,7 @@ public class VerificationsStartServiceTest extends BaseTest {
   @GivenJsonResource("/domains/verification/v1/start/StartVerificationSeamlessRequestDto.json")
   public StartVerificationRequestParameters startVerificationSeamlessRequestDto;
 
-  @GivenJsonResource("/domains/verification/v1/start/StartVerificationSMSRequestDto.json")
+  @GivenJsonResource("/domains/verification/v1/start/StartVerificationSmsRequestDto.json")
   public StartVerificationRequestParameters startVerificationSMSRequestDto;
 
   @Mock VerificationsStartApi api;
@@ -58,7 +58,7 @@ public class VerificationsStartServiceTest extends BaseTest {
   void startSms() throws ApiException {
 
     when(api.startVerification(eq(startVerificationSMSRequestDto), eq(null)))
-        .thenReturn(StartVerificationResponseTest.expectedStartVerificationSMSDto);
+        .thenReturn(StartVerificationResponseTest.expectedStartVerificationSmsDto);
 
     StartVerificationResponseSMS response =
         service.startSms(VerificationsDtoConverterTest.startVerificationSMSRequest);

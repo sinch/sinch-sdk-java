@@ -32,10 +32,10 @@ public class VerificationReportResponseDtoTest extends BaseTest {
           .setStatus(VerificationStatus.FAIL)
           .build();
 
-  @GivenJsonResource("/domains/verification/v1/report/VerificationReportSMSResponseDto.json")
-  VerificationReportResponse expectedVerificationReportSMS;
+  @GivenJsonResource("/domains/verification/v1/report/VerificationReportSmsResponseDto.json")
+  VerificationReportResponse expectedVerificationReportSms;
 
-  public static VerificationReportResponse verificationReportSMSDto =
+  public static VerificationReportResponse verificationReportSmsDto =
       VerificationReportResponse.builder()
           .setMethod(VerificationMethod.SMS)
           .setId("the id")
@@ -57,9 +57,9 @@ public class VerificationReportResponseDtoTest extends BaseTest {
   }
 
   @Test
-  void serializeSMS() {
-    Assertions.assertThat(verificationReportSMSDto)
+  void serializeSms() {
+    Assertions.assertThat(verificationReportSmsDto)
         .usingRecursiveComparison()
-        .isEqualTo(expectedVerificationReportSMS);
+        .isEqualTo(expectedVerificationReportSms);
   }
 }

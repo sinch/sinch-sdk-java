@@ -88,7 +88,7 @@ public class VerificationStatusResponseInternalTest extends BaseTest {
                   .setCountryId("es-ES")
                   .setVerificationTimestamp("2024-05-22T09:38:59.5590437")
                   .build());
-  public static VerificationStatusResponseInternal expectedVerificationSMSDto =
+  public static VerificationStatusResponseInternal expectedVerificationSmsDto =
       new VerificationStatusResponseInternalImpl(
           (SmsVerificationStatusResponseImpl)
               SmsVerificationStatusResponse.builder()
@@ -121,8 +121,8 @@ public class VerificationStatusResponseInternalTest extends BaseTest {
   @GivenJsonResource("/domains/verification/v1/status/VerificationStatusFlashCallResponseDto.json")
   VerificationStatusResponseInternal loadedVerificationFlashCallDto;
 
-  @GivenJsonResource("/domains/verification/v1/status/VerificationStatusSMSResponseDto.json")
-  VerificationStatusResponseInternal loadedVerificationSMSDto;
+  @GivenJsonResource("/domains/verification/v1/status/VerificationStatusSmsResponseDto.json")
+  VerificationStatusResponseInternal loadedVerificationSmsDto;
 
   @Test
   void deserializeCallout() {
@@ -139,9 +139,9 @@ public class VerificationStatusResponseInternalTest extends BaseTest {
   }
 
   @Test
-  void deserializeSMS() {
-    Assertions.assertThat(loadedVerificationSMSDto)
+  void deserializeSms() {
+    Assertions.assertThat(loadedVerificationSmsDto)
         .usingRecursiveComparison()
-        .isEqualTo(expectedVerificationSMSDto);
+        .isEqualTo(expectedVerificationSmsDto);
   }
 }

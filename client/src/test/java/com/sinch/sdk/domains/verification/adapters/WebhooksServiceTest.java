@@ -37,7 +37,7 @@ public class WebhooksServiceTest extends BaseTest {
   @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseFlashCall.json")
   String jsonResponseFlashCall;
 
-  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseSMS.json")
+  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseSms.json")
   String jsonResponseSMS;
 
   WebHooksService webHooksService;

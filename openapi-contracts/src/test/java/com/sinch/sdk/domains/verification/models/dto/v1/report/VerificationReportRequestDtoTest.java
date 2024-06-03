@@ -42,7 +42,7 @@ public class VerificationReportRequestDtoTest extends BaseTest {
                           .setCli("foo cli")
                           .build())
                   .build());
-  public static VerificationReportRequestParametersInternal verificationReportSMSDto =
+  public static VerificationReportRequestParametersInternal verificationReportSmsDto =
       new VerificationReportRequestParametersInternalImpl(
           (VerificationReportRequestParametersSmsImpl)
               VerificationReportRequestParametersSms.builder()
@@ -60,8 +60,8 @@ public class VerificationReportRequestDtoTest extends BaseTest {
   @GivenTextResource("/domains/verification/v1/report/VerificationReportFlashCallRequestDto.json")
   String jsonVerificationReportFlashCall;
 
-  @GivenTextResource("/domains/verification/v1/report/VerificationReportSMSRequestDto.json")
-  String jsonVerificationReportSMS;
+  @GivenTextResource("/domains/verification/v1/report/VerificationReportSmsRequestDto.json")
+  String jsonVerificationReportSms;
 
   @Test
   void serializeCallout() throws JsonProcessingException, JSONException {
@@ -78,9 +78,9 @@ public class VerificationReportRequestDtoTest extends BaseTest {
   }
 
   @Test
-  void serializeSMS() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(verificationReportSMSDto);
+  void serializeSms() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(verificationReportSmsDto);
 
-    JSONAssert.assertEquals(jsonVerificationReportSMS, serializedString, true);
+    JSONAssert.assertEquals(jsonVerificationReportSms, serializedString, true);
   }
 }

@@ -70,10 +70,10 @@ public class StartVerificationResponseTest extends BaseTest {
                           .build())
                   .build());
 
-  @GivenJsonResource("/domains/verification/v1/start/StartVerificationSMSResponseDto.json")
-  StartVerificationResponseInternal loadedStartVerificationSMSDto;
+  @GivenJsonResource("/domains/verification/v1/start/StartVerificationSmsResponseDto.json")
+  StartVerificationResponseInternal loadedStartVerificationSmsDto;
 
-  public static StartVerificationResponseInternal expectedStartVerificationSMSDto =
+  public static StartVerificationResponseInternal expectedStartVerificationSmsDto =
       new StartVerificationResponseInternalImpl(
           (StartVerificationResponseSmsImpl)
               StartVerificationResponseSms.builder()
@@ -109,9 +109,9 @@ public class StartVerificationResponseTest extends BaseTest {
   }
 
   @Test
-  void deserializeSMS() {
-    Assertions.assertThat(loadedStartVerificationSMSDto)
+  void deserializeSms() {
+    Assertions.assertThat(loadedStartVerificationSmsDto)
         .usingRecursiveComparison()
-        .isEqualTo(expectedStartVerificationSMSDto);
+        .isEqualTo(expectedStartVerificationSmsDto);
   }
 }

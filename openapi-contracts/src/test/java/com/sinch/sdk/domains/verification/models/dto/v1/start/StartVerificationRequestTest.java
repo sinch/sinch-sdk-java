@@ -50,7 +50,7 @@ public class StartVerificationRequestTest extends BaseTest {
           .setIdentity(
               IdentityInternal.builder().setType(TypeEnum.NUMBER).setEndpoint("+endpoint").build())
           .build();
-  public static StartVerificationRequestParameters startVerificationSMSDto =
+  public static StartVerificationRequestParameters startVerificationSmsDto =
       StartVerificationRequestParameters.builder()
           .setMethod(VerificationMethod.SMS)
           .setCustom("a custom")
@@ -74,8 +74,8 @@ public class StartVerificationRequestTest extends BaseTest {
   @GivenTextResource("/domains/verification/v1/start/StartVerificationSeamlessRequestDto.json")
   String jsonStartVerificationSeamless;
 
-  @GivenTextResource("/domains/verification/v1/start/StartVerificationSMSRequestDto.json")
-  String jsonStartVerificationSMS;
+  @GivenTextResource("/domains/verification/v1/start/StartVerificationSmsRequestDto.json")
+  String jsonStartVerificationSms;
 
   @Test
   void serializeStartCallout() throws JsonProcessingException, JSONException {
@@ -99,9 +99,9 @@ public class StartVerificationRequestTest extends BaseTest {
   }
 
   @Test
-  void serializeSMSCall() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(startVerificationSMSDto);
+  void serializeSmsCall() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(startVerificationSmsDto);
 
-    JSONAssert.assertEquals(jsonStartVerificationSMS, serializedString, true);
+    JSONAssert.assertEquals(jsonStartVerificationSms, serializedString, true);
   }
 }

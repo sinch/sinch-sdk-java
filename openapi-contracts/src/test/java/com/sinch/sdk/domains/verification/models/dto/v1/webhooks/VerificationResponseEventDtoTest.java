@@ -38,7 +38,7 @@ public class VerificationResponseEventDtoTest extends BaseTest {
                   .setDialTimeout(123)
                   .build())
           .build();
-  public static SmsRequestEventResponse expectedSMSRequestEventResponseDto =
+  public static SmsRequestEventResponse expectedSmsRequestEventResponseDto =
       SmsRequestEventResponse.builder()
           .setAction(VerificationEventResponseAction.DENY)
           .setSms(
@@ -48,11 +48,11 @@ public class VerificationResponseEventDtoTest extends BaseTest {
                   .build())
           .build();
 
-  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseSMS.json")
-  String jsonResponseSMS;
+  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseSms.json")
+  String jsonResponseSms;
 
-  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseSMSEmptySMS.json")
-  String jsonResponseSMSEmptySMS;
+  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseSmsEmptySms.json")
+  String jsonResponseSmsEmptySms;
 
   @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseFlashCall.json")
   String jsonResponseFlashCall;
@@ -69,22 +69,22 @@ public class VerificationResponseEventDtoTest extends BaseTest {
   String jsonResponseCalloutEmptyCallout;
 
   @Test
-  void serializeSMSResponse() throws JsonProcessingException, JSONException {
+  void serializeSmsResponse() throws JsonProcessingException, JSONException {
 
-    String serializedString = objectMapper.writeValueAsString(expectedSMSRequestEventResponseDto);
+    String serializedString = objectMapper.writeValueAsString(expectedSmsRequestEventResponseDto);
 
-    JSONAssert.assertEquals(jsonResponseSMS, serializedString, true);
+    JSONAssert.assertEquals(jsonResponseSms, serializedString, true);
   }
 
   @Test
-  void serializeSMSResponseEmptySms() throws JsonProcessingException, JSONException {
+  void serializeSmsResponseEmptySms() throws JsonProcessingException, JSONException {
 
     SmsRequestEventResponse value =
         SmsRequestEventResponse.builder().setAction(VerificationEventResponseAction.ALLOW).build();
 
     String serializedString = objectMapper.writeValueAsString(value);
 
-    JSONAssert.assertEquals(jsonResponseSMSEmptySMS, serializedString, true);
+    JSONAssert.assertEquals(jsonResponseSmsEmptySms, serializedString, true);
   }
 
   @Test

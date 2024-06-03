@@ -36,7 +36,7 @@ public class VerificationsReportServiceTest extends BaseTest {
   @GivenJsonResource("/domains/verification/v1/report/VerificationReportFlashCallRequestDto.json")
   public VerificationReportRequestParametersInternal verificationReportFlashCallRequestDto;
 
-  @GivenJsonResource("/domains/verification/v1/report/VerificationReportSMSRequestDto.json")
+  @GivenJsonResource("/domains/verification/v1/report/VerificationReportSmsRequestDto.json")
   public VerificationReportRequestParametersInternal verificationReportSMSRequestDto;
 
   @Mock VerificationsReportApi api;
@@ -57,7 +57,7 @@ public class VerificationsReportServiceTest extends BaseTest {
 
     when(api.reportVerificationByIdentity(
             eq("endpoint string"), eq(verificationReportSMSRequestDto)))
-        .thenReturn(VerificationReportResponseDtoTest.verificationReportSMSDto);
+        .thenReturn(VerificationReportResponseDtoTest.verificationReportSmsDto);
 
     VerificationReportSMS response =
         service.reportSmsByIdentity(
@@ -107,7 +107,7 @@ public class VerificationsReportServiceTest extends BaseTest {
   void reportSmsById() throws ApiException {
 
     when(api.reportVerificationById(eq("the id"), eq(verificationReportSMSRequestDto)))
-        .thenReturn(VerificationReportResponseDtoTest.verificationReportSMSDto);
+        .thenReturn(VerificationReportResponseDtoTest.verificationReportSmsDto);
 
     VerificationReportSMS response =
         service.reportSmsById(
