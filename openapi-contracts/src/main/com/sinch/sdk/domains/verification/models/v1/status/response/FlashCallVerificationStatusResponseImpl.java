@@ -10,7 +10,7 @@ import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
 import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
-import com.sinch.sdk.domains.verification.models.v1.status.StatusCall;
+import com.sinch.sdk.domains.verification.models.v1.status.StatusCallResult;
 import com.sinch.sdk.domains.verification.models.v1.status.StatusPrice;
 import java.util.Objects;
 
@@ -72,7 +72,7 @@ public class FlashCallVerificationStatusResponseImpl
 
   public static final String JSON_PROPERTY_CALL_RESULT = "callResult";
 
-  private OptionalValue<StatusCall> callResult;
+  private OptionalValue<StatusCallResult> callResult;
 
   public static final String JSON_PROPERTY_PRICE = "price";
 
@@ -94,7 +94,7 @@ public class FlashCallVerificationStatusResponseImpl
       OptionalValue<String> verificationTimestamp,
       OptionalValue<MethodEnum> method,
       OptionalValue<Boolean> callComplete,
-      OptionalValue<StatusCall> callResult,
+      OptionalValue<StatusCallResult> callResult,
       OptionalValue<StatusPrice> price,
       OptionalValue<SourceEnum> source) {
     this.id = id;
@@ -211,13 +211,13 @@ public class FlashCallVerificationStatusResponseImpl
   }
 
   @JsonIgnore
-  public StatusCall getCallResult() {
+  public StatusCallResult getCallResult() {
     return callResult.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CALL_RESULT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<StatusCall> callResult() {
+  public OptionalValue<StatusCallResult> callResult() {
     return callResult;
   }
 
@@ -329,7 +329,7 @@ public class FlashCallVerificationStatusResponseImpl
     OptionalValue<String> verificationTimestamp = OptionalValue.empty();
     OptionalValue<MethodEnum> method = OptionalValue.empty();
     OptionalValue<Boolean> callComplete = OptionalValue.empty();
-    OptionalValue<StatusCall> callResult = OptionalValue.empty();
+    OptionalValue<StatusCallResult> callResult = OptionalValue.empty();
     OptionalValue<StatusPrice> price = OptionalValue.empty();
     OptionalValue<SourceEnum> source = OptionalValue.empty();
 
@@ -388,7 +388,7 @@ public class FlashCallVerificationStatusResponseImpl
     }
 
     @JsonProperty(JSON_PROPERTY_CALL_RESULT)
-    public Builder setCallResult(StatusCall callResult) {
+    public Builder setCallResult(StatusCallResult callResult) {
       this.callResult = OptionalValue.of(callResult);
       return this;
     }

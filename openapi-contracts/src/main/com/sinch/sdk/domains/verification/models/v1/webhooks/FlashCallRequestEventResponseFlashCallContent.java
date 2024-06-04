@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface FlashCallRequestEventResponseFlashCallContent {
 
   /**
-   * The phone number that will be displayed to the user when the phone call is received on the
+   * The phone number that will be displayed to the user when the flash call is received on the
    * user&#39;s phone. By default, the Sinch dashboard will randomly select the CLI that will be
    * displayed during a phone call from a pool of numbers. If you want to set your own CLI, you can
    * specify it in the response to the Verification Request Event.

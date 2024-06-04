@@ -18,7 +18,7 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
 import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
-import com.sinch.sdk.domains.verification.models.v1.status.StatusCall;
+import com.sinch.sdk.domains.verification.models.v1.status.StatusCallResult;
 import com.sinch.sdk.domains.verification.models.v1.status.StatusPrice;
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -123,7 +123,7 @@ public interface PhoneCallVerificationStatusResponse {
    *
    * @return callResult
    */
-  StatusCall getCallResult();
+  StatusCallResult getCallResult();
 
   /**
    * Get price
@@ -232,7 +232,7 @@ public interface PhoneCallVerificationStatusResponse {
      * @return Current builder
      * @see #getCallResult
      */
-    Builder setCallResult(StatusCall callResult);
+    Builder setCallResult(StatusCallResult callResult);
 
     /**
      * see getter
