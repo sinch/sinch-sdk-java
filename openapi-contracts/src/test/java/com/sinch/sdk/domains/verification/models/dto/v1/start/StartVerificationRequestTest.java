@@ -92,14 +92,14 @@ public class StartVerificationRequestTest extends BaseTest {
   }
 
   @Test
-  void serializeDataCall() throws JsonProcessingException, JSONException {
+  void serializeStartDataCall() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(startVerificationDataDto);
 
     JSONAssert.assertEquals(jsonStartVerificationData, serializedString, true);
   }
 
   @Test
-  void serializeSmsCall() throws JsonProcessingException, JSONException {
+  void serializeStartSmsCall() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(startVerificationSmsDto);
 
     JSONAssert.assertEquals(jsonStartVerificationSms, serializedString, true);

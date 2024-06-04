@@ -31,13 +31,13 @@ import org.mockito.Mock;
 public class VerificationsReportServiceTest extends BaseTest {
 
   @GivenJsonResource("/domains/verification/v1/report/VerificationReportPhoneCallRequestDto.json")
-  public VerificationReportRequestParametersInternal verificationReportCalloutRequestDto;
+  public VerificationReportRequestParametersInternal verificationReportPhoneCallRequestDto;
 
   @GivenJsonResource("/domains/verification/v1/report/VerificationReportFlashCallRequestDto.json")
   public VerificationReportRequestParametersInternal verificationReportFlashCallRequestDto;
 
   @GivenJsonResource("/domains/verification/v1/report/VerificationReportSmsRequestDto.json")
-  public VerificationReportRequestParametersInternal verificationReportSMSRequestDto;
+  public VerificationReportRequestParametersInternal verificationReportSmsRequestDto;
 
   @Mock VerificationsReportApi api;
   @Mock VerificationContext context;
@@ -56,17 +56,17 @@ public class VerificationsReportServiceTest extends BaseTest {
   void reportSmsByIdentity() throws ApiException {
 
     when(api.reportVerificationByIdentity(
-            eq("endpoint string"), eq(verificationReportSMSRequestDto)))
+            eq("endpoint string"), eq(verificationReportSmsRequestDto)))
         .thenReturn(VerificationReportResponseDtoTest.verificationReportSmsDto);
 
     VerificationReportSMS response =
         service.reportSmsByIdentity(
             NumberIdentity.builder().setEndpoint("endpoint string").build(),
-            VerificationsDtoConverterTest.verificationReportSMSRequest);
+            VerificationsDtoConverterTest.verificationReportSmsRequest);
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationStatusSMSResponse);
+        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationStatusSmsResponse);
   }
 
   @Test
@@ -83,40 +83,40 @@ public class VerificationsReportServiceTest extends BaseTest {
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationReportFlashCallResponse);
+        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationStatusFlashCallResponse);
   }
 
   @Test
-  void reportCalloutByIdentity() throws ApiException {
+  void reportPhoneCallByIdentity() throws ApiException {
 
     when(api.reportVerificationByIdentity(
-            eq("endpoint string"), eq(verificationReportCalloutRequestDto)))
+            eq("endpoint string"), eq(verificationReportPhoneCallRequestDto)))
         .thenReturn(VerificationReportResponseDtoTest.verificationReportPhoneCallDto);
 
     VerificationReportCallout response =
         service.reportCalloutByIdentity(
             NumberIdentity.builder().setEndpoint("endpoint string").build(),
-            VerificationsDtoConverterTest.verificationReportCalloutRequest);
+            VerificationsDtoConverterTest.verificationReportPhoneCallRequest);
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationReportCalloutResponse);
+        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationStatusPhoneCallResponse);
   }
 
   @Test
   void reportSmsById() throws ApiException {
 
-    when(api.reportVerificationById(eq("the id"), eq(verificationReportSMSRequestDto)))
+    when(api.reportVerificationById(eq("the id"), eq(verificationReportSmsRequestDto)))
         .thenReturn(VerificationReportResponseDtoTest.verificationReportSmsDto);
 
     VerificationReportSMS response =
         service.reportSmsById(
             VerificationId.valueOf("the id"),
-            VerificationsDtoConverterTest.verificationReportSMSRequest);
+            VerificationsDtoConverterTest.verificationReportSmsRequest);
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationStatusSMSResponse);
+        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationStatusSmsResponse);
   }
 
   @Test
@@ -132,22 +132,22 @@ public class VerificationsReportServiceTest extends BaseTest {
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationReportFlashCallResponse);
+        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationStatusFlashCallResponse);
   }
 
   @Test
-  void reportCalloutById() throws ApiException {
+  void reportPhoneCallById() throws ApiException {
 
-    when(api.reportVerificationById(eq("the id"), eq(verificationReportCalloutRequestDto)))
+    when(api.reportVerificationById(eq("the id"), eq(verificationReportPhoneCallRequestDto)))
         .thenReturn(VerificationReportResponseDtoTest.verificationReportPhoneCallDto);
 
     VerificationReportCallout response =
         service.reportCalloutById(
             VerificationId.valueOf("the id"),
-            VerificationsDtoConverterTest.verificationReportCalloutRequest);
+            VerificationsDtoConverterTest.verificationReportPhoneCallRequest);
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationReportCalloutResponse);
+        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationStatusPhoneCallResponse);
   }
 }

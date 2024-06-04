@@ -30,16 +30,16 @@ import org.mockito.Mock;
 public class VerificationsStartServiceTest extends BaseTest {
 
   @GivenJsonResource("/domains/verification/v1/start/StartVerificationPhoneCallRequestDto.json")
-  public StartVerificationRequestParameters startVerificationCalloutRequestDto;
+  public StartVerificationRequestParameters startVerificationPhoneCallRequestDto;
 
   @GivenJsonResource("/domains/verification/v1/start/StartVerificationFlashCallRequestDto.json")
   public StartVerificationRequestParameters startVerificationFlashCallRequestDto;
 
   @GivenJsonResource("/domains/verification/v1/start/StartVerificationDataRequestDto.json")
-  public StartVerificationRequestParameters startVerificationSeamlessRequestDto;
+  public StartVerificationRequestParameters startVerificationDataRequestDto;
 
   @GivenJsonResource("/domains/verification/v1/start/StartVerificationSmsRequestDto.json")
-  public StartVerificationRequestParameters startVerificationSMSRequestDto;
+  public StartVerificationRequestParameters startVerificationSmsRequestDto;
 
   @Mock VerificationsStartApi api;
   @Mock VerificationContext context;
@@ -57,15 +57,15 @@ public class VerificationsStartServiceTest extends BaseTest {
   @Test
   void startSms() throws ApiException {
 
-    when(api.startVerification(eq(startVerificationSMSRequestDto), eq(null)))
+    when(api.startVerification(eq(startVerificationSmsRequestDto), eq(null)))
         .thenReturn(StartVerificationResponseTest.expectedStartVerificationSmsDto);
 
     StartVerificationResponseSMS response =
-        service.startSms(VerificationsDtoConverterTest.startVerificationSMSRequest);
+        service.startSms(VerificationsDtoConverterTest.startVerificationSmsRequest);
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedStartVerificationSMSResponse);
+        .isEqualTo(VerificationsDtoConverterTest.expectedStartVerificationSmsResponse);
   }
 
   @Test
@@ -83,30 +83,30 @@ public class VerificationsStartServiceTest extends BaseTest {
   }
 
   @Test
-  void startCallout() throws ApiException {
+  void startPhoneCall() throws ApiException {
 
-    when(api.startVerification(eq(startVerificationCalloutRequestDto), eq(null)))
+    when(api.startVerification(eq(startVerificationPhoneCallRequestDto), eq(null)))
         .thenReturn(StartVerificationResponseTest.expectedStartVerificationPhoneCallDto);
 
     StartVerificationResponseCallout response =
-        service.startCallout(VerificationsDtoConverterTest.startVerificationCalloutRequest);
+        service.startCallout(VerificationsDtoConverterTest.startVerificationPhoneCallRequest);
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedStartVerificationCalloutResponse);
+        .isEqualTo(VerificationsDtoConverterTest.expectedStartVerificationPhoneCallResponse);
   }
 
   @Test
-  void startSeamless() throws ApiException {
+  void startData() throws ApiException {
 
-    when(api.startVerification(eq(startVerificationSeamlessRequestDto), eq(null)))
+    when(api.startVerification(eq(startVerificationDataRequestDto), eq(null)))
         .thenReturn(StartVerificationResponseTest.expectedStartVerificationDataDto);
 
     StartVerificationResponseSeamless response =
-        service.startSeamless(VerificationsDtoConverterTest.startVerificationSeamlessRequest);
+        service.startSeamless(VerificationsDtoConverterTest.startVerificationDataRequest);
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedStartVerificationSeamlessResponse);
+        .isEqualTo(VerificationsDtoConverterTest.expectedStartVerificationDataResponse);
   }
 }

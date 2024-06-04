@@ -48,7 +48,7 @@ public class WebhooksDtoConverterTest extends BaseTest {
           VerificationStatusReasonType.FRAUD,
           VerificationSourceType.MANUAL);
 
-  public static VerificationResponse verificationResponseCallout =
+  public static VerificationResponse verificationResponsePhoneCall =
       VerificationResponseCallout.builder()
           .setAction(VerificationResponseActionType.DENY)
           .setCode("4567")
@@ -62,7 +62,7 @@ public class WebhooksDtoConverterTest extends BaseTest {
           .setDialTimeout(123)
           .build();
 
-  public static VerificationResponse verificationResponseSMS =
+  public static VerificationResponse verificationResponseSms =
       VerificationResponseSMS.builder()
           .setAction(VerificationResponseActionType.DENY)
           .setCode("5666")
@@ -86,10 +86,10 @@ public class WebhooksDtoConverterTest extends BaseTest {
   }
 
   @Test
-  void convertVerificationCalloutResponse() {
+  void convertVerificationPhoneCallResponse() {
     Assertions.assertThat(VerificationResponseEventDtoTest.expectedPhoneCallRequestEventResponseDto)
         .usingRecursiveComparison()
-        .isEqualTo(WebHooksDtoConverter.convert(verificationResponseCallout));
+        .isEqualTo(WebHooksDtoConverter.convert(verificationResponsePhoneCall));
   }
 
   @Test
@@ -100,9 +100,9 @@ public class WebhooksDtoConverterTest extends BaseTest {
   }
 
   @Test
-  void convertVerificationSMSResponse() {
+  void convertVerificationSmsResponse() {
     Assertions.assertThat(VerificationResponseEventDtoTest.expectedSmsRequestEventResponseDto)
         .usingRecursiveComparison()
-        .isEqualTo(WebHooksDtoConverter.convert(verificationResponseSMS));
+        .isEqualTo(WebHooksDtoConverter.convert(verificationResponseSms));
   }
 }

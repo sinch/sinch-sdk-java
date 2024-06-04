@@ -32,13 +32,13 @@ public class WebhooksServiceTest extends BaseTest {
   static String jsonVerificationResultEventDto;
 
   @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponsePhoneCall.json")
-  String jsonResponseCallout;
+  String jsonResponsePhoneCall;
 
   @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseFlashCall.json")
   String jsonResponseFlashCall;
 
   @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseSms.json")
-  String jsonResponseSMS;
+  String jsonResponseSms;
 
   WebHooksService webHooksService;
 
@@ -78,11 +78,11 @@ public class WebhooksServiceTest extends BaseTest {
   }
 
   @Test
-  void checkSerializeResponseCallOut() throws JSONException {
+  void checkSerializeResponsePhoneCall() throws JSONException {
 
     JSONAssert.assertEquals(
-        webHooksService.serializeResponse(WebhooksDtoConverterTest.verificationResponseCallout),
-        jsonResponseCallout,
+        webHooksService.serializeResponse(WebhooksDtoConverterTest.verificationResponsePhoneCall),
+        jsonResponsePhoneCall,
         true);
   }
 
@@ -96,11 +96,11 @@ public class WebhooksServiceTest extends BaseTest {
   }
 
   @Test
-  void checkSerializeResponseSMS() throws JSONException {
+  void checkSerializeResponseSms() throws JSONException {
 
     JSONAssert.assertEquals(
-        webHooksService.serializeResponse(WebhooksDtoConverterTest.verificationResponseSMS),
-        jsonResponseSMS,
+        webHooksService.serializeResponse(WebhooksDtoConverterTest.verificationResponseSms),
+        jsonResponseSms,
         true);
   }
 

@@ -22,7 +22,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class VerificationReportRequestDtoTest extends BaseTest {
 
-  public static VerificationReportRequestParametersInternal verificationReportCalloutDto =
+  public static VerificationReportRequestParametersInternal verificationReportPhoneCallDto =
       new VerificationReportRequestParametersInternalImpl(
           (VerificationReportRequestParametersPhoneCallImpl)
               VerificationReportRequestParametersPhoneCall.builder()
@@ -55,7 +55,7 @@ public class VerificationReportRequestDtoTest extends BaseTest {
                   .build());
 
   @GivenTextResource("/domains/verification/v1/report/VerificationReportPhoneCallRequestDto.json")
-  String jsonVerificationReportCallout;
+  String jsonVerificationReportPhoneCall;
 
   @GivenTextResource("/domains/verification/v1/report/VerificationReportFlashCallRequestDto.json")
   String jsonVerificationReportFlashCall;
@@ -64,10 +64,10 @@ public class VerificationReportRequestDtoTest extends BaseTest {
   String jsonVerificationReportSms;
 
   @Test
-  void serializeCallout() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(verificationReportCalloutDto);
+  void serializePhoneCall() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(verificationReportPhoneCallDto);
 
-    JSONAssert.assertEquals(jsonVerificationReportCallout, serializedString, true);
+    JSONAssert.assertEquals(jsonVerificationReportPhoneCall, serializedString, true);
   }
 
   @Test

@@ -54,7 +54,7 @@ public class VerificationStatusServiceTest extends BaseTest {
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationReportCalloutResponse);
+        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationStatusPhoneCallResponse);
   }
 
   @Test
@@ -67,7 +67,7 @@ public class VerificationStatusServiceTest extends BaseTest {
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationReportCalloutResponse);
+        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationStatusPhoneCallResponse);
   }
 
   @Test
@@ -81,6 +81,6 @@ public class VerificationStatusServiceTest extends BaseTest {
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationReportCalloutResponse);
+        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationStatusPhoneCallResponse);
   }
 }
