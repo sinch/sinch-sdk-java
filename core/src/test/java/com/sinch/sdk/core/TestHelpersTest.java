@@ -3,46 +3,27 @@ package com.sinch.sdk.core;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.sinch.sdk.core.http.HttpMethod;
-import com.sinch.sdk.core.http.HttpRequest;
-import com.sinch.sdk.core.http.URLParameter;
 import java.time.OffsetDateTime;
-import java.util.Collections;
+import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 public class TestHelpersTest {
-  HttpRequest request1 =
-      new HttpRequest(
-          "the path",
-          HttpMethod.PUT,
-          Collections.singletonList(new URLParameter("a name", "the value")),
-          "the body",
-          Collections.singletonMap("a key", "a value"),
-          Collections.singletonList("accept/value"),
-          Collections.singletonList("content-type/value"),
-          Collections.singletonList("auth name"));
 
-  HttpRequest requestEqualsToRequest1 =
-      new HttpRequest(
-          "the path",
-          HttpMethod.PUT,
-          Collections.singletonList(new URLParameter("a name", "the value")),
-          "the body",
-          Collections.singletonMap("a key", "a value"),
-          Collections.singletonList("accept/value"),
-          Collections.singletonList("content-type/value"),
-          Collections.singletonList("auth name"));
+  static class MyObject {
+    final Object o1;
+    final Object o2;
 
-  HttpRequest requestDifferentOfRequest1 =
-      new HttpRequest(
-          "the path",
-          HttpMethod.PUT,
-          Collections.singletonList(new URLParameter("a name", "the value")),
-          "the body",
-          Collections.singletonMap("a key", "a value"),
-          Collections.singletonList("different accept/value"),
-          Collections.singletonList("content-type/value"),
-          Collections.singletonList("auth name"));
+    public MyObject(Object o1, Object o2) {
+      this.o1 = o1;
+      this.o2 = o2;
+    }
+  }
+
+  MyObject object1 = new MyObject("my value1", Arrays.asList("my value2"));
+  MyObject objectEqualsToObject1 = new MyObject("my value1", Arrays.asList("my value2"));
+  MyObject objectDifferentFromObject1ByValue =
+      new MyObject("my value1", Arrays.asList("my different value2"));
+  MyObject objectDifferentFromObject1ByNull = new MyObject("my value1", null);
 
   @Test
   void recursiveDifferentByClass() {
@@ -67,24 +48,61 @@ public class TestHelpersTest {
     AssertionError thrown =
         assertThrows(
             AssertionError.class,
-            () -> TestHelpers.recursiveEquals(request1, requestDifferentOfRequest1),
+            () -> TestHelpers.recursiveEquals(object1, objectDifferentFromObject1ByValue),
             "Expected recursiveEquals() to throw, but it didn't");
     // expected error message hardcoded according to JUnit 5
     assertTrue(
         thrown
             .getMessage()
             .contains(
-                "- actual value  : \"accept/value\"\n"
-                    + "- expected value: \"different accept/value\""));
+                "field/property 'o2[0]' differ:\n"
+                    + "- actual value  : \"my value2\"\n"
+                    + "- expected value: \"my different value2\""));
+  }
+
+  @Test
+  void recursiveDifferentByNullO1O2() {
+
+    AssertionError thrown =
+        assertThrows(
+            AssertionError.class,
+            () -> TestHelpers.recursiveEquals(object1, objectDifferentFromObject1ByNull),
+            "Expected recursiveEquals() to throw, but it didn't");
+    // expected error message hardcoded according to JUnit 5
+    assertTrue(
+        thrown
+            .getMessage()
+            .contains(
+                "field/property 'o2' differ:\n"
+                    + "- actual value  : [\"my value2\"]\n"
+                    + "- expected value: null"));
+  }
+
+  @Test
+  void recursiveDifferentByNullO2O1() {
+
+    AssertionError thrown =
+        assertThrows(
+            AssertionError.class,
+            () -> TestHelpers.recursiveEquals(objectDifferentFromObject1ByNull, object1),
+            "Expected recursiveEquals() to throw, but it didn't");
+    // expected error message hardcoded according to JUnit 5
+    assertTrue(
+        thrown
+            .getMessage()
+            .contains(
+                "field/property 'o2' differ:\n"
+                    + "- actual value  : null\n"
+                    + "- expected value: [\"my value2\"]"));
   }
 
   @Test
   void recursiveEqualsO1O2() {
-    TestHelpers.recursiveEquals(request1, requestEqualsToRequest1);
+    TestHelpers.recursiveEquals(object1, objectEqualsToObject1);
   }
 
   @Test
   void recursiveEqualsO2O1() {
-    TestHelpers.recursiveEquals(requestEqualsToRequest1, request1);
+    TestHelpers.recursiveEquals(objectEqualsToObject1, object1);
   }
 }
