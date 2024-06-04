@@ -3,6 +3,7 @@ package com.sinch.sdk.domains.verification.adapters;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.verification.WebHooksService;
 import com.sinch.sdk.domains.verification.adapters.converters.WebhooksDtoConverterTest;
@@ -31,14 +32,14 @@ public class WebhooksServiceTest extends BaseTest {
   @GivenTextResource("/domains/verification/v1/webhooks/VerificationResultEventDto.json")
   static String jsonVerificationResultEventDto;
 
-  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseCallout.json")
-  String jsonResponseCallout;
+  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponsePhoneCall.json")
+  String jsonResponsePhoneCall;
 
   @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseFlashCall.json")
   String jsonResponseFlashCall;
 
-  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseSMS.json")
-  String jsonResponseSMS;
+  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseSms.json")
+  String jsonResponseSms;
 
   WebHooksService webHooksService;
 
@@ -64,25 +65,25 @@ public class WebhooksServiceTest extends BaseTest {
   @Test
   void checkParseEventVerificationRequestEventDto() throws ApiException {
 
-    Assertions.assertThat(webHooksService.parseEvent(jsonVerificationRequestEventDto))
-        .usingRecursiveComparison()
-        .isEqualTo(WebhooksDtoConverterTest.verificationRequestEvent);
+    TestHelpers.recursiveEquals(
+        webHooksService.parseEvent(jsonVerificationRequestEventDto),
+        WebhooksDtoConverterTest.verificationRequestEvent);
   }
 
   @Test
   void checkParseEventVerificationResultEventDto() throws ApiException {
 
-    Assertions.assertThat(webHooksService.parseEvent(jsonVerificationResultEventDto))
-        .usingRecursiveComparison()
-        .isEqualTo(WebhooksDtoConverterTest.verificationResultEvent);
+    TestHelpers.recursiveEquals(
+        webHooksService.parseEvent(jsonVerificationResultEventDto),
+        WebhooksDtoConverterTest.verificationResultEvent);
   }
 
   @Test
-  void checkSerializeResponseCallOut() throws JSONException {
+  void checkSerializeResponsePhoneCall() throws JSONException {
 
     JSONAssert.assertEquals(
-        webHooksService.serializeResponse(WebhooksDtoConverterTest.verificationResponseCallout),
-        jsonResponseCallout,
+        webHooksService.serializeResponse(WebhooksDtoConverterTest.verificationResponsePhoneCall),
+        jsonResponsePhoneCall,
         true);
   }
 
@@ -96,11 +97,11 @@ public class WebhooksServiceTest extends BaseTest {
   }
 
   @Test
-  void checkSerializeResponseSMS() throws JSONException {
+  void checkSerializeResponseSms() throws JSONException {
 
     JSONAssert.assertEquals(
-        webHooksService.serializeResponse(WebhooksDtoConverterTest.verificationResponseSMS),
-        jsonResponseSMS,
+        webHooksService.serializeResponse(WebhooksDtoConverterTest.verificationResponseSms),
+        jsonResponseSms,
         true);
   }
 

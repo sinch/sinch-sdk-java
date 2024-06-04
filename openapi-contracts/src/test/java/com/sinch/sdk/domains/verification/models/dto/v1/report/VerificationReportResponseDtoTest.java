@@ -3,19 +3,19 @@ package com.sinch.sdk.domains.verification.models.dto.v1.report;
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponse;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
 public class VerificationReportResponseDtoTest extends BaseTest {
 
-  @GivenJsonResource("/domains/verification/v1/report/VerificationReportCalloutResponseDto.json")
-  VerificationReportResponse expectedVerificationReportCallout;
+  @GivenJsonResource("/domains/verification/v1/report/VerificationReportPhoneCallResponseDto.json")
+  VerificationReportResponse expectedVerificationReportPhoneCall;
 
-  public static VerificationReportResponse verificationReportCalloutDto =
+  public static VerificationReportResponse verificationReportPhoneCallDto =
       VerificationReportResponse.builder()
           .setMethod(VerificationMethod.CALLOUT)
           .setId("the id")
@@ -32,10 +32,10 @@ public class VerificationReportResponseDtoTest extends BaseTest {
           .setStatus(VerificationStatus.FAIL)
           .build();
 
-  @GivenJsonResource("/domains/verification/v1/report/VerificationReportSMSResponseDto.json")
-  VerificationReportResponse expectedVerificationReportSMS;
+  @GivenJsonResource("/domains/verification/v1/report/VerificationReportSmsResponseDto.json")
+  VerificationReportResponse expectedVerificationReportSms;
 
-  public static VerificationReportResponse verificationReportSMSDto =
+  public static VerificationReportResponse verificationReportSmsDto =
       VerificationReportResponse.builder()
           .setMethod(VerificationMethod.SMS)
           .setId("the id")
@@ -43,23 +43,19 @@ public class VerificationReportResponseDtoTest extends BaseTest {
           .build();
 
   @Test
-  void deserializeCallout() {
-    Assertions.assertThat(verificationReportCalloutDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedVerificationReportCallout);
+  void deserializePhoneCall() {
+    TestHelpers.recursiveEquals(
+        verificationReportPhoneCallDto, expectedVerificationReportPhoneCall);
   }
 
   @Test
   void deserializeFlashCall() {
-    Assertions.assertThat(verificationReportFlashCallDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedVerificationReportFlashCall);
+    TestHelpers.recursiveEquals(
+        verificationReportFlashCallDto, expectedVerificationReportFlashCall);
   }
 
   @Test
-  void serializeSMS() {
-    Assertions.assertThat(verificationReportSMSDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedVerificationReportSMS);
+  void serializeSms() {
+    TestHelpers.recursiveEquals(verificationReportSmsDto, expectedVerificationReportSms);
   }
 }

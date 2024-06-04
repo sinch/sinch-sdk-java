@@ -73,7 +73,7 @@ public class LinkImpl implements Link {
     return method;
   }
 
-  /** Return true if this _linksObject object is equal to o. */
+  /** Return true if this Links object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -82,10 +82,10 @@ public class LinkImpl implements Link {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    LinkImpl linksObject = (LinkImpl) o;
-    return Objects.equals(this.rel, linksObject.rel)
-        && Objects.equals(this.href, linksObject.href)
-        && Objects.equals(this.method, linksObject.method);
+    LinkImpl links = (LinkImpl) o;
+    return Objects.equals(this.rel, links.rel)
+        && Objects.equals(this.href, links.href)
+        && Objects.equals(this.method, links.method);
   }
 
   @Override

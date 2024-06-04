@@ -15,7 +15,7 @@ package com.sinch.sdk.domains.verification.models.v1.start.request;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
- * An optional object for FlashCall Verification, considered only when the verification request
+ * An optional object for Flash Call Verification, considered only when the verification request
  * originates from your backend (not an SDK client) via an [Application signed
  * request](/docs/voice/api-reference/authentication/signed-request).
  */

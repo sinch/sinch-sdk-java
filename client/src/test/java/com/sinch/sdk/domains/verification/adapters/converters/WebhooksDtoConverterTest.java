@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.verification.adapters.converters;
 
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.Price;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
@@ -21,7 +22,6 @@ import com.sinch.sdk.domains.verification.models.webhooks.VerificationResponseFl
 import com.sinch.sdk.domains.verification.models.webhooks.VerificationResponseSMS;
 import com.sinch.sdk.domains.verification.models.webhooks.VerificationResultEvent;
 import java.util.Collections;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
@@ -48,7 +48,7 @@ public class WebhooksDtoConverterTest extends BaseTest {
           VerificationStatusReasonType.FRAUD,
           VerificationSourceType.MANUAL);
 
-  public static VerificationResponse verificationResponseCallout =
+  public static VerificationResponse verificationResponsePhoneCall =
       VerificationResponseCallout.builder()
           .setAction(VerificationResponseActionType.DENY)
           .setCode("4567")
@@ -62,7 +62,7 @@ public class WebhooksDtoConverterTest extends BaseTest {
           .setDialTimeout(123)
           .build();
 
-  public static VerificationResponse verificationResponseSMS =
+  public static VerificationResponse verificationResponseSms =
       VerificationResponseSMS.builder()
           .setAction(VerificationResponseActionType.DENY)
           .setCode("5666")
@@ -71,38 +71,36 @@ public class WebhooksDtoConverterTest extends BaseTest {
 
   @Test
   void convertVerificationRequestEvent() {
-    Assertions.assertThat(verificationRequestEvent)
-        .usingRecursiveComparison()
-        .isEqualTo(
-            WebHooksDtoConverter.convert(VerificationRequestEventDtoTest.expectedRequestEventDto));
+    TestHelpers.recursiveEquals(
+        verificationRequestEvent,
+        WebHooksDtoConverter.convert(VerificationRequestEventDtoTest.expectedRequestEventDto));
   }
 
   @Test
   void convertVerificationResultEvent() {
-    Assertions.assertThat(verificationResultEvent)
-        .usingRecursiveComparison()
-        .isEqualTo(
-            WebHooksDtoConverter.convert(VerificationResultEventDtoTest.expectedResultEvent));
+    TestHelpers.recursiveEquals(
+        verificationResultEvent,
+        WebHooksDtoConverter.convert(VerificationResultEventDtoTest.expectedResultEvent));
   }
 
   @Test
-  void convertVerificationCalloutResponse() {
-    Assertions.assertThat(VerificationResponseEventDtoTest.expectedCalloutRequestEventResponseDto)
-        .usingRecursiveComparison()
-        .isEqualTo(WebHooksDtoConverter.convert(verificationResponseCallout));
+  void convertVerificationPhoneCallResponse() {
+    TestHelpers.recursiveEquals(
+        VerificationResponseEventDtoTest.expectedPhoneCallRequestEventResponseDto,
+        WebHooksDtoConverter.convert(verificationResponsePhoneCall));
   }
 
   @Test
   void convertVerificationFlashCallResponse() {
-    Assertions.assertThat(VerificationResponseEventDtoTest.expectedFlashCallRequestEventResponseDto)
-        .usingRecursiveComparison()
-        .isEqualTo(WebHooksDtoConverter.convert(verificationResponseFlashCall));
+    TestHelpers.recursiveEquals(
+        VerificationResponseEventDtoTest.expectedFlashCallRequestEventResponseDto,
+        WebHooksDtoConverter.convert(verificationResponseFlashCall));
   }
 
   @Test
-  void convertVerificationSMSResponse() {
-    Assertions.assertThat(VerificationResponseEventDtoTest.expectedSMSRequestEventResponseDto)
-        .usingRecursiveComparison()
-        .isEqualTo(WebHooksDtoConverter.convert(verificationResponseSMS));
+  void convertVerificationSmsResponse() {
+    TestHelpers.recursiveEquals(
+        VerificationResponseEventDtoTest.expectedSmsRequestEventResponseDto,
+        WebHooksDtoConverter.convert(verificationResponseSms));
   }
 }

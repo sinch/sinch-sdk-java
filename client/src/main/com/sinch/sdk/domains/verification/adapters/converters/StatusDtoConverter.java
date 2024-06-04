@@ -10,11 +10,11 @@ import com.sinch.sdk.domains.verification.models.VerificationStatusFlashCall;
 import com.sinch.sdk.domains.verification.models.VerificationStatusReasonType;
 import com.sinch.sdk.domains.verification.models.VerificationStatusSMS;
 import com.sinch.sdk.domains.verification.models.VerificationStatusType;
-import com.sinch.sdk.domains.verification.models.v1.status.response.CalloutVerificationStatusResponseImpl;
-import com.sinch.sdk.domains.verification.models.v1.status.response.FlashcallVerificationStatusResponseImpl;
-import com.sinch.sdk.domains.verification.models.v1.status.response.FlashcallVerificationStatusResponsePriceImpl;
-import com.sinch.sdk.domains.verification.models.v1.status.response.SMSVerificationStatusResponseImpl;
-import com.sinch.sdk.domains.verification.models.v1.status.response.SMSVerificationStatusResponsePriceImpl;
+import com.sinch.sdk.domains.verification.models.v1.status.StatusPriceImpl;
+import com.sinch.sdk.domains.verification.models.v1.status.response.FlashCallVerificationStatusResponseImpl;
+import com.sinch.sdk.domains.verification.models.v1.status.response.PhoneCallVerificationStatusResponseImpl;
+import com.sinch.sdk.domains.verification.models.v1.status.response.SmsVerificationStatusResponseImpl;
+import com.sinch.sdk.domains.verification.models.v1.status.response.SmsVerificationStatusResponsePriceImpl;
 import com.sinch.sdk.domains.verification.models.v1.status.response.internal.VerificationStatusResponseInternal;
 import com.sinch.sdk.domains.verification.models.v1.status.response.internal.VerificationStatusResponseInternalImpl;
 import java.util.logging.Logger;
@@ -32,18 +32,18 @@ public class StatusDtoConverter {
     if (dto.getActualInstance()
         instanceof
         com.sinch.sdk.domains.verification.models.v1.status.response
-            .SMSVerificationStatusResponse) {
-      builder = convert(dto.getSMSVerificationStatusResponseImpl());
+            .SmsVerificationStatusResponse) {
+      builder = convert(dto.getSmsVerificationStatusResponseImpl());
     } else if (dto.getActualInstance()
         instanceof
         com.sinch.sdk.domains.verification.models.v1.status.response
-            .FlashcallVerificationStatusResponse) {
-      builder = convert(dto.getFlashcallVerificationStatusResponseImpl());
+            .FlashCallVerificationStatusResponse) {
+      builder = convert(dto.getFlashCallVerificationStatusResponseImpl());
     } else if (dto.getActualInstance()
         instanceof
         com.sinch.sdk.domains.verification.models.v1.status.response
-            .CalloutVerificationStatusResponse) {
-      builder = convert(dto.getCalloutVerificationStatusResponseImpl());
+            .PhoneCallVerificationStatusResponse) {
+      builder = convert(dto.getPhoneCallVerificationStatusResponseImpl());
     } else {
       LOGGER.severe(String.format("Unexpected class '%s'", dto.getActualInstance()));
       builder = VerificationStatus.builder();
@@ -51,7 +51,7 @@ public class StatusDtoConverter {
     return builder.build();
   }
 
-  static VerificationStatusFlashCall.Builder convert(FlashcallVerificationStatusResponseImpl dto) {
+  static VerificationStatusFlashCall.Builder convert(FlashCallVerificationStatusResponseImpl dto) {
 
     VerificationStatusFlashCall.Builder builder = VerificationStatusFlashCall.builder();
 
@@ -69,8 +69,7 @@ public class StatusDtoConverter {
     dto.price()
         .ifPresent(
             f -> {
-              FlashcallVerificationStatusResponsePriceImpl price =
-                  (FlashcallVerificationStatusResponsePriceImpl) f;
+              StatusPriceImpl price = (StatusPriceImpl) f;
               price
                   .verificationPrice()
                   .ifPresent(p -> builder.setVerificationPrice(PriceDtoConverter.convert(p)));
@@ -82,7 +81,7 @@ public class StatusDtoConverter {
     return builder;
   }
 
-  static VerificationStatusSMS.Builder convert(SMSVerificationStatusResponseImpl dto) {
+  static VerificationStatusSMS.Builder convert(SmsVerificationStatusResponseImpl dto) {
 
     VerificationStatusSMS.Builder builder = VerificationStatusSMS.builder();
 
@@ -100,8 +99,8 @@ public class StatusDtoConverter {
     dto.price()
         .ifPresent(
             f -> {
-              SMSVerificationStatusResponsePriceImpl price =
-                  (SMSVerificationStatusResponsePriceImpl) f;
+              SmsVerificationStatusResponsePriceImpl price =
+                  (SmsVerificationStatusResponsePriceImpl) f;
               price
                   .verificationPrice()
                   .ifPresent(p -> builder.setVerificationPrice(PriceDtoConverter.convert(p)));
@@ -109,7 +108,7 @@ public class StatusDtoConverter {
     return builder;
   }
 
-  static VerificationStatusCallout.Builder convert(CalloutVerificationStatusResponseImpl dto) {
+  static VerificationStatusCallout.Builder convert(PhoneCallVerificationStatusResponseImpl dto) {
 
     VerificationStatusCallout.Builder builder = VerificationStatusCallout.builder();
 
@@ -127,8 +126,7 @@ public class StatusDtoConverter {
     dto.price()
         .ifPresent(
             f -> {
-              FlashcallVerificationStatusResponsePriceImpl price =
-                  (FlashcallVerificationStatusResponsePriceImpl) f;
+              StatusPriceImpl price = (StatusPriceImpl) f;
               price
                   .verificationPrice()
                   .ifPresent(p -> builder.setVerificationPrice(PriceDtoConverter.convert(p)));

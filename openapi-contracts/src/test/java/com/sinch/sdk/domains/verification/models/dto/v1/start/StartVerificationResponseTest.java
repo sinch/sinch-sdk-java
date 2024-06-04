@@ -3,33 +3,33 @@ package com.sinch.sdk.domains.verification.models.dto.v1.start;
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseCallout;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseCalloutImpl;
+import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseData;
+import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseDataContent;
+import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseDataImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCallContent;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCallImpl;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSMS;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSMSContent;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSMSImpl;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSeamless;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSeamlessContent;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSeamlessImpl;
+import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponsePhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponsePhoneCallImpl;
+import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSms;
+import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSmsContent;
+import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSmsImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.StartVerificationResponseInternal;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.StartVerificationResponseInternalImpl;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
 public class StartVerificationResponseTest extends BaseTest {
 
-  @GivenJsonResource("/domains/verification/v1/start/StartVerificationCalloutResponseDto.json")
-  StartVerificationResponseInternal loadedStartVerificationCalloutDto;
+  @GivenJsonResource("/domains/verification/v1/start/StartVerificationPhoneCallResponseDto.json")
+  StartVerificationResponseInternal loadedStartVerificationPhoneCallDto;
 
-  public static StartVerificationResponseInternal expectedStartVerificationCalloutDto =
+  public static StartVerificationResponseInternal expectedStartVerificationPhoneCallDto =
       new StartVerificationResponseInternalImpl(
-          (StartVerificationResponseCalloutImpl)
-              StartVerificationResponseCallout.builder()
+          (StartVerificationResponsePhoneCallImpl)
+              StartVerificationResponsePhoneCall.builder()
                   .setId("the id")
                   .setMethod(VerificationMethod.CALLOUT.value())
                   .setLinks(LinkTest.expectedLinks)
@@ -54,64 +54,58 @@ public class StartVerificationResponseTest extends BaseTest {
                           .build())
                   .build());
 
-  @GivenJsonResource("/domains/verification/v1/start/StartVerificationSeamlessResponseDto.json")
-  StartVerificationResponseInternal loadedStartVerificationSeamlessDto;
+  @GivenJsonResource("/domains/verification/v1/start/StartVerificationDataResponseDto.json")
+  StartVerificationResponseInternal loadedStartVerificationDataDto;
 
-  public static StartVerificationResponseInternal expectedStartVerificationSeamlessDto =
+  public static StartVerificationResponseInternal expectedStartVerificationDataDto =
       new StartVerificationResponseInternalImpl(
-          (StartVerificationResponseSeamlessImpl)
-              StartVerificationResponseSeamless.builder()
+          (StartVerificationResponseDataImpl)
+              StartVerificationResponseData.builder()
                   .setId("the id")
                   .setMethod(VerificationMethod.SEAMLESS.value())
                   .setLinks(LinkTest.expectedLinks)
                   .setSeamless(
-                      StartVerificationResponseSeamlessContent.builder()
+                      StartVerificationResponseDataContent.builder()
                           .setTargetUri("target URI")
                           .build())
                   .build());
 
-  @GivenJsonResource("/domains/verification/v1/start/StartVerificationSMSResponseDto.json")
-  StartVerificationResponseInternal loadedStartVerificationSMSDto;
+  @GivenJsonResource("/domains/verification/v1/start/StartVerificationSmsResponseDto.json")
+  StartVerificationResponseInternal loadedStartVerificationSmsDto;
 
-  public static StartVerificationResponseInternal expectedStartVerificationSMSDto =
+  public static StartVerificationResponseInternal expectedStartVerificationSmsDto =
       new StartVerificationResponseInternalImpl(
-          (StartVerificationResponseSMSImpl)
-              StartVerificationResponseSMS.builder()
+          (StartVerificationResponseSmsImpl)
+              StartVerificationResponseSms.builder()
                   .setId("the id")
                   .setMethod(VerificationMethod.SMS.value())
                   .setLinks(LinkTest.expectedLinks)
                   .setSms(
-                      StartVerificationResponseSMSContent.builder()
+                      StartVerificationResponseSmsContent.builder()
                           .setTemplate("Your verification code is {{CODE}}. Verified by Sinch")
                           .setInterceptionTimeout(298)
                           .build())
                   .build());
 
   @Test
-  void deserializeStartCallout() {
-    Assertions.assertThat(loadedStartVerificationCalloutDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedStartVerificationCalloutDto);
+  void deserializeStartPhoneCall() {
+    TestHelpers.recursiveEquals(
+        loadedStartVerificationPhoneCallDto, expectedStartVerificationPhoneCallDto);
   }
 
   @Test
   void deserializeStartFlashCall() {
-    Assertions.assertThat(loadedStartVerificationFlashCallDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedStartVerificationFlashCallDto);
+    TestHelpers.recursiveEquals(
+        loadedStartVerificationFlashCallDto, expectedStartVerificationFlashCallDto);
   }
 
   @Test
-  void deserializeStartSeamless() {
-    Assertions.assertThat(loadedStartVerificationSeamlessDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedStartVerificationSeamlessDto);
+  void deserializeStartData() {
+    TestHelpers.recursiveEquals(loadedStartVerificationDataDto, expectedStartVerificationDataDto);
   }
 
   @Test
-  void deserializeSMS() {
-    Assertions.assertThat(loadedStartVerificationSMSDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedStartVerificationSMSDto);
+  void deserializeSms() {
+    TestHelpers.recursiveEquals(loadedStartVerificationSmsDto, expectedStartVerificationSmsDto);
   }
 }

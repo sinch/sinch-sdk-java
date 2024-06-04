@@ -28,7 +28,7 @@ public interface StartVerificationResponseFlashCall
   String getId();
 
   /**
-   * The value of the method used for the Verification. For Flashcall Verifications, this will
+   * The value of the method used for the Verification. For flash call Verifications, this will
    * always be &#x60;flashcall&#x60;.
    *
    * @return method

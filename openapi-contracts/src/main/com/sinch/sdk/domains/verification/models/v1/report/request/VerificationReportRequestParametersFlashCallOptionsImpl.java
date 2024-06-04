@@ -37,7 +37,7 @@ public class VerificationReportRequestParametersFlashCallOptionsImpl
     return cli;
   }
 
-  /** Return true if this FlashcallVerificationReportRequest_flashCall object is equal to o. */
+  /** Return true if this FlashCallVerificationReportRequest_flashCall object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -47,9 +47,9 @@ public class VerificationReportRequestParametersFlashCallOptionsImpl
       return false;
     }
     VerificationReportRequestParametersFlashCallOptionsImpl
-        flashcallVerificationReportRequestFlashCall =
+        flashCallVerificationReportRequestFlashCall =
             (VerificationReportRequestParametersFlashCallOptionsImpl) o;
-    return Objects.equals(this.cli, flashcallVerificationReportRequestFlashCall.cli);
+    return Objects.equals(this.cli, flashCallVerificationReportRequestFlashCall.cli);
   }
 
   @Override

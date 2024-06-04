@@ -4,15 +4,15 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersCallout;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersCalloutImpl;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersCalloutOptions;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersFlashCallImpl;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersFlashCallOptions;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersSMS;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersSMSImpl;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersSMSOptions;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersPhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersPhoneCallImpl;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersPhoneCallOptions;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersSms;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersSmsImpl;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersSmsOptions;
 import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestParametersInternal;
 import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestParametersInternalImpl;
 import org.json.JSONException;
@@ -22,13 +22,13 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class VerificationReportRequestDtoTest extends BaseTest {
 
-  public static VerificationReportRequestParametersInternal verificationReportCalloutDto =
+  public static VerificationReportRequestParametersInternal verificationReportPhoneCallDto =
       new VerificationReportRequestParametersInternalImpl(
-          (VerificationReportRequestParametersCalloutImpl)
-              VerificationReportRequestParametersCallout.builder()
-                  .setMethod(VerificationReportRequestParametersCallout.MethodEnum.CALLOUT)
+          (VerificationReportRequestParametersPhoneCallImpl)
+              VerificationReportRequestParametersPhoneCall.builder()
+                  .setMethod(VerificationReportRequestParametersPhoneCall.MethodEnum.CALLOUT)
                   .setCallout(
-                      VerificationReportRequestParametersCalloutOptions.builder()
+                      VerificationReportRequestParametersPhoneCallOptions.builder()
                           .setCode("foo code")
                           .build())
                   .build());
@@ -42,32 +42,32 @@ public class VerificationReportRequestDtoTest extends BaseTest {
                           .setCli("foo cli")
                           .build())
                   .build());
-  public static VerificationReportRequestParametersInternal verificationReportSMSDto =
+  public static VerificationReportRequestParametersInternal verificationReportSmsDto =
       new VerificationReportRequestParametersInternalImpl(
-          (VerificationReportRequestParametersSMSImpl)
-              VerificationReportRequestParametersSMS.builder()
-                  .setMethod(VerificationReportRequestParametersSMS.MethodEnum.SMS)
+          (VerificationReportRequestParametersSmsImpl)
+              VerificationReportRequestParametersSms.builder()
+                  .setMethod(VerificationReportRequestParametersSms.MethodEnum.SMS)
                   .setSms(
-                      VerificationReportRequestParametersSMSOptions.builder()
+                      VerificationReportRequestParametersSmsOptions.builder()
                           .setCode("foo code")
                           .setCli("foo cli")
                           .build())
                   .build());
 
-  @GivenTextResource("/domains/verification/v1/report/VerificationReportCalloutRequestDto.json")
-  String jsonVerificationReportCallout;
+  @GivenTextResource("/domains/verification/v1/report/VerificationReportPhoneCallRequestDto.json")
+  String jsonVerificationReportPhoneCall;
 
   @GivenTextResource("/domains/verification/v1/report/VerificationReportFlashCallRequestDto.json")
   String jsonVerificationReportFlashCall;
 
-  @GivenTextResource("/domains/verification/v1/report/VerificationReportSMSRequestDto.json")
-  String jsonVerificationReportSMS;
+  @GivenTextResource("/domains/verification/v1/report/VerificationReportSmsRequestDto.json")
+  String jsonVerificationReportSms;
 
   @Test
-  void serializeCallout() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(verificationReportCalloutDto);
+  void serializePhoneCall() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(verificationReportPhoneCallDto);
 
-    JSONAssert.assertEquals(jsonVerificationReportCallout, serializedString, true);
+    JSONAssert.assertEquals(jsonVerificationReportPhoneCall, serializedString, true);
   }
 
   @Test
@@ -78,9 +78,9 @@ public class VerificationReportRequestDtoTest extends BaseTest {
   }
 
   @Test
-  void serializeSMS() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(verificationReportSMSDto);
+  void serializeSms() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(verificationReportSmsDto);
 
-    JSONAssert.assertEquals(jsonVerificationReportSMS, serializedString, true);
+    JSONAssert.assertEquals(jsonVerificationReportSms, serializedString, true);
   }
 }

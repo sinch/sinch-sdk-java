@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
@@ -20,7 +21,6 @@ import com.sinch.sdk.domains.verification.models.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.dto.v1.status.VerificationStatusResponseInternalTest;
 import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -45,42 +45,39 @@ public class VerificationStatusServiceTest extends BaseTest {
   void getByIdentity() throws ApiException {
 
     when(api.verificationStatusByIdentity(eq("endpoint string"), eq("sms")))
-        .thenReturn(VerificationStatusResponseInternalTest.expectedVerificationCalloutDto);
+        .thenReturn(VerificationStatusResponseInternalTest.expectedVerificationPhoneCallDto);
 
     VerificationStatus response =
         service.getByIdentity(
             NumberIdentity.builder().setEndpoint("endpoint string").build(),
             VerificationMethodType.SMS);
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationReportCalloutResponse);
+    TestHelpers.recursiveEquals(
+        response, VerificationsDtoConverterTest.expectedVerificationStatusPhoneCallResponse);
   }
 
   @Test
   void getById() throws ApiException {
 
     when(api.verificationStatusById(eq("the id")))
-        .thenReturn(VerificationStatusResponseInternalTest.expectedVerificationCalloutDto);
+        .thenReturn(VerificationStatusResponseInternalTest.expectedVerificationPhoneCallDto);
 
     VerificationStatus response = service.getById(VerificationId.valueOf("the id"));
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationReportCalloutResponse);
+    TestHelpers.recursiveEquals(
+        response, VerificationsDtoConverterTest.expectedVerificationStatusPhoneCallResponse);
   }
 
   @Test
   void getByReference() throws ApiException {
 
     when(api.verificationStatusByReference(eq("the reference")))
-        .thenReturn(VerificationStatusResponseInternalTest.expectedVerificationCalloutDto);
+        .thenReturn(VerificationStatusResponseInternalTest.expectedVerificationPhoneCallDto);
 
     VerificationStatus response =
         service.getByReference(VerificationReference.valueOf("the reference"));
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationReportCalloutResponse);
+    TestHelpers.recursiveEquals(
+        response, VerificationsDtoConverterTest.expectedVerificationStatusPhoneCallResponse);
   }
 }

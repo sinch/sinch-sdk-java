@@ -3,40 +3,39 @@ package com.sinch.sdk.domains.verification.models.dto.v1.status;
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.verification.models.v1.Price;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
 import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
 import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal.TypeEnum;
-import com.sinch.sdk.domains.verification.models.v1.status.response.CalloutVerificationStatusResponse;
-import com.sinch.sdk.domains.verification.models.v1.status.response.CalloutVerificationStatusResponseImpl;
-import com.sinch.sdk.domains.verification.models.v1.status.response.FlashcallVerificationStatusResponse;
-import com.sinch.sdk.domains.verification.models.v1.status.response.FlashcallVerificationStatusResponse.SourceEnum;
-import com.sinch.sdk.domains.verification.models.v1.status.response.FlashcallVerificationStatusResponseImpl;
-import com.sinch.sdk.domains.verification.models.v1.status.response.FlashcallVerificationStatusResponsePrice;
-import com.sinch.sdk.domains.verification.models.v1.status.response.SMSVerificationStatusResponse;
-import com.sinch.sdk.domains.verification.models.v1.status.response.SMSVerificationStatusResponseImpl;
-import com.sinch.sdk.domains.verification.models.v1.status.response.SMSVerificationStatusResponsePrice;
+import com.sinch.sdk.domains.verification.models.v1.status.StatusPrice;
+import com.sinch.sdk.domains.verification.models.v1.status.response.FlashCallVerificationStatusResponse;
+import com.sinch.sdk.domains.verification.models.v1.status.response.FlashCallVerificationStatusResponseImpl;
+import com.sinch.sdk.domains.verification.models.v1.status.response.PhoneCallVerificationStatusResponse;
+import com.sinch.sdk.domains.verification.models.v1.status.response.PhoneCallVerificationStatusResponseImpl;
+import com.sinch.sdk.domains.verification.models.v1.status.response.SmsVerificationStatusResponse;
+import com.sinch.sdk.domains.verification.models.v1.status.response.SmsVerificationStatusResponseImpl;
+import com.sinch.sdk.domains.verification.models.v1.status.response.SmsVerificationStatusResponsePrice;
 import com.sinch.sdk.domains.verification.models.v1.status.response.internal.VerificationStatusResponseInternal;
 import com.sinch.sdk.domains.verification.models.v1.status.response.internal.VerificationStatusResponseInternalImpl;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
 public class VerificationStatusResponseInternalTest extends BaseTest {
 
-  public static VerificationStatusResponseInternal expectedVerificationCalloutDto =
+  public static VerificationStatusResponseInternal expectedVerificationPhoneCallDto =
       new VerificationStatusResponseInternalImpl(
-          (CalloutVerificationStatusResponseImpl)
-              CalloutVerificationStatusResponse.builder()
+          (PhoneCallVerificationStatusResponseImpl)
+              PhoneCallVerificationStatusResponse.builder()
                   .setId("the id")
-                  .setMethod(CalloutVerificationStatusResponse.MethodEnum.CALLOUT)
+                  .setMethod(PhoneCallVerificationStatusResponse.MethodEnum.CALLOUT)
                   .setStatus(VerificationStatus.FAIL)
                   .setReason(VerificationStatusReason.FRAUD)
                   .setCallComplete(true)
                   .setReference("my reference")
                   .setPrice(
-                      FlashcallVerificationStatusResponsePrice.builder()
+                      StatusPrice.builder()
                           .setVerificationPrice(
                               Price.builder()
                                   .setCurrencyId("verificationPrice currency id")
@@ -59,15 +58,15 @@ public class VerificationStatusResponseInternalTest extends BaseTest {
                   .build());
   public static VerificationStatusResponseInternal expectedVerificationFlashCallDto =
       new VerificationStatusResponseInternalImpl(
-          (FlashcallVerificationStatusResponseImpl)
-              FlashcallVerificationStatusResponse.builder()
+          (FlashCallVerificationStatusResponseImpl)
+              FlashCallVerificationStatusResponse.builder()
                   .setId("the id")
-                  .setMethod(FlashcallVerificationStatusResponse.MethodEnum.FLASHCALL)
+                  .setMethod(FlashCallVerificationStatusResponse.MethodEnum.FLASHCALL)
                   .setStatus(VerificationStatus.FAIL)
                   .setReason(VerificationStatusReason.FRAUD)
                   .setReference("my reference")
                   .setPrice(
-                      FlashcallVerificationStatusResponsePrice.builder()
+                      StatusPrice.builder()
                           .setVerificationPrice(
                               Price.builder()
                                   .setCurrencyId("verificationPrice currency id")
@@ -80,7 +79,7 @@ public class VerificationStatusResponseInternalTest extends BaseTest {
                                   .build())
                           .setBillableDuration(34)
                           .build())
-                  .setSource(SourceEnum.MANUAL)
+                  .setSource(FlashCallVerificationStatusResponse.SourceEnum.MANUAL)
                   .setIdentity(
                       IdentityInternal.builder()
                           .setType(TypeEnum.NUMBER)
@@ -89,18 +88,18 @@ public class VerificationStatusResponseInternalTest extends BaseTest {
                   .setCountryId("es-ES")
                   .setVerificationTimestamp("2024-05-22T09:38:59.5590437")
                   .build());
-  public static VerificationStatusResponseInternal expectedVerificationSMSDto =
+  public static VerificationStatusResponseInternal expectedVerificationSmsDto =
       new VerificationStatusResponseInternalImpl(
-          (SMSVerificationStatusResponseImpl)
-              SMSVerificationStatusResponse.builder()
+          (SmsVerificationStatusResponseImpl)
+              SmsVerificationStatusResponse.builder()
                   .setId("the id")
-                  .setMethod(SMSVerificationStatusResponse.MethodEnum.SMS)
+                  .setMethod(SmsVerificationStatusResponse.MethodEnum.SMS)
                   .setReference("my reference")
                   .setStatus(VerificationStatus.FAIL)
                   .setReason(VerificationStatusReason.FRAUD)
-                  .setSource(SMSVerificationStatusResponse.SourceEnum.INTERCEPTED)
+                  .setSource(SmsVerificationStatusResponse.SourceEnum.INTERCEPTED)
                   .setPrice(
-                      SMSVerificationStatusResponsePrice.builder()
+                      SmsVerificationStatusResponsePrice.builder()
                           .setVerificationPrice(
                               Price.builder()
                                   .setCurrencyId("verificationPrice currency id")
@@ -116,33 +115,27 @@ public class VerificationStatusResponseInternalTest extends BaseTest {
                   .setVerificationTimestamp("2024-05-22T09:38:59.5590437")
                   .build());
 
-  @GivenJsonResource("/domains/verification/v1/status/VerificationStatusCalloutResponseDto.json")
-  VerificationStatusResponseInternal loadedVerificationCalloutDto;
+  @GivenJsonResource("/domains/verification/v1/status/VerificationStatusPhoneCallResponseDto.json")
+  VerificationStatusResponseInternal loadedVerificationPhoneCallDto;
 
   @GivenJsonResource("/domains/verification/v1/status/VerificationStatusFlashCallResponseDto.json")
   VerificationStatusResponseInternal loadedVerificationFlashCallDto;
 
-  @GivenJsonResource("/domains/verification/v1/status/VerificationStatusSMSResponseDto.json")
-  VerificationStatusResponseInternal loadedVerificationSMSDto;
+  @GivenJsonResource("/domains/verification/v1/status/VerificationStatusSmsResponseDto.json")
+  VerificationStatusResponseInternal loadedVerificationSmsDto;
 
   @Test
-  void deserializeCallout() {
-    Assertions.assertThat(loadedVerificationCalloutDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedVerificationCalloutDto);
+  void deserializePhoneCall() {
+    TestHelpers.recursiveEquals(loadedVerificationPhoneCallDto, expectedVerificationPhoneCallDto);
   }
 
   @Test
   void deserializeFlashCall() {
-    Assertions.assertThat(loadedVerificationFlashCallDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedVerificationFlashCallDto);
+    TestHelpers.recursiveEquals(loadedVerificationFlashCallDto, expectedVerificationFlashCallDto);
   }
 
   @Test
-  void deserializeSMS() {
-    Assertions.assertThat(loadedVerificationSMSDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedVerificationSMSDto);
+  void deserializeSms() {
+    TestHelpers.recursiveEquals(loadedVerificationSmsDto, expectedVerificationSmsDto);
   }
 }
