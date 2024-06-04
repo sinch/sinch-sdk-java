@@ -15,8 +15,8 @@ package com.sinch.sdk.domains.verification.models.v1.start.response;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /** The response contains the target URI. */
-@JsonDeserialize(builder = StartVerificationResponseSeamlessContentImpl.Builder.class)
-public interface StartVerificationResponseSeamlessContent {
+@JsonDeserialize(builder = StartVerificationResponseDataContentImpl.Builder.class)
+public interface StartVerificationResponseDataContent {
 
   /**
    * The target URI.
@@ -31,7 +31,7 @@ public interface StartVerificationResponseSeamlessContent {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new StartVerificationResponseSeamlessContentImpl.Builder();
+    return new StartVerificationResponseDataContentImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -51,6 +51,6 @@ public interface StartVerificationResponseSeamlessContent {
      *
      * @return The instance build with current builder values
      */
-    StartVerificationResponseSeamlessContent build();
+    StartVerificationResponseDataContent build();
   }
 }

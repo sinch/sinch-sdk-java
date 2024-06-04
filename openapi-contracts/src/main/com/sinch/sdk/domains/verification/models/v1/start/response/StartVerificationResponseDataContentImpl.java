@@ -9,20 +9,20 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
-@JsonPropertyOrder({StartVerificationResponseSeamlessContentImpl.JSON_PROPERTY_TARGET_URI})
+@JsonPropertyOrder({StartVerificationResponseDataContentImpl.JSON_PROPERTY_TARGET_URI})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class StartVerificationResponseSeamlessContentImpl
-    implements StartVerificationResponseSeamlessContent {
+public class StartVerificationResponseDataContentImpl
+    implements StartVerificationResponseDataContent {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_TARGET_URI = "targetUri";
 
   private OptionalValue<String> targetUri;
 
-  public StartVerificationResponseSeamlessContentImpl() {}
+  public StartVerificationResponseDataContentImpl() {}
 
-  protected StartVerificationResponseSeamlessContentImpl(OptionalValue<String> targetUri) {
+  protected StartVerificationResponseDataContentImpl(OptionalValue<String> targetUri) {
     this.targetUri = targetUri;
   }
 
@@ -46,8 +46,8 @@ public class StartVerificationResponseSeamlessContentImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StartVerificationResponseSeamlessContentImpl dataInitiateVerificationResponseSeamless =
-        (StartVerificationResponseSeamlessContentImpl) o;
+    StartVerificationResponseDataContentImpl dataInitiateVerificationResponseSeamless =
+        (StartVerificationResponseDataContentImpl) o;
     return Objects.equals(this.targetUri, dataInitiateVerificationResponseSeamless.targetUri);
   }
 
@@ -59,7 +59,7 @@ public class StartVerificationResponseSeamlessContentImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class StartVerificationResponseSeamlessContentImpl {\n");
+    sb.append("class StartVerificationResponseDataContentImpl {\n");
     sb.append("    targetUri: ").append(toIndentedString(targetUri)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -76,7 +76,7 @@ public class StartVerificationResponseSeamlessContentImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements StartVerificationResponseSeamlessContent.Builder {
+  static class Builder implements StartVerificationResponseDataContent.Builder {
     OptionalValue<String> targetUri = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_TARGET_URI)
@@ -85,8 +85,8 @@ public class StartVerificationResponseSeamlessContentImpl
       return this;
     }
 
-    public StartVerificationResponseSeamlessContent build() {
-      return new StartVerificationResponseSeamlessContentImpl(targetUri);
+    public StartVerificationResponseDataContent build() {
+      return new StartVerificationResponseDataContentImpl(targetUri);
     }
   }
 }

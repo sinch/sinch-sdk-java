@@ -41,8 +41,8 @@ import com.sinch.sdk.domains.verification.models.v1.report.response.Verification
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationFlashCallOptions;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsOptions;
+import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseDataContentImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCallContentImpl;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSeamlessContentImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSmsContentImpl;
 import java.util.logging.Logger;
 
@@ -173,9 +173,8 @@ public class VerificationsDtoConverter {
       builder = convert(dto.getStartVerificationResponsePhoneCallImpl());
     } else if (dto.getActualInstance()
         instanceof
-        com.sinch.sdk.domains.verification.models.v1.start.response
-            .StartVerificationResponseSeamless) {
-      builder = convert(dto.getStartVerificationResponseSeamlessImpl());
+        com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseData) {
+      builder = convert(dto.getStartVerificationResponseDataImpl());
     } else {
       LOGGER.severe(String.format("Unexpected class '%s'", dto.getActualInstance()));
       builder = StartVerificationResponse.builder();
@@ -242,8 +241,7 @@ public class VerificationsDtoConverter {
   }
 
   static StartVerificationResponseSeamless.Builder convert(
-      com.sinch.sdk.domains.verification.models.v1.start.response
-              .StartVerificationResponseSeamlessImpl
+      com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseDataImpl
           dto) {
 
     StartVerificationResponseSeamless.Builder builder = StartVerificationResponseSeamless.builder();
@@ -254,8 +252,8 @@ public class VerificationsDtoConverter {
     dto.seamless()
         .ifPresent(
             _seamless -> {
-              StartVerificationResponseSeamlessContentImpl seamless =
-                  (StartVerificationResponseSeamlessContentImpl) _seamless;
+              StartVerificationResponseDataContentImpl seamless =
+                  (StartVerificationResponseDataContentImpl) _seamless;
               seamless.targetUri().ifPresent(builder::setTargetUri);
             });
     return builder;

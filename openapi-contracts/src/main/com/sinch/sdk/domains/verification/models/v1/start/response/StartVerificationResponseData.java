@@ -16,8 +16,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 
 /** declaration */
-@JsonDeserialize(builder = StartVerificationResponseSeamlessImpl.Builder.class)
-public interface StartVerificationResponseSeamless
+@JsonDeserialize(builder = StartVerificationResponseDataImpl.Builder.class)
+public interface StartVerificationResponseData
     extends com.sinch.sdk.domains.verification.models.v1.response.StartVerificationResponse {
 
   /**
@@ -40,7 +40,7 @@ public interface StartVerificationResponseSeamless
    *
    * @return seamless
    */
-  StartVerificationResponseSeamlessContent getSeamless();
+  StartVerificationResponseDataContent getSeamless();
 
   /**
    * Get links
@@ -55,7 +55,7 @@ public interface StartVerificationResponseSeamless
    * @return New Builder instance
    */
   static Builder builder() {
-    return new StartVerificationResponseSeamlessImpl.Builder();
+    return new StartVerificationResponseDataImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -86,7 +86,7 @@ public interface StartVerificationResponseSeamless
      * @return Current builder
      * @see #getSeamless
      */
-    Builder setSeamless(StartVerificationResponseSeamlessContent seamless);
+    Builder setSeamless(StartVerificationResponseDataContent seamless);
 
     /**
      * see getter
@@ -102,6 +102,6 @@ public interface StartVerificationResponseSeamless
      *
      * @return The instance build with current builder values
      */
-    StartVerificationResponseSeamless build();
+    StartVerificationResponseData build();
   }
 }

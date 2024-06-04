@@ -4,14 +4,14 @@ import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseData;
+import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseDataContent;
+import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseDataImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCallContent;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCallImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponsePhoneCall;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponsePhoneCallImpl;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSeamless;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSeamlessContent;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSeamlessImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSms;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSmsContent;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSmsImpl;
@@ -59,13 +59,13 @@ public class StartVerificationResponseTest extends BaseTest {
 
   public static StartVerificationResponseInternal expectedStartVerificationDataDto =
       new StartVerificationResponseInternalImpl(
-          (StartVerificationResponseSeamlessImpl)
-              StartVerificationResponseSeamless.builder()
+          (StartVerificationResponseDataImpl)
+              StartVerificationResponseData.builder()
                   .setId("the id")
                   .setMethod(VerificationMethod.SEAMLESS.value())
                   .setLinks(LinkTest.expectedLinks)
                   .setSeamless(
-                      StartVerificationResponseSeamlessContent.builder()
+                      StartVerificationResponseDataContent.builder()
                           .setTargetUri("target URI")
                           .build())
                   .build());

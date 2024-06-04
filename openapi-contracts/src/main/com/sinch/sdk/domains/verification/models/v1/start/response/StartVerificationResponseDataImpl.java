@@ -11,15 +11,15 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  StartVerificationResponseSeamlessImpl.JSON_PROPERTY_ID,
-  StartVerificationResponseSeamlessImpl.JSON_PROPERTY_METHOD,
-  StartVerificationResponseSeamlessImpl.JSON_PROPERTY_SEAMLESS,
-  StartVerificationResponseSeamlessImpl.JSON_PROPERTY_LINKS
+  StartVerificationResponseDataImpl.JSON_PROPERTY_ID,
+  StartVerificationResponseDataImpl.JSON_PROPERTY_METHOD,
+  StartVerificationResponseDataImpl.JSON_PROPERTY_SEAMLESS,
+  StartVerificationResponseDataImpl.JSON_PROPERTY_LINKS
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class StartVerificationResponseSeamlessImpl
-    implements StartVerificationResponseSeamless,
+public class StartVerificationResponseDataImpl
+    implements StartVerificationResponseData,
         com.sinch.sdk.domains.verification.models.v1.response.StartVerificationResponse {
   private static final long serialVersionUID = 1L;
 
@@ -33,18 +33,18 @@ public class StartVerificationResponseSeamlessImpl
 
   public static final String JSON_PROPERTY_SEAMLESS = "seamless";
 
-  private OptionalValue<StartVerificationResponseSeamlessContent> seamless;
+  private OptionalValue<StartVerificationResponseDataContent> seamless;
 
   public static final String JSON_PROPERTY_LINKS = "_links";
 
   private OptionalValue<List<Link>> links;
 
-  public StartVerificationResponseSeamlessImpl() {}
+  public StartVerificationResponseDataImpl() {}
 
-  protected StartVerificationResponseSeamlessImpl(
+  protected StartVerificationResponseDataImpl(
       OptionalValue<String> id,
       OptionalValue<String> method,
-      OptionalValue<StartVerificationResponseSeamlessContent> seamless,
+      OptionalValue<StartVerificationResponseDataContent> seamless,
       OptionalValue<List<Link>> links) {
     this.id = id;
     this.method = method;
@@ -75,13 +75,13 @@ public class StartVerificationResponseSeamlessImpl
   }
 
   @JsonIgnore
-  public StartVerificationResponseSeamlessContent getSeamless() {
+  public StartVerificationResponseDataContent getSeamless() {
     return seamless.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_SEAMLESS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<StartVerificationResponseSeamlessContent> seamless() {
+  public OptionalValue<StartVerificationResponseDataContent> seamless() {
     return seamless;
   }
 
@@ -105,8 +105,8 @@ public class StartVerificationResponseSeamlessImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StartVerificationResponseSeamlessImpl dataInitiateVerificationResponse =
-        (StartVerificationResponseSeamlessImpl) o;
+    StartVerificationResponseDataImpl dataInitiateVerificationResponse =
+        (StartVerificationResponseDataImpl) o;
     return Objects.equals(this.id, dataInitiateVerificationResponse.id)
         && Objects.equals(this.method, dataInitiateVerificationResponse.method)
         && Objects.equals(this.seamless, dataInitiateVerificationResponse.seamless)
@@ -121,7 +121,7 @@ public class StartVerificationResponseSeamlessImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class StartVerificationResponseSeamlessImpl {\n");
+    sb.append("class StartVerificationResponseDataImpl {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    method: ").append(toIndentedString(method)).append("\n");
     sb.append("    seamless: ").append(toIndentedString(seamless)).append("\n");
@@ -141,10 +141,10 @@ public class StartVerificationResponseSeamlessImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements StartVerificationResponseSeamless.Builder {
+  static class Builder implements StartVerificationResponseData.Builder {
     OptionalValue<String> id = OptionalValue.empty();
     OptionalValue<String> method = OptionalValue.empty();
-    OptionalValue<StartVerificationResponseSeamlessContent> seamless = OptionalValue.empty();
+    OptionalValue<StartVerificationResponseDataContent> seamless = OptionalValue.empty();
     OptionalValue<List<Link>> links = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_ID)
@@ -160,7 +160,7 @@ public class StartVerificationResponseSeamlessImpl
     }
 
     @JsonProperty(JSON_PROPERTY_SEAMLESS)
-    public Builder setSeamless(StartVerificationResponseSeamlessContent seamless) {
+    public Builder setSeamless(StartVerificationResponseDataContent seamless) {
       this.seamless = OptionalValue.of(seamless);
       return this;
     }
@@ -171,8 +171,8 @@ public class StartVerificationResponseSeamlessImpl
       return this;
     }
 
-    public StartVerificationResponseSeamless build() {
-      return new StartVerificationResponseSeamlessImpl(id, method, seamless, links);
+    public StartVerificationResponseData build() {
+      return new StartVerificationResponseDataImpl(id, method, seamless, links);
     }
   }
 }
