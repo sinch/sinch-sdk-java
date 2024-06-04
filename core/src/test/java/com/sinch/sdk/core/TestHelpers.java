@@ -5,7 +5,7 @@ import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguratio
 
 public class TestHelpers {
 
-  static RecursiveComparisonConfiguration recursiveComparisonConfiguration =
+  private static RecursiveComparisonConfiguration recursiveComparisonConfiguration =
       RecursiveComparisonConfiguration.builder().withStrictTypeChecking(true).build();
 
   public static void recursiveEquals(Object o1, Object o2) {
