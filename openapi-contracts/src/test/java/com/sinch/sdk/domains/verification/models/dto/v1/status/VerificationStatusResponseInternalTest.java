@@ -3,6 +3,7 @@ package com.sinch.sdk.domains.verification.models.dto.v1.status;
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.verification.models.v1.Price;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
@@ -18,7 +19,6 @@ import com.sinch.sdk.domains.verification.models.v1.status.response.SmsVerificat
 import com.sinch.sdk.domains.verification.models.v1.status.response.SmsVerificationStatusResponsePrice;
 import com.sinch.sdk.domains.verification.models.v1.status.response.internal.VerificationStatusResponseInternal;
 import com.sinch.sdk.domains.verification.models.v1.status.response.internal.VerificationStatusResponseInternalImpl;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
@@ -126,22 +126,16 @@ public class VerificationStatusResponseInternalTest extends BaseTest {
 
   @Test
   void deserializePhoneCall() {
-    Assertions.assertThat(loadedVerificationPhoneCallDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedVerificationPhoneCallDto);
+    TestHelpers.recursiveEquals(loadedVerificationPhoneCallDto, expectedVerificationPhoneCallDto);
   }
 
   @Test
   void deserializeFlashCall() {
-    Assertions.assertThat(loadedVerificationFlashCallDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedVerificationFlashCallDto);
+    TestHelpers.recursiveEquals(loadedVerificationFlashCallDto, expectedVerificationFlashCallDto);
   }
 
   @Test
   void deserializeSms() {
-    Assertions.assertThat(loadedVerificationSmsDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedVerificationSmsDto);
+    TestHelpers.recursiveEquals(loadedVerificationSmsDto, expectedVerificationSmsDto);
   }
 }

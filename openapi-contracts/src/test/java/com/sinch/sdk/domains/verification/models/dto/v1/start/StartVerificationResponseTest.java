@@ -3,6 +3,7 @@ package com.sinch.sdk.domains.verification.models.dto.v1.start;
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseData;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseDataContent;
@@ -17,7 +18,6 @@ import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerifica
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSmsImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.StartVerificationResponseInternal;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.StartVerificationResponseInternalImpl;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
@@ -89,29 +89,23 @@ public class StartVerificationResponseTest extends BaseTest {
 
   @Test
   void deserializeStartPhoneCall() {
-    Assertions.assertThat(loadedStartVerificationPhoneCallDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedStartVerificationPhoneCallDto);
+    TestHelpers.recursiveEquals(
+        loadedStartVerificationPhoneCallDto, expectedStartVerificationPhoneCallDto);
   }
 
   @Test
   void deserializeStartFlashCall() {
-    Assertions.assertThat(loadedStartVerificationFlashCallDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedStartVerificationFlashCallDto);
+    TestHelpers.recursiveEquals(
+        loadedStartVerificationFlashCallDto, expectedStartVerificationFlashCallDto);
   }
 
   @Test
   void deserializeStartData() {
-    Assertions.assertThat(loadedStartVerificationDataDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedStartVerificationDataDto);
+    TestHelpers.recursiveEquals(loadedStartVerificationDataDto, expectedStartVerificationDataDto);
   }
 
   @Test
   void deserializeSms() {
-    Assertions.assertThat(loadedStartVerificationSmsDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedStartVerificationSmsDto);
+    TestHelpers.recursiveEquals(loadedStartVerificationSmsDto, expectedStartVerificationSmsDto);
   }
 }

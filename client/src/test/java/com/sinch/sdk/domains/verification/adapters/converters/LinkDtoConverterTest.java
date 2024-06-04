@@ -3,12 +3,13 @@ package com.sinch.sdk.domains.verification.adapters.converters;
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.domains.verification.models.Link;
 import com.sinch.sdk.domains.verification.models.LinkRelType;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
@@ -18,23 +19,22 @@ public class LinkDtoConverterTest extends BaseTest {
   public Collection<com.sinch.sdk.domains.verification.models.v1.start.response.Link> linksDto;
 
   public static Collection<Link> linksClient =
-      Arrays.asList(
-          Link.builder()
-              .setRel(LinkRelType.STATUS)
-              .setHref("an href for status")
-              .setMethod(HttpMethod.GET)
-              .build(),
-          Link.builder()
-              .setRel(LinkRelType.REPORT)
-              .setHref("an href for report")
-              .setMethod(HttpMethod.PUT)
-              .build());
+      new ArrayList<>(
+          Arrays.asList(
+              Link.builder()
+                  .setRel(LinkRelType.STATUS)
+                  .setHref("an href for status")
+                  .setMethod(HttpMethod.GET)
+                  .build(),
+              Link.builder()
+                  .setRel(LinkRelType.REPORT)
+                  .setHref("an href for report")
+                  .setMethod(HttpMethod.PUT)
+                  .build()));
 
   @Test
   void convert() {
 
-    Assertions.assertThat(LinkDtoConverter.convert(linksDto))
-        .usingRecursiveComparison()
-        .isEqualTo(linksClient);
+    TestHelpers.recursiveEquals(LinkDtoConverter.convert(linksDto), linksClient);
   }
 }

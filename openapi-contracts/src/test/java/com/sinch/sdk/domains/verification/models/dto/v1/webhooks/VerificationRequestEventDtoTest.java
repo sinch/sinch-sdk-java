@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.verification.models.dto.v1.webhooks;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.verification.models.v1.Price;
 import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent;
@@ -9,7 +10,6 @@ import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEventIm
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEvent;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventImpl;
 import java.util.Collections;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
@@ -38,8 +38,6 @@ public class VerificationRequestEventDtoTest {
 
   @Test
   void deserialize() {
-    Assertions.assertThat(requestEventDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedRequestEventDto);
+    TestHelpers.recursiveEquals(requestEventDto, expectedRequestEventDto);
   }
 }

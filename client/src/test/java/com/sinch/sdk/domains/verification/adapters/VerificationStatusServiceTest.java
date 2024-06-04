@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
@@ -20,7 +21,6 @@ import com.sinch.sdk.domains.verification.models.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.dto.v1.status.VerificationStatusResponseInternalTest;
 import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -52,9 +52,8 @@ public class VerificationStatusServiceTest extends BaseTest {
             NumberIdentity.builder().setEndpoint("endpoint string").build(),
             VerificationMethodType.SMS);
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationStatusPhoneCallResponse);
+    TestHelpers.recursiveEquals(
+        response, VerificationsDtoConverterTest.expectedVerificationStatusPhoneCallResponse);
   }
 
   @Test
@@ -65,9 +64,8 @@ public class VerificationStatusServiceTest extends BaseTest {
 
     VerificationStatus response = service.getById(VerificationId.valueOf("the id"));
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationStatusPhoneCallResponse);
+    TestHelpers.recursiveEquals(
+        response, VerificationsDtoConverterTest.expectedVerificationStatusPhoneCallResponse);
   }
 
   @Test
@@ -79,8 +77,7 @@ public class VerificationStatusServiceTest extends BaseTest {
     VerificationStatus response =
         service.getByReference(VerificationReference.valueOf("the reference"));
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationStatusPhoneCallResponse);
+    TestHelpers.recursiveEquals(
+        response, VerificationsDtoConverterTest.expectedVerificationStatusPhoneCallResponse);
   }
 }

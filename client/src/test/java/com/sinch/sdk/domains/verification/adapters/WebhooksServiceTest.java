@@ -3,6 +3,7 @@ package com.sinch.sdk.domains.verification.adapters;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.verification.WebHooksService;
 import com.sinch.sdk.domains.verification.adapters.converters.WebhooksDtoConverterTest;
@@ -64,17 +65,17 @@ public class WebhooksServiceTest extends BaseTest {
   @Test
   void checkParseEventVerificationRequestEventDto() throws ApiException {
 
-    Assertions.assertThat(webHooksService.parseEvent(jsonVerificationRequestEventDto))
-        .usingRecursiveComparison()
-        .isEqualTo(WebhooksDtoConverterTest.verificationRequestEvent);
+    TestHelpers.recursiveEquals(
+        webHooksService.parseEvent(jsonVerificationRequestEventDto),
+        WebhooksDtoConverterTest.verificationRequestEvent);
   }
 
   @Test
   void checkParseEventVerificationResultEventDto() throws ApiException {
 
-    Assertions.assertThat(webHooksService.parseEvent(jsonVerificationResultEventDto))
-        .usingRecursiveComparison()
-        .isEqualTo(WebhooksDtoConverterTest.verificationResultEvent);
+    TestHelpers.recursiveEquals(
+        webHooksService.parseEvent(jsonVerificationResultEventDto),
+        WebhooksDtoConverterTest.verificationResultEvent);
   }
 
   @Test

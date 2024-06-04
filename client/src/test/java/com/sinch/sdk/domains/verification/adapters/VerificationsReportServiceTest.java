@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
@@ -22,7 +23,6 @@ import com.sinch.sdk.domains.verification.models.dto.v1.report.VerificationRepor
 import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestParametersInternal;
 import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -64,9 +64,8 @@ public class VerificationsReportServiceTest extends BaseTest {
             NumberIdentity.builder().setEndpoint("endpoint string").build(),
             VerificationsDtoConverterTest.verificationReportSmsRequest);
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationStatusSmsResponse);
+    TestHelpers.recursiveEquals(
+        response, VerificationsDtoConverterTest.expectedVerificationReportSmsResponse);
   }
 
   @Test
@@ -81,9 +80,8 @@ public class VerificationsReportServiceTest extends BaseTest {
             NumberIdentity.builder().setEndpoint("endpoint string").build(),
             VerificationsDtoConverterTest.verificationReportFlashCallRequest);
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationStatusFlashCallResponse);
+    TestHelpers.recursiveEquals(
+        response, VerificationsDtoConverterTest.expectedVerificationReportFlashCallResponse);
   }
 
   @Test
@@ -98,9 +96,8 @@ public class VerificationsReportServiceTest extends BaseTest {
             NumberIdentity.builder().setEndpoint("endpoint string").build(),
             VerificationsDtoConverterTest.verificationReportPhoneCallRequest);
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationStatusPhoneCallResponse);
+    TestHelpers.recursiveEquals(
+        response, VerificationsDtoConverterTest.expectedVerificationReportPhoneCallResponse);
   }
 
   @Test
@@ -114,9 +111,8 @@ public class VerificationsReportServiceTest extends BaseTest {
             VerificationId.valueOf("the id"),
             VerificationsDtoConverterTest.verificationReportSmsRequest);
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationStatusSmsResponse);
+    TestHelpers.recursiveEquals(
+        response, VerificationsDtoConverterTest.expectedVerificationReportSmsResponse);
   }
 
   @Test
@@ -130,9 +126,8 @@ public class VerificationsReportServiceTest extends BaseTest {
             VerificationId.valueOf("the id"),
             VerificationsDtoConverterTest.verificationReportFlashCallRequest);
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationStatusFlashCallResponse);
+    TestHelpers.recursiveEquals(
+        response, VerificationsDtoConverterTest.expectedVerificationReportFlashCallResponse);
   }
 
   @Test
@@ -146,8 +141,7 @@ public class VerificationsReportServiceTest extends BaseTest {
             VerificationId.valueOf("the id"),
             VerificationsDtoConverterTest.verificationReportPhoneCallRequest);
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedVerificationStatusPhoneCallResponse);
+    TestHelpers.recursiveEquals(
+        response, VerificationsDtoConverterTest.expectedVerificationReportPhoneCallResponse);
   }
 }

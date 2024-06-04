@@ -3,10 +3,10 @@ package com.sinch.sdk.domains.verification.models.dto.v1.report;
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponse;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
@@ -44,22 +44,18 @@ public class VerificationReportResponseDtoTest extends BaseTest {
 
   @Test
   void deserializePhoneCall() {
-    Assertions.assertThat(verificationReportPhoneCallDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedVerificationReportPhoneCall);
+    TestHelpers.recursiveEquals(
+        verificationReportPhoneCallDto, expectedVerificationReportPhoneCall);
   }
 
   @Test
   void deserializeFlashCall() {
-    Assertions.assertThat(verificationReportFlashCallDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedVerificationReportFlashCall);
+    TestHelpers.recursiveEquals(
+        verificationReportFlashCallDto, expectedVerificationReportFlashCall);
   }
 
   @Test
   void serializeSms() {
-    Assertions.assertThat(verificationReportSmsDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedVerificationReportSms);
+    TestHelpers.recursiveEquals(verificationReportSmsDto, expectedVerificationReportSms);
   }
 }

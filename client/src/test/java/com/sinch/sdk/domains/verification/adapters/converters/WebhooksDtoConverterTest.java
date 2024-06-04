@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.verification.adapters.converters;
 
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.Price;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
@@ -21,7 +22,6 @@ import com.sinch.sdk.domains.verification.models.webhooks.VerificationResponseFl
 import com.sinch.sdk.domains.verification.models.webhooks.VerificationResponseSMS;
 import com.sinch.sdk.domains.verification.models.webhooks.VerificationResultEvent;
 import java.util.Collections;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
@@ -71,38 +71,36 @@ public class WebhooksDtoConverterTest extends BaseTest {
 
   @Test
   void convertVerificationRequestEvent() {
-    Assertions.assertThat(verificationRequestEvent)
-        .usingRecursiveComparison()
-        .isEqualTo(
-            WebHooksDtoConverter.convert(VerificationRequestEventDtoTest.expectedRequestEventDto));
+    TestHelpers.recursiveEquals(
+        verificationRequestEvent,
+        WebHooksDtoConverter.convert(VerificationRequestEventDtoTest.expectedRequestEventDto));
   }
 
   @Test
   void convertVerificationResultEvent() {
-    Assertions.assertThat(verificationResultEvent)
-        .usingRecursiveComparison()
-        .isEqualTo(
-            WebHooksDtoConverter.convert(VerificationResultEventDtoTest.expectedResultEvent));
+    TestHelpers.recursiveEquals(
+        verificationResultEvent,
+        WebHooksDtoConverter.convert(VerificationResultEventDtoTest.expectedResultEvent));
   }
 
   @Test
   void convertVerificationPhoneCallResponse() {
-    Assertions.assertThat(VerificationResponseEventDtoTest.expectedPhoneCallRequestEventResponseDto)
-        .usingRecursiveComparison()
-        .isEqualTo(WebHooksDtoConverter.convert(verificationResponsePhoneCall));
+    TestHelpers.recursiveEquals(
+        VerificationResponseEventDtoTest.expectedPhoneCallRequestEventResponseDto,
+        WebHooksDtoConverter.convert(verificationResponsePhoneCall));
   }
 
   @Test
   void convertVerificationFlashCallResponse() {
-    Assertions.assertThat(VerificationResponseEventDtoTest.expectedFlashCallRequestEventResponseDto)
-        .usingRecursiveComparison()
-        .isEqualTo(WebHooksDtoConverter.convert(verificationResponseFlashCall));
+    TestHelpers.recursiveEquals(
+        VerificationResponseEventDtoTest.expectedFlashCallRequestEventResponseDto,
+        WebHooksDtoConverter.convert(verificationResponseFlashCall));
   }
 
   @Test
   void convertVerificationSmsResponse() {
-    Assertions.assertThat(VerificationResponseEventDtoTest.expectedSmsRequestEventResponseDto)
-        .usingRecursiveComparison()
-        .isEqualTo(WebHooksDtoConverter.convert(verificationResponseSms));
+    TestHelpers.recursiveEquals(
+        VerificationResponseEventDtoTest.expectedSmsRequestEventResponseDto,
+        WebHooksDtoConverter.convert(verificationResponseSms));
   }
 }

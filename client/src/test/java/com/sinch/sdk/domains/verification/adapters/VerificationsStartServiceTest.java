@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
@@ -21,7 +22,6 @@ import com.sinch.sdk.domains.verification.models.response.StartVerificationRespo
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationRequestParameters;
 import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -63,9 +63,8 @@ public class VerificationsStartServiceTest extends BaseTest {
     StartVerificationResponseSMS response =
         service.startSms(VerificationsDtoConverterTest.startVerificationSmsRequest);
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedStartVerificationSmsResponse);
+    TestHelpers.recursiveEquals(
+        response, VerificationsDtoConverterTest.expectedStartVerificationSmsResponse);
   }
 
   @Test
@@ -77,9 +76,8 @@ public class VerificationsStartServiceTest extends BaseTest {
     StartVerificationResponseFlashCall response =
         service.startFlashCall(VerificationsDtoConverterTest.startVerificationFlashCallRequest);
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedStartVerificationFlashCallResponse);
+    TestHelpers.recursiveEquals(
+        response, VerificationsDtoConverterTest.expectedStartVerificationFlashCallResponse);
   }
 
   @Test
@@ -91,9 +89,8 @@ public class VerificationsStartServiceTest extends BaseTest {
     StartVerificationResponseCallout response =
         service.startCallout(VerificationsDtoConverterTest.startVerificationPhoneCallRequest);
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedStartVerificationPhoneCallResponse);
+    TestHelpers.recursiveEquals(
+        response, VerificationsDtoConverterTest.expectedStartVerificationPhoneCallResponse);
   }
 
   @Test
@@ -105,8 +102,7 @@ public class VerificationsStartServiceTest extends BaseTest {
     StartVerificationResponseSeamless response =
         service.startSeamless(VerificationsDtoConverterTest.startVerificationDataRequest);
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(VerificationsDtoConverterTest.expectedStartVerificationDataResponse);
+    TestHelpers.recursiveEquals(
+        response, VerificationsDtoConverterTest.expectedStartVerificationDataResponse);
   }
 }
