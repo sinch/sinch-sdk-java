@@ -301,7 +301,6 @@
                         <exclude>sample-app/src/main/java/com/sinch/sample/webhooks/sms/SmsController.java</exclude>
                         <exclude>sample-app/src/main/java/com/sinch/sample/webhooks/verification/VerificationController.java</exclude>
                         <exclude>sample-app/src/main/java/com/sinch/sample/webhooks/voice/VoiceController.java</exclude>
-                        <exclude>examples/tutorials/sms/auto-subscribe-app/src/main/java/com/mycompany/app/AutoSubscribeController.java</exclude>
                       </excludes>
                         <googleJavaFormat>
                             <version>1.18.1</version>
