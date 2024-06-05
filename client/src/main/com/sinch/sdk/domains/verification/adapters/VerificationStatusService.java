@@ -3,8 +3,8 @@ package com.sinch.sdk.domains.verification.adapters;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
-import com.sinch.sdk.domains.verification.adapters.api.v1.VerificationStatusApi;
-import com.sinch.sdk.domains.verification.adapters.converters.VerificationsDtoConverter;
+import com.sinch.sdk.domains.verification.adapters.converters.StatusDtoConverter;
+import com.sinch.sdk.domains.verification.api.v1.internal.VerificationStatusApi;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
@@ -31,18 +31,18 @@ public class VerificationStatusService
 
   public VerificationStatus getByIdentity(NumberIdentity identity, VerificationMethodType method) {
 
-    return VerificationsDtoConverter.convert(
+    return StatusDtoConverter.convert(
         getApi().verificationStatusByIdentity(identity.getEndpoint(), method.value()));
   }
 
   public VerificationStatus getById(VerificationId id) {
 
-    return VerificationsDtoConverter.convert(getApi().verificationStatusById(id.getId()));
+    return StatusDtoConverter.convert(getApi().verificationStatusById(id.getId()));
   }
 
   public VerificationStatus getByReference(VerificationReference reference) {
 
-    return VerificationsDtoConverter.convert(
+    return StatusDtoConverter.convert(
         getApi().verificationStatusByReference(reference.getReference()));
   }
 }

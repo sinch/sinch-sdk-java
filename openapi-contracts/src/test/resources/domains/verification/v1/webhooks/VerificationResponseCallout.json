@@ -1,9 +1,0 @@
-{
-  "callout": {
-    "code": "4567",
-    "speech": {
-      "locale": "the locale"
-    }
-  },
-  "action": "deny"
-}

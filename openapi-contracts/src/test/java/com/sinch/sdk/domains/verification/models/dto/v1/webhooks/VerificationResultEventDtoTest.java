@@ -2,33 +2,43 @@ package com.sinch.sdk.domains.verification.models.dto.v1.webhooks;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
-import com.sinch.sdk.domains.verification.models.dto.v1.IdentityDto;
-import com.sinch.sdk.domains.verification.models.dto.v1.VerificationResultEventDto;
-import com.sinch.sdk.domains.verification.models.dto.v1.VerificationStatusDto;
-import com.sinch.sdk.domains.verification.models.dto.v1.VerificationStatusReasonDto;
-import org.assertj.core.api.Assertions;
+import com.sinch.sdk.core.TestHelpers;
+import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
+import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
+import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEventImpl;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationResultEvent;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationResultEventImpl;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
 public class VerificationResultEventDtoTest {
 
   @GivenJsonResource("/domains/verification/v1/webhooks/VerificationResultEventDto.json")
-  static VerificationResultEventDto resultEventDto;
+  static VerificationEvent resultEventDto;
 
-  public static VerificationResultEventDto expectedResultEvent =
-      new VerificationResultEventDto()
-          .id("1234567890")
-          .event("VerificationResultEvent")
-          .method("sms")
-          .identity(new IdentityDto().type("number").endpoint("+11235551234"))
-          .reference("reference string")
-          .custom("custom string")
-          .status(VerificationStatusDto.DENIED)
-          .reason(VerificationStatusReasonDto.FRAUD)
-          .source("manual");
+  public static VerificationEvent expectedResultEvent =
+      new VerificationEventImpl(
+          (VerificationResultEventImpl)
+              VerificationResultEvent.builder()
+                  .setId("1234567890")
+                  .setEvent(VerificationResultEvent.EventEnum.VERIFICATIONRESULTEVENT)
+                  .setMethod(VerificationResultEvent.MethodEnum.SMS)
+                  .setIdentity(
+                      IdentityInternal.builder()
+                          .setType(IdentityInternal.TypeEnum.NUMBER)
+                          .setEndpoint("+11235551234")
+                          .build())
+                  .setReference("reference string")
+                  .setCustom("custom string")
+                  .setStatus(VerificationStatus.DENIED)
+                  .setReason(VerificationStatusReason.FRAUD)
+                  .setSource(VerificationResultEvent.SourceEnum.MANUAL)
+                  .build());
 
   @Test
   void deserialize() {
-    Assertions.assertThat(resultEventDto).usingRecursiveComparison().isEqualTo(expectedResultEvent);
+    TestHelpers.recursiveEquals(resultEventDto, expectedResultEvent);
   }
 }

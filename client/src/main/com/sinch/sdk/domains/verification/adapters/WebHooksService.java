@@ -5,7 +5,7 @@ import com.sinch.sdk.core.exceptions.ApiMappingException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.utils.databind.Mapper;
 import com.sinch.sdk.domains.verification.adapters.converters.WebHooksDtoConverter;
-import com.sinch.sdk.domains.verification.models.dto.v1.VerificationEventDto;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEventImpl;
 import com.sinch.sdk.domains.verification.models.webhooks.VerificationEvent;
 import com.sinch.sdk.domains.verification.models.webhooks.VerificationResponse;
 import java.util.Map;
@@ -52,8 +52,8 @@ public class WebHooksService implements com.sinch.sdk.domains.verification.WebHo
   @Override
   public VerificationEvent parseEvent(String jsonPayload) throws ApiMappingException {
     try {
-      VerificationEventDto dto =
-          Mapper.getInstance().readValue(jsonPayload, VerificationEventDto.class);
+      VerificationEventImpl dto =
+          Mapper.getInstance().readValue(jsonPayload, VerificationEventImpl.class);
       return WebHooksDtoConverter.convert(dto);
     } catch (JsonProcessingException e) {
       throw new ApiMappingException(jsonPayload, e);
