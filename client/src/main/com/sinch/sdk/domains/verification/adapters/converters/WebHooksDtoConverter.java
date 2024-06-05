@@ -93,27 +93,27 @@ public class WebHooksDtoConverter {
     }
     com.sinch.sdk.domains.verification.models.v1.webhooks
             .PhoneCallRequestEventResponsePhoneCallContent.Builder
-        calloutDto = null;
+        phoneCallDto = null;
 
     if (null != client.getCode()) {
-      if (null == calloutDto) {
-        calloutDto =
+      if (null == phoneCallDto) {
+        phoneCallDto =
             com.sinch.sdk.domains.verification.models.v1.webhooks
                 .PhoneCallRequestEventResponsePhoneCallContent.builder();
       }
-      calloutDto.setCode(client.getCode());
+      phoneCallDto.setCode(client.getCode());
     }
 
     if (null != client.getSpeech()) {
-      if (null == calloutDto) {
-        calloutDto =
+      if (null == phoneCallDto) {
+        phoneCallDto =
             com.sinch.sdk.domains.verification.models.v1.webhooks
                 .PhoneCallRequestEventResponsePhoneCallContent.builder();
       }
-      calloutDto.setSpeech(convert(client.getSpeech()));
+      phoneCallDto.setSpeech(convert(client.getSpeech()));
     }
-    if (null != calloutDto) {
-      dto.setCallout(calloutDto.build());
+    if (null != phoneCallDto) {
+      dto.setCallout(phoneCallDto.build());
     }
     return dto.build();
   }

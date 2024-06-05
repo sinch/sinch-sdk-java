@@ -22,7 +22,7 @@ public class VerificationResponseEventDtoTest extends BaseTest {
 
   public static PhoneCallRequestEventResponse expectedPhoneCallRequestEventResponseDto =
       PhoneCallRequestEventResponse.builder()
-          .setAction(VerificationEventResponseAction.DENY)
+          .setAction(VerificationEventResponseAction.ALLOW)
           .setCallout(
               PhoneCallRequestEventResponsePhoneCallContent.builder()
                   .setCode("4567")
@@ -31,7 +31,7 @@ public class VerificationResponseEventDtoTest extends BaseTest {
           .build();
   public static FlashCallRequestEventResponse expectedFlashCallRequestEventResponseDto =
       FlashCallRequestEventResponse.builder()
-          .setAction(VerificationEventResponseAction.DENY)
+          .setAction(VerificationEventResponseAction.ALLOW)
           .setFlashCall(
               FlashCallRequestEventResponseFlashCallContent.builder()
                   .setCli("cli code")
@@ -40,7 +40,7 @@ public class VerificationResponseEventDtoTest extends BaseTest {
           .build();
   public static SmsRequestEventResponse expectedSmsRequestEventResponseDto =
       SmsRequestEventResponse.builder()
-          .setAction(VerificationEventResponseAction.DENY)
+          .setAction(VerificationEventResponseAction.ALLOW)
           .setSms(
               SmsRequestEventResponseSmsContent.builder()
                   .setCode("5666")

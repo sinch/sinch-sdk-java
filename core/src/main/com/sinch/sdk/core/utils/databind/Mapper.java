@@ -64,8 +64,7 @@ public class Mapper {
               if (member.hasAnnotation(JsonInclude.class)) {
                 JsonInclude annotation = member.getAnnotation(JsonInclude.class);
                 // property is required but was not defined: throw an exception from client side
-                // before
-                // network transfer
+                // before network transfer
                 if (null != annotation && JsonInclude.Include.ALWAYS == annotation.value()) {
                   throw new IllegalStateException(
                       String.format("Required property '%s' was not set", writer.getName()));

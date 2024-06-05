@@ -5,5 +5,5 @@
       "a language"
     ]
   },
-  "action": "deny"
+  "action": "allow"
 }

@@ -50,21 +50,21 @@ public class WebhooksDtoConverterTest extends BaseTest {
 
   public static VerificationResponse verificationResponsePhoneCall =
       VerificationResponseCallout.builder()
-          .setAction(VerificationResponseActionType.DENY)
+          .setAction(VerificationResponseActionType.ALLOW)
           .setCode("4567")
           .setSpeech(VerificationResponseCalloutSpeech.builder().setLocale("the locale").build())
           .build();
 
   public static VerificationResponse verificationResponseFlashCall =
       VerificationResponseFlashCall.builder()
-          .setAction(VerificationResponseActionType.DENY)
+          .setAction(VerificationResponseActionType.ALLOW)
           .setCli("cli code")
           .setDialTimeout(123)
           .build();
 
   public static VerificationResponse verificationResponseSms =
       VerificationResponseSMS.builder()
-          .setAction(VerificationResponseActionType.DENY)
+          .setAction(VerificationResponseActionType.ALLOW)
           .setCode("5666")
           .setAcceptLanguage(Collections.singletonList("a language"))
           .build();

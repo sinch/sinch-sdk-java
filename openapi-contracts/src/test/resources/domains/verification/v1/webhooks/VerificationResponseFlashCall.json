@@ -3,5 +3,5 @@
     "cli": "cli code",
     "dialTimeout": 123
   },
-  "action": "deny"
+  "action": "allow"
 }

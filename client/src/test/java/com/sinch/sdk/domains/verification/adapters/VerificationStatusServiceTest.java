@@ -45,7 +45,7 @@ public class VerificationStatusServiceTest extends BaseTest {
   void getByIdentity() throws ApiException {
 
     when(api.verificationStatusByIdentity(eq("endpoint string"), eq("sms")))
-        .thenReturn(VerificationStatusResponseInternalTest.expectedVerificationPhoneCallDto);
+        .thenReturn(VerificationStatusResponseInternalTest.expectedVerificationSmsDto);
 
     VerificationStatus response =
         service.getByIdentity(
@@ -53,7 +53,7 @@ public class VerificationStatusServiceTest extends BaseTest {
             VerificationMethodType.SMS);
 
     TestHelpers.recursiveEquals(
-        response, VerificationsDtoConverterTest.expectedVerificationStatusPhoneCallResponse);
+        response, VerificationsDtoConverterTest.expectedVerificationStatusSmsResponse);
   }
 
   @Test

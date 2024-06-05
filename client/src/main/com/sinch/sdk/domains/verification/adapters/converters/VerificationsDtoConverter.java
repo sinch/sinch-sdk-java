@@ -284,40 +284,40 @@ public class VerificationsDtoConverter {
   private static VerificationReportRequestParametersFlashCall convert(
       VerificationReportFlashCallRequestParameters client) {
 
-    VerificationReportRequestParametersFlashCallOptions.Builder subfield =
+    VerificationReportRequestParametersFlashCallOptions.Builder flashCallOptions =
         VerificationReportRequestParametersFlashCallOptions.builder();
-    client.getCli().ifPresent(subfield::setCli);
+    client.getCli().ifPresent(flashCallOptions::setCli);
 
     return VerificationReportRequestParametersFlashCall.builder()
         .setMethod(VerificationReportRequestParametersFlashCall.MethodEnum.FLASHCALL)
-        .setFlashCall(subfield.build())
+        .setFlashCall(flashCallOptions.build())
         .build();
   }
 
   private static VerificationReportRequestParametersSms convert(
       VerificationReportSMSRequestParameters client) {
 
-    VerificationReportRequestParametersSmsOptions.Builder subfield =
+    VerificationReportRequestParametersSmsOptions.Builder smsOptions =
         VerificationReportRequestParametersSmsOptions.builder();
-    client.getCode().ifPresent(subfield::setCode);
-    client.getCli().ifPresent(subfield::setCli);
+    client.getCode().ifPresent(smsOptions::setCode);
+    client.getCli().ifPresent(smsOptions::setCli);
 
     return VerificationReportRequestParametersSms.builder()
         .setMethod(VerificationReportRequestParametersSms.MethodEnum.SMS)
-        .setSms(subfield.build())
+        .setSms(smsOptions.build())
         .build();
   }
 
   private static VerificationReportRequestParametersPhoneCall convert(
       VerificationReportCalloutRequestParameters client) {
 
-    VerificationReportRequestParametersPhoneCallOptions.Builder subfield =
+    VerificationReportRequestParametersPhoneCallOptions.Builder phoneCallOptions =
         VerificationReportRequestParametersPhoneCallOptions.builder();
-    client.getCode().ifPresent(subfield::setCode);
+    client.getCode().ifPresent(phoneCallOptions::setCode);
 
     return VerificationReportRequestParametersPhoneCall.builder()
         .setMethod(VerificationReportRequestParametersPhoneCall.MethodEnum.CALLOUT)
-        .setCallout(subfield.build())
+        .setCallout(phoneCallOptions.build())
         .build();
   }
 

@@ -105,7 +105,7 @@ public class StartVerificationResponseTest extends BaseTest {
   }
 
   @Test
-  void deserializeSms() {
+  void deserializeStartSms() {
     TestHelpers.recursiveEquals(loadedStartVerificationSmsDto, expectedStartVerificationSmsDto);
   }
 }
