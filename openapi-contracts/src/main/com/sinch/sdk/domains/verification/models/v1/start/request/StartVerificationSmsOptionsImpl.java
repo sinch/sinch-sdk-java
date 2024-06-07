@@ -75,7 +75,7 @@ public class StartVerificationSmsOptionsImpl implements StartVerificationSmsOpti
     return template;
   }
 
-  /** Return true if this InitiateVerificationResource_smsOptions object is equal to o. */
+  /** Return true if this StartVerificationSmsRequest_allOf_smsOptions object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -84,11 +84,11 @@ public class StartVerificationSmsOptionsImpl implements StartVerificationSmsOpti
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StartVerificationSmsOptionsImpl initiateVerificationResourceSmsOptions =
+    StartVerificationSmsOptionsImpl startVerificationSmsRequestAllOfSmsOptions =
         (StartVerificationSmsOptionsImpl) o;
-    return Objects.equals(this.expiry, initiateVerificationResourceSmsOptions.expiry)
-        && Objects.equals(this.codeType, initiateVerificationResourceSmsOptions.codeType)
-        && Objects.equals(this.template, initiateVerificationResourceSmsOptions.template);
+    return Objects.equals(this.expiry, startVerificationSmsRequestAllOfSmsOptions.expiry)
+        && Objects.equals(this.codeType, startVerificationSmsRequestAllOfSmsOptions.codeType)
+        && Objects.equals(this.template, startVerificationSmsRequestAllOfSmsOptions.template);
   }
 
   @Override

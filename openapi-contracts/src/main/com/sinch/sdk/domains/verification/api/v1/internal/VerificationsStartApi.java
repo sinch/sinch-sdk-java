@@ -24,7 +24,7 @@ import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationRequestParameters;
+import com.sinch.sdk.domains.verification.models.v1.start.request.internal.StartVerificationRequestInternal;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.StartVerificationResponseInternal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,7 +58,7 @@ public class VerificationsStartApi {
    * verification. It can also be used to request a verification from your backend, by making an
    * request.
    *
-   * @param startVerificationRequestParameters (required)
+   * @param startVerificationRequestInternal (required)
    * @param acceptLanguage In SMS Verification, value of
    *     [Accept-Language](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language)
    *     header is used to determine the languge of an SMS message. (optional)
@@ -66,20 +66,20 @@ public class VerificationsStartApi {
    * @throws ApiException if fails to make API call
    */
   public StartVerificationResponseInternal startVerification(
-      StartVerificationRequestParameters startVerificationRequestParameters, String acceptLanguage)
+      StartVerificationRequestInternal startVerificationRequestInternal, String acceptLanguage)
       throws ApiException {
 
     LOGGER.finest(
         "[startVerification]"
             + " "
-            + "startVerificationRequestParameters: "
-            + startVerificationRequestParameters
+            + "startVerificationRequestInternal: "
+            + startVerificationRequestInternal
             + ", "
             + "acceptLanguage: "
             + acceptLanguage);
 
     HttpRequest httpRequest =
-        startVerificationRequestBuilder(startVerificationRequestParameters, acceptLanguage);
+        startVerificationRequestBuilder(startVerificationRequestInternal, acceptLanguage);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -99,13 +99,13 @@ public class VerificationsStartApi {
   }
 
   private HttpRequest startVerificationRequestBuilder(
-      StartVerificationRequestParameters startVerificationRequestParameters, String acceptLanguage)
+      StartVerificationRequestInternal startVerificationRequestInternal, String acceptLanguage)
       throws ApiException {
-    // verify the required parameter 'startVerificationRequestParameters' is set
-    if (startVerificationRequestParameters == null) {
+    // verify the required parameter 'startVerificationRequestInternal' is set
+    if (startVerificationRequestInternal == null) {
       throw new ApiException(
           400,
-          "Missing the required parameter 'startVerificationRequestParameters' when calling"
+          "Missing the required parameter 'startVerificationRequestInternal' when calling"
               + " startVerification");
     }
 
@@ -122,7 +122,7 @@ public class VerificationsStartApi {
 
     final Collection<String> localVarAuthNames = Arrays.asList("Basic", "Application");
     final String serializedBody =
-        mapper.serialize(localVarContentTypes, startVerificationRequestParameters);
+        mapper.serialize(localVarContentTypes, startVerificationRequestInternal);
 
     return new HttpRequest(
         localVarPath,

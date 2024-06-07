@@ -36,7 +36,10 @@ public class StartVerificationPhoneCallOptionsImpl implements StartVerificationP
     return speech;
   }
 
-  /** Return true if this InitiateVerificationResource_calloutOptions object is equal to o. */
+  /**
+   * Return true if this StartVerificationPhoneCallRequest_allOf_calloutOptions object is equal to
+   * o.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -45,9 +48,9 @@ public class StartVerificationPhoneCallOptionsImpl implements StartVerificationP
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StartVerificationPhoneCallOptionsImpl initiateVerificationResourceCalloutOptions =
+    StartVerificationPhoneCallOptionsImpl startVerificationPhoneCallRequestAllOfCalloutOptions =
         (StartVerificationPhoneCallOptionsImpl) o;
-    return Objects.equals(this.speech, initiateVerificationResourceCalloutOptions.speech);
+    return Objects.equals(this.speech, startVerificationPhoneCallRequestAllOfCalloutOptions.speech);
   }
 
   @Override

@@ -7,27 +7,27 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
-import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  StartVerificationRequestParametersImpl.JSON_PROPERTY_IDENTITY,
-  StartVerificationRequestParametersImpl.JSON_PROPERTY_METHOD,
-  StartVerificationRequestParametersImpl.JSON_PROPERTY_REFERENCE,
-  StartVerificationRequestParametersImpl.JSON_PROPERTY_CUSTOM,
-  StartVerificationRequestParametersImpl.JSON_PROPERTY_FLASH_CALL_OPTIONS,
-  StartVerificationRequestParametersImpl.JSON_PROPERTY_SMS_OPTIONS,
-  StartVerificationRequestParametersImpl.JSON_PROPERTY_CALLOUT_OPTIONS
+  StartVerificationFlashCallRequestImpl.JSON_PROPERTY_IDENTITY,
+  StartVerificationFlashCallRequestImpl.JSON_PROPERTY_METHOD,
+  StartVerificationFlashCallRequestImpl.JSON_PROPERTY_REFERENCE,
+  StartVerificationFlashCallRequestImpl.JSON_PROPERTY_CUSTOM,
+  StartVerificationFlashCallRequestImpl.JSON_PROPERTY_FLASH_CALL_OPTIONS
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class StartVerificationRequestParametersImpl implements StartVerificationRequestParameters {
+public class StartVerificationFlashCallRequestImpl
+    implements StartVerificationFlashCallRequest,
+        com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationRequest {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_IDENTITY = "identity";
 
-  private OptionalValue<IdentityInternal> identity;
+  private OptionalValue<Identity> identity;
 
   public static final String JSON_PROPERTY_METHOD = "method";
 
@@ -45,41 +45,29 @@ public class StartVerificationRequestParametersImpl implements StartVerification
 
   private OptionalValue<StartVerificationFlashCallOptions> flashCallOptions;
 
-  public static final String JSON_PROPERTY_SMS_OPTIONS = "smsOptions";
+  public StartVerificationFlashCallRequestImpl() {}
 
-  private OptionalValue<StartVerificationSmsOptions> smsOptions;
-
-  public static final String JSON_PROPERTY_CALLOUT_OPTIONS = "calloutOptions";
-
-  private OptionalValue<StartVerificationPhoneCallOptions> calloutOptions;
-
-  public StartVerificationRequestParametersImpl() {}
-
-  protected StartVerificationRequestParametersImpl(
-      OptionalValue<IdentityInternal> identity,
+  protected StartVerificationFlashCallRequestImpl(
+      OptionalValue<Identity> identity,
       OptionalValue<VerificationMethod> method,
       OptionalValue<String> reference,
       OptionalValue<String> custom,
-      OptionalValue<StartVerificationFlashCallOptions> flashCallOptions,
-      OptionalValue<StartVerificationSmsOptions> smsOptions,
-      OptionalValue<StartVerificationPhoneCallOptions> calloutOptions) {
+      OptionalValue<StartVerificationFlashCallOptions> flashCallOptions) {
     this.identity = identity;
     this.method = method;
     this.reference = reference;
     this.custom = custom;
     this.flashCallOptions = flashCallOptions;
-    this.smsOptions = smsOptions;
-    this.calloutOptions = calloutOptions;
   }
 
   @JsonIgnore
-  public IdentityInternal getIdentity() {
+  public Identity getIdentity() {
     return identity.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_IDENTITY)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<IdentityInternal> identity() {
+  public OptionalValue<Identity> identity() {
     return identity;
   }
 
@@ -127,29 +115,7 @@ public class StartVerificationRequestParametersImpl implements StartVerification
     return flashCallOptions;
   }
 
-  @JsonIgnore
-  public StartVerificationSmsOptions getSmsOptions() {
-    return smsOptions.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_SMS_OPTIONS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<StartVerificationSmsOptions> smsOptions() {
-    return smsOptions;
-  }
-
-  @JsonIgnore
-  public StartVerificationPhoneCallOptions getCalloutOptions() {
-    return calloutOptions.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_CALLOUT_OPTIONS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<StartVerificationPhoneCallOptions> calloutOptions() {
-    return calloutOptions;
-  }
-
-  /** Return true if this InitiateVerificationResource object is equal to o. */
+  /** Return true if this StartVerificationFlashCallRequest object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -158,34 +124,30 @@ public class StartVerificationRequestParametersImpl implements StartVerification
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StartVerificationRequestParametersImpl initiateVerificationResource =
-        (StartVerificationRequestParametersImpl) o;
-    return Objects.equals(this.identity, initiateVerificationResource.identity)
-        && Objects.equals(this.method, initiateVerificationResource.method)
-        && Objects.equals(this.reference, initiateVerificationResource.reference)
-        && Objects.equals(this.custom, initiateVerificationResource.custom)
-        && Objects.equals(this.flashCallOptions, initiateVerificationResource.flashCallOptions)
-        && Objects.equals(this.smsOptions, initiateVerificationResource.smsOptions)
-        && Objects.equals(this.calloutOptions, initiateVerificationResource.calloutOptions);
+    StartVerificationFlashCallRequestImpl startVerificationFlashCallRequest =
+        (StartVerificationFlashCallRequestImpl) o;
+    return Objects.equals(this.identity, startVerificationFlashCallRequest.identity)
+        && Objects.equals(this.method, startVerificationFlashCallRequest.method)
+        && Objects.equals(this.reference, startVerificationFlashCallRequest.reference)
+        && Objects.equals(this.custom, startVerificationFlashCallRequest.custom)
+        && Objects.equals(
+            this.flashCallOptions, startVerificationFlashCallRequest.flashCallOptions);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(
-        identity, method, reference, custom, flashCallOptions, smsOptions, calloutOptions);
+    return Objects.hash(identity, method, reference, custom, flashCallOptions);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class StartVerificationRequestParametersImpl {\n");
+    sb.append("class StartVerificationFlashCallRequestImpl {\n");
     sb.append("    identity: ").append(toIndentedString(identity)).append("\n");
     sb.append("    method: ").append(toIndentedString(method)).append("\n");
     sb.append("    reference: ").append(toIndentedString(reference)).append("\n");
     sb.append("    custom: ").append(toIndentedString(custom)).append("\n");
     sb.append("    flashCallOptions: ").append(toIndentedString(flashCallOptions)).append("\n");
-    sb.append("    smsOptions: ").append(toIndentedString(smsOptions)).append("\n");
-    sb.append("    calloutOptions: ").append(toIndentedString(calloutOptions)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -201,24 +163,16 @@ public class StartVerificationRequestParametersImpl implements StartVerification
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements StartVerificationRequestParameters.Builder {
-    OptionalValue<IdentityInternal> identity = OptionalValue.empty();
-    OptionalValue<VerificationMethod> method = OptionalValue.empty();
+  static class Builder implements StartVerificationFlashCallRequest.Builder {
+    OptionalValue<Identity> identity = OptionalValue.empty();
+    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.FLASHCALL);
     OptionalValue<String> reference = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
     OptionalValue<StartVerificationFlashCallOptions> flashCallOptions = OptionalValue.empty();
-    OptionalValue<StartVerificationSmsOptions> smsOptions = OptionalValue.empty();
-    OptionalValue<StartVerificationPhoneCallOptions> calloutOptions = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_IDENTITY)
-    public Builder setIdentity(IdentityInternal identity) {
+    public Builder setIdentity(Identity identity) {
       this.identity = OptionalValue.of(identity);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_METHOD)
-    public Builder setMethod(VerificationMethod method) {
-      this.method = OptionalValue.of(method);
       return this;
     }
 
@@ -240,21 +194,9 @@ public class StartVerificationRequestParametersImpl implements StartVerification
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_SMS_OPTIONS)
-    public Builder setSmsOptions(StartVerificationSmsOptions smsOptions) {
-      this.smsOptions = OptionalValue.of(smsOptions);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_CALLOUT_OPTIONS)
-    public Builder setCalloutOptions(StartVerificationPhoneCallOptions calloutOptions) {
-      this.calloutOptions = OptionalValue.of(calloutOptions);
-      return this;
-    }
-
-    public StartVerificationRequestParameters build() {
-      return new StartVerificationRequestParametersImpl(
-          identity, method, reference, custom, flashCallOptions, smsOptions, calloutOptions);
+    public StartVerificationFlashCallRequest build() {
+      return new StartVerificationFlashCallRequestImpl(
+          identity, method, reference, custom, flashCallOptions);
     }
   }
 }

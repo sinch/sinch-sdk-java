@@ -36,7 +36,10 @@ public class StartVerificationFlashCallOptionsImpl implements StartVerificationF
     return dialTimeout;
   }
 
-  /** Return true if this InitiateVerificationResource_flashCallOptions object is equal to o. */
+  /**
+   * Return true if this StartVerificationFlashCallRequest_allOf_flashCallOptions object is equal to
+   * o.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -45,10 +48,10 @@ public class StartVerificationFlashCallOptionsImpl implements StartVerificationF
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StartVerificationFlashCallOptionsImpl initiateVerificationResourceFlashCallOptions =
+    StartVerificationFlashCallOptionsImpl startVerificationFlashCallRequestAllOfFlashCallOptions =
         (StartVerificationFlashCallOptionsImpl) o;
     return Objects.equals(
-        this.dialTimeout, initiateVerificationResourceFlashCallOptions.dialTimeout);
+        this.dialTimeout, startVerificationFlashCallRequestAllOfFlashCallOptions.dialTimeout);
   }
 
   @Override

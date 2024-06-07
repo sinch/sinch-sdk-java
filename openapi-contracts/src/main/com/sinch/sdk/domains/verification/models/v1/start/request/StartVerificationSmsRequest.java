@@ -13,26 +13,19 @@
 package com.sinch.sdk.domains.verification.models.v1.start.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
-import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
+import com.sinch.sdk.domains.verification.models.Identity;
 
 /** declaration */
-@JsonDeserialize(builder = StartVerificationRequestParametersImpl.Builder.class)
-public interface StartVerificationRequestParameters {
+@JsonDeserialize(builder = StartVerificationSmsRequestImpl.Builder.class)
+public interface StartVerificationSmsRequest
+    extends com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationRequest {
 
   /**
    * Get identity
    *
    * @return identity
    */
-  IdentityInternal getIdentity();
-
-  /**
-   * Get method
-   *
-   * @return method
-   */
-  VerificationMethod getMethod();
+  Identity getIdentity();
 
   /**
    * Used to pass your own reference in the request for tracking purposes.
@@ -49,13 +42,6 @@ public interface StartVerificationRequestParameters {
   String getCustom();
 
   /**
-   * Get flashCallOptions
-   *
-   * @return flashCallOptions
-   */
-  StartVerificationFlashCallOptions getFlashCallOptions();
-
-  /**
    * Get smsOptions
    *
    * @return smsOptions
@@ -63,23 +49,18 @@ public interface StartVerificationRequestParameters {
   StartVerificationSmsOptions getSmsOptions();
 
   /**
-   * Get calloutOptions
-   *
-   * @return calloutOptions
-   */
-  StartVerificationPhoneCallOptions getCalloutOptions();
-
-  /**
    * Getting builder
    *
    * @return New Builder instance
    */
   static Builder builder() {
-    return new StartVerificationRequestParametersImpl.Builder();
+    return new StartVerificationSmsRequestImpl.Builder();
   }
 
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder
+      extends com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationRequest
+          .Builder {
 
     /**
      * see getter
@@ -88,16 +69,7 @@ public interface StartVerificationRequestParameters {
      * @return Current builder
      * @see #getIdentity
      */
-    Builder setIdentity(IdentityInternal identity);
-
-    /**
-     * see getter
-     *
-     * @param method see getter
-     * @return Current builder
-     * @see #getMethod
-     */
-    Builder setMethod(VerificationMethod method);
+    Builder setIdentity(Identity identity);
 
     /**
      * see getter
@@ -120,15 +92,6 @@ public interface StartVerificationRequestParameters {
     /**
      * see getter
      *
-     * @param flashCallOptions see getter
-     * @return Current builder
-     * @see #getFlashCallOptions
-     */
-    Builder setFlashCallOptions(StartVerificationFlashCallOptions flashCallOptions);
-
-    /**
-     * see getter
-     *
      * @param smsOptions see getter
      * @return Current builder
      * @see #getSmsOptions
@@ -136,19 +99,10 @@ public interface StartVerificationRequestParameters {
     Builder setSmsOptions(StartVerificationSmsOptions smsOptions);
 
     /**
-     * see getter
-     *
-     * @param calloutOptions see getter
-     * @return Current builder
-     * @see #getCalloutOptions
-     */
-    Builder setCalloutOptions(StartVerificationPhoneCallOptions calloutOptions);
-
-    /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    StartVerificationRequestParameters build();
+    StartVerificationSmsRequest build();
   }
 }
