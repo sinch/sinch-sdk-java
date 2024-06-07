@@ -33,6 +33,10 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
   private Map<String, AuthManager> clientAuthManagers;
   private Map<String, AuthManager> webhooksAuthManagers;
 
+  static {
+    LocalLazyInit.init();
+  }
+
   public VerificationService(
       ApplicationCredentials credentials, VerificationContext context, HttpClient httpClient) {
 
@@ -115,6 +119,22 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
           String.format(
               "Service '%s' cannot be called without defined credentials",
               this.getClass().getSimpleName()));
+    }
+  }
+
+  static final class LocalLazyInit {
+
+    private LocalLazyInit() {
+      IdentityMapper.initMapper();
+    }
+
+    public static LocalLazyInit init() {
+      return LocalLazyInit.LazyHolder.INSTANCE;
+    }
+
+    private static class LazyHolder {
+
+      public static final LocalLazyInit INSTANCE = new LocalLazyInit();
     }
   }
 }

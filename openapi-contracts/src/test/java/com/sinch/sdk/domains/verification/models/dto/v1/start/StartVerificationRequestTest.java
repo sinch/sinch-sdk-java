@@ -3,67 +3,74 @@ package com.sinch.sdk.domains.verification.models.dto.v1.start;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.sinch.sdk.BaseTest;
-import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
-import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
-import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal.TypeEnum;
+import com.sinch.sdk.domains.verification.adapters.VerificationBaseTest;
+import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
+import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationDataRequest;
+import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationDataRequestImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationFlashCallOptions;
+import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationFlashCallRequest;
+import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationFlashCallRequestImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationPhoneCallOptions;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationRequestParameters;
+import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationPhoneCallRequest;
+import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationPhoneCallRequestImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsOptions;
+import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsRequest;
+import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsRequestImpl;
+import com.sinch.sdk.domains.verification.models.v1.start.request.internal.StartVerificationRequestInternal;
+import com.sinch.sdk.domains.verification.models.v1.start.request.internal.StartVerificationRequestInternalImpl;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-public class StartVerificationRequestTest extends BaseTest {
+public class StartVerificationRequestTest extends VerificationBaseTest {
 
-  public static StartVerificationRequestParameters startVerificationPhoneCallDto =
-      StartVerificationRequestParameters.builder()
-          .setMethod(VerificationMethod.CALLOUT)
-          .setCustom("a custom")
-          .setReference("a reference")
-          .setIdentity(
-              IdentityInternal.builder().setType(TypeEnum.NUMBER).setEndpoint("+endpoint").build())
-          .setCalloutOptions(
-              StartVerificationPhoneCallOptions.builder()
-                  .setSpeech(PhoneCallSpeech.builder().setLocale("fr-FR").build())
-                  .build())
-          .build();
+  public static StartVerificationRequestInternal startVerificationPhoneCallDto =
+      new StartVerificationRequestInternalImpl(
+          (StartVerificationPhoneCallRequestImpl)
+              StartVerificationPhoneCallRequest.builder()
+                  .setCustom("a custom")
+                  .setReference("a reference")
+                  .setIdentity(NumberIdentity.valueOf("+endpoint"))
+                  .setCalloutOptions(
+                      StartVerificationPhoneCallOptions.builder()
+                          .setSpeech(PhoneCallSpeech.builder().setLocale("fr-FR").build())
+                          .build())
+                  .build());
 
-  public static StartVerificationRequestParameters startVerificationFlashCallDto =
-      StartVerificationRequestParameters.builder()
-          .setMethod(VerificationMethod.FLASHCALL)
-          .setCustom("a custom")
-          .setReference("a reference")
-          .setIdentity(
-              IdentityInternal.builder().setType(TypeEnum.NUMBER).setEndpoint("+endpoint").build())
-          .setFlashCallOptions(
-              StartVerificationFlashCallOptions.builder().setDialTimeout(17).build())
-          .build();
-  public static StartVerificationRequestParameters startVerificationDataDto =
-      StartVerificationRequestParameters.builder()
-          .setMethod(VerificationMethod.SEAMLESS)
-          .setCustom("a custom")
-          .setReference("a reference")
-          .setIdentity(
-              IdentityInternal.builder().setType(TypeEnum.NUMBER).setEndpoint("+endpoint").build())
-          .build();
-  public static StartVerificationRequestParameters startVerificationSmsDto =
-      StartVerificationRequestParameters.builder()
-          .setMethod(VerificationMethod.SMS)
-          .setCustom("a custom")
-          .setReference("a reference")
-          .setIdentity(
-              IdentityInternal.builder().setType(TypeEnum.NUMBER).setEndpoint("+endpoint").build())
-          .setSmsOptions(
-              StartVerificationSmsOptions.builder()
-                  .setExpiry("01:02:03")
-                  .setCodeType(StartVerificationSmsOptions.CodeTypeEnum.ALPHANUMERIC)
-                  .setTemplate("My template require to use '{{CODE}}' code")
-                  .build())
-          .build();
+  public static StartVerificationRequestInternalImpl startVerificationFlashCallDto =
+      new StartVerificationRequestInternalImpl(
+          (StartVerificationFlashCallRequestImpl)
+              StartVerificationFlashCallRequest.builder()
+                  .setCustom("a custom")
+                  .setReference("a reference")
+                  .setIdentity(NumberIdentity.valueOf("+endpoint"))
+                  .setFlashCallOptions(
+                      StartVerificationFlashCallOptions.builder().setDialTimeout(17).build())
+                  .build());
+  public static StartVerificationRequestInternalImpl startVerificationDataDto =
+      new StartVerificationRequestInternalImpl(
+          (StartVerificationDataRequestImpl)
+              StartVerificationDataRequest.builder()
+                  .setCustom("a custom")
+                  .setReference("a reference")
+                  .setIdentity(NumberIdentity.valueOf("+endpoint"))
+                  .build());
+  public static StartVerificationRequestInternalImpl startVerificationSmsDto =
+      new StartVerificationRequestInternalImpl(
+          (StartVerificationSmsRequestImpl)
+              StartVerificationSmsRequest.builder()
+                  .setCustom("a custom")
+                  .setReference("a reference")
+                  .setIdentity(NumberIdentity.valueOf("+endpoint"))
+                  .setSmsOptions(
+                      StartVerificationSmsOptions.builder()
+                          .setExpiry("01:02:03")
+                          .setCodeType(StartVerificationSmsOptions.CodeTypeEnum.ALPHANUMERIC)
+                          .setTemplate("My template require to use '{{CODE}}' code")
+                          .build())
+                  .build());
 
   @GivenTextResource("/domains/verification/v1/start/StartVerificationPhoneCallRequestDto.json")
   String jsonStartVerificationPhoneCall;

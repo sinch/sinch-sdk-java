@@ -7,7 +7,6 @@ import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
-import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
@@ -19,7 +18,7 @@ import com.sinch.sdk.domains.verification.models.response.StartVerificationRespo
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSMS;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSeamless;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationRequestParameters;
+import com.sinch.sdk.domains.verification.models.v1.start.request.internal.StartVerificationRequestInternal;
 import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,19 +26,19 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 @TestWithResources
-public class VerificationsStartServiceTest extends BaseTest {
+public class VerificationsStartServiceTest extends VerificationBaseTest {
 
   @GivenJsonResource("/domains/verification/v1/start/StartVerificationPhoneCallRequestDto.json")
-  public StartVerificationRequestParameters startVerificationPhoneCallRequestDto;
+  public StartVerificationRequestInternal startVerificationPhoneCallRequestDto;
 
   @GivenJsonResource("/domains/verification/v1/start/StartVerificationFlashCallRequestDto.json")
-  public StartVerificationRequestParameters startVerificationFlashCallRequestDto;
+  public StartVerificationRequestInternal startVerificationFlashCallRequestDto;
 
   @GivenJsonResource("/domains/verification/v1/start/StartVerificationDataRequestDto.json")
-  public StartVerificationRequestParameters startVerificationDataRequestDto;
+  public StartVerificationRequestInternal startVerificationDataRequestDto;
 
   @GivenJsonResource("/domains/verification/v1/start/StartVerificationSmsRequestDto.json")
-  public StartVerificationRequestParameters startVerificationSmsRequestDto;
+  public StartVerificationRequestInternal startVerificationSmsRequestDto;
 
   @Mock VerificationsStartApi api;
   @Mock VerificationContext context;

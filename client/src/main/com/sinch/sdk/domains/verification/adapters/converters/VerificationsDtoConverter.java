@@ -17,6 +17,7 @@ import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlash
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSOptions;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationSeamlessRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportCalloutRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportFlashCallRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportRequestParameters;
@@ -41,6 +42,7 @@ import com.sinch.sdk.domains.verification.models.v1.report.response.Verification
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationFlashCallOptions;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsOptions;
+import com.sinch.sdk.domains.verification.models.v1.start.request.internal.StartVerificationRequestInternalImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseDataContentImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCallContentImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSmsContentImpl;
@@ -50,41 +52,68 @@ public class VerificationsDtoConverter {
 
   private static final Logger LOGGER = Logger.getLogger(VerificationsDtoConverter.class.getName());
 
-  public static com.sinch.sdk.domains.verification.models.v1.start.request
-          .StartVerificationRequestParameters
+  public static com.sinch.sdk.domains.verification.models.v1.start.request.internal
+          .StartVerificationRequestInternal
       convert(StartVerificationRequestParameters client) {
-    com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationRequestParameters
-            .Builder
-        dto =
-            com.sinch.sdk.domains.verification.models.v1.start.request
-                .StartVerificationRequestParameters.builder();
 
-    dto.setMethod(convert(client.getMethod()));
-    client.getIdentity().ifPresent(f -> dto.setIdentity(convert(f)));
-    client.getReference().ifPresent(f -> dto.setReference(f.getReference()));
-    client.getCustom().ifPresent(dto::setCustom);
+    com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationRequest.Builder dto;
 
     if (client instanceof StartVerificationFlashCallRequestParameters) {
+      com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationFlashCallRequest
+              .Builder
+          flashCallBuilder =
+              com.sinch.sdk.domains.verification.models.v1.start.request
+                  .StartVerificationFlashCallRequest.builder();
+      dto = flashCallBuilder;
       StartVerificationFlashCallRequestParameters options =
           (StartVerificationFlashCallRequestParameters) client;
       options
           .getDialTimeOut()
           .ifPresent(
               f ->
-                  dto.setFlashCallOptions(
-                      StartVerificationFlashCallOptions.builder().setDialTimeout(f).build()));
+                  flashCallBuilder.setFlashCallOptions(
+                      StartVerificationFlashCallOptions.builder()
+                          .setDialTimeout(f)
+                          //   .setCli("+18318300060")
+                          .build()));
     } else if (client instanceof StartVerificationSMSRequestParameters) {
+      com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsRequest.Builder
+          smsBuilder =
+              com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsRequest
+                  .builder();
+      dto = smsBuilder;
       StartVerificationSMSRequestParameters options =
           (StartVerificationSMSRequestParameters) client;
-      options.getOptions().ifPresent(f -> dto.setSmsOptions(convert(f)));
+      options.getOptions().ifPresent(f -> smsBuilder.setSmsOptions(convert(f)));
     } else if (client instanceof StartVerificationCalloutRequestParameters) {
+      com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationPhoneCallRequest
+              .Builder
+          phoneCallBuilder =
+              com.sinch.sdk.domains.verification.models.v1.start.request
+                  .StartVerificationPhoneCallRequest.builder();
+      dto = phoneCallBuilder;
       StartVerificationCalloutRequestParameters options =
           (StartVerificationCalloutRequestParameters) client;
-      options.getOptions().ifPresent(f -> dto.setCalloutOptions(convert(f)));
+      options.getOptions().ifPresent(f -> phoneCallBuilder.setCalloutOptions(convert(f)));
+    } else if (client instanceof StartVerificationSeamlessRequestParameters) {
+      com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationDataRequest
+              .Builder
+          dataBuilder =
+              com.sinch.sdk.domains.verification.models.v1.start.request
+                  .StartVerificationDataRequest.builder();
+      dto = dataBuilder;
     } else {
       LOGGER.severe(String.format("Unexpected class '%s'", client.getClass()));
+      return null;
     }
-    return dto.build();
+
+    client.getIdentity().ifPresent(dto::setIdentity);
+    client.getReference().ifPresent(f -> dto.setReference(f.getReference()));
+    client.getCustom().ifPresent(dto::setCustom);
+
+    StartVerificationRequestInternalImpl impl = new StartVerificationRequestInternalImpl();
+    impl.setActualInstance(dto.build());
+    return impl;
   }
 
   static com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsOptions
@@ -196,8 +225,7 @@ public class VerificationsDtoConverter {
               StartVerificationResponseSmsContentImpl sms =
                   (StartVerificationResponseSmsContentImpl) _sms;
               sms.template().ifPresent(builder::setTemplate);
-              sms.interceptionTimeout()
-                  .ifPresent(f -> builder.setInterceptionTimeOut(Integer.valueOf(f)));
+              sms.interceptionTimeout().ifPresent(builder::setInterceptionTimeOut);
             });
 
     return builder;
