@@ -12,13 +12,10 @@
 
 package com.sinch.sdk.domains.verification.models.v1.start.response;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 
 /** declaration */
-@JsonDeserialize(builder = StartVerificationResponseSmsImpl.Builder.class)
-public interface StartVerificationResponseSms
-    extends com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponse {
+public interface StartVerificationResponse {
 
   /**
    * Verification identifier used to query for status.
@@ -34,26 +31,8 @@ public interface StartVerificationResponseSms
    */
   List<Link> getLinks();
 
-  /**
-   * Get sms
-   *
-   * @return sms
-   */
-  StartVerificationResponseSmsContent getSms();
-
-  /**
-   * Getting builder
-   *
-   * @return New Builder instance
-   */
-  static Builder builder() {
-    return new StartVerificationResponseSmsImpl.Builder();
-  }
-
   /** Dedicated Builder */
-  interface Builder
-      extends com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponse
-          .Builder {
+  interface Builder {
 
     /**
      * see getter
@@ -74,19 +53,10 @@ public interface StartVerificationResponseSms
     Builder setLinks(List<Link> links);
 
     /**
-     * see getter
-     *
-     * @param sms see getter
-     * @return Current builder
-     * @see #getSms
-     */
-    Builder setSms(StartVerificationResponseSmsContent sms);
-
-    /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    StartVerificationResponseSms build();
+    StartVerificationResponse build();
   }
 }

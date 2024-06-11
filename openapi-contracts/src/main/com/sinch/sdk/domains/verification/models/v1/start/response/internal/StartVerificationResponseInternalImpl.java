@@ -109,24 +109,24 @@ public class StartVerificationResponseInternalImpl extends AbstractOpenApiSchema
               tree.traverse(jp.getCodec()).readValueAs(StartVerificationResponseSmsImpl.class);
           newStartVerificationResponseInternalImpl.setActualInstance(deserialized);
           return newStartVerificationResponseInternalImpl;
-        case "DataInitiateVerificationResponse":
+        case "StartVerificationDataResponse":
           deserialized =
               tree.traverse(jp.getCodec()).readValueAs(StartVerificationResponseDataImpl.class);
           newStartVerificationResponseInternalImpl.setActualInstance(deserialized);
           return newStartVerificationResponseInternalImpl;
-        case "FlashCallInitiateVerificationResponse":
+        case "StartVerificationFlashCallResponse":
           deserialized =
               tree.traverse(jp.getCodec())
                   .readValueAs(StartVerificationResponseFlashCallImpl.class);
           newStartVerificationResponseInternalImpl.setActualInstance(deserialized);
           return newStartVerificationResponseInternalImpl;
-        case "PhoneCallInitiateVerificationResponse":
+        case "StartVerificationPhoneCallResponse":
           deserialized =
               tree.traverse(jp.getCodec())
                   .readValueAs(StartVerificationResponsePhoneCallImpl.class);
           newStartVerificationResponseInternalImpl.setActualInstance(deserialized);
           return newStartVerificationResponseInternalImpl;
-        case "SmsInitiateVerificationResponse":
+        case "StartVerificationSmsResponse":
           deserialized =
               tree.traverse(jp.getCodec()).readValueAs(StartVerificationResponseSmsImpl.class);
           newStartVerificationResponseInternalImpl.setActualInstance(deserialized);
@@ -137,9 +137,9 @@ public class StartVerificationResponseInternalImpl extends AbstractOpenApiSchema
               String.format(
                   "Failed to lookup discriminator value `%s` for"
                       + " StartVerificationResponseInternalImpl. Possible values: callout flashcall"
-                      + " seamless sms DataInitiateVerificationResponse"
-                      + " FlashCallInitiateVerificationResponse"
-                      + " PhoneCallInitiateVerificationResponse SmsInitiateVerificationResponse",
+                      + " seamless sms StartVerificationDataResponse"
+                      + " StartVerificationFlashCallResponse StartVerificationPhoneCallResponse"
+                      + " StartVerificationSmsResponse",
                   discriminatorValue));
       }
 
@@ -389,13 +389,13 @@ public class StartVerificationResponseInternalImpl extends AbstractOpenApiSchema
     mappings.put("flashcall", StartVerificationResponseFlashCallImpl.class);
     mappings.put("seamless", StartVerificationResponseDataImpl.class);
     mappings.put("sms", StartVerificationResponseSmsImpl.class);
-    mappings.put("DataInitiateVerificationResponse", StartVerificationResponseDataImpl.class);
+    mappings.put("StartVerificationDataResponse", StartVerificationResponseDataImpl.class);
     mappings.put(
-        "FlashCallInitiateVerificationResponse", StartVerificationResponseFlashCallImpl.class);
+        "StartVerificationFlashCallResponse", StartVerificationResponseFlashCallImpl.class);
     mappings.put(
-        "PhoneCallInitiateVerificationResponse", StartVerificationResponsePhoneCallImpl.class);
-    mappings.put("SmsInitiateVerificationResponse", StartVerificationResponseSmsImpl.class);
-    mappings.put("InitiateVerificationResponse", StartVerificationResponseInternalImpl.class);
+        "StartVerificationPhoneCallResponse", StartVerificationResponsePhoneCallImpl.class);
+    mappings.put("StartVerificationSmsResponse", StartVerificationResponseSmsImpl.class);
+    mappings.put("StartVerificationResponse", StartVerificationResponseInternalImpl.class);
     JSONNavigator.registerDiscriminator(
         StartVerificationResponseInternalImpl.class, "method", mappings);
   }

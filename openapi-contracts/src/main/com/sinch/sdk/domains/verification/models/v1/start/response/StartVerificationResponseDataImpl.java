@@ -7,20 +7,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
   StartVerificationResponseDataImpl.JSON_PROPERTY_ID,
   StartVerificationResponseDataImpl.JSON_PROPERTY_METHOD,
-  StartVerificationResponseDataImpl.JSON_PROPERTY_SEAMLESS,
-  StartVerificationResponseDataImpl.JSON_PROPERTY_LINKS
+  StartVerificationResponseDataImpl.JSON_PROPERTY_LINKS,
+  StartVerificationResponseDataImpl.JSON_PROPERTY_SEAMLESS
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class StartVerificationResponseDataImpl
     implements StartVerificationResponseData,
-        com.sinch.sdk.domains.verification.models.v1.response.StartVerificationResponse {
+        com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponse {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ID = "id";
@@ -29,27 +30,27 @@ public class StartVerificationResponseDataImpl
 
   public static final String JSON_PROPERTY_METHOD = "method";
 
-  private OptionalValue<String> method;
-
-  public static final String JSON_PROPERTY_SEAMLESS = "seamless";
-
-  private OptionalValue<StartVerificationResponseDataContent> seamless;
+  private OptionalValue<VerificationMethod> method;
 
   public static final String JSON_PROPERTY_LINKS = "_links";
 
   private OptionalValue<List<Link>> links;
 
+  public static final String JSON_PROPERTY_SEAMLESS = "seamless";
+
+  private OptionalValue<StartVerificationResponseDataContent> seamless;
+
   public StartVerificationResponseDataImpl() {}
 
   protected StartVerificationResponseDataImpl(
       OptionalValue<String> id,
-      OptionalValue<String> method,
-      OptionalValue<StartVerificationResponseDataContent> seamless,
-      OptionalValue<List<Link>> links) {
+      OptionalValue<VerificationMethod> method,
+      OptionalValue<List<Link>> links,
+      OptionalValue<StartVerificationResponseDataContent> seamless) {
     this.id = id;
     this.method = method;
-    this.seamless = seamless;
     this.links = links;
+    this.seamless = seamless;
   }
 
   @JsonIgnore
@@ -64,25 +65,14 @@ public class StartVerificationResponseDataImpl
   }
 
   @JsonIgnore
-  public String getMethod() {
+  public VerificationMethod getMethod() {
     return method.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_METHOD)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> method() {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<VerificationMethod> method() {
     return method;
-  }
-
-  @JsonIgnore
-  public StartVerificationResponseDataContent getSeamless() {
-    return seamless.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_SEAMLESS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<StartVerificationResponseDataContent> seamless() {
-    return seamless;
   }
 
   @JsonIgnore
@@ -96,7 +86,18 @@ public class StartVerificationResponseDataImpl
     return links;
   }
 
-  /** Return true if this DataInitiateVerificationResponse object is equal to o. */
+  @JsonIgnore
+  public StartVerificationResponseDataContent getSeamless() {
+    return seamless.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_SEAMLESS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<StartVerificationResponseDataContent> seamless() {
+    return seamless;
+  }
+
+  /** Return true if this StartVerificationDataResponse object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -105,17 +106,17 @@ public class StartVerificationResponseDataImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StartVerificationResponseDataImpl dataInitiateVerificationResponse =
+    StartVerificationResponseDataImpl startVerificationDataResponse =
         (StartVerificationResponseDataImpl) o;
-    return Objects.equals(this.id, dataInitiateVerificationResponse.id)
-        && Objects.equals(this.method, dataInitiateVerificationResponse.method)
-        && Objects.equals(this.seamless, dataInitiateVerificationResponse.seamless)
-        && Objects.equals(this.links, dataInitiateVerificationResponse.links);
+    return Objects.equals(this.id, startVerificationDataResponse.id)
+        && Objects.equals(this.method, startVerificationDataResponse.method)
+        && Objects.equals(this.links, startVerificationDataResponse.links)
+        && Objects.equals(this.seamless, startVerificationDataResponse.seamless);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, method, seamless, links);
+    return Objects.hash(id, method, links, seamless);
   }
 
   @Override
@@ -124,8 +125,8 @@ public class StartVerificationResponseDataImpl
     sb.append("class StartVerificationResponseDataImpl {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    method: ").append(toIndentedString(method)).append("\n");
-    sb.append("    seamless: ").append(toIndentedString(seamless)).append("\n");
     sb.append("    links: ").append(toIndentedString(links)).append("\n");
+    sb.append("    seamless: ").append(toIndentedString(seamless)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -143,25 +144,13 @@ public class StartVerificationResponseDataImpl
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements StartVerificationResponseData.Builder {
     OptionalValue<String> id = OptionalValue.empty();
-    OptionalValue<String> method = OptionalValue.empty();
-    OptionalValue<StartVerificationResponseDataContent> seamless = OptionalValue.empty();
+    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.SEAMLESS);
     OptionalValue<List<Link>> links = OptionalValue.empty();
+    OptionalValue<StartVerificationResponseDataContent> seamless = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_ID)
     public Builder setId(String id) {
       this.id = OptionalValue.of(id);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_METHOD)
-    public Builder setMethod(String method) {
-      this.method = OptionalValue.of(method);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_SEAMLESS)
-    public Builder setSeamless(StartVerificationResponseDataContent seamless) {
-      this.seamless = OptionalValue.of(seamless);
       return this;
     }
 
@@ -171,8 +160,14 @@ public class StartVerificationResponseDataImpl
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_SEAMLESS)
+    public Builder setSeamless(StartVerificationResponseDataContent seamless) {
+      this.seamless = OptionalValue.of(seamless);
+      return this;
+    }
+
     public StartVerificationResponseData build() {
-      return new StartVerificationResponseDataImpl(id, method, seamless, links);
+      return new StartVerificationResponseDataImpl(id, method, links, seamless);
     }
   }
 }

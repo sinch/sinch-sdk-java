@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,7 +20,7 @@ import java.util.Objects;
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class StartVerificationResponsePhoneCallImpl
     implements StartVerificationResponsePhoneCall,
-        com.sinch.sdk.domains.verification.models.v1.response.StartVerificationResponse {
+        com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponse {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ID = "id";
@@ -28,7 +29,7 @@ public class StartVerificationResponsePhoneCallImpl
 
   public static final String JSON_PROPERTY_METHOD = "method";
 
-  private OptionalValue<String> method;
+  private OptionalValue<VerificationMethod> method;
 
   public static final String JSON_PROPERTY_LINKS = "_links";
 
@@ -37,7 +38,9 @@ public class StartVerificationResponsePhoneCallImpl
   public StartVerificationResponsePhoneCallImpl() {}
 
   protected StartVerificationResponsePhoneCallImpl(
-      OptionalValue<String> id, OptionalValue<String> method, OptionalValue<List<Link>> links) {
+      OptionalValue<String> id,
+      OptionalValue<VerificationMethod> method,
+      OptionalValue<List<Link>> links) {
     this.id = id;
     this.method = method;
     this.links = links;
@@ -49,19 +52,19 @@ public class StartVerificationResponsePhoneCallImpl
   }
 
   @JsonProperty(JSON_PROPERTY_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<String> id() {
     return id;
   }
 
   @JsonIgnore
-  public String getMethod() {
+  public VerificationMethod getMethod() {
     return method.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_METHOD)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> method() {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<VerificationMethod> method() {
     return method;
   }
 
@@ -76,7 +79,7 @@ public class StartVerificationResponsePhoneCallImpl
     return links;
   }
 
-  /** Return true if this PhoneCallInitiateVerificationResponse object is equal to o. */
+  /** Return true if this StartVerificationPhoneCallResponse object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -85,11 +88,11 @@ public class StartVerificationResponsePhoneCallImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StartVerificationResponsePhoneCallImpl phoneCallInitiateVerificationResponse =
+    StartVerificationResponsePhoneCallImpl startVerificationPhoneCallResponse =
         (StartVerificationResponsePhoneCallImpl) o;
-    return Objects.equals(this.id, phoneCallInitiateVerificationResponse.id)
-        && Objects.equals(this.method, phoneCallInitiateVerificationResponse.method)
-        && Objects.equals(this.links, phoneCallInitiateVerificationResponse.links);
+    return Objects.equals(this.id, startVerificationPhoneCallResponse.id)
+        && Objects.equals(this.method, startVerificationPhoneCallResponse.method)
+        && Objects.equals(this.links, startVerificationPhoneCallResponse.links);
   }
 
   @Override
@@ -121,18 +124,12 @@ public class StartVerificationResponsePhoneCallImpl
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements StartVerificationResponsePhoneCall.Builder {
     OptionalValue<String> id = OptionalValue.empty();
-    OptionalValue<String> method = OptionalValue.empty();
+    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.CALLOUT);
     OptionalValue<List<Link>> links = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_ID)
     public Builder setId(String id) {
       this.id = OptionalValue.of(id);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_METHOD)
-    public Builder setMethod(String method) {
-      this.method = OptionalValue.of(method);
       return this;
     }
 

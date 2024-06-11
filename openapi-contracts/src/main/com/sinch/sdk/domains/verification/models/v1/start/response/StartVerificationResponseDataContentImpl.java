@@ -37,7 +37,7 @@ public class StartVerificationResponseDataContentImpl
     return targetUri;
   }
 
-  /** Return true if this DataInitiateVerificationResponse_seamless object is equal to o. */
+  /** Return true if this StartVerificationDataResponse_allOf_seamless object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -46,9 +46,9 @@ public class StartVerificationResponseDataContentImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StartVerificationResponseDataContentImpl dataInitiateVerificationResponseSeamless =
+    StartVerificationResponseDataContentImpl startVerificationDataResponseAllOfSeamless =
         (StartVerificationResponseDataContentImpl) o;
-    return Objects.equals(this.targetUri, dataInitiateVerificationResponseSeamless.targetUri);
+    return Objects.equals(this.targetUri, startVerificationDataResponseAllOfSeamless.targetUri);
   }
 
   @Override

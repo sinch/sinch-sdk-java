@@ -18,7 +18,7 @@ import java.util.List;
 /** declaration */
 @JsonDeserialize(builder = StartVerificationResponsePhoneCallImpl.Builder.class)
 public interface StartVerificationResponsePhoneCall
-    extends com.sinch.sdk.domains.verification.models.v1.response.StartVerificationResponse {
+    extends com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponse {
 
   /**
    * Verification identifier used to query for status.
@@ -26,14 +26,6 @@ public interface StartVerificationResponsePhoneCall
    * @return id
    */
   String getId();
-
-  /**
-   * The value of the method used for the Verification. For Phone Call Verifications, this will
-   * always be &#x60;callout&#x60;.
-   *
-   * @return method
-   */
-  String getMethod();
 
   /**
    * Get links
@@ -52,7 +44,9 @@ public interface StartVerificationResponsePhoneCall
   }
 
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder
+      extends com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponse
+          .Builder {
 
     /**
      * see getter
@@ -62,15 +56,6 @@ public interface StartVerificationResponsePhoneCall
      * @see #getId
      */
     Builder setId(String id);
-
-    /**
-     * see getter
-     *
-     * @param method see getter
-     * @return Current builder
-     * @see #getMethod
-     */
-    Builder setMethod(String method);
 
     /**
      * see getter

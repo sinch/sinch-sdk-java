@@ -18,7 +18,7 @@ import java.util.List;
 /** declaration */
 @JsonDeserialize(builder = StartVerificationResponseDataImpl.Builder.class)
 public interface StartVerificationResponseData
-    extends com.sinch.sdk.domains.verification.models.v1.response.StartVerificationResponse {
+    extends com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponse {
 
   /**
    * Verification identifier used to query for status.
@@ -28,12 +28,11 @@ public interface StartVerificationResponseData
   String getId();
 
   /**
-   * The value of the method used for the Verification. For Data Verifications, this will always be
-   * &#x60;seamless&#x60;.
+   * Get links
    *
-   * @return method
+   * @return links
    */
-  String getMethod();
+  List<Link> getLinks();
 
   /**
    * Get seamless
@@ -41,13 +40,6 @@ public interface StartVerificationResponseData
    * @return seamless
    */
   StartVerificationResponseDataContent getSeamless();
-
-  /**
-   * Get links
-   *
-   * @return links
-   */
-  List<Link> getLinks();
 
   /**
    * Getting builder
@@ -59,7 +51,9 @@ public interface StartVerificationResponseData
   }
 
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder
+      extends com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponse
+          .Builder {
 
     /**
      * see getter
@@ -73,11 +67,11 @@ public interface StartVerificationResponseData
     /**
      * see getter
      *
-     * @param method see getter
+     * @param links see getter
      * @return Current builder
-     * @see #getMethod
+     * @see #getLinks
      */
-    Builder setMethod(String method);
+    Builder setLinks(List<Link> links);
 
     /**
      * see getter
@@ -87,15 +81,6 @@ public interface StartVerificationResponseData
      * @see #getSeamless
      */
     Builder setSeamless(StartVerificationResponseDataContent seamless);
-
-    /**
-     * see getter
-     *
-     * @param links see getter
-     * @return Current builder
-     * @see #getLinks
-     */
-    Builder setLinks(List<Link> links);
 
     /**
      * Create instance

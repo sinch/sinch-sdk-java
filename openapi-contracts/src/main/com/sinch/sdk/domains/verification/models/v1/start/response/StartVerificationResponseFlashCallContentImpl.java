@@ -94,7 +94,9 @@ public class StartVerificationResponseFlashCallContentImpl
     return denyCallAfter;
   }
 
-  /** Return true if this FlashCallInitiateVerificationResponse_flashCall object is equal to o. */
+  /**
+   * Return true if this StartVerificationFlashCallResponse_allOf_flashCall object is equal to o.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -103,16 +105,17 @@ public class StartVerificationResponseFlashCallContentImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StartVerificationResponseFlashCallContentImpl flashCallInitiateVerificationResponseFlashCall =
+    StartVerificationResponseFlashCallContentImpl startVerificationFlashCallResponseAllOfFlashCall =
         (StartVerificationResponseFlashCallContentImpl) o;
-    return Objects.equals(this.cliFilter, flashCallInitiateVerificationResponseFlashCall.cliFilter)
+    return Objects.equals(
+            this.cliFilter, startVerificationFlashCallResponseAllOfFlashCall.cliFilter)
         && Objects.equals(
             this.interceptionTimeout,
-            flashCallInitiateVerificationResponseFlashCall.interceptionTimeout)
+            startVerificationFlashCallResponseAllOfFlashCall.interceptionTimeout)
         && Objects.equals(
-            this.reportTimeout, flashCallInitiateVerificationResponseFlashCall.reportTimeout)
+            this.reportTimeout, startVerificationFlashCallResponseAllOfFlashCall.reportTimeout)
         && Objects.equals(
-            this.denyCallAfter, flashCallInitiateVerificationResponseFlashCall.denyCallAfter);
+            this.denyCallAfter, startVerificationFlashCallResponseAllOfFlashCall.denyCallAfter);
   }
 
   @Override

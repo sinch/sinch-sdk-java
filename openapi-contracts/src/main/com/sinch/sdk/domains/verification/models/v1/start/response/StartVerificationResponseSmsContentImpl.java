@@ -57,7 +57,7 @@ public class StartVerificationResponseSmsContentImpl
     return interceptionTimeout;
   }
 
-  /** Return true if this SmsInitiateVerificationResponse_sms object is equal to o. */
+  /** Return true if this StartVerificationSmsResponse_allOf_sms object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -66,11 +66,11 @@ public class StartVerificationResponseSmsContentImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StartVerificationResponseSmsContentImpl smsInitiateVerificationResponseSms =
+    StartVerificationResponseSmsContentImpl startVerificationSmsResponseAllOfSms =
         (StartVerificationResponseSmsContentImpl) o;
-    return Objects.equals(this.template, smsInitiateVerificationResponseSms.template)
+    return Objects.equals(this.template, startVerificationSmsResponseAllOfSms.template)
         && Objects.equals(
-            this.interceptionTimeout, smsInitiateVerificationResponseSms.interceptionTimeout);
+            this.interceptionTimeout, startVerificationSmsResponseAllOfSms.interceptionTimeout);
   }
 
   @Override
