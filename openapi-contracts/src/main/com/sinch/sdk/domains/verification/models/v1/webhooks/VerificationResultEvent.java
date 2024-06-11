@@ -34,12 +34,12 @@ public interface VerificationResultEvent {
 
   /** The type of the event. */
   public class EventEnum extends EnumDynamic<String, EventEnum> {
-    public static final EventEnum VERIFICATIONRESULTEVENT =
+    public static final EventEnum VERIFICATION_RESULT_EVENT =
         new EventEnum("VerificationResultEvent");
 
     private static final EnumSupportDynamic<String, EventEnum> ENUM_SUPPORT =
         new EnumSupportDynamic<>(
-            EventEnum.class, EventEnum::new, Arrays.asList(VERIFICATIONRESULTEVENT));
+            EventEnum.class, EventEnum::new, Arrays.asList(VERIFICATION_RESULT_EVENT));
 
     private EventEnum(String value) {
       super(value);
