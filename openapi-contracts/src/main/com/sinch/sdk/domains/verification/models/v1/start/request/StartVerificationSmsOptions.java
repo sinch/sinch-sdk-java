@@ -76,6 +76,15 @@ public interface StartVerificationSmsOptions {
   String getTemplate();
 
   /**
+   * In SMS Verification, value of
+   * [Accept-Language](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language)
+   * header is used to determine the languge of an SMS message.
+   *
+   * @return acceptLanguage
+   */
+  String getAcceptLanguage();
+
+  /**
    * Getting builder
    *
    * @return New Builder instance
@@ -113,6 +122,15 @@ public interface StartVerificationSmsOptions {
      * @see #getTemplate
      */
     Builder setTemplate(String template);
+
+    /**
+     * see getter
+     *
+     * @param acceptLanguage see getter
+     * @return Current builder
+     * @see #getAcceptLanguage
+     */
+    Builder setAcceptLanguage(String acceptLanguage);
 
     /**
      * Create instance

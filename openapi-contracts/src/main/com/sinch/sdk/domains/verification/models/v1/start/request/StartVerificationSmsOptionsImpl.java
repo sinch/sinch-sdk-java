@@ -12,7 +12,7 @@ import java.util.Objects;
 @JsonPropertyOrder({
   StartVerificationSmsOptionsImpl.JSON_PROPERTY_EXPIRY,
   StartVerificationSmsOptionsImpl.JSON_PROPERTY_CODE_TYPE,
-  StartVerificationSmsOptionsImpl.JSON_PROPERTY_TEMPLATE
+  StartVerificationSmsOptionsImpl.JSON_PROPERTY_TEMPLATE,
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
@@ -31,15 +31,19 @@ public class StartVerificationSmsOptionsImpl implements StartVerificationSmsOpti
 
   private OptionalValue<String> template;
 
+  private OptionalValue<String> acceptLanguage;
+
   public StartVerificationSmsOptionsImpl() {}
 
   protected StartVerificationSmsOptionsImpl(
       OptionalValue<String> expiry,
       OptionalValue<CodeTypeEnum> codeType,
-      OptionalValue<String> template) {
+      OptionalValue<String> template,
+      OptionalValue<String> acceptLanguage) {
     this.expiry = expiry;
     this.codeType = codeType;
     this.template = template;
+    this.acceptLanguage = acceptLanguage;
   }
 
   @JsonIgnore
@@ -75,6 +79,15 @@ public class StartVerificationSmsOptionsImpl implements StartVerificationSmsOpti
     return template;
   }
 
+  @JsonIgnore
+  public String getAcceptLanguage() {
+    return acceptLanguage.orElse(null);
+  }
+
+  public OptionalValue<String> acceptLanguage() {
+    return acceptLanguage;
+  }
+
   /** Return true if this StartVerificationSmsRequest_allOf_smsOptions object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -88,12 +101,14 @@ public class StartVerificationSmsOptionsImpl implements StartVerificationSmsOpti
         (StartVerificationSmsOptionsImpl) o;
     return Objects.equals(this.expiry, startVerificationSmsRequestAllOfSmsOptions.expiry)
         && Objects.equals(this.codeType, startVerificationSmsRequestAllOfSmsOptions.codeType)
-        && Objects.equals(this.template, startVerificationSmsRequestAllOfSmsOptions.template);
+        && Objects.equals(this.template, startVerificationSmsRequestAllOfSmsOptions.template)
+        && Objects.equals(
+            this.acceptLanguage, startVerificationSmsRequestAllOfSmsOptions.acceptLanguage);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(expiry, codeType, template);
+    return Objects.hash(expiry, codeType, template, acceptLanguage);
   }
 
   @Override
@@ -103,6 +118,7 @@ public class StartVerificationSmsOptionsImpl implements StartVerificationSmsOpti
     sb.append("    expiry: ").append(toIndentedString(expiry)).append("\n");
     sb.append("    codeType: ").append(toIndentedString(codeType)).append("\n");
     sb.append("    template: ").append(toIndentedString(template)).append("\n");
+    sb.append("    acceptLanguage: ").append(toIndentedString(acceptLanguage)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -122,6 +138,7 @@ public class StartVerificationSmsOptionsImpl implements StartVerificationSmsOpti
     OptionalValue<String> expiry = OptionalValue.empty();
     OptionalValue<CodeTypeEnum> codeType = OptionalValue.empty();
     OptionalValue<String> template = OptionalValue.empty();
+    OptionalValue<String> acceptLanguage = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_EXPIRY)
     public Builder setExpiry(String expiry) {
@@ -141,8 +158,14 @@ public class StartVerificationSmsOptionsImpl implements StartVerificationSmsOpti
       return this;
     }
 
+    @JsonIgnore
+    public Builder setAcceptLanguage(String acceptLanguage) {
+      this.acceptLanguage = OptionalValue.of(acceptLanguage);
+      return this;
+    }
+
     public StartVerificationSmsOptions build() {
-      return new StartVerificationSmsOptionsImpl(expiry, codeType, template);
+      return new StartVerificationSmsOptionsImpl(expiry, codeType, template, acceptLanguage);
     }
   }
 }
