@@ -4,7 +4,6 @@ import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
-import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseData;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseDataContent;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseDataImpl;
@@ -31,7 +30,6 @@ public class StartVerificationResponseTest extends BaseTest {
           (StartVerificationResponsePhoneCallImpl)
               StartVerificationResponsePhoneCall.builder()
                   .setId("the id")
-                  .setMethod(VerificationMethod.CALLOUT.value())
                   .setLinks(LinkTest.expectedLinks)
                   .build());
 
@@ -43,7 +41,6 @@ public class StartVerificationResponseTest extends BaseTest {
           (StartVerificationResponseFlashCallImpl)
               StartVerificationResponseFlashCall.builder()
                   .setId("the id")
-                  .setMethod(VerificationMethod.FLASHCALL.value())
                   .setLinks(LinkTest.expectedLinks)
                   .setFlashCall(
                       StartVerificationResponseFlashCallContent.builder()
@@ -62,7 +59,6 @@ public class StartVerificationResponseTest extends BaseTest {
           (StartVerificationResponseDataImpl)
               StartVerificationResponseData.builder()
                   .setId("the id")
-                  .setMethod(VerificationMethod.SEAMLESS.value())
                   .setLinks(LinkTest.expectedLinks)
                   .setSeamless(
                       StartVerificationResponseDataContent.builder()
@@ -78,7 +74,6 @@ public class StartVerificationResponseTest extends BaseTest {
           (StartVerificationResponseSmsImpl)
               StartVerificationResponseSms.builder()
                   .setId("the id")
-                  .setMethod(VerificationMethod.SMS.value())
                   .setLinks(LinkTest.expectedLinks)
                   .setSms(
                       StartVerificationResponseSmsContent.builder()
