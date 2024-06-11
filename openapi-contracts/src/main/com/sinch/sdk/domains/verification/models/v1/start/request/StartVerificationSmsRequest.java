@@ -13,7 +13,11 @@
 package com.sinch.sdk.domains.verification.models.v1.start.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.utils.EnumDynamic;
+import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import com.sinch.sdk.domains.verification.models.Identity;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 /** declaration */
 @JsonDeserialize(builder = StartVerificationSmsRequestImpl.Builder.class)
@@ -42,11 +46,63 @@ public interface StartVerificationSmsRequest
   String getCustom();
 
   /**
-   * Get smsOptions
+   * The expiration time for a verification process is represented in the format
+   * &#x60;HH:MM:SS&#x60;.
    *
-   * @return smsOptions
+   * @return expiry
    */
-  StartVerificationSmsOptions getSmsOptions();
+  String getExpiry();
+
+  /** Accepted values for the type of code to be generated are Numeric, Alpha, and Alphanumeric. */
+  public class CodeTypeEnum extends EnumDynamic<String, CodeTypeEnum> {
+    public static final CodeTypeEnum NUMERIC = new CodeTypeEnum("Numeric");
+    public static final CodeTypeEnum ALPHA = new CodeTypeEnum("Alpha");
+    public static final CodeTypeEnum ALPHANUMERIC = new CodeTypeEnum("Alphanumeric");
+
+    private static final EnumSupportDynamic<String, CodeTypeEnum> ENUM_SUPPORT =
+        new EnumSupportDynamic<>(
+            CodeTypeEnum.class, CodeTypeEnum::new, Arrays.asList(NUMERIC, ALPHA, ALPHANUMERIC));
+
+    private CodeTypeEnum(String value) {
+      super(value);
+    }
+
+    public static Stream<CodeTypeEnum> values() {
+      return ENUM_SUPPORT.values();
+    }
+
+    public static CodeTypeEnum from(String value) {
+      return ENUM_SUPPORT.from(value);
+    }
+
+    public static String valueOf(CodeTypeEnum e) {
+      return ENUM_SUPPORT.valueOf(e);
+    }
+  }
+
+  /**
+   * Accepted values for the type of code to be generated are Numeric, Alpha, and Alphanumeric.
+   *
+   * @return codeType
+   */
+  CodeTypeEnum getCodeType();
+
+  /**
+   * The SMS template must include a placeholder &#x60;{{CODE}}&#x60; where the verification code
+   * will be inserted, and it can otherwise be customized as desired.
+   *
+   * @return template
+   */
+  String getTemplate();
+
+  /**
+   * In SMS Verification, value of
+   * [Accept-Language](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language)
+   * header is used to determine the languge of an SMS message.
+   *
+   * @return acceptLanguage
+   */
+  String getAcceptLanguage();
 
   /**
    * Getting builder
@@ -92,11 +148,38 @@ public interface StartVerificationSmsRequest
     /**
      * see getter
      *
-     * @param smsOptions see getter
+     * @param expiry see getter
      * @return Current builder
-     * @see #getSmsOptions
+     * @see #getExpiry
      */
-    Builder setSmsOptions(StartVerificationSmsOptions smsOptions);
+    Builder setExpiry(String expiry);
+
+    /**
+     * see getter
+     *
+     * @param codeType see getter
+     * @return Current builder
+     * @see #getCodeType
+     */
+    Builder setCodeType(CodeTypeEnum codeType);
+
+    /**
+     * see getter
+     *
+     * @param template see getter
+     * @return Current builder
+     * @see #getTemplate
+     */
+    Builder setTemplate(String template);
+
+    /**
+     * see getter
+     *
+     * @param acceptLanguage see getter
+     * @return Current builder
+     * @see #getAcceptLanguage
+     */
+    Builder setAcceptLanguage(String acceptLanguage);
 
     /**
      * Create instance

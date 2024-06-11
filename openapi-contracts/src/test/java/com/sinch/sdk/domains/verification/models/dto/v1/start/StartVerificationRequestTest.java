@@ -14,7 +14,6 @@ import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificat
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationPhoneCallOptions;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationPhoneCallRequest;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationPhoneCallRequestImpl;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsOptions;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsRequest;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsRequestImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.internal.StartVerificationRequestInternal;
@@ -64,12 +63,9 @@ public class StartVerificationRequestTest extends VerificationBaseTest {
                   .setCustom("a custom")
                   .setReference("a reference")
                   .setIdentity(NumberIdentity.valueOf("+endpoint"))
-                  .setSmsOptions(
-                      StartVerificationSmsOptions.builder()
-                          .setExpiry("01:02:03")
-                          .setCodeType(StartVerificationSmsOptions.CodeTypeEnum.ALPHANUMERIC)
-                          .setTemplate("My template require to use '{{CODE}}' code")
-                          .build())
+                  .setExpiry("01:02:03")
+                  .setCodeType(StartVerificationSmsRequest.CodeTypeEnum.ALPHANUMERIC)
+                  .setTemplate("My template require to use '{{CODE}}' code")
                   .build());
 
   @GivenTextResource("/domains/verification/v1/start/StartVerificationPhoneCallRequestDto.json")

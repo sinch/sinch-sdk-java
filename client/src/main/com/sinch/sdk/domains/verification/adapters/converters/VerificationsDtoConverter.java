@@ -41,7 +41,7 @@ import com.sinch.sdk.domains.verification.models.v1.report.response.Verification
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationFlashCallOptions;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsOptions;
+import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsRequest;
 import com.sinch.sdk.domains.verification.models.v1.start.request.internal.StartVerificationRequestInternalImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseDataContentImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCallContentImpl;
@@ -84,7 +84,7 @@ public class VerificationsDtoConverter {
       dto = smsBuilder;
       StartVerificationSMSRequestParameters options =
           (StartVerificationSMSRequestParameters) client;
-      options.getOptions().ifPresent(f -> smsBuilder.setSmsOptions(convert(f)));
+      options.getOptions().ifPresent(f -> convert(smsBuilder, f));
     } else if (client instanceof StartVerificationCalloutRequestParameters) {
       com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationPhoneCallRequest
               .Builder
@@ -116,18 +116,20 @@ public class VerificationsDtoConverter {
     return impl;
   }
 
-  static com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsOptions
-      convert(StartVerificationSMSOptions client) {
-    com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsOptions.Builder
-        dto =
-            com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsOptions
-                .builder();
-    client.getExpiry().ifPresent(dto::setExpiry);
+  static void convert(
+      com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsRequest.Builder
+          smsBuilder,
+      StartVerificationSMSOptions client) {
+    /*  com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsOptions.Builder
+    dto =
+        com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsOptions
+            .builder();*/
+    client.getExpiry().ifPresent(smsBuilder::setExpiry);
     client
         .getCodeType()
-        .ifPresent(f -> dto.setCodeType(StartVerificationSmsOptions.CodeTypeEnum.from(f.value())));
-    client.getTemplate().ifPresent(dto::setTemplate);
-    return dto.build();
+        .ifPresent(
+            f -> smsBuilder.setCodeType(StartVerificationSmsRequest.CodeTypeEnum.from(f.value())));
+    client.getTemplate().ifPresent(smsBuilder::setTemplate);
   }
 
   static com.sinch.sdk.domains.verification.models.v1.start.request

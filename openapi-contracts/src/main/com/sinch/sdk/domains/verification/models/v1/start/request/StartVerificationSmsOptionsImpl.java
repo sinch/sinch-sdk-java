@@ -12,7 +12,7 @@ import java.util.Objects;
 @JsonPropertyOrder({
   StartVerificationSmsOptionsImpl.JSON_PROPERTY_EXPIRY,
   StartVerificationSmsOptionsImpl.JSON_PROPERTY_CODE_TYPE,
-  StartVerificationSmsOptionsImpl.JSON_PROPERTY_TEMPLATE,
+  StartVerificationSmsOptionsImpl.JSON_PROPERTY_TEMPLATE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)

@@ -115,6 +115,64 @@ public class StartVerificationSmsRequestImpl
     return smsOptions;
   }
 
+  @JsonIgnore
+  public String getExpiry() {
+    if (null == smsOptions || !smsOptions.isPresent() || null == smsOptions.get().getExpiry()) {
+      return null;
+    }
+    return smsOptions.get().getExpiry();
+  }
+
+  public OptionalValue<String> expiry() {
+    return null != smsOptions
+        ? smsOptions.map(StartVerificationSmsOptions::getExpiry)
+        : OptionalValue.empty();
+  }
+
+  @JsonIgnore
+  public CodeTypeEnum getCodeType() {
+    if (null == smsOptions || !smsOptions.isPresent() || null == smsOptions.get().getCodeType()) {
+      return null;
+    }
+    return CodeTypeEnum.from(smsOptions.get().getCodeType().value());
+  }
+
+  public OptionalValue<CodeTypeEnum> codeType() {
+    return null != smsOptions
+        ? smsOptions.map(f -> CodeTypeEnum.from(smsOptions.get().getCodeType().value()))
+        : OptionalValue.empty();
+  }
+
+  @JsonIgnore
+  public String getTemplate() {
+    if (null == smsOptions || !smsOptions.isPresent() || null == smsOptions.get().getTemplate()) {
+      return null;
+    }
+    return smsOptions.get().getTemplate();
+  }
+
+  public OptionalValue<String> template() {
+    return null != smsOptions
+        ? smsOptions.map(StartVerificationSmsOptions::getTemplate)
+        : OptionalValue.empty();
+  }
+
+  @JsonIgnore
+  public String getAcceptLanguage() {
+    if (null == smsOptions
+        || !smsOptions.isPresent()
+        || null == smsOptions.get().getAcceptLanguage()) {
+      return null;
+    }
+    return smsOptions.get().getAcceptLanguage();
+  }
+
+  public OptionalValue<String> acceptLanguage() {
+    return null != smsOptions
+        ? smsOptions.map(StartVerificationSmsOptions::getAcceptLanguage)
+        : OptionalValue.empty();
+  }
+
   /** Return true if this StartVerificationSmsRequest object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -169,6 +227,8 @@ public class StartVerificationSmsRequestImpl
     OptionalValue<String> custom = OptionalValue.empty();
     OptionalValue<StartVerificationSmsOptions> smsOptions = OptionalValue.empty();
 
+    StartVerificationSmsOptions.Builder _delegatedBuilder = null;
+
     @JsonProperty(JSON_PROPERTY_IDENTITY)
     public Builder setIdentity(Identity identity) {
       this.identity = OptionalValue.of(identity);
@@ -193,7 +253,46 @@ public class StartVerificationSmsRequestImpl
       return this;
     }
 
+    @JsonIgnore
+    public Builder setExpiry(String expiry) {
+      getDelegatedBuilder().setExpiry(expiry);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setCodeType(CodeTypeEnum codeType) {
+      getDelegatedBuilder()
+          .setCodeType(
+              null != codeType
+                  ? StartVerificationSmsOptionsImpl.CodeTypeEnum.from(codeType.value())
+                  : null);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setTemplate(String template) {
+      getDelegatedBuilder().setTemplate(template);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setAcceptLanguage(String acceptLanguage) {
+      getDelegatedBuilder().setAcceptLanguage(acceptLanguage);
+      return this;
+    }
+
+    private StartVerificationSmsOptions.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = StartVerificationSmsOptions.builder();
+      }
+      return this._delegatedBuilder;
+    }
+
     public StartVerificationSmsRequest build() {
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.smsOptions = OptionalValue.of(this._delegatedBuilder.build());
+      }
       return new StartVerificationSmsRequestImpl(identity, method, reference, custom, smsOptions);
     }
   }
