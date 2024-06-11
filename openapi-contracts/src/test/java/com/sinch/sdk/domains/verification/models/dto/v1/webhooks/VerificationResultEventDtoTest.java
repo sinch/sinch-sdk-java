@@ -9,6 +9,7 @@ import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEventImpl;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationResultEvent;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationResultEvent.EventEnum;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationResultEventImpl;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +24,7 @@ public class VerificationResultEventDtoTest {
           (VerificationResultEventImpl)
               VerificationResultEvent.builder()
                   .setId("1234567890")
-                  .setEvent(VerificationResultEvent.EventEnum.VERIFICATIONRESULTEVENT)
+                  .setEvent(EventEnum.VERIFICATION_RESULT_EVENT)
                   .setMethod(VerificationResultEvent.MethodEnum.SMS)
                   .setIdentity(
                       IdentityInternal.builder()
