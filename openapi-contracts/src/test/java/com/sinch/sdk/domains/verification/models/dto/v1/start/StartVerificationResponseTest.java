@@ -25,7 +25,7 @@ public class StartVerificationResponseTest extends BaseTest {
   @GivenJsonResource("/domains/verification/v1/start/StartVerificationPhoneCallResponseDto.json")
   StartVerificationResponseInternal loadedStartVerificationPhoneCallDto;
 
-  public static StartVerificationResponseInternal expectedStartVerificationPhoneCallDto =
+  public static StartVerificationResponseInternalImpl expectedStartVerificationPhoneCallDto =
       new StartVerificationResponseInternalImpl(
           (StartVerificationResponsePhoneCallImpl)
               StartVerificationResponsePhoneCall.builder()
@@ -36,7 +36,7 @@ public class StartVerificationResponseTest extends BaseTest {
   @GivenJsonResource("/domains/verification/v1/start/StartVerificationFlashCallResponseDto.json")
   StartVerificationResponseInternal loadedStartVerificationFlashCallDto;
 
-  public static StartVerificationResponseInternal expectedStartVerificationFlashCallDto =
+  public static StartVerificationResponseInternalImpl expectedStartVerificationFlashCallDto =
       new StartVerificationResponseInternalImpl(
           (StartVerificationResponseFlashCallImpl)
               StartVerificationResponseFlashCall.builder()
@@ -54,7 +54,7 @@ public class StartVerificationResponseTest extends BaseTest {
   @GivenJsonResource("/domains/verification/v1/start/StartVerificationDataResponseDto.json")
   StartVerificationResponseInternal loadedStartVerificationDataDto;
 
-  public static StartVerificationResponseInternal expectedStartVerificationDataDto =
+  public static StartVerificationResponseInternalImpl expectedStartVerificationDataDto =
       new StartVerificationResponseInternalImpl(
           (StartVerificationResponseDataImpl)
               StartVerificationResponseData.builder()
@@ -69,7 +69,7 @@ public class StartVerificationResponseTest extends BaseTest {
   @GivenJsonResource("/domains/verification/v1/start/StartVerificationSmsResponseDto.json")
   StartVerificationResponseInternal loadedStartVerificationSmsDto;
 
-  public static StartVerificationResponseInternal expectedStartVerificationSmsDto =
+  public static StartVerificationResponseInternalImpl expectedStartVerificationSmsDto =
       new StartVerificationResponseInternalImpl(
           (StartVerificationResponseSmsImpl)
               StartVerificationResponseSms.builder()

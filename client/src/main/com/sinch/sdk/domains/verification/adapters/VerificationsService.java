@@ -28,9 +28,12 @@ public class VerificationsService
   private final VerificationsStartService startService;
 
   public VerificationsService(
-      VerificationContext context, HttpClient httpClient, Map<String, AuthManager> authManagers) {
+      VerificationContext context,
+      HttpClient httpClient,
+      Map<String, AuthManager> authManagers,
+      com.sinch.sdk.domains.verification.api.v1.VerificationStartService v1) {
     this.reportService = new VerificationsReportService(context, httpClient, authManagers);
-    this.startService = new VerificationsStartService(context, httpClient, authManagers);
+    this.startService = new VerificationsStartService(v1);
   }
 
   public StartVerificationResponseSMS startSms(StartVerificationSMSRequestParameters parameters) {

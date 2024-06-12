@@ -16,7 +16,6 @@ import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificat
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationPhoneCallRequestImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsRequest;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsRequestImpl;
-import com.sinch.sdk.domains.verification.models.v1.start.request.internal.StartVerificationRequestInternal;
 import com.sinch.sdk.domains.verification.models.v1.start.request.internal.StartVerificationRequestInternalImpl;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
@@ -25,7 +24,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class StartVerificationRequestTest extends VerificationBaseTest {
 
-  public static StartVerificationRequestInternal startVerificationPhoneCallDto =
+  public static StartVerificationRequestInternalImpl startVerificationPhoneCallDto =
       new StartVerificationRequestInternalImpl(
           (StartVerificationPhoneCallRequestImpl)
               StartVerificationPhoneCallRequest.builder()
@@ -68,6 +67,19 @@ public class StartVerificationRequestTest extends VerificationBaseTest {
                   .setTemplate("My template require to use '{{CODE}}' code")
                   .build());
 
+  public static StartVerificationRequestInternalImpl startVerificationSmsDtoWithAcceptLanguage =
+      new StartVerificationRequestInternalImpl(
+          (StartVerificationSmsRequestImpl)
+              StartVerificationSmsRequest.builder()
+                  .setCustom("a custom")
+                  .setReference("a reference")
+                  .setIdentity(NumberIdentity.valueOf("+endpoint"))
+                  .setExpiry("01:02:03")
+                  .setCodeType(StartVerificationSmsRequest.CodeTypeEnum.ALPHANUMERIC)
+                  .setTemplate("My template require to use '{{CODE}}' code")
+                  .setAcceptLanguage("es-ES")
+                  .build());
+
   @GivenTextResource("/domains/verification/v1/start/StartVerificationPhoneCallRequestDto.json")
   String jsonStartVerificationPhoneCall;
 
@@ -105,6 +117,14 @@ public class StartVerificationRequestTest extends VerificationBaseTest {
   void serializeStartSmsCall() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(startVerificationSmsDto);
 
+    JSONAssert.assertEquals(jsonStartVerificationSms, serializedString, true);
+  }
+
+  @Test
+  void serializeStartSmsCallWithAcceptLanguage() throws JsonProcessingException, JSONException {
+    String serializedString =
+        objectMapper.writeValueAsString(startVerificationSmsDtoWithAcceptLanguage);
+    // acceptLanguage do not have to be serialized
     JSONAssert.assertEquals(jsonStartVerificationSms, serializedString, true);
   }
 }
