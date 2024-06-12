@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.v1.start.request.internal.StartVerificationPhoneCallOptions;
 import java.util.Objects;
 
 @JsonPropertyOrder({
@@ -115,6 +116,22 @@ public class StartVerificationPhoneCallRequestImpl
     return calloutOptions;
   }
 
+  @JsonIgnore
+  public PhoneCallSpeech getSpeech() {
+    if (null == calloutOptions
+        || !calloutOptions.isPresent()
+        || null == calloutOptions.get().getSpeech()) {
+      return null;
+    }
+    return calloutOptions.get().getSpeech();
+  }
+
+  public OptionalValue<PhoneCallSpeech> speech() {
+    return null != calloutOptions
+        ? calloutOptions.map(StartVerificationPhoneCallOptions::getSpeech)
+        : OptionalValue.empty();
+  }
+
   /** Return true if this StartVerificationPhoneCallRequest object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -169,6 +186,8 @@ public class StartVerificationPhoneCallRequestImpl
     OptionalValue<String> custom = OptionalValue.empty();
     OptionalValue<StartVerificationPhoneCallOptions> calloutOptions = OptionalValue.empty();
 
+    StartVerificationPhoneCallOptions.Builder _delegatedBuilder = null;
+
     @JsonProperty(JSON_PROPERTY_IDENTITY)
     public Builder setIdentity(Identity identity) {
       this.identity = OptionalValue.of(identity);
@@ -193,7 +212,24 @@ public class StartVerificationPhoneCallRequestImpl
       return this;
     }
 
+    @JsonIgnore
+    public Builder setSpeech(PhoneCallSpeech speech) {
+      getDelegatedBuilder().setSpeech(speech);
+      return this;
+    }
+
+    private StartVerificationPhoneCallOptions.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = StartVerificationPhoneCallOptions.builder();
+      }
+      return this._delegatedBuilder;
+    }
+
     public StartVerificationPhoneCallRequest build() {
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.calloutOptions = OptionalValue.of(this._delegatedBuilder.build());
+      }
       return new StartVerificationPhoneCallRequestImpl(
           identity, method, reference, custom, calloutOptions);
     }

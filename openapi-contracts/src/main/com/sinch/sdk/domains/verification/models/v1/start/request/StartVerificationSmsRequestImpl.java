@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.v1.start.request.internal.StartVerificationSmsOptions;
+import com.sinch.sdk.domains.verification.models.v1.start.request.internal.StartVerificationSmsOptionsImpl;
 import java.util.Objects;
 
 @JsonPropertyOrder({

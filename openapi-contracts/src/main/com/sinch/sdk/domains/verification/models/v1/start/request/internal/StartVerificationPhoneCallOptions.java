@@ -10,9 +10,10 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.verification.models.v1.start.request;
+package com.sinch.sdk.domains.verification.models.v1.start.request.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 
 /**
  * An optional object for Phone Call Verification, with default values assumed for all contained

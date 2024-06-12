@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.verification.models.v1.start.request;
+package com.sinch.sdk.domains.verification.models.v1.start.request.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import java.util.Objects;
 
 @JsonPropertyOrder({StartVerificationPhoneCallOptionsImpl.JSON_PROPERTY_SPEECH})

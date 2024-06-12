@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.Identity;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.v1.start.request.internal.StartVerificationFlashCallOptions;
 import java.util.Objects;
 
 @JsonPropertyOrder({
@@ -115,6 +116,22 @@ public class StartVerificationFlashCallRequestImpl
     return flashCallOptions;
   }
 
+  @JsonIgnore
+  public Integer getDialTimeout() {
+    if (null == flashCallOptions
+        || !flashCallOptions.isPresent()
+        || null == flashCallOptions.get().getDialTimeout()) {
+      return null;
+    }
+    return flashCallOptions.get().getDialTimeout();
+  }
+
+  public OptionalValue<Integer> dialTimeout() {
+    return null != flashCallOptions
+        ? flashCallOptions.map(StartVerificationFlashCallOptions::getDialTimeout)
+        : OptionalValue.empty();
+  }
+
   /** Return true if this StartVerificationFlashCallRequest object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -170,6 +187,8 @@ public class StartVerificationFlashCallRequestImpl
     OptionalValue<String> custom = OptionalValue.empty();
     OptionalValue<StartVerificationFlashCallOptions> flashCallOptions = OptionalValue.empty();
 
+    StartVerificationFlashCallOptions.Builder _delegatedBuilder = null;
+
     @JsonProperty(JSON_PROPERTY_IDENTITY)
     public Builder setIdentity(Identity identity) {
       this.identity = OptionalValue.of(identity);
@@ -194,7 +213,24 @@ public class StartVerificationFlashCallRequestImpl
       return this;
     }
 
+    @JsonIgnore
+    public Builder setDialTimeout(Integer dialTimeout) {
+      getDelegatedBuilder().setDialTimeout(dialTimeout);
+      return this;
+    }
+
+    private StartVerificationFlashCallOptions.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = StartVerificationFlashCallOptions.builder();
+      }
+      return this._delegatedBuilder;
+    }
+
     public StartVerificationFlashCallRequest build() {
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.flashCallOptions = OptionalValue.of(this._delegatedBuilder.build());
+      }
       return new StartVerificationFlashCallRequestImpl(
           identity, method, reference, custom, flashCallOptions);
     }

@@ -42,11 +42,11 @@ public interface StartVerificationPhoneCallRequest
   String getCustom();
 
   /**
-   * Get calloutOptions
+   * Get speech
    *
-   * @return calloutOptions
+   * @return speech
    */
-  StartVerificationPhoneCallOptions getCalloutOptions();
+  PhoneCallSpeech getSpeech();
 
   /**
    * Getting builder
@@ -92,11 +92,11 @@ public interface StartVerificationPhoneCallRequest
     /**
      * see getter
      *
-     * @param calloutOptions see getter
+     * @param speech see getter
      * @return Current builder
-     * @see #getCalloutOptions
+     * @see #getSpeech
      */
-    Builder setCalloutOptions(StartVerificationPhoneCallOptions calloutOptions);
+    Builder setSpeech(PhoneCallSpeech speech);
 
     /**
      * Create instance

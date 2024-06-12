@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.verification.models.v1.start.request;
+package com.sinch.sdk.domains.verification.models.v1.start.request.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;

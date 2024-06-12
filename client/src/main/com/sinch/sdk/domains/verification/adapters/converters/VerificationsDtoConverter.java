@@ -40,7 +40,6 @@ import com.sinch.sdk.domains.verification.models.v1.report.request.internal.Veri
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponse;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationFlashCallOptions;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsRequest;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseDataContentImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCallContentImpl;
@@ -65,12 +64,7 @@ public class VerificationsDtoConverter {
       dto = flashCallBuilder;
       StartVerificationFlashCallRequestParameters options =
           (StartVerificationFlashCallRequestParameters) client;
-      options
-          .getDialTimeOut()
-          .ifPresent(
-              f ->
-                  flashCallBuilder.setFlashCallOptions(
-                      StartVerificationFlashCallOptions.builder().setDialTimeout(f).build()));
+      options.getDialTimeOut().ifPresent(flashCallBuilder::setDialTimeout);
     } else if (client instanceof StartVerificationSMSRequestParameters) {
       com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsRequest.Builder
           smsBuilder =
@@ -89,7 +83,7 @@ public class VerificationsDtoConverter {
       dto = phoneCallBuilder;
       StartVerificationCalloutRequestParameters options =
           (StartVerificationCalloutRequestParameters) client;
-      options.getOptions().ifPresent(f -> phoneCallBuilder.setCalloutOptions(convert(f)));
+      options.getOptions().ifPresent(f -> convert(phoneCallBuilder, f));
     } else if (client instanceof StartVerificationSeamlessRequestParameters) {
       dto =
           com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationDataRequest
@@ -106,7 +100,7 @@ public class VerificationsDtoConverter {
     return dto.build();
   }
 
-  static void convert(
+  private static void convert(
       com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsRequest.Builder
           smsBuilder,
       StartVerificationSMSOptions client) {
@@ -120,19 +114,15 @@ public class VerificationsDtoConverter {
     client.getAcceptLanguage().ifPresent(smsBuilder::setAcceptLanguage);
   }
 
-  static com.sinch.sdk.domains.verification.models.v1.start.request
-          .StartVerificationPhoneCallOptions
-      convert(StartVerificationCalloutOptions client) {
-    com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationPhoneCallOptions
-            .Builder
-        dto =
-            com.sinch.sdk.domains.verification.models.v1.start.request
-                .StartVerificationPhoneCallOptions.builder();
-    client.getSpeech().ifPresent(f -> dto.setSpeech(convert(f)));
-    return dto.build();
+  private static void convert(
+      com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationPhoneCallRequest
+              .Builder
+          phoneCallBuilder,
+      StartVerificationCalloutOptions client) {
+    client.getSpeech().ifPresent(f -> phoneCallBuilder.setSpeech(convert(f)));
   }
 
-  static PhoneCallSpeech convert(StartVerificationCalloutSpeechOptions client) {
+  private static PhoneCallSpeech convert(StartVerificationCalloutSpeechOptions client) {
     PhoneCallSpeech.Builder dto = PhoneCallSpeech.builder();
     client.getLocale().ifPresent(dto::setLocale);
     return dto.build();

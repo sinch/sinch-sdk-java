@@ -42,11 +42,11 @@ public interface StartVerificationFlashCallRequest
   String getCustom();
 
   /**
-   * Get flashCallOptions
+   * The dial timeout in seconds.
    *
-   * @return flashCallOptions
+   * @return dialTimeout
    */
-  StartVerificationFlashCallOptions getFlashCallOptions();
+  Integer getDialTimeout();
 
   /**
    * Getting builder
@@ -92,11 +92,11 @@ public interface StartVerificationFlashCallRequest
     /**
      * see getter
      *
-     * @param flashCallOptions see getter
+     * @param dialTimeout see getter
      * @return Current builder
-     * @see #getFlashCallOptions
+     * @see #getDialTimeout
      */
-    Builder setFlashCallOptions(StartVerificationFlashCallOptions flashCallOptions);
+    Builder setDialTimeout(Integer dialTimeout);
 
     /**
      * Create instance

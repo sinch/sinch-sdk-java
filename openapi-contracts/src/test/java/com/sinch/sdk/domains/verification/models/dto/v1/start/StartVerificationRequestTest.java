@@ -8,10 +8,8 @@ import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationDataRequest;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationDataRequestImpl;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationFlashCallOptions;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationFlashCallRequest;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationFlashCallRequestImpl;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationPhoneCallOptions;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationPhoneCallRequest;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationPhoneCallRequestImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsRequest;
@@ -31,10 +29,7 @@ public class StartVerificationRequestTest extends VerificationBaseTest {
                   .setCustom("a custom")
                   .setReference("a reference")
                   .setIdentity(NumberIdentity.valueOf("+endpoint"))
-                  .setCalloutOptions(
-                      StartVerificationPhoneCallOptions.builder()
-                          .setSpeech(PhoneCallSpeech.builder().setLocale("fr-FR").build())
-                          .build())
+                  .setSpeech(PhoneCallSpeech.builder().setLocale("fr-FR").build())
                   .build());
 
   public static StartVerificationRequestInternalImpl startVerificationFlashCallDto =
@@ -44,8 +39,7 @@ public class StartVerificationRequestTest extends VerificationBaseTest {
                   .setCustom("a custom")
                   .setReference("a reference")
                   .setIdentity(NumberIdentity.valueOf("+endpoint"))
-                  .setFlashCallOptions(
-                      StartVerificationFlashCallOptions.builder().setDialTimeout(17).build())
+                  .setDialTimeout(17)
                   .build());
   public static StartVerificationRequestInternalImpl startVerificationDataDto =
       new StartVerificationRequestInternalImpl(
