@@ -35,11 +35,33 @@ public interface StartVerificationResponseFlashCall
   List<Link> getLinks();
 
   /**
-   * Get flashCall
+   * Filter that should be applied for incoming calls to intercept the flash call.
    *
-   * @return flashCall
+   * @return cliFilter
    */
-  StartVerificationResponseFlashCallContent getFlashCall();
+  String getCliFilter();
+
+  /**
+   * Amount of seconds client should wait for the flash call.
+   *
+   * @return interceptionTimeout
+   */
+  Integer getInterceptionTimeout();
+
+  /**
+   * The time in seconds allowed for reporting the code after which the verification will expire.
+   *
+   * @return reportTimeout
+   */
+  Integer getReportTimeout();
+
+  /**
+   * Used by the SDKs, this setting makes the handset deny the flash call after the set time in
+   * seconds.
+   *
+   * @return denyCallAfter
+   */
+  Integer getDenyCallAfter();
 
   /**
    * Getting builder
@@ -76,11 +98,38 @@ public interface StartVerificationResponseFlashCall
     /**
      * see getter
      *
-     * @param flashCall see getter
+     * @param cliFilter see getter
      * @return Current builder
-     * @see #getFlashCall
+     * @see #getCliFilter
      */
-    Builder setFlashCall(StartVerificationResponseFlashCallContent flashCall);
+    Builder setCliFilter(String cliFilter);
+
+    /**
+     * see getter
+     *
+     * @param interceptionTimeout see getter
+     * @return Current builder
+     * @see #getInterceptionTimeout
+     */
+    Builder setInterceptionTimeout(Integer interceptionTimeout);
+
+    /**
+     * see getter
+     *
+     * @param reportTimeout see getter
+     * @return Current builder
+     * @see #getReportTimeout
+     */
+    Builder setReportTimeout(Integer reportTimeout);
+
+    /**
+     * see getter
+     *
+     * @param denyCallAfter see getter
+     * @return Current builder
+     * @see #getDenyCallAfter
+     */
+    Builder setDenyCallAfter(Integer denyCallAfter);
 
     /**
      * Create instance

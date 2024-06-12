@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.v1.start.response.internal.StartVerificationResponseSmsContent;
 import java.util.List;
 import java.util.Objects;
 
@@ -97,6 +98,34 @@ public class StartVerificationResponseSmsImpl
     return sms;
   }
 
+  @JsonIgnore
+  public String getTemplate() {
+    if (null == sms || !sms.isPresent() || null == sms.get().getTemplate()) {
+      return null;
+    }
+    return sms.get().getTemplate();
+  }
+
+  public OptionalValue<String> template() {
+    return null != sms
+        ? sms.map(StartVerificationResponseSmsContent::getTemplate)
+        : OptionalValue.empty();
+  }
+
+  @JsonIgnore
+  public Integer getInterceptionTimeout() {
+    if (null == sms || !sms.isPresent() || null == sms.get().getInterceptionTimeout()) {
+      return null;
+    }
+    return sms.get().getInterceptionTimeout();
+  }
+
+  public OptionalValue<Integer> interceptionTimeout() {
+    return null != sms
+        ? sms.map(StartVerificationResponseSmsContent::getInterceptionTimeout)
+        : OptionalValue.empty();
+  }
+
   /** Return true if this StartVerificationSmsResponse object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -148,6 +177,8 @@ public class StartVerificationResponseSmsImpl
     OptionalValue<List<Link>> links = OptionalValue.empty();
     OptionalValue<StartVerificationResponseSmsContent> sms = OptionalValue.empty();
 
+    StartVerificationResponseSmsContent.Builder _delegatedBuilder = null;
+
     @JsonProperty(JSON_PROPERTY_ID)
     public Builder setId(String id) {
       this.id = OptionalValue.of(id);
@@ -166,7 +197,30 @@ public class StartVerificationResponseSmsImpl
       return this;
     }
 
+    @JsonIgnore
+    public Builder setTemplate(String template) {
+      getDelegatedBuilder().setTemplate(template);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setInterceptionTimeout(Integer interceptionTimeout) {
+      getDelegatedBuilder().setInterceptionTimeout(interceptionTimeout);
+      return this;
+    }
+
+    private StartVerificationResponseSmsContent.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = StartVerificationResponseSmsContent.builder();
+      }
+      return this._delegatedBuilder;
+    }
+
     public StartVerificationResponseSms build() {
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.sms = OptionalValue.of(this._delegatedBuilder.build());
+      }
       return new StartVerificationResponseSmsImpl(id, method, links, sms);
     }
   }

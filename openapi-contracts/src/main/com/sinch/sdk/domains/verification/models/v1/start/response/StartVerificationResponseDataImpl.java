@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.v1.start.response.internal.StartVerificationResponseDataContent;
 import java.util.List;
 import java.util.Objects;
 
@@ -97,6 +98,20 @@ public class StartVerificationResponseDataImpl
     return seamless;
   }
 
+  @JsonIgnore
+  public String getTargetUri() {
+    if (null == seamless || !seamless.isPresent() || null == seamless.get().getTargetUri()) {
+      return null;
+    }
+    return seamless.get().getTargetUri();
+  }
+
+  public OptionalValue<String> targetUri() {
+    return null != seamless
+        ? seamless.map(StartVerificationResponseDataContent::getTargetUri)
+        : OptionalValue.empty();
+  }
+
   /** Return true if this StartVerificationDataResponse object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -148,6 +163,8 @@ public class StartVerificationResponseDataImpl
     OptionalValue<List<Link>> links = OptionalValue.empty();
     OptionalValue<StartVerificationResponseDataContent> seamless = OptionalValue.empty();
 
+    StartVerificationResponseDataContent.Builder _delegatedBuilder = null;
+
     @JsonProperty(JSON_PROPERTY_ID)
     public Builder setId(String id) {
       this.id = OptionalValue.of(id);
@@ -166,7 +183,24 @@ public class StartVerificationResponseDataImpl
       return this;
     }
 
+    @JsonIgnore
+    public Builder setTargetUri(String targetUri) {
+      getDelegatedBuilder().setTargetUri(targetUri);
+      return this;
+    }
+
+    private StartVerificationResponseDataContent.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = StartVerificationResponseDataContent.builder();
+      }
+      return this._delegatedBuilder;
+    }
+
     public StartVerificationResponseData build() {
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.seamless = OptionalValue.of(this._delegatedBuilder.build());
+      }
       return new StartVerificationResponseDataImpl(id, method, links, seamless);
     }
   }

@@ -41,9 +41,9 @@ import com.sinch.sdk.domains.verification.models.v1.report.response.Verification
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsRequest;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseDataContentImpl;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCallContentImpl;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSmsContentImpl;
+import com.sinch.sdk.domains.verification.models.v1.start.response.internal.StartVerificationResponseDataContentImpl;
+import com.sinch.sdk.domains.verification.models.v1.start.response.internal.StartVerificationResponseFlashCallContentImpl;
+import com.sinch.sdk.domains.verification.models.v1.start.response.internal.StartVerificationResponseSmsContentImpl;
 import java.util.logging.Logger;
 
 public class VerificationsDtoConverter {

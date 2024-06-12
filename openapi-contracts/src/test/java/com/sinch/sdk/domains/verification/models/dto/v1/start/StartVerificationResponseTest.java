@@ -5,15 +5,12 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseData;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseDataContent;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseDataImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCall;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCallContent;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCallImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponsePhoneCall;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponsePhoneCallImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSms;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSmsContent;
 import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSmsImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.StartVerificationResponseInternal;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.StartVerificationResponseInternalImpl;
@@ -42,13 +39,10 @@ public class StartVerificationResponseTest extends BaseTest {
               StartVerificationResponseFlashCall.builder()
                   .setId("the id")
                   .setLinks(LinkTest.expectedLinks)
-                  .setFlashCall(
-                      StartVerificationResponseFlashCallContent.builder()
-                          .setCliFilter("(.*)5312(.*)")
-                          .setInterceptionTimeout(45)
-                          .setReportTimeout(75)
-                          .setDenyCallAfter(0)
-                          .build())
+                  .setCliFilter("(.*)5312(.*)")
+                  .setInterceptionTimeout(45)
+                  .setReportTimeout(75)
+                  .setDenyCallAfter(0)
                   .build());
 
   @GivenJsonResource("/domains/verification/v1/start/StartVerificationDataResponseDto.json")
@@ -60,10 +54,7 @@ public class StartVerificationResponseTest extends BaseTest {
               StartVerificationResponseData.builder()
                   .setId("the id")
                   .setLinks(LinkTest.expectedLinks)
-                  .setSeamless(
-                      StartVerificationResponseDataContent.builder()
-                          .setTargetUri("target URI")
-                          .build())
+                  .setTargetUri("target URI")
                   .build());
 
   @GivenJsonResource("/domains/verification/v1/start/StartVerificationSmsResponseDto.json")
@@ -75,11 +66,8 @@ public class StartVerificationResponseTest extends BaseTest {
               StartVerificationResponseSms.builder()
                   .setId("the id")
                   .setLinks(LinkTest.expectedLinks)
-                  .setSms(
-                      StartVerificationResponseSmsContent.builder()
-                          .setTemplate("Your verification code is {{CODE}}. Verified by Sinch")
-                          .setInterceptionTimeout(298)
-                          .build())
+                  .setTemplate("Your verification code is {{CODE}}. Verified by Sinch")
+                  .setInterceptionTimeout(298)
                   .build());
 
   @Test

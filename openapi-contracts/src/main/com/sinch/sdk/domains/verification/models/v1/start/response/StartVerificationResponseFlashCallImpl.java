@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.v1.start.response.internal.StartVerificationResponseFlashCallContent;
 import java.util.List;
 import java.util.Objects;
 
@@ -97,6 +98,64 @@ public class StartVerificationResponseFlashCallImpl
     return flashCall;
   }
 
+  @JsonIgnore
+  public String getCliFilter() {
+    if (null == flashCall || !flashCall.isPresent() || null == flashCall.get().getCliFilter()) {
+      return null;
+    }
+    return flashCall.get().getCliFilter();
+  }
+
+  public OptionalValue<String> cliFilter() {
+    return null != flashCall
+        ? flashCall.map(StartVerificationResponseFlashCallContent::getCliFilter)
+        : OptionalValue.empty();
+  }
+
+  @JsonIgnore
+  public Integer getInterceptionTimeout() {
+    if (null == flashCall
+        || !flashCall.isPresent()
+        || null == flashCall.get().getInterceptionTimeout()) {
+      return null;
+    }
+    return flashCall.get().getInterceptionTimeout();
+  }
+
+  public OptionalValue<Integer> interceptionTimeout() {
+    return null != flashCall
+        ? flashCall.map(StartVerificationResponseFlashCallContent::getInterceptionTimeout)
+        : OptionalValue.empty();
+  }
+
+  @JsonIgnore
+  public Integer getReportTimeout() {
+    if (null == flashCall || !flashCall.isPresent() || null == flashCall.get().getReportTimeout()) {
+      return null;
+    }
+    return flashCall.get().getReportTimeout();
+  }
+
+  public OptionalValue<Integer> reportTimeout() {
+    return null != flashCall
+        ? flashCall.map(StartVerificationResponseFlashCallContent::getReportTimeout)
+        : OptionalValue.empty();
+  }
+
+  @JsonIgnore
+  public Integer getDenyCallAfter() {
+    if (null == flashCall || !flashCall.isPresent() || null == flashCall.get().getDenyCallAfter()) {
+      return null;
+    }
+    return flashCall.get().getDenyCallAfter();
+  }
+
+  public OptionalValue<Integer> denyCallAfter() {
+    return null != flashCall
+        ? flashCall.map(StartVerificationResponseFlashCallContent::getDenyCallAfter)
+        : OptionalValue.empty();
+  }
+
   /** Return true if this StartVerificationFlashCallResponse object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -148,6 +207,8 @@ public class StartVerificationResponseFlashCallImpl
     OptionalValue<List<Link>> links = OptionalValue.empty();
     OptionalValue<StartVerificationResponseFlashCallContent> flashCall = OptionalValue.empty();
 
+    StartVerificationResponseFlashCallContent.Builder _delegatedBuilder = null;
+
     @JsonProperty(JSON_PROPERTY_ID)
     public Builder setId(String id) {
       this.id = OptionalValue.of(id);
@@ -166,7 +227,42 @@ public class StartVerificationResponseFlashCallImpl
       return this;
     }
 
+    @JsonIgnore
+    public Builder setCliFilter(String cliFilter) {
+      getDelegatedBuilder().setCliFilter(cliFilter);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setInterceptionTimeout(Integer interceptionTimeout) {
+      getDelegatedBuilder().setInterceptionTimeout(interceptionTimeout);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setReportTimeout(Integer reportTimeout) {
+      getDelegatedBuilder().setReportTimeout(reportTimeout);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setDenyCallAfter(Integer denyCallAfter) {
+      getDelegatedBuilder().setDenyCallAfter(denyCallAfter);
+      return this;
+    }
+
+    private StartVerificationResponseFlashCallContent.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = StartVerificationResponseFlashCallContent.builder();
+      }
+      return this._delegatedBuilder;
+    }
+
     public StartVerificationResponseFlashCall build() {
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.flashCall = OptionalValue.of(this._delegatedBuilder.build());
+      }
       return new StartVerificationResponseFlashCallImpl(id, method, links, flashCall);
     }
   }

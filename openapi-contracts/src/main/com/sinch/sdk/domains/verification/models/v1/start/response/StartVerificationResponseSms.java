@@ -35,11 +35,18 @@ public interface StartVerificationResponseSms
   List<Link> getLinks();
 
   /**
-   * Get sms
+   * The expected template for the SMS response.
    *
-   * @return sms
+   * @return template
    */
-  StartVerificationResponseSmsContent getSms();
+  String getTemplate();
+
+  /**
+   * The amount of time in seconds that the client should wait for the SMS.
+   *
+   * @return interceptionTimeout
+   */
+  Integer getInterceptionTimeout();
 
   /**
    * Getting builder
@@ -76,11 +83,20 @@ public interface StartVerificationResponseSms
     /**
      * see getter
      *
-     * @param sms see getter
+     * @param template see getter
      * @return Current builder
-     * @see #getSms
+     * @see #getTemplate
      */
-    Builder setSms(StartVerificationResponseSmsContent sms);
+    Builder setTemplate(String template);
+
+    /**
+     * see getter
+     *
+     * @param interceptionTimeout see getter
+     * @return Current builder
+     * @see #getInterceptionTimeout
+     */
+    Builder setInterceptionTimeout(Integer interceptionTimeout);
 
     /**
      * Create instance

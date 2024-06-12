@@ -35,11 +35,11 @@ public interface StartVerificationResponseData
   List<Link> getLinks();
 
   /**
-   * Get seamless
+   * The target URI.
    *
-   * @return seamless
+   * @return targetUri
    */
-  StartVerificationResponseDataContent getSeamless();
+  String getTargetUri();
 
   /**
    * Getting builder
@@ -76,11 +76,11 @@ public interface StartVerificationResponseData
     /**
      * see getter
      *
-     * @param seamless see getter
+     * @param targetUri see getter
      * @return Current builder
-     * @see #getSeamless
+     * @see #getTargetUri
      */
-    Builder setSeamless(StartVerificationResponseDataContent seamless);
+    Builder setTargetUri(String targetUri);
 
     /**
      * Create instance

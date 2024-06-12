@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.verification.models.v1.start.response;
+package com.sinch.sdk.domains.verification.models.v1.start.response.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
