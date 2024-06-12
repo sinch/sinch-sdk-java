@@ -20,7 +20,7 @@ import com.sinch.sdk.domains.verification.models.VerificationReportCallout;
 import com.sinch.sdk.domains.verification.models.VerificationReportFlashCall;
 import com.sinch.sdk.domains.verification.models.VerificationReportSMS;
 import com.sinch.sdk.domains.verification.models.dto.v1.report.VerificationReportResponseDtoTest;
-import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestParametersInternal;
+import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestInternal;
 import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,13 +31,13 @@ import org.mockito.Mock;
 public class VerificationsReportServiceTest extends BaseTest {
 
   @GivenJsonResource("/domains/verification/v1/report/VerificationReportPhoneCallRequestDto.json")
-  public VerificationReportRequestParametersInternal verificationReportPhoneCallRequestDto;
+  public VerificationReportRequestInternal verificationReportPhoneCallRequestDto;
 
   @GivenJsonResource("/domains/verification/v1/report/VerificationReportFlashCallRequestDto.json")
-  public VerificationReportRequestParametersInternal verificationReportFlashCallRequestDto;
+  public VerificationReportRequestInternal verificationReportFlashCallRequestDto;
 
   @GivenJsonResource("/domains/verification/v1/report/VerificationReportSmsRequestDto.json")
-  public VerificationReportRequestParametersInternal verificationReportSmsRequestDto;
+  public VerificationReportRequestInternal verificationReportSmsRequestDto;
 
   @Mock VerificationsReportApi api;
   @Mock VerificationContext context;

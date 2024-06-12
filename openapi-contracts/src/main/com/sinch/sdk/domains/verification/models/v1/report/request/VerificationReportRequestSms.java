@@ -19,15 +19,16 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 /** declaration */
-@JsonDeserialize(builder = VerificationReportRequestParametersFlashCallImpl.Builder.class)
-public interface VerificationReportRequestParametersFlashCall {
+@JsonDeserialize(builder = VerificationReportRequestSmsImpl.Builder.class)
+public interface VerificationReportRequestSms
+    extends com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequest {
 
   /** The type of verification. */
   public class MethodEnum extends EnumDynamic<String, MethodEnum> {
-    public static final MethodEnum FLASHCALL = new MethodEnum("flashcall");
+    public static final MethodEnum SMS = new MethodEnum("sms");
 
     private static final EnumSupportDynamic<String, MethodEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(MethodEnum.class, MethodEnum::new, Arrays.asList(FLASHCALL));
+        new EnumSupportDynamic<>(MethodEnum.class, MethodEnum::new, Arrays.asList(SMS));
 
     private MethodEnum(String value) {
       super(value);
@@ -47,18 +48,18 @@ public interface VerificationReportRequestParametersFlashCall {
   }
 
   /**
-   * The type of verification.
+   * The code which was received by the user submitting the SMS verification.
    *
-   * @return method
+   * @return code
    */
-  MethodEnum getMethod();
+  String getCode();
 
   /**
-   * Get flashCall
+   * The sender ID of the SMS.
    *
-   * @return flashCall
+   * @return cli
    */
-  VerificationReportRequestParametersFlashCallOptions getFlashCall();
+  String getCli();
 
   /**
    * Getting builder
@@ -66,7 +67,7 @@ public interface VerificationReportRequestParametersFlashCall {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationReportRequestParametersFlashCallImpl.Builder();
+    return new VerificationReportRequestSmsImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -75,26 +76,26 @@ public interface VerificationReportRequestParametersFlashCall {
     /**
      * see getter
      *
-     * @param method see getter
+     * @param code see getter
      * @return Current builder
-     * @see #getMethod
+     * @see #getCode
      */
-    Builder setMethod(MethodEnum method);
+    Builder setCode(String code);
 
     /**
      * see getter
      *
-     * @param flashCall see getter
+     * @param cli see getter
      * @return Current builder
-     * @see #getFlashCall
+     * @see #getCli
      */
-    Builder setFlashCall(VerificationReportRequestParametersFlashCallOptions flashCall);
+    Builder setCli(String cli);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    VerificationReportRequestParametersFlashCall build();
+    VerificationReportRequestSms build();
   }
 }

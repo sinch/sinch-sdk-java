@@ -10,13 +10,13 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.verification.models.v1.report.request;
+package com.sinch.sdk.domains.verification.models.v1.report.request.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /** A configuration object containing settings specific to flash call verifications. */
-@JsonDeserialize(builder = VerificationReportRequestParametersFlashCallOptionsImpl.Builder.class)
-public interface VerificationReportRequestParametersFlashCallOptions {
+@JsonDeserialize(builder = VerificationReportRequestFlashCallOptionsImpl.Builder.class)
+public interface VerificationReportRequestFlashCallOptions {
 
   /**
    * The caller ID of the flash call.
@@ -31,7 +31,7 @@ public interface VerificationReportRequestParametersFlashCallOptions {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationReportRequestParametersFlashCallOptionsImpl.Builder();
+    return new VerificationReportRequestFlashCallOptionsImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -51,6 +51,6 @@ public interface VerificationReportRequestParametersFlashCallOptions {
      *
      * @return The instance build with current builder values
      */
-    VerificationReportRequestParametersFlashCallOptions build();
+    VerificationReportRequestFlashCallOptions build();
   }
 }

@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.verification.models.v1.report.request;
+package com.sinch.sdk.domains.verification.models.v1.report.request.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -9,20 +9,20 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
-@JsonPropertyOrder({VerificationReportRequestParametersFlashCallOptionsImpl.JSON_PROPERTY_CLI})
+@JsonPropertyOrder({VerificationReportRequestFlashCallOptionsImpl.JSON_PROPERTY_CLI})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class VerificationReportRequestParametersFlashCallOptionsImpl
-    implements VerificationReportRequestParametersFlashCallOptions {
+public class VerificationReportRequestFlashCallOptionsImpl
+    implements VerificationReportRequestFlashCallOptions {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CLI = "cli";
 
   private OptionalValue<String> cli;
 
-  public VerificationReportRequestParametersFlashCallOptionsImpl() {}
+  public VerificationReportRequestFlashCallOptionsImpl() {}
 
-  protected VerificationReportRequestParametersFlashCallOptionsImpl(OptionalValue<String> cli) {
+  protected VerificationReportRequestFlashCallOptionsImpl(OptionalValue<String> cli) {
     this.cli = cli;
   }
 
@@ -37,7 +37,7 @@ public class VerificationReportRequestParametersFlashCallOptionsImpl
     return cli;
   }
 
-  /** Return true if this FlashCallVerificationReportRequest_flashCall object is equal to o. */
+  /** Return true if this VerificationReportRequestFlashCall_flashCall object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -46,10 +46,9 @@ public class VerificationReportRequestParametersFlashCallOptionsImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerificationReportRequestParametersFlashCallOptionsImpl
-        flashCallVerificationReportRequestFlashCall =
-            (VerificationReportRequestParametersFlashCallOptionsImpl) o;
-    return Objects.equals(this.cli, flashCallVerificationReportRequestFlashCall.cli);
+    VerificationReportRequestFlashCallOptionsImpl verificationReportRequestFlashCallFlashCall =
+        (VerificationReportRequestFlashCallOptionsImpl) o;
+    return Objects.equals(this.cli, verificationReportRequestFlashCallFlashCall.cli);
   }
 
   @Override
@@ -60,7 +59,7 @@ public class VerificationReportRequestParametersFlashCallOptionsImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VerificationReportRequestParametersFlashCallOptionsImpl {\n");
+    sb.append("class VerificationReportRequestFlashCallOptionsImpl {\n");
     sb.append("    cli: ").append(toIndentedString(cli)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -77,7 +76,7 @@ public class VerificationReportRequestParametersFlashCallOptionsImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements VerificationReportRequestParametersFlashCallOptions.Builder {
+  static class Builder implements VerificationReportRequestFlashCallOptions.Builder {
     OptionalValue<String> cli = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CLI)
@@ -86,8 +85,8 @@ public class VerificationReportRequestParametersFlashCallOptionsImpl
       return this;
     }
 
-    public VerificationReportRequestParametersFlashCallOptions build() {
-      return new VerificationReportRequestParametersFlashCallOptionsImpl(cli);
+    public VerificationReportRequestFlashCallOptions build() {
+      return new VerificationReportRequestFlashCallOptionsImpl(cli);
     }
   }
 }

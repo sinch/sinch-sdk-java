@@ -16,6 +16,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @JsonDeserialize(
     using =
-        VerificationReportRequestParametersInternalImpl
-            .VerificationReportRequestParametersInternalImplDeserializer.class)
-public interface VerificationReportRequestParametersInternal {}
+        VerificationReportRequestInternalImpl.VerificationReportRequestInternalImplDeserializer
+            .class)
+public interface VerificationReportRequestInternal {}

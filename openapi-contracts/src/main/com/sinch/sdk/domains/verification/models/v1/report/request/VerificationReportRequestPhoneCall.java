@@ -19,8 +19,9 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 /** declaration */
-@JsonDeserialize(builder = VerificationReportRequestParametersPhoneCallImpl.Builder.class)
-public interface VerificationReportRequestParametersPhoneCall {
+@JsonDeserialize(builder = VerificationReportRequestPhoneCallImpl.Builder.class)
+public interface VerificationReportRequestPhoneCall
+    extends com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequest {
 
   /** The type of verification. */
   public class MethodEnum extends EnumDynamic<String, MethodEnum> {
@@ -47,18 +48,11 @@ public interface VerificationReportRequestParametersPhoneCall {
   }
 
   /**
-   * The type of verification.
+   * The code which was received by the user submitting the Phone Call verification.
    *
-   * @return method
+   * @return code
    */
-  MethodEnum getMethod();
-
-  /**
-   * Get callout
-   *
-   * @return callout
-   */
-  VerificationReportRequestParametersPhoneCallOptions getCallout();
+  String getCode();
 
   /**
    * Getting builder
@@ -66,7 +60,7 @@ public interface VerificationReportRequestParametersPhoneCall {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationReportRequestParametersPhoneCallImpl.Builder();
+    return new VerificationReportRequestPhoneCallImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -75,26 +69,17 @@ public interface VerificationReportRequestParametersPhoneCall {
     /**
      * see getter
      *
-     * @param method see getter
+     * @param code see getter
      * @return Current builder
-     * @see #getMethod
+     * @see #getCode
      */
-    Builder setMethod(MethodEnum method);
-
-    /**
-     * see getter
-     *
-     * @param callout see getter
-     * @return Current builder
-     * @see #getCallout
-     */
-    Builder setCallout(VerificationReportRequestParametersPhoneCallOptions callout);
+    Builder setCode(String code);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    VerificationReportRequestParametersPhoneCall build();
+    VerificationReportRequestPhoneCall build();
   }
 }

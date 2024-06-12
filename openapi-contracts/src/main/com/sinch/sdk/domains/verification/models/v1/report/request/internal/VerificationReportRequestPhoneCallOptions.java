@@ -10,27 +10,20 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.verification.models.v1.report.request;
+package com.sinch.sdk.domains.verification.models.v1.report.request.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** A configuration object containing settings specific to SMS verifications. */
-@JsonDeserialize(builder = VerificationReportRequestParametersSmsOptionsImpl.Builder.class)
-public interface VerificationReportRequestParametersSmsOptions {
+/** A configuration object containing settings specific to Phone Call verifications. */
+@JsonDeserialize(builder = VerificationReportRequestPhoneCallOptionsImpl.Builder.class)
+public interface VerificationReportRequestPhoneCallOptions {
 
   /**
-   * The code which was received by the user submitting the SMS verification.
+   * The code which was received by the user submitting the Phone Call verification.
    *
    * @return code
    */
   String getCode();
-
-  /**
-   * The sender ID of the SMS.
-   *
-   * @return cli
-   */
-  String getCli();
 
   /**
    * Getting builder
@@ -38,7 +31,7 @@ public interface VerificationReportRequestParametersSmsOptions {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationReportRequestParametersSmsOptionsImpl.Builder();
+    return new VerificationReportRequestPhoneCallOptionsImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -54,19 +47,10 @@ public interface VerificationReportRequestParametersSmsOptions {
     Builder setCode(String code);
 
     /**
-     * see getter
-     *
-     * @param cli see getter
-     * @return Current builder
-     * @see #getCli
-     */
-    Builder setCli(String cli);
-
-    /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    VerificationReportRequestParametersSmsOptions build();
+    VerificationReportRequestPhoneCallOptions build();
   }
 }
