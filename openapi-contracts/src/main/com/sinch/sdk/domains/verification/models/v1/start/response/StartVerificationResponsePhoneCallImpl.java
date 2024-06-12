@@ -124,7 +124,7 @@ public class StartVerificationResponsePhoneCallImpl
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements StartVerificationResponsePhoneCall.Builder {
     OptionalValue<String> id = OptionalValue.empty();
-    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.CALLOUT);
+    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.PHONE_CALL);
     OptionalValue<List<Link>> links = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_ID)

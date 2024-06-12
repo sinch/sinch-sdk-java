@@ -69,11 +69,11 @@ public interface VerificationRequestEvent {
   public class MethodEnum extends EnumDynamic<String, MethodEnum> {
     public static final MethodEnum SMS = new MethodEnum("sms");
     public static final MethodEnum FLASHCALL = new MethodEnum("flashcall");
-    public static final MethodEnum CALLOUT = new MethodEnum("callout");
+    public static final MethodEnum PHONE_CALL = new MethodEnum("callout");
 
     private static final EnumSupportDynamic<String, MethodEnum> ENUM_SUPPORT =
         new EnumSupportDynamic<>(
-            MethodEnum.class, MethodEnum::new, Arrays.asList(SMS, FLASHCALL, CALLOUT));
+            MethodEnum.class, MethodEnum::new, Arrays.asList(SMS, FLASHCALL, PHONE_CALL));
 
     private MethodEnum(String value) {
       super(value);

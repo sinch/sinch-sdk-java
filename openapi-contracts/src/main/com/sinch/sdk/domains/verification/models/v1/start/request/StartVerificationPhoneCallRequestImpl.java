@@ -181,7 +181,7 @@ public class StartVerificationPhoneCallRequestImpl
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements StartVerificationPhoneCallRequest.Builder {
     OptionalValue<Identity> identity = OptionalValue.empty();
-    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.CALLOUT);
+    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.PHONE_CALL);
     OptionalValue<String> reference = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
     OptionalValue<StartVerificationPhoneCallOptions> calloutOptions = OptionalValue.empty();

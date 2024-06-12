@@ -353,7 +353,7 @@ public class VerificationsDtoConverter {
     client.getCode().ifPresent(phoneCallOptions::setCode);
 
     return VerificationReportRequestParametersPhoneCall.builder()
-        .setMethod(VerificationReportRequestParametersPhoneCall.MethodEnum.CALLOUT)
+        .setMethod(VerificationReportRequestParametersPhoneCall.MethodEnum.PHONE_CALL)
         .setCallout(phoneCallOptions.build())
         .build();
   }
@@ -366,7 +366,7 @@ public class VerificationsDtoConverter {
       builder = VerificationReportSMS.builder();
     } else if (method.equals(VerificationMethod.FLASHCALL)) {
       builder = VerificationReportFlashCall.builder();
-    } else if (method.equals(VerificationMethod.CALLOUT)) {
+    } else if (method.equals(VerificationMethod.PHONE_CALL)) {
       builder = VerificationReportCallout.builder();
     } else {
       LOGGER.severe(String.format("Unexpected value '%s'", dto.getMethod()));

@@ -144,7 +144,7 @@ public class StartVerificationDataRequestImpl
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements StartVerificationDataRequest.Builder {
     OptionalValue<Identity> identity = OptionalValue.empty();
-    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.SEAMLESS);
+    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.DATA);
     OptionalValue<String> reference = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
 

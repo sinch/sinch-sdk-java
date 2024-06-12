@@ -17,7 +17,7 @@ public class VerificationReportResponseDtoTest extends BaseTest {
 
   public static VerificationReportResponse verificationReportPhoneCallDto =
       VerificationReportResponse.builder()
-          .setMethod(VerificationMethod.CALLOUT)
+          .setMethod(VerificationMethod.PHONE_CALL)
           .setId("the id")
           .setStatus(VerificationStatus.FAIL)
           .build();

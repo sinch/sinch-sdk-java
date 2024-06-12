@@ -29,7 +29,7 @@ public class VerificationStatusResponseInternalTest extends BaseTest {
           (PhoneCallVerificationStatusResponseImpl)
               PhoneCallVerificationStatusResponse.builder()
                   .setId("the id")
-                  .setMethod(PhoneCallVerificationStatusResponse.MethodEnum.CALLOUT)
+                  .setMethod(PhoneCallVerificationStatusResponse.MethodEnum.PHONE_CALL)
                   .setStatus(VerificationStatus.FAIL)
                   .setReason(VerificationStatusReason.FRAUD)
                   .setCallComplete(true)

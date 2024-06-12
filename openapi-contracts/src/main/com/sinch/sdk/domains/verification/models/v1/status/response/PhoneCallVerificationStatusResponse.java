@@ -82,10 +82,10 @@ public interface PhoneCallVerificationStatusResponse {
 
   /** The method of the verification request. This will always be &#x60;callout&#x60;. */
   public class MethodEnum extends EnumDynamic<String, MethodEnum> {
-    public static final MethodEnum CALLOUT = new MethodEnum("callout");
+    public static final MethodEnum PHONE_CALL = new MethodEnum("callout");
 
     private static final EnumSupportDynamic<String, MethodEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(MethodEnum.class, MethodEnum::new, Arrays.asList(CALLOUT));
+        new EnumSupportDynamic<>(MethodEnum.class, MethodEnum::new, Arrays.asList(PHONE_CALL));
 
     private MethodEnum(String value) {
       super(value);

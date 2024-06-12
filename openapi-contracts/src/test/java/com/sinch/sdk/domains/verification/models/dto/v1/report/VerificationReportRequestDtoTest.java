@@ -26,7 +26,7 @@ public class VerificationReportRequestDtoTest extends BaseTest {
       new VerificationReportRequestParametersInternalImpl(
           (VerificationReportRequestParametersPhoneCallImpl)
               VerificationReportRequestParametersPhoneCall.builder()
-                  .setMethod(VerificationReportRequestParametersPhoneCall.MethodEnum.CALLOUT)
+                  .setMethod(VerificationReportRequestParametersPhoneCall.MethodEnum.PHONE_CALL)
                   .setCallout(
                       VerificationReportRequestParametersPhoneCallOptions.builder()
                           .setCode("foo code")

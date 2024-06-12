@@ -159,7 +159,7 @@ public class StartVerificationResponseDataImpl
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements StartVerificationResponseData.Builder {
     OptionalValue<String> id = OptionalValue.empty();
-    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.SEAMLESS);
+    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.DATA);
     OptionalValue<List<Link>> links = OptionalValue.empty();
     OptionalValue<StartVerificationResponseDataContent> seamless = OptionalValue.empty();
 
