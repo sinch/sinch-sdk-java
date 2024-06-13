@@ -4,18 +4,18 @@ import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.domains.verification.api.v1.internal.VerificationsStartApi;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationDataRequest;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationFlashCallRequest;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationPhoneCallRequest;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationRequest;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsRequest;
-import com.sinch.sdk.domains.verification.models.v1.start.request.internal.StartVerificationRequestInternalImpl;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponse;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseData;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCall;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponsePhoneCall;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSms;
-import com.sinch.sdk.domains.verification.models.v1.start.response.internal.StartVerificationResponseInternalImpl;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequest;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestData;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestFlashCall;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestPhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms;
+import com.sinch.sdk.domains.verification.models.v1.start.request.internal.VerificationStartRequestInternalImpl;
+import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponse;
+import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseData;
+import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseFlashCall;
+import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponsePhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseSms;
+import com.sinch.sdk.domains.verification.models.v1.start.response.internal.VerificationStartResponseInternalImpl;
 import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
 import java.util.Optional;
@@ -36,38 +36,38 @@ public class VerificationStartService
     return this.api;
   }
 
-  public StartVerificationResponseSms startSms(StartVerificationSmsRequest parameters) {
+  public VerificationStartResponseSms startSms(VerificationStartRequestSms parameters) {
     String acceptLanguage = parameters.getAcceptLanguage();
-    return (StartVerificationResponseSms) start(parameters, acceptLanguage).orElse(null);
+    return (VerificationStartResponseSms) start(parameters, acceptLanguage).orElse(null);
   }
 
-  public StartVerificationResponseFlashCall startFlashCall(
-      StartVerificationFlashCallRequest parameters) {
-    return (StartVerificationResponseFlashCall) start(parameters).orElse(null);
+  public VerificationStartResponseFlashCall startFlashCall(
+      VerificationStartRequestFlashCall parameters) {
+    return (VerificationStartResponseFlashCall) start(parameters).orElse(null);
   }
 
-  public StartVerificationResponsePhoneCall startPhoneCall(
-      StartVerificationPhoneCallRequest parameters) {
-    return (StartVerificationResponsePhoneCall) start(parameters).orElse(null);
+  public VerificationStartResponsePhoneCall startPhoneCall(
+      VerificationStartRequestPhoneCall parameters) {
+    return (VerificationStartResponsePhoneCall) start(parameters).orElse(null);
   }
 
-  public StartVerificationResponseData startData(StartVerificationDataRequest parameters) {
-    return (StartVerificationResponseData) start(parameters).orElse(null);
+  public VerificationStartResponseData startData(VerificationStartRequestData parameters) {
+    return (VerificationStartResponseData) start(parameters).orElse(null);
   }
 
-  private Optional<StartVerificationResponse> start(StartVerificationRequest parameters) {
+  private Optional<VerificationStartResponse> start(VerificationStartRequest parameters) {
     return start(parameters, null);
   }
 
-  private Optional<StartVerificationResponse> start(
-      StartVerificationRequest parameters, String acceptLanguage) {
-    StartVerificationRequestInternalImpl impl = new StartVerificationRequestInternalImpl();
+  private Optional<VerificationStartResponse> start(
+      VerificationStartRequest parameters, String acceptLanguage) {
+    VerificationStartRequestInternalImpl impl = new VerificationStartRequestInternalImpl();
     impl.setActualInstance(parameters);
-    StartVerificationResponseInternalImpl response =
-        (StartVerificationResponseInternalImpl) getApi().startVerification(impl, acceptLanguage);
+    VerificationStartResponseInternalImpl response =
+        (VerificationStartResponseInternalImpl) getApi().startVerification(impl, acceptLanguage);
     if (null == response) {
       return Optional.empty();
     }
-    return Optional.ofNullable((StartVerificationResponse) response.getActualInstance());
+    return Optional.ofNullable((VerificationStartResponse) response.getActualInstance());
   }
 }

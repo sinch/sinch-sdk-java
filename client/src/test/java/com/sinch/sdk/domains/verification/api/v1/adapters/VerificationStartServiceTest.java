@@ -13,17 +13,17 @@ import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.domains.verification.adapters.VerificationBaseTest;
 import com.sinch.sdk.domains.verification.api.v1.internal.VerificationsStartApi;
-import com.sinch.sdk.domains.verification.models.dto.v1.start.StartVerificationRequestTest;
-import com.sinch.sdk.domains.verification.models.dto.v1.start.StartVerificationResponseTest;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationRequest;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsRequest;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsRequestImpl;
-import com.sinch.sdk.domains.verification.models.v1.start.request.internal.StartVerificationRequestInternal;
-import com.sinch.sdk.domains.verification.models.v1.start.request.internal.StartVerificationRequestInternalImpl;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseData;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCall;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponsePhoneCall;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSms;
+import com.sinch.sdk.domains.verification.models.dto.v1.start.VerificationStartRequestTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.start.VerificationStartResponseTest;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequest;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSmsImpl;
+import com.sinch.sdk.domains.verification.models.v1.start.request.internal.VerificationStartRequestInternal;
+import com.sinch.sdk.domains.verification.models.v1.start.request.internal.VerificationStartRequestInternalImpl;
+import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseData;
+import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseFlashCall;
+import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponsePhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseSms;
 import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,17 +33,17 @@ import org.mockito.Mock;
 @TestWithResources
 public class VerificationStartServiceTest extends VerificationBaseTest {
 
-  @GivenJsonResource("/domains/verification/v1/start/StartVerificationPhoneCallRequestDto.json")
-  public StartVerificationRequestInternal startVerificationPhoneCallRequestDto;
+  @GivenJsonResource("/domains/verification/v1/start/VerificationStartRequestPhoneCallDto.json")
+  public VerificationStartRequestInternal startVerificationPhoneCallRequestDto;
 
-  @GivenJsonResource("/domains/verification/v1/start/StartVerificationFlashCallRequestDto.json")
-  public StartVerificationRequestInternal startVerificationFlashCallRequestDto;
+  @GivenJsonResource("/domains/verification/v1/start/VerificationStartRequestFlashCallDto.json")
+  public VerificationStartRequestInternal startVerificationFlashCallRequestDto;
 
-  @GivenJsonResource("/domains/verification/v1/start/StartVerificationDataRequestDto.json")
-  public StartVerificationRequestInternal startVerificationDataRequestDto;
+  @GivenJsonResource("/domains/verification/v1/start/VerificationStartRequestDataDto.json")
+  public VerificationStartRequestInternal startVerificationDataRequestDto;
 
-  @GivenJsonResource("/domains/verification/v1/start/StartVerificationSmsRequestDto.json")
-  public StartVerificationRequestInternal startVerificationSmsRequestDto;
+  @GivenJsonResource("/domains/verification/v1/start/VerificationStartRequestSmsDto.json")
+  public VerificationStartRequestInternal startVerificationSmsRequestDto;
 
   @Mock VerificationsStartApi api;
   @Mock VerificationContext context;
@@ -63,26 +63,26 @@ public class VerificationStartServiceTest extends VerificationBaseTest {
   void startSms() throws ApiException {
 
     when(api.startVerification(eq(startVerificationSmsRequestDto), eq(null)))
-        .thenReturn(StartVerificationResponseTest.expectedStartVerificationSmsDto);
+        .thenReturn(VerificationStartResponseTest.expectedStartVerificationSmsDto);
 
-    StartVerificationResponseSms response =
+    VerificationStartResponseSms response =
         service.startSms(
-            StartVerificationRequestTest.startVerificationSmsDto
-                .getStartVerificationSmsRequestImpl());
+            VerificationStartRequestTest.startVerificationSmsDto
+                .getVerificationStartRequestSmsImpl());
 
     TestHelpers.recursiveEquals(
         response,
-        StartVerificationResponseTest.expectedStartVerificationSmsDto.getActualInstance());
+        VerificationStartResponseTest.expectedStartVerificationSmsDto.getActualInstance());
   }
 
   @Test
   void startSmsWithAcceptLanguage() throws ApiException {
 
-    StartVerificationSmsRequestImpl startVerificationSmsRequestDtoImpl =
-        ((StartVerificationRequestInternalImpl) startVerificationSmsRequestDto)
-            .getStartVerificationSmsRequestImpl();
-    StartVerificationRequest withAcceptLanguage =
-        StartVerificationSmsRequest.builder()
+    VerificationStartRequestSmsImpl startVerificationSmsRequestDtoImpl =
+        ((VerificationStartRequestInternalImpl) startVerificationSmsRequestDto)
+            .getVerificationStartRequestSmsImpl();
+    VerificationStartRequest withAcceptLanguage =
+        VerificationStartRequestSms.builder()
             .setIdentity(startVerificationSmsRequestDtoImpl.getIdentity())
             .setReference(startVerificationSmsRequestDtoImpl.getReference())
             .setCustom(startVerificationSmsRequestDtoImpl.getCustom())
@@ -91,70 +91,72 @@ public class VerificationStartServiceTest extends VerificationBaseTest {
             .setTemplate(startVerificationSmsRequestDtoImpl.getTemplate())
             .setAcceptLanguage("es-ES")
             .build();
-    StartVerificationRequestInternalImpl internalWithAcceptLanguage =
-        new StartVerificationRequestInternalImpl();
+    VerificationStartRequestInternalImpl internalWithAcceptLanguage =
+        new VerificationStartRequestInternalImpl();
     internalWithAcceptLanguage.setActualInstance(withAcceptLanguage);
 
     when(api.startVerification(eq(internalWithAcceptLanguage), eq("es-ES")))
-        .thenReturn(StartVerificationResponseTest.expectedStartVerificationSmsDto);
+        .thenReturn(VerificationStartResponseTest.expectedStartVerificationSmsDto);
 
-    StartVerificationResponseSms response =
+    VerificationStartResponseSms response =
         service.startSms(
-            StartVerificationRequestTest.startVerificationSmsDtoWithAcceptLanguage
-                .getStartVerificationSmsRequestImpl());
+            VerificationStartRequestTest.startVerificationSmsDtoWithAcceptLanguage
+                .getVerificationStartRequestSmsImpl());
 
     TestHelpers.recursiveEquals(
         response,
-        StartVerificationResponseTest.expectedStartVerificationSmsDto.getActualInstance());
+        VerificationStartResponseTest.expectedStartVerificationSmsDto
+            .getVerificationStartResponseSmsImpl());
   }
 
   @Test
   void startFlashCall() throws ApiException {
 
     when(api.startVerification(eq(startVerificationFlashCallRequestDto), eq(null)))
-        .thenReturn(StartVerificationResponseTest.expectedStartVerificationFlashCallDto);
+        .thenReturn(VerificationStartResponseTest.expectedStartVerificationFlashCallDto);
 
-    StartVerificationResponseFlashCall response =
+    VerificationStartResponseFlashCall response =
         service.startFlashCall(
-            StartVerificationRequestTest.startVerificationFlashCallDto
-                .getStartVerificationFlashCallRequestImpl());
+            VerificationStartRequestTest.startVerificationFlashCallDto
+                .getVerificationStartRequestFlashCallImpl());
 
     TestHelpers.recursiveEquals(
         response,
-        StartVerificationResponseTest.expectedStartVerificationFlashCallDto.getActualInstance());
+        VerificationStartResponseTest.expectedStartVerificationFlashCallDto
+            .getVerificationStartResponseFlashCallImpl());
   }
 
   @Test
   void startPhoneCall() throws ApiException {
 
     when(api.startVerification(eq(startVerificationPhoneCallRequestDto), eq(null)))
-        .thenReturn(StartVerificationResponseTest.expectedStartVerificationPhoneCallDto);
+        .thenReturn(VerificationStartResponseTest.expectedStartVerificationPhoneCallDto);
 
-    StartVerificationResponsePhoneCall response =
+    VerificationStartResponsePhoneCall response =
         service.startPhoneCall(
-            StartVerificationRequestTest.startVerificationPhoneCallDto
-                .getStartVerificationPhoneCallRequestImpl());
+            VerificationStartRequestTest.startVerificationPhoneCallDto
+                .getVerificationStartRequestPhoneCallImpl());
 
     TestHelpers.recursiveEquals(
         response,
-        StartVerificationResponseTest.expectedStartVerificationPhoneCallDto
-            .getStartVerificationResponsePhoneCallImpl());
+        VerificationStartResponseTest.expectedStartVerificationPhoneCallDto
+            .getVerificationStartResponsePhoneCallImpl());
   }
 
   @Test
   void startData() throws ApiException {
 
     when(api.startVerification(eq(startVerificationDataRequestDto), eq(null)))
-        .thenReturn(StartVerificationResponseTest.expectedStartVerificationDataDto);
+        .thenReturn(VerificationStartResponseTest.expectedStartVerificationDataDto);
 
-    StartVerificationResponseData response =
+    VerificationStartResponseData response =
         service.startData(
-            StartVerificationRequestTest.startVerificationDataDto
-                .getStartVerificationDataRequestImpl());
+            VerificationStartRequestTest.startVerificationDataDto
+                .getVerificationStartRequestDataImpl());
 
     TestHelpers.recursiveEquals(
         response,
-        StartVerificationResponseTest.expectedStartVerificationDataDto
-            .getStartVerificationResponseDataImpl());
+        VerificationStartResponseTest.expectedStartVerificationDataDto
+            .getVerificationStartResponseDataImpl());
   }
 }

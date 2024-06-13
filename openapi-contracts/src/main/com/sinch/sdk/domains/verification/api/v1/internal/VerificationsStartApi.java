@@ -24,8 +24,8 @@ import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.domains.verification.models.v1.start.request.internal.StartVerificationRequestInternal;
-import com.sinch.sdk.domains.verification.models.v1.start.response.internal.StartVerificationResponseInternal;
+import com.sinch.sdk.domains.verification.models.v1.start.request.internal.VerificationStartRequestInternal;
+import com.sinch.sdk.domains.verification.models.v1.start.response.internal.VerificationStartResponseInternal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -58,35 +58,35 @@ public class VerificationsStartApi {
    * verification. It can also be used to request a verification from your backend, by making an
    * request.
    *
-   * @param startVerificationRequestInternal (required)
+   * @param verificationStartRequestInternal (required)
    * @param acceptLanguage In SMS Verification, value of
    *     [Accept-Language](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language)
    *     header is used to determine the languge of an SMS message. (optional)
-   * @return StartVerificationResponseInternal
+   * @return VerificationStartResponseInternal
    * @throws ApiException if fails to make API call
    */
-  public StartVerificationResponseInternal startVerification(
-      StartVerificationRequestInternal startVerificationRequestInternal, String acceptLanguage)
+  public VerificationStartResponseInternal startVerification(
+      VerificationStartRequestInternal verificationStartRequestInternal, String acceptLanguage)
       throws ApiException {
 
     LOGGER.finest(
         "[startVerification]"
             + " "
-            + "startVerificationRequestInternal: "
-            + startVerificationRequestInternal
+            + "verificationStartRequestInternal: "
+            + verificationStartRequestInternal
             + ", "
             + "acceptLanguage: "
             + acceptLanguage);
 
     HttpRequest httpRequest =
-        startVerificationRequestBuilder(startVerificationRequestInternal, acceptLanguage);
+        startVerificationRequestBuilder(verificationStartRequestInternal, acceptLanguage);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<StartVerificationResponseInternal> localVarReturnType =
-          new TypeReference<StartVerificationResponseInternal>() {};
+      TypeReference<VerificationStartResponseInternal> localVarReturnType =
+          new TypeReference<VerificationStartResponseInternal>() {};
       return mapper.deserialize(response, localVarReturnType);
     }
     // fallback to default errors handling:
@@ -99,13 +99,13 @@ public class VerificationsStartApi {
   }
 
   private HttpRequest startVerificationRequestBuilder(
-      StartVerificationRequestInternal startVerificationRequestInternal, String acceptLanguage)
+      VerificationStartRequestInternal verificationStartRequestInternal, String acceptLanguage)
       throws ApiException {
-    // verify the required parameter 'startVerificationRequestInternal' is set
-    if (startVerificationRequestInternal == null) {
+    // verify the required parameter 'verificationStartRequestInternal' is set
+    if (verificationStartRequestInternal == null) {
       throw new ApiException(
           400,
-          "Missing the required parameter 'startVerificationRequestInternal' when calling"
+          "Missing the required parameter 'verificationStartRequestInternal' when calling"
               + " startVerification");
     }
 
@@ -122,7 +122,7 @@ public class VerificationsStartApi {
 
     final Collection<String> localVarAuthNames = Arrays.asList("Basic", "Application");
     final String serializedBody =
-        mapper.serialize(localVarContentTypes, startVerificationRequestInternal);
+        mapper.serialize(localVarContentTypes, verificationStartRequestInternal);
 
     return new HttpRequest(
         localVarPath,

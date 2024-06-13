@@ -1,21 +1,21 @@
 package com.sinch.sdk.domains.verification.api.v1;
 
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationDataRequest;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationFlashCallRequest;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationPhoneCallRequest;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsRequest;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseData;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCall;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponsePhoneCall;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSms;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestData;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestFlashCall;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestPhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms;
+import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseData;
+import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseFlashCall;
+import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponsePhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseSms;
 
 public interface VerificationStartService {
 
-  StartVerificationResponseSms startSms(StartVerificationSmsRequest parameters);
+  VerificationStartResponseSms startSms(VerificationStartRequestSms parameters);
 
-  StartVerificationResponseFlashCall startFlashCall(StartVerificationFlashCallRequest parameters);
+  VerificationStartResponseFlashCall startFlashCall(VerificationStartRequestFlashCall parameters);
 
-  StartVerificationResponsePhoneCall startPhoneCall(StartVerificationPhoneCallRequest parameters);
+  VerificationStartResponsePhoneCall startPhoneCall(VerificationStartRequestPhoneCall parameters);
 
-  StartVerificationResponseData startData(StartVerificationDataRequest parameters);
+  VerificationStartResponseData startData(VerificationStartRequestData parameters);
 }

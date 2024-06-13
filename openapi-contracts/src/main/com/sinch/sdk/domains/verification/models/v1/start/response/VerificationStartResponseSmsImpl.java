@@ -1,0 +1,227 @@
+package com.sinch.sdk.domains.verification.models.v1.start.response;
+
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.v1.start.response.internal.VerificationStartResponseSmsContent;
+import java.util.List;
+import java.util.Objects;
+
+@JsonPropertyOrder({
+  VerificationStartResponseSmsImpl.JSON_PROPERTY_ID,
+  VerificationStartResponseSmsImpl.JSON_PROPERTY_METHOD,
+  VerificationStartResponseSmsImpl.JSON_PROPERTY_LINKS,
+  VerificationStartResponseSmsImpl.JSON_PROPERTY_SMS
+})
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
+public class VerificationStartResponseSmsImpl
+    implements VerificationStartResponseSms,
+        com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponse {
+  private static final long serialVersionUID = 1L;
+
+  public static final String JSON_PROPERTY_ID = "id";
+
+  private OptionalValue<String> id;
+
+  public static final String JSON_PROPERTY_METHOD = "method";
+
+  private OptionalValue<VerificationMethod> method;
+
+  public static final String JSON_PROPERTY_LINKS = "_links";
+
+  private OptionalValue<List<Link>> links;
+
+  public static final String JSON_PROPERTY_SMS = "sms";
+
+  private OptionalValue<VerificationStartResponseSmsContent> sms;
+
+  public VerificationStartResponseSmsImpl() {}
+
+  protected VerificationStartResponseSmsImpl(
+      OptionalValue<String> id,
+      OptionalValue<VerificationMethod> method,
+      OptionalValue<List<Link>> links,
+      OptionalValue<VerificationStartResponseSmsContent> sms) {
+    this.id = id;
+    this.method = method;
+    this.links = links;
+    this.sms = sms;
+  }
+
+  @JsonIgnore
+  public String getId() {
+    return id.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_ID)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<String> id() {
+    return id;
+  }
+
+  @JsonIgnore
+  public VerificationMethod getMethod() {
+    return method.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_METHOD)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<VerificationMethod> method() {
+    return method;
+  }
+
+  @JsonIgnore
+  public List<Link> getLinks() {
+    return links.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_LINKS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<List<Link>> links() {
+    return links;
+  }
+
+  @JsonIgnore
+  public VerificationStartResponseSmsContent getSms() {
+    return sms.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_SMS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<VerificationStartResponseSmsContent> sms() {
+    return sms;
+  }
+
+  @JsonIgnore
+  public String getTemplate() {
+    if (null == sms || !sms.isPresent() || null == sms.get().getTemplate()) {
+      return null;
+    }
+    return sms.get().getTemplate();
+  }
+
+  public OptionalValue<String> template() {
+    return null != sms
+        ? sms.map(VerificationStartResponseSmsContent::getTemplate)
+        : OptionalValue.empty();
+  }
+
+  @JsonIgnore
+  public Integer getInterceptionTimeout() {
+    if (null == sms || !sms.isPresent() || null == sms.get().getInterceptionTimeout()) {
+      return null;
+    }
+    return sms.get().getInterceptionTimeout();
+  }
+
+  public OptionalValue<Integer> interceptionTimeout() {
+    return null != sms
+        ? sms.map(VerificationStartResponseSmsContent::getInterceptionTimeout)
+        : OptionalValue.empty();
+  }
+
+  /** Return true if this VerificationStartResponseSms object is equal to o. */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    VerificationStartResponseSmsImpl verificationStartResponseSms =
+        (VerificationStartResponseSmsImpl) o;
+    return Objects.equals(this.id, verificationStartResponseSms.id)
+        && Objects.equals(this.method, verificationStartResponseSms.method)
+        && Objects.equals(this.links, verificationStartResponseSms.links)
+        && Objects.equals(this.sms, verificationStartResponseSms.sms);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, method, links, sms);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class VerificationStartResponseSmsImpl {\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    method: ").append(toIndentedString(method)).append("\n");
+    sb.append("    links: ").append(toIndentedString(links)).append("\n");
+    sb.append("    sms: ").append(toIndentedString(sms)).append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
+
+  @JsonPOJOBuilder(withPrefix = "set")
+  static class Builder implements VerificationStartResponseSms.Builder {
+    OptionalValue<String> id = OptionalValue.empty();
+    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.SMS);
+    OptionalValue<List<Link>> links = OptionalValue.empty();
+    OptionalValue<VerificationStartResponseSmsContent> sms = OptionalValue.empty();
+
+    VerificationStartResponseSmsContent.Builder _delegatedBuilder = null;
+
+    @JsonProperty(JSON_PROPERTY_ID)
+    public Builder setId(String id) {
+      this.id = OptionalValue.of(id);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_LINKS)
+    public Builder setLinks(List<Link> links) {
+      this.links = OptionalValue.of(links);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_SMS)
+    public Builder setSms(VerificationStartResponseSmsContent sms) {
+      this.sms = OptionalValue.of(sms);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setTemplate(String template) {
+      getDelegatedBuilder().setTemplate(template);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setInterceptionTimeout(Integer interceptionTimeout) {
+      getDelegatedBuilder().setInterceptionTimeout(interceptionTimeout);
+      return this;
+    }
+
+    private VerificationStartResponseSmsContent.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = VerificationStartResponseSmsContent.builder();
+      }
+      return this._delegatedBuilder;
+    }
+
+    public VerificationStartResponseSms build() {
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.sms = OptionalValue.of(this._delegatedBuilder.build());
+      }
+      return new VerificationStartResponseSmsImpl(id, method, links, sms);
+    }
+  }
+}

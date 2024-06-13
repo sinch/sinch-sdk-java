@@ -9,11 +9,11 @@ import com.sinch.sdk.domains.verification.models.response.StartVerificationRespo
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSMS;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSeamless;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationDataRequest;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationFlashCallRequest;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationPhoneCallRequest;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsRequest;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSms;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestData;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestFlashCall;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestPhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms;
+import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseSms;
 
 public class VerificationsStartService {
 
@@ -26,38 +26,38 @@ public class VerificationsStartService {
 
   public StartVerificationResponseSMS startSms(StartVerificationSMSRequestParameters parameters) {
 
-    StartVerificationResponseSms response =
-        v1.startSms((StartVerificationSmsRequest) VerificationsDtoConverter.convert(parameters));
+    VerificationStartResponseSms response =
+        v1.startSms((VerificationStartRequestSms) VerificationsDtoConverter.convert(parameters));
     return (StartVerificationResponseSMS) VerificationsDtoConverter.convert(response);
   }
 
   public StartVerificationResponseFlashCall startFlashCall(
       StartVerificationFlashCallRequestParameters parameters) {
 
-    com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCall
+    com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseFlashCall
         response =
             v1.startFlashCall(
-                (StartVerificationFlashCallRequest) VerificationsDtoConverter.convert(parameters));
+                (VerificationStartRequestFlashCall) VerificationsDtoConverter.convert(parameters));
     return (StartVerificationResponseFlashCall) VerificationsDtoConverter.convert(response);
   }
 
   public StartVerificationResponseCallout startCallout(
       StartVerificationCalloutRequestParameters parameters) {
 
-    com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponsePhoneCall
+    com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponsePhoneCall
         response =
             v1.startPhoneCall(
-                (StartVerificationPhoneCallRequest) VerificationsDtoConverter.convert(parameters));
+                (VerificationStartRequestPhoneCall) VerificationsDtoConverter.convert(parameters));
     return (StartVerificationResponseCallout) VerificationsDtoConverter.convert(response);
   }
 
   public StartVerificationResponseSeamless startSeamless(
       StartVerificationSeamlessRequestParameters parameters) {
 
-    com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseData
+    com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseData
         response =
             v1.startData(
-                (StartVerificationDataRequest) VerificationsDtoConverter.convert(parameters));
+                (VerificationStartRequestData) VerificationsDtoConverter.convert(parameters));
     return (StartVerificationResponseSeamless) VerificationsDtoConverter.convert(response);
   }
 }
