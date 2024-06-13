@@ -4,43 +4,52 @@ import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
-import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
-import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponse;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseFlashCall;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseFlashCallImpl;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponsePhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponsePhoneCallImpl;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseSms;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseSmsImpl;
+import com.sinch.sdk.domains.verification.models.v1.report.response.internal.VerificationReportResponseInternal;
+import com.sinch.sdk.domains.verification.models.v1.report.response.internal.VerificationReportResponseInternalImpl;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
 public class VerificationReportResponseDtoTest extends BaseTest {
 
   @GivenJsonResource("/domains/verification/v1/report/VerificationReportPhoneCallResponseDto.json")
-  VerificationReportResponse expectedVerificationReportPhoneCall;
+  VerificationReportResponseInternal expectedVerificationReportPhoneCall;
 
-  public static VerificationReportResponse verificationReportPhoneCallDto =
-      VerificationReportResponse.builder()
-          .setMethod(VerificationMethod.PHONE_CALL)
-          .setId("the id")
-          .setStatus(VerificationStatus.FAIL)
-          .build();
+  public static VerificationReportResponseInternalImpl verificationReportPhoneCallDto =
+      new VerificationReportResponseInternalImpl(
+          (VerificationReportResponsePhoneCallImpl)
+              VerificationReportResponsePhoneCall.builder()
+                  .setId("the id")
+                  .setStatus(VerificationStatus.FAIL)
+                  .build());
 
   @GivenJsonResource("/domains/verification/v1/report/VerificationReportFlashCallResponseDto.json")
-  VerificationReportResponse expectedVerificationReportFlashCall;
+  VerificationReportResponseInternal expectedVerificationReportFlashCall;
 
-  public static VerificationReportResponse verificationReportFlashCallDto =
-      VerificationReportResponse.builder()
-          .setMethod(VerificationMethod.FLASHCALL)
-          .setId("the id")
-          .setStatus(VerificationStatus.FAIL)
-          .build();
+  public static VerificationReportResponseInternalImpl verificationReportFlashCallDto =
+      new VerificationReportResponseInternalImpl(
+          (VerificationReportResponseFlashCallImpl)
+              VerificationReportResponseFlashCall.builder()
+                  .setId("the id")
+                  .setStatus(VerificationStatus.FAIL)
+                  .build());
 
   @GivenJsonResource("/domains/verification/v1/report/VerificationReportSmsResponseDto.json")
-  VerificationReportResponse expectedVerificationReportSms;
+  VerificationReportResponseInternal expectedVerificationReportSms;
 
-  public static VerificationReportResponse verificationReportSmsDto =
-      VerificationReportResponse.builder()
-          .setMethod(VerificationMethod.SMS)
-          .setId("the id")
-          .setStatus(VerificationStatus.FAIL)
-          .build();
+  public static VerificationReportResponseInternalImpl verificationReportSmsDto =
+      new VerificationReportResponseInternalImpl(
+          (VerificationReportResponseSmsImpl)
+              VerificationReportResponseSms.builder()
+                  .setId("the id")
+                  .setStatus(VerificationStatus.FAIL)
+                  .build());
 
   @Test
   void deserializePhoneCall() {

@@ -12,11 +12,15 @@
 
 package com.sinch.sdk.domains.verification.models.v1.report.response;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
 
 /** declaration */
-public interface VerificationReportResponse {
+@JsonDeserialize(builder = VerificationReportResponsePhoneCallImpl.Builder.class)
+public interface VerificationReportResponsePhoneCall
+    extends com.sinch.sdk.domains.verification.models.v1.report.response
+        .VerificationReportResponse {
 
   /**
    * The unique ID of the verification request.
@@ -39,8 +43,26 @@ public interface VerificationReportResponse {
    */
   VerificationStatusReason getReason();
 
+  /**
+   * Displays if the call was completed successfully.
+   *
+   * @return callComplete
+   */
+  Boolean getCallComplete();
+
+  /**
+   * Getting builder
+   *
+   * @return New Builder instance
+   */
+  static Builder builder() {
+    return new VerificationReportResponsePhoneCallImpl.Builder();
+  }
+
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder
+      extends com.sinch.sdk.domains.verification.models.v1.report.response
+          .VerificationReportResponse.Builder {
 
     /**
      * see getter
@@ -70,10 +92,19 @@ public interface VerificationReportResponse {
     Builder setReason(VerificationStatusReason reason);
 
     /**
+     * see getter
+     *
+     * @param callComplete see getter
+     * @return Current builder
+     * @see #getCallComplete
+     */
+    Builder setCallComplete(Boolean callComplete);
+
+    /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    VerificationReportResponse build();
+    VerificationReportResponsePhoneCall build();
   }
 }

@@ -26,7 +26,9 @@ public class VerificationService
 
   private final VerificationContext context;
   private final HttpClient httpClient;
-  private com.sinch.sdk.domains.verification.api.v1.VerificationStartService startService;
+  private VerificationStartService startService;
+  private VerificationReportService reportService;
+
   private Map<String, AuthManager> clientAuthManagers;
   private Map<String, AuthManager> webhooksAuthManagers;
 
@@ -87,14 +89,20 @@ public class VerificationService
         APPLICATION_SECURITY_SCHEME_KEYWORD_VERIFICATION, applicationAuthManager);
   }
 
-  public com.sinch.sdk.domains.verification.api.v1.VerificationStartService start() {
+  public VerificationStartService verificationStart() {
     if (null == this.startService) {
       checkCredentials();
-      this.startService =
-          new com.sinch.sdk.domains.verification.api.v1.adapters.VerificationStartService(
-              context, httpClient, clientAuthManagers);
+      this.startService = new VerificationStartService(context, httpClient, clientAuthManagers);
     }
     return this.startService;
+  }
+
+  public VerificationReportService verificationReport() {
+    if (null == this.reportService) {
+      checkCredentials();
+      this.reportService = new VerificationReportService(context, httpClient, clientAuthManagers);
+    }
+    return this.reportService;
   }
 
   private void checkCredentials() throws ApiAuthException {

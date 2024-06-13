@@ -13,15 +13,17 @@ import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  VerificationReportResponseImpl.JSON_PROPERTY_ID,
-  VerificationReportResponseImpl.JSON_PROPERTY_METHOD,
-  VerificationReportResponseImpl.JSON_PROPERTY_STATUS,
-  VerificationReportResponseImpl.JSON_PROPERTY_REASON,
-  VerificationReportResponseImpl.JSON_PROPERTY_CALL_COMPLETE
+  VerificationReportResponseFlashCallImpl.JSON_PROPERTY_ID,
+  VerificationReportResponseFlashCallImpl.JSON_PROPERTY_METHOD,
+  VerificationReportResponseFlashCallImpl.JSON_PROPERTY_STATUS,
+  VerificationReportResponseFlashCallImpl.JSON_PROPERTY_REASON,
+  VerificationReportResponseFlashCallImpl.JSON_PROPERTY_CALL_COMPLETE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class VerificationReportResponseImpl implements VerificationReportResponse {
+public class VerificationReportResponseFlashCallImpl
+    implements VerificationReportResponseFlashCall,
+        com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponse {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ID = "id";
@@ -44,9 +46,9 @@ public class VerificationReportResponseImpl implements VerificationReportRespons
 
   private OptionalValue<Boolean> callComplete;
 
-  public VerificationReportResponseImpl() {}
+  public VerificationReportResponseFlashCallImpl() {}
 
-  protected VerificationReportResponseImpl(
+  protected VerificationReportResponseFlashCallImpl(
       OptionalValue<String> id,
       OptionalValue<VerificationMethod> method,
       OptionalValue<VerificationStatus> status,
@@ -76,7 +78,7 @@ public class VerificationReportResponseImpl implements VerificationReportRespons
   }
 
   @JsonProperty(JSON_PROPERTY_METHOD)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<VerificationMethod> method() {
     return method;
   }
@@ -114,7 +116,7 @@ public class VerificationReportResponseImpl implements VerificationReportRespons
     return callComplete;
   }
 
-  /** Return true if this VerificationReportResponse object is equal to o. */
+  /** Return true if this VerificationReportResponseFlashCall object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -123,12 +125,13 @@ public class VerificationReportResponseImpl implements VerificationReportRespons
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerificationReportResponseImpl verificationReportResponse = (VerificationReportResponseImpl) o;
-    return Objects.equals(this.id, verificationReportResponse.id)
-        && Objects.equals(this.method, verificationReportResponse.method)
-        && Objects.equals(this.status, verificationReportResponse.status)
-        && Objects.equals(this.reason, verificationReportResponse.reason)
-        && Objects.equals(this.callComplete, verificationReportResponse.callComplete);
+    VerificationReportResponseFlashCallImpl verificationReportResponseFlashCall =
+        (VerificationReportResponseFlashCallImpl) o;
+    return Objects.equals(this.id, verificationReportResponseFlashCall.id)
+        && Objects.equals(this.method, verificationReportResponseFlashCall.method)
+        && Objects.equals(this.status, verificationReportResponseFlashCall.status)
+        && Objects.equals(this.reason, verificationReportResponseFlashCall.reason)
+        && Objects.equals(this.callComplete, verificationReportResponseFlashCall.callComplete);
   }
 
   @Override
@@ -139,7 +142,7 @@ public class VerificationReportResponseImpl implements VerificationReportRespons
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VerificationReportResponseImpl {\n");
+    sb.append("class VerificationReportResponseFlashCallImpl {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    method: ").append(toIndentedString(method)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
@@ -160,9 +163,9 @@ public class VerificationReportResponseImpl implements VerificationReportRespons
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements VerificationReportResponse.Builder {
+  static class Builder implements VerificationReportResponseFlashCall.Builder {
     OptionalValue<String> id = OptionalValue.empty();
-    OptionalValue<VerificationMethod> method = OptionalValue.empty();
+    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.FLASHCALL);
     OptionalValue<VerificationStatus> status = OptionalValue.empty();
     OptionalValue<VerificationStatusReason> reason = OptionalValue.empty();
     OptionalValue<Boolean> callComplete = OptionalValue.empty();
@@ -170,12 +173,6 @@ public class VerificationReportResponseImpl implements VerificationReportRespons
     @JsonProperty(JSON_PROPERTY_ID)
     public Builder setId(String id) {
       this.id = OptionalValue.of(id);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_METHOD)
-    public Builder setMethod(VerificationMethod method) {
-      this.method = OptionalValue.of(method);
       return this;
     }
 
@@ -197,8 +194,8 @@ public class VerificationReportResponseImpl implements VerificationReportRespons
       return this;
     }
 
-    public VerificationReportResponse build() {
-      return new VerificationReportResponseImpl(id, method, status, reason, callComplete);
+    public VerificationReportResponseFlashCall build() {
+      return new VerificationReportResponseFlashCallImpl(id, method, status, reason, callComplete);
     }
   }
 }

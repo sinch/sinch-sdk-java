@@ -1,63 +1,54 @@
 package com.sinch.sdk.domains.verification.adapters;
 
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
-import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.core.http.AuthManager;
-import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.domains.verification.adapters.converters.VerificationsDtoConverterTest;
-import com.sinch.sdk.domains.verification.api.v1.internal.VerificationsReportApi;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationReportCallout;
 import com.sinch.sdk.domains.verification.models.VerificationReportFlashCall;
 import com.sinch.sdk.domains.verification.models.VerificationReportSMS;
 import com.sinch.sdk.domains.verification.models.dto.v1.report.VerificationReportResponseDtoTest;
-import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestInternal;
-import com.sinch.sdk.models.VerificationContext;
-import java.util.Map;
+import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestInternalImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 @TestWithResources
-public class VerificationsReportServiceTest extends BaseTest {
+public class VerificationsReportServiceTest extends VerificationBaseTest {
 
   @GivenJsonResource("/domains/verification/v1/report/VerificationReportPhoneCallRequestDto.json")
-  public VerificationReportRequestInternal verificationReportPhoneCallRequestDto;
+  public VerificationReportRequestInternalImpl verificationReportPhoneCallRequestDto;
 
   @GivenJsonResource("/domains/verification/v1/report/VerificationReportFlashCallRequestDto.json")
-  public VerificationReportRequestInternal verificationReportFlashCallRequestDto;
+  public VerificationReportRequestInternalImpl verificationReportFlashCallRequestDto;
 
   @GivenJsonResource("/domains/verification/v1/report/VerificationReportSmsRequestDto.json")
-  public VerificationReportRequestInternal verificationReportSmsRequestDto;
+  public VerificationReportRequestInternalImpl verificationReportSmsRequestDto;
 
-  @Mock VerificationsReportApi api;
-  @Mock VerificationContext context;
-  @Mock HttpClient httpClient;
-  @Mock Map<String, AuthManager> authManagers;
-
+  @Mock com.sinch.sdk.domains.verification.api.v1.VerificationReportService v1;
   VerificationsReportService service;
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new VerificationsReportService(context, httpClient, authManagers));
-    doReturn(api).when(service).getApi();
+    service = spy(new VerificationsReportService(v1));
   }
 
   @Test
   void reportSmsByIdentity() throws ApiException {
 
-    when(api.reportVerificationByIdentity(
-            eq("endpoint string"), eq(verificationReportSmsRequestDto)))
-        .thenReturn(VerificationReportResponseDtoTest.verificationReportSmsDto);
+    when(v1.reportSmsByIdentity(
+            eq(NumberIdentity.valueOf("endpoint string")),
+            eq(verificationReportSmsRequestDto.getVerificationReportRequestSmsImpl())))
+        .thenReturn(
+            VerificationReportResponseDtoTest.verificationReportSmsDto
+                .getVerificationReportResponseSmsImpl());
 
     VerificationReportSMS response =
         service.reportSmsByIdentity(
@@ -71,9 +62,12 @@ public class VerificationsReportServiceTest extends BaseTest {
   @Test
   void reportFlashCallByIdentity() throws ApiException {
 
-    when(api.reportVerificationByIdentity(
-            eq("endpoint string"), eq(verificationReportFlashCallRequestDto)))
-        .thenReturn(VerificationReportResponseDtoTest.verificationReportFlashCallDto);
+    when(v1.reportFlashCallByIdentity(
+            eq(NumberIdentity.valueOf("endpoint string")),
+            eq(verificationReportFlashCallRequestDto.getVerificationReportRequestFlashCallImpl())))
+        .thenReturn(
+            VerificationReportResponseDtoTest.verificationReportFlashCallDto
+                .getVerificationReportResponseFlashCallImpl());
 
     VerificationReportFlashCall response =
         service.reportFlashCallByIdentity(
@@ -87,9 +81,12 @@ public class VerificationsReportServiceTest extends BaseTest {
   @Test
   void reportPhoneCallByIdentity() throws ApiException {
 
-    when(api.reportVerificationByIdentity(
-            eq("endpoint string"), eq(verificationReportPhoneCallRequestDto)))
-        .thenReturn(VerificationReportResponseDtoTest.verificationReportPhoneCallDto);
+    when(v1.reportPhoneCallByIdentity(
+            eq(NumberIdentity.valueOf("endpoint string")),
+            eq(verificationReportPhoneCallRequestDto.getVerificationReportRequestPhoneCallImpl())))
+        .thenReturn(
+            VerificationReportResponseDtoTest.verificationReportPhoneCallDto
+                .getVerificationReportResponsePhoneCallImpl());
 
     VerificationReportCallout response =
         service.reportCalloutByIdentity(
@@ -103,8 +100,12 @@ public class VerificationsReportServiceTest extends BaseTest {
   @Test
   void reportSmsById() throws ApiException {
 
-    when(api.reportVerificationById(eq("the id"), eq(verificationReportSmsRequestDto)))
-        .thenReturn(VerificationReportResponseDtoTest.verificationReportSmsDto);
+    when(v1.reportSmsById(
+            eq("the id"),
+            eq(verificationReportSmsRequestDto.getVerificationReportRequestSmsImpl())))
+        .thenReturn(
+            VerificationReportResponseDtoTest.verificationReportSmsDto
+                .getVerificationReportResponseSmsImpl());
 
     VerificationReportSMS response =
         service.reportSmsById(
@@ -118,8 +119,12 @@ public class VerificationsReportServiceTest extends BaseTest {
   @Test
   void reportFlashCallById() throws ApiException {
 
-    when(api.reportVerificationById(eq("the id"), eq(verificationReportFlashCallRequestDto)))
-        .thenReturn(VerificationReportResponseDtoTest.verificationReportFlashCallDto);
+    when(v1.reportFlashCallById(
+            eq("the id"),
+            eq(verificationReportFlashCallRequestDto.getVerificationReportRequestFlashCallImpl())))
+        .thenReturn(
+            VerificationReportResponseDtoTest.verificationReportFlashCallDto
+                .getVerificationReportResponseFlashCallImpl());
 
     VerificationReportFlashCall response =
         service.reportFlashCallById(
@@ -133,8 +138,12 @@ public class VerificationsReportServiceTest extends BaseTest {
   @Test
   void reportPhoneCallById() throws ApiException {
 
-    when(api.reportVerificationById(eq("the id"), eq(verificationReportPhoneCallRequestDto)))
-        .thenReturn(VerificationReportResponseDtoTest.verificationReportPhoneCallDto);
+    when(v1.reportPhoneCallById(
+            eq("the id"),
+            eq(verificationReportPhoneCallRequestDto.getVerificationReportRequestPhoneCallImpl())))
+        .thenReturn(
+            VerificationReportResponseDtoTest.verificationReportPhoneCallDto
+                .getVerificationReportResponsePhoneCallImpl());
 
     VerificationReportCallout response =
         service.reportCalloutById(

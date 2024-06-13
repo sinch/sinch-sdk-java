@@ -218,7 +218,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         VerificationsDtoConverter.convert(verificationReportPhoneCallRequest),
-        VerificationReportRequestDtoTest.verificationReportPhoneCallDto);
+        VerificationReportRequestDtoTest.verificationReportPhoneCallDto
+            .getVerificationReportRequestPhoneCallImpl());
   }
 
   @Test
@@ -226,7 +227,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         VerificationsDtoConverter.convert(
-            VerificationReportResponseDtoTest.verificationReportPhoneCallDto),
+            VerificationReportResponseDtoTest.verificationReportPhoneCallDto
+                .getVerificationReportResponsePhoneCallImpl()),
         expectedVerificationReportPhoneCallResponse);
   }
 
@@ -275,7 +277,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         VerificationsDtoConverter.convert(verificationReportFlashCallRequest),
-        VerificationReportRequestDtoTest.verificationReportFlashCallDto);
+        VerificationReportRequestDtoTest.verificationReportFlashCallDto
+            .getVerificationReportRequestFlashCallImpl());
   }
 
   @Test
@@ -283,7 +286,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         VerificationsDtoConverter.convert(
-            VerificationReportResponseDtoTest.verificationReportFlashCallDto),
+            VerificationReportResponseDtoTest.verificationReportFlashCallDto
+                .getVerificationReportResponseFlashCallImpl()),
         expectedVerificationReportFlashCallResponse);
   }
 
@@ -329,7 +333,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         VerificationsDtoConverter.convert(verificationReportSmsRequest),
-        VerificationReportRequestDtoTest.verificationReportSmsDto);
+        VerificationReportRequestDtoTest.verificationReportSmsDto
+            .getVerificationReportRequestSmsImpl());
   }
 
   @Test
@@ -337,7 +342,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         VerificationsDtoConverter.convert(
-            VerificationReportResponseDtoTest.verificationReportSmsDto),
+            VerificationReportResponseDtoTest.verificationReportSmsDto
+                .getVerificationReportResponseSmsImpl()),
         expectedVerificationReportSmsResponse);
   }
 

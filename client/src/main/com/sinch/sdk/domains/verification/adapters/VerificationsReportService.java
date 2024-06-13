@@ -1,81 +1,67 @@
 package com.sinch.sdk.domains.verification.adapters;
 
-import com.sinch.sdk.core.http.AuthManager;
-import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.domains.verification.adapters.converters.VerificationsDtoConverter;
-import com.sinch.sdk.domains.verification.api.v1.internal.VerificationsReportApi;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
-import com.sinch.sdk.domains.verification.models.VerificationReport;
 import com.sinch.sdk.domains.verification.models.VerificationReportCallout;
 import com.sinch.sdk.domains.verification.models.VerificationReportFlashCall;
 import com.sinch.sdk.domains.verification.models.VerificationReportSMS;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportCalloutRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportFlashCallRequestParameters;
-import com.sinch.sdk.domains.verification.models.requests.VerificationReportRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportSMSRequestParameters;
-import com.sinch.sdk.models.VerificationContext;
-import java.util.Map;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseFlashCall;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponsePhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseSms;
 
 public class VerificationsReportService {
 
-  private final VerificationsReportApi api;
+  private final com.sinch.sdk.domains.verification.api.v1.VerificationReportService v1;
 
   public VerificationsReportService(
-      VerificationContext context, HttpClient httpClient, Map<String, AuthManager> authManagers) {
-    this.api =
-        new VerificationsReportApi(
-            httpClient, context.getVerificationServer(), authManagers, new HttpMapper());
-  }
-
-  protected VerificationsReportApi getApi() {
-    return this.api;
+      com.sinch.sdk.domains.verification.api.v1.VerificationReportService v1) {
+    this.v1 = v1;
   }
 
   public VerificationReportSMS reportSmsByIdentity(
       NumberIdentity identity, VerificationReportSMSRequestParameters parameters) {
-    return (VerificationReportSMS) report(identity, parameters);
+
+    VerificationReportResponseSms response =
+        v1.reportSmsByIdentity(identity, VerificationsDtoConverter.convert(parameters));
+    return (VerificationReportSMS) VerificationsDtoConverter.convert(response);
   }
 
   public VerificationReportFlashCall reportFlashCallByIdentity(
       NumberIdentity identity, VerificationReportFlashCallRequestParameters parameters) {
-    return (VerificationReportFlashCall) report(identity, parameters);
+    VerificationReportResponseFlashCall response =
+        v1.reportFlashCallByIdentity(identity, VerificationsDtoConverter.convert(parameters));
+    return (VerificationReportFlashCall) VerificationsDtoConverter.convert(response);
   }
 
   public VerificationReportCallout reportCalloutByIdentity(
       NumberIdentity identity, VerificationReportCalloutRequestParameters parameters) {
-    return (VerificationReportCallout) report(identity, parameters);
-  }
-
-  private VerificationReport report(
-      NumberIdentity identity, VerificationReportRequestParameters parameters) {
-
-    return VerificationsDtoConverter.convert(
-        getApi()
-            .reportVerificationByIdentity(
-                identity.getEndpoint(), VerificationsDtoConverter.convert(parameters)));
+    VerificationReportResponsePhoneCall response =
+        v1.reportPhoneCallByIdentity(identity, VerificationsDtoConverter.convert(parameters));
+    return (VerificationReportCallout) VerificationsDtoConverter.convert(response);
   }
 
   public VerificationReportSMS reportSmsById(
       VerificationId id, VerificationReportSMSRequestParameters parameters) {
-    return (VerificationReportSMS) report(id, parameters);
+    VerificationReportResponseSms response =
+        v1.reportSmsById(id.getId(), VerificationsDtoConverter.convert(parameters));
+    return (VerificationReportSMS) VerificationsDtoConverter.convert(response);
   }
 
   public VerificationReportFlashCall reportFlashCallById(
       VerificationId id, VerificationReportFlashCallRequestParameters parameters) {
-    return (VerificationReportFlashCall) report(id, parameters);
+    VerificationReportResponseFlashCall response =
+        v1.reportFlashCallById(id.getId(), VerificationsDtoConverter.convert(parameters));
+    return (VerificationReportFlashCall) VerificationsDtoConverter.convert(response);
   }
 
   public VerificationReportCallout reportCalloutById(
       VerificationId id, VerificationReportCalloutRequestParameters parameters) {
-    return (VerificationReportCallout) report(id, parameters);
-  }
-
-  private VerificationReport report(
-      VerificationId id, VerificationReportRequestParameters parameters) {
-
-    return VerificationsDtoConverter.convert(
-        getApi().reportVerificationById(id.getId(), VerificationsDtoConverter.convert(parameters)));
+    VerificationReportResponsePhoneCall response =
+        v1.reportPhoneCallById(id.getId(), VerificationsDtoConverter.convert(parameters));
+    return (VerificationReportCallout) VerificationsDtoConverter.convert(response);
   }
 }

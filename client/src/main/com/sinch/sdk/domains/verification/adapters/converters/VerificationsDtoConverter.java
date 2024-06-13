@@ -32,7 +32,12 @@ import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationR
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestPhoneCall;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestSms;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponse;
-import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseImpl;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseFlashCall;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseFlashCallImpl;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponsePhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponsePhoneCallImpl;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseSms;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseSmsImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsRequest;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.StartVerificationResponseDataContentImpl;
@@ -324,23 +329,30 @@ public class VerificationsDtoConverter {
   }
 
   public static VerificationReport convert(VerificationReportResponse _dto) {
-    VerificationReportResponseImpl dto = (VerificationReportResponseImpl) _dto;
+
     VerificationReport.Builder<?> builder;
-    VerificationMethod method = dto.getMethod();
-    if (method.equals(VerificationMethod.SMS)) {
+    if (_dto instanceof VerificationReportResponseSms) {
       builder = VerificationReportSMS.builder();
-    } else if (method.equals(VerificationMethod.FLASHCALL)) {
+      VerificationReportResponseSmsImpl dto = (VerificationReportResponseSmsImpl) _dto;
+      dto.id().ifPresent(f -> builder.setId(VerificationId.valueOf(f)));
+      dto.status()
+          .ifPresent(f -> builder.setStatus(VerificationStatusType.from(dto.getStatus().value())));
+    } else if (_dto instanceof VerificationReportResponseFlashCall) {
       builder = VerificationReportFlashCall.builder();
-    } else if (method.equals(VerificationMethod.PHONE_CALL)) {
+      VerificationReportResponseFlashCallImpl dto = (VerificationReportResponseFlashCallImpl) _dto;
+      dto.id().ifPresent(f -> builder.setId(VerificationId.valueOf(f)));
+      dto.status()
+          .ifPresent(f -> builder.setStatus(VerificationStatusType.from(dto.getStatus().value())));
+    } else if (_dto instanceof VerificationReportResponsePhoneCall) {
       builder = VerificationReportCallout.builder();
+      VerificationReportResponsePhoneCallImpl dto = (VerificationReportResponsePhoneCallImpl) _dto;
+      dto.id().ifPresent(f -> builder.setId(VerificationId.valueOf(f)));
+      dto.status()
+          .ifPresent(f -> builder.setStatus(VerificationStatusType.from(dto.getStatus().value())));
     } else {
-      LOGGER.severe(String.format("Unexpected value '%s'", dto.getMethod()));
+      LOGGER.severe(String.format("Unexpected value '%s'", _dto));
       return VerificationReport.builder().build();
     }
-
-    dto.id().ifPresent(f -> builder.setId(VerificationId.valueOf(f)));
-    dto.status()
-        .ifPresent(f -> builder.setStatus(VerificationStatusType.from(dto.getStatus().value())));
 
     return builder.build();
   }

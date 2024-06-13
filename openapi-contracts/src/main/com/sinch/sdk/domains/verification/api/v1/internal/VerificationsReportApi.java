@@ -26,7 +26,7 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestInternal;
-import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponse;
+import com.sinch.sdk.domains.verification.models.v1.report.response.internal.VerificationReportResponseInternal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -60,10 +60,10 @@ public class VerificationsReportApi {
    *
    * @param id The ID of the verification. (required)
    * @param verificationReportRequestInternal (required)
-   * @return VerificationReportResponse
+   * @return VerificationReportResponseInternal
    * @throws ApiException if fails to make API call
    */
-  public VerificationReportResponse reportVerificationById(
+  public VerificationReportResponseInternal reportVerificationById(
       String id, VerificationReportRequestInternal verificationReportRequestInternal)
       throws ApiException {
 
@@ -83,8 +83,8 @@ public class VerificationsReportApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<VerificationReportResponse> localVarReturnType =
-          new TypeReference<VerificationReportResponse>() {};
+      TypeReference<VerificationReportResponseInternal> localVarReturnType =
+          new TypeReference<VerificationReportResponseInternal>() {};
       return mapper.deserialize(response, localVarReturnType);
     }
     // fallback to default errors handling:
@@ -148,10 +148,10 @@ public class VerificationsReportApi {
    *     [E.164](https://community.sinch.com/t5/Glossary/E-164/ta-p/7537)-compatible phone number.
    *     (required)
    * @param verificationReportRequestInternal (required)
-   * @return VerificationReportResponse
+   * @return VerificationReportResponseInternal
    * @throws ApiException if fails to make API call
    */
-  public VerificationReportResponse reportVerificationByIdentity(
+  public VerificationReportResponseInternal reportVerificationByIdentity(
       String endpoint, VerificationReportRequestInternal verificationReportRequestInternal)
       throws ApiException {
 
@@ -171,8 +171,8 @@ public class VerificationsReportApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<VerificationReportResponse> localVarReturnType =
-          new TypeReference<VerificationReportResponse>() {};
+      TypeReference<VerificationReportResponseInternal> localVarReturnType =
+          new TypeReference<VerificationReportResponseInternal>() {};
       return mapper.deserialize(response, localVarReturnType);
     }
     // fallback to default errors handling:

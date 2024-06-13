@@ -12,11 +12,15 @@
 
 package com.sinch.sdk.domains.verification.models.v1.report.response;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
 
 /** declaration */
-public interface VerificationReportResponse {
+@JsonDeserialize(builder = VerificationReportResponseSmsImpl.Builder.class)
+public interface VerificationReportResponseSms
+    extends com.sinch.sdk.domains.verification.models.v1.report.response
+        .VerificationReportResponse {
 
   /**
    * The unique ID of the verification request.
@@ -39,8 +43,19 @@ public interface VerificationReportResponse {
    */
   VerificationStatusReason getReason();
 
+  /**
+   * Getting builder
+   *
+   * @return New Builder instance
+   */
+  static Builder builder() {
+    return new VerificationReportResponseSmsImpl.Builder();
+  }
+
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder
+      extends com.sinch.sdk.domains.verification.models.v1.report.response
+          .VerificationReportResponse.Builder {
 
     /**
      * see getter
@@ -74,6 +89,6 @@ public interface VerificationReportResponse {
      *
      * @return The instance build with current builder values
      */
-    VerificationReportResponse build();
+    VerificationReportResponseSms build();
   }
 }
