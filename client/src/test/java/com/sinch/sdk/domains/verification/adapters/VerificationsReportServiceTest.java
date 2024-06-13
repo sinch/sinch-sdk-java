@@ -23,13 +23,13 @@ import org.mockito.Mock;
 @TestWithResources
 public class VerificationsReportServiceTest extends VerificationBaseTest {
 
-  @GivenJsonResource("/domains/verification/v1/report/VerificationReportPhoneCallRequestDto.json")
+  @GivenJsonResource("/domains/verification/v1/report/VerificationReportRequestPhoneCallDto.json")
   public VerificationReportRequestInternalImpl verificationReportPhoneCallRequestDto;
 
-  @GivenJsonResource("/domains/verification/v1/report/VerificationReportFlashCallRequestDto.json")
+  @GivenJsonResource("/domains/verification/v1/report/VerificationReportRequestFlashCallDto.json")
   public VerificationReportRequestInternalImpl verificationReportFlashCallRequestDto;
 
-  @GivenJsonResource("/domains/verification/v1/report/VerificationReportSmsRequestDto.json")
+  @GivenJsonResource("/domains/verification/v1/report/VerificationReportRequestSmsDto.json")
   public VerificationReportRequestInternalImpl verificationReportSmsRequestDto;
 
   @Mock com.sinch.sdk.domains.verification.api.v1.VerificationReportService v1;

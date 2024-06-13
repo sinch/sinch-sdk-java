@@ -29,13 +29,13 @@ import org.mockito.Mock;
 @TestWithResources
 public class VerificationReportServiceTest extends VerificationBaseTest {
 
-  @GivenJsonResource("/domains/verification/v1/report/VerificationReportPhoneCallRequestDto.json")
+  @GivenJsonResource("/domains/verification/v1/report/VerificationReportRequestPhoneCallDto.json")
   public VerificationReportRequestInternal verificationReportPhoneCallRequestDto;
 
-  @GivenJsonResource("/domains/verification/v1/report/VerificationReportFlashCallRequestDto.json")
+  @GivenJsonResource("/domains/verification/v1/report/VerificationReportRequestFlashCallDto.json")
   public VerificationReportRequestInternal verificationReportFlashCallRequestDto;
 
-  @GivenJsonResource("/domains/verification/v1/report/VerificationReportSmsRequestDto.json")
+  @GivenJsonResource("/domains/verification/v1/report/VerificationReportRequestSmsDto.json")
   public VerificationReportRequestInternal verificationReportSmsRequestDto;
 
   @Mock VerificationsReportApi api;

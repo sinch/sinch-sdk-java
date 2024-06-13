@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 @TestWithResources
 public class VerificationReportResponseDtoTest extends BaseTest {
 
-  @GivenJsonResource("/domains/verification/v1/report/VerificationReportPhoneCallResponseDto.json")
+  @GivenJsonResource("/domains/verification/v1/report/VerificationReportResponsePhoneCallDto.json")
   VerificationReportResponseInternal expectedVerificationReportPhoneCall;
 
   public static VerificationReportResponseInternalImpl verificationReportPhoneCallDto =
@@ -29,7 +29,7 @@ public class VerificationReportResponseDtoTest extends BaseTest {
                   .setStatus(VerificationStatus.FAIL)
                   .build());
 
-  @GivenJsonResource("/domains/verification/v1/report/VerificationReportFlashCallResponseDto.json")
+  @GivenJsonResource("/domains/verification/v1/report/VerificationReportResponseFlashCallDto.json")
   VerificationReportResponseInternal expectedVerificationReportFlashCall;
 
   public static VerificationReportResponseInternalImpl verificationReportFlashCallDto =
@@ -40,7 +40,7 @@ public class VerificationReportResponseDtoTest extends BaseTest {
                   .setStatus(VerificationStatus.FAIL)
                   .build());
 
-  @GivenJsonResource("/domains/verification/v1/report/VerificationReportSmsResponseDto.json")
+  @GivenJsonResource("/domains/verification/v1/report/VerificationReportResponseSmsDto.json")
   VerificationReportResponseInternal expectedVerificationReportSms;
 
   public static VerificationReportResponseInternalImpl verificationReportSmsDto =

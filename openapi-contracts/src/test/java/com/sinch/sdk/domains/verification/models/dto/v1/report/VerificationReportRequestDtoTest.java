@@ -32,13 +32,13 @@ public class VerificationReportRequestDtoTest extends BaseTest {
           (VerificationReportRequestSmsImpl)
               VerificationReportRequestSms.builder().setCode("foo code").setCli("foo cli").build());
 
-  @GivenTextResource("/domains/verification/v1/report/VerificationReportPhoneCallRequestDto.json")
+  @GivenTextResource("/domains/verification/v1/report/VerificationReportRequestPhoneCallDto.json")
   String jsonVerificationReportPhoneCall;
 
-  @GivenTextResource("/domains/verification/v1/report/VerificationReportFlashCallRequestDto.json")
+  @GivenTextResource("/domains/verification/v1/report/VerificationReportRequestFlashCallDto.json")
   String jsonVerificationReportFlashCall;
 
-  @GivenTextResource("/domains/verification/v1/report/VerificationReportSmsRequestDto.json")
+  @GivenTextResource("/domains/verification/v1/report/VerificationReportRequestSmsDto.json")
   String jsonVerificationReportSms;
 
   @Test
