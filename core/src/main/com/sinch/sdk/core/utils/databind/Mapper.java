@@ -20,8 +20,10 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.core.utils.DateUtil;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import java.io.IOException;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -89,7 +91,8 @@ public class Mapper {
 
     public static final SimpleModule module =
         new JavaTimeModule()
-            .addDeserializer(OffsetDateTime.class, new OffsetDateTimeCustomDeserializer());
+            .addDeserializer(OffsetDateTime.class, new OffsetDateTimeCustomDeserializer())
+            .addDeserializer(Instant.class, new InstantCustomDeserializer());
 
     public static final SimpleModule optionalValueModule =
         new SimpleModule("optionalValueModule")
@@ -130,6 +133,17 @@ public class Mapper {
         return LocalDateTime.parse(text, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
             .atOffset(ZoneOffset.UTC);
       }
+    }
+  }
+
+  public static final class InstantCustomDeserializer extends JsonDeserializer<Instant> {
+
+    @Override
+    public Instant deserialize(JsonParser parser, DeserializationContext context)
+        throws IOException {
+
+      String text = parser.getText();
+      return DateUtil.failSafeTimeStampToInstant(text);
     }
   }
 
