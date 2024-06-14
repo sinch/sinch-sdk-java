@@ -16,9 +16,9 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.sinch.sdk.core.models.AbstractOpenApiSchema;
 import com.sinch.sdk.core.utils.databind.JSONNavigator;
-import com.sinch.sdk.domains.verification.models.v1.status.response.FlashCallVerificationStatusResponseImpl;
-import com.sinch.sdk.domains.verification.models.v1.status.response.PhoneCallVerificationStatusResponseImpl;
-import com.sinch.sdk.domains.verification.models.v1.status.response.SmsVerificationStatusResponseImpl;
+import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponseFlashCallImpl;
+import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponsePhoneCallImpl;
+import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponseSmsImpl;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -90,35 +90,35 @@ public class VerificationStatusResponseInternalImpl extends AbstractOpenApiSchem
         case "callout":
           deserialized =
               tree.traverse(jp.getCodec())
-                  .readValueAs(PhoneCallVerificationStatusResponseImpl.class);
+                  .readValueAs(VerificationStatusResponsePhoneCallImpl.class);
           newVerificationStatusResponseInternalImpl.setActualInstance(deserialized);
           return newVerificationStatusResponseInternalImpl;
         case "flashcall":
           deserialized =
               tree.traverse(jp.getCodec())
-                  .readValueAs(FlashCallVerificationStatusResponseImpl.class);
+                  .readValueAs(VerificationStatusResponseFlashCallImpl.class);
           newVerificationStatusResponseInternalImpl.setActualInstance(deserialized);
           return newVerificationStatusResponseInternalImpl;
         case "sms":
           deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(SmsVerificationStatusResponseImpl.class);
+              tree.traverse(jp.getCodec()).readValueAs(VerificationStatusResponseSmsImpl.class);
           newVerificationStatusResponseInternalImpl.setActualInstance(deserialized);
           return newVerificationStatusResponseInternalImpl;
-        case "FlashCallVerificationStatusResponse":
+        case "VerificationStatusResponseFlashCall":
           deserialized =
               tree.traverse(jp.getCodec())
-                  .readValueAs(FlashCallVerificationStatusResponseImpl.class);
+                  .readValueAs(VerificationStatusResponseFlashCallImpl.class);
           newVerificationStatusResponseInternalImpl.setActualInstance(deserialized);
           return newVerificationStatusResponseInternalImpl;
-        case "PhoneCallVerificationStatusResponse":
+        case "VerificationStatusResponsePhoneCall":
           deserialized =
               tree.traverse(jp.getCodec())
-                  .readValueAs(PhoneCallVerificationStatusResponseImpl.class);
+                  .readValueAs(VerificationStatusResponsePhoneCallImpl.class);
           newVerificationStatusResponseInternalImpl.setActualInstance(deserialized);
           return newVerificationStatusResponseInternalImpl;
-        case "SmsVerificationStatusResponse":
+        case "VerificationStatusResponseSms":
           deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(SmsVerificationStatusResponseImpl.class);
+              tree.traverse(jp.getCodec()).readValueAs(VerificationStatusResponseSmsImpl.class);
           newVerificationStatusResponseInternalImpl.setActualInstance(deserialized);
           return newVerificationStatusResponseInternalImpl;
         default:
@@ -127,149 +127,149 @@ public class VerificationStatusResponseInternalImpl extends AbstractOpenApiSchem
               String.format(
                   "Failed to lookup discriminator value `%s` for"
                       + " VerificationStatusResponseInternalImpl. Possible values: callout"
-                      + " flashcall sms FlashCallVerificationStatusResponse"
-                      + " PhoneCallVerificationStatusResponse SmsVerificationStatusResponse",
+                      + " flashcall sms VerificationStatusResponseFlashCall"
+                      + " VerificationStatusResponsePhoneCall VerificationStatusResponseSms",
                   discriminatorValue));
       }
 
       boolean typeCoercion = ctxt.isEnabled(MapperFeature.ALLOW_COERCION_OF_SCALARS);
       int match = 0;
       JsonToken token = tree.traverse(jp.getCodec()).nextToken();
-      // deserialize FlashCallVerificationStatusResponseImpl
+      // deserialize VerificationStatusResponseFlashCallImpl
       try {
         boolean attemptParsing = true;
         // ensure that we respect type coercion as set on the client ObjectMapper
-        if (FlashCallVerificationStatusResponseImpl.class.equals(Integer.class)
-            || FlashCallVerificationStatusResponseImpl.class.equals(Long.class)
-            || FlashCallVerificationStatusResponseImpl.class.equals(Float.class)
-            || FlashCallVerificationStatusResponseImpl.class.equals(Double.class)
-            || FlashCallVerificationStatusResponseImpl.class.equals(Boolean.class)
-            || FlashCallVerificationStatusResponseImpl.class.equals(String.class)) {
+        if (VerificationStatusResponseFlashCallImpl.class.equals(Integer.class)
+            || VerificationStatusResponseFlashCallImpl.class.equals(Long.class)
+            || VerificationStatusResponseFlashCallImpl.class.equals(Float.class)
+            || VerificationStatusResponseFlashCallImpl.class.equals(Double.class)
+            || VerificationStatusResponseFlashCallImpl.class.equals(Boolean.class)
+            || VerificationStatusResponseFlashCallImpl.class.equals(String.class)) {
           attemptParsing = typeCoercion;
           if (!attemptParsing) {
             attemptParsing |=
-                ((FlashCallVerificationStatusResponseImpl.class.equals(Integer.class)
-                        || FlashCallVerificationStatusResponseImpl.class.equals(Long.class))
+                ((VerificationStatusResponseFlashCallImpl.class.equals(Integer.class)
+                        || VerificationStatusResponseFlashCallImpl.class.equals(Long.class))
                     && token == JsonToken.VALUE_NUMBER_INT);
             attemptParsing |=
-                ((FlashCallVerificationStatusResponseImpl.class.equals(Float.class)
-                        || FlashCallVerificationStatusResponseImpl.class.equals(Double.class))
+                ((VerificationStatusResponseFlashCallImpl.class.equals(Float.class)
+                        || VerificationStatusResponseFlashCallImpl.class.equals(Double.class))
                     && token == JsonToken.VALUE_NUMBER_FLOAT);
             attemptParsing |=
-                (FlashCallVerificationStatusResponseImpl.class.equals(Boolean.class)
+                (VerificationStatusResponseFlashCallImpl.class.equals(Boolean.class)
                     && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
             attemptParsing |=
-                (FlashCallVerificationStatusResponseImpl.class.equals(String.class)
+                (VerificationStatusResponseFlashCallImpl.class.equals(String.class)
                     && token == JsonToken.VALUE_STRING);
           }
         }
         if (attemptParsing) {
           deserialized =
               tree.traverse(jp.getCodec())
-                  .readValueAs(FlashCallVerificationStatusResponseImpl.class);
+                  .readValueAs(VerificationStatusResponseFlashCallImpl.class);
           // TODO: there is no validation against JSON schema constraints
           // (min, max, enum, pattern...), this does not perform a strict JSON
           // validation, which means the 'match' count may be higher than it should be.
           match++;
           log.log(
-              Level.FINER, "Input data matches schema 'FlashCallVerificationStatusResponseImpl'");
+              Level.FINER, "Input data matches schema 'VerificationStatusResponseFlashCallImpl'");
         }
       } catch (Exception e) {
         // deserialization failed, continue
         log.log(
             Level.FINER,
-            "Input data does not match schema 'FlashCallVerificationStatusResponseImpl'",
+            "Input data does not match schema 'VerificationStatusResponseFlashCallImpl'",
             e);
       }
 
-      // deserialize PhoneCallVerificationStatusResponseImpl
+      // deserialize VerificationStatusResponsePhoneCallImpl
       try {
         boolean attemptParsing = true;
         // ensure that we respect type coercion as set on the client ObjectMapper
-        if (PhoneCallVerificationStatusResponseImpl.class.equals(Integer.class)
-            || PhoneCallVerificationStatusResponseImpl.class.equals(Long.class)
-            || PhoneCallVerificationStatusResponseImpl.class.equals(Float.class)
-            || PhoneCallVerificationStatusResponseImpl.class.equals(Double.class)
-            || PhoneCallVerificationStatusResponseImpl.class.equals(Boolean.class)
-            || PhoneCallVerificationStatusResponseImpl.class.equals(String.class)) {
+        if (VerificationStatusResponsePhoneCallImpl.class.equals(Integer.class)
+            || VerificationStatusResponsePhoneCallImpl.class.equals(Long.class)
+            || VerificationStatusResponsePhoneCallImpl.class.equals(Float.class)
+            || VerificationStatusResponsePhoneCallImpl.class.equals(Double.class)
+            || VerificationStatusResponsePhoneCallImpl.class.equals(Boolean.class)
+            || VerificationStatusResponsePhoneCallImpl.class.equals(String.class)) {
           attemptParsing = typeCoercion;
           if (!attemptParsing) {
             attemptParsing |=
-                ((PhoneCallVerificationStatusResponseImpl.class.equals(Integer.class)
-                        || PhoneCallVerificationStatusResponseImpl.class.equals(Long.class))
+                ((VerificationStatusResponsePhoneCallImpl.class.equals(Integer.class)
+                        || VerificationStatusResponsePhoneCallImpl.class.equals(Long.class))
                     && token == JsonToken.VALUE_NUMBER_INT);
             attemptParsing |=
-                ((PhoneCallVerificationStatusResponseImpl.class.equals(Float.class)
-                        || PhoneCallVerificationStatusResponseImpl.class.equals(Double.class))
+                ((VerificationStatusResponsePhoneCallImpl.class.equals(Float.class)
+                        || VerificationStatusResponsePhoneCallImpl.class.equals(Double.class))
                     && token == JsonToken.VALUE_NUMBER_FLOAT);
             attemptParsing |=
-                (PhoneCallVerificationStatusResponseImpl.class.equals(Boolean.class)
+                (VerificationStatusResponsePhoneCallImpl.class.equals(Boolean.class)
                     && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
             attemptParsing |=
-                (PhoneCallVerificationStatusResponseImpl.class.equals(String.class)
+                (VerificationStatusResponsePhoneCallImpl.class.equals(String.class)
                     && token == JsonToken.VALUE_STRING);
           }
         }
         if (attemptParsing) {
           deserialized =
               tree.traverse(jp.getCodec())
-                  .readValueAs(PhoneCallVerificationStatusResponseImpl.class);
+                  .readValueAs(VerificationStatusResponsePhoneCallImpl.class);
           // TODO: there is no validation against JSON schema constraints
           // (min, max, enum, pattern...), this does not perform a strict JSON
           // validation, which means the 'match' count may be higher than it should be.
           match++;
           log.log(
-              Level.FINER, "Input data matches schema 'PhoneCallVerificationStatusResponseImpl'");
+              Level.FINER, "Input data matches schema 'VerificationStatusResponsePhoneCallImpl'");
         }
       } catch (Exception e) {
         // deserialization failed, continue
         log.log(
             Level.FINER,
-            "Input data does not match schema 'PhoneCallVerificationStatusResponseImpl'",
+            "Input data does not match schema 'VerificationStatusResponsePhoneCallImpl'",
             e);
       }
 
-      // deserialize SmsVerificationStatusResponseImpl
+      // deserialize VerificationStatusResponseSmsImpl
       try {
         boolean attemptParsing = true;
         // ensure that we respect type coercion as set on the client ObjectMapper
-        if (SmsVerificationStatusResponseImpl.class.equals(Integer.class)
-            || SmsVerificationStatusResponseImpl.class.equals(Long.class)
-            || SmsVerificationStatusResponseImpl.class.equals(Float.class)
-            || SmsVerificationStatusResponseImpl.class.equals(Double.class)
-            || SmsVerificationStatusResponseImpl.class.equals(Boolean.class)
-            || SmsVerificationStatusResponseImpl.class.equals(String.class)) {
+        if (VerificationStatusResponseSmsImpl.class.equals(Integer.class)
+            || VerificationStatusResponseSmsImpl.class.equals(Long.class)
+            || VerificationStatusResponseSmsImpl.class.equals(Float.class)
+            || VerificationStatusResponseSmsImpl.class.equals(Double.class)
+            || VerificationStatusResponseSmsImpl.class.equals(Boolean.class)
+            || VerificationStatusResponseSmsImpl.class.equals(String.class)) {
           attemptParsing = typeCoercion;
           if (!attemptParsing) {
             attemptParsing |=
-                ((SmsVerificationStatusResponseImpl.class.equals(Integer.class)
-                        || SmsVerificationStatusResponseImpl.class.equals(Long.class))
+                ((VerificationStatusResponseSmsImpl.class.equals(Integer.class)
+                        || VerificationStatusResponseSmsImpl.class.equals(Long.class))
                     && token == JsonToken.VALUE_NUMBER_INT);
             attemptParsing |=
-                ((SmsVerificationStatusResponseImpl.class.equals(Float.class)
-                        || SmsVerificationStatusResponseImpl.class.equals(Double.class))
+                ((VerificationStatusResponseSmsImpl.class.equals(Float.class)
+                        || VerificationStatusResponseSmsImpl.class.equals(Double.class))
                     && token == JsonToken.VALUE_NUMBER_FLOAT);
             attemptParsing |=
-                (SmsVerificationStatusResponseImpl.class.equals(Boolean.class)
+                (VerificationStatusResponseSmsImpl.class.equals(Boolean.class)
                     && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
             attemptParsing |=
-                (SmsVerificationStatusResponseImpl.class.equals(String.class)
+                (VerificationStatusResponseSmsImpl.class.equals(String.class)
                     && token == JsonToken.VALUE_STRING);
           }
         }
         if (attemptParsing) {
           deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(SmsVerificationStatusResponseImpl.class);
+              tree.traverse(jp.getCodec()).readValueAs(VerificationStatusResponseSmsImpl.class);
           // TODO: there is no validation against JSON schema constraints
           // (min, max, enum, pattern...), this does not perform a strict JSON
           // validation, which means the 'match' count may be higher than it should be.
           match++;
-          log.log(Level.FINER, "Input data matches schema 'SmsVerificationStatusResponseImpl'");
+          log.log(Level.FINER, "Input data matches schema 'VerificationStatusResponseSmsImpl'");
         }
       } catch (Exception e) {
         // deserialization failed, continue
         log.log(
-            Level.FINER, "Input data does not match schema 'SmsVerificationStatusResponseImpl'", e);
+            Level.FINER, "Input data does not match schema 'VerificationStatusResponseSmsImpl'", e);
       }
 
       if (match == 1) {
@@ -300,40 +300,40 @@ public class VerificationStatusResponseInternalImpl extends AbstractOpenApiSchem
     super("oneOf", Boolean.FALSE);
   }
 
-  public VerificationStatusResponseInternalImpl(FlashCallVerificationStatusResponseImpl o) {
+  public VerificationStatusResponseInternalImpl(VerificationStatusResponseFlashCallImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public VerificationStatusResponseInternalImpl(PhoneCallVerificationStatusResponseImpl o) {
+  public VerificationStatusResponseInternalImpl(VerificationStatusResponsePhoneCallImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public VerificationStatusResponseInternalImpl(SmsVerificationStatusResponseImpl o) {
+  public VerificationStatusResponseInternalImpl(VerificationStatusResponseSmsImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
   static {
     schemas.put(
-        "FlashCallVerificationStatusResponseImpl", FlashCallVerificationStatusResponseImpl.class);
+        "VerificationStatusResponseFlashCallImpl", VerificationStatusResponseFlashCallImpl.class);
     schemas.put(
-        "PhoneCallVerificationStatusResponseImpl", PhoneCallVerificationStatusResponseImpl.class);
-    schemas.put("SmsVerificationStatusResponseImpl", SmsVerificationStatusResponseImpl.class);
+        "VerificationStatusResponsePhoneCallImpl", VerificationStatusResponsePhoneCallImpl.class);
+    schemas.put("VerificationStatusResponseSmsImpl", VerificationStatusResponseSmsImpl.class);
     JSONNavigator.registerDescendants(
         VerificationStatusResponseInternalImpl.class, Collections.unmodifiableMap(schemas));
     // Initialize and register the discriminator mappings.
     Map<String, Class<?>> mappings = new HashMap<String, Class<?>>();
-    mappings.put("callout", PhoneCallVerificationStatusResponseImpl.class);
-    mappings.put("flashcall", FlashCallVerificationStatusResponseImpl.class);
-    mappings.put("sms", SmsVerificationStatusResponseImpl.class);
+    mappings.put("callout", VerificationStatusResponsePhoneCallImpl.class);
+    mappings.put("flashcall", VerificationStatusResponseFlashCallImpl.class);
+    mappings.put("sms", VerificationStatusResponseSmsImpl.class);
     mappings.put(
-        "FlashCallVerificationStatusResponse", FlashCallVerificationStatusResponseImpl.class);
+        "VerificationStatusResponseFlashCall", VerificationStatusResponseFlashCallImpl.class);
     mappings.put(
-        "PhoneCallVerificationStatusResponse", PhoneCallVerificationStatusResponseImpl.class);
-    mappings.put("SmsVerificationStatusResponse", SmsVerificationStatusResponseImpl.class);
-    mappings.put("VerificationResponse", VerificationStatusResponseInternalImpl.class);
+        "VerificationStatusResponsePhoneCall", VerificationStatusResponsePhoneCallImpl.class);
+    mappings.put("VerificationStatusResponseSms", VerificationStatusResponseSmsImpl.class);
+    mappings.put("VerificationStatusResponse", VerificationStatusResponseInternalImpl.class);
     JSONNavigator.registerDiscriminator(
         VerificationStatusResponseInternalImpl.class, "method", mappings);
   }
@@ -345,8 +345,8 @@ public class VerificationStatusResponseInternalImpl extends AbstractOpenApiSchem
 
   /**
    * Set the instance that matches the oneOf child schema, check the instance parameter is valid
-   * against the oneOf child schemas: FlashCallVerificationStatusResponseImpl,
-   * PhoneCallVerificationStatusResponseImpl, SmsVerificationStatusResponseImpl
+   * against the oneOf child schemas: VerificationStatusResponseFlashCallImpl,
+   * VerificationStatusResponsePhoneCallImpl, VerificationStatusResponseSmsImpl
    *
    * <p>It could be an instance of the 'oneOf' schemas. The oneOf child schemas may themselves be a
    * composed schema (allOf, anyOf, oneOf).
@@ -354,34 +354,34 @@ public class VerificationStatusResponseInternalImpl extends AbstractOpenApiSchem
   @Override
   public void setActualInstance(Object instance) {
     if (JSONNavigator.isInstanceOf(
-        FlashCallVerificationStatusResponseImpl.class, instance, new HashSet<Class<?>>())) {
+        VerificationStatusResponseFlashCallImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
 
     if (JSONNavigator.isInstanceOf(
-        PhoneCallVerificationStatusResponseImpl.class, instance, new HashSet<Class<?>>())) {
+        VerificationStatusResponsePhoneCallImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
 
     if (JSONNavigator.isInstanceOf(
-        SmsVerificationStatusResponseImpl.class, instance, new HashSet<Class<?>>())) {
+        VerificationStatusResponseSmsImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
 
     throw new RuntimeException(
-        "Invalid instance type. Must be FlashCallVerificationStatusResponseImpl,"
-            + " PhoneCallVerificationStatusResponseImpl, SmsVerificationStatusResponseImpl");
+        "Invalid instance type. Must be VerificationStatusResponseFlashCallImpl,"
+            + " VerificationStatusResponsePhoneCallImpl, VerificationStatusResponseSmsImpl");
   }
 
   /**
-   * Get the actual instance, which can be the following: FlashCallVerificationStatusResponseImpl,
-   * PhoneCallVerificationStatusResponseImpl, SmsVerificationStatusResponseImpl
+   * Get the actual instance, which can be the following: VerificationStatusResponseFlashCallImpl,
+   * VerificationStatusResponsePhoneCallImpl, VerificationStatusResponseSmsImpl
    *
-   * @return The actual instance (FlashCallVerificationStatusResponseImpl,
-   *     PhoneCallVerificationStatusResponseImpl, SmsVerificationStatusResponseImpl)
+   * @return The actual instance (VerificationStatusResponseFlashCallImpl,
+   *     VerificationStatusResponsePhoneCallImpl, VerificationStatusResponseSmsImpl)
    */
   @Override
   public Object getActualInstance() {
@@ -389,38 +389,38 @@ public class VerificationStatusResponseInternalImpl extends AbstractOpenApiSchem
   }
 
   /**
-   * Get the actual instance of `FlashCallVerificationStatusResponseImpl`. If the actual instance is
-   * not `FlashCallVerificationStatusResponseImpl`, the ClassCastException will be thrown.
+   * Get the actual instance of `VerificationStatusResponseFlashCallImpl`. If the actual instance is
+   * not `VerificationStatusResponseFlashCallImpl`, the ClassCastException will be thrown.
    *
-   * @return The actual instance of `FlashCallVerificationStatusResponseImpl`
-   * @throws ClassCastException if the instance is not `FlashCallVerificationStatusResponseImpl`
+   * @return The actual instance of `VerificationStatusResponseFlashCallImpl`
+   * @throws ClassCastException if the instance is not `VerificationStatusResponseFlashCallImpl`
    */
-  public FlashCallVerificationStatusResponseImpl getFlashCallVerificationStatusResponseImpl()
+  public VerificationStatusResponseFlashCallImpl getVerificationStatusResponseFlashCallImpl()
       throws ClassCastException {
-    return (FlashCallVerificationStatusResponseImpl) super.getActualInstance();
+    return (VerificationStatusResponseFlashCallImpl) super.getActualInstance();
   }
 
   /**
-   * Get the actual instance of `PhoneCallVerificationStatusResponseImpl`. If the actual instance is
-   * not `PhoneCallVerificationStatusResponseImpl`, the ClassCastException will be thrown.
+   * Get the actual instance of `VerificationStatusResponsePhoneCallImpl`. If the actual instance is
+   * not `VerificationStatusResponsePhoneCallImpl`, the ClassCastException will be thrown.
    *
-   * @return The actual instance of `PhoneCallVerificationStatusResponseImpl`
-   * @throws ClassCastException if the instance is not `PhoneCallVerificationStatusResponseImpl`
+   * @return The actual instance of `VerificationStatusResponsePhoneCallImpl`
+   * @throws ClassCastException if the instance is not `VerificationStatusResponsePhoneCallImpl`
    */
-  public PhoneCallVerificationStatusResponseImpl getPhoneCallVerificationStatusResponseImpl()
+  public VerificationStatusResponsePhoneCallImpl getVerificationStatusResponsePhoneCallImpl()
       throws ClassCastException {
-    return (PhoneCallVerificationStatusResponseImpl) super.getActualInstance();
+    return (VerificationStatusResponsePhoneCallImpl) super.getActualInstance();
   }
 
   /**
-   * Get the actual instance of `SmsVerificationStatusResponseImpl`. If the actual instance is not
-   * `SmsVerificationStatusResponseImpl`, the ClassCastException will be thrown.
+   * Get the actual instance of `VerificationStatusResponseSmsImpl`. If the actual instance is not
+   * `VerificationStatusResponseSmsImpl`, the ClassCastException will be thrown.
    *
-   * @return The actual instance of `SmsVerificationStatusResponseImpl`
-   * @throws ClassCastException if the instance is not `SmsVerificationStatusResponseImpl`
+   * @return The actual instance of `VerificationStatusResponseSmsImpl`
+   * @throws ClassCastException if the instance is not `VerificationStatusResponseSmsImpl`
    */
-  public SmsVerificationStatusResponseImpl getSmsVerificationStatusResponseImpl()
+  public VerificationStatusResponseSmsImpl getVerificationStatusResponseSmsImpl()
       throws ClassCastException {
-    return (SmsVerificationStatusResponseImpl) super.getActualInstance();
+    return (VerificationStatusResponseSmsImpl) super.getActualInstance();
   }
 }

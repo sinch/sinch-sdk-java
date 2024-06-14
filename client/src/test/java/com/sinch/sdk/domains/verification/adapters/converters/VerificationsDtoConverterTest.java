@@ -19,7 +19,7 @@ import com.sinch.sdk.domains.verification.models.dto.v1.report.VerificationRepor
 import com.sinch.sdk.domains.verification.models.dto.v1.report.VerificationReportResponseDtoTest;
 import com.sinch.sdk.domains.verification.models.dto.v1.start.VerificationStartRequestTest;
 import com.sinch.sdk.domains.verification.models.dto.v1.start.VerificationStartResponseTest;
-import com.sinch.sdk.domains.verification.models.dto.v1.status.VerificationStatusResponseInternalTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.status.VerificationStatusResponseTest;
 import com.sinch.sdk.domains.verification.models.requests.SMSCodeType;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutOptions;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutRequestParameters;
@@ -237,7 +237,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         StatusDtoConverter.convert(
-            VerificationStatusResponseInternalTest.expectedVerificationPhoneCallDto),
+            VerificationStatusResponseTest.expectedVerificationPhoneCallDto
+                .getVerificationStatusResponsePhoneCallImpl()),
         expectedVerificationStatusPhoneCallResponse);
   }
 
@@ -296,7 +297,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         StatusDtoConverter.convert(
-            VerificationStatusResponseInternalTest.expectedVerificationFlashCallDto),
+            VerificationStatusResponseTest.expectedVerificationFlashCallDto
+                .getVerificationStatusResponseFlashCallImpl()),
         expectedVerificationStatusFlashCallResponse);
   }
 
@@ -352,7 +354,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         StatusDtoConverter.convert(
-            VerificationStatusResponseInternalTest.expectedVerificationSmsDto),
+            VerificationStatusResponseTest.expectedVerificationSmsDto
+                .getVerificationStatusResponseSmsImpl()),
         expectedVerificationStatusSmsResponse);
   }
 }

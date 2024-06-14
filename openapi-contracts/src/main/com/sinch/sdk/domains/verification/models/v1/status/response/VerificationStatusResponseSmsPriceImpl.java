@@ -10,19 +10,19 @@ import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.Price;
 import java.util.Objects;
 
-@JsonPropertyOrder({SmsVerificationStatusResponsePriceImpl.JSON_PROPERTY_VERIFICATION_PRICE})
+@JsonPropertyOrder({VerificationStatusResponseSmsPriceImpl.JSON_PROPERTY_VERIFICATION_PRICE})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class SmsVerificationStatusResponsePriceImpl implements SmsVerificationStatusResponsePrice {
+public class VerificationStatusResponseSmsPriceImpl implements VerificationStatusResponseSmsPrice {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_VERIFICATION_PRICE = "verificationPrice";
 
   private OptionalValue<Price> verificationPrice;
 
-  public SmsVerificationStatusResponsePriceImpl() {}
+  public VerificationStatusResponseSmsPriceImpl() {}
 
-  protected SmsVerificationStatusResponsePriceImpl(OptionalValue<Price> verificationPrice) {
+  protected VerificationStatusResponseSmsPriceImpl(OptionalValue<Price> verificationPrice) {
     this.verificationPrice = verificationPrice;
   }
 
@@ -37,7 +37,7 @@ public class SmsVerificationStatusResponsePriceImpl implements SmsVerificationSt
     return verificationPrice;
   }
 
-  /** Return true if this SmsVerificationStatusResponse_allOf_price object is equal to o. */
+  /** Return true if this VerificationStatusResponseSms_allOf_price object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -46,10 +46,10 @@ public class SmsVerificationStatusResponsePriceImpl implements SmsVerificationSt
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SmsVerificationStatusResponsePriceImpl smsVerificationStatusResponseAllOfPrice =
-        (SmsVerificationStatusResponsePriceImpl) o;
+    VerificationStatusResponseSmsPriceImpl verificationStatusResponseSmsAllOfPrice =
+        (VerificationStatusResponseSmsPriceImpl) o;
     return Objects.equals(
-        this.verificationPrice, smsVerificationStatusResponseAllOfPrice.verificationPrice);
+        this.verificationPrice, verificationStatusResponseSmsAllOfPrice.verificationPrice);
   }
 
   @Override
@@ -60,7 +60,7 @@ public class SmsVerificationStatusResponsePriceImpl implements SmsVerificationSt
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SmsVerificationStatusResponsePriceImpl {\n");
+    sb.append("class VerificationStatusResponseSmsPriceImpl {\n");
     sb.append("    verificationPrice: ").append(toIndentedString(verificationPrice)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -77,7 +77,7 @@ public class SmsVerificationStatusResponsePriceImpl implements SmsVerificationSt
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements SmsVerificationStatusResponsePrice.Builder {
+  static class Builder implements VerificationStatusResponseSmsPrice.Builder {
     OptionalValue<Price> verificationPrice = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_VERIFICATION_PRICE)
@@ -86,8 +86,8 @@ public class SmsVerificationStatusResponsePriceImpl implements SmsVerificationSt
       return this;
     }
 
-    public SmsVerificationStatusResponsePrice build() {
-      return new SmsVerificationStatusResponsePriceImpl(verificationPrice);
+    public VerificationStatusResponseSmsPrice build() {
+      return new VerificationStatusResponseSmsPriceImpl(verificationPrice);
     }
   }
 }

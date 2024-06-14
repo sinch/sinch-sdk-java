@@ -2,34 +2,33 @@ package com.sinch.sdk.domains.verification.models.dto.v1.status;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
-import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
+import com.sinch.sdk.core.utils.DateUtil;
+import com.sinch.sdk.domains.verification.adapters.VerificationBaseTest;
+import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.v1.Price;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
-import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
-import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal.TypeEnum;
 import com.sinch.sdk.domains.verification.models.v1.status.StatusPrice;
-import com.sinch.sdk.domains.verification.models.v1.status.response.FlashCallVerificationStatusResponse;
-import com.sinch.sdk.domains.verification.models.v1.status.response.FlashCallVerificationStatusResponseImpl;
-import com.sinch.sdk.domains.verification.models.v1.status.response.PhoneCallVerificationStatusResponse;
-import com.sinch.sdk.domains.verification.models.v1.status.response.PhoneCallVerificationStatusResponseImpl;
-import com.sinch.sdk.domains.verification.models.v1.status.response.SmsVerificationStatusResponse;
-import com.sinch.sdk.domains.verification.models.v1.status.response.SmsVerificationStatusResponseImpl;
-import com.sinch.sdk.domains.verification.models.v1.status.response.SmsVerificationStatusResponsePrice;
+import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponseFlashCall;
+import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponseFlashCallImpl;
+import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponsePhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponsePhoneCallImpl;
+import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponseSms;
+import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponseSmsImpl;
+import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponseSmsPrice;
 import com.sinch.sdk.domains.verification.models.v1.status.response.internal.VerificationStatusResponseInternal;
 import com.sinch.sdk.domains.verification.models.v1.status.response.internal.VerificationStatusResponseInternalImpl;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
-public class VerificationStatusResponseInternalTest extends BaseTest {
+public class VerificationStatusResponseTest extends VerificationBaseTest {
 
-  public static VerificationStatusResponseInternal expectedVerificationPhoneCallDto =
+  public static VerificationStatusResponseInternalImpl expectedVerificationPhoneCallDto =
       new VerificationStatusResponseInternalImpl(
-          (PhoneCallVerificationStatusResponseImpl)
-              PhoneCallVerificationStatusResponse.builder()
+          (VerificationStatusResponsePhoneCallImpl)
+              VerificationStatusResponsePhoneCall.builder()
                   .setId("the id")
-                  .setMethod(PhoneCallVerificationStatusResponse.MethodEnum.PHONE_CALL)
                   .setStatus(VerificationStatus.FAIL)
                   .setReason(VerificationStatusReason.FRAUD)
                   .setCallComplete(true)
@@ -48,20 +47,16 @@ public class VerificationStatusResponseInternalTest extends BaseTest {
                                   .build())
                           .setBillableDuration(34)
                           .build())
-                  .setIdentity(
-                      IdentityInternal.builder()
-                          .setType(TypeEnum.NUMBER)
-                          .setEndpoint("endpoint value")
-                          .build())
+                  .setIdentity(NumberIdentity.valueOf("endpoint value"))
                   .setCountryId("es-ES")
-                  .setVerificationTimestamp("2024-05-22T09:38:59.5590437")
+                  .setVerificationTimestamp(
+                      DateUtil.failSafeTimeStampToInstant("2024-05-22T09:38:59.5590437"))
                   .build());
-  public static VerificationStatusResponseInternal expectedVerificationFlashCallDto =
+  public static VerificationStatusResponseInternalImpl expectedVerificationFlashCallDto =
       new VerificationStatusResponseInternalImpl(
-          (FlashCallVerificationStatusResponseImpl)
-              FlashCallVerificationStatusResponse.builder()
+          (VerificationStatusResponseFlashCallImpl)
+              VerificationStatusResponseFlashCall.builder()
                   .setId("the id")
-                  .setMethod(FlashCallVerificationStatusResponse.MethodEnum.FLASHCALL)
                   .setStatus(VerificationStatus.FAIL)
                   .setReason(VerificationStatusReason.FRAUD)
                   .setReference("my reference")
@@ -79,49 +74,42 @@ public class VerificationStatusResponseInternalTest extends BaseTest {
                                   .build())
                           .setBillableDuration(34)
                           .build())
-                  .setSource(FlashCallVerificationStatusResponse.SourceEnum.MANUAL)
-                  .setIdentity(
-                      IdentityInternal.builder()
-                          .setType(TypeEnum.NUMBER)
-                          .setEndpoint("endpoint value")
-                          .build())
+                  .setSource(VerificationStatusResponseFlashCall.SourceEnum.MANUAL)
+                  .setIdentity(NumberIdentity.valueOf("endpoint value"))
                   .setCountryId("es-ES")
-                  .setVerificationTimestamp("2024-05-22T09:38:59.5590437")
+                  .setVerificationTimestamp(
+                      DateUtil.failSafeTimeStampToInstant("2024-05-22T09:38:59.5590437"))
                   .build());
-  public static VerificationStatusResponseInternal expectedVerificationSmsDto =
+  public static VerificationStatusResponseInternalImpl expectedVerificationSmsDto =
       new VerificationStatusResponseInternalImpl(
-          (SmsVerificationStatusResponseImpl)
-              SmsVerificationStatusResponse.builder()
+          (VerificationStatusResponseSmsImpl)
+              VerificationStatusResponseSms.builder()
                   .setId("the id")
-                  .setMethod(SmsVerificationStatusResponse.MethodEnum.SMS)
                   .setReference("my reference")
                   .setStatus(VerificationStatus.FAIL)
                   .setReason(VerificationStatusReason.FRAUD)
-                  .setSource(SmsVerificationStatusResponse.SourceEnum.INTERCEPTED)
+                  .setSource(VerificationStatusResponseSms.SourceEnum.INTERCEPTED)
                   .setPrice(
-                      SmsVerificationStatusResponsePrice.builder()
+                      VerificationStatusResponseSmsPrice.builder()
                           .setVerificationPrice(
                               Price.builder()
                                   .setCurrencyId("verificationPrice currency id")
                                   .setAmount(3.141516F)
                                   .build())
                           .build())
-                  .setIdentity(
-                      IdentityInternal.builder()
-                          .setType(TypeEnum.NUMBER)
-                          .setEndpoint("endpoint value")
-                          .build())
+                  .setIdentity(NumberIdentity.valueOf("endpoint value"))
                   .setCountryId("es-ES")
-                  .setVerificationTimestamp("2024-05-22T09:38:59.5590437")
+                  .setVerificationTimestamp(
+                      DateUtil.failSafeTimeStampToInstant("2024-05-22T09:38:59.5590437"))
                   .build());
 
-  @GivenJsonResource("/domains/verification/v1/status/VerificationStatusPhoneCallResponseDto.json")
+  @GivenJsonResource("/domains/verification/v1/status/VerificationStatusResponsePhoneCallDto.json")
   VerificationStatusResponseInternal loadedVerificationPhoneCallDto;
 
-  @GivenJsonResource("/domains/verification/v1/status/VerificationStatusFlashCallResponseDto.json")
+  @GivenJsonResource("/domains/verification/v1/status/VerificationStatusResponseFlashCallDto.json")
   VerificationStatusResponseInternal loadedVerificationFlashCallDto;
 
-  @GivenJsonResource("/domains/verification/v1/status/VerificationStatusSmsResponseDto.json")
+  @GivenJsonResource("/domains/verification/v1/status/VerificationStatusResponseSmsDto.json")
   VerificationStatusResponseInternal loadedVerificationSmsDto;
 
   @Test

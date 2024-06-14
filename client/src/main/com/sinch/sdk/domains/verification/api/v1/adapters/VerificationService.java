@@ -28,6 +28,7 @@ public class VerificationService
   private final HttpClient httpClient;
   private VerificationStartService startService;
   private VerificationReportService reportService;
+  private VerificationStatusService statusService;
 
   private Map<String, AuthManager> clientAuthManagers;
   private Map<String, AuthManager> webhooksAuthManagers;
@@ -103,6 +104,14 @@ public class VerificationService
       this.reportService = new VerificationReportService(context, httpClient, clientAuthManagers);
     }
     return this.reportService;
+  }
+
+  public VerificationStatusService verificationStatus() {
+    if (null == this.statusService) {
+      checkCredentials();
+      this.statusService = new VerificationStatusService(context, httpClient, clientAuthManagers);
+    }
+    return this.statusService;
   }
 
   private void checkCredentials() throws ApiAuthException {

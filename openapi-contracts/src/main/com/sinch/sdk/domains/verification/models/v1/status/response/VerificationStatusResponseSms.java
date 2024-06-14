@@ -15,15 +15,18 @@ package com.sinch.sdk.domains.verification.models.v1.status.response;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import com.sinch.sdk.domains.verification.models.v1.Identity;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
-import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
 /** declaration */
-@JsonDeserialize(builder = SmsVerificationStatusResponseImpl.Builder.class)
-public interface SmsVerificationStatusResponse {
+@JsonDeserialize(builder = VerificationStatusResponseSmsImpl.Builder.class)
+public interface VerificationStatusResponseSms
+    extends com.sinch.sdk.domains.verification.models.v1.status.response
+        .VerificationStatusResponse {
 
   /**
    * The unique ID of the verification request.
@@ -58,7 +61,7 @@ public interface SmsVerificationStatusResponse {
    *
    * @return identity
    */
-  IdentityInternal getIdentity();
+  Identity getIdentity();
 
   /**
    * The ID of the country to which the verification was sent.
@@ -76,7 +79,7 @@ public interface SmsVerificationStatusResponse {
    *
    * @return verificationTimestamp
    */
-  String getVerificationTimestamp();
+  Instant getVerificationTimestamp();
 
   /** The method of the verification request. This will always be &#x60;sms&#x60;. */
   public class MethodEnum extends EnumDynamic<String, MethodEnum> {
@@ -103,18 +106,11 @@ public interface SmsVerificationStatusResponse {
   }
 
   /**
-   * The method of the verification request. This will always be &#x60;sms&#x60;.
-   *
-   * @return method
-   */
-  MethodEnum getMethod();
-
-  /**
    * Get price
    *
    * @return price
    */
-  SmsVerificationStatusResponsePrice getPrice();
+  VerificationStatusResponseSmsPrice getPrice();
 
   /** Free text that the client is sending, used to show if the call/SMS was intercepted or not. */
   public class SourceEnum extends EnumDynamic<String, SourceEnum> {
@@ -155,7 +151,7 @@ public interface SmsVerificationStatusResponse {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new SmsVerificationStatusResponseImpl.Builder();
+    return new VerificationStatusResponseSmsImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -204,7 +200,7 @@ public interface SmsVerificationStatusResponse {
      * @return Current builder
      * @see #getIdentity
      */
-    Builder setIdentity(IdentityInternal identity);
+    Builder setIdentity(Identity identity);
 
     /**
      * see getter
@@ -222,16 +218,7 @@ public interface SmsVerificationStatusResponse {
      * @return Current builder
      * @see #getVerificationTimestamp
      */
-    Builder setVerificationTimestamp(String verificationTimestamp);
-
-    /**
-     * see getter
-     *
-     * @param method see getter
-     * @return Current builder
-     * @see #getMethod
-     */
-    Builder setMethod(MethodEnum method);
+    Builder setVerificationTimestamp(Instant verificationTimestamp);
 
     /**
      * see getter
@@ -240,7 +227,7 @@ public interface SmsVerificationStatusResponse {
      * @return Current builder
      * @see #getPrice
      */
-    Builder setPrice(SmsVerificationStatusResponsePrice price);
+    Builder setPrice(VerificationStatusResponseSmsPrice price);
 
     /**
      * see getter
@@ -256,6 +243,6 @@ public interface SmsVerificationStatusResponse {
      *
      * @return The instance build with current builder values
      */
-    SmsVerificationStatusResponse build();
+    VerificationStatusResponseSms build();
   }
 }

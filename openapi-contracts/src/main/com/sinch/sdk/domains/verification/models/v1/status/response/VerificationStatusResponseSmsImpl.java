@@ -7,26 +7,29 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.verification.models.v1.Identity;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
-import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
+import java.time.Instant;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  SmsVerificationStatusResponseImpl.JSON_PROPERTY_ID,
-  SmsVerificationStatusResponseImpl.JSON_PROPERTY_STATUS,
-  SmsVerificationStatusResponseImpl.JSON_PROPERTY_REASON,
-  SmsVerificationStatusResponseImpl.JSON_PROPERTY_REFERENCE,
-  SmsVerificationStatusResponseImpl.JSON_PROPERTY_IDENTITY,
-  SmsVerificationStatusResponseImpl.JSON_PROPERTY_COUNTRY_ID,
-  SmsVerificationStatusResponseImpl.JSON_PROPERTY_VERIFICATION_TIMESTAMP,
-  SmsVerificationStatusResponseImpl.JSON_PROPERTY_METHOD,
-  SmsVerificationStatusResponseImpl.JSON_PROPERTY_PRICE,
-  SmsVerificationStatusResponseImpl.JSON_PROPERTY_SOURCE
+  VerificationStatusResponseSmsImpl.JSON_PROPERTY_ID,
+  VerificationStatusResponseSmsImpl.JSON_PROPERTY_STATUS,
+  VerificationStatusResponseSmsImpl.JSON_PROPERTY_REASON,
+  VerificationStatusResponseSmsImpl.JSON_PROPERTY_REFERENCE,
+  VerificationStatusResponseSmsImpl.JSON_PROPERTY_IDENTITY,
+  VerificationStatusResponseSmsImpl.JSON_PROPERTY_COUNTRY_ID,
+  VerificationStatusResponseSmsImpl.JSON_PROPERTY_VERIFICATION_TIMESTAMP,
+  VerificationStatusResponseSmsImpl.JSON_PROPERTY_METHOD,
+  VerificationStatusResponseSmsImpl.JSON_PROPERTY_PRICE,
+  VerificationStatusResponseSmsImpl.JSON_PROPERTY_SOURCE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class SmsVerificationStatusResponseImpl implements SmsVerificationStatusResponse {
+public class VerificationStatusResponseSmsImpl
+    implements VerificationStatusResponseSms,
+        com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponse {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ID = "id";
@@ -47,7 +50,7 @@ public class SmsVerificationStatusResponseImpl implements SmsVerificationStatusR
 
   public static final String JSON_PROPERTY_IDENTITY = "identity";
 
-  private OptionalValue<IdentityInternal> identity;
+  private OptionalValue<Identity> identity;
 
   public static final String JSON_PROPERTY_COUNTRY_ID = "countryId";
 
@@ -55,7 +58,7 @@ public class SmsVerificationStatusResponseImpl implements SmsVerificationStatusR
 
   public static final String JSON_PROPERTY_VERIFICATION_TIMESTAMP = "verificationTimestamp";
 
-  private OptionalValue<String> verificationTimestamp;
+  private OptionalValue<Instant> verificationTimestamp;
 
   public static final String JSON_PROPERTY_METHOD = "method";
 
@@ -63,24 +66,24 @@ public class SmsVerificationStatusResponseImpl implements SmsVerificationStatusR
 
   public static final String JSON_PROPERTY_PRICE = "price";
 
-  private OptionalValue<SmsVerificationStatusResponsePrice> price;
+  private OptionalValue<VerificationStatusResponseSmsPrice> price;
 
   public static final String JSON_PROPERTY_SOURCE = "source";
 
   private OptionalValue<SourceEnum> source;
 
-  public SmsVerificationStatusResponseImpl() {}
+  public VerificationStatusResponseSmsImpl() {}
 
-  protected SmsVerificationStatusResponseImpl(
+  protected VerificationStatusResponseSmsImpl(
       OptionalValue<String> id,
       OptionalValue<VerificationStatus> status,
       OptionalValue<VerificationStatusReason> reason,
       OptionalValue<String> reference,
-      OptionalValue<IdentityInternal> identity,
+      OptionalValue<Identity> identity,
       OptionalValue<String> countryId,
-      OptionalValue<String> verificationTimestamp,
+      OptionalValue<Instant> verificationTimestamp,
       OptionalValue<MethodEnum> method,
-      OptionalValue<SmsVerificationStatusResponsePrice> price,
+      OptionalValue<VerificationStatusResponseSmsPrice> price,
       OptionalValue<SourceEnum> source) {
     this.id = id;
     this.status = status;
@@ -139,13 +142,13 @@ public class SmsVerificationStatusResponseImpl implements SmsVerificationStatusR
   }
 
   @JsonIgnore
-  public IdentityInternal getIdentity() {
+  public Identity getIdentity() {
     return identity.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_IDENTITY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<IdentityInternal> identity() {
+  public OptionalValue<Identity> identity() {
     return identity;
   }
 
@@ -161,13 +164,13 @@ public class SmsVerificationStatusResponseImpl implements SmsVerificationStatusR
   }
 
   @JsonIgnore
-  public String getVerificationTimestamp() {
+  public Instant getVerificationTimestamp() {
     return verificationTimestamp.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_VERIFICATION_TIMESTAMP)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> verificationTimestamp() {
+  public OptionalValue<Instant> verificationTimestamp() {
     return verificationTimestamp;
   }
 
@@ -183,13 +186,13 @@ public class SmsVerificationStatusResponseImpl implements SmsVerificationStatusR
   }
 
   @JsonIgnore
-  public SmsVerificationStatusResponsePrice getPrice() {
+  public VerificationStatusResponseSmsPrice getPrice() {
     return price.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_PRICE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<SmsVerificationStatusResponsePrice> price() {
+  public OptionalValue<VerificationStatusResponseSmsPrice> price() {
     return price;
   }
 
@@ -204,7 +207,7 @@ public class SmsVerificationStatusResponseImpl implements SmsVerificationStatusR
     return source;
   }
 
-  /** Return true if this SmsVerificationStatusResponse object is equal to o. */
+  /** Return true if this VerificationStatusResponseSms object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -213,19 +216,19 @@ public class SmsVerificationStatusResponseImpl implements SmsVerificationStatusR
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SmsVerificationStatusResponseImpl smsVerificationStatusResponse =
-        (SmsVerificationStatusResponseImpl) o;
-    return Objects.equals(this.id, smsVerificationStatusResponse.id)
-        && Objects.equals(this.status, smsVerificationStatusResponse.status)
-        && Objects.equals(this.reason, smsVerificationStatusResponse.reason)
-        && Objects.equals(this.reference, smsVerificationStatusResponse.reference)
-        && Objects.equals(this.identity, smsVerificationStatusResponse.identity)
-        && Objects.equals(this.countryId, smsVerificationStatusResponse.countryId)
+    VerificationStatusResponseSmsImpl verificationStatusResponseSms =
+        (VerificationStatusResponseSmsImpl) o;
+    return Objects.equals(this.id, verificationStatusResponseSms.id)
+        && Objects.equals(this.status, verificationStatusResponseSms.status)
+        && Objects.equals(this.reason, verificationStatusResponseSms.reason)
+        && Objects.equals(this.reference, verificationStatusResponseSms.reference)
+        && Objects.equals(this.identity, verificationStatusResponseSms.identity)
+        && Objects.equals(this.countryId, verificationStatusResponseSms.countryId)
         && Objects.equals(
-            this.verificationTimestamp, smsVerificationStatusResponse.verificationTimestamp)
-        && Objects.equals(this.method, smsVerificationStatusResponse.method)
-        && Objects.equals(this.price, smsVerificationStatusResponse.price)
-        && Objects.equals(this.source, smsVerificationStatusResponse.source);
+            this.verificationTimestamp, verificationStatusResponseSms.verificationTimestamp)
+        && Objects.equals(this.method, verificationStatusResponseSms.method)
+        && Objects.equals(this.price, verificationStatusResponseSms.price)
+        && Objects.equals(this.source, verificationStatusResponseSms.source);
   }
 
   @Override
@@ -246,7 +249,7 @@ public class SmsVerificationStatusResponseImpl implements SmsVerificationStatusR
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SmsVerificationStatusResponseImpl {\n");
+    sb.append("class VerificationStatusResponseSmsImpl {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    reason: ").append(toIndentedString(reason)).append("\n");
@@ -274,16 +277,16 @@ public class SmsVerificationStatusResponseImpl implements SmsVerificationStatusR
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements SmsVerificationStatusResponse.Builder {
+  static class Builder implements VerificationStatusResponseSms.Builder {
     OptionalValue<String> id = OptionalValue.empty();
     OptionalValue<VerificationStatus> status = OptionalValue.empty();
     OptionalValue<VerificationStatusReason> reason = OptionalValue.empty();
     OptionalValue<String> reference = OptionalValue.empty();
-    OptionalValue<IdentityInternal> identity = OptionalValue.empty();
+    OptionalValue<Identity> identity = OptionalValue.empty();
     OptionalValue<String> countryId = OptionalValue.empty();
-    OptionalValue<String> verificationTimestamp = OptionalValue.empty();
-    OptionalValue<MethodEnum> method = OptionalValue.empty();
-    OptionalValue<SmsVerificationStatusResponsePrice> price = OptionalValue.empty();
+    OptionalValue<Instant> verificationTimestamp = OptionalValue.empty();
+    OptionalValue<MethodEnum> method = OptionalValue.of(MethodEnum.SMS);
+    OptionalValue<VerificationStatusResponseSmsPrice> price = OptionalValue.empty();
     OptionalValue<SourceEnum> source = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_ID)
@@ -311,7 +314,7 @@ public class SmsVerificationStatusResponseImpl implements SmsVerificationStatusR
     }
 
     @JsonProperty(JSON_PROPERTY_IDENTITY)
-    public Builder setIdentity(IdentityInternal identity) {
+    public Builder setIdentity(Identity identity) {
       this.identity = OptionalValue.of(identity);
       return this;
     }
@@ -323,19 +326,13 @@ public class SmsVerificationStatusResponseImpl implements SmsVerificationStatusR
     }
 
     @JsonProperty(JSON_PROPERTY_VERIFICATION_TIMESTAMP)
-    public Builder setVerificationTimestamp(String verificationTimestamp) {
+    public Builder setVerificationTimestamp(Instant verificationTimestamp) {
       this.verificationTimestamp = OptionalValue.of(verificationTimestamp);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_METHOD)
-    public Builder setMethod(MethodEnum method) {
-      this.method = OptionalValue.of(method);
-      return this;
-    }
-
     @JsonProperty(JSON_PROPERTY_PRICE)
-    public Builder setPrice(SmsVerificationStatusResponsePrice price) {
+    public Builder setPrice(VerificationStatusResponseSmsPrice price) {
       this.price = OptionalValue.of(price);
       return this;
     }
@@ -346,8 +343,8 @@ public class SmsVerificationStatusResponseImpl implements SmsVerificationStatusR
       return this;
     }
 
-    public SmsVerificationStatusResponse build() {
-      return new SmsVerificationStatusResponseImpl(
+    public VerificationStatusResponseSms build() {
+      return new VerificationStatusResponseSmsImpl(
           id,
           status,
           reason,

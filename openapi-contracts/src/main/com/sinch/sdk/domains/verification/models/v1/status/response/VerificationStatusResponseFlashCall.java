@@ -15,17 +15,20 @@ package com.sinch.sdk.domains.verification.models.v1.status.response;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import com.sinch.sdk.domains.verification.models.v1.Identity;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
-import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
 import com.sinch.sdk.domains.verification.models.v1.status.StatusCallResult;
 import com.sinch.sdk.domains.verification.models.v1.status.StatusPrice;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
 /** declaration */
-@JsonDeserialize(builder = PhoneCallVerificationStatusResponseImpl.Builder.class)
-public interface PhoneCallVerificationStatusResponse {
+@JsonDeserialize(builder = VerificationStatusResponseFlashCallImpl.Builder.class)
+public interface VerificationStatusResponseFlashCall
+    extends com.sinch.sdk.domains.verification.models.v1.status.response
+        .VerificationStatusResponse {
 
   /**
    * The unique ID of the verification request.
@@ -60,7 +63,7 @@ public interface PhoneCallVerificationStatusResponse {
    *
    * @return identity
    */
-  IdentityInternal getIdentity();
+  Identity getIdentity();
 
   /**
    * The ID of the country to which the verification was sent.
@@ -78,14 +81,14 @@ public interface PhoneCallVerificationStatusResponse {
    *
    * @return verificationTimestamp
    */
-  String getVerificationTimestamp();
+  Instant getVerificationTimestamp();
 
-  /** The method of the verification request. This will always be &#x60;callout&#x60;. */
+  /** The method of the verification request. This will always be &#x60;flashcall&#x60;. */
   public class MethodEnum extends EnumDynamic<String, MethodEnum> {
-    public static final MethodEnum PHONE_CALL = new MethodEnum("callout");
+    public static final MethodEnum FLASHCALL = new MethodEnum("flashcall");
 
     private static final EnumSupportDynamic<String, MethodEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(MethodEnum.class, MethodEnum::new, Arrays.asList(PHONE_CALL));
+        new EnumSupportDynamic<>(MethodEnum.class, MethodEnum::new, Arrays.asList(FLASHCALL));
 
     private MethodEnum(String value) {
       super(value);
@@ -103,13 +106,6 @@ public interface PhoneCallVerificationStatusResponse {
       return ENUM_SUPPORT.valueOf(e);
     }
   }
-
-  /**
-   * The method of the verification request. This will always be &#x60;callout&#x60;.
-   *
-   * @return method
-   */
-  MethodEnum getMethod();
 
   /**
    * Shows whether the call is complete or not.
@@ -132,13 +128,46 @@ public interface PhoneCallVerificationStatusResponse {
    */
   StatusPrice getPrice();
 
+  /** Free text that the client is sending, used to show if the call/SMS was intercepted or not. */
+  public class SourceEnum extends EnumDynamic<String, SourceEnum> {
+    public static final SourceEnum INTERCEPTED = new SourceEnum("intercepted");
+    public static final SourceEnum MANUAL = new SourceEnum("manual");
+
+    private static final EnumSupportDynamic<String, SourceEnum> ENUM_SUPPORT =
+        new EnumSupportDynamic<>(
+            SourceEnum.class, SourceEnum::new, Arrays.asList(INTERCEPTED, MANUAL));
+
+    private SourceEnum(String value) {
+      super(value);
+    }
+
+    public static Stream<SourceEnum> values() {
+      return ENUM_SUPPORT.values();
+    }
+
+    public static SourceEnum from(String value) {
+      return ENUM_SUPPORT.from(value);
+    }
+
+    public static String valueOf(SourceEnum e) {
+      return ENUM_SUPPORT.valueOf(e);
+    }
+  }
+
+  /**
+   * Free text that the client is sending, used to show if the call/SMS was intercepted or not.
+   *
+   * @return source
+   */
+  SourceEnum getSource();
+
   /**
    * Getting builder
    *
    * @return New Builder instance
    */
   static Builder builder() {
-    return new PhoneCallVerificationStatusResponseImpl.Builder();
+    return new VerificationStatusResponseFlashCallImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -187,7 +216,7 @@ public interface PhoneCallVerificationStatusResponse {
      * @return Current builder
      * @see #getIdentity
      */
-    Builder setIdentity(IdentityInternal identity);
+    Builder setIdentity(Identity identity);
 
     /**
      * see getter
@@ -205,16 +234,7 @@ public interface PhoneCallVerificationStatusResponse {
      * @return Current builder
      * @see #getVerificationTimestamp
      */
-    Builder setVerificationTimestamp(String verificationTimestamp);
-
-    /**
-     * see getter
-     *
-     * @param method see getter
-     * @return Current builder
-     * @see #getMethod
-     */
-    Builder setMethod(MethodEnum method);
+    Builder setVerificationTimestamp(Instant verificationTimestamp);
 
     /**
      * see getter
@@ -244,10 +264,19 @@ public interface PhoneCallVerificationStatusResponse {
     Builder setPrice(StatusPrice price);
 
     /**
+     * see getter
+     *
+     * @param source see getter
+     * @return Current builder
+     * @see #getSource
+     */
+    Builder setSource(SourceEnum source);
+
+    /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    PhoneCallVerificationStatusResponse build();
+    VerificationStatusResponseFlashCall build();
   }
 }

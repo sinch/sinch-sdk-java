@@ -105,7 +105,7 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
       checkCredentials();
       this.verificationStatus =
           new com.sinch.sdk.domains.verification.adapters.VerificationStatusService(
-              context, httpClient, clientAuthManagers);
+              v1.verificationStatus());
     }
     return this.verificationStatus;
   }

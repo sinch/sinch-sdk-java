@@ -7,30 +7,32 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.verification.models.v1.Identity;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
-import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
 import com.sinch.sdk.domains.verification.models.v1.status.StatusCallResult;
 import com.sinch.sdk.domains.verification.models.v1.status.StatusPrice;
+import java.time.Instant;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  PhoneCallVerificationStatusResponseImpl.JSON_PROPERTY_ID,
-  PhoneCallVerificationStatusResponseImpl.JSON_PROPERTY_STATUS,
-  PhoneCallVerificationStatusResponseImpl.JSON_PROPERTY_REASON,
-  PhoneCallVerificationStatusResponseImpl.JSON_PROPERTY_REFERENCE,
-  PhoneCallVerificationStatusResponseImpl.JSON_PROPERTY_IDENTITY,
-  PhoneCallVerificationStatusResponseImpl.JSON_PROPERTY_COUNTRY_ID,
-  PhoneCallVerificationStatusResponseImpl.JSON_PROPERTY_VERIFICATION_TIMESTAMP,
-  PhoneCallVerificationStatusResponseImpl.JSON_PROPERTY_METHOD,
-  PhoneCallVerificationStatusResponseImpl.JSON_PROPERTY_CALL_COMPLETE,
-  PhoneCallVerificationStatusResponseImpl.JSON_PROPERTY_CALL_RESULT,
-  PhoneCallVerificationStatusResponseImpl.JSON_PROPERTY_PRICE
+  VerificationStatusResponsePhoneCallImpl.JSON_PROPERTY_ID,
+  VerificationStatusResponsePhoneCallImpl.JSON_PROPERTY_STATUS,
+  VerificationStatusResponsePhoneCallImpl.JSON_PROPERTY_REASON,
+  VerificationStatusResponsePhoneCallImpl.JSON_PROPERTY_REFERENCE,
+  VerificationStatusResponsePhoneCallImpl.JSON_PROPERTY_IDENTITY,
+  VerificationStatusResponsePhoneCallImpl.JSON_PROPERTY_COUNTRY_ID,
+  VerificationStatusResponsePhoneCallImpl.JSON_PROPERTY_VERIFICATION_TIMESTAMP,
+  VerificationStatusResponsePhoneCallImpl.JSON_PROPERTY_METHOD,
+  VerificationStatusResponsePhoneCallImpl.JSON_PROPERTY_CALL_COMPLETE,
+  VerificationStatusResponsePhoneCallImpl.JSON_PROPERTY_CALL_RESULT,
+  VerificationStatusResponsePhoneCallImpl.JSON_PROPERTY_PRICE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class PhoneCallVerificationStatusResponseImpl
-    implements PhoneCallVerificationStatusResponse {
+public class VerificationStatusResponsePhoneCallImpl
+    implements VerificationStatusResponsePhoneCall,
+        com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponse {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ID = "id";
@@ -51,7 +53,7 @@ public class PhoneCallVerificationStatusResponseImpl
 
   public static final String JSON_PROPERTY_IDENTITY = "identity";
 
-  private OptionalValue<IdentityInternal> identity;
+  private OptionalValue<Identity> identity;
 
   public static final String JSON_PROPERTY_COUNTRY_ID = "countryId";
 
@@ -59,7 +61,7 @@ public class PhoneCallVerificationStatusResponseImpl
 
   public static final String JSON_PROPERTY_VERIFICATION_TIMESTAMP = "verificationTimestamp";
 
-  private OptionalValue<String> verificationTimestamp;
+  private OptionalValue<Instant> verificationTimestamp;
 
   public static final String JSON_PROPERTY_METHOD = "method";
 
@@ -77,16 +79,16 @@ public class PhoneCallVerificationStatusResponseImpl
 
   private OptionalValue<StatusPrice> price;
 
-  public PhoneCallVerificationStatusResponseImpl() {}
+  public VerificationStatusResponsePhoneCallImpl() {}
 
-  protected PhoneCallVerificationStatusResponseImpl(
+  protected VerificationStatusResponsePhoneCallImpl(
       OptionalValue<String> id,
       OptionalValue<VerificationStatus> status,
       OptionalValue<VerificationStatusReason> reason,
       OptionalValue<String> reference,
-      OptionalValue<IdentityInternal> identity,
+      OptionalValue<Identity> identity,
       OptionalValue<String> countryId,
-      OptionalValue<String> verificationTimestamp,
+      OptionalValue<Instant> verificationTimestamp,
       OptionalValue<MethodEnum> method,
       OptionalValue<Boolean> callComplete,
       OptionalValue<StatusCallResult> callResult,
@@ -149,13 +151,13 @@ public class PhoneCallVerificationStatusResponseImpl
   }
 
   @JsonIgnore
-  public IdentityInternal getIdentity() {
+  public Identity getIdentity() {
     return identity.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_IDENTITY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<IdentityInternal> identity() {
+  public OptionalValue<Identity> identity() {
     return identity;
   }
 
@@ -171,13 +173,13 @@ public class PhoneCallVerificationStatusResponseImpl
   }
 
   @JsonIgnore
-  public String getVerificationTimestamp() {
+  public Instant getVerificationTimestamp() {
     return verificationTimestamp.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_VERIFICATION_TIMESTAMP)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> verificationTimestamp() {
+  public OptionalValue<Instant> verificationTimestamp() {
     return verificationTimestamp;
   }
 
@@ -225,7 +227,7 @@ public class PhoneCallVerificationStatusResponseImpl
     return price;
   }
 
-  /** Return true if this PhoneCallVerificationStatusResponse object is equal to o. */
+  /** Return true if this VerificationStatusResponsePhoneCall object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -234,20 +236,20 @@ public class PhoneCallVerificationStatusResponseImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    PhoneCallVerificationStatusResponseImpl phoneCallVerificationStatusResponse =
-        (PhoneCallVerificationStatusResponseImpl) o;
-    return Objects.equals(this.id, phoneCallVerificationStatusResponse.id)
-        && Objects.equals(this.status, phoneCallVerificationStatusResponse.status)
-        && Objects.equals(this.reason, phoneCallVerificationStatusResponse.reason)
-        && Objects.equals(this.reference, phoneCallVerificationStatusResponse.reference)
-        && Objects.equals(this.identity, phoneCallVerificationStatusResponse.identity)
-        && Objects.equals(this.countryId, phoneCallVerificationStatusResponse.countryId)
+    VerificationStatusResponsePhoneCallImpl verificationStatusResponsePhoneCall =
+        (VerificationStatusResponsePhoneCallImpl) o;
+    return Objects.equals(this.id, verificationStatusResponsePhoneCall.id)
+        && Objects.equals(this.status, verificationStatusResponsePhoneCall.status)
+        && Objects.equals(this.reason, verificationStatusResponsePhoneCall.reason)
+        && Objects.equals(this.reference, verificationStatusResponsePhoneCall.reference)
+        && Objects.equals(this.identity, verificationStatusResponsePhoneCall.identity)
+        && Objects.equals(this.countryId, verificationStatusResponsePhoneCall.countryId)
         && Objects.equals(
-            this.verificationTimestamp, phoneCallVerificationStatusResponse.verificationTimestamp)
-        && Objects.equals(this.method, phoneCallVerificationStatusResponse.method)
-        && Objects.equals(this.callComplete, phoneCallVerificationStatusResponse.callComplete)
-        && Objects.equals(this.callResult, phoneCallVerificationStatusResponse.callResult)
-        && Objects.equals(this.price, phoneCallVerificationStatusResponse.price);
+            this.verificationTimestamp, verificationStatusResponsePhoneCall.verificationTimestamp)
+        && Objects.equals(this.method, verificationStatusResponsePhoneCall.method)
+        && Objects.equals(this.callComplete, verificationStatusResponsePhoneCall.callComplete)
+        && Objects.equals(this.callResult, verificationStatusResponsePhoneCall.callResult)
+        && Objects.equals(this.price, verificationStatusResponsePhoneCall.price);
   }
 
   @Override
@@ -269,7 +271,7 @@ public class PhoneCallVerificationStatusResponseImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class PhoneCallVerificationStatusResponseImpl {\n");
+    sb.append("class VerificationStatusResponsePhoneCallImpl {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    reason: ").append(toIndentedString(reason)).append("\n");
@@ -298,15 +300,15 @@ public class PhoneCallVerificationStatusResponseImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements PhoneCallVerificationStatusResponse.Builder {
+  static class Builder implements VerificationStatusResponsePhoneCall.Builder {
     OptionalValue<String> id = OptionalValue.empty();
     OptionalValue<VerificationStatus> status = OptionalValue.empty();
     OptionalValue<VerificationStatusReason> reason = OptionalValue.empty();
     OptionalValue<String> reference = OptionalValue.empty();
-    OptionalValue<IdentityInternal> identity = OptionalValue.empty();
+    OptionalValue<Identity> identity = OptionalValue.empty();
     OptionalValue<String> countryId = OptionalValue.empty();
-    OptionalValue<String> verificationTimestamp = OptionalValue.empty();
-    OptionalValue<MethodEnum> method = OptionalValue.empty();
+    OptionalValue<Instant> verificationTimestamp = OptionalValue.empty();
+    OptionalValue<MethodEnum> method = OptionalValue.of(MethodEnum.PHONE_CALL);
     OptionalValue<Boolean> callComplete = OptionalValue.empty();
     OptionalValue<StatusCallResult> callResult = OptionalValue.empty();
     OptionalValue<StatusPrice> price = OptionalValue.empty();
@@ -336,7 +338,7 @@ public class PhoneCallVerificationStatusResponseImpl
     }
 
     @JsonProperty(JSON_PROPERTY_IDENTITY)
-    public Builder setIdentity(IdentityInternal identity) {
+    public Builder setIdentity(Identity identity) {
       this.identity = OptionalValue.of(identity);
       return this;
     }
@@ -348,14 +350,8 @@ public class PhoneCallVerificationStatusResponseImpl
     }
 
     @JsonProperty(JSON_PROPERTY_VERIFICATION_TIMESTAMP)
-    public Builder setVerificationTimestamp(String verificationTimestamp) {
+    public Builder setVerificationTimestamp(Instant verificationTimestamp) {
       this.verificationTimestamp = OptionalValue.of(verificationTimestamp);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_METHOD)
-    public Builder setMethod(MethodEnum method) {
-      this.method = OptionalValue.of(method);
       return this;
     }
 
@@ -377,8 +373,8 @@ public class PhoneCallVerificationStatusResponseImpl
       return this;
     }
 
-    public PhoneCallVerificationStatusResponse build() {
-      return new PhoneCallVerificationStatusResponseImpl(
+    public VerificationStatusResponsePhoneCall build() {
+      return new VerificationStatusResponsePhoneCallImpl(
           id,
           status,
           reason,

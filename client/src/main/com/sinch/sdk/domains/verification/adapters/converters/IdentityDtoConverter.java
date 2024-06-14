@@ -18,16 +18,29 @@ public class IdentityDtoConverter {
     return identity;
   }
 
+  public static com.sinch.sdk.domains.verification.models.Identity convert(
+      com.sinch.sdk.domains.verification.models.v1.Identity dto) {
+    com.sinch.sdk.domains.verification.models.Identity client = null;
+    if (dto instanceof com.sinch.sdk.domains.verification.models.v1.NumberIdentity) {
+      client =
+          com.sinch.sdk.domains.verification.models.NumberIdentity.valueOf(
+              ((com.sinch.sdk.domains.verification.models.v1.NumberIdentity) dto).getEndpoint());
+    } else {
+      LOGGER.severe(String.format("Unexpected '%s'", client));
+    }
+    return client;
+  }
+
   public static com.sinch.sdk.domains.verification.models.v1.Identity convert(
       com.sinch.sdk.domains.verification.models.Identity client) {
-    com.sinch.sdk.domains.verification.models.v1.Identity identity = null;
+    com.sinch.sdk.domains.verification.models.v1.Identity dto = null;
     if (client instanceof com.sinch.sdk.domains.verification.models.NumberIdentity) {
-      identity =
+      dto =
           com.sinch.sdk.domains.verification.models.v1.NumberIdentity.valueOf(
               ((com.sinch.sdk.domains.verification.models.NumberIdentity) client).getEndpoint());
     } else {
       LOGGER.severe(String.format("Unexpected '%s'", client));
     }
-    return identity;
+    return dto;
   }
 }
