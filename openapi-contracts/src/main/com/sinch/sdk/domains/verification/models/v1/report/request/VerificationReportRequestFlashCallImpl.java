@@ -116,7 +116,7 @@ public class VerificationReportRequestFlashCallImpl
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements VerificationReportRequestFlashCall.Builder {
-    OptionalValue<MethodEnum> method = OptionalValue.of(MethodEnum.FLASHCALL);
+    OptionalValue<MethodEnum> method = OptionalValue.of(MethodEnum.FLASH_CALL);
     OptionalValue<VerificationReportRequestFlashCallOptions> flashCall = OptionalValue.empty();
 
     VerificationReportRequestFlashCallOptions.Builder _delegatedBuilder = null;

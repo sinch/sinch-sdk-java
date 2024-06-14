@@ -10,7 +10,7 @@ public class VerificationMethod extends EnumDynamic<String, VerificationMethod> 
 
   public static final VerificationMethod SMS = new VerificationMethod("sms");
 
-  public static final VerificationMethod FLASHCALL = new VerificationMethod("flashcall");
+  public static final VerificationMethod FLASH_CALL = new VerificationMethod("flashcall");
 
   public static final VerificationMethod PHONE_CALL = new VerificationMethod("callout");
 
@@ -20,7 +20,7 @@ public class VerificationMethod extends EnumDynamic<String, VerificationMethod> 
       new EnumSupportDynamic<>(
           VerificationMethod.class,
           VerificationMethod::new,
-          Arrays.asList(SMS, FLASHCALL, PHONE_CALL, DATA));
+          Arrays.asList(SMS, FLASH_CALL, PHONE_CALL, DATA));
 
   private VerificationMethod(String value) {
     super(value);

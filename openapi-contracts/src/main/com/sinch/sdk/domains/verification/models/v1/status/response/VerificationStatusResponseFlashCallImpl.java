@@ -329,7 +329,7 @@ public class VerificationStatusResponseFlashCallImpl
     OptionalValue<Identity> identity = OptionalValue.empty();
     OptionalValue<String> countryId = OptionalValue.empty();
     OptionalValue<Instant> verificationTimestamp = OptionalValue.empty();
-    OptionalValue<MethodEnum> method = OptionalValue.of(MethodEnum.FLASHCALL);
+    OptionalValue<MethodEnum> method = OptionalValue.of(MethodEnum.FLASH_CALL);
     OptionalValue<Boolean> callComplete = OptionalValue.empty();
     OptionalValue<StatusCallResult> callResult = OptionalValue.empty();
     OptionalValue<StatusPrice> price = OptionalValue.empty();

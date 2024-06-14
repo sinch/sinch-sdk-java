@@ -203,7 +203,7 @@ public class VerificationStartResponseFlashCallImpl
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements VerificationStartResponseFlashCall.Builder {
     OptionalValue<String> id = OptionalValue.empty();
-    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.FLASHCALL);
+    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.FLASH_CALL);
     OptionalValue<List<Link>> links = OptionalValue.empty();
     OptionalValue<VerificationStartResponseFlashCallContent> flashCall = OptionalValue.empty();
 

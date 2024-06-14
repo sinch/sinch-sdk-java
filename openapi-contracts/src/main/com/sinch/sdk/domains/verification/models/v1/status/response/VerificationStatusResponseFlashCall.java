@@ -85,10 +85,10 @@ public interface VerificationStatusResponseFlashCall
 
   /** The method of the verification request. This will always be &#x60;flashcall&#x60;. */
   public class MethodEnum extends EnumDynamic<String, MethodEnum> {
-    public static final MethodEnum FLASHCALL = new MethodEnum("flashcall");
+    public static final MethodEnum FLASH_CALL = new MethodEnum("flashcall");
 
     private static final EnumSupportDynamic<String, MethodEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(MethodEnum.class, MethodEnum::new, Arrays.asList(FLASHCALL));
+        new EnumSupportDynamic<>(MethodEnum.class, MethodEnum::new, Arrays.asList(FLASH_CALL));
 
     private MethodEnum(String value) {
       super(value);

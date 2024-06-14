@@ -68,13 +68,13 @@ public interface VerificationResultEvent {
   /** The verification method. */
   public class MethodEnum extends EnumDynamic<String, MethodEnum> {
     public static final MethodEnum SMS = new MethodEnum("sms");
-    public static final MethodEnum FLASHCALL = new MethodEnum("flashcall");
+    public static final MethodEnum FLASH_CALL = new MethodEnum("flashcall");
     public static final MethodEnum PHONE_CALL = new MethodEnum("callout");
     public static final MethodEnum DATA = new MethodEnum("seamless");
 
     private static final EnumSupportDynamic<String, MethodEnum> ENUM_SUPPORT =
         new EnumSupportDynamic<>(
-            MethodEnum.class, MethodEnum::new, Arrays.asList(SMS, FLASHCALL, PHONE_CALL, DATA));
+            MethodEnum.class, MethodEnum::new, Arrays.asList(SMS, FLASH_CALL, PHONE_CALL, DATA));
 
     private MethodEnum(String value) {
       super(value);
