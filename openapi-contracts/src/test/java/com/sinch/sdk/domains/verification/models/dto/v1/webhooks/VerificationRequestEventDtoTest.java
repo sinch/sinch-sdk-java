@@ -23,7 +23,7 @@ public class VerificationRequestEventDtoTest {
           (VerificationRequestEventImpl)
               VerificationRequestEvent.builder()
                   .setId("1234567890")
-                  .setEvent(VerificationRequestEvent.EventEnum.VERIFICATIONREQUESTEVENT)
+                  .setEvent(VerificationRequestEvent.EventEnum.VERIFICATION_REQUEST_EVENT)
                   .setMethod(VerificationRequestEvent.MethodEnum.SMS)
                   .setIdentity(
                       IdentityInternal.builder()
