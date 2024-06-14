@@ -15,8 +15,16 @@ package com.sinch.sdk.domains.verification.models.v1.webhooks;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /** declaration */
-@JsonDeserialize(builder = FlashCallRequestEventResponseFlashCallContentImpl.Builder.class)
-public interface FlashCallRequestEventResponseFlashCallContent {
+@JsonDeserialize(builder = VerificationRequestEventResponseFlashCallImpl.Builder.class)
+public interface VerificationRequestEventResponseFlashCall
+    extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponse {
+
+  /**
+   * Get action
+   *
+   * @return action
+   */
+  VerificationEventResponseAction getAction();
 
   /**
    * The phone number that will be displayed to the user when the flash call is received on the
@@ -45,11 +53,20 @@ public interface FlashCallRequestEventResponseFlashCallContent {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new FlashCallRequestEventResponseFlashCallContentImpl.Builder();
+    return new VerificationRequestEventResponseFlashCallImpl.Builder();
   }
 
   /** Dedicated Builder */
   interface Builder {
+
+    /**
+     * see getter
+     *
+     * @param action see getter
+     * @return Current builder
+     * @see #getAction
+     */
+    Builder setAction(VerificationEventResponseAction action);
 
     /**
      * see getter
@@ -74,6 +91,6 @@ public interface FlashCallRequestEventResponseFlashCallContent {
      *
      * @return The instance build with current builder values
      */
-    FlashCallRequestEventResponseFlashCallContent build();
+    VerificationRequestEventResponseFlashCall build();
   }
 }

@@ -15,23 +15,25 @@ package com.sinch.sdk.domains.verification.models.v1.webhooks;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import com.sinch.sdk.domains.verification.models.v1.Identity;
+import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
-import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
 import com.sinch.sdk.domains.verification.models.v1.status.StatusSource;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
 /** declaration */
 @JsonDeserialize(builder = VerificationResultEventImpl.Builder.class)
-public interface VerificationResultEvent {
+public interface VerificationResultEvent
+    extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent {
 
   /**
-   * The ID of the verification request.
+   * Get method
    *
-   * @return id
+   * @return method
    */
-  String getId();
+  VerificationMethod getMethod();
 
   /** The type of the event. */
   public class EventEnum extends EnumDynamic<String, EventEnum> {
@@ -66,48 +68,6 @@ public interface VerificationResultEvent {
    */
   EventEnum getEvent();
 
-  /** The verification method. */
-  public class MethodEnum extends EnumDynamic<String, MethodEnum> {
-    public static final MethodEnum SMS = new MethodEnum("sms");
-    public static final MethodEnum FLASH_CALL = new MethodEnum("flashcall");
-    public static final MethodEnum PHONE_CALL = new MethodEnum("callout");
-    public static final MethodEnum DATA = new MethodEnum("seamless");
-
-    private static final EnumSupportDynamic<String, MethodEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(
-            MethodEnum.class, MethodEnum::new, Arrays.asList(SMS, FLASH_CALL, PHONE_CALL, DATA));
-
-    private MethodEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<MethodEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static MethodEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(MethodEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
-
-  /**
-   * The verification method.
-   *
-   * @return method
-   */
-  MethodEnum getMethod();
-
-  /**
-   * Get identity
-   *
-   * @return identity
-   */
-  IdentityInternal getIdentity();
-
   /**
    * Get status
    *
@@ -123,13 +83,6 @@ public interface VerificationResultEvent {
   VerificationStatusReason getReason();
 
   /**
-   * The reference ID that was optionally passed together with the verification request.
-   *
-   * @return reference
-   */
-  String getReference();
-
-  /**
    * Get source
    *
    * @return source
@@ -137,7 +90,28 @@ public interface VerificationResultEvent {
   StatusSource getSource();
 
   /**
-   * A custom string that can be provided during a verification request.
+   * The ID of the verification request.
+   *
+   * @return id
+   */
+  String getId();
+
+  /**
+   * Get identity
+   *
+   * @return identity
+   */
+  Identity getIdentity();
+
+  /**
+   * Used to pass your own reference in the request for tracking purposes.
+   *
+   * @return reference
+   */
+  String getReference();
+
+  /**
+   * Can be used to pass custom data in the request.
    *
    * @return custom
    */
@@ -153,16 +127,17 @@ public interface VerificationResultEvent {
   }
 
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder
+      extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent.Builder {
 
     /**
      * see getter
      *
-     * @param id see getter
+     * @param method see getter
      * @return Current builder
-     * @see #getId
+     * @see #getMethod
      */
-    Builder setId(String id);
+    Builder setMethod(VerificationMethod method);
 
     /**
      * see getter
@@ -172,24 +147,6 @@ public interface VerificationResultEvent {
      * @see #getEvent
      */
     Builder setEvent(EventEnum event);
-
-    /**
-     * see getter
-     *
-     * @param method see getter
-     * @return Current builder
-     * @see #getMethod
-     */
-    Builder setMethod(MethodEnum method);
-
-    /**
-     * see getter
-     *
-     * @param identity see getter
-     * @return Current builder
-     * @see #getIdentity
-     */
-    Builder setIdentity(IdentityInternal identity);
 
     /**
      * see getter
@@ -212,20 +169,38 @@ public interface VerificationResultEvent {
     /**
      * see getter
      *
-     * @param reference see getter
-     * @return Current builder
-     * @see #getReference
-     */
-    Builder setReference(String reference);
-
-    /**
-     * see getter
-     *
      * @param source see getter
      * @return Current builder
      * @see #getSource
      */
     Builder setSource(StatusSource source);
+
+    /**
+     * see getter
+     *
+     * @param id see getter
+     * @return Current builder
+     * @see #getId
+     */
+    Builder setId(String id);
+
+    /**
+     * see getter
+     *
+     * @param identity see getter
+     * @return Current builder
+     * @see #getIdentity
+     */
+    Builder setIdentity(Identity identity);
+
+    /**
+     * see getter
+     *
+     * @param reference see getter
+     * @return Current builder
+     * @see #getReference
+     */
+    Builder setReference(String reference);
 
     /**
      * see getter

@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.verification.adapters;
+package com.sinch.sdk.domains.verification.api.v1.adapters;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;

@@ -12,11 +12,8 @@
 
 package com.sinch.sdk.domains.verification.models.v1.webhooks;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
 /** declaration */
-@JsonDeserialize(builder = FlashCallRequestEventResponseImpl.Builder.class)
-public interface FlashCallRequestEventResponse {
+public interface VerificationRequestEventResponse {
 
   /**
    * Get action
@@ -24,22 +21,6 @@ public interface FlashCallRequestEventResponse {
    * @return action
    */
   VerificationEventResponseAction getAction();
-
-  /**
-   * Get flashCall
-   *
-   * @return flashCall
-   */
-  FlashCallRequestEventResponseFlashCallContent getFlashCall();
-
-  /**
-   * Getting builder
-   *
-   * @return New Builder instance
-   */
-  static Builder builder() {
-    return new FlashCallRequestEventResponseImpl.Builder();
-  }
 
   /** Dedicated Builder */
   interface Builder {
@@ -54,19 +35,10 @@ public interface FlashCallRequestEventResponse {
     Builder setAction(VerificationEventResponseAction action);
 
     /**
-     * see getter
-     *
-     * @param flashCall see getter
-     * @return Current builder
-     * @see #getFlashCall
-     */
-    Builder setFlashCall(FlashCallRequestEventResponseFlashCallContent flashCall);
-
-    /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    FlashCallRequestEventResponse build();
+    VerificationRequestEventResponse build();
   }
 }

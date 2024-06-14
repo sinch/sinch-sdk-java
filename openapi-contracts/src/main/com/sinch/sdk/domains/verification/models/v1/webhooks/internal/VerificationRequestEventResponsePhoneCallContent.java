@@ -10,18 +10,18 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.verification.models.v1.webhooks;
+package com.sinch.sdk.domains.verification.models.v1.webhooks.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.util.List;
+import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 
 /** declaration */
-@JsonDeserialize(builder = SmsRequestEventResponseSmsContentImpl.Builder.class)
-public interface SmsRequestEventResponseSmsContent {
+@JsonDeserialize(builder = VerificationRequestEventResponsePhoneCallContentImpl.Builder.class)
+public interface VerificationRequestEventResponsePhoneCallContent {
 
   /**
-   * The SMS PIN that should be used. By default, the Sinch dashboard will automatically generate
-   * PIN codes for SMS verification. If you want to set your own PIN, you can specify it in the
+   * The Phone Call PIN that should be entered by the user. Sinch servers automatically generate PIN
+   * codes for Phone Call verification. If you want to set your own code, you can specify it in the
    * response to the Verification Request Event.
    *
    * @return code
@@ -29,11 +29,11 @@ public interface SmsRequestEventResponseSmsContent {
   String getCode();
 
   /**
-   * The SMS verification content language. Set in the verification request.
+   * Get speech
    *
-   * @return acceptLanguage
+   * @return speech
    */
-  List<String> getAcceptLanguage();
+  PhoneCallSpeech getSpeech();
 
   /**
    * Getting builder
@@ -41,7 +41,7 @@ public interface SmsRequestEventResponseSmsContent {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new SmsRequestEventResponseSmsContentImpl.Builder();
+    return new VerificationRequestEventResponsePhoneCallContentImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -59,17 +59,17 @@ public interface SmsRequestEventResponseSmsContent {
     /**
      * see getter
      *
-     * @param acceptLanguage see getter
+     * @param speech see getter
      * @return Current builder
-     * @see #getAcceptLanguage
+     * @see #getSpeech
      */
-    Builder setAcceptLanguage(List<String> acceptLanguage);
+    Builder setSpeech(PhoneCallSpeech speech);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    SmsRequestEventResponseSmsContent build();
+    VerificationRequestEventResponsePhoneCallContent build();
   }
 }

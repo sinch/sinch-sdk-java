@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.verification.models.v1.webhooks;
+package com.sinch.sdk.domains.verification.models.v1.webhooks.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,13 +11,13 @@ import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeec
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  PhoneCallRequestEventResponsePhoneCallContentImpl.JSON_PROPERTY_CODE,
-  PhoneCallRequestEventResponsePhoneCallContentImpl.JSON_PROPERTY_SPEECH
+  VerificationRequestEventResponsePhoneCallContentImpl.JSON_PROPERTY_CODE,
+  VerificationRequestEventResponsePhoneCallContentImpl.JSON_PROPERTY_SPEECH
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class PhoneCallRequestEventResponsePhoneCallContentImpl
-    implements PhoneCallRequestEventResponsePhoneCallContent {
+public class VerificationRequestEventResponsePhoneCallContentImpl
+    implements VerificationRequestEventResponsePhoneCallContent {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CODE = "code";
@@ -28,9 +28,9 @@ public class PhoneCallRequestEventResponsePhoneCallContentImpl
 
   private OptionalValue<PhoneCallSpeech> speech;
 
-  public PhoneCallRequestEventResponsePhoneCallContentImpl() {}
+  public VerificationRequestEventResponsePhoneCallContentImpl() {}
 
-  protected PhoneCallRequestEventResponsePhoneCallContentImpl(
+  protected VerificationRequestEventResponsePhoneCallContentImpl(
       OptionalValue<String> code, OptionalValue<PhoneCallSpeech> speech) {
     this.code = code;
     this.speech = speech;
@@ -58,7 +58,10 @@ public class PhoneCallRequestEventResponsePhoneCallContentImpl
     return speech;
   }
 
-  /** Return true if this PhoneCallRequestEventResponse_callout object is equal to o. */
+  /**
+   * Return true if this VerificationRequestEventResponsePhoneCall_allOf_callout object is equal to
+   * o.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -67,10 +70,12 @@ public class PhoneCallRequestEventResponsePhoneCallContentImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    PhoneCallRequestEventResponsePhoneCallContentImpl phoneCallRequestEventResponseCallout =
-        (PhoneCallRequestEventResponsePhoneCallContentImpl) o;
-    return Objects.equals(this.code, phoneCallRequestEventResponseCallout.code)
-        && Objects.equals(this.speech, phoneCallRequestEventResponseCallout.speech);
+    VerificationRequestEventResponsePhoneCallContentImpl
+        verificationRequestEventResponsePhoneCallAllOfCallout =
+            (VerificationRequestEventResponsePhoneCallContentImpl) o;
+    return Objects.equals(this.code, verificationRequestEventResponsePhoneCallAllOfCallout.code)
+        && Objects.equals(
+            this.speech, verificationRequestEventResponsePhoneCallAllOfCallout.speech);
   }
 
   @Override
@@ -81,7 +86,7 @@ public class PhoneCallRequestEventResponsePhoneCallContentImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class PhoneCallRequestEventResponsePhoneCallContentImpl {\n");
+    sb.append("class VerificationRequestEventResponsePhoneCallContentImpl {\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    speech: ").append(toIndentedString(speech)).append("\n");
     sb.append("}");
@@ -99,7 +104,7 @@ public class PhoneCallRequestEventResponsePhoneCallContentImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements PhoneCallRequestEventResponsePhoneCallContent.Builder {
+  static class Builder implements VerificationRequestEventResponsePhoneCallContent.Builder {
     OptionalValue<String> code = OptionalValue.empty();
     OptionalValue<PhoneCallSpeech> speech = OptionalValue.empty();
 
@@ -115,8 +120,8 @@ public class PhoneCallRequestEventResponsePhoneCallContentImpl
       return this;
     }
 
-    public PhoneCallRequestEventResponsePhoneCallContent build() {
-      return new PhoneCallRequestEventResponsePhoneCallContentImpl(code, speech);
+    public VerificationRequestEventResponsePhoneCallContent build() {
+      return new VerificationRequestEventResponsePhoneCallContentImpl(code, speech);
     }
   }
 }

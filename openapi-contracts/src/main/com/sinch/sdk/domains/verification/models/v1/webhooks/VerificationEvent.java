@@ -12,7 +12,83 @@
 
 package com.sinch.sdk.domains.verification.models.v1.webhooks;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.verification.models.v1.Identity;
 
-@JsonDeserialize(using = VerificationEventImpl.VerificationEventImplDeserializer.class)
-public interface VerificationEvent {}
+/** declaration */
+public interface VerificationEvent {
+
+  /**
+   * The ID of the verification request.
+   *
+   * @return id
+   */
+  String getId();
+
+  /**
+   * Get identity
+   *
+   * @return identity
+   */
+  Identity getIdentity();
+
+  /**
+   * Used to pass your own reference in the request for tracking purposes.
+   *
+   * @return reference
+   */
+  String getReference();
+
+  /**
+   * Can be used to pass custom data in the request.
+   *
+   * @return custom
+   */
+  String getCustom();
+
+  /** Dedicated Builder */
+  interface Builder {
+
+    /**
+     * see getter
+     *
+     * @param id see getter
+     * @return Current builder
+     * @see #getId
+     */
+    Builder setId(String id);
+
+    /**
+     * see getter
+     *
+     * @param identity see getter
+     * @return Current builder
+     * @see #getIdentity
+     */
+    Builder setIdentity(Identity identity);
+
+    /**
+     * see getter
+     *
+     * @param reference see getter
+     * @return Current builder
+     * @see #getReference
+     */
+    Builder setReference(String reference);
+
+    /**
+     * see getter
+     *
+     * @param custom see getter
+     * @return Current builder
+     * @see #getCustom
+     */
+    Builder setCustom(String custom);
+
+    /**
+     * Create instance
+     *
+     * @return The instance build with current builder values
+     */
+    VerificationEvent build();
+  }
+}

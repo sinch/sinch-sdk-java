@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.verification.models.v1.webhooks;
+package com.sinch.sdk.domains.verification.models.v1.webhooks.internal;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
@@ -16,6 +16,8 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.sinch.sdk.core.models.AbstractOpenApiSchema;
 import com.sinch.sdk.core.utils.databind.JSONNavigator;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventImpl;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationResultEventImpl;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,50 +26,53 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@JsonDeserialize(using = VerificationEventImpl.VerificationEventImplDeserializer.class)
-@JsonSerialize(using = VerificationEventImpl.VerificationEventImplSerializer.class)
-public class VerificationEventImpl extends AbstractOpenApiSchema implements VerificationEvent {
-  private static final Logger log = Logger.getLogger(VerificationEventImpl.class.getName());
+@JsonDeserialize(
+    using = VerificationEventInternalImpl.VerificationEventInternalImplDeserializer.class)
+@JsonSerialize(using = VerificationEventInternalImpl.VerificationEventInternalImplSerializer.class)
+public class VerificationEventInternalImpl extends AbstractOpenApiSchema
+    implements VerificationEventInternal {
+  private static final Logger log = Logger.getLogger(VerificationEventInternalImpl.class.getName());
 
-  public static final class VerificationEventImplSerializer
-      extends StdSerializer<VerificationEventImpl> {
+  public static final class VerificationEventInternalImplSerializer
+      extends StdSerializer<VerificationEventInternalImpl> {
     private static final long serialVersionUID = 1L;
 
-    public VerificationEventImplSerializer(Class<VerificationEventImpl> t) {
+    public VerificationEventInternalImplSerializer(Class<VerificationEventInternalImpl> t) {
       super(t);
     }
 
-    public VerificationEventImplSerializer() {
+    public VerificationEventInternalImplSerializer() {
       this(null);
     }
 
     @Override
     public void serialize(
-        VerificationEventImpl value, JsonGenerator jgen, SerializerProvider provider)
+        VerificationEventInternalImpl value, JsonGenerator jgen, SerializerProvider provider)
         throws IOException, JsonProcessingException {
       jgen.writeObject(value.getActualInstance());
     }
   }
 
-  public static final class VerificationEventImplDeserializer
-      extends StdDeserializer<VerificationEventImpl> {
+  public static final class VerificationEventInternalImplDeserializer
+      extends StdDeserializer<VerificationEventInternalImpl> {
 
     private static final long serialVersionUID = 1L;
 
-    public VerificationEventImplDeserializer() {
-      this(VerificationEventImpl.class);
+    public VerificationEventInternalImplDeserializer() {
+      this(VerificationEventInternalImpl.class);
     }
 
-    public VerificationEventImplDeserializer(Class<?> vc) {
+    public VerificationEventInternalImplDeserializer(Class<?> vc) {
       super(vc);
     }
 
     @Override
-    public VerificationEventImpl deserialize(JsonParser jp, DeserializationContext ctxt)
+    public VerificationEventInternalImpl deserialize(JsonParser jp, DeserializationContext ctxt)
         throws IOException, JsonProcessingException {
       JsonNode tree = jp.readValueAsTree();
       Object deserialized = null;
-      VerificationEventImpl newVerificationEventImpl = new VerificationEventImpl();
+      VerificationEventInternalImpl newVerificationEventInternalImpl =
+          new VerificationEventInternalImpl();
       Map<String, Object> result2 =
           tree.traverse(jp.getCodec()).readValueAs(new TypeReference<Map<String, Object>>() {});
       String discriminatorValue = (String) result2.get("event");
@@ -75,19 +80,19 @@ public class VerificationEventImpl extends AbstractOpenApiSchema implements Veri
         case "VerificationRequestEvent":
           deserialized =
               tree.traverse(jp.getCodec()).readValueAs(VerificationRequestEventImpl.class);
-          newVerificationEventImpl.setActualInstance(deserialized);
-          return newVerificationEventImpl;
+          newVerificationEventInternalImpl.setActualInstance(deserialized);
+          return newVerificationEventInternalImpl;
         case "VerificationResultEvent":
           deserialized =
               tree.traverse(jp.getCodec()).readValueAs(VerificationResultEventImpl.class);
-          newVerificationEventImpl.setActualInstance(deserialized);
-          return newVerificationEventImpl;
+          newVerificationEventInternalImpl.setActualInstance(deserialized);
+          return newVerificationEventInternalImpl;
         default:
           log.log(
               Level.WARNING,
               String.format(
-                  "Failed to lookup discriminator value `%s` for VerificationEventImpl. Possible"
-                      + " values: VerificationRequestEvent VerificationResultEvent",
+                  "Failed to lookup discriminator value `%s` for VerificationEventInternalImpl."
+                      + " Possible values: VerificationRequestEvent VerificationResultEvent",
                   discriminatorValue));
       }
 
@@ -179,38 +184,39 @@ public class VerificationEventImpl extends AbstractOpenApiSchema implements Veri
       }
 
       if (match == 1) {
-        VerificationEventImpl ret = new VerificationEventImpl();
+        VerificationEventInternalImpl ret = new VerificationEventInternalImpl();
         ret.setActualInstance(deserialized);
         return ret;
       }
       throw new IOException(
           String.format(
-              "Failed deserialization for VerificationEventImpl: %d classes match result, expected"
-                  + " 1",
+              "Failed deserialization for VerificationEventInternalImpl: %d classes match result,"
+                  + " expected 1",
               match));
     }
 
     /** Handle deserialization of the 'null' value. */
     @Override
-    public VerificationEventImpl getNullValue(DeserializationContext ctxt)
+    public VerificationEventInternalImpl getNullValue(DeserializationContext ctxt)
         throws JsonMappingException {
-      throw new JsonMappingException(ctxt.getParser(), "VerificationEventImpl cannot be null");
+      throw new JsonMappingException(
+          ctxt.getParser(), "VerificationEventInternalImpl cannot be null");
     }
   }
 
   // store a list of schema names defined in oneOf
   public static final Map<String, Class<?>> schemas = new HashMap<>();
 
-  public VerificationEventImpl() {
+  public VerificationEventInternalImpl() {
     super("oneOf", Boolean.FALSE);
   }
 
-  public VerificationEventImpl(VerificationRequestEventImpl o) {
+  public VerificationEventInternalImpl(VerificationRequestEventImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public VerificationEventImpl(VerificationResultEventImpl o) {
+  public VerificationEventInternalImpl(VerificationResultEventImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
@@ -219,18 +225,18 @@ public class VerificationEventImpl extends AbstractOpenApiSchema implements Veri
     schemas.put("VerificationRequestEventImpl", VerificationRequestEventImpl.class);
     schemas.put("VerificationResultEventImpl", VerificationResultEventImpl.class);
     JSONNavigator.registerDescendants(
-        VerificationEventImpl.class, Collections.unmodifiableMap(schemas));
+        VerificationEventInternalImpl.class, Collections.unmodifiableMap(schemas));
     // Initialize and register the discriminator mappings.
     Map<String, Class<?>> mappings = new HashMap<String, Class<?>>();
     mappings.put("VerificationRequestEvent", VerificationRequestEventImpl.class);
     mappings.put("VerificationResultEvent", VerificationResultEventImpl.class);
-    mappings.put("VerificationEvent", VerificationEventImpl.class);
-    JSONNavigator.registerDiscriminator(VerificationEventImpl.class, "event", mappings);
+    mappings.put("VerificationEvent", VerificationEventInternalImpl.class);
+    JSONNavigator.registerDiscriminator(VerificationEventInternalImpl.class, "event", mappings);
   }
 
   @Override
   public Map<String, Class<?>> getSchemas() {
-    return VerificationEventImpl.schemas;
+    return VerificationEventInternalImpl.schemas;
   }
 
   /**

@@ -16,7 +16,6 @@ public class VerificationStatusService
   public VerificationStatusService(
       com.sinch.sdk.domains.verification.api.v1.VerificationStatusService v1) {
     this.v1 = v1;
-    ;
   }
 
   public VerificationStatus getByIdentity(NumberIdentity identity, VerificationMethodType method) {

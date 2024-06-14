@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.verification.models.v1.webhooks;
+package com.sinch.sdk.domains.verification.models.v1.webhooks.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,13 +10,13 @@ import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  FlashCallRequestEventResponseFlashCallContentImpl.JSON_PROPERTY_CLI,
-  FlashCallRequestEventResponseFlashCallContentImpl.JSON_PROPERTY_DIAL_TIMEOUT
+  VerificationRequestEventResponseFlashCallContentImpl.JSON_PROPERTY_CLI,
+  VerificationRequestEventResponseFlashCallContentImpl.JSON_PROPERTY_DIAL_TIMEOUT
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class FlashCallRequestEventResponseFlashCallContentImpl
-    implements FlashCallRequestEventResponseFlashCallContent {
+public class VerificationRequestEventResponseFlashCallContentImpl
+    implements VerificationRequestEventResponseFlashCallContent {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CLI = "cli";
@@ -27,9 +27,9 @@ public class FlashCallRequestEventResponseFlashCallContentImpl
 
   private OptionalValue<Integer> dialTimeout;
 
-  public FlashCallRequestEventResponseFlashCallContentImpl() {}
+  public VerificationRequestEventResponseFlashCallContentImpl() {}
 
-  protected FlashCallRequestEventResponseFlashCallContentImpl(
+  protected VerificationRequestEventResponseFlashCallContentImpl(
       OptionalValue<String> cli, OptionalValue<Integer> dialTimeout) {
     this.cli = cli;
     this.dialTimeout = dialTimeout;
@@ -57,7 +57,10 @@ public class FlashCallRequestEventResponseFlashCallContentImpl
     return dialTimeout;
   }
 
-  /** Return true if this FlashCallRequestEventResponse_flashCall object is equal to o. */
+  /**
+   * Return true if this VerificationRequestEventResponseFlashCall_allOf_flashCall object is equal
+   * to o.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -66,10 +69,12 @@ public class FlashCallRequestEventResponseFlashCallContentImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    FlashCallRequestEventResponseFlashCallContentImpl flashCallRequestEventResponseFlashCall =
-        (FlashCallRequestEventResponseFlashCallContentImpl) o;
-    return Objects.equals(this.cli, flashCallRequestEventResponseFlashCall.cli)
-        && Objects.equals(this.dialTimeout, flashCallRequestEventResponseFlashCall.dialTimeout);
+    VerificationRequestEventResponseFlashCallContentImpl
+        verificationRequestEventResponseFlashCallAllOfFlashCall =
+            (VerificationRequestEventResponseFlashCallContentImpl) o;
+    return Objects.equals(this.cli, verificationRequestEventResponseFlashCallAllOfFlashCall.cli)
+        && Objects.equals(
+            this.dialTimeout, verificationRequestEventResponseFlashCallAllOfFlashCall.dialTimeout);
   }
 
   @Override
@@ -80,7 +85,7 @@ public class FlashCallRequestEventResponseFlashCallContentImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class FlashCallRequestEventResponseFlashCallContentImpl {\n");
+    sb.append("class VerificationRequestEventResponseFlashCallContentImpl {\n");
     sb.append("    cli: ").append(toIndentedString(cli)).append("\n");
     sb.append("    dialTimeout: ").append(toIndentedString(dialTimeout)).append("\n");
     sb.append("}");
@@ -98,7 +103,7 @@ public class FlashCallRequestEventResponseFlashCallContentImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements FlashCallRequestEventResponseFlashCallContent.Builder {
+  static class Builder implements VerificationRequestEventResponseFlashCallContent.Builder {
     OptionalValue<String> cli = OptionalValue.empty();
     OptionalValue<Integer> dialTimeout = OptionalValue.empty();
 
@@ -114,8 +119,8 @@ public class FlashCallRequestEventResponseFlashCallContentImpl
       return this;
     }
 
-    public FlashCallRequestEventResponseFlashCallContent build() {
-      return new FlashCallRequestEventResponseFlashCallContentImpl(cli, dialTimeout);
+    public VerificationRequestEventResponseFlashCallContent build() {
+      return new VerificationRequestEventResponseFlashCallContentImpl(cli, dialTimeout);
     }
   }
 }

@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.verification.models.v1.webhooks;
+package com.sinch.sdk.domains.verification.models.v1.webhooks.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,12 +11,13 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  SmsRequestEventResponseSmsContentImpl.JSON_PROPERTY_CODE,
-  SmsRequestEventResponseSmsContentImpl.JSON_PROPERTY_ACCEPT_LANGUAGE
+  VerificationRequestEventResponseSmsContentImpl.JSON_PROPERTY_CODE,
+  VerificationRequestEventResponseSmsContentImpl.JSON_PROPERTY_ACCEPT_LANGUAGE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class SmsRequestEventResponseSmsContentImpl implements SmsRequestEventResponseSmsContent {
+public class VerificationRequestEventResponseSmsContentImpl
+    implements VerificationRequestEventResponseSmsContent {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CODE = "code";
@@ -27,9 +28,9 @@ public class SmsRequestEventResponseSmsContentImpl implements SmsRequestEventRes
 
   private OptionalValue<List<String>> acceptLanguage;
 
-  public SmsRequestEventResponseSmsContentImpl() {}
+  public VerificationRequestEventResponseSmsContentImpl() {}
 
-  protected SmsRequestEventResponseSmsContentImpl(
+  protected VerificationRequestEventResponseSmsContentImpl(
       OptionalValue<String> code, OptionalValue<List<String>> acceptLanguage) {
     this.code = code;
     this.acceptLanguage = acceptLanguage;
@@ -57,7 +58,7 @@ public class SmsRequestEventResponseSmsContentImpl implements SmsRequestEventRes
     return acceptLanguage;
   }
 
-  /** Return true if this SmsRequestEventResponse_sms object is equal to o. */
+  /** Return true if this VerificationRequestEventResponseSms_allOf_sms object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -66,10 +67,11 @@ public class SmsRequestEventResponseSmsContentImpl implements SmsRequestEventRes
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SmsRequestEventResponseSmsContentImpl smsRequestEventResponseSms =
-        (SmsRequestEventResponseSmsContentImpl) o;
-    return Objects.equals(this.code, smsRequestEventResponseSms.code)
-        && Objects.equals(this.acceptLanguage, smsRequestEventResponseSms.acceptLanguage);
+    VerificationRequestEventResponseSmsContentImpl verificationRequestEventResponseSmsAllOfSms =
+        (VerificationRequestEventResponseSmsContentImpl) o;
+    return Objects.equals(this.code, verificationRequestEventResponseSmsAllOfSms.code)
+        && Objects.equals(
+            this.acceptLanguage, verificationRequestEventResponseSmsAllOfSms.acceptLanguage);
   }
 
   @Override
@@ -80,7 +82,7 @@ public class SmsRequestEventResponseSmsContentImpl implements SmsRequestEventRes
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SmsRequestEventResponseSmsContentImpl {\n");
+    sb.append("class VerificationRequestEventResponseSmsContentImpl {\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    acceptLanguage: ").append(toIndentedString(acceptLanguage)).append("\n");
     sb.append("}");
@@ -98,7 +100,7 @@ public class SmsRequestEventResponseSmsContentImpl implements SmsRequestEventRes
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements SmsRequestEventResponseSmsContent.Builder {
+  static class Builder implements VerificationRequestEventResponseSmsContent.Builder {
     OptionalValue<String> code = OptionalValue.empty();
     OptionalValue<List<String>> acceptLanguage = OptionalValue.empty();
 
@@ -114,8 +116,8 @@ public class SmsRequestEventResponseSmsContentImpl implements SmsRequestEventRes
       return this;
     }
 
-    public SmsRequestEventResponseSmsContent build() {
-      return new SmsRequestEventResponseSmsContentImpl(code, acceptLanguage);
+    public VerificationRequestEventResponseSmsContent build() {
+      return new VerificationRequestEventResponseSmsContentImpl(code, acceptLanguage);
     }
   }
 }

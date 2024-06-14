@@ -13,10 +13,12 @@
 package com.sinch.sdk.domains.verification.models.v1.webhooks;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 
 /** declaration */
-@JsonDeserialize(builder = SmsRequestEventResponseImpl.Builder.class)
-public interface SmsRequestEventResponse {
+@JsonDeserialize(builder = VerificationRequestEventResponsePhoneCallImpl.Builder.class)
+public interface VerificationRequestEventResponsePhoneCall
+    extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponse {
 
   /**
    * Get action
@@ -26,11 +28,20 @@ public interface SmsRequestEventResponse {
   VerificationEventResponseAction getAction();
 
   /**
-   * Get sms
+   * The Phone Call PIN that should be entered by the user. Sinch servers automatically generate PIN
+   * codes for Phone Call verification. If you want to set your own code, you can specify it in the
+   * response to the Verification Request Event.
    *
-   * @return sms
+   * @return code
    */
-  SmsRequestEventResponseSmsContent getSms();
+  String getCode();
+
+  /**
+   * Get speech
+   *
+   * @return speech
+   */
+  PhoneCallSpeech getSpeech();
 
   /**
    * Getting builder
@@ -38,7 +49,7 @@ public interface SmsRequestEventResponse {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new SmsRequestEventResponseImpl.Builder();
+    return new VerificationRequestEventResponsePhoneCallImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -56,17 +67,26 @@ public interface SmsRequestEventResponse {
     /**
      * see getter
      *
-     * @param sms see getter
+     * @param code see getter
      * @return Current builder
-     * @see #getSms
+     * @see #getCode
      */
-    Builder setSms(SmsRequestEventResponseSmsContent sms);
+    Builder setCode(String code);
+
+    /**
+     * see getter
+     *
+     * @param speech see getter
+     * @return Current builder
+     * @see #getSpeech
+     */
+    Builder setSpeech(PhoneCallSpeech speech);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    SmsRequestEventResponse build();
+    VerificationRequestEventResponsePhoneCall build();
   }
 }

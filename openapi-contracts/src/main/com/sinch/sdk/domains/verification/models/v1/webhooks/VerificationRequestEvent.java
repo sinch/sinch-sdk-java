@@ -15,15 +15,16 @@ package com.sinch.sdk.domains.verification.models.v1.webhooks;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import com.sinch.sdk.domains.verification.models.v1.Identity;
 import com.sinch.sdk.domains.verification.models.v1.Price;
-import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
 /** declaration */
 @JsonDeserialize(builder = VerificationRequestEventImpl.Builder.class)
-public interface VerificationRequestEvent {
+public interface VerificationRequestEvent
+    extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent {
 
   /**
    * The ID of the verification request.
@@ -65,6 +66,27 @@ public interface VerificationRequestEvent {
    */
   EventEnum getEvent();
 
+  /**
+   * Get identity
+   *
+   * @return identity
+   */
+  Identity getIdentity();
+
+  /**
+   * Used to pass your own reference in the request for tracking purposes.
+   *
+   * @return reference
+   */
+  String getReference();
+
+  /**
+   * Can be used to pass custom data in the request.
+   *
+   * @return custom
+   */
+  String getCustom();
+
   /** The verification method. */
   public class MethodEnum extends EnumDynamic<String, MethodEnum> {
     public static final MethodEnum SMS = new MethodEnum("sms");
@@ -100,32 +122,11 @@ public interface VerificationRequestEvent {
   MethodEnum getMethod();
 
   /**
-   * Get identity
-   *
-   * @return identity
-   */
-  IdentityInternal getIdentity();
-
-  /**
    * Get price
    *
    * @return price
    */
   Price getPrice();
-
-  /**
-   * Used to pass your own reference in the request for tracking purposes.
-   *
-   * @return reference
-   */
-  String getReference();
-
-  /**
-   * Can be used to pass custom data in the request.
-   *
-   * @return custom
-   */
-  String getCustom();
 
   /**
    * Allows you to set or override if provided in the API request, the SMS verification content
@@ -148,7 +149,8 @@ public interface VerificationRequestEvent {
   }
 
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder
+      extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent.Builder {
 
     /**
      * see getter
@@ -171,29 +173,11 @@ public interface VerificationRequestEvent {
     /**
      * see getter
      *
-     * @param method see getter
-     * @return Current builder
-     * @see #getMethod
-     */
-    Builder setMethod(MethodEnum method);
-
-    /**
-     * see getter
-     *
      * @param identity see getter
      * @return Current builder
      * @see #getIdentity
      */
-    Builder setIdentity(IdentityInternal identity);
-
-    /**
-     * see getter
-     *
-     * @param price see getter
-     * @return Current builder
-     * @see #getPrice
-     */
-    Builder setPrice(Price price);
+    Builder setIdentity(Identity identity);
 
     /**
      * see getter
@@ -212,6 +196,24 @@ public interface VerificationRequestEvent {
      * @see #getCustom
      */
     Builder setCustom(String custom);
+
+    /**
+     * see getter
+     *
+     * @param method see getter
+     * @return Current builder
+     * @see #getMethod
+     */
+    Builder setMethod(MethodEnum method);
+
+    /**
+     * see getter
+     *
+     * @param price see getter
+     * @return Current builder
+     * @see #getPrice
+     */
+    Builder setPrice(Price price);
 
     /**
      * see getter

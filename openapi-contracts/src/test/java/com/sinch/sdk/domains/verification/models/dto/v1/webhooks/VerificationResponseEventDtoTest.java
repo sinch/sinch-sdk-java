@@ -3,49 +3,37 @@ package com.sinch.sdk.domains.verification.models.dto.v1.webhooks;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.domains.verification.adapters.VerificationBaseTest;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.FlashCallRequestEventResponse;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.FlashCallRequestEventResponseFlashCallContent;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.PhoneCallRequestEventResponse;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.PhoneCallRequestEventResponsePhoneCallContent;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.SmsRequestEventResponse;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.SmsRequestEventResponseSmsContent;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEventResponseAction;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponseFlashCall;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponsePhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponseSms;
 import java.util.Collections;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-public class VerificationResponseEventDtoTest extends BaseTest {
+public class VerificationResponseEventDtoTest extends VerificationBaseTest {
 
-  public static PhoneCallRequestEventResponse expectedPhoneCallRequestEventResponseDto =
-      PhoneCallRequestEventResponse.builder()
+  public static VerificationRequestEventResponsePhoneCall expectedPhoneCallRequestEventResponseDto =
+      VerificationRequestEventResponsePhoneCall.builder()
           .setAction(VerificationEventResponseAction.ALLOW)
-          .setCallout(
-              PhoneCallRequestEventResponsePhoneCallContent.builder()
-                  .setCode("4567")
-                  .setSpeech(PhoneCallSpeech.builder().setLocale("the locale").build())
-                  .build())
+          .setCode("4567")
+          .setSpeech(PhoneCallSpeech.builder().setLocale("the locale").build())
           .build();
-  public static FlashCallRequestEventResponse expectedFlashCallRequestEventResponseDto =
-      FlashCallRequestEventResponse.builder()
+  public static VerificationRequestEventResponseFlashCall expectedFlashCallRequestEventResponseDto =
+      VerificationRequestEventResponseFlashCall.builder()
           .setAction(VerificationEventResponseAction.ALLOW)
-          .setFlashCall(
-              FlashCallRequestEventResponseFlashCallContent.builder()
-                  .setCli("cli code")
-                  .setDialTimeout(123)
-                  .build())
+          .setCli("cli code")
+          .setDialTimeout(123)
           .build();
-  public static SmsRequestEventResponse expectedSmsRequestEventResponseDto =
-      SmsRequestEventResponse.builder()
+  public static VerificationRequestEventResponseSms expectedSmsRequestEventResponseDto =
+      VerificationRequestEventResponseSms.builder()
           .setAction(VerificationEventResponseAction.ALLOW)
-          .setSms(
-              SmsRequestEventResponseSmsContent.builder()
-                  .setCode("5666")
-                  .setAcceptLanguage(Collections.singletonList("a language"))
-                  .build())
+          .setCode("5666")
+          .setAcceptLanguage(Collections.singletonList("a language"))
           .build();
 
   @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseSms.json")
@@ -79,8 +67,10 @@ public class VerificationResponseEventDtoTest extends BaseTest {
   @Test
   void serializeSmsResponseEmptySms() throws JsonProcessingException, JSONException {
 
-    SmsRequestEventResponse value =
-        SmsRequestEventResponse.builder().setAction(VerificationEventResponseAction.ALLOW).build();
+    VerificationRequestEventResponseSms value =
+        VerificationRequestEventResponseSms.builder()
+            .setAction(VerificationEventResponseAction.ALLOW)
+            .build();
 
     String serializedString = objectMapper.writeValueAsString(value);
 
@@ -99,8 +89,8 @@ public class VerificationResponseEventDtoTest extends BaseTest {
   @Test
   void serializeFlashCallResponseEmptyFlashCall() throws JsonProcessingException, JSONException {
 
-    FlashCallRequestEventResponse value =
-        FlashCallRequestEventResponse.builder()
+    VerificationRequestEventResponseFlashCall value =
+        VerificationRequestEventResponseFlashCall.builder()
             .setAction(VerificationEventResponseAction.ALLOW)
             .build();
 
@@ -121,8 +111,8 @@ public class VerificationResponseEventDtoTest extends BaseTest {
   @Test
   void serializePhoneCallResponseEmptyCallout() throws JsonProcessingException, JSONException {
 
-    PhoneCallRequestEventResponse value =
-        PhoneCallRequestEventResponse.builder()
+    VerificationRequestEventResponsePhoneCall value =
+        VerificationRequestEventResponsePhoneCall.builder()
             .setAction(VerificationEventResponseAction.ALLOW)
             .build();
 

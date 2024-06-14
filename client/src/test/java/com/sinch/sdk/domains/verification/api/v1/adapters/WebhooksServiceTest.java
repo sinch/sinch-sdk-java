@@ -1,11 +1,14 @@
-package com.sinch.sdk.domains.verification.adapters;
+package com.sinch.sdk.domains.verification.api.v1.adapters;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.domains.verification.WebHooksService;
-import com.sinch.sdk.domains.verification.adapters.converters.WebhooksDtoConverterTest;
+import com.sinch.sdk.domains.verification.adapters.VerificationBaseTest;
+import com.sinch.sdk.domains.verification.api.v1.WebHooksService;
+import com.sinch.sdk.domains.verification.models.dto.v1.webhooks.VerificationRequestEventDtoTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.webhooks.VerificationResponseEventDtoTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.webhooks.VerificationResultEventDtoTest;
 import com.sinch.sdk.models.ApplicationCredentials;
 import com.sinch.sdk.models.VerificationContext;
 import java.io.IOException;
@@ -66,7 +69,7 @@ public class WebhooksServiceTest extends VerificationBaseTest {
 
     TestHelpers.recursiveEquals(
         webHooksService.parseEvent(jsonVerificationRequestEventDto),
-        WebhooksDtoConverterTest.verificationRequestEvent);
+        VerificationRequestEventDtoTest.expectedRequestEventDto.getVerificationRequestEventImpl());
   }
 
   @Test
@@ -74,14 +77,15 @@ public class WebhooksServiceTest extends VerificationBaseTest {
 
     TestHelpers.recursiveEquals(
         webHooksService.parseEvent(jsonVerificationResultEventDto),
-        WebhooksDtoConverterTest.verificationResultEvent);
+        VerificationResultEventDtoTest.expectedResultEvent.getVerificationResultEventImpl());
   }
 
   @Test
   void checkSerializeResponsePhoneCall() throws JSONException {
 
     JSONAssert.assertEquals(
-        webHooksService.serializeResponse(WebhooksDtoConverterTest.verificationResponsePhoneCall),
+        webHooksService.serializeResponse(
+            VerificationResponseEventDtoTest.expectedPhoneCallRequestEventResponseDto),
         jsonResponsePhoneCall,
         true);
   }
@@ -90,7 +94,8 @@ public class WebhooksServiceTest extends VerificationBaseTest {
   void checkSerializeResponseFlashCall() throws JSONException {
 
     JSONAssert.assertEquals(
-        webHooksService.serializeResponse(WebhooksDtoConverterTest.verificationResponseFlashCall),
+        webHooksService.serializeResponse(
+            VerificationResponseEventDtoTest.expectedFlashCallRequestEventResponseDto),
         jsonResponseFlashCall,
         true);
   }
@@ -99,7 +104,8 @@ public class WebhooksServiceTest extends VerificationBaseTest {
   void checkSerializeResponseSms() throws JSONException {
 
     JSONAssert.assertEquals(
-        webHooksService.serializeResponse(WebhooksDtoConverterTest.verificationResponseSms),
+        webHooksService.serializeResponse(
+            VerificationResponseEventDtoTest.expectedSmsRequestEventResponseDto),
         jsonResponseSms,
         true);
   }
