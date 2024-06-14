@@ -10,6 +10,7 @@ import com.sinch.sdk.domains.verification.models.v1.Price;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
 import com.sinch.sdk.domains.verification.models.v1.status.StatusPrice;
+import com.sinch.sdk.domains.verification.models.v1.status.StatusSource;
 import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponseFlashCallImpl;
 import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponsePhoneCall;
@@ -74,7 +75,7 @@ public class VerificationStatusResponseTest extends VerificationBaseTest {
                                   .build())
                           .setBillableDuration(34)
                           .build())
-                  .setSource(VerificationStatusResponseFlashCall.SourceEnum.MANUAL)
+                  .setSource(StatusSource.MANUAL)
                   .setIdentity(NumberIdentity.valueOf("endpoint value"))
                   .setCountryId("es-ES")
                   .setVerificationTimestamp(
@@ -88,7 +89,7 @@ public class VerificationStatusResponseTest extends VerificationBaseTest {
                   .setReference("my reference")
                   .setStatus(VerificationStatus.FAIL)
                   .setReason(VerificationStatusReason.FRAUD)
-                  .setSource(VerificationStatusResponseSms.SourceEnum.INTERCEPTED)
+                  .setSource(StatusSource.INTERCEPTED)
                   .setPrice(
                       VerificationStatusResponseSmsPrice.builder()
                           .setVerificationPrice(

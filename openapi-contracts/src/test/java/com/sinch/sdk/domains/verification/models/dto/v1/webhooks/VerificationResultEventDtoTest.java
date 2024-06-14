@@ -6,6 +6,7 @@ import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
 import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
+import com.sinch.sdk.domains.verification.models.v1.status.StatusSource;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEventImpl;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationResultEvent;
@@ -35,7 +36,7 @@ public class VerificationResultEventDtoTest {
                   .setCustom("custom string")
                   .setStatus(VerificationStatus.DENIED)
                   .setReason(VerificationStatusReason.FRAUD)
-                  .setSource(VerificationResultEvent.SourceEnum.MANUAL)
+                  .setSource(StatusSource.MANUAL)
                   .build());
 
   @Test

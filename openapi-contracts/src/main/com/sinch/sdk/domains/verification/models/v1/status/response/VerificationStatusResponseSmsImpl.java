@@ -10,6 +10,7 @@ import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.Identity;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
+import com.sinch.sdk.domains.verification.models.v1.status.StatusSource;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -70,7 +71,7 @@ public class VerificationStatusResponseSmsImpl
 
   public static final String JSON_PROPERTY_SOURCE = "source";
 
-  private OptionalValue<SourceEnum> source;
+  private OptionalValue<StatusSource> source;
 
   public VerificationStatusResponseSmsImpl() {}
 
@@ -84,7 +85,7 @@ public class VerificationStatusResponseSmsImpl
       OptionalValue<Instant> verificationTimestamp,
       OptionalValue<MethodEnum> method,
       OptionalValue<VerificationStatusResponseSmsPrice> price,
-      OptionalValue<SourceEnum> source) {
+      OptionalValue<StatusSource> source) {
     this.id = id;
     this.status = status;
     this.reason = reason;
@@ -197,13 +198,13 @@ public class VerificationStatusResponseSmsImpl
   }
 
   @JsonIgnore
-  public SourceEnum getSource() {
+  public StatusSource getSource() {
     return source.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_SOURCE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<SourceEnum> source() {
+  public OptionalValue<StatusSource> source() {
     return source;
   }
 
@@ -287,7 +288,7 @@ public class VerificationStatusResponseSmsImpl
     OptionalValue<Instant> verificationTimestamp = OptionalValue.empty();
     OptionalValue<MethodEnum> method = OptionalValue.of(MethodEnum.SMS);
     OptionalValue<VerificationStatusResponseSmsPrice> price = OptionalValue.empty();
-    OptionalValue<SourceEnum> source = OptionalValue.empty();
+    OptionalValue<StatusSource> source = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_ID)
     public Builder setId(String id) {
@@ -338,7 +339,7 @@ public class VerificationStatusResponseSmsImpl
     }
 
     @JsonProperty(JSON_PROPERTY_SOURCE)
-    public Builder setSource(SourceEnum source) {
+    public Builder setSource(StatusSource source) {
       this.source = OptionalValue.of(source);
       return this;
     }

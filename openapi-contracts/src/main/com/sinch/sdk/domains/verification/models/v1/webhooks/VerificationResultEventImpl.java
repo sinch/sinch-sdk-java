@@ -10,6 +10,7 @@ import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
 import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
+import com.sinch.sdk.domains.verification.models.v1.status.StatusSource;
 import java.util.Objects;
 
 @JsonPropertyOrder({
@@ -58,7 +59,7 @@ public class VerificationResultEventImpl implements VerificationResultEvent {
 
   public static final String JSON_PROPERTY_SOURCE = "source";
 
-  private OptionalValue<SourceEnum> source;
+  private OptionalValue<StatusSource> source;
 
   public static final String JSON_PROPERTY_CUSTOM = "custom";
 
@@ -74,7 +75,7 @@ public class VerificationResultEventImpl implements VerificationResultEvent {
       OptionalValue<VerificationStatus> status,
       OptionalValue<VerificationStatusReason> reason,
       OptionalValue<String> reference,
-      OptionalValue<SourceEnum> source,
+      OptionalValue<StatusSource> source,
       OptionalValue<String> custom) {
     this.id = id;
     this.event = event;
@@ -165,13 +166,13 @@ public class VerificationResultEventImpl implements VerificationResultEvent {
   }
 
   @JsonIgnore
-  public SourceEnum getSource() {
+  public StatusSource getSource() {
     return source.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_SOURCE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<SourceEnum> source() {
+  public OptionalValue<StatusSource> source() {
     return source;
   }
 
@@ -248,7 +249,7 @@ public class VerificationResultEventImpl implements VerificationResultEvent {
     OptionalValue<VerificationStatus> status = OptionalValue.empty();
     OptionalValue<VerificationStatusReason> reason = OptionalValue.empty();
     OptionalValue<String> reference = OptionalValue.empty();
-    OptionalValue<SourceEnum> source = OptionalValue.empty();
+    OptionalValue<StatusSource> source = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_ID)
@@ -294,7 +295,7 @@ public class VerificationResultEventImpl implements VerificationResultEvent {
     }
 
     @JsonProperty(JSON_PROPERTY_SOURCE)
-    public Builder setSource(SourceEnum source) {
+    public Builder setSource(StatusSource source) {
       this.source = OptionalValue.of(source);
       return this;
     }

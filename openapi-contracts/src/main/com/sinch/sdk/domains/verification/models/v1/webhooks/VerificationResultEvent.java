@@ -18,6 +18,7 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
 import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
+import com.sinch.sdk.domains.verification.models.v1.status.StatusSource;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -128,38 +129,12 @@ public interface VerificationResultEvent {
    */
   String getReference();
 
-  /** Free text that the client is sending, used to show if the call/SMS was intercepted or not. */
-  public class SourceEnum extends EnumDynamic<String, SourceEnum> {
-    public static final SourceEnum INTERCEPTED = new SourceEnum("intercepted");
-    public static final SourceEnum MANUAL = new SourceEnum("manual");
-
-    private static final EnumSupportDynamic<String, SourceEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(
-            SourceEnum.class, SourceEnum::new, Arrays.asList(INTERCEPTED, MANUAL));
-
-    private SourceEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<SourceEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static SourceEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(SourceEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
-
   /**
-   * Free text that the client is sending, used to show if the call/SMS was intercepted or not.
+   * Get source
    *
    * @return source
    */
-  SourceEnum getSource();
+  StatusSource getSource();
 
   /**
    * A custom string that can be provided during a verification request.
@@ -250,7 +225,7 @@ public interface VerificationResultEvent {
      * @return Current builder
      * @see #getSource
      */
-    Builder setSource(SourceEnum source);
+    Builder setSource(StatusSource source);
 
     /**
      * see getter
