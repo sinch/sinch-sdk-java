@@ -17,4 +17,17 @@ public class IdentityDtoConverter {
     }
     return identity;
   }
+
+  public static com.sinch.sdk.domains.verification.models.v1.Identity convert(
+      com.sinch.sdk.domains.verification.models.Identity client) {
+    com.sinch.sdk.domains.verification.models.v1.Identity identity = null;
+    if (client instanceof com.sinch.sdk.domains.verification.models.NumberIdentity) {
+      identity =
+          com.sinch.sdk.domains.verification.models.v1.NumberIdentity.valueOf(
+              ((com.sinch.sdk.domains.verification.models.NumberIdentity) client).getEndpoint());
+    } else {
+      LOGGER.severe(String.format("Unexpected '%s'", client));
+    }
+    return identity;
+  }
 }

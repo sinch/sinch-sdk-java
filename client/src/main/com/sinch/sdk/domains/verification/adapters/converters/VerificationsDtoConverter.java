@@ -92,7 +92,7 @@ public class VerificationsDtoConverter {
       return null;
     }
 
-    client.getIdentity().ifPresent(dto::setIdentity);
+    client.getIdentity().ifPresent(f -> dto.setIdentity(IdentityDtoConverter.convert(f)));
     client.getReference().ifPresent(f -> dto.setReference(f.getReference()));
     client.getCustom().ifPresent(dto::setCustom);
 

@@ -4,7 +4,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.domains.verification.adapters.VerificationBaseTest;
-import com.sinch.sdk.domains.verification.models.NumberIdentity;
+import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestData;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestDataImpl;
