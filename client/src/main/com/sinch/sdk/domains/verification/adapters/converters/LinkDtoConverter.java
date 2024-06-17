@@ -15,7 +15,7 @@ public class LinkDtoConverter {
 
   public static Link convert(com.sinch.sdk.domains.verification.models.v1.start.response.Link dto) {
     return Link.builder()
-        .setRel(LinkRelType.from(dto.getRel()))
+        .setRel(LinkRelType.from(dto.getRel().value()))
         .setHref(dto.getHref())
         .setMethod(HttpMethod.valueOf(dto.getMethod()))
         .build();
