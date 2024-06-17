@@ -29,11 +29,11 @@ public interface VerificationResultEvent
     extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent {
 
   /**
-   * Get method
+   * The ID of the verification request.
    *
-   * @return method
+   * @return id
    */
-  VerificationMethod getMethod();
+  String getId();
 
   /** The type of the event. */
   public class EventEnum extends EnumDynamic<String, EventEnum> {
@@ -69,34 +69,6 @@ public interface VerificationResultEvent
   EventEnum getEvent();
 
   /**
-   * Get status
-   *
-   * @return status
-   */
-  VerificationStatus getStatus();
-
-  /**
-   * Get reason
-   *
-   * @return reason
-   */
-  VerificationStatusReason getReason();
-
-  /**
-   * Get source
-   *
-   * @return source
-   */
-  StatusSource getSource();
-
-  /**
-   * The ID of the verification request.
-   *
-   * @return id
-   */
-  String getId();
-
-  /**
    * Get identity
    *
    * @return identity
@@ -118,6 +90,34 @@ public interface VerificationResultEvent
   String getCustom();
 
   /**
+   * Get method
+   *
+   * @return method
+   */
+  VerificationMethod getMethod();
+
+  /**
+   * Get status
+   *
+   * @return status
+   */
+  VerificationStatus getStatus();
+
+  /**
+   * Get reason
+   *
+   * @return reason
+   */
+  VerificationStatusReason getReason();
+
+  /**
+   * Get source
+   *
+   * @return source
+   */
+  StatusSource getSource();
+
+  /**
    * Getting builder
    *
    * @return New Builder instance
@@ -133,11 +133,11 @@ public interface VerificationResultEvent
     /**
      * see getter
      *
-     * @param method see getter
+     * @param id see getter
      * @return Current builder
-     * @see #getMethod
+     * @see #getId
      */
-    Builder setMethod(VerificationMethod method);
+    Builder setId(String id);
 
     /**
      * see getter
@@ -147,42 +147,6 @@ public interface VerificationResultEvent
      * @see #getEvent
      */
     Builder setEvent(EventEnum event);
-
-    /**
-     * see getter
-     *
-     * @param status see getter
-     * @return Current builder
-     * @see #getStatus
-     */
-    Builder setStatus(VerificationStatus status);
-
-    /**
-     * see getter
-     *
-     * @param reason see getter
-     * @return Current builder
-     * @see #getReason
-     */
-    Builder setReason(VerificationStatusReason reason);
-
-    /**
-     * see getter
-     *
-     * @param source see getter
-     * @return Current builder
-     * @see #getSource
-     */
-    Builder setSource(StatusSource source);
-
-    /**
-     * see getter
-     *
-     * @param id see getter
-     * @return Current builder
-     * @see #getId
-     */
-    Builder setId(String id);
 
     /**
      * see getter
@@ -210,6 +174,42 @@ public interface VerificationResultEvent
      * @see #getCustom
      */
     Builder setCustom(String custom);
+
+    /**
+     * see getter
+     *
+     * @param method see getter
+     * @return Current builder
+     * @see #getMethod
+     */
+    Builder setMethod(VerificationMethod method);
+
+    /**
+     * see getter
+     *
+     * @param status see getter
+     * @return Current builder
+     * @see #getStatus
+     */
+    Builder setStatus(VerificationStatus status);
+
+    /**
+     * see getter
+     *
+     * @param reason see getter
+     * @return Current builder
+     * @see #getReason
+     */
+    Builder setReason(VerificationStatusReason reason);
+
+    /**
+     * see getter
+     *
+     * @param source see getter
+     * @return Current builder
+     * @see #getSource
+     */
+    Builder setSource(StatusSource source);
 
     /**
      * Create instance
