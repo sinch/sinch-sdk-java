@@ -5,7 +5,12 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** Free text that the client is sending, used to show if the call/SMS was intercepted or not. */
+/**
+ * With the PIN SMS verification method, a user&#39;s phone number is verified by sending an SMS
+ * containing a PIN code. In the case of iOS or Javascript, the user needs to enter the PIN manually
+ * in the app, while for Android there is an option of intercepting the SMS message delivery and
+ * capturing the PIN code automatically
+ */
 public class StatusSource extends EnumDynamic<String, StatusSource> {
 
   public static final StatusSource INTERCEPTED = new StatusSource("intercepted");
