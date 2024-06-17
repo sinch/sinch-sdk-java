@@ -136,7 +136,9 @@ public interface VerificationRequestEvent
    * (pdf)](https://community.sinch.com/t5/SMS/Sinch-US-Short-Code-Onboarding-Overview/ta-p/7085).
    *
    * @return acceptLanguage
+   * @deprecated
    */
+  @Deprecated
   List<String> getAcceptLanguage();
 
   /**
@@ -222,6 +224,7 @@ public interface VerificationRequestEvent
      * @return Current builder
      * @see #getAcceptLanguage
      */
+    @Deprecated
     Builder setAcceptLanguage(List<String> acceptLanguage);
 
     /**

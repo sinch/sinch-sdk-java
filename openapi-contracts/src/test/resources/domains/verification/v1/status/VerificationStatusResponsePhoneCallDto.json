@@ -21,5 +21,6 @@
     "endpoint": "endpoint value"
   },
   "countryId": "es-ES",
-  "verificationTimestamp": "2024-05-22T09:38:59.5590437"
+  "verificationTimestamp": "2024-05-22T09:38:59.5590437",
+  "callResult": "ANSWERED"
 }

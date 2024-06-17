@@ -10,7 +10,6 @@ import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequest
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventImpl;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.internal.VerificationEventInternal;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.internal.VerificationEventInternalImpl;
-import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
@@ -30,7 +29,6 @@ public class VerificationRequestEventDtoTest extends VerificationBaseTest {
                   .setReference("reference string")
                   .setCustom("custom string")
                   .setPrice(Price.builder().setAmount(10.5F).setCurrencyId("USD").build())
-                  .setAcceptLanguage(Collections.singletonList("es-ES"))
                   .build());
 
   @Test

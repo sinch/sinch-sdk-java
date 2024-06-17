@@ -1,5 +1,7 @@
 {
   "id": "the id",
   "method": "flashcall",
-  "status": "FAIL"
+  "status": "FAIL",
+  "reason": "Fraud",
+  "callComplete": true
 }

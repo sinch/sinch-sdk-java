@@ -1,5 +1,6 @@
 {
   "id": "the id",
   "method": "sms",
-  "status": "FAIL"
+  "status": "FAIL",
+  "reason": "Expired"
 }

@@ -35,7 +35,7 @@ public class WebhooksDtoConverterTest extends VerificationBaseTest {
           Price.builder().setAmount(10.5F).setCurrencyId("USD").build(),
           VerificationReference.valueOf("reference string"),
           "custom string",
-          Collections.singletonList("es-ES"));
+          null);
 
   public static VerificationResultEvent verificationResultEvent =
       new VerificationResultEvent(

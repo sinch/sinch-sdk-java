@@ -9,6 +9,7 @@ import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.v1.Price;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
+import com.sinch.sdk.domains.verification.models.v1.status.StatusCallResult;
 import com.sinch.sdk.domains.verification.models.v1.status.StatusPrice;
 import com.sinch.sdk.domains.verification.models.v1.status.StatusSource;
 import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponseFlashCall;
@@ -52,6 +53,7 @@ public class VerificationStatusResponseTest extends VerificationBaseTest {
                   .setCountryId("es-ES")
                   .setVerificationTimestamp(
                       DateUtil.failSafeTimeStampToInstant("2024-05-22T09:38:59.5590437"))
+                  .setCallResult(StatusCallResult.ANSWERED)
                   .build());
   public static VerificationStatusResponseInternalImpl expectedVerificationFlashCallDto =
       new VerificationStatusResponseInternalImpl(
@@ -80,6 +82,8 @@ public class VerificationStatusResponseTest extends VerificationBaseTest {
                   .setCountryId("es-ES")
                   .setVerificationTimestamp(
                       DateUtil.failSafeTimeStampToInstant("2024-05-22T09:38:59.5590437"))
+                  .setCallComplete(false)
+                  .setCallResult(StatusCallResult.ANSWERED)
                   .build());
   public static VerificationStatusResponseInternalImpl expectedVerificationSmsDto =
       new VerificationStatusResponseInternalImpl(

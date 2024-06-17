@@ -5,6 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
+import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseFlashCallImpl;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponsePhoneCall;
@@ -27,6 +28,8 @@ public class VerificationReportResponseDtoTest extends BaseTest {
               VerificationReportResponsePhoneCall.builder()
                   .setId("the id")
                   .setStatus(VerificationStatus.FAIL)
+                  .setReason(VerificationStatusReason.INVALID_CLI)
+                  .setCallComplete(true)
                   .build());
 
   @GivenJsonResource("/domains/verification/v1/report/VerificationReportResponseFlashCallDto.json")
@@ -38,6 +41,8 @@ public class VerificationReportResponseDtoTest extends BaseTest {
               VerificationReportResponseFlashCall.builder()
                   .setId("the id")
                   .setStatus(VerificationStatus.FAIL)
+                  .setReason(VerificationStatusReason.FRAUD)
+                  .setCallComplete(true)
                   .build());
 
   @GivenJsonResource("/domains/verification/v1/report/VerificationReportResponseSmsDto.json")
@@ -49,6 +54,7 @@ public class VerificationReportResponseDtoTest extends BaseTest {
               VerificationReportResponseSms.builder()
                   .setId("the id")
                   .setStatus(VerificationStatus.FAIL)
+                  .setReason(VerificationStatusReason.EXPIRED)
                   .build());
 
   @Test

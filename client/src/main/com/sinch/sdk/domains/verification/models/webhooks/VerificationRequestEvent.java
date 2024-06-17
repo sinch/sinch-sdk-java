@@ -27,7 +27,7 @@ public class VerificationRequestEvent extends VerificationEvent {
       Price price,
       VerificationReference reference,
       String custom,
-      Collection<String> acceptLanguage) {
+      @Deprecated Collection<String> acceptLanguage) {
     super(id, method, identity, reference, custom);
     this.price = price;
     this.acceptLanguage = acceptLanguage;
@@ -52,7 +52,9 @@ public class VerificationRequestEvent extends VerificationEvent {
    *
    * @return Values collection list
    * @since 1.0
+   * @deprecated
    */
+  @Deprecated
   public Optional<Collection<String>> getAcceptLanguage() {
     return Optional.ofNullable(acceptLanguage);
   }
