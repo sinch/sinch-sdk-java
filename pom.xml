@@ -139,7 +139,6 @@
                             <sourceFileExclude>**/pagination/Page*.java</sourceFileExclude>
                             <sourceFileExclude>**/AbstractOpenApiSchema.java</sourceFileExclude>
                             <sourceFileExclude>**/*Impl.java</sourceFileExclude>
-
                         </sourceFileExcludes>
                         <groups>
                             <group>
