@@ -25,8 +25,8 @@ import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestParametersInternal;
-import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponse;
+import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestInternal;
+import com.sinch.sdk.domains.verification.models.v1.report.response.internal.VerificationReportResponseInternal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -59,13 +59,12 @@ public class VerificationsReportApi {
    * Verification ID of the Verification request.
    *
    * @param id The ID of the verification. (required)
-   * @param verificationReportRequestParametersInternal (required)
-   * @return VerificationReportResponse
+   * @param verificationReportRequestInternal (required)
+   * @return VerificationReportResponseInternal
    * @throws ApiException if fails to make API call
    */
-  public VerificationReportResponse reportVerificationById(
-      String id,
-      VerificationReportRequestParametersInternal verificationReportRequestParametersInternal)
+  public VerificationReportResponseInternal reportVerificationById(
+      String id, VerificationReportRequestInternal verificationReportRequestInternal)
       throws ApiException {
 
     LOGGER.finest(
@@ -74,18 +73,18 @@ public class VerificationsReportApi {
             + "id: "
             + id
             + ", "
-            + "verificationReportRequestParametersInternal: "
-            + verificationReportRequestParametersInternal);
+            + "verificationReportRequestInternal: "
+            + verificationReportRequestInternal);
 
     HttpRequest httpRequest =
-        reportVerificationByIdRequestBuilder(id, verificationReportRequestParametersInternal);
+        reportVerificationByIdRequestBuilder(id, verificationReportRequestInternal);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<VerificationReportResponse> localVarReturnType =
-          new TypeReference<VerificationReportResponse>() {};
+      TypeReference<VerificationReportResponseInternal> localVarReturnType =
+          new TypeReference<VerificationReportResponseInternal>() {};
       return mapper.deserialize(response, localVarReturnType);
     }
     // fallback to default errors handling:
@@ -98,20 +97,19 @@ public class VerificationsReportApi {
   }
 
   private HttpRequest reportVerificationByIdRequestBuilder(
-      String id,
-      VerificationReportRequestParametersInternal verificationReportRequestParametersInternal)
+      String id, VerificationReportRequestInternal verificationReportRequestInternal)
       throws ApiException {
     // verify the required parameter 'id' is set
     if (id == null) {
       throw new ApiException(
           400, "Missing the required parameter 'id' when calling reportVerificationById");
     }
-    // verify the required parameter 'verificationReportRequestParametersInternal' is set
-    if (verificationReportRequestParametersInternal == null) {
+    // verify the required parameter 'verificationReportRequestInternal' is set
+    if (verificationReportRequestInternal == null) {
       throw new ApiException(
           400,
-          "Missing the required parameter 'verificationReportRequestParametersInternal' when"
-              + " calling reportVerificationById");
+          "Missing the required parameter 'verificationReportRequestInternal' when calling"
+              + " reportVerificationById");
     }
 
     String localVarPath =
@@ -128,7 +126,7 @@ public class VerificationsReportApi {
 
     final Collection<String> localVarAuthNames = Arrays.asList("Basic", "Application");
     final String serializedBody =
-        mapper.serialize(localVarContentTypes, verificationReportRequestParametersInternal);
+        mapper.serialize(localVarContentTypes, verificationReportRequestInternal);
 
     return new HttpRequest(
         localVarPath,
@@ -149,13 +147,12 @@ public class VerificationsReportApi {
    * @param endpoint For type &#x60;number&#x60; use a
    *     [E.164](https://community.sinch.com/t5/Glossary/E-164/ta-p/7537)-compatible phone number.
    *     (required)
-   * @param verificationReportRequestParametersInternal (required)
-   * @return VerificationReportResponse
+   * @param verificationReportRequestInternal (required)
+   * @return VerificationReportResponseInternal
    * @throws ApiException if fails to make API call
    */
-  public VerificationReportResponse reportVerificationByIdentity(
-      String endpoint,
-      VerificationReportRequestParametersInternal verificationReportRequestParametersInternal)
+  public VerificationReportResponseInternal reportVerificationByIdentity(
+      String endpoint, VerificationReportRequestInternal verificationReportRequestInternal)
       throws ApiException {
 
     LOGGER.finest(
@@ -164,19 +161,18 @@ public class VerificationsReportApi {
             + "endpoint: "
             + endpoint
             + ", "
-            + "verificationReportRequestParametersInternal: "
-            + verificationReportRequestParametersInternal);
+            + "verificationReportRequestInternal: "
+            + verificationReportRequestInternal);
 
     HttpRequest httpRequest =
-        reportVerificationByIdentityRequestBuilder(
-            endpoint, verificationReportRequestParametersInternal);
+        reportVerificationByIdentityRequestBuilder(endpoint, verificationReportRequestInternal);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<VerificationReportResponse> localVarReturnType =
-          new TypeReference<VerificationReportResponse>() {};
+      TypeReference<VerificationReportResponseInternal> localVarReturnType =
+          new TypeReference<VerificationReportResponseInternal>() {};
       return mapper.deserialize(response, localVarReturnType);
     }
     // fallback to default errors handling:
@@ -189,8 +185,7 @@ public class VerificationsReportApi {
   }
 
   private HttpRequest reportVerificationByIdentityRequestBuilder(
-      String endpoint,
-      VerificationReportRequestParametersInternal verificationReportRequestParametersInternal)
+      String endpoint, VerificationReportRequestInternal verificationReportRequestInternal)
       throws ApiException {
     // verify the required parameter 'endpoint' is set
     if (endpoint == null) {
@@ -198,12 +193,12 @@ public class VerificationsReportApi {
           400,
           "Missing the required parameter 'endpoint' when calling reportVerificationByIdentity");
     }
-    // verify the required parameter 'verificationReportRequestParametersInternal' is set
-    if (verificationReportRequestParametersInternal == null) {
+    // verify the required parameter 'verificationReportRequestInternal' is set
+    if (verificationReportRequestInternal == null) {
       throw new ApiException(
           400,
-          "Missing the required parameter 'verificationReportRequestParametersInternal' when"
-              + " calling reportVerificationByIdentity");
+          "Missing the required parameter 'verificationReportRequestInternal' when calling"
+              + " reportVerificationByIdentity");
     }
 
     String localVarPath =
@@ -221,7 +216,7 @@ public class VerificationsReportApi {
 
     final Collection<String> localVarAuthNames = Arrays.asList("Basic", "Application");
     final String serializedBody =
-        mapper.serialize(localVarContentTypes, verificationReportRequestParametersInternal);
+        mapper.serialize(localVarContentTypes, verificationReportRequestInternal);
 
     return new HttpRequest(
         localVarPath,

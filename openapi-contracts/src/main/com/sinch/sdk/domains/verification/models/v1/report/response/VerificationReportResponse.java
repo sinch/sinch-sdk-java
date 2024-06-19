@@ -12,13 +12,10 @@
 
 package com.sinch.sdk.domains.verification.models.v1.report.response;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
 
 /** declaration */
-@JsonDeserialize(builder = VerificationReportResponseImpl.Builder.class)
 public interface VerificationReportResponse {
 
   /**
@@ -27,13 +24,6 @@ public interface VerificationReportResponse {
    * @return id
    */
   String getId();
-
-  /**
-   * Get method
-   *
-   * @return method
-   */
-  VerificationMethod getMethod();
 
   /**
    * Get status
@@ -49,23 +39,6 @@ public interface VerificationReportResponse {
    */
   VerificationStatusReason getReason();
 
-  /**
-   * If the Verification method type is &#x60;callout&#x60; or &#x60;flashcall&#x60;, this displays
-   * if the call was completed successfully.
-   *
-   * @return callComplete
-   */
-  Boolean getCallComplete();
-
-  /**
-   * Getting builder
-   *
-   * @return New Builder instance
-   */
-  static Builder builder() {
-    return new VerificationReportResponseImpl.Builder();
-  }
-
   /** Dedicated Builder */
   interface Builder {
 
@@ -77,15 +50,6 @@ public interface VerificationReportResponse {
      * @see #getId
      */
     Builder setId(String id);
-
-    /**
-     * see getter
-     *
-     * @param method see getter
-     * @return Current builder
-     * @see #getMethod
-     */
-    Builder setMethod(VerificationMethod method);
 
     /**
      * see getter
@@ -104,15 +68,6 @@ public interface VerificationReportResponse {
      * @see #getReason
      */
     Builder setReason(VerificationStatusReason reason);
-
-    /**
-     * see getter
-     *
-     * @param callComplete see getter
-     * @return Current builder
-     * @see #getCallComplete
-     */
-    Builder setCallComplete(Boolean callComplete);
 
     /**
      * Create instance

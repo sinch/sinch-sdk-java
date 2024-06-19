@@ -13,17 +13,46 @@
 package com.sinch.sdk.domains.verification.models.v1.start.response;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.utils.EnumDynamic;
+import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 /** Available methods and actions which can be done after a successful Verification */
 @JsonDeserialize(builder = LinkImpl.Builder.class)
 public interface Link {
+
+  /** The related action that can be performed on the initiated Verification. */
+  public class RelEnum extends EnumDynamic<String, RelEnum> {
+    public static final RelEnum STATUS = new RelEnum("status");
+    public static final RelEnum REPORT = new RelEnum("report");
+
+    private static final EnumSupportDynamic<String, RelEnum> ENUM_SUPPORT =
+        new EnumSupportDynamic<>(RelEnum.class, RelEnum::new, Arrays.asList(STATUS, REPORT));
+
+    private RelEnum(String value) {
+      super(value);
+    }
+
+    public static Stream<RelEnum> values() {
+      return ENUM_SUPPORT.values();
+    }
+
+    public static RelEnum from(String value) {
+      return ENUM_SUPPORT.from(value);
+    }
+
+    public static String valueOf(RelEnum e) {
+      return ENUM_SUPPORT.valueOf(e);
+    }
+  }
 
   /**
    * The related action that can be performed on the initiated Verification.
    *
    * @return rel
    */
-  String getRel();
+  RelEnum getRel();
 
   /**
    * The complete URL to perform the specified action, localized to the DataCenter which handled the
@@ -59,7 +88,7 @@ public interface Link {
      * @return Current builder
      * @see #getRel
      */
-    Builder setRel(String rel);
+    Builder setRel(RelEnum rel);
 
     /**
      * see getter

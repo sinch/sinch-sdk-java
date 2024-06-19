@@ -21,7 +21,7 @@ public class LinkImpl implements Link {
 
   public static final String JSON_PROPERTY_REL = "rel";
 
-  private OptionalValue<String> rel;
+  private OptionalValue<RelEnum> rel;
 
   public static final String JSON_PROPERTY_HREF = "href";
 
@@ -34,20 +34,20 @@ public class LinkImpl implements Link {
   public LinkImpl() {}
 
   protected LinkImpl(
-      OptionalValue<String> rel, OptionalValue<String> href, OptionalValue<String> method) {
+      OptionalValue<RelEnum> rel, OptionalValue<String> href, OptionalValue<String> method) {
     this.rel = rel;
     this.href = href;
     this.method = method;
   }
 
   @JsonIgnore
-  public String getRel() {
+  public RelEnum getRel() {
     return rel.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_REL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> rel() {
+  public OptionalValue<RelEnum> rel() {
     return rel;
   }
 
@@ -116,12 +116,12 @@ public class LinkImpl implements Link {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements Link.Builder {
-    OptionalValue<String> rel = OptionalValue.empty();
+    OptionalValue<RelEnum> rel = OptionalValue.empty();
     OptionalValue<String> href = OptionalValue.empty();
     OptionalValue<String> method = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_REL)
-    public Builder setRel(String rel) {
+    public Builder setRel(RelEnum rel) {
       this.rel = OptionalValue.of(rel);
       return this;
     }

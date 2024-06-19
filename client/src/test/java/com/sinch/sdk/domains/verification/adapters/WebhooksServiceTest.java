@@ -2,7 +2,6 @@ package com.sinch.sdk.domains.verification.adapters;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
-import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.verification.WebHooksService;
@@ -21,7 +20,7 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-public class WebhooksServiceTest extends BaseTest {
+public class WebhooksServiceTest extends VerificationBaseTest {
 
   String request =
       "{\"id\":\"018c25e1-7163-5677-b8fb-467d7b1cffa5\",\"event\":\"VerificationResultEvent\",\"method\":\"sms\",\"identity\":{\"verified\":false,\"type\":\"number\",\"endpoint\":\"+33628254417\"},\"status\":\"FAIL\",\"reason\":\"Expired\"}";

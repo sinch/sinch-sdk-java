@@ -17,9 +17,9 @@ import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlash
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSOptions;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationSeamlessRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportCalloutRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportFlashCallRequestParameters;
-import com.sinch.sdk.domains.verification.models.requests.VerificationReportRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportSMSRequestParameters;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponse;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseCallout;
@@ -28,92 +28,100 @@ import com.sinch.sdk.domains.verification.models.response.StartVerificationRespo
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSeamless;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersFlashCall;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersFlashCallOptions;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersPhoneCall;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersPhoneCallOptions;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersSms;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersSmsOptions;
-import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestParametersInternal;
-import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestParametersInternalImpl;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestFlashCall;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestPhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestSms;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponse;
-import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseImpl;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseFlashCall;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseFlashCallImpl;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponsePhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponsePhoneCallImpl;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseSms;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseSmsImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationFlashCallOptions;
-import com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsOptions;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseDataContentImpl;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseFlashCallContentImpl;
-import com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSmsContentImpl;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms;
+import com.sinch.sdk.domains.verification.models.v1.start.response.internal.VerificationStartResponseDataContentImpl;
+import com.sinch.sdk.domains.verification.models.v1.start.response.internal.VerificationStartResponseFlashCallContentImpl;
+import com.sinch.sdk.domains.verification.models.v1.start.response.internal.VerificationStartResponseSmsContentImpl;
 import java.util.logging.Logger;
 
 public class VerificationsDtoConverter {
 
   private static final Logger LOGGER = Logger.getLogger(VerificationsDtoConverter.class.getName());
 
-  public static com.sinch.sdk.domains.verification.models.v1.start.request
-          .StartVerificationRequestParameters
+  public static com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequest
       convert(StartVerificationRequestParameters client) {
-    com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationRequestParameters
-            .Builder
-        dto =
-            com.sinch.sdk.domains.verification.models.v1.start.request
-                .StartVerificationRequestParameters.builder();
 
-    dto.setMethod(convert(client.getMethod()));
-    client.getIdentity().ifPresent(f -> dto.setIdentity(convert(f)));
+    com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequest.Builder dto;
+
+    if (client instanceof StartVerificationFlashCallRequestParameters) {
+      com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestFlashCall
+              .Builder
+          flashCallBuilder =
+              com.sinch.sdk.domains.verification.models.v1.start.request
+                  .VerificationStartRequestFlashCall.builder();
+      dto = flashCallBuilder;
+      StartVerificationFlashCallRequestParameters options =
+          (StartVerificationFlashCallRequestParameters) client;
+      options.getDialTimeOut().ifPresent(flashCallBuilder::setDialTimeout);
+    } else if (client instanceof StartVerificationSMSRequestParameters) {
+      com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms.Builder
+          smsBuilder =
+              com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms
+                  .builder();
+      dto = smsBuilder;
+      StartVerificationSMSRequestParameters options =
+          (StartVerificationSMSRequestParameters) client;
+      options.getOptions().ifPresent(f -> convert(smsBuilder, f));
+    } else if (client instanceof StartVerificationCalloutRequestParameters) {
+      com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestPhoneCall
+              .Builder
+          phoneCallBuilder =
+              com.sinch.sdk.domains.verification.models.v1.start.request
+                  .VerificationStartRequestPhoneCall.builder();
+      dto = phoneCallBuilder;
+      StartVerificationCalloutRequestParameters options =
+          (StartVerificationCalloutRequestParameters) client;
+      options.getOptions().ifPresent(f -> convert(phoneCallBuilder, f));
+    } else if (client instanceof StartVerificationSeamlessRequestParameters) {
+      dto =
+          com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestData
+              .builder();
+    } else {
+      LOGGER.severe(String.format("Unexpected class '%s'", client.getClass()));
+      return null;
+    }
+
+    client.getIdentity().ifPresent(f -> dto.setIdentity(IdentityDtoConverter.convert(f)));
     client.getReference().ifPresent(f -> dto.setReference(f.getReference()));
     client.getCustom().ifPresent(dto::setCustom);
 
-    if (client instanceof StartVerificationFlashCallRequestParameters) {
-      StartVerificationFlashCallRequestParameters options =
-          (StartVerificationFlashCallRequestParameters) client;
-      options
-          .getDialTimeOut()
-          .ifPresent(
-              f ->
-                  dto.setFlashCallOptions(
-                      StartVerificationFlashCallOptions.builder().setDialTimeout(f).build()));
-    } else if (client instanceof StartVerificationSMSRequestParameters) {
-      StartVerificationSMSRequestParameters options =
-          (StartVerificationSMSRequestParameters) client;
-      options.getOptions().ifPresent(f -> dto.setSmsOptions(convert(f)));
-    } else if (client instanceof StartVerificationCalloutRequestParameters) {
-      StartVerificationCalloutRequestParameters options =
-          (StartVerificationCalloutRequestParameters) client;
-      options.getOptions().ifPresent(f -> dto.setCalloutOptions(convert(f)));
-    } else {
-      LOGGER.severe(String.format("Unexpected class '%s'", client.getClass()));
-    }
     return dto.build();
   }
 
-  static com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsOptions
-      convert(StartVerificationSMSOptions client) {
-    com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsOptions.Builder
-        dto =
-            com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationSmsOptions
-                .builder();
-    client.getExpiry().ifPresent(dto::setExpiry);
+  private static void convert(
+      com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms.Builder
+          smsBuilder,
+      StartVerificationSMSOptions client) {
+
+    client.getExpiry().ifPresent(smsBuilder::setExpiry);
     client
         .getCodeType()
-        .ifPresent(f -> dto.setCodeType(StartVerificationSmsOptions.CodeTypeEnum.from(f.value())));
-    client.getTemplate().ifPresent(dto::setTemplate);
-    return dto.build();
+        .ifPresent(
+            f -> smsBuilder.setCodeType(VerificationStartRequestSms.CodeTypeEnum.from(f.value())));
+    client.getTemplate().ifPresent(smsBuilder::setTemplate);
+    client.getAcceptLanguage().ifPresent(smsBuilder::setAcceptLanguage);
   }
 
-  static com.sinch.sdk.domains.verification.models.v1.start.request
-          .StartVerificationPhoneCallOptions
-      convert(StartVerificationCalloutOptions client) {
-    com.sinch.sdk.domains.verification.models.v1.start.request.StartVerificationPhoneCallOptions
-            .Builder
-        dto =
-            com.sinch.sdk.domains.verification.models.v1.start.request
-                .StartVerificationPhoneCallOptions.builder();
-    client.getSpeech().ifPresent(f -> dto.setSpeech(convert(f)));
-    return dto.build();
+  private static void convert(
+      com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestPhoneCall
+              .Builder
+          phoneCallBuilder,
+      StartVerificationCalloutOptions client) {
+    client.getSpeech().ifPresent(f -> phoneCallBuilder.setSpeech(convert(f)));
   }
 
-  static PhoneCallSpeech convert(StartVerificationCalloutSpeechOptions client) {
+  private static PhoneCallSpeech convert(StartVerificationCalloutSpeechOptions client) {
     PhoneCallSpeech.Builder dto = PhoneCallSpeech.builder();
     client.getLocale().ifPresent(dto::setLocale);
     return dto.build();
@@ -145,46 +153,60 @@ public class VerificationsDtoConverter {
   }
 
   public static StartVerificationResponse convert(
-      com.sinch.sdk.domains.verification.models.v1.start.response.internal
-              .StartVerificationResponseInternal
-          _dto) {
+      com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponse dto) {
 
-    com.sinch.sdk.domains.verification.models.v1.start.response.internal
-            .StartVerificationResponseInternalImpl
-        dto =
-            (com.sinch.sdk.domains.verification.models.v1.start.response.internal
-                    .StartVerificationResponseInternalImpl)
-                _dto;
     StartVerificationResponse.Builder<?> builder;
 
-    if (dto.getActualInstance()
+    if (dto
         instanceof
-        com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSms) {
-      builder = convert(dto.getStartVerificationResponseSmsImpl());
-    } else if (dto.getActualInstance()
+        com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseSms) {
+      builder =
+          convert(
+              (com.sinch.sdk.domains.verification.models.v1.start.response
+                      .VerificationStartResponseSms)
+                  dto);
+    } else if (dto
         instanceof
         com.sinch.sdk.domains.verification.models.v1.start.response
-            .StartVerificationResponseFlashCall) {
-      builder = convert(dto.getStartVerificationResponseFlashCallImpl());
-    } else if (dto.getActualInstance()
+            .VerificationStartResponseFlashCall) {
+      builder =
+          convert(
+              (com.sinch.sdk.domains.verification.models.v1.start.response
+                      .VerificationStartResponseFlashCall)
+                  dto);
+    } else if (dto
         instanceof
         com.sinch.sdk.domains.verification.models.v1.start.response
-            .StartVerificationResponsePhoneCall) {
-      builder = convert(dto.getStartVerificationResponsePhoneCallImpl());
-    } else if (dto.getActualInstance()
+            .VerificationStartResponsePhoneCall) {
+      builder =
+          convert(
+              (com.sinch.sdk.domains.verification.models.v1.start.response
+                      .VerificationStartResponsePhoneCall)
+                  dto);
+    } else if (dto
         instanceof
-        com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseData) {
-      builder = convert(dto.getStartVerificationResponseDataImpl());
+        com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseData) {
+      builder =
+          convert(
+              (com.sinch.sdk.domains.verification.models.v1.start.response
+                      .VerificationStartResponseData)
+                  dto);
     } else {
-      LOGGER.severe(String.format("Unexpected class '%s'", dto.getActualInstance()));
+      LOGGER.severe(String.format("Unexpected class '%s'", dto));
       builder = StartVerificationResponse.builder();
     }
     return builder.build();
   }
 
-  static StartVerificationResponseSMS.Builder convert(
-      com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseSmsImpl
-          dto) {
+  private static StartVerificationResponseSMS.Builder convert(
+      com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseSms
+          _dto) {
+
+    com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseSmsImpl
+        dto =
+            (com.sinch.sdk.domains.verification.models.v1.start.response
+                    .VerificationStartResponseSmsImpl)
+                _dto;
     StartVerificationResponseSMS.Builder builder = StartVerificationResponseSMS.builder();
 
     dto.id().ifPresent(f -> builder.setId(VerificationId.valueOf(f)));
@@ -193,21 +215,25 @@ public class VerificationsDtoConverter {
     dto.sms()
         .ifPresent(
             _sms -> {
-              StartVerificationResponseSmsContentImpl sms =
-                  (StartVerificationResponseSmsContentImpl) _sms;
+              VerificationStartResponseSmsContentImpl sms =
+                  (VerificationStartResponseSmsContentImpl) _sms;
               sms.template().ifPresent(builder::setTemplate);
-              sms.interceptionTimeout()
-                  .ifPresent(f -> builder.setInterceptionTimeOut(Integer.valueOf(f)));
+              sms.interceptionTimeout().ifPresent(builder::setInterceptionTimeOut);
             });
 
     return builder;
   }
 
-  static StartVerificationResponseFlashCall.Builder convert(
-      com.sinch.sdk.domains.verification.models.v1.start.response
-              .StartVerificationResponseFlashCallImpl
-          dto) {
+  private static StartVerificationResponseFlashCall.Builder convert(
+      com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseFlashCall
+          _dto) {
 
+    com.sinch.sdk.domains.verification.models.v1.start.response
+            .VerificationStartResponseFlashCallImpl
+        dto =
+            (com.sinch.sdk.domains.verification.models.v1.start.response
+                    .VerificationStartResponseFlashCallImpl)
+                _dto;
     StartVerificationResponseFlashCall.Builder builder =
         StartVerificationResponseFlashCall.builder();
 
@@ -217,8 +243,8 @@ public class VerificationsDtoConverter {
     dto.flashCall()
         .ifPresent(
             _flashCall -> {
-              StartVerificationResponseFlashCallContentImpl flashCall =
-                  (StartVerificationResponseFlashCallContentImpl) _flashCall;
+              VerificationStartResponseFlashCallContentImpl flashCall =
+                  (VerificationStartResponseFlashCallContentImpl) _flashCall;
               flashCall.cliFilter().ifPresent(builder::setCliFilter);
               flashCall.interceptionTimeout().ifPresent(builder::setInterceptionTimeOut);
               flashCall.reportTimeout().ifPresent(builder::setReportTimeout);
@@ -227,11 +253,16 @@ public class VerificationsDtoConverter {
     return builder;
   }
 
-  static StartVerificationResponseCallout.Builder convert(
-      com.sinch.sdk.domains.verification.models.v1.start.response
-              .StartVerificationResponsePhoneCallImpl
-          dto) {
+  private static StartVerificationResponseCallout.Builder convert(
+      com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponsePhoneCall
+          _dto) {
 
+    com.sinch.sdk.domains.verification.models.v1.start.response
+            .VerificationStartResponsePhoneCallImpl
+        dto =
+            (com.sinch.sdk.domains.verification.models.v1.start.response
+                    .VerificationStartResponsePhoneCallImpl)
+                _dto;
     StartVerificationResponseCallout.Builder builder = StartVerificationResponseCallout.builder();
 
     dto.id().ifPresent(f -> builder.setId(VerificationId.valueOf(f)));
@@ -240,10 +271,15 @@ public class VerificationsDtoConverter {
     return builder;
   }
 
-  static StartVerificationResponseSeamless.Builder convert(
-      com.sinch.sdk.domains.verification.models.v1.start.response.StartVerificationResponseDataImpl
-          dto) {
+  private static StartVerificationResponseSeamless.Builder convert(
+      com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseData
+          _dto) {
 
+    com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseDataImpl
+        dto =
+            (com.sinch.sdk.domains.verification.models.v1.start.response
+                    .VerificationStartResponseDataImpl)
+                _dto;
     StartVerificationResponseSeamless.Builder builder = StartVerificationResponseSeamless.builder();
 
     dto.id().ifPresent(f -> builder.setId(VerificationId.valueOf(f)));
@@ -252,93 +288,71 @@ public class VerificationsDtoConverter {
     dto.seamless()
         .ifPresent(
             _seamless -> {
-              StartVerificationResponseDataContentImpl seamless =
-                  (StartVerificationResponseDataContentImpl) _seamless;
+              VerificationStartResponseDataContentImpl seamless =
+                  (VerificationStartResponseDataContentImpl) _seamless;
               seamless.targetUri().ifPresent(builder::setTargetUri);
             });
     return builder;
   }
 
-  public static VerificationReportRequestParametersInternal convert(
-      VerificationReportRequestParameters client) {
-
-    VerificationReportRequestParametersInternalImpl dto =
-        new VerificationReportRequestParametersInternalImpl();
-
-    if (client instanceof VerificationReportFlashCallRequestParameters) {
-      VerificationReportFlashCallRequestParameters typedClient =
-          (VerificationReportFlashCallRequestParameters) client;
-      dto.setActualInstance(convert(typedClient));
-    } else if (client instanceof VerificationReportSMSRequestParameters) {
-      VerificationReportSMSRequestParameters typedClient =
-          (VerificationReportSMSRequestParameters) client;
-      dto.setActualInstance(convert(typedClient));
-    } else if (client instanceof VerificationReportCalloutRequestParameters) {
-      VerificationReportCalloutRequestParameters typedClient =
-          (VerificationReportCalloutRequestParameters) client;
-      dto.setActualInstance(convert(typedClient));
-    }
-    return dto;
-  }
-
-  private static VerificationReportRequestParametersFlashCall convert(
+  public static VerificationReportRequestFlashCall convert(
       VerificationReportFlashCallRequestParameters client) {
 
-    VerificationReportRequestParametersFlashCallOptions.Builder flashCallOptions =
-        VerificationReportRequestParametersFlashCallOptions.builder();
-    client.getCli().ifPresent(flashCallOptions::setCli);
+    VerificationReportRequestFlashCall.Builder builder =
+        VerificationReportRequestFlashCall.builder();
 
-    return VerificationReportRequestParametersFlashCall.builder()
-        .setMethod(VerificationReportRequestParametersFlashCall.MethodEnum.FLASHCALL)
-        .setFlashCall(flashCallOptions.build())
-        .build();
+    client.getCli().ifPresent(builder::setCli);
+
+    return builder.build();
   }
 
-  private static VerificationReportRequestParametersSms convert(
+  public static VerificationReportRequestSms convert(
       VerificationReportSMSRequestParameters client) {
 
-    VerificationReportRequestParametersSmsOptions.Builder smsOptions =
-        VerificationReportRequestParametersSmsOptions.builder();
-    client.getCode().ifPresent(smsOptions::setCode);
-    client.getCli().ifPresent(smsOptions::setCli);
+    VerificationReportRequestSms.Builder builder = VerificationReportRequestSms.builder();
 
-    return VerificationReportRequestParametersSms.builder()
-        .setMethod(VerificationReportRequestParametersSms.MethodEnum.SMS)
-        .setSms(smsOptions.build())
-        .build();
+    client.getCode().ifPresent(builder::setCode);
+    client.getCli().ifPresent(builder::setCli);
+
+    return builder.build();
   }
 
-  private static VerificationReportRequestParametersPhoneCall convert(
+  public static VerificationReportRequestPhoneCall convert(
       VerificationReportCalloutRequestParameters client) {
 
-    VerificationReportRequestParametersPhoneCallOptions.Builder phoneCallOptions =
-        VerificationReportRequestParametersPhoneCallOptions.builder();
-    client.getCode().ifPresent(phoneCallOptions::setCode);
+    VerificationReportRequestPhoneCall.Builder builder =
+        VerificationReportRequestPhoneCall.builder();
 
-    return VerificationReportRequestParametersPhoneCall.builder()
-        .setMethod(VerificationReportRequestParametersPhoneCall.MethodEnum.CALLOUT)
-        .setCallout(phoneCallOptions.build())
-        .build();
+    client.getCode().ifPresent(builder::setCode);
+
+    return builder.build();
   }
 
   public static VerificationReport convert(VerificationReportResponse _dto) {
-    VerificationReportResponseImpl dto = (VerificationReportResponseImpl) _dto;
+
     VerificationReport.Builder<?> builder;
-    VerificationMethod method = dto.getMethod();
-    if (method.equals(VerificationMethod.SMS)) {
+    if (_dto instanceof VerificationReportResponseSms) {
       builder = VerificationReportSMS.builder();
-    } else if (method.equals(VerificationMethod.FLASHCALL)) {
+      VerificationReportResponseSmsImpl dto = (VerificationReportResponseSmsImpl) _dto;
+      dto.id().ifPresent(f -> builder.setId(VerificationId.valueOf(f)));
+      dto.status()
+          .ifPresent(f -> builder.setStatus(VerificationStatusType.from(dto.getStatus().value())));
+    } else if (_dto instanceof VerificationReportResponseFlashCall) {
       builder = VerificationReportFlashCall.builder();
-    } else if (method.equals(VerificationMethod.CALLOUT)) {
+      VerificationReportResponseFlashCallImpl dto = (VerificationReportResponseFlashCallImpl) _dto;
+      dto.id().ifPresent(f -> builder.setId(VerificationId.valueOf(f)));
+      dto.status()
+          .ifPresent(f -> builder.setStatus(VerificationStatusType.from(dto.getStatus().value())));
+    } else if (_dto instanceof VerificationReportResponsePhoneCall) {
       builder = VerificationReportCallout.builder();
+      VerificationReportResponsePhoneCallImpl dto = (VerificationReportResponsePhoneCallImpl) _dto;
+      dto.id().ifPresent(f -> builder.setId(VerificationId.valueOf(f)));
+      dto.status()
+          .ifPresent(f -> builder.setStatus(VerificationStatusType.from(dto.getStatus().value())));
     } else {
-      LOGGER.severe(String.format("Unexpected value '%s'", dto.getMethod()));
+      LOGGER.severe(String.format("Unexpected value '%s'", _dto));
       return VerificationReport.builder().build();
     }
-
-    dto.id().ifPresent(f -> builder.setId(VerificationId.valueOf(f)));
-    dto.status()
-        .ifPresent(f -> builder.setStatus(VerificationStatusType.from(dto.getStatus().value())));
 
     return builder.build();
   }

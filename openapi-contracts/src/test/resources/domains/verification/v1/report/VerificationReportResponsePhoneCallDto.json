@@ -1,0 +1,7 @@
+{
+  "id": "the id",
+  "method": "callout",
+  "status": "FAIL",
+  "reason": "Invalid CLI",
+  "callComplete": true
+}

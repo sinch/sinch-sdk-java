@@ -1,8 +1,8 @@
 package com.sinch.sdk.domains.verification.adapters.converters;
 
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
-import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
+import com.sinch.sdk.domains.verification.adapters.VerificationBaseTest;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.Price;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
@@ -25,7 +25,7 @@ import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
-public class WebhooksDtoConverterTest extends BaseTest {
+public class WebhooksDtoConverterTest extends VerificationBaseTest {
 
   public static VerificationRequestEvent verificationRequestEvent =
       new VerificationRequestEvent(
@@ -35,7 +35,7 @@ public class WebhooksDtoConverterTest extends BaseTest {
           Price.builder().setAmount(10.5F).setCurrencyId("USD").build(),
           VerificationReference.valueOf("reference string"),
           "custom string",
-          Collections.singletonList("es-ES"));
+          null);
 
   public static VerificationResultEvent verificationResultEvent =
       new VerificationResultEvent(
@@ -73,14 +73,17 @@ public class WebhooksDtoConverterTest extends BaseTest {
   void convertVerificationRequestEvent() {
     TestHelpers.recursiveEquals(
         verificationRequestEvent,
-        WebHooksDtoConverter.convert(VerificationRequestEventDtoTest.expectedRequestEventDto));
+        WebHooksDtoConverter.convert(
+            VerificationRequestEventDtoTest.expectedRequestEventDto
+                .getVerificationRequestEventImpl()));
   }
 
   @Test
   void convertVerificationResultEvent() {
     TestHelpers.recursiveEquals(
         verificationResultEvent,
-        WebHooksDtoConverter.convert(VerificationResultEventDtoTest.expectedResultEvent));
+        WebHooksDtoConverter.convert(
+            VerificationResultEventDtoTest.expectedResultEvent.getVerificationResultEventImpl()));
   }
 
   @Test

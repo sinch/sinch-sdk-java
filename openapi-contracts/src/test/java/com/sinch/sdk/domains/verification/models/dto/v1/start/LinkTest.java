@@ -5,6 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.verification.models.v1.start.response.Link;
+import com.sinch.sdk.domains.verification.models.v1.start.response.Link.RelEnum;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,12 +20,12 @@ public class LinkTest extends BaseTest {
       new ArrayList<>(
           Arrays.asList(
               Link.builder()
-                  .setRel("status")
+                  .setRel(RelEnum.STATUS)
                   .setHref("an href for status")
                   .setMethod("GET")
                   .build(),
               Link.builder()
-                  .setRel("report")
+                  .setRel(RelEnum.REPORT)
                   .setHref("an href for report")
                   .setMethod("PUT")
                   .build()));

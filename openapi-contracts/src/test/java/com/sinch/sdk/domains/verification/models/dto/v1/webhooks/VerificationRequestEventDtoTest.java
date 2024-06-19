@@ -3,37 +3,32 @@ package com.sinch.sdk.domains.verification.models.dto.v1.webhooks;
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.core.TestHelpers;
+import com.sinch.sdk.domains.verification.adapters.VerificationBaseTest;
+import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.v1.Price;
-import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEventImpl;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEvent;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventImpl;
-import java.util.Collections;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.internal.VerificationEventInternal;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.internal.VerificationEventInternalImpl;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
-public class VerificationRequestEventDtoTest {
+public class VerificationRequestEventDtoTest extends VerificationBaseTest {
 
   @GivenJsonResource("/domains/verification/v1/webhooks/VerificationRequestEventDto.json")
-  static VerificationEvent requestEventDto;
+  VerificationEventInternal requestEventDto;
 
-  public static VerificationEvent expectedRequestEventDto =
-      new VerificationEventImpl(
+  public static VerificationEventInternalImpl expectedRequestEventDto =
+      new VerificationEventInternalImpl(
           (VerificationRequestEventImpl)
               VerificationRequestEvent.builder()
                   .setId("1234567890")
-                  .setEvent(VerificationRequestEvent.EventEnum.VERIFICATIONREQUESTEVENT)
+                  .setEvent(VerificationRequestEvent.EventEnum.VERIFICATION_REQUEST_EVENT)
                   .setMethod(VerificationRequestEvent.MethodEnum.SMS)
-                  .setIdentity(
-                      IdentityInternal.builder()
-                          .setType(IdentityInternal.TypeEnum.NUMBER)
-                          .setEndpoint("+11235551234")
-                          .build())
+                  .setIdentity(NumberIdentity.valueOf("+11235551234"))
                   .setReference("reference string")
                   .setCustom("custom string")
                   .setPrice(Price.builder().setAmount(10.5F).setCurrencyId("USD").build())
-                  .setAcceptLanguage(Collections.singletonList("es-ES"))
                   .build());
 
   @Test

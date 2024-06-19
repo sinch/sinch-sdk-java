@@ -4,17 +4,13 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersFlashCall;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersFlashCallImpl;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersFlashCallOptions;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersPhoneCall;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersPhoneCallImpl;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersPhoneCallOptions;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersSms;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersSmsImpl;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestParametersSmsOptions;
-import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestParametersInternal;
-import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestParametersInternalImpl;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestFlashCall;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestFlashCallImpl;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestPhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestPhoneCallImpl;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestSms;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestSmsImpl;
+import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestInternalImpl;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -22,45 +18,27 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class VerificationReportRequestDtoTest extends BaseTest {
 
-  public static VerificationReportRequestParametersInternal verificationReportPhoneCallDto =
-      new VerificationReportRequestParametersInternalImpl(
-          (VerificationReportRequestParametersPhoneCallImpl)
-              VerificationReportRequestParametersPhoneCall.builder()
-                  .setMethod(VerificationReportRequestParametersPhoneCall.MethodEnum.CALLOUT)
-                  .setCallout(
-                      VerificationReportRequestParametersPhoneCallOptions.builder()
-                          .setCode("foo code")
-                          .build())
-                  .build());
-  public static VerificationReportRequestParametersInternal verificationReportFlashCallDto =
-      new VerificationReportRequestParametersInternalImpl(
-          (VerificationReportRequestParametersFlashCallImpl)
-              VerificationReportRequestParametersFlashCall.builder()
-                  .setMethod(VerificationReportRequestParametersFlashCall.MethodEnum.FLASHCALL)
-                  .setFlashCall(
-                      VerificationReportRequestParametersFlashCallOptions.builder()
-                          .setCli("foo cli")
-                          .build())
-                  .build());
-  public static VerificationReportRequestParametersInternal verificationReportSmsDto =
-      new VerificationReportRequestParametersInternalImpl(
-          (VerificationReportRequestParametersSmsImpl)
-              VerificationReportRequestParametersSms.builder()
-                  .setMethod(VerificationReportRequestParametersSms.MethodEnum.SMS)
-                  .setSms(
-                      VerificationReportRequestParametersSmsOptions.builder()
-                          .setCode("foo code")
-                          .setCli("foo cli")
-                          .build())
-                  .build());
+  public static VerificationReportRequestInternalImpl verificationReportPhoneCallDto =
+      new VerificationReportRequestInternalImpl(
+          (VerificationReportRequestPhoneCallImpl)
+              VerificationReportRequestPhoneCall.builder().setCode("foo code").build());
 
-  @GivenTextResource("/domains/verification/v1/report/VerificationReportPhoneCallRequestDto.json")
+  public static VerificationReportRequestInternalImpl verificationReportFlashCallDto =
+      new VerificationReportRequestInternalImpl(
+          (VerificationReportRequestFlashCallImpl)
+              VerificationReportRequestFlashCall.builder().setCli("foo cli").build());
+  public static VerificationReportRequestInternalImpl verificationReportSmsDto =
+      new VerificationReportRequestInternalImpl(
+          (VerificationReportRequestSmsImpl)
+              VerificationReportRequestSms.builder().setCode("foo code").setCli("foo cli").build());
+
+  @GivenTextResource("/domains/verification/v1/report/VerificationReportRequestPhoneCallDto.json")
   String jsonVerificationReportPhoneCall;
 
-  @GivenTextResource("/domains/verification/v1/report/VerificationReportFlashCallRequestDto.json")
+  @GivenTextResource("/domains/verification/v1/report/VerificationReportRequestFlashCallDto.json")
   String jsonVerificationReportFlashCall;
 
-  @GivenTextResource("/domains/verification/v1/report/VerificationReportSmsRequestDto.json")
+  @GivenTextResource("/domains/verification/v1/report/VerificationReportRequestSmsDto.json")
   String jsonVerificationReportSms;
 
   @Test

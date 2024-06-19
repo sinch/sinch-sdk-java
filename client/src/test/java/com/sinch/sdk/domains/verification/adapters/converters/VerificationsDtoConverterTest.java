@@ -17,9 +17,9 @@ import com.sinch.sdk.domains.verification.models.VerificationStatusSMS;
 import com.sinch.sdk.domains.verification.models.VerificationStatusType;
 import com.sinch.sdk.domains.verification.models.dto.v1.report.VerificationReportRequestDtoTest;
 import com.sinch.sdk.domains.verification.models.dto.v1.report.VerificationReportResponseDtoTest;
-import com.sinch.sdk.domains.verification.models.dto.v1.start.StartVerificationRequestTest;
-import com.sinch.sdk.domains.verification.models.dto.v1.start.StartVerificationResponseTest;
-import com.sinch.sdk.domains.verification.models.dto.v1.status.VerificationStatusResponseInternalTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.start.VerificationStartRequestTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.start.VerificationStartResponseTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.status.VerificationStatusResponseTest;
 import com.sinch.sdk.domains.verification.models.requests.SMSCodeType;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutOptions;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutRequestParameters;
@@ -111,7 +111,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         VerificationsDtoConverter.convert(startVerificationPhoneCallRequest),
-        StartVerificationRequestTest.startVerificationPhoneCallDto);
+        VerificationStartRequestTest.startVerificationPhoneCallDto
+            .getVerificationStartRequestPhoneCallImpl());
   }
 
   @Test
@@ -119,7 +120,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         VerificationsDtoConverter.convert(startVerificationFlashCallRequest),
-        StartVerificationRequestTest.startVerificationFlashCallDto);
+        VerificationStartRequestTest.startVerificationFlashCallDto
+            .getVerificationStartRequestFlashCallImpl());
   }
 
   @Test
@@ -127,7 +129,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         VerificationsDtoConverter.convert(startVerificationDataRequest),
-        StartVerificationRequestTest.startVerificationDataDto);
+        VerificationStartRequestTest.startVerificationDataDto
+            .getVerificationStartRequestDataImpl());
   }
 
   @Test
@@ -135,7 +138,7 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         VerificationsDtoConverter.convert(startVerificationSmsRequest),
-        StartVerificationRequestTest.startVerificationSmsDto);
+        VerificationStartRequestTest.startVerificationSmsDto.getVerificationStartRequestSmsImpl());
   }
 
   @Test
@@ -143,7 +146,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         VerificationsDtoConverter.convert(
-            StartVerificationResponseTest.expectedStartVerificationPhoneCallDto),
+            VerificationStartResponseTest.expectedStartVerificationPhoneCallDto
+                .getVerificationStartResponsePhoneCallImpl()),
         expectedStartVerificationPhoneCallResponse);
   }
 
@@ -152,7 +156,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         VerificationsDtoConverter.convert(
-            StartVerificationResponseTest.expectedStartVerificationFlashCallDto),
+            VerificationStartResponseTest.expectedStartVerificationFlashCallDto
+                .getVerificationStartResponseFlashCallImpl()),
         expectedStartVerificationFlashCallResponse);
   }
 
@@ -161,7 +166,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         VerificationsDtoConverter.convert(
-            StartVerificationResponseTest.expectedStartVerificationDataDto),
+            VerificationStartResponseTest.expectedStartVerificationDataDto
+                .getVerificationStartResponseDataImpl()),
         expectedStartVerificationDataResponse);
   }
 
@@ -170,7 +176,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         VerificationsDtoConverter.convert(
-            StartVerificationResponseTest.expectedStartVerificationSmsDto),
+            VerificationStartResponseTest.expectedStartVerificationSmsDto
+                .getVerificationStartResponseSmsImpl()),
         expectedStartVerificationSmsResponse);
   }
 
@@ -211,7 +218,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         VerificationsDtoConverter.convert(verificationReportPhoneCallRequest),
-        VerificationReportRequestDtoTest.verificationReportPhoneCallDto);
+        VerificationReportRequestDtoTest.verificationReportPhoneCallDto
+            .getVerificationReportRequestPhoneCallImpl());
   }
 
   @Test
@@ -219,7 +227,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         VerificationsDtoConverter.convert(
-            VerificationReportResponseDtoTest.verificationReportPhoneCallDto),
+            VerificationReportResponseDtoTest.verificationReportPhoneCallDto
+                .getVerificationReportResponsePhoneCallImpl()),
         expectedVerificationReportPhoneCallResponse);
   }
 
@@ -228,7 +237,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         StatusDtoConverter.convert(
-            VerificationStatusResponseInternalTest.expectedVerificationPhoneCallDto),
+            VerificationStatusResponseTest.expectedVerificationPhoneCallDto
+                .getVerificationStatusResponsePhoneCallImpl()),
         expectedVerificationStatusPhoneCallResponse);
   }
 
@@ -268,7 +278,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         VerificationsDtoConverter.convert(verificationReportFlashCallRequest),
-        VerificationReportRequestDtoTest.verificationReportFlashCallDto);
+        VerificationReportRequestDtoTest.verificationReportFlashCallDto
+            .getVerificationReportRequestFlashCallImpl());
   }
 
   @Test
@@ -276,7 +287,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         VerificationsDtoConverter.convert(
-            VerificationReportResponseDtoTest.verificationReportFlashCallDto),
+            VerificationReportResponseDtoTest.verificationReportFlashCallDto
+                .getVerificationReportResponseFlashCallImpl()),
         expectedVerificationReportFlashCallResponse);
   }
 
@@ -285,7 +297,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         StatusDtoConverter.convert(
-            VerificationStatusResponseInternalTest.expectedVerificationFlashCallDto),
+            VerificationStatusResponseTest.expectedVerificationFlashCallDto
+                .getVerificationStatusResponseFlashCallImpl()),
         expectedVerificationStatusFlashCallResponse);
   }
 
@@ -322,7 +335,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         VerificationsDtoConverter.convert(verificationReportSmsRequest),
-        VerificationReportRequestDtoTest.verificationReportSmsDto);
+        VerificationReportRequestDtoTest.verificationReportSmsDto
+            .getVerificationReportRequestSmsImpl());
   }
 
   @Test
@@ -330,7 +344,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         VerificationsDtoConverter.convert(
-            VerificationReportResponseDtoTest.verificationReportSmsDto),
+            VerificationReportResponseDtoTest.verificationReportSmsDto
+                .getVerificationReportResponseSmsImpl()),
         expectedVerificationReportSmsResponse);
   }
 
@@ -339,7 +354,8 @@ public class VerificationsDtoConverterTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         StatusDtoConverter.convert(
-            VerificationStatusResponseInternalTest.expectedVerificationSmsDto),
+            VerificationStatusResponseTest.expectedVerificationSmsDto
+                .getVerificationStatusResponseSmsImpl()),
         expectedVerificationStatusSmsResponse);
   }
 }

@@ -1,7 +1,5 @@
 package com.sinch.sdk.domains.verification.adapters;
 
-import com.sinch.sdk.core.http.AuthManager;
-import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationReportCallout;
@@ -18,8 +16,6 @@ import com.sinch.sdk.domains.verification.models.response.StartVerificationRespo
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSMS;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSeamless;
-import com.sinch.sdk.models.VerificationContext;
-import java.util.Map;
 
 public class VerificationsService
     implements com.sinch.sdk.domains.verification.VerificationsService {
@@ -28,9 +24,10 @@ public class VerificationsService
   private final VerificationsStartService startService;
 
   public VerificationsService(
-      VerificationContext context, HttpClient httpClient, Map<String, AuthManager> authManagers) {
-    this.reportService = new VerificationsReportService(context, httpClient, authManagers);
-    this.startService = new VerificationsStartService(context, httpClient, authManagers);
+      com.sinch.sdk.domains.verification.api.v1.VerificationStartService startV1,
+      com.sinch.sdk.domains.verification.api.v1.VerificationReportService reportV1) {
+    this.reportService = new VerificationsReportService(reportV1);
+    this.startService = new VerificationsStartService(startV1);
   }
 
   public StartVerificationResponseSMS startSms(StartVerificationSMSRequestParameters parameters) {

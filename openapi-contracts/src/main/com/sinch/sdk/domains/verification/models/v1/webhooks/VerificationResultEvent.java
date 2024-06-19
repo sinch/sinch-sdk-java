@@ -15,15 +15,18 @@ package com.sinch.sdk.domains.verification.models.v1.webhooks;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import com.sinch.sdk.domains.verification.models.v1.Identity;
+import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
-import com.sinch.sdk.domains.verification.models.v1.internal.IdentityInternal;
+import com.sinch.sdk.domains.verification.models.v1.status.StatusSource;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
 /** declaration */
 @JsonDeserialize(builder = VerificationResultEventImpl.Builder.class)
-public interface VerificationResultEvent {
+public interface VerificationResultEvent
+    extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent {
 
   /**
    * The ID of the verification request.
@@ -34,12 +37,12 @@ public interface VerificationResultEvent {
 
   /** The type of the event. */
   public class EventEnum extends EnumDynamic<String, EventEnum> {
-    public static final EventEnum VERIFICATIONRESULTEVENT =
+    public static final EventEnum VERIFICATION_RESULT_EVENT =
         new EventEnum("VerificationResultEvent");
 
     private static final EnumSupportDynamic<String, EventEnum> ENUM_SUPPORT =
         new EnumSupportDynamic<>(
-            EventEnum.class, EventEnum::new, Arrays.asList(VERIFICATIONRESULTEVENT));
+            EventEnum.class, EventEnum::new, Arrays.asList(VERIFICATION_RESULT_EVENT));
 
     private EventEnum(String value) {
       super(value);
@@ -65,47 +68,33 @@ public interface VerificationResultEvent {
    */
   EventEnum getEvent();
 
-  /** The verification method. */
-  public class MethodEnum extends EnumDynamic<String, MethodEnum> {
-    public static final MethodEnum SMS = new MethodEnum("sms");
-    public static final MethodEnum FLASHCALL = new MethodEnum("flashcall");
-    public static final MethodEnum CALLOUT = new MethodEnum("callout");
-    public static final MethodEnum SEAMLESS = new MethodEnum("seamless");
-
-    private static final EnumSupportDynamic<String, MethodEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(
-            MethodEnum.class, MethodEnum::new, Arrays.asList(SMS, FLASHCALL, CALLOUT, SEAMLESS));
-
-    private MethodEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<MethodEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static MethodEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(MethodEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
-
-  /**
-   * The verification method.
-   *
-   * @return method
-   */
-  MethodEnum getMethod();
-
   /**
    * Get identity
    *
    * @return identity
    */
-  IdentityInternal getIdentity();
+  Identity getIdentity();
+
+  /**
+   * Used to pass your own reference in the request for tracking purposes.
+   *
+   * @return reference
+   */
+  String getReference();
+
+  /**
+   * Can be used to pass custom data in the request.
+   *
+   * @return custom
+   */
+  String getCustom();
+
+  /**
+   * Get method
+   *
+   * @return method
+   */
+  VerificationMethod getMethod();
 
   /**
    * Get status
@@ -122,51 +111,11 @@ public interface VerificationResultEvent {
   VerificationStatusReason getReason();
 
   /**
-   * The reference ID that was optionally passed together with the verification request.
-   *
-   * @return reference
-   */
-  String getReference();
-
-  /** Free text that the client is sending, used to show if the call/SMS was intercepted or not. */
-  public class SourceEnum extends EnumDynamic<String, SourceEnum> {
-    public static final SourceEnum INTERCEPTED = new SourceEnum("intercepted");
-    public static final SourceEnum MANUAL = new SourceEnum("manual");
-
-    private static final EnumSupportDynamic<String, SourceEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(
-            SourceEnum.class, SourceEnum::new, Arrays.asList(INTERCEPTED, MANUAL));
-
-    private SourceEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<SourceEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static SourceEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(SourceEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
-
-  /**
-   * Free text that the client is sending, used to show if the call/SMS was intercepted or not.
+   * Get source
    *
    * @return source
    */
-  SourceEnum getSource();
-
-  /**
-   * A custom string that can be provided during a verification request.
-   *
-   * @return custom
-   */
-  String getCustom();
+  StatusSource getSource();
 
   /**
    * Getting builder
@@ -178,7 +127,8 @@ public interface VerificationResultEvent {
   }
 
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder
+      extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent.Builder {
 
     /**
      * see getter
@@ -201,20 +151,38 @@ public interface VerificationResultEvent {
     /**
      * see getter
      *
-     * @param method see getter
-     * @return Current builder
-     * @see #getMethod
-     */
-    Builder setMethod(MethodEnum method);
-
-    /**
-     * see getter
-     *
      * @param identity see getter
      * @return Current builder
      * @see #getIdentity
      */
-    Builder setIdentity(IdentityInternal identity);
+    Builder setIdentity(Identity identity);
+
+    /**
+     * see getter
+     *
+     * @param reference see getter
+     * @return Current builder
+     * @see #getReference
+     */
+    Builder setReference(String reference);
+
+    /**
+     * see getter
+     *
+     * @param custom see getter
+     * @return Current builder
+     * @see #getCustom
+     */
+    Builder setCustom(String custom);
+
+    /**
+     * see getter
+     *
+     * @param method see getter
+     * @return Current builder
+     * @see #getMethod
+     */
+    Builder setMethod(VerificationMethod method);
 
     /**
      * see getter
@@ -237,29 +205,11 @@ public interface VerificationResultEvent {
     /**
      * see getter
      *
-     * @param reference see getter
-     * @return Current builder
-     * @see #getReference
-     */
-    Builder setReference(String reference);
-
-    /**
-     * see getter
-     *
      * @param source see getter
      * @return Current builder
      * @see #getSource
      */
-    Builder setSource(SourceEnum source);
-
-    /**
-     * see getter
-     *
-     * @param custom see getter
-     * @return Current builder
-     * @see #getCustom
-     */
-    Builder setCustom(String custom);
+    Builder setSource(StatusSource source);
 
     /**
      * Create instance
