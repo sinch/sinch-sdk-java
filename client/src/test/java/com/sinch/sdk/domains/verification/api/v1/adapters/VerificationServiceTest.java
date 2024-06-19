@@ -23,7 +23,7 @@ class VerificationServiceTest {
             NullPointerException.class, () -> new VerificationService(null, context, httpClient));
 
     assertTrue(
-        exception.getMessage().contains("service require application credentials to be defined"));
+        exception.getMessage().contains("service requires application credentials to be defined"));
   }
 
   @Test
