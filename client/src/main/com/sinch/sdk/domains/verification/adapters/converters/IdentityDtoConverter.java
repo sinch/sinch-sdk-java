@@ -31,9 +31,9 @@ public class IdentityDtoConverter {
     return client;
   }
 
-  public static com.sinch.sdk.domains.verification.models.v1.Identity convert(
+  public static com.sinch.sdk.domains.verification.models.v1.NumberIdentity convert(
       com.sinch.sdk.domains.verification.models.Identity client) {
-    com.sinch.sdk.domains.verification.models.v1.Identity dto = null;
+    com.sinch.sdk.domains.verification.models.v1.NumberIdentity dto = null;
     if (client instanceof com.sinch.sdk.domains.verification.models.NumberIdentity) {
       dto =
           com.sinch.sdk.domains.verification.models.v1.NumberIdentity.valueOf(

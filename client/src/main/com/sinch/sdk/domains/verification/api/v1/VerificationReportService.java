@@ -1,6 +1,6 @@
 package com.sinch.sdk.domains.verification.api.v1;
 
-import com.sinch.sdk.domains.verification.models.NumberIdentity;
+import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestPhoneCall;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestSms;

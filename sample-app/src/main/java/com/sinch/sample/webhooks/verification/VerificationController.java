@@ -1,8 +1,9 @@
 package com.sinch.sample.webhooks.verification;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.verification.models.webhooks.VerificationRequestEvent;
-import com.sinch.sdk.domains.verification.models.webhooks.VerificationResultEvent;
+import com.sinch.sdk.domains.verification.api.v1.WebHooksService;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEvent;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationResultEvent;
 import java.util.Map;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,13 @@ import org.springframework.web.server.ResponseStatusException;
 public class VerificationController {
 
   private static final Logger LOGGER = Logger.getLogger(VerificationController.class.getName());
-  private final SinchClient sinchClient;
-  private final VerificationService service;
+  private final WebHooksService webhooks;
+  private final VerificationService verification;
 
   @Autowired
-  public VerificationController(SinchClient sinchClient, VerificationService service) {
-    this.sinchClient = sinchClient;
-    this.service = service;
+  public VerificationController(SinchClient sinchClient, VerificationService verification) {
+    this.webhooks = sinchClient.verification().v1().webhooks();
+    this.verification = verification;
   }
 
   @PostMapping(
@@ -39,18 +40,15 @@ public class VerificationController {
 
     // ensure valid authentication to handle request
     var validAuth =
-        sinchClient
-            .verification()
-            .webhooks()
-            .validateAuthenticationHeader(
-                // The HTTP verb this controller is managing
-                "POST",
-                // The URI this controller is managing
-                "/VerificationEvent",
-                // request headers
-                headers,
-                // request payload body
-                body);
+        webhooks.validateAuthenticationHeader(
+            // The HTTP verb this controller is managing
+            "POST",
+            // The URI this controller is managing
+            "/VerificationEvent",
+            // request headers
+            headers,
+            // request payload body
+            body);
 
     // token validation failed
     if (!validAuth) {
@@ -58,19 +56,20 @@ public class VerificationController {
     }
 
     // decode the request payload
-    var event = sinchClient.verification().webhooks().parseEvent(body);
+    var event = webhooks.parseEvent(body);
 
     // let business layer process the request
-    var response = switch (event) {
-      case VerificationRequestEvent e -> service.verificationEvent(e);
-      case VerificationResultEvent e -> {
-        service.verificationEvent(e);
-        yield null;
-      }
-      default -> throw new IllegalStateException("Unexpected value: " + event);
-    };
+    var response =
+        switch (event) {
+          case VerificationRequestEvent e -> verification.verificationEvent(e);
+          case VerificationResultEvent e -> {
+            verification.verificationEvent(e);
+            yield null;
+          }
+          default -> throw new IllegalStateException("Unexpected value: " + event);
+        };
 
-    var serializedResponse = sinchClient.verification().webhooks().serializeResponse(response);
+    var serializedResponse = webhooks.serializeResponse(response);
 
     LOGGER.finest("JSON response: " + serializedResponse);
 

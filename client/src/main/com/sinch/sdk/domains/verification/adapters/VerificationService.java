@@ -27,6 +27,10 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
             credentials, context, httpClient);
   }
 
+  public com.sinch.sdk.domains.verification.api.v1.VerificationService v1() {
+    return this.v1;
+  }
+
   public VerificationsService verifications() {
     if (null == this.verifications) {
       this.verifications =
