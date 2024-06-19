@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.verification.adapters;
 
+import com.sinch.sdk.domains.verification.adapters.converters.IdentityDtoConverter;
 import com.sinch.sdk.domains.verification.adapters.converters.VerificationsDtoConverter;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
@@ -26,21 +27,24 @@ public class VerificationsReportService {
       NumberIdentity identity, VerificationReportSMSRequestParameters parameters) {
 
     VerificationReportResponseSms response =
-        v1.reportSmsByIdentity(identity, VerificationsDtoConverter.convert(parameters));
+        v1.reportSmsByIdentity(
+            IdentityDtoConverter.convert(identity), VerificationsDtoConverter.convert(parameters));
     return (VerificationReportSMS) VerificationsDtoConverter.convert(response);
   }
 
   public VerificationReportFlashCall reportFlashCallByIdentity(
       NumberIdentity identity, VerificationReportFlashCallRequestParameters parameters) {
     VerificationReportResponseFlashCall response =
-        v1.reportFlashCallByIdentity(identity, VerificationsDtoConverter.convert(parameters));
+        v1.reportFlashCallByIdentity(
+            IdentityDtoConverter.convert(identity), VerificationsDtoConverter.convert(parameters));
     return (VerificationReportFlashCall) VerificationsDtoConverter.convert(response);
   }
 
   public VerificationReportCallout reportCalloutByIdentity(
       NumberIdentity identity, VerificationReportCalloutRequestParameters parameters) {
     VerificationReportResponsePhoneCall response =
-        v1.reportPhoneCallByIdentity(identity, VerificationsDtoConverter.convert(parameters));
+        v1.reportPhoneCallByIdentity(
+            IdentityDtoConverter.convert(identity), VerificationsDtoConverter.convert(parameters));
     return (VerificationReportCallout) VerificationsDtoConverter.convert(response);
   }
 

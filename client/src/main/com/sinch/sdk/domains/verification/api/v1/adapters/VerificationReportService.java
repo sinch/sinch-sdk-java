@@ -4,7 +4,7 @@ import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.domains.verification.api.v1.internal.VerificationsReportApi;
-import com.sinch.sdk.domains.verification.models.NumberIdentity;
+import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequest;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestPhoneCall;

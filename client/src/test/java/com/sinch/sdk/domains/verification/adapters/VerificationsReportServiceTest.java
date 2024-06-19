@@ -44,7 +44,9 @@ public class VerificationsReportServiceTest extends VerificationBaseTest {
   void reportSmsByIdentity() throws ApiException {
 
     when(v1.reportSmsByIdentity(
-            eq(NumberIdentity.valueOf("endpoint string")),
+            eq(
+                com.sinch.sdk.domains.verification.models.v1.NumberIdentity.valueOf(
+                    "endpoint string")),
             eq(verificationReportSmsRequestDto.getVerificationReportRequestSmsImpl())))
         .thenReturn(
             VerificationReportResponseDtoTest.verificationReportSmsDto
@@ -63,7 +65,9 @@ public class VerificationsReportServiceTest extends VerificationBaseTest {
   void reportFlashCallByIdentity() throws ApiException {
 
     when(v1.reportFlashCallByIdentity(
-            eq(NumberIdentity.valueOf("endpoint string")),
+            eq(
+                com.sinch.sdk.domains.verification.models.v1.NumberIdentity.valueOf(
+                    "endpoint string")),
             eq(verificationReportFlashCallRequestDto.getVerificationReportRequestFlashCallImpl())))
         .thenReturn(
             VerificationReportResponseDtoTest.verificationReportFlashCallDto
@@ -82,7 +86,9 @@ public class VerificationsReportServiceTest extends VerificationBaseTest {
   void reportPhoneCallByIdentity() throws ApiException {
 
     when(v1.reportPhoneCallByIdentity(
-            eq(NumberIdentity.valueOf("endpoint string")),
+            eq(
+                com.sinch.sdk.domains.verification.models.v1.NumberIdentity.valueOf(
+                    "endpoint string")),
             eq(verificationReportPhoneCallRequestDto.getVerificationReportRequestPhoneCallImpl())))
         .thenReturn(
             VerificationReportResponseDtoTest.verificationReportPhoneCallDto
