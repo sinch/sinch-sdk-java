@@ -44,7 +44,7 @@ public class VerificationService
     // Currently, we are not supporting unified credentials: ensure application credentials are
     // defined
     Objects.requireNonNull(
-        credentials, "Verification service require application credentials to be defined");
+        credentials, "Verification service requires application credentials to be defined");
     Objects.requireNonNull(context, "Verification service require context to be defined");
     StringUtil.requireNonEmpty(
         credentials.getApplicationKey(),
