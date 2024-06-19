@@ -1,49 +1,42 @@
 package com.sinch.sample.webhooks.verification;
 
-import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.domains.verification.models.VerificationMethodType;
-import com.sinch.sdk.domains.verification.models.webhooks.VerificationRequestEvent;
-import com.sinch.sdk.domains.verification.models.webhooks.VerificationResponse;
-import com.sinch.sdk.domains.verification.models.webhooks.VerificationResponseActionType;
-import com.sinch.sdk.domains.verification.models.webhooks.VerificationResponseCallout;
-import com.sinch.sdk.domains.verification.models.webhooks.VerificationResponseFlashCall;
-import com.sinch.sdk.domains.verification.models.webhooks.VerificationResponseSMS;
-import com.sinch.sdk.domains.verification.models.webhooks.VerificationResultEvent;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEventResponseAction;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEvent;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEvent.MethodEnum;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponse;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponseFlashCall;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponsePhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponseSms;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationResultEvent;
 import java.util.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class VerificationService {
 
-  private final SinchClient sinchClient;
-
   private static final Logger LOGGER = Logger.getLogger(VerificationService.class.getName());
 
-  @Autowired
-  public VerificationService(SinchClient sinchClient) {
-    this.sinchClient = sinchClient;
-  }
+  public VerificationService() {}
 
-  public VerificationResponse verificationEvent(VerificationRequestEvent event) {
+  public VerificationRequestEventResponse verificationEvent(VerificationRequestEvent event) {
 
     LOGGER.info("decoded event: " + event);
 
-    VerificationResponse.Builder<?> builder;
+    VerificationRequestEventResponse.Builder builder;
     var method = event.getMethod();
 
-    if (method == VerificationMethodType.SMS) {
-      builder = VerificationResponseSMS.builder().setCode("1234");
-    } else if (method == VerificationMethodType.FLASH_CALL) {
-      builder = VerificationResponseFlashCall.builder().setDialTimeout(12);
-    } else if (method == VerificationMethodType.CALLOUT) {
-      builder = VerificationResponseCallout.builder().setCode("4567");
+    if (MethodEnum.SMS.equals(method)) {
+      builder = VerificationRequestEventResponseSms.builder().setCode("1234");
+    } else if (MethodEnum.FLASH_CALL.equals(method)) {
+      builder = VerificationRequestEventResponseFlashCall.builder().setDialTimeout(12);
+    } else if (MethodEnum.PHONE_CALL.equals(method)) {
+      builder = VerificationRequestEventResponsePhoneCall.builder().setCode("4567");
     } else {
       throw new ApiException("Unexpected methode value: '" + method + "'");
     }
 
-    builder.setAction(VerificationResponseActionType.ALLOW);
+    builder.setAction(VerificationEventResponseAction.ALLOW);
 
     var response = builder.build();
     LOGGER.info("Response: " + response);

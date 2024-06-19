@@ -9,6 +9,8 @@ package com.sinch.sdk.domains.verification;
  */
 public interface VerificationService {
 
+  com.sinch.sdk.domains.verification.api.v1.VerificationService v1();
+
   /**
    * Verifications Service instance
    *

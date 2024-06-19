@@ -1,8 +1,8 @@
 package com.sinch.sample.verification.status;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.verification.models.VerificationId;
-import com.sinch.sdk.domains.verification.models.VerificationStatus;
+import com.sinch.sdk.domains.verification.api.v1.VerificationStatusService;
+import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponse;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -23,11 +23,12 @@ public class GetById extends BaseApplication {
 
   public void run() {
 
-    VerificationId id = VerificationId.valueOf(verificationId);
+    LOGGER.info("Get status by id for  : " + verificationId);
 
-    LOGGER.info("Get status by id for  : " + id);
+    VerificationStatusService service = client.verification().v1().verificationStatus();
 
-    VerificationStatus response = client.verification().verificationStatus().getById(id);
-    LOGGER.info("Response :" + response);
+    VerificationStatusResponse response = service.getById(verificationId);
+
+    LOGGER.info("Response: " + response);
   }
 }
