@@ -57,7 +57,9 @@ public interface VerificationRequestEventResponseFlashCall
   }
 
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder
+      extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponse
+          .Builder {
 
     /**
      * see getter
