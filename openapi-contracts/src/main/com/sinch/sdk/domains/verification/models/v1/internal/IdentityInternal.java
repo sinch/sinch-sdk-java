@@ -19,13 +19,13 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 /**
- * Specifies the type of endpoint that will be verified and the particular endpoint.
- * &#x60;number&#x60; is currently the only supported endpoint type.
+ * Specifies the type of endpoint that will be verified and the particular endpoint. <code>number
+ * </code> is currently the only supported endpoint type.
  */
 @JsonDeserialize(builder = IdentityInternalImpl.Builder.class)
 public interface IdentityInternal {
 
-  /** Currently only &#x60;number&#x60; type is supported. */
+  /** Currently only <code>number</code> type is supported. */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
     public static final TypeEnum NUMBER = new TypeEnum("number");
 
@@ -50,15 +50,16 @@ public interface IdentityInternal {
   }
 
   /**
-   * Currently only &#x60;number&#x60; type is supported.
+   * Currently only <code>number</code> type is supported.
    *
    * @return type
    */
   TypeEnum getType();
 
   /**
-   * For type &#x60;number&#x60; use an
-   * [E.164](https://community.sinch.com/t5/Glossary/E-164/ta-p/7537)-compatible phone number.
+   * For type <code>number</code> use an <a
+   * href="https://community.sinch.com/t5/Glossary/E-164/ta-p/7537">E.164</a>-compatible phone
+   * number.
    *
    * @return endpoint
    */

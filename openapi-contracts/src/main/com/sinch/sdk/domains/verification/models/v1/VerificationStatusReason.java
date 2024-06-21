@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 /**
- * Displays the reason why a verification has &#x60;FAILED&#x60;, was &#x60;DENIED&#x60;, or was
- * &#x60;ABORTED&#x60;.
+ * Displays the reason why a verification has <code>FAILED</code>, was <code>DENIED</code>, or was
+ * <code>ABORTED</code>.
  */
 public class VerificationStatusReason extends EnumDynamic<String, VerificationStatusReason> {
 

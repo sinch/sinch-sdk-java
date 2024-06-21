@@ -72,17 +72,18 @@ public interface VerificationStatusResponseSms
   String getCountryId();
 
   /**
-   * The timestamp in UTC format. &lt;/br&gt; **Note:** The formatting does not respect
-   * &#x60;ISO-8601&#x60; and the returned value has the format &#x60;YYYY-MM-DDThh:mm:ss.SSS&#x60;.
-   * If you need to parse this value into a specific date object in your programming language,
-   * please append &#x60;Z&#x60; (Zulu time &#x3D; UTC) at the end of the date value to match the
-   * &#x60;ISO-8601&#x60; format: &#x60;YYYY-MM-DDThh:mm:ss.SSSZ&#x60;.
+   * The timestamp in UTC format. <br>
+   * <strong>Note:</strong> The formatting does not respect <code>ISO-8601</code> and the returned
+   * value has the format <code>YYYY-MM-DDThh:mm:ss.SSS</code>. If you need to parse this value into
+   * a specific date object in your programming language, please append <code>Z</code> (Zulu time =
+   * UTC) at the end of the date value to match the <code>ISO-8601</code> format: <code>
+   * YYYY-MM-DDThh:mm:ss.SSSZ</code>.
    *
    * @return verificationTimestamp
    */
   Instant getVerificationTimestamp();
 
-  /** The method of the verification request. This will always be &#x60;sms&#x60;. */
+  /** The method of the verification request. This will always be <code>sms</code>. */
   public class MethodEnum extends EnumDynamic<String, MethodEnum> {
     public static final MethodEnum SMS = new MethodEnum("sms");
 
