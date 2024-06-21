@@ -14,7 +14,7 @@ package com.sinch.sdk.domains.verification.models.v1.start.response;
 
 import java.util.List;
 
-/** declaration */
+/** VerificationStartResponse */
 public interface VerificationStartResponse {
 
   /**

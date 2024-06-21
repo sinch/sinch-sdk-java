@@ -12,8 +12,10 @@ import java.util.stream.Stream;
  */
 public class StatusSource extends EnumDynamic<String, StatusSource> {
 
+  /** PIN verification was performed automatically */
   public static final StatusSource INTERCEPTED = new StatusSource("intercepted");
 
+  /** PIN verification was manually performed */
   public static final StatusSource MANUAL = new StatusSource("manual");
 
   private static final EnumSupportDynamic<String, StatusSource> ENUM_SUPPORT =

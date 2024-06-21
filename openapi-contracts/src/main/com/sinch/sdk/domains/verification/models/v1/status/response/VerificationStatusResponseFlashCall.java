@@ -25,7 +25,7 @@ import java.time.Instant;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** declaration */
+/** Flash Call Verification Status Response */
 @JsonDeserialize(builder = VerificationStatusResponseFlashCallImpl.Builder.class)
 public interface VerificationStatusResponseFlashCall
     extends com.sinch.sdk.domains.verification.models.v1.status.response

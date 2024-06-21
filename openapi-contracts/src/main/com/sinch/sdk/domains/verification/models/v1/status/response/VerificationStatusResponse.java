@@ -17,7 +17,7 @@ import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
 import java.time.Instant;
 
-/** declaration */
+/** Verification Status Response Common Fields */
 public interface VerificationStatusResponse {
 
   /**

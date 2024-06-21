@@ -14,7 +14,7 @@ package com.sinch.sdk.domains.verification.models.v1.start.request;
 
 import com.sinch.sdk.domains.verification.models.v1.Identity;
 
-/** declaration */
+/** VerificationStartRequest */
 public interface VerificationStartRequest {
 
   /**

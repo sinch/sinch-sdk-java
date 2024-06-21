@@ -9,9 +9,11 @@ import java.util.stream.Stream;
 public class VerificationEventResponseAction
     extends EnumDynamic<String, VerificationEventResponseAction> {
 
+  /** Verification allowed */
   public static final VerificationEventResponseAction ALLOW =
       new VerificationEventResponseAction("allow");
 
+  /** Verification denied */
   public static final VerificationEventResponseAction DENY =
       new VerificationEventResponseAction("deny");
 

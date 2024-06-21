@@ -15,7 +15,7 @@ package com.sinch.sdk.domains.verification.models.v1.webhooks;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 
-/** declaration */
+/** SMS Request Event Response */
 @JsonDeserialize(builder = VerificationRequestEventResponseSmsImpl.Builder.class)
 public interface VerificationRequestEventResponseSms
     extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponse {

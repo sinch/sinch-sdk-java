@@ -18,7 +18,7 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** declaration */
+/** Flash Call Verification Report Request */
 @JsonDeserialize(builder = VerificationReportRequestFlashCallImpl.Builder.class)
 public interface VerificationReportRequestFlashCall
     extends com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequest {

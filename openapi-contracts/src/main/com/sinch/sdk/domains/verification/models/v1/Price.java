@@ -14,7 +14,7 @@ package com.sinch.sdk.domains.verification.models.v1;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** declaration */
+/** Price */
 @JsonDeserialize(builder = PriceImpl.Builder.class)
 public interface Price {
 

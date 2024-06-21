@@ -14,7 +14,7 @@ package com.sinch.sdk.domains.verification.models.v1.webhooks.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** declaration */
+/** VerificationRequestEventResponseFlashCallContent */
 @JsonDeserialize(builder = VerificationRequestEventResponseFlashCallContentImpl.Builder.class)
 public interface VerificationRequestEventResponseFlashCallContent {
 

@@ -15,7 +15,7 @@ package com.sinch.sdk.domains.verification.models.v1.start.response;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 
-/** declaration */
+/** Flash Call Response */
 @JsonDeserialize(builder = VerificationStartResponseFlashCallImpl.Builder.class)
 public interface VerificationStartResponseFlashCall
     extends com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponse {

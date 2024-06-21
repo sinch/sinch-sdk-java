@@ -24,7 +24,7 @@ import java.time.Instant;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** declaration */
+/** Phone Call Verification Status Response */
 @JsonDeserialize(builder = VerificationStatusResponsePhoneCallImpl.Builder.class)
 public interface VerificationStatusResponsePhoneCall
     extends com.sinch.sdk.domains.verification.models.v1.status.response

@@ -23,7 +23,7 @@ import java.time.Instant;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** declaration */
+/** SMS Verification Status Response */
 @JsonDeserialize(builder = VerificationStatusResponseSmsImpl.Builder.class)
 public interface VerificationStatusResponseSms
     extends com.sinch.sdk.domains.verification.models.v1.status.response

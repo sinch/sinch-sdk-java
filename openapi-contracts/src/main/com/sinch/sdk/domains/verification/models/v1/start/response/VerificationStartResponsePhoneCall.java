@@ -15,7 +15,7 @@ package com.sinch.sdk.domains.verification.models.v1.start.response;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 
-/** declaration */
+/** Phone Call Response */
 @JsonDeserialize(builder = VerificationStartResponsePhoneCallImpl.Builder.class)
 public interface VerificationStartResponsePhoneCall
     extends com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponse {

@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-/** declaration */
+/** VerificationRequestEvent */
 @JsonDeserialize(builder = VerificationRequestEventImpl.Builder.class)
 public interface VerificationRequestEvent
     extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent {

@@ -15,7 +15,7 @@ package com.sinch.sdk.domains.verification.models.v1.report.response;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
 
-/** declaration */
+/** VerificationReportResponse */
 public interface VerificationReportResponse {
 
   /**

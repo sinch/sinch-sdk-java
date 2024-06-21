@@ -19,7 +19,7 @@ import com.sinch.sdk.domains.verification.models.v1.Identity;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** declaration */
+/** VerificationStartRequestSms */
 @JsonDeserialize(builder = VerificationStartRequestSmsImpl.Builder.class)
 public interface VerificationStartRequestSms
     extends com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequest {
