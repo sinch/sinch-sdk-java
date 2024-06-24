@@ -18,8 +18,8 @@ public class VerificationMethod extends EnumDynamic<String, VerificationMethod> 
   public static final VerificationMethod FLASH_CALL = new VerificationMethod("flashcall");
 
   /**
-   * Verification by placing a PSTN call to the user&#39;s phone and playing an announcement, asking
-   * the user to press a particular digit to verify the phone number.
+   * Verification by placing a PSTN call to the user's phone and playing an announcement, asking the
+   * user to press a particular digit to verify the phone number.
    */
   public static final VerificationMethod PHONE_CALL = new VerificationMethod("callout");
 

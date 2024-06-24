@@ -26,8 +26,8 @@ import java.util.stream.Stream;
 public interface VerificationStartSmsOptions {
 
   /**
-   * The expiration time for a verification process is represented in the format
-   * &#x60;HH:MM:SS&#x60;.
+   * The expiration time for a verification process is represented in the format <code>HH:MM:SS
+   * </code>.
    *
    * @return expiry
    */
@@ -68,7 +68,7 @@ public interface VerificationStartSmsOptions {
   CodeTypeEnum getCodeType();
 
   /**
-   * The SMS template must include a placeholder &#x60;{{CODE}}&#x60; where the verification code
+   * The SMS template must include a placeholder <code>{{CODE}}</code> where the verification code
    * will be inserted, and it can otherwise be customized as desired.
    *
    * @return template

@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 /**
- * With the PIN SMS verification method, a user&#39;s phone number is verified by sending an SMS
+ * With the PIN SMS verification method, a user's phone number is verified by sending an SMS
  * containing a PIN code that must be manually returned. If you are are using an Android handset,
  * you could instead intercept the SMS message delivery and capture the PIN code automatically.
  */
