@@ -14,7 +14,7 @@ public class VerificationStatus extends EnumDynamic<String, VerificationStatus> 
   /** The verification was successful. */
   public static final VerificationStatus SUCCESSFUL = new VerificationStatus("SUCCESSFUL");
 
-  /** The verification attempt was made, but the number wasn&#39;t verified. */
+  /** The verification attempt was made, but the number wasn't verified. */
   public static final VerificationStatus FAIL = new VerificationStatus("FAIL");
 
   /** The verification attempt was denied by Sinch or your backend. */
@@ -24,8 +24,7 @@ public class VerificationStatus extends EnumDynamic<String, VerificationStatus> 
   public static final VerificationStatus ABORTED = new VerificationStatus("ABORTED");
 
   /**
-   * The verification couldn&#39;t be completed due to a network error or the number being
-   * unreachable.
+   * The verification couldn't be completed due to a network error or the number being unreachable.
    */
   public static final VerificationStatus ERROR = new VerificationStatus("ERROR");
 
