@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
 
-/** declaration */
+/** VerificationReportResponsePhoneCall */
 @JsonDeserialize(builder = VerificationReportResponsePhoneCallImpl.Builder.class)
 public interface VerificationReportResponsePhoneCall
     extends com.sinch.sdk.domains.verification.models.v1.report.response

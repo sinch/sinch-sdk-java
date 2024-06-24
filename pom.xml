@@ -129,17 +129,32 @@
                             com.sinch.sdk.http;
                             com.sinch.sdk.pagination.Page*;
                             **.dto.*;
-                            **.api.*;
                             **.adapters.converters;
                             **.adapters;
+                            **.adapters*;
                             **.internal;
-                            **.v*.**;
+                            com.sinch.sdk.domains.verification.models;
+                            com.sinch.sdk.domains.verification.models.requests;
+                            com.sinch.sdk.domains.verification.models.response;
+                            com.sinch.sdk.domains.verification.models.webhooks;
                         </excludePackageNames>
                         <sourceFileExcludes>
                             <sourceFileExclude>**/pagination/Page*.java</sourceFileExclude>
                             <sourceFileExclude>**/AbstractOpenApiSchema.java</sourceFileExclude>
                             <sourceFileExclude>**/*Impl.java</sourceFileExclude>
+                            <!-- Transition period -->
+                            <sourceFileExclude>com/sinch/sdk/domains/verification/models/*.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/verification/VerificationsService.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/verification/VerificationStatusService.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/verification/WebHooksService.java</sourceFileExclude>
                         </sourceFileExcludes>
+                        <tags>
+                            <tag>
+                                <name>apiNote</name>
+                                <placement>a</placement>
+                                <head>API Note:</head>
+                            </tag>
+                        </tags>
                         <groups>
                             <group>
                                 <title>Sinch Client</title>
@@ -157,9 +172,10 @@
                                 <title>SMS</title>
                                 <packages>com.sinch.sdk.domains.sms*</packages>
                             </group>
+
                             <group>
                                 <title>Verification</title>
-                                <packages>com.sinch.sdk.domains.verification*</packages>
+                                <packages>com.sinch.sdk.domains.verification.models.v1*:com.sinch.sdk.domains.verification.api.v1*</packages>
                             </group>
                             <group>
                                 <title>Voice</title>

@@ -15,7 +15,7 @@ package com.sinch.sdk.domains.verification.models.v1.start.request;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.verification.models.v1.Identity;
 
-/** declaration */
+/** VerificationStartRequestPhoneCall */
 @JsonDeserialize(builder = VerificationStartRequestPhoneCallImpl.Builder.class)
 public interface VerificationStartRequestPhoneCall
     extends com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequest {

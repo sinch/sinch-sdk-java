@@ -15,7 +15,7 @@ package com.sinch.sdk.domains.verification.models.v1.start.response;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 
-/** declaration */
+/** Data Response */
 @JsonDeserialize(builder = VerificationStartResponseDataImpl.Builder.class)
 public interface VerificationStartResponseData
     extends com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponse {

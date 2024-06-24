@@ -23,7 +23,7 @@ import com.sinch.sdk.domains.verification.models.v1.status.StatusSource;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** declaration */
+/** VerificationResultEvent */
 @JsonDeserialize(builder = VerificationResultEventImpl.Builder.class)
 public interface VerificationResultEvent
     extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent {

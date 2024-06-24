@@ -14,7 +14,7 @@ package com.sinch.sdk.domains.verification.models.v1.webhooks;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** declaration */
+/** Flash Call Request Event Response */
 @JsonDeserialize(builder = VerificationRequestEventResponseFlashCallImpl.Builder.class)
 public interface VerificationRequestEventResponseFlashCall
     extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponse {
@@ -28,7 +28,7 @@ public interface VerificationRequestEventResponseFlashCall
 
   /**
    * The phone number that will be displayed to the user when the flash call is received on the
-   * user&#39;s phone. By default, the Sinch dashboard will randomly select the CLI that will be
+   * user's phone. By default, the Sinch dashboard will randomly select the CLI that will be
    * displayed during a phone call from a pool of numbers. If you want to set your own CLI, you can
    * specify it in the response to the Verification Request Event.
    *
@@ -38,10 +38,10 @@ public interface VerificationRequestEventResponseFlashCall
 
   /**
    * The maximum time that a phone call verification will be active and can be completed. If the
-   * phone number hasn&#39;t been verified successfully during this time, then the verification
-   * request will fail. By default, the Sinch dashboard will automatically optimize dial time out
-   * during a phone call. If you want to set your own dial time out for the phone call, you can
-   * specify it in the response to the Verification Request Event.
+   * phone number hasn't been verified successfully during this time, then the verification request
+   * will fail. By default, the Sinch dashboard will automatically optimize dial time out during a
+   * phone call. If you want to set your own dial time out for the phone call, you can specify it in
+   * the response to the Verification Request Event.
    *
    * @return dialTimeout
    */

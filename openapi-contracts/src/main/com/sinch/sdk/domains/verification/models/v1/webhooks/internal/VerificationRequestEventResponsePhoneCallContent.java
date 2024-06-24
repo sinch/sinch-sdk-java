@@ -15,7 +15,7 @@ package com.sinch.sdk.domains.verification.models.v1.webhooks.internal;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 
-/** declaration */
+/** VerificationRequestEventResponsePhoneCallContent */
 @JsonDeserialize(builder = VerificationRequestEventResponsePhoneCallContentImpl.Builder.class)
 public interface VerificationRequestEventResponsePhoneCallContent {
 

@@ -14,7 +14,7 @@ package com.sinch.sdk.domains.verification.models.v1.webhooks;
 
 import com.sinch.sdk.domains.verification.models.v1.Identity;
 
-/** declaration */
+/** VerificationEvent */
 public interface VerificationEvent {
 
   /**

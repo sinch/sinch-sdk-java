@@ -18,7 +18,7 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** declaration */
+/** SMS Verification Report Request */
 @JsonDeserialize(builder = VerificationReportRequestSmsImpl.Builder.class)
 public interface VerificationReportRequestSms
     extends com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequest {

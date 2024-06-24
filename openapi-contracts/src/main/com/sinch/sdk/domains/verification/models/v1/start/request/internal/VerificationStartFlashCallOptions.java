@@ -16,8 +16,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
  * An optional object for Flash Call Verification, considered only when the verification request
- * originates from your backend (not an SDK client) via an [Application signed
- * request](/docs/voice/api-reference/authentication/signed-request).
+ * originates from your backend (not an SDK client) via an <a
+ * href="/docs/voice/api-reference/authentication/signed-request">Application signed request</a>.
  */
 @JsonDeserialize(builder = VerificationStartFlashCallOptionsImpl.Builder.class)
 public interface VerificationStartFlashCallOptions {

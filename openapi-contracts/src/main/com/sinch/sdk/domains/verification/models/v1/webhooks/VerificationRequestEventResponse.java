@@ -12,7 +12,7 @@
 
 package com.sinch.sdk.domains.verification.models.v1.webhooks;
 
-/** declaration */
+/** VerificationRequestEventResponse */
 public interface VerificationRequestEventResponse {
 
   /**

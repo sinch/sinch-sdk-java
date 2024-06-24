@@ -18,7 +18,7 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** declaration */
+/** Phone Call Verification Report Request */
 @JsonDeserialize(builder = VerificationReportRequestPhoneCallImpl.Builder.class)
 public interface VerificationReportRequestPhoneCall
     extends com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequest {

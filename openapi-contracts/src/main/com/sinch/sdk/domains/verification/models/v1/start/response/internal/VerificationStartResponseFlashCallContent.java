@@ -15,7 +15,7 @@ package com.sinch.sdk.domains.verification.models.v1.start.response.internal;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
- * The response contains the &#x60;cliFilter&#x60; and &#x60;interceptionTimeout&#x60; properties.
+ * The response contains the <code>cliFilter</code> and <code>interceptionTimeout</code> properties.
  */
 @JsonDeserialize(builder = VerificationStartResponseFlashCallContentImpl.Builder.class)
 public interface VerificationStartResponseFlashCallContent {

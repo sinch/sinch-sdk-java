@@ -19,8 +19,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface PhoneCallSpeech {
 
   /**
-   * A &#x60;language-region&#x60; identifier according to
-   * [IANA](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry).
+   * A <code>language-region</code> identifier according to <a
+   * href="https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry">IANA</a>.
    * Only a subset of those identifiers is accepted.
    *
    * @return locale

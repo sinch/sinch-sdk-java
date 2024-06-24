@@ -14,7 +14,7 @@ package com.sinch.sdk.domains.verification.models.v1.start.response.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** The response contains the &#x60;template&#x60; of the SMS to be expected and intercepted. */
+/** The response contains the <code>template</code> of the SMS to be expected and intercepted. */
 @JsonDeserialize(builder = VerificationStartResponseSmsContentImpl.Builder.class)
 public interface VerificationStartResponseSmsContent {
 

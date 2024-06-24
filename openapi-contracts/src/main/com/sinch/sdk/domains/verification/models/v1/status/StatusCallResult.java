@@ -8,16 +8,22 @@ import java.util.stream.Stream;
 /** The type of the call result. */
 public class StatusCallResult extends EnumDynamic<String, StatusCallResult> {
 
+  /** Call answered */
   public static final StatusCallResult ANSWERED = new StatusCallResult("ANSWERED");
 
+  /** Call canceled */
   public static final StatusCallResult CANCEL = new StatusCallResult("CANCEL");
 
+  /** Call completed */
   public static final StatusCallResult COMPLETED = new StatusCallResult("COMPLETED");
 
+  /** No answer to call */
   public static final StatusCallResult NO_ANSWER = new StatusCallResult("NO_ANSWER");
 
+  /** Busy Call */
   public static final StatusCallResult BUSY = new StatusCallResult("BUSY");
 
+  /** Call failed */
   public static final StatusCallResult FAILED = new StatusCallResult("FAILED");
 
   private static final EnumSupportDynamic<String, StatusCallResult> ENUM_SUPPORT =

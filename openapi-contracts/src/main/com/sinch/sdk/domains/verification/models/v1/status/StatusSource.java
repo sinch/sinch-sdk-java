@@ -6,14 +6,16 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 /**
- * With the PIN SMS verification method, a user&#39;s phone number is verified by sending an SMS
+ * With the PIN SMS verification method, a user's phone number is verified by sending an SMS
  * containing a PIN code that must be manually returned. If you are are using an Android handset,
  * you could instead intercept the SMS message delivery and capture the PIN code automatically.
  */
 public class StatusSource extends EnumDynamic<String, StatusSource> {
 
+  /** PIN verification was performed automatically */
   public static final StatusSource INTERCEPTED = new StatusSource("intercepted");
 
+  /** PIN verification was manually performed */
   public static final StatusSource MANUAL = new StatusSource("manual");
 
   private static final EnumSupportDynamic<String, StatusSource> ENUM_SUPPORT =

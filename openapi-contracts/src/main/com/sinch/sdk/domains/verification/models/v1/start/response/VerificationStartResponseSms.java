@@ -15,7 +15,7 @@ package com.sinch.sdk.domains.verification.models.v1.start.response;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 
-/** declaration */
+/** SMS Response */
 @JsonDeserialize(builder = VerificationStartResponseSmsImpl.Builder.class)
 public interface VerificationStartResponseSms
     extends com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponse {
