@@ -93,7 +93,7 @@ public class VerificationStartResponseDataImpl
   }
 
   @JsonProperty(JSON_PROPERTY_SEAMLESS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<VerificationStartResponseDataContent> seamless() {
     return seamless;
   }

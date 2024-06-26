@@ -76,9 +76,9 @@ public interface VerificationStartSmsOptions {
   String getTemplate();
 
   /**
-   * In SMS Verification, value of
-   * [Accept-Language](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language)
-   * header is used to determine the languge of an SMS message.
+   * In SMS Verification, value of <a
+   * href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language">Accept-Language</a>
+   * header is used to determine the language of an SMS message.
    *
    * @return acceptLanguage
    */

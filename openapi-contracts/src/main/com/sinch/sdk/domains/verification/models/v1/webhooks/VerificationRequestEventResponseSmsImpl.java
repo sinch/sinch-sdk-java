@@ -45,7 +45,7 @@ public class VerificationRequestEventResponseSmsImpl
   }
 
   @JsonProperty(JSON_PROPERTY_ACTION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<VerificationEventResponseAction> action() {
     return action;
   }
