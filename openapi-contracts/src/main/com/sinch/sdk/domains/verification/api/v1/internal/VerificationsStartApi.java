@@ -61,7 +61,7 @@ public class VerificationsStartApi {
    * @param verificationStartRequestInternal (required)
    * @param acceptLanguage In SMS Verification, value of
    *     [Accept-Language](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language)
-   *     header is used to determine the languge of an SMS message. (optional)
+   *     header is used to determine the language of an SMS message. (optional)
    * @return VerificationStartResponseInternal
    * @throws ApiException if fails to make API call
    */
