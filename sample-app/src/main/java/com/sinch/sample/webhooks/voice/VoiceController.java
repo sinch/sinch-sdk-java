@@ -34,8 +34,7 @@ public class VoiceController {
       value = "/VoiceEvent",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public String VoiceEvent(
-      @RequestHeader Map<String, String> headers, @RequestBody String body) {
+  public String VoiceEvent(@RequestHeader Map<String, String> headers, @RequestBody String body) {
 
     LOGGER.finest("Received body:" + body);
     LOGGER.finest("Received headers: " + headers);
