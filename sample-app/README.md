@@ -64,7 +64,6 @@ See https://developers.sinch.com for details about these parameters
 
 ### Full workflows
 - Numbers: A full application chaining calls to Numbers service to onboard onto Java SDK and Numbers: [NumbersSampleFlow](src/main/java/com/sinch/sample/numbers/NumbersSampleFlow.java)
-- Verification: An interactive console application sending a SMS verification and returning the report result: [VerificationsSampleFlowInteractive](src/main/java/com/sinch/sample/verification/VerificationsSampleFlowInteractive.java)
 - Voice Conferences: A full application chaining calls to voice service to join and manage a conference: [ConferencesSampleFlow](src/main/java/com/sinch/sample/voice/ConferencesSampleFlow.java)
 
 ### Dedicated service feature samples
