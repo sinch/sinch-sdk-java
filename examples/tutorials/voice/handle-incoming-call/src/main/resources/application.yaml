@@ -9,8 +9,8 @@ server:
 
 credentials:
   application:
-      key:
-      secret: 
+      key: 191585b9-6d7a-4660-8910-e5587fcce67f
+      secret: CEEvSif/2EqrJI5bUufERA==
 
 voice:
   controller-path: /voice

@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.core.models.OptionalValue;
 import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.util.Collections;
@@ -97,19 +98,20 @@ public class HttpMapperTest {
   }
 
   @Test
-  void serializeUninitializedRequired() throws ApiException {
+  void serializeUninitializedRequiredWithDefinedGetter() throws ApiException {
 
-    UninitializedFilterSerialization value =
-        new UninitializedFilterSerialization().setRequired("my required value");
+    UninitializedFilterSerializationWithDefinedGetter value =
+        new UninitializedFilterSerializationWithDefinedGetter().setRequired("my required value");
 
     Assertions.assertThat(mapper.serialize(null, value))
         .isEqualTo("{\"required\":\"my required value\"}");
   }
 
   @Test
-  void serializeUninitializedRequiredUndefined() throws ApiException {
+  void serializeUninitializedRequiredUndefinedWithDefinedGetter() throws ApiException {
 
-    UninitializedFilterSerialization value = new UninitializedFilterSerialization();
+    UninitializedFilterSerializationWithDefinedGetter value =
+        new UninitializedFilterSerializationWithDefinedGetter();
 
     ApiException thrown =
         assertThrows(
@@ -121,19 +123,19 @@ public class HttpMapperTest {
   }
 
   @Test
-  void serializeUninitializedRequiredWithNull() throws ApiException {
+  void serializeUninitializedRequiredWithNullWithDefinedGetter() throws ApiException {
 
-    UninitializedFilterSerialization value =
-        new UninitializedFilterSerialization().setRequired(null);
+    UninitializedFilterSerializationWithDefinedGetter value =
+        new UninitializedFilterSerializationWithDefinedGetter().setRequired(null);
 
     Assertions.assertThat(mapper.serialize(null, value)).isEqualTo("{\"required\":null}");
   }
 
   @Test
-  void serializeUninitializedOptional() throws ApiException {
+  void serializeUninitializedOptionalWithDefinedGetter() throws ApiException {
 
-    UninitializedFilterSerialization value =
-        new UninitializedFilterSerialization()
+    UninitializedFilterSerializationWithDefinedGetter value =
+        new UninitializedFilterSerializationWithDefinedGetter()
             .setRequired("my required value")
             .setOptional("my optional value");
 
@@ -142,10 +144,71 @@ public class HttpMapperTest {
   }
 
   @Test
-  void serializeUninitializedOptionalWithNull() throws ApiException {
+  void serializeUninitializedOptionalWithNullWithDefinedGetter() throws ApiException {
 
-    UninitializedFilterSerialization value =
-        new UninitializedFilterSerialization().setRequired("my required value").setOptional(null);
+    UninitializedFilterSerializationWithDefinedGetter value =
+        new UninitializedFilterSerializationWithDefinedGetter()
+            .setRequired("my required value")
+            .setOptional(null);
+
+    Assertions.assertThat(mapper.serialize(null, value))
+        .isEqualTo("{\"required\":\"my required value\",\"optional\":null}");
+  }
+
+  @Test
+  void serializeUninitializedRequiredWithOptionalValueGetter() throws ApiException {
+
+    UninitializedFilterSerializationWithOptionalValueGetter value =
+        new UninitializedFilterSerializationWithOptionalValueGetter()
+            .setRequired("my required value");
+
+    Assertions.assertThat(mapper.serialize(null, value))
+        .isEqualTo("{\"required\":\"my required value\"}");
+  }
+
+  @Test
+  void serializeUninitializedRequiredUndefinedWithOptionalValueGetter() throws ApiException {
+
+    UninitializedFilterSerializationWithOptionalValueGetter value =
+        new UninitializedFilterSerializationWithOptionalValueGetter();
+
+    ApiException thrown =
+        assertThrows(
+            ApiException.class,
+            () -> mapper.serialize(null, value),
+            "Expected mapper.serialize() to throw, but it didn't");
+
+    assertTrue(thrown.getMessage().contains("Required property 'required' was not set"));
+  }
+
+  @Test
+  void serializeUninitializedRequiredWithNullWithOptionalValueGetter() throws ApiException {
+
+    UninitializedFilterSerializationWithOptionalValueGetter value =
+        new UninitializedFilterSerializationWithOptionalValueGetter().setRequired(null);
+
+    Assertions.assertThat(mapper.serialize(null, value)).isEqualTo("{\"required\":null}");
+  }
+
+  @Test
+  void serializeUninitializedOptionalWithOptionalValueGetter() throws ApiException {
+
+    UninitializedFilterSerializationWithOptionalValueGetter value =
+        new UninitializedFilterSerializationWithOptionalValueGetter()
+            .setRequired("my required value")
+            .setOptional("my optional value");
+
+    Assertions.assertThat(mapper.serialize(null, value))
+        .isEqualTo("{\"required\":\"my required value\",\"optional\":\"my optional value\"}");
+  }
+
+  @Test
+  void serializeUninitializedOptionalWithNullWithOptionalValueGetter() throws ApiException {
+
+    UninitializedFilterSerializationWithOptionalValueGetter value =
+        new UninitializedFilterSerializationWithOptionalValueGetter()
+            .setRequired("my required value")
+            .setOptional(null);
 
     Assertions.assertThat(mapper.serialize(null, value))
         .isEqualTo("{\"required\":\"my required value\",\"optional\":null}");
@@ -188,6 +251,7 @@ public class HttpMapperTest {
   }
 
   public static class DatesClass {
+
     public static final String JSON_PROPERTY_OFFSETDATETIME = "offsetdatetime";
     private OffsetDateTime offsetdatetime;
 
@@ -208,17 +272,17 @@ public class HttpMapperTest {
 
   @JsonFilter("uninitializedFilter")
   @JsonInclude(value = JsonInclude.Include.CUSTOM)
-  public static class UninitializedFilterSerialization {
+  public static class UninitializedFilterSerializationWithDefinedGetter {
 
     public static final String JSON_PROPERTY_REQUIRED = "required";
+    public static final String JSON_PROPERTY_OPTIONAL = "optional";
     private String required;
     private boolean requiredDefined = false;
-    public static final String JSON_PROPERTY_OPTIONAL = "optional";
     private String optional;
     private boolean optionalDefined = false;
 
     @JsonCreator
-    public UninitializedFilterSerialization() {}
+    public UninitializedFilterSerializationWithDefinedGetter() {}
 
     @JsonProperty(JSON_PROPERTY_REQUIRED)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
@@ -226,17 +290,17 @@ public class HttpMapperTest {
       return required;
     }
 
-    @JsonIgnore
-    public boolean getRequiredDefined() {
-      return requiredDefined;
-    }
-
     @JsonProperty(JSON_PROPERTY_REQUIRED)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public UninitializedFilterSerialization setRequired(String value) {
+    public UninitializedFilterSerializationWithDefinedGetter setRequired(String value) {
       this.required = value;
       this.requiredDefined = true;
       return this;
+    }
+
+    @JsonIgnore
+    public boolean getRequiredDefined() {
+      return requiredDefined;
     }
 
     @JsonProperty(JSON_PROPERTY_OPTIONAL)
@@ -244,22 +308,70 @@ public class HttpMapperTest {
       return optional;
     }
 
+    @JsonProperty(JSON_PROPERTY_OPTIONAL)
+    public UninitializedFilterSerializationWithDefinedGetter setOptional(String value) {
+      this.optional = value;
+      this.optionalDefined = true;
+      return this;
+    }
+
     @JsonIgnore
     public boolean getOptionalDefined() {
       return optionalDefined;
     }
+  }
+
+  @JsonFilter("uninitializedFilter")
+  @JsonInclude(value = JsonInclude.Include.CUSTOM)
+  public static class UninitializedFilterSerializationWithOptionalValueGetter {
+
+    public static final String JSON_PROPERTY_REQUIRED = "required";
+    public static final String JSON_PROPERTY_OPTIONAL = "optional";
+    private OptionalValue<String> required = OptionalValue.empty();
+    private OptionalValue<String> optional = OptionalValue.empty();
+
+    @JsonCreator
+    public UninitializedFilterSerializationWithOptionalValueGetter() {}
+
+    @JsonIgnore
+    public String getRequired() {
+      return required.orElse(null);
+    }
+
+    @JsonProperty(JSON_PROPERTY_REQUIRED)
+    @JsonInclude(value = JsonInclude.Include.ALWAYS)
+    public UninitializedFilterSerializationWithOptionalValueGetter setRequired(String value) {
+      this.required = OptionalValue.of(value);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_REQUIRED)
+    @JsonInclude(value = JsonInclude.Include.ALWAYS)
+    public OptionalValue<String> required() {
+      return required;
+    }
+
+    @JsonIgnore
+    public String getOptional() {
+      return optional.orElse(null);
+    }
 
     @JsonProperty(JSON_PROPERTY_OPTIONAL)
-    public UninitializedFilterSerialization setOptional(String value) {
-      this.optional = value;
-      this.optionalDefined = true;
+    public UninitializedFilterSerializationWithOptionalValueGetter setOptional(String value) {
+      this.optional = OptionalValue.of(value);
       return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_OPTIONAL)
+    public OptionalValue<String> optional() {
+      return optional;
     }
   }
 
   @JsonFilter("uninitializedFilter")
   @JsonInclude(value = JsonInclude.Include.CUSTOM)
   public static class HashMapSerialization extends HashMap<String, Object> {
+
     private static final long serialVersionUID = 1L;
   }
 

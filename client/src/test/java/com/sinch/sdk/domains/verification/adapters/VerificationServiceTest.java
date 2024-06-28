@@ -22,7 +22,8 @@ class VerificationServiceTest {
         assertThrows(
             NullPointerException.class, () -> new VerificationService(null, context, httpClient));
 
-    assertTrue(exception.getMessage().contains("Credentials must be defined"));
+    assertTrue(
+        exception.getMessage().contains("service requires application credentials to be defined"));
   }
 
   @Test
@@ -68,7 +69,7 @@ class VerificationServiceTest {
         assertThrows(
             NullPointerException.class,
             () -> new VerificationService(credentials, null, httpClient));
-    assertTrue(exception.getMessage().contains("Context must be defined"));
+    assertTrue(exception.getMessage().contains("service require context to be defined"));
   }
 
   @Test
