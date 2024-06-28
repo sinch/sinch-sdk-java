@@ -2,13 +2,14 @@ package com.sinch.sdk.domains.verification.models.response;
 
 import com.sinch.sdk.domains.verification.models.Link;
 import com.sinch.sdk.domains.verification.models.VerificationId;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlashCallRequestParameters;
 import java.util.Collection;
 
 /**
- * Dedicated response type for a flash call verification started with {@link
- * com.sinch.sdk.domains.verification.VerificationsService#startFlashCall}
- * VerificationsService#start()} initiated wit method {@link
- * com.sinch.sdk.domains.verification.models.VerificationMethodType#FLASH_CALL FLASH_CALL}
+ * Dedicated response type for a flash call verification
+ *
+ * <p>Verification response when started using {@link
+ * com.sinch.sdk.domains.verification.VerificationsService#startFlashCall(StartVerificationFlashCallRequestParameters)}
  *
  * @since 1.0
  */

@@ -6,10 +6,10 @@ import com.sinch.sdk.domains.verification.models.requests.StartVerificationSeaml
 import java.util.Collection;
 
 /**
- * Dedicated response type for a seamless call verification started with {@link
+ * Dedicated response type for a seamless call verification
+ *
+ * <p>Verification response when started using with {@link
  * com.sinch.sdk.domains.verification.VerificationsService#startSeamless(StartVerificationSeamlessRequestParameters)}
- * initiated wit method {@link
- * com.sinch.sdk.domains.verification.models.VerificationMethodType#SEAMLESS SEAMLESS}
  *
  * @since 1.0
  */

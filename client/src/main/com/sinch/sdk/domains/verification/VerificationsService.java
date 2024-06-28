@@ -16,6 +16,13 @@ import com.sinch.sdk.domains.verification.models.response.StartVerificationRespo
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSMS;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSeamless;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestFlashCall;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestPhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestSms;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestData;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestFlashCall;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestPhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms;
 
 /**
  * Verifications Service
@@ -35,6 +42,8 @@ public interface VerificationsService {
    * <p>This method is used by the mobile and web Verification SDKs to start a verification. It can
    * also be used to request a verification from your backend, by making a request.
    *
+   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationStartService#startSms(VerificationStartRequestSms)}
    * @param parameters Parameters to be used to start verification
    * @return Verification response
    * @since 1.0
@@ -48,6 +57,8 @@ public interface VerificationsService {
    * <p>This method is used by the mobile and web Verification SDKs to start a verification. It can
    * also be used to request a verification from your backend, by making a request.
    *
+   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationStartService#startFlashCall(VerificationStartRequestFlashCall)}
    * @param parameters Parameters to be used to start verification
    * @return Verification response
    * @since 1.0
@@ -62,6 +73,8 @@ public interface VerificationsService {
    * <p>This method is used by the mobile and web Verification SDKs to start a verification. It can
    * also be used to request a verification from your backend, by making a request.
    *
+   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationStartService#startPhoneCall(VerificationStartRequestPhoneCall)}
    * @param parameters Parameters to be used to start verification
    * @return Verification response
    * @since 1.0
@@ -76,6 +89,8 @@ public interface VerificationsService {
    * <p>This method is used by the mobile and web Verification SDKs to start a verification. It can
    * also be used to request a verification from your backend, by making a request.
    *
+   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationStartService#startData(VerificationStartRequestData)}
    * @param parameters Parameters to be used to start verification
    * @return Verification response
    * @since 1.0
@@ -89,6 +104,9 @@ public interface VerificationsService {
    *
    * <p>Report the received verification code to verify it, using the identity of the user
    *
+   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationReportService#reportSmsByIdentity(com.sinch.sdk.domains.verification.models.v1.NumberIdentity,
+   *     VerificationReportRequestSms)}
    * @param identity Currently <b>Only</b> {@link
    *     com.sinch.sdk.domains.verification.models.NumberIdentity NumberIdentity} is supported
    * @param parameters Parameters to be used to get report
@@ -105,6 +123,9 @@ public interface VerificationsService {
    *
    * <p>Report the received verification code to verify it, using the identity of the user
    *
+   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationReportService#reportFlashCallByIdentity(com.sinch.sdk.domains.verification.models.v1.NumberIdentity,
+   *     VerificationReportRequestFlashCall)}
    * @param identity Currently <b>Only</b> {@link
    *     com.sinch.sdk.domains.verification.models.NumberIdentity NumberIdentity} is supported
    * @param parameters Parameters to be used to get report
@@ -121,6 +142,9 @@ public interface VerificationsService {
    *
    * <p>Report the received verification code to verify it, using the identity of the user
    *
+   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationReportService#reportPhoneCallByIdentity(com.sinch.sdk.domains.verification.models.v1.NumberIdentity,
+   *     VerificationReportRequestPhoneCall)}
    * @param identity Currently <b>Only</b> {@link
    *     com.sinch.sdk.domains.verification.models.NumberIdentity NumberIdentity} is supported
    * @param parameters Parameters to be used to get report
@@ -134,6 +158,9 @@ public interface VerificationsService {
    * Report the received verification code to verify it, using the Verification ID of the {@link
    * com.sinch.sdk.domains.verification.models.VerificationMethodType#SMS SMS} Verification request
    *
+   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationReportService#reportSmsById(String,
+   *     VerificationReportRequestSms)}
    * @param id ID returned from start verification
    * @param parameters Parameters to be used to get report
    * @return Verification report response
@@ -147,6 +174,9 @@ public interface VerificationsService {
    * com.sinch.sdk.domains.verification.models.VerificationMethodType#FLASH_CALL FLASH_CALL}
    * Verification request
    *
+   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationReportService#reportFlashCallById(String,
+   *     VerificationReportRequestFlashCall)}
    * @param id ID returned from start verification
    * @param parameters Parameters to be used to get report
    * @return Verification report response
@@ -160,6 +190,9 @@ public interface VerificationsService {
    * com.sinch.sdk.domains.verification.models.VerificationMethodType#CALLOUT CALLOUT} Verification
    * request
    *
+   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationReportService#reportPhoneCallById(String,
+   *     VerificationReportRequestPhoneCall)}
    * @param id ID returned from start verification
    * @param parameters Parameters to be used to get report
    * @return Verification report response

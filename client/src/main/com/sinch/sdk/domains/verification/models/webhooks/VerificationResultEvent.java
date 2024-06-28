@@ -1,40 +1,41 @@
 package com.sinch.sdk.domains.verification.models.webhooks;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sinch.sdk.domains.verification.models.VerificationReportReasonType;
-import com.sinch.sdk.domains.verification.models.VerificationReportStatusType;
+import com.sinch.sdk.domains.verification.models.Identity;
+import com.sinch.sdk.domains.verification.models.VerificationMethodType;
+import com.sinch.sdk.domains.verification.models.VerificationReference;
 import com.sinch.sdk.domains.verification.models.VerificationSourceType;
+import com.sinch.sdk.domains.verification.models.VerificationStatusReasonType;
+import com.sinch.sdk.domains.verification.models.VerificationStatusType;
 import java.util.Optional;
 
 /**
- * This event is received onto a POST request to the specified verification callback URL and
+ * Event received when a verification has been completed
+ *
+ * <p>This event is received onto a POST request to the specified verification callback URL and
  * triggered when a verification has been completed and the result is known. It's used to report the
  * verification result to the developer's backend application. This callback event is only triggered
  * when the verification callback URL is specified in your dashboard.
  */
 public class VerificationResultEvent extends VerificationEvent {
 
-  private final VerificationReportStatusType status;
-  private final VerificationReportReasonType reason;
+  private final VerificationStatusType status;
+  private final VerificationStatusReasonType reason;
   private final VerificationSourceType source;
 
-  @JsonCreator
-  VerificationResultEvent(
-      @JsonProperty("id") String id,
-      @JsonProperty("event") String event,
-      @JsonProperty("method") String method,
-      @JsonProperty("identity") jsonIdentity identity,
-      @JsonProperty("reference") String reference,
-      @JsonProperty("custom") String custom,
-      @JsonProperty("status") String status,
-      @JsonProperty("reason") String reason,
-      @JsonProperty("source") String source) {
-    super(id, event, method, identity, reference, custom);
+  public VerificationResultEvent(
+      String id,
+      VerificationMethodType method,
+      Identity identity,
+      VerificationReference reference,
+      String custom,
+      VerificationStatusType status,
+      VerificationStatusReasonType reason,
+      VerificationSourceType source) {
+    super(id, method, identity, reference, custom);
 
-    this.status = VerificationReportStatusType.from(status);
-    this.reason = null != reason ? VerificationReportReasonType.from(reason) : null;
-    this.source = null != source ? VerificationSourceType.from(source) : null;
+    this.status = status;
+    this.reason = reason;
+    this.source = source;
   }
 
   /**
@@ -43,7 +44,7 @@ public class VerificationResultEvent extends VerificationEvent {
    * @return Status value
    * @since 1.0
    */
-  public VerificationReportStatusType getStatus() {
+  public VerificationStatusType getStatus() {
     return status;
   }
 
@@ -53,7 +54,7 @@ public class VerificationResultEvent extends VerificationEvent {
    * @return reason value
    * @since 1.0
    */
-  public Optional<VerificationReportReasonType> getReason() {
+  public Optional<VerificationStatusReasonType> getReason() {
     return Optional.ofNullable(reason);
   }
 

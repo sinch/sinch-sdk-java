@@ -64,7 +64,6 @@ See https://developers.sinch.com for details about these parameters
 
 ### Full workflows
 - Numbers: A full application chaining calls to Numbers service to onboard onto Java SDK and Numbers: [NumbersSampleFlow](src/main/java/com/sinch/sample/numbers/NumbersSampleFlow.java)
-- Verification: An interactive console application sending a SMS verification and returning the report result: [VerificationsSampleFlowInteractive](src/main/java/com/sinch/sample/verification/VerificationsSampleFlowInteractive.java)
 - Voice Conferences: A full application chaining calls to voice service to join and manage a conference: [ConferencesSampleFlow](src/main/java/com/sinch/sample/voice/ConferencesSampleFlow.java)
 
 ### Dedicated service feature samples
@@ -114,9 +113,9 @@ See https://developers.sinch.com for details about these parameters
 
 | Service | Sample           | Class                                                                                                                                           |                     |
 |---------|------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|
-| Report  | Start            | [com.sinch.sample.verification.verifications.Start](src/main/java/com/sinch/sample/verification/verifications/Start.java)                       |                     |
-|         | ReportById       | [com.sinch.sample.verification.verifications.ReportById](src/main/java/com/sinch/sample/verification/verifications/ReportById.java)             |                     |
-|         | ReportByIdentity | [com.sinch.sample.verification.verifications.ReportByIdentity](src/main/java/com/sinch/sample/verification/verifications/ReportByIdentity.java) |                     |
+| Report  | Start            | [com.sinch.sample.verification.start.Start](src/main/java/com/sinch/sample/verification/report/Start.java)                       |                     |
+|         | ReportById       | [com.sinch.sample.verification.report.ReportById](src/main/java/com/sinch/sample/verification/report/ReportById.java)             |                     |
+|         | ReportByIdentity | [com.sinch.sample.verification.report.ReportByIdentity](src/main/java/com/sinch/sample/verification/report/ReportByIdentity.java) |                     |
 | Status  | GetById          | [com.sinch.sample.verification.status.GetById](src/main/java/com/sinch/sample/verification/status/GetById.java)                                 |                     |
 |         | GetByIdentity    | [com.sinch.sample.verification.status.GetByIdentity](src/main/java/com/sinch/sample/verification/status/GetByIdentity.java)                     |                     |
 |         | GetByReference   | [com.sinch.sample.verification.status.GetByReference](src/main/java/com/sinch/sample/verification/status/GetByReference.java)                   |                     |

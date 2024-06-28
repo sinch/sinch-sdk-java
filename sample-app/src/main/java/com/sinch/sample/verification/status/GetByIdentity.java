@@ -1,9 +1,10 @@
 package com.sinch.sample.verification.status;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.verification.models.NumberIdentity;
-import com.sinch.sdk.domains.verification.models.VerificationMethodType;
-import com.sinch.sdk.domains.verification.models.VerificationReport;
+import com.sinch.sdk.domains.verification.api.v1.VerificationStatusService;
+import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
+import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponse;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -24,14 +25,16 @@ public class GetByIdentity extends BaseApplication {
 
   public void run() {
 
-    var identity = NumberIdentity.builder().setEndpoint(phoneNumber).build();
+    VerificationStatusService service = client.verification().v1().verificationStatus();
+
+    NumberIdentity identity = NumberIdentity.valueOf(phoneNumber);
 
     LOGGER.info("Get status by identity for  : " + identity);
 
-    VerificationMethodType method = VerificationMethodType.SMS;
+    VerificationMethod method = VerificationMethod.FLASH_CALL;
 
-    VerificationReport response =
-        client.verification().verificationStatus().getByIdentity(identity, method);
-    LOGGER.info("Response :" + response);
+    VerificationStatusResponse response = service.getByIdentity(identity, method);
+
+    LOGGER.info("Response: " + response);
   }
 }

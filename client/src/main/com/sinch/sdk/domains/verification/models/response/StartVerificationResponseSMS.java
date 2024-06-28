@@ -6,10 +6,10 @@ import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSRe
 import java.util.Collection;
 
 /**
- * Dedicated response type for a SMS call verification started with {@link
+ * Dedicated response type for a SMS verification
+ *
+ * <p>Verification response when started using {@link
  * com.sinch.sdk.domains.verification.VerificationsService#startSms(StartVerificationSMSRequestParameters)}
- * initiated wit method {@link com.sinch.sdk.domains.verification.models.VerificationMethodType#SMS
- * SMS}
  *
  * @since 1.0
  */

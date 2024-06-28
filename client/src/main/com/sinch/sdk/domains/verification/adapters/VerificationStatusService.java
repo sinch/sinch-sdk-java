@@ -1,48 +1,39 @@
 package com.sinch.sdk.domains.verification.adapters;
 
-import com.sinch.sdk.core.http.AuthManager;
-import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.core.http.HttpMapper;
-import com.sinch.sdk.domains.verification.adapters.api.v1.QueryVerificationsApi;
-import com.sinch.sdk.domains.verification.adapters.converters.VerificationsDtoConverter;
+import com.sinch.sdk.domains.verification.adapters.converters.StatusDtoConverter;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationMethodType;
 import com.sinch.sdk.domains.verification.models.VerificationReference;
-import com.sinch.sdk.domains.verification.models.VerificationReport;
-import com.sinch.sdk.models.VerificationContext;
-import java.util.Map;
+import com.sinch.sdk.domains.verification.models.VerificationStatus;
+import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 
 public class VerificationStatusService
     implements com.sinch.sdk.domains.verification.VerificationStatusService {
 
-  private final QueryVerificationsApi api;
+  private final com.sinch.sdk.domains.verification.api.v1.VerificationStatusService v1;
 
   public VerificationStatusService(
-      VerificationContext context, HttpClient httpClient, Map<String, AuthManager> authManagers) {
-    this.api =
-        new QueryVerificationsApi(
-            httpClient, context.getVerificationServer(), authManagers, new HttpMapper());
+      com.sinch.sdk.domains.verification.api.v1.VerificationStatusService v1) {
+    this.v1 = v1;
   }
 
-  protected QueryVerificationsApi getApi() {
-    return this.api;
+  public VerificationStatus getByIdentity(NumberIdentity identity, VerificationMethodType method) {
+
+    return StatusDtoConverter.convert(
+        v1.getByIdentity(
+            com.sinch.sdk.domains.verification.models.v1.NumberIdentity.valueOf(
+                identity.getEndpoint()),
+            VerificationMethod.from(method.value())));
   }
 
-  public VerificationReport getByIdentity(NumberIdentity identity, VerificationMethodType method) {
+  public VerificationStatus getById(VerificationId id) {
 
-    return VerificationsDtoConverter.convert(
-        getApi().verificationStatusByIdentity("number", identity.getEndpoint(), method.value()));
+    return StatusDtoConverter.convert(v1.getById(id.getId()));
   }
 
-  public VerificationReport getById(VerificationId id) {
+  public VerificationStatus getByReference(VerificationReference reference) {
 
-    return VerificationsDtoConverter.convert(getApi().verificationStatusById(id.getId()));
-  }
-
-  public VerificationReport getByReference(VerificationReference reference) {
-
-    return VerificationsDtoConverter.convert(
-        getApi().verificationStatusByReference(reference.getReference()));
+    return StatusDtoConverter.convert(v1.getByReference(reference.getReference()));
   }
 }
