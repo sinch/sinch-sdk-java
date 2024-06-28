@@ -1,0 +1,14 @@
+{
+  "identity": {
+    "type": "number",
+    "endpoint": "+endpoint"
+  },
+  "reference": "a reference",
+  "custom": "a custom",
+  "method": "callout",
+  "calloutOptions": {
+    "speech": {
+      "locale": "fr-FR"
+    }
+  }
+}

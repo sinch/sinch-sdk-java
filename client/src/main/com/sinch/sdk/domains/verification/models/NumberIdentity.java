@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.verification.models;
 
 import com.sinch.sdk.models.E164PhoneNumber;
+import java.util.Objects;
 
 /** Identity based onto a phone number */
 public class NumberIdentity extends Identity {
@@ -51,6 +52,23 @@ public class NumberIdentity extends Identity {
    */
   public static NumberIdentity valueOf(E164PhoneNumber phoneNumber) {
     return builder().setEndpoint(phoneNumber.stringValue()).build();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof NumberIdentity)) {
+      return false;
+    }
+    NumberIdentity that = (NumberIdentity) o;
+    return Objects.equals(getEndpoint(), that.getEndpoint());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getEndpoint());
   }
 
   /**

@@ -1,22 +1,31 @@
 package com.sinch.sdk.domains.verification.adapters.converters;
 
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.verification.models.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.Price;
 import com.sinch.sdk.domains.verification.models.VerificationId;
 import com.sinch.sdk.domains.verification.models.VerificationReference;
 import com.sinch.sdk.domains.verification.models.VerificationReportCallout;
 import com.sinch.sdk.domains.verification.models.VerificationReportFlashCall;
-import com.sinch.sdk.domains.verification.models.VerificationReportReasonType;
 import com.sinch.sdk.domains.verification.models.VerificationReportSMS;
-import com.sinch.sdk.domains.verification.models.VerificationReportStatusType;
 import com.sinch.sdk.domains.verification.models.VerificationSourceType;
-import com.sinch.sdk.domains.verification.models.dto.v1.StartVerificationRequestDtoTest;
-import com.sinch.sdk.domains.verification.models.dto.v1.StartVerificationResponseDtoTest;
-import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportDtoTest;
-import com.sinch.sdk.domains.verification.models.dto.v1.VerificationReportRequestDtoTest;
+import com.sinch.sdk.domains.verification.models.VerificationStatusCallout;
+import com.sinch.sdk.domains.verification.models.VerificationStatusFlashCall;
+import com.sinch.sdk.domains.verification.models.VerificationStatusReasonType;
+import com.sinch.sdk.domains.verification.models.VerificationStatusSMS;
+import com.sinch.sdk.domains.verification.models.VerificationStatusType;
+import com.sinch.sdk.domains.verification.models.dto.v1.report.VerificationReportRequestDtoTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.report.VerificationReportResponseDtoTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.start.VerificationStartRequestTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.start.VerificationStartResponseTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.status.VerificationStatusResponseTest;
+import com.sinch.sdk.domains.verification.models.requests.SMSCodeType;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutOptions;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutSpeechOptions;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationFlashCallRequestParameters;
+import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSOptions;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationSMSRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationSeamlessRequestParameters;
 import com.sinch.sdk.domains.verification.models.requests.VerificationReportCalloutRequestParameters;
@@ -26,19 +35,24 @@ import com.sinch.sdk.domains.verification.models.response.StartVerificationRespo
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSMS;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSeamless;
-import org.assertj.core.api.Assertions;
+import java.time.Instant;
 import org.junit.jupiter.api.Test;
 
 public class VerificationsDtoConverterTest extends BaseTest {
 
-  public static StartVerificationCalloutRequestParameters startVerificationCalloutRequest =
+  public static StartVerificationCalloutRequestParameters startVerificationPhoneCallRequest =
       StartVerificationCalloutRequestParameters.builder()
           .setCustom("a custom")
           .setReference(VerificationReference.valueOf("a reference"))
           .setIdentity(NumberIdentity.builder().setEndpoint("+endpoint").build())
+          .setOptions(
+              StartVerificationCalloutOptions.builder()
+                  .setSpeech(
+                      StartVerificationCalloutSpeechOptions.builder().setLocale("fr-FR").build())
+                  .build())
           .build();
 
-  public static StartVerificationResponseCallout expectedStartVerificationCalloutResponse =
+  public static StartVerificationResponseCallout expectedStartVerificationPhoneCallResponse =
       StartVerificationResponseCallout.builder()
           .setId(VerificationId.valueOf("the id"))
           .setLinks(LinkDtoConverterTest.linksClient)
@@ -60,25 +74,31 @@ public class VerificationsDtoConverterTest extends BaseTest {
           .setReportTimeout(75)
           .setDenyCallAfter(0)
           .build();
-  public static StartVerificationSeamlessRequestParameters startVerificationSeamlessRequest =
+  public static StartVerificationSeamlessRequestParameters startVerificationDataRequest =
       StartVerificationSeamlessRequestParameters.builder()
           .setCustom("a custom")
           .setReference(VerificationReference.valueOf("a reference"))
           .setIdentity(NumberIdentity.builder().setEndpoint("+endpoint").build())
           .build();
-  public static StartVerificationResponseSeamless expectedStartVerificationSeamlessResponse =
+  public static StartVerificationResponseSeamless expectedStartVerificationDataResponse =
       StartVerificationResponseSeamless.builder()
           .setId(VerificationId.valueOf("the id"))
           .setLinks(LinkDtoConverterTest.linksClient)
           .setTargetUri("target URI")
           .build();
-  public static StartVerificationSMSRequestParameters startVerificationSMSRequest =
+  public static StartVerificationSMSRequestParameters startVerificationSmsRequest =
       StartVerificationSMSRequestParameters.builder()
           .setCustom("a custom")
           .setReference(VerificationReference.valueOf("a reference"))
           .setIdentity(NumberIdentity.builder().setEndpoint("+endpoint").build())
+          .setOptions(
+              StartVerificationSMSOptions.builder()
+                  .setExpiry("01:02:03")
+                  .setCodeType(SMSCodeType.ALPHANUMERIC)
+                  .setTemplate("My template require to use '{{CODE}}' code")
+                  .build())
           .build();
-  public static StartVerificationResponseSMS expectedStartVerificationSMSResponse =
+  public static StartVerificationResponseSMS expectedStartVerificationSmsResponse =
       StartVerificationResponseSMS.builder()
           .setId(VerificationId.valueOf("the id"))
           .setLinks(LinkDtoConverterTest.linksClient)
@@ -87,85 +107,97 @@ public class VerificationsDtoConverterTest extends BaseTest {
           .build();
 
   @Test
-  void convertStartCalloutRequest() {
+  void convertStartPhoneCallRequest() {
 
-    Assertions.assertThat(VerificationsDtoConverter.convert(startVerificationCalloutRequest))
-        .usingRecursiveComparison()
-        .isEqualTo(StartVerificationRequestDtoTest.startVerificationCalloutDto);
+    TestHelpers.recursiveEquals(
+        VerificationsDtoConverter.convert(startVerificationPhoneCallRequest),
+        VerificationStartRequestTest.startVerificationPhoneCallDto
+            .getVerificationStartRequestPhoneCallImpl());
   }
 
   @Test
   void convertStartFlashCallRequest() {
 
-    Assertions.assertThat(VerificationsDtoConverter.convert(startVerificationFlashCallRequest))
-        .usingRecursiveComparison()
-        .isEqualTo(StartVerificationRequestDtoTest.startVerificationFlashCallDto);
+    TestHelpers.recursiveEquals(
+        VerificationsDtoConverter.convert(startVerificationFlashCallRequest),
+        VerificationStartRequestTest.startVerificationFlashCallDto
+            .getVerificationStartRequestFlashCallImpl());
   }
 
   @Test
-  void convertStartSeamlessRequest() {
+  void convertStartDataRequest() {
 
-    Assertions.assertThat(VerificationsDtoConverter.convert(startVerificationSeamlessRequest))
-        .usingRecursiveComparison()
-        .isEqualTo(StartVerificationRequestDtoTest.startVerificationSeamlessDto);
+    TestHelpers.recursiveEquals(
+        VerificationsDtoConverter.convert(startVerificationDataRequest),
+        VerificationStartRequestTest.startVerificationDataDto
+            .getVerificationStartRequestDataImpl());
   }
 
   @Test
-  void convertStartSMSRequest() {
+  void convertStartSmsRequest() {
 
-    Assertions.assertThat(VerificationsDtoConverter.convert(startVerificationSMSRequest))
-        .usingRecursiveComparison()
-        .isEqualTo(StartVerificationRequestDtoTest.startVerificationSMSDto);
+    TestHelpers.recursiveEquals(
+        VerificationsDtoConverter.convert(startVerificationSmsRequest),
+        VerificationStartRequestTest.startVerificationSmsDto.getVerificationStartRequestSmsImpl());
   }
 
   @Test
-  void convertStartCalloutResponse() {
+  void convertStartPhoneCallResponse() {
 
-    Assertions.assertThat(
-            VerificationsDtoConverter.convert(
-                StartVerificationResponseDtoTest.expectedStartVerificationCalloutDto))
-        .usingRecursiveComparison()
-        .isEqualTo(expectedStartVerificationCalloutResponse);
+    TestHelpers.recursiveEquals(
+        VerificationsDtoConverter.convert(
+            VerificationStartResponseTest.expectedStartVerificationPhoneCallDto
+                .getVerificationStartResponsePhoneCallImpl()),
+        expectedStartVerificationPhoneCallResponse);
   }
 
   @Test
   void convertStartFlashCallResponse() {
 
-    Assertions.assertThat(
-            VerificationsDtoConverter.convert(
-                StartVerificationResponseDtoTest.expectedStartVerificationFlashCallDto))
-        .usingRecursiveComparison()
-        .isEqualTo(expectedStartVerificationFlashCallResponse);
+    TestHelpers.recursiveEquals(
+        VerificationsDtoConverter.convert(
+            VerificationStartResponseTest.expectedStartVerificationFlashCallDto
+                .getVerificationStartResponseFlashCallImpl()),
+        expectedStartVerificationFlashCallResponse);
   }
 
   @Test
-  void convertStartSeamlessResponse() {
+  void convertStartDataResponse() {
 
-    Assertions.assertThat(
-            VerificationsDtoConverter.convert(
-                StartVerificationResponseDtoTest.expectedStartVerificationSeamlessDto))
-        .usingRecursiveComparison()
-        .isEqualTo(expectedStartVerificationSeamlessResponse);
+    TestHelpers.recursiveEquals(
+        VerificationsDtoConverter.convert(
+            VerificationStartResponseTest.expectedStartVerificationDataDto
+                .getVerificationStartResponseDataImpl()),
+        expectedStartVerificationDataResponse);
   }
 
   @Test
-  void convertStartSMSResponse() {
+  void convertStartSmsResponse() {
 
-    Assertions.assertThat(
-            VerificationsDtoConverter.convert(
-                StartVerificationResponseDtoTest.expectedStartVerificationSMSDto))
-        .usingRecursiveComparison()
-        .isEqualTo(expectedStartVerificationSMSResponse);
+    TestHelpers.recursiveEquals(
+        VerificationsDtoConverter.convert(
+            VerificationStartResponseTest.expectedStartVerificationSmsDto
+                .getVerificationStartResponseSmsImpl()),
+        expectedStartVerificationSmsResponse);
   }
 
-  public static VerificationReportCalloutRequestParameters verificationReportCalloutRequest =
+  public static VerificationReportCalloutRequestParameters verificationReportPhoneCallRequest =
       VerificationReportCalloutRequestParameters.builder().setCode("foo code").build();
 
-  public static VerificationReportCallout expectedVerificationReportCalloutResponse =
+  public static VerificationReportCallout expectedVerificationReportPhoneCallResponse =
       VerificationReportCallout.builder()
           .setId(VerificationId.valueOf("the id"))
-          .setStatus(VerificationReportStatusType.FAIL)
-          .setReason(VerificationReportReasonType.FRAUD)
+          .setStatus(VerificationStatusType.FAIL)
+          .build();
+
+  public static VerificationStatusCallout expectedVerificationStatusPhoneCallResponse =
+      VerificationStatusCallout.builder()
+          .setId(VerificationId.valueOf("the id"))
+          .setStatus(VerificationStatusType.FAIL)
+          .setReason(VerificationStatusReasonType.FRAUD)
+          .setIdentity(NumberIdentity.valueOf("endpoint value"))
+          .setCountryId("es-ES")
+          .setVerificationTimeStamp(Instant.parse("2024-05-22T09:38:59.559043700Z"))
           .setCallComplete(true)
           .setReference(VerificationReference.valueOf("my reference"))
           .setVerificationPrice(
@@ -182,21 +214,32 @@ public class VerificationsDtoConverterTest extends BaseTest {
           .build();
 
   @Test
-  void convertReportCalloutRequest() {
+  void convertReportPhoneCallRequest() {
 
-    Assertions.assertThat(VerificationsDtoConverter.convert(verificationReportCalloutRequest))
-        .usingRecursiveComparison()
-        .isEqualTo(VerificationReportRequestDtoTest.verificationReportCalloutDto);
+    TestHelpers.recursiveEquals(
+        VerificationsDtoConverter.convert(verificationReportPhoneCallRequest),
+        VerificationReportRequestDtoTest.verificationReportPhoneCallDto
+            .getVerificationReportRequestPhoneCallImpl());
   }
 
   @Test
-  void convertReportCalloutResponse() {
+  void convertReportPhoneCallResponse() {
 
-    Assertions.assertThat(
-            VerificationsDtoConverter.convert(
-                VerificationReportDtoTest.expectedVerificationCalloutDto))
-        .usingRecursiveComparison()
-        .isEqualTo(expectedVerificationReportCalloutResponse);
+    TestHelpers.recursiveEquals(
+        VerificationsDtoConverter.convert(
+            VerificationReportResponseDtoTest.verificationReportPhoneCallDto
+                .getVerificationReportResponsePhoneCallImpl()),
+        expectedVerificationReportPhoneCallResponse);
+  }
+
+  @Test
+  void convertStatusPhoneCallResponse() {
+
+    TestHelpers.recursiveEquals(
+        StatusDtoConverter.convert(
+            VerificationStatusResponseTest.expectedVerificationPhoneCallDto
+                .getVerificationStatusResponsePhoneCallImpl()),
+        expectedVerificationStatusPhoneCallResponse);
   }
 
   public static VerificationReportFlashCallRequestParameters verificationReportFlashCallRequest =
@@ -205,42 +248,80 @@ public class VerificationsDtoConverterTest extends BaseTest {
   public static VerificationReportFlashCall expectedVerificationReportFlashCallResponse =
       VerificationReportFlashCall.builder()
           .setId(VerificationId.valueOf("the id"))
-          .setStatus(VerificationReportStatusType.FAIL)
-          .setReason(VerificationReportReasonType.FRAUD)
+          .setStatus(VerificationStatusType.FAIL)
+          .build();
+  public static VerificationStatusFlashCall expectedVerificationStatusFlashCallResponse =
+      VerificationStatusFlashCall.builder()
+          .setId(VerificationId.valueOf("the id"))
+          .setStatus(VerificationStatusType.FAIL)
+          .setReason(VerificationStatusReasonType.FRAUD)
+          .setIdentity(NumberIdentity.valueOf("endpoint value"))
+          .setCountryId("es-ES")
+          .setVerificationTimeStamp(Instant.parse("2024-05-22T09:38:59.559043700Z"))
           .setReference(VerificationReference.valueOf("my reference"))
           .setSource(VerificationSourceType.MANUAL)
+          .setVerificationPrice(
+              Price.builder()
+                  .setCurrencyId("verificationPrice currency id")
+                  .setAmount(3.141516F)
+                  .build())
+          .setTerminationPrice(
+              Price.builder()
+                  .setCurrencyId("terminationPrice currency id")
+                  .setAmount(6.626070F)
+                  .build())
+          .setBillableDuration(34)
           .build();
 
   @Test
   void convertReportFlashCallRequest() {
 
-    Assertions.assertThat(VerificationsDtoConverter.convert(verificationReportFlashCallRequest))
-        .usingRecursiveComparison()
-        .isEqualTo(VerificationReportRequestDtoTest.verificationReportFlashCallDto);
+    TestHelpers.recursiveEquals(
+        VerificationsDtoConverter.convert(verificationReportFlashCallRequest),
+        VerificationReportRequestDtoTest.verificationReportFlashCallDto
+            .getVerificationReportRequestFlashCallImpl());
   }
 
   @Test
   void convertReportFlashCallResponse() {
 
-    Assertions.assertThat(
-            VerificationsDtoConverter.convert(
-                VerificationReportDtoTest.expectedVerificationFlashCallDto))
-        .usingRecursiveComparison()
-        .isEqualTo(expectedVerificationReportFlashCallResponse);
+    TestHelpers.recursiveEquals(
+        VerificationsDtoConverter.convert(
+            VerificationReportResponseDtoTest.verificationReportFlashCallDto
+                .getVerificationReportResponseFlashCallImpl()),
+        expectedVerificationReportFlashCallResponse);
   }
 
-  public static VerificationReportSMSRequestParameters verificationReportSMSRequest =
+  @Test
+  void convertStatusFlashCallResponse() {
+
+    TestHelpers.recursiveEquals(
+        StatusDtoConverter.convert(
+            VerificationStatusResponseTest.expectedVerificationFlashCallDto
+                .getVerificationStatusResponseFlashCallImpl()),
+        expectedVerificationStatusFlashCallResponse);
+  }
+
+  public static VerificationReportSMSRequestParameters verificationReportSmsRequest =
       VerificationReportSMSRequestParameters.builder()
           .setCode("foo code")
           .setCli("foo cli")
           .build();
 
-  public static VerificationReportSMS expectedVerificationReportSMSResponse =
+  public static VerificationReportSMS expectedVerificationReportSmsResponse =
       VerificationReportSMS.builder()
           .setId(VerificationId.valueOf("the id"))
-          .setStatus(VerificationReportStatusType.FAIL)
-          .setReason(VerificationReportReasonType.FRAUD)
+          .setStatus(VerificationStatusType.FAIL)
+          .build();
+  public static VerificationStatusSMS expectedVerificationStatusSmsResponse =
+      VerificationStatusSMS.builder()
+          .setId(VerificationId.valueOf("the id"))
+          .setStatus(VerificationStatusType.FAIL)
+          .setReason(VerificationStatusReasonType.FRAUD)
           .setReference(VerificationReference.valueOf("my reference"))
+          .setIdentity(NumberIdentity.valueOf("endpoint value"))
+          .setCountryId("es-ES")
+          .setVerificationTimeStamp(Instant.parse("2024-05-22T09:38:59.559043700Z"))
           .setSource(VerificationSourceType.INTERCEPTED)
           .setVerificationPrice(
               Price.builder()
@@ -250,19 +331,31 @@ public class VerificationsDtoConverterTest extends BaseTest {
           .build();
 
   @Test
-  void convertReportSMSRequest() {
+  void convertReportSmsRequest() {
 
-    Assertions.assertThat(VerificationsDtoConverter.convert(verificationReportSMSRequest))
-        .usingRecursiveComparison()
-        .isEqualTo(VerificationReportRequestDtoTest.verificationReportSMSDto);
+    TestHelpers.recursiveEquals(
+        VerificationsDtoConverter.convert(verificationReportSmsRequest),
+        VerificationReportRequestDtoTest.verificationReportSmsDto
+            .getVerificationReportRequestSmsImpl());
   }
 
   @Test
-  void convertReportSMSResponse() {
+  void convertReportSmsResponse() {
 
-    Assertions.assertThat(
-            VerificationsDtoConverter.convert(VerificationReportDtoTest.expectedVerificationSMSDto))
-        .usingRecursiveComparison()
-        .isEqualTo(expectedVerificationReportSMSResponse);
+    TestHelpers.recursiveEquals(
+        VerificationsDtoConverter.convert(
+            VerificationReportResponseDtoTest.verificationReportSmsDto
+                .getVerificationReportResponseSmsImpl()),
+        expectedVerificationReportSmsResponse);
+  }
+
+  @Test
+  void convertStatusSmsResponse() {
+
+    TestHelpers.recursiveEquals(
+        StatusDtoConverter.convert(
+            VerificationStatusResponseTest.expectedVerificationSmsDto
+                .getVerificationStatusResponseSmsImpl()),
+        expectedVerificationStatusSmsResponse);
   }
 }

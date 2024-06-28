@@ -1,127 +1,57 @@
 package com.sinch.sdk.domains.verification.models.webhooks;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-/** Verification response related to call out */
+/** Verification response related to a call out */
 public class VerificationResponseCallout extends VerificationResponse {
 
-  @JsonProperty("callout")
-  private final CalloutResponse callout;
+  private final String code;
+  private final VerificationResponseCalloutSpeech speech;
 
   /**
    * @param action Determines whether the verification can be executed.
-   * @param callout call out related information
+   * @param code see {@link #getCode() getter}
+   * @param speech see {@link #getSpeech() getter}
    */
-  VerificationResponseCallout(VerificationResponseActionType action, CalloutResponse callout) {
+  VerificationResponseCallout(
+      VerificationResponseActionType action,
+      String code,
+      VerificationResponseCalloutSpeech speech) {
     super(action);
-    this.callout = callout;
+    this.code = code;
+    this.speech = speech;
   }
 
   /**
-   * Call out related information
+   * The Phone Call PIN that should be entered by the user. Sinch servers automatically generate PIN
+   * codes for Phone Call verification. If you want to set your own code, you can specify it in the
+   * response to the Verification Request Event.
    *
-   * @return Call out related information
+   * @return The code value
    * @since 1.0
    */
-  public CalloutResponse getCallout() {
-    return callout;
+  public String getCode() {
+    return code;
+  }
+
+  /**
+   * Speech related information
+   *
+   * @return Speech information
+   * @since 1.0
+   */
+  public VerificationResponseCalloutSpeech getSpeech() {
+    return speech;
   }
 
   @Override
   public String toString() {
-    return "VerificationResponseCallout{" + "callout=" + callout + "} " + super.toString();
-  }
-
-  /**
-   * Call out related information for call out verification callback. See <a
-   * href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post!c=200&amp;path=2/callout&amp;t=response">callout
-   * response documentation</a>
-   *
-   * @since 1.0
-   */
-  public static class CalloutResponse {
-
-    @JsonProperty("code")
-    private final Integer code;
-
-    @JsonProperty("speech")
-    private final SpeechResponse speech;
-
-    /**
-     * Construct a CalloutResponse instance
-     *
-     * @param code The Phone Call PIN that should be entered by the user. Sinch's servers
-     *     automatically generate PIN codes for Phone Call verification. If you want to set your own
-     *     code, you can specify it in the response to the Verification Request Event.
-     * @param speech An object defining various properties for the text-to-speech message.
-     */
-    public CalloutResponse(Integer code, SpeechResponse speech) {
-      this.code = code;
-      this.speech = speech;
-    }
-
-    /**
-     * see CalloutResponse Constructor
-     *
-     * @return see {@link CalloutResponse#CalloutResponse(Integer, SpeechResponse) constructor}
-     * @since 1.0
-     */
-    public Integer getCode() {
-      return code;
-    }
-
-    /**
-     * see CalloutResponse Constructor
-     *
-     * @return see {@link CalloutResponse#CalloutResponse(Integer, SpeechResponse) constructor}
-     * @since 1.0
-     */
-    public SpeechResponse getSpeech() {
-      return speech;
-    }
-
-    @Override
-    public String toString() {
-      return "CalloutResponse{" + "code='" + code + '\'' + ", speech=" + speech + '}';
-    }
-  }
-
-  /**
-   * Speech related information for SMS verification callback. See <a
-   * href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post!c=200&amp;path=2/callout&amp;t=response">speech
-   * response documentation</a>
-   *
-   * @since 1.0
-   */
-  public static class SpeechResponse {
-
-    @JsonProperty("locale")
-    private final String locale;
-
-    /**
-     * Indicates the language that should be used for the text-to-speech message. Currently, only
-     * en-US is supported.
-     *
-     * @param locale Locale value
-     */
-    public SpeechResponse(String locale) {
-      this.locale = locale;
-    }
-
-    /**
-     * see SpeechResponse Constructor
-     *
-     * @return see {@link SpeechResponse#SpeechResponse(String) constructor}
-     * @since 1.0
-     */
-    public String getLocale() {
-      return locale;
-    }
-
-    @Override
-    public String toString() {
-      return "SpeechResponse{" + "locale='" + locale + '\'' + '}';
-    }
+    return "VerificationResponseCallout{"
+        + "code='"
+        + code
+        + '\''
+        + ", speech="
+        + speech
+        + "} "
+        + super.toString();
   }
 
   /**
@@ -141,33 +71,33 @@ public class VerificationResponseCallout extends VerificationResponse {
    */
   public static class Builder extends VerificationResponse.Builder<Builder> {
 
-    Integer code;
+    String code;
 
-    String locale;
+    VerificationResponseCalloutSpeech speech;
 
     private Builder() {}
 
     /**
-     * See {@link CalloutResponse#CalloutResponse(Integer, SpeechResponse) constructor}
+     * See {@link VerificationResponseCallout#getCode()}
      *
-     * @param code see constructor
+     * @param code {@link VerificationResponseCallout#getCode()}
      * @return The current builder
      * @since 1.0
      */
-    public Builder setCode(Integer code) {
+    public Builder setCode(String code) {
       this.code = code;
       return self();
     }
 
     /**
-     * See {@link SpeechResponse#SpeechResponse(String) constructor}
+     * See {@link VerificationResponseCallout#getSpeech()}
      *
-     * @param locale see constructor
+     * @param speech {@link VerificationResponseCallout#getSpeech()}
      * @return The current builder
      * @since 1.0
      */
-    public Builder setLocale(String locale) {
-      this.locale = locale;
+    public Builder setSpeech(VerificationResponseCalloutSpeech speech) {
+      this.speech = speech;
       return self();
     }
 
@@ -178,8 +108,7 @@ public class VerificationResponseCallout extends VerificationResponse {
      * @since 1.0
      */
     public VerificationResponseCallout build() {
-      return new VerificationResponseCallout(
-          action, new CalloutResponse(code, new SpeechResponse(locale)));
+      return new VerificationResponseCallout(action, code, speech);
     }
 
     @Override

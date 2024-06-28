@@ -1,69 +1,58 @@
 package com.sinch.sdk.domains.verification.models.webhooks;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Collection;
 
-/** Verification response related to SMS */
+/** Verification response related to a SMS */
 public class VerificationResponseSMS extends VerificationResponse {
 
-  @JsonProperty("sms")
-  private final SMSResponse sms;
+  private final String code;
+
+  private final Collection<String> acceptLanguage;
 
   /**
+   * SMS response related information
+   *
    * @param action Determines whether the verification can be executed.
-   * @param sms SMS related information
+   * @param code see {@link #getCode() getter}
+   * @param acceptLanguage see {@link #getAcceptLanguage() getter}
    */
-  VerificationResponseSMS(VerificationResponseActionType action, SMSResponse sms) {
+  public VerificationResponseSMS(
+      VerificationResponseActionType action, String code, Collection<String> acceptLanguage) {
     super(action);
-    this.sms = sms;
+    this.code = code;
+    this.acceptLanguage = acceptLanguage;
   }
 
   /**
-   * SMS Response related information
+   * The SMS PIN that should be used. By default, the Sinch dashboard will automatically generate
+   * PIN codes for SMS verification. If you want to set your own PIN, you can specify it in the
+   * response to the Verification Request Event.
    *
-   * @return SMS related information
-   * @since 1.0
+   * @return Code value
    */
-  public SMSResponse getSms() {
-    return sms;
+  public String getCode() {
+    return code;
+  }
+
+  /**
+   * The SMS verification content languages. Set in the verification request.
+   *
+   * @return Accepted languages list
+   */
+  public Collection<String> getAcceptLanguage() {
+    return acceptLanguage;
   }
 
   @Override
   public String toString() {
-    return "VerificationResponseSMS{" + "sms=" + sms + "} " + super.toString();
-  }
-
-  /**
-   * SMS related information for SMS verification callback See <a
-   * href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post!c=200&amp;path=0/action&amp;t=response">sms
-   * response documentation</a>
-   *
-   * @since 1.0
-   */
-  public static class SMSResponse {
-    @JsonProperty("code")
-    private final Integer code;
-
-    @JsonProperty("acceptLanguage")
-    private final Collection<String> acceptLanguage;
-
-    /**
-     * SMS response related information
-     *
-     * @param code The SMS PIN that should be used. By default, the Sinch dashboard will
-     *     automatically generate PIN codes for SMS verification. If you want to set your own PIN,
-     *     you can specify it in the response to the Verification Request Event.
-     * @param acceptLanguage The SMS verification content language. Set in the verification request.
-     */
-    public SMSResponse(Integer code, Collection<String> acceptLanguage) {
-      this.code = code;
-      this.acceptLanguage = acceptLanguage;
-    }
-
-    @Override
-    public String toString() {
-      return "SMSResponse{" + "code='" + code + '\'' + ", acceptLanguage=" + acceptLanguage + '}';
-    }
+    return "VerificationResponseSMS{"
+        + "code='"
+        + code
+        + '\''
+        + ", acceptLanguage="
+        + acceptLanguage
+        + "} "
+        + super.toString();
   }
 
   /**
@@ -83,27 +72,27 @@ public class VerificationResponseSMS extends VerificationResponse {
    */
   public static class Builder extends VerificationResponse.Builder<Builder> {
 
-    Integer code;
+    String code;
     Collection<String> acceptLanguage;
 
     private Builder() {}
 
     /**
-     * See {@link SMSResponse#SMSResponse(Integer, Collection) constructor}
+     * See {@link VerificationResponseSMS#getCode()}
      *
-     * @param code see constructor
+     * @param code See {@link VerificationResponseSMS#getCode()}
      * @return The current builder
      * @since 1.0
      */
-    public Builder setCode(Integer code) {
+    public Builder setCode(String code) {
       this.code = code;
       return self();
     }
 
     /**
-     * See {@link SMSResponse#SMSResponse(Integer, Collection) constructor}
+     * See {@link VerificationResponseSMS#getAcceptLanguage()}
      *
-     * @param acceptLanguage see constructor
+     * @param acceptLanguage See {@link VerificationResponseSMS#getAcceptLanguage()}
      * @return The current builder
      * @since 1.0
      */
@@ -119,7 +108,7 @@ public class VerificationResponseSMS extends VerificationResponse {
      * @since 1.0
      */
     public VerificationResponseSMS build() {
-      return new VerificationResponseSMS(action, new SMSResponse(code, acceptLanguage));
+      return new VerificationResponseSMS(action, code, acceptLanguage);
     }
 
     @Override

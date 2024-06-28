@@ -1,0 +1,14 @@
+{
+  "identity": {
+    "type": "number",
+    "endpoint": "+endpoint"
+  },
+  "reference": "a reference",
+  "custom": "a custom",
+  "method": "sms",
+  "smsOptions": {
+    "expiry": "01:02:03",
+    "codeType": "Alphanumeric",
+    "template": "My template require to use '{{CODE}}' code"
+  }
+}

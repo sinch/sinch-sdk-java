@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 /**
  * The type of the verification request authorized values
  *
- * @since 1.0
+ * @since 1.1
  */
 public class VerificationSourceType extends EnumDynamic<String, VerificationSourceType> {
 

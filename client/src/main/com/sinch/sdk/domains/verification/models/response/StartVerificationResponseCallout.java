@@ -6,10 +6,10 @@ import com.sinch.sdk.domains.verification.models.requests.StartVerificationCallo
 import java.util.Collection;
 
 /**
- * Dedicated response type for a callout verification started with {@link
+ * Dedicated response type for a callout verification
+ *
+ * <p>Verification response when started using {@link
  * com.sinch.sdk.domains.verification.VerificationsService#startCallout(StartVerificationCalloutRequestParameters)}
- * initiated wit method {@link
- * com.sinch.sdk.domains.verification.models.VerificationMethodType#CALLOUT CALLOUT}
  *
  * @since 1.0
  */

@@ -41,7 +41,7 @@ public class E164PhoneNumber {
       if (STRICT.get()) {
         throw new NumberFormatException(message);
       }
-      LOGGER.warning(message);
+      LOGGER.finest(message);
     }
     this.number = number;
   }

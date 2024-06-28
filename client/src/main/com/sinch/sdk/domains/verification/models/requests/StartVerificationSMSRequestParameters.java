@@ -12,16 +12,15 @@ import com.sinch.sdk.domains.verification.models.VerificationReference;
  */
 public class StartVerificationSMSRequestParameters extends StartVerificationRequestParameters {
 
+  private final OptionalValue<StartVerificationSMSOptions> options;
+
   private StartVerificationSMSRequestParameters(
       OptionalValue<Identity> identity,
       OptionalValue<VerificationReference> reference,
-      OptionalValue<String> custom) {
+      OptionalValue<String> custom,
+      OptionalValue<StartVerificationSMSOptions> options) {
     super(identity, VerificationMethodType.SMS, reference, custom);
-  }
-
-  @Override
-  public String toString() {
-    return "StartVerificationSMSRequestParameters{} " + super.toString();
+    this.options = options;
   }
 
   /**
@@ -34,6 +33,15 @@ public class StartVerificationSMSRequestParameters extends StartVerificationRequ
     return new Builder();
   }
 
+  public OptionalValue<StartVerificationSMSOptions> getOptions() {
+    return options;
+  }
+
+  @Override
+  public String toString() {
+    return "StartVerificationSMSRequestParameters{} " + super.toString();
+  }
+
   /**
    * Dedicated Builder
    *
@@ -41,7 +49,22 @@ public class StartVerificationSMSRequestParameters extends StartVerificationRequ
    */
   public static class Builder extends StartVerificationRequestParameters.Builder<Builder> {
 
+    OptionalValue<String> acceptLanguage = OptionalValue.empty();
+    OptionalValue<StartVerificationSMSOptions> options = OptionalValue.empty();
+
     private Builder() {}
+
+    /**
+     * SMS options to be used
+     *
+     * @param options Specifies options
+     * @return current builder
+     * @since 1.0
+     */
+    public Builder setOptions(StartVerificationSMSOptions options) {
+      this.options = OptionalValue.of(options);
+      return self();
+    }
 
     /**
      * Create instance
@@ -51,7 +74,7 @@ public class StartVerificationSMSRequestParameters extends StartVerificationRequ
      */
     @Override
     public StartVerificationSMSRequestParameters build() {
-      return new StartVerificationSMSRequestParameters(identity, reference, custom);
+      return new StartVerificationSMSRequestParameters(identity, reference, custom, options);
     }
 
     @Override
