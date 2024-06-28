@@ -33,7 +33,7 @@ public class List extends BaseApplication {
                 ActiveNumberListRequestParameters.builder()
                     .setRegionCode("US")
                     .setType(NumberType.LOCAL)
-                    .setPageSize(2)
+                    .setPageSize(1)
                     .build());
 
     LOGGER.info("Response");

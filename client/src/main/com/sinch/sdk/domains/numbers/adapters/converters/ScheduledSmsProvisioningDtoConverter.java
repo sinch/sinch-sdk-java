@@ -4,14 +4,12 @@ import com.sinch.sdk.domains.common.adapters.converters.EnumDynamicConverter;
 import com.sinch.sdk.domains.numbers.models.ProvisioningStatus;
 import com.sinch.sdk.domains.numbers.models.ScheduledSmsProvisioning;
 import com.sinch.sdk.domains.numbers.models.SmsErrorCode;
-import com.sinch.sdk.domains.numbers.models.dto.v1.ScheduledProvisioningDto;
-import com.sinch.sdk.domains.numbers.models.dto.v1.SmsErrorCodeDto;
-import java.time.ZoneOffset;
 import java.util.stream.Collectors;
 
 public class ScheduledSmsProvisioningDtoConverter {
 
-  public static ScheduledSmsProvisioning convert(ScheduledProvisioningDto dto) {
+  public static ScheduledSmsProvisioning convert(
+      com.sinch.sdk.domains.numbers.models.v1.ScheduledSmsProvisioning dto) {
 
     if (null == dto) {
       return null;
@@ -19,25 +17,41 @@ public class ScheduledSmsProvisioningDtoConverter {
     return new ScheduledSmsProvisioning(
         dto.getServicePlanId(),
         dto.getCampaignId(),
-        ProvisioningStatus.from(dto.getStatus().getValue()),
-        dto.getLastUpdatedTime().toInstant(),
+        null == dto.getStatus() ? null : ProvisioningStatus.from(dto.getStatus().value()),
+        dto.getLastUpdatedTime(),
         dto.getErrorCodes().stream()
-            .map(e -> SmsErrorCode.from(e.getValue()))
+            .map(e -> SmsErrorCode.from(e.value()))
             .collect(Collectors.toList()));
   }
 
-  public static ScheduledProvisioningDto convert(ScheduledSmsProvisioning provisioning) {
+  public static com.sinch.sdk.domains.numbers.models.v1.ScheduledSmsProvisioning convert(
+      ScheduledSmsProvisioning provisioning) {
 
     if (null == provisioning) {
       return null;
     }
 
-    return new ScheduledProvisioningDto(
-        provisioning.getServicePlanId(),
-        provisioning.getCampaignId(),
-        provisioning.getLastUpdatedTime().atOffset(ZoneOffset.UTC),
-        provisioning.getErrorCodes().stream()
-            .map(e -> SmsErrorCodeDto.fromValue(EnumDynamicConverter.convert(e)))
-            .collect(Collectors.toList()));
+    com.sinch.sdk.domains.numbers.models.v1.ScheduledSmsProvisioning.Builder builder =
+        com.sinch.sdk.domains.numbers.models.v1.ScheduledSmsProvisioning.builder();
+
+    if (null != provisioning.getServicePlanId()) {
+      builder.setServicePlanId(provisioning.getServicePlanId());
+    }
+    if (null != provisioning.getCampaignId()) {
+      builder.setCampaignId(provisioning.getCampaignId());
+    }
+    if (null != provisioning.getLastUpdatedTime()) {
+      builder.setLastUpdatedTime(provisioning.getLastUpdatedTime());
+    }
+    if (null != provisioning.getErrorCodes()) {
+      builder.setErrorCodes(
+          provisioning.getErrorCodes().stream()
+              .map(
+                  e ->
+                      com.sinch.sdk.domains.numbers.models.v1.SmsErrorCode.from(
+                          EnumDynamicConverter.convert(e)))
+              .collect(Collectors.toList()));
+    }
+    return builder.build();
   }
 }

@@ -1,12 +1,12 @@
 package com.sinch.sdk.domains.numbers.adapters.converters;
 
-import com.sinch.sdk.domains.numbers.models.dto.v1.ActiveNumberRequestDto;
 import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberUpdateRequestParameters;
+import com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberUpdateRequest;
 
 public class ActiveNumberUpdateRequestParametersDtoConverter {
 
-  public static ActiveNumberRequestDto convert(ActiveNumberUpdateRequestParameters parameters) {
-    ActiveNumberRequestDto dto = new ActiveNumberRequestDto();
+  public static ActiveNumberUpdateRequest convert(ActiveNumberUpdateRequestParameters parameters) {
+    ActiveNumberUpdateRequest.Builder dto = ActiveNumberUpdateRequest.builder();
     parameters.getDisplayName().ifPresent(dto::setDisplayName);
     parameters
         .getSmsConfiguration()
@@ -16,6 +16,6 @@ public class ActiveNumberUpdateRequestParametersDtoConverter {
         .ifPresent(
             value -> dto.setVoiceConfiguration(VoiceConfigurationDtoConverter.convert(value)));
     parameters.getCallback().ifPresent(dto::setCallbackUrl);
-    return dto;
+    return dto.build();
   }
 }

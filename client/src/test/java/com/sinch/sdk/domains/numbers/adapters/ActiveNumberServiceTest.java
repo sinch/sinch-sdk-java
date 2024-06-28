@@ -1,34 +1,37 @@
 package com.sinch.sdk.domains.numbers.adapters;
 
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.core.http.AuthManager;
-import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.core.models.pagination.TokenPageNavigator;
-import com.sinch.sdk.domains.numbers.adapters.api.v1.ActiveNumberApi;
-import com.sinch.sdk.domains.numbers.adapters.converters.ActiveNumberUpdateRequestParametersDtoConverter;
-import com.sinch.sdk.domains.numbers.models.*;
-import com.sinch.sdk.domains.numbers.models.dto.v1.ActiveNumberDto;
-import com.sinch.sdk.domains.numbers.models.dto.v1.ActiveNumbersResponseDto;
+import com.sinch.sdk.domains.numbers.models.ActiveNumber;
+import com.sinch.sdk.domains.numbers.models.Capability;
+import com.sinch.sdk.domains.numbers.models.Money;
+import com.sinch.sdk.domains.numbers.models.NumberPattern;
+import com.sinch.sdk.domains.numbers.models.NumberType;
+import com.sinch.sdk.domains.numbers.models.OrderBy;
+import com.sinch.sdk.domains.numbers.models.ProvisioningStatus;
+import com.sinch.sdk.domains.numbers.models.SMSConfiguration;
+import com.sinch.sdk.domains.numbers.models.ScheduledSmsProvisioning;
+import com.sinch.sdk.domains.numbers.models.ScheduledVoiceProvisioning;
+import com.sinch.sdk.domains.numbers.models.SearchPattern;
+import com.sinch.sdk.domains.numbers.models.SmsErrorCode;
+import com.sinch.sdk.domains.numbers.models.VoiceConfiguration;
 import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberListRequestParameters;
 import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberUpdateRequestParameters;
 import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberUpdateSMSConfigurationRequestParameters;
 import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberUpdateVoiceConfigurationRequestParameters;
 import com.sinch.sdk.domains.numbers.models.responses.ActiveNumberListResponse;
-import com.sinch.sdk.models.NumbersContext;
+import com.sinch.sdk.domains.numbers.models.v1.ActiveNumberDtoTest;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Map;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -37,43 +40,69 @@ import org.mockito.Mock;
 @TestWithResources
 class ActiveNumberServiceTest extends BaseTest {
 
-  @GivenJsonResource("/domains/numbers/v1/active-numbers-list-light.json")
-  ActiveNumbersResponseDto activeNumbersListLightDto;
+  @Mock com.sinch.sdk.domains.numbers.api.v1.ActiveNumberService v1;
 
-  @GivenJsonResource("/domains/numbers/v1/active-numbers-list.json")
-  ActiveNumbersResponseDto activeNumbersListDto;
-
-  @GivenJsonResource("/domains/numbers/v1/active-numbers-get.json")
-  ActiveNumberDto activeGetResponseDto;
-
-  @Mock NumbersContext context;
-  @Mock HttpClient httpClient;
-  @Mock Map<String, AuthManager> authManagers;
-  @Mock ActiveNumberApi api;
   ActiveNumberService service;
 
-  String uriUUID = "foo";
+  ActiveNumber expectedNumberResponse =
+      ActiveNumber.builder()
+          .setPhoneNumber("+447520651116XYZ")
+          .setProjectId("project id")
+          .setRegionCode("GB")
+          .setType(NumberType.MOBILE)
+          .setCapability(Arrays.asList(Capability.SMS, Capability.VOICE))
+          .setDisplayName("a display")
+          .setMoney(new Money("EUR", 0.80))
+          .setPaymentIntervalMonths(1)
+          .setNextChargeDate(Instant.parse("2023-09-22T15:49:58.813424Z"))
+          .setExpireAt(Instant.parse("2023-10-06T15:49:58.813381Z"))
+          .setSmsConfiguration(
+              new SMSConfiguration(
+                  "service plan id",
+                  "campaign id",
+                  new ScheduledSmsProvisioning(
+                      "service plan id from scheduled",
+                      "campaign id from scheduled",
+                      ProvisioningStatus.PROVISIONING_STATUS_UNSPECIFIED,
+                      Instant.parse("2023-09-25T12:08:02.115Z"),
+                      Arrays.asList(SmsErrorCode.ERROR_CODE_UNSPECIFIED))))
+          .setVoiceConfiguration(
+              new VoiceConfiguration(
+                  "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE",
+                  Instant.parse("2024-06-30T07:08:09.100Z"),
+                  new ScheduledVoiceProvisioning(
+                      "EEEEEEEEEE-DDDD-CCCC-BBBB-AAAAAAAA",
+                      ProvisioningStatus.WAITING,
+                      Instant.parse("2024-07-01T11:58:35.610198Z"))))
+          .setCallbackUrl("foo callback")
+          .build();
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new ActiveNumberService(uriUUID, context, httpClient, authManagers));
-    doReturn(api).when(service).getApi();
+    service = spy(new ActiveNumberService(v1));
   }
 
   @Test
   void list() throws ApiException {
 
-    when(api.numberServiceListActiveNumbers(
-            eq(uriUUID),
-            eq("region"),
-            eq(NumberType.MOBILE.value()),
-            eq(null),
-            eq(null),
-            eq(null),
-            eq(null),
-            eq(null),
-            eq(null)))
-        .thenReturn(activeNumbersListLightDto);
+    com.sinch.sdk.domains.numbers.models.v1.active.response.ActiveNumberListResponse responseV1 =
+        new com.sinch.sdk.domains.numbers.models.v1.active.response.ActiveNumberListResponse(
+            v1,
+            new Page<>(
+                com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberListRequest
+                    .builder()
+                    .setRegionCode("another region")
+                    .setType(com.sinch.sdk.domains.numbers.models.v1.NumberType.MOBILE)
+                    .build(),
+                ActiveNumberDtoTest.activeNumberListLight.getActiveNumbers(),
+                new TokenPageNavigator("")));
+
+    when(v1.list(
+            com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberListRequest.builder()
+                .setRegionCode("region")
+                .setType(com.sinch.sdk.domains.numbers.models.v1.NumberType.MOBILE)
+                .build()))
+        .thenReturn(responseV1);
 
     ActiveNumberListResponse response =
         service.list(
@@ -88,42 +117,71 @@ class ActiveNumberServiceTest extends BaseTest {
                 .setRegionCode("region")
                 .setType(NumberType.MOBILE)
                 .build(),
-            Collections.singletonList(
-                ActiveNumber.builder()
-                    .setPhoneNumber("+447520651116XYZ")
-                    .setProjectId("project id")
-                    .setRegionCode("GB")
-                    .setType(NumberType.MOBILE)
-                    .setCapability(Arrays.asList(Capability.SMS, Capability.VOICE))
-                    .setDisplayName("")
-                    .setMoney(new Money("EUR", 0.80))
-                    .setPaymentIntervalMonths(1)
-                    .setNextChargeDate(Instant.parse("2023-09-22T15:49:58.813424Z"))
-                    .setExpireAt(Instant.parse("2023-10-06T15:49:58.813381Z"))
-                    .setSmsConfiguration(new SMSConfiguration("service plan id", "", null))
-                    .setVoiceConfiguration(new VoiceConfiguration("app id", null, null))
-                    .setCallbackUrl("")
-                    .build()),
+            new ArrayList<>(
+                Arrays.asList(
+                    ActiveNumber.builder()
+                        .setPhoneNumber("+447520651116XYZ")
+                        .setProjectId("project id")
+                        .setRegionCode("GB")
+                        .setType(NumberType.MOBILE)
+                        .setCapability(Arrays.asList(Capability.SMS, Capability.VOICE))
+                        .setDisplayName("")
+                        .setMoney(new Money("EUR", 0.80))
+                        .setPaymentIntervalMonths(1)
+                        .setNextChargeDate(Instant.parse("2023-09-22T15:49:58.813424Z"))
+                        .setExpireAt(Instant.parse("2023-10-06T15:49:58.813381Z"))
+                        .setSmsConfiguration(new SMSConfiguration("service plan id", "", null))
+                        .setVoiceConfiguration(new VoiceConfiguration("app id", null, null))
+                        .setCallbackUrl("")
+                        .build())),
             new TokenPageNavigator(""));
-    Assertions.assertThat(response.getContent())
-        .usingRecursiveComparison()
-        .isEqualTo(expected.getEntities());
+
+    TestHelpers.recursiveEquals(response.getContent(), expected.getEntities());
   }
 
   @Test
   void listWithParameters() throws ApiException {
 
-    when(api.numberServiceListActiveNumbers(
-            eq(uriUUID),
-            eq("another region"),
-            eq(NumberType.TOLL_FREE.value()),
-            eq("pattern value"),
-            eq(SearchPattern.END.value()),
-            eq(Collections.singletonList(Capability.VOICE.value())),
-            eq(5),
-            eq("foo"),
-            eq(OrderBy.PHONE_NUMBER.value())))
-        .thenReturn(activeNumbersListDto);
+    com.sinch.sdk.domains.numbers.models.v1.active.response.ActiveNumberListResponse responseV1 =
+        new com.sinch.sdk.domains.numbers.models.v1.active.response.ActiveNumberListResponse(
+            v1,
+            new Page<>(
+                com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberListRequest
+                    .builder()
+                    .setRegionCode("another region")
+                    .setType(com.sinch.sdk.domains.numbers.models.v1.NumberType.TOLL_FREE)
+                    .setSearchPattern(
+                        com.sinch.sdk.domains.numbers.models.v1.SearchPattern.builder()
+                            .setPattern("pattern value")
+                            .setPosition(com.sinch.sdk.domains.numbers.models.v1.SearchPosition.END)
+                            .build())
+                    .setCapabilities(
+                        Arrays.asList(com.sinch.sdk.domains.numbers.models.v1.Capability.VOICE))
+                    .setPageSize(5)
+                    .setPageToken("foo")
+                    .setOrderBy(
+                        com.sinch.sdk.domains.numbers.models.v1.active.request.OrderBy.PHONE_NUMBER)
+                    .build(),
+                ActiveNumberDtoTest.activeNumberList.getActiveNumbers(),
+                new TokenPageNavigator("foo")));
+
+    when(v1.list(
+            com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberListRequest.builder()
+                .setRegionCode("another region")
+                .setType(com.sinch.sdk.domains.numbers.models.v1.NumberType.TOLL_FREE)
+                .setSearchPattern(
+                    com.sinch.sdk.domains.numbers.models.v1.SearchPattern.builder()
+                        .setPattern("pattern value")
+                        .setPosition(com.sinch.sdk.domains.numbers.models.v1.SearchPosition.END)
+                        .build())
+                .setCapabilities(
+                    Arrays.asList(com.sinch.sdk.domains.numbers.models.v1.Capability.VOICE))
+                .setPageSize(5)
+                .setPageToken("foo")
+                .setOrderBy(
+                    com.sinch.sdk.domains.numbers.models.v1.active.request.OrderBy.PHONE_NUMBER)
+                .build()))
+        .thenReturn(responseV1);
 
     ActiveNumberListRequestParameters parameters =
         ActiveNumberListRequestParameters.builder()
@@ -134,7 +192,7 @@ class ActiveNumberServiceTest extends BaseTest {
                     .setPattern("pattern value")
                     .setSearchPattern(SearchPattern.END)
                     .build())
-            .setCapabilities(Collections.singletonList(Capability.VOICE))
+            .setCapabilities(Arrays.asList(Capability.VOICE))
             .setPageSize(5)
             .setPageToken("foo")
             .setOrderBy(OrderBy.PHONE_NUMBER)
@@ -150,138 +208,69 @@ class ActiveNumberServiceTest extends BaseTest {
                         .setPattern("pattern value")
                         .setSearchPattern(SearchPattern.END)
                         .build())
-                .setCapabilities(Collections.singletonList(Capability.VOICE))
+                .setCapabilities(Arrays.asList(Capability.VOICE))
                 .setPageSize(5)
                 .setPageToken("foo")
                 .setOrderBy(OrderBy.PHONE_NUMBER)
                 .build(),
-            Collections.singletonList(
-                ActiveNumber.builder()
-                    .setPhoneNumber("+447520651116XYZ")
-                    .setProjectId("project id")
-                    .setRegionCode("GB")
-                    .setType(NumberType.MOBILE)
-                    .setCapability(Arrays.asList(Capability.SMS, Capability.VOICE))
-                    .setDisplayName("a display")
-                    .setMoney(new Money("EUR", 0.80))
-                    .setPaymentIntervalMonths(1)
-                    .setNextChargeDate(Instant.parse("2023-09-22T15:49:58.813424Z"))
-                    .setExpireAt(Instant.parse("2023-10-06T15:49:58.813381Z"))
-                    .setSmsConfiguration(
-                        new SMSConfiguration(
-                            "service plan id",
-                            null,
-                            new ScheduledSmsProvisioning(
-                                "service plan id from scheduled",
-                                "campaign id from scheduled",
-                                ProvisioningStatus.PROVISIONING_STATUS_UNSPECIFIED,
-                                Instant.parse("2023-09-25T12:08:02.115Z"),
-                                Collections.singletonList(SmsErrorCode.ERROR_CODE_UNSPECIFIED))))
-                    .setVoiceConfiguration(
-                        new VoiceConfiguration(
-                            "app id",
-                            Instant.parse("2023-09-25T12:08:02.115Z"),
-                            new ScheduledVoiceProvisioning(
-                                "app id from scheduled",
-                                ProvisioningStatus.PROVISIONING_STATUS_UNSPECIFIED,
-                                Instant.parse("2023-09-25T12:08:02.115Z"))))
-                    .setCallbackUrl("foo callback")
-                    .build()),
+            new ArrayList<>(
+                Arrays.asList(
+                    ActiveNumber.builder()
+                        .setPhoneNumber("+447520651116XYZ")
+                        .setProjectId("project id")
+                        .setRegionCode("GB")
+                        .setType(NumberType.MOBILE)
+                        .setCapability(Arrays.asList(Capability.SMS, Capability.VOICE))
+                        .setDisplayName("a display")
+                        .setMoney(new Money("EUR", 0.80))
+                        .setPaymentIntervalMonths(1)
+                        .setNextChargeDate(Instant.parse("2023-09-22T15:49:58.813424Z"))
+                        .setExpireAt(Instant.parse("2023-10-06T15:49:58.813381Z"))
+                        .setSmsConfiguration(
+                            new SMSConfiguration(
+                                "service plan id",
+                                "campaign id",
+                                new ScheduledSmsProvisioning(
+                                    "service plan id from scheduled",
+                                    "campaign id from scheduled",
+                                    ProvisioningStatus.PROVISIONING_STATUS_UNSPECIFIED,
+                                    Instant.parse("2023-09-25T12:08:02.115Z"),
+                                    Arrays.asList(SmsErrorCode.ERROR_CODE_UNSPECIFIED))))
+                        .setVoiceConfiguration(
+                            new VoiceConfiguration(
+                                "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE",
+                                Instant.parse("2024-06-30T07:08:09.10Z"),
+                                new ScheduledVoiceProvisioning(
+                                    "EEEEEEEEEE-DDDD-CCCC-BBBB-AAAAAAAA",
+                                    ProvisioningStatus.WAITING,
+                                    Instant.parse("2024-07-01T11:58:35.610198Z"))))
+                        .setCallbackUrl("foo callback")
+                        .build())),
             new TokenPageNavigator("foo"));
 
     ActiveNumberListResponse response = service.list(parameters);
 
-    Assertions.assertThat(response.getContent())
-        .usingRecursiveComparison()
-        .isEqualTo(expected.getEntities());
+    TestHelpers.recursiveEquals(response.getContent(), expected.getEntities());
   }
 
   @Test
   void get() throws ApiException {
 
-    when(api.numberServiceGetActiveNumber(eq(uriUUID), eq("foo phone number")))
-        .thenReturn(activeGetResponseDto);
-
-    ActiveNumber expected =
-        ActiveNumber.builder()
-            .setPhoneNumber("+447520651116XYZ")
-            .setProjectId("project id")
-            .setRegionCode("GB")
-            .setType(NumberType.MOBILE)
-            .setCapability(Arrays.asList(Capability.SMS, Capability.VOICE))
-            .setDisplayName("a display")
-            .setMoney(new Money("EUR", 0.80))
-            .setPaymentIntervalMonths(1)
-            .setNextChargeDate(Instant.parse("2023-09-22T15:49:58.813424Z"))
-            .setExpireAt(Instant.parse("2023-10-06T15:49:58.813381Z"))
-            .setSmsConfiguration(
-                new SMSConfiguration(
-                    "service plan id",
-                    null,
-                    new ScheduledSmsProvisioning(
-                        "service plan id from scheduled",
-                        "campaign id from scheduled",
-                        ProvisioningStatus.PROVISIONING_STATUS_UNSPECIFIED,
-                        Instant.parse("2023-09-25T12:08:02.115Z"),
-                        Collections.singletonList(SmsErrorCode.ERROR_CODE_UNSPECIFIED))))
-            .setVoiceConfiguration(
-                new VoiceConfiguration(
-                    "app id",
-                    Instant.parse("2023-09-25T12:08:02.115Z"),
-                    new ScheduledVoiceProvisioning(
-                        "app id from scheduled",
-                        ProvisioningStatus.PROVISIONING_STATUS_UNSPECIFIED,
-                        Instant.parse("2023-09-25T12:08:02.115Z"))))
-            .setCallbackUrl("foo callback")
-            .build();
+    when(v1.get(eq("foo phone number"))).thenReturn(ActiveNumberDtoTest.activeNumber);
 
     ActiveNumber response = service.get("foo phone number");
 
-    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(expected);
+    TestHelpers.recursiveEquals(response, expectedNumberResponse);
   }
 
   @Test
   void release() throws ApiException {
 
-    when(api.numberServiceReleaseNumber(eq(uriUUID), eq("foo phone number")))
-        .thenReturn(activeGetResponseDto);
-
-    ActiveNumber expected =
-        ActiveNumber.builder()
-            .setPhoneNumber("+447520651116XYZ")
-            .setProjectId("project id")
-            .setRegionCode("GB")
-            .setType(NumberType.MOBILE)
-            .setCapability(Arrays.asList(Capability.SMS, Capability.VOICE))
-            .setDisplayName("a display")
-            .setMoney(new Money("EUR", 0.80))
-            .setPaymentIntervalMonths(1)
-            .setNextChargeDate(Instant.parse("2023-09-22T15:49:58.813424Z"))
-            .setExpireAt(Instant.parse("2023-10-06T15:49:58.813381Z"))
-            .setSmsConfiguration(
-                new SMSConfiguration(
-                    "service plan id",
-                    null,
-                    new ScheduledSmsProvisioning(
-                        "service plan id from scheduled",
-                        "campaign id from scheduled",
-                        ProvisioningStatus.PROVISIONING_STATUS_UNSPECIFIED,
-                        Instant.parse("2023-09-25T12:08:02.115Z"),
-                        Collections.singletonList(SmsErrorCode.ERROR_CODE_UNSPECIFIED))))
-            .setVoiceConfiguration(
-                new VoiceConfiguration(
-                    "app id",
-                    Instant.parse("2023-09-25T12:08:02.115Z"),
-                    new ScheduledVoiceProvisioning(
-                        "app id from scheduled",
-                        ProvisioningStatus.PROVISIONING_STATUS_UNSPECIFIED,
-                        Instant.parse("2023-09-25T12:08:02.115Z"))))
-            .setCallbackUrl("foo callback")
-            .build();
+    when(v1.release(eq("foo phone number"))).thenReturn(ActiveNumberDtoTest.activeNumber);
 
     ActiveNumber response = service.release("foo phone number");
 
-    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(expected);
+    TestHelpers.recursiveEquals(response, expectedNumberResponse);
   }
 
   @Test
@@ -294,57 +283,24 @@ class ActiveNumberServiceTest extends BaseTest {
             .build();
 
     ActiveNumberUpdateVoiceConfigurationRequestParameters voiceConfiguration =
-        ActiveNumberUpdateVoiceConfigurationRequestParameters.builder().setAppId("app id").build();
+        ActiveNumberUpdateVoiceConfigurationRequestParameters.builder()
+            .setAppId("AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE")
+            .build();
     ActiveNumberUpdateRequestParameters parameters =
         ActiveNumberUpdateRequestParameters.builder()
-            .setDisplayName("my display name")
+            .setDisplayName("a display")
             .setSmsConfiguration(smsConfiguration)
             .setVoiceConfiguration(voiceConfiguration)
             .setCallback("foo callback")
             .build();
 
-    when(api.numberServiceUpdateActiveNumber(
-            eq(uriUUID),
+    when(v1.update(
             eq("foo phone number"),
-            ArgumentMatchers.eq(
-                ActiveNumberUpdateRequestParametersDtoConverter.convert(parameters))))
-        .thenReturn(activeGetResponseDto);
-
-    ActiveNumber expected =
-        ActiveNumber.builder()
-            .setPhoneNumber("+447520651116XYZ")
-            .setProjectId("project id")
-            .setRegionCode("GB")
-            .setType(NumberType.MOBILE)
-            .setCapability(Arrays.asList(Capability.SMS, Capability.VOICE))
-            .setDisplayName("a display")
-            .setMoney(new Money("EUR", 0.80))
-            .setPaymentIntervalMonths(1)
-            .setNextChargeDate(Instant.parse("2023-09-22T15:49:58.813424Z"))
-            .setExpireAt(Instant.parse("2023-10-06T15:49:58.813381Z"))
-            .setSmsConfiguration(
-                new SMSConfiguration(
-                    "service plan id",
-                    null,
-                    new ScheduledSmsProvisioning(
-                        "service plan id from scheduled",
-                        "campaign id from scheduled",
-                        ProvisioningStatus.PROVISIONING_STATUS_UNSPECIFIED,
-                        Instant.parse("2023-09-25T12:08:02.115Z"),
-                        Collections.singletonList(SmsErrorCode.ERROR_CODE_UNSPECIFIED))))
-            .setVoiceConfiguration(
-                new VoiceConfiguration(
-                    "app id",
-                    Instant.parse("2023-09-25T12:08:02.115Z"),
-                    new ScheduledVoiceProvisioning(
-                        "app id from scheduled",
-                        ProvisioningStatus.PROVISIONING_STATUS_UNSPECIFIED,
-                        Instant.parse("2023-09-25T12:08:02.115Z"))))
-            .setCallbackUrl("foo callback")
-            .build();
+            ArgumentMatchers.eq(ActiveNumberDtoTest.activeNumberUpdateRequest)))
+        .thenReturn(ActiveNumberDtoTest.activeNumber);
 
     ActiveNumber response = service.update("foo phone number", parameters);
 
-    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(expected);
+    TestHelpers.recursiveEquals(response, expectedNumberResponse);
   }
 }

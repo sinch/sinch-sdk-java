@@ -1,54 +1,19 @@
 package com.sinch.sdk.domains.numbers.adapters.converters;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
-import com.sinch.sdk.domains.numbers.models.dto.v1.RentNumberRequestDto;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.numbers.models.requests.AvailableNumberRentRequestParameters;
 import com.sinch.sdk.domains.numbers.models.requests.RentSMSConfigurationRequestParameters;
 import com.sinch.sdk.domains.numbers.models.requests.RentVoiceConfigurationRequestParameters;
-import org.junit.jupiter.api.BeforeEach;
+import com.sinch.sdk.domains.numbers.models.v1.SmsConfiguration;
+import com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration;
+import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberRentRequest;
 import org.junit.jupiter.api.Test;
 
 class AvailableRentRequestParametersDtoConverterTest {
-  AvailableNumberRentRequestParameters item;
-
-  public static void compareWithDto(
-      AvailableNumberRentRequestParameters client, RentNumberRequestDto dto) {
-
-    if (null == dto.getSmsConfiguration()) {
-      assertFalse(client.getSmsConfiguration().isPresent());
-    } else {
-      assertEquals(
-          dto.getSmsConfiguration().getCampaignId(),
-          client.getSmsConfiguration().get().getCampaignId().get());
-      assertEquals(
-          dto.getSmsConfiguration().getServicePlanId(),
-          client.getSmsConfiguration().get().getServicePlanId().get());
-    }
-    if (null == dto.getVoiceConfiguration()) {
-      assertFalse(client.getVoiceConfiguration().isPresent());
-    } else {
-      assertEquals(
-          dto.getVoiceConfiguration().getAppId(),
-          client.getVoiceConfiguration().get().getAppId().get());
-    }
-    if (null == dto.getCallbackUrl()) {
-      assertFalse(client.getCallBackUrl().isPresent());
-    } else {
-      assertEquals(dto.getCallbackUrl(), client.getCallBackUrl().get());
-    }
-  }
 
   @Test
   void convert() {
-    RentNumberRequestDto converted = AvailableRentRequestParametersDtoConverter.convert(item);
-    compareWithDto(item, converted);
-  }
-
-  @BeforeEach
-  void setUp() {
-    item =
+    AvailableNumberRentRequestParameters parameters =
         AvailableNumberRentRequestParameters.builder()
             .setSmsConfiguration(
                 RentSMSConfigurationRequestParameters.builder()
@@ -59,5 +24,19 @@ class AvailableRentRequestParametersDtoConverterTest {
                 RentVoiceConfigurationRequestParameters.builder().setAppId("app id").build())
             .setCallbackUrl("callback url")
             .build();
+
+    AvailableNumberRentRequest expected =
+        AvailableNumberRentRequest.builder()
+            .setSmsConfiguration(
+                SmsConfiguration.builder()
+                    .setCampaignId("campaign id")
+                    .setServicePlanId("service plan")
+                    .build())
+            .setVoiceConfiguration(VoiceConfiguration.builder().setAppId("app id").build())
+            .setCallbackUrl("callback url")
+            .build();
+    AvailableNumberRentRequest converted =
+        AvailableRentRequestParametersDtoConverter.convert(parameters);
+    TestHelpers.recursiveEquals(converted, expected);
   }
 }

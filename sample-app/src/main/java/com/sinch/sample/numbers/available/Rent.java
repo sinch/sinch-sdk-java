@@ -32,10 +32,10 @@ public class Rent extends BaseApplication {
           RentSMSConfigurationRequestParameters.builder() // .setCampaignId("campaign id")
               .build();
       RentVoiceConfigurationRequestParameters rentVoice =
-          RentVoiceConfigurationRequestParameters.builder() // .setAppId("app id")
-              .build();
+          RentVoiceConfigurationRequestParameters.builder().setAppId("app id").build();
       AvailableNumberRentRequestParameters parameters =
           AvailableNumberRentRequestParameters.builder()
+              .setVoiceConfiguration(rentVoice)
               // .setCallbackUrl("foo callback")
               .build();
       ActiveNumber value = client.numbers().available().rent(phoneNumber, parameters);

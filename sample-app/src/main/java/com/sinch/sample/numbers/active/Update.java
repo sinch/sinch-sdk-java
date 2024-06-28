@@ -24,22 +24,27 @@ public class Update extends BaseApplication {
 
   public void run() {
 
-    LOGGER.info("Update for :" + phoneNumber);
+    LOGGER.info("Update for :" + virtualPhoneNumber);
 
-    String displayName = "my display from app sample foo";
+    String displayName = "my display from app sample";
     ActiveNumberUpdateSMSConfigurationRequestParameters smsConfiguration =
-        null; // new ActiveNumberUpdateSMSConfigurationRequestParameters();
+        ActiveNumberUpdateSMSConfigurationRequestParameters.builder()
+            // .setServicePlanId()
+            // .setCampaignId("foo")
+            .build();
     ActiveNumberUpdateVoiceConfigurationRequestParameters voiceConfiguration =
-        null; // new ActiveNumberUpdateVoiceConfigurationRequestParameters();
+        ActiveNumberUpdateVoiceConfigurationRequestParameters.builder()
+            //.setAppId("foo")
+            .build();
 
     ActiveNumberUpdateRequestParameters parameters =
         ActiveNumberUpdateRequestParameters.builder()
             .setDisplayName(displayName)
-            .setSmsConfiguration(smsConfiguration)
-            .setVoiceConfiguration(voiceConfiguration)
+            // .setSmsConfiguration(smsConfiguration)
+            //.setVoiceConfiguration(voiceConfiguration)
             .build();
 
-    ActiveNumber value = client.numbers().active().update(phoneNumber, parameters);
+    ActiveNumber value = client.numbers().active().update(virtualPhoneNumber, parameters);
 
     LOGGER.info("Response :" + value);
   }

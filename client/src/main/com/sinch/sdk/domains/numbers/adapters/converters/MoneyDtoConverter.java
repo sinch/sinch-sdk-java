@@ -1,15 +1,14 @@
 package com.sinch.sdk.domains.numbers.adapters.converters;
 
 import com.sinch.sdk.domains.numbers.models.Money;
-import com.sinch.sdk.domains.numbers.models.dto.v1.MoneyDto;
 
 public class MoneyDtoConverter {
 
-  public static Money convert(MoneyDto dto) {
+  public static Money convert(com.sinch.sdk.domains.numbers.models.v1.Money dto) {
 
     if (null == dto) {
       return null;
     }
-    return new Money(dto.getCurrencyCode(), Double.valueOf(dto.getAmount()));
+    return new Money(dto.getCurrencyCode(), dto.getAmount());
   }
 }

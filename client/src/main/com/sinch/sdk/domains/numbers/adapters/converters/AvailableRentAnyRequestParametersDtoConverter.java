@@ -1,61 +1,63 @@
 package com.sinch.sdk.domains.numbers.adapters.converters;
 
-import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.core.utils.EnumDynamic;
-import com.sinch.sdk.domains.numbers.models.NumberPattern;
-import com.sinch.sdk.domains.numbers.models.dto.v1.RentAnyNumberRequestDto;
-import com.sinch.sdk.domains.numbers.models.dto.v1.RentAnyNumberRequestSmsConfigurationDto;
-import com.sinch.sdk.domains.numbers.models.dto.v1.RentAnyNumberRequestVoiceConfigurationDto;
-import com.sinch.sdk.domains.numbers.models.dto.v1.SearchPatternDto;
 import com.sinch.sdk.domains.numbers.models.requests.AvailableNumberRentAnyRequestParameters;
+import com.sinch.sdk.domains.numbers.models.v1.Capability;
+import com.sinch.sdk.domains.numbers.models.v1.NumberType;
+import com.sinch.sdk.domains.numbers.models.v1.SearchPosition;
+import com.sinch.sdk.domains.numbers.models.v1.SmsConfiguration;
+import com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration;
+import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberRentAnyRequest;
 import java.util.stream.Collectors;
 
 public class AvailableRentAnyRequestParametersDtoConverter {
-  public static RentAnyNumberRequestDto convert(
+  public static AvailableNumberRentAnyRequest convert(
       AvailableNumberRentAnyRequestParameters parameters) {
 
-    RentAnyNumberRequestDto dto =
-        new RentAnyNumberRequestDto()
-            .regionCode(parameters.getRegionCode().get())
-            .type(parameters.getType().get().value());
+    AvailableNumberRentAnyRequest.Builder dto = AvailableNumberRentAnyRequest.builder();
 
-    OptionalValue<NumberPattern> pattern = parameters.getNumberPattern();
-    if (pattern.isPresent()) {
-      NumberPattern p = pattern.get();
-      String patternPattern = p.getPattern();
-      String searchPattern = p.getSearchPattern().value();
-      SearchPatternDto spDto = new SearchPatternDto();
-      spDto.pattern(patternPattern);
-      spDto.searchPattern(searchPattern);
-      dto.numberPattern(spDto);
-    }
+    parameters.getRegionCode().ifPresent(dto::setRegionCode);
+    parameters.getType().ifPresent(f -> dto.setType(NumberType.from(f.value())));
+
+    parameters
+        .getNumberPattern()
+        .ifPresent(
+            f -> {
+              com.sinch.sdk.domains.numbers.models.v1.SearchPattern.Builder spBuilder =
+                  com.sinch.sdk.domains.numbers.models.v1.SearchPattern.builder();
+              spBuilder.setPattern(f.getPattern());
+              spBuilder.setPosition(
+                  null != f.getSearchPattern()
+                      ? SearchPosition.from(f.getSearchPattern().value())
+                      : null);
+              dto.setNumberPattern(spBuilder.build());
+            });
 
     parameters
         .getCapabilities()
         .ifPresent(
-            value ->
-                dto.capabilities(
-                    value.stream().map(EnumDynamic::value).collect(Collectors.toList())));
+            f ->
+                dto.setCapabilities(
+                    f.stream().map(c -> Capability.from(c.value())).collect(Collectors.toList())));
+
     parameters
         .getSmsConfiguration()
         .ifPresent(
             value -> {
-              RentAnyNumberRequestSmsConfigurationDto config =
-                  new RentAnyNumberRequestSmsConfigurationDto();
+              SmsConfiguration.Builder config = SmsConfiguration.builder();
               value.getServicePlanId().ifPresent(config::setServicePlanId);
               value.getCampaignId().ifPresent(config::setCampaignId);
-              dto.smsConfiguration(config);
+              dto.setSmsConfiguration(config.build());
             });
+
     parameters
         .getVoiceConfiguration()
         .ifPresent(
             value -> {
-              RentAnyNumberRequestVoiceConfigurationDto config =
-                  new RentAnyNumberRequestVoiceConfigurationDto();
+              VoiceConfiguration.Builder config = VoiceConfiguration.builder();
               value.getAppId().ifPresent(config::setAppId);
-              dto.voiceConfiguration(config);
+              dto.setVoiceConfiguration(config.build());
             });
-    parameters.getCallBackUrl().ifPresent(dto::callbackUrl);
-    return dto;
+    parameters.getCallBackUrl().ifPresent(dto::setCallbackUrl);
+    return dto.build();
   }
 }

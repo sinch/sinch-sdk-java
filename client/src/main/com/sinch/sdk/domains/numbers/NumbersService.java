@@ -10,6 +10,16 @@ package com.sinch.sdk.domains.numbers;
 public interface NumbersService {
 
   /**
+   * Numbers Service V1
+   *
+   * @return V1 service instance for project
+   * @see <a
+   *     href="https://developers.sinch.com/docs/numbers/sdk/java/syntax-reference/">Documentation</a>
+   * @since TODO NEXT_RELEASE_VERSION
+   */
+  com.sinch.sdk.domains.numbers.api.v1.NumbersService v1();
+
+  /**
    * Available Number Service instance
    *
    * @return service instance for project

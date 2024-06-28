@@ -1,27 +1,24 @@
 package com.sinch.sdk.domains.numbers.adapters;
 
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.core.http.AuthManager;
-import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.numbers.adapters.api.v1.AvailableRegionsApi;
 import com.sinch.sdk.domains.numbers.models.NumberType;
 import com.sinch.sdk.domains.numbers.models.Region;
-import com.sinch.sdk.domains.numbers.models.dto.v1.ListAvailableRegionsResponseDto;
 import com.sinch.sdk.domains.numbers.models.requests.AvailableRegionListAllRequestParameters;
 import com.sinch.sdk.domains.numbers.models.responses.AvailableRegionListResponse;
-import com.sinch.sdk.models.NumbersContext;
+import com.sinch.sdk.domains.numbers.models.v1.AvailableRegionsDtoTest;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Map;
-import org.assertj.core.api.Assertions;
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -29,30 +26,23 @@ import org.mockito.Mock;
 @TestWithResources
 class RegionServiceTest extends BaseTest {
 
-  @GivenJsonResource("/domains/numbers/v1/available-regions-list.json")
-  ListAvailableRegionsResponseDto availableRegionsListDto;
-
-  @Mock AvailableRegionsApi api;
-  @Mock NumbersContext context;
-  @Mock HttpClient httpClient;
-  @Mock Map<String, AuthManager> authManagers;
-
   AvailableRegionService service;
 
-  String uriUUID = "foo";
+  @Mock com.sinch.sdk.domains.numbers.api.v1.AvailableRegionService v1;
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new AvailableRegionService(uriUUID, context, httpClient, authManagers));
-    doReturn(api).when(service).getApi();
+    service = spy(new AvailableRegionService(v1));
   }
 
   @Test
   void list() throws ApiException {
 
-    when(api.numberServiceListAvailableRegions(
-            eq(uriUUID), eq(Collections.singletonList("MOBILE"))))
-        .thenReturn(availableRegionsListDto);
+    when(v1.list(any()))
+        .thenReturn(
+            new com.sinch.sdk.domains.numbers.models.v1.regions.available.response
+                .AvailableRegionListResponse(
+                AvailableRegionsDtoTest.availableRegionList.getAvailableRegions()));
 
     AvailableRegionListResponse response =
         service.list(
@@ -61,13 +51,16 @@ class RegionServiceTest extends BaseTest {
                 .build());
 
     Collection<Region> expected =
-        Collections.singletonList(
-            Region.builder()
-                .setRegionName("Australia")
-                .setRegionCode("AU")
-                .setTypes(Collections.singletonList(NumberType.MOBILE))
-                .build());
+        new ArrayList<>(
+            Collections.singletonList(
+                Region.builder()
+                    .setRegionName("Australia")
+                    .setRegionCode("AU")
+                    .setTypes(new ArrayList<>(Collections.singletonList(NumberType.MOBILE)))
+                    .build()));
 
-    Assertions.assertThat(response.getContent()).usingRecursiveComparison().isEqualTo(expected);
+    assertFalse(response.hasNextPage(), "Has no next page");
+    assertThrows(NoSuchElementException.class, response::nextPage);
+    TestHelpers.recursiveEquals(response.getContent(), expected);
   }
 }
