@@ -25,7 +25,8 @@
       "voiceConfiguration": {
         "appId": "app id",
         "scheduledVoiceProvisioning": null,
-        "lastUpdatedTime": null
+        "lastUpdatedTime": null,
+        "type": "RTC"
       },
       "callbackUrl": ""
     }

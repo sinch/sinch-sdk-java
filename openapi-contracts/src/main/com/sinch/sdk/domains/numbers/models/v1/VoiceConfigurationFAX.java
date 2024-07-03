@@ -12,10 +12,13 @@
 
 package com.sinch.sdk.domains.numbers.models.v1;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.Instant;
 
-/** Common VoiceConfiguration fields */
-public interface VoiceConfiguration {
+/** FAX VoiceConfiguration */
+@JsonDeserialize(builder = VoiceConfigurationFAXImpl.Builder.class)
+public interface VoiceConfigurationFAX
+    extends com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration {
 
   /**
    * Timestamp when the status was last updated.
@@ -31,8 +34,25 @@ public interface VoiceConfiguration {
    */
   ScheduledVoiceProvisioning getScheduledProvisioning();
 
+  /**
+   * The service ID if the type is FAX. The <code>serviceId</code> can be found in your <a
+   * href="https://dashboard.sinch.com/fax/services">Sinch Customer Dashboard</a>.
+   *
+   * @return serviceId
+   */
+  String getServiceId();
+
+  /**
+   * Getting builder
+   *
+   * @return New Builder instance
+   */
+  static Builder builder() {
+    return new VoiceConfigurationFAXImpl.Builder();
+  }
+
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder extends com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration.Builder {
 
     /**
      * see getter
@@ -53,10 +73,19 @@ public interface VoiceConfiguration {
     Builder setScheduledProvisioning(ScheduledVoiceProvisioning scheduledProvisioning);
 
     /**
+     * see getter
+     *
+     * @param serviceId see getter
+     * @return Current builder
+     * @see #getServiceId
+     */
+    Builder setServiceId(String serviceId);
+
+    /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    VoiceConfiguration build();
+    VoiceConfigurationFAX build();
   }
 }

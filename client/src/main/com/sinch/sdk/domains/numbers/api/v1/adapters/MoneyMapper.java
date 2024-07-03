@@ -16,7 +16,7 @@ public class MoneyMapper {
     Mapper.getInstance().addMixIn(Money.class, MoneyMapperMixin.class);
   }
 
-  public static class MoneyMapperMixin extends MoneyImpl {
+  private static class MoneyMapperMixin extends MoneyImpl {
 
     @Override
     @JsonSerialize(using = AmountSerializer.class)

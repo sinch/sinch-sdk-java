@@ -1,4 +1,5 @@
 {
-  "appId": "my app id"
+  "appId": "my app id",
+  "type": "RTC"
 }
 

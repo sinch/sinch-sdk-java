@@ -7,7 +7,6 @@ import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
-import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
@@ -22,6 +21,7 @@ import com.sinch.sdk.domains.numbers.models.v1.SearchPattern;
 import com.sinch.sdk.domains.numbers.models.v1.SearchPosition;
 import com.sinch.sdk.domains.numbers.models.v1.SmsConfiguration;
 import com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration;
+import com.sinch.sdk.domains.numbers.models.v1.VoiceConfigurationRTC;
 import com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberListRequest;
 import com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberUpdateRequest;
 import com.sinch.sdk.domains.numbers.models.v1.active.request.OrderBy;
@@ -38,7 +38,7 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 
 @TestWithResources
-class ActiveNumberServiceTest extends BaseTest {
+class ActiveNumberServiceTest extends NumbersBaseTest {
 
   @GivenJsonResource("/domains/numbers/v1/active/active-numbers-list-light.json")
   ActiveNumberListResponseInternal activeNumbersListLightDto;
@@ -186,7 +186,8 @@ class ActiveNumberServiceTest extends BaseTest {
             .setCampaignId("campaign id")
             .build();
 
-    VoiceConfiguration voiceConfiguration = VoiceConfiguration.builder().setAppId("app id").build();
+    VoiceConfiguration voiceConfiguration =
+        VoiceConfigurationRTC.builder().setAppId("app id").build();
 
     ActiveNumberUpdateRequest parameters =
         ActiveNumberUpdateRequest.builder()

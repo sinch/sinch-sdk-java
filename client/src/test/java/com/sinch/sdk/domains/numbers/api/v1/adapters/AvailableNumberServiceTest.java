@@ -20,7 +20,7 @@ import com.sinch.sdk.domains.numbers.models.v1.NumberType;
 import com.sinch.sdk.domains.numbers.models.v1.SearchPattern;
 import com.sinch.sdk.domains.numbers.models.v1.SearchPosition;
 import com.sinch.sdk.domains.numbers.models.v1.SmsConfiguration;
-import com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration;
+import com.sinch.sdk.domains.numbers.models.v1.VoiceConfigurationRTC;
 import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberListRequest;
 import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberRentAnyRequest;
 import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberRentRequest;
@@ -122,7 +122,7 @@ class AvailableNumberServiceTest extends BaseTest {
         AvailableNumberRentRequest.builder()
             .setSmsConfiguration(
                 SmsConfiguration.builder().setServicePlanId("").setCampaignId("").build())
-            .setVoiceConfiguration(VoiceConfiguration.builder().setAppId("").build())
+            .setVoiceConfiguration(VoiceConfigurationRTC.builder().setAppId("").build())
             .setCallbackUrl("foo")
             .build();
 

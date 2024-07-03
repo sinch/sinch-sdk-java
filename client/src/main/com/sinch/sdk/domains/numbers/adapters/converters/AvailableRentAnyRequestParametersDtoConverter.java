@@ -5,7 +5,7 @@ import com.sinch.sdk.domains.numbers.models.v1.Capability;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
 import com.sinch.sdk.domains.numbers.models.v1.SearchPosition;
 import com.sinch.sdk.domains.numbers.models.v1.SmsConfiguration;
-import com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration;
+import com.sinch.sdk.domains.numbers.models.v1.VoiceConfigurationRTC;
 import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberRentAnyRequest;
 import java.util.stream.Collectors;
 
@@ -53,7 +53,7 @@ public class AvailableRentAnyRequestParametersDtoConverter {
         .getVoiceConfiguration()
         .ifPresent(
             value -> {
-              VoiceConfiguration.Builder config = VoiceConfiguration.builder();
+              VoiceConfigurationRTC.Builder config = VoiceConfigurationRTC.builder();
               value.getAppId().ifPresent(config::setAppId);
               dto.setVoiceConfiguration(config.build());
             });

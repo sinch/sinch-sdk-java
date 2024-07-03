@@ -54,9 +54,8 @@ public class ActiveNumberDtoTest extends NumbersBaseTest {
                   .setCampaignId("campaign id")
                   .build())
           .setVoiceConfiguration(
-              VoiceConfiguration.builder()
+              VoiceConfigurationRTC.builder()
                   .setAppId("AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE")
-                  .setType(VoiceApplicationType.RTC)
                   .build())
           .setCallbackUrl("foo callback")
           .build();
@@ -89,7 +88,7 @@ public class ActiveNumberDtoTest extends NumbersBaseTest {
                               .setCampaignId("")
                               .build())
                       .setVoiceConfiguration(
-                          VoiceConfiguration.builder().setAppId("app id").build())
+                          VoiceConfigurationRTC.builder().setAppId("app id").build())
                       .setCallbackUrl("")
                       .build()))
           .setNextPageToken("")

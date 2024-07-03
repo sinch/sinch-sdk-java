@@ -102,6 +102,7 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
 
     private LocalLazyInit() {
       MoneyMapper.initMapper();
+      VoiceConfigurationMapper.initMapper();
     }
 
     public static LocalLazyInit init() {

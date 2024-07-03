@@ -12,10 +12,13 @@
 
 package com.sinch.sdk.domains.numbers.models.v1;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.Instant;
 
-/** Common VoiceConfiguration fields */
-public interface VoiceConfiguration {
+/** EST VoiceConfiguration */
+@JsonDeserialize(builder = VoiceConfigurationESTImpl.Builder.class)
+public interface VoiceConfigurationEST
+    extends com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration {
 
   /**
    * Timestamp when the status was last updated.
@@ -31,8 +34,25 @@ public interface VoiceConfiguration {
    */
   ScheduledVoiceProvisioning getScheduledProvisioning();
 
+  /**
+   * The trunk ID if the type is EST. The <code>trunkId</code> can be found in your <a
+   * href="https://dashboard.sinch.com/trunks/your-trunks">Sinch Customer Dashboard</a>.
+   *
+   * @return trunkId
+   */
+  String getTrunkId();
+
+  /**
+   * Getting builder
+   *
+   * @return New Builder instance
+   */
+  static Builder builder() {
+    return new VoiceConfigurationESTImpl.Builder();
+  }
+
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder extends com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration.Builder {
 
     /**
      * see getter
@@ -53,10 +73,19 @@ public interface VoiceConfiguration {
     Builder setScheduledProvisioning(ScheduledVoiceProvisioning scheduledProvisioning);
 
     /**
+     * see getter
+     *
+     * @param trunkId see getter
+     * @return Current builder
+     * @see #getTrunkId
+     */
+    Builder setTrunkId(String trunkId);
+
+    /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    VoiceConfiguration build();
+    VoiceConfigurationEST build();
   }
 }

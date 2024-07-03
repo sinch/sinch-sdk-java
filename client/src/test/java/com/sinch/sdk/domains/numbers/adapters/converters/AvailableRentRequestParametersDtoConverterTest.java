@@ -5,7 +5,7 @@ import com.sinch.sdk.domains.numbers.models.requests.AvailableNumberRentRequestP
 import com.sinch.sdk.domains.numbers.models.requests.RentSMSConfigurationRequestParameters;
 import com.sinch.sdk.domains.numbers.models.requests.RentVoiceConfigurationRequestParameters;
 import com.sinch.sdk.domains.numbers.models.v1.SmsConfiguration;
-import com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration;
+import com.sinch.sdk.domains.numbers.models.v1.VoiceConfigurationRTC;
 import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberRentRequest;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +32,7 @@ class AvailableRentRequestParametersDtoConverterTest {
                     .setCampaignId("campaign id")
                     .setServicePlanId("service plan")
                     .build())
-            .setVoiceConfiguration(VoiceConfiguration.builder().setAppId("app id").build())
+            .setVoiceConfiguration(VoiceConfigurationRTC.builder().setAppId("app id").build())
             .setCallbackUrl("callback url")
             .build();
     AvailableNumberRentRequest converted =

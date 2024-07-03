@@ -12,10 +12,13 @@
 
 package com.sinch.sdk.domains.numbers.models.v1;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.Instant;
 
-/** Common VoiceConfiguration fields */
-public interface VoiceConfiguration {
+/** RTC VoiceConfiguration */
+@JsonDeserialize(builder = VoiceConfigurationRTCImpl.Builder.class)
+public interface VoiceConfigurationRTC
+    extends com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration {
 
   /**
    * Timestamp when the status was last updated.
@@ -31,8 +34,25 @@ public interface VoiceConfiguration {
    */
   ScheduledVoiceProvisioning getScheduledProvisioning();
 
+  /**
+   * Your app ID for the Voice API. The <code>appId</code> can be found in your <a
+   * href="https://dashboard.sinch.com/voice/apps">Sinch Customer Dashboard</a>.
+   *
+   * @return appId
+   */
+  String getAppId();
+
+  /**
+   * Getting builder
+   *
+   * @return New Builder instance
+   */
+  static Builder builder() {
+    return new VoiceConfigurationRTCImpl.Builder();
+  }
+
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder extends com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration.Builder {
 
     /**
      * see getter
@@ -53,10 +73,19 @@ public interface VoiceConfiguration {
     Builder setScheduledProvisioning(ScheduledVoiceProvisioning scheduledProvisioning);
 
     /**
+     * see getter
+     *
+     * @param appId see getter
+     * @return Current builder
+     * @see #getAppId
+     */
+    Builder setAppId(String appId);
+
+    /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    VoiceConfiguration build();
+    VoiceConfigurationRTC build();
   }
 }
