@@ -15,10 +15,10 @@ package com.sinch.sdk.domains.numbers.models.v1;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.Instant;
 
-/** FAX VoiceConfiguration */
-@JsonDeserialize(builder = VoiceConfigurationFAXImpl.Builder.class)
-public interface VoiceConfigurationFAX
-    extends com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration {
+/** ScheduledVoiceProvisioningFAX */
+@JsonDeserialize(builder = ScheduledVoiceProvisioningFAXImpl.Builder.class)
+public interface ScheduledVoiceProvisioningFAX
+    extends com.sinch.sdk.domains.numbers.models.v1.ScheduledVoiceProvisioning {
 
   /**
    * Timestamp when the status was last updated.
@@ -28,11 +28,11 @@ public interface VoiceConfigurationFAX
   Instant getLastUpdatedTime();
 
   /**
-   * Get scheduledProvisioning
+   * Get status
    *
-   * @return scheduledProvisioning
+   * @return status
    */
-  ScheduledVoiceProvisioning getScheduledProvisioning();
+  ProvisioningStatus getStatus();
 
   /**
    * The service ID if the type is FAX. The <code>serviceId</code> can be found in your <a
@@ -48,11 +48,12 @@ public interface VoiceConfigurationFAX
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VoiceConfigurationFAXImpl.Builder();
+    return new ScheduledVoiceProvisioningFAXImpl.Builder();
   }
 
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder
+      extends com.sinch.sdk.domains.numbers.models.v1.ScheduledVoiceProvisioning.Builder {
 
     /**
      * see getter
@@ -66,11 +67,11 @@ public interface VoiceConfigurationFAX
     /**
      * see getter
      *
-     * @param scheduledProvisioning see getter
+     * @param status see getter
      * @return Current builder
-     * @see #getScheduledProvisioning
+     * @see #getStatus
      */
-    Builder setScheduledProvisioning(ScheduledVoiceProvisioning scheduledProvisioning);
+    Builder setStatus(ProvisioningStatus status);
 
     /**
      * see getter
@@ -86,6 +87,6 @@ public interface VoiceConfigurationFAX
      *
      * @return The instance build with current builder values
      */
-    VoiceConfigurationFAX build();
+    ScheduledVoiceProvisioningFAX build();
   }
 }

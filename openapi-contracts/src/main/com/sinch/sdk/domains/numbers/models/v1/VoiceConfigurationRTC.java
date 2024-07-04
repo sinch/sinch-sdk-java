@@ -52,7 +52,7 @@ public interface VoiceConfigurationRTC
   }
 
   /** Dedicated Builder */
-  interface Builder extends com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration.Builder {
+  interface Builder {
 
     /**
      * see getter

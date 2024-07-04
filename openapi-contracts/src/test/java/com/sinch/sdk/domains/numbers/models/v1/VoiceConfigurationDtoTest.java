@@ -23,27 +23,34 @@ public class VoiceConfigurationDtoTest extends NumbersBaseTest {
   @GivenTextResource("/domains/numbers/v1/active/VoiceConfigurationDtoRTC.json")
   String configurationJsonRTC;
 
-  public static VoiceConfiguration configurationEST =
+  @GivenTextResource("/domains/numbers/v1/active/VoiceConfigurationDtoRTCSwitchToFAX.json")
+  String configurationJsonRTCSwitchToFAX;
+
+  public static VoiceConfigurationEST configurationEST =
       VoiceConfigurationEST.builder()
           .setTrunkId("AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE")
           .setLastUpdatedTime(Instant.parse("2024-06-30T07:08:09.10Z"))
+          .setScheduledProvisioning(ScheduledVoiceProvisioningDtoTest.provisioningEST)
           .build();
 
-  public static VoiceConfiguration configurationFAX =
+  public static VoiceConfigurationFAX configurationFAX =
       VoiceConfigurationFAX.builder()
           .setServiceId("AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE")
           .setLastUpdatedTime(Instant.parse("2024-06-30T07:08:09.10Z"))
+          .setScheduledProvisioning(ScheduledVoiceProvisioningDtoTest.provisioningFAX)
           .build();
-  public static VoiceConfiguration configurationRTC =
+  public static VoiceConfigurationRTC configurationRTC =
       VoiceConfigurationRTC.builder()
           .setAppId("AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE")
           .setLastUpdatedTime(Instant.parse("2024-06-30T07:08:09.10Z"))
-          .setScheduledProvisioning(
-              ScheduledVoiceProvisioning.builder()
-                  .setAppId("EEEEEEEEEE-DDDD-CCCC-BBBB-AAAAAAAA")
-                  .setStatus(ProvisioningStatus.WAITING)
-                  .setLastUpdatedTime(Instant.parse("2024-07-01T11:58:35.610198Z"))
-                  .build())
+          .setScheduledProvisioning(ScheduledVoiceProvisioningDtoTest.provisioningRTC)
+          .build();
+
+  public static VoiceConfigurationRTC configurationRTCSwitchToFAX =
+      VoiceConfigurationRTC.builder()
+          .setAppId("AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE")
+          .setLastUpdatedTime(Instant.parse("2024-06-30T07:08:09.10Z"))
+          .setScheduledProvisioning(ScheduledVoiceProvisioningDtoTest.provisioningFAX)
           .build();
 
   @Test
@@ -95,6 +102,15 @@ public class VoiceConfigurationDtoTest extends NumbersBaseTest {
         objectMapper.readValue(configurationJsonRTC, VoiceConfigurationRTC.class);
 
     TestHelpers.recursiveEquals(configurationRTC, deserializedString);
+  }
+
+  @Test
+  void deserializeRTCSwitchToFax() throws JsonProcessingException {
+
+    VoiceConfiguration deserializedString =
+        objectMapper.readValue(configurationJsonRTCSwitchToFAX, VoiceConfigurationRTC.class);
+
+    TestHelpers.recursiveEquals(configurationRTCSwitchToFAX, deserializedString);
   }
 
   @Test

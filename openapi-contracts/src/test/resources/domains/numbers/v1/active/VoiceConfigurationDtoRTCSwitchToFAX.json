@@ -1,11 +1,11 @@
 {
-  "serviceId": "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE",
-  "lastUpdatedTime": "2024-06-30T07:08:09.100Z",
+  "appId": "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE",
   "scheduledVoiceProvisioning": {
     "serviceId": "EEEEEEEEEE-DDDD-CCCC-BBBB-AAAAAAAA",
     "status": "WAITING",
     "lastUpdatedTime": "2024-07-01T11:58:35.610198Z",
     "type": "FAX"
   },
-  "type": "FAX"
+  "lastUpdatedTime": "2024-06-30T07:08:09.100Z",
+  "type": "RTC"
 }

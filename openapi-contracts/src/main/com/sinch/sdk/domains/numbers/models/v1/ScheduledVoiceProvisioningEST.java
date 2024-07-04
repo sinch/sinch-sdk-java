@@ -15,10 +15,10 @@ package com.sinch.sdk.domains.numbers.models.v1;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.Instant;
 
-/** FAX VoiceConfiguration */
-@JsonDeserialize(builder = VoiceConfigurationFAXImpl.Builder.class)
-public interface VoiceConfigurationFAX
-    extends com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration {
+/** ScheduledVoiceProvisioningEST */
+@JsonDeserialize(builder = ScheduledVoiceProvisioningESTImpl.Builder.class)
+public interface ScheduledVoiceProvisioningEST
+    extends com.sinch.sdk.domains.numbers.models.v1.ScheduledVoiceProvisioning {
 
   /**
    * Timestamp when the status was last updated.
@@ -28,19 +28,19 @@ public interface VoiceConfigurationFAX
   Instant getLastUpdatedTime();
 
   /**
-   * Get scheduledProvisioning
+   * Get status
    *
-   * @return scheduledProvisioning
+   * @return status
    */
-  ScheduledVoiceProvisioning getScheduledProvisioning();
+  ProvisioningStatus getStatus();
 
   /**
-   * The service ID if the type is FAX. The <code>serviceId</code> can be found in your <a
-   * href="https://dashboard.sinch.com/fax/services">Sinch Customer Dashboard</a>.
+   * The trunk ID if the type is EST. The <code>trunkId</code> can be found in your <a
+   * href="https://dashboard.sinch.com/trunks/your-trunks">Sinch Customer Dashboard</a>.
    *
-   * @return serviceId
+   * @return trunkId
    */
-  String getServiceId();
+  String getTrunkId();
 
   /**
    * Getting builder
@@ -48,7 +48,7 @@ public interface VoiceConfigurationFAX
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VoiceConfigurationFAXImpl.Builder();
+    return new ScheduledVoiceProvisioningESTImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -66,26 +66,26 @@ public interface VoiceConfigurationFAX
     /**
      * see getter
      *
-     * @param scheduledProvisioning see getter
+     * @param status see getter
      * @return Current builder
-     * @see #getScheduledProvisioning
+     * @see #getStatus
      */
-    Builder setScheduledProvisioning(ScheduledVoiceProvisioning scheduledProvisioning);
+    Builder setStatus(ProvisioningStatus status);
 
     /**
      * see getter
      *
-     * @param serviceId see getter
+     * @param trunkId see getter
      * @return Current builder
-     * @see #getServiceId
+     * @see #getTrunkId
      */
-    Builder setServiceId(String serviceId);
+    Builder setTrunkId(String trunkId);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    VoiceConfigurationFAX build();
+    ScheduledVoiceProvisioningEST build();
   }
 }

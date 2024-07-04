@@ -12,31 +12,10 @@
 
 package com.sinch.sdk.domains.numbers.models.v1;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.Instant;
 
-/**
- * Represents the ongoing or failed scheduled voice provisioning job. This field will be empty if
- * the number was successfully provisioned provisioned for voice.
- */
-@JsonDeserialize(builder = ScheduledVoiceProvisioningImpl.Builder.class)
+/** ScheduledVoiceProvisioning */
 public interface ScheduledVoiceProvisioning {
-
-  /**
-   * Your app ID for the Voice API. The <code>appId</code> can be found in your <a
-   * href="https://dashboard.sinch.com/voice/apps">Sinch Customer Dashboard</a> under Voice, then
-   * apps.
-   *
-   * @return appId
-   */
-  String getAppId();
-
-  /**
-   * Get status
-   *
-   * @return status
-   */
-  ProvisioningStatus getStatus();
 
   /**
    * Timestamp when the status was last updated.
@@ -46,34 +25,14 @@ public interface ScheduledVoiceProvisioning {
   Instant getLastUpdatedTime();
 
   /**
-   * Getting builder
+   * Get status
    *
-   * @return New Builder instance
+   * @return status
    */
-  static Builder builder() {
-    return new ScheduledVoiceProvisioningImpl.Builder();
-  }
+  ProvisioningStatus getStatus();
 
   /** Dedicated Builder */
   interface Builder {
-
-    /**
-     * see getter
-     *
-     * @param appId see getter
-     * @return Current builder
-     * @see #getAppId
-     */
-    Builder setAppId(String appId);
-
-    /**
-     * see getter
-     *
-     * @param status see getter
-     * @return Current builder
-     * @see #getStatus
-     */
-    Builder setStatus(ProvisioningStatus status);
 
     /**
      * see getter
@@ -83,6 +42,15 @@ public interface ScheduledVoiceProvisioning {
      * @see #getLastUpdatedTime
      */
     Builder setLastUpdatedTime(Instant lastUpdatedTime);
+
+    /**
+     * see getter
+     *
+     * @param status see getter
+     * @return Current builder
+     * @see #getStatus
+     */
+    Builder setStatus(ProvisioningStatus status);
 
     /**
      * Create instance

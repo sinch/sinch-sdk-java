@@ -15,10 +15,10 @@ package com.sinch.sdk.domains.numbers.models.v1;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.Instant;
 
-/** FAX VoiceConfiguration */
-@JsonDeserialize(builder = VoiceConfigurationFAXImpl.Builder.class)
-public interface VoiceConfigurationFAX
-    extends com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration {
+/** ScheduledVoiceProvisioningRTC */
+@JsonDeserialize(builder = ScheduledVoiceProvisioningRTCImpl.Builder.class)
+public interface ScheduledVoiceProvisioningRTC
+    extends com.sinch.sdk.domains.numbers.models.v1.ScheduledVoiceProvisioning {
 
   /**
    * Timestamp when the status was last updated.
@@ -28,19 +28,19 @@ public interface VoiceConfigurationFAX
   Instant getLastUpdatedTime();
 
   /**
-   * Get scheduledProvisioning
+   * Get status
    *
-   * @return scheduledProvisioning
+   * @return status
    */
-  ScheduledVoiceProvisioning getScheduledProvisioning();
+  ProvisioningStatus getStatus();
 
   /**
-   * The service ID if the type is FAX. The <code>serviceId</code> can be found in your <a
-   * href="https://dashboard.sinch.com/fax/services">Sinch Customer Dashboard</a>.
+   * Your app ID for the Voice API. The <code>appId</code> can be found in your <a
+   * href="https://dashboard.sinch.com/voice/apps">Sinch Customer Dashboard</a>.
    *
-   * @return serviceId
+   * @return appId
    */
-  String getServiceId();
+  String getAppId();
 
   /**
    * Getting builder
@@ -48,11 +48,12 @@ public interface VoiceConfigurationFAX
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VoiceConfigurationFAXImpl.Builder();
+    return new ScheduledVoiceProvisioningRTCImpl.Builder();
   }
 
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder
+      extends com.sinch.sdk.domains.numbers.models.v1.ScheduledVoiceProvisioning.Builder {
 
     /**
      * see getter
@@ -66,26 +67,26 @@ public interface VoiceConfigurationFAX
     /**
      * see getter
      *
-     * @param scheduledProvisioning see getter
+     * @param status see getter
      * @return Current builder
-     * @see #getScheduledProvisioning
+     * @see #getStatus
      */
-    Builder setScheduledProvisioning(ScheduledVoiceProvisioning scheduledProvisioning);
+    Builder setStatus(ProvisioningStatus status);
 
     /**
      * see getter
      *
-     * @param serviceId see getter
+     * @param appId see getter
      * @return Current builder
-     * @see #getServiceId
+     * @see #getAppId
      */
-    Builder setServiceId(String serviceId);
+    Builder setAppId(String appId);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    VoiceConfigurationFAX build();
+    ScheduledVoiceProvisioningRTC build();
   }
 }
