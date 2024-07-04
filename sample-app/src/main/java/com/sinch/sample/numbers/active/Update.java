@@ -1,10 +1,12 @@
 package com.sinch.sample.numbers.active;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.numbers.models.ActiveNumber;
-import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberUpdateRequestParameters;
-import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberUpdateSMSConfigurationRequestParameters;
-import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberUpdateVoiceConfigurationRequestParameters;
+import com.sinch.sdk.domains.numbers.api.v1.ActiveNumberService;
+import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
+import com.sinch.sdk.domains.numbers.models.v1.SmsConfiguration;
+import com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration;
+import com.sinch.sdk.domains.numbers.models.v1.VoiceConfigurationRTC;
+import com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberUpdateRequest;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -24,27 +26,27 @@ public class Update extends BaseApplication {
 
   public void run() {
 
+    ActiveNumberService service = client.numbers().v1().active();
+
     LOGGER.info("Update for :" + virtualPhoneNumber);
 
     String displayName = "my display from app sample";
-    ActiveNumberUpdateSMSConfigurationRequestParameters smsConfiguration =
-        ActiveNumberUpdateSMSConfigurationRequestParameters.builder()
+    SmsConfiguration smsConfiguration =
+        SmsConfiguration.builder()
             // .setServicePlanId()
-            // .setCampaignId("foo")
+            // .setCampaignId()
             .build();
-    ActiveNumberUpdateVoiceConfigurationRequestParameters voiceConfiguration =
-        ActiveNumberUpdateVoiceConfigurationRequestParameters.builder()
-            //.setAppId("foo")
-            .build();
+    VoiceConfiguration voiceConfiguration =
+        VoiceConfigurationRTC.builder().setAppId(applicationKey).build();
 
-    ActiveNumberUpdateRequestParameters parameters =
-        ActiveNumberUpdateRequestParameters.builder()
+    ActiveNumberUpdateRequest parameters =
+        ActiveNumberUpdateRequest.builder()
             .setDisplayName(displayName)
             // .setSmsConfiguration(smsConfiguration)
-            //.setVoiceConfiguration(voiceConfiguration)
+            .setVoiceConfiguration(voiceConfiguration)
             .build();
 
-    ActiveNumber value = client.numbers().active().update(virtualPhoneNumber, parameters);
+    ActiveNumber value = service.update(virtualPhoneNumber, parameters);
 
     LOGGER.info("Response :" + value);
   }

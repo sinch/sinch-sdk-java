@@ -1,7 +1,8 @@
 package com.sinch.sample.numbers.active;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.numbers.models.ActiveNumber;
+import com.sinch.sdk.domains.numbers.api.v1.ActiveNumberService;
+import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -21,8 +22,10 @@ public class Get extends BaseApplication {
 
   public void run() {
 
+    ActiveNumberService service = client.numbers().v1().active();
+
     LOGGER.info("Get for: " + virtualPhoneNumber);
-    ActiveNumber value = client.numbers().active().get(virtualPhoneNumber);
+    ActiveNumber value = service.get(virtualPhoneNumber);
 
     LOGGER.info("Response: " + value);
   }

@@ -1,7 +1,8 @@
 package com.sinch.sample.numbers.active;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.numbers.models.ActiveNumber;
+import com.sinch.sdk.domains.numbers.api.v1.ActiveNumberService;
+import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -21,9 +22,11 @@ public class Release extends BaseApplication {
 
   public void run() {
 
-    LOGGER.info("Release for: " + phoneNumber);
+    ActiveNumberService service = client.numbers().v1().active();
 
-    ActiveNumber value = client.numbers().active().release(phoneNumber);
+    LOGGER.info("Release for: " + virtualPhoneNumber);
+
+    ActiveNumber value = service.release(virtualPhoneNumber);
 
     LOGGER.info("Response: " + value);
   }

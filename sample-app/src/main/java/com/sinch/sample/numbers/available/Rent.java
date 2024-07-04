@@ -2,10 +2,12 @@ package com.sinch.sample.numbers.available;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.domains.numbers.models.ActiveNumber;
-import com.sinch.sdk.domains.numbers.models.requests.AvailableNumberRentRequestParameters;
-import com.sinch.sdk.domains.numbers.models.requests.RentSMSConfigurationRequestParameters;
-import com.sinch.sdk.domains.numbers.models.requests.RentVoiceConfigurationRequestParameters;
+import com.sinch.sdk.domains.numbers.api.v1.AvailableNumberService;
+import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
+import com.sinch.sdk.domains.numbers.models.v1.SmsConfiguration;
+import com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration;
+import com.sinch.sdk.domains.numbers.models.v1.VoiceConfigurationRTC;
+import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberRentRequest;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -25,20 +27,26 @@ public class Rent extends BaseApplication {
 
   public void run() {
 
-    LOGGER.info("Rent for: " + phoneNumber);
+    AvailableNumberService service = client.numbers().v1().available();
+
+    LOGGER.info("Rent for: " + virtualPhoneNumber);
     try {
 
-      RentSMSConfigurationRequestParameters rentSms =
-          RentSMSConfigurationRequestParameters.builder() // .setCampaignId("campaign id")
+      SmsConfiguration rentSms =
+          SmsConfiguration.builder()
+              // .setCampaignId("campaign id")
               .build();
-      RentVoiceConfigurationRequestParameters rentVoice =
-          RentVoiceConfigurationRequestParameters.builder().setAppId("app id").build();
-      AvailableNumberRentRequestParameters parameters =
-          AvailableNumberRentRequestParameters.builder()
+
+      VoiceConfiguration rentVoice =
+          VoiceConfigurationRTC.builder().setAppId(applicationKey).build();
+
+      AvailableNumberRentRequest parameters =
+          AvailableNumberRentRequest.builder()
+              // .setSmsConfiguration(rentSms)
               .setVoiceConfiguration(rentVoice)
               // .setCallbackUrl("foo callback")
               .build();
-      ActiveNumber value = client.numbers().available().rent(phoneNumber, parameters);
+      ActiveNumber value = service.rent(virtualPhoneNumber, parameters);
 
       LOGGER.info("Response: " + value);
     } catch (ApiException e) {

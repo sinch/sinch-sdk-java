@@ -1,10 +1,11 @@
 package com.sinch.sample.numbers.available;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.numbers.models.Capability;
-import com.sinch.sdk.domains.numbers.models.NumberType;
-import com.sinch.sdk.domains.numbers.models.requests.AvailableNumberListAllRequestParameters;
-import com.sinch.sdk.domains.numbers.models.responses.AvailableNumberListResponse;
+import com.sinch.sdk.domains.numbers.api.v1.AvailableNumberService;
+import com.sinch.sdk.domains.numbers.models.v1.Capability;
+import com.sinch.sdk.domains.numbers.models.v1.NumberType;
+import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.available.response.AvailableNumberListResponse;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.logging.Logger;
@@ -25,19 +26,18 @@ public class List extends BaseApplication {
 
   public void run() {
 
+    AvailableNumberService service = client.numbers().v1().available();
+
     LOGGER.info("List");
 
     int page = 1;
     AvailableNumberListResponse response =
-        client
-            .numbers()
-            .available()
-            .list(
-                AvailableNumberListAllRequestParameters.builder()
-                    .setRegionCode("US")
-                    .setType(NumberType.LOCAL)
-                    .setCapabilities(Collections.singletonList(Capability.from("SMS")))
-                    .build());
+        service.list(
+            AvailableNumberListRequest.builder()
+                .setRegionCode("US")
+                .setType(NumberType.LOCAL)
+                .setCapabilities(Collections.singletonList(Capability.from("SMS")))
+                .build());
     LOGGER.info(String.format("Response (page %d): %s", page, response));
 
     while (response.hasNextPage()) {

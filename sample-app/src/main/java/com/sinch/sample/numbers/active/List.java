@@ -1,9 +1,10 @@
 package com.sinch.sample.numbers.active;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.numbers.models.NumberType;
-import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberListRequestParameters;
-import com.sinch.sdk.domains.numbers.models.responses.ActiveNumberListResponse;
+import com.sinch.sdk.domains.numbers.api.v1.ActiveNumberService;
+import com.sinch.sdk.domains.numbers.models.v1.NumberType;
+import com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.active.response.ActiveNumberListResponse;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -23,18 +24,17 @@ public class List extends BaseApplication {
 
   public void run() {
 
+    ActiveNumberService service = client.numbers().v1().active();
+
     LOGGER.info("List");
 
     ActiveNumberListResponse response =
-        client
-            .numbers()
-            .active()
-            .list(
-                ActiveNumberListRequestParameters.builder()
-                    .setRegionCode("US")
-                    .setType(NumberType.LOCAL)
-                    .setPageSize(1)
-                    .build());
+        service.list(
+            ActiveNumberListRequest.builder()
+                .setRegionCode("US")
+                .setType(NumberType.LOCAL)
+                .setPageSize(1)
+                .build());
 
     LOGGER.info("Response");
 
