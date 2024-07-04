@@ -49,5 +49,4 @@ public class SmsController {
       default -> throw new IllegalStateException("Unexpected value: " + event);
     }
   }
-
 }
