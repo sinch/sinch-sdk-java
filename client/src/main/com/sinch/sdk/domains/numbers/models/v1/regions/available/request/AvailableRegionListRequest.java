@@ -10,7 +10,7 @@ import java.util.Objects;
  *
  * @see <a
  *     href="https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Available-Regions/">https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Available-Regions/</a>
- * @since 1.0
+ * @since 1.2
  */
 public class AvailableRegionListRequest {
 

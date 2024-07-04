@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 /**
  * Lists all available numbers for a project
  *
- * @since TODO NEXT_RELEASE_VERSION
+ * @since 1.2
  */
 public class AvailableRegionListResponse extends ListResponse<AvailableRegion> {
 

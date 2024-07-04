@@ -10,7 +10,7 @@ import com.sinch.sdk.domains.numbers.models.v1.regions.available.response.Availa
  * @see <a
  *     href="https://developers.sinch.com/docs/numbers/sdk/java/syntax-reference/#numbersregions-endpoint-category">online
  *     documentation</a>
- * @since TODO NEXT_RELEASE_VERSION
+ * @since 1.2
  */
 public interface AvailableRegionService {
 
@@ -19,7 +19,7 @@ public interface AvailableRegionService {
    *
    * @param parameters Filtering criteria
    * @return List of available regions according to search criteria
-   * @since TODO NEXT_RELEASE_VERSION
+   * @since 1.2
    */
   AvailableRegionListResponse list(AvailableRegionListRequest parameters) throws ApiException;
 }

@@ -12,7 +12,7 @@ import java.util.Objects;
  *
  * @see <a
  *     href="https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Available-Number/#tag/Available-Number/operation/NumberService_ListAvailableNumbers">https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Available-Number/#tag/Available-Number/operation/NumberService_ListAvailableNumbers/</a>
- * @since TODO NEXT_RELEASE_VERSION
+ * @since 1.2
  */
 public class AvailableNumberListRequestImpl implements AvailableNumberListRequest {
   private final OptionalValue<String> regionCode;

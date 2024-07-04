@@ -8,9 +8,6 @@ import java.util.stream.Stream;
 /** The voice application type. Examples are RTC, EST, FAX */
 public class VoiceApplicationType extends EnumDynamic<String, VoiceApplicationType> {
 
-  /** Voice application type not specified. */
-  public static final VoiceApplicationType UNSPECIFIED = new VoiceApplicationType("UNSPECIFIED");
-
   /** Voice <a href="https://developers.sinch.com/docs/voice">see documentation</a> */
   public static final VoiceApplicationType RTC = new VoiceApplicationType("RTC");
 
@@ -24,9 +21,7 @@ public class VoiceApplicationType extends EnumDynamic<String, VoiceApplicationTy
 
   private static final EnumSupportDynamic<String, VoiceApplicationType> ENUM_SUPPORT =
       new EnumSupportDynamic<>(
-          VoiceApplicationType.class,
-          VoiceApplicationType::new,
-          Arrays.asList(UNSPECIFIED, RTC, EST, FAX));
+          VoiceApplicationType.class, VoiceApplicationType::new, Arrays.asList(RTC, EST, FAX));
 
   private VoiceApplicationType(String value) {
     super(value);

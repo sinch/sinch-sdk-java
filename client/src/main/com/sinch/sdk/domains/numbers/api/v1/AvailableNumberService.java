@@ -13,8 +13,8 @@ import com.sinch.sdk.domains.numbers.models.v1.available.response.AvailableNumbe
  *
  * @see <a
  *     href="https://developers.sinch.com/docs/numbers/sdk/java/syntax-reference/#numbersavailable-endpoint-category">online
- *     documentatio</a>
- * @since TODO NEXT_RELEASE_VERSION
+ *     documentation</a>
+ * @since 1.2
  */
 public interface AvailableNumberService {
 
@@ -29,7 +29,7 @@ public interface AvailableNumberService {
    *
    * @param parameters Filtering criteria
    * @return List of available numbers according to search criteria
-   * @since TODO NEXT_RELEASE_VERSION
+   * @since 1.2
    */
   AvailableNumberListResponse list(AvailableNumberListRequest parameters) throws ApiException;
 
@@ -40,7 +40,7 @@ public interface AvailableNumberService {
    *
    * @param phoneNumber Phone number
    * @return Available number information
-   * @since TODO NEXT_RELEASE_VERSION
+   * @since 1.2
    */
   AvailableNumber checkAvailability(String phoneNumber) throws ApiException;
 
@@ -60,7 +60,7 @@ public interface AvailableNumberService {
    * @param phoneNumber Number to be activated
    * @param parameters Activation parameters
    * @return Activated number
-   * @since TODO NEXT_RELEASE_VERSION
+   * @since 1.2
    */
   ActiveNumber rent(String phoneNumber, AvailableNumberRentRequest parameters) throws ApiException;
 
@@ -72,7 +72,7 @@ public interface AvailableNumberService {
    *
    * @param parameters Selection and activation parameters
    * @return Activated number according to criteria
-   * @since TODO NEXT_RELEASE_VERSION
+   * @since 1.2
    */
   ActiveNumber rentAny(AvailableNumberRentAnyRequest parameters) throws ApiException;
 }

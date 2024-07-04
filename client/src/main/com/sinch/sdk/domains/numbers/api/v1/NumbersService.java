@@ -3,9 +3,9 @@ package com.sinch.sdk.domains.numbers.api.v1;
 /**
  * Numbers Service
  *
- * @see <a href="https://developers.sinch.com/docs/numbers/sdk/java/syntax-reference/">online
+ * @see <a href="https://developers.sinch.com/docs/numbers/sdk/java/syntax-reference">online
  *     documentation</a>
- * @since TODO NEXT_RELEASE_VERSION
+ * @since 1.2
  */
 public interface NumbersService {
 
@@ -13,7 +13,7 @@ public interface NumbersService {
    * Available Number Service instance
    *
    * @return service instance for project
-   * @since TODO NEXT_RELEASE_VERSION
+   * @since 1.2
    */
   AvailableNumberService available();
 
@@ -21,7 +21,7 @@ public interface NumbersService {
    * Available Region Service instance
    *
    * @return service instance for project
-   * @since TODO NEXT_RELEASE_VERSION
+   * @since 1.2
    */
   AvailableRegionService regions();
 
@@ -29,7 +29,7 @@ public interface NumbersService {
    * Active Number Service instance
    *
    * @return service instance for project
-   * @since TODO NEXT_RELEASE_VERSION
+   * @since 1.2
    */
   ActiveNumberService active();
 
@@ -37,7 +37,7 @@ public interface NumbersService {
    * Callbacks Configuration Service instance
    *
    * @return service instance for project
-   * @since TODO NEXT_RELEASE_VERSION
+   * @since 1.2
    */
   CallbackConfigurationService callback();
 
@@ -45,7 +45,7 @@ public interface NumbersService {
    * Webhooks helpers instance
    *
    * @return instance service related to webhooks helpers
-   * @since TODO NEXT_RELEASE_VERSION
+   * @since 1.2
    */
   WebHooksService webhooks();
 }

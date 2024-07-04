@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 /**
  * Supported fields for ordering
  *
- * @since 1.0
+ * @since 1.2
  */
 public final class OrderBy extends EnumDynamic<String, OrderBy> {
   /** Ordering by phoneNumber */

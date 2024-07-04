@@ -12,7 +12,7 @@ import com.sinch.sdk.domains.numbers.models.v1.active.response.ActiveNumberListR
  * @see <a
  *     href="https://developers.sinch.com/docs/numbers/sdk/java/syntax-reference/#numbersactive-endpoint-category">online
  *     documentation</a>
- * @since TODO NEXT_RELEASE_VERSION
+ * @since 1.2
  */
 public interface ActiveNumberService {
 
@@ -21,7 +21,7 @@ public interface ActiveNumberService {
    *
    * @param parameters Filtering criteria
    * @return List of active numbers
-   * @since TODO NEXT_RELEASE_VERSION
+   * @since 1.2
    */
   ActiveNumberListResponse list(ActiveNumberListRequest parameters) throws ApiException;
 
@@ -30,7 +30,7 @@ public interface ActiveNumberService {
    *
    * @param phoneNumber Phone number
    * @return Active number information
-   * @since TODO NEXT_RELEASE_VERSION
+   * @since 1.2
    */
   ActiveNumber get(String phoneNumber) throws ApiException;
 
@@ -39,7 +39,7 @@ public interface ActiveNumberService {
    *
    * @param phoneNumber Phone number
    * @return Released active number
-   * @since TODO NEXT_RELEASE_VERSION
+   * @since 1.2
    */
   ActiveNumber release(String phoneNumber) throws ApiException;
 
@@ -49,7 +49,7 @@ public interface ActiveNumberService {
    * @param phoneNumber Phone number
    * @param parameters Parameters to be updated
    * @return Updated active number
-   * @since TODO NEXT_RELEASE_VERSION
+   * @since 1.2
    */
   ActiveNumber update(String phoneNumber, ActiveNumberUpdateRequest parameters) throws ApiException;
 }

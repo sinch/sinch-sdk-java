@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 /**
  * Lists all active numbers for a project
  *
- * @since TODO NEXT_RELEASE_VERSION
+ * @since 1.2
  */
 public class ActiveNumberListResponse extends ListResponse<ActiveNumber> {
 

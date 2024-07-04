@@ -12,7 +12,7 @@ import java.util.Objects;
  *
  * @see <a
  *     href="https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Active-Number">https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Active-Number/</a>
- * @since 1.0
+ * @since 1.2
  */
 public class ActiveNumberListRequestImpl implements ActiveNumberListRequest {
 

@@ -10,7 +10,7 @@ import java.util.Collection;
  *
  * @see <a
  *     href="https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Available-Number/#tag/Available-Number/operation/NumberService_ListAvailableNumbers">https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Available-Number/#tag/Available-Number/operation/NumberService_ListAvailableNumbers/</a>
- * @since TODO NEXT_RELEASE_VERSION
+ * @since 1.2
  */
 public interface AvailableNumberListRequest {
 

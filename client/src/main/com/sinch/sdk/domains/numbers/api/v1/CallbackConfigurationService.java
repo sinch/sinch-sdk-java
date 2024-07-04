@@ -10,7 +10,7 @@ import com.sinch.sdk.domains.numbers.models.v1.callbacks.response.CallbackConfig
  * @see <a
  *     href="https://developers.sinch.com/docs/numbers/sdk/java/syntax-reference/#numberscallback-endpoint-category">online
  *     documentation</a>
- * @since TODO NEXT_RELEASE_VERSION
+ * @since 1.2
  */
 public interface CallbackConfigurationService {
 
@@ -18,7 +18,7 @@ public interface CallbackConfigurationService {
    * Get callbacks configuration
    *
    * @return callbacks configuration for the project
-   * @since TODO NEXT_RELEASE_VERSION
+   * @since 1.2
    */
   CallbackConfigurationResponse get() throws ApiException;
 
@@ -27,7 +27,7 @@ public interface CallbackConfigurationService {
    *
    * @param parameters Parameters to be updated
    * @return Updated callbacks configuration
-   * @since TODO NEXT_RELEASE_VERSION
+   * @since 1.2
    */
   CallbackConfigurationResponse update(CallbackConfigurationUpdateRequest parameters)
       throws ApiException;

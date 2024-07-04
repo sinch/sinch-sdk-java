@@ -10,9 +10,10 @@ import com.sinch.sdk.domains.numbers.models.v1.webhooks.NumberEvent;
  * callback URL
  *
  * <p>see <a
- * href="https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Callbacks/#tag/Callbacks/operation/ImportedNumberService_EventsCallback">https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Callbacks/#tag/Callbacks/operation/ImportedNumberService_EventsCallback</a>
+ * href="https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Numbers-Callbacks/#tag/Numbers-Callbacks/operation/ImportedNumberService_EventsCallback">online
+ * documentation</a>
  *
- * @since TODO NEXT_RELEASE_VERSION
+ * @since 1.2
  */
 public interface WebHooksService {
 
@@ -22,7 +23,7 @@ public interface WebHooksService {
    *
    * @param jsonPayload Received payload to be un-serialized
    * @return The decoded event notification instance class
-   * @since TODO NEXT_RELEASE_VERSION
+   * @since 1.2
    */
   NumberEvent parseEvent(String jsonPayload) throws ApiMappingException;
 }
