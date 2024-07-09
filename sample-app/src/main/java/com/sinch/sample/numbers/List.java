@@ -1,7 +1,7 @@
 package com.sinch.sample.numbers.active;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.numbers.api.v1.ActiveNumberService;
+import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
 import com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberListRequest;
 import com.sinch.sdk.domains.numbers.models.v1.active.response.ActiveNumberListResponse;
@@ -24,7 +24,7 @@ public class List extends BaseApplication {
 
   public void run() {
 
-    ActiveNumberService service = client.numbers().v1().active();
+    NumbersService service = client.numbers().v1();
 
     LOGGER.info("List");
 

@@ -23,8 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class AvailableNumberService
-    implements com.sinch.sdk.domains.numbers.api.v1.AvailableNumberService {
+public class AvailableNumberService {
 
   private final String uriUUID;
   private final AvailableNumberApi api;

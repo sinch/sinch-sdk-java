@@ -13,6 +13,7 @@ import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.core.models.pagination.TokenPageNavigator;
+import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.api.v1.internal.ActiveNumberApi;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.Capability;
@@ -53,13 +54,16 @@ class ActiveNumberServiceTest extends NumbersBaseTest {
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
   @Mock ActiveNumberApi api;
+  @Mock NumbersService numbersService;
+
   ActiveNumberService service;
 
   String uriUUID = "foo";
 
   @BeforeEach
   public void initMocks() {
-    ActiveNumberService v1 = new ActiveNumberService(uriUUID, context, httpClient, authManagers);
+    ActiveNumberService v1 =
+        new ActiveNumberService(uriUUID, numbersService, context, httpClient, authManagers);
     service = spy(v1);
     doReturn(api).when(service).getApi();
   }
@@ -81,7 +85,7 @@ class ActiveNumberServiceTest extends NumbersBaseTest {
 
     ActiveNumberListResponse expected =
         new ActiveNumberListResponse(
-            service,
+            numbersService,
             new Page<>(
                 ActiveNumberListRequest.builder()
                     .setRegionCode("region")
@@ -132,7 +136,7 @@ class ActiveNumberServiceTest extends NumbersBaseTest {
 
     ActiveNumberListResponse expected =
         new ActiveNumberListResponse(
-            service,
+            numbersService,
             new Page<>(
                 ActiveNumberListRequest.builder()
                     .setRegionCode("another region")

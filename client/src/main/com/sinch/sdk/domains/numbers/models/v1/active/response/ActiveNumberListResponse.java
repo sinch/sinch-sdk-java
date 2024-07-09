@@ -3,7 +3,7 @@ package com.sinch.sdk.domains.numbers.models.v1.active.response;
 import com.sinch.sdk.core.models.pagination.ListResponse;
 import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.core.utils.StringUtil;
-import com.sinch.sdk.domains.numbers.api.v1.ActiveNumberService;
+import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberListRequest;
 import java.util.Collection;
@@ -17,10 +17,10 @@ import java.util.NoSuchElementException;
 public class ActiveNumberListResponse extends ListResponse<ActiveNumber> {
 
   private final Page<ActiveNumberListRequest, ActiveNumber, String> page;
-  private final ActiveNumberService service;
+  private final NumbersService service;
 
   public ActiveNumberListResponse(
-      ActiveNumberService service, Page<ActiveNumberListRequest, ActiveNumber, String> page) {
+      NumbersService service, Page<ActiveNumberListRequest, ActiveNumber, String> page) {
     this.service = service;
     this.page = page;
   }

@@ -31,7 +31,7 @@ import org.mockito.Mock;
 class AvailableNumberServiceTest extends BaseTest {
 
   AvailableNumberService service;
-  @Mock com.sinch.sdk.domains.numbers.api.v1.AvailableNumberService v1;
+  @Mock com.sinch.sdk.domains.numbers.api.v1.NumbersService v1;
 
   @BeforeEach
   public void initMocks() {
@@ -41,7 +41,7 @@ class AvailableNumberServiceTest extends BaseTest {
   @Test
   void list() throws ApiException {
 
-    when(v1.list(
+    when(v1.searchForAvailableNumbers(
             eq(
                 AvailableNumberListRequest.builder()
                     .setRegionCode("region")
@@ -82,7 +82,7 @@ class AvailableNumberServiceTest extends BaseTest {
   @Test
   void listWithParameters() throws ApiException {
 
-    when(v1.list(
+    when(v1.searchForAvailableNumbers(
             eq(
                 AvailableNumberListRequest.builder()
                     .setRegionCode("another region")

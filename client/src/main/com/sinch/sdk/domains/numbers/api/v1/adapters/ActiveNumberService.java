@@ -8,6 +8,7 @@ import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.core.models.pagination.TokenPageNavigator;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.Pair;
+import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.api.v1.internal.ActiveNumberApi;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.SearchPattern;
@@ -24,18 +25,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ActiveNumberService
-    implements com.sinch.sdk.domains.numbers.api.v1.ActiveNumberService {
+public class ActiveNumberService {
 
   private final String uriUUID;
   private final ActiveNumberApi api;
+  private final NumbersService numbersService;
 
   public ActiveNumberService(
       String uriUUID,
+      NumbersService numbersService,
       NumbersContext context,
       HttpClient httpClient,
       Map<String, AuthManager> authManagers) {
     this.uriUUID = uriUUID;
+    this.numbersService = numbersService;
     this.api =
         new ActiveNumberApi(httpClient, context.getNumbersServer(), authManagers, new HttpMapper());
   }
@@ -121,6 +124,6 @@ public class ActiveNumberService
         new Pair<>(list, new TokenPageNavigator(nextPageToken));
 
     return new ActiveNumberListResponse(
-        this, new Page<>(parameters, paginated.getLeft(), paginated.getRight()));
+        this.numbersService, new Page<>(parameters, paginated.getLeft(), paginated.getRight()));
   }
 }

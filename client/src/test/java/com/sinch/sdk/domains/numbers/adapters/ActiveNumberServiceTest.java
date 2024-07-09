@@ -40,7 +40,7 @@ import org.mockito.Mock;
 @TestWithResources
 class ActiveNumberServiceTest extends BaseTest {
 
-  @Mock com.sinch.sdk.domains.numbers.api.v1.ActiveNumberService v1;
+  @Mock com.sinch.sdk.domains.numbers.api.v1.NumbersService v1;
 
   ActiveNumberService service;
 

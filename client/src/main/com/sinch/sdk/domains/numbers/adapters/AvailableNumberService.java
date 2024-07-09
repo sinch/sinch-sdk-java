@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 public class AvailableNumberService
     implements com.sinch.sdk.domains.numbers.AvailableNumberService {
 
-  private final com.sinch.sdk.domains.numbers.api.v1.AvailableNumberService v1;
+  private final com.sinch.sdk.domains.numbers.api.v1.NumbersService v1;
 
-  public AvailableNumberService(com.sinch.sdk.domains.numbers.api.v1.AvailableNumberService v1) {
+  public AvailableNumberService(com.sinch.sdk.domains.numbers.api.v1.NumbersService v1) {
     this.v1 = v1;
   }
 
@@ -59,7 +59,7 @@ public class AvailableNumberService
     parameters.getSize().ifPresent(builder::setSize);
 
     com.sinch.sdk.domains.numbers.models.v1.available.response.AvailableNumberListResponse
-        response = v1.list(builder.build());
+        response = v1.searchForAvailableNumbers(builder.build());
 
     Collection<AvailableNumber> entities = AvailableNumberDtoConverter.convert(response);
 

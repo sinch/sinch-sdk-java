@@ -1,7 +1,7 @@
 package com.sinch.sample.numbers.active;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.numbers.api.v1.ActiveNumberService;
+import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.SmsConfiguration;
 import com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration;
@@ -26,7 +26,7 @@ public class Update extends BaseApplication {
 
   public void run() {
 
-    ActiveNumberService service = client.numbers().v1().active();
+    NumbersService service = client.numbers().v1();
 
     LOGGER.info("Update for :" + virtualPhoneNumber);
 

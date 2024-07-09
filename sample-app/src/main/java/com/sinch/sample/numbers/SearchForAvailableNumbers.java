@@ -1,7 +1,7 @@
 package com.sinch.sample.numbers.available;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.numbers.api.v1.AvailableNumberService;
+import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.models.v1.Capability;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
 import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberListRequest;
@@ -10,14 +10,14 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.logging.Logger;
 
-public class List extends BaseApplication {
-  private static final Logger LOGGER = Logger.getLogger(List.class.getName());
+public class SearchForAvailableNumbers extends BaseApplication {
+  private static final Logger LOGGER = Logger.getLogger(SearchForAvailableNumbers.class.getName());
 
-  public List() throws IOException {}
+  public SearchForAvailableNumbers() throws IOException {}
 
   public static void main(String[] args) {
     try {
-      new List().run();
+      new SearchForAvailableNumbers().run();
     } catch (Exception e) {
       LOGGER.severe(e.getMessage());
       e.printStackTrace();
@@ -26,13 +26,13 @@ public class List extends BaseApplication {
 
   public void run() {
 
-    AvailableNumberService service = client.numbers().v1().available();
+    NumbersService service = client.numbers().v1();
 
-    LOGGER.info("List");
+    LOGGER.info("SearchForAvailableNumbers");
 
     int page = 1;
     AvailableNumberListResponse response =
-        service.list(
+        service.searchForAvailableNumbers(
             AvailableNumberListRequest.builder()
                 .setRegionCode("US")
                 .setType(NumberType.LOCAL)

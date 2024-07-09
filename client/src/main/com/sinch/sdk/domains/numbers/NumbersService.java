@@ -23,7 +23,7 @@ public interface NumbersService {
    * Non versioned Available Number Service instance
    *
    * @apiNote This version is no longer updated, to get updates use V1 version: {@link
-   *     com.sinch.sdk.domains.numbers.api.v1.AvailableNumberService}
+   *     com.sinch.sdk.domains.numbers.api.v1.NumbersService}
    * @return service instance for project
    * @since 1.0
    */
@@ -43,7 +43,7 @@ public interface NumbersService {
    * Non versioned Active Number Service instance
    *
    * @apiNote This version is no longer updated, to get updates use V1 version: {@link
-   *     com.sinch.sdk.domains.numbers.api.v1.ActiveNumberService}
+   *     com.sinch.sdk.domains.numbers.api.v1.NumbersService}
    * @return service instance for project
    * @since 1.0
    */

@@ -20,9 +20,9 @@ import java.util.stream.Collectors;
 
 public class ActiveNumberService implements com.sinch.sdk.domains.numbers.ActiveNumberService {
 
-  private final com.sinch.sdk.domains.numbers.api.v1.ActiveNumberService v1;
+  private final com.sinch.sdk.domains.numbers.api.v1.NumbersService v1;
 
-  public ActiveNumberService(com.sinch.sdk.domains.numbers.api.v1.ActiveNumberService v1) {
+  public ActiveNumberService(com.sinch.sdk.domains.numbers.api.v1.NumbersService v1) {
     this.v1 = v1;
   }
 

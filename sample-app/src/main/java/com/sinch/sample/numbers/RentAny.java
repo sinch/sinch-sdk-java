@@ -1,7 +1,7 @@
 package com.sinch.sample.numbers.available;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.numbers.api.v1.AvailableNumberService;
+import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.Capability;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
@@ -28,7 +28,7 @@ public class RentAny extends BaseApplication {
 
   public void run() {
 
-    AvailableNumberService service = client.numbers().v1().available();
+    NumbersService service = client.numbers().v1();
 
     LOGGER.info("RentAny:");
 
