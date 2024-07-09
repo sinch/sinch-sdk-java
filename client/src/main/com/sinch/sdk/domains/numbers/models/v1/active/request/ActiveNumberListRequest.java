@@ -15,14 +15,13 @@ import java.util.Collection;
 public interface ActiveNumberListRequest {
 
   /**
-   * @return Region code to filter by. ISO 3166-1 alpha-2 country code of the phone number. Example:
-   *     &#x60;US&#x60;, &#x60;GB&#x60; or &#x60;SE&#x60;. (required)
+   * @return Region code to filter by. ISO 3166-1 alpha-2 country code of the phone number.
+   *     <p>Example: "US", "GB" or "SE".
    */
   String getRegionCode();
 
   /**
-   * @return Number type to filter by. Options include, &#x60;MOBILE&#x60;, &#x60;LOCAL&#x60; or
-   *     &#x60;TOLL_FREE&#x60;. (required)
+   * @return Number type to filter by.
    */
   NumberType getType();
 
@@ -32,7 +31,7 @@ public interface ActiveNumberListRequest {
   SearchPattern getSearchPattern();
 
   /**
-   * @return Number capabilities to filter by, &#x60;SMS&#x60; and/or &#x60;VOICE&#x60;.
+   * @return Number capabilities to filter by.
    */
   Collection<Capability> getCapabilities();
 
@@ -47,7 +46,7 @@ public interface ActiveNumberListRequest {
   String getPageToken();
 
   /**
-   * @return Supported fields for ordering by &#x60;phoneNumber&#x60; or * &#x60;displayName&#x60;
+   * @return Supported fields for ordering by.
    */
   OrderBy getOrderBy();
 

@@ -38,15 +38,15 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
 
     Objects.requireNonNull(
         credentials, "Numbers service require unified credentials to be defined");
-    Objects.requireNonNull(context, "Numbers service require context must be defined");
+    Objects.requireNonNull(context, "Numbers service requires context must be defined");
     StringUtil.requireNonEmpty(
-        credentials.getKeyId(), "Numbers service require  'keyId' must be defined");
+        credentials.getKeyId(), "Numbers service requires 'keyId' must be defined");
     StringUtil.requireNonEmpty(
-        credentials.getKeySecret(), "Numbers service require  'keySecret' must be defined");
+        credentials.getKeySecret(), "Numbers service requires 'keySecret' must be defined");
     StringUtil.requireNonEmpty(
-        credentials.getProjectId(), "Numbers service require  'projectId' must be defined");
+        credentials.getProjectId(), "Numbers service requires 'projectId' must be defined");
     StringUtil.requireNonEmpty(
-        context.getNumbersUrl(), "'Numbers service require  numbersUrl' must be defined");
+        context.getNumbersUrl(), "'Numbers service requires numbersUrl' must be defined");
 
     LOGGER.fine("Activate numbers API with server='" + context.getNumbersServer().getUrl() + "'");
 
@@ -76,7 +76,7 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
     return this.regions;
   }
 
-  public com.sinch.sdk.domains.numbers.api.v1.ActiveNumberService active() {
+  public ActiveNumberService active() {
     if (null == this.active) {
       this.active = new ActiveNumberService(uriUUID, context, httpClient, authManagers);
     }
