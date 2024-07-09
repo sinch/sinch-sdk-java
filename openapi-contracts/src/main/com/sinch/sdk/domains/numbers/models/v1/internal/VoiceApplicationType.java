@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.numbers.models.v1;
+package com.sinch.sdk.domains.numbers.models.v1.internal;
 
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
