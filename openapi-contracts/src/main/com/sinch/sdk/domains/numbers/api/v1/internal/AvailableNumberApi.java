@@ -421,7 +421,7 @@ public class AvailableNumberApi {
    * @param projectId Found on your [Sinch Customer
    *     Dashboard](https://dashboard.sinch.com/settings/project-management). (required)
    * @param phoneNumber Output only. The phone number in
-   *     [E.164](https://community.sinch.com/t5/Glossary/E-164/ta-p/7537\&quot;) format with leading
+   *     [E.164](https://community.sinch.com/t5/Glossary/E-164/ta-p/7537) format with leading
    *     &#x60;+&#x60;. (required)
    * @param availableNumberRentRequest The request to rent a number. (required)
    * @return ActiveNumber
