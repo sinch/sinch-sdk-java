@@ -25,7 +25,7 @@ public class ActiveNumberDtoTest extends NumbersBaseTest {
   @GivenTextResource("/domains/numbers/v1/active/active-numbers-list-light.json")
   String activeListLightResponseJson;
 
-  @GivenTextResource("/domains/numbers/v1/active/active-numbers-update.json")
+  @GivenTextResource("/domains/numbers/v1/active/active-numbers-update-request.json")
   String activeNumberUpdateRequestJson;
 
   public static ActiveNumber activeNumber =

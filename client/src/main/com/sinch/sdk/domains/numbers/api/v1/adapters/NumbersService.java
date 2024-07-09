@@ -38,15 +38,15 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
 
     Objects.requireNonNull(
         credentials, "Numbers service require unified credentials to be defined");
-    Objects.requireNonNull(context, "Numbers service requires context must be defined");
+    Objects.requireNonNull(context, "Numbers service requires context to be defined");
     StringUtil.requireNonEmpty(
-        credentials.getKeyId(), "Numbers service requires 'keyId' must be defined");
+        credentials.getKeyId(), "Numbers service requires 'keyId' to be defined");
     StringUtil.requireNonEmpty(
-        credentials.getKeySecret(), "Numbers service requires 'keySecret' must be defined");
+        credentials.getKeySecret(), "Numbers service requires 'keySecret' to be defined");
     StringUtil.requireNonEmpty(
-        credentials.getProjectId(), "Numbers service requires 'projectId' must be defined");
+        credentials.getProjectId(), "Numbers service requires 'projectId' to be defined");
     StringUtil.requireNonEmpty(
-        context.getNumbersUrl(), "'Numbers service requires numbersUrl' must be defined");
+        context.getNumbersUrl(), "'Numbers service requires numbersUrl' to be defined");
 
     LOGGER.fine("Activate numbers API with server='" + context.getNumbersServer().getUrl() + "'");
 
