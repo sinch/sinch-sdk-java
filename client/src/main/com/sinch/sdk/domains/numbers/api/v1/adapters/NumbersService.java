@@ -113,15 +113,6 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
     return available().list(parameters);
   }
 
-  /**
-   * Get available number information by phone number
-   *
-   * <p>This endpoint allows you to enter a specific phone number to check if it's available for use
-   *
-   * @param phoneNumber Phone number
-   * @return Available number information
-   * @since 1.2
-   */
   public AvailableNumber checkAvailability(String phoneNumber) throws ApiException {
     return available().checkAvailability(phoneNumber);
   }
