@@ -3,7 +3,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.sinch.sdk.domains.conversation.adapters.ConversationBaseTest;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;

@@ -1,10 +1,10 @@
-package com.sinch.sdk.domains.conversation.adapters;
+package com.sinch.sdk.domains.conversation.api.v1.adapters;
 
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
-import com.sinch.sdk.domains.conversation.api.v1.AppApi;
+import com.sinch.sdk.domains.conversation.api.v1.internal.AppApi;
 import com.sinch.sdk.domains.conversation.models.v1.app.request.AppCreateRequest;
 import com.sinch.sdk.domains.conversation.models.v1.app.request.AppUpdateRequest;
 import com.sinch.sdk.domains.conversation.models.v1.app.response.AppResponse;
@@ -12,7 +12,7 @@ import com.sinch.sdk.models.ConversationContext;
 import java.util.Collection;
 import java.util.Map;
 
-public class AppService implements com.sinch.sdk.domains.conversation.AppService {
+public class AppService implements com.sinch.sdk.domains.conversation.api.v1.AppService {
 
   private final String uriUUID;
   private final AppApi api;

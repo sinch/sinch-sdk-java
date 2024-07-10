@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation;
+package com.sinch.sdk.domains.conversation.api.v1;
 
 import com.sinch.sdk.domains.conversation.models.v1.messages.CardMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.CarouselMessage;

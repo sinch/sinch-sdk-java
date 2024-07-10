@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.adapters.messages;
+package com.sinch.sdk.domains.conversation.api.v1.adapters.messages;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;

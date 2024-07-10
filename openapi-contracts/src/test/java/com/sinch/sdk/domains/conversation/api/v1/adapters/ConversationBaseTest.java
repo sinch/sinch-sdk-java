@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.adapters;
+package com.sinch.sdk.domains.conversation.api.v1.adapters;
 
 import com.sinch.sdk.BaseTest;
 

@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.adapters;
+package com.sinch.sdk.domains.conversation.api.v1.adapters;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -11,7 +11,7 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.conversation.api.v1.ContactApi;
+import com.sinch.sdk.domains.conversation.api.v1.internal.ContactApi;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentities;
 import com.sinch.sdk.domains.conversation.models.v1.ContactDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.ContactId;

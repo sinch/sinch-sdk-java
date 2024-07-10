@@ -15,4 +15,4 @@
  * @see <a href="https://developers.sinch.com/docs/conversation/overview">Conversation</a>
  * @since 1.0
  */
-package com.sinch.sdk.domains.conversation;
+package com.sinch.sdk.domains.conversation.api.v1;

@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.adapters;
+package com.sinch.sdk.domains.conversation.api.v1.adapters;
 
 import com.sinch.sdk.auth.adapters.OAuthManager;
 import com.sinch.sdk.core.http.AuthManager;
@@ -15,7 +15,8 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ConversationService implements com.sinch.sdk.domains.conversation.ConversationService {
+public class ConversationService
+    implements com.sinch.sdk.domains.conversation.api.v1.ConversationService {
 
   private static final Logger LOGGER = Logger.getLogger(ConversationService.class.getName());
   private static final String SECURITY_SCHEME_KEYWORD_ = "oAuth2";

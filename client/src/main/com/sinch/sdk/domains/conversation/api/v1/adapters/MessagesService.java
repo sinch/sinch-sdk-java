@@ -1,16 +1,16 @@
-package com.sinch.sdk.domains.conversation.adapters;
+package com.sinch.sdk.domains.conversation.api.v1.adapters;
 
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
-import com.sinch.sdk.domains.conversation.adapters.messages.AppMessageRequestMapper;
-import com.sinch.sdk.domains.conversation.adapters.messages.ChoiceItemMapper;
-import com.sinch.sdk.domains.conversation.adapters.messages.ChoiceMapper;
-import com.sinch.sdk.domains.conversation.adapters.messages.ListSectionMapper;
-import com.sinch.sdk.domains.conversation.adapters.messages.SendMessageRequestMapper;
-import com.sinch.sdk.domains.conversation.adapters.messages.WhatsAppInteractiveHeaderMapper;
-import com.sinch.sdk.domains.conversation.api.v1.MessagesApi;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.AppMessageRequestMapper;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ChoiceItemMapper;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ChoiceMapper;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ListSectionMapper;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.SendMessageRequestMapper;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.WhatsAppInteractiveHeaderMapper;
+import com.sinch.sdk.domains.conversation.api.v1.internal.MessagesApi;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.CardMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.CarouselMessage;
@@ -27,7 +27,7 @@ import com.sinch.sdk.domains.conversation.models.v1.templates.TemplateMessage;
 import com.sinch.sdk.models.ConversationContext;
 import java.util.Map;
 
-public class MessagesService implements com.sinch.sdk.domains.conversation.MessagesService {
+public class MessagesService implements com.sinch.sdk.domains.conversation.api.v1.MessagesService {
 
   static {
     ConversationService.LocalLazyInit.init();

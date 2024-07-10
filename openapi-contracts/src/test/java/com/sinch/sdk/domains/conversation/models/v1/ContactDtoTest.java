@@ -4,7 +4,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.sinch.sdk.domains.conversation.adapters.ConversationBaseTest;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.Contact;
 import com.sinch.sdk.domains.conversation.models.v1.contact.ContactLanguage;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactCreateRequest;

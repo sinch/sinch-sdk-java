@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation;
+package com.sinch.sdk.domains.conversation.api.v1;
 
 /**
  * Conversation Service

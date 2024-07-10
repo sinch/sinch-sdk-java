@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.adapters.messages;
+package com.sinch.sdk.domains.conversation.api.v1.adapters.messages;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.sinch.sdk.domains.conversation.models.v1.messages.CardMessage;

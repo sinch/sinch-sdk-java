@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.adapters;
+package com.sinch.sdk.domains.conversation.api.v1.adapters;
 
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
@@ -7,7 +7,7 @@ import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.core.models.pagination.TokenPageNavigator;
 import com.sinch.sdk.core.utils.Pair;
-import com.sinch.sdk.domains.conversation.api.v1.ContactApi;
+import com.sinch.sdk.domains.conversation.api.v1.internal.ContactApi;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.contact.Contact;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactCreateRequest;
@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class ContactService implements com.sinch.sdk.domains.conversation.ContactService {
+public class ContactService implements com.sinch.sdk.domains.conversation.api.v1.ContactService {
 
   private final String uriUUID;
   private final ContactApi api;
