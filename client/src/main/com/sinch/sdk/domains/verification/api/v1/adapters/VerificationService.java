@@ -45,16 +45,16 @@ public class VerificationService
     // defined
     Objects.requireNonNull(
         credentials, "Verification service requires application credentials to be defined");
-    Objects.requireNonNull(context, "Verification service require context to be defined");
+    Objects.requireNonNull(context, "Verification service requires context to be defined");
     StringUtil.requireNonEmpty(
         credentials.getApplicationKey(),
-        "Verification service require 'applicationKey' to be defined");
+        "Verification service requires 'applicationKey' to be defined");
     StringUtil.requireNonEmpty(
         credentials.getApplicationSecret(),
-        "Verification service require 'applicationSecret' to be defined");
+        "Verification service requires 'applicationSecret' to be defined");
     StringUtil.requireNonEmpty(
         context.getVerificationUrl(),
-        "Verification service require 'verificationUrl' to be defined");
+        "Verification service requires 'verificationUrl' to be defined");
 
     LOGGER.fine(
         "Activate verification API with server='" + context.getVerificationServer().getUrl() + "'");
