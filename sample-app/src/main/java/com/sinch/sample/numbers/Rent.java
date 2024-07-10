@@ -1,4 +1,4 @@
-package com.sinch.sample.numbers.available;
+package com.sinch.sample.numbers;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.core.exceptions.ApiException;
@@ -7,7 +7,7 @@ import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.SmsConfiguration;
 import com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration;
 import com.sinch.sdk.domains.numbers.models.v1.VoiceConfigurationRTC;
-import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberRentRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentRequest;
 import java.io.IOException;
 import java.util.logging.Logger;
 

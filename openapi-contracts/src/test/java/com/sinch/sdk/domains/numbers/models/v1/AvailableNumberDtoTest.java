@@ -5,8 +5,8 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.numbers.api.v1.adapters.NumbersBaseTest;
-import com.sinch.sdk.domains.numbers.models.v1.available.response.AvailableNumber;
-import com.sinch.sdk.domains.numbers.models.v1.available.response.internal.AvailableNumberListResponseInternal;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
+import com.sinch.sdk.domains.numbers.models.v1.response.internal.AvailableNumberListResponseInternal;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;
 

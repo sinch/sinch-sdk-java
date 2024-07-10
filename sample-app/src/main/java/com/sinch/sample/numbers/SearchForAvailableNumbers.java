@@ -1,11 +1,11 @@
-package com.sinch.sample.numbers.available;
+package com.sinch.sample.numbers;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.models.v1.Capability;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
-import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberListRequest;
-import com.sinch.sdk.domains.numbers.models.v1.available.response.AvailableNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.logging.Logger;

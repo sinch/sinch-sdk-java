@@ -3,15 +3,15 @@ package com.sinch.sdk.domains.numbers.adapters.converters;
 import com.sinch.sdk.domains.numbers.models.AvailableNumber;
 import com.sinch.sdk.domains.numbers.models.Capability;
 import com.sinch.sdk.domains.numbers.models.NumberType;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
 public class AvailableNumberDtoConverter {
 
-  public static Collection<AvailableNumber> convert(
-      com.sinch.sdk.domains.numbers.models.v1.available.response.AvailableNumberListResponse dto) {
-    Collection<com.sinch.sdk.domains.numbers.models.v1.available.response.AvailableNumber> list =
+  public static Collection<AvailableNumber> convert(AvailableNumberListResponse dto) {
+    Collection<com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber> list =
         dto.getContent();
     if (null == list) {
       return Collections.emptyList();
@@ -20,7 +20,7 @@ public class AvailableNumberDtoConverter {
   }
 
   public static AvailableNumber convert(
-      com.sinch.sdk.domains.numbers.models.v1.available.response.AvailableNumber dto) {
+      com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber dto) {
 
     return new AvailableNumber(
         dto.getPhoneNumber(),

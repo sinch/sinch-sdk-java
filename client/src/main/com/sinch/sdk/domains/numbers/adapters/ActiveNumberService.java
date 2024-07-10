@@ -12,9 +12,9 @@ import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberUpdateRequestPa
 import com.sinch.sdk.domains.numbers.models.responses.ActiveNumberListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.Capability;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
-import com.sinch.sdk.domains.numbers.models.v1.SearchPosition;
-import com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberListRequest;
-import com.sinch.sdk.domains.numbers.models.v1.active.request.OrderBy;
+import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.OrderBy;
+import com.sinch.sdk.domains.numbers.models.v1.request.SearchPosition;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -38,8 +38,8 @@ public class ActiveNumberService implements com.sinch.sdk.domains.numbers.Active
         .getNumberPattern()
         .ifPresent(
             f -> {
-              com.sinch.sdk.domains.numbers.models.v1.SearchPattern.Builder spBuilder =
-                  com.sinch.sdk.domains.numbers.models.v1.SearchPattern.builder();
+              com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern.Builder spBuilder =
+                  com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern.builder();
               spBuilder.setPattern(f.getPattern());
               spBuilder.setPosition(
                   null != f.getSearchPattern()
@@ -60,7 +60,7 @@ public class ActiveNumberService implements com.sinch.sdk.domains.numbers.Active
 
     parameters.getPageToken().ifPresent(builder::setPageToken);
 
-    com.sinch.sdk.domains.numbers.models.v1.active.response.ActiveNumberListResponse response =
+    com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse response =
         v1.list(builder.build());
     Pair<Collection<ActiveNumber>, TokenPageNavigator> content =
         ActiveNumberDtoConverter.convert(response);

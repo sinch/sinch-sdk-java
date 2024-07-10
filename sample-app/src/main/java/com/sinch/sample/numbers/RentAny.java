@@ -1,13 +1,13 @@
-package com.sinch.sample.numbers.available;
+package com.sinch.sample.numbers;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.Capability;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
-import com.sinch.sdk.domains.numbers.models.v1.SearchPattern;
-import com.sinch.sdk.domains.numbers.models.v1.SearchPosition;
-import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberRentAnyRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentAnyRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern;
+import com.sinch.sdk.domains.numbers.models.v1.request.SearchPosition;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.logging.Logger;

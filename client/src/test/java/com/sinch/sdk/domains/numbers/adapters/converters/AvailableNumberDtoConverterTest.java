@@ -8,6 +8,7 @@ import com.sinch.sdk.domains.numbers.models.Capability;
 import com.sinch.sdk.domains.numbers.models.Money;
 import com.sinch.sdk.domains.numbers.models.NumberType;
 import com.sinch.sdk.domains.numbers.models.v1.AvailableNumberDtoTest;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -33,8 +34,8 @@ class AvailableNumberDtoConverterTest {
 
     Collection<AvailableNumber> expected = new ArrayList<>(Arrays.asList(expectedItem));
 
-    com.sinch.sdk.domains.numbers.models.v1.available.response.AvailableNumberListResponse dto =
-        new com.sinch.sdk.domains.numbers.models.v1.available.response.AvailableNumberListResponse(
+    AvailableNumberListResponse dto =
+        new AvailableNumberListResponse(
             AvailableNumberDtoTest.availableNumberList.getAvailableNumbers());
 
     Collection<AvailableNumber> converted = AvailableNumberDtoConverter.convert(dto);
@@ -44,9 +45,7 @@ class AvailableNumberDtoConverterTest {
 
   @Test
   void convertEmptyAvailableNumberListResponse() {
-    com.sinch.sdk.domains.numbers.models.v1.available.response.AvailableNumberListResponse dto =
-        new com.sinch.sdk.domains.numbers.models.v1.available.response.AvailableNumberListResponse(
-            null);
+    AvailableNumberListResponse dto = new AvailableNumberListResponse(null);
     Collection<AvailableNumber> converted = AvailableNumberDtoConverter.convert(dto);
 
     assertEquals(converted.size(), 0);

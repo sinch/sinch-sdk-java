@@ -1,10 +1,10 @@
-package com.sinch.sample.numbers.active;
+package com.sinch.sample.numbers;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
-import com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberListRequest;
-import com.sinch.sdk.domains.numbers.models.v1.active.response.ActiveNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse;
 import java.io.IOException;
 import java.util.logging.Logger;
 

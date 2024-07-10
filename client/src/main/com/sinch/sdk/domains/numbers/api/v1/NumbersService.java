@@ -2,14 +2,14 @@ package com.sinch.sdk.domains.numbers.api.v1;
 
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
-import com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberListRequest;
-import com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberUpdateRequest;
-import com.sinch.sdk.domains.numbers.models.v1.active.response.ActiveNumberListResponse;
-import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberListRequest;
-import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberRentAnyRequest;
-import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberRentRequest;
-import com.sinch.sdk.domains.numbers.models.v1.available.response.AvailableNumber;
-import com.sinch.sdk.domains.numbers.models.v1.available.response.AvailableNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentAnyRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentRequest;
+import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse;
 
 /**
  * Numbers Service
