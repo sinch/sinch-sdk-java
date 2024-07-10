@@ -1,4 +1,4 @@
-package com.sinch.sample.numbers.active;
+package com.sinch.sample.numbers;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.numbers.api.v1.NumbersService;

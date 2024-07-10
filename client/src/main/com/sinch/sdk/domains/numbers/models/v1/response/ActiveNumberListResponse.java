@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.numbers.models.v1.active.response;
+package com.sinch.sdk.domains.numbers.models.v1.response;
 
 import com.sinch.sdk.core.models.pagination.ListResponse;
 import com.sinch.sdk.core.models.pagination.Page;

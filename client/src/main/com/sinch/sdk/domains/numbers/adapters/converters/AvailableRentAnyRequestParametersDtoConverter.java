@@ -3,10 +3,10 @@ package com.sinch.sdk.domains.numbers.adapters.converters;
 import com.sinch.sdk.domains.numbers.models.requests.AvailableNumberRentAnyRequestParameters;
 import com.sinch.sdk.domains.numbers.models.v1.Capability;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
-import com.sinch.sdk.domains.numbers.models.v1.SearchPosition;
 import com.sinch.sdk.domains.numbers.models.v1.SmsConfiguration;
 import com.sinch.sdk.domains.numbers.models.v1.VoiceConfigurationRTC;
-import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberRentAnyRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentAnyRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.SearchPosition;
 import java.util.stream.Collectors;
 
 public class AvailableRentAnyRequestParametersDtoConverter {
@@ -22,8 +22,9 @@ public class AvailableRentAnyRequestParametersDtoConverter {
         .getNumberPattern()
         .ifPresent(
             f -> {
-              com.sinch.sdk.domains.numbers.models.v1.SearchPattern.Builder spBuilder =
-                  com.sinch.sdk.domains.numbers.models.v1.SearchPattern.builder();
+              com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern.Builder spBuilder =
+                  com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern.builder();
+              com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern.builder();
               spBuilder.setPattern(f.getPattern());
               spBuilder.setPosition(
                   null != f.getSearchPattern()

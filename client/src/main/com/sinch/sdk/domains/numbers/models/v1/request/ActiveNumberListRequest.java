@@ -1,8 +1,7 @@
-package com.sinch.sdk.domains.numbers.models.v1.active.request;
+package com.sinch.sdk.domains.numbers.models.v1.request;
 
 import com.sinch.sdk.domains.numbers.models.v1.Capability;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
-import com.sinch.sdk.domains.numbers.models.v1.SearchPattern;
 import java.util.Collection;
 
 /**

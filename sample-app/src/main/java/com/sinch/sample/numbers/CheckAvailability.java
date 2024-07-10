@@ -1,8 +1,8 @@
-package com.sinch.sample.numbers.available;
+package com.sinch.sample.numbers;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
-import com.sinch.sdk.domains.numbers.models.v1.available.response.AvailableNumber;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
 import java.io.IOException;
 import java.util.logging.Logger;
 

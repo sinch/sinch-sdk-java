@@ -1,7 +1,7 @@
 package com.sinch.sdk.domains.numbers.adapters.converters;
 
 import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberUpdateRequestParameters;
-import com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberUpdateRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
 
 public class ActiveNumberUpdateRequestParametersDtoConverter {
 

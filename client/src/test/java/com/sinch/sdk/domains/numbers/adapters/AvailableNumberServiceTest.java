@@ -17,8 +17,8 @@ import com.sinch.sdk.domains.numbers.models.requests.*;
 import com.sinch.sdk.domains.numbers.models.responses.AvailableNumberListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumberDtoTest;
 import com.sinch.sdk.domains.numbers.models.v1.AvailableNumberDtoTest;
-import com.sinch.sdk.domains.numbers.models.v1.SearchPosition;
-import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.SearchPosition;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -48,8 +48,7 @@ class AvailableNumberServiceTest extends BaseTest {
                     .setType(com.sinch.sdk.domains.numbers.models.v1.NumberType.MOBILE)
                     .build())))
         .thenReturn(
-            new com.sinch.sdk.domains.numbers.models.v1.available.response
-                .AvailableNumberListResponse(
+            new com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse(
                 AvailableNumberDtoTest.availableNumberList.getAvailableNumbers()));
 
     AvailableNumberListAllRequestParameters parameters =
@@ -88,7 +87,7 @@ class AvailableNumberServiceTest extends BaseTest {
                     .setRegionCode("another region")
                     .setType(com.sinch.sdk.domains.numbers.models.v1.NumberType.TOLL_FREE)
                     .setSearchPattern(
-                        com.sinch.sdk.domains.numbers.models.v1.SearchPattern.builder()
+                        com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern.builder()
                             .setPattern("pattern value")
                             .setPosition(SearchPosition.END)
                             .build())
@@ -98,8 +97,7 @@ class AvailableNumberServiceTest extends BaseTest {
                     .setSize(45)
                     .build())))
         .thenReturn(
-            new com.sinch.sdk.domains.numbers.models.v1.available.response
-                .AvailableNumberListResponse(
+            new com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse(
                 AvailableNumberDtoTest.availableNumberList.getAvailableNumbers()));
 
     AvailableNumberListAllRequestParameters parameters =
