@@ -8,23 +8,22 @@ import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.domains.numbers.api.v1.internal.AvailableNumberApi;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
-import com.sinch.sdk.domains.numbers.models.v1.SearchPattern;
-import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberListRequest;
-import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberListRequestImpl;
-import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberRentAnyRequest;
-import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberRentRequest;
-import com.sinch.sdk.domains.numbers.models.v1.available.response.AvailableNumber;
-import com.sinch.sdk.domains.numbers.models.v1.available.response.AvailableNumberListResponse;
-import com.sinch.sdk.domains.numbers.models.v1.available.response.internal.AvailableNumberListResponseInternal;
-import com.sinch.sdk.domains.numbers.models.v1.available.response.internal.AvailableNumberListResponseInternalImpl;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberListRequestImpl;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentAnyRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.internal.AvailableNumberListResponseInternal;
+import com.sinch.sdk.domains.numbers.models.v1.response.internal.AvailableNumberListResponseInternalImpl;
 import com.sinch.sdk.models.NumbersContext;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class AvailableNumberService
-    implements com.sinch.sdk.domains.numbers.api.v1.AvailableNumberService {
+public class AvailableNumberService {
 
   private final String uriUUID;
   private final AvailableNumberApi api;

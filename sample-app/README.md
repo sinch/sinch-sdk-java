@@ -70,19 +70,19 @@ See https://developers.sinch.com for details about these parameters
 
 #### Numbers
 
-| Service   | Sample            | Class                                                                                                                           |                                  |
-|-----------|-------------------|---------------------------------------------------------------------------------------------------------------------------------|----------------------------------|
-| Available | CheckAvailability | [com.sinch.sample.numbers.available.CheckAvailability](src/main/java/com/sinch/sample/numbers/available/CheckAvailability.java) | Require `PHONE_NUMBER` parameter |
-|           | List              | [com.sinch.sample.numbers.available.List](src/main/java/com/sinch/sample/numbers/available/List.java)                           |                                  |
-|           | Rent              | [com.sinch.sample.numbers.available.Rent](src/main/java/com/sinch/sample/numbers/available/Rent.java)                           | Require `PHONE_NUMBER` parameter |
-|           | RentAny           | [com.sinch.sample.numbers.available.RentAny](src/main/java/com/sinch/sample/numbers/available/RentAny.java)                     |                                  |
-| Active    | Get               | [com.sinch.sample.numbers.active.Get](src/main/java/com/sinch/sample/numbers/active/Get.java)                                   | Require `PHONE_NUMBER` parameter |
-|           | List              | [com.sinch.sample.numbers.active.List](src/main/java/com/sinch/sample/numbers/active/List.java)                                 |                                  |
-|           | Release           | [com.sinch.sample.numbers.active.Release](src/main/java/com/sinch/sample/numbers/active/Release.java)                           | Require `PHONE_NUMBER` parameter |
-|           | Update            | [com.sinch.sample.numbers.active.Update](src/main/java/com/sinch/sample/numbers/active/Update.java)                             | Require `PHONE_NUMBER` parameter |
-| Callback  | Get               | [com.sinch.sample.numbers.callback.Get](src/main/java/com/sinch/sample/numbers/callback/Get.java)                               |                                  |
-|           | Update            | [com.sinch.sample.numbers.callback.Update](src/main/java/com/sinch/sample/numbers/callback/Get.java)                            |                                  |
-| Regions   | ListAll           | [com.sinch.sample.numbers.regions.List](src/main/java/com/sinch/sample/numbers/regions/List.java)                               |                                  |
+| Service  | Sample                     | Class                                                                                                                           |                                  |
+|----------|----------------------------|---------------------------------------------------------------------------------------------------------------------------------|----------------------------------|
+| Numbers  | CheckAvailability          | [com.sinch.sample.numbers.CheckAvailability](src/main/java/com/sinch/sample/numbers/CheckAvailability.java) | Require `PHONE_NUMBER` parameter |
+|          | SearchForAvailableNumbers  | [com.sinch.sample.numbers.SearchForAvailableNumbers](src/main/java/com/sinch/sample/numbers/SearchForAvailableNumbers.java)                           |                                  |
+|          | Rent                       | [com.sinch.sample.numbers.Rent](src/main/java/com/sinch/sample/numbers/Rent.java)                           | Require `PHONE_NUMBER` parameter |
+|          | RentAny                    | [com.sinch.sample.numbers.RentAny](src/main/java/com/sinch/sample/numbers/RentAny.java)                     |                                  |
+|          | Get                        | [com.sinch.sample.numbers.Get](src/main/java/com/sinch/sample/numbers/Get.java)                                   | Require `PHONE_NUMBER` parameter |
+|          | List                       | [com.sinch.sample.numbers.List](src/main/java/com/sinch/sample/numbers/List.java)                                 |                                  |
+|          | Release                    | [com.sinch.sample.numbers.Release](src/main/java/com/sinch/sample/numbers/Release.java)                           | Require `PHONE_NUMBER` parameter |
+|          | Update                     | [com.sinch.sample.numbers.Update](src/main/java/com/sinch/sample/numbers/Update.java)                             | Require `PHONE_NUMBER` parameter |
+| Callback | Get                        | [com.sinch.sample.numbers.callback.Get](src/main/java/com/sinch/sample/numbers/callback/Get.java)                               |                                  |
+|          | Update                     | [com.sinch.sample.numbers.callback.Update](src/main/java/com/sinch/sample/numbers/callback/Get.java)                            |                                  |
+| Regions  | ListAll                    | [com.sinch.sample.numbers.regions.List](src/main/java/com/sinch/sample/numbers/regions/List.java)                               |                                  |
 
 #### SMS
 

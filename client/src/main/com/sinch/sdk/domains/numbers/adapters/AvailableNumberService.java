@@ -13,17 +13,17 @@ import com.sinch.sdk.domains.numbers.models.requests.AvailableNumberRentRequestP
 import com.sinch.sdk.domains.numbers.models.responses.AvailableNumberListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.Capability;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
-import com.sinch.sdk.domains.numbers.models.v1.SearchPosition;
-import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.SearchPosition;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
 public class AvailableNumberService
     implements com.sinch.sdk.domains.numbers.AvailableNumberService {
 
-  private final com.sinch.sdk.domains.numbers.api.v1.AvailableNumberService v1;
+  private final com.sinch.sdk.domains.numbers.api.v1.NumbersService v1;
 
-  public AvailableNumberService(com.sinch.sdk.domains.numbers.api.v1.AvailableNumberService v1) {
+  public AvailableNumberService(com.sinch.sdk.domains.numbers.api.v1.NumbersService v1) {
     this.v1 = v1;
   }
 
@@ -39,8 +39,8 @@ public class AvailableNumberService
         .getNumberPattern()
         .ifPresent(
             f -> {
-              com.sinch.sdk.domains.numbers.models.v1.SearchPattern.Builder spBuilder =
-                  com.sinch.sdk.domains.numbers.models.v1.SearchPattern.builder();
+              com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern.Builder spBuilder =
+                  com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern.builder();
               spBuilder.setPattern(f.getPattern());
               spBuilder.setPosition(
                   null != f.getSearchPattern()
@@ -58,8 +58,8 @@ public class AvailableNumberService
 
     parameters.getSize().ifPresent(builder::setSize);
 
-    com.sinch.sdk.domains.numbers.models.v1.available.response.AvailableNumberListResponse
-        response = v1.list(builder.build());
+    com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse response =
+        v1.searchForAvailableNumbers(builder.build());
 
     Collection<AvailableNumber> entities = AvailableNumberDtoConverter.convert(response);
 
@@ -68,7 +68,7 @@ public class AvailableNumberService
 
   public AvailableNumber checkAvailability(String phoneNumber) throws ApiException {
 
-    com.sinch.sdk.domains.numbers.models.v1.available.response.AvailableNumber response =
+    com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber response =
         v1.checkAvailability(phoneNumber);
     return AvailableNumberDtoConverter.convert(response);
   }

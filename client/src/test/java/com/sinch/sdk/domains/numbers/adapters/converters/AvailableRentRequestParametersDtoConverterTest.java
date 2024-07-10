@@ -6,7 +6,7 @@ import com.sinch.sdk.domains.numbers.models.requests.RentSMSConfigurationRequest
 import com.sinch.sdk.domains.numbers.models.requests.RentVoiceConfigurationRequestParameters;
 import com.sinch.sdk.domains.numbers.models.v1.SmsConfiguration;
 import com.sinch.sdk.domains.numbers.models.v1.VoiceConfigurationRTC;
-import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberRentRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentRequest;
 import org.junit.jupiter.api.Test;
 
 class AvailableRentRequestParametersDtoConverterTest {

@@ -5,7 +5,7 @@ import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.numbers.models.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.Capability;
 import com.sinch.sdk.domains.numbers.models.NumberType;
-import com.sinch.sdk.domains.numbers.models.v1.active.response.ActiveNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;

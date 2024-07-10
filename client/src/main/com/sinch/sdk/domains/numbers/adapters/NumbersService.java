@@ -28,7 +28,7 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.NumbersServ
 
   public AvailableNumberService available() {
     if (null == this.available) {
-      this.available = new AvailableNumberService(v1.available());
+      this.available = new AvailableNumberService(v1);
     }
     return this.available;
   }
@@ -42,7 +42,7 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.NumbersServ
 
   public ActiveNumberService active() {
     if (null == this.active) {
-      this.active = new ActiveNumberService(v1.active());
+      this.active = new ActiveNumberService(v1);
     }
     return this.active;
   }

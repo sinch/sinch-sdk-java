@@ -1,9 +1,19 @@
 package com.sinch.sdk.domains.numbers.api.v1.adapters;
 
 import com.sinch.sdk.auth.adapters.BasicAuthManager;
+import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.utils.StringUtil;
+import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
+import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentAnyRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentRequest;
+import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
@@ -62,7 +72,7 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 
-  public AvailableNumberService available() {
+  AvailableNumberService available() {
     if (null == this.available) {
       this.available = new AvailableNumberService(uriUUID, context, httpClient, authManagers);
     }
@@ -76,9 +86,9 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
     return this.regions;
   }
 
-  public ActiveNumberService active() {
+  ActiveNumberService active() {
     if (null == this.active) {
-      this.active = new ActiveNumberService(uriUUID, context, httpClient, authManagers);
+      this.active = new ActiveNumberService(uriUUID, this, context, httpClient, authManagers);
     }
     return this.active;
   }
@@ -96,6 +106,41 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
       this.webhooks = new WebHooksService();
     }
     return this.webhooks;
+  }
+
+  public AvailableNumberListResponse searchForAvailableNumbers(
+      AvailableNumberListRequest parameters) throws ApiException {
+    return available().list(parameters);
+  }
+
+  public AvailableNumber checkAvailability(String phoneNumber) throws ApiException {
+    return available().checkAvailability(phoneNumber);
+  }
+
+  public ActiveNumber rent(String phoneNumber, AvailableNumberRentRequest parameters)
+      throws ApiException {
+    return available().rent(phoneNumber, parameters);
+  }
+
+  public ActiveNumber rentAny(AvailableNumberRentAnyRequest parameters) throws ApiException {
+    return available().rentAny(parameters);
+  }
+
+  public ActiveNumberListResponse list(ActiveNumberListRequest parameters) throws ApiException {
+    return active().list(parameters);
+  }
+
+  public ActiveNumber get(String phoneNumber) throws ApiException {
+    return active().get(phoneNumber);
+  }
+
+  public ActiveNumber update(String phoneNumber, ActiveNumberUpdateRequest parameters)
+      throws ApiException {
+    return active().update(phoneNumber, parameters);
+  }
+
+  public ActiveNumber release(String phoneNumber) throws ApiException {
+    return active().release(phoneNumber);
   }
 
   static final class LocalLazyInit {

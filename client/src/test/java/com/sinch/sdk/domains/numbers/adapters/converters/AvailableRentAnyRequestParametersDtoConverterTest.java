@@ -8,10 +8,10 @@ import com.sinch.sdk.domains.numbers.models.SearchPattern;
 import com.sinch.sdk.domains.numbers.models.requests.AvailableNumberRentAnyRequestParameters;
 import com.sinch.sdk.domains.numbers.models.requests.RentSMSConfigurationRequestParameters;
 import com.sinch.sdk.domains.numbers.models.requests.RentVoiceConfigurationRequestParameters;
-import com.sinch.sdk.domains.numbers.models.v1.SearchPosition;
 import com.sinch.sdk.domains.numbers.models.v1.SmsConfiguration;
 import com.sinch.sdk.domains.numbers.models.v1.VoiceConfigurationRTC;
-import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberRentAnyRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentAnyRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.SearchPosition;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
@@ -44,7 +44,7 @@ class AvailableRentAnyRequestParametersDtoConverterTest {
             .setRegionCode("region code")
             .setType(com.sinch.sdk.domains.numbers.models.v1.NumberType.from("foo type"))
             .setNumberPattern(
-                com.sinch.sdk.domains.numbers.models.v1.SearchPattern.builder()
+                com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern.builder()
                     .setPattern("pattern")
                     .setPosition(SearchPosition.CONTAINS)
                     .build())

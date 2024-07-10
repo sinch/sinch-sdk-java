@@ -6,21 +6,19 @@ import static com.sinch.sample.Utils.echoStep;
 import com.sinch.sample.Utils;
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.domains.numbers.api.v1.ActiveNumberService;
-import com.sinch.sdk.domains.numbers.api.v1.AvailableNumberService;
 import com.sinch.sdk.domains.numbers.api.v1.AvailableRegionService;
 import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
-import com.sinch.sdk.domains.numbers.models.v1.SearchPattern;
-import com.sinch.sdk.domains.numbers.models.v1.SearchPosition;
-import com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberListRequest;
-import com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberUpdateRequest;
-import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberListRequest;
-import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberRentAnyRequest;
-import com.sinch.sdk.domains.numbers.models.v1.available.request.AvailableNumberRentRequest;
-import com.sinch.sdk.domains.numbers.models.v1.available.response.AvailableNumber;
 import com.sinch.sdk.domains.numbers.models.v1.regions.available.request.AvailableRegionListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentAnyRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern;
+import com.sinch.sdk.domains.numbers.models.v1.request.SearchPosition;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
 import com.sinch.sdk.models.Configuration;
 import java.util.Collections;
 import java.util.Optional;
@@ -62,30 +60,29 @@ public class NumbersSampleFlow {
 
     if (rentByNumber) {
       //   2.1 can be rent by phone number
-      phoneNumber =
-          getAvailablePhoneNumber(++step, service.available(), regionCode, testCodePattern);
+      phoneNumber = getAvailablePhoneNumber(++step, service, regionCode, testCodePattern);
       // Rent by phone number
-      rentPhoneNumber(++step, service.available(), phoneNumber);
+      rentPhoneNumber(++step, service, phoneNumber);
     } else {
       //   2.2 or can be rent by filtering parameters
-      phoneNumber = rentPhoneNumberByAny(++step, service.available(), regionCode, testCodePattern);
+      phoneNumber = rentPhoneNumberByAny(++step, service, regionCode, testCodePattern);
     }
 
     echo("Let's use now the 'ActiveNumbers' API to see how to manage this number.\n");
 
     // 3 Verify number is active
     // 3.1: verify by dedicated phone number request
-    verifyActiveNumberByNumber(++step, service.active(), phoneNumber);
+    verifyActiveNumberByNumber(++step, service, phoneNumber);
     // 3.2: verify by listing page after page and check for requested number
-    verifyActiveNumberByPagination(++step, service.active(), phoneNumber, regionCode);
+    verifyActiveNumberByPagination(++step, service, phoneNumber, regionCode);
     // 3.3: verify by using auto pagination feature and check for requested number
-    verifyActiveNumberByAutoPagination(++step, service.active(), phoneNumber, regionCode);
+    verifyActiveNumberByAutoPagination(++step, service, phoneNumber, regionCode);
 
     // 4: Update an active number
-    updateActiveNumber(++step, service.active(), phoneNumber);
+    updateActiveNumber(++step, service, phoneNumber);
 
     // 5. Release the number
-    releasePhoneNumber(++step, service.active(), phoneNumber);
+    releasePhoneNumber(++step, service, phoneNumber);
   }
 
   String checkAndGetRegionCodeAvailability(
@@ -141,7 +138,7 @@ public class NumbersSampleFlow {
   }
 
   String getAvailablePhoneNumber(
-      int step, AvailableNumberService service, String regionCode, String codePattern) {
+      int step, NumbersService service, String regionCode, String codePattern) {
 
     echoStep(
         step,
@@ -166,7 +163,8 @@ public class NumbersSampleFlow {
 
     // 2. Request for available numbers using the built-in SDK method
     // This API is following the SDK pattern for list and the server response is wrapped inside a
-    var availableNumbersListResponse = service.list(availableNumbersRequestData);
+    var availableNumbersListResponse =
+        service.searchForAvailableNumbers(availableNumbersRequestData);
 
     // 3. Looking for first available number
     // auto iteration other items is available for all List responses.
@@ -192,7 +190,7 @@ public class NumbersSampleFlow {
     return phoneNumber;
   }
 
-  void rentPhoneNumber(int step, AvailableNumberService service, String phoneNumber) {
+  void rentPhoneNumber(int step, NumbersService service, String phoneNumber) {
 
     echoStep(step, "Rent phone number: '" + phoneNumber + "'");
 
@@ -210,8 +208,7 @@ public class NumbersSampleFlow {
             + rentedNumber.getNextChargeDate());
   }
 
-  String rentPhoneNumberByAny(
-      int step, AvailableNumberService service, String regionCode, String pattern) {
+  String rentPhoneNumberByAny(int step, NumbersService service, String regionCode, String pattern) {
 
     echoStep(step, "Rent a phone number for region '" + regionCode + "'");
 
@@ -239,7 +236,7 @@ public class NumbersSampleFlow {
     return rentedNumber.getPhoneNumber();
   }
 
-  void verifyActiveNumberByNumber(int step, ActiveNumberService service, String phoneNumber) {
+  void verifyActiveNumberByNumber(int step, NumbersService service, String phoneNumber) {
     echoStep(
         step,
         "Verify the number is part of our active numbers - Method 1: Give the number in input");
@@ -258,7 +255,7 @@ public class NumbersSampleFlow {
   }
 
   void verifyActiveNumberByPagination(
-      int step, ActiveNumberService service, String phoneNumber, String regionCode) {
+      int step, NumbersService service, String phoneNumber, String regionCode) {
 
     echoStep(
         step,
@@ -312,7 +309,7 @@ public class NumbersSampleFlow {
   }
 
   void verifyActiveNumberByAutoPagination(
-      int step, ActiveNumberService service, String phoneNumber, String regionCode) {
+      int step, NumbersService service, String phoneNumber, String regionCode) {
 
     echoStep(
         step,
@@ -356,7 +353,7 @@ public class NumbersSampleFlow {
             + "listed in the active numbers.\n");
   }
 
-  void updateActiveNumber(int step, ActiveNumberService service, String phoneNumber) {
+  void updateActiveNumber(int step, NumbersService service, String phoneNumber) {
 
     echoStep(step, "Update active number: '" + phoneNumber + "'");
 
@@ -377,7 +374,7 @@ public class NumbersSampleFlow {
             + "'\n");
   }
 
-  void releasePhoneNumber(int step, ActiveNumberService service, String phoneNumber) {
+  void releasePhoneNumber(int step, NumbersService service, String phoneNumber) {
     echoStep(step, "Releasing  phone number: '" + phoneNumber + "'");
 
     // 1. Request to release the number

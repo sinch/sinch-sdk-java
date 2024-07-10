@@ -29,6 +29,7 @@ import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberUpdateSMSConfig
 import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberUpdateVoiceConfigurationRequestParameters;
 import com.sinch.sdk.domains.numbers.models.responses.ActiveNumberListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumberDtoTest;
+import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,7 +41,7 @@ import org.mockito.Mock;
 @TestWithResources
 class ActiveNumberServiceTest extends BaseTest {
 
-  @Mock com.sinch.sdk.domains.numbers.api.v1.ActiveNumberService v1;
+  @Mock com.sinch.sdk.domains.numbers.api.v1.NumbersService v1;
 
   ActiveNumberService service;
 
@@ -85,12 +86,11 @@ class ActiveNumberServiceTest extends BaseTest {
   @Test
   void list() throws ApiException {
 
-    com.sinch.sdk.domains.numbers.models.v1.active.response.ActiveNumberListResponse responseV1 =
-        new com.sinch.sdk.domains.numbers.models.v1.active.response.ActiveNumberListResponse(
+    com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse responseV1 =
+        new com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse(
             v1,
             new Page<>(
-                com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberListRequest
-                    .builder()
+                ActiveNumberListRequest.builder()
                     .setRegionCode("another region")
                     .setType(com.sinch.sdk.domains.numbers.models.v1.NumberType.MOBILE)
                     .build(),
@@ -98,7 +98,7 @@ class ActiveNumberServiceTest extends BaseTest {
                 new TokenPageNavigator("")));
 
     when(v1.list(
-            com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberListRequest.builder()
+            ActiveNumberListRequest.builder()
                 .setRegionCode("region")
                 .setType(com.sinch.sdk.domains.numbers.models.v1.NumberType.MOBILE)
                 .build()))
@@ -142,44 +142,44 @@ class ActiveNumberServiceTest extends BaseTest {
   @Test
   void listWithParameters() throws ApiException {
 
-    com.sinch.sdk.domains.numbers.models.v1.active.response.ActiveNumberListResponse responseV1 =
-        new com.sinch.sdk.domains.numbers.models.v1.active.response.ActiveNumberListResponse(
+    com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse responseV1 =
+        new com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse(
             v1,
             new Page<>(
-                com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberListRequest
-                    .builder()
+                ActiveNumberListRequest.builder()
                     .setRegionCode("another region")
                     .setType(com.sinch.sdk.domains.numbers.models.v1.NumberType.TOLL_FREE)
                     .setSearchPattern(
-                        com.sinch.sdk.domains.numbers.models.v1.SearchPattern.builder()
+                        com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern.builder()
                             .setPattern("pattern value")
-                            .setPosition(com.sinch.sdk.domains.numbers.models.v1.SearchPosition.END)
+                            .setPosition(
+                                com.sinch.sdk.domains.numbers.models.v1.request.SearchPosition.END)
                             .build())
                     .setCapabilities(
                         Arrays.asList(com.sinch.sdk.domains.numbers.models.v1.Capability.VOICE))
                     .setPageSize(5)
                     .setPageToken("foo")
                     .setOrderBy(
-                        com.sinch.sdk.domains.numbers.models.v1.active.request.OrderBy.PHONE_NUMBER)
+                        com.sinch.sdk.domains.numbers.models.v1.request.OrderBy.PHONE_NUMBER)
                     .build(),
                 ActiveNumberDtoTest.activeNumberList.getActiveNumbers(),
                 new TokenPageNavigator("foo")));
 
     when(v1.list(
-            com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberListRequest.builder()
+            ActiveNumberListRequest.builder()
                 .setRegionCode("another region")
                 .setType(com.sinch.sdk.domains.numbers.models.v1.NumberType.TOLL_FREE)
                 .setSearchPattern(
-                    com.sinch.sdk.domains.numbers.models.v1.SearchPattern.builder()
+                    com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern.builder()
                         .setPattern("pattern value")
-                        .setPosition(com.sinch.sdk.domains.numbers.models.v1.SearchPosition.END)
+                        .setPosition(
+                            com.sinch.sdk.domains.numbers.models.v1.request.SearchPosition.END)
                         .build())
                 .setCapabilities(
                     Arrays.asList(com.sinch.sdk.domains.numbers.models.v1.Capability.VOICE))
                 .setPageSize(5)
                 .setPageToken("foo")
-                .setOrderBy(
-                    com.sinch.sdk.domains.numbers.models.v1.active.request.OrderBy.PHONE_NUMBER)
+                .setOrderBy(com.sinch.sdk.domains.numbers.models.v1.request.OrderBy.PHONE_NUMBER)
                 .build()))
         .thenReturn(responseV1);
 

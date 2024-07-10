@@ -5,7 +5,7 @@ import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberUpdateRequestPa
 import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberUpdateSMSConfigurationRequestParameters;
 import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberUpdateVoiceConfigurationRequestParameters;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumberDtoTest;
-import com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberUpdateRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
 import org.junit.jupiter.api.Test;
 
 class ActiveNumberUpdateRequestParametersDtoConverterTest {
