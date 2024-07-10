@@ -5,7 +5,7 @@ import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
-import com.sinch.sdk.domains.numbers.models.v1.active.request.ActiveNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 

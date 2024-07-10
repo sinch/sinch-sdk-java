@@ -1,5 +1,5 @@
 /**
- * Numbers Active API responses related models
+ * Numbers API responses related models
  *
  * @since 1.2
  */

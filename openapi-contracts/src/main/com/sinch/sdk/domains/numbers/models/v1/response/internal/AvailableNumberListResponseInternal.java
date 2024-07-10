@@ -10,27 +10,22 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.numbers.models.v1;
+package com.sinch.sdk.domains.numbers.models.v1.response.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
+import java.util.List;
 
-/** SearchPattern */
-@JsonDeserialize(builder = SearchPatternImpl.Builder.class)
-public interface SearchPattern {
-
-  /**
-   * Sequence of digits to search for.
-   *
-   * @return pattern
-   */
-  String getPattern();
+/** Response message to list available phone numbers. */
+@JsonDeserialize(builder = AvailableNumberListResponseInternalImpl.Builder.class)
+public interface AvailableNumberListResponseInternal {
 
   /**
-   * Get position
+   * List of available phone numbers.
    *
-   * @return position
+   * @return availableNumbers
    */
-  SearchPosition getPosition();
+  List<AvailableNumber> getAvailableNumbers();
 
   /**
    * Getting builder
@@ -38,7 +33,7 @@ public interface SearchPattern {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new SearchPatternImpl.Builder();
+    return new AvailableNumberListResponseInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -47,26 +42,17 @@ public interface SearchPattern {
     /**
      * see getter
      *
-     * @param pattern see getter
+     * @param availableNumbers see getter
      * @return Current builder
-     * @see #getPattern
+     * @see #getAvailableNumbers
      */
-    Builder setPattern(String pattern);
-
-    /**
-     * see getter
-     *
-     * @param position see getter
-     * @return Current builder
-     * @see #getPosition
-     */
-    Builder setPosition(SearchPosition position);
+    Builder setAvailableNumbers(List<AvailableNumber> availableNumbers);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    SearchPattern build();
+    AvailableNumberListResponseInternal build();
   }
 }

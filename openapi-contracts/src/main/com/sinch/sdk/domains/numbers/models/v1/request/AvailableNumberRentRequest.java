@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.numbers.models.v1.available.request;
+package com.sinch.sdk.domains.numbers.models.v1.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.numbers.models.v1.SmsConfiguration;

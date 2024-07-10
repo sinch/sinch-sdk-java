@@ -10,22 +10,49 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.numbers.models.v1.active.request;
+package com.sinch.sdk.domains.numbers.models.v1.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.numbers.models.v1.Capability;
+import com.sinch.sdk.domains.numbers.models.v1.NumberType;
 import com.sinch.sdk.domains.numbers.models.v1.SmsConfiguration;
 import com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration;
+import java.util.List;
 
-/** The phone number that has been rented by a customer and assigned to a project. */
-@JsonDeserialize(builder = ActiveNumberUpdateRequestImpl.Builder.class)
-public interface ActiveNumberUpdateRequest {
+/**
+ * Request message for searching and renting in one go any number that matches the search criteria.
+ */
+@JsonDeserialize(builder = AvailableNumberRentAnyRequestImpl.Builder.class)
+public interface AvailableNumberRentAnyRequest {
 
   /**
-   * User supplied name for the phone number.
+   * Get numberPattern
    *
-   * @return displayName
+   * @return numberPattern
    */
-  String getDisplayName();
+  SearchPattern getNumberPattern();
+
+  /**
+   * Region code to filter by. ISO 3166-1 alpha-2 country code of the phone number. Example: <code>
+   * US</code>, <code>GB</code> or <code>SE</code>.
+   *
+   * @return regionCode
+   */
+  String getRegionCode();
+
+  /**
+   * Get type
+   *
+   * @return type
+   */
+  NumberType getType();
+
+  /**
+   * Number capabilities to filter by, <code>SMS</code> and/or <code>VOICE</code>.
+   *
+   * @return capabilities
+   */
+  List<Capability> getCapabilities();
 
   /**
    * Get smsConfiguration
@@ -54,7 +81,7 @@ public interface ActiveNumberUpdateRequest {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ActiveNumberUpdateRequestImpl.Builder();
+    return new AvailableNumberRentAnyRequestImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -63,11 +90,38 @@ public interface ActiveNumberUpdateRequest {
     /**
      * see getter
      *
-     * @param displayName see getter
+     * @param numberPattern see getter
      * @return Current builder
-     * @see #getDisplayName
+     * @see #getNumberPattern
      */
-    Builder setDisplayName(String displayName);
+    Builder setNumberPattern(SearchPattern numberPattern);
+
+    /**
+     * see getter
+     *
+     * @param regionCode see getter
+     * @return Current builder
+     * @see #getRegionCode
+     */
+    Builder setRegionCode(String regionCode);
+
+    /**
+     * see getter
+     *
+     * @param type see getter
+     * @return Current builder
+     * @see #getType
+     */
+    Builder setType(NumberType type);
+
+    /**
+     * see getter
+     *
+     * @param capabilities see getter
+     * @return Current builder
+     * @see #getCapabilities
+     */
+    Builder setCapabilities(List<Capability> capabilities);
 
     /**
      * see getter
@@ -101,6 +155,6 @@ public interface ActiveNumberUpdateRequest {
      *
      * @return The instance build with current builder values
      */
-    ActiveNumberUpdateRequest build();
+    AvailableNumberRentAnyRequest build();
   }
 }

@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.numbers.models.v1.available.request;
+package com.sinch.sdk.domains.numbers.models.v1.request;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,14 +12,19 @@ import com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  AvailableNumberRentRequestImpl.JSON_PROPERTY_SMS_CONFIGURATION,
-  AvailableNumberRentRequestImpl.JSON_PROPERTY_VOICE_CONFIGURATION,
-  AvailableNumberRentRequestImpl.JSON_PROPERTY_CALLBACK_URL
+  ActiveNumberUpdateRequestImpl.JSON_PROPERTY_DISPLAY_NAME,
+  ActiveNumberUpdateRequestImpl.JSON_PROPERTY_SMS_CONFIGURATION,
+  ActiveNumberUpdateRequestImpl.JSON_PROPERTY_VOICE_CONFIGURATION,
+  ActiveNumberUpdateRequestImpl.JSON_PROPERTY_CALLBACK_URL
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class AvailableNumberRentRequestImpl implements AvailableNumberRentRequest {
+public class ActiveNumberUpdateRequestImpl implements ActiveNumberUpdateRequest {
   private static final long serialVersionUID = 1L;
+
+  public static final String JSON_PROPERTY_DISPLAY_NAME = "displayName";
+
+  private OptionalValue<String> displayName;
 
   public static final String JSON_PROPERTY_SMS_CONFIGURATION = "smsConfiguration";
 
@@ -33,15 +38,28 @@ public class AvailableNumberRentRequestImpl implements AvailableNumberRentReques
 
   private OptionalValue<String> callbackUrl;
 
-  public AvailableNumberRentRequestImpl() {}
+  public ActiveNumberUpdateRequestImpl() {}
 
-  protected AvailableNumberRentRequestImpl(
+  protected ActiveNumberUpdateRequestImpl(
+      OptionalValue<String> displayName,
       OptionalValue<SmsConfiguration> smsConfiguration,
       OptionalValue<VoiceConfiguration> voiceConfiguration,
       OptionalValue<String> callbackUrl) {
+    this.displayName = displayName;
     this.smsConfiguration = smsConfiguration;
     this.voiceConfiguration = voiceConfiguration;
     this.callbackUrl = callbackUrl;
+  }
+
+  @JsonIgnore
+  public String getDisplayName() {
+    return displayName.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_DISPLAY_NAME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> displayName() {
+    return displayName;
   }
 
   @JsonIgnore
@@ -77,7 +95,7 @@ public class AvailableNumberRentRequestImpl implements AvailableNumberRentReques
     return callbackUrl;
   }
 
-  /** Return true if this RentNumberRequest object is equal to o. */
+  /** Return true if this ActiveNumberRequest object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -86,21 +104,23 @@ public class AvailableNumberRentRequestImpl implements AvailableNumberRentReques
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AvailableNumberRentRequestImpl rentNumberRequest = (AvailableNumberRentRequestImpl) o;
-    return Objects.equals(this.smsConfiguration, rentNumberRequest.smsConfiguration)
-        && Objects.equals(this.voiceConfiguration, rentNumberRequest.voiceConfiguration)
-        && Objects.equals(this.callbackUrl, rentNumberRequest.callbackUrl);
+    ActiveNumberUpdateRequestImpl activeNumberRequest = (ActiveNumberUpdateRequestImpl) o;
+    return Objects.equals(this.displayName, activeNumberRequest.displayName)
+        && Objects.equals(this.smsConfiguration, activeNumberRequest.smsConfiguration)
+        && Objects.equals(this.voiceConfiguration, activeNumberRequest.voiceConfiguration)
+        && Objects.equals(this.callbackUrl, activeNumberRequest.callbackUrl);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(smsConfiguration, voiceConfiguration, callbackUrl);
+    return Objects.hash(displayName, smsConfiguration, voiceConfiguration, callbackUrl);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AvailableNumberRentRequestImpl {\n");
+    sb.append("class ActiveNumberUpdateRequestImpl {\n");
+    sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
     sb.append("    smsConfiguration: ").append(toIndentedString(smsConfiguration)).append("\n");
     sb.append("    voiceConfiguration: ").append(toIndentedString(voiceConfiguration)).append("\n");
     sb.append("    callbackUrl: ").append(toIndentedString(callbackUrl)).append("\n");
@@ -119,10 +139,17 @@ public class AvailableNumberRentRequestImpl implements AvailableNumberRentReques
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements AvailableNumberRentRequest.Builder {
+  static class Builder implements ActiveNumberUpdateRequest.Builder {
+    OptionalValue<String> displayName = OptionalValue.empty();
     OptionalValue<SmsConfiguration> smsConfiguration = OptionalValue.empty();
     OptionalValue<VoiceConfiguration> voiceConfiguration = OptionalValue.empty();
     OptionalValue<String> callbackUrl = OptionalValue.empty();
+
+    @JsonProperty(JSON_PROPERTY_DISPLAY_NAME)
+    public Builder setDisplayName(String displayName) {
+      this.displayName = OptionalValue.of(displayName);
+      return this;
+    }
 
     @JsonProperty(JSON_PROPERTY_SMS_CONFIGURATION)
     public Builder setSmsConfiguration(SmsConfiguration smsConfiguration) {
@@ -142,8 +169,9 @@ public class AvailableNumberRentRequestImpl implements AvailableNumberRentReques
       return this;
     }
 
-    public AvailableNumberRentRequest build() {
-      return new AvailableNumberRentRequestImpl(smsConfiguration, voiceConfiguration, callbackUrl);
+    public ActiveNumberUpdateRequest build() {
+      return new ActiveNumberUpdateRequestImpl(
+          displayName, smsConfiguration, voiceConfiguration, callbackUrl);
     }
   }
 }

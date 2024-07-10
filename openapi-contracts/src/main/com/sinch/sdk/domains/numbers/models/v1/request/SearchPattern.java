@@ -10,22 +10,27 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.numbers.models.v1.available.response.internal;
+package com.sinch.sdk.domains.numbers.models.v1.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.numbers.models.v1.available.response.AvailableNumber;
-import java.util.List;
 
-/** Response message to list available phone numbers. */
-@JsonDeserialize(builder = AvailableNumberListResponseInternalImpl.Builder.class)
-public interface AvailableNumberListResponseInternal {
+/** SearchPattern */
+@JsonDeserialize(builder = SearchPatternImpl.Builder.class)
+public interface SearchPattern {
 
   /**
-   * List of available phone numbers.
+   * Sequence of digits to search for.
    *
-   * @return availableNumbers
+   * @return pattern
    */
-  List<AvailableNumber> getAvailableNumbers();
+  String getPattern();
+
+  /**
+   * Get position
+   *
+   * @return position
+   */
+  SearchPosition getPosition();
 
   /**
    * Getting builder
@@ -33,7 +38,7 @@ public interface AvailableNumberListResponseInternal {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new AvailableNumberListResponseInternalImpl.Builder();
+    return new SearchPatternImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -42,17 +47,26 @@ public interface AvailableNumberListResponseInternal {
     /**
      * see getter
      *
-     * @param availableNumbers see getter
+     * @param pattern see getter
      * @return Current builder
-     * @see #getAvailableNumbers
+     * @see #getPattern
      */
-    Builder setAvailableNumbers(List<AvailableNumber> availableNumbers);
+    Builder setPattern(String pattern);
+
+    /**
+     * see getter
+     *
+     * @param position see getter
+     * @return Current builder
+     * @see #getPosition
+     */
+    Builder setPosition(SearchPosition position);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    AvailableNumberListResponseInternal build();
+    SearchPattern build();
   }
 }

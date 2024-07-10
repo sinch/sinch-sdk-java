@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.numbers.models.v1.active.response.internal;
+package com.sinch.sdk.domains.numbers.models.v1.response.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
