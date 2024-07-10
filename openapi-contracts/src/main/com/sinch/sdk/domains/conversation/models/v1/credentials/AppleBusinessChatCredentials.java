@@ -15,8 +15,8 @@ package com.sinch.sdk.domains.conversation.models.v1.credentials;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
- * If you are including the AppleBC channel in the &#x60;channel_identifier&#x60; property, you must
- * include this object.
+ * If you are including the AppleBC channel in the <code>channel_identifier</code> property, you
+ * must include this object.
  */
 @JsonDeserialize(builder = AppleBusinessChatCredentialsImpl.Builder.class)
 public interface AppleBusinessChatCredentials {

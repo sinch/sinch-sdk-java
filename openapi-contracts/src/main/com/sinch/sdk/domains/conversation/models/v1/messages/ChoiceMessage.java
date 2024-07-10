@@ -15,7 +15,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 
-/** declaration */
+/** Choice Message */
 @JsonDeserialize(builder = ChoiceMessageImpl.Builder.class)
 public interface ChoiceMessage
     extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,

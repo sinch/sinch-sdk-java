@@ -12,4 +12,10 @@
 
 package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(
+    using =
+        FlowChannelSpecificMessageHeaderInternalImpl
+            .FlowChannelSpecificMessageHeaderInternalImplDeserializer.class)
 public interface FlowChannelSpecificMessageHeaderInternal {}

@@ -32,7 +32,8 @@ import java.util.logging.Logger;
     using =
         FlowChannelSpecificMessageHeaderInternalImpl
             .FlowChannelSpecificMessageHeaderInternalImplSerializer.class)
-public class FlowChannelSpecificMessageHeaderInternalImpl extends AbstractOpenApiSchema {
+public class FlowChannelSpecificMessageHeaderInternalImpl extends AbstractOpenApiSchema
+    implements FlowChannelSpecificMessageHeaderInternal {
   private static final Logger log =
       Logger.getLogger(FlowChannelSpecificMessageHeaderInternalImpl.class.getName());
 

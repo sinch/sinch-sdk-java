@@ -32,7 +32,8 @@ import java.util.logging.Logger;
     using =
         ChannelSpecificContactMessageMessageImpl.ChannelSpecificContactMessageMessageImplSerializer
             .class)
-public class ChannelSpecificContactMessageMessageImpl extends AbstractOpenApiSchema {
+public class ChannelSpecificContactMessageMessageImpl extends AbstractOpenApiSchema
+    implements ChannelSpecificContactMessageMessage {
   private static final Logger log =
       Logger.getLogger(ChannelSpecificContactMessageMessageImpl.class.getName());
 

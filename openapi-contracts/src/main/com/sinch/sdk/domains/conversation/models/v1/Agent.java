@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface Agent {
 
   /**
-   * Agent&#39;s display name
+   * Agent's display name
    *
    * @return displayName
    */
@@ -33,7 +33,7 @@ public interface Agent {
   AgentType getType();
 
   /**
-   * The Agent&#39;s picture url.
+   * The Agent's picture url.
    *
    * @return pictureUrl
    */

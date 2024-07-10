@@ -12,4 +12,7 @@
 
 package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(using = ListItemOneOfInternalImpl.ListItemOneOfInternalImplDeserializer.class)
 public interface ListItemOneOfInternal {}

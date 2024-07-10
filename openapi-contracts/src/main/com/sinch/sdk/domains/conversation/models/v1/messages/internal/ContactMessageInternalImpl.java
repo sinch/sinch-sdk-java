@@ -26,7 +26,8 @@ import java.util.logging.Logger;
 
 @JsonDeserialize(using = ContactMessageInternalImpl.ContactMessageInternalImplDeserializer.class)
 @JsonSerialize(using = ContactMessageInternalImpl.ContactMessageInternalImplSerializer.class)
-public class ContactMessageInternalImpl extends AbstractOpenApiSchema {
+public class ContactMessageInternalImpl extends AbstractOpenApiSchema
+    implements ContactMessageInternal {
   private static final Logger log = Logger.getLogger(ContactMessageInternalImpl.class.getName());
 
   public static final class ContactMessageInternalImplSerializer

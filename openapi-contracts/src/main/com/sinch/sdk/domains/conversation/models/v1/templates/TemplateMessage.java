@@ -16,15 +16,15 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import java.util.Map;
 
-/** declaration */
+/** Template Message */
 @JsonDeserialize(builder = TemplateMessageImpl.Builder.class)
 public interface TemplateMessage
     extends com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage {
 
   /**
    * Optional. Channel specific template reference with parameters per channel. The channel template
-   * if exists overrides the omnichannel template. At least one of &#x60;channel_template&#x60; or
-   * &#x60;omni_template&#x60; needs to be present. The key in the map must point to a valid
+   * if exists overrides the omnichannel template. At least one of <code>channel_template</code> or
+   * <code>omni_template</code> needs to be present. The key in the map must point to a valid
    * conversation channel as defined by the enum ConversationChannel.
    *
    * @return channelTemplate

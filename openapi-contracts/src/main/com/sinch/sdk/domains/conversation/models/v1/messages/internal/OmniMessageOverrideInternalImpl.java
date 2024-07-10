@@ -28,7 +28,8 @@ import java.util.logging.Logger;
     using = OmniMessageOverrideInternalImpl.OmniMessageOverrideInternalImplDeserializer.class)
 @JsonSerialize(
     using = OmniMessageOverrideInternalImpl.OmniMessageOverrideInternalImplSerializer.class)
-public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema {
+public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
+    implements OmniMessageOverrideInternal {
   private static final Logger log =
       Logger.getLogger(OmniMessageOverrideInternalImpl.class.getName());
 

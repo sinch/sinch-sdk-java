@@ -8,14 +8,27 @@ import java.util.stream.Stream;
 /** Gets or Sets ReasonSubCode */
 public class ReasonSubCode extends EnumDynamic<String, ReasonSubCode> {
 
+  /**
+   * UNSPECIFIED_SUB_CODE is used if no other sub code can be used to describe the encountered
+   * error.
+   */
   public static final ReasonSubCode UNSPECIFIED_SUB_CODE =
       new ReasonSubCode("UNSPECIFIED_SUB_CODE");
 
+  /**
+   * The message attachment was rejected by the channel due to a policy. Some channels have specific
+   * policies that must be met to receive an attachment.
+   */
   public static final ReasonSubCode ATTACHMENT_REJECTED = new ReasonSubCode("ATTACHMENT_REJECTED");
 
+  /** The specified media urls media type could not be determined. */
   public static final ReasonSubCode MEDIA_TYPE_UNDETERMINED =
       new ReasonSubCode("MEDIA_TYPE_UNDETERMINED");
 
+  /**
+   * The used credentials for the underlying channel is inactivated and not allowed to send or
+   * receive messages.
+   */
   public static final ReasonSubCode INACTIVE_SENDER = new ReasonSubCode("INACTIVE_SENDER");
 
   private static final EnumSupportDynamic<String, ReasonSubCode> ENUM_SUPPORT =

@@ -7,12 +7,23 @@ import java.util.stream.Stream;
 
 /**
  * Whether or not Conversation API should store contacts and conversations for the app. For more
- * information, see [Processing Modes](../../../../../conversation/processing-modes/).
+ * information, see <a href="../../../../../conversation/processing-modes/">Processing Modes</a>.
  */
 public class ProcessingMode extends EnumDynamic<String, ProcessingMode> {
 
+  /**
+   * The default Processing Mode. Creates contacts and conversations automatically when a message is
+   * sent or received and there's no existing contact or active conversation.
+   */
   public static final ProcessingMode CONVERSATION = new ProcessingMode("CONVERSATION");
 
+  /**
+   * Does not associate messages with contacts and conversations. This processing mode is mostly
+   * intended for unidirectional high volume SMS use cases. The lack of contacts and conversations
+   * limits some API features as related data won't be queryable in the <a
+   * href="/docs/conversation/api-reference/conversation/tag/Contact">Contact</a> and <a
+   * href="/docs/conversation/api-reference/conversation/tag/Conversation">Conversation</a> APIs.
+   */
   public static final ProcessingMode DISPATCH = new ProcessingMode("DISPATCH");
 
   private static final EnumSupportDynamic<String, ProcessingMode> ENUM_SUPPORT =

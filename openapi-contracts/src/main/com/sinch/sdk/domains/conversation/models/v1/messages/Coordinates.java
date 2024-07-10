@@ -14,7 +14,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** declaration */
+/** Geographic coordinates */
 @JsonDeserialize(builder = CoordinatesImpl.Builder.class)
 public interface Coordinates {
 

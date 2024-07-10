@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 
 @JsonDeserialize(using = RecipientInternalImpl.RecipientInternalImplDeserializer.class)
 @JsonSerialize(using = RecipientInternalImpl.RecipientInternalImplSerializer.class)
-public class RecipientInternalImpl extends AbstractOpenApiSchema {
+public class RecipientInternalImpl extends AbstractOpenApiSchema implements RecipientInternal {
   private static final Logger log = Logger.getLogger(RecipientInternalImpl.class.getName());
 
   public static final class RecipientInternalImplSerializer

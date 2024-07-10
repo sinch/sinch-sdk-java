@@ -15,7 +15,7 @@ package com.sinch.sdk.domains.conversation.models.v1.credentials;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
- * If you are including the KakaoTalkChat channel in the &#x60;channel_identifier&#x60; property,
+ * If you are including the KakaoTalkChat channel in the <code>channel_identifier</code> property,
  * you must include this object.
  */
 @JsonDeserialize(builder = KakaoTalkChatCredentialsImpl.Builder.class)

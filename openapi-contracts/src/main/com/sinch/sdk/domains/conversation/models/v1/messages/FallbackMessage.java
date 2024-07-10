@@ -14,7 +14,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** declaration */
+/** Fallback Message */
 @JsonDeserialize(builder = FallbackMessageImpl.Builder.class)
 public interface FallbackMessage {
 

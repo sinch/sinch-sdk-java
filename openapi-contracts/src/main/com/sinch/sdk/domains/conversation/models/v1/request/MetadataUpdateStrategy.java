@@ -5,11 +5,19 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** Update strategy for the &#x60;conversation_metadata&#x60; field. */
+/** Update strategy for the <code>conversation_metadata</code> field. */
 public class MetadataUpdateStrategy extends EnumDynamic<String, MetadataUpdateStrategy> {
 
+  /**
+   * The default strategy. Replaces the whole <code>conversation_metadata</code> field with the new
+   * value provided.
+   */
   public static final MetadataUpdateStrategy REPLACE = new MetadataUpdateStrategy("REPLACE");
 
+  /**
+   * Patches the <code>conversation_metadata</code> field with the patch provided according to RFC
+   * 7386.
+   */
   public static final MetadataUpdateStrategy MERGE_PATCH =
       new MetadataUpdateStrategy("MERGE_PATCH");
 

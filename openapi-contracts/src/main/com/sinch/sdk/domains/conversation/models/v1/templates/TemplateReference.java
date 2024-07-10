@@ -25,7 +25,7 @@ public interface TemplateReference
     extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride {
 
   /**
-   * The BCP-47 language code, such as &#x60;en-US&#x60; or &#x60;sr-Latn&#x60;. For more
+   * The BCP-47 language code, such as <code>en-US</code> or <code>sr-Latn</code>. For more
    * information, see http://www.unicode.org/reports/tr35/#Unicode_locale_identifier. English is the
    * default language_code.
    *
@@ -50,8 +50,8 @@ public interface TemplateReference
   String getTemplateId();
 
   /**
-   * Used to specify what version of a template to use. This will be used in conjunction with
-   * &#x60;language_code&#x60;.
+   * Used to specify what version of a template to use. This will be used in conjunction with <code>
+   * language_code</code>.
    *
    * @return version
    */

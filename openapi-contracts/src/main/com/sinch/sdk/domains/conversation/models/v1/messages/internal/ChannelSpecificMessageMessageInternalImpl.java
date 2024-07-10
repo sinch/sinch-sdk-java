@@ -32,7 +32,8 @@ import java.util.logging.Logger;
     using =
         ChannelSpecificMessageMessageInternalImpl
             .ChannelSpecificMessageMessageInternalImplSerializer.class)
-public class ChannelSpecificMessageMessageInternalImpl extends AbstractOpenApiSchema {
+public class ChannelSpecificMessageMessageInternalImpl extends AbstractOpenApiSchema
+    implements ChannelSpecificMessageMessageInternal {
   private static final Logger log =
       Logger.getLogger(ChannelSpecificMessageMessageInternalImpl.class.getName());
 

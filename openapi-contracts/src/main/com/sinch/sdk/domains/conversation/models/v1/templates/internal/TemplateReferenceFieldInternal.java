@@ -15,7 +15,7 @@ package com.sinch.sdk.domains.conversation.models.v1.templates.internal;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.templates.TemplateReference;
 
-/** declaration */
+/** Template (Reference) */
 @JsonDeserialize(builder = TemplateReferenceFieldInternalImpl.Builder.class)
 public interface TemplateReferenceFieldInternal {
 

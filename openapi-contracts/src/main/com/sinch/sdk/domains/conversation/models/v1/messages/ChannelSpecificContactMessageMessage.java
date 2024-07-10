@@ -12,4 +12,10 @@
 
 package com.sinch.sdk.domains.conversation.models.v1.messages;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(
+    using =
+        ChannelSpecificContactMessageMessageImpl
+            .ChannelSpecificContactMessageMessageImplDeserializer.class)
 public interface ChannelSpecificContactMessageMessage {}

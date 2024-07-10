@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.response.ConversationMessage;
 import java.util.List;
 
-/** declaration */
+/** ListMessagesResponse */
 @JsonDeserialize(builder = ListMessagesResponseImpl.Builder.class)
 public interface ListMessagesResponse {
 

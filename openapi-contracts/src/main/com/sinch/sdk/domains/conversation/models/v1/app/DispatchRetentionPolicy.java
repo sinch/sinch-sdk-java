@@ -15,10 +15,10 @@ package com.sinch.sdk.domains.conversation.models.v1.app;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
- * The retention policy configured for messages in [Dispatch
- * Mode](../../../../../conversation/processing-modes/). Currently only
- * &#x60;MESSAGE_EXPIRE_POLICY&#x60; is available. For more information about retention policies,
- * see [Retention Policy](/docs/conversation/keyconcepts/#retention-policy).
+ * The retention policy configured for messages in <a
+ * href="../../../../../conversation/processing-modes/">Dispatch Mode</a>. Currently only <code>
+ * MESSAGE_EXPIRE_POLICY</code> is available. For more information about retention policies, see <a
+ * href="/docs/conversation/keyconcepts/#retention-policy">Retention Policy</a>.
  */
 @JsonDeserialize(builder = DispatchRetentionPolicyImpl.Builder.class)
 public interface DispatchRetentionPolicy {
@@ -31,8 +31,8 @@ public interface DispatchRetentionPolicy {
   DispatchRetentionPolicyType getRetentionType();
 
   /**
-   * Optional. The days before a message is eligible for deletion. The valid range is &#x60;[0 -
-   * 7]&#x60;. In the case of a &#x60;0&#x60; day TTL, messages aren&#39;t stored at all. Note the
+   * Optional. The days before a message is eligible for deletion. The valid range is <code>[0 - 7]
+   * </code>. In the case of a <code>0</code> day TTL, messages aren't stored at all. Note the
    * retention cleanup job runs once every twenty-four hours, so messages are not deleted on the
    * minute they become eligible for deletion.
    *

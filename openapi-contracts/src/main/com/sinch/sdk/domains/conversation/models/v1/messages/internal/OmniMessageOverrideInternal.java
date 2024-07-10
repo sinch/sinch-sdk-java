@@ -12,4 +12,8 @@
 
 package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(
+    using = OmniMessageOverrideInternalImpl.OmniMessageOverrideInternalImplDeserializer.class)
 public interface OmniMessageOverrideInternal {}

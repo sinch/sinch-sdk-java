@@ -41,7 +41,7 @@ public interface ContactCreateRequest {
   List<ConversationChannel> getChannelPriority();
 
   /**
-   * The display name. A default &#39;Unknown&#39; will be assigned if left empty.
+   * The display name. A default 'Unknown' will be assigned if left empty.
    *
    * @return displayName
    */

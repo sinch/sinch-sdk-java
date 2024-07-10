@@ -20,8 +20,8 @@ public interface CallbackSettings {
 
   /**
    * Optional. Secret can be used to sign contents of delivery receipts for a message that was sent
-   * with the default &#x60;callback_url&#x60; overridden. You can then use the secret to verify the
-   * signature.
+   * with the default <code>callback_url</code> overridden. You can then use the secret to verify
+   * the signature.
    *
    * @return secretForOverriddenCallbackUrls
    */

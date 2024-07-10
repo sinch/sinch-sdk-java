@@ -14,7 +14,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** declaration */
+/** Update message request */
 @JsonDeserialize(builder = UpdateMessageMetadataRequestImpl.Builder.class)
 public interface UpdateMessageMetadataRequest {
 

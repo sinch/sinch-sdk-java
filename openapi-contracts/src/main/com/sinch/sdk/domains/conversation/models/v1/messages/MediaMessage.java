@@ -14,7 +14,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** declaration */
+/** Media Message */
 @JsonDeserialize(builder = MediaMessageImpl.Builder.class)
 public interface MediaMessage
     extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,

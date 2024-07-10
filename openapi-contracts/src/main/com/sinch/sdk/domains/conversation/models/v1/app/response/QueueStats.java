@@ -14,19 +14,19 @@ package com.sinch.sdk.domains.conversation.models.v1.app.response;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** declaration */
+/** QueueStats */
 @JsonDeserialize(builder = QueueStatsImpl.Builder.class)
 public interface QueueStats {
 
   /**
-   * The current size of the App&#39;s MT queue.
+   * The current size of the App's MT queue.
    *
    * @return outboundSize
    */
   Long getOutboundSize();
 
   /**
-   * The limit of the App&#39;s MT queue. The default limit is 500000 messages.
+   * The limit of the App's MT queue. The default limit is 500000 messages.
    *
    * @return outboundLimit
    */
