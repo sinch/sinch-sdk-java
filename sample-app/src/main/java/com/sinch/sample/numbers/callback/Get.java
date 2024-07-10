@@ -1,7 +1,8 @@
 package com.sinch.sample.numbers.callback;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.numbers.models.CallbackConfiguration;
+import com.sinch.sdk.domains.numbers.api.v1.CallbackConfigurationService;
+import com.sinch.sdk.domains.numbers.models.v1.callbacks.response.CallbackConfigurationResponse;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -21,9 +22,11 @@ public class Get extends BaseApplication {
 
   public void run() {
 
+    CallbackConfigurationService service = client.numbers().v1().callback();
+
     LOGGER.info("Get");
 
-    CallbackConfiguration value = client.numbers().callback().get();
+    CallbackConfigurationResponse value = service.get();
 
     LOGGER.info("Response :" + value);
   }

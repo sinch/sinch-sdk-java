@@ -1,18 +1,18 @@
 package com.sinch.sdk.domains.numbers.adapters.converters;
 
-import com.sinch.sdk.domains.numbers.models.dto.v1.CallbackConfigurationUpdateDto;
 import com.sinch.sdk.domains.numbers.models.requests.CallbackConfigurationUpdateRequestParameters;
+import com.sinch.sdk.domains.numbers.models.v1.callbacks.request.CallbackConfigurationUpdateRequest;
 
 public class CallbackConfigurationUpdateRequestParametersDtoConverter {
 
-  public static CallbackConfigurationUpdateDto convert(
+  public static CallbackConfigurationUpdateRequest convert(
       CallbackConfigurationUpdateRequestParameters parameters) {
 
     if (null == parameters) {
       return null;
     }
-    CallbackConfigurationUpdateDto dto = new CallbackConfigurationUpdateDto();
-    parameters.getHMACSecret().ifPresent(dto::hmacSecret);
-    return dto;
+    CallbackConfigurationUpdateRequest.Builder dto = CallbackConfigurationUpdateRequest.builder();
+    parameters.getHMACSecret().ifPresent(dto::setHmacSecret);
+    return dto.build();
   }
 }

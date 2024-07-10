@@ -21,7 +21,7 @@ class ApiExceptionBuilderTest extends BaseTest {
           + "\"foo\": \"MY_STATUS\""
           + "}}";
 
-  @GivenTextResource("/domains/numbers/v1/error-trial-account.json")
+  @GivenTextResource("/domains/numbers/v1/errors/error-trial-account.json")
   String numberError;
 
   @GivenTextResource("/domains/sms/v1/error-response.json")

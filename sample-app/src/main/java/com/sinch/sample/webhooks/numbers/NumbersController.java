@@ -1,6 +1,7 @@
 package com.sinch.sample.webhooks.numbers;
 
 import com.sinch.sdk.SinchClient;
+import com.sinch.sdk.domains.numbers.api.v1.WebHooksService;
 import java.util.Map;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class NumbersController {
 
-  private final SinchClient sinchClient;
+  private final WebHooksService webhooks;
   private final NumbersService service;
   private static final Logger LOGGER = Logger.getLogger(NumbersController.class.getName());
 
   @Autowired
   public NumbersController(SinchClient sinchClient, NumbersService service) {
-    this.sinchClient = sinchClient;
+    this.webhooks = sinchClient.numbers().v1().webhooks();
     this.service = service;
   }
 
@@ -33,7 +34,7 @@ public class NumbersController {
     LOGGER.finest("Received headers: " + headers);
 
     // decode the request payload
-    var event = sinchClient.numbers().webhooks().unserializeEventNotification(body);
+    var event = webhooks.parseEvent(body);
 
     // let business layer process the request
     service.numbersEvent(event);

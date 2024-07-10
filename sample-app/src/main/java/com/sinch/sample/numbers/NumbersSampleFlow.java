@@ -6,8 +6,19 @@ import static com.sinch.sample.Utils.echoStep;
 import com.sinch.sample.Utils;
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.domains.numbers.models.*;
-import com.sinch.sdk.domains.numbers.models.requests.*;
+import com.sinch.sdk.domains.numbers.api.v1.AvailableRegionService;
+import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
+import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
+import com.sinch.sdk.domains.numbers.models.v1.NumberType;
+import com.sinch.sdk.domains.numbers.models.v1.regions.available.request.AvailableRegionListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentAnyRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern;
+import com.sinch.sdk.domains.numbers.models.v1.request.SearchPosition;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
 import com.sinch.sdk.models.Configuration;
 import java.util.Collections;
 import java.util.Optional;
@@ -34,14 +45,14 @@ public class NumbersSampleFlow {
     String testRegionCode = "US"; // region code we are interested in
     String testCodePattern = "+1781"; // Boston area code
 
-    SinchClient sinch = new SinchClient(configuration);
+    NumbersService service = new SinchClient(configuration).numbers().v1();
     // ===================================================================== \\
     // Scenario: We want to rent a number of type 'LOCAL' in the 'US' region \\
     // ===================================================================== \\
     int step = 0;
 
     // 1. check and retrieve region code availability
-    var regionCode = checkAndGetRegionCodeAvailability(++step, sinch, testRegionCode);
+    var regionCode = checkAndGetRegionCodeAvailability(++step, service.regions(), testRegionCode);
 
     // 2. retrieve a number for this region code
     boolean rentByNumber = true;
@@ -49,32 +60,33 @@ public class NumbersSampleFlow {
 
     if (rentByNumber) {
       //   2.1 can be rent by phone number
-      phoneNumber = getAvailablePhoneNumber(++step, sinch, regionCode, testCodePattern);
+      phoneNumber = getAvailablePhoneNumber(++step, service, regionCode, testCodePattern);
       // Rent by phone number
-      rentPhoneNumber(++step, sinch, phoneNumber);
+      rentPhoneNumber(++step, service, phoneNumber);
     } else {
       //   2.2 or can be rent by filtering parameters
-      phoneNumber = rentPhoneNumberByAny(++step, sinch, regionCode, testCodePattern);
+      phoneNumber = rentPhoneNumberByAny(++step, service, regionCode, testCodePattern);
     }
 
     echo("Let's use now the 'ActiveNumbers' API to see how to manage this number.\n");
 
     // 3 Verify number is active
     // 3.1: verify by dedicated phone number request
-    verifyActiveNumberByNumber(++step, sinch, phoneNumber);
+    verifyActiveNumberByNumber(++step, service, phoneNumber);
     // 3.2: verify by listing page after page and check for requested number
-    verifyActiveNumberByPagination(++step, sinch, phoneNumber, regionCode);
+    verifyActiveNumberByPagination(++step, service, phoneNumber, regionCode);
     // 3.3: verify by using auto pagination feature and check for requested number
-    verifyActiveNumberByAutoPagination(++step, sinch, phoneNumber, regionCode);
+    verifyActiveNumberByAutoPagination(++step, service, phoneNumber, regionCode);
 
     // 4: Update an active number
-    updateActiveNumber(++step, sinch, phoneNumber);
+    updateActiveNumber(++step, service, phoneNumber);
 
     // 5. Release the number
-    releasePhoneNumber(++step, sinch, phoneNumber);
+    releasePhoneNumber(++step, service, phoneNumber);
   }
 
-  String checkAndGetRegionCodeAvailability(int step, SinchClient sinchClient, String regionCode) {
+  String checkAndGetRegionCodeAvailability(
+      int step, AvailableRegionService service, String regionCode) {
 
     echoStep(
         step,
@@ -85,13 +97,12 @@ public class NumbersSampleFlow {
 
     // 1. Build the request data for listing the regions that support 'LOCAL' numbers
     var availableRegionsRequestData =
-        AvailableRegionListAllRequestParameters.builder()
+        AvailableRegionListRequest.builder()
             .setTypes(Collections.singletonList(NumberType.LOCAL))
             .build();
 
     // 2. Request for available regions using the built-in SDK method
-    var availableRegionListResponse =
-        sinchClient.numbers().regions().list(availableRegionsRequestData);
+    var availableRegionListResponse = service.list(availableRegionsRequestData);
 
     // 3. This API is following the SDK pattern for list and the server response is wrapped inside a
     // ListResponse
@@ -127,7 +138,7 @@ public class NumbersSampleFlow {
   }
 
   String getAvailablePhoneNumber(
-      int step, SinchClient sinchClient, String regionCode, String codePattern) {
+      int step, NumbersService service, String regionCode, String codePattern) {
 
     echoStep(
         step,
@@ -140,12 +151,12 @@ public class NumbersSampleFlow {
     // 1. Build the request data for listing the numbers of type 'LOCAL' in the regionCode with an
     // area code pattern
     var availableNumbersRequestData =
-        AvailableNumberListAllRequestParameters.builder()
+        AvailableNumberListRequest.builder()
             .setRegionCode(regionCode)
             .setType(NumberType.LOCAL)
-            .setNumberPattern(
-                NumberPattern.builder()
-                    .setSearchPattern(SearchPattern.START)
+            .setSearchPattern(
+                SearchPattern.builder()
+                    .setPosition(SearchPosition.START)
                     .setPattern(codePattern)
                     .build())
             .build();
@@ -153,7 +164,7 @@ public class NumbersSampleFlow {
     // 2. Request for available numbers using the built-in SDK method
     // This API is following the SDK pattern for list and the server response is wrapped inside a
     var availableNumbersListResponse =
-        sinchClient.numbers().available().list(availableNumbersRequestData);
+        service.searchForAvailableNumbers(availableNumbersRequestData);
 
     // 3. Looking for first available number
     // auto iteration other items is available for all List responses.
@@ -170,7 +181,7 @@ public class NumbersSampleFlow {
                             + " in the region "
                             + availableNumbersRequestData.getRegionCode()
                             + " with the pattern "
-                            + availableNumbersRequestData.getNumberPattern().get().getPattern()));
+                            + availableNumbersRequestData.getSearchPattern()));
 
     // 4. return the phone number
     String phoneNumber = availableNumber.getPhoneNumber();
@@ -179,17 +190,16 @@ public class NumbersSampleFlow {
     return phoneNumber;
   }
 
-  void rentPhoneNumber(int step, SinchClient sinchClient, String phoneNumber) {
+  void rentPhoneNumber(int step, NumbersService service, String phoneNumber) {
 
     echoStep(step, "Rent phone number: '" + phoneNumber + "'");
 
     // 1. Build the request data
     var rentRequestData =
-        AvailableNumberRentRequestParameters.builder().setCallbackUrl("https://foo.url").build();
+        AvailableNumberRentRequest.builder().setCallbackUrl("https://foo.url").build();
 
     // 2. Request to rent the number
-    ActiveNumber rentedNumber =
-        sinchClient.numbers().available().rent(phoneNumber, rentRequestData);
+    ActiveNumber rentedNumber = service.rent(phoneNumber, rentRequestData);
 
     echo(
         "The number "
@@ -198,25 +208,24 @@ public class NumbersSampleFlow {
             + rentedNumber.getNextChargeDate());
   }
 
-  String rentPhoneNumberByAny(
-      int step, SinchClient sinchClient, String regionCode, String pattern) {
+  String rentPhoneNumberByAny(int step, NumbersService service, String regionCode, String pattern) {
 
     echoStep(step, "Rent a phone number for region '" + regionCode + "'");
 
     // 1. Build the request data
     var rentAnyNumberRequestData =
-        AvailableNumberRentAnyRequestParameters.builder()
+        AvailableNumberRentAnyRequest.builder()
             .setRegionCode(regionCode)
             .setType(NumberType.LOCAL)
             .setNumberPattern(
-                NumberPattern.builder()
-                    .setSearchPattern(SearchPattern.START)
+                SearchPattern.builder()
+                    .setPosition(SearchPosition.START)
                     .setPattern(pattern)
                     .build())
             .build();
 
     // 2. rent a number
-    ActiveNumber rentedNumber = sinchClient.numbers().available().rentAny(rentAnyNumberRequestData);
+    ActiveNumber rentedNumber = service.rentAny(rentAnyNumberRequestData);
 
     echo(
         "The number "
@@ -227,13 +236,13 @@ public class NumbersSampleFlow {
     return rentedNumber.getPhoneNumber();
   }
 
-  void verifyActiveNumberByNumber(int step, SinchClient sinchClient, String phoneNumber) {
+  void verifyActiveNumberByNumber(int step, NumbersService service, String phoneNumber) {
     echoStep(
         step,
         "Verify the number is part of our active numbers - Method 1: Give the number in input");
 
     // 1. Simple request to get information related to active number
-    ActiveNumber activeNumber = sinchClient.numbers().active().get(phoneNumber);
+    ActiveNumber activeNumber = service.get(phoneNumber);
 
     echo(
         "SUCCESS: The number "
@@ -246,7 +255,7 @@ public class NumbersSampleFlow {
   }
 
   void verifyActiveNumberByPagination(
-      int step, SinchClient sinchClient, String phoneNumber, String regionCode) {
+      int step, NumbersService service, String phoneNumber, String regionCode) {
 
     echoStep(
         step,
@@ -255,15 +264,14 @@ public class NumbersSampleFlow {
 
     // 1. Build the request data
     var listActiveNumbersRequestData =
-        ActiveNumberListRequestParameters.builder()
+        ActiveNumberListRequest.builder()
             .setRegionCode(regionCode)
             .setType(NumberType.LOCAL)
             .setPageSize(2) // Set a low number to demonstrate the pagination later on
             .build();
 
     // 2. Request for active number using the built-in SDK method
-    var activeNumbersListResponse =
-        sinchClient.numbers().active().list(listActiveNumbersRequestData);
+    var activeNumbersListResponse = service.list(listActiveNumbersRequestData);
 
     // 3. To check if the phone number is part of the active numbers: check the page
     // content and if not present, check the next page until we find the phone number, or we reach
@@ -301,7 +309,7 @@ public class NumbersSampleFlow {
   }
 
   void verifyActiveNumberByAutoPagination(
-      int step, SinchClient sinchClient, String phoneNumber, String regionCode) {
+      int step, NumbersService service, String phoneNumber, String regionCode) {
 
     echoStep(
         step,
@@ -310,15 +318,14 @@ public class NumbersSampleFlow {
 
     // 1. Build the request data
     var listActiveNumbersRequestData =
-        ActiveNumberListRequestParameters.builder()
+        ActiveNumberListRequest.builder()
             .setRegionCode(regionCode)
             .setType(NumberType.LOCAL)
             .setPageSize(2) // Set a low number to demonstrate the pagination later on
             .build();
 
     // 2. Request for active number using the built-in SDK method
-    var activeNumbersListResponse =
-        sinchClient.numbers().active().list(listActiveNumbersRequestData);
+    var activeNumbersListResponse = service.list(listActiveNumbersRequestData);
 
     // 3. To check if the phone number is part of the active numbers: use the
     // auto-iterator. Like for hasNextPage/nextPage, http calls will be performed automatically when
@@ -346,19 +353,18 @@ public class NumbersSampleFlow {
             + "listed in the active numbers.\n");
   }
 
-  void updateActiveNumber(int step, SinchClient sinchClient, String phoneNumber) {
+  void updateActiveNumber(int step, NumbersService service, String phoneNumber) {
 
     echoStep(step, "Update active number: '" + phoneNumber + "'");
 
     // 1. Build the request data
     var updateActiveNumberRequestData =
-        ActiveNumberUpdateRequestParameters.builder()
+        ActiveNumberUpdateRequest.builder()
             .setDisplayName("Rented in the scope of testing the Java SDK")
             .build();
 
     // 2. Request to update the number
-    ActiveNumber updatedNumber =
-        sinchClient.numbers().active().update(phoneNumber, updateActiveNumberRequestData);
+    ActiveNumber updatedNumber = service.update(phoneNumber, updateActiveNumberRequestData);
 
     echo(
         "SUCCESS: The number "
@@ -368,11 +374,11 @@ public class NumbersSampleFlow {
             + "'\n");
   }
 
-  void releasePhoneNumber(int step, SinchClient sinchClient, String phoneNumber) {
+  void releasePhoneNumber(int step, NumbersService service, String phoneNumber) {
     echoStep(step, "Releasing  phone number: '" + phoneNumber + "'");
 
     // 1. Request to release the number
-    ActiveNumber releasedNumber = sinchClient.numbers().active().release(phoneNumber);
+    ActiveNumber releasedNumber = service.release(phoneNumber);
 
     echo(
         "SUCCESS: The number "
