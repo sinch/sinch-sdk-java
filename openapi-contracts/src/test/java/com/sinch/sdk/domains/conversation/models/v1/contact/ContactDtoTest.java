@@ -1,12 +1,15 @@
-package com.sinch.sdk.domains.conversation.models.v1;
+package com.sinch.sdk.domains.conversation.models.v1.contact;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
-import com.sinch.sdk.domains.conversation.models.v1.contact.Contact;
-import com.sinch.sdk.domains.conversation.models.v1.contact.ContactLanguage;
+import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
+import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentities;
+import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentity;
+import com.sinch.sdk.domains.conversation.models.v1.ContactId;
+import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactCreateRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.GetChannelProfileConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.GetChannelProfileRequest;
@@ -126,25 +129,27 @@ public class ContactDtoTest extends ConversationBaseTest {
   public static GetChannelProfileResponse expectedChannelProfileResponseDto =
       GetChannelProfileResponse.builder().setProfileName("a profile name").build();
 
-  @GivenJsonResource("/domains/conversation/v1/ContactListResponseDtoPage0.json")
+  @GivenJsonResource("/domains/conversation/v1/contact/ContactListResponseDtoPage0.json")
   ListContactsResponse loadedContactListResponseDtoPage0;
 
-  @GivenJsonResource("/domains/conversation/v1/ContactListResponseDtoPage1.json")
+  @GivenJsonResource("/domains/conversation/v1/contact/ContactListResponseDtoPage1.json")
   ListContactsResponse loadedContactListResponseDtoPage1;
 
-  @GivenTextResource("/domains/conversation/v1/ContactCreateRequestDto.json")
+  @GivenTextResource("/domains/conversation/v1/contact/ContactCreateRequestDto.json")
   String jsonContactCreateRequestDto;
 
-  @GivenJsonResource("/domains/conversation/v1/ContactCreateResponseDto.json")
+  @GivenJsonResource("/domains/conversation/v1/contact/ContactDto.json")
   Contact loadedContactCreateResponseDto;
 
-  @GivenTextResource("/domains/conversation/v1/ContactGetChannelProfileByChannelRequestDto.json")
+  @GivenTextResource(
+      "/domains/conversation/v1/contact/ContactGetChannelProfileByChannelRequestDto.json")
   String jsonContactGetChannelProfileByChannelRequestDto;
 
-  @GivenTextResource("/domains/conversation/v1/ContactGetChannelProfileByContactRequestDto.json")
+  @GivenTextResource(
+      "/domains/conversation/v1/contact/ContactGetChannelProfileByContactRequestDto.json")
   String jsonContactGetChannelProfileByContactRequestDto;
 
-  @GivenJsonResource("/domains/conversation/v1/ContactGetChannelResponseDto.json")
+  @GivenJsonResource("/domains/conversation/v1/contact/ContactGetChannelResponseDto.json")
   GetChannelProfileResponse loadedContactGetChannelResponseDto;
 
   @Test
