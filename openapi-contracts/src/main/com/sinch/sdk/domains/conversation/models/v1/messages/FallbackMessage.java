@@ -13,6 +13,7 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.conversation.models.v1.Reason;
 
 /** Fallback Message */
 @JsonDeserialize(builder = FallbackMessageImpl.Builder.class)
