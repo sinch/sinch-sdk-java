@@ -69,7 +69,8 @@ class VerificationServiceTest {
         assertThrows(
             NullPointerException.class,
             () -> new VerificationService(credentials, null, httpClient));
-    assertTrue(exception.getMessage().contains("service require context to be defined"));
+    assertTrue(
+        exception.getMessage().contains("Verification service requires context to be defined"));
   }
 
   @Test

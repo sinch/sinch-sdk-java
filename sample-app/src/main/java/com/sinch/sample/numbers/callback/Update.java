@@ -1,8 +1,9 @@
 package com.sinch.sample.numbers.callback;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.numbers.models.CallbackConfiguration;
-import com.sinch.sdk.domains.numbers.models.requests.CallbackConfigurationUpdateRequestParameters;
+import com.sinch.sdk.domains.numbers.api.v1.CallbackConfigurationService;
+import com.sinch.sdk.domains.numbers.models.v1.callbacks.request.CallbackConfigurationUpdateRequest;
+import com.sinch.sdk.domains.numbers.models.v1.callbacks.response.CallbackConfigurationResponse;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -22,13 +23,15 @@ public class Update extends BaseApplication {
 
   public void run() {
 
+    CallbackConfigurationService service = client.numbers().v1().callback();
+
     LOGGER.info("Update");
 
     String hmac = "HMAC value";
-    CallbackConfigurationUpdateRequestParameters parameters =
-        CallbackConfigurationUpdateRequestParameters.builder().setHMACSecret(hmac).build();
+    CallbackConfigurationUpdateRequest parameters =
+        CallbackConfigurationUpdateRequest.builder().setHmacSecret(hmac).build();
 
-    CallbackConfiguration value = client.numbers().callback().update(parameters);
+    CallbackConfigurationResponse value = service.update(parameters);
 
     LOGGER.info("Response :" + value);
   }

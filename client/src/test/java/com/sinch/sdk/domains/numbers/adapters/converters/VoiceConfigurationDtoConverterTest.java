@@ -1,36 +1,24 @@
 package com.sinch.sdk.domains.numbers.adapters.converters;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.numbers.models.VoiceConfiguration;
-import com.sinch.sdk.domains.numbers.models.dto.v1.ProvisioningStatusDto;
-import com.sinch.sdk.domains.numbers.models.dto.v1.ScheduledVoiceProvisioningDto;
-import com.sinch.sdk.domains.numbers.models.dto.v1.VoiceConfigurationDto;
-import java.time.OffsetDateTime;
+import com.sinch.sdk.domains.numbers.models.v1.VoiceConfigurationDtoTest;
+import java.time.Instant;
 import org.junit.jupiter.api.Test;
 
 class VoiceConfigurationDtoConverterTest {
 
-  public static void compareWithDto(VoiceConfiguration client, VoiceConfigurationDto dto) {
-    if (null == client && null == dto) {
-      return;
-    }
-    assertEquals(dto.getAppId(), client.getAppId());
-    assertEquals(dto.getLastUpdatedTime().toInstant(), client.getLastUpdatedTime().get());
-    ScheduledVoiceProvisioningDtoConverterTest.compareWithDto(
-        client.getScheduledVoiceProvisioning().get(), dto.getScheduledVoiceProvisioning());
-  }
+  static VoiceConfiguration configuration =
+      new VoiceConfiguration(
+          "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE",
+          Instant.parse("2024-06-30T07:08:09.10Z"),
+          ScheduledVoiceProvisioningDtoConverterTest.provisioning);
 
   @Test
   void convert() {
-    VoiceConfigurationDto dto =
-        new VoiceConfigurationDto(OffsetDateTime.now())
-            .appId("app id")
-            .scheduledVoiceProvisioning(
-                new ScheduledVoiceProvisioningDto("app id", OffsetDateTime.now())
-                    .status(ProvisioningStatusDto.WAITING));
 
-    VoiceConfiguration converted = VoiceConfigurationDtoConverter.convert(dto);
-    compareWithDto(converted, dto);
+    VoiceConfiguration converted =
+        VoiceConfigurationDtoConverter.convert(VoiceConfigurationDtoTest.configurationRTC);
+    TestHelpers.recursiveEquals(configuration, converted);
   }
 }
