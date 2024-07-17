@@ -40,7 +40,7 @@ public class ConversationMessageImpl implements ConversationMessage {
 
   public static final String JSON_PROPERTY_CONTACT_MESSAGE = "contact_message";
 
-  private OptionalValue<ContactMessage<?>> contactMessage;
+  private OptionalValue<ContactMessage> contactMessage;
 
   public static final String JSON_PROPERTY_ACCEPT_TIME = "accept_time";
 
@@ -86,7 +86,7 @@ public class ConversationMessageImpl implements ConversationMessage {
 
   protected ConversationMessageImpl(
       OptionalValue<AppMessage<?>> appMessage,
-      OptionalValue<ContactMessage<?>> contactMessage,
+      OptionalValue<ContactMessage> contactMessage,
       OptionalValue<Instant> acceptTime,
       OptionalValue<ChannelIdentity> channelIdentity,
       OptionalValue<String> contactId,
@@ -123,13 +123,13 @@ public class ConversationMessageImpl implements ConversationMessage {
   }
 
   @JsonIgnore
-  public ContactMessage<?> getContactMessage() {
+  public ContactMessage getContactMessage() {
     return contactMessage.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CONTACT_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<ContactMessage<?>> contactMessage() {
+  public OptionalValue<ContactMessage> contactMessage() {
     return contactMessage;
   }
 
@@ -317,7 +317,7 @@ public class ConversationMessageImpl implements ConversationMessage {
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements ConversationMessage.Builder {
     OptionalValue<AppMessage<?>> appMessage = OptionalValue.empty();
-    OptionalValue<ContactMessage<?>> contactMessage = OptionalValue.empty();
+    OptionalValue<ContactMessage> contactMessage = OptionalValue.empty();
     OptionalValue<Instant> acceptTime = OptionalValue.empty();
     OptionalValue<ChannelIdentity> channelIdentity = OptionalValue.empty();
     OptionalValue<String> contactId = OptionalValue.empty();
@@ -336,7 +336,7 @@ public class ConversationMessageImpl implements ConversationMessage {
     }
 
     @JsonProperty(JSON_PROPERTY_CONTACT_MESSAGE)
-    public Builder setContactMessage(ContactMessage<?> contactMessage) {
+    public Builder setContactMessage(ContactMessage contactMessage) {
       this.contactMessage = OptionalValue.of(contactMessage);
       return this;
     }

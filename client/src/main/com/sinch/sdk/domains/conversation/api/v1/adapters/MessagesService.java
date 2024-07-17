@@ -6,7 +6,6 @@ import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.AppMessageRequestMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ChoiceItemMapper;
-import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ChoiceMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ListSectionMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.SendMessageRequestMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.WhatsAppInteractiveHeaderMapper;
@@ -20,6 +19,7 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.ListMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.LocationMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.MediaMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ChoiceMessageOneOfInternalMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
 import com.sinch.sdk.domains.conversation.models.v1.response.ConversationMessage;
@@ -101,7 +101,7 @@ public class MessagesService implements com.sinch.sdk.domains.conversation.api.v
     private LocalLazyInit() {
       AppMessageRequestMapper.initMapper();
       ChoiceItemMapper.initMapper();
-      ChoiceMapper.initMapper();
+      ChoiceMessageOneOfInternalMapper.initMapper();
       ListSectionMapper.initMapper();
       SendMessageRequestMapper.initMapper();
       WhatsAppInteractiveHeaderMapper.initMapper();

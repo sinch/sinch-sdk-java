@@ -7,36 +7,53 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ReplyToMessageInternal;
 import java.util.Objects;
 
-@JsonPropertyOrder({ReplyToMessageImpl.JSON_PROPERTY_MESSAGE_ID})
+@JsonPropertyOrder({ReplyToMessageImpl.JSON_PROPERTY_REPLY_TO})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class ReplyToMessageImpl implements ReplyToMessage {
+public class ReplyToMessageImpl
+    implements ReplyToMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_MESSAGE_ID = "message_id";
+  public static final String JSON_PROPERTY_REPLY_TO = "reply_to";
 
-  private OptionalValue<String> messageId;
+  private OptionalValue<ReplyToMessageInternal> replyTo;
 
   public ReplyToMessageImpl() {}
 
-  protected ReplyToMessageImpl(OptionalValue<String> messageId) {
-    this.messageId = messageId;
+  protected ReplyToMessageImpl(OptionalValue<ReplyToMessageInternal> replyTo) {
+    this.replyTo = replyTo;
+  }
+
+  @JsonIgnore
+  public ReplyToMessageInternal getReplyTo() {
+    return replyTo.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_REPLY_TO)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<ReplyToMessageInternal> replyTo() {
+    return replyTo;
   }
 
   @JsonIgnore
   public String getMessageId() {
-    return messageId.orElse(null);
+    if (null == replyTo || !replyTo.isPresent() || null == replyTo.get().getMessageId()) {
+      return null;
+    }
+    return replyTo.get().getMessageId();
   }
 
-  @JsonProperty(JSON_PROPERTY_MESSAGE_ID)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<String> messageId() {
-    return messageId;
+    return null != replyTo
+        ? replyTo.map(ReplyToMessageInternal::getMessageId)
+        : OptionalValue.empty();
   }
 
-  /** Return true if this Reply_To_Message object is equal to o. */
+  /** Return true if this ReplyToMessageField object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -45,20 +62,20 @@ public class ReplyToMessageImpl implements ReplyToMessage {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ReplyToMessageImpl replyToMessage = (ReplyToMessageImpl) o;
-    return Objects.equals(this.messageId, replyToMessage.messageId);
+    ReplyToMessageImpl replyToMessageField = (ReplyToMessageImpl) o;
+    return Objects.equals(this.replyTo, replyToMessageField.replyTo);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(messageId);
+    return Objects.hash(replyTo);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ReplyToMessageImpl {\n");
-    sb.append("    messageId: ").append(toIndentedString(messageId)).append("\n");
+    sb.append("    replyTo: ").append(toIndentedString(replyTo)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -75,16 +92,35 @@ public class ReplyToMessageImpl implements ReplyToMessage {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements ReplyToMessage.Builder {
-    OptionalValue<String> messageId = OptionalValue.empty();
+    OptionalValue<ReplyToMessageInternal> replyTo = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_MESSAGE_ID)
-    public Builder setMessageId(String messageId) {
-      this.messageId = OptionalValue.of(messageId);
+    ReplyToMessageInternal.Builder _delegatedBuilder = null;
+
+    @JsonProperty(value = JSON_PROPERTY_REPLY_TO, required = true)
+    public Builder setReplyTo(ReplyToMessageInternal replyTo) {
+      this.replyTo = OptionalValue.of(replyTo);
       return this;
     }
 
+    @JsonIgnore
+    public Builder setMessageId(String messageId) {
+      getDelegatedBuilder().setMessageId(messageId);
+      return this;
+    }
+
+    private ReplyToMessageInternal.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = ReplyToMessageInternal.builder();
+      }
+      return this._delegatedBuilder;
+    }
+
     public ReplyToMessage build() {
-      return new ReplyToMessageImpl(messageId);
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.replyTo = OptionalValue.of(this._delegatedBuilder.build());
+      }
+      return new ReplyToMessageImpl(replyTo);
     }
   }
 }

@@ -14,9 +14,13 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** Reply To Message */
+/**
+ * If the contact message was a response to a previous App message then this field contains
+ * information about that.
+ */
 @JsonDeserialize(builder = ReplyToMessageImpl.Builder.class)
-public interface ReplyToMessage {
+public interface ReplyToMessage
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage {
 
   /**
    * Required. The Id of the message that this is a response to

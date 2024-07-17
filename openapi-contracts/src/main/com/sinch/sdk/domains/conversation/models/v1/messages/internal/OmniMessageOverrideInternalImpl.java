@@ -15,6 +15,9 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.sinch.sdk.core.models.AbstractOpenApiSchema;
 import com.sinch.sdk.core.utils.databind.JSONNavigator;
+import com.sinch.sdk.domains.conversation.models.v1.messages.LocationMessageImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.MediaMessageImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessageImpl;
 import com.sinch.sdk.domains.conversation.models.v1.templates.internal.TemplateReferenceFieldInternalImpl;
 import java.io.IOException;
 import java.util.Collections;
@@ -289,89 +292,84 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
         log.log(Level.FINER, "Input data does not match schema 'ListMessageFieldInternalImpl'", e);
       }
 
-      // deserialize LocationMessageFieldInternalImpl
+      // deserialize LocationMessageImpl
       try {
         boolean attemptParsing = true;
         // ensure that we respect type coercion as set on the client ObjectMapper
-        if (LocationMessageFieldInternalImpl.class.equals(Integer.class)
-            || LocationMessageFieldInternalImpl.class.equals(Long.class)
-            || LocationMessageFieldInternalImpl.class.equals(Float.class)
-            || LocationMessageFieldInternalImpl.class.equals(Double.class)
-            || LocationMessageFieldInternalImpl.class.equals(Boolean.class)
-            || LocationMessageFieldInternalImpl.class.equals(String.class)) {
+        if (LocationMessageImpl.class.equals(Integer.class)
+            || LocationMessageImpl.class.equals(Long.class)
+            || LocationMessageImpl.class.equals(Float.class)
+            || LocationMessageImpl.class.equals(Double.class)
+            || LocationMessageImpl.class.equals(Boolean.class)
+            || LocationMessageImpl.class.equals(String.class)) {
           attemptParsing = typeCoercion;
           if (!attemptParsing) {
             attemptParsing |=
-                ((LocationMessageFieldInternalImpl.class.equals(Integer.class)
-                        || LocationMessageFieldInternalImpl.class.equals(Long.class))
+                ((LocationMessageImpl.class.equals(Integer.class)
+                        || LocationMessageImpl.class.equals(Long.class))
                     && token == JsonToken.VALUE_NUMBER_INT);
             attemptParsing |=
-                ((LocationMessageFieldInternalImpl.class.equals(Float.class)
-                        || LocationMessageFieldInternalImpl.class.equals(Double.class))
+                ((LocationMessageImpl.class.equals(Float.class)
+                        || LocationMessageImpl.class.equals(Double.class))
                     && token == JsonToken.VALUE_NUMBER_FLOAT);
             attemptParsing |=
-                (LocationMessageFieldInternalImpl.class.equals(Boolean.class)
+                (LocationMessageImpl.class.equals(Boolean.class)
                     && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
             attemptParsing |=
-                (LocationMessageFieldInternalImpl.class.equals(String.class)
-                    && token == JsonToken.VALUE_STRING);
+                (LocationMessageImpl.class.equals(String.class) && token == JsonToken.VALUE_STRING);
           }
         }
         if (attemptParsing) {
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(LocationMessageFieldInternalImpl.class);
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(LocationMessageImpl.class);
           // TODO: there is no validation against JSON schema constraints
           // (min, max, enum, pattern...), this does not perform a strict JSON
           // validation, which means the 'match' count may be higher than it should be.
           match++;
-          log.log(Level.FINER, "Input data matches schema 'LocationMessageFieldInternalImpl'");
+          log.log(Level.FINER, "Input data matches schema 'LocationMessageImpl'");
         }
       } catch (Exception e) {
         // deserialization failed, continue
-        log.log(
-            Level.FINER, "Input data does not match schema 'LocationMessageFieldInternalImpl'", e);
+        log.log(Level.FINER, "Input data does not match schema 'LocationMessageImpl'", e);
       }
 
-      // deserialize MediaMessageFieldInternalImpl
+      // deserialize MediaMessageImpl
       try {
         boolean attemptParsing = true;
         // ensure that we respect type coercion as set on the client ObjectMapper
-        if (MediaMessageFieldInternalImpl.class.equals(Integer.class)
-            || MediaMessageFieldInternalImpl.class.equals(Long.class)
-            || MediaMessageFieldInternalImpl.class.equals(Float.class)
-            || MediaMessageFieldInternalImpl.class.equals(Double.class)
-            || MediaMessageFieldInternalImpl.class.equals(Boolean.class)
-            || MediaMessageFieldInternalImpl.class.equals(String.class)) {
+        if (MediaMessageImpl.class.equals(Integer.class)
+            || MediaMessageImpl.class.equals(Long.class)
+            || MediaMessageImpl.class.equals(Float.class)
+            || MediaMessageImpl.class.equals(Double.class)
+            || MediaMessageImpl.class.equals(Boolean.class)
+            || MediaMessageImpl.class.equals(String.class)) {
           attemptParsing = typeCoercion;
           if (!attemptParsing) {
             attemptParsing |=
-                ((MediaMessageFieldInternalImpl.class.equals(Integer.class)
-                        || MediaMessageFieldInternalImpl.class.equals(Long.class))
+                ((MediaMessageImpl.class.equals(Integer.class)
+                        || MediaMessageImpl.class.equals(Long.class))
                     && token == JsonToken.VALUE_NUMBER_INT);
             attemptParsing |=
-                ((MediaMessageFieldInternalImpl.class.equals(Float.class)
-                        || MediaMessageFieldInternalImpl.class.equals(Double.class))
+                ((MediaMessageImpl.class.equals(Float.class)
+                        || MediaMessageImpl.class.equals(Double.class))
                     && token == JsonToken.VALUE_NUMBER_FLOAT);
             attemptParsing |=
-                (MediaMessageFieldInternalImpl.class.equals(Boolean.class)
+                (MediaMessageImpl.class.equals(Boolean.class)
                     && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
             attemptParsing |=
-                (MediaMessageFieldInternalImpl.class.equals(String.class)
-                    && token == JsonToken.VALUE_STRING);
+                (MediaMessageImpl.class.equals(String.class) && token == JsonToken.VALUE_STRING);
           }
         }
         if (attemptParsing) {
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(MediaMessageFieldInternalImpl.class);
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(MediaMessageImpl.class);
           // TODO: there is no validation against JSON schema constraints
           // (min, max, enum, pattern...), this does not perform a strict JSON
           // validation, which means the 'match' count may be higher than it should be.
           match++;
-          log.log(Level.FINER, "Input data matches schema 'MediaMessageFieldInternalImpl'");
+          log.log(Level.FINER, "Input data matches schema 'MediaMessageImpl'");
         }
       } catch (Exception e) {
         // deserialization failed, continue
-        log.log(Level.FINER, "Input data does not match schema 'MediaMessageFieldInternalImpl'", e);
+        log.log(Level.FINER, "Input data does not match schema 'MediaMessageImpl'", e);
       }
 
       // deserialize TemplateReferenceFieldInternalImpl
@@ -419,46 +417,44 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
             e);
       }
 
-      // deserialize TextMessageFieldInternalImpl
+      // deserialize TextMessageImpl
       try {
         boolean attemptParsing = true;
         // ensure that we respect type coercion as set on the client ObjectMapper
-        if (TextMessageFieldInternalImpl.class.equals(Integer.class)
-            || TextMessageFieldInternalImpl.class.equals(Long.class)
-            || TextMessageFieldInternalImpl.class.equals(Float.class)
-            || TextMessageFieldInternalImpl.class.equals(Double.class)
-            || TextMessageFieldInternalImpl.class.equals(Boolean.class)
-            || TextMessageFieldInternalImpl.class.equals(String.class)) {
+        if (TextMessageImpl.class.equals(Integer.class)
+            || TextMessageImpl.class.equals(Long.class)
+            || TextMessageImpl.class.equals(Float.class)
+            || TextMessageImpl.class.equals(Double.class)
+            || TextMessageImpl.class.equals(Boolean.class)
+            || TextMessageImpl.class.equals(String.class)) {
           attemptParsing = typeCoercion;
           if (!attemptParsing) {
             attemptParsing |=
-                ((TextMessageFieldInternalImpl.class.equals(Integer.class)
-                        || TextMessageFieldInternalImpl.class.equals(Long.class))
+                ((TextMessageImpl.class.equals(Integer.class)
+                        || TextMessageImpl.class.equals(Long.class))
                     && token == JsonToken.VALUE_NUMBER_INT);
             attemptParsing |=
-                ((TextMessageFieldInternalImpl.class.equals(Float.class)
-                        || TextMessageFieldInternalImpl.class.equals(Double.class))
+                ((TextMessageImpl.class.equals(Float.class)
+                        || TextMessageImpl.class.equals(Double.class))
                     && token == JsonToken.VALUE_NUMBER_FLOAT);
             attemptParsing |=
-                (TextMessageFieldInternalImpl.class.equals(Boolean.class)
+                (TextMessageImpl.class.equals(Boolean.class)
                     && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
             attemptParsing |=
-                (TextMessageFieldInternalImpl.class.equals(String.class)
-                    && token == JsonToken.VALUE_STRING);
+                (TextMessageImpl.class.equals(String.class) && token == JsonToken.VALUE_STRING);
           }
         }
         if (attemptParsing) {
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(TextMessageFieldInternalImpl.class);
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(TextMessageImpl.class);
           // TODO: there is no validation against JSON schema constraints
           // (min, max, enum, pattern...), this does not perform a strict JSON
           // validation, which means the 'match' count may be higher than it should be.
           match++;
-          log.log(Level.FINER, "Input data matches schema 'TextMessageFieldInternalImpl'");
+          log.log(Level.FINER, "Input data matches schema 'TextMessageImpl'");
         }
       } catch (Exception e) {
         // deserialization failed, continue
-        log.log(Level.FINER, "Input data does not match schema 'TextMessageFieldInternalImpl'", e);
+        log.log(Level.FINER, "Input data does not match schema 'TextMessageImpl'", e);
       }
 
       if (match == 1) {
@@ -514,12 +510,12 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
     setActualInstance(o);
   }
 
-  public OmniMessageOverrideInternalImpl(LocationMessageFieldInternalImpl o) {
+  public OmniMessageOverrideInternalImpl(LocationMessageImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public OmniMessageOverrideInternalImpl(MediaMessageFieldInternalImpl o) {
+  public OmniMessageOverrideInternalImpl(MediaMessageImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
@@ -529,7 +525,7 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
     setActualInstance(o);
   }
 
-  public OmniMessageOverrideInternalImpl(TextMessageFieldInternalImpl o) {
+  public OmniMessageOverrideInternalImpl(TextMessageImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
@@ -540,10 +536,10 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
     schemas.put("ChoiceMessageFieldInternalImpl", ChoiceMessageFieldInternalImpl.class);
     schemas.put("ContactInfoMessageFieldInternalImpl", ContactInfoMessageFieldInternalImpl.class);
     schemas.put("ListMessageFieldInternalImpl", ListMessageFieldInternalImpl.class);
-    schemas.put("LocationMessageFieldInternalImpl", LocationMessageFieldInternalImpl.class);
-    schemas.put("MediaMessageFieldInternalImpl", MediaMessageFieldInternalImpl.class);
+    schemas.put("LocationMessageImpl", LocationMessageImpl.class);
+    schemas.put("MediaMessageImpl", MediaMessageImpl.class);
     schemas.put("TemplateReferenceFieldInternalImpl", TemplateReferenceFieldInternalImpl.class);
-    schemas.put("TextMessageFieldInternalImpl", TextMessageFieldInternalImpl.class);
+    schemas.put("TextMessageImpl", TextMessageImpl.class);
     JSONNavigator.registerDescendants(
         OmniMessageOverrideInternalImpl.class, Collections.unmodifiableMap(schemas));
   }
@@ -557,9 +553,8 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
    * Set the instance that matches the oneOf child schema, check the instance parameter is valid
    * against the oneOf child schemas: CardMessageFieldInternalImpl,
    * CarouselMessageFieldInternalImpl, ChoiceMessageFieldInternalImpl,
-   * ContactInfoMessageFieldInternalImpl, ListMessageFieldInternalImpl,
-   * LocationMessageFieldInternalImpl, MediaMessageFieldInternalImpl,
-   * TemplateReferenceFieldInternalImpl, TextMessageFieldInternalImpl
+   * ContactInfoMessageFieldInternalImpl, ListMessageFieldInternalImpl, LocationMessageImpl,
+   * MediaMessageImpl, TemplateReferenceFieldInternalImpl, TextMessageImpl
    *
    * <p>It could be an instance of the 'oneOf' schemas. The oneOf child schemas may themselves be a
    * composed schema (allOf, anyOf, oneOf).
@@ -596,14 +591,12 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
       return;
     }
 
-    if (JSONNavigator.isInstanceOf(
-        LocationMessageFieldInternalImpl.class, instance, new HashSet<Class<?>>())) {
+    if (JSONNavigator.isInstanceOf(LocationMessageImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
 
-    if (JSONNavigator.isInstanceOf(
-        MediaMessageFieldInternalImpl.class, instance, new HashSet<Class<?>>())) {
+    if (JSONNavigator.isInstanceOf(MediaMessageImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
@@ -614,8 +607,7 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
       return;
     }
 
-    if (JSONNavigator.isInstanceOf(
-        TextMessageFieldInternalImpl.class, instance, new HashSet<Class<?>>())) {
+    if (JSONNavigator.isInstanceOf(TextMessageImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
@@ -624,22 +616,20 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
         "Invalid instance type. Must be CardMessageFieldInternalImpl,"
             + " CarouselMessageFieldInternalImpl, ChoiceMessageFieldInternalImpl,"
             + " ContactInfoMessageFieldInternalImpl, ListMessageFieldInternalImpl,"
-            + " LocationMessageFieldInternalImpl, MediaMessageFieldInternalImpl,"
-            + " TemplateReferenceFieldInternalImpl, TextMessageFieldInternalImpl");
+            + " LocationMessageImpl, MediaMessageImpl, TemplateReferenceFieldInternalImpl,"
+            + " TextMessageImpl");
   }
 
   /**
    * Get the actual instance, which can be the following: CardMessageFieldInternalImpl,
    * CarouselMessageFieldInternalImpl, ChoiceMessageFieldInternalImpl,
-   * ContactInfoMessageFieldInternalImpl, ListMessageFieldInternalImpl,
-   * LocationMessageFieldInternalImpl, MediaMessageFieldInternalImpl,
-   * TemplateReferenceFieldInternalImpl, TextMessageFieldInternalImpl
+   * ContactInfoMessageFieldInternalImpl, ListMessageFieldInternalImpl, LocationMessageImpl,
+   * MediaMessageImpl, TemplateReferenceFieldInternalImpl, TextMessageImpl
    *
    * @return The actual instance (CardMessageFieldInternalImpl, CarouselMessageFieldInternalImpl,
    *     ChoiceMessageFieldInternalImpl, ContactInfoMessageFieldInternalImpl,
-   *     ListMessageFieldInternalImpl, LocationMessageFieldInternalImpl,
-   *     MediaMessageFieldInternalImpl, TemplateReferenceFieldInternalImpl,
-   *     TextMessageFieldInternalImpl)
+   *     ListMessageFieldInternalImpl, LocationMessageImpl, MediaMessageImpl,
+   *     TemplateReferenceFieldInternalImpl, TextMessageImpl)
    */
   @Override
   public Object getActualInstance() {
@@ -705,27 +695,25 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
   }
 
   /**
-   * Get the actual instance of `LocationMessageFieldInternalImpl`. If the actual instance is not
-   * `LocationMessageFieldInternalImpl`, the ClassCastException will be thrown.
+   * Get the actual instance of `LocationMessageImpl`. If the actual instance is not
+   * `LocationMessageImpl`, the ClassCastException will be thrown.
    *
-   * @return The actual instance of `LocationMessageFieldInternalImpl`
-   * @throws ClassCastException if the instance is not `LocationMessageFieldInternalImpl`
+   * @return The actual instance of `LocationMessageImpl`
+   * @throws ClassCastException if the instance is not `LocationMessageImpl`
    */
-  public LocationMessageFieldInternalImpl getLocationMessageFieldInternalImpl()
-      throws ClassCastException {
-    return (LocationMessageFieldInternalImpl) super.getActualInstance();
+  public LocationMessageImpl getLocationMessageImpl() throws ClassCastException {
+    return (LocationMessageImpl) super.getActualInstance();
   }
 
   /**
-   * Get the actual instance of `MediaMessageFieldInternalImpl`. If the actual instance is not
-   * `MediaMessageFieldInternalImpl`, the ClassCastException will be thrown.
+   * Get the actual instance of `MediaMessageImpl`. If the actual instance is not
+   * `MediaMessageImpl`, the ClassCastException will be thrown.
    *
-   * @return The actual instance of `MediaMessageFieldInternalImpl`
-   * @throws ClassCastException if the instance is not `MediaMessageFieldInternalImpl`
+   * @return The actual instance of `MediaMessageImpl`
+   * @throws ClassCastException if the instance is not `MediaMessageImpl`
    */
-  public MediaMessageFieldInternalImpl getMediaMessageFieldInternalImpl()
-      throws ClassCastException {
-    return (MediaMessageFieldInternalImpl) super.getActualInstance();
+  public MediaMessageImpl getMediaMessageImpl() throws ClassCastException {
+    return (MediaMessageImpl) super.getActualInstance();
   }
 
   /**
@@ -741,13 +729,13 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
   }
 
   /**
-   * Get the actual instance of `TextMessageFieldInternalImpl`. If the actual instance is not
-   * `TextMessageFieldInternalImpl`, the ClassCastException will be thrown.
+   * Get the actual instance of `TextMessageImpl`. If the actual instance is not `TextMessageImpl`,
+   * the ClassCastException will be thrown.
    *
-   * @return The actual instance of `TextMessageFieldInternalImpl`
-   * @throws ClassCastException if the instance is not `TextMessageFieldInternalImpl`
+   * @return The actual instance of `TextMessageImpl`
+   * @throws ClassCastException if the instance is not `TextMessageImpl`
    */
-  public TextMessageFieldInternalImpl getTextMessageFieldInternalImpl() throws ClassCastException {
-    return (TextMessageFieldInternalImpl) super.getActualInstance();
+  public TextMessageImpl getTextMessageImpl() throws ClassCastException {
+    return (TextMessageImpl) super.getActualInstance();
   }
 }

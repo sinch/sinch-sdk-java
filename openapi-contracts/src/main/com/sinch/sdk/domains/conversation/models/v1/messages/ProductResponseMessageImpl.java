@@ -7,73 +7,86 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ProductResponseMessageInternal;
 import java.util.List;
 import java.util.Objects;
 
-@JsonPropertyOrder({
-  ProductResponseMessageImpl.JSON_PROPERTY_PRODUCTS,
-  ProductResponseMessageImpl.JSON_PROPERTY_TITLE,
-  ProductResponseMessageImpl.JSON_PROPERTY_CATALOG_ID
-})
+@JsonPropertyOrder({ProductResponseMessageImpl.JSON_PROPERTY_PRODUCT_RESPONSE_MESSAGE})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class ProductResponseMessageImpl implements ProductResponseMessage {
+public class ProductResponseMessageImpl
+    implements ProductResponseMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_PRODUCTS = "products";
+  public static final String JSON_PROPERTY_PRODUCT_RESPONSE_MESSAGE = "product_response_message";
 
-  private OptionalValue<List<ProductItem>> products;
-
-  public static final String JSON_PROPERTY_TITLE = "title";
-
-  private OptionalValue<String> title;
-
-  public static final String JSON_PROPERTY_CATALOG_ID = "catalog_id";
-
-  private OptionalValue<String> catalogId;
+  private OptionalValue<ProductResponseMessageInternal> productResponseMessage;
 
   public ProductResponseMessageImpl() {}
 
   protected ProductResponseMessageImpl(
-      OptionalValue<List<ProductItem>> products,
-      OptionalValue<String> title,
-      OptionalValue<String> catalogId) {
-    this.products = products;
-    this.title = title;
-    this.catalogId = catalogId;
+      OptionalValue<ProductResponseMessageInternal> productResponseMessage) {
+    this.productResponseMessage = productResponseMessage;
+  }
+
+  @JsonIgnore
+  public ProductResponseMessageInternal getProductResponseMessage() {
+    return productResponseMessage.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_PRODUCT_RESPONSE_MESSAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<ProductResponseMessageInternal> productResponseMessage() {
+    return productResponseMessage;
   }
 
   @JsonIgnore
   public List<ProductItem> getProducts() {
-    return products.orElse(null);
+    if (null == productResponseMessage
+        || !productResponseMessage.isPresent()
+        || null == productResponseMessage.get().getProducts()) {
+      return null;
+    }
+    return productResponseMessage.get().getProducts();
   }
 
-  @JsonProperty(JSON_PROPERTY_PRODUCTS)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<List<ProductItem>> products() {
-    return products;
+    return null != productResponseMessage
+        ? productResponseMessage.map(ProductResponseMessageInternal::getProducts)
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public String getTitle() {
-    return title.orElse(null);
+    if (null == productResponseMessage
+        || !productResponseMessage.isPresent()
+        || null == productResponseMessage.get().getTitle()) {
+      return null;
+    }
+    return productResponseMessage.get().getTitle();
   }
 
-  @JsonProperty(JSON_PROPERTY_TITLE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> title() {
-    return title;
+    return null != productResponseMessage
+        ? productResponseMessage.map(ProductResponseMessageInternal::getTitle)
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public String getCatalogId() {
-    return catalogId.orElse(null);
+    if (null == productResponseMessage
+        || !productResponseMessage.isPresent()
+        || null == productResponseMessage.get().getCatalogId()) {
+      return null;
+    }
+    return productResponseMessage.get().getCatalogId();
   }
 
-  @JsonProperty(JSON_PROPERTY_CATALOG_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> catalogId() {
-    return catalogId;
+    return null != productResponseMessage
+        ? productResponseMessage.map(ProductResponseMessageInternal::getCatalogId)
+        : OptionalValue.empty();
   }
 
   /** Return true if this ProductResponseMessage object is equal to o. */
@@ -86,23 +99,22 @@ public class ProductResponseMessageImpl implements ProductResponseMessage {
       return false;
     }
     ProductResponseMessageImpl productResponseMessage = (ProductResponseMessageImpl) o;
-    return Objects.equals(this.products, productResponseMessage.products)
-        && Objects.equals(this.title, productResponseMessage.title)
-        && Objects.equals(this.catalogId, productResponseMessage.catalogId);
+    return Objects.equals(
+        this.productResponseMessage, productResponseMessage.productResponseMessage);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(products, title, catalogId);
+    return Objects.hash(productResponseMessage);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ProductResponseMessageImpl {\n");
-    sb.append("    products: ").append(toIndentedString(products)).append("\n");
-    sb.append("    title: ").append(toIndentedString(title)).append("\n");
-    sb.append("    catalogId: ").append(toIndentedString(catalogId)).append("\n");
+    sb.append("    productResponseMessage: ")
+        .append(toIndentedString(productResponseMessage))
+        .append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -119,30 +131,48 @@ public class ProductResponseMessageImpl implements ProductResponseMessage {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements ProductResponseMessage.Builder {
-    OptionalValue<List<ProductItem>> products = OptionalValue.empty();
-    OptionalValue<String> title = OptionalValue.empty();
-    OptionalValue<String> catalogId = OptionalValue.empty();
+    OptionalValue<ProductResponseMessageInternal> productResponseMessage = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_PRODUCTS)
+    ProductResponseMessageInternal.Builder _delegatedBuilder = null;
+
+    @JsonProperty(value = JSON_PROPERTY_PRODUCT_RESPONSE_MESSAGE, required = true)
+    public Builder setProductResponseMessage(
+        ProductResponseMessageInternal productResponseMessage) {
+      this.productResponseMessage = OptionalValue.of(productResponseMessage);
+      return this;
+    }
+
+    @JsonIgnore
     public Builder setProducts(List<ProductItem> products) {
-      this.products = OptionalValue.of(products);
+      getDelegatedBuilder().setProducts(products);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_TITLE)
+    @JsonIgnore
     public Builder setTitle(String title) {
-      this.title = OptionalValue.of(title);
+      getDelegatedBuilder().setTitle(title);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_CATALOG_ID)
+    @JsonIgnore
     public Builder setCatalogId(String catalogId) {
-      this.catalogId = OptionalValue.of(catalogId);
+      getDelegatedBuilder().setCatalogId(catalogId);
       return this;
+    }
+
+    private ProductResponseMessageInternal.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = ProductResponseMessageInternal.builder();
+      }
+      return this._delegatedBuilder;
     }
 
     public ProductResponseMessage build() {
-      return new ProductResponseMessageImpl(products, title, catalogId);
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.productResponseMessage = OptionalValue.of(this._delegatedBuilder.build());
+      }
+      return new ProductResponseMessageImpl(productResponseMessage);
     }
   }
 }

@@ -14,9 +14,10 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** Media Card Message */
+/** A message containing a media component, such as an image or video. */
 @JsonDeserialize(builder = MediaCardMessageImpl.Builder.class)
-public interface MediaCardMessage {
+public interface MediaCardMessage
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage {
 
   /**
    * Caption for the media on supported channels.
