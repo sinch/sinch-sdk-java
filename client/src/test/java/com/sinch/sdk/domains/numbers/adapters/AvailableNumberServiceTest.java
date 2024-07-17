@@ -4,74 +4,52 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.core.http.AuthManager;
-import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.numbers.adapters.api.v1.AvailableNumberApi;
+import com.sinch.sdk.domains.numbers.adapters.converters.ActiveNumberDtoConverterTest;
 import com.sinch.sdk.domains.numbers.models.*;
-import com.sinch.sdk.domains.numbers.models.dto.v1.ActiveNumberDto;
-import com.sinch.sdk.domains.numbers.models.dto.v1.AvailableNumberDto;
-import com.sinch.sdk.domains.numbers.models.dto.v1.AvailableNumbersResponseDto;
 import com.sinch.sdk.domains.numbers.models.requests.*;
 import com.sinch.sdk.domains.numbers.models.responses.AvailableNumberListResponse;
-import com.sinch.sdk.models.NumbersContext;
-import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
+import com.sinch.sdk.domains.numbers.models.v1.ActiveNumberDtoTest;
+import com.sinch.sdk.domains.numbers.models.v1.AvailableNumberDtoTest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.SearchPosition;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Map;
 import java.util.NoSuchElementException;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 
 @TestWithResources
 class AvailableNumberServiceTest extends BaseTest {
 
-  @GivenJsonResource("/domains/numbers/v1/available-numbers-list.json")
-  AvailableNumbersResponseDto availableNumbersListDto;
-
-  @GivenJsonResource("/domains/numbers/v1/available-numbers-get.json")
-  AvailableNumberDto getNumberDto;
-
-  @GivenJsonResource("/domains/numbers/v1/rent-response.json")
-  ActiveNumberDto rentNumberDto;
-
-  @Mock NumbersContext context;
-  @Mock HttpClient httpClient;
-  @Mock Map<String, AuthManager> authManagers;
-  @Mock AvailableNumberApi api;
   AvailableNumberService service;
-
-  String uriUUID = "foo";
+  @Mock com.sinch.sdk.domains.numbers.api.v1.NumbersService v1;
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new AvailableNumberService(uriUUID, context, httpClient, authManagers));
-    doReturn(api).when(service).getApi();
+    service = spy(new AvailableNumberService(v1));
   }
 
   @Test
   void list() throws ApiException {
 
-    when(api.numberServiceListAvailableNumbers(
-            eq(uriUUID),
-            eq("region"),
-            ArgumentMatchers.eq(NumberType.MOBILE.value()),
-            eq(null),
-            eq(null),
-            eq(null),
-            eq(null)))
-        .thenReturn(availableNumbersListDto);
+    when(v1.searchForAvailableNumbers(
+            eq(
+                AvailableNumberListRequest.builder()
+                    .setRegionCode("region")
+                    .setType(com.sinch.sdk.domains.numbers.models.v1.NumberType.MOBILE)
+                    .build())))
+        .thenReturn(
+            new com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse(
+                AvailableNumberDtoTest.availableNumberList.getAvailableNumbers()));
 
     AvailableNumberListAllRequestParameters parameters =
         AvailableNumberListAllRequestParameters.builder()
@@ -80,37 +58,47 @@ class AvailableNumberServiceTest extends BaseTest {
             .build();
 
     Collection<AvailableNumber> expected =
-        Collections.singletonList(
-            AvailableNumber.builder()
-                .setPhoneNumber("+46650553763")
-                .setRegionCode("SE")
-                .setType(NumberType.LOCAL)
-                .setCapability(Collections.singletonList(Capability.VOICE))
-                .setSetupPrice(new Money("DOLLAR", 0.57))
-                .setMonthlyPrice(new Money("EUR", 0.80))
-                .setPaymentIntervalMonths(1)
-                .setSupportingDocumentationRequired(true)
-                .build());
+        new ArrayList<>(
+            Collections.singletonList(
+                AvailableNumber.builder()
+                    .setPhoneNumber("+46650553763")
+                    .setRegionCode("SE")
+                    .setType(NumberType.LOCAL)
+                    .setCapability(new ArrayList<>(Collections.singletonList(Capability.VOICE)))
+                    .setSetupPrice(new Money("DOLLAR", 0.57))
+                    .setMonthlyPrice(new Money("EUR", 0.80))
+                    .setPaymentIntervalMonths(1)
+                    .setSupportingDocumentationRequired(true)
+                    .build()));
 
     AvailableNumberListResponse response = service.list(parameters);
 
     assertFalse(response.hasNextPage(), "Has no next page");
     assertThrows(NoSuchElementException.class, response::nextPage);
-    Assertions.assertThat(response.getContent()).usingRecursiveComparison().isEqualTo(expected);
+    TestHelpers.recursiveEquals(response.getContent(), expected);
   }
 
   @Test
   void listWithParameters() throws ApiException {
 
-    when(api.numberServiceListAvailableNumbers(
-            eq(uriUUID),
-            eq("another region"),
-            ArgumentMatchers.eq(NumberType.TOLL_FREE.value()),
-            eq("pattern value"),
-            ArgumentMatchers.eq(SearchPattern.END.value()),
-            ArgumentMatchers.eq(Collections.singletonList(Capability.VOICE.value())),
-            eq(45)))
-        .thenReturn(availableNumbersListDto);
+    when(v1.searchForAvailableNumbers(
+            eq(
+                AvailableNumberListRequest.builder()
+                    .setRegionCode("another region")
+                    .setType(com.sinch.sdk.domains.numbers.models.v1.NumberType.TOLL_FREE)
+                    .setSearchPattern(
+                        com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern.builder()
+                            .setPattern("pattern value")
+                            .setPosition(SearchPosition.END)
+                            .build())
+                    .setCapabilities(
+                        Collections.singletonList(
+                            com.sinch.sdk.domains.numbers.models.v1.Capability.VOICE))
+                    .setSize(45)
+                    .build())))
+        .thenReturn(
+            new com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse(
+                AvailableNumberDtoTest.availableNumberList.getAvailableNumbers()));
 
     AvailableNumberListAllRequestParameters parameters =
         AvailableNumberListAllRequestParameters.builder()
@@ -126,29 +114,30 @@ class AvailableNumberServiceTest extends BaseTest {
             .build();
 
     Collection<AvailableNumber> expected =
-        Collections.singletonList(
-            AvailableNumber.builder()
-                .setPhoneNumber("+46650553763")
-                .setRegionCode("SE")
-                .setType(NumberType.LOCAL)
-                .setCapability(Collections.singletonList(Capability.VOICE))
-                .setSetupPrice(new Money("DOLLAR", 0.57))
-                .setMonthlyPrice(new Money("EUR", 0.80))
-                .setPaymentIntervalMonths(1)
-                .setSupportingDocumentationRequired(true)
-                .build());
+        new ArrayList<>(
+            Collections.singletonList(
+                AvailableNumber.builder()
+                    .setPhoneNumber("+46650553763")
+                    .setRegionCode("SE")
+                    .setType(NumberType.LOCAL)
+                    .setCapability(new ArrayList<>(Collections.singletonList(Capability.VOICE)))
+                    .setSetupPrice(new Money("DOLLAR", 0.57))
+                    .setMonthlyPrice(new Money("EUR", 0.80))
+                    .setPaymentIntervalMonths(1)
+                    .setSupportingDocumentationRequired(true)
+                    .build()));
 
     AvailableNumberListResponse response = service.list(parameters);
 
     assertFalse(response.hasNextPage(), "Has no next page");
     assertThrows(NoSuchElementException.class, response::nextPage);
-    Assertions.assertThat(response.getContent()).usingRecursiveComparison().isEqualTo(expected);
+    TestHelpers.recursiveEquals(response.getContent(), expected);
   }
 
   @Test
   void get() {
 
-    when(api.numberServiceGetAvailableNumber(eq(uriUUID), eq("foo"))).thenReturn(getNumberDto);
+    when(v1.checkAvailability(eq("foo"))).thenReturn(AvailableNumberDtoTest.availableNumber);
 
     AvailableNumber response = service.checkAvailability("foo");
 
@@ -164,13 +153,13 @@ class AvailableNumberServiceTest extends BaseTest {
             .setSupportingDocumentationRequired(true)
             .build();
 
-    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(expected);
+    TestHelpers.recursiveEquals(response, expected);
   }
 
   @Test
   void rent() {
 
-    when(api.numberServiceRentNumber(eq(uriUUID), eq("foo"), any())).thenReturn(rentNumberDto);
+    when(v1.rent(eq("foo"), any())).thenReturn(ActiveNumberDtoTest.activeNumber);
 
     ActiveNumber response =
         service.rent(
@@ -185,56 +174,14 @@ class AvailableNumberServiceTest extends BaseTest {
                     RentVoiceConfigurationRequestParameters.builder().setAppId("").build())
                 .setCallbackUrl("foo")
                 .build());
-    ActiveNumber expected =
-        ActiveNumber.builder()
-            .setRegionCode("US")
-            .setPaymentIntervalMonths(0)
-            .setNextChargeDate(
-                OffsetDateTime.parse("2019-08-24T14:15:22Z", DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-                    .toInstant())
-            .setExpireAt(
-                OffsetDateTime.parse("2019-08-24T14:15:22Z", DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-                    .toInstant())
-            .setPhoneNumber("+12025550134")
-            .setProjectId("51bc3f40-f266-4ca8-8938-a1ed0ff32b9a")
-            .setDisplayName("string")
-            .setType(NumberType.MOBILE)
-            .setCapability(Collections.singletonList(Capability.SMS))
-            .setMoney(new Money("USD", 2.00))
-            .setSmsConfiguration(
-                new SMSConfiguration(
-                    "string",
-                    "string",
-                    new ScheduledSmsProvisioning(
-                        "8200000f74924bd6800000b212f00000",
-                        "string",
-                        ProvisioningStatus.WAITING,
-                        OffsetDateTime.parse(
-                                "2019-08-24T14:15:22Z", DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-                            .toInstant(),
-                        Collections.emptyList())))
-            .setVoiceConfiguration(
-                new VoiceConfiguration(
-                    "string",
-                    OffsetDateTime.parse(
-                            "2019-08-24T14:15:22Z", DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-                        .toInstant(),
-                    new ScheduledVoiceProvisioning(
-                        "string",
-                        ProvisioningStatus.WAITING,
-                        OffsetDateTime.parse(
-                                "2019-08-24T14:15:22Z", DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-                            .toInstant())))
-            .setCallbackUrl("https://www.your-callback-server.com/callback")
-            .build();
 
-    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(expected);
+    TestHelpers.recursiveEquals(response, ActiveNumberDtoConverterTest.activeNumber);
   }
 
   @Test
   void rentAny() {
 
-    when(api.numberServiceRentAnyNumber(eq(uriUUID), any())).thenReturn(rentNumberDto);
+    when(v1.rentAny(any())).thenReturn(ActiveNumberDtoTest.activeNumber);
 
     AvailableNumberRentAnyRequestParameters parameters =
         AvailableNumberRentAnyRequestParameters.builder()
@@ -242,49 +189,7 @@ class AvailableNumberServiceTest extends BaseTest {
             .setType(NumberType.MOBILE)
             .build();
     ActiveNumber response = service.rentAny(parameters);
-    ActiveNumber expected =
-        ActiveNumber.builder()
-            .setRegionCode("US")
-            .setPaymentIntervalMonths(0)
-            .setNextChargeDate(
-                OffsetDateTime.parse("2019-08-24T14:15:22Z", DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-                    .toInstant())
-            .setExpireAt(
-                OffsetDateTime.parse("2019-08-24T14:15:22Z", DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-                    .toInstant())
-            .setPhoneNumber("+12025550134")
-            .setProjectId("51bc3f40-f266-4ca8-8938-a1ed0ff32b9a")
-            .setDisplayName("string")
-            .setType(NumberType.MOBILE)
-            .setCapability(Collections.singletonList(Capability.SMS))
-            .setMoney(new Money("USD", 2.00))
-            .setSmsConfiguration(
-                new SMSConfiguration(
-                    "string",
-                    "string",
-                    new ScheduledSmsProvisioning(
-                        "8200000f74924bd6800000b212f00000",
-                        "string",
-                        ProvisioningStatus.WAITING,
-                        OffsetDateTime.parse(
-                                "2019-08-24T14:15:22Z", DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-                            .toInstant(),
-                        Collections.emptyList())))
-            .setVoiceConfiguration(
-                new VoiceConfiguration(
-                    "string",
-                    OffsetDateTime.parse(
-                            "2019-08-24T14:15:22Z", DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-                        .toInstant(),
-                    new ScheduledVoiceProvisioning(
-                        "string",
-                        ProvisioningStatus.WAITING,
-                        OffsetDateTime.parse(
-                                "2019-08-24T14:15:22Z", DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-                            .toInstant())))
-            .setCallbackUrl("https://www.your-callback-server.com/callback")
-            .build();
 
-    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(expected);
+    TestHelpers.recursiveEquals(response, ActiveNumberDtoConverterTest.activeNumber);
   }
 }

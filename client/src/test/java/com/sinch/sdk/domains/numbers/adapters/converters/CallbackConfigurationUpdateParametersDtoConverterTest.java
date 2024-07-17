@@ -1,31 +1,20 @@
 package com.sinch.sdk.domains.numbers.adapters.converters;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import com.sinch.sdk.domains.numbers.models.dto.v1.CallbackConfigurationUpdateDto;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.numbers.models.requests.CallbackConfigurationUpdateRequestParameters;
-import org.junit.jupiter.api.BeforeEach;
+import com.sinch.sdk.domains.numbers.models.v1.CallbackConfigurationDtoTest;
+import com.sinch.sdk.domains.numbers.models.v1.callbacks.request.CallbackConfigurationUpdateRequest;
 import org.junit.jupiter.api.Test;
 
 class CallbackConfigurationUpdateParametersDtoConverterTest {
 
-  CallbackConfigurationUpdateRequestParameters item;
-
-  public static void compareWithDto(
-      CallbackConfigurationUpdateRequestParameters client, CallbackConfigurationUpdateDto dto) {
-    assertEquals(dto.getHmacSecret(), client.getHMACSecret().get());
-  }
-
   @Test
   void convert() {
-    CallbackConfigurationUpdateDto converted =
-        CallbackConfigurationUpdateRequestParametersDtoConverter.convert(item);
-    compareWithDto(item, converted);
-  }
-
-  @BeforeEach
-  void setUp() {
-
-    item = CallbackConfigurationUpdateRequestParameters.builder().setHMACSecret("my HMAC").build();
+    CallbackConfigurationUpdateRequest converted =
+        CallbackConfigurationUpdateRequestParametersDtoConverter.convert(
+            CallbackConfigurationUpdateRequestParameters.builder()
+                .setHMACSecret("HMAC value")
+                .build());
+    TestHelpers.recursiveEquals(converted, CallbackConfigurationDtoTest.updateRequest);
   }
 }

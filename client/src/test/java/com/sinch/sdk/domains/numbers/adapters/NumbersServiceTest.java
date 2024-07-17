@@ -59,7 +59,7 @@ class NumbersServiceTest {
     Exception exception =
         assertThrows(
             NullPointerException.class, () -> new NumbersService(credentials, null, httpClient));
-    assertTrue(exception.getMessage().contains("Context must be defined"));
+    assertTrue(exception.getMessage().contains("Numbers service requires context to be defined"));
   }
 
   @Test

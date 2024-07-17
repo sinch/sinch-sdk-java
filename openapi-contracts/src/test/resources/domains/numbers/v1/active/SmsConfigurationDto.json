@@ -1,0 +1,13 @@
+{
+  "servicePlanId": "service plan id",
+  "campaignId": "campaign id",
+  "scheduledProvisioning": {
+    "servicePlanId": "service plan id from scheduled",
+    "campaignId": "campaign id from scheduled",
+    "status": "PROVISIONING_STATUS_UNSPECIFIED",
+    "lastUpdatedTime": "2023-09-25T12:08:02.115Z",
+    "errorCodes": [
+      "ERROR_CODE_UNSPECIFIED"
+    ]
+  }
+}

@@ -44,17 +44,17 @@ public class Money {
 
     private Builder() {}
 
-    Builder setCurrencyCode(String value) {
+    public Builder setCurrencyCode(String value) {
       this.currencyCode = value;
       return this;
     }
 
-    Builder setAmount(Double value) {
+    public Builder setAmount(Double value) {
       this.amount = value;
       return this;
     }
 
-    Money build() {
+    public Money build() {
       return new Money(this.currencyCode, this.amount);
     }
   }
