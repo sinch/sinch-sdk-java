@@ -1,9 +1,10 @@
 package com.sinch.sample.numbers.regions;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.numbers.models.NumberType;
-import com.sinch.sdk.domains.numbers.models.requests.AvailableRegionListAllRequestParameters;
-import com.sinch.sdk.domains.numbers.models.responses.AvailableRegionListResponse;
+import com.sinch.sdk.domains.numbers.api.v1.AvailableRegionService;
+import com.sinch.sdk.domains.numbers.models.v1.NumberType;
+import com.sinch.sdk.domains.numbers.models.v1.regions.available.request.AvailableRegionListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.regions.available.response.AvailableRegionListResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.logging.Logger;
@@ -24,17 +25,16 @@ public class List extends BaseApplication {
 
   public void run() {
 
+    AvailableRegionService service = client.numbers().v1().regions();
+
     LOGGER.info("List");
     int page = 1;
 
     AvailableRegionListResponse response =
-        client
-            .numbers()
-            .regions()
-            .list(
-                AvailableRegionListAllRequestParameters.builder()
-                    .setTypes(Arrays.asList(NumberType.MOBILE, NumberType.LOCAL))
-                    .build());
+        service.list(
+            AvailableRegionListRequest.builder()
+                .setTypes(Arrays.asList(NumberType.MOBILE, NumberType.LOCAL))
+                .build());
 
     LOGGER.info(String.format("Response (page %d): %s", page, response));
 

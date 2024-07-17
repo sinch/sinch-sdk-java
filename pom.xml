@@ -4,7 +4,7 @@
 
     <groupId>com.sinch.sdk</groupId>
     <artifactId>sinch-sdk-java</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.3.0-SNAPSHOT</version>
 
     <name>Sinch Java SDK</name>
     <description>
@@ -135,10 +135,15 @@
                             **.adapters;
                             **.adapters*;
                             **.internal;
+                            com.sinch.sdk.domains.numbers.models.v1.errors;
                             com.sinch.sdk.domains.verification.models;
                             com.sinch.sdk.domains.verification.models.requests;
                             com.sinch.sdk.domains.verification.models.response;
                             com.sinch.sdk.domains.verification.models.webhooks;
+                            com.sinch.sdk.domains.numbers.models;
+                            com.sinch.sdk.domains.numbers.models.requests;
+                            com.sinch.sdk.domains.numbers.models.responses;
+                            com.sinch.sdk.domains.numbers.models.webhooks;
                         </excludePackageNames>
                         <sourceFileExcludes>
                             <sourceFileExclude>**/pagination/Page*.java</sourceFileExclude>
@@ -150,6 +155,12 @@
                             <sourceFileExclude>com/sinch/sdk/domains/verification/VerificationsService.java</sourceFileExclude>
                             <sourceFileExclude>com/sinch/sdk/domains/verification/VerificationStatusService.java</sourceFileExclude>
                             <sourceFileExclude>com/sinch/sdk/domains/verification/WebHooksService.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/numbers/models/*.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/numbers/ActiveNumberService.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/numbers/AvailableNumberService.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/numbers/AvailableRegionService.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/numbers/CallbackConfigurationService.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/numbers/WebHooksService.java</sourceFileExclude>
                         </sourceFileExcludes>
                         <tags>
                             <tag>

@@ -1,94 +1,67 @@
 package com.sinch.sdk.domains.numbers.adapters;
 
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.core.http.AuthManager;
-import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.core.http.HttpMapper;
-import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.core.models.pagination.TokenPageNavigator;
-import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.Pair;
-import com.sinch.sdk.domains.numbers.adapters.api.v1.ActiveNumberApi;
 import com.sinch.sdk.domains.numbers.adapters.converters.ActiveNumberDtoConverter;
 import com.sinch.sdk.domains.numbers.adapters.converters.ActiveNumberUpdateRequestParametersDtoConverter;
 import com.sinch.sdk.domains.numbers.models.ActiveNumber;
-import com.sinch.sdk.domains.numbers.models.NumberPattern;
-import com.sinch.sdk.domains.numbers.models.NumberType;
-import com.sinch.sdk.domains.numbers.models.SearchPattern;
-import com.sinch.sdk.domains.numbers.models.dto.v1.ActiveNumberDto;
-import com.sinch.sdk.domains.numbers.models.dto.v1.ActiveNumbersResponseDto;
 import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberListRequestParameters;
 import com.sinch.sdk.domains.numbers.models.requests.ActiveNumberUpdateRequestParameters;
 import com.sinch.sdk.domains.numbers.models.responses.ActiveNumberListResponse;
-import com.sinch.sdk.models.NumbersContext;
+import com.sinch.sdk.domains.numbers.models.v1.Capability;
+import com.sinch.sdk.domains.numbers.models.v1.NumberType;
+import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.OrderBy;
+import com.sinch.sdk.domains.numbers.models.v1.request.SearchPosition;
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ActiveNumberService implements com.sinch.sdk.domains.numbers.ActiveNumberService {
 
-  private final String uriUUID;
-  private final ActiveNumberApi api;
+  private final com.sinch.sdk.domains.numbers.api.v1.NumbersService v1;
 
-  public ActiveNumberService(
-      String uriUUID,
-      NumbersContext context,
-      HttpClient httpClient,
-      Map<String, AuthManager> authManagers) {
-    this.uriUUID = uriUUID;
-    this.api =
-        new ActiveNumberApi(httpClient, context.getNumbersServer(), authManagers, new HttpMapper());
-  }
-
-  protected ActiveNumberApi getApi() {
-    return this.api;
+  public ActiveNumberService(com.sinch.sdk.domains.numbers.api.v1.NumbersService v1) {
+    this.v1 = v1;
   }
 
   public ActiveNumberListResponse list(ActiveNumberListRequestParameters parameters)
       throws ApiException {
 
-    String regionCode = parameters.getRegionCode().get();
-    NumberType type = parameters.getType().get();
+    ActiveNumberListRequest.Builder builder = ActiveNumberListRequest.builder();
 
-    OptionalValue<NumberPattern> pattern = parameters.getNumberPattern();
-    String patternPattern = null;
-    SearchPattern searchPattern = null;
-    if (pattern.isPresent()) {
-      NumberPattern p = pattern.get();
-      patternPattern = p.getPattern();
-      searchPattern = p.getSearchPattern();
-    }
+    parameters.getRegionCode().ifPresent(builder::setRegionCode);
+    parameters.getType().ifPresent(f -> builder.setType(NumberType.from(f.value())));
 
-    List<String> capabilities = null;
-    if (parameters.getCapabilities().isPresent()) {
-      capabilities =
-          parameters.getCapabilities().get().stream()
-              .map(EnumDynamic::value)
-              .collect(Collectors.toList());
-    }
+    parameters
+        .getNumberPattern()
+        .ifPresent(
+            f -> {
+              com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern.Builder spBuilder =
+                  com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern.builder();
+              spBuilder.setPattern(f.getPattern());
+              spBuilder.setPosition(
+                  null != f.getSearchPattern()
+                      ? SearchPosition.from(f.getSearchPattern().value())
+                      : null);
+              builder.setSearchPattern(spBuilder.build());
+            });
 
-    Integer pageSize = parameters.getPageSize().orElse(null);
+    parameters
+        .getCapabilities()
+        .ifPresent(
+            f ->
+                builder.setCapabilities(
+                    f.stream().map(c -> Capability.from(c.value())).collect(Collectors.toList())));
 
-    String orderBy = null;
-    if (parameters.getOrderBy().isPresent()) {
-      orderBy = parameters.getOrderBy().get().value();
-    }
+    parameters.getPageSize().ifPresent(builder::setPageSize);
+    parameters.getOrderBy().ifPresent(f -> builder.setOrderBy(OrderBy.from(f.value())));
 
-    String pageToken = parameters.getPageToken().orElse(null);
-    ActiveNumbersResponseDto response =
-        getApi()
-            .numberServiceListActiveNumbers(
-                uriUUID,
-                regionCode,
-                type.value(),
-                patternPattern,
-                null != searchPattern ? searchPattern.value() : null,
-                capabilities,
-                pageSize,
-                pageToken,
-                orderBy);
+    parameters.getPageToken().ifPresent(builder::setPageToken);
+
+    com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse response =
+        v1.list(builder.build());
     Pair<Collection<ActiveNumber>, TokenPageNavigator> content =
         ActiveNumberDtoConverter.convert(response);
     return new ActiveNumberListResponse(
@@ -96,23 +69,18 @@ public class ActiveNumberService implements com.sinch.sdk.domains.numbers.Active
   }
 
   public ActiveNumber get(String phoneNumber) throws ApiException {
-    ActiveNumberDto response = getApi().numberServiceGetActiveNumber(uriUUID, phoneNumber);
-    return ActiveNumberDtoConverter.convert(response);
+    return ActiveNumberDtoConverter.convert(v1.get(phoneNumber));
   }
 
   public ActiveNumber release(String phoneNumber) throws ApiException {
-    ActiveNumberDto response = getApi().numberServiceReleaseNumber(uriUUID, phoneNumber);
-    return ActiveNumberDtoConverter.convert(response);
+    return ActiveNumberDtoConverter.convert(v1.release(phoneNumber));
   }
 
   public ActiveNumber update(String phoneNumber, ActiveNumberUpdateRequestParameters parameters)
       throws ApiException {
-    ActiveNumberDto response =
-        getApi()
-            .numberServiceUpdateActiveNumber(
-                uriUUID,
-                phoneNumber,
-                ActiveNumberUpdateRequestParametersDtoConverter.convert(parameters));
-    return ActiveNumberDtoConverter.convert(response);
+
+    return ActiveNumberDtoConverter.convert(
+        v1.update(
+            phoneNumber, ActiveNumberUpdateRequestParametersDtoConverter.convert(parameters)));
   }
 }
