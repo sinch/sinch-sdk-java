@@ -13,6 +13,9 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.CardMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.CarouselMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ChoiceMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ContactInfoMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.DelegatedMappers.DelegatedLocationSerializer;
+import com.sinch.sdk.domains.conversation.models.v1.messages.DelegatedMappers.DelegatedMediaSerializer;
+import com.sinch.sdk.domains.conversation.models.v1.messages.DelegatedMappers.DelegatedTextSerializer;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ListMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.LocationMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.MediaMessage;
@@ -25,9 +28,9 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class AppMessageRequestMapper {
+public class AppMessageMapper {
 
-  private static final Logger LOGGER = Logger.getLogger(AppMessageRequestMapper.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(AppMessageMapper.class.getName());
 
   public static void initMapper() {
     SimpleModule module = new SimpleModule().addSerializer(AppMessageImpl.class, new Serializer());
@@ -89,6 +92,24 @@ public class AppMessageRequestMapper {
   }
 
   public static class AppMessageMapperMixin extends AppMessageInternalImpl {
+
+    @Override
+    @JsonSerialize(using = DelegatedLocationSerializer.class)
+    public OptionalValue<LocationMessage> locationMessage() {
+      return super.locationMessage();
+    }
+
+    @Override
+    @JsonSerialize(using = DelegatedMediaSerializer.class)
+    public OptionalValue<MediaMessage> mediaMessage() {
+      return super.mediaMessage();
+    }
+
+    @Override
+    @JsonSerialize(using = DelegatedTextSerializer.class)
+    public OptionalValue<TextMessage> textMessage() {
+      return super.textMessage();
+    }
 
     @Override
     @JsonSerialize(using = OmniMessageOverrideSerializer.class)
