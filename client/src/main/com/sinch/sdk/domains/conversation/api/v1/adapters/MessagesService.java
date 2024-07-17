@@ -5,7 +5,6 @@ import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.AppMessageMapper;
-import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ChoiceItemMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ListSectionMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.SendMessageRequestMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.WhatsAppInteractiveHeaderMapper;
@@ -100,7 +99,6 @@ public class MessagesService implements com.sinch.sdk.domains.conversation.api.v
 
     private LocalLazyInit() {
       AppMessageMapper.initMapper();
-      ChoiceItemMapper.initMapper();
       ChoiceMessageOneOfInternalMapper.initMapper();
       ListSectionMapper.initMapper();
       SendMessageRequestMapper.initMapper();
