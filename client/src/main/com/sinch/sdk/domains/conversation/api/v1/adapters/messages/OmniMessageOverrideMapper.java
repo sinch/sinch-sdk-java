@@ -15,10 +15,7 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.internal.CarouselMe
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ChoiceMessageFieldInternal;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ContactInfoMessageFieldInternal;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ListMessageFieldInternal;
-import com.sinch.sdk.domains.conversation.models.v1.messages.internal.LocationMessageFieldInternal;
-import com.sinch.sdk.domains.conversation.models.v1.messages.internal.MediaMessageFieldInternal;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.OmniMessageOverrideInternalImpl;
-import com.sinch.sdk.domains.conversation.models.v1.messages.internal.TextMessageFieldInternal;
 import com.sinch.sdk.domains.conversation.models.v1.templates.TemplateReference;
 import com.sinch.sdk.domains.conversation.models.v1.templates.internal.TemplateReferenceFieldInternal;
 import java.io.IOException;
@@ -57,19 +54,16 @@ public class OmniMessageOverrideMapper {
     } else if (value instanceof ListMessage) {
       field = ListMessageFieldInternal.builder().setListMessage((ListMessage) value).build();
     } else if (value instanceof LocationMessage) {
-      field =
-          LocationMessageFieldInternal.builder()
-              .setLocationMessage((LocationMessage) value)
-              .build();
+      field = value;
     } else if (value instanceof MediaMessage) {
-      field = MediaMessageFieldInternal.builder().setMediaMessage((MediaMessage) value).build();
+      field = value;
     } else if (value instanceof TemplateReference) {
       field =
           TemplateReferenceFieldInternal.builder()
               .setTemplateReference((TemplateReference) value)
               .build();
     } else if (value instanceof TextMessage) {
-      field = TextMessageFieldInternal.builder().setTextMessage((TextMessage) value).build();
+      field = value;
     } else {
       LOGGER.severe("Unexpected class '" + value.getClass() + "'");
     }
