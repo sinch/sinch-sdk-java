@@ -125,7 +125,7 @@ public class AvailableRegionsApi {
 
     final Collection<String> localVarContentTypes = Arrays.asList();
 
-    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuthCredentials");
+    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
     final String serializedBody = null;
 
     return new HttpRequest(

@@ -127,7 +127,7 @@ public class ActiveNumberApi {
 
     final Collection<String> localVarContentTypes = Arrays.asList();
 
-    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuthCredentials");
+    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
     final String serializedBody = null;
 
     return new HttpRequest(
@@ -324,7 +324,7 @@ public class ActiveNumberApi {
 
     final Collection<String> localVarContentTypes = Arrays.asList();
 
-    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuthCredentials");
+    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
     final String serializedBody = null;
 
     return new HttpRequest(
@@ -411,7 +411,7 @@ public class ActiveNumberApi {
 
     final Collection<String> localVarContentTypes = Arrays.asList();
 
-    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuthCredentials");
+    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
     final String serializedBody = null;
 
     return new HttpRequest(
@@ -510,13 +510,8 @@ public class ActiveNumberApi {
 
     final Collection<String> localVarContentTypes = Arrays.asList("application/json");
 
-<<<<<<< HEAD:openapi-contracts/src/main/com/sinch/sdk/domains/numbers/adapters/api/v1/ActiveNumberApi.java
-    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuthCredentials");
-    final String serializedBody = mapper.serialize(localVarContentTypes, activeNumberRequestDto);
-=======
     final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
     final String serializedBody = mapper.serialize(localVarContentTypes, activeNumberUpdateRequest);
->>>>>>> main:openapi-contracts/src/main/com/sinch/sdk/domains/numbers/api/v1/internal/ActiveNumberApi.java
 
     return new HttpRequest(
         localVarPath,

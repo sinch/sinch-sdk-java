@@ -133,7 +133,7 @@ public class AvailableNumberApi {
 
     final Collection<String> localVarContentTypes = Arrays.asList();
 
-    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuthCredentials");
+    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
     final String serializedBody = null;
 
     return new HttpRequest(
@@ -311,7 +311,7 @@ public class AvailableNumberApi {
 
     final Collection<String> localVarContentTypes = Arrays.asList();
 
-    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuthCredentials");
+    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
     final String serializedBody = null;
 
     return new HttpRequest(
@@ -398,14 +398,9 @@ public class AvailableNumberApi {
 
     final Collection<String> localVarContentTypes = Arrays.asList("application/json");
 
-<<<<<<< HEAD:openapi-contracts/src/main/com/sinch/sdk/domains/numbers/adapters/api/v1/AvailableNumberApi.java
-    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuthCredentials");
-    final String serializedBody = mapper.serialize(localVarContentTypes, rentAnyNumberRequestDto);
-=======
     final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
     final String serializedBody =
         mapper.serialize(localVarContentTypes, availableNumberRentAnyRequest);
->>>>>>> main:openapi-contracts/src/main/com/sinch/sdk/domains/numbers/api/v1/internal/AvailableNumberApi.java
 
     return new HttpRequest(
         localVarPath,
@@ -504,14 +499,9 @@ public class AvailableNumberApi {
 
     final Collection<String> localVarContentTypes = Arrays.asList("application/json");
 
-<<<<<<< HEAD:openapi-contracts/src/main/com/sinch/sdk/domains/numbers/adapters/api/v1/AvailableNumberApi.java
-    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuthCredentials");
-    final String serializedBody = mapper.serialize(localVarContentTypes, rentNumberRequestDto);
-=======
     final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth");
     final String serializedBody =
         mapper.serialize(localVarContentTypes, availableNumberRentRequest);
->>>>>>> main:openapi-contracts/src/main/com/sinch/sdk/domains/numbers/api/v1/internal/AvailableNumberApi.java
 
     return new HttpRequest(
         localVarPath,
