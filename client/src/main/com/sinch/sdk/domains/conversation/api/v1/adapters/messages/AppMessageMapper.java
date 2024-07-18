@@ -138,7 +138,7 @@ public class AppMessageMapper {
             map.entrySet()) {
           jgen.writeStartObject();
           jgen.writeFieldName(entry.getKey().getChannel().value());
-          OmniMessageOverrideMapper.serialize(entry.getValue(), jgen);
+          OmniMessageOverrideMapperHelper.serialize(entry.getValue(), jgen);
           jgen.writeEndObject();
         }
       }

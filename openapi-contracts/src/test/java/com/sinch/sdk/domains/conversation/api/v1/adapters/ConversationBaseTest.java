@@ -7,6 +7,5 @@ public class ConversationBaseTest extends BaseTest {
   static {
     // faking a service init to trigger dedicated serializers initialization
     ConversationService.LocalLazyInit.init();
-    MessagesService.LocalLazyInit.init();
   }
 }

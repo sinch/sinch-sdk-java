@@ -21,9 +21,10 @@ import com.sinch.sdk.domains.conversation.models.v1.templates.internal.TemplateR
 import java.io.IOException;
 import java.util.logging.Logger;
 
-public class OmniMessageOverrideMapper {
+public class OmniMessageOverrideMapperHelper {
 
-  private static final Logger LOGGER = Logger.getLogger(OmniMessageOverrideMapper.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(OmniMessageOverrideMapperHelper.class.getName());
 
   // We cannot create a dedicated Mapper based onto "OmniMessageOverride" interface detection
   // 'OmniMessageOverride' interface is added to all fields supported by OmniMessageOverride
