@@ -29,7 +29,7 @@ public class ConversationEventDtoTest extends ConversationBaseTest {
   public static ConversationEvent expectedEventContactEventDto =
       ConversationEvent.builder()
           .setDirection(ConversationDirection.TO_APP)
-          .setEvent(EventGenericDtoTest.expectedDto)
+          .setAppEvent(EventGenericDtoTest.expectedDto)
           .setId("event id")
           .setConversationId("conversation id")
           .setContactId("contact id")

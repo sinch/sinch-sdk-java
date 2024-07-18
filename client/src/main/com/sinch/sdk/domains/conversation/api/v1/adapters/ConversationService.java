@@ -9,7 +9,6 @@ import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.events.contactmessage.internal.ContactMessageEventMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.events.contacts.internal.ContactEventMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ContactMessageMapper;
-import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ConversationEventMapper;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
@@ -95,7 +94,6 @@ public class ConversationService
       ContactEventMapper.initMapper();
       ContactMessageMapper.initMapper();
       ContactMessageEventMapper.initMapper();
-      ConversationEventMapper.initMapper();
       RecipientMapper.initMapper();
     }
 

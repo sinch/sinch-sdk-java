@@ -1,11 +1,9 @@
 {
   "direction": "TO_APP",
-  "event": {
-    "contact_event": {
-      "generic_event": {
-        "payload": {
-          "payload_key": "payload value"
-        }
+  "app_event": {
+    "generic_event": {
+      "payload": {
+        "payload_key": "payload value"
       }
     }
   },

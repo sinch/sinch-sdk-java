@@ -4,6 +4,7 @@ import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.events.app.AppEventMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.AppMessageMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ListSectionMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.SendMessageRequestMapper;
@@ -98,6 +99,7 @@ public class MessagesService implements com.sinch.sdk.domains.conversation.api.v
   static final class LocalLazyInit {
 
     private LocalLazyInit() {
+      AppEventMapper.initMapper();
       AppMessageMapper.initMapper();
       ChoiceMessageOneOfInternalMapper.initMapper();
       ListSectionMapper.initMapper();
