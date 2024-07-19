@@ -24,7 +24,7 @@ import com.sinch.sdk.domains.conversation.models.v1.templates.TemplateMessage;
  *
  * @see <a
  *     href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/Messages">https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/Messages</a>
- * @since 1.0
+ * @since _NEXT_VERSION_
  */
 public interface MessagesService {
 
@@ -41,7 +41,7 @@ public interface MessagesService {
    *
    * @return Response related to messages sent (from {@link
    *     com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse})
-   * @since 1.0
+   * @since _NEXT_VERSION_
    */
   SendMessageResponse sendCardMessage(SendMessageRequest<CardMessage> request);
 

@@ -13,6 +13,6 @@
  * Ireland, and additional channels will be supported as they become popular.
  *
  * @see <a href="https://developers.sinch.com/docs/conversation/overview">Conversation</a>
- * @since 1.0
+ * @since _NEXT_VERSION_
  */
 package com.sinch.sdk.domains.conversation.api.v1;

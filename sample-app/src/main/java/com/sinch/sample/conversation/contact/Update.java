@@ -1,6 +1,7 @@
 package com.sinch.sample.conversation.contact;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.conversation.api.v1.ContactService;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.contact.Contact;
@@ -25,6 +26,8 @@ public class Update extends BaseApplication {
   }
 
   public void run() {
+
+    ContactService service = client.conversation().v1().contact();
 
     LOGGER.info("Update contact '%s'".formatted(conversationContactId));
 
@@ -60,7 +63,7 @@ public class Update extends BaseApplication {
             .setLanguage(ContactLanguage.BG)
             .build();
 
-    var result = client.conversation().contact().update(contact);
+    var result = service.update(contact);
 
     LOGGER.info("Response: " + result);
   }

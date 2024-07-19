@@ -20,7 +20,7 @@ import java.util.Collection;
  *
  * @see <a
  *     href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/App/">https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/App/</a>
- * @since 1.0
+ * @since _NEXT_VERSION_
  */
 public interface AppService {
 
@@ -31,7 +31,7 @@ public interface AppService {
    *
    * @return List of apps related to configured region (from {@link
    *     com.sinch.sdk.models.Configuration.Builder#setConversationRegion(ConversationRegion)})
-   * @since 1.0
+   * @since _NEXT_VERSION_
    */
   Collection<AppResponse> list();
 
@@ -42,7 +42,7 @@ public interface AppService {
    *
    * @param appId The application identifier
    * @return App information details
-   * @since 1.0
+   * @since _NEXT_VERSION_
    */
   AppResponse get(String appId);
 
@@ -56,7 +56,7 @@ public interface AppService {
    * deleted).
    *
    * @param appId The application identifier
-   * @since 1.0
+   * @since _NEXT_VERSION_
    */
   void delete(String appId);
 
@@ -69,6 +69,7 @@ public interface AppService {
    *
    * @param parameters Creation parameters
    * @return Created application
+   * @since _NEXT_VERSION_
    */
   AppResponse create(AppCreateRequest parameters);
 
@@ -89,6 +90,7 @@ public interface AppService {
    * @param parameters Fields to be updated. Only fields filled within the parameters will be
    *     updated
    * @return Updated application
+   * @since _NEXT_VERSION_
    */
   AppResponse update(String appId, AppUpdateRequest parameters);
 }

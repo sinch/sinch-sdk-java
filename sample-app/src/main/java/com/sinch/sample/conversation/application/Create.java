@@ -1,6 +1,7 @@
 package com.sinch.sample.conversation.application;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.conversation.api.v1.AppService;
 import com.sinch.sdk.domains.conversation.models.v1.app.request.AppCreateRequest;
 import com.sinch.sdk.domains.conversation.models.v1.app.request.ConversationChannelCredentialsRequestBuilderFactory;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.AppleBusinessChatCredentials;
@@ -34,6 +35,8 @@ public class Create extends BaseApplication {
   }
 
   public void run() {
+
+    AppService service = client.conversation().v1().app();
 
     LOGGER.info("Create conversation Application");
 
@@ -170,7 +173,7 @@ public class Create extends BaseApplication {
             .setChannelCredentials(channelCredentials)
             .setDisplayName("Created from Java SDK")
             .build();
-    var result = client.conversation().app().create(parameters);
+    var result = service.create(parameters);
 
     LOGGER.info("Response: " + result);
   }

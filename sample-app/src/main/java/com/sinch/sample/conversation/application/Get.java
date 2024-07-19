@@ -1,6 +1,7 @@
 package com.sinch.sample.conversation.application;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.conversation.api.v1.AppService;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -21,9 +22,11 @@ public class Get extends BaseApplication {
 
   public void run() {
 
+    AppService service = client.conversation().v1().app();
+
     LOGGER.info("Get conversation App details: " + conversationAppId);
 
-    var result = client.conversation().app().get(conversationAppId);
+    var result = service.get(conversationAppId);
 
     LOGGER.info("Response: " + result);
   }

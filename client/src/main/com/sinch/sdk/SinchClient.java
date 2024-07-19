@@ -1,7 +1,7 @@
 package com.sinch.sdk;
 
 import com.sinch.sdk.core.utils.StringUtil;
-import com.sinch.sdk.domains.conversation.api.v1.ConversationService;
+import com.sinch.sdk.domains.conversation.ConversationService;
 import com.sinch.sdk.domains.numbers.NumbersService;
 import com.sinch.sdk.domains.sms.SMSService;
 import com.sinch.sdk.domains.verification.VerificationService;
@@ -366,7 +366,7 @@ public class SinchClient {
   }
 
   private ConversationService conversationInit() {
-    return new com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationService(
+    return new com.sinch.sdk.domains.conversation.adapters.ConversationService(
         getConfiguration().getUnifiedCredentials().orElse(null),
         getConfiguration().getConversationContext().orElse(null),
         getConfiguration().getOAuthServer(),
