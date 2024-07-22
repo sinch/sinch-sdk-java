@@ -32,4 +32,12 @@ public interface ConversationService {
    * @since_NEXT_VERSION_
    */
   MessagesService messages();
+
+  /**
+   * WebHooksService Service instance
+   *
+   * @return service instance for project
+   * @since _NEXT_VERSION_
+   */
+  WebHooksService webhooks();
 }

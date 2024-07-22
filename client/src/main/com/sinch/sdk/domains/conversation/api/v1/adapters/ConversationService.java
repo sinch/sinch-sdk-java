@@ -37,6 +37,7 @@ public class ConversationService
   private AppService app;
   private ContactService contact;
   private MessagesService messages;
+  private WebHooksService webhooks;
 
   static {
     LocalLazyInit.init();
@@ -48,14 +49,19 @@ public class ConversationService
       ServerConfiguration oAuthServer,
       HttpClient httpClient) {
 
-    Objects.requireNonNull(credentials, "Credentials must be defined");
-    Objects.requireNonNull(context, "Context must be defined");
-    StringUtil.requireNonEmpty(credentials.getKeyId(), "'keyId' must be defined");
-    StringUtil.requireNonEmpty(credentials.getKeySecret(), "'keySecret' must be defined");
-    StringUtil.requireNonEmpty(credentials.getProjectId(), "'projectId' must be defined");
-    StringUtil.requireNonEmpty(context.getUrl(), "'url' must be defined");
+    Objects.requireNonNull(credentials, "Conversation service requires credentials to be defined");
+    Objects.requireNonNull(context, "Conversation service requires context to be defined");
     StringUtil.requireNonEmpty(
-        context.getTemplateManagementUrl(), "'templateManagementUrl' must be defined");
+        credentials.getKeyId(), "Conversation service requires 'keyId' to be defined");
+    StringUtil.requireNonEmpty(
+        credentials.getKeySecret(), "Conversation service requires 'keySecret' to be defined");
+    StringUtil.requireNonEmpty(
+        credentials.getProjectId(), "Conversation service requires 'projectId' to be defined");
+    StringUtil.requireNonEmpty(
+        context.getUrl(), "Conversation service requires 'url' to be defined");
+    StringUtil.requireNonEmpty(
+        context.getTemplateManagementUrl(),
+        "Conversation service requires  'templateManagementUrl' to be defined");
 
     LOGGER.fine(
         String.format(
@@ -66,10 +72,10 @@ public class ConversationService
     this.context = context;
     this.httpClient = httpClient;
 
-    OAuthManager bearerAuthManager =
+    OAuthManager authManager =
         new OAuthManager(credentials, oAuthServer, new HttpMapper(), httpClient);
     authManagers =
-        Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_, bearerAuthManager))
+        Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_, authManager))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 
@@ -92,6 +98,13 @@ public class ConversationService
       this.messages = new MessagesService(uriUUID, context, httpClient, authManagers);
     }
     return this.messages;
+  }
+
+  public WebHooksService webhooks() {
+    if (null == this.webhooks) {
+      this.webhooks = new WebHooksService(new ConversationWebhooksAuthenticationValidation());
+    }
+    return this.webhooks;
   }
 
   static final class LocalLazyInit {

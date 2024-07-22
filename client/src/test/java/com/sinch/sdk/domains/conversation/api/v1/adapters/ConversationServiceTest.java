@@ -63,7 +63,8 @@ class ConversationServiceTest {
         assertThrows(
             NullPointerException.class,
             () -> new ConversationService(null, context, server, httpClient));
-    assertTrue(exception.getMessage().contains("Credentials must be defined"));
+    assertTrue(
+        exception.getMessage().contains("Conversation service requires credentials to be defined"));
   }
 
   @Test
@@ -79,6 +80,7 @@ class ConversationServiceTest {
         assertThrows(
             NullPointerException.class,
             () -> new ConversationService(credentials, null, server, httpClient));
-    assertTrue(exception.getMessage().contains("Context must be defined"));
+    assertTrue(
+        exception.getMessage().contains("Conversation service requires context to be defined"));
   }
 }
