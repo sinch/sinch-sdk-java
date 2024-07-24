@@ -65,6 +65,39 @@ public class WebhooksServiceTest extends VerificationBaseTest {
   }
 
   @Test
+  void checkApplicationEmptyAuthorizationHeader() throws ApiException {
+
+    Map<String, String> headers =
+        Stream.of(
+                new AbstractMap.SimpleEntry<>("authorization", ""),
+                new AbstractMap.SimpleEntry<>("content-type", "application/json; charset=utf-8"),
+                new AbstractMap.SimpleEntry<>("x-timestamp", "2023-12-01T15:01:20.0406449Z"))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+    boolean authenticationResult =
+        webHooksService.validateAuthenticationHeader(
+            "POST", "/VerificationRequestEvent", headers, request);
+
+    Assertions.assertThat(authenticationResult).isEqualTo(false);
+  }
+
+  @Test
+  void checkApplicationNoAuthorizationHeader() throws ApiException {
+
+    Map<String, String> headers =
+        Stream.of(
+                new AbstractMap.SimpleEntry<>("content-type", "application/json; charset=utf-8"),
+                new AbstractMap.SimpleEntry<>("x-timestamp", "2023-12-01T15:01:20.0406449Z"))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+    boolean authenticationResult =
+        webHooksService.validateAuthenticationHeader(
+            "POST", "/VerificationRequestEvent", headers, request);
+
+    Assertions.assertThat(authenticationResult).isEqualTo(false);
+  }
+
+  @Test
   void checkParseEventVerificationRequestEventDto() throws ApiException {
 
     TestHelpers.recursiveEquals(
