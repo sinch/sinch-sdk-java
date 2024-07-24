@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.numbers.api.v1.adapters;
 
 import com.sinch.sdk.core.exceptions.ApiAuthException;
 import com.sinch.sdk.core.utils.MapUtils;
+import com.sinch.sdk.core.utils.StringUtil;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -22,7 +23,7 @@ public class NumbersWebhooksAuthenticationValidation {
     String signatureHeader = MapUtils.getCaseInsensitiveMap(headers).get(SIGNATURE_HEADER);
 
     // missing authorization header(s)
-    if (null == secret || null == signatureHeader) {
+    if (StringUtil.isEmpty(secret) || StringUtil.isEmpty(signatureHeader)) {
       return false;
     }
 

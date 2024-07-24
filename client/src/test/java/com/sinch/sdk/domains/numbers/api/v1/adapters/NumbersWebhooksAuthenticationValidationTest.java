@@ -74,4 +74,12 @@ class NumbersWebhooksAuthenticationValidationTest {
 
     assertFalse(authenticationResult);
   }
+
+  @Test
+  void checkValidateAuthenticatedEmptySecret() {
+
+    boolean authenticationResult = webhooksService.validateAuthenticationHeader("", headers, body);
+
+    assertFalse(authenticationResult);
+  }
 }
