@@ -21,6 +21,7 @@ public class WebHooksService implements com.sinch.sdk.domains.verification.api.v
     this.authManagers = authManagers;
   }
 
+  @Override
   public boolean validateAuthenticationHeader(
       String method, String path, Map<String, String> headers, String jsonPayload) {
 
