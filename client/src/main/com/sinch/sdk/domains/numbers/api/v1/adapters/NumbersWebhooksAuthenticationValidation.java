@@ -14,7 +14,7 @@ import javax.crypto.spec.SecretKeySpec;
 public class NumbersWebhooksAuthenticationValidation {
 
   public static final String SIGNATURE_HEADER = "X-Sinch-Signature";
-  static final String algorithm = "HmacSHA1";
+  static final String HMAC_SHA1_ALGORITHM = "HmacSHA1";
 
   public boolean validateAuthenticationHeader(
       String secret, Map<String, String> headers, String jsonPayload) {
@@ -35,8 +35,8 @@ public class NumbersWebhooksAuthenticationValidation {
   private String encode(String secret, String stringToSign) {
     try {
       SecretKeySpec secretKeySpec =
-          new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), algorithm);
-      Mac mac = Mac.getInstance(algorithm);
+          new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), HMAC_SHA1_ALGORITHM);
+      Mac mac = Mac.getInstance(HMAC_SHA1_ALGORITHM);
       mac.init(secretKeySpec);
       byte[] hmacSha256 = mac.doFinal(stringToSign.getBytes(StandardCharsets.UTF_8));
       return NumbersWebhooksAuthenticationValidation.bytesToHex(hmacSha256);
