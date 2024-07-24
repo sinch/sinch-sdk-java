@@ -5,11 +5,13 @@ import com.sinch.sdk.domains.numbers.api.v1.WebHooksService;
 import java.util.Map;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 public class NumbersController {
@@ -33,6 +35,19 @@ public class NumbersController {
     LOGGER.finest("Received body:" + body);
     LOGGER.finest("Received headers: " + headers);
 
+    // ensure valid authentication to handle request
+    var validAuth =
+        webhooks.validateAuthenticationHeader(
+            "secret value",
+            // request headers
+            headers,
+            // request payload body
+            body);
+
+    // token validation failed
+    if (!validAuth) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+    }
     // decode the request payload
     var event = webhooks.parseEvent(body);
 
