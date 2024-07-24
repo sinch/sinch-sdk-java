@@ -13,6 +13,7 @@ public class WebHooksService implements com.sinch.sdk.domains.numbers.api.v1.Web
     this.authenticationChecker = authenticationChecker;
   }
 
+  @Override
   public boolean validateAuthenticationHeader(
       String secret, Map<String, String> headers, String jsonPayload) {
     return authenticationChecker.validateAuthenticationHeader(secret, headers, jsonPayload);
