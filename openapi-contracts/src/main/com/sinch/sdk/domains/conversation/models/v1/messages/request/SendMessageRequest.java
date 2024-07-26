@@ -17,8 +17,6 @@ import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.Recipient;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage;
-import com.sinch.sdk.domains.conversation.models.v1.request.MessageQueue;
-import com.sinch.sdk.domains.conversation.models.v1.request.MetadataUpdateStrategy;
 import java.util.List;
 import java.util.Map;
 

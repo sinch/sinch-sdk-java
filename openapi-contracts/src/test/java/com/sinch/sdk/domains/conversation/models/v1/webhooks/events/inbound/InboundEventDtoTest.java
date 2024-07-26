@@ -7,8 +7,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
-import com.sinch.sdk.domains.conversation.models.v1.events.EventComposingDtoTest;
-import com.sinch.sdk.domains.conversation.models.v1.events.contactmessage.ReactionEventDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.events.types.ComposingEventDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.events.types.ReactionEventDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.ChannelIdentityDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.inbound.Event.DirectionEnum;
 import java.time.Instant;
@@ -45,7 +45,7 @@ public class InboundEventDtoTest extends ConversationBaseTest {
               Event.builder()
                   .setId("event id")
                   .setDirection(DirectionEnum.TO_APP)
-                  .setContactEvent(EventComposingDtoTest.expectedDto)
+                  .setContactEvent(ComposingEventDtoTest.expectedDto)
                   .setChannelIdentity(ChannelIdentityDtoTest.expectedDto)
                   .setContactId("contact ID")
                   .setConversationId("conversation id")

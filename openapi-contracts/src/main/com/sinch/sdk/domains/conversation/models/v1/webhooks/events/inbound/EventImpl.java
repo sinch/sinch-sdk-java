@@ -9,8 +9,8 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
-import com.sinch.sdk.domains.conversation.models.v1.events.contact.ContactEvent;
-import com.sinch.sdk.domains.conversation.models.v1.events.contactmessage.ContactMessageEvent;
+import com.sinch.sdk.domains.conversation.models.v1.events.ContactEvent;
+import com.sinch.sdk.domains.conversation.models.v1.events.ContactMessageEvent;
 import java.time.Instant;
 import java.util.Objects;
 

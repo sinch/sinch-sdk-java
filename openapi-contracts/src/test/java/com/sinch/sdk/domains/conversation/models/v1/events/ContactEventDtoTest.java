@@ -6,9 +6,17 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
-import com.sinch.sdk.domains.conversation.models.v1.events.contact.internal.ContactEventInternalImpl;
-import com.sinch.sdk.domains.conversation.models.v1.events.conversation.EventConversationDeletedDtoTest;
-import com.sinch.sdk.domains.conversation.models.v1.events.conversation.EventConversationDeletedImpl;
+import com.sinch.sdk.domains.conversation.models.v1.events.internal.ContactEventInternalImpl;
+import com.sinch.sdk.domains.conversation.models.v1.events.types.CommentEventDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.events.types.CommentEventImpl;
+import com.sinch.sdk.domains.conversation.models.v1.events.types.ComposingEndEventDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.events.types.ComposingEndEventImpl;
+import com.sinch.sdk.domains.conversation.models.v1.events.types.ComposingEventDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.events.types.ComposingEventImpl;
+import com.sinch.sdk.domains.conversation.models.v1.events.types.ConversationDeletedEventDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.events.types.ConversationDeletedEventImpl;
+import com.sinch.sdk.domains.conversation.models.v1.events.types.GenericEventDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.events.types.GenericEventImpl;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -16,104 +24,104 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class ContactEventDtoTest extends ConversationBaseTest {
 
-  @GivenJsonResource("domains/conversation/v1/events/EventComposingDto.json")
-  ContactEventInternalImpl dtoEventComposing;
+  @GivenJsonResource("domains/conversation/v1/events/types/ComposingEventDto.json")
+  ContactEventInternalImpl dtoComposingEvent;
 
-  @GivenTextResource("domains/conversation/v1/events/EventComposingDto.json")
-  String jsonEventComposing;
+  @GivenTextResource("domains/conversation/v1/events/types/ComposingEventDto.json")
+  String jsonComposingEvent;
 
-  @GivenJsonResource("domains/conversation/v1/events/EventComposingEndDto.json")
-  ContactEventInternalImpl dtoEventComposingEnd;
+  @GivenJsonResource("domains/conversation/v1/events/types/ComposingEndEventDto.json")
+  ContactEventInternalImpl dtoComposingEndEvent;
 
-  @GivenTextResource("domains/conversation/v1/events/EventComposingEndDto.json")
-  String jsonEventComposingEnd;
+  @GivenTextResource("domains/conversation/v1/events/types/ComposingEndEventDto.json")
+  String jsonComposingEndEvent;
 
-  @GivenJsonResource("domains/conversation/v1/events/conversation/EventConversationDeletedDto.json")
-  ContactEventInternalImpl dtoConversationDeleteEvent;
+  @GivenJsonResource("domains/conversation/v1/events/types/ConversationDeletedEventDto.json")
+  ContactEventInternalImpl dtoConversationDeletedEvent;
 
-  @GivenTextResource("domains/conversation/v1/events/conversation/EventConversationDeletedDto.json")
+  @GivenTextResource("domains/conversation/v1/events/types/ConversationDeletedEventDto.json")
   String jsonConversationDeleteEvent;
 
-  @GivenJsonResource("domains/conversation/v1/events/EventCommentDto.json")
-  ContactEventInternalImpl dtoEventCommentDto;
+  @GivenJsonResource("domains/conversation/v1/events/types/CommentEventDto.json")
+  ContactEventInternalImpl dtoCommentEvent;
 
-  @GivenTextResource("domains/conversation/v1/events/EventCommentDto.json")
-  String jsonEventCommentDto;
+  @GivenTextResource("domains/conversation/v1/events/types/CommentEventDto.json")
+  String jsonCommentEvent;
 
-  @GivenJsonResource("domains/conversation/v1/events/EventGenericDto.json")
-  ContactEventInternalImpl dtoEventGenericDto;
+  @GivenJsonResource("domains/conversation/v1/events/types/GenericEventDto.json")
+  ContactEventInternalImpl dtoGenericEvent;
 
-  @GivenTextResource("domains/conversation/v1/events/EventGenericDto.json")
-  String jsonEventGenericDto;
+  @GivenTextResource("domains/conversation/v1/events/types/GenericEventDto.json")
+  String jsonGenericEvent;
 
-  public static ContactEventInternalImpl expectedComposingDto =
-      new ContactEventInternalImpl((EventComposingImpl) EventComposingDtoTest.expectedDto);
+  public static ContactEventInternalImpl expectedComposingEventDto =
+      new ContactEventInternalImpl((ComposingEventImpl) ComposingEventDtoTest.expectedDto);
 
-  public static ContactEventInternalImpl expectedComposingEndDto =
-      new ContactEventInternalImpl((EventComposingEndImpl) EventComposingEndDtoTest.expectedDto);
+  public static ContactEventInternalImpl expectedComposingEndEventDto =
+      new ContactEventInternalImpl((ComposingEndEventImpl) ComposingEndEventDtoTest.expectedDto);
 
-  public static ContactEventInternalImpl expectedEventConversationDeletedDto =
+  public static ContactEventInternalImpl expectedConversationDeletedEventDto =
       new ContactEventInternalImpl(
-          (EventConversationDeletedImpl) EventConversationDeletedDtoTest.expectedDto);
+          (ConversationDeletedEventImpl) ConversationDeletedEventDtoTest.expectedDto);
 
-  public static ContactEventInternalImpl expectedEventCommentDto =
-      new ContactEventInternalImpl((EventCommentImpl) EventCommentDtoTest.expectedDto);
+  public static ContactEventInternalImpl expectedCommentEventDto =
+      new ContactEventInternalImpl((CommentEventImpl) CommentEventDtoTest.expectedDto);
 
-  public static ContactEventInternalImpl expectedEventGenericDto =
-      new ContactEventInternalImpl((EventGenericImpl) EventGenericDtoTest.expectedDto);
+  public static ContactEventInternalImpl expectedGenericEventDto =
+      new ContactEventInternalImpl((GenericEventImpl) GenericEventDtoTest.expectedDto);
 
   @Test
-  void serializeEventComposingDto() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(expectedComposingDto);
-    JSONAssert.assertEquals(jsonEventComposing, serializedString, true);
+  void serializeComposingEventDto() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(expectedComposingEventDto);
+    JSONAssert.assertEquals(jsonComposingEvent, serializedString, true);
   }
 
   @Test
-  void deserializeEventComposingDto() {
-    TestHelpers.recursiveEquals(dtoEventComposing, expectedComposingDto);
+  void deserializeComposingEventDto() {
+    TestHelpers.recursiveEquals(dtoComposingEvent, expectedComposingEventDto);
   }
 
   @Test
-  void serializeEventComposingEndDto() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(expectedComposingEndDto);
-    JSONAssert.assertEquals(jsonEventComposingEnd, serializedString, true);
+  void serializeComposingEndEventDto() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(expectedComposingEndEventDto);
+    JSONAssert.assertEquals(jsonComposingEndEvent, serializedString, true);
   }
 
   @Test
-  void deserializeEventComposingEndDto() {
-    TestHelpers.recursiveEquals(dtoEventComposingEnd, expectedComposingEndDto);
+  void deserializeComposingEndEventDto() {
+    TestHelpers.recursiveEquals(dtoComposingEndEvent, expectedComposingEndEventDto);
   }
 
   @Test
   void serializeConversationDeletedEventDto() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(expectedEventConversationDeletedDto);
+    String serializedString = objectMapper.writeValueAsString(expectedConversationDeletedEventDto);
     JSONAssert.assertEquals(jsonConversationDeleteEvent, serializedString, true);
   }
 
   @Test
   void deserializeConversationDeletedEventDto() {
-    TestHelpers.recursiveEquals(dtoConversationDeleteEvent, expectedEventConversationDeletedDto);
+    TestHelpers.recursiveEquals(dtoConversationDeletedEvent, expectedConversationDeletedEventDto);
   }
 
   @Test
-  void serializeEventCommentDto() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(expectedEventCommentDto);
-    JSONAssert.assertEquals(jsonEventCommentDto, serializedString, true);
+  void serializeCommentEventDto() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(expectedCommentEventDto);
+    JSONAssert.assertEquals(jsonCommentEvent, serializedString, true);
   }
 
   @Test
-  void deserializeEventCommentDto() {
-    TestHelpers.recursiveEquals(dtoEventCommentDto, expectedEventCommentDto);
+  void deserializeCommentEventDto() {
+    TestHelpers.recursiveEquals(dtoCommentEvent, expectedCommentEventDto);
   }
 
   @Test
-  void serializeEventGenericDto() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(expectedEventGenericDto);
-    JSONAssert.assertEquals(jsonEventGenericDto, serializedString, true);
+  void serializeGenericEventDto() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(expectedGenericEventDto);
+    JSONAssert.assertEquals(jsonGenericEvent, serializedString, true);
   }
 
   @Test
-  void deserializeEventGenericDto() {
-    TestHelpers.recursiveEquals(dtoEventGenericDto, expectedEventGenericDto);
+  void deserializeGenericEventDto() {
+    TestHelpers.recursiveEquals(dtoGenericEvent, expectedGenericEventDto);
   }
 }

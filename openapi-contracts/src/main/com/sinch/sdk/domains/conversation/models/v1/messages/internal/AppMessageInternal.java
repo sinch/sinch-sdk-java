@@ -24,8 +24,8 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.ListMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.LocationMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.MediaMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride;
+import com.sinch.sdk.domains.conversation.models.v1.messages.TemplateMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessage;
-import com.sinch.sdk.domains.conversation.models.v1.templates.TemplateMessage;
 import java.util.Map;
 
 /** Message originating from an app */

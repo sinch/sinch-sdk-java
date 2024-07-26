@@ -7,11 +7,11 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.ContactInfoMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ListMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.LocationMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.MediaMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.TemplateMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
 import com.sinch.sdk.domains.conversation.models.v1.response.ConversationMessage;
-import com.sinch.sdk.domains.conversation.models.v1.templates.TemplateMessage;
 
 /**
  * Messages related service

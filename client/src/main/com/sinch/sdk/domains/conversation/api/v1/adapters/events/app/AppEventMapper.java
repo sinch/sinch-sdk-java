@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.sinch.sdk.core.utils.databind.Mapper;
-import com.sinch.sdk.domains.conversation.models.v1.events.app.AppEvent;
-import com.sinch.sdk.domains.conversation.models.v1.events.app.internal.AppEventInternalImpl;
+import com.sinch.sdk.domains.conversation.models.v1.events.AppEvent;
+import com.sinch.sdk.domains.conversation.models.v1.events.internal.AppEventInternalImpl;
 import java.io.IOException;
 
 public class AppEventMapper {

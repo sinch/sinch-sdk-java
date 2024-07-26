@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.sinch.sdk.core.utils.databind.Mapper;
-import com.sinch.sdk.domains.conversation.models.v1.events.contactmessage.ContactMessageEvent;
-import com.sinch.sdk.domains.conversation.models.v1.events.contactmessage.internal.ContactMessageEventInternalImpl;
+import com.sinch.sdk.domains.conversation.models.v1.events.ContactMessageEvent;
+import com.sinch.sdk.domains.conversation.models.v1.events.internal.ContactMessageEventInternalImpl;
 import java.io.IOException;
 
 public class ContactMessageEventMapper {

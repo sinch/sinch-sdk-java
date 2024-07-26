@@ -18,7 +18,6 @@ import com.sinch.sdk.core.utils.databind.JSONNavigator;
 import com.sinch.sdk.domains.conversation.models.v1.messages.LocationMessageImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.MediaMessageImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessageImpl;
-import com.sinch.sdk.domains.conversation.models.v1.templates.internal.TemplateReferenceFieldInternalImpl;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;

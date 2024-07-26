@@ -9,6 +9,7 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.ListMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.LocationMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.MediaMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride;
+import com.sinch.sdk.domains.conversation.models.v1.messages.TemplateReference;
 import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.CardMessageFieldInternal;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.CarouselMessageFieldInternal;
@@ -16,8 +17,7 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ChoiceMess
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ContactInfoMessageFieldInternal;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ListMessageFieldInternal;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.OmniMessageOverrideInternalImpl;
-import com.sinch.sdk.domains.conversation.models.v1.templates.TemplateReference;
-import com.sinch.sdk.domains.conversation.models.v1.templates.internal.TemplateReferenceFieldInternal;
+import com.sinch.sdk.domains.conversation.models.v1.messages.internal.TemplateReferenceFieldInternal;
 import java.io.IOException;
 import java.util.logging.Logger;
 
