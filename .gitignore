@@ -28,5 +28,4 @@ openapi-contracts/src/main/com/sinch/sdk/domains/conversation/api/v1/internal/We
 
 openapi-contracts/src/main/com/sinch/sdk/domains/conversation/models/v1/capability
 openapi-contracts/src/main/com/sinch/sdk/domains/conversation/models/v1/conversation
-openapi-contracts/src/main/com/sinch/sdk/domains/conversation/models/v1/events
 openapi-contracts/src/main/com/sinch/sdk/domains/conversation/models/v1/transcoding
