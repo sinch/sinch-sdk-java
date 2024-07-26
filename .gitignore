@@ -27,5 +27,4 @@ openapi-contracts/src/main/com/sinch/sdk/domains/conversation/api/v1/internal/Tr
 openapi-contracts/src/main/com/sinch/sdk/domains/conversation/api/v1/internal/WebhooksApi.java
 
 openapi-contracts/src/main/com/sinch/sdk/domains/conversation/models/v1/capability
-openapi-contracts/src/main/com/sinch/sdk/domains/conversation/models/v1/conversation
 openapi-contracts/src/main/com/sinch/sdk/domains/conversation/models/v1/transcoding
