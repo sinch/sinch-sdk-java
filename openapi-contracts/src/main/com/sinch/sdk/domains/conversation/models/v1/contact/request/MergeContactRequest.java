@@ -14,7 +14,7 @@ package com.sinch.sdk.domains.conversation.models.v1.contact.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** declaration */
+/** MergeContactRequest */
 @JsonDeserialize(builder = MergeContactRequestImpl.Builder.class)
 public interface MergeContactRequest {
 

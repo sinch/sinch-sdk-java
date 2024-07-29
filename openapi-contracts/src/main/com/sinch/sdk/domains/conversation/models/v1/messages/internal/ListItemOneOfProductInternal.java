@@ -15,7 +15,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ProductItem;
 
-/** declaration */
+/** Product */
 @JsonDeserialize(builder = ListItemOneOfProductInternalImpl.Builder.class)
 public interface ListItemOneOfProductInternal {
 

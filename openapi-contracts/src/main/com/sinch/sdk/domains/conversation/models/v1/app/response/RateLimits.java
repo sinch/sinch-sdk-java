@@ -14,7 +14,7 @@ package com.sinch.sdk.domains.conversation.models.v1.app.response;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** declaration */
+/** RateLimits */
 @JsonDeserialize(builder = RateLimitsImpl.Builder.class)
 public interface RateLimits {
 

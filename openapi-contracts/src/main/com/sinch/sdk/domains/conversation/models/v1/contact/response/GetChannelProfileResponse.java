@@ -14,7 +14,7 @@ package com.sinch.sdk.domains.conversation.models.v1.contact.response;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** declaration */
+/** GetChannelProfileResponse */
 @JsonDeserialize(builder = GetChannelProfileResponseImpl.Builder.class)
 public interface GetChannelProfileResponse {
 

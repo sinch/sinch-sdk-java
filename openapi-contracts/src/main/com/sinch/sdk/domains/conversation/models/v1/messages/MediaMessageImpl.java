@@ -7,78 +7,87 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.messages.internal.MediaMessageInternal;
 import java.util.Objects;
 
-@JsonPropertyOrder({
-  MediaMessageImpl.JSON_PROPERTY_THUMBNAIL_URL,
-  MediaMessageImpl.JSON_PROPERTY_URL,
-  MediaMessageImpl.JSON_PROPERTY_FILENAME_OVERRIDE
-})
+@JsonPropertyOrder({MediaMessageImpl.JSON_PROPERTY_MEDIA_MESSAGE})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class MediaMessageImpl
     implements MediaMessage,
         com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
-        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage {
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_THUMBNAIL_URL = "thumbnail_url";
+  public static final String JSON_PROPERTY_MEDIA_MESSAGE = "media_message";
 
-  private OptionalValue<String> thumbnailUrl;
-
-  public static final String JSON_PROPERTY_URL = "url";
-
-  private OptionalValue<String> url;
-
-  public static final String JSON_PROPERTY_FILENAME_OVERRIDE = "filename_override";
-
-  private OptionalValue<String> filenameOverride;
+  private OptionalValue<MediaMessageInternal> mediaMessage;
 
   public MediaMessageImpl() {}
 
-  protected MediaMessageImpl(
-      OptionalValue<String> thumbnailUrl,
-      OptionalValue<String> url,
-      OptionalValue<String> filenameOverride) {
-    this.thumbnailUrl = thumbnailUrl;
-    this.url = url;
-    this.filenameOverride = filenameOverride;
+  protected MediaMessageImpl(OptionalValue<MediaMessageInternal> mediaMessage) {
+    this.mediaMessage = mediaMessage;
+  }
+
+  @JsonIgnore
+  public MediaMessageInternal getMediaMessage() {
+    return mediaMessage.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_MEDIA_MESSAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<MediaMessageInternal> mediaMessage() {
+    return mediaMessage;
   }
 
   @JsonIgnore
   public String getThumbnailUrl() {
-    return thumbnailUrl.orElse(null);
+    if (null == mediaMessage
+        || !mediaMessage.isPresent()
+        || null == mediaMessage.get().getThumbnailUrl()) {
+      return null;
+    }
+    return mediaMessage.get().getThumbnailUrl();
   }
 
-  @JsonProperty(JSON_PROPERTY_THUMBNAIL_URL)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> thumbnailUrl() {
-    return thumbnailUrl;
+    return null != mediaMessage
+        ? mediaMessage.map(MediaMessageInternal::getThumbnailUrl)
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public String getUrl() {
-    return url.orElse(null);
+    if (null == mediaMessage || !mediaMessage.isPresent() || null == mediaMessage.get().getUrl()) {
+      return null;
+    }
+    return mediaMessage.get().getUrl();
   }
 
-  @JsonProperty(JSON_PROPERTY_URL)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<String> url() {
-    return url;
+    return null != mediaMessage
+        ? mediaMessage.map(MediaMessageInternal::getUrl)
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public String getFilenameOverride() {
-    return filenameOverride.orElse(null);
+    if (null == mediaMessage
+        || !mediaMessage.isPresent()
+        || null == mediaMessage.get().getFilenameOverride()) {
+      return null;
+    }
+    return mediaMessage.get().getFilenameOverride();
   }
 
-  @JsonProperty(JSON_PROPERTY_FILENAME_OVERRIDE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> filenameOverride() {
-    return filenameOverride;
+    return null != mediaMessage
+        ? mediaMessage.map(MediaMessageInternal::getFilenameOverride)
+        : OptionalValue.empty();
   }
 
-  /** Return true if this Media_Message object is equal to o. */
+  /** Return true if this MediaMessageField object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -87,24 +96,20 @@ public class MediaMessageImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    MediaMessageImpl mediaMessage = (MediaMessageImpl) o;
-    return Objects.equals(this.thumbnailUrl, mediaMessage.thumbnailUrl)
-        && Objects.equals(this.url, mediaMessage.url)
-        && Objects.equals(this.filenameOverride, mediaMessage.filenameOverride);
+    MediaMessageImpl mediaMessageField = (MediaMessageImpl) o;
+    return Objects.equals(this.mediaMessage, mediaMessageField.mediaMessage);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(thumbnailUrl, url, filenameOverride);
+    return Objects.hash(mediaMessage);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class MediaMessageImpl {\n");
-    sb.append("    thumbnailUrl: ").append(toIndentedString(thumbnailUrl)).append("\n");
-    sb.append("    url: ").append(toIndentedString(url)).append("\n");
-    sb.append("    filenameOverride: ").append(toIndentedString(filenameOverride)).append("\n");
+    sb.append("    mediaMessage: ").append(toIndentedString(mediaMessage)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -121,30 +126,47 @@ public class MediaMessageImpl
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements MediaMessage.Builder {
-    OptionalValue<String> thumbnailUrl = OptionalValue.empty();
-    OptionalValue<String> url = OptionalValue.empty();
-    OptionalValue<String> filenameOverride = OptionalValue.empty();
+    OptionalValue<MediaMessageInternal> mediaMessage = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_THUMBNAIL_URL)
+    MediaMessageInternal.Builder _delegatedBuilder = null;
+
+    @JsonProperty(value = JSON_PROPERTY_MEDIA_MESSAGE, required = true)
+    public Builder setMediaMessage(MediaMessageInternal mediaMessage) {
+      this.mediaMessage = OptionalValue.of(mediaMessage);
+      return this;
+    }
+
+    @JsonIgnore
     public Builder setThumbnailUrl(String thumbnailUrl) {
-      this.thumbnailUrl = OptionalValue.of(thumbnailUrl);
+      getDelegatedBuilder().setThumbnailUrl(thumbnailUrl);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_URL)
+    @JsonIgnore
     public Builder setUrl(String url) {
-      this.url = OptionalValue.of(url);
+      getDelegatedBuilder().setUrl(url);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_FILENAME_OVERRIDE)
+    @JsonIgnore
     public Builder setFilenameOverride(String filenameOverride) {
-      this.filenameOverride = OptionalValue.of(filenameOverride);
+      getDelegatedBuilder().setFilenameOverride(filenameOverride);
       return this;
+    }
+
+    private MediaMessageInternal.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = MediaMessageInternal.builder();
+      }
+      return this._delegatedBuilder;
     }
 
     public MediaMessage build() {
-      return new MediaMessageImpl(thumbnailUrl, url, filenameOverride);
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.mediaMessage = OptionalValue.of(this._delegatedBuilder.build());
+      }
+      return new MediaMessageImpl(mediaMessage);
     }
   }
 }

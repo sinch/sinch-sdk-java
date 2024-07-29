@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
  * The retention policy configured for the app. For more information about retention policies, see
- * [Retention Policy](/docs/conversation/keyconcepts/#retention-policy).
+ * <a href="/docs/conversation/keyconcepts/#retention-policy">Retention Policy</a>.
  */
 @JsonDeserialize(builder = RetentionPolicyImpl.Builder.class)
 public interface RetentionPolicy {
@@ -30,10 +30,10 @@ public interface RetentionPolicy {
 
   /**
    * Optional. The days before a message or conversation is eligible for deletion. Default value is
-   * 180. The ttl_days value has no effect when retention_type is
-   * &#x60;PERSIST_RETENTION_POLICY&#x60;. The valid values for this field are [1 - 3650]. Note that
-   * retention cleanup job runs once every twenty-four hours which can lead to delay i.e., messages
-   * and conversations are not deleted on the minute they become eligible for deletion.
+   * 180. The ttl_days value has no effect when retention_type is <code>PERSIST_RETENTION_POLICY
+   * </code>. The valid values for this field are [1 - 3650]. Note that retention cleanup job runs
+   * once every twenty-four hours which can lead to delay i.e., messages and conversations are not
+   * deleted on the minute they become eligible for deletion.
    *
    * @return ttlDays
    */

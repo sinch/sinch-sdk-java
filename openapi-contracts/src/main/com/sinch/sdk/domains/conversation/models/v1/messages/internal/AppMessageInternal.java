@@ -24,8 +24,8 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.ListMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.LocationMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.MediaMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride;
+import com.sinch.sdk.domains.conversation.models.v1.messages.TemplateMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessage;
-import com.sinch.sdk.domains.conversation.models.v1.templates.TemplateMessage;
 import java.util.Map;
 
 /** Message originating from an app */
@@ -97,7 +97,7 @@ public interface AppMessageInternal {
 
   /**
    * Channel specific messages, overriding any transcoding. The key in the map must point to a valid
-   * conversation channel as defined in the enum &#x60;ConversationChannel&#x60;.
+   * conversation channel as defined in the enum <code>ConversationChannel</code>.
    *
    * @return explicitChannelMessage
    */
@@ -105,9 +105,9 @@ public interface AppMessageInternal {
 
   /**
    * The option to override the omni-channel template configuration with a channel-specific template
-   * (for channels on which channel-specific templates can be created. For more information, see
-   * [Channel Specific
-   * Templates](../../../../../conversation/templates/#channel-specific-templates)).
+   * (for channels on which channel-specific templates can be created. For more information, see <a
+   * href="../../../../../conversation/templates/#channel-specific-templates">Channel Specific
+   * Templates</a>).
    *
    * @return explicitChannelOmniMessage
    */
@@ -116,9 +116,9 @@ public interface AppMessageInternal {
 
   /**
    * Channel specific messages, overriding any transcoding. The structure of this property is more
-   * well-defined than the open structure of the &#x60;explicit_channel_message&#x60; property, and
+   * well-defined than the open structure of the <code>explicit_channel_message</code> property, and
    * may be easier to use. The key in the map must point to a valid conversation channel as defined
-   * in the enum &#x60;ConversationChannel&#x60;.
+   * in the enum <code>ConversationChannel</code>.
    *
    * @return channelSpecificMessage
    */

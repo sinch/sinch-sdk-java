@@ -34,7 +34,7 @@ public interface ChoiceItem
   String getDescription();
 
   /**
-   * Get media
+   * Optional parameter. The media of this choice item.
    *
    * @return media
    */

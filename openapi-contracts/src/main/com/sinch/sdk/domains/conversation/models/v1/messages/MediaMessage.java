@@ -14,11 +14,12 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** declaration */
+/** A message containing a media component, such as an image, document, or video. */
 @JsonDeserialize(builder = MediaMessageImpl.Builder.class)
 public interface MediaMessage
     extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
-        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage {
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage {
 
   /**
    * An optional parameter. Will be used where it is natively supported.

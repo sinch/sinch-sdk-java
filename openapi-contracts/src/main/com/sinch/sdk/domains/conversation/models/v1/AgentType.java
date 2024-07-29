@@ -5,13 +5,16 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** Agent&#39;s classification. It can be UNKNOWN_AGENT_TYPE, HUMAN or BOT. */
+/** Agent's classification. It can be UNKNOWN_AGENT_TYPE, HUMAN or BOT. */
 public class AgentType extends EnumDynamic<String, AgentType> {
 
+  /** The default AgentType. When the agent type is unknown. */
   public static final AgentType UNKNOWN_AGENT_TYPE = new AgentType("UNKNOWN_AGENT_TYPE");
 
+  /** Human agent. */
   public static final AgentType HUMAN = new AgentType("HUMAN");
 
+  /** Bot agent. */
   public static final AgentType BOT = new AgentType("BOT");
 
   private static final EnumSupportDynamic<String, AgentType> ENUM_SUPPORT =

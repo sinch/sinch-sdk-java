@@ -36,7 +36,7 @@ public interface ConversationMessage {
    *
    * @return contactMessage
    */
-  ContactMessage<?> getContactMessage();
+  ContactMessage getContactMessage();
 
   /**
    * The time Conversation API processed the message.
@@ -137,7 +137,7 @@ public interface ConversationMessage {
      * @return Current builder
      * @see #getContactMessage
      */
-    Builder setContactMessage(ContactMessage<?> contactMessage);
+    Builder setContactMessage(ContactMessage contactMessage);
 
     /**
      * see getter

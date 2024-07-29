@@ -1,0 +1,26 @@
+{
+  "app_id": "app id value",
+  "accepted_time": "2020-11-17T16:05:51.724083Z",
+  "event_time": "2020-11-17T16:05:45Z",
+  "message_metadata": "metadata value",
+  "project_id": "project id value",
+  "correlation_id": "correlation id value",
+  "message_submit_notification": {
+    "message_id": "message id",
+    "conversation_id": "conversation id",
+    "channel_identity": {
+      "app_id": "an app id",
+      "channel": "MESSENGER",
+      "identity": "an identity"
+    },
+    "contact_id": "contact ID",
+    "submitted_message": {
+      "text_message": {
+        "text": "This is a text message."
+      }
+    },
+    "metadata": "metadata value",
+    "processing_mode": "DISPATCH"
+    }
+  }
+}

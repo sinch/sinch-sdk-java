@@ -5,31 +5,17 @@ package com.sinch.sdk.domains.conversation;
  *
  * @see <a
  *     href="https://developers.sinch.com/docs/conversation/">https://developers.sinch.com/docs/conversation/</a>
- * @since 1.0
+ * @since _NEXT_VERSION_
  */
 public interface ConversationService {
 
   /**
-   * Applications Service instance
+   * Conversation Service V1
    *
-   * @return service instance for project
-   * @since 1.0
+   * @return V1 service instance for project
+   * @see <a
+   *     href="https://developers.sinch.com/docs/conversation/sdk/java/syntax-reference">Documentation</a>
+   * @since 1.2
    */
-  AppService app();
-
-  /**
-   * Contact Service instance
-   *
-   * @return service instance for project
-   * @since 1.0
-   */
-  ContactService contact();
-
-  /**
-   * Messages Service instance
-   *
-   * @return service instance for project
-   * @since 1.0
-   */
-  MessagesService messages();
+  com.sinch.sdk.domains.conversation.api.v1.ConversationService v1();
 }

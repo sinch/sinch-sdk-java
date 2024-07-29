@@ -7,55 +7,71 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.messages.internal.MediaCardMessageInternal;
 import java.util.Objects;
 
-@JsonPropertyOrder({
-  MediaCardMessageImpl.JSON_PROPERTY_CAPTION,
-  MediaCardMessageImpl.JSON_PROPERTY_URL
-})
+@JsonPropertyOrder({MediaCardMessageImpl.JSON_PROPERTY_MEDIA_CARD_MESSAGE})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class MediaCardMessageImpl implements MediaCardMessage {
+public class MediaCardMessageImpl
+    implements MediaCardMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_CAPTION = "caption";
+  public static final String JSON_PROPERTY_MEDIA_CARD_MESSAGE = "media_card_message";
 
-  private OptionalValue<String> caption;
-
-  public static final String JSON_PROPERTY_URL = "url";
-
-  private OptionalValue<String> url;
+  private OptionalValue<MediaCardMessageInternal> mediaCardMessage;
 
   public MediaCardMessageImpl() {}
 
-  protected MediaCardMessageImpl(OptionalValue<String> caption, OptionalValue<String> url) {
-    this.caption = caption;
-    this.url = url;
+  protected MediaCardMessageImpl(OptionalValue<MediaCardMessageInternal> mediaCardMessage) {
+    this.mediaCardMessage = mediaCardMessage;
+  }
+
+  @JsonIgnore
+  public MediaCardMessageInternal getMediaCardMessage() {
+    return mediaCardMessage.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_MEDIA_CARD_MESSAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<MediaCardMessageInternal> mediaCardMessage() {
+    return mediaCardMessage;
   }
 
   @JsonIgnore
   public String getCaption() {
-    return caption.orElse(null);
+    if (null == mediaCardMessage
+        || !mediaCardMessage.isPresent()
+        || null == mediaCardMessage.get().getCaption()) {
+      return null;
+    }
+    return mediaCardMessage.get().getCaption();
   }
 
-  @JsonProperty(JSON_PROPERTY_CAPTION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> caption() {
-    return caption;
+    return null != mediaCardMessage
+        ? mediaCardMessage.map(MediaCardMessageInternal::getCaption)
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public String getUrl() {
-    return url.orElse(null);
+    if (null == mediaCardMessage
+        || !mediaCardMessage.isPresent()
+        || null == mediaCardMessage.get().getUrl()) {
+      return null;
+    }
+    return mediaCardMessage.get().getUrl();
   }
 
-  @JsonProperty(JSON_PROPERTY_URL)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<String> url() {
-    return url;
+    return null != mediaCardMessage
+        ? mediaCardMessage.map(MediaCardMessageInternal::getUrl)
+        : OptionalValue.empty();
   }
 
-  /** Return true if this Media_Card_Message object is equal to o. */
+  /** Return true if this MediaCardMessageField object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -64,22 +80,20 @@ public class MediaCardMessageImpl implements MediaCardMessage {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    MediaCardMessageImpl mediaCardMessage = (MediaCardMessageImpl) o;
-    return Objects.equals(this.caption, mediaCardMessage.caption)
-        && Objects.equals(this.url, mediaCardMessage.url);
+    MediaCardMessageImpl mediaCardMessageField = (MediaCardMessageImpl) o;
+    return Objects.equals(this.mediaCardMessage, mediaCardMessageField.mediaCardMessage);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(caption, url);
+    return Objects.hash(mediaCardMessage);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class MediaCardMessageImpl {\n");
-    sb.append("    caption: ").append(toIndentedString(caption)).append("\n");
-    sb.append("    url: ").append(toIndentedString(url)).append("\n");
+    sb.append("    mediaCardMessage: ").append(toIndentedString(mediaCardMessage)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -96,23 +110,41 @@ public class MediaCardMessageImpl implements MediaCardMessage {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements MediaCardMessage.Builder {
-    OptionalValue<String> caption = OptionalValue.empty();
-    OptionalValue<String> url = OptionalValue.empty();
+    OptionalValue<MediaCardMessageInternal> mediaCardMessage = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_CAPTION)
-    public Builder setCaption(String caption) {
-      this.caption = OptionalValue.of(caption);
+    MediaCardMessageInternal.Builder _delegatedBuilder = null;
+
+    @JsonProperty(value = JSON_PROPERTY_MEDIA_CARD_MESSAGE, required = true)
+    public Builder setMediaCardMessage(MediaCardMessageInternal mediaCardMessage) {
+      this.mediaCardMessage = OptionalValue.of(mediaCardMessage);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_URL)
-    public Builder setUrl(String url) {
-      this.url = OptionalValue.of(url);
+    @JsonIgnore
+    public Builder setCaption(String caption) {
+      getDelegatedBuilder().setCaption(caption);
       return this;
+    }
+
+    @JsonIgnore
+    public Builder setUrl(String url) {
+      getDelegatedBuilder().setUrl(url);
+      return this;
+    }
+
+    private MediaCardMessageInternal.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = MediaCardMessageInternal.builder();
+      }
+      return this._delegatedBuilder;
     }
 
     public MediaCardMessage build() {
-      return new MediaCardMessageImpl(caption, url);
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.mediaCardMessage = OptionalValue.of(this._delegatedBuilder.build());
+      }
+      return new MediaCardMessageImpl(mediaCardMessage);
     }
   }
 }

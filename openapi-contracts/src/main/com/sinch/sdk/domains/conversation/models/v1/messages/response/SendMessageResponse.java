@@ -15,7 +15,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.response;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.Instant;
 
-/** declaration */
+/** SendMessageResponse */
 @JsonDeserialize(builder = SendMessageResponseImpl.Builder.class)
 public interface SendMessageResponse {
 

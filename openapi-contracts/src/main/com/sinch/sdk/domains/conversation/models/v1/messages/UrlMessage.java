@@ -14,7 +14,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** declaration */
+/** URL Message */
 @JsonDeserialize(builder = UrlMessageImpl.Builder.class)
 public interface UrlMessage {
 

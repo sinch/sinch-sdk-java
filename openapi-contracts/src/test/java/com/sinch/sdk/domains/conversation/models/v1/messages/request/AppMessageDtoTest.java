@@ -3,7 +3,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.request;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.sinch.sdk.domains.conversation.adapters.ConversationBaseTest;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.AgentDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
@@ -24,10 +24,10 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.MediaMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.MediaMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride;
 import com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride.ChannelSpecificTemplate;
+import com.sinch.sdk.domains.conversation.models.v1.messages.TemplateMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.TemplateMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessageDtoTest;
-import com.sinch.sdk.domains.conversation.models.v1.templates.TemplateMessage;
-import com.sinch.sdk.domains.conversation.models.v1.templates.TemplateMessageDtoTest;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +44,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
           .setChannelSpecificMessage(createChannelSpecificMessage())
-          .setAgent(AgentDtoTest.agentDto)
+          .setAgent(AgentDtoTest.expectedDto)
           .build();
 
   public static AppMessage<CarouselMessage> appCarouselMessageDto =
@@ -53,7 +53,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
           .setChannelSpecificMessage(createChannelSpecificMessage())
-          .setAgent(AgentDtoTest.agentDto)
+          .setAgent(AgentDtoTest.expectedDto)
           .build();
 
   public static AppMessage<ChoiceMessage> appChoiceMessageDto =
@@ -62,7 +62,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
           .setChannelSpecificMessage(createChannelSpecificMessage())
-          .setAgent(AgentDtoTest.agentDto)
+          .setAgent(AgentDtoTest.expectedDto)
           .build();
   public static AppMessage<ContactInfoMessage> appContactInfoMessageDto =
       AppMessage.<ContactInfoMessage>builder()
@@ -70,7 +70,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
           .setChannelSpecificMessage(createChannelSpecificMessage())
-          .setAgent(AgentDtoTest.agentDto)
+          .setAgent(AgentDtoTest.expectedDto)
           .build();
 
   public static AppMessage<ListMessage> appListMessageDto =
@@ -79,7 +79,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
           .setChannelSpecificMessage(createChannelSpecificMessage())
-          .setAgent(AgentDtoTest.agentDto)
+          .setAgent(AgentDtoTest.expectedDto)
           .build();
 
   public static AppMessage<LocationMessage> appLocationMessageDto =
@@ -88,7 +88,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
           .setChannelSpecificMessage(createChannelSpecificMessage())
-          .setAgent(AgentDtoTest.agentDto)
+          .setAgent(AgentDtoTest.expectedDto)
           .build();
   public static AppMessage<MediaMessage> appMediaMessageDto =
       AppMessage.<MediaMessage>builder()
@@ -96,7 +96,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
           .setChannelSpecificMessage(createChannelSpecificMessage())
-          .setAgent(AgentDtoTest.agentDto)
+          .setAgent(AgentDtoTest.expectedDto)
           .build();
 
   public static AppMessage<TemplateMessage> appTemplateMessageDto =
@@ -105,7 +105,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
           .setChannelSpecificMessage(createChannelSpecificMessage())
-          .setAgent(AgentDtoTest.agentDto)
+          .setAgent(AgentDtoTest.expectedDto)
           .build();
   public static AppMessage<TextMessage> appTextMessageDto =
       AppMessage.<TextMessage>builder()
@@ -113,7 +113,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
           .setChannelSpecificMessage(createChannelSpecificMessage())
-          .setAgent(AgentDtoTest.agentDto)
+          .setAgent(AgentDtoTest.expectedDto)
           .build();
 
   @GivenTextResource("/domains/conversation/v1/messages/request/AppMessageCardRequestDto.json")

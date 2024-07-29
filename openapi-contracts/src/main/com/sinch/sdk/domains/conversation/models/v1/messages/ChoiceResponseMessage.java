@@ -14,9 +14,10 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** declaration */
+/** Represents a response to a choice message. */
 @JsonDeserialize(builder = ChoiceResponseMessageImpl.Builder.class)
-public interface ChoiceResponseMessage {
+public interface ChoiceResponseMessage
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage {
 
   /**
    * The message id containing the choice.

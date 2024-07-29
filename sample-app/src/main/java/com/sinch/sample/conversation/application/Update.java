@@ -1,6 +1,7 @@
 package com.sinch.sample.conversation.application;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.conversation.api.v1.AppService;
 import com.sinch.sdk.domains.conversation.models.v1.app.CallbackSettings;
 import com.sinch.sdk.domains.conversation.models.v1.app.request.AppUpdateRequest;
 import com.sinch.sdk.domains.conversation.models.v1.app.request.ConversationChannelCredentialsRequestBuilderFactory;
@@ -26,6 +27,8 @@ public class Update extends BaseApplication {
 
   public void run() {
 
+    AppService service = client.conversation().v1().app();
+
     LOGGER.info(String.format("Updating application '%s'", conversationAppId));
 
     var smsChannel =
@@ -43,7 +46,8 @@ public class Update extends BaseApplication {
             .setCallbackSettings(
                 CallbackSettings.builder().setSecretForOverriddenCallbackUrls("foo secret").build())
             .build();
-    var result = client.conversation().app().update(conversationAppId, parameters);
+
+    var result = service.update(conversationAppId, parameters);
 
     LOGGER.info("Response: " + result);
   }

@@ -14,7 +14,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** declaration */
+/** Call Message */
 @JsonDeserialize(builder = CallMessageImpl.Builder.class)
 public interface CallMessage {
 

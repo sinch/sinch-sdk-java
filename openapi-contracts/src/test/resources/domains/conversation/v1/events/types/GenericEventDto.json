@@ -1,0 +1,7 @@
+{
+  "generic_event": {
+    "payload": {
+      "payload_key": "payload value"
+    }
+  }
+}

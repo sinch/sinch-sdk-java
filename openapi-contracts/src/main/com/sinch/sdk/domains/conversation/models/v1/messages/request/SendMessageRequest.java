@@ -17,14 +17,12 @@ import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.Recipient;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage;
-import com.sinch.sdk.domains.conversation.models.v1.request.MessageQueue;
-import com.sinch.sdk.domains.conversation.models.v1.request.MetadataUpdateStrategy;
 import java.util.List;
 import java.util.Map;
 
 /**
- * This is the request body for sending a message. &#x60;app_id&#x60;, &#x60;recipient&#x60;, and
- * &#x60;message&#x60; are all required fields.
+ * This is the request body for sending a message. <code>app_id</code>, <code>recipient</code>, and
+ * <code>message</code> are all required fields.
  */
 @JsonDeserialize(builder = SendMessageRequestImpl.Builder.class)
 public interface SendMessageRequest<T extends AppMessageMessage> {
@@ -38,7 +36,7 @@ public interface SendMessageRequest<T extends AppMessageMessage> {
 
   /**
    * Overwrites the default callback url for delivery receipts for this message The REST URL should
-   * be of the form: &#x60;http://host[:port]/path&#x60;
+   * be of the form: <code>http://host[:port]/path</code>
    *
    * @return callbackUrl
    */
@@ -48,9 +46,9 @@ public interface SendMessageRequest<T extends AppMessageMessage> {
    * Explicitly define the channels and order in which they are tried when sending the message. All
    * channels provided in this field must be configured in the corresponding Conversation API app,
    * or the request will be rejected. Which channels the API will try and their priority is defined
-   * by: 1. &#x60;channel_priority_order&#x60; if available. 2.
-   * &#x60;recipient.identified_by.channel_identities&#x60; if available. 3. When recipient is a
-   * &#x60;contact_id&#x60;: - if a conversation with the contact exists: the active channel of the
+   * by: 1. <code>channel_priority_order</code> if available. 2. <code>
+   * recipient.identified_by.channel_identities</code> if available. 3. When recipient is a <code>
+   * contact_id</code>: - if a conversation with the contact exists: the active channel of the
    * conversation is tried first. - the existing channels for the contact are ordered by contact
    * channel preferences if given. - lastly the existing channels for the contact are ordered by the
    * app priority.
@@ -76,10 +74,10 @@ public interface SendMessageRequest<T extends AppMessageMessage> {
   AppMessage<T> getMessage();
 
   /**
-   * Metadata that should be associated with the message. Returned in the &#x60;metadata&#x60; field
-   * of a [Message Delivery
-   * Receipt](https://developers.sinch.com/docs/conversation/callbacks/#message-delivery-receipt).
-   * Up to 1024 characters long.
+   * Metadata that should be associated with the message. Returned in the <code>metadata</code>
+   * field of a <a
+   * href="https://developers.sinch.com/docs/conversation/callbacks/#message-delivery-receipt">Message
+   * Delivery Receipt</a>. Up to 1024 characters long.
    *
    * @return messageMetadata
    */
@@ -89,15 +87,15 @@ public interface SendMessageRequest<T extends AppMessageMessage> {
    * Metadata that should be associated with the conversation. This metadata will be propagated on
    * MO callbacks associated with this conversation. Up to 1024 characters long. Note that the MO
    * callback will always use the last metadata available in the conversation. Important notes: - If
-   * you send a message with the &#x60;conversation_metadata&#x60; field populated, and then send
-   * another message without populating the &#x60;conversation_metadata&#x60; field, the original
+   * you send a message with the <code>conversation_metadata</code> field populated, and then send
+   * another message without populating the <code>conversation_metadata</code> field, the original
    * metadata will continue be propagated on the related MO callbacks. - If you send a message with
-   * the &#x60;conversation_metadata&#x60; field populated, and then send another message with a
-   * different value for &#x60;conversation_metadata&#x60; in the same conversation, the latest
+   * the <code>conversation_metadata</code> field populated, and then send another message with a
+   * different value for <code>conversation_metadata</code> in the same conversation, the latest
    * metadata value overwrites the existing one. So, future MO callbacks will include the new
-   * metadata. - The &#x60;conversation_metadata&#x60; only accepts json objects. Currently only
-   * returned in the &#x60;message_metadata&#x60; field of an [Inbound
-   * Message](/docs/conversation/callbacks/#inbound-message) callback.
+   * metadata. - The <code>conversation_metadata</code> only accepts json objects. Currently only
+   * returned in the <code>message_metadata</code> field of an <a
+   * href="/docs/conversation/callbacks/#inbound-message">Inbound Message</a> callback.
    *
    * @return conversationMetadata
    */
@@ -121,9 +119,9 @@ public interface SendMessageRequest<T extends AppMessageMessage> {
    * The timeout allotted for sending the message, expressed in seconds. Passed to channels which
    * support it and emulated by the Conversation API for channels without ttl support but with
    * message retract/unsend functionality. Channel failover will not be performed for messages with
-   * an expired TTL. The format is an integer with the suffix &#x60;s&#x60; (for seconds). Valid
-   * integer range is 3 to 315,576,000,000 (inclusive). Example values include &#x60;10s&#x60; (10
-   * seconds) and &#x60;86400s&#x60; (24 hours).
+   * an expired TTL. The format is an integer with the suffix <code>s</code> (for seconds). Valid
+   * integer range is 3 to 315,576,000,000 (inclusive). Example values include <code>10s</code> (10
+   * seconds) and <code>86400s</code> (24 hours).
    *
    * @return ttl
    */
@@ -138,8 +136,8 @@ public interface SendMessageRequest<T extends AppMessageMessage> {
 
   /**
    * An arbitrary identifier that will be propagated to callbacks related to this message, including
-   * MO replies. Only applicable to messages sent with the &#x60;CONVERSATION&#x60; processing mode.
-   * Up to 128 characters long.
+   * MO replies. Only applicable to messages sent with the <code>CONVERSATION</code> processing
+   * mode. Up to 128 characters long.
    *
    * @return correlationId
    */

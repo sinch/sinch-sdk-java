@@ -1,6 +1,7 @@
 package com.sinch.sample.conversation.contact;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.conversation.api.v1.ContactService;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -21,8 +22,10 @@ public class Delete extends BaseApplication {
 
   public void run() {
 
+    ContactService service = client.conversation().v1().contact();
+
     LOGGER.info("Delete conversation contact: " + conversationContactId);
 
-    client.conversation().contact().delete(conversationContactId);
+    service.delete(conversationContactId);
   }
 }

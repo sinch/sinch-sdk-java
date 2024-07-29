@@ -15,7 +15,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 
-/** declaration */
+/** List Message */
 @JsonDeserialize(builder = ListMessageImpl.Builder.class)
 public interface ListMessage
     extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,

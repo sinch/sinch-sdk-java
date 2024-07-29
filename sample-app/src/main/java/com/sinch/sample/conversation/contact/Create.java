@@ -1,6 +1,7 @@
 package com.sinch.sample.conversation.contact;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.conversation.api.v1.ContactService;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.contact.ContactLanguage;
@@ -26,6 +27,8 @@ public class Create extends BaseApplication {
 
   public void run() {
 
+    ContactService service = client.conversation().v1().contact();
+
     LOGGER.info("Create contact");
 
     var contact =
@@ -50,7 +53,7 @@ public class Create extends BaseApplication {
             .setLanguage(ContactLanguage.AR)
             .build();
 
-    var result = client.conversation().contact().create(contact);
+    var result = service.create(contact);
 
     LOGGER.info("Response: " + result);
   }

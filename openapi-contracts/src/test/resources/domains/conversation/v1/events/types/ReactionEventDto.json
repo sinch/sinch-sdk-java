@@ -1,0 +1,8 @@
+{
+  "reaction_event": {
+    "emoji": "\uD83D\uDD25 Java SDK",
+    "action": "REACTION_ACTION_REACT",
+    "message_id": "message id value",
+    "reaction_category": "reaction category"
+  }
+}

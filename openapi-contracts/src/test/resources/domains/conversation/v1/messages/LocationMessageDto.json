@@ -1,8 +1,10 @@
 {
-  "coordinates": {
-    "latitude": 47.627980,
-    "longitude": -2.822915
-  },
-  "title": "title value",
-  "label": "label value"
+  "location_message": {
+    "coordinates": {
+      "latitude": 47.627980,
+      "longitude": -2.822915
+    },
+    "title": "title value",
+    "label": "label value"
+  }
 }

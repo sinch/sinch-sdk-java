@@ -14,11 +14,12 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** declaration */
+/** Message containing geographic location. */
 @JsonDeserialize(builder = LocationMessageImpl.Builder.class)
 public interface LocationMessage
     extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
-        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage {
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage {
 
   /**
    * Get coordinates

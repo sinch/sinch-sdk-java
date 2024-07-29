@@ -1,6 +1,7 @@
 package com.sinch.sample.conversation.messages;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.conversation.api.v1.MessagesService;
 import com.sinch.sdk.domains.conversation.models.v1.Agent;
 import com.sinch.sdk.domains.conversation.models.v1.AgentType;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentities;
@@ -29,6 +30,8 @@ public class Send extends BaseApplication {
 
   public void run() {
 
+    MessagesService service = client.conversation().v1().messages();
+
     LOGGER.info("Send message with Conversation");
 
     var parameters =
@@ -55,7 +58,7 @@ public class Send extends BaseApplication {
             .setTtl(25)
             .build();
 
-    var result = client.conversation().messages().sendTextMessage(parameters);
+    var result = service.sendTextMessage(parameters);
 
     LOGGER.info("Response: " + result);
   }

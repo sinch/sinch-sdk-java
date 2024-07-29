@@ -15,7 +15,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentities;
 
-/** declaration */
+/** Channel Identities */
 @JsonDeserialize(builder = IdentifiedByFieldInternalImpl.Builder.class)
 public interface IdentifiedByFieldInternal {
 

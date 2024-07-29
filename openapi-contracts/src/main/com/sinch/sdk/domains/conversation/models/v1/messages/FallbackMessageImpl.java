@@ -7,55 +7,72 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.Reason;
+import com.sinch.sdk.domains.conversation.models.v1.messages.internal.FallbackMessageInternal;
 import java.util.Objects;
 
-@JsonPropertyOrder({
-  FallbackMessageImpl.JSON_PROPERTY_RAW_MESSAGE,
-  FallbackMessageImpl.JSON_PROPERTY_REASON
-})
+@JsonPropertyOrder({FallbackMessageImpl.JSON_PROPERTY_FALLBACK_MESSAGE})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class FallbackMessageImpl implements FallbackMessage {
+public class FallbackMessageImpl
+    implements FallbackMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_RAW_MESSAGE = "raw_message";
+  public static final String JSON_PROPERTY_FALLBACK_MESSAGE = "fallback_message";
 
-  private OptionalValue<String> rawMessage;
-
-  public static final String JSON_PROPERTY_REASON = "reason";
-
-  private OptionalValue<Reason> reason;
+  private OptionalValue<FallbackMessageInternal> fallbackMessage;
 
   public FallbackMessageImpl() {}
 
-  protected FallbackMessageImpl(OptionalValue<String> rawMessage, OptionalValue<Reason> reason) {
-    this.rawMessage = rawMessage;
-    this.reason = reason;
+  protected FallbackMessageImpl(OptionalValue<FallbackMessageInternal> fallbackMessage) {
+    this.fallbackMessage = fallbackMessage;
+  }
+
+  @JsonIgnore
+  public FallbackMessageInternal getFallbackMessage() {
+    return fallbackMessage.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_FALLBACK_MESSAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<FallbackMessageInternal> fallbackMessage() {
+    return fallbackMessage;
   }
 
   @JsonIgnore
   public String getRawMessage() {
-    return rawMessage.orElse(null);
+    if (null == fallbackMessage
+        || !fallbackMessage.isPresent()
+        || null == fallbackMessage.get().getRawMessage()) {
+      return null;
+    }
+    return fallbackMessage.get().getRawMessage();
   }
 
-  @JsonProperty(JSON_PROPERTY_RAW_MESSAGE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> rawMessage() {
-    return rawMessage;
+    return null != fallbackMessage
+        ? fallbackMessage.map(FallbackMessageInternal::getRawMessage)
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public Reason getReason() {
-    return reason.orElse(null);
+    if (null == fallbackMessage
+        || !fallbackMessage.isPresent()
+        || null == fallbackMessage.get().getReason()) {
+      return null;
+    }
+    return fallbackMessage.get().getReason();
   }
 
-  @JsonProperty(JSON_PROPERTY_REASON)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<Reason> reason() {
-    return reason;
+    return null != fallbackMessage
+        ? fallbackMessage.map(FallbackMessageInternal::getReason)
+        : OptionalValue.empty();
   }
 
-  /** Return true if this Fallback_Message object is equal to o. */
+  /** Return true if this FallbackMessageField object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -64,22 +81,20 @@ public class FallbackMessageImpl implements FallbackMessage {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    FallbackMessageImpl fallbackMessage = (FallbackMessageImpl) o;
-    return Objects.equals(this.rawMessage, fallbackMessage.rawMessage)
-        && Objects.equals(this.reason, fallbackMessage.reason);
+    FallbackMessageImpl fallbackMessageField = (FallbackMessageImpl) o;
+    return Objects.equals(this.fallbackMessage, fallbackMessageField.fallbackMessage);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(rawMessage, reason);
+    return Objects.hash(fallbackMessage);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class FallbackMessageImpl {\n");
-    sb.append("    rawMessage: ").append(toIndentedString(rawMessage)).append("\n");
-    sb.append("    reason: ").append(toIndentedString(reason)).append("\n");
+    sb.append("    fallbackMessage: ").append(toIndentedString(fallbackMessage)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -96,23 +111,41 @@ public class FallbackMessageImpl implements FallbackMessage {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements FallbackMessage.Builder {
-    OptionalValue<String> rawMessage = OptionalValue.empty();
-    OptionalValue<Reason> reason = OptionalValue.empty();
+    OptionalValue<FallbackMessageInternal> fallbackMessage = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_RAW_MESSAGE)
-    public Builder setRawMessage(String rawMessage) {
-      this.rawMessage = OptionalValue.of(rawMessage);
+    FallbackMessageInternal.Builder _delegatedBuilder = null;
+
+    @JsonProperty(value = JSON_PROPERTY_FALLBACK_MESSAGE, required = true)
+    public Builder setFallbackMessage(FallbackMessageInternal fallbackMessage) {
+      this.fallbackMessage = OptionalValue.of(fallbackMessage);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_REASON)
-    public Builder setReason(Reason reason) {
-      this.reason = OptionalValue.of(reason);
+    @JsonIgnore
+    public Builder setRawMessage(String rawMessage) {
+      getDelegatedBuilder().setRawMessage(rawMessage);
       return this;
+    }
+
+    @JsonIgnore
+    public Builder setReason(Reason reason) {
+      getDelegatedBuilder().setReason(reason);
+      return this;
+    }
+
+    private FallbackMessageInternal.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = FallbackMessageInternal.builder();
+      }
+      return this._delegatedBuilder;
     }
 
     public FallbackMessage build() {
-      return new FallbackMessageImpl(rawMessage, reason);
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.fallbackMessage = OptionalValue.of(this._delegatedBuilder.build());
+      }
+      return new FallbackMessageImpl(fallbackMessage);
     }
   }
 }

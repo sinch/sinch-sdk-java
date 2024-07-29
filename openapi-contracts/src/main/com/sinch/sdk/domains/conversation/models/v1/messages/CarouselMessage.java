@@ -15,7 +15,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 
-/** declaration */
+/** Carousel Message */
 @JsonDeserialize(builder = CarouselMessageImpl.Builder.class)
 public interface CarouselMessage
     extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,

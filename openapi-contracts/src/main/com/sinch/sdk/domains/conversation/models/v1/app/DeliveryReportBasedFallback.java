@@ -15,9 +15,10 @@ package com.sinch.sdk.domains.conversation.models.v1.app;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
- * This object contains additional settings related to [delivery report based
- * fallback](../../../../../conversation/keyconcepts/#delivery-report-base-message-fallback). Note
- * that this **paid** functionality is available for open beta testing.
+ * This object contains additional settings related to <a
+ * href="../../../../../conversation/keyconcepts/#delivery-report-base-message-fallback">delivery
+ * report based fallback</a>. Note that this <strong>paid</strong> functionality is available for
+ * open beta testing.
  */
 @JsonDeserialize(builder = DeliveryReportBasedFallbackImpl.Builder.class)
 public interface DeliveryReportBasedFallback {
@@ -26,8 +27,8 @@ public interface DeliveryReportBasedFallback {
    * Optional. A flag specifying whether this app has enabled fallback message delivery upon no
    * positive delivery report. This feature is applicable only to messages which are sent to a
    * recipient with more than one channel identity. Identities must be defined on channels which
-   * support at least the &#39;DELIVERED&#39; message state. **Please note that this functionality
-   * requires payment.**
+   * support at least the 'DELIVERED' message state. <strong>Please note that this functionality
+   * requires payment.</strong>
    *
    * @return enabled
    */

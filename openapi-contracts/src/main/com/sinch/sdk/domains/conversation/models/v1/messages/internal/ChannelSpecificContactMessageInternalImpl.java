@@ -1,123 +1,238 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.conversation.models.v1.messages.ChannelSpecificContactMessageMessage;
-import java.util.Objects;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.JsonToken;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.sinch.sdk.core.models.AbstractOpenApiSchema;
+import com.sinch.sdk.core.utils.databind.JSONNavigator;
+import com.sinch.sdk.domains.conversation.models.v1.messages.WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-@JsonPropertyOrder({
-  ChannelSpecificContactMessageInternalImpl.JSON_PROPERTY_MESSAGE_TYPE,
-  ChannelSpecificContactMessageInternalImpl.JSON_PROPERTY_MESSAGE
-})
-@JsonFilter("uninitializedFilter")
-@JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class ChannelSpecificContactMessageInternalImpl
+@JsonDeserialize(
+    using =
+        ChannelSpecificContactMessageInternalImpl
+            .ChannelSpecificContactMessageInternalImplDeserializer.class)
+@JsonSerialize(
+    using =
+        ChannelSpecificContactMessageInternalImpl
+            .ChannelSpecificContactMessageInternalImplSerializer.class)
+public class ChannelSpecificContactMessageInternalImpl extends AbstractOpenApiSchema
     implements ChannelSpecificContactMessageInternal {
-  private static final long serialVersionUID = 1L;
+  private static final Logger log =
+      Logger.getLogger(ChannelSpecificContactMessageInternalImpl.class.getName());
 
-  public static final String JSON_PROPERTY_MESSAGE_TYPE = "message_type";
+  public static final class ChannelSpecificContactMessageInternalImplSerializer
+      extends StdSerializer<ChannelSpecificContactMessageInternalImpl> {
+    private static final long serialVersionUID = 1L;
 
-  private OptionalValue<MessageTypeEnum> messageType;
-
-  public static final String JSON_PROPERTY_MESSAGE = "message";
-
-  private OptionalValue<ChannelSpecificContactMessageMessage> message;
-
-  public ChannelSpecificContactMessageInternalImpl() {}
-
-  protected ChannelSpecificContactMessageInternalImpl(
-      OptionalValue<MessageTypeEnum> messageType,
-      OptionalValue<ChannelSpecificContactMessageMessage> message) {
-    this.messageType = messageType;
-    this.message = message;
-  }
-
-  @JsonIgnore
-  public MessageTypeEnum getMessageType() {
-    return messageType.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_MESSAGE_TYPE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<MessageTypeEnum> messageType() {
-    return messageType;
-  }
-
-  @JsonIgnore
-  public ChannelSpecificContactMessageMessage getMessage() {
-    return message.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_MESSAGE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<ChannelSpecificContactMessageMessage> message() {
-    return message;
-  }
-
-  /** Return true if this ChannelSpecificContactMessage object is equal to o. */
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    public ChannelSpecificContactMessageInternalImplSerializer(
+        Class<ChannelSpecificContactMessageInternalImpl> t) {
+      super(t);
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+
+    public ChannelSpecificContactMessageInternalImplSerializer() {
+      this(null);
     }
-    ChannelSpecificContactMessageInternalImpl channelSpecificContactMessage =
-        (ChannelSpecificContactMessageInternalImpl) o;
-    return Objects.equals(this.messageType, channelSpecificContactMessage.messageType)
-        && Objects.equals(this.message, channelSpecificContactMessage.message);
+
+    @Override
+    public void serialize(
+        ChannelSpecificContactMessageInternalImpl value,
+        JsonGenerator jgen,
+        SerializerProvider provider)
+        throws IOException, JsonProcessingException {
+      jgen.writeObject(value.getActualInstance());
+    }
+  }
+
+  public static final class ChannelSpecificContactMessageInternalImplDeserializer
+      extends StdDeserializer<ChannelSpecificContactMessageInternalImpl> {
+
+    private static final long serialVersionUID = 1L;
+
+    public ChannelSpecificContactMessageInternalImplDeserializer() {
+      this(ChannelSpecificContactMessageInternalImpl.class);
+    }
+
+    public ChannelSpecificContactMessageInternalImplDeserializer(Class<?> vc) {
+      super(vc);
+    }
+
+    @Override
+    public ChannelSpecificContactMessageInternalImpl deserialize(
+        JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+      JsonNode tree = jp.readValueAsTree();
+      Object deserialized = null;
+      boolean typeCoercion = ctxt.isEnabled(MapperFeature.ALLOW_COERCION_OF_SCALARS);
+      int match = 0;
+      JsonToken token = tree.traverse(jp.getCodec()).nextToken();
+      // deserialize WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl
+      try {
+        boolean attemptParsing = true;
+        // ensure that we respect type coercion as set on the client ObjectMapper
+        if (WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl.class.equals(Integer.class)
+            || WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl.class.equals(Long.class)
+            || WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl.class.equals(
+                Float.class)
+            || WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl.class.equals(
+                Double.class)
+            || WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl.class.equals(
+                Boolean.class)
+            || WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl.class.equals(
+                String.class)) {
+          attemptParsing = typeCoercion;
+          if (!attemptParsing) {
+            attemptParsing |=
+                ((WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl.class.equals(
+                            Integer.class)
+                        || WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl.class
+                            .equals(Long.class))
+                    && token == JsonToken.VALUE_NUMBER_INT);
+            attemptParsing |=
+                ((WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl.class.equals(
+                            Float.class)
+                        || WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl.class
+                            .equals(Double.class))
+                    && token == JsonToken.VALUE_NUMBER_FLOAT);
+            attemptParsing |=
+                (WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl.class.equals(
+                        Boolean.class)
+                    && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
+            attemptParsing |=
+                (WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl.class.equals(
+                        String.class)
+                    && token == JsonToken.VALUE_STRING);
+          }
+        }
+        if (attemptParsing) {
+          deserialized =
+              tree.traverse(jp.getCodec())
+                  .readValueAs(WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl.class);
+          // TODO: there is no validation against JSON schema constraints
+          // (min, max, enum, pattern...), this does not perform a strict JSON
+          // validation, which means the 'match' count may be higher than it should be.
+          match++;
+          log.log(
+              Level.FINER,
+              "Input data matches schema"
+                  + " 'WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl'");
+        }
+      } catch (Exception e) {
+        // deserialization failed, continue
+        log.log(
+            Level.FINER,
+            "Input data does not match schema"
+                + " 'WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl'",
+            e);
+      }
+
+      if (match == 1) {
+        ChannelSpecificContactMessageInternalImpl ret =
+            new ChannelSpecificContactMessageInternalImpl();
+        ret.setActualInstance(deserialized);
+        return ret;
+      }
+      throw new IOException(
+          String.format(
+              "Failed deserialization for ChannelSpecificContactMessageInternalImpl: %d classes"
+                  + " match result, expected 1",
+              match));
+    }
+
+    /** Handle deserialization of the 'null' value. */
+    @Override
+    public ChannelSpecificContactMessageInternalImpl getNullValue(DeserializationContext ctxt)
+        throws JsonMappingException {
+      throw new JsonMappingException(
+          ctxt.getParser(), "ChannelSpecificContactMessageInternalImpl cannot be null");
+    }
+  }
+
+  // store a list of schema names defined in oneOf
+  public static final Map<String, Class<?>> schemas = new HashMap<>();
+
+  public ChannelSpecificContactMessageInternalImpl() {
+    super("oneOf", Boolean.FALSE);
+  }
+
+  public ChannelSpecificContactMessageInternalImpl(
+      WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl o) {
+    super("oneOf", Boolean.FALSE);
+    setActualInstance(o);
+  }
+
+  static {
+    schemas.put(
+        "WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl",
+        WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl.class);
+    JSONNavigator.registerDescendants(
+        ChannelSpecificContactMessageInternalImpl.class, Collections.unmodifiableMap(schemas));
   }
 
   @Override
-  public int hashCode() {
-    return Objects.hash(messageType, message);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class ChannelSpecificContactMessageInternalImpl {\n");
-    sb.append("    messageType: ").append(toIndentedString(messageType)).append("\n");
-    sb.append("    message: ").append(toIndentedString(message)).append("\n");
-    sb.append("}");
-    return sb.toString();
+  public Map<String, Class<?>> getSchemas() {
+    return ChannelSpecificContactMessageInternalImpl.schemas;
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   * Set the instance that matches the oneOf child schema, check the instance parameter is valid
+   * against the oneOf child schemas: WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl
+   *
+   * <p>It could be an instance of the 'oneOf' schemas. The oneOf child schemas may themselves be a
+   * composed schema (allOf, anyOf, oneOf).
    */
-  private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
+  @Override
+  public void setActualInstance(Object instance) {
+    if (JSONNavigator.isInstanceOf(
+        WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl.class,
+        instance,
+        new HashSet<Class<?>>())) {
+      super.setActualInstance(instance);
+      return;
     }
-    return o.toString().replace("\n", "\n    ");
+
+    throw new RuntimeException(
+        "Invalid instance type. Must be"
+            + " WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl");
   }
 
-  @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements ChannelSpecificContactMessageInternal.Builder {
-    OptionalValue<MessageTypeEnum> messageType = OptionalValue.empty();
-    OptionalValue<ChannelSpecificContactMessageMessage> message = OptionalValue.empty();
+  /**
+   * Get the actual instance, which can be the following:
+   * WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl
+   *
+   * @return The actual instance (WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl)
+   */
+  @Override
+  public Object getActualInstance() {
+    return super.getActualInstance();
+  }
 
-    @JsonProperty(JSON_PROPERTY_MESSAGE_TYPE)
-    public Builder setMessageType(MessageTypeEnum messageType) {
-      this.messageType = OptionalValue.of(messageType);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_MESSAGE)
-    public Builder setMessage(ChannelSpecificContactMessageMessage message) {
-      this.message = OptionalValue.of(message);
-      return this;
-    }
-
-    public ChannelSpecificContactMessageInternal build() {
-      return new ChannelSpecificContactMessageInternalImpl(messageType, message);
-    }
+  /**
+   * Get the actual instance of `WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl`. If
+   * the actual instance is not `WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl`, the
+   * ClassCastException will be thrown.
+   *
+   * @return The actual instance of `WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl`
+   * @throws ClassCastException if the instance is not
+   *     `WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl`
+   */
+  public WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl
+      getWhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl() throws ClassCastException {
+    return (WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl) super.getActualInstance();
   }
 }

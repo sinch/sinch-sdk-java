@@ -14,7 +14,7 @@ package com.sinch.sdk.domains.conversation.models.v1;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** declaration */
+/** Contact ID */
 @JsonDeserialize(builder = ContactIdImpl.Builder.class)
 public interface ContactId extends com.sinch.sdk.domains.conversation.models.v1.Recipient {
 

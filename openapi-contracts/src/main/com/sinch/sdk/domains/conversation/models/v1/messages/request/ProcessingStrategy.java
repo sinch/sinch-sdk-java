@@ -6,13 +6,18 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 /**
- * Overrides the app&#39;s [Processing Mode](../../../../../conversation/processing-modes/). Default
- * value is &#x60;DEFAULT&#x60;.
+ * Overrides the app's <a href="../../../../../conversation/processing-modes/">Processing Mode</a>.
+ * Default value is <code>DEFAULT</code>.
  */
 public class ProcessingStrategy extends EnumDynamic<String, ProcessingStrategy> {
 
+  /** The request will inherit the app's configured processing mode. */
   public static final ProcessingStrategy DEFAULT = new ProcessingStrategy("DEFAULT");
 
+  /**
+   * Forces the request to be processed in dispatch mode (without storing contacts and
+   * conversations), regardless of the app's configured processing mode.
+   */
   public static final ProcessingStrategy DISPATCH_ONLY = new ProcessingStrategy("DISPATCH_ONLY");
 
   private static final EnumSupportDynamic<String, ProcessingStrategy> ENUM_SUPPORT =

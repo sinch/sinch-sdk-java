@@ -1,6 +1,7 @@
 package com.sinch.sample.conversation.contact;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.conversation.api.v1.ContactService;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactGetChannelProfileByChannelIdentityRequest;
@@ -27,6 +28,8 @@ public class GetChannelProfile extends BaseApplication {
 
   public void run() {
 
+    ContactService service = client.conversation().v1().contact();
+
     var parametersByContactId =
         ContactGetChannelProfileByContactIdRequest.builder()
             .setAppId(conversationAppId)
@@ -49,9 +52,7 @@ public class GetChannelProfile extends BaseApplication {
     LOGGER.info("Get channel profile: " + conversationContactId);
 
     var result =
-        client
-            .conversation()
-            .contact()
+        service
             // .getChannelProfileByContactId(parametersByContactId)
             .getChannelProfileByChannelIdentity(parametersByChannelIdentity);
 

@@ -15,7 +15,15 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.sinch.sdk.core.models.AbstractOpenApiSchema;
 import com.sinch.sdk.core.utils.databind.JSONNavigator;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ChannelSpecificContactMessageImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ChoiceResponseMessageImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.FallbackMessageImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.LocationMessageImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.MediaCardMessageImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.MediaMessageImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ProductResponseMessageImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ReplyToMessageImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessageImpl;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,7 +34,8 @@ import java.util.logging.Logger;
 
 @JsonDeserialize(using = ContactMessageInternalImpl.ContactMessageInternalImplDeserializer.class)
 @JsonSerialize(using = ContactMessageInternalImpl.ContactMessageInternalImplSerializer.class)
-public class ContactMessageInternalImpl extends AbstractOpenApiSchema {
+public class ContactMessageInternalImpl extends AbstractOpenApiSchema
+    implements ContactMessageInternal {
   private static final Logger log = Logger.getLogger(ContactMessageInternalImpl.class.getName());
 
   public static final class ContactMessageInternalImplSerializer
@@ -70,269 +79,249 @@ public class ContactMessageInternalImpl extends AbstractOpenApiSchema {
       boolean typeCoercion = ctxt.isEnabled(MapperFeature.ALLOW_COERCION_OF_SCALARS);
       int match = 0;
       JsonToken token = tree.traverse(jp.getCodec()).nextToken();
-      // deserialize ChannelSpecificContactMessageInternalImpl
+      // deserialize ChannelSpecificContactMessageImpl
       try {
         boolean attemptParsing = true;
         // ensure that we respect type coercion as set on the client ObjectMapper
-        if (ChannelSpecificContactMessageInternalImpl.class.equals(Integer.class)
-            || ChannelSpecificContactMessageInternalImpl.class.equals(Long.class)
-            || ChannelSpecificContactMessageInternalImpl.class.equals(Float.class)
-            || ChannelSpecificContactMessageInternalImpl.class.equals(Double.class)
-            || ChannelSpecificContactMessageInternalImpl.class.equals(Boolean.class)
-            || ChannelSpecificContactMessageInternalImpl.class.equals(String.class)) {
+        if (ChannelSpecificContactMessageImpl.class.equals(Integer.class)
+            || ChannelSpecificContactMessageImpl.class.equals(Long.class)
+            || ChannelSpecificContactMessageImpl.class.equals(Float.class)
+            || ChannelSpecificContactMessageImpl.class.equals(Double.class)
+            || ChannelSpecificContactMessageImpl.class.equals(Boolean.class)
+            || ChannelSpecificContactMessageImpl.class.equals(String.class)) {
           attemptParsing = typeCoercion;
           if (!attemptParsing) {
             attemptParsing |=
-                ((ChannelSpecificContactMessageInternalImpl.class.equals(Integer.class)
-                        || ChannelSpecificContactMessageInternalImpl.class.equals(Long.class))
+                ((ChannelSpecificContactMessageImpl.class.equals(Integer.class)
+                        || ChannelSpecificContactMessageImpl.class.equals(Long.class))
                     && token == JsonToken.VALUE_NUMBER_INT);
             attemptParsing |=
-                ((ChannelSpecificContactMessageInternalImpl.class.equals(Float.class)
-                        || ChannelSpecificContactMessageInternalImpl.class.equals(Double.class))
+                ((ChannelSpecificContactMessageImpl.class.equals(Float.class)
+                        || ChannelSpecificContactMessageImpl.class.equals(Double.class))
                     && token == JsonToken.VALUE_NUMBER_FLOAT);
             attemptParsing |=
-                (ChannelSpecificContactMessageInternalImpl.class.equals(Boolean.class)
+                (ChannelSpecificContactMessageImpl.class.equals(Boolean.class)
                     && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
             attemptParsing |=
-                (ChannelSpecificContactMessageInternalImpl.class.equals(String.class)
+                (ChannelSpecificContactMessageImpl.class.equals(String.class)
                     && token == JsonToken.VALUE_STRING);
           }
         }
         if (attemptParsing) {
           deserialized =
-              tree.traverse(jp.getCodec())
-                  .readValueAs(ChannelSpecificContactMessageInternalImpl.class);
+              tree.traverse(jp.getCodec()).readValueAs(ChannelSpecificContactMessageImpl.class);
           // TODO: there is no validation against JSON schema constraints
           // (min, max, enum, pattern...), this does not perform a strict JSON
           // validation, which means the 'match' count may be higher than it should be.
           match++;
-          log.log(
-              Level.FINER, "Input data matches schema 'ChannelSpecificContactMessageInternalImpl'");
+          log.log(Level.FINER, "Input data matches schema 'ChannelSpecificContactMessageImpl'");
         }
       } catch (Exception e) {
         // deserialization failed, continue
         log.log(
-            Level.FINER,
-            "Input data does not match schema 'ChannelSpecificContactMessageInternalImpl'",
-            e);
+            Level.FINER, "Input data does not match schema 'ChannelSpecificContactMessageImpl'", e);
       }
 
-      // deserialize ChoiceResponseMessageFieldInternalImpl
+      // deserialize ChoiceResponseMessageImpl
       try {
         boolean attemptParsing = true;
         // ensure that we respect type coercion as set on the client ObjectMapper
-        if (ChoiceResponseMessageFieldInternalImpl.class.equals(Integer.class)
-            || ChoiceResponseMessageFieldInternalImpl.class.equals(Long.class)
-            || ChoiceResponseMessageFieldInternalImpl.class.equals(Float.class)
-            || ChoiceResponseMessageFieldInternalImpl.class.equals(Double.class)
-            || ChoiceResponseMessageFieldInternalImpl.class.equals(Boolean.class)
-            || ChoiceResponseMessageFieldInternalImpl.class.equals(String.class)) {
+        if (ChoiceResponseMessageImpl.class.equals(Integer.class)
+            || ChoiceResponseMessageImpl.class.equals(Long.class)
+            || ChoiceResponseMessageImpl.class.equals(Float.class)
+            || ChoiceResponseMessageImpl.class.equals(Double.class)
+            || ChoiceResponseMessageImpl.class.equals(Boolean.class)
+            || ChoiceResponseMessageImpl.class.equals(String.class)) {
           attemptParsing = typeCoercion;
           if (!attemptParsing) {
             attemptParsing |=
-                ((ChoiceResponseMessageFieldInternalImpl.class.equals(Integer.class)
-                        || ChoiceResponseMessageFieldInternalImpl.class.equals(Long.class))
+                ((ChoiceResponseMessageImpl.class.equals(Integer.class)
+                        || ChoiceResponseMessageImpl.class.equals(Long.class))
                     && token == JsonToken.VALUE_NUMBER_INT);
             attemptParsing |=
-                ((ChoiceResponseMessageFieldInternalImpl.class.equals(Float.class)
-                        || ChoiceResponseMessageFieldInternalImpl.class.equals(Double.class))
+                ((ChoiceResponseMessageImpl.class.equals(Float.class)
+                        || ChoiceResponseMessageImpl.class.equals(Double.class))
                     && token == JsonToken.VALUE_NUMBER_FLOAT);
             attemptParsing |=
-                (ChoiceResponseMessageFieldInternalImpl.class.equals(Boolean.class)
+                (ChoiceResponseMessageImpl.class.equals(Boolean.class)
                     && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
             attemptParsing |=
-                (ChoiceResponseMessageFieldInternalImpl.class.equals(String.class)
+                (ChoiceResponseMessageImpl.class.equals(String.class)
                     && token == JsonToken.VALUE_STRING);
           }
         }
         if (attemptParsing) {
-          deserialized =
-              tree.traverse(jp.getCodec())
-                  .readValueAs(ChoiceResponseMessageFieldInternalImpl.class);
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(ChoiceResponseMessageImpl.class);
           // TODO: there is no validation against JSON schema constraints
           // (min, max, enum, pattern...), this does not perform a strict JSON
           // validation, which means the 'match' count may be higher than it should be.
           match++;
-          log.log(
-              Level.FINER, "Input data matches schema 'ChoiceResponseMessageFieldInternalImpl'");
+          log.log(Level.FINER, "Input data matches schema 'ChoiceResponseMessageImpl'");
         }
       } catch (Exception e) {
         // deserialization failed, continue
-        log.log(
-            Level.FINER,
-            "Input data does not match schema 'ChoiceResponseMessageFieldInternalImpl'",
-            e);
+        log.log(Level.FINER, "Input data does not match schema 'ChoiceResponseMessageImpl'", e);
       }
 
-      // deserialize FallbackMessageFieldInternalImpl
+      // deserialize FallbackMessageImpl
       try {
         boolean attemptParsing = true;
         // ensure that we respect type coercion as set on the client ObjectMapper
-        if (FallbackMessageFieldInternalImpl.class.equals(Integer.class)
-            || FallbackMessageFieldInternalImpl.class.equals(Long.class)
-            || FallbackMessageFieldInternalImpl.class.equals(Float.class)
-            || FallbackMessageFieldInternalImpl.class.equals(Double.class)
-            || FallbackMessageFieldInternalImpl.class.equals(Boolean.class)
-            || FallbackMessageFieldInternalImpl.class.equals(String.class)) {
+        if (FallbackMessageImpl.class.equals(Integer.class)
+            || FallbackMessageImpl.class.equals(Long.class)
+            || FallbackMessageImpl.class.equals(Float.class)
+            || FallbackMessageImpl.class.equals(Double.class)
+            || FallbackMessageImpl.class.equals(Boolean.class)
+            || FallbackMessageImpl.class.equals(String.class)) {
           attemptParsing = typeCoercion;
           if (!attemptParsing) {
             attemptParsing |=
-                ((FallbackMessageFieldInternalImpl.class.equals(Integer.class)
-                        || FallbackMessageFieldInternalImpl.class.equals(Long.class))
+                ((FallbackMessageImpl.class.equals(Integer.class)
+                        || FallbackMessageImpl.class.equals(Long.class))
                     && token == JsonToken.VALUE_NUMBER_INT);
             attemptParsing |=
-                ((FallbackMessageFieldInternalImpl.class.equals(Float.class)
-                        || FallbackMessageFieldInternalImpl.class.equals(Double.class))
+                ((FallbackMessageImpl.class.equals(Float.class)
+                        || FallbackMessageImpl.class.equals(Double.class))
                     && token == JsonToken.VALUE_NUMBER_FLOAT);
             attemptParsing |=
-                (FallbackMessageFieldInternalImpl.class.equals(Boolean.class)
+                (FallbackMessageImpl.class.equals(Boolean.class)
                     && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
             attemptParsing |=
-                (FallbackMessageFieldInternalImpl.class.equals(String.class)
+                (FallbackMessageImpl.class.equals(String.class) && token == JsonToken.VALUE_STRING);
+          }
+        }
+        if (attemptParsing) {
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(FallbackMessageImpl.class);
+          // TODO: there is no validation against JSON schema constraints
+          // (min, max, enum, pattern...), this does not perform a strict JSON
+          // validation, which means the 'match' count may be higher than it should be.
+          match++;
+          log.log(Level.FINER, "Input data matches schema 'FallbackMessageImpl'");
+        }
+      } catch (Exception e) {
+        // deserialization failed, continue
+        log.log(Level.FINER, "Input data does not match schema 'FallbackMessageImpl'", e);
+      }
+
+      // deserialize LocationMessageImpl
+      try {
+        boolean attemptParsing = true;
+        // ensure that we respect type coercion as set on the client ObjectMapper
+        if (LocationMessageImpl.class.equals(Integer.class)
+            || LocationMessageImpl.class.equals(Long.class)
+            || LocationMessageImpl.class.equals(Float.class)
+            || LocationMessageImpl.class.equals(Double.class)
+            || LocationMessageImpl.class.equals(Boolean.class)
+            || LocationMessageImpl.class.equals(String.class)) {
+          attemptParsing = typeCoercion;
+          if (!attemptParsing) {
+            attemptParsing |=
+                ((LocationMessageImpl.class.equals(Integer.class)
+                        || LocationMessageImpl.class.equals(Long.class))
+                    && token == JsonToken.VALUE_NUMBER_INT);
+            attemptParsing |=
+                ((LocationMessageImpl.class.equals(Float.class)
+                        || LocationMessageImpl.class.equals(Double.class))
+                    && token == JsonToken.VALUE_NUMBER_FLOAT);
+            attemptParsing |=
+                (LocationMessageImpl.class.equals(Boolean.class)
+                    && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
+            attemptParsing |=
+                (LocationMessageImpl.class.equals(String.class) && token == JsonToken.VALUE_STRING);
+          }
+        }
+        if (attemptParsing) {
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(LocationMessageImpl.class);
+          // TODO: there is no validation against JSON schema constraints
+          // (min, max, enum, pattern...), this does not perform a strict JSON
+          // validation, which means the 'match' count may be higher than it should be.
+          match++;
+          log.log(Level.FINER, "Input data matches schema 'LocationMessageImpl'");
+        }
+      } catch (Exception e) {
+        // deserialization failed, continue
+        log.log(Level.FINER, "Input data does not match schema 'LocationMessageImpl'", e);
+      }
+
+      // deserialize MediaCardMessageImpl
+      try {
+        boolean attemptParsing = true;
+        // ensure that we respect type coercion as set on the client ObjectMapper
+        if (MediaCardMessageImpl.class.equals(Integer.class)
+            || MediaCardMessageImpl.class.equals(Long.class)
+            || MediaCardMessageImpl.class.equals(Float.class)
+            || MediaCardMessageImpl.class.equals(Double.class)
+            || MediaCardMessageImpl.class.equals(Boolean.class)
+            || MediaCardMessageImpl.class.equals(String.class)) {
+          attemptParsing = typeCoercion;
+          if (!attemptParsing) {
+            attemptParsing |=
+                ((MediaCardMessageImpl.class.equals(Integer.class)
+                        || MediaCardMessageImpl.class.equals(Long.class))
+                    && token == JsonToken.VALUE_NUMBER_INT);
+            attemptParsing |=
+                ((MediaCardMessageImpl.class.equals(Float.class)
+                        || MediaCardMessageImpl.class.equals(Double.class))
+                    && token == JsonToken.VALUE_NUMBER_FLOAT);
+            attemptParsing |=
+                (MediaCardMessageImpl.class.equals(Boolean.class)
+                    && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
+            attemptParsing |=
+                (MediaCardMessageImpl.class.equals(String.class)
                     && token == JsonToken.VALUE_STRING);
           }
         }
         if (attemptParsing) {
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(FallbackMessageFieldInternalImpl.class);
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(MediaCardMessageImpl.class);
           // TODO: there is no validation against JSON schema constraints
           // (min, max, enum, pattern...), this does not perform a strict JSON
           // validation, which means the 'match' count may be higher than it should be.
           match++;
-          log.log(Level.FINER, "Input data matches schema 'FallbackMessageFieldInternalImpl'");
+          log.log(Level.FINER, "Input data matches schema 'MediaCardMessageImpl'");
         }
       } catch (Exception e) {
         // deserialization failed, continue
-        log.log(
-            Level.FINER, "Input data does not match schema 'FallbackMessageFieldInternalImpl'", e);
+        log.log(Level.FINER, "Input data does not match schema 'MediaCardMessageImpl'", e);
       }
 
-      // deserialize LocationMessageFieldInternalImpl
+      // deserialize MediaMessageImpl
       try {
         boolean attemptParsing = true;
         // ensure that we respect type coercion as set on the client ObjectMapper
-        if (LocationMessageFieldInternalImpl.class.equals(Integer.class)
-            || LocationMessageFieldInternalImpl.class.equals(Long.class)
-            || LocationMessageFieldInternalImpl.class.equals(Float.class)
-            || LocationMessageFieldInternalImpl.class.equals(Double.class)
-            || LocationMessageFieldInternalImpl.class.equals(Boolean.class)
-            || LocationMessageFieldInternalImpl.class.equals(String.class)) {
+        if (MediaMessageImpl.class.equals(Integer.class)
+            || MediaMessageImpl.class.equals(Long.class)
+            || MediaMessageImpl.class.equals(Float.class)
+            || MediaMessageImpl.class.equals(Double.class)
+            || MediaMessageImpl.class.equals(Boolean.class)
+            || MediaMessageImpl.class.equals(String.class)) {
           attemptParsing = typeCoercion;
           if (!attemptParsing) {
             attemptParsing |=
-                ((LocationMessageFieldInternalImpl.class.equals(Integer.class)
-                        || LocationMessageFieldInternalImpl.class.equals(Long.class))
+                ((MediaMessageImpl.class.equals(Integer.class)
+                        || MediaMessageImpl.class.equals(Long.class))
                     && token == JsonToken.VALUE_NUMBER_INT);
             attemptParsing |=
-                ((LocationMessageFieldInternalImpl.class.equals(Float.class)
-                        || LocationMessageFieldInternalImpl.class.equals(Double.class))
+                ((MediaMessageImpl.class.equals(Float.class)
+                        || MediaMessageImpl.class.equals(Double.class))
                     && token == JsonToken.VALUE_NUMBER_FLOAT);
             attemptParsing |=
-                (LocationMessageFieldInternalImpl.class.equals(Boolean.class)
+                (MediaMessageImpl.class.equals(Boolean.class)
                     && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
             attemptParsing |=
-                (LocationMessageFieldInternalImpl.class.equals(String.class)
-                    && token == JsonToken.VALUE_STRING);
+                (MediaMessageImpl.class.equals(String.class) && token == JsonToken.VALUE_STRING);
           }
         }
         if (attemptParsing) {
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(LocationMessageFieldInternalImpl.class);
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(MediaMessageImpl.class);
           // TODO: there is no validation against JSON schema constraints
           // (min, max, enum, pattern...), this does not perform a strict JSON
           // validation, which means the 'match' count may be higher than it should be.
           match++;
-          log.log(Level.FINER, "Input data matches schema 'LocationMessageFieldInternalImpl'");
+          log.log(Level.FINER, "Input data matches schema 'MediaMessageImpl'");
         }
       } catch (Exception e) {
         // deserialization failed, continue
-        log.log(
-            Level.FINER, "Input data does not match schema 'LocationMessageFieldInternalImpl'", e);
-      }
-
-      // deserialize MediaCardMessageFieldInternalImpl
-      try {
-        boolean attemptParsing = true;
-        // ensure that we respect type coercion as set on the client ObjectMapper
-        if (MediaCardMessageFieldInternalImpl.class.equals(Integer.class)
-            || MediaCardMessageFieldInternalImpl.class.equals(Long.class)
-            || MediaCardMessageFieldInternalImpl.class.equals(Float.class)
-            || MediaCardMessageFieldInternalImpl.class.equals(Double.class)
-            || MediaCardMessageFieldInternalImpl.class.equals(Boolean.class)
-            || MediaCardMessageFieldInternalImpl.class.equals(String.class)) {
-          attemptParsing = typeCoercion;
-          if (!attemptParsing) {
-            attemptParsing |=
-                ((MediaCardMessageFieldInternalImpl.class.equals(Integer.class)
-                        || MediaCardMessageFieldInternalImpl.class.equals(Long.class))
-                    && token == JsonToken.VALUE_NUMBER_INT);
-            attemptParsing |=
-                ((MediaCardMessageFieldInternalImpl.class.equals(Float.class)
-                        || MediaCardMessageFieldInternalImpl.class.equals(Double.class))
-                    && token == JsonToken.VALUE_NUMBER_FLOAT);
-            attemptParsing |=
-                (MediaCardMessageFieldInternalImpl.class.equals(Boolean.class)
-                    && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
-            attemptParsing |=
-                (MediaCardMessageFieldInternalImpl.class.equals(String.class)
-                    && token == JsonToken.VALUE_STRING);
-          }
-        }
-        if (attemptParsing) {
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(MediaCardMessageFieldInternalImpl.class);
-          // TODO: there is no validation against JSON schema constraints
-          // (min, max, enum, pattern...), this does not perform a strict JSON
-          // validation, which means the 'match' count may be higher than it should be.
-          match++;
-          log.log(Level.FINER, "Input data matches schema 'MediaCardMessageFieldInternalImpl'");
-        }
-      } catch (Exception e) {
-        // deserialization failed, continue
-        log.log(
-            Level.FINER, "Input data does not match schema 'MediaCardMessageFieldInternalImpl'", e);
-      }
-
-      // deserialize MediaMessageFieldInternalImpl
-      try {
-        boolean attemptParsing = true;
-        // ensure that we respect type coercion as set on the client ObjectMapper
-        if (MediaMessageFieldInternalImpl.class.equals(Integer.class)
-            || MediaMessageFieldInternalImpl.class.equals(Long.class)
-            || MediaMessageFieldInternalImpl.class.equals(Float.class)
-            || MediaMessageFieldInternalImpl.class.equals(Double.class)
-            || MediaMessageFieldInternalImpl.class.equals(Boolean.class)
-            || MediaMessageFieldInternalImpl.class.equals(String.class)) {
-          attemptParsing = typeCoercion;
-          if (!attemptParsing) {
-            attemptParsing |=
-                ((MediaMessageFieldInternalImpl.class.equals(Integer.class)
-                        || MediaMessageFieldInternalImpl.class.equals(Long.class))
-                    && token == JsonToken.VALUE_NUMBER_INT);
-            attemptParsing |=
-                ((MediaMessageFieldInternalImpl.class.equals(Float.class)
-                        || MediaMessageFieldInternalImpl.class.equals(Double.class))
-                    && token == JsonToken.VALUE_NUMBER_FLOAT);
-            attemptParsing |=
-                (MediaMessageFieldInternalImpl.class.equals(Boolean.class)
-                    && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
-            attemptParsing |=
-                (MediaMessageFieldInternalImpl.class.equals(String.class)
-                    && token == JsonToken.VALUE_STRING);
-          }
-        }
-        if (attemptParsing) {
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(MediaMessageFieldInternalImpl.class);
-          // TODO: there is no validation against JSON schema constraints
-          // (min, max, enum, pattern...), this does not perform a strict JSON
-          // validation, which means the 'match' count may be higher than it should be.
-          match++;
-          log.log(Level.FINER, "Input data matches schema 'MediaMessageFieldInternalImpl'");
-        }
-      } catch (Exception e) {
-        // deserialization failed, continue
-        log.log(Level.FINER, "Input data does not match schema 'MediaMessageFieldInternalImpl'", e);
+        log.log(Level.FINER, "Input data does not match schema 'MediaMessageImpl'", e);
       }
 
       // deserialize ProductResponseMessageImpl
@@ -376,89 +365,84 @@ public class ContactMessageInternalImpl extends AbstractOpenApiSchema {
         log.log(Level.FINER, "Input data does not match schema 'ProductResponseMessageImpl'", e);
       }
 
-      // deserialize ReplyToMessageFieldInternalImpl
+      // deserialize ReplyToMessageImpl
       try {
         boolean attemptParsing = true;
         // ensure that we respect type coercion as set on the client ObjectMapper
-        if (ReplyToMessageFieldInternalImpl.class.equals(Integer.class)
-            || ReplyToMessageFieldInternalImpl.class.equals(Long.class)
-            || ReplyToMessageFieldInternalImpl.class.equals(Float.class)
-            || ReplyToMessageFieldInternalImpl.class.equals(Double.class)
-            || ReplyToMessageFieldInternalImpl.class.equals(Boolean.class)
-            || ReplyToMessageFieldInternalImpl.class.equals(String.class)) {
+        if (ReplyToMessageImpl.class.equals(Integer.class)
+            || ReplyToMessageImpl.class.equals(Long.class)
+            || ReplyToMessageImpl.class.equals(Float.class)
+            || ReplyToMessageImpl.class.equals(Double.class)
+            || ReplyToMessageImpl.class.equals(Boolean.class)
+            || ReplyToMessageImpl.class.equals(String.class)) {
           attemptParsing = typeCoercion;
           if (!attemptParsing) {
             attemptParsing |=
-                ((ReplyToMessageFieldInternalImpl.class.equals(Integer.class)
-                        || ReplyToMessageFieldInternalImpl.class.equals(Long.class))
+                ((ReplyToMessageImpl.class.equals(Integer.class)
+                        || ReplyToMessageImpl.class.equals(Long.class))
                     && token == JsonToken.VALUE_NUMBER_INT);
             attemptParsing |=
-                ((ReplyToMessageFieldInternalImpl.class.equals(Float.class)
-                        || ReplyToMessageFieldInternalImpl.class.equals(Double.class))
+                ((ReplyToMessageImpl.class.equals(Float.class)
+                        || ReplyToMessageImpl.class.equals(Double.class))
                     && token == JsonToken.VALUE_NUMBER_FLOAT);
             attemptParsing |=
-                (ReplyToMessageFieldInternalImpl.class.equals(Boolean.class)
+                (ReplyToMessageImpl.class.equals(Boolean.class)
                     && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
             attemptParsing |=
-                (ReplyToMessageFieldInternalImpl.class.equals(String.class)
-                    && token == JsonToken.VALUE_STRING);
+                (ReplyToMessageImpl.class.equals(String.class) && token == JsonToken.VALUE_STRING);
           }
         }
         if (attemptParsing) {
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(ReplyToMessageFieldInternalImpl.class);
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(ReplyToMessageImpl.class);
           // TODO: there is no validation against JSON schema constraints
           // (min, max, enum, pattern...), this does not perform a strict JSON
           // validation, which means the 'match' count may be higher than it should be.
           match++;
-          log.log(Level.FINER, "Input data matches schema 'ReplyToMessageFieldInternalImpl'");
+          log.log(Level.FINER, "Input data matches schema 'ReplyToMessageImpl'");
         }
       } catch (Exception e) {
         // deserialization failed, continue
-        log.log(
-            Level.FINER, "Input data does not match schema 'ReplyToMessageFieldInternalImpl'", e);
+        log.log(Level.FINER, "Input data does not match schema 'ReplyToMessageImpl'", e);
       }
 
-      // deserialize TextMessageFieldInternalImpl
+      // deserialize TextMessageImpl
       try {
         boolean attemptParsing = true;
         // ensure that we respect type coercion as set on the client ObjectMapper
-        if (TextMessageFieldInternalImpl.class.equals(Integer.class)
-            || TextMessageFieldInternalImpl.class.equals(Long.class)
-            || TextMessageFieldInternalImpl.class.equals(Float.class)
-            || TextMessageFieldInternalImpl.class.equals(Double.class)
-            || TextMessageFieldInternalImpl.class.equals(Boolean.class)
-            || TextMessageFieldInternalImpl.class.equals(String.class)) {
+        if (TextMessageImpl.class.equals(Integer.class)
+            || TextMessageImpl.class.equals(Long.class)
+            || TextMessageImpl.class.equals(Float.class)
+            || TextMessageImpl.class.equals(Double.class)
+            || TextMessageImpl.class.equals(Boolean.class)
+            || TextMessageImpl.class.equals(String.class)) {
           attemptParsing = typeCoercion;
           if (!attemptParsing) {
             attemptParsing |=
-                ((TextMessageFieldInternalImpl.class.equals(Integer.class)
-                        || TextMessageFieldInternalImpl.class.equals(Long.class))
+                ((TextMessageImpl.class.equals(Integer.class)
+                        || TextMessageImpl.class.equals(Long.class))
                     && token == JsonToken.VALUE_NUMBER_INT);
             attemptParsing |=
-                ((TextMessageFieldInternalImpl.class.equals(Float.class)
-                        || TextMessageFieldInternalImpl.class.equals(Double.class))
+                ((TextMessageImpl.class.equals(Float.class)
+                        || TextMessageImpl.class.equals(Double.class))
                     && token == JsonToken.VALUE_NUMBER_FLOAT);
             attemptParsing |=
-                (TextMessageFieldInternalImpl.class.equals(Boolean.class)
+                (TextMessageImpl.class.equals(Boolean.class)
                     && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
             attemptParsing |=
-                (TextMessageFieldInternalImpl.class.equals(String.class)
-                    && token == JsonToken.VALUE_STRING);
+                (TextMessageImpl.class.equals(String.class) && token == JsonToken.VALUE_STRING);
           }
         }
         if (attemptParsing) {
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(TextMessageFieldInternalImpl.class);
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(TextMessageImpl.class);
           // TODO: there is no validation against JSON schema constraints
           // (min, max, enum, pattern...), this does not perform a strict JSON
           // validation, which means the 'match' count may be higher than it should be.
           match++;
-          log.log(Level.FINER, "Input data matches schema 'TextMessageFieldInternalImpl'");
+          log.log(Level.FINER, "Input data matches schema 'TextMessageImpl'");
         }
       } catch (Exception e) {
         // deserialization failed, continue
-        log.log(Level.FINER, "Input data does not match schema 'TextMessageFieldInternalImpl'", e);
+        log.log(Level.FINER, "Input data does not match schema 'TextMessageImpl'", e);
       }
 
       if (match == 1) {
@@ -488,32 +472,32 @@ public class ContactMessageInternalImpl extends AbstractOpenApiSchema {
     super("oneOf", Boolean.FALSE);
   }
 
-  public ContactMessageInternalImpl(ChannelSpecificContactMessageInternalImpl o) {
+  public ContactMessageInternalImpl(ChannelSpecificContactMessageImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public ContactMessageInternalImpl(ChoiceResponseMessageFieldInternalImpl o) {
+  public ContactMessageInternalImpl(ChoiceResponseMessageImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public ContactMessageInternalImpl(FallbackMessageFieldInternalImpl o) {
+  public ContactMessageInternalImpl(FallbackMessageImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public ContactMessageInternalImpl(LocationMessageFieldInternalImpl o) {
+  public ContactMessageInternalImpl(LocationMessageImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public ContactMessageInternalImpl(MediaCardMessageFieldInternalImpl o) {
+  public ContactMessageInternalImpl(MediaCardMessageImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public ContactMessageInternalImpl(MediaMessageFieldInternalImpl o) {
+  public ContactMessageInternalImpl(MediaMessageImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
@@ -523,29 +507,26 @@ public class ContactMessageInternalImpl extends AbstractOpenApiSchema {
     setActualInstance(o);
   }
 
-  public ContactMessageInternalImpl(ReplyToMessageFieldInternalImpl o) {
+  public ContactMessageInternalImpl(ReplyToMessageImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public ContactMessageInternalImpl(TextMessageFieldInternalImpl o) {
+  public ContactMessageInternalImpl(TextMessageImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
   static {
-    schemas.put(
-        "ChannelSpecificContactMessageInternalImpl",
-        ChannelSpecificContactMessageInternalImpl.class);
-    schemas.put(
-        "ChoiceResponseMessageFieldInternalImpl", ChoiceResponseMessageFieldInternalImpl.class);
-    schemas.put("FallbackMessageFieldInternalImpl", FallbackMessageFieldInternalImpl.class);
-    schemas.put("LocationMessageFieldInternalImpl", LocationMessageFieldInternalImpl.class);
-    schemas.put("MediaCardMessageFieldInternalImpl", MediaCardMessageFieldInternalImpl.class);
-    schemas.put("MediaMessageFieldInternalImpl", MediaMessageFieldInternalImpl.class);
+    schemas.put("ChannelSpecificContactMessageImpl", ChannelSpecificContactMessageImpl.class);
+    schemas.put("ChoiceResponseMessageImpl", ChoiceResponseMessageImpl.class);
+    schemas.put("FallbackMessageImpl", FallbackMessageImpl.class);
+    schemas.put("LocationMessageImpl", LocationMessageImpl.class);
+    schemas.put("MediaCardMessageImpl", MediaCardMessageImpl.class);
+    schemas.put("MediaMessageImpl", MediaMessageImpl.class);
     schemas.put("ProductResponseMessageImpl", ProductResponseMessageImpl.class);
-    schemas.put("ReplyToMessageFieldInternalImpl", ReplyToMessageFieldInternalImpl.class);
-    schemas.put("TextMessageFieldInternalImpl", TextMessageFieldInternalImpl.class);
+    schemas.put("ReplyToMessageImpl", ReplyToMessageImpl.class);
+    schemas.put("TextMessageImpl", TextMessageImpl.class);
     JSONNavigator.registerDescendants(
         ContactMessageInternalImpl.class, Collections.unmodifiableMap(schemas));
   }
@@ -557,11 +538,9 @@ public class ContactMessageInternalImpl extends AbstractOpenApiSchema {
 
   /**
    * Set the instance that matches the oneOf child schema, check the instance parameter is valid
-   * against the oneOf child schemas: ChannelSpecificContactMessageInternalImpl,
-   * ChoiceResponseMessageFieldInternalImpl, FallbackMessageFieldInternalImpl,
-   * LocationMessageFieldInternalImpl, MediaCardMessageFieldInternalImpl,
-   * MediaMessageFieldInternalImpl, ProductResponseMessageImpl, ReplyToMessageFieldInternalImpl,
-   * TextMessageFieldInternalImpl
+   * against the oneOf child schemas: ChannelSpecificContactMessageImpl, ChoiceResponseMessageImpl,
+   * FallbackMessageImpl, LocationMessageImpl, MediaCardMessageImpl, MediaMessageImpl,
+   * ProductResponseMessageImpl, ReplyToMessageImpl, TextMessageImpl
    *
    * <p>It could be an instance of the 'oneOf' schemas. The oneOf child schemas may themselves be a
    * composed schema (allOf, anyOf, oneOf).
@@ -569,37 +548,33 @@ public class ContactMessageInternalImpl extends AbstractOpenApiSchema {
   @Override
   public void setActualInstance(Object instance) {
     if (JSONNavigator.isInstanceOf(
-        ChannelSpecificContactMessageInternalImpl.class, instance, new HashSet<Class<?>>())) {
+        ChannelSpecificContactMessageImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
 
     if (JSONNavigator.isInstanceOf(
-        ChoiceResponseMessageFieldInternalImpl.class, instance, new HashSet<Class<?>>())) {
+        ChoiceResponseMessageImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
 
-    if (JSONNavigator.isInstanceOf(
-        FallbackMessageFieldInternalImpl.class, instance, new HashSet<Class<?>>())) {
+    if (JSONNavigator.isInstanceOf(FallbackMessageImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
 
-    if (JSONNavigator.isInstanceOf(
-        LocationMessageFieldInternalImpl.class, instance, new HashSet<Class<?>>())) {
+    if (JSONNavigator.isInstanceOf(LocationMessageImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
 
-    if (JSONNavigator.isInstanceOf(
-        MediaCardMessageFieldInternalImpl.class, instance, new HashSet<Class<?>>())) {
+    if (JSONNavigator.isInstanceOf(MediaCardMessageImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
 
-    if (JSONNavigator.isInstanceOf(
-        MediaMessageFieldInternalImpl.class, instance, new HashSet<Class<?>>())) {
+    if (JSONNavigator.isInstanceOf(MediaMessageImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
@@ -610,38 +585,31 @@ public class ContactMessageInternalImpl extends AbstractOpenApiSchema {
       return;
     }
 
-    if (JSONNavigator.isInstanceOf(
-        ReplyToMessageFieldInternalImpl.class, instance, new HashSet<Class<?>>())) {
+    if (JSONNavigator.isInstanceOf(ReplyToMessageImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
 
-    if (JSONNavigator.isInstanceOf(
-        TextMessageFieldInternalImpl.class, instance, new HashSet<Class<?>>())) {
+    if (JSONNavigator.isInstanceOf(TextMessageImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
 
     throw new RuntimeException(
-        "Invalid instance type. Must be ChannelSpecificContactMessageInternalImpl,"
-            + " ChoiceResponseMessageFieldInternalImpl, FallbackMessageFieldInternalImpl,"
-            + " LocationMessageFieldInternalImpl, MediaCardMessageFieldInternalImpl,"
-            + " MediaMessageFieldInternalImpl, ProductResponseMessageImpl,"
-            + " ReplyToMessageFieldInternalImpl, TextMessageFieldInternalImpl");
+        "Invalid instance type. Must be ChannelSpecificContactMessageImpl,"
+            + " ChoiceResponseMessageImpl, FallbackMessageImpl, LocationMessageImpl,"
+            + " MediaCardMessageImpl, MediaMessageImpl, ProductResponseMessageImpl,"
+            + " ReplyToMessageImpl, TextMessageImpl");
   }
 
   /**
-   * Get the actual instance, which can be the following: ChannelSpecificContactMessageInternalImpl,
-   * ChoiceResponseMessageFieldInternalImpl, FallbackMessageFieldInternalImpl,
-   * LocationMessageFieldInternalImpl, MediaCardMessageFieldInternalImpl,
-   * MediaMessageFieldInternalImpl, ProductResponseMessageImpl, ReplyToMessageFieldInternalImpl,
-   * TextMessageFieldInternalImpl
+   * Get the actual instance, which can be the following: ChannelSpecificContactMessageImpl,
+   * ChoiceResponseMessageImpl, FallbackMessageImpl, LocationMessageImpl, MediaCardMessageImpl,
+   * MediaMessageImpl, ProductResponseMessageImpl, ReplyToMessageImpl, TextMessageImpl
    *
-   * @return The actual instance (ChannelSpecificContactMessageInternalImpl,
-   *     ChoiceResponseMessageFieldInternalImpl, FallbackMessageFieldInternalImpl,
-   *     LocationMessageFieldInternalImpl, MediaCardMessageFieldInternalImpl,
-   *     MediaMessageFieldInternalImpl, ProductResponseMessageImpl, ReplyToMessageFieldInternalImpl,
-   *     TextMessageFieldInternalImpl)
+   * @return The actual instance (ChannelSpecificContactMessageImpl, ChoiceResponseMessageImpl,
+   *     FallbackMessageImpl, LocationMessageImpl, MediaCardMessageImpl, MediaMessageImpl,
+   *     ProductResponseMessageImpl, ReplyToMessageImpl, TextMessageImpl)
    */
   @Override
   public Object getActualInstance() {
@@ -649,75 +617,70 @@ public class ContactMessageInternalImpl extends AbstractOpenApiSchema {
   }
 
   /**
-   * Get the actual instance of `ChannelSpecificContactMessageInternalImpl`. If the actual instance
-   * is not `ChannelSpecificContactMessageInternalImpl`, the ClassCastException will be thrown.
+   * Get the actual instance of `ChannelSpecificContactMessageImpl`. If the actual instance is not
+   * `ChannelSpecificContactMessageImpl`, the ClassCastException will be thrown.
    *
-   * @return The actual instance of `ChannelSpecificContactMessageInternalImpl`
-   * @throws ClassCastException if the instance is not `ChannelSpecificContactMessageInternalImpl`
+   * @return The actual instance of `ChannelSpecificContactMessageImpl`
+   * @throws ClassCastException if the instance is not `ChannelSpecificContactMessageImpl`
    */
-  public ChannelSpecificContactMessageInternalImpl getChannelSpecificContactMessageInternalImpl()
+  public ChannelSpecificContactMessageImpl getChannelSpecificContactMessageImpl()
       throws ClassCastException {
-    return (ChannelSpecificContactMessageInternalImpl) super.getActualInstance();
+    return (ChannelSpecificContactMessageImpl) super.getActualInstance();
   }
 
   /**
-   * Get the actual instance of `ChoiceResponseMessageFieldInternalImpl`. If the actual instance is
-   * not `ChoiceResponseMessageFieldInternalImpl`, the ClassCastException will be thrown.
+   * Get the actual instance of `ChoiceResponseMessageImpl`. If the actual instance is not
+   * `ChoiceResponseMessageImpl`, the ClassCastException will be thrown.
    *
-   * @return The actual instance of `ChoiceResponseMessageFieldInternalImpl`
-   * @throws ClassCastException if the instance is not `ChoiceResponseMessageFieldInternalImpl`
+   * @return The actual instance of `ChoiceResponseMessageImpl`
+   * @throws ClassCastException if the instance is not `ChoiceResponseMessageImpl`
    */
-  public ChoiceResponseMessageFieldInternalImpl getChoiceResponseMessageFieldInternalImpl()
-      throws ClassCastException {
-    return (ChoiceResponseMessageFieldInternalImpl) super.getActualInstance();
+  public ChoiceResponseMessageImpl getChoiceResponseMessageImpl() throws ClassCastException {
+    return (ChoiceResponseMessageImpl) super.getActualInstance();
   }
 
   /**
-   * Get the actual instance of `FallbackMessageFieldInternalImpl`. If the actual instance is not
-   * `FallbackMessageFieldInternalImpl`, the ClassCastException will be thrown.
+   * Get the actual instance of `FallbackMessageImpl`. If the actual instance is not
+   * `FallbackMessageImpl`, the ClassCastException will be thrown.
    *
-   * @return The actual instance of `FallbackMessageFieldInternalImpl`
-   * @throws ClassCastException if the instance is not `FallbackMessageFieldInternalImpl`
+   * @return The actual instance of `FallbackMessageImpl`
+   * @throws ClassCastException if the instance is not `FallbackMessageImpl`
    */
-  public FallbackMessageFieldInternalImpl getFallbackMessageFieldInternalImpl()
-      throws ClassCastException {
-    return (FallbackMessageFieldInternalImpl) super.getActualInstance();
+  public FallbackMessageImpl getFallbackMessageImpl() throws ClassCastException {
+    return (FallbackMessageImpl) super.getActualInstance();
   }
 
   /**
-   * Get the actual instance of `LocationMessageFieldInternalImpl`. If the actual instance is not
-   * `LocationMessageFieldInternalImpl`, the ClassCastException will be thrown.
+   * Get the actual instance of `LocationMessageImpl`. If the actual instance is not
+   * `LocationMessageImpl`, the ClassCastException will be thrown.
    *
-   * @return The actual instance of `LocationMessageFieldInternalImpl`
-   * @throws ClassCastException if the instance is not `LocationMessageFieldInternalImpl`
+   * @return The actual instance of `LocationMessageImpl`
+   * @throws ClassCastException if the instance is not `LocationMessageImpl`
    */
-  public LocationMessageFieldInternalImpl getLocationMessageFieldInternalImpl()
-      throws ClassCastException {
-    return (LocationMessageFieldInternalImpl) super.getActualInstance();
+  public LocationMessageImpl getLocationMessageImpl() throws ClassCastException {
+    return (LocationMessageImpl) super.getActualInstance();
   }
 
   /**
-   * Get the actual instance of `MediaCardMessageFieldInternalImpl`. If the actual instance is not
-   * `MediaCardMessageFieldInternalImpl`, the ClassCastException will be thrown.
+   * Get the actual instance of `MediaCardMessageImpl`. If the actual instance is not
+   * `MediaCardMessageImpl`, the ClassCastException will be thrown.
    *
-   * @return The actual instance of `MediaCardMessageFieldInternalImpl`
-   * @throws ClassCastException if the instance is not `MediaCardMessageFieldInternalImpl`
+   * @return The actual instance of `MediaCardMessageImpl`
+   * @throws ClassCastException if the instance is not `MediaCardMessageImpl`
    */
-  public MediaCardMessageFieldInternalImpl getMediaCardMessageFieldInternalImpl()
-      throws ClassCastException {
-    return (MediaCardMessageFieldInternalImpl) super.getActualInstance();
+  public MediaCardMessageImpl getMediaCardMessageImpl() throws ClassCastException {
+    return (MediaCardMessageImpl) super.getActualInstance();
   }
 
   /**
-   * Get the actual instance of `MediaMessageFieldInternalImpl`. If the actual instance is not
-   * `MediaMessageFieldInternalImpl`, the ClassCastException will be thrown.
+   * Get the actual instance of `MediaMessageImpl`. If the actual instance is not
+   * `MediaMessageImpl`, the ClassCastException will be thrown.
    *
-   * @return The actual instance of `MediaMessageFieldInternalImpl`
-   * @throws ClassCastException if the instance is not `MediaMessageFieldInternalImpl`
+   * @return The actual instance of `MediaMessageImpl`
+   * @throws ClassCastException if the instance is not `MediaMessageImpl`
    */
-  public MediaMessageFieldInternalImpl getMediaMessageFieldInternalImpl()
-      throws ClassCastException {
-    return (MediaMessageFieldInternalImpl) super.getActualInstance();
+  public MediaMessageImpl getMediaMessageImpl() throws ClassCastException {
+    return (MediaMessageImpl) super.getActualInstance();
   }
 
   /**
@@ -732,25 +695,24 @@ public class ContactMessageInternalImpl extends AbstractOpenApiSchema {
   }
 
   /**
-   * Get the actual instance of `ReplyToMessageFieldInternalImpl`. If the actual instance is not
-   * `ReplyToMessageFieldInternalImpl`, the ClassCastException will be thrown.
+   * Get the actual instance of `ReplyToMessageImpl`. If the actual instance is not
+   * `ReplyToMessageImpl`, the ClassCastException will be thrown.
    *
-   * @return The actual instance of `ReplyToMessageFieldInternalImpl`
-   * @throws ClassCastException if the instance is not `ReplyToMessageFieldInternalImpl`
+   * @return The actual instance of `ReplyToMessageImpl`
+   * @throws ClassCastException if the instance is not `ReplyToMessageImpl`
    */
-  public ReplyToMessageFieldInternalImpl getReplyToMessageFieldInternalImpl()
-      throws ClassCastException {
-    return (ReplyToMessageFieldInternalImpl) super.getActualInstance();
+  public ReplyToMessageImpl getReplyToMessageImpl() throws ClassCastException {
+    return (ReplyToMessageImpl) super.getActualInstance();
   }
 
   /**
-   * Get the actual instance of `TextMessageFieldInternalImpl`. If the actual instance is not
-   * `TextMessageFieldInternalImpl`, the ClassCastException will be thrown.
+   * Get the actual instance of `TextMessageImpl`. If the actual instance is not `TextMessageImpl`,
+   * the ClassCastException will be thrown.
    *
-   * @return The actual instance of `TextMessageFieldInternalImpl`
-   * @throws ClassCastException if the instance is not `TextMessageFieldInternalImpl`
+   * @return The actual instance of `TextMessageImpl`
+   * @throws ClassCastException if the instance is not `TextMessageImpl`
    */
-  public TextMessageFieldInternalImpl getTextMessageFieldInternalImpl() throws ClassCastException {
-    return (TextMessageFieldInternalImpl) super.getActualInstance();
+  public TextMessageImpl getTextMessageImpl() throws ClassCastException {
+    return (TextMessageImpl) super.getActualInstance();
   }
 }

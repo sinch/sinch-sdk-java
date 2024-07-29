@@ -50,8 +50,8 @@ public interface AppResponse {
   String getDisplayName();
 
   /**
-   * The ID of the app. You can find this on the [Sinch
-   * Dashboard](https://dashboard.sinch.com/convapi/apps).
+   * The ID of the app. You can find this on the <a
+   * href="https://dashboard.sinch.com/convapi/apps">Sinch Dashboard</a>.
    *
    * @return id
    */

@@ -1,6 +1,7 @@
 package com.sinch.sample.conversation.messages;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.conversation.api.v1.MessagesService;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -21,9 +22,11 @@ public class Get extends BaseApplication {
 
   public void run() {
 
+    MessagesService service = client.conversation().v1().messages();
+
     LOGGER.info("Get message");
 
-    var result = client.conversation().messages().get(conversationMessageId);
+    var result = service.get(conversationMessageId);
 
     LOGGER.info("Response: " + result);
   }

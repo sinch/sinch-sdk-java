@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.contact.Contact;
 import java.util.List;
 
-/** declaration */
+/** ListContactsResponse */
 @JsonDeserialize(builder = ListContactsResponseImpl.Builder.class)
 public interface ListContactsResponse {
 

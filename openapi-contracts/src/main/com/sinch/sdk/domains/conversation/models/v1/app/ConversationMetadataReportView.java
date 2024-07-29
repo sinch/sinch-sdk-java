@@ -9,9 +9,11 @@ import java.util.stream.Stream;
 public class ConversationMetadataReportView
     extends EnumDynamic<String, ConversationMetadataReportView> {
 
+  /** Omit metadata. */
   public static final ConversationMetadataReportView NONE =
       new ConversationMetadataReportView("NONE");
 
+  /** Include all metadata assigned to the conversation. */
   public static final ConversationMetadataReportView FULL =
       new ConversationMetadataReportView("FULL");
 
