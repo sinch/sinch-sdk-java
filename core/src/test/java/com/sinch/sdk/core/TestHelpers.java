@@ -1,20 +1,12 @@
 package com.sinch.sdk.core;
 
-import com.sinch.sdk.core.models.OptionalValue;
-import java.util.Comparator;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 
 public class TestHelpers {
 
-  static Comparator<OptionalValue> optionalValueComparator = (a, b) -> a.equals(b) ? 0 : 1;
-  private static RecursiveComparisonConfiguration recursiveComparisonConfiguration =
-      RecursiveComparisonConfiguration.builder()
-          // .
-          // .withIgnoreAllOverriddenEquals(true)
-          // .withComparatorForType(optionalValueComparator, OptionalValue.class)
-          .withStrictTypeChecking(true)
-          .build();
+  private static final RecursiveComparisonConfiguration recursiveComparisonConfiguration =
+      RecursiveComparisonConfiguration.builder().withStrictTypeChecking(true).build();
 
   public static void recursiveEquals(Object o1, Object o2) {
 

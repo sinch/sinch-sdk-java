@@ -10,7 +10,7 @@
     "record_status": "EVENT_RECORD_STORED",
     "channel_identity": {
       "app_id": "an app id",
-      "channel": "RCS",
+      "channel": "MESSENGER",
       "identity": "an identity"
     },
     "contact_id": "contact id",

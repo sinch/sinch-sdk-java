@@ -24,7 +24,7 @@ public class ChannelIdentityDtoTest extends ConversationBaseTest {
   public static ChannelIdentity expectedDto =
       ChannelIdentity.builder()
           .setAppId("an app id")
-          .setChannel(ConversationChannel.RCS)
+          .setChannel(ConversationChannel.MESSENGER)
           .setIdentity("an identity")
           .build();
 

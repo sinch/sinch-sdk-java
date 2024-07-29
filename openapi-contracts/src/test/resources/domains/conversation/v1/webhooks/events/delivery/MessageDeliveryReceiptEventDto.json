@@ -11,7 +11,7 @@
     "status": "DELIVERED",
     "channel_identity": {
       "app_id": "an app id",
-      "channel": "RCS",
+      "channel": "MESSENGER",
       "identity": "an identity"
     },
     "contact_id": "contact ID",

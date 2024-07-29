@@ -17,7 +17,7 @@
     },
     "channel_identity":{
       "app_id": "an app id",
-      "channel": "RCS",
+      "channel": "MESSENGER",
       "identity": "an identity"
     },
     "conversation_id": "conversation id",
