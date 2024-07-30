@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessage;
 import java.util.Objects;
 
 @JsonPropertyOrder({
@@ -19,7 +20,7 @@ import java.util.Objects;
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ChoiceItemImpl
     implements ChoiceItem,
-        com.sinch.sdk.domains.conversation.models.v1.messages.ListItem<ChoiceItem> {
+        com.sinch.sdk.domains.conversation.models.v1.messages.types.list.ListItem<ChoiceItem> {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_TITLE = "title";

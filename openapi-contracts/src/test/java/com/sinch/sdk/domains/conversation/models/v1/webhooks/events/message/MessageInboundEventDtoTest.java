@@ -7,7 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
-import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessageDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.ChannelIdentityDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.message.MessageInboundEventMessage.DirectionEnum;
 import java.time.Instant;

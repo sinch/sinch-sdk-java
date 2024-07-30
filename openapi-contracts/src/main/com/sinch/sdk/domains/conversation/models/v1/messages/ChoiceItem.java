@@ -13,11 +13,12 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessage;
 
 /** A message component for interactive messages, containing a choice. */
 @JsonDeserialize(builder = ChoiceItemImpl.Builder.class)
 public interface ChoiceItem
-    extends com.sinch.sdk.domains.conversation.models.v1.messages.ListItem<ChoiceItem> {
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.types.list.ListItem<ChoiceItem> {
 
   /**
    * Required parameter. Title for the choice item.

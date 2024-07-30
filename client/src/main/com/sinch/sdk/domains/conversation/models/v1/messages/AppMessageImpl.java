@@ -3,6 +3,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.Agent;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.ChannelSpecificMessage;
 import java.util.Map;
 
 public class AppMessageImpl<T extends AppMessageMessage> implements AppMessage<T> {

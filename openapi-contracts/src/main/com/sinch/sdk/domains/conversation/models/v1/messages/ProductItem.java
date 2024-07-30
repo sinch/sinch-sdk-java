@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 /** A message component for interactive messages, containing a product. */
 @JsonDeserialize(builder = ProductItemImpl.Builder.class)
 public interface ProductItem
-    extends com.sinch.sdk.domains.conversation.models.v1.messages.ListItem<ProductItem> {
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.types.list.ListItem<ProductItem> {
 
   /**
    * Required parameter. The ID for the product.

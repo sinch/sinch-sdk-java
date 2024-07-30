@@ -8,8 +8,8 @@ import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentities;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
-import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
 import java.io.IOException;
 import java.util.logging.Logger;
 

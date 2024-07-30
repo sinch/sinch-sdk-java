@@ -4,6 +4,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessageDtoTest;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ public class ChoiceItemDtoTest extends ConversationBaseTest {
           .setTitle("choice title")
           .setDescription("description value")
           .setMedia(MediaMessageDtoTest.mediaMessageDto)
-          .setPostbackData("description value")
+          .setPostbackData("postback value")
           .build();
 
   @GivenTextResource("/domains/conversation/v1/messages/ChoiceItemDto.json")

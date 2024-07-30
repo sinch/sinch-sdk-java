@@ -1,16 +1,16 @@
 package com.sinch.sdk.domains.conversation.api.v1;
 
-import com.sinch.sdk.domains.conversation.models.v1.messages.CardMessage;
-import com.sinch.sdk.domains.conversation.models.v1.messages.CarouselMessage;
-import com.sinch.sdk.domains.conversation.models.v1.messages.ChoiceMessage;
-import com.sinch.sdk.domains.conversation.models.v1.messages.ContactInfoMessage;
-import com.sinch.sdk.domains.conversation.models.v1.messages.ListMessage;
-import com.sinch.sdk.domains.conversation.models.v1.messages.LocationMessage;
-import com.sinch.sdk.domains.conversation.models.v1.messages.MediaMessage;
-import com.sinch.sdk.domains.conversation.models.v1.messages.TemplateMessage;
-import com.sinch.sdk.domains.conversation.models.v1.messages.TextMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.carousel.CarouselMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.contactinfo.ContactInfoMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.list.ListMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.location.LocationMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.template.TemplateMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
 import com.sinch.sdk.domains.conversation.models.v1.response.ConversationMessage;
 
 /**

@@ -14,7 +14,7 @@ import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ContactMessag
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ListSectionMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.SendMessageRequestMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.WhatsAppInteractiveHeaderMapper;
-import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ChoiceMessageOneOfInternalMapper;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ChoiceMessageOneOfInternalMapper;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;

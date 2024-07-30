@@ -1,0 +1,15 @@
+{
+  "product_response_message": {
+    "title": "a product response message title value",
+    "catalog_id": "catalog id value",
+    "products": [
+      {
+        "id": "product ID value",
+        "marketplace": "marketplace value",
+        "quantity": 4,
+        "item_price": 3.14159,
+        "currency": "currency value"
+      }
+    ]
+  }
+}
