@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.webhooks.events;
+package com.sinch.sdk.domains.conversation.models.v1;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
@@ -6,8 +6,6 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
-import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
-import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
