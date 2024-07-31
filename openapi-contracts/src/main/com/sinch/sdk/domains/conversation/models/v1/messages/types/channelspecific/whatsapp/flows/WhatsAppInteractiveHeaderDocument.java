@@ -10,25 +10,26 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
+package com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows.WhatsAppInteractiveHeaderMedia;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** Header of the interactive message with video. */
-@JsonDeserialize(builder = WhatsAppInteractiveVideoHeaderInternalImpl.Builder.class)
-public interface WhatsAppInteractiveVideoHeaderInternal {
+/** Header of the interactive message with document. */
+@JsonDeserialize(builder = WhatsAppInteractiveHeaderDocumentImpl.Builder.class)
+public interface WhatsAppInteractiveHeaderDocument
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp
+        .flows.WhatsAppInteractiveHeader {
 
   /** Gets or Sets type */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
-    public static final TypeEnum VIDEO = new TypeEnum("video");
+    public static final TypeEnum DOCUMENT = new TypeEnum("document");
 
     private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(TypeEnum.class, TypeEnum::new, Arrays.asList(VIDEO));
+        new EnumSupportDynamic<>(TypeEnum.class, TypeEnum::new, Arrays.asList(DOCUMENT));
 
     private TypeEnum(String value) {
       super(value);
@@ -48,18 +49,11 @@ public interface WhatsAppInteractiveVideoHeaderInternal {
   }
 
   /**
-   * Get type
+   * Get document
    *
-   * @return type
+   * @return document
    */
-  TypeEnum getType();
-
-  /**
-   * Get video
-   *
-   * @return video
-   */
-  WhatsAppInteractiveHeaderMedia getVideo();
+  WhatsAppInteractiveHeaderMedia getDocument();
 
   /**
    * Getting builder
@@ -67,7 +61,7 @@ public interface WhatsAppInteractiveVideoHeaderInternal {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new WhatsAppInteractiveVideoHeaderInternalImpl.Builder();
+    return new WhatsAppInteractiveHeaderDocumentImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -76,26 +70,17 @@ public interface WhatsAppInteractiveVideoHeaderInternal {
     /**
      * see getter
      *
-     * @param type see getter
+     * @param document see getter
      * @return Current builder
-     * @see #getType
+     * @see #getDocument
      */
-    Builder setType(TypeEnum type);
-
-    /**
-     * see getter
-     *
-     * @param video see getter
-     * @return Current builder
-     * @see #getVideo
-     */
-    Builder setVideo(WhatsAppInteractiveHeaderMedia video);
+    Builder setDocument(WhatsAppInteractiveHeaderMedia document);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    WhatsAppInteractiveVideoHeaderInternal build();
+    WhatsAppInteractiveHeaderDocument build();
   }
 }

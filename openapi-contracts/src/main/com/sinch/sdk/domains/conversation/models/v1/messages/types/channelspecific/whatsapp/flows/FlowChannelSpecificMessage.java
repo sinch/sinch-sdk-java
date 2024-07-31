@@ -29,7 +29,7 @@ public interface FlowChannelSpecificMessage
    *
    * @return header
    */
-  FlowChannelSpecificMessageHeader getHeader();
+  WhatsAppInteractiveHeader getHeader();
 
   /**
    * Get body
@@ -159,7 +159,7 @@ public interface FlowChannelSpecificMessage
      * @return Current builder
      * @see #getHeader
      */
-    Builder setHeader(FlowChannelSpecificMessageHeader header);
+    Builder setHeader(WhatsAppInteractiveHeader header);
 
     /**
      * see getter

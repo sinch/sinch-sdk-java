@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
+package com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
@@ -18,16 +18,18 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** Header of the interactive message with text. */
-@JsonDeserialize(builder = WhatsAppInteractiveTextHeaderInternalImpl.Builder.class)
-public interface WhatsAppInteractiveTextHeaderInternal {
+/** Header of the interactive message with video. */
+@JsonDeserialize(builder = WhatsAppInteractiveHeaderVideoImpl.Builder.class)
+public interface WhatsAppInteractiveHeaderVideo
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp
+        .flows.WhatsAppInteractiveHeader {
 
   /** Gets or Sets type */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
-    public static final TypeEnum TEXT = new TypeEnum("text");
+    public static final TypeEnum VIDEO = new TypeEnum("video");
 
     private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(TypeEnum.class, TypeEnum::new, Arrays.asList(TEXT));
+        new EnumSupportDynamic<>(TypeEnum.class, TypeEnum::new, Arrays.asList(VIDEO));
 
     private TypeEnum(String value) {
       super(value);
@@ -47,18 +49,11 @@ public interface WhatsAppInteractiveTextHeaderInternal {
   }
 
   /**
-   * Get type
+   * Get video
    *
-   * @return type
+   * @return video
    */
-  TypeEnum getType();
-
-  /**
-   * Text for the header. Formatting allows emojis, but not Markdown.
-   *
-   * @return text
-   */
-  String getText();
+  WhatsAppInteractiveHeaderMedia getVideo();
 
   /**
    * Getting builder
@@ -66,7 +61,7 @@ public interface WhatsAppInteractiveTextHeaderInternal {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new WhatsAppInteractiveTextHeaderInternalImpl.Builder();
+    return new WhatsAppInteractiveHeaderVideoImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -75,26 +70,17 @@ public interface WhatsAppInteractiveTextHeaderInternal {
     /**
      * see getter
      *
-     * @param type see getter
+     * @param video see getter
      * @return Current builder
-     * @see #getType
+     * @see #getVideo
      */
-    Builder setType(TypeEnum type);
-
-    /**
-     * see getter
-     *
-     * @param text see getter
-     * @return Current builder
-     * @see #getText
-     */
-    Builder setText(String text);
+    Builder setVideo(WhatsAppInteractiveHeaderMedia video);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    WhatsAppInteractiveTextHeaderInternal build();
+    WhatsAppInteractiveHeaderVideo build();
   }
 }

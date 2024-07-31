@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
+package com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,17 +7,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows.WhatsAppInteractiveHeaderMedia;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  WhatsAppInteractiveDocumentHeaderInternalImpl.JSON_PROPERTY_TYPE,
-  WhatsAppInteractiveDocumentHeaderInternalImpl.JSON_PROPERTY_DOCUMENT
+  WhatsAppInteractiveHeaderDocumentImpl.JSON_PROPERTY_TYPE,
+  WhatsAppInteractiveHeaderDocumentImpl.JSON_PROPERTY_DOCUMENT
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class WhatsAppInteractiveDocumentHeaderInternalImpl
-    implements WhatsAppInteractiveDocumentHeaderInternal {
+public class WhatsAppInteractiveHeaderDocumentImpl
+    implements WhatsAppInteractiveHeaderDocument,
+        com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows
+            .WhatsAppInteractiveHeader {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_TYPE = "type";
@@ -28,9 +29,9 @@ public class WhatsAppInteractiveDocumentHeaderInternalImpl
 
   private OptionalValue<WhatsAppInteractiveHeaderMedia> document;
 
-  public WhatsAppInteractiveDocumentHeaderInternalImpl() {}
+  public WhatsAppInteractiveHeaderDocumentImpl() {}
 
-  protected WhatsAppInteractiveDocumentHeaderInternalImpl(
+  protected WhatsAppInteractiveHeaderDocumentImpl(
       OptionalValue<TypeEnum> type, OptionalValue<WhatsAppInteractiveHeaderMedia> document) {
     this.type = type;
     this.document = document;
@@ -67,8 +68,8 @@ public class WhatsAppInteractiveDocumentHeaderInternalImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    WhatsAppInteractiveDocumentHeaderInternalImpl whatsAppInteractiveDocumentHeader =
-        (WhatsAppInteractiveDocumentHeaderInternalImpl) o;
+    WhatsAppInteractiveHeaderDocumentImpl whatsAppInteractiveDocumentHeader =
+        (WhatsAppInteractiveHeaderDocumentImpl) o;
     return Objects.equals(this.type, whatsAppInteractiveDocumentHeader.type)
         && Objects.equals(this.document, whatsAppInteractiveDocumentHeader.document);
   }
@@ -81,7 +82,7 @@ public class WhatsAppInteractiveDocumentHeaderInternalImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class WhatsAppInteractiveDocumentHeaderInternalImpl {\n");
+    sb.append("class WhatsAppInteractiveHeaderDocumentImpl {\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    document: ").append(toIndentedString(document)).append("\n");
     sb.append("}");
@@ -99,15 +100,10 @@ public class WhatsAppInteractiveDocumentHeaderInternalImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements WhatsAppInteractiveDocumentHeaderInternal.Builder {
-    OptionalValue<TypeEnum> type = OptionalValue.empty();
+  static class Builder implements WhatsAppInteractiveHeaderDocument.Builder {
+    OptionalValue<TypeEnum> type =
+        OptionalValue.of(WhatsAppInteractiveHeaderDocument.TypeEnum.DOCUMENT);
     OptionalValue<WhatsAppInteractiveHeaderMedia> document = OptionalValue.empty();
-
-    @JsonProperty(JSON_PROPERTY_TYPE)
-    public Builder setType(TypeEnum type) {
-      this.type = OptionalValue.of(type);
-      return this;
-    }
 
     @JsonProperty(JSON_PROPERTY_DOCUMENT)
     public Builder setDocument(WhatsAppInteractiveHeaderMedia document) {
@@ -115,8 +111,8 @@ public class WhatsAppInteractiveDocumentHeaderInternalImpl
       return this;
     }
 
-    public WhatsAppInteractiveDocumentHeaderInternal build() {
-      return new WhatsAppInteractiveDocumentHeaderInternalImpl(type, document);
+    public WhatsAppInteractiveHeaderDocument build() {
+      return new WhatsAppInteractiveHeaderDocumentImpl(type, document);
     }
   }
 }

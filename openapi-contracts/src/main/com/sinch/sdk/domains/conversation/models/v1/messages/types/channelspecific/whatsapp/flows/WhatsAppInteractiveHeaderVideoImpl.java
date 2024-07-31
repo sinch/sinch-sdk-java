@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
+package com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,17 +7,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows.WhatsAppInteractiveHeaderMedia;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  WhatsAppInteractiveVideoHeaderInternalImpl.JSON_PROPERTY_TYPE,
-  WhatsAppInteractiveVideoHeaderInternalImpl.JSON_PROPERTY_VIDEO
+  WhatsAppInteractiveHeaderVideoImpl.JSON_PROPERTY_TYPE,
+  WhatsAppInteractiveHeaderVideoImpl.JSON_PROPERTY_VIDEO
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class WhatsAppInteractiveVideoHeaderInternalImpl
-    implements WhatsAppInteractiveVideoHeaderInternal {
+public class WhatsAppInteractiveHeaderVideoImpl
+    implements WhatsAppInteractiveHeaderVideo,
+        com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows
+            .WhatsAppInteractiveHeader {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_TYPE = "type";
@@ -28,9 +29,9 @@ public class WhatsAppInteractiveVideoHeaderInternalImpl
 
   private OptionalValue<WhatsAppInteractiveHeaderMedia> video;
 
-  public WhatsAppInteractiveVideoHeaderInternalImpl() {}
+  public WhatsAppInteractiveHeaderVideoImpl() {}
 
-  protected WhatsAppInteractiveVideoHeaderInternalImpl(
+  protected WhatsAppInteractiveHeaderVideoImpl(
       OptionalValue<TypeEnum> type, OptionalValue<WhatsAppInteractiveHeaderMedia> video) {
     this.type = type;
     this.video = video;
@@ -67,8 +68,8 @@ public class WhatsAppInteractiveVideoHeaderInternalImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    WhatsAppInteractiveVideoHeaderInternalImpl whatsAppInteractiveVideoHeader =
-        (WhatsAppInteractiveVideoHeaderInternalImpl) o;
+    WhatsAppInteractiveHeaderVideoImpl whatsAppInteractiveVideoHeader =
+        (WhatsAppInteractiveHeaderVideoImpl) o;
     return Objects.equals(this.type, whatsAppInteractiveVideoHeader.type)
         && Objects.equals(this.video, whatsAppInteractiveVideoHeader.video);
   }
@@ -81,7 +82,7 @@ public class WhatsAppInteractiveVideoHeaderInternalImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class WhatsAppInteractiveVideoHeaderInternalImpl {\n");
+    sb.append("class WhatsAppInteractiveHeaderVideoImpl {\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    video: ").append(toIndentedString(video)).append("\n");
     sb.append("}");
@@ -99,15 +100,9 @@ public class WhatsAppInteractiveVideoHeaderInternalImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements WhatsAppInteractiveVideoHeaderInternal.Builder {
-    OptionalValue<TypeEnum> type = OptionalValue.empty();
+  static class Builder implements WhatsAppInteractiveHeaderVideo.Builder {
+    OptionalValue<TypeEnum> type = OptionalValue.of(WhatsAppInteractiveHeaderVideo.TypeEnum.VIDEO);
     OptionalValue<WhatsAppInteractiveHeaderMedia> video = OptionalValue.empty();
-
-    @JsonProperty(JSON_PROPERTY_TYPE)
-    public Builder setType(TypeEnum type) {
-      this.type = OptionalValue.of(type);
-      return this;
-    }
 
     @JsonProperty(JSON_PROPERTY_VIDEO)
     public Builder setVideo(WhatsAppInteractiveHeaderMedia video) {
@@ -115,8 +110,8 @@ public class WhatsAppInteractiveVideoHeaderInternalImpl
       return this;
     }
 
-    public WhatsAppInteractiveVideoHeaderInternal build() {
-      return new WhatsAppInteractiveVideoHeaderInternalImpl(type, video);
+    public WhatsAppInteractiveHeaderVideo build() {
+      return new WhatsAppInteractiveHeaderVideoImpl(type, video);
     }
   }
 }

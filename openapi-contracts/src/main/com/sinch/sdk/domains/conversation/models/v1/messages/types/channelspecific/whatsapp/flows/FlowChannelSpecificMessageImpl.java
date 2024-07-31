@@ -30,7 +30,7 @@ public class FlowChannelSpecificMessageImpl
 
   public static final String JSON_PROPERTY_HEADER = "header";
 
-  private OptionalValue<FlowChannelSpecificMessageHeader> header;
+  private OptionalValue<WhatsAppInteractiveHeader> header;
 
   public static final String JSON_PROPERTY_BODY = "body";
 
@@ -67,7 +67,7 @@ public class FlowChannelSpecificMessageImpl
   public FlowChannelSpecificMessageImpl() {}
 
   protected FlowChannelSpecificMessageImpl(
-      OptionalValue<FlowChannelSpecificMessageHeader> header,
+      OptionalValue<WhatsAppInteractiveHeader> header,
       OptionalValue<WhatsAppInteractiveBody> body,
       OptionalValue<WhatsAppInteractiveFooter> footer,
       OptionalValue<String> flowId,
@@ -88,13 +88,13 @@ public class FlowChannelSpecificMessageImpl
   }
 
   @JsonIgnore
-  public FlowChannelSpecificMessageHeader getHeader() {
+  public WhatsAppInteractiveHeader getHeader() {
     return header.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_HEADER)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<FlowChannelSpecificMessageHeader> header() {
+  public OptionalValue<WhatsAppInteractiveHeader> header() {
     return header;
   }
 
@@ -242,7 +242,7 @@ public class FlowChannelSpecificMessageImpl
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements FlowChannelSpecificMessage.Builder {
-    OptionalValue<FlowChannelSpecificMessageHeader> header = OptionalValue.empty();
+    OptionalValue<WhatsAppInteractiveHeader> header = OptionalValue.empty();
     OptionalValue<WhatsAppInteractiveBody> body = OptionalValue.empty();
     OptionalValue<WhatsAppInteractiveFooter> footer = OptionalValue.empty();
     OptionalValue<String> flowId = OptionalValue.empty();
@@ -254,7 +254,7 @@ public class FlowChannelSpecificMessageImpl
         OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_HEADER)
-    public Builder setHeader(FlowChannelSpecificMessageHeader header) {
+    public Builder setHeader(WhatsAppInteractiveHeader header) {
       this.header = OptionalValue.of(header);
       return this;
     }

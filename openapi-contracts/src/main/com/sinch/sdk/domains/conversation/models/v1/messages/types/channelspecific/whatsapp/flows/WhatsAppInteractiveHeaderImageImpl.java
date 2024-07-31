@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
+package com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,17 +7,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows.WhatsAppInteractiveHeaderMedia;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  WhatsAppInteractiveImageHeaderInternalImpl.JSON_PROPERTY_TYPE,
-  WhatsAppInteractiveImageHeaderInternalImpl.JSON_PROPERTY_IMAGE
+  WhatsAppInteractiveHeaderImageImpl.JSON_PROPERTY_TYPE,
+  WhatsAppInteractiveHeaderImageImpl.JSON_PROPERTY_IMAGE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class WhatsAppInteractiveImageHeaderInternalImpl
-    implements WhatsAppInteractiveImageHeaderInternal {
+public class WhatsAppInteractiveHeaderImageImpl
+    implements WhatsAppInteractiveHeaderImage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows
+            .WhatsAppInteractiveHeader {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_TYPE = "type";
@@ -28,9 +29,9 @@ public class WhatsAppInteractiveImageHeaderInternalImpl
 
   private OptionalValue<WhatsAppInteractiveHeaderMedia> image;
 
-  public WhatsAppInteractiveImageHeaderInternalImpl() {}
+  public WhatsAppInteractiveHeaderImageImpl() {}
 
-  protected WhatsAppInteractiveImageHeaderInternalImpl(
+  protected WhatsAppInteractiveHeaderImageImpl(
       OptionalValue<TypeEnum> type, OptionalValue<WhatsAppInteractiveHeaderMedia> image) {
     this.type = type;
     this.image = image;
@@ -67,8 +68,8 @@ public class WhatsAppInteractiveImageHeaderInternalImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    WhatsAppInteractiveImageHeaderInternalImpl whatsAppInteractiveImageHeader =
-        (WhatsAppInteractiveImageHeaderInternalImpl) o;
+    WhatsAppInteractiveHeaderImageImpl whatsAppInteractiveImageHeader =
+        (WhatsAppInteractiveHeaderImageImpl) o;
     return Objects.equals(this.type, whatsAppInteractiveImageHeader.type)
         && Objects.equals(this.image, whatsAppInteractiveImageHeader.image);
   }
@@ -81,7 +82,7 @@ public class WhatsAppInteractiveImageHeaderInternalImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class WhatsAppInteractiveImageHeaderInternalImpl {\n");
+    sb.append("class WhatsAppInteractiveHeaderImageImpl {\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    image: ").append(toIndentedString(image)).append("\n");
     sb.append("}");
@@ -99,15 +100,9 @@ public class WhatsAppInteractiveImageHeaderInternalImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements WhatsAppInteractiveImageHeaderInternal.Builder {
-    OptionalValue<TypeEnum> type = OptionalValue.empty();
+  static class Builder implements WhatsAppInteractiveHeaderImage.Builder {
+    OptionalValue<TypeEnum> type = OptionalValue.of(WhatsAppInteractiveHeaderImage.TypeEnum.IMAGE);
     OptionalValue<WhatsAppInteractiveHeaderMedia> image = OptionalValue.empty();
-
-    @JsonProperty(JSON_PROPERTY_TYPE)
-    public Builder setType(TypeEnum type) {
-      this.type = OptionalValue.of(type);
-      return this;
-    }
 
     @JsonProperty(JSON_PROPERTY_IMAGE)
     public Builder setImage(WhatsAppInteractiveHeaderMedia image) {
@@ -115,8 +110,8 @@ public class WhatsAppInteractiveImageHeaderInternalImpl
       return this;
     }
 
-    public WhatsAppInteractiveImageHeaderInternal build() {
-      return new WhatsAppInteractiveImageHeaderInternalImpl(type, image);
+    public WhatsAppInteractiveHeaderImage build() {
+      return new WhatsAppInteractiveHeaderImageImpl(type, image);
     }
   }
 }

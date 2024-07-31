@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
+package com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,13 +10,15 @@ import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  WhatsAppInteractiveTextHeaderInternalImpl.JSON_PROPERTY_TYPE,
-  WhatsAppInteractiveTextHeaderInternalImpl.JSON_PROPERTY_TEXT
+  WhatsAppInteractiveHeaderTextImpl.JSON_PROPERTY_TYPE,
+  WhatsAppInteractiveHeaderTextImpl.JSON_PROPERTY_TEXT
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class WhatsAppInteractiveTextHeaderInternalImpl
-    implements WhatsAppInteractiveTextHeaderInternal {
+public class WhatsAppInteractiveHeaderTextImpl
+    implements WhatsAppInteractiveHeaderText,
+        com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows
+            .WhatsAppInteractiveHeader {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_TYPE = "type";
@@ -27,9 +29,9 @@ public class WhatsAppInteractiveTextHeaderInternalImpl
 
   private OptionalValue<String> text;
 
-  public WhatsAppInteractiveTextHeaderInternalImpl() {}
+  public WhatsAppInteractiveHeaderTextImpl() {}
 
-  protected WhatsAppInteractiveTextHeaderInternalImpl(
+  protected WhatsAppInteractiveHeaderTextImpl(
       OptionalValue<TypeEnum> type, OptionalValue<String> text) {
     this.type = type;
     this.text = text;
@@ -66,8 +68,8 @@ public class WhatsAppInteractiveTextHeaderInternalImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    WhatsAppInteractiveTextHeaderInternalImpl whatsAppInteractiveTextHeader =
-        (WhatsAppInteractiveTextHeaderInternalImpl) o;
+    WhatsAppInteractiveHeaderTextImpl whatsAppInteractiveTextHeader =
+        (WhatsAppInteractiveHeaderTextImpl) o;
     return Objects.equals(this.type, whatsAppInteractiveTextHeader.type)
         && Objects.equals(this.text, whatsAppInteractiveTextHeader.text);
   }
@@ -80,7 +82,7 @@ public class WhatsAppInteractiveTextHeaderInternalImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class WhatsAppInteractiveTextHeaderInternalImpl {\n");
+    sb.append("class WhatsAppInteractiveHeaderTextImpl {\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    text: ").append(toIndentedString(text)).append("\n");
     sb.append("}");
@@ -98,15 +100,9 @@ public class WhatsAppInteractiveTextHeaderInternalImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements WhatsAppInteractiveTextHeaderInternal.Builder {
-    OptionalValue<TypeEnum> type = OptionalValue.empty();
+  static class Builder implements WhatsAppInteractiveHeaderText.Builder {
+    OptionalValue<TypeEnum> type = OptionalValue.of(WhatsAppInteractiveHeaderText.TypeEnum.TEXT);
     OptionalValue<String> text = OptionalValue.empty();
-
-    @JsonProperty(JSON_PROPERTY_TYPE)
-    public Builder setType(TypeEnum type) {
-      this.type = OptionalValue.of(type);
-      return this;
-    }
 
     @JsonProperty(JSON_PROPERTY_TEXT)
     public Builder setText(String text) {
@@ -114,8 +110,8 @@ public class WhatsAppInteractiveTextHeaderInternalImpl
       return this;
     }
 
-    public WhatsAppInteractiveTextHeaderInternal build() {
-      return new WhatsAppInteractiveTextHeaderInternalImpl(type, text);
+    public WhatsAppInteractiveHeaderText build() {
+      return new WhatsAppInteractiveHeaderTextImpl(type, text);
     }
   }
 }

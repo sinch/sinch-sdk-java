@@ -10,25 +10,26 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
+package com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows.WhatsAppInteractiveHeaderMedia;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** Header of the interactive message with image. */
-@JsonDeserialize(builder = WhatsAppInteractiveImageHeaderInternalImpl.Builder.class)
-public interface WhatsAppInteractiveImageHeaderInternal {
+/** Header of the interactive message with text. */
+@JsonDeserialize(builder = WhatsAppInteractiveHeaderTextImpl.Builder.class)
+public interface WhatsAppInteractiveHeaderText
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp
+        .flows.WhatsAppInteractiveHeader {
 
   /** Gets or Sets type */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
-    public static final TypeEnum IMAGE = new TypeEnum("image");
+    public static final TypeEnum TEXT = new TypeEnum("text");
 
     private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(TypeEnum.class, TypeEnum::new, Arrays.asList(IMAGE));
+        new EnumSupportDynamic<>(TypeEnum.class, TypeEnum::new, Arrays.asList(TEXT));
 
     private TypeEnum(String value) {
       super(value);
@@ -48,18 +49,11 @@ public interface WhatsAppInteractiveImageHeaderInternal {
   }
 
   /**
-   * Get type
+   * Text for the header. Formatting allows emojis, but not Markdown.
    *
-   * @return type
+   * @return text
    */
-  TypeEnum getType();
-
-  /**
-   * Get image
-   *
-   * @return image
-   */
-  WhatsAppInteractiveHeaderMedia getImage();
+  String getText();
 
   /**
    * Getting builder
@@ -67,7 +61,7 @@ public interface WhatsAppInteractiveImageHeaderInternal {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new WhatsAppInteractiveImageHeaderInternalImpl.Builder();
+    return new WhatsAppInteractiveHeaderTextImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -76,26 +70,17 @@ public interface WhatsAppInteractiveImageHeaderInternal {
     /**
      * see getter
      *
-     * @param type see getter
+     * @param text see getter
      * @return Current builder
-     * @see #getType
+     * @see #getText
      */
-    Builder setType(TypeEnum type);
-
-    /**
-     * see getter
-     *
-     * @param image see getter
-     * @return Current builder
-     * @see #getImage
-     */
-    Builder setImage(WhatsAppInteractiveHeaderMedia image);
+    Builder setText(String text);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    WhatsAppInteractiveImageHeaderInternal build();
+    WhatsAppInteractiveHeaderText build();
   }
 }
