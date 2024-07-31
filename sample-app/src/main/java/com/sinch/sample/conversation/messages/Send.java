@@ -9,8 +9,13 @@ import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.call.CallMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.Choice;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceCallMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 public class Send extends BaseApplication {
@@ -34,32 +39,70 @@ public class Send extends BaseApplication {
 
     LOGGER.info("Send message with Conversation");
 
-    var parameters =
-        SendMessageRequest.<TextMessage>builder()
-            .setAppId(conversationAppId)
-            .setMessage(
-                AppMessage.<TextMessage>builder()
-                    .setMessage(
-                        TextMessage.builder()
-                            .setText("[Java SDK: Conversation Message] Sample text message")
-                            .build())
-                    .setAgent(
-                        Agent.builder()
-                            .setType(AgentType.HUMAN)
-                            .setDisplayName("Agent Name")
-                            .build())
-                    .build())
-            .setRecipient(
-                ChannelRecipientIdentities.of(
-                    ChannelRecipientIdentity.builder()
-                        .setChannel(ConversationChannel.SMS)
-                        .setIdentity(phoneNumber)
-                        .build()))
-            .setTtl(25)
-            .build();
+    var parameters = createRCSSendMessage();
 
-    var result = service.sendTextMessage(parameters);
+    var result = service.sendMessage(parameters);
 
     LOGGER.info("Response: " + result);
+  }
+
+  SendMessageRequest<?> createRCSSendMessage() {
+    var textMessage =
+        TextMessage.builder()
+            .setText("[Java SDK: Conversation Message] Please select a phone number to be called")
+            .build();
+
+    var choices = new ArrayList<Choice<?>>();
+    for (int i = 0; i < 4; i++) {
+      choices.add(
+          ChoiceCallMessage.builder()
+              .setMessage(
+                  CallMessage.builder()
+                      .setTitle("Phone call choice " + (i + 1))
+                      .setPhoneNumber(phoneNumber)
+                      .build())
+              .setPostbackData("postback call_message data value " + (i + 1))
+              .build());
+    }
+
+    return SendMessageRequest.<ChoiceMessage>builder()
+        .setAppId(conversationAppId)
+        .setMessage(
+            AppMessage.<ChoiceMessage>builder()
+                .setMessage(
+                    ChoiceMessage.builder().setChoices(choices).setTextMessage(textMessage).build())
+                .setAgent(
+                    Agent.builder().setType(AgentType.HUMAN).setDisplayName("Agent Name").build())
+                .build())
+        .setRecipient(
+            ChannelRecipientIdentities.of(
+                ChannelRecipientIdentity.builder()
+                    .setChannel(ConversationChannel.RCS)
+                    .setIdentity(phoneNumber)
+                    .build()))
+        .setTtl(25)
+        .build();
+  }
+
+  SendMessageRequest<?> createSMSSendMessage() {
+    return SendMessageRequest.<TextMessage>builder()
+        .setAppId(conversationAppId)
+        .setMessage(
+            AppMessage.<TextMessage>builder()
+                .setMessage(
+                    TextMessage.builder()
+                        .setText("[Java SDK: Conversation Message] Sample text message")
+                        .build())
+                .setAgent(
+                    Agent.builder().setType(AgentType.HUMAN).setDisplayName("Agent Name").build())
+                .build())
+        .setRecipient(
+            ChannelRecipientIdentities.of(
+                ChannelRecipientIdentity.builder()
+                    .setChannel(ConversationChannel.SMS)
+                    .setIdentity(phoneNumber)
+                    .build()))
+        .setTtl(25)
+        .build();
   }
 }

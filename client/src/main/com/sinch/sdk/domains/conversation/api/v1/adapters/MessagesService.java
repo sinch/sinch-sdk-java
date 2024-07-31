@@ -39,46 +39,46 @@ public class MessagesService implements com.sinch.sdk.domains.conversation.api.v
     return this.api;
   }
 
-  <T extends AppMessageMessage> SendMessageResponse send(SendMessageRequest<T> request)
+  public SendMessageResponse sendMessage(SendMessageRequest<? extends AppMessageMessage> request)
       throws ApiException {
     return getApi().messagesSendMessage(uriUUID, request);
   }
 
   public SendMessageResponse sendCardMessage(SendMessageRequest<CardMessage> request) {
-    return send(request);
+    return sendMessage(request);
   }
 
   public SendMessageResponse sendCarouselMessage(SendMessageRequest<CarouselMessage> request) {
-    return send(request);
+    return sendMessage(request);
   }
 
   public SendMessageResponse sendChoiceMessage(SendMessageRequest<ChoiceMessage> request) {
-    return send(request);
+    return sendMessage(request);
   }
 
   public SendMessageResponse sendContactInfoMessage(
       SendMessageRequest<ContactInfoMessage> request) {
-    return send(request);
+    return sendMessage(request);
   }
 
   public SendMessageResponse sendListMessage(SendMessageRequest<ListMessage> request) {
-    return send(request);
+    return sendMessage(request);
   }
 
   public SendMessageResponse sendLocationMessage(SendMessageRequest<LocationMessage> request) {
-    return send(request);
+    return sendMessage(request);
   }
 
   public SendMessageResponse sendMediaMessage(SendMessageRequest<MediaMessage> request) {
-    return send(request);
+    return sendMessage(request);
   }
 
   public SendMessageResponse sendTemplateMessage(SendMessageRequest<TemplateMessage> request) {
-    return send(request);
+    return sendMessage(request);
   }
 
   public SendMessageResponse sendTextMessage(SendMessageRequest<TextMessage> request) {
-    return send(request);
+    return sendMessage(request);
   }
 
   public ConversationMessage get(String messageId) {
