@@ -20,7 +20,7 @@ import java.util.Map;
 /** Template Message */
 @JsonDeserialize(builder = TemplateMessageImpl.Builder.class)
 public interface TemplateMessage
-    extends com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage {
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage {
 
   /**
    * Optional. Channel specific template reference with parameters per channel. The channel template

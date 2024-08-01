@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.databind.Mapper;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageWithExtensionsImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.AppMessageInternal;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.AppMessageInternalImpl;
@@ -28,32 +28,34 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class AppMessageMapper {
+public class AppMessageContainerMapper {
 
-  private static final Logger LOGGER = Logger.getLogger(AppMessageMapper.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(AppMessageContainerMapper.class.getName());
 
   public static void initMapper() {
-    SimpleModule module = new SimpleModule().addSerializer(AppMessageImpl.class, new Serializer());
+    SimpleModule module =
+        new SimpleModule().addSerializer(AppMessageWithExtensionsImpl.class, new Serializer());
     Mapper.getInstance()
         .addMixIn(AppMessageInternalImpl.class, AppMessageMapperMixin.class)
         .registerModule(module);
   }
 
-  static class Serializer extends StdSerializer<AppMessageImpl> {
+  static class Serializer extends StdSerializer<AppMessageWithExtensionsImpl> {
 
     public Serializer() {
       this(null);
     }
 
-    public Serializer(Class<AppMessageImpl> t) {
+    public Serializer(Class<AppMessageWithExtensionsImpl> t) {
       super(t);
     }
 
     @Override
-    public void serialize(AppMessageImpl raw, JsonGenerator jgen, SerializerProvider provider)
+    public void serialize(
+        AppMessageWithExtensionsImpl raw, JsonGenerator jgen, SerializerProvider provider)
         throws IOException {
 
-      AppMessageImpl<?> value = (AppMessageImpl<?>) raw;
+      AppMessageWithExtensionsImpl<?> value = (AppMessageWithExtensionsImpl<?>) raw;
       AppMessageInternal.Builder internal = AppMessageInternal.builder();
 
       value.explicitChannelMessage().ifPresent(internal::setExplicitChannelMessage);

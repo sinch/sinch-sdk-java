@@ -20,7 +20,7 @@ import java.util.List;
 @JsonDeserialize(builder = ContactInfoMessageImpl.Builder.class)
 public interface ContactInfoMessage
     extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
-        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage {
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage {
 
   /**
    * Get name

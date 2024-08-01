@@ -20,7 +20,7 @@ import java.util.List;
 @JsonDeserialize(builder = ChoiceMessageImpl.Builder.class)
 public interface ChoiceMessage
     extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
-        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage {
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage {
 
   /**
    * The number of choices is limited to 10.

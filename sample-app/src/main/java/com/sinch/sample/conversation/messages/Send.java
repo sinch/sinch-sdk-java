@@ -7,7 +7,7 @@ import com.sinch.sdk.domains.conversation.models.v1.AgentType;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentities;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageWithExtensions;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.call.CallMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.Choice;
@@ -68,7 +68,7 @@ public class Send extends BaseApplication {
     return SendMessageRequest.<ChoiceMessage>builder()
         .setAppId(conversationAppId)
         .setMessage(
-            AppMessage.<ChoiceMessage>builder()
+            AppMessageWithExtensions.<ChoiceMessage>builder()
                 .setMessage(
                     ChoiceMessage.builder().setChoices(choices).setTextMessage(textMessage).build())
                 .setAgent(
@@ -88,7 +88,7 @@ public class Send extends BaseApplication {
     return SendMessageRequest.<TextMessage>builder()
         .setAppId(conversationAppId)
         .setMessage(
-            AppMessage.<TextMessage>builder()
+            AppMessageWithExtensions.<TextMessage>builder()
                 .setMessage(
                     TextMessage.builder()
                         .setText("[Java SDK: Conversation Message] Sample text message")

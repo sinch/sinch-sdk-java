@@ -6,7 +6,8 @@ import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.ChannelSpecificMessage;
 import java.util.Map;
 
-public class AppMessageImpl<T extends AppMessageMessage> implements AppMessage<T> {
+public class AppMessageWithExtensionsImpl<T extends AppMessage>
+    implements AppMessageWithExtensions<T> {
 
   private final OptionalValue<T> message;
   private final OptionalValue<Map<ConversationChannel, Object>> explicitChannelMessage;
@@ -16,7 +17,7 @@ public class AppMessageImpl<T extends AppMessageMessage> implements AppMessage<T
       channelSpecificMessage;
   private final OptionalValue<Agent> agent;
 
-  public AppMessageImpl(
+  public AppMessageWithExtensionsImpl(
       OptionalValue<T> message,
       OptionalValue<Map<ConversationChannel, Object>> explicitChannelMessage,
       OptionalValue<Map<OmniMessageOverride.ChannelSpecificTemplate, OmniMessageOverride>>
@@ -74,7 +75,7 @@ public class AppMessageImpl<T extends AppMessageMessage> implements AppMessage<T
 
   @Override
   public String toString() {
-    return "AppMessageImpl{"
+    return "AppMessageWithExtensionsImpl{"
         + "message="
         + message
         + ", explicitChannelMessage="
@@ -89,7 +90,7 @@ public class AppMessageImpl<T extends AppMessageMessage> implements AppMessage<T
   }
 
   /** Dedicated Builder */
-  static class Builder<T extends AppMessageMessage> implements AppMessage.Builder<T> {
+  static class Builder<T extends AppMessage> implements AppMessageWithExtensions.Builder<T> {
 
     OptionalValue<T> message = OptionalValue.empty();
     OptionalValue<Map<ConversationChannel, Object>> explicitChannelMessage = OptionalValue.empty();
@@ -128,8 +129,8 @@ public class AppMessageImpl<T extends AppMessageMessage> implements AppMessage<T
       return this;
     }
 
-    public AppMessage<T> build() {
-      return new AppMessageImpl<>(
+    public AppMessageWithExtensions<T> build() {
+      return new AppMessageWithExtensionsImpl<>(
           message,
           explicitChannelMessage,
           explicitChannelOmniMessage,

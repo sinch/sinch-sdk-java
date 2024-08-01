@@ -20,7 +20,7 @@ import java.util.Objects;
 public class ChoiceMessageImpl
     implements ChoiceMessage,
         com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
-        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage {
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CHOICES = "choices";

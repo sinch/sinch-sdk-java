@@ -16,7 +16,7 @@ import java.util.Objects;
 public class MediaMessageImpl
     implements MediaMessage,
         com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
-        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage,
         com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage {
   private static final long serialVersionUID = 1L;
 

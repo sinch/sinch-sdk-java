@@ -5,7 +5,7 @@ import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.domains.conversation.api.v1.internal.MessagesApi;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardMessage;
@@ -39,7 +39,7 @@ public class MessagesService implements com.sinch.sdk.domains.conversation.api.v
     return this.api;
   }
 
-  public SendMessageResponse sendMessage(SendMessageRequest<? extends AppMessageMessage> request)
+  public SendMessageResponse sendMessage(SendMessageRequest<? extends AppMessage> request)
       throws ApiException {
     return getApi().messagesSendMessage(uriUUID, request);
   }

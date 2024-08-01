@@ -1,6 +1,6 @@
 package com.sinch.sdk.domains.conversation.api.v1;
 
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardMessage;
@@ -44,7 +44,7 @@ public interface MessagesService {
    *     com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse})
    * @since _NEXT_VERSION_
    */
-  SendMessageResponse sendMessage(SendMessageRequest<? extends AppMessageMessage> request);
+  SendMessageResponse sendMessage(SendMessageRequest<? extends AppMessage> request);
 
   SendMessageResponse sendCardMessage(SendMessageRequest<CardMessage> request);
 
