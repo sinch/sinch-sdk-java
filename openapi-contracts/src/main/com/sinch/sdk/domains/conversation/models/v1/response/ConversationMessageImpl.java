@@ -10,7 +10,7 @@ import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationDirection;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageWithExtensions;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage;
 import java.time.Instant;
 import java.util.Objects;
@@ -36,7 +36,7 @@ public class ConversationMessageImpl implements ConversationMessage {
 
   public static final String JSON_PROPERTY_APP_MESSAGE = "app_message";
 
-  private OptionalValue<AppMessage<?>> appMessage;
+  private OptionalValue<AppMessageWithExtensions<?>> appMessage;
 
   public static final String JSON_PROPERTY_CONTACT_MESSAGE = "contact_message";
 
@@ -85,7 +85,7 @@ public class ConversationMessageImpl implements ConversationMessage {
   public ConversationMessageImpl() {}
 
   protected ConversationMessageImpl(
-      OptionalValue<AppMessage<?>> appMessage,
+      OptionalValue<AppMessageWithExtensions<?>> appMessage,
       OptionalValue<ContactMessage> contactMessage,
       OptionalValue<Instant> acceptTime,
       OptionalValue<ChannelIdentity> channelIdentity,
@@ -112,13 +112,13 @@ public class ConversationMessageImpl implements ConversationMessage {
   }
 
   @JsonIgnore
-  public AppMessage<?> getAppMessage() {
+  public AppMessageWithExtensions<?> getAppMessage() {
     return appMessage.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_APP_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<AppMessage<?>> appMessage() {
+  public OptionalValue<AppMessageWithExtensions<?>> appMessage() {
     return appMessage;
   }
 
@@ -316,7 +316,7 @@ public class ConversationMessageImpl implements ConversationMessage {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements ConversationMessage.Builder {
-    OptionalValue<AppMessage<?>> appMessage = OptionalValue.empty();
+    OptionalValue<AppMessageWithExtensions<?>> appMessage = OptionalValue.empty();
     OptionalValue<ContactMessage> contactMessage = OptionalValue.empty();
     OptionalValue<Instant> acceptTime = OptionalValue.empty();
     OptionalValue<ChannelIdentity> channelIdentity = OptionalValue.empty();
@@ -330,7 +330,7 @@ public class ConversationMessageImpl implements ConversationMessage {
     OptionalValue<ProcessingMode> processingMode = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_APP_MESSAGE)
-    public Builder setAppMessage(AppMessage<?> appMessage) {
+    public Builder setAppMessage(AppMessageWithExtensions<?> appMessage) {
       this.appMessage = OptionalValue.of(appMessage);
       return this;
     }

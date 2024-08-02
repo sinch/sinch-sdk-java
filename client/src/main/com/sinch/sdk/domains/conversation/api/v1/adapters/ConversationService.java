@@ -9,12 +9,12 @@ import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.events.app.AppEventMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.events.contactmessage.internal.ContactMessageEventMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.events.contacts.internal.ContactEventMapper;
-import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.AppMessageMapper;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.AppMessageContainerMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ContactMessageMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ListSectionMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.SendMessageRequestMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.WhatsAppInteractiveHeaderMapper;
-import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ChoiceMessageOneOfInternalMapper;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ChoiceMessageOneOfInternalMapper;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
@@ -111,7 +111,7 @@ public class ConversationService
 
     private LocalLazyInit() {
       AppEventMapper.initMapper();
-      AppMessageMapper.initMapper();
+      AppMessageContainerMapper.initMapper();
       ChoiceMessageOneOfInternalMapper.initMapper();
       ContactEventMapper.initMapper();
       ContactMessageEventMapper.initMapper();

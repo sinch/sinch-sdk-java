@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.databind.Mapper;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequestImpl;
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ public class SendMessageRequestMapper {
         .addMixIn(SendMessageRequestImpl.class, SendMessageRequestMapperMixin.class);
   }
 
-  public static class SendMessageRequestMapperMixin<T extends AppMessageMessage>
+  public static class SendMessageRequestMapperMixin<T extends AppMessage>
       extends SendMessageRequestImpl<T> {
 
     @Override

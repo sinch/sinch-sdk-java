@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationDirection;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageWithExtensions;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage;
 import java.time.Instant;
 
@@ -29,7 +29,7 @@ public interface ConversationMessage {
    *
    * @return appMessage
    */
-  AppMessage<?> getAppMessage();
+  AppMessageWithExtensions<?> getAppMessage();
 
   /**
    * Get contactMessage
@@ -128,7 +128,7 @@ public interface ConversationMessage {
      * @return Current builder
      * @see #getAppMessage
      */
-    Builder setAppMessage(AppMessage<?> appMessage);
+    Builder setAppMessage(AppMessageWithExtensions<?> appMessage);
 
     /**
      * see getter

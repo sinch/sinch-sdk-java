@@ -15,7 +15,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
-import com.sinch.sdk.domains.conversation.models.v1.messages.ChannelSpecificMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.ChannelSpecificMessage;
 import java.util.Arrays;
 import java.util.stream.Stream;
 

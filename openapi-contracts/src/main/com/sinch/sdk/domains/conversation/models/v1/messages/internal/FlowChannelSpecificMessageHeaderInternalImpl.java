@@ -16,6 +16,10 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.sinch.sdk.core.models.AbstractOpenApiSchema;
 import com.sinch.sdk.core.utils.databind.JSONNavigator;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows.WhatsAppInteractiveHeaderDocumentImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows.WhatsAppInteractiveHeaderImageImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows.WhatsAppInteractiveHeaderTextImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows.WhatsAppInteractiveHeaderVideoImpl;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -86,50 +90,42 @@ public class FlowChannelSpecificMessageHeaderInternalImpl extends AbstractOpenAp
       switch (discriminatorValue) {
         case "document":
           deserialized =
-              tree.traverse(jp.getCodec())
-                  .readValueAs(WhatsAppInteractiveDocumentHeaderInternalImpl.class);
+              tree.traverse(jp.getCodec()).readValueAs(WhatsAppInteractiveHeaderDocumentImpl.class);
           newFlowChannelSpecificMessageHeaderInternalImpl.setActualInstance(deserialized);
           return newFlowChannelSpecificMessageHeaderInternalImpl;
         case "image":
           deserialized =
-              tree.traverse(jp.getCodec())
-                  .readValueAs(WhatsAppInteractiveImageHeaderInternalImpl.class);
+              tree.traverse(jp.getCodec()).readValueAs(WhatsAppInteractiveHeaderImageImpl.class);
           newFlowChannelSpecificMessageHeaderInternalImpl.setActualInstance(deserialized);
           return newFlowChannelSpecificMessageHeaderInternalImpl;
         case "text":
           deserialized =
-              tree.traverse(jp.getCodec())
-                  .readValueAs(WhatsAppInteractiveTextHeaderInternalImpl.class);
+              tree.traverse(jp.getCodec()).readValueAs(WhatsAppInteractiveHeaderTextImpl.class);
           newFlowChannelSpecificMessageHeaderInternalImpl.setActualInstance(deserialized);
           return newFlowChannelSpecificMessageHeaderInternalImpl;
         case "video":
           deserialized =
-              tree.traverse(jp.getCodec())
-                  .readValueAs(WhatsAppInteractiveVideoHeaderInternalImpl.class);
+              tree.traverse(jp.getCodec()).readValueAs(WhatsAppInteractiveHeaderVideoImpl.class);
           newFlowChannelSpecificMessageHeaderInternalImpl.setActualInstance(deserialized);
           return newFlowChannelSpecificMessageHeaderInternalImpl;
         case "WhatsAppInteractiveDocumentHeader":
           deserialized =
-              tree.traverse(jp.getCodec())
-                  .readValueAs(WhatsAppInteractiveDocumentHeaderInternalImpl.class);
+              tree.traverse(jp.getCodec()).readValueAs(WhatsAppInteractiveHeaderDocumentImpl.class);
           newFlowChannelSpecificMessageHeaderInternalImpl.setActualInstance(deserialized);
           return newFlowChannelSpecificMessageHeaderInternalImpl;
         case "WhatsAppInteractiveImageHeader":
           deserialized =
-              tree.traverse(jp.getCodec())
-                  .readValueAs(WhatsAppInteractiveImageHeaderInternalImpl.class);
+              tree.traverse(jp.getCodec()).readValueAs(WhatsAppInteractiveHeaderImageImpl.class);
           newFlowChannelSpecificMessageHeaderInternalImpl.setActualInstance(deserialized);
           return newFlowChannelSpecificMessageHeaderInternalImpl;
         case "WhatsAppInteractiveTextHeader":
           deserialized =
-              tree.traverse(jp.getCodec())
-                  .readValueAs(WhatsAppInteractiveTextHeaderInternalImpl.class);
+              tree.traverse(jp.getCodec()).readValueAs(WhatsAppInteractiveHeaderTextImpl.class);
           newFlowChannelSpecificMessageHeaderInternalImpl.setActualInstance(deserialized);
           return newFlowChannelSpecificMessageHeaderInternalImpl;
         case "WhatsAppInteractiveVideoHeader":
           deserialized =
-              tree.traverse(jp.getCodec())
-                  .readValueAs(WhatsAppInteractiveVideoHeaderInternalImpl.class);
+              tree.traverse(jp.getCodec()).readValueAs(WhatsAppInteractiveHeaderVideoImpl.class);
           newFlowChannelSpecificMessageHeaderInternalImpl.setActualInstance(deserialized);
           return newFlowChannelSpecificMessageHeaderInternalImpl;
         default:
@@ -147,194 +143,181 @@ public class FlowChannelSpecificMessageHeaderInternalImpl extends AbstractOpenAp
       boolean typeCoercion = ctxt.isEnabled(MapperFeature.ALLOW_COERCION_OF_SCALARS);
       int match = 0;
       JsonToken token = tree.traverse(jp.getCodec()).nextToken();
-      // deserialize WhatsAppInteractiveDocumentHeaderInternalImpl
+      // deserialize WhatsAppInteractiveHeaderDocumentImpl
       try {
         boolean attemptParsing = true;
         // ensure that we respect type coercion as set on the client ObjectMapper
-        if (WhatsAppInteractiveDocumentHeaderInternalImpl.class.equals(Integer.class)
-            || WhatsAppInteractiveDocumentHeaderInternalImpl.class.equals(Long.class)
-            || WhatsAppInteractiveDocumentHeaderInternalImpl.class.equals(Float.class)
-            || WhatsAppInteractiveDocumentHeaderInternalImpl.class.equals(Double.class)
-            || WhatsAppInteractiveDocumentHeaderInternalImpl.class.equals(Boolean.class)
-            || WhatsAppInteractiveDocumentHeaderInternalImpl.class.equals(String.class)) {
+        if (WhatsAppInteractiveHeaderDocumentImpl.class.equals(Integer.class)
+            || WhatsAppInteractiveHeaderDocumentImpl.class.equals(Long.class)
+            || WhatsAppInteractiveHeaderDocumentImpl.class.equals(Float.class)
+            || WhatsAppInteractiveHeaderDocumentImpl.class.equals(Double.class)
+            || WhatsAppInteractiveHeaderDocumentImpl.class.equals(Boolean.class)
+            || WhatsAppInteractiveHeaderDocumentImpl.class.equals(String.class)) {
           attemptParsing = typeCoercion;
           if (!attemptParsing) {
             attemptParsing |=
-                ((WhatsAppInteractiveDocumentHeaderInternalImpl.class.equals(Integer.class)
-                        || WhatsAppInteractiveDocumentHeaderInternalImpl.class.equals(Long.class))
+                ((WhatsAppInteractiveHeaderDocumentImpl.class.equals(Integer.class)
+                        || WhatsAppInteractiveHeaderDocumentImpl.class.equals(Long.class))
                     && token == JsonToken.VALUE_NUMBER_INT);
             attemptParsing |=
-                ((WhatsAppInteractiveDocumentHeaderInternalImpl.class.equals(Float.class)
-                        || WhatsAppInteractiveDocumentHeaderInternalImpl.class.equals(Double.class))
+                ((WhatsAppInteractiveHeaderDocumentImpl.class.equals(Float.class)
+                        || WhatsAppInteractiveHeaderDocumentImpl.class.equals(Double.class))
                     && token == JsonToken.VALUE_NUMBER_FLOAT);
             attemptParsing |=
-                (WhatsAppInteractiveDocumentHeaderInternalImpl.class.equals(Boolean.class)
+                (WhatsAppInteractiveHeaderDocumentImpl.class.equals(Boolean.class)
                     && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
             attemptParsing |=
-                (WhatsAppInteractiveDocumentHeaderInternalImpl.class.equals(String.class)
+                (WhatsAppInteractiveHeaderDocumentImpl.class.equals(String.class)
                     && token == JsonToken.VALUE_STRING);
           }
         }
         if (attemptParsing) {
           deserialized =
-              tree.traverse(jp.getCodec())
-                  .readValueAs(WhatsAppInteractiveDocumentHeaderInternalImpl.class);
+              tree.traverse(jp.getCodec()).readValueAs(WhatsAppInteractiveHeaderDocumentImpl.class);
           // TODO: there is no validation against JSON schema constraints
           // (min, max, enum, pattern...), this does not perform a strict JSON
           // validation, which means the 'match' count may be higher than it should be.
           match++;
-          log.log(
-              Level.FINER,
-              "Input data matches schema 'WhatsAppInteractiveDocumentHeaderInternalImpl'");
+          log.log(Level.FINER, "Input data matches schema 'WhatsAppInteractiveHeaderDocumentImpl'");
         }
       } catch (Exception e) {
         // deserialization failed, continue
         log.log(
             Level.FINER,
-            "Input data does not match schema 'WhatsAppInteractiveDocumentHeaderInternalImpl'",
+            "Input data does not match schema 'WhatsAppInteractiveHeaderDocumentImpl'",
             e);
       }
 
-      // deserialize WhatsAppInteractiveImageHeaderInternalImpl
+      // deserialize WhatsAppInteractiveHeaderImageImpl
       try {
         boolean attemptParsing = true;
         // ensure that we respect type coercion as set on the client ObjectMapper
-        if (WhatsAppInteractiveImageHeaderInternalImpl.class.equals(Integer.class)
-            || WhatsAppInteractiveImageHeaderInternalImpl.class.equals(Long.class)
-            || WhatsAppInteractiveImageHeaderInternalImpl.class.equals(Float.class)
-            || WhatsAppInteractiveImageHeaderInternalImpl.class.equals(Double.class)
-            || WhatsAppInteractiveImageHeaderInternalImpl.class.equals(Boolean.class)
-            || WhatsAppInteractiveImageHeaderInternalImpl.class.equals(String.class)) {
+        if (WhatsAppInteractiveHeaderImageImpl.class.equals(Integer.class)
+            || WhatsAppInteractiveHeaderImageImpl.class.equals(Long.class)
+            || WhatsAppInteractiveHeaderImageImpl.class.equals(Float.class)
+            || WhatsAppInteractiveHeaderImageImpl.class.equals(Double.class)
+            || WhatsAppInteractiveHeaderImageImpl.class.equals(Boolean.class)
+            || WhatsAppInteractiveHeaderImageImpl.class.equals(String.class)) {
           attemptParsing = typeCoercion;
           if (!attemptParsing) {
             attemptParsing |=
-                ((WhatsAppInteractiveImageHeaderInternalImpl.class.equals(Integer.class)
-                        || WhatsAppInteractiveImageHeaderInternalImpl.class.equals(Long.class))
+                ((WhatsAppInteractiveHeaderImageImpl.class.equals(Integer.class)
+                        || WhatsAppInteractiveHeaderImageImpl.class.equals(Long.class))
                     && token == JsonToken.VALUE_NUMBER_INT);
             attemptParsing |=
-                ((WhatsAppInteractiveImageHeaderInternalImpl.class.equals(Float.class)
-                        || WhatsAppInteractiveImageHeaderInternalImpl.class.equals(Double.class))
+                ((WhatsAppInteractiveHeaderImageImpl.class.equals(Float.class)
+                        || WhatsAppInteractiveHeaderImageImpl.class.equals(Double.class))
                     && token == JsonToken.VALUE_NUMBER_FLOAT);
             attemptParsing |=
-                (WhatsAppInteractiveImageHeaderInternalImpl.class.equals(Boolean.class)
+                (WhatsAppInteractiveHeaderImageImpl.class.equals(Boolean.class)
                     && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
             attemptParsing |=
-                (WhatsAppInteractiveImageHeaderInternalImpl.class.equals(String.class)
+                (WhatsAppInteractiveHeaderImageImpl.class.equals(String.class)
                     && token == JsonToken.VALUE_STRING);
           }
         }
         if (attemptParsing) {
           deserialized =
-              tree.traverse(jp.getCodec())
-                  .readValueAs(WhatsAppInteractiveImageHeaderInternalImpl.class);
+              tree.traverse(jp.getCodec()).readValueAs(WhatsAppInteractiveHeaderImageImpl.class);
           // TODO: there is no validation against JSON schema constraints
           // (min, max, enum, pattern...), this does not perform a strict JSON
           // validation, which means the 'match' count may be higher than it should be.
           match++;
-          log.log(
-              Level.FINER,
-              "Input data matches schema 'WhatsAppInteractiveImageHeaderInternalImpl'");
+          log.log(Level.FINER, "Input data matches schema 'WhatsAppInteractiveHeaderImageImpl'");
         }
       } catch (Exception e) {
         // deserialization failed, continue
         log.log(
             Level.FINER,
-            "Input data does not match schema 'WhatsAppInteractiveImageHeaderInternalImpl'",
+            "Input data does not match schema 'WhatsAppInteractiveHeaderImageImpl'",
             e);
       }
 
-      // deserialize WhatsAppInteractiveTextHeaderInternalImpl
+      // deserialize WhatsAppInteractiveHeaderTextImpl
       try {
         boolean attemptParsing = true;
         // ensure that we respect type coercion as set on the client ObjectMapper
-        if (WhatsAppInteractiveTextHeaderInternalImpl.class.equals(Integer.class)
-            || WhatsAppInteractiveTextHeaderInternalImpl.class.equals(Long.class)
-            || WhatsAppInteractiveTextHeaderInternalImpl.class.equals(Float.class)
-            || WhatsAppInteractiveTextHeaderInternalImpl.class.equals(Double.class)
-            || WhatsAppInteractiveTextHeaderInternalImpl.class.equals(Boolean.class)
-            || WhatsAppInteractiveTextHeaderInternalImpl.class.equals(String.class)) {
+        if (WhatsAppInteractiveHeaderTextImpl.class.equals(Integer.class)
+            || WhatsAppInteractiveHeaderTextImpl.class.equals(Long.class)
+            || WhatsAppInteractiveHeaderTextImpl.class.equals(Float.class)
+            || WhatsAppInteractiveHeaderTextImpl.class.equals(Double.class)
+            || WhatsAppInteractiveHeaderTextImpl.class.equals(Boolean.class)
+            || WhatsAppInteractiveHeaderTextImpl.class.equals(String.class)) {
           attemptParsing = typeCoercion;
           if (!attemptParsing) {
             attemptParsing |=
-                ((WhatsAppInteractiveTextHeaderInternalImpl.class.equals(Integer.class)
-                        || WhatsAppInteractiveTextHeaderInternalImpl.class.equals(Long.class))
+                ((WhatsAppInteractiveHeaderTextImpl.class.equals(Integer.class)
+                        || WhatsAppInteractiveHeaderTextImpl.class.equals(Long.class))
                     && token == JsonToken.VALUE_NUMBER_INT);
             attemptParsing |=
-                ((WhatsAppInteractiveTextHeaderInternalImpl.class.equals(Float.class)
-                        || WhatsAppInteractiveTextHeaderInternalImpl.class.equals(Double.class))
+                ((WhatsAppInteractiveHeaderTextImpl.class.equals(Float.class)
+                        || WhatsAppInteractiveHeaderTextImpl.class.equals(Double.class))
                     && token == JsonToken.VALUE_NUMBER_FLOAT);
             attemptParsing |=
-                (WhatsAppInteractiveTextHeaderInternalImpl.class.equals(Boolean.class)
+                (WhatsAppInteractiveHeaderTextImpl.class.equals(Boolean.class)
                     && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
             attemptParsing |=
-                (WhatsAppInteractiveTextHeaderInternalImpl.class.equals(String.class)
+                (WhatsAppInteractiveHeaderTextImpl.class.equals(String.class)
                     && token == JsonToken.VALUE_STRING);
           }
         }
         if (attemptParsing) {
           deserialized =
-              tree.traverse(jp.getCodec())
-                  .readValueAs(WhatsAppInteractiveTextHeaderInternalImpl.class);
+              tree.traverse(jp.getCodec()).readValueAs(WhatsAppInteractiveHeaderTextImpl.class);
           // TODO: there is no validation against JSON schema constraints
           // (min, max, enum, pattern...), this does not perform a strict JSON
           // validation, which means the 'match' count may be higher than it should be.
           match++;
-          log.log(
-              Level.FINER, "Input data matches schema 'WhatsAppInteractiveTextHeaderInternalImpl'");
+          log.log(Level.FINER, "Input data matches schema 'WhatsAppInteractiveHeaderTextImpl'");
         }
       } catch (Exception e) {
         // deserialization failed, continue
         log.log(
-            Level.FINER,
-            "Input data does not match schema 'WhatsAppInteractiveTextHeaderInternalImpl'",
-            e);
+            Level.FINER, "Input data does not match schema 'WhatsAppInteractiveHeaderTextImpl'", e);
       }
 
-      // deserialize WhatsAppInteractiveVideoHeaderInternalImpl
+      // deserialize WhatsAppInteractiveHeaderVideoImpl
       try {
         boolean attemptParsing = true;
         // ensure that we respect type coercion as set on the client ObjectMapper
-        if (WhatsAppInteractiveVideoHeaderInternalImpl.class.equals(Integer.class)
-            || WhatsAppInteractiveVideoHeaderInternalImpl.class.equals(Long.class)
-            || WhatsAppInteractiveVideoHeaderInternalImpl.class.equals(Float.class)
-            || WhatsAppInteractiveVideoHeaderInternalImpl.class.equals(Double.class)
-            || WhatsAppInteractiveVideoHeaderInternalImpl.class.equals(Boolean.class)
-            || WhatsAppInteractiveVideoHeaderInternalImpl.class.equals(String.class)) {
+        if (WhatsAppInteractiveHeaderVideoImpl.class.equals(Integer.class)
+            || WhatsAppInteractiveHeaderVideoImpl.class.equals(Long.class)
+            || WhatsAppInteractiveHeaderVideoImpl.class.equals(Float.class)
+            || WhatsAppInteractiveHeaderVideoImpl.class.equals(Double.class)
+            || WhatsAppInteractiveHeaderVideoImpl.class.equals(Boolean.class)
+            || WhatsAppInteractiveHeaderVideoImpl.class.equals(String.class)) {
           attemptParsing = typeCoercion;
           if (!attemptParsing) {
             attemptParsing |=
-                ((WhatsAppInteractiveVideoHeaderInternalImpl.class.equals(Integer.class)
-                        || WhatsAppInteractiveVideoHeaderInternalImpl.class.equals(Long.class))
+                ((WhatsAppInteractiveHeaderVideoImpl.class.equals(Integer.class)
+                        || WhatsAppInteractiveHeaderVideoImpl.class.equals(Long.class))
                     && token == JsonToken.VALUE_NUMBER_INT);
             attemptParsing |=
-                ((WhatsAppInteractiveVideoHeaderInternalImpl.class.equals(Float.class)
-                        || WhatsAppInteractiveVideoHeaderInternalImpl.class.equals(Double.class))
+                ((WhatsAppInteractiveHeaderVideoImpl.class.equals(Float.class)
+                        || WhatsAppInteractiveHeaderVideoImpl.class.equals(Double.class))
                     && token == JsonToken.VALUE_NUMBER_FLOAT);
             attemptParsing |=
-                (WhatsAppInteractiveVideoHeaderInternalImpl.class.equals(Boolean.class)
+                (WhatsAppInteractiveHeaderVideoImpl.class.equals(Boolean.class)
                     && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
             attemptParsing |=
-                (WhatsAppInteractiveVideoHeaderInternalImpl.class.equals(String.class)
+                (WhatsAppInteractiveHeaderVideoImpl.class.equals(String.class)
                     && token == JsonToken.VALUE_STRING);
           }
         }
         if (attemptParsing) {
           deserialized =
-              tree.traverse(jp.getCodec())
-                  .readValueAs(WhatsAppInteractiveVideoHeaderInternalImpl.class);
+              tree.traverse(jp.getCodec()).readValueAs(WhatsAppInteractiveHeaderVideoImpl.class);
           // TODO: there is no validation against JSON schema constraints
           // (min, max, enum, pattern...), this does not perform a strict JSON
           // validation, which means the 'match' count may be higher than it should be.
           match++;
-          log.log(
-              Level.FINER,
-              "Input data matches schema 'WhatsAppInteractiveVideoHeaderInternalImpl'");
+          log.log(Level.FINER, "Input data matches schema 'WhatsAppInteractiveHeaderVideoImpl'");
         }
       } catch (Exception e) {
         // deserialization failed, continue
         log.log(
             Level.FINER,
-            "Input data does not match schema 'WhatsAppInteractiveVideoHeaderInternalImpl'",
+            "Input data does not match schema 'WhatsAppInteractiveHeaderVideoImpl'",
             e);
       }
 
@@ -367,57 +350,44 @@ public class FlowChannelSpecificMessageHeaderInternalImpl extends AbstractOpenAp
     super("oneOf", Boolean.FALSE);
   }
 
-  public FlowChannelSpecificMessageHeaderInternalImpl(
-      WhatsAppInteractiveDocumentHeaderInternalImpl o) {
+  public FlowChannelSpecificMessageHeaderInternalImpl(WhatsAppInteractiveHeaderDocumentImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public FlowChannelSpecificMessageHeaderInternalImpl(
-      WhatsAppInteractiveImageHeaderInternalImpl o) {
+  public FlowChannelSpecificMessageHeaderInternalImpl(WhatsAppInteractiveHeaderImageImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public FlowChannelSpecificMessageHeaderInternalImpl(WhatsAppInteractiveTextHeaderInternalImpl o) {
+  public FlowChannelSpecificMessageHeaderInternalImpl(WhatsAppInteractiveHeaderTextImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public FlowChannelSpecificMessageHeaderInternalImpl(
-      WhatsAppInteractiveVideoHeaderInternalImpl o) {
+  public FlowChannelSpecificMessageHeaderInternalImpl(WhatsAppInteractiveHeaderVideoImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
   static {
     schemas.put(
-        "WhatsAppInteractiveDocumentHeaderInternalImpl",
-        WhatsAppInteractiveDocumentHeaderInternalImpl.class);
-    schemas.put(
-        "WhatsAppInteractiveImageHeaderInternalImpl",
-        WhatsAppInteractiveImageHeaderInternalImpl.class);
-    schemas.put(
-        "WhatsAppInteractiveTextHeaderInternalImpl",
-        WhatsAppInteractiveTextHeaderInternalImpl.class);
-    schemas.put(
-        "WhatsAppInteractiveVideoHeaderInternalImpl",
-        WhatsAppInteractiveVideoHeaderInternalImpl.class);
+        "WhatsAppInteractiveHeaderDocumentImpl", WhatsAppInteractiveHeaderDocumentImpl.class);
+    schemas.put("WhatsAppInteractiveHeaderImageImpl", WhatsAppInteractiveHeaderImageImpl.class);
+    schemas.put("WhatsAppInteractiveHeaderTextImpl", WhatsAppInteractiveHeaderTextImpl.class);
+    schemas.put("WhatsAppInteractiveHeaderVideoImpl", WhatsAppInteractiveHeaderVideoImpl.class);
     JSONNavigator.registerDescendants(
         FlowChannelSpecificMessageHeaderInternalImpl.class, Collections.unmodifiableMap(schemas));
     // Initialize and register the discriminator mappings.
     Map<String, Class<?>> mappings = new HashMap<String, Class<?>>();
-    mappings.put("document", WhatsAppInteractiveDocumentHeaderInternalImpl.class);
-    mappings.put("image", WhatsAppInteractiveImageHeaderInternalImpl.class);
-    mappings.put("text", WhatsAppInteractiveTextHeaderInternalImpl.class);
-    mappings.put("video", WhatsAppInteractiveVideoHeaderInternalImpl.class);
-    mappings.put(
-        "WhatsAppInteractiveDocumentHeader", WhatsAppInteractiveDocumentHeaderInternalImpl.class);
-    mappings.put(
-        "WhatsAppInteractiveImageHeader", WhatsAppInteractiveImageHeaderInternalImpl.class);
-    mappings.put("WhatsAppInteractiveTextHeader", WhatsAppInteractiveTextHeaderInternalImpl.class);
-    mappings.put(
-        "WhatsAppInteractiveVideoHeader", WhatsAppInteractiveVideoHeaderInternalImpl.class);
+    mappings.put("document", WhatsAppInteractiveHeaderDocumentImpl.class);
+    mappings.put("image", WhatsAppInteractiveHeaderImageImpl.class);
+    mappings.put("text", WhatsAppInteractiveHeaderTextImpl.class);
+    mappings.put("video", WhatsAppInteractiveHeaderVideoImpl.class);
+    mappings.put("WhatsAppInteractiveDocumentHeader", WhatsAppInteractiveHeaderDocumentImpl.class);
+    mappings.put("WhatsAppInteractiveImageHeader", WhatsAppInteractiveHeaderImageImpl.class);
+    mappings.put("WhatsAppInteractiveTextHeader", WhatsAppInteractiveHeaderTextImpl.class);
+    mappings.put("WhatsAppInteractiveVideoHeader", WhatsAppInteractiveHeaderVideoImpl.class);
     mappings.put(
         "FlowChannelSpecificMessage_header", FlowChannelSpecificMessageHeaderInternalImpl.class);
     JSONNavigator.registerDiscriminator(
@@ -431,9 +401,9 @@ public class FlowChannelSpecificMessageHeaderInternalImpl extends AbstractOpenAp
 
   /**
    * Set the instance that matches the oneOf child schema, check the instance parameter is valid
-   * against the oneOf child schemas: WhatsAppInteractiveDocumentHeaderInternalImpl,
-   * WhatsAppInteractiveImageHeaderInternalImpl, WhatsAppInteractiveTextHeaderInternalImpl,
-   * WhatsAppInteractiveVideoHeaderInternalImpl
+   * against the oneOf child schemas: WhatsAppInteractiveHeaderDocumentImpl,
+   * WhatsAppInteractiveHeaderImageImpl, WhatsAppInteractiveHeaderTextImpl,
+   * WhatsAppInteractiveHeaderVideoImpl
    *
    * <p>It could be an instance of the 'oneOf' schemas. The oneOf child schemas may themselves be a
    * composed schema (allOf, anyOf, oneOf).
@@ -441,44 +411,43 @@ public class FlowChannelSpecificMessageHeaderInternalImpl extends AbstractOpenAp
   @Override
   public void setActualInstance(Object instance) {
     if (JSONNavigator.isInstanceOf(
-        WhatsAppInteractiveDocumentHeaderInternalImpl.class, instance, new HashSet<Class<?>>())) {
+        WhatsAppInteractiveHeaderDocumentImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
 
     if (JSONNavigator.isInstanceOf(
-        WhatsAppInteractiveImageHeaderInternalImpl.class, instance, new HashSet<Class<?>>())) {
+        WhatsAppInteractiveHeaderImageImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
 
     if (JSONNavigator.isInstanceOf(
-        WhatsAppInteractiveTextHeaderInternalImpl.class, instance, new HashSet<Class<?>>())) {
+        WhatsAppInteractiveHeaderTextImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
 
     if (JSONNavigator.isInstanceOf(
-        WhatsAppInteractiveVideoHeaderInternalImpl.class, instance, new HashSet<Class<?>>())) {
+        WhatsAppInteractiveHeaderVideoImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
 
     throw new RuntimeException(
-        "Invalid instance type. Must be WhatsAppInteractiveDocumentHeaderInternalImpl,"
-            + " WhatsAppInteractiveImageHeaderInternalImpl,"
-            + " WhatsAppInteractiveTextHeaderInternalImpl,"
-            + " WhatsAppInteractiveVideoHeaderInternalImpl");
+        "Invalid instance type. Must be WhatsAppInteractiveHeaderDocumentImpl,"
+            + " WhatsAppInteractiveHeaderImageImpl, WhatsAppInteractiveHeaderTextImpl,"
+            + " WhatsAppInteractiveHeaderVideoImpl");
   }
 
   /**
-   * Get the actual instance, which can be the following:
-   * WhatsAppInteractiveDocumentHeaderInternalImpl, WhatsAppInteractiveImageHeaderInternalImpl,
-   * WhatsAppInteractiveTextHeaderInternalImpl, WhatsAppInteractiveVideoHeaderInternalImpl
+   * Get the actual instance, which can be the following: WhatsAppInteractiveHeaderDocumentImpl,
+   * WhatsAppInteractiveHeaderImageImpl, WhatsAppInteractiveHeaderTextImpl,
+   * WhatsAppInteractiveHeaderVideoImpl
    *
-   * @return The actual instance (WhatsAppInteractiveDocumentHeaderInternalImpl,
-   *     WhatsAppInteractiveImageHeaderInternalImpl, WhatsAppInteractiveTextHeaderInternalImpl,
-   *     WhatsAppInteractiveVideoHeaderInternalImpl)
+   * @return The actual instance (WhatsAppInteractiveHeaderDocumentImpl,
+   *     WhatsAppInteractiveHeaderImageImpl, WhatsAppInteractiveHeaderTextImpl,
+   *     WhatsAppInteractiveHeaderVideoImpl)
    */
   @Override
   public Object getActualInstance() {
@@ -486,52 +455,50 @@ public class FlowChannelSpecificMessageHeaderInternalImpl extends AbstractOpenAp
   }
 
   /**
-   * Get the actual instance of `WhatsAppInteractiveDocumentHeaderInternalImpl`. If the actual
-   * instance is not `WhatsAppInteractiveDocumentHeaderInternalImpl`, the ClassCastException will be
-   * thrown.
+   * Get the actual instance of `WhatsAppInteractiveHeaderDocumentImpl`. If the actual instance is
+   * not `WhatsAppInteractiveHeaderDocumentImpl`, the ClassCastException will be thrown.
    *
-   * @return The actual instance of `WhatsAppInteractiveDocumentHeaderInternalImpl`
-   * @throws ClassCastException if the instance is not
-   *     `WhatsAppInteractiveDocumentHeaderInternalImpl`
+   * @return The actual instance of `WhatsAppInteractiveHeaderDocumentImpl`
+   * @throws ClassCastException if the instance is not `WhatsAppInteractiveHeaderDocumentImpl`
    */
-  public WhatsAppInteractiveDocumentHeaderInternalImpl
-      getWhatsAppInteractiveDocumentHeaderInternalImpl() throws ClassCastException {
-    return (WhatsAppInteractiveDocumentHeaderInternalImpl) super.getActualInstance();
+  public WhatsAppInteractiveHeaderDocumentImpl getWhatsAppInteractiveHeaderDocumentImpl()
+      throws ClassCastException {
+    return (WhatsAppInteractiveHeaderDocumentImpl) super.getActualInstance();
   }
 
   /**
-   * Get the actual instance of `WhatsAppInteractiveImageHeaderInternalImpl`. If the actual instance
-   * is not `WhatsAppInteractiveImageHeaderInternalImpl`, the ClassCastException will be thrown.
+   * Get the actual instance of `WhatsAppInteractiveHeaderImageImpl`. If the actual instance is not
+   * `WhatsAppInteractiveHeaderImageImpl`, the ClassCastException will be thrown.
    *
-   * @return The actual instance of `WhatsAppInteractiveImageHeaderInternalImpl`
-   * @throws ClassCastException if the instance is not `WhatsAppInteractiveImageHeaderInternalImpl`
+   * @return The actual instance of `WhatsAppInteractiveHeaderImageImpl`
+   * @throws ClassCastException if the instance is not `WhatsAppInteractiveHeaderImageImpl`
    */
-  public WhatsAppInteractiveImageHeaderInternalImpl getWhatsAppInteractiveImageHeaderInternalImpl()
+  public WhatsAppInteractiveHeaderImageImpl getWhatsAppInteractiveHeaderImageImpl()
       throws ClassCastException {
-    return (WhatsAppInteractiveImageHeaderInternalImpl) super.getActualInstance();
+    return (WhatsAppInteractiveHeaderImageImpl) super.getActualInstance();
   }
 
   /**
-   * Get the actual instance of `WhatsAppInteractiveTextHeaderInternalImpl`. If the actual instance
-   * is not `WhatsAppInteractiveTextHeaderInternalImpl`, the ClassCastException will be thrown.
+   * Get the actual instance of `WhatsAppInteractiveHeaderTextImpl`. If the actual instance is not
+   * `WhatsAppInteractiveHeaderTextImpl`, the ClassCastException will be thrown.
    *
-   * @return The actual instance of `WhatsAppInteractiveTextHeaderInternalImpl`
-   * @throws ClassCastException if the instance is not `WhatsAppInteractiveTextHeaderInternalImpl`
+   * @return The actual instance of `WhatsAppInteractiveHeaderTextImpl`
+   * @throws ClassCastException if the instance is not `WhatsAppInteractiveHeaderTextImpl`
    */
-  public WhatsAppInteractiveTextHeaderInternalImpl getWhatsAppInteractiveTextHeaderInternalImpl()
+  public WhatsAppInteractiveHeaderTextImpl getWhatsAppInteractiveHeaderTextImpl()
       throws ClassCastException {
-    return (WhatsAppInteractiveTextHeaderInternalImpl) super.getActualInstance();
+    return (WhatsAppInteractiveHeaderTextImpl) super.getActualInstance();
   }
 
   /**
-   * Get the actual instance of `WhatsAppInteractiveVideoHeaderInternalImpl`. If the actual instance
-   * is not `WhatsAppInteractiveVideoHeaderInternalImpl`, the ClassCastException will be thrown.
+   * Get the actual instance of `WhatsAppInteractiveHeaderVideoImpl`. If the actual instance is not
+   * `WhatsAppInteractiveHeaderVideoImpl`, the ClassCastException will be thrown.
    *
-   * @return The actual instance of `WhatsAppInteractiveVideoHeaderInternalImpl`
-   * @throws ClassCastException if the instance is not `WhatsAppInteractiveVideoHeaderInternalImpl`
+   * @return The actual instance of `WhatsAppInteractiveHeaderVideoImpl`
+   * @throws ClassCastException if the instance is not `WhatsAppInteractiveHeaderVideoImpl`
    */
-  public WhatsAppInteractiveVideoHeaderInternalImpl getWhatsAppInteractiveVideoHeaderInternalImpl()
+  public WhatsAppInteractiveHeaderVideoImpl getWhatsAppInteractiveHeaderVideoImpl()
       throws ClassCastException {
-    return (WhatsAppInteractiveVideoHeaderInternalImpl) super.getActualInstance();
+    return (WhatsAppInteractiveHeaderVideoImpl) super.getActualInstance();
   }
 }
