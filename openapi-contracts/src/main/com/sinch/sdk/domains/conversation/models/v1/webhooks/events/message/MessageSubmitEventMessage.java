@@ -15,7 +15,7 @@ package com.sinch.sdk.domains.conversation.models.v1.webhooks.events.message;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
-import com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageWithExtensions;
 
 /** MessageSubmitEventMessage */
 @JsonDeserialize(builder = MessageSubmitEventMessageImpl.Builder.class)
@@ -55,7 +55,7 @@ public interface MessageSubmitEventMessage {
    *
    * @return submittedMessage
    */
-  ContactMessage getSubmittedMessage();
+  AppMessageWithExtensions<?> getSubmittedMessage();
 
   /**
    * Metadata specified in the message_metadata field of a Send Message request, if any.
@@ -126,7 +126,7 @@ public interface MessageSubmitEventMessage {
      * @return Current builder
      * @see #getSubmittedMessage
      */
-    Builder setSubmittedMessage(ContactMessage submittedMessage);
+    Builder setSubmittedMessage(AppMessageWithExtensions<?> submittedMessage);
 
     /**
      * see getter
