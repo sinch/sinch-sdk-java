@@ -13,7 +13,7 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages.response;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.conversation.models.v1.response.ConversationMessage;
+import com.sinch.sdk.domains.conversation.models.v1.internal.ConversationMessageInternal;
 import java.util.List;
 
 /** ListMessagesResponse */
@@ -25,7 +25,7 @@ public interface ListMessagesResponse {
    *
    * @return messages
    */
-  List<ConversationMessage> getMessages();
+  List<ConversationMessageInternal> getMessages();
 
   /**
    * Token that should be included in the next request to fetch the next page.
@@ -53,7 +53,7 @@ public interface ListMessagesResponse {
      * @return Current builder
      * @see #getMessages
      */
-    Builder setMessages(List<ConversationMessage> messages);
+    Builder setMessages(List<ConversationMessageInternal> messages);
 
     /**
      * see getter

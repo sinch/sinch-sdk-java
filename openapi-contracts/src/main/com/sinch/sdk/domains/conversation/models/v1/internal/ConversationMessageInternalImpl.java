@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.response;
+package com.sinch.sdk.domains.conversation.models.v1.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -16,22 +16,22 @@ import java.time.Instant;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  ConversationMessageImpl.JSON_PROPERTY_APP_MESSAGE,
-  ConversationMessageImpl.JSON_PROPERTY_CONTACT_MESSAGE,
-  ConversationMessageImpl.JSON_PROPERTY_ACCEPT_TIME,
-  ConversationMessageImpl.JSON_PROPERTY_CHANNEL_IDENTITY,
-  ConversationMessageImpl.JSON_PROPERTY_CONTACT_ID,
-  ConversationMessageImpl.JSON_PROPERTY_CONVERSATION_ID,
-  ConversationMessageImpl.JSON_PROPERTY_DIRECTION,
-  ConversationMessageImpl.JSON_PROPERTY_ID,
-  ConversationMessageImpl.JSON_PROPERTY_METADATA,
-  ConversationMessageImpl.JSON_PROPERTY_INJECTED,
-  ConversationMessageImpl.JSON_PROPERTY_SENDER_ID,
-  ConversationMessageImpl.JSON_PROPERTY_PROCESSING_MODE
+  ConversationMessageInternalImpl.JSON_PROPERTY_APP_MESSAGE,
+  ConversationMessageInternalImpl.JSON_PROPERTY_CONTACT_MESSAGE,
+  ConversationMessageInternalImpl.JSON_PROPERTY_ACCEPT_TIME,
+  ConversationMessageInternalImpl.JSON_PROPERTY_CHANNEL_IDENTITY,
+  ConversationMessageInternalImpl.JSON_PROPERTY_CONTACT_ID,
+  ConversationMessageInternalImpl.JSON_PROPERTY_CONVERSATION_ID,
+  ConversationMessageInternalImpl.JSON_PROPERTY_DIRECTION,
+  ConversationMessageInternalImpl.JSON_PROPERTY_ID,
+  ConversationMessageInternalImpl.JSON_PROPERTY_METADATA,
+  ConversationMessageInternalImpl.JSON_PROPERTY_INJECTED,
+  ConversationMessageInternalImpl.JSON_PROPERTY_SENDER_ID,
+  ConversationMessageInternalImpl.JSON_PROPERTY_PROCESSING_MODE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class ConversationMessageImpl implements ConversationMessage {
+public class ConversationMessageInternalImpl implements ConversationMessageInternal {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_APP_MESSAGE = "app_message";
@@ -82,9 +82,9 @@ public class ConversationMessageImpl implements ConversationMessage {
 
   private OptionalValue<ProcessingMode> processingMode;
 
-  public ConversationMessageImpl() {}
+  public ConversationMessageInternalImpl() {}
 
-  protected ConversationMessageImpl(
+  protected ConversationMessageInternalImpl(
       OptionalValue<AppMessageWithExtensions<?>> appMessage,
       OptionalValue<ContactMessage> contactMessage,
       OptionalValue<Instant> acceptTime,
@@ -252,7 +252,7 @@ public class ConversationMessageImpl implements ConversationMessage {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ConversationMessageImpl conversationMessage = (ConversationMessageImpl) o;
+    ConversationMessageInternalImpl conversationMessage = (ConversationMessageInternalImpl) o;
     return Objects.equals(this.appMessage, conversationMessage.appMessage)
         && Objects.equals(this.contactMessage, conversationMessage.contactMessage)
         && Objects.equals(this.acceptTime, conversationMessage.acceptTime)
@@ -287,7 +287,7 @@ public class ConversationMessageImpl implements ConversationMessage {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ConversationMessageImpl {\n");
+    sb.append("class ConversationMessageInternalImpl {\n");
     sb.append("    appMessage: ").append(toIndentedString(appMessage)).append("\n");
     sb.append("    contactMessage: ").append(toIndentedString(contactMessage)).append("\n");
     sb.append("    acceptTime: ").append(toIndentedString(acceptTime)).append("\n");
@@ -315,7 +315,7 @@ public class ConversationMessageImpl implements ConversationMessage {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements ConversationMessage.Builder {
+  static class Builder implements ConversationMessageInternal.Builder {
     OptionalValue<AppMessageWithExtensions<?>> appMessage = OptionalValue.empty();
     OptionalValue<ContactMessage> contactMessage = OptionalValue.empty();
     OptionalValue<Instant> acceptTime = OptionalValue.empty();
@@ -401,8 +401,8 @@ public class ConversationMessageImpl implements ConversationMessage {
       return this;
     }
 
-    public ConversationMessage build() {
-      return new ConversationMessageImpl(
+    public ConversationMessageInternal build() {
+      return new ConversationMessageInternalImpl(
           appMessage,
           contactMessage,
           acceptTime,

@@ -26,12 +26,12 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
+import com.sinch.sdk.domains.conversation.models.v1.internal.ConversationMessageInternal;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.ConversationMessagesView;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.UpdateMessageMetadataRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.ListMessagesResponse;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
-import com.sinch.sdk.domains.conversation.models.v1.response.ConversationMessage;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -166,10 +166,10 @@ public class MessagesApi {
    *     Used for operations on messages in Dispatch Mode. For more information, see [Processing
    *     Modes](../../../../../conversation/processing-modes/). (optional, default to
    *     CONVERSATION_SOURCE)
-   * @return ConversationMessage
+   * @return ConversationMessageInternal
    * @throws ApiException if fails to make API call
    */
-  public ConversationMessage messagesGetMessage(
+  public ConversationMessageInternal messagesGetMessage(
       String projectId, String messageId, String messagesSource) throws ApiException {
 
     LOGGER.finest(
@@ -191,8 +191,8 @@ public class MessagesApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<ConversationMessage> localVarReturnType =
-          new TypeReference<ConversationMessage>() {};
+      TypeReference<ConversationMessageInternal> localVarReturnType =
+          new TypeReference<ConversationMessageInternal>() {};
       return mapper.deserialize(response, localVarReturnType);
     }
     // fallback to default errors handling:
@@ -602,10 +602,10 @@ public class MessagesApi {
    *     Used for operations on messages in Dispatch Mode. For more information, see [Processing
    *     Modes](../../../../../conversation/processing-modes/). (optional, default to
    *     CONVERSATION_SOURCE)
-   * @return ConversationMessage
+   * @return ConversationMessageInternal
    * @throws ApiException if fails to make API call
    */
-  public ConversationMessage messagesUpdateMessageMetadata(
+  public ConversationMessageInternal messagesUpdateMessageMetadata(
       String projectId,
       String messageId,
       UpdateMessageMetadataRequest updateMessageMetadataRequest,
@@ -635,8 +635,8 @@ public class MessagesApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<ConversationMessage> localVarReturnType =
-          new TypeReference<ConversationMessage>() {};
+      TypeReference<ConversationMessageInternal> localVarReturnType =
+          new TypeReference<ConversationMessageInternal>() {};
       return mapper.deserialize(response, localVarReturnType);
     }
     // fallback to default errors handling:

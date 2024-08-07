@@ -5,7 +5,7 @@ import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.ChannelSpecificMessage;
 import java.util.Map;
 
-public interface AppMessageWithExtensions<T extends AppMessage> {
+public interface AppMessageWithExtensions<T extends AppMessage> extends ConversationMessageContent {
 
   T getMessage();
 

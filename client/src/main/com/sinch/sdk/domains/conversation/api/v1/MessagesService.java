@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.conversation.api.v1;
 
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardMessage;
@@ -12,7 +13,6 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.location.Loca
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.template.TemplateMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
-import com.sinch.sdk.domains.conversation.models.v1.response.ConversationMessage;
 
 /**
  * Messages related service
@@ -66,5 +66,21 @@ public interface MessagesService {
 
   ConversationMessage get(String messageId);
 
-  // ConversationMessage get(String messageId, MessageSource );
+  ConversationMessage get(String messageId, MessageSource messageSource);
+  /**
+   * Specifies the message source for which the request will be processed. Used for operations on
+   * messages in Dispatch Mode
+   */
+  enum MessageSource {
+    /**
+     * The default messages source. Retrieves messages sent in the default `CONVERSATION` processing
+     * mode, which associates the messages with a specific conversation and contact.
+     */
+    CONVERSATION_SOURCE,
+    /**
+     * Retrieves messages sent in the `DISPATCH` processing mode. These types of messages are not
+     * associated with any conversation or contact.
+     */
+    DISPATCH_SOURCE
+  }
 }

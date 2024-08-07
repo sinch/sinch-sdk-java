@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.conversation.models.v1.response.ConversationMessage;
+import com.sinch.sdk.domains.conversation.models.v1.internal.ConversationMessageInternal;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,7 +22,7 @@ public class ListMessagesResponseImpl implements ListMessagesResponse {
 
   public static final String JSON_PROPERTY_MESSAGES = "messages";
 
-  private OptionalValue<List<ConversationMessage>> messages;
+  private OptionalValue<List<ConversationMessageInternal>> messages;
 
   public static final String JSON_PROPERTY_NEXT_PAGE_TOKEN = "next_page_token";
 
@@ -31,19 +31,20 @@ public class ListMessagesResponseImpl implements ListMessagesResponse {
   public ListMessagesResponseImpl() {}
 
   protected ListMessagesResponseImpl(
-      OptionalValue<List<ConversationMessage>> messages, OptionalValue<String> nextPageToken) {
+      OptionalValue<List<ConversationMessageInternal>> messages,
+      OptionalValue<String> nextPageToken) {
     this.messages = messages;
     this.nextPageToken = nextPageToken;
   }
 
   @JsonIgnore
-  public List<ConversationMessage> getMessages() {
+  public List<ConversationMessageInternal> getMessages() {
     return messages.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_MESSAGES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<List<ConversationMessage>> messages() {
+  public OptionalValue<List<ConversationMessageInternal>> messages() {
     return messages;
   }
 
@@ -99,11 +100,11 @@ public class ListMessagesResponseImpl implements ListMessagesResponse {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements ListMessagesResponse.Builder {
-    OptionalValue<List<ConversationMessage>> messages = OptionalValue.empty();
+    OptionalValue<List<ConversationMessageInternal>> messages = OptionalValue.empty();
     OptionalValue<String> nextPageToken = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_MESSAGES)
-    public Builder setMessages(List<ConversationMessage> messages) {
+    public Builder setMessages(List<ConversationMessageInternal> messages) {
       this.messages = OptionalValue.of(messages);
       return this;
     }

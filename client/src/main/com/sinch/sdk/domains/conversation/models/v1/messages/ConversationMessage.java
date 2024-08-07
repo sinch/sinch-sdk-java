@@ -10,33 +10,16 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.response;
+package com.sinch.sdk.domains.conversation.models.v1.messages;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationDirection;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageWithExtensions;
-import com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage;
 import java.time.Instant;
 
-/** A message on a particular channel. */
-@JsonDeserialize(builder = ConversationMessageImpl.Builder.class)
 public interface ConversationMessage {
 
-  /**
-   * Get appMessage
-   *
-   * @return appMessage
-   */
-  AppMessageWithExtensions<?> getAppMessage();
-
-  /**
-   * Get contactMessage
-   *
-   * @return contactMessage
-   */
-  ContactMessage getContactMessage();
+  ConversationMessageContent getContent();
 
   /**
    * The time Conversation API processed the message.
@@ -124,20 +107,11 @@ public interface ConversationMessage {
     /**
      * see getter
      *
-     * @param appMessage see getter
+     * @param content see getter
      * @return Current builder
-     * @see #getAppMessage
+     * @see #getContent
      */
-    Builder setAppMessage(AppMessageWithExtensions<?> appMessage);
-
-    /**
-     * see getter
-     *
-     * @param contactMessage see getter
-     * @return Current builder
-     * @see #getContactMessage
-     */
-    Builder setContactMessage(ContactMessage contactMessage);
+    Builder setContent(ConversationMessageContent content);
 
     /**
      * see getter

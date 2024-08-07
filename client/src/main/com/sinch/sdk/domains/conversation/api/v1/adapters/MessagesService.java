@@ -4,8 +4,10 @@ import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ConversationMessageMapper;
 import com.sinch.sdk.domains.conversation.api.v1.internal.MessagesApi;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardMessage;
@@ -17,7 +19,6 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.location.Loca
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.template.TemplateMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
-import com.sinch.sdk.domains.conversation.models.v1.response.ConversationMessage;
 import com.sinch.sdk.models.ConversationContext;
 import java.util.Map;
 
@@ -82,6 +83,13 @@ public class MessagesService implements com.sinch.sdk.domains.conversation.api.v
   }
 
   public ConversationMessage get(String messageId) {
-    return getApi().messagesGetMessage(uriUUID, messageId, null);
+    return get(messageId, null);
+  }
+
+  public ConversationMessage get(String messageId, MessageSource messageSource) {
+    return ConversationMessageMapper.convert(
+        getApi()
+            .messagesGetMessage(
+                uriUUID, messageId, null == messageSource ? null : messageSource.name()));
   }
 }
