@@ -116,32 +116,32 @@ public class AppMessageWithExtensionsDtoTest extends ConversationBaseTest {
           .setAgent(AgentDtoTest.expectedDto)
           .build();
 
-  @GivenTextResource("/domains/conversation/v1/messages/request/AppMessageCardRequestDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/AppMessageWithExtensionsCardDto.json")
   static String jsonAppMessageCardRequestDto;
 
-  @GivenTextResource("/domains/conversation/v1/messages/request/AppMessageCarouselRequestDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/AppMessageWithExtensionsCarouselDto.json")
   static String jsonAppMessageCarouselRequestDto;
 
-  @GivenTextResource("/domains/conversation/v1/messages/request/AppMessageChoiceRequestDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/AppMessageWithExtensionsChoiceDto.json")
   static String jsonAppMessageChoiceRequestDto;
 
   @GivenTextResource(
-      "/domains/conversation/v1/messages/request/AppMessageContactInfoRequestDto.json")
+      "/domains/conversation/v1/messages/AppMessageWithExtensionsContactInfoDto.json")
   static String jsonAppMessageContactInfoRequestDto;
 
-  @GivenTextResource("/domains/conversation/v1/messages/request/AppMessageListRequestDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/AppMessageWithExtensionsListDto.json")
   static String jsonAppMessageListMessageRequestDto;
 
-  @GivenTextResource("/domains/conversation/v1/messages/request/AppMessageLocationRequestDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/AppMessageWithExtensionsLocationDto.json")
   static String jsonAppMessageLocationMessageRequestDto;
 
-  @GivenTextResource("/domains/conversation/v1/messages/request/AppMessageMediaRequestDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/AppMessageWithExtensionsMediaDto.json")
   static String jsonAppMessageMediaRequestDto;
 
-  @GivenTextResource("/domains/conversation/v1/messages/request/AppMessageTemplateRequestDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/AppMessageWithExtensionsTemplateDto.json")
   static String jsonAppMessageTemplateRequestDto;
 
-  @GivenTextResource("/domains/conversation/v1/messages/request/AppMessageTextRequestDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/AppMessageWithExtensionsTextDto.json")
   static String jsonAppMessageTextRequestDto;
 
   private static Map<ConversationChannel, Object> createExplicitChannelMessage() {
