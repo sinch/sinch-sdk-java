@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows;
+package com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.nfmreply;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -16,7 +16,9 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl
-    implements WhatsAppInteractiveNfmReplyChannelSpecificContactMessage {
+    implements WhatsAppInteractiveNfmReplyChannelSpecificContactMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific
+            .ChannelSpecificContactMessageContent {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_TYPE = "type";
@@ -104,14 +106,10 @@ public class WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements WhatsAppInteractiveNfmReplyChannelSpecificContactMessage.Builder {
-    OptionalValue<TypeEnum> type = OptionalValue.empty();
+    OptionalValue<TypeEnum> type =
+        OptionalValue.of(
+            WhatsAppInteractiveNfmReplyChannelSpecificContactMessage.TypeEnum.NFM_REPLY);
     OptionalValue<WhatsAppInteractiveNfmReply> nfmReply = OptionalValue.empty();
-
-    @JsonProperty(JSON_PROPERTY_TYPE)
-    public Builder setType(TypeEnum type) {
-      this.type = OptionalValue.of(type);
-      return this;
-    }
 
     @JsonProperty(JSON_PROPERTY_NFM_REPLY)
     public Builder setNfmReply(WhatsAppInteractiveNfmReply nfmReply) {

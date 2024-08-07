@@ -10,17 +10,18 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
+package com.sinch.sdk.domains.conversation.models.v1.messages.types.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.ChannelSpecificContactMessageContent;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** ChannelSpecificContactInternal */
-@JsonDeserialize(builder = ChannelSpecificContactInternalImpl.Builder.class)
-public interface ChannelSpecificContactInternal {
+/** ChannelSpecificContactMessageMessageInternal */
+@JsonDeserialize(builder = ChannelSpecificContactMessageMessageInternalImpl.Builder.class)
+public interface ChannelSpecificContactMessageMessageInternal {
 
   /** The message type. */
   public class MessageTypeEnum extends EnumDynamic<String, MessageTypeEnum> {
@@ -59,7 +60,7 @@ public interface ChannelSpecificContactInternal {
    *
    * @return message
    */
-  ChannelSpecificContactMessageInternal getMessage();
+  ChannelSpecificContactMessageContent getMessage();
 
   /**
    * Getting builder
@@ -67,7 +68,7 @@ public interface ChannelSpecificContactInternal {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ChannelSpecificContactInternalImpl.Builder();
+    return new ChannelSpecificContactMessageMessageInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -89,13 +90,13 @@ public interface ChannelSpecificContactInternal {
      * @return Current builder
      * @see #getMessage
      */
-    Builder setMessage(ChannelSpecificContactMessageInternal message);
+    Builder setMessage(ChannelSpecificContactMessageContent message);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    ChannelSpecificContactInternal build();
+    ChannelSpecificContactMessageMessageInternal build();
   }
 }

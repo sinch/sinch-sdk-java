@@ -10,12 +10,12 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
+package com.sinch.sdk.domains.conversation.models.v1.messages.types.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @JsonDeserialize(
     using =
-        ChannelSpecificContactMessageInternalImpl
-            .ChannelSpecificContactMessageInternalImplDeserializer.class)
-public interface ChannelSpecificContactMessageInternal {}
+        ChannelSpecificContactMessageMessageMessageInternalImpl
+            .ChannelSpecificContactMessageMessageMessageInternalImplDeserializer.class)
+public interface ChannelSpecificContactMessageMessageMessageInternal {}

@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows;
+package com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.nfmreply;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;

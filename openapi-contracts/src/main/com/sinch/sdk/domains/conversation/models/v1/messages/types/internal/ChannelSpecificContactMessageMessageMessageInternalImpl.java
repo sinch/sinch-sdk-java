@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
+package com.sinch.sdk.domains.conversation.models.v1.messages.types.internal;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.sinch.sdk.core.models.AbstractOpenApiSchema;
 import com.sinch.sdk.core.utils.databind.JSONNavigator;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows.WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.nfmreply.WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,33 +26,33 @@ import java.util.logging.Logger;
 
 @JsonDeserialize(
     using =
-        ChannelSpecificContactMessageInternalImpl
-            .ChannelSpecificContactMessageInternalImplDeserializer.class)
+        ChannelSpecificContactMessageMessageMessageInternalImpl
+            .ChannelSpecificContactMessageMessageMessageInternalImplDeserializer.class)
 @JsonSerialize(
     using =
-        ChannelSpecificContactMessageInternalImpl
-            .ChannelSpecificContactMessageInternalImplSerializer.class)
-public class ChannelSpecificContactMessageInternalImpl extends AbstractOpenApiSchema
-    implements ChannelSpecificContactMessageInternal {
+        ChannelSpecificContactMessageMessageMessageInternalImpl
+            .ChannelSpecificContactMessageMessageMessageInternalImplSerializer.class)
+public class ChannelSpecificContactMessageMessageMessageInternalImpl extends AbstractOpenApiSchema
+    implements ChannelSpecificContactMessageMessageMessageInternal {
   private static final Logger log =
-      Logger.getLogger(ChannelSpecificContactMessageInternalImpl.class.getName());
+      Logger.getLogger(ChannelSpecificContactMessageMessageMessageInternalImpl.class.getName());
 
-  public static final class ChannelSpecificContactMessageInternalImplSerializer
-      extends StdSerializer<ChannelSpecificContactMessageInternalImpl> {
+  public static final class ChannelSpecificContactMessageMessageMessageInternalImplSerializer
+      extends StdSerializer<ChannelSpecificContactMessageMessageMessageInternalImpl> {
     private static final long serialVersionUID = 1L;
 
-    public ChannelSpecificContactMessageInternalImplSerializer(
-        Class<ChannelSpecificContactMessageInternalImpl> t) {
+    public ChannelSpecificContactMessageMessageMessageInternalImplSerializer(
+        Class<ChannelSpecificContactMessageMessageMessageInternalImpl> t) {
       super(t);
     }
 
-    public ChannelSpecificContactMessageInternalImplSerializer() {
+    public ChannelSpecificContactMessageMessageMessageInternalImplSerializer() {
       this(null);
     }
 
     @Override
     public void serialize(
-        ChannelSpecificContactMessageInternalImpl value,
+        ChannelSpecificContactMessageMessageMessageInternalImpl value,
         JsonGenerator jgen,
         SerializerProvider provider)
         throws IOException, JsonProcessingException {
@@ -60,21 +60,21 @@ public class ChannelSpecificContactMessageInternalImpl extends AbstractOpenApiSc
     }
   }
 
-  public static final class ChannelSpecificContactMessageInternalImplDeserializer
-      extends StdDeserializer<ChannelSpecificContactMessageInternalImpl> {
+  public static final class ChannelSpecificContactMessageMessageMessageInternalImplDeserializer
+      extends StdDeserializer<ChannelSpecificContactMessageMessageMessageInternalImpl> {
 
     private static final long serialVersionUID = 1L;
 
-    public ChannelSpecificContactMessageInternalImplDeserializer() {
-      this(ChannelSpecificContactMessageInternalImpl.class);
+    public ChannelSpecificContactMessageMessageMessageInternalImplDeserializer() {
+      this(ChannelSpecificContactMessageMessageMessageInternalImpl.class);
     }
 
-    public ChannelSpecificContactMessageInternalImplDeserializer(Class<?> vc) {
+    public ChannelSpecificContactMessageMessageMessageInternalImplDeserializer(Class<?> vc) {
       super(vc);
     }
 
     @Override
-    public ChannelSpecificContactMessageInternalImpl deserialize(
+    public ChannelSpecificContactMessageMessageMessageInternalImpl deserialize(
         JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
       JsonNode tree = jp.readValueAsTree();
       Object deserialized = null;
@@ -142,35 +142,36 @@ public class ChannelSpecificContactMessageInternalImpl extends AbstractOpenApiSc
       }
 
       if (match == 1) {
-        ChannelSpecificContactMessageInternalImpl ret =
-            new ChannelSpecificContactMessageInternalImpl();
+        ChannelSpecificContactMessageMessageMessageInternalImpl ret =
+            new ChannelSpecificContactMessageMessageMessageInternalImpl();
         ret.setActualInstance(deserialized);
         return ret;
       }
       throw new IOException(
           String.format(
-              "Failed deserialization for ChannelSpecificContactMessageInternalImpl: %d classes"
-                  + " match result, expected 1",
+              "Failed deserialization for ChannelSpecificContactMessageMessageMessageInternalImpl:"
+                  + " %d classes match result, expected 1",
               match));
     }
 
     /** Handle deserialization of the 'null' value. */
     @Override
-    public ChannelSpecificContactMessageInternalImpl getNullValue(DeserializationContext ctxt)
-        throws JsonMappingException {
+    public ChannelSpecificContactMessageMessageMessageInternalImpl getNullValue(
+        DeserializationContext ctxt) throws JsonMappingException {
       throw new JsonMappingException(
-          ctxt.getParser(), "ChannelSpecificContactMessageInternalImpl cannot be null");
+          ctxt.getParser(),
+          "ChannelSpecificContactMessageMessageMessageInternalImpl cannot be null");
     }
   }
 
   // store a list of schema names defined in oneOf
   public static final Map<String, Class<?>> schemas = new HashMap<>();
 
-  public ChannelSpecificContactMessageInternalImpl() {
+  public ChannelSpecificContactMessageMessageMessageInternalImpl() {
     super("oneOf", Boolean.FALSE);
   }
 
-  public ChannelSpecificContactMessageInternalImpl(
+  public ChannelSpecificContactMessageMessageMessageInternalImpl(
       WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
@@ -181,12 +182,13 @@ public class ChannelSpecificContactMessageInternalImpl extends AbstractOpenApiSc
         "WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl",
         WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl.class);
     JSONNavigator.registerDescendants(
-        ChannelSpecificContactMessageInternalImpl.class, Collections.unmodifiableMap(schemas));
+        ChannelSpecificContactMessageMessageMessageInternalImpl.class,
+        Collections.unmodifiableMap(schemas));
   }
 
   @Override
   public Map<String, Class<?>> getSchemas() {
-    return ChannelSpecificContactMessageInternalImpl.schemas;
+    return ChannelSpecificContactMessageMessageMessageInternalImpl.schemas;
   }
 
   /**

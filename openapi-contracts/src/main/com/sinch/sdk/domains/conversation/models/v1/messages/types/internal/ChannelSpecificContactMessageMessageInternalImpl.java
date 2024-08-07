@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
+package com.sinch.sdk.domains.conversation.models.v1.messages.types.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,15 +7,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.ChannelSpecificContactMessageContent;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  ChannelSpecificContactInternalImpl.JSON_PROPERTY_MESSAGE_TYPE,
-  ChannelSpecificContactInternalImpl.JSON_PROPERTY_MESSAGE
+  ChannelSpecificContactMessageMessageInternalImpl.JSON_PROPERTY_MESSAGE_TYPE,
+  ChannelSpecificContactMessageMessageInternalImpl.JSON_PROPERTY_MESSAGE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class ChannelSpecificContactInternalImpl implements ChannelSpecificContactInternal {
+public class ChannelSpecificContactMessageMessageInternalImpl
+    implements ChannelSpecificContactMessageMessageInternal {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_MESSAGE_TYPE = "message_type";
@@ -24,13 +26,13 @@ public class ChannelSpecificContactInternalImpl implements ChannelSpecificContac
 
   public static final String JSON_PROPERTY_MESSAGE = "message";
 
-  private OptionalValue<ChannelSpecificContactMessageInternal> message;
+  private OptionalValue<ChannelSpecificContactMessageContent> message;
 
-  public ChannelSpecificContactInternalImpl() {}
+  public ChannelSpecificContactMessageMessageInternalImpl() {}
 
-  protected ChannelSpecificContactInternalImpl(
+  protected ChannelSpecificContactMessageMessageInternalImpl(
       OptionalValue<MessageTypeEnum> messageType,
-      OptionalValue<ChannelSpecificContactMessageInternal> message) {
+      OptionalValue<ChannelSpecificContactMessageContent> message) {
     this.messageType = messageType;
     this.message = message;
   }
@@ -47,13 +49,13 @@ public class ChannelSpecificContactInternalImpl implements ChannelSpecificContac
   }
 
   @JsonIgnore
-  public ChannelSpecificContactMessageInternal getMessage() {
+  public ChannelSpecificContactMessageContent getMessage() {
     return message.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<ChannelSpecificContactMessageInternal> message() {
+  public OptionalValue<ChannelSpecificContactMessageContent> message() {
     return message;
   }
 
@@ -69,8 +71,9 @@ public class ChannelSpecificContactInternalImpl implements ChannelSpecificContac
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ChannelSpecificContactInternalImpl channelSpecificContactMessageChannelSpecificMessage =
-        (ChannelSpecificContactInternalImpl) o;
+    ChannelSpecificContactMessageMessageInternalImpl
+        channelSpecificContactMessageChannelSpecificMessage =
+            (ChannelSpecificContactMessageMessageInternalImpl) o;
     return Objects.equals(
             this.messageType, channelSpecificContactMessageChannelSpecificMessage.messageType)
         && Objects.equals(
@@ -85,7 +88,7 @@ public class ChannelSpecificContactInternalImpl implements ChannelSpecificContac
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ChannelSpecificContactInternalImpl {\n");
+    sb.append("class ChannelSpecificContactMessageMessageInternalImpl {\n");
     sb.append("    messageType: ").append(toIndentedString(messageType)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("}");
@@ -103,9 +106,9 @@ public class ChannelSpecificContactInternalImpl implements ChannelSpecificContac
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements ChannelSpecificContactInternal.Builder {
+  static class Builder implements ChannelSpecificContactMessageMessageInternal.Builder {
     OptionalValue<MessageTypeEnum> messageType = OptionalValue.empty();
-    OptionalValue<ChannelSpecificContactMessageInternal> message = OptionalValue.empty();
+    OptionalValue<ChannelSpecificContactMessageContent> message = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_MESSAGE_TYPE)
     public Builder setMessageType(MessageTypeEnum messageType) {
@@ -114,13 +117,13 @@ public class ChannelSpecificContactInternalImpl implements ChannelSpecificContac
     }
 
     @JsonProperty(JSON_PROPERTY_MESSAGE)
-    public Builder setMessage(ChannelSpecificContactMessageInternal message) {
+    public Builder setMessage(ChannelSpecificContactMessageContent message) {
       this.message = OptionalValue.of(message);
       return this;
     }
 
-    public ChannelSpecificContactInternal build() {
-      return new ChannelSpecificContactInternalImpl(messageType, message);
+    public ChannelSpecificContactMessageMessageInternal build() {
+      return new ChannelSpecificContactMessageMessageInternalImpl(messageType, message);
     }
   }
 }

@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows;
+package com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.nfmreply;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
@@ -21,7 +21,9 @@ import java.util.stream.Stream;
 /** A WhatsApp interactive contact message containing the nfm_reply. */
 @JsonDeserialize(
     builder = WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl.Builder.class)
-public interface WhatsAppInteractiveNfmReplyChannelSpecificContactMessage {
+public interface WhatsAppInteractiveNfmReplyChannelSpecificContactMessage
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific
+        .ChannelSpecificContactMessageContent {
 
   /** The interactive message type. */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
@@ -48,13 +50,6 @@ public interface WhatsAppInteractiveNfmReplyChannelSpecificContactMessage {
   }
 
   /**
-   * The interactive message type.
-   *
-   * @return type
-   */
-  TypeEnum getType();
-
-  /**
    * Get nfmReply
    *
    * @return nfmReply
@@ -72,15 +67,6 @@ public interface WhatsAppInteractiveNfmReplyChannelSpecificContactMessage {
 
   /** Dedicated Builder */
   interface Builder {
-
-    /**
-     * see getter
-     *
-     * @param type see getter
-     * @return Current builder
-     * @see #getType
-     */
-    Builder setType(TypeEnum type);
 
     /**
      * see getter

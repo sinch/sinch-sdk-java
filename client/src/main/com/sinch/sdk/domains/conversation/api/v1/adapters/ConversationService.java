@@ -10,6 +10,7 @@ import com.sinch.sdk.domains.conversation.api.v1.adapters.events.app.AppEventMap
 import com.sinch.sdk.domains.conversation.api.v1.adapters.events.contactmessage.internal.ContactMessageEventMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.events.contacts.internal.ContactEventMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.AppMessageWithExtensionsMapper;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ChannelSpecificContactMessageMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ContactMessageMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ListSectionMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.OmniMessageOverrideMapper;
@@ -119,6 +120,7 @@ public class ConversationService
       AppMessageWithExtensionsMapper.initMapper();
       AppMessageInternalMapper.initMapper();
       CarouselMessageMapper.initMapper();
+      ChannelSpecificContactMessageMapper.initMapper();
       ChannelSpecificMessageInternalMapper.initMapper();
       ChoiceMessageMapper.initMapper();
       ContactEventMapper.initMapper();
