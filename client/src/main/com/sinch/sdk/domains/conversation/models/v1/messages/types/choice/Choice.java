@@ -1,6 +1,10 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages.types.choice;
 
-public interface Choice<T> {
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest.Builder;
+
+@JsonDeserialize(using = ChoiceImpl.ChoiceDeserializer.class)
+public interface Choice<T extends ChoiceMessageType> {
 
   T getMessage();
 
@@ -12,8 +16,12 @@ public interface Choice<T> {
    */
   Object getPostbackData();
 
+  static <T extends ChoiceMessageType> Builder<T> builder() {
+    return new ChoiceImpl.Builder<>();
+  }
+
   /** Dedicated Builder */
-  interface Builder<T> {
+  interface Builder<T extends ChoiceMessageType> {
 
     Builder<T> setMessage(T message);
 

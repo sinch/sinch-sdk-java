@@ -33,8 +33,7 @@ public class CarouselMessageDtoTest extends BaseTest {
 
   @Test
   void deserializeMessageDto() throws JsonProcessingException {
-    Object deserialized =
-        objectMapper.readValue(jsonCarouselMessageDto, carouselMessageDto.getClass());
+    Object deserialized = objectMapper.readValue(jsonCarouselMessageDto, CarouselMessage.class);
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(carouselMessageDto);
   }

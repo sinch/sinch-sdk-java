@@ -1,10 +1,11 @@
 {
-  "title": "a list message title value",
-  "sections": [
-    {
-      "title": "a list section title value",
-      "items": [
-        {
+  "list_message": {
+    "title": "a list message title value",
+    "sections": [
+      {
+        "title": "a list section title value",
+        "items": [
+          {
             "choice": {
               "title": "choice title",
               "description": "description value",
@@ -17,13 +18,14 @@
               },
               "postback_data": "postback value"
             }
-        }
-      ]
+          }
+        ]
+      }
+    ],
+    "description": "description value",
+    "message_properties": {
+      "catalog_id": "catalog ID value",
+      "menu": "menu value"
     }
-  ],
-  "description": "description value",
-  "message_properties": {
-    "catalog_id": "catalog ID value",
-    "menu": "menu value"
   }
 }

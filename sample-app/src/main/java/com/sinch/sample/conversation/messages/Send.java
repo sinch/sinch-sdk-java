@@ -11,7 +11,6 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageWithExten
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.call.CallMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.Choice;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceCallMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
 import java.io.IOException;
@@ -55,7 +54,7 @@ public class Send extends BaseApplication {
     var choices = new ArrayList<Choice<?>>();
     for (int i = 0; i < 4; i++) {
       choices.add(
-          ChoiceCallMessage.builder()
+          Choice.<CallMessage>builder()
               .setMessage(
                   CallMessage.builder()
                       .setTitle("Phone call choice " + (i + 1))

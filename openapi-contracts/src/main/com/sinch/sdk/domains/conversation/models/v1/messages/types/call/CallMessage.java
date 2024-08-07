@@ -14,9 +14,10 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.types.call;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** Call Message */
+/** Message for triggering a call. */
 @JsonDeserialize(builder = CallMessageImpl.Builder.class)
-public interface CallMessage {
+public interface CallMessage
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceMessageType {
 
   /**
    * Phone number in E.164 with leading +.

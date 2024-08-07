@@ -27,7 +27,7 @@ public class URLInfoDtoTest extends BaseTest {
 
   @Test
   void deserializeMessageDto() throws JsonProcessingException {
-    Object deserialized = objectMapper.readValue(jsonURLInfoDto, urlInfoDto.getClass());
+    Object deserialized = objectMapper.readValue(jsonURLInfoDto, UrlInfo.class);
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(urlInfoDto);
   }

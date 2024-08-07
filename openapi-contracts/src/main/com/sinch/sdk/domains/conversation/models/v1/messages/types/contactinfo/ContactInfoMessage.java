@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.LocalDate;
 import java.util.List;
 
-/** Contact Info Message */
+/** Message containing contact information. */
 @JsonDeserialize(builder = ContactInfoMessageImpl.Builder.class)
 public interface ContactInfoMessage
     extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,

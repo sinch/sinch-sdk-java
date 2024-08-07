@@ -5,11 +5,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.channel.internal.ChannelEventNotificationChannelEvent;
+import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.channel.internal.ChannelEventNotificationChannelEventImpl;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({ChannelEventNotificationImpl.JSON_PROPERTY_CHANNEL_EVENT})
 @JsonFilter("uninitializedFilter")
@@ -50,8 +59,10 @@ public class ChannelEventNotificationImpl implements ChannelEventNotification {
   }
 
   public OptionalValue<ConversationChannel> channel() {
-    return null != channelEvent
-        ? channelEvent.map(ChannelEventNotificationChannelEvent::getChannel)
+    return null != channelEvent && channelEvent.isPresent()
+        ? channelEvent
+            .map(f -> ((ChannelEventNotificationChannelEventImpl) f).channel())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -66,8 +77,10 @@ public class ChannelEventNotificationImpl implements ChannelEventNotification {
   }
 
   public OptionalValue<String> eventType() {
-    return null != channelEvent
-        ? channelEvent.map(ChannelEventNotificationChannelEvent::getEventType)
+    return null != channelEvent && channelEvent.isPresent()
+        ? channelEvent
+            .map(f -> ((ChannelEventNotificationChannelEventImpl) f).eventType())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -82,8 +95,10 @@ public class ChannelEventNotificationImpl implements ChannelEventNotification {
   }
 
   public OptionalValue<Object> additionalData() {
-    return null != channelEvent
-        ? channelEvent.map(ChannelEventNotificationChannelEvent::getAdditionalData)
+    return null != channelEvent && channelEvent.isPresent()
+        ? channelEvent
+            .map(f -> ((ChannelEventNotificationChannelEventImpl) f).additionalData())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -170,5 +185,43 @@ public class ChannelEventNotificationImpl implements ChannelEventNotification {
       }
       return new ChannelEventNotificationImpl(channelEvent);
     }
+  }
+
+  public static class DelegatedSerializer
+      extends JsonSerializer<OptionalValue<ChannelEventNotification>> {
+    @Override
+    public void serialize(
+        OptionalValue<ChannelEventNotification> value,
+        JsonGenerator jgen,
+        SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      ChannelEventNotificationImpl impl = (ChannelEventNotificationImpl) value.get();
+      jgen.writeObject(impl.getChannelEvent());
+    }
+  }
+
+  public static class DelegatedDeSerializer extends JsonDeserializer<ChannelEventNotification> {
+    @Override
+    public ChannelEventNotification deserialize(JsonParser jp, DeserializationContext ctxt)
+        throws IOException {
+
+      ChannelEventNotificationImpl.Builder builder = new ChannelEventNotificationImpl.Builder();
+      ChannelEventNotificationChannelEventImpl deserialized =
+          jp.readValueAs(ChannelEventNotificationChannelEventImpl.class);
+      builder.setChannelEvent(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<ChannelEventNotification> delegatedConverter(
+      ChannelEventNotificationChannelEvent internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setChannelEvent(internal).build());
   }
 }

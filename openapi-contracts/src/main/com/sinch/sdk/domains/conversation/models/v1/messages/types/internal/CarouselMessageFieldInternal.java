@@ -13,7 +13,6 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages.types.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.carousel.CarouselMessage;
 
 /**
  * Message containing a list of cards often rendered horizontally on supported channels. Supported
@@ -27,7 +26,7 @@ public interface CarouselMessageFieldInternal {
    *
    * @return carouselMessage
    */
-  CarouselMessage getCarouselMessage();
+  CarouselMessageInternal getCarouselMessage();
 
   /**
    * Getting builder
@@ -48,7 +47,7 @@ public interface CarouselMessageFieldInternal {
      * @return Current builder
      * @see #getCarouselMessage
      */
-    Builder setCarouselMessage(CarouselMessage carouselMessage);
+    Builder setCarouselMessage(CarouselMessageInternal carouselMessage);
 
     /**
      * Create instance

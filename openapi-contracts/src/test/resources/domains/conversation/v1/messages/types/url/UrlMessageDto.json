@@ -1,4 +1,6 @@
 {
-  "title": "title value",
-  "url": "an url value"
+  "url_message": {
+    "title": "title value",
+    "url": "an url value"
+  }
 }

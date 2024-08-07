@@ -34,7 +34,7 @@ public class NameInfoDtoTest extends BaseTest {
 
   @Test
   void deserializeMessageDto() throws JsonProcessingException {
-    Object deserialized = objectMapper.readValue(jsonNameInfoDto, nameInfoDto.getClass());
+    Object deserialized = objectMapper.readValue(jsonNameInfoDto, NameInfo.class);
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(nameInfoDto);
   }

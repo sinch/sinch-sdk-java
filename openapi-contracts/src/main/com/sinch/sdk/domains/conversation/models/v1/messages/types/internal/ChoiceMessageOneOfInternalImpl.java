@@ -7,10 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.call.CallMessage;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.location.LocationMessage;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.url.UrlMessage;
 import java.util.Objects;
 
 @JsonPropertyOrder({
@@ -27,19 +23,19 @@ public class ChoiceMessageOneOfInternalImpl implements ChoiceMessageOneOfInterna
 
   public static final String JSON_PROPERTY_CALL_MESSAGE = "call_message";
 
-  private OptionalValue<CallMessage> callMessage;
+  private OptionalValue<CallMessageInternal> callMessage;
 
   public static final String JSON_PROPERTY_LOCATION_MESSAGE = "location_message";
 
-  private OptionalValue<LocationMessage> locationMessage;
+  private OptionalValue<LocationMessageInternal> locationMessage;
 
   public static final String JSON_PROPERTY_TEXT_MESSAGE = "text_message";
 
-  private OptionalValue<TextMessage> textMessage;
+  private OptionalValue<TextMessageInternal> textMessage;
 
   public static final String JSON_PROPERTY_URL_MESSAGE = "url_message";
 
-  private OptionalValue<UrlMessage> urlMessage;
+  private OptionalValue<UrlMessageInternal> urlMessage;
 
   public static final String JSON_PROPERTY_POSTBACK_DATA = "postback_data";
 
@@ -48,10 +44,10 @@ public class ChoiceMessageOneOfInternalImpl implements ChoiceMessageOneOfInterna
   public ChoiceMessageOneOfInternalImpl() {}
 
   protected ChoiceMessageOneOfInternalImpl(
-      OptionalValue<CallMessage> callMessage,
-      OptionalValue<LocationMessage> locationMessage,
-      OptionalValue<TextMessage> textMessage,
-      OptionalValue<UrlMessage> urlMessage,
+      OptionalValue<CallMessageInternal> callMessage,
+      OptionalValue<LocationMessageInternal> locationMessage,
+      OptionalValue<TextMessageInternal> textMessage,
+      OptionalValue<UrlMessageInternal> urlMessage,
       OptionalValue<Object> postbackData) {
     this.callMessage = callMessage;
     this.locationMessage = locationMessage;
@@ -61,46 +57,46 @@ public class ChoiceMessageOneOfInternalImpl implements ChoiceMessageOneOfInterna
   }
 
   @JsonIgnore
-  public CallMessage getCallMessage() {
+  public CallMessageInternal getCallMessage() {
     return callMessage.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CALL_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<CallMessage> callMessage() {
+  public OptionalValue<CallMessageInternal> callMessage() {
     return callMessage;
   }
 
   @JsonIgnore
-  public LocationMessage getLocationMessage() {
+  public LocationMessageInternal getLocationMessage() {
     return locationMessage.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_LOCATION_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<LocationMessage> locationMessage() {
+  public OptionalValue<LocationMessageInternal> locationMessage() {
     return locationMessage;
   }
 
   @JsonIgnore
-  public TextMessage getTextMessage() {
+  public TextMessageInternal getTextMessage() {
     return textMessage.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_TEXT_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<TextMessage> textMessage() {
+  public OptionalValue<TextMessageInternal> textMessage() {
     return textMessage;
   }
 
   @JsonIgnore
-  public UrlMessage getUrlMessage() {
+  public UrlMessageInternal getUrlMessage() {
     return urlMessage.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_URL_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<UrlMessage> urlMessage() {
+  public OptionalValue<UrlMessageInternal> urlMessage() {
     return urlMessage;
   }
 
@@ -162,32 +158,32 @@ public class ChoiceMessageOneOfInternalImpl implements ChoiceMessageOneOfInterna
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements ChoiceMessageOneOfInternal.Builder {
-    OptionalValue<CallMessage> callMessage = OptionalValue.empty();
-    OptionalValue<LocationMessage> locationMessage = OptionalValue.empty();
-    OptionalValue<TextMessage> textMessage = OptionalValue.empty();
-    OptionalValue<UrlMessage> urlMessage = OptionalValue.empty();
+    OptionalValue<CallMessageInternal> callMessage = OptionalValue.empty();
+    OptionalValue<LocationMessageInternal> locationMessage = OptionalValue.empty();
+    OptionalValue<TextMessageInternal> textMessage = OptionalValue.empty();
+    OptionalValue<UrlMessageInternal> urlMessage = OptionalValue.empty();
     OptionalValue<Object> postbackData = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CALL_MESSAGE)
-    public Builder setCallMessage(CallMessage callMessage) {
+    public Builder setCallMessage(CallMessageInternal callMessage) {
       this.callMessage = OptionalValue.of(callMessage);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_LOCATION_MESSAGE)
-    public Builder setLocationMessage(LocationMessage locationMessage) {
+    public Builder setLocationMessage(LocationMessageInternal locationMessage) {
       this.locationMessage = OptionalValue.of(locationMessage);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_TEXT_MESSAGE)
-    public Builder setTextMessage(TextMessage textMessage) {
+    public Builder setTextMessage(TextMessageInternal textMessage) {
       this.textMessage = OptionalValue.of(textMessage);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_URL_MESSAGE)
-    public Builder setUrlMessage(UrlMessage urlMessage) {
+    public Builder setUrlMessage(UrlMessageInternal urlMessage) {
       this.urlMessage = OptionalValue.of(urlMessage);
       return this;
     }

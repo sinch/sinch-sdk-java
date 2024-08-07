@@ -5,10 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.events.types.internal.CommentReplyEventInternal;
+import com.sinch.sdk.domains.conversation.models.v1.events.types.internal.CommentReplyEventInternalImpl;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({CommentReplyEventImpl.JSON_PROPERTY_COMMENT_REPLY_EVENT})
 @JsonFilter("uninitializedFilter")
@@ -49,8 +58,10 @@ public class CommentReplyEventImpl
   }
 
   public OptionalValue<String> text() {
-    return null != commentReplyEvent
-        ? commentReplyEvent.map(CommentReplyEventInternal::getText)
+    return null != commentReplyEvent && commentReplyEvent.isPresent()
+        ? commentReplyEvent
+            .map(f -> ((CommentReplyEventInternalImpl) f).text())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -123,5 +134,39 @@ public class CommentReplyEventImpl
       }
       return new CommentReplyEventImpl(commentReplyEvent);
     }
+  }
+
+  public static class DelegatedSerializer extends JsonSerializer<OptionalValue<CommentReplyEvent>> {
+    @Override
+    public void serialize(
+        OptionalValue<CommentReplyEvent> value, JsonGenerator jgen, SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      CommentReplyEventImpl impl = (CommentReplyEventImpl) value.get();
+      jgen.writeObject(impl.getCommentReplyEvent());
+    }
+  }
+
+  public static class DelegatedDeSerializer extends JsonDeserializer<CommentReplyEvent> {
+    @Override
+    public CommentReplyEvent deserialize(JsonParser jp, DeserializationContext ctxt)
+        throws IOException {
+
+      CommentReplyEventImpl.Builder builder = new CommentReplyEventImpl.Builder();
+      CommentReplyEventInternalImpl deserialized =
+          jp.readValueAs(CommentReplyEventInternalImpl.class);
+      builder.setCommentReplyEvent(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<CommentReplyEvent> delegatedConverter(CommentReplyEventInternal internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setCommentReplyEvent(internal).build());
   }
 }

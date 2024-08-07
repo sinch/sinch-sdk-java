@@ -19,7 +19,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface TextMessage
     extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
         com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage,
-        com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage {
+        com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceMessageType {
 
   /**
    * The text to be sent.

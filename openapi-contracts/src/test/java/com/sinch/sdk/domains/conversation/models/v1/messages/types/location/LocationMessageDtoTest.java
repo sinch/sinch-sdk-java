@@ -36,28 +36,4 @@ public class LocationMessageDtoTest extends ConversationBaseTest {
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(locationMessageDto);
   }
-
-  @TestWithResources
-  public static class CoordinatesDtoTest extends ConversationBaseTest {
-
-    public static Coordinates coordinatesDto =
-        Coordinates.builder().setLatitude(47.627980F).setLongitude(-2.822915F).build();
-
-    @GivenTextResource("/domains/conversation/v1/messages/types/location/CoordinatesDto.json")
-    String jsonCoordinatesDto;
-
-    @Test
-    void serializeMessageDto() throws JsonProcessingException, JSONException {
-      String serializedString = objectMapper.writeValueAsString(coordinatesDto);
-
-      JSONAssert.assertEquals(jsonCoordinatesDto, serializedString, true);
-    }
-
-    @Test
-    void deserializeMessageDto() throws JsonProcessingException {
-      Object deserialized = objectMapper.readValue(jsonCoordinatesDto, Coordinates.class);
-
-      Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(coordinatesDto);
-    }
-  }
 }

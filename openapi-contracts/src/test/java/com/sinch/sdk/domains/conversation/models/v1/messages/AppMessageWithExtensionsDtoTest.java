@@ -30,6 +30,7 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMess
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -172,10 +173,26 @@ public class AppMessageWithExtensionsDtoTest extends ConversationBaseTest {
   }
 
   @Test
+  void deserializeCardMessageRequestDto() throws JsonProcessingException {
+    Object deserialized =
+        objectMapper.readValue(jsonAppMessageCardRequestDto, AppMessageWithExtensions.class);
+
+    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appCardMessageDto);
+  }
+
+  @Test
   void serializeCarouselMessageRequestDto() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(appCarouselMessageDto);
 
     JSONAssert.assertEquals(jsonAppMessageCarouselRequestDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeCarouselMessageRequestDto() throws JsonProcessingException {
+    Object deserialized =
+        objectMapper.readValue(jsonAppMessageCarouselRequestDto, AppMessageWithExtensions.class);
+
+    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appCarouselMessageDto);
   }
 
   @Test
@@ -186,10 +203,28 @@ public class AppMessageWithExtensionsDtoTest extends ConversationBaseTest {
   }
 
   @Test
+  void deserializeChoiceMessageRequestDto() throws JsonProcessingException {
+    Object deserialized =
+        objectMapper.readValue(jsonAppMessageChoiceRequestDto, AppMessageWithExtensions.class);
+
+    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appChoiceMessageDto);
+  }
+
+  @Test
   void serializeContactInfoMessageRequestDto() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(appContactInfoMessageDto);
 
     JSONAssert.assertEquals(jsonAppMessageContactInfoRequestDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeContactInfoMessageRequestDto() throws JsonProcessingException {
+    Object deserialized =
+        objectMapper.readValue(jsonAppMessageContactInfoRequestDto, AppMessageWithExtensions.class);
+
+    Assertions.assertThat(deserialized)
+        .usingRecursiveComparison()
+        .isEqualTo(appContactInfoMessageDto);
   }
 
   @Test
@@ -200,10 +235,27 @@ public class AppMessageWithExtensionsDtoTest extends ConversationBaseTest {
   }
 
   @Test
+  void deserializeListMessageRequestDto() throws JsonProcessingException {
+    Object deserialized =
+        objectMapper.readValue(jsonAppMessageListMessageRequestDto, AppMessageWithExtensions.class);
+
+    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appListMessageDto);
+  }
+
+  @Test
   void serializeLocationMessageRequestDto() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(appLocationMessageDto);
 
     JSONAssert.assertEquals(jsonAppMessageLocationMessageRequestDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeLocationMessageRequestDto() throws JsonProcessingException, JSONException {
+    Object deserialized =
+        objectMapper.readValue(
+            jsonAppMessageLocationMessageRequestDto, AppMessageWithExtensions.class);
+
+    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appLocationMessageDto);
   }
 
   @Test
@@ -214,6 +266,14 @@ public class AppMessageWithExtensionsDtoTest extends ConversationBaseTest {
   }
 
   @Test
+  void deserializeMediaMessageRequestDto() throws JsonProcessingException {
+    Object deserialized =
+        objectMapper.readValue(jsonAppMessageMediaRequestDto, AppMessageWithExtensions.class);
+
+    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appMediaMessageDto);
+  }
+
+  @Test
   void serializeTemplateMessageRequestDto() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(appTemplateMessageDto);
 
@@ -221,9 +281,25 @@ public class AppMessageWithExtensionsDtoTest extends ConversationBaseTest {
   }
 
   @Test
+  void deserializeTemplateMessageRequestDto() throws JsonProcessingException {
+    Object deserialized =
+        objectMapper.readValue(jsonAppMessageTemplateRequestDto, AppMessageWithExtensions.class);
+
+    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appTemplateMessageDto);
+  }
+
+  @Test
   void serializeTextMessageRequestDto() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(appTextMessageDto);
 
     JSONAssert.assertEquals(jsonAppMessageTextRequestDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeTextMessageRequestDto() throws JsonProcessingException {
+    Object deserialized =
+        objectMapper.readValue(jsonAppMessageTextRequestDto, AppMessageWithExtensions.class);
+
+    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appTextMessageDto);
   }
 }

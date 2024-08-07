@@ -5,17 +5,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ListMessageInternal;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ListMessageInternalImpl;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
-@JsonPropertyOrder({
-  ListMessageImpl.JSON_PROPERTY_TITLE,
-  ListMessageImpl.JSON_PROPERTY_DESCRIPTION,
-  ListMessageImpl.JSON_PROPERTY_SECTIONS,
-  ListMessageImpl.JSON_PROPERTY_MESSAGE_PROPERTIES
-})
+@JsonPropertyOrder({ListMessageImpl.JSON_PROPERTY_LIST_MESSAGE})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ListMessageImpl
@@ -24,80 +29,96 @@ public class ListMessageImpl
         com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_TITLE = "title";
+  public static final String JSON_PROPERTY_LIST_MESSAGE = "list_message";
 
-  private OptionalValue<String> title;
-
-  public static final String JSON_PROPERTY_DESCRIPTION = "description";
-
-  private OptionalValue<String> description;
-
-  public static final String JSON_PROPERTY_SECTIONS = "sections";
-
-  private OptionalValue<List<ListSection<?>>> sections;
-
-  public static final String JSON_PROPERTY_MESSAGE_PROPERTIES = "message_properties";
-
-  private OptionalValue<ListAdditionalProperties> messageProperties;
+  private OptionalValue<ListMessageInternal> listMessage;
 
   public ListMessageImpl() {}
 
-  protected ListMessageImpl(
-      OptionalValue<String> title,
-      OptionalValue<String> description,
-      OptionalValue<List<ListSection<?>>> sections,
-      OptionalValue<ListAdditionalProperties> messageProperties) {
-    this.title = title;
-    this.description = description;
-    this.sections = sections;
-    this.messageProperties = messageProperties;
+  protected ListMessageImpl(OptionalValue<ListMessageInternal> listMessage) {
+    this.listMessage = listMessage;
+  }
+
+  @JsonIgnore
+  public ListMessageInternal getListMessage() {
+    return listMessage.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_LIST_MESSAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<ListMessageInternal> listMessage() {
+    return listMessage;
   }
 
   @JsonIgnore
   public String getTitle() {
-    return title.orElse(null);
+    if (null == listMessage || !listMessage.isPresent() || null == listMessage.get().getTitle()) {
+      return null;
+    }
+    return listMessage.get().getTitle();
   }
 
-  @JsonProperty(JSON_PROPERTY_TITLE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<String> title() {
-    return title;
+    return null != listMessage && listMessage.isPresent()
+        ? listMessage.map(f -> ((ListMessageInternalImpl) f).title()).orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public String getDescription() {
-    return description.orElse(null);
+    if (null == listMessage
+        || !listMessage.isPresent()
+        || null == listMessage.get().getDescription()) {
+      return null;
+    }
+    return listMessage.get().getDescription();
   }
 
-  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> description() {
-    return description;
+    return null != listMessage && listMessage.isPresent()
+        ? listMessage
+            .map(f -> ((ListMessageInternalImpl) f).description())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public List<ListSection<?>> getSections() {
-    return sections.orElse(null);
+    if (null == listMessage
+        || !listMessage.isPresent()
+        || null == listMessage.get().getSections()) {
+      return null;
+    }
+    return listMessage.get().getSections();
   }
 
-  @JsonProperty(JSON_PROPERTY_SECTIONS)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<List<ListSection<?>>> sections() {
-    return sections;
+    return null != listMessage && listMessage.isPresent()
+        ? listMessage
+            .map(f -> ((ListMessageInternalImpl) f).sections())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public ListAdditionalProperties getMessageProperties() {
-    return messageProperties.orElse(null);
+    if (null == listMessage
+        || !listMessage.isPresent()
+        || null == listMessage.get().getMessageProperties()) {
+      return null;
+    }
+    return listMessage.get().getMessageProperties();
   }
 
-  @JsonProperty(JSON_PROPERTY_MESSAGE_PROPERTIES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<ListAdditionalProperties> messageProperties() {
-    return messageProperties;
+    return null != listMessage && listMessage.isPresent()
+        ? listMessage
+            .map(f -> ((ListMessageInternalImpl) f).messageProperties())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
-  /** Return true if this List_Message object is equal to o. */
+  /** Return true if this ListMessageField object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -106,26 +127,20 @@ public class ListMessageImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ListMessageImpl listMessage = (ListMessageImpl) o;
-    return Objects.equals(this.title, listMessage.title)
-        && Objects.equals(this.description, listMessage.description)
-        && Objects.equals(this.sections, listMessage.sections)
-        && Objects.equals(this.messageProperties, listMessage.messageProperties);
+    ListMessageImpl listMessageField = (ListMessageImpl) o;
+    return Objects.equals(this.listMessage, listMessageField.listMessage);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(title, description, sections, messageProperties);
+    return Objects.hash(listMessage);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ListMessageImpl {\n");
-    sb.append("    title: ").append(toIndentedString(title)).append("\n");
-    sb.append("    description: ").append(toIndentedString(description)).append("\n");
-    sb.append("    sections: ").append(toIndentedString(sections)).append("\n");
-    sb.append("    messageProperties: ").append(toIndentedString(messageProperties)).append("\n");
+    sb.append("    listMessage: ").append(toIndentedString(listMessage)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -142,37 +157,85 @@ public class ListMessageImpl
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements ListMessage.Builder {
-    OptionalValue<String> title = OptionalValue.empty();
-    OptionalValue<String> description = OptionalValue.empty();
-    OptionalValue<List<ListSection<?>>> sections = OptionalValue.empty();
-    OptionalValue<ListAdditionalProperties> messageProperties = OptionalValue.empty();
+    OptionalValue<ListMessageInternal> listMessage = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_TITLE)
+    ListMessageInternal.Builder _delegatedBuilder = null;
+
+    @JsonProperty(value = JSON_PROPERTY_LIST_MESSAGE, required = true)
+    public Builder setListMessage(ListMessageInternal listMessage) {
+      this.listMessage = OptionalValue.of(listMessage);
+      return this;
+    }
+
+    @JsonIgnore
     public Builder setTitle(String title) {
-      this.title = OptionalValue.of(title);
+      getDelegatedBuilder().setTitle(title);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_DESCRIPTION)
+    @JsonIgnore
     public Builder setDescription(String description) {
-      this.description = OptionalValue.of(description);
+      getDelegatedBuilder().setDescription(description);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_SECTIONS)
+    @JsonIgnore
     public Builder setSections(List<ListSection<?>> sections) {
-      this.sections = OptionalValue.of(sections);
+      getDelegatedBuilder().setSections(sections);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_MESSAGE_PROPERTIES)
+    @JsonIgnore
     public Builder setMessageProperties(ListAdditionalProperties messageProperties) {
-      this.messageProperties = OptionalValue.of(messageProperties);
+      getDelegatedBuilder().setMessageProperties(messageProperties);
       return this;
+    }
+
+    private ListMessageInternal.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = ListMessageInternal.builder();
+      }
+      return this._delegatedBuilder;
     }
 
     public ListMessage build() {
-      return new ListMessageImpl(title, description, sections, messageProperties);
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.listMessage = OptionalValue.of(this._delegatedBuilder.build());
+      }
+      return new ListMessageImpl(listMessage);
     }
+  }
+
+  public static class DelegatedSerializer extends JsonSerializer<OptionalValue<ListMessage>> {
+    @Override
+    public void serialize(
+        OptionalValue<ListMessage> value, JsonGenerator jgen, SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      ListMessageImpl impl = (ListMessageImpl) value.get();
+      jgen.writeObject(impl.getListMessage());
+    }
+  }
+
+  public static class DelegatedDeSerializer extends JsonDeserializer<ListMessage> {
+    @Override
+    public ListMessage deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+
+      ListMessageImpl.Builder builder = new ListMessageImpl.Builder();
+      ListMessageInternalImpl deserialized = jp.readValueAs(ListMessageInternalImpl.class);
+      builder.setListMessage(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<ListMessage> delegatedConverter(ListMessageInternal internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setListMessage(internal).build());
   }
 }

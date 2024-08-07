@@ -5,10 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ReplyToMessageInternal;
+import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ReplyToMessageInternalImpl;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({ReplyToMessageImpl.JSON_PROPERTY_REPLY_TO})
 @JsonFilter("uninitializedFilter")
@@ -48,8 +57,10 @@ public class ReplyToMessageImpl
   }
 
   public OptionalValue<String> messageId() {
-    return null != replyTo
-        ? replyTo.map(ReplyToMessageInternal::getMessageId)
+    return null != replyTo && replyTo.isPresent()
+        ? replyTo
+            .map(f -> ((ReplyToMessageInternalImpl) f).messageId())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -122,5 +133,38 @@ public class ReplyToMessageImpl
       }
       return new ReplyToMessageImpl(replyTo);
     }
+  }
+
+  public static class DelegatedSerializer extends JsonSerializer<OptionalValue<ReplyToMessage>> {
+    @Override
+    public void serialize(
+        OptionalValue<ReplyToMessage> value, JsonGenerator jgen, SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      ReplyToMessageImpl impl = (ReplyToMessageImpl) value.get();
+      jgen.writeObject(impl.getReplyTo());
+    }
+  }
+
+  public static class DelegatedDeSerializer extends JsonDeserializer<ReplyToMessage> {
+    @Override
+    public ReplyToMessage deserialize(JsonParser jp, DeserializationContext ctxt)
+        throws IOException {
+
+      ReplyToMessageImpl.Builder builder = new ReplyToMessageImpl.Builder();
+      ReplyToMessageInternalImpl deserialized = jp.readValueAs(ReplyToMessageInternalImpl.class);
+      builder.setReplyTo(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<ReplyToMessage> delegatedConverter(ReplyToMessageInternal internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setReplyTo(internal).build());
   }
 }

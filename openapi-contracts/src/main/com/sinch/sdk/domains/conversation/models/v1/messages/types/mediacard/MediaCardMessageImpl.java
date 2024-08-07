@@ -5,10 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.MediaCardMessageInternal;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.MediaCardMessageInternalImpl;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({MediaCardMessageImpl.JSON_PROPERTY_MEDIA_CARD_MESSAGE})
 @JsonFilter("uninitializedFilter")
@@ -50,8 +59,10 @@ public class MediaCardMessageImpl
   }
 
   public OptionalValue<String> caption() {
-    return null != mediaCardMessage
-        ? mediaCardMessage.map(MediaCardMessageInternal::getCaption)
+    return null != mediaCardMessage && mediaCardMessage.isPresent()
+        ? mediaCardMessage
+            .map(f -> ((MediaCardMessageInternalImpl) f).caption())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -66,8 +77,10 @@ public class MediaCardMessageImpl
   }
 
   public OptionalValue<String> url() {
-    return null != mediaCardMessage
-        ? mediaCardMessage.map(MediaCardMessageInternal::getUrl)
+    return null != mediaCardMessage && mediaCardMessage.isPresent()
+        ? mediaCardMessage
+            .map(f -> ((MediaCardMessageInternalImpl) f).url())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -146,5 +159,39 @@ public class MediaCardMessageImpl
       }
       return new MediaCardMessageImpl(mediaCardMessage);
     }
+  }
+
+  public static class DelegatedSerializer extends JsonSerializer<OptionalValue<MediaCardMessage>> {
+    @Override
+    public void serialize(
+        OptionalValue<MediaCardMessage> value, JsonGenerator jgen, SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      MediaCardMessageImpl impl = (MediaCardMessageImpl) value.get();
+      jgen.writeObject(impl.getMediaCardMessage());
+    }
+  }
+
+  public static class DelegatedDeSerializer extends JsonDeserializer<MediaCardMessage> {
+    @Override
+    public MediaCardMessage deserialize(JsonParser jp, DeserializationContext ctxt)
+        throws IOException {
+
+      MediaCardMessageImpl.Builder builder = new MediaCardMessageImpl.Builder();
+      MediaCardMessageInternalImpl deserialized =
+          jp.readValueAs(MediaCardMessageInternalImpl.class);
+      builder.setMediaCardMessage(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<MediaCardMessage> delegatedConverter(MediaCardMessageInternal internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setMediaCardMessage(internal).build());
   }
 }

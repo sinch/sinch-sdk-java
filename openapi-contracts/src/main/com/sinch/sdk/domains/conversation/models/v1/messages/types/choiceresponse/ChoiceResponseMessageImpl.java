@@ -5,10 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ChoiceResponseMessageInternal;
+import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ChoiceResponseMessageInternalImpl;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({ChoiceResponseMessageImpl.JSON_PROPERTY_CHOICE_RESPONSE_MESSAGE})
 @JsonFilter("uninitializedFilter")
@@ -51,8 +60,10 @@ public class ChoiceResponseMessageImpl
   }
 
   public OptionalValue<String> messageId() {
-    return null != choiceResponseMessage
-        ? choiceResponseMessage.map(ChoiceResponseMessageInternal::getMessageId)
+    return null != choiceResponseMessage && choiceResponseMessage.isPresent()
+        ? choiceResponseMessage
+            .map(f -> ((ChoiceResponseMessageInternalImpl) f).messageId())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -67,8 +78,10 @@ public class ChoiceResponseMessageImpl
   }
 
   public OptionalValue<String> postbackData() {
-    return null != choiceResponseMessage
-        ? choiceResponseMessage.map(ChoiceResponseMessageInternal::getPostbackData)
+    return null != choiceResponseMessage && choiceResponseMessage.isPresent()
+        ? choiceResponseMessage
+            .map(f -> ((ChoiceResponseMessageInternalImpl) f).postbackData())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -150,5 +163,41 @@ public class ChoiceResponseMessageImpl
       }
       return new ChoiceResponseMessageImpl(choiceResponseMessage);
     }
+  }
+
+  public static class DelegatedSerializer
+      extends JsonSerializer<OptionalValue<ChoiceResponseMessage>> {
+    @Override
+    public void serialize(
+        OptionalValue<ChoiceResponseMessage> value, JsonGenerator jgen, SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      ChoiceResponseMessageImpl impl = (ChoiceResponseMessageImpl) value.get();
+      jgen.writeObject(impl.getChoiceResponseMessage());
+    }
+  }
+
+  public static class DelegatedDeSerializer extends JsonDeserializer<ChoiceResponseMessage> {
+    @Override
+    public ChoiceResponseMessage deserialize(JsonParser jp, DeserializationContext ctxt)
+        throws IOException {
+
+      ChoiceResponseMessageImpl.Builder builder = new ChoiceResponseMessageImpl.Builder();
+      ChoiceResponseMessageInternalImpl deserialized =
+          jp.readValueAs(ChoiceResponseMessageInternalImpl.class);
+      builder.setChoiceResponseMessage(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<ChoiceResponseMessage> delegatedConverter(
+      ChoiceResponseMessageInternal internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setChoiceResponseMessage(internal).build());
   }
 }

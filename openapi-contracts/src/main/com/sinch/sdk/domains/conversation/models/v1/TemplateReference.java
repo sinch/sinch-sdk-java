@@ -15,11 +15,7 @@ package com.sinch.sdk.domains.conversation.models.v1;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Map;
 
-/**
- * The referenced template can be an omnichannel template stored in Conversation API Template Store
- * as AppMessage or it can reference external channel-specific template such as WhatsApp Business
- * Template.
- */
+/** Template (Reference) */
 @JsonDeserialize(builder = TemplateReferenceImpl.Builder.class)
 public interface TemplateReference
     extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride {

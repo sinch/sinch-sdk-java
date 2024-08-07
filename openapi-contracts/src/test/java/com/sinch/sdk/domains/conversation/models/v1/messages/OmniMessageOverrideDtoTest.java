@@ -2,10 +2,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
-import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.OmniMessageOverrideMapperHelper;
 import com.sinch.sdk.domains.conversation.models.v1.TemplateReferenceDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.carousel.CarouselMessageDtoTest;
@@ -16,10 +13,8 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.location.Loca
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessageDtoTest;
 import java.io.IOException;
-import java.io.StringWriter;
+import org.assertj.core.api.Assertions;
 import org.json.JSONException;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
@@ -71,82 +66,157 @@ public class OmniMessageOverrideDtoTest extends ConversationBaseTest {
   @GivenTextResource("/domains/conversation/v1/messages/OmniMessageOverrideMessageTextDto.json")
   static String jsonOmniMessageOverrideTextDto;
 
-  JsonGenerator jsonGen;
-  StringWriter writer;
+  @Test
+  void serializeCardDto() throws IOException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(omniMessageOverrideCard);
 
-  @BeforeEach
-  void init() throws IOException {
-    JsonFactory jsonFactory = new JsonFactory();
-    writer = new StringWriter();
-    jsonGen = jsonFactory.createGenerator(writer);
-    jsonGen.setCodec(objectMapper);
-  }
-
-  @AfterEach
-  void tearDown() throws IOException {
-    writer.close();
+    JSONAssert.assertEquals(jsonOmniMessageOverrideCardDto, serializedString, true);
   }
 
   @Test
-  void serializeCardDto() throws IOException, JSONException {
-    OmniMessageOverrideMapperHelper.serialize(omniMessageOverrideCard, jsonGen);
+  void deserializeCardDto() throws IOException, JSONException {
+    Object deserialized =
+        objectMapper.readValue(jsonOmniMessageOverrideCardDto, OmniMessageOverride.class);
 
-    JSONAssert.assertEquals(jsonOmniMessageOverrideCardDto, writer.toString(), true);
+    Assertions.assertThat(deserialized)
+        .usingRecursiveComparison()
+        .isEqualTo(omniMessageOverrideCard);
   }
 
   @Test
   void serializeCarouselDto() throws IOException, JSONException {
-    OmniMessageOverrideMapperHelper.serialize(omniMessageOverrideCarousel, jsonGen);
+    String serializedString = objectMapper.writeValueAsString(omniMessageOverrideCarousel);
 
-    JSONAssert.assertEquals(jsonOmniMessageOverrideCarouselDto, writer.toString(), true);
+    JSONAssert.assertEquals(jsonOmniMessageOverrideCarouselDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeCarouselDto() throws IOException, JSONException {
+    Object deserialized =
+        objectMapper.readValue(jsonOmniMessageOverrideCarouselDto, OmniMessageOverride.class);
+
+    Assertions.assertThat(deserialized)
+        .usingRecursiveComparison()
+        .isEqualTo(omniMessageOverrideCarousel);
   }
 
   @Test
   void serializeChoiceDto() throws IOException, JSONException {
-    OmniMessageOverrideMapperHelper.serialize(omniMessageOverrideChoice, jsonGen);
+    String serializedString = objectMapper.writeValueAsString(omniMessageOverrideChoice);
 
-    JSONAssert.assertEquals(jsonOmniMessageOverrideChoiceDto, writer.toString(), true);
+    JSONAssert.assertEquals(jsonOmniMessageOverrideChoiceDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeChoiceDto() throws IOException, JSONException {
+    Object deserialized =
+        objectMapper.readValue(jsonOmniMessageOverrideChoiceDto, OmniMessageOverride.class);
+
+    Assertions.assertThat(deserialized)
+        .usingRecursiveComparison()
+        .isEqualTo(omniMessageOverrideChoice);
   }
 
   @Test
   void serializeContactInfoDto() throws IOException, JSONException {
-    OmniMessageOverrideMapperHelper.serialize(omniMessageOverrideContactInfo, jsonGen);
+    String serializedString = objectMapper.writeValueAsString(omniMessageOverrideContactInfo);
 
-    JSONAssert.assertEquals(jsonOmniMessageOverrideContactInfoDto, writer.toString(), true);
+    JSONAssert.assertEquals(jsonOmniMessageOverrideContactInfoDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeContactInfoDto() throws IOException, JSONException {
+    Object deserialized =
+        objectMapper.readValue(jsonOmniMessageOverrideContactInfoDto, OmniMessageOverride.class);
+
+    Assertions.assertThat(deserialized)
+        .usingRecursiveComparison()
+        .isEqualTo(omniMessageOverrideContactInfo);
   }
 
   @Test
   void serializeListDto() throws IOException, JSONException {
-    OmniMessageOverrideMapperHelper.serialize(omniMessageOverrideList, jsonGen);
+    String serializedString = objectMapper.writeValueAsString(omniMessageOverrideList);
 
-    JSONAssert.assertEquals(jsonOmniMessageOverrideListDto, writer.toString(), true);
+    JSONAssert.assertEquals(jsonOmniMessageOverrideListDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeListDto() throws IOException, JSONException {
+    Object deserialized =
+        objectMapper.readValue(jsonOmniMessageOverrideListDto, OmniMessageOverride.class);
+
+    Assertions.assertThat(deserialized)
+        .usingRecursiveComparison()
+        .isEqualTo(omniMessageOverrideList);
   }
 
   @Test
   void serializeLocationDto() throws IOException, JSONException {
-    OmniMessageOverrideMapperHelper.serialize(omniMessageOverrideLocation, jsonGen);
+    String serializedString = objectMapper.writeValueAsString(omniMessageOverrideLocation);
 
-    JSONAssert.assertEquals(jsonOmniMessageOverrideLocationDto, writer.toString(), true);
+    JSONAssert.assertEquals(jsonOmniMessageOverrideLocationDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeLocationDto() throws IOException, JSONException {
+    Object deserialized =
+        objectMapper.readValue(jsonOmniMessageOverrideLocationDto, OmniMessageOverride.class);
+
+    Assertions.assertThat(deserialized)
+        .usingRecursiveComparison()
+        .isEqualTo(omniMessageOverrideLocation);
   }
 
   @Test
   void serializeMediaDto() throws IOException, JSONException {
-    OmniMessageOverrideMapperHelper.serialize(omniMessageOverrideMedia, jsonGen);
+    String serializedString = objectMapper.writeValueAsString(omniMessageOverrideMedia);
 
-    JSONAssert.assertEquals(jsonOmniMessageOverrideMediaDto, writer.toString(), true);
+    JSONAssert.assertEquals(jsonOmniMessageOverrideMediaDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeMediaDto() throws IOException, JSONException {
+    Object deserialized =
+        objectMapper.readValue(jsonOmniMessageOverrideMediaDto, OmniMessageOverride.class);
+
+    Assertions.assertThat(deserialized)
+        .usingRecursiveComparison()
+        .isEqualTo(omniMessageOverrideMedia);
   }
 
   @Test
   void serializeTemplateReferenceDto() throws IOException, JSONException {
-    OmniMessageOverrideMapperHelper.serialize(omniMessageOverrideTemplateReference, jsonGen);
+    String serializedString = objectMapper.writeValueAsString(omniMessageOverrideTemplateReference);
 
-    JSONAssert.assertEquals(jsonOmniMessageOverrideTemplateReferenceDto, writer.toString(), true);
+    JSONAssert.assertEquals(jsonOmniMessageOverrideTemplateReferenceDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeTemplateReferenceDto() throws IOException, JSONException {
+    Object deserialized =
+        objectMapper.readValue(
+            jsonOmniMessageOverrideTemplateReferenceDto, OmniMessageOverride.class);
+
+    Assertions.assertThat(deserialized)
+        .usingRecursiveComparison()
+        .isEqualTo(omniMessageOverrideTemplateReference);
   }
 
   @Test
   void serializeTextDto() throws IOException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(omniMessageOverrideText);
 
-    OmniMessageOverrideMapperHelper.serialize(omniMessageOverrideText, jsonGen);
-    JSONAssert.assertEquals(jsonOmniMessageOverrideTextDto, writer.toString(), true);
+    JSONAssert.assertEquals(jsonOmniMessageOverrideTextDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeTextDto() throws IOException, JSONException {
+    Object deserialized =
+        objectMapper.readValue(jsonOmniMessageOverrideTextDto, OmniMessageOverride.class);
+
+    Assertions.assertThat(deserialized)
+        .usingRecursiveComparison()
+        .isEqualTo(omniMessageOverrideText);
   }
 }

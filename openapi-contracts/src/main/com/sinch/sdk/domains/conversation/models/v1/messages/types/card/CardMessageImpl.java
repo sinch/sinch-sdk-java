@@ -5,19 +5,23 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.Choice;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.CardMessageInternal;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.CardMessageInternalImpl;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
-@JsonPropertyOrder({
-  CardMessageImpl.JSON_PROPERTY_CHOICES,
-  CardMessageImpl.JSON_PROPERTY_DESCRIPTION,
-  CardMessageImpl.JSON_PROPERTY_HEIGHT,
-  CardMessageImpl.JSON_PROPERTY_MEDIA_MESSAGE,
-  CardMessageImpl.JSON_PROPERTY_TITLE
-})
+@JsonPropertyOrder({CardMessageImpl.JSON_PROPERTY_CARD_MESSAGE})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class CardMessageImpl
@@ -26,97 +30,104 @@ public class CardMessageImpl
         com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_CHOICES = "choices";
+  public static final String JSON_PROPERTY_CARD_MESSAGE = "card_message";
 
-  private OptionalValue<List<Choice<?>>> choices;
-
-  public static final String JSON_PROPERTY_DESCRIPTION = "description";
-
-  private OptionalValue<String> description;
-
-  public static final String JSON_PROPERTY_HEIGHT = "height";
-
-  private OptionalValue<CardHeight> height;
-
-  public static final String JSON_PROPERTY_MEDIA_MESSAGE = "media_message";
-
-  private OptionalValue<CardMessageMedia> media;
-
-  public static final String JSON_PROPERTY_TITLE = "title";
-
-  private OptionalValue<String> title;
+  private OptionalValue<CardMessageInternal> cardMessage;
 
   public CardMessageImpl() {}
 
-  protected CardMessageImpl(
-      OptionalValue<List<Choice<?>>> choices,
-      OptionalValue<String> description,
-      OptionalValue<CardHeight> height,
-      OptionalValue<CardMessageMedia> media,
-      OptionalValue<String> title) {
-    this.choices = choices;
-    this.description = description;
-    this.height = height;
-    this.media = media;
-    this.title = title;
+  protected CardMessageImpl(OptionalValue<CardMessageInternal> cardMessage) {
+    this.cardMessage = cardMessage;
+  }
+
+  @JsonIgnore
+  public CardMessageInternal getCardMessage() {
+    return cardMessage.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CARD_MESSAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<CardMessageInternal> cardMessage() {
+    return cardMessage;
   }
 
   @JsonIgnore
   public List<Choice<?>> getChoices() {
-    return choices.orElse(null);
+    if (null == cardMessage || !cardMessage.isPresent() || null == cardMessage.get().getChoices()) {
+      return null;
+    }
+    return cardMessage.get().getChoices();
   }
 
-  @JsonProperty(JSON_PROPERTY_CHOICES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<List<Choice<?>>> choices() {
-    return choices;
+    return null != cardMessage && cardMessage.isPresent()
+        ? cardMessage
+            .map(f -> ((CardMessageInternalImpl) f).choices())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public String getDescription() {
-    return description.orElse(null);
+    if (null == cardMessage
+        || !cardMessage.isPresent()
+        || null == cardMessage.get().getDescription()) {
+      return null;
+    }
+    return cardMessage.get().getDescription();
   }
 
-  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> description() {
-    return description;
+    return null != cardMessage && cardMessage.isPresent()
+        ? cardMessage
+            .map(f -> ((CardMessageInternalImpl) f).description())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public CardHeight getHeight() {
-    return height.orElse(null);
+    if (null == cardMessage || !cardMessage.isPresent() || null == cardMessage.get().getHeight()) {
+      return null;
+    }
+    return cardMessage.get().getHeight();
   }
 
-  @JsonProperty(JSON_PROPERTY_HEIGHT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<CardHeight> height() {
-    return height;
+    return null != cardMessage && cardMessage.isPresent()
+        ? cardMessage.map(f -> ((CardMessageInternalImpl) f).height()).orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public CardMessageMedia getMedia() {
-    return media.orElse(null);
+    if (null == cardMessage || !cardMessage.isPresent() || null == cardMessage.get().getMedia()) {
+      return null;
+    }
+    return cardMessage.get().getMedia();
   }
 
-  @JsonProperty(JSON_PROPERTY_MEDIA_MESSAGE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<CardMessageMedia> media() {
-    return media;
+    return null != cardMessage && cardMessage.isPresent()
+        ? cardMessage.map(f -> ((CardMessageInternalImpl) f).media()).orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public String getTitle() {
-    return title.orElse(null);
+    if (null == cardMessage || !cardMessage.isPresent() || null == cardMessage.get().getTitle()) {
+      return null;
+    }
+    return cardMessage.get().getTitle();
   }
 
-  @JsonProperty(JSON_PROPERTY_TITLE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> title() {
-    return title;
+    return null != cardMessage && cardMessage.isPresent()
+        ? cardMessage.map(f -> ((CardMessageInternalImpl) f).title()).orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
-  /** Return true if this CardMessage object is equal to o. */
+  /** Return true if this CardMessageField object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -125,28 +136,20 @@ public class CardMessageImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CardMessageImpl cardMessage = (CardMessageImpl) o;
-    return Objects.equals(this.choices, cardMessage.choices)
-        && Objects.equals(this.description, cardMessage.description)
-        && Objects.equals(this.height, cardMessage.height)
-        && Objects.equals(this.media, cardMessage.media)
-        && Objects.equals(this.title, cardMessage.title);
+    CardMessageImpl cardMessageField = (CardMessageImpl) o;
+    return Objects.equals(this.cardMessage, cardMessageField.cardMessage);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(choices, description, height, media, title);
+    return Objects.hash(cardMessage);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CardMessageImpl {\n");
-    sb.append("    choices: ").append(toIndentedString(choices)).append("\n");
-    sb.append("    description: ").append(toIndentedString(description)).append("\n");
-    sb.append("    height: ").append(toIndentedString(height)).append("\n");
-    sb.append("    media: ").append(toIndentedString(media)).append("\n");
-    sb.append("    title: ").append(toIndentedString(title)).append("\n");
+    sb.append("    cardMessage: ").append(toIndentedString(cardMessage)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -163,44 +166,91 @@ public class CardMessageImpl
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements CardMessage.Builder {
-    OptionalValue<List<Choice<?>>> choices = OptionalValue.empty();
-    OptionalValue<String> description = OptionalValue.empty();
-    OptionalValue<CardHeight> height = OptionalValue.empty();
-    OptionalValue<CardMessageMedia> media = OptionalValue.empty();
-    OptionalValue<String> title = OptionalValue.empty();
+    OptionalValue<CardMessageInternal> cardMessage = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_CHOICES)
+    CardMessageInternal.Builder _delegatedBuilder = null;
+
+    @JsonProperty(value = JSON_PROPERTY_CARD_MESSAGE, required = true)
+    public Builder setCardMessage(CardMessageInternal cardMessage) {
+      this.cardMessage = OptionalValue.of(cardMessage);
+      return this;
+    }
+
+    @JsonIgnore
     public Builder setChoices(List<Choice<?>> choices) {
-      this.choices = OptionalValue.of(choices);
+      getDelegatedBuilder().setChoices(choices);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_DESCRIPTION)
+    @JsonIgnore
     public Builder setDescription(String description) {
-      this.description = OptionalValue.of(description);
+      getDelegatedBuilder().setDescription(description);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_HEIGHT)
+    @JsonIgnore
     public Builder setHeight(CardHeight height) {
-      this.height = OptionalValue.of(height);
+      getDelegatedBuilder().setHeight(height);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_MEDIA_MESSAGE)
+    @JsonIgnore
     public Builder setMedia(CardMessageMedia media) {
-      this.media = OptionalValue.of(media);
+      getDelegatedBuilder().setMedia(media);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_TITLE)
+    @JsonIgnore
     public Builder setTitle(String title) {
-      this.title = OptionalValue.of(title);
+      getDelegatedBuilder().setTitle(title);
       return this;
+    }
+
+    private CardMessageInternal.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = CardMessageInternal.builder();
+      }
+      return this._delegatedBuilder;
     }
 
     public CardMessage build() {
-      return new CardMessageImpl(choices, description, height, media, title);
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.cardMessage = OptionalValue.of(this._delegatedBuilder.build());
+      }
+      return new CardMessageImpl(cardMessage);
     }
+  }
+
+  public static class DelegatedSerializer extends JsonSerializer<OptionalValue<CardMessage>> {
+    @Override
+    public void serialize(
+        OptionalValue<CardMessage> value, JsonGenerator jgen, SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      CardMessageImpl impl = (CardMessageImpl) value.get();
+      jgen.writeObject(impl.getCardMessage());
+    }
+  }
+
+  public static class DelegatedDeSerializer extends JsonDeserializer<CardMessage> {
+    @Override
+    public CardMessage deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+
+      CardMessageImpl.Builder builder = new CardMessageImpl.Builder();
+      CardMessageInternalImpl deserialized = jp.readValueAs(CardMessageInternalImpl.class);
+      builder.setCardMessage(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<CardMessage> delegatedConverter(CardMessageInternal internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setCardMessage(internal).build());
   }
 }

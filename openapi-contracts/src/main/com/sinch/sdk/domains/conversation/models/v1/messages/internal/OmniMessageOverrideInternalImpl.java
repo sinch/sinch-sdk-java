@@ -15,12 +15,12 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.sinch.sdk.core.models.AbstractOpenApiSchema;
 import com.sinch.sdk.core.utils.databind.JSONNavigator;
-import com.sinch.sdk.domains.conversation.models.v1.internal.TemplateReferenceFieldInternalImpl;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.CardMessageFieldInternalImpl;
+import com.sinch.sdk.domains.conversation.models.v1.TemplateReferenceImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardMessageImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceMessageImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.contactinfo.ContactInfoMessageImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.CarouselMessageFieldInternalImpl;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ChoiceMessageFieldInternalImpl;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ContactInfoMessageFieldInternalImpl;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ListMessageFieldInternalImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.list.ListMessageImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.location.LocationMessageImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessageImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessageImpl;
@@ -82,46 +82,44 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
       boolean typeCoercion = ctxt.isEnabled(MapperFeature.ALLOW_COERCION_OF_SCALARS);
       int match = 0;
       JsonToken token = tree.traverse(jp.getCodec()).nextToken();
-      // deserialize CardMessageFieldInternalImpl
+      // deserialize CardMessageImpl
       try {
         boolean attemptParsing = true;
         // ensure that we respect type coercion as set on the client ObjectMapper
-        if (CardMessageFieldInternalImpl.class.equals(Integer.class)
-            || CardMessageFieldInternalImpl.class.equals(Long.class)
-            || CardMessageFieldInternalImpl.class.equals(Float.class)
-            || CardMessageFieldInternalImpl.class.equals(Double.class)
-            || CardMessageFieldInternalImpl.class.equals(Boolean.class)
-            || CardMessageFieldInternalImpl.class.equals(String.class)) {
+        if (CardMessageImpl.class.equals(Integer.class)
+            || CardMessageImpl.class.equals(Long.class)
+            || CardMessageImpl.class.equals(Float.class)
+            || CardMessageImpl.class.equals(Double.class)
+            || CardMessageImpl.class.equals(Boolean.class)
+            || CardMessageImpl.class.equals(String.class)) {
           attemptParsing = typeCoercion;
           if (!attemptParsing) {
             attemptParsing |=
-                ((CardMessageFieldInternalImpl.class.equals(Integer.class)
-                        || CardMessageFieldInternalImpl.class.equals(Long.class))
+                ((CardMessageImpl.class.equals(Integer.class)
+                        || CardMessageImpl.class.equals(Long.class))
                     && token == JsonToken.VALUE_NUMBER_INT);
             attemptParsing |=
-                ((CardMessageFieldInternalImpl.class.equals(Float.class)
-                        || CardMessageFieldInternalImpl.class.equals(Double.class))
+                ((CardMessageImpl.class.equals(Float.class)
+                        || CardMessageImpl.class.equals(Double.class))
                     && token == JsonToken.VALUE_NUMBER_FLOAT);
             attemptParsing |=
-                (CardMessageFieldInternalImpl.class.equals(Boolean.class)
+                (CardMessageImpl.class.equals(Boolean.class)
                     && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
             attemptParsing |=
-                (CardMessageFieldInternalImpl.class.equals(String.class)
-                    && token == JsonToken.VALUE_STRING);
+                (CardMessageImpl.class.equals(String.class) && token == JsonToken.VALUE_STRING);
           }
         }
         if (attemptParsing) {
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(CardMessageFieldInternalImpl.class);
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(CardMessageImpl.class);
           // TODO: there is no validation against JSON schema constraints
           // (min, max, enum, pattern...), this does not perform a strict JSON
           // validation, which means the 'match' count may be higher than it should be.
           match++;
-          log.log(Level.FINER, "Input data matches schema 'CardMessageFieldInternalImpl'");
+          log.log(Level.FINER, "Input data matches schema 'CardMessageImpl'");
         }
       } catch (Exception e) {
         // deserialization failed, continue
-        log.log(Level.FINER, "Input data does not match schema 'CardMessageFieldInternalImpl'", e);
+        log.log(Level.FINER, "Input data does not match schema 'CardMessageImpl'", e);
       }
 
       // deserialize CarouselMessageFieldInternalImpl
@@ -167,134 +165,125 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
             Level.FINER, "Input data does not match schema 'CarouselMessageFieldInternalImpl'", e);
       }
 
-      // deserialize ChoiceMessageFieldInternalImpl
+      // deserialize ChoiceMessageImpl
       try {
         boolean attemptParsing = true;
         // ensure that we respect type coercion as set on the client ObjectMapper
-        if (ChoiceMessageFieldInternalImpl.class.equals(Integer.class)
-            || ChoiceMessageFieldInternalImpl.class.equals(Long.class)
-            || ChoiceMessageFieldInternalImpl.class.equals(Float.class)
-            || ChoiceMessageFieldInternalImpl.class.equals(Double.class)
-            || ChoiceMessageFieldInternalImpl.class.equals(Boolean.class)
-            || ChoiceMessageFieldInternalImpl.class.equals(String.class)) {
+        if (ChoiceMessageImpl.class.equals(Integer.class)
+            || ChoiceMessageImpl.class.equals(Long.class)
+            || ChoiceMessageImpl.class.equals(Float.class)
+            || ChoiceMessageImpl.class.equals(Double.class)
+            || ChoiceMessageImpl.class.equals(Boolean.class)
+            || ChoiceMessageImpl.class.equals(String.class)) {
           attemptParsing = typeCoercion;
           if (!attemptParsing) {
             attemptParsing |=
-                ((ChoiceMessageFieldInternalImpl.class.equals(Integer.class)
-                        || ChoiceMessageFieldInternalImpl.class.equals(Long.class))
+                ((ChoiceMessageImpl.class.equals(Integer.class)
+                        || ChoiceMessageImpl.class.equals(Long.class))
                     && token == JsonToken.VALUE_NUMBER_INT);
             attemptParsing |=
-                ((ChoiceMessageFieldInternalImpl.class.equals(Float.class)
-                        || ChoiceMessageFieldInternalImpl.class.equals(Double.class))
+                ((ChoiceMessageImpl.class.equals(Float.class)
+                        || ChoiceMessageImpl.class.equals(Double.class))
                     && token == JsonToken.VALUE_NUMBER_FLOAT);
             attemptParsing |=
-                (ChoiceMessageFieldInternalImpl.class.equals(Boolean.class)
+                (ChoiceMessageImpl.class.equals(Boolean.class)
                     && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
             attemptParsing |=
-                (ChoiceMessageFieldInternalImpl.class.equals(String.class)
-                    && token == JsonToken.VALUE_STRING);
+                (ChoiceMessageImpl.class.equals(String.class) && token == JsonToken.VALUE_STRING);
           }
         }
         if (attemptParsing) {
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(ChoiceMessageFieldInternalImpl.class);
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(ChoiceMessageImpl.class);
           // TODO: there is no validation against JSON schema constraints
           // (min, max, enum, pattern...), this does not perform a strict JSON
           // validation, which means the 'match' count may be higher than it should be.
           match++;
-          log.log(Level.FINER, "Input data matches schema 'ChoiceMessageFieldInternalImpl'");
+          log.log(Level.FINER, "Input data matches schema 'ChoiceMessageImpl'");
         }
       } catch (Exception e) {
         // deserialization failed, continue
-        log.log(
-            Level.FINER, "Input data does not match schema 'ChoiceMessageFieldInternalImpl'", e);
+        log.log(Level.FINER, "Input data does not match schema 'ChoiceMessageImpl'", e);
       }
 
-      // deserialize ContactInfoMessageFieldInternalImpl
+      // deserialize ContactInfoMessageImpl
       try {
         boolean attemptParsing = true;
         // ensure that we respect type coercion as set on the client ObjectMapper
-        if (ContactInfoMessageFieldInternalImpl.class.equals(Integer.class)
-            || ContactInfoMessageFieldInternalImpl.class.equals(Long.class)
-            || ContactInfoMessageFieldInternalImpl.class.equals(Float.class)
-            || ContactInfoMessageFieldInternalImpl.class.equals(Double.class)
-            || ContactInfoMessageFieldInternalImpl.class.equals(Boolean.class)
-            || ContactInfoMessageFieldInternalImpl.class.equals(String.class)) {
+        if (ContactInfoMessageImpl.class.equals(Integer.class)
+            || ContactInfoMessageImpl.class.equals(Long.class)
+            || ContactInfoMessageImpl.class.equals(Float.class)
+            || ContactInfoMessageImpl.class.equals(Double.class)
+            || ContactInfoMessageImpl.class.equals(Boolean.class)
+            || ContactInfoMessageImpl.class.equals(String.class)) {
           attemptParsing = typeCoercion;
           if (!attemptParsing) {
             attemptParsing |=
-                ((ContactInfoMessageFieldInternalImpl.class.equals(Integer.class)
-                        || ContactInfoMessageFieldInternalImpl.class.equals(Long.class))
+                ((ContactInfoMessageImpl.class.equals(Integer.class)
+                        || ContactInfoMessageImpl.class.equals(Long.class))
                     && token == JsonToken.VALUE_NUMBER_INT);
             attemptParsing |=
-                ((ContactInfoMessageFieldInternalImpl.class.equals(Float.class)
-                        || ContactInfoMessageFieldInternalImpl.class.equals(Double.class))
+                ((ContactInfoMessageImpl.class.equals(Float.class)
+                        || ContactInfoMessageImpl.class.equals(Double.class))
                     && token == JsonToken.VALUE_NUMBER_FLOAT);
             attemptParsing |=
-                (ContactInfoMessageFieldInternalImpl.class.equals(Boolean.class)
+                (ContactInfoMessageImpl.class.equals(Boolean.class)
                     && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
             attemptParsing |=
-                (ContactInfoMessageFieldInternalImpl.class.equals(String.class)
+                (ContactInfoMessageImpl.class.equals(String.class)
                     && token == JsonToken.VALUE_STRING);
           }
         }
         if (attemptParsing) {
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(ContactInfoMessageFieldInternalImpl.class);
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(ContactInfoMessageImpl.class);
           // TODO: there is no validation against JSON schema constraints
           // (min, max, enum, pattern...), this does not perform a strict JSON
           // validation, which means the 'match' count may be higher than it should be.
           match++;
-          log.log(Level.FINER, "Input data matches schema 'ContactInfoMessageFieldInternalImpl'");
+          log.log(Level.FINER, "Input data matches schema 'ContactInfoMessageImpl'");
         }
       } catch (Exception e) {
         // deserialization failed, continue
-        log.log(
-            Level.FINER,
-            "Input data does not match schema 'ContactInfoMessageFieldInternalImpl'",
-            e);
+        log.log(Level.FINER, "Input data does not match schema 'ContactInfoMessageImpl'", e);
       }
 
-      // deserialize ListMessageFieldInternalImpl
+      // deserialize ListMessageImpl
       try {
         boolean attemptParsing = true;
         // ensure that we respect type coercion as set on the client ObjectMapper
-        if (ListMessageFieldInternalImpl.class.equals(Integer.class)
-            || ListMessageFieldInternalImpl.class.equals(Long.class)
-            || ListMessageFieldInternalImpl.class.equals(Float.class)
-            || ListMessageFieldInternalImpl.class.equals(Double.class)
-            || ListMessageFieldInternalImpl.class.equals(Boolean.class)
-            || ListMessageFieldInternalImpl.class.equals(String.class)) {
+        if (ListMessageImpl.class.equals(Integer.class)
+            || ListMessageImpl.class.equals(Long.class)
+            || ListMessageImpl.class.equals(Float.class)
+            || ListMessageImpl.class.equals(Double.class)
+            || ListMessageImpl.class.equals(Boolean.class)
+            || ListMessageImpl.class.equals(String.class)) {
           attemptParsing = typeCoercion;
           if (!attemptParsing) {
             attemptParsing |=
-                ((ListMessageFieldInternalImpl.class.equals(Integer.class)
-                        || ListMessageFieldInternalImpl.class.equals(Long.class))
+                ((ListMessageImpl.class.equals(Integer.class)
+                        || ListMessageImpl.class.equals(Long.class))
                     && token == JsonToken.VALUE_NUMBER_INT);
             attemptParsing |=
-                ((ListMessageFieldInternalImpl.class.equals(Float.class)
-                        || ListMessageFieldInternalImpl.class.equals(Double.class))
+                ((ListMessageImpl.class.equals(Float.class)
+                        || ListMessageImpl.class.equals(Double.class))
                     && token == JsonToken.VALUE_NUMBER_FLOAT);
             attemptParsing |=
-                (ListMessageFieldInternalImpl.class.equals(Boolean.class)
+                (ListMessageImpl.class.equals(Boolean.class)
                     && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
             attemptParsing |=
-                (ListMessageFieldInternalImpl.class.equals(String.class)
-                    && token == JsonToken.VALUE_STRING);
+                (ListMessageImpl.class.equals(String.class) && token == JsonToken.VALUE_STRING);
           }
         }
         if (attemptParsing) {
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(ListMessageFieldInternalImpl.class);
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(ListMessageImpl.class);
           // TODO: there is no validation against JSON schema constraints
           // (min, max, enum, pattern...), this does not perform a strict JSON
           // validation, which means the 'match' count may be higher than it should be.
           match++;
-          log.log(Level.FINER, "Input data matches schema 'ListMessageFieldInternalImpl'");
+          log.log(Level.FINER, "Input data matches schema 'ListMessageImpl'");
         }
       } catch (Exception e) {
         // deserialization failed, continue
-        log.log(Level.FINER, "Input data does not match schema 'ListMessageFieldInternalImpl'", e);
+        log.log(Level.FINER, "Input data does not match schema 'ListMessageImpl'", e);
       }
 
       // deserialize LocationMessageImpl
@@ -377,49 +366,45 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
         log.log(Level.FINER, "Input data does not match schema 'MediaMessageImpl'", e);
       }
 
-      // deserialize TemplateReferenceFieldInternalImpl
+      // deserialize TemplateReferenceImpl
       try {
         boolean attemptParsing = true;
         // ensure that we respect type coercion as set on the client ObjectMapper
-        if (TemplateReferenceFieldInternalImpl.class.equals(Integer.class)
-            || TemplateReferenceFieldInternalImpl.class.equals(Long.class)
-            || TemplateReferenceFieldInternalImpl.class.equals(Float.class)
-            || TemplateReferenceFieldInternalImpl.class.equals(Double.class)
-            || TemplateReferenceFieldInternalImpl.class.equals(Boolean.class)
-            || TemplateReferenceFieldInternalImpl.class.equals(String.class)) {
+        if (TemplateReferenceImpl.class.equals(Integer.class)
+            || TemplateReferenceImpl.class.equals(Long.class)
+            || TemplateReferenceImpl.class.equals(Float.class)
+            || TemplateReferenceImpl.class.equals(Double.class)
+            || TemplateReferenceImpl.class.equals(Boolean.class)
+            || TemplateReferenceImpl.class.equals(String.class)) {
           attemptParsing = typeCoercion;
           if (!attemptParsing) {
             attemptParsing |=
-                ((TemplateReferenceFieldInternalImpl.class.equals(Integer.class)
-                        || TemplateReferenceFieldInternalImpl.class.equals(Long.class))
+                ((TemplateReferenceImpl.class.equals(Integer.class)
+                        || TemplateReferenceImpl.class.equals(Long.class))
                     && token == JsonToken.VALUE_NUMBER_INT);
             attemptParsing |=
-                ((TemplateReferenceFieldInternalImpl.class.equals(Float.class)
-                        || TemplateReferenceFieldInternalImpl.class.equals(Double.class))
+                ((TemplateReferenceImpl.class.equals(Float.class)
+                        || TemplateReferenceImpl.class.equals(Double.class))
                     && token == JsonToken.VALUE_NUMBER_FLOAT);
             attemptParsing |=
-                (TemplateReferenceFieldInternalImpl.class.equals(Boolean.class)
+                (TemplateReferenceImpl.class.equals(Boolean.class)
                     && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
             attemptParsing |=
-                (TemplateReferenceFieldInternalImpl.class.equals(String.class)
+                (TemplateReferenceImpl.class.equals(String.class)
                     && token == JsonToken.VALUE_STRING);
           }
         }
         if (attemptParsing) {
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(TemplateReferenceFieldInternalImpl.class);
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(TemplateReferenceImpl.class);
           // TODO: there is no validation against JSON schema constraints
           // (min, max, enum, pattern...), this does not perform a strict JSON
           // validation, which means the 'match' count may be higher than it should be.
           match++;
-          log.log(Level.FINER, "Input data matches schema 'TemplateReferenceFieldInternalImpl'");
+          log.log(Level.FINER, "Input data matches schema 'TemplateReferenceImpl'");
         }
       } catch (Exception e) {
         // deserialization failed, continue
-        log.log(
-            Level.FINER,
-            "Input data does not match schema 'TemplateReferenceFieldInternalImpl'",
-            e);
+        log.log(Level.FINER, "Input data does not match schema 'TemplateReferenceImpl'", e);
       }
 
       // deserialize TextMessageImpl
@@ -490,7 +475,7 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
     super("oneOf", Boolean.FALSE);
   }
 
-  public OmniMessageOverrideInternalImpl(CardMessageFieldInternalImpl o) {
+  public OmniMessageOverrideInternalImpl(CardMessageImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
@@ -500,17 +485,17 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
     setActualInstance(o);
   }
 
-  public OmniMessageOverrideInternalImpl(ChoiceMessageFieldInternalImpl o) {
+  public OmniMessageOverrideInternalImpl(ChoiceMessageImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public OmniMessageOverrideInternalImpl(ContactInfoMessageFieldInternalImpl o) {
+  public OmniMessageOverrideInternalImpl(ContactInfoMessageImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public OmniMessageOverrideInternalImpl(ListMessageFieldInternalImpl o) {
+  public OmniMessageOverrideInternalImpl(ListMessageImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
@@ -525,7 +510,7 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
     setActualInstance(o);
   }
 
-  public OmniMessageOverrideInternalImpl(TemplateReferenceFieldInternalImpl o) {
+  public OmniMessageOverrideInternalImpl(TemplateReferenceImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
@@ -536,14 +521,14 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
   }
 
   static {
-    schemas.put("CardMessageFieldInternalImpl", CardMessageFieldInternalImpl.class);
+    schemas.put("CardMessageImpl", CardMessageImpl.class);
     schemas.put("CarouselMessageFieldInternalImpl", CarouselMessageFieldInternalImpl.class);
-    schemas.put("ChoiceMessageFieldInternalImpl", ChoiceMessageFieldInternalImpl.class);
-    schemas.put("ContactInfoMessageFieldInternalImpl", ContactInfoMessageFieldInternalImpl.class);
-    schemas.put("ListMessageFieldInternalImpl", ListMessageFieldInternalImpl.class);
+    schemas.put("ChoiceMessageImpl", ChoiceMessageImpl.class);
+    schemas.put("ContactInfoMessageImpl", ContactInfoMessageImpl.class);
+    schemas.put("ListMessageImpl", ListMessageImpl.class);
     schemas.put("LocationMessageImpl", LocationMessageImpl.class);
     schemas.put("MediaMessageImpl", MediaMessageImpl.class);
-    schemas.put("TemplateReferenceFieldInternalImpl", TemplateReferenceFieldInternalImpl.class);
+    schemas.put("TemplateReferenceImpl", TemplateReferenceImpl.class);
     schemas.put("TextMessageImpl", TextMessageImpl.class);
     JSONNavigator.registerDescendants(
         OmniMessageOverrideInternalImpl.class, Collections.unmodifiableMap(schemas));
@@ -556,18 +541,16 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
 
   /**
    * Set the instance that matches the oneOf child schema, check the instance parameter is valid
-   * against the oneOf child schemas: CardMessageFieldInternalImpl,
-   * CarouselMessageFieldInternalImpl, ChoiceMessageFieldInternalImpl,
-   * ContactInfoMessageFieldInternalImpl, ListMessageFieldInternalImpl, LocationMessageImpl,
-   * MediaMessageImpl, TemplateReferenceFieldInternalImpl, TextMessageImpl
+   * against the oneOf child schemas: CardMessageImpl, CarouselMessageFieldInternalImpl,
+   * ChoiceMessageImpl, ContactInfoMessageImpl, ListMessageImpl, LocationMessageImpl,
+   * MediaMessageImpl, TemplateReferenceImpl, TextMessageImpl
    *
    * <p>It could be an instance of the 'oneOf' schemas. The oneOf child schemas may themselves be a
    * composed schema (allOf, anyOf, oneOf).
    */
   @Override
   public void setActualInstance(Object instance) {
-    if (JSONNavigator.isInstanceOf(
-        CardMessageFieldInternalImpl.class, instance, new HashSet<Class<?>>())) {
+    if (JSONNavigator.isInstanceOf(CardMessageImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
@@ -578,20 +561,18 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
       return;
     }
 
-    if (JSONNavigator.isInstanceOf(
-        ChoiceMessageFieldInternalImpl.class, instance, new HashSet<Class<?>>())) {
+    if (JSONNavigator.isInstanceOf(ChoiceMessageImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
 
     if (JSONNavigator.isInstanceOf(
-        ContactInfoMessageFieldInternalImpl.class, instance, new HashSet<Class<?>>())) {
+        ContactInfoMessageImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
 
-    if (JSONNavigator.isInstanceOf(
-        ListMessageFieldInternalImpl.class, instance, new HashSet<Class<?>>())) {
+    if (JSONNavigator.isInstanceOf(ListMessageImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
@@ -607,7 +588,7 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
     }
 
     if (JSONNavigator.isInstanceOf(
-        TemplateReferenceFieldInternalImpl.class, instance, new HashSet<Class<?>>())) {
+        TemplateReferenceImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
@@ -618,23 +599,19 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
     }
 
     throw new RuntimeException(
-        "Invalid instance type. Must be CardMessageFieldInternalImpl,"
-            + " CarouselMessageFieldInternalImpl, ChoiceMessageFieldInternalImpl,"
-            + " ContactInfoMessageFieldInternalImpl, ListMessageFieldInternalImpl,"
-            + " LocationMessageImpl, MediaMessageImpl, TemplateReferenceFieldInternalImpl,"
-            + " TextMessageImpl");
+        "Invalid instance type. Must be CardMessageImpl, CarouselMessageFieldInternalImpl,"
+            + " ChoiceMessageImpl, ContactInfoMessageImpl, ListMessageImpl, LocationMessageImpl,"
+            + " MediaMessageImpl, TemplateReferenceImpl, TextMessageImpl");
   }
 
   /**
-   * Get the actual instance, which can be the following: CardMessageFieldInternalImpl,
-   * CarouselMessageFieldInternalImpl, ChoiceMessageFieldInternalImpl,
-   * ContactInfoMessageFieldInternalImpl, ListMessageFieldInternalImpl, LocationMessageImpl,
-   * MediaMessageImpl, TemplateReferenceFieldInternalImpl, TextMessageImpl
+   * Get the actual instance, which can be the following: CardMessageImpl,
+   * CarouselMessageFieldInternalImpl, ChoiceMessageImpl, ContactInfoMessageImpl, ListMessageImpl,
+   * LocationMessageImpl, MediaMessageImpl, TemplateReferenceImpl, TextMessageImpl
    *
-   * @return The actual instance (CardMessageFieldInternalImpl, CarouselMessageFieldInternalImpl,
-   *     ChoiceMessageFieldInternalImpl, ContactInfoMessageFieldInternalImpl,
-   *     ListMessageFieldInternalImpl, LocationMessageImpl, MediaMessageImpl,
-   *     TemplateReferenceFieldInternalImpl, TextMessageImpl)
+   * @return The actual instance (CardMessageImpl, CarouselMessageFieldInternalImpl,
+   *     ChoiceMessageImpl, ContactInfoMessageImpl, ListMessageImpl, LocationMessageImpl,
+   *     MediaMessageImpl, TemplateReferenceImpl, TextMessageImpl)
    */
   @Override
   public Object getActualInstance() {
@@ -642,14 +619,14 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
   }
 
   /**
-   * Get the actual instance of `CardMessageFieldInternalImpl`. If the actual instance is not
-   * `CardMessageFieldInternalImpl`, the ClassCastException will be thrown.
+   * Get the actual instance of `CardMessageImpl`. If the actual instance is not `CardMessageImpl`,
+   * the ClassCastException will be thrown.
    *
-   * @return The actual instance of `CardMessageFieldInternalImpl`
-   * @throws ClassCastException if the instance is not `CardMessageFieldInternalImpl`
+   * @return The actual instance of `CardMessageImpl`
+   * @throws ClassCastException if the instance is not `CardMessageImpl`
    */
-  public CardMessageFieldInternalImpl getCardMessageFieldInternalImpl() throws ClassCastException {
-    return (CardMessageFieldInternalImpl) super.getActualInstance();
+  public CardMessageImpl getCardMessageImpl() throws ClassCastException {
+    return (CardMessageImpl) super.getActualInstance();
   }
 
   /**
@@ -665,38 +642,36 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
   }
 
   /**
-   * Get the actual instance of `ChoiceMessageFieldInternalImpl`. If the actual instance is not
-   * `ChoiceMessageFieldInternalImpl`, the ClassCastException will be thrown.
+   * Get the actual instance of `ChoiceMessageImpl`. If the actual instance is not
+   * `ChoiceMessageImpl`, the ClassCastException will be thrown.
    *
-   * @return The actual instance of `ChoiceMessageFieldInternalImpl`
-   * @throws ClassCastException if the instance is not `ChoiceMessageFieldInternalImpl`
+   * @return The actual instance of `ChoiceMessageImpl`
+   * @throws ClassCastException if the instance is not `ChoiceMessageImpl`
    */
-  public ChoiceMessageFieldInternalImpl getChoiceMessageFieldInternalImpl()
-      throws ClassCastException {
-    return (ChoiceMessageFieldInternalImpl) super.getActualInstance();
+  public ChoiceMessageImpl getChoiceMessageImpl() throws ClassCastException {
+    return (ChoiceMessageImpl) super.getActualInstance();
   }
 
   /**
-   * Get the actual instance of `ContactInfoMessageFieldInternalImpl`. If the actual instance is not
-   * `ContactInfoMessageFieldInternalImpl`, the ClassCastException will be thrown.
+   * Get the actual instance of `ContactInfoMessageImpl`. If the actual instance is not
+   * `ContactInfoMessageImpl`, the ClassCastException will be thrown.
    *
-   * @return The actual instance of `ContactInfoMessageFieldInternalImpl`
-   * @throws ClassCastException if the instance is not `ContactInfoMessageFieldInternalImpl`
+   * @return The actual instance of `ContactInfoMessageImpl`
+   * @throws ClassCastException if the instance is not `ContactInfoMessageImpl`
    */
-  public ContactInfoMessageFieldInternalImpl getContactInfoMessageFieldInternalImpl()
-      throws ClassCastException {
-    return (ContactInfoMessageFieldInternalImpl) super.getActualInstance();
+  public ContactInfoMessageImpl getContactInfoMessageImpl() throws ClassCastException {
+    return (ContactInfoMessageImpl) super.getActualInstance();
   }
 
   /**
-   * Get the actual instance of `ListMessageFieldInternalImpl`. If the actual instance is not
-   * `ListMessageFieldInternalImpl`, the ClassCastException will be thrown.
+   * Get the actual instance of `ListMessageImpl`. If the actual instance is not `ListMessageImpl`,
+   * the ClassCastException will be thrown.
    *
-   * @return The actual instance of `ListMessageFieldInternalImpl`
-   * @throws ClassCastException if the instance is not `ListMessageFieldInternalImpl`
+   * @return The actual instance of `ListMessageImpl`
+   * @throws ClassCastException if the instance is not `ListMessageImpl`
    */
-  public ListMessageFieldInternalImpl getListMessageFieldInternalImpl() throws ClassCastException {
-    return (ListMessageFieldInternalImpl) super.getActualInstance();
+  public ListMessageImpl getListMessageImpl() throws ClassCastException {
+    return (ListMessageImpl) super.getActualInstance();
   }
 
   /**
@@ -722,15 +697,14 @@ public class OmniMessageOverrideInternalImpl extends AbstractOpenApiSchema
   }
 
   /**
-   * Get the actual instance of `TemplateReferenceFieldInternalImpl`. If the actual instance is not
-   * `TemplateReferenceFieldInternalImpl`, the ClassCastException will be thrown.
+   * Get the actual instance of `TemplateReferenceImpl`. If the actual instance is not
+   * `TemplateReferenceImpl`, the ClassCastException will be thrown.
    *
-   * @return The actual instance of `TemplateReferenceFieldInternalImpl`
-   * @throws ClassCastException if the instance is not `TemplateReferenceFieldInternalImpl`
+   * @return The actual instance of `TemplateReferenceImpl`
+   * @throws ClassCastException if the instance is not `TemplateReferenceImpl`
    */
-  public TemplateReferenceFieldInternalImpl getTemplateReferenceFieldInternalImpl()
-      throws ClassCastException {
-    return (TemplateReferenceFieldInternalImpl) super.getActualInstance();
+  public TemplateReferenceImpl getTemplateReferenceImpl() throws ClassCastException {
+    return (TemplateReferenceImpl) super.getActualInstance();
   }
 
   /**

@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.Choice;
 import java.util.List;
 
-/** Message containing text, media and choices. */
+/** Field containing a Card Message */
 @JsonDeserialize(builder = CardMessageImpl.Builder.class)
 public interface CardMessage
     extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,

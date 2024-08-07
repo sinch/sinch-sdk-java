@@ -39,9 +39,7 @@
         "postback_data": "postback_data url"
       }
     ]
-  }
-
-,
+  },
   "explicit_channel_message": {
     "KAKAOTALK": "foo value"
   },

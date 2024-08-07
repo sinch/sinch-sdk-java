@@ -5,21 +5,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
-@JsonPropertyOrder({
-  ContactInfoMessageImpl.JSON_PROPERTY_NAME,
-  ContactInfoMessageImpl.JSON_PROPERTY_PHONE_NUMBERS,
-  ContactInfoMessageImpl.JSON_PROPERTY_ADDRESSES,
-  ContactInfoMessageImpl.JSON_PROPERTY_EMAIL_ADDRESSES,
-  ContactInfoMessageImpl.JSON_PROPERTY_ORGANIZATION,
-  ContactInfoMessageImpl.JSON_PROPERTY_URLS,
-  ContactInfoMessageImpl.JSON_PROPERTY_BIRTHDAY
-})
+@JsonPropertyOrder({ContactInfoMessageImpl.JSON_PROPERTY_CONTACT_INFO_MESSAGE})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ContactInfoMessageImpl
@@ -28,131 +28,154 @@ public class ContactInfoMessageImpl
         com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_NAME = "name";
+  public static final String JSON_PROPERTY_CONTACT_INFO_MESSAGE = "contact_info_message";
 
-  private OptionalValue<NameInfo> name;
-
-  public static final String JSON_PROPERTY_PHONE_NUMBERS = "phone_numbers";
-
-  private OptionalValue<List<PhoneNumberInfo>> phoneNumbers;
-
-  public static final String JSON_PROPERTY_ADDRESSES = "addresses";
-
-  private OptionalValue<List<AddressInfo>> addresses;
-
-  public static final String JSON_PROPERTY_EMAIL_ADDRESSES = "email_addresses";
-
-  private OptionalValue<List<EmailInfo>> emailAddresses;
-
-  public static final String JSON_PROPERTY_ORGANIZATION = "organization";
-
-  private OptionalValue<OrganizationInfo> organization;
-
-  public static final String JSON_PROPERTY_URLS = "urls";
-
-  private OptionalValue<List<UrlInfo>> urls;
-
-  public static final String JSON_PROPERTY_BIRTHDAY = "birthday";
-
-  private OptionalValue<LocalDate> birthday;
+  private OptionalValue<ContactInfoMessageInternal> contactInfoMessage;
 
   public ContactInfoMessageImpl() {}
 
-  protected ContactInfoMessageImpl(
-      OptionalValue<NameInfo> name,
-      OptionalValue<List<PhoneNumberInfo>> phoneNumbers,
-      OptionalValue<List<AddressInfo>> addresses,
-      OptionalValue<List<EmailInfo>> emailAddresses,
-      OptionalValue<OrganizationInfo> organization,
-      OptionalValue<List<UrlInfo>> urls,
-      OptionalValue<LocalDate> birthday) {
-    this.name = name;
-    this.phoneNumbers = phoneNumbers;
-    this.addresses = addresses;
-    this.emailAddresses = emailAddresses;
-    this.organization = organization;
-    this.urls = urls;
-    this.birthday = birthday;
+  protected ContactInfoMessageImpl(OptionalValue<ContactInfoMessageInternal> contactInfoMessage) {
+    this.contactInfoMessage = contactInfoMessage;
+  }
+
+  @JsonIgnore
+  public ContactInfoMessageInternal getContactInfoMessage() {
+    return contactInfoMessage.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CONTACT_INFO_MESSAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<ContactInfoMessageInternal> contactInfoMessage() {
+    return contactInfoMessage;
   }
 
   @JsonIgnore
   public NameInfo getName() {
-    return name.orElse(null);
+    if (null == contactInfoMessage
+        || !contactInfoMessage.isPresent()
+        || null == contactInfoMessage.get().getName()) {
+      return null;
+    }
+    return contactInfoMessage.get().getName();
   }
 
-  @JsonProperty(JSON_PROPERTY_NAME)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<NameInfo> name() {
-    return name;
+    return null != contactInfoMessage && contactInfoMessage.isPresent()
+        ? contactInfoMessage
+            .map(f -> ((ContactInfoMessageInternalImpl) f).name())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public List<PhoneNumberInfo> getPhoneNumbers() {
-    return phoneNumbers.orElse(null);
+    if (null == contactInfoMessage
+        || !contactInfoMessage.isPresent()
+        || null == contactInfoMessage.get().getPhoneNumbers()) {
+      return null;
+    }
+    return contactInfoMessage.get().getPhoneNumbers();
   }
 
-  @JsonProperty(JSON_PROPERTY_PHONE_NUMBERS)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<List<PhoneNumberInfo>> phoneNumbers() {
-    return phoneNumbers;
+    return null != contactInfoMessage && contactInfoMessage.isPresent()
+        ? contactInfoMessage
+            .map(f -> ((ContactInfoMessageInternalImpl) f).phoneNumbers())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public List<AddressInfo> getAddresses() {
-    return addresses.orElse(null);
+    if (null == contactInfoMessage
+        || !contactInfoMessage.isPresent()
+        || null == contactInfoMessage.get().getAddresses()) {
+      return null;
+    }
+    return contactInfoMessage.get().getAddresses();
   }
 
-  @JsonProperty(JSON_PROPERTY_ADDRESSES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<List<AddressInfo>> addresses() {
-    return addresses;
+    return null != contactInfoMessage && contactInfoMessage.isPresent()
+        ? contactInfoMessage
+            .map(f -> ((ContactInfoMessageInternalImpl) f).addresses())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public List<EmailInfo> getEmailAddresses() {
-    return emailAddresses.orElse(null);
+    if (null == contactInfoMessage
+        || !contactInfoMessage.isPresent()
+        || null == contactInfoMessage.get().getEmailAddresses()) {
+      return null;
+    }
+    return contactInfoMessage.get().getEmailAddresses();
   }
 
-  @JsonProperty(JSON_PROPERTY_EMAIL_ADDRESSES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<List<EmailInfo>> emailAddresses() {
-    return emailAddresses;
+    return null != contactInfoMessage && contactInfoMessage.isPresent()
+        ? contactInfoMessage
+            .map(f -> ((ContactInfoMessageInternalImpl) f).emailAddresses())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public OrganizationInfo getOrganization() {
-    return organization.orElse(null);
+    if (null == contactInfoMessage
+        || !contactInfoMessage.isPresent()
+        || null == contactInfoMessage.get().getOrganization()) {
+      return null;
+    }
+    return contactInfoMessage.get().getOrganization();
   }
 
-  @JsonProperty(JSON_PROPERTY_ORGANIZATION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<OrganizationInfo> organization() {
-    return organization;
+    return null != contactInfoMessage && contactInfoMessage.isPresent()
+        ? contactInfoMessage
+            .map(f -> ((ContactInfoMessageInternalImpl) f).organization())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public List<UrlInfo> getUrls() {
-    return urls.orElse(null);
+    if (null == contactInfoMessage
+        || !contactInfoMessage.isPresent()
+        || null == contactInfoMessage.get().getUrls()) {
+      return null;
+    }
+    return contactInfoMessage.get().getUrls();
   }
 
-  @JsonProperty(JSON_PROPERTY_URLS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<List<UrlInfo>> urls() {
-    return urls;
+    return null != contactInfoMessage && contactInfoMessage.isPresent()
+        ? contactInfoMessage
+            .map(f -> ((ContactInfoMessageInternalImpl) f).urls())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public LocalDate getBirthday() {
-    return birthday.orElse(null);
+    if (null == contactInfoMessage
+        || !contactInfoMessage.isPresent()
+        || null == contactInfoMessage.get().getBirthday()) {
+      return null;
+    }
+    return contactInfoMessage.get().getBirthday();
   }
 
-  @JsonProperty(JSON_PROPERTY_BIRTHDAY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<LocalDate> birthday() {
-    return birthday;
+    return null != contactInfoMessage && contactInfoMessage.isPresent()
+        ? contactInfoMessage
+            .map(f -> ((ContactInfoMessageInternalImpl) f).birthday())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
-  /** Return true if this Contact_Info_Message object is equal to o. */
+  /** Return true if this ContactInfoMessageField object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -161,33 +184,20 @@ public class ContactInfoMessageImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ContactInfoMessageImpl contactInfoMessage = (ContactInfoMessageImpl) o;
-    return Objects.equals(this.name, contactInfoMessage.name)
-        && Objects.equals(this.phoneNumbers, contactInfoMessage.phoneNumbers)
-        && Objects.equals(this.addresses, contactInfoMessage.addresses)
-        && Objects.equals(this.emailAddresses, contactInfoMessage.emailAddresses)
-        && Objects.equals(this.organization, contactInfoMessage.organization)
-        && Objects.equals(this.urls, contactInfoMessage.urls)
-        && Objects.equals(this.birthday, contactInfoMessage.birthday);
+    ContactInfoMessageImpl contactInfoMessageField = (ContactInfoMessageImpl) o;
+    return Objects.equals(this.contactInfoMessage, contactInfoMessageField.contactInfoMessage);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(
-        name, phoneNumbers, addresses, emailAddresses, organization, urls, birthday);
+    return Objects.hash(contactInfoMessage);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ContactInfoMessageImpl {\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    phoneNumbers: ").append(toIndentedString(phoneNumbers)).append("\n");
-    sb.append("    addresses: ").append(toIndentedString(addresses)).append("\n");
-    sb.append("    emailAddresses: ").append(toIndentedString(emailAddresses)).append("\n");
-    sb.append("    organization: ").append(toIndentedString(organization)).append("\n");
-    sb.append("    urls: ").append(toIndentedString(urls)).append("\n");
-    sb.append("    birthday: ").append(toIndentedString(birthday)).append("\n");
+    sb.append("    contactInfoMessage: ").append(toIndentedString(contactInfoMessage)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -204,59 +214,107 @@ public class ContactInfoMessageImpl
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements ContactInfoMessage.Builder {
-    OptionalValue<NameInfo> name = OptionalValue.empty();
-    OptionalValue<List<PhoneNumberInfo>> phoneNumbers = OptionalValue.empty();
-    OptionalValue<List<AddressInfo>> addresses = OptionalValue.empty();
-    OptionalValue<List<EmailInfo>> emailAddresses = OptionalValue.empty();
-    OptionalValue<OrganizationInfo> organization = OptionalValue.empty();
-    OptionalValue<List<UrlInfo>> urls = OptionalValue.empty();
-    OptionalValue<LocalDate> birthday = OptionalValue.empty();
+    OptionalValue<ContactInfoMessageInternal> contactInfoMessage = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_NAME)
+    ContactInfoMessageInternal.Builder _delegatedBuilder = null;
+
+    @JsonProperty(value = JSON_PROPERTY_CONTACT_INFO_MESSAGE, required = true)
+    public Builder setContactInfoMessage(ContactInfoMessageInternal contactInfoMessage) {
+      this.contactInfoMessage = OptionalValue.of(contactInfoMessage);
+      return this;
+    }
+
+    @JsonIgnore
     public Builder setName(NameInfo name) {
-      this.name = OptionalValue.of(name);
+      getDelegatedBuilder().setName(name);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_PHONE_NUMBERS)
+    @JsonIgnore
     public Builder setPhoneNumbers(List<PhoneNumberInfo> phoneNumbers) {
-      this.phoneNumbers = OptionalValue.of(phoneNumbers);
+      getDelegatedBuilder().setPhoneNumbers(phoneNumbers);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_ADDRESSES)
+    @JsonIgnore
     public Builder setAddresses(List<AddressInfo> addresses) {
-      this.addresses = OptionalValue.of(addresses);
+      getDelegatedBuilder().setAddresses(addresses);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_EMAIL_ADDRESSES)
+    @JsonIgnore
     public Builder setEmailAddresses(List<EmailInfo> emailAddresses) {
-      this.emailAddresses = OptionalValue.of(emailAddresses);
+      getDelegatedBuilder().setEmailAddresses(emailAddresses);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_ORGANIZATION)
+    @JsonIgnore
     public Builder setOrganization(OrganizationInfo organization) {
-      this.organization = OptionalValue.of(organization);
+      getDelegatedBuilder().setOrganization(organization);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_URLS)
+    @JsonIgnore
     public Builder setUrls(List<UrlInfo> urls) {
-      this.urls = OptionalValue.of(urls);
+      getDelegatedBuilder().setUrls(urls);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_BIRTHDAY)
+    @JsonIgnore
     public Builder setBirthday(LocalDate birthday) {
-      this.birthday = OptionalValue.of(birthday);
+      getDelegatedBuilder().setBirthday(birthday);
       return this;
+    }
+
+    private ContactInfoMessageInternal.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = ContactInfoMessageInternal.builder();
+      }
+      return this._delegatedBuilder;
     }
 
     public ContactInfoMessage build() {
-      return new ContactInfoMessageImpl(
-          name, phoneNumbers, addresses, emailAddresses, organization, urls, birthday);
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.contactInfoMessage = OptionalValue.of(this._delegatedBuilder.build());
+      }
+      return new ContactInfoMessageImpl(contactInfoMessage);
     }
+  }
+
+  public static class DelegatedSerializer
+      extends JsonSerializer<OptionalValue<ContactInfoMessage>> {
+    @Override
+    public void serialize(
+        OptionalValue<ContactInfoMessage> value, JsonGenerator jgen, SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      ContactInfoMessageImpl impl = (ContactInfoMessageImpl) value.get();
+      jgen.writeObject(impl.getContactInfoMessage());
+    }
+  }
+
+  public static class DelegatedDeSerializer extends JsonDeserializer<ContactInfoMessage> {
+    @Override
+    public ContactInfoMessage deserialize(JsonParser jp, DeserializationContext ctxt)
+        throws IOException {
+
+      ContactInfoMessageImpl.Builder builder = new ContactInfoMessageImpl.Builder();
+      ContactInfoMessageInternalImpl deserialized =
+          jp.readValueAs(ContactInfoMessageInternalImpl.class);
+      builder.setContactInfoMessage(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<ContactInfoMessage> delegatedConverter(
+      ContactInfoMessageInternal internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setContactInfoMessage(internal).build());
   }
 }
