@@ -10,7 +10,6 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.fallback.Fall
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.location.LocationMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.mediacard.MediaCardMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.productresponse.ProductResponseMessageDtoTest;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.replyto.ReplyToMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessageDtoTest;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
@@ -33,7 +32,11 @@ public class ContactMessageDtoTest extends ConversationBaseTest {
 
   public static ContactMessage mediaCardContactMessageDto =
       MediaCardMessageDtoTest.mediaCardMessageDto;
+
+  /*
+      TODO Temporary removed: waiting for https://tickets.sinch.com/browse/CACORE-2200 status
   public static ContactMessage replyToContactMessageDto = ReplyToMessageDtoTest.replyToMessageDto;
+   */
   public static ContactMessage textContactMessageDto = TextMessageDtoTest.textMessageDto;
   public static ContactMessage productResponseContactMessageDto =
       ProductResponseMessageDtoTest.productResponseMessageDto;
@@ -150,6 +153,9 @@ public class ContactMessageDtoTest extends ConversationBaseTest {
         .isEqualTo(mediaCardContactMessageDto);
   }
 
+  /*
+        TODO Temporary removed: waiting for https://tickets.sinch.com/browse/CACORE-2200 status
+
   @Test
   void serializeReplyToContactMessageDto() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(replyToContactMessageDto);
@@ -167,6 +173,7 @@ public class ContactMessageDtoTest extends ConversationBaseTest {
         .isEqualTo(replyToContactMessageDto);
   }
 
+   */
   @Test
   void serializeTextContactMessageDto() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(textContactMessageDto);
