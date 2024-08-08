@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.messages.response;
+package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,44 +7,44 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.conversation.models.v1.internal.ConversationMessageInternal;
-import java.util.List;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
+import java.util.Collection;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  ListMessagesResponseImpl.JSON_PROPERTY_MESSAGES,
-  ListMessagesResponseImpl.JSON_PROPERTY_NEXT_PAGE_TOKEN
+  ListMessagesResponseInternalImpl.JSON_PROPERTY_MESSAGES,
+  ListMessagesResponseInternalImpl.JSON_PROPERTY_NEXT_PAGE_TOKEN
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class ListMessagesResponseImpl implements ListMessagesResponse {
+public class ListMessagesResponseInternalImpl implements ListMessagesResponseInternal {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_MESSAGES = "messages";
 
-  private OptionalValue<List<ConversationMessageInternal>> messages;
+  private OptionalValue<Collection<ConversationMessage>> messages;
 
   public static final String JSON_PROPERTY_NEXT_PAGE_TOKEN = "next_page_token";
 
   private OptionalValue<String> nextPageToken;
 
-  public ListMessagesResponseImpl() {}
+  public ListMessagesResponseInternalImpl() {}
 
-  protected ListMessagesResponseImpl(
-      OptionalValue<List<ConversationMessageInternal>> messages,
+  protected ListMessagesResponseInternalImpl(
+      OptionalValue<Collection<ConversationMessage>> messages,
       OptionalValue<String> nextPageToken) {
     this.messages = messages;
     this.nextPageToken = nextPageToken;
   }
 
   @JsonIgnore
-  public List<ConversationMessageInternal> getMessages() {
+  public Collection<ConversationMessage> getMessages() {
     return messages.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_MESSAGES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<List<ConversationMessageInternal>> messages() {
+  public OptionalValue<Collection<ConversationMessage>> messages() {
     return messages;
   }
 
@@ -68,7 +68,7 @@ public class ListMessagesResponseImpl implements ListMessagesResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ListMessagesResponseImpl listMessagesResponse = (ListMessagesResponseImpl) o;
+    ListMessagesResponseInternalImpl listMessagesResponse = (ListMessagesResponseInternalImpl) o;
     return Objects.equals(this.messages, listMessagesResponse.messages)
         && Objects.equals(this.nextPageToken, listMessagesResponse.nextPageToken);
   }
@@ -81,7 +81,7 @@ public class ListMessagesResponseImpl implements ListMessagesResponse {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ListMessagesResponseImpl {\n");
+    sb.append("class ListMessagesResponseInternalImpl {\n");
     sb.append("    messages: ").append(toIndentedString(messages)).append("\n");
     sb.append("    nextPageToken: ").append(toIndentedString(nextPageToken)).append("\n");
     sb.append("}");
@@ -99,12 +99,12 @@ public class ListMessagesResponseImpl implements ListMessagesResponse {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements ListMessagesResponse.Builder {
-    OptionalValue<List<ConversationMessageInternal>> messages = OptionalValue.empty();
+  static class Builder implements ListMessagesResponseInternal.Builder {
+    OptionalValue<Collection<ConversationMessage>> messages = OptionalValue.empty();
     OptionalValue<String> nextPageToken = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_MESSAGES)
-    public Builder setMessages(List<ConversationMessageInternal> messages) {
+    public Builder setMessages(Collection<ConversationMessage> messages) {
       this.messages = OptionalValue.of(messages);
       return this;
     }
@@ -115,8 +115,8 @@ public class ListMessagesResponseImpl implements ListMessagesResponse {
       return this;
     }
 
-    public ListMessagesResponse build() {
-      return new ListMessagesResponseImpl(messages, nextPageToken);
+    public ListMessagesResponseInternal build() {
+      return new ListMessagesResponseInternalImpl(messages, nextPageToken);
     }
   }
 }

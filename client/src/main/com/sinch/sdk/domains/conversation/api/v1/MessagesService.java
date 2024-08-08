@@ -2,7 +2,9 @@ package com.sinch.sdk.domains.conversation.api.v1;
 
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesListRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.response.MessagesListResponse;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.carousel.CarouselMessage;
@@ -67,6 +69,28 @@ public interface MessagesService {
   ConversationMessage get(String messageId);
 
   ConversationMessage get(String messageId, MessageSource messageSource);
+
+  /**
+   * This operation lists all messages sent or received via particular {@link
+   * com.sinch.sdk.domains.conversation.models.v1.ProcessingMode}.
+   *
+   * <p>Setting the <code>messages_source</code> parameter to <code>CONVERSATION_SOURCE</code>
+   * allows for querying messages in <code>CONVERSATION</code> mode, and setting it to <code>
+   * DISPATCH_SOURCE</code> will allow for queries of messages in DISPATCH mode.
+   *
+   * <p>Combining multiple parameters is supported for more detailed filtering of messages, but some
+   * of them are not supported depending on the value specified for <code>messages_source</code>.
+   * The description for each field will inform if that field may not be supported.
+   *
+   * <p>The messages are ordered by their <code>accept_time</code> property in descending order,
+   * where <code>accept_time</code> is a timestamp of when the message was enqueued by the
+   * Conversation API. This means messages received most recently will be listed first.
+   *
+   * @param request Request parameters
+   * @since _NEXT_VERSION_
+   */
+  MessagesListResponse list(MessagesListRequest request);
+
   /**
    * Specifies the message source for which the request will be processed. Used for operations on
    * messages in Dispatch Mode

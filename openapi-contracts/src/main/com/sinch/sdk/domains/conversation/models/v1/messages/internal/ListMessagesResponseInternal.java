@@ -10,22 +10,22 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.messages.response;
+package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.conversation.models.v1.internal.ConversationMessageInternal;
-import java.util.List;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
+import java.util.Collection;
 
-/** ListMessagesResponse */
-@JsonDeserialize(builder = ListMessagesResponseImpl.Builder.class)
-public interface ListMessagesResponse {
+/** ListMessagesResponseInternal */
+@JsonDeserialize(builder = ListMessagesResponseInternalImpl.Builder.class)
+public interface ListMessagesResponseInternal {
 
   /**
    * List of messages associated to the referenced conversation.
    *
    * @return messages
    */
-  List<ConversationMessageInternal> getMessages();
+  Collection<ConversationMessage> getMessages();
 
   /**
    * Token that should be included in the next request to fetch the next page.
@@ -40,7 +40,7 @@ public interface ListMessagesResponse {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ListMessagesResponseImpl.Builder();
+    return new ListMessagesResponseInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -53,7 +53,7 @@ public interface ListMessagesResponse {
      * @return Current builder
      * @see #getMessages
      */
-    Builder setMessages(List<ConversationMessageInternal> messages);
+    Builder setMessages(Collection<ConversationMessage> messages);
 
     /**
      * see getter
@@ -69,6 +69,6 @@ public interface ListMessagesResponse {
      *
      * @return The instance build with current builder values
      */
-    ListMessagesResponse build();
+    ListMessagesResponseInternal build();
   }
 }

@@ -27,10 +27,10 @@ import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.internal.ConversationMessageInternal;
+import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ListMessagesResponseInternal;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.ConversationMessagesView;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.UpdateMessageMetadataRequest;
-import com.sinch.sdk.domains.conversation.models.v1.messages.response.ListMessagesResponse;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -291,10 +291,10 @@ public class MessagesApi {
    * @param onlyRecipientOriginated If true, fetch only recipient originated messages. Available
    *     only when &#x60;messages_source&#x60; is &#x60;DISPATCH_SOURCE&#x60;. (optional)
    * @param channel Only fetch messages from the &#x60;channel&#x60;. (optional)
-   * @return ListMessagesResponse
+   * @return ListMessagesResponseInternal
    * @throws ApiException if fails to make API call
    */
-  public ListMessagesResponse messagesListMessages(
+  public ListMessagesResponseInternal messagesListMessages(
       String projectId,
       String conversationId,
       String contactId,
@@ -372,8 +372,8 @@ public class MessagesApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<ListMessagesResponse> localVarReturnType =
-          new TypeReference<ListMessagesResponse>() {};
+      TypeReference<ListMessagesResponseInternal> localVarReturnType =
+          new TypeReference<ListMessagesResponseInternal>() {};
       return mapper.deserialize(response, localVarReturnType);
     }
     // fallback to default errors handling:
