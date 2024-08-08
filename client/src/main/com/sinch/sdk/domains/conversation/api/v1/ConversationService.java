@@ -29,7 +29,7 @@ public interface ConversationService {
    * Messages Service instance
    *
    * @return service instance for project
-   * @since_NEXT_VERSION_
+   * @since _NEXT_VERSION_
    */
   MessagesService messages();
 

@@ -129,7 +129,6 @@
                             com.sinch.sdk.http;
                             com.sinch.sdk.pagination.Page*;
                             **.dto.*;
-                            **.api.*;
                             **.adapters.**;
                             **.adapters.converters;
                             **.adapters;

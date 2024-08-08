@@ -66,8 +66,25 @@ public interface MessagesService {
 
   SendMessageResponse sendTextMessage(SendMessageRequest<TextMessage> request);
 
+  /**
+   * Helper method for {@link #get(String, MessageSource)}
+   *
+   * @see #get(String, MessageSource)
+   * @param messageId The unique ID of the message.
+   * @return Conversation message
+   */
   ConversationMessage get(String messageId);
 
+  /**
+   * Retrieves a specific message by its ID.
+   *
+   * @param messageId The unique ID of the message.
+   * @param messageSource Specifies the message source for which the request will be processed. Used
+   *     for operations on messages in Dispatch Mode. For more information, see <a
+   *     href="https://developers.sinch.com/docs/conversation/processing-modes">Processing Modes</a>
+   * @default <code>CONVERSATION_SOURCE</code>
+   * @return Conversation message
+   */
   ConversationMessage get(String messageId, MessageSource messageSource);
 
   /**
@@ -97,13 +114,13 @@ public interface MessagesService {
    */
   enum MessageSource {
     /**
-     * The default messages source. Retrieves messages sent in the default `CONVERSATION` processing
-     * mode, which associates the messages with a specific conversation and contact.
+     * The default messages source. Retrieves messages sent in the default <code>CONVERSATION</code>
+     * processing mode, which associates the messages with a specific conversation and contact.
      */
     CONVERSATION_SOURCE,
     /**
-     * Retrieves messages sent in the `DISPATCH` processing mode. These types of messages are not
-     * associated with any conversation or contact.
+     * Retrieves messages sent in the <code>DISPATCH</code> processing mode. These types of messages
+     * are not associated with any conversation or contact.
      */
     DISPATCH_SOURCE
   }
