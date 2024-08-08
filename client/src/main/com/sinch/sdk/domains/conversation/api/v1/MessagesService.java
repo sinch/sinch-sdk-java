@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.conversation.api.v1;
 
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessageUpdateRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesListRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.MessagesListResponse;
@@ -128,6 +129,30 @@ public interface MessagesService {
    * @default <code>CONVERSATION_SOURCE</code>
    */
   void delete(String messageId, MessageSource messageSource);
+
+  /**
+   * Helper method for {@link #update(String, MessageSource, MessageUpdateRequest)}
+   *
+   * @see #update(String, MessageSource, MessageUpdateRequest)
+   * @param messageId The unique ID of the message.
+   * @param request Request parameters to be used for updating
+   * @return Updated message
+   */
+  ConversationMessage update(String messageId, MessageUpdateRequest request);
+
+  /**
+   * Update a specific message by its ID.
+   *
+   * @param messageId The unique ID of the message
+   * @param messageSource Specifies the message source for which the request will be processed. Used
+   *     for operations on messages in Dispatch Mode. For more information, see <a
+   *     href="https://developers.sinch.com/docs/conversation/processing-modes">Processing Modes</a>
+   * @default <code>CONVERSATION_SOURCE</code>
+   * @param request Request parameters to be used for updating
+   * @return Updated message
+   */
+  ConversationMessage update(
+      String messageId, MessageSource messageSource, MessageUpdateRequest request);
 
   /**
    * Specifies the message source for which the request will be processed. Used for operations on

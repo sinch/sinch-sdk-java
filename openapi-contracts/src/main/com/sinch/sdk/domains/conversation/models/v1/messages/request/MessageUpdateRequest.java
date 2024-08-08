@@ -15,8 +15,8 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.request;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /** Update message request */
-@JsonDeserialize(builder = UpdateMessageMetadataRequestImpl.Builder.class)
-public interface UpdateMessageMetadataRequest {
+@JsonDeserialize(builder = MessageUpdateRequestImpl.Builder.class)
+public interface MessageUpdateRequest {
 
   /**
    * Get metadata
@@ -31,7 +31,7 @@ public interface UpdateMessageMetadataRequest {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new UpdateMessageMetadataRequestImpl.Builder();
+    return new MessageUpdateRequestImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -51,6 +51,6 @@ public interface UpdateMessageMetadataRequest {
      *
      * @return The instance build with current builder values
      */
-    UpdateMessageMetadataRequest build();
+    MessageUpdateRequest build();
   }
 }

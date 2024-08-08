@@ -9,19 +9,19 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
-@JsonPropertyOrder({UpdateMessageMetadataRequestImpl.JSON_PROPERTY_METADATA})
+@JsonPropertyOrder({MessageUpdateRequestImpl.JSON_PROPERTY_METADATA})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class UpdateMessageMetadataRequestImpl implements UpdateMessageMetadataRequest {
+public class MessageUpdateRequestImpl implements MessageUpdateRequest {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_METADATA = "metadata";
 
   private OptionalValue<String> metadata;
 
-  public UpdateMessageMetadataRequestImpl() {}
+  public MessageUpdateRequestImpl() {}
 
-  protected UpdateMessageMetadataRequestImpl(OptionalValue<String> metadata) {
+  protected MessageUpdateRequestImpl(OptionalValue<String> metadata) {
     this.metadata = metadata;
   }
 
@@ -45,8 +45,7 @@ public class UpdateMessageMetadataRequestImpl implements UpdateMessageMetadataRe
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UpdateMessageMetadataRequestImpl updateMessageMetadataRequest =
-        (UpdateMessageMetadataRequestImpl) o;
+    MessageUpdateRequestImpl updateMessageMetadataRequest = (MessageUpdateRequestImpl) o;
     return Objects.equals(this.metadata, updateMessageMetadataRequest.metadata);
   }
 
@@ -58,7 +57,7 @@ public class UpdateMessageMetadataRequestImpl implements UpdateMessageMetadataRe
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UpdateMessageMetadataRequestImpl {\n");
+    sb.append("class MessageUpdateRequestImpl {\n");
     sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -75,7 +74,7 @@ public class UpdateMessageMetadataRequestImpl implements UpdateMessageMetadataRe
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements UpdateMessageMetadataRequest.Builder {
+  static class Builder implements MessageUpdateRequest.Builder {
     OptionalValue<String> metadata = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_METADATA)
@@ -84,8 +83,8 @@ public class UpdateMessageMetadataRequestImpl implements UpdateMessageMetadataRe
       return this;
     }
 
-    public UpdateMessageMetadataRequest build() {
-      return new UpdateMessageMetadataRequestImpl(metadata);
+    public MessageUpdateRequest build() {
+      return new MessageUpdateRequestImpl(metadata);
     }
   }
 }

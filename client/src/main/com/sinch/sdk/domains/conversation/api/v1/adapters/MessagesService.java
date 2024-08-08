@@ -10,11 +10,13 @@ import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ConversationMessageMapper;
 import com.sinch.sdk.domains.conversation.api.v1.internal.MessagesApi;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
+import com.sinch.sdk.domains.conversation.models.v1.internal.ConversationMessageInternal;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ListMessagesResponseInternal;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ListMessagesResponseInternalImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.ConversationMessagesView;
+import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessageUpdateRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesListRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.MessagesListResponse;
@@ -148,6 +150,21 @@ public class MessagesService implements com.sinch.sdk.domains.conversation.api.v
     getApi()
         .messagesDeleteMessage(
             uriUUID, messageId, null == messageSource ? null : messageSource.name());
+  }
+
+  public ConversationMessage update(String messageId, MessageUpdateRequest parameters) {
+    return update(messageId, null, parameters);
+  }
+
+  public ConversationMessage update(
+      String messageId, MessageSource _messageSource, MessageUpdateRequest parameters) {
+
+    String messageSource = null == _messageSource ? null : _messageSource.name();
+
+    ConversationMessageInternal response =
+        getApi().messagesUpdateMessageMetadata(uriUUID, messageId, parameters, messageSource);
+
+    return ConversationMessageMapper.convert(response);
   }
 
   private MessagesListResponse mapForPaging(

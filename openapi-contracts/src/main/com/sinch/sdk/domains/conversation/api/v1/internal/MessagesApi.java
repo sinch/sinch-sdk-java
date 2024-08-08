@@ -29,8 +29,8 @@ import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.internal.ConversationMessageInternal;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ListMessagesResponseInternal;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.ConversationMessagesView;
+import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessageUpdateRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
-import com.sinch.sdk.domains.conversation.models.v1.messages.request.UpdateMessageMetadataRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -597,7 +597,7 @@ public class MessagesApi {
    * @param projectId The unique ID of the project. You can find this on the [Sinch
    *     Dashboard](https://dashboard.sinch.com/convapi/apps). (required)
    * @param messageId The unique ID of the message. (required)
-   * @param updateMessageMetadataRequest Update message metadata request. (required)
+   * @param messageUpdateRequest Update message metadata request. (required)
    * @param messagesSource Specifies the message source for which the request will be processed.
    *     Used for operations on messages in Dispatch Mode. For more information, see [Processing
    *     Modes](../../../../../conversation/processing-modes/). (optional, default to
@@ -608,7 +608,7 @@ public class MessagesApi {
   public ConversationMessageInternal messagesUpdateMessageMetadata(
       String projectId,
       String messageId,
-      UpdateMessageMetadataRequest updateMessageMetadataRequest,
+      MessageUpdateRequest messageUpdateRequest,
       String messagesSource)
       throws ApiException {
 
@@ -621,15 +621,15 @@ public class MessagesApi {
             + "messageId: "
             + messageId
             + ", "
-            + "updateMessageMetadataRequest: "
-            + updateMessageMetadataRequest
+            + "messageUpdateRequest: "
+            + messageUpdateRequest
             + ", "
             + "messagesSource: "
             + messagesSource);
 
     HttpRequest httpRequest =
         messagesUpdateMessageMetadataRequestBuilder(
-            projectId, messageId, updateMessageMetadataRequest, messagesSource);
+            projectId, messageId, messageUpdateRequest, messagesSource);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -651,7 +651,7 @@ public class MessagesApi {
   private HttpRequest messagesUpdateMessageMetadataRequestBuilder(
       String projectId,
       String messageId,
-      UpdateMessageMetadataRequest updateMessageMetadataRequest,
+      MessageUpdateRequest messageUpdateRequest,
       String messagesSource)
       throws ApiException {
     // verify the required parameter 'projectId' is set
@@ -666,11 +666,11 @@ public class MessagesApi {
           400,
           "Missing the required parameter 'messageId' when calling messagesUpdateMessageMetadata");
     }
-    // verify the required parameter 'updateMessageMetadataRequest' is set
-    if (updateMessageMetadataRequest == null) {
+    // verify the required parameter 'messageUpdateRequest' is set
+    if (messageUpdateRequest == null) {
       throw new ApiException(
           400,
-          "Missing the required parameter 'updateMessageMetadataRequest' when calling"
+          "Missing the required parameter 'messageUpdateRequest' when calling"
               + " messagesUpdateMessageMetadata");
     }
 
@@ -698,8 +698,7 @@ public class MessagesApi {
     final Collection<String> localVarContentTypes = Arrays.asList("application/json");
 
     final Collection<String> localVarAuthNames = Arrays.asList("Basic", "oAuth2");
-    final String serializedBody =
-        mapper.serialize(localVarContentTypes, updateMessageMetadataRequest);
+    final String serializedBody = mapper.serialize(localVarContentTypes, messageUpdateRequest);
 
     return new HttpRequest(
         localVarPath,
