@@ -140,6 +140,16 @@ public class MessagesService implements com.sinch.sdk.domains.conversation.api.v
     return mapForPaging(parameters, response);
   }
 
+  public void delete(String messageId) {
+    delete(messageId, null);
+  }
+
+  public void delete(String messageId, MessageSource messageSource) {
+    getApi()
+        .messagesDeleteMessage(
+            uriUUID, messageId, null == messageSource ? null : messageSource.name());
+  }
+
   private MessagesListResponse mapForPaging(
       MessagesListRequest parameters, ListMessagesResponseInternal _dto) {
 

@@ -5,15 +5,15 @@ import com.sinch.sdk.domains.conversation.api.v1.MessagesService;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-public class Get extends BaseApplication {
+public class Delete extends BaseApplication {
 
-  private static final Logger LOGGER = Logger.getLogger(Get.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(Delete.class.getName());
 
-  public Get() throws IOException {}
+  public Delete() throws IOException {}
 
   public static void main(String[] args) {
     try {
-      new Get().run();
+      new Delete().run();
     } catch (Exception e) {
       LOGGER.severe(e.getMessage());
       e.printStackTrace();
@@ -24,10 +24,10 @@ public class Get extends BaseApplication {
 
     MessagesService service = client.conversation().v1().messages();
 
-    LOGGER.info("Get message: " + conversationMessageId);
+    LOGGER.info("Deleting message: " + conversationMessageId);
 
-    var result = service.get(conversationMessageId);
+    service.delete(conversationMessageId);
 
-    LOGGER.info("Response: " + result);
+    LOGGER.info("Done");
   }
 }

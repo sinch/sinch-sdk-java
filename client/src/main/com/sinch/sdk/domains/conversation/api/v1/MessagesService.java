@@ -109,6 +109,27 @@ public interface MessagesService {
   MessagesListResponse list(MessagesListRequest request);
 
   /**
+   * Helper method for {@link #delete(String, MessageSource)}
+   *
+   * @see #delete(String, MessageSource)
+   * @param messageId The unique ID of the message.
+   */
+  void delete(String messageId);
+
+  /**
+   * Delete a specific message by its ID.
+   *
+   * @apiNote Removing all messages of a conversation will not automatically delete the
+   *     conversation.
+   * @param messageId The unique ID of the message.
+   * @param messageSource Specifies the message source for which the request will be processed. Used
+   *     for operations on messages in Dispatch Mode. For more information, see <a
+   *     href="https://developers.sinch.com/docs/conversation/processing-modes">Processing Modes</a>
+   * @default <code>CONVERSATION_SOURCE</code>
+   */
+  void delete(String messageId, MessageSource messageSource);
+
+  /**
    * Specifies the message source for which the request will be processed. Used for operations on
    * messages in Dispatch Mode
    */
