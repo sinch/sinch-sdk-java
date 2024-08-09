@@ -5,11 +5,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.internal.VerificationRequestEventResponsePhoneCallContent;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.internal.VerificationRequestEventResponsePhoneCallContentImpl;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({
   VerificationRequestEventResponsePhoneCallImpl.JSON_PROPERTY_ACTION,
@@ -70,8 +79,10 @@ public class VerificationRequestEventResponsePhoneCallImpl
   }
 
   public OptionalValue<String> code() {
-    return null != callout
-        ? callout.map(VerificationRequestEventResponsePhoneCallContent::getCode)
+    return null != callout && callout.isPresent()
+        ? callout
+            .map(f -> ((VerificationRequestEventResponsePhoneCallContentImpl) f).code())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -84,8 +95,10 @@ public class VerificationRequestEventResponsePhoneCallImpl
   }
 
   public OptionalValue<PhoneCallSpeech> speech() {
-    return null != callout
-        ? callout.map(VerificationRequestEventResponsePhoneCallContent::getSpeech)
+    return null != callout && callout.isPresent()
+        ? callout
+            .map(f -> ((VerificationRequestEventResponsePhoneCallContentImpl) f).speech())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -174,5 +187,46 @@ public class VerificationRequestEventResponsePhoneCallImpl
       }
       return new VerificationRequestEventResponsePhoneCallImpl(action, callout);
     }
+  }
+
+  public static class DelegatedSerializer
+      extends JsonSerializer<OptionalValue<VerificationRequestEventResponsePhoneCall>> {
+    @Override
+    public void serialize(
+        OptionalValue<VerificationRequestEventResponsePhoneCall> value,
+        JsonGenerator jgen,
+        SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      VerificationRequestEventResponsePhoneCallImpl impl =
+          (VerificationRequestEventResponsePhoneCallImpl) value.get();
+      jgen.writeObject(null != impl ? impl.getCallout() : null);
+    }
+  }
+
+  public static class DelegatedDeSerializer
+      extends JsonDeserializer<VerificationRequestEventResponsePhoneCall> {
+    @Override
+    public VerificationRequestEventResponsePhoneCall deserialize(
+        JsonParser jp, DeserializationContext ctxt) throws IOException {
+
+      VerificationRequestEventResponsePhoneCallImpl.Builder builder =
+          new VerificationRequestEventResponsePhoneCallImpl.Builder();
+      VerificationRequestEventResponsePhoneCallContentImpl deserialized =
+          jp.readValueAs(VerificationRequestEventResponsePhoneCallContentImpl.class);
+      builder.setCallout(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<VerificationRequestEventResponsePhoneCall> delegatedConverter(
+      VerificationRequestEventResponsePhoneCallContent internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setCallout(internal).build());
   }
 }

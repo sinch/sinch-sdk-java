@@ -5,10 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestSmsOptions;
+import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestSmsOptionsImpl;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({
   VerificationReportRequestSmsImpl.JSON_PROPERTY_METHOD,
@@ -68,8 +77,9 @@ public class VerificationReportRequestSmsImpl
   }
 
   public OptionalValue<String> code() {
-    return null != sms
-        ? sms.map(VerificationReportRequestSmsOptions::getCode)
+    return null != sms && sms.isPresent()
+        ? sms.map(f -> ((VerificationReportRequestSmsOptionsImpl) f).code())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -82,8 +92,9 @@ public class VerificationReportRequestSmsImpl
   }
 
   public OptionalValue<String> cli() {
-    return null != sms
-        ? sms.map(VerificationReportRequestSmsOptions::getCli)
+    return null != sms && sms.isPresent()
+        ? sms.map(f -> ((VerificationReportRequestSmsOptionsImpl) f).cli())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -166,5 +177,44 @@ public class VerificationReportRequestSmsImpl
       }
       return new VerificationReportRequestSmsImpl(method, sms);
     }
+  }
+
+  public static class DelegatedSerializer
+      extends JsonSerializer<OptionalValue<VerificationReportRequestSms>> {
+    @Override
+    public void serialize(
+        OptionalValue<VerificationReportRequestSms> value,
+        JsonGenerator jgen,
+        SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      VerificationReportRequestSmsImpl impl = (VerificationReportRequestSmsImpl) value.get();
+      jgen.writeObject(null != impl ? impl.getSms() : null);
+    }
+  }
+
+  public static class DelegatedDeSerializer extends JsonDeserializer<VerificationReportRequestSms> {
+    @Override
+    public VerificationReportRequestSms deserialize(JsonParser jp, DeserializationContext ctxt)
+        throws IOException {
+
+      VerificationReportRequestSmsImpl.Builder builder =
+          new VerificationReportRequestSmsImpl.Builder();
+      VerificationReportRequestSmsOptionsImpl deserialized =
+          jp.readValueAs(VerificationReportRequestSmsOptionsImpl.class);
+      builder.setSms(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<VerificationReportRequestSms> delegatedConverter(
+      VerificationReportRequestSmsOptions internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setSms(internal).build());
   }
 }
