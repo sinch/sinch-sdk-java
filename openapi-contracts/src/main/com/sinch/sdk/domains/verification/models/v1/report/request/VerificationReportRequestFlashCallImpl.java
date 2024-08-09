@@ -5,10 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestFlashCallOptions;
+import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestFlashCallOptionsImpl;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({
   VerificationReportRequestFlashCallImpl.JSON_PROPERTY_METHOD,
@@ -69,8 +78,10 @@ public class VerificationReportRequestFlashCallImpl
   }
 
   public OptionalValue<String> cli() {
-    return null != flashCall
-        ? flashCall.map(VerificationReportRequestFlashCallOptions::getCli)
+    return null != flashCall && flashCall.isPresent()
+        ? flashCall
+            .map(f -> ((VerificationReportRequestFlashCallOptionsImpl) f).cli())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -147,5 +158,46 @@ public class VerificationReportRequestFlashCallImpl
       }
       return new VerificationReportRequestFlashCallImpl(method, flashCall);
     }
+  }
+
+  public static class DelegatedSerializer
+      extends JsonSerializer<OptionalValue<VerificationReportRequestFlashCall>> {
+    @Override
+    public void serialize(
+        OptionalValue<VerificationReportRequestFlashCall> value,
+        JsonGenerator jgen,
+        SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      VerificationReportRequestFlashCallImpl impl =
+          (VerificationReportRequestFlashCallImpl) value.get();
+      jgen.writeObject(null != impl ? impl.getFlashCall() : null);
+    }
+  }
+
+  public static class DelegatedDeSerializer
+      extends JsonDeserializer<VerificationReportRequestFlashCall> {
+    @Override
+    public VerificationReportRequestFlashCall deserialize(
+        JsonParser jp, DeserializationContext ctxt) throws IOException {
+
+      VerificationReportRequestFlashCallImpl.Builder builder =
+          new VerificationReportRequestFlashCallImpl.Builder();
+      VerificationReportRequestFlashCallOptionsImpl deserialized =
+          jp.readValueAs(VerificationReportRequestFlashCallOptionsImpl.class);
+      builder.setFlashCall(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<VerificationReportRequestFlashCall> delegatedConverter(
+      VerificationReportRequestFlashCallOptions internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setFlashCall(internal).build());
   }
 }
