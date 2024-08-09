@@ -27,7 +27,7 @@ public class EmailInfoDtoTest extends BaseTest {
 
   @Test
   void deserializeMessageDto() throws JsonProcessingException {
-    Object deserialized = objectMapper.readValue(jsonEmailInfoDto, emailInfoDto.getClass());
+    Object deserialized = objectMapper.readValue(jsonEmailInfoDto, EmailInfo.class);
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(emailInfoDto);
   }

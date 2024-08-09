@@ -5,10 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.TextMessageInternal;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.TextMessageInternalImpl;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({TextMessageImpl.JSON_PROPERTY_TEXT_MESSAGE})
 @JsonFilter("uninitializedFilter")
@@ -16,8 +25,9 @@ import java.util.Objects;
 public class TextMessageImpl
     implements TextMessage,
         com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
-        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage,
-        com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage {
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody,
+        com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceMessageType {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_TEXT_MESSAGE = "text_message";
@@ -50,8 +60,8 @@ public class TextMessageImpl
   }
 
   public OptionalValue<String> text() {
-    return null != textMessage
-        ? textMessage.map(TextMessageInternal::getText)
+    return null != textMessage && textMessage.isPresent()
+        ? textMessage.map(f -> ((TextMessageInternalImpl) f).text()).orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -124,5 +134,37 @@ public class TextMessageImpl
       }
       return new TextMessageImpl(textMessage);
     }
+  }
+
+  public static class DelegatedSerializer extends JsonSerializer<OptionalValue<TextMessage>> {
+    @Override
+    public void serialize(
+        OptionalValue<TextMessage> value, JsonGenerator jgen, SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      TextMessageImpl impl = (TextMessageImpl) value.get();
+      jgen.writeObject(impl.getTextMessage());
+    }
+  }
+
+  public static class DelegatedDeSerializer extends JsonDeserializer<TextMessage> {
+    @Override
+    public TextMessage deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+
+      TextMessageImpl.Builder builder = new TextMessageImpl.Builder();
+      TextMessageInternalImpl deserialized = jp.readValueAs(TextMessageInternalImpl.class);
+      builder.setTextMessage(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<TextMessage> delegatedConverter(TextMessageInternal internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setTextMessage(internal).build());
   }
 }

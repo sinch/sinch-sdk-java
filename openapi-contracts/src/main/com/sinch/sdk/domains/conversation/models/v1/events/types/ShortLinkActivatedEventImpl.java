@@ -5,10 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.events.types.internal.ShortLinkActivatedEventInternal;
+import com.sinch.sdk.domains.conversation.models.v1.events.types.internal.ShortLinkActivatedEventInternalImpl;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({ShortLinkActivatedEventImpl.JSON_PROPERTY_SHORTLINK_ACTIVATED_EVENT})
 @JsonFilter("uninitializedFilter")
@@ -51,8 +60,10 @@ public class ShortLinkActivatedEventImpl
   }
 
   public OptionalValue<String> payload() {
-    return null != shortlinkActivatedEvent
-        ? shortlinkActivatedEvent.map(ShortLinkActivatedEventInternal::getPayload)
+    return null != shortlinkActivatedEvent && shortlinkActivatedEvent.isPresent()
+        ? shortlinkActivatedEvent
+            .map(f -> ((ShortLinkActivatedEventInternalImpl) f).payload())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -67,8 +78,10 @@ public class ShortLinkActivatedEventImpl
   }
 
   public OptionalValue<String> title() {
-    return null != shortlinkActivatedEvent
-        ? shortlinkActivatedEvent.map(ShortLinkActivatedEventInternal::getTitle)
+    return null != shortlinkActivatedEvent && shortlinkActivatedEvent.isPresent()
+        ? shortlinkActivatedEvent
+            .map(f -> ((ShortLinkActivatedEventInternalImpl) f).title())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -83,8 +96,10 @@ public class ShortLinkActivatedEventImpl
   }
 
   public OptionalValue<String> ref() {
-    return null != shortlinkActivatedEvent
-        ? shortlinkActivatedEvent.map(ShortLinkActivatedEventInternal::getRef)
+    return null != shortlinkActivatedEvent && shortlinkActivatedEvent.isPresent()
+        ? shortlinkActivatedEvent
+            .map(f -> ((ShortLinkActivatedEventInternalImpl) f).ref())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -99,8 +114,10 @@ public class ShortLinkActivatedEventImpl
   }
 
   public OptionalValue<String> source() {
-    return null != shortlinkActivatedEvent
-        ? shortlinkActivatedEvent.map(ShortLinkActivatedEventInternal::getSource)
+    return null != shortlinkActivatedEvent && shortlinkActivatedEvent.isPresent()
+        ? shortlinkActivatedEvent
+            .map(f -> ((ShortLinkActivatedEventInternalImpl) f).source())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -115,8 +132,10 @@ public class ShortLinkActivatedEventImpl
   }
 
   public OptionalValue<String> type() {
-    return null != shortlinkActivatedEvent
-        ? shortlinkActivatedEvent.map(ShortLinkActivatedEventInternal::getType)
+    return null != shortlinkActivatedEvent && shortlinkActivatedEvent.isPresent()
+        ? shortlinkActivatedEvent
+            .map(f -> ((ShortLinkActivatedEventInternalImpl) f).type())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -131,8 +150,10 @@ public class ShortLinkActivatedEventImpl
   }
 
   public OptionalValue<Boolean> existingThread() {
-    return null != shortlinkActivatedEvent
-        ? shortlinkActivatedEvent.map(ShortLinkActivatedEventInternal::getExistingThread)
+    return null != shortlinkActivatedEvent && shortlinkActivatedEvent.isPresent()
+        ? shortlinkActivatedEvent
+            .map(f -> ((ShortLinkActivatedEventInternalImpl) f).existingThread())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -238,5 +259,43 @@ public class ShortLinkActivatedEventImpl
       }
       return new ShortLinkActivatedEventImpl(shortlinkActivatedEvent);
     }
+  }
+
+  public static class DelegatedSerializer
+      extends JsonSerializer<OptionalValue<ShortLinkActivatedEvent>> {
+    @Override
+    public void serialize(
+        OptionalValue<ShortLinkActivatedEvent> value,
+        JsonGenerator jgen,
+        SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      ShortLinkActivatedEventImpl impl = (ShortLinkActivatedEventImpl) value.get();
+      jgen.writeObject(impl.getShortlinkActivatedEvent());
+    }
+  }
+
+  public static class DelegatedDeSerializer extends JsonDeserializer<ShortLinkActivatedEvent> {
+    @Override
+    public ShortLinkActivatedEvent deserialize(JsonParser jp, DeserializationContext ctxt)
+        throws IOException {
+
+      ShortLinkActivatedEventImpl.Builder builder = new ShortLinkActivatedEventImpl.Builder();
+      ShortLinkActivatedEventInternalImpl deserialized =
+          jp.readValueAs(ShortLinkActivatedEventInternalImpl.class);
+      builder.setShortlinkActivatedEvent(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<ShortLinkActivatedEvent> delegatedConverter(
+      ShortLinkActivatedEventInternal internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setShortlinkActivatedEvent(internal).build());
   }
 }

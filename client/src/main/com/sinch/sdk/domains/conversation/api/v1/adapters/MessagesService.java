@@ -4,9 +4,22 @@ import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.core.models.pagination.Page;
+import com.sinch.sdk.core.models.pagination.TokenPageNavigator;
+import com.sinch.sdk.core.utils.Pair;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ConversationMessageMapper;
 import com.sinch.sdk.domains.conversation.api.v1.internal.MessagesApi;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
+import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
+import com.sinch.sdk.domains.conversation.models.v1.internal.ConversationMessageInternal;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ListMessagesResponseInternal;
+import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ListMessagesResponseInternalImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.request.ConversationMessagesView;
+import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessageUpdateRequest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesListRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.response.MessagesListResponse;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.carousel.CarouselMessage;
@@ -17,8 +30,10 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.location.Loca
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.template.TemplateMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
-import com.sinch.sdk.domains.conversation.models.v1.response.ConversationMessage;
 import com.sinch.sdk.models.ConversationContext;
+import java.time.Instant;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 
 public class MessagesService implements com.sinch.sdk.domains.conversation.api.v1.MessagesService {
@@ -39,7 +54,7 @@ public class MessagesService implements com.sinch.sdk.domains.conversation.api.v
     return this.api;
   }
 
-  public SendMessageResponse sendMessage(SendMessageRequest<? extends AppMessage> request)
+  public SendMessageResponse sendMessage(SendMessageRequest<? extends AppMessageBody> request)
       throws ApiException {
     return getApi().messagesSendMessage(uriUUID, request);
   }
@@ -82,6 +97,88 @@ public class MessagesService implements com.sinch.sdk.domains.conversation.api.v
   }
 
   public ConversationMessage get(String messageId) {
-    return getApi().messagesGetMessage(uriUUID, messageId, null);
+    return get(messageId, null);
+  }
+
+  public ConversationMessage get(String messageId, MessageSource messageSource) {
+    return ConversationMessageMapper.convert(
+        getApi()
+            .messagesGetMessage(
+                uriUUID, messageId, null == messageSource ? null : messageSource.name()));
+  }
+
+  public MessagesListResponse list(MessagesListRequest parameters) {
+
+    String conversationId = parameters.getConversationId().orElse(null);
+    String contactId = parameters.getContactId().orElse(null);
+    String appId = parameters.getAppId().orElse(null);
+    String channelIdentity = parameters.getChannelIdentity().orElse(null);
+    Instant startTime = parameters.getStartTime().orElse(null);
+    Instant endTime = parameters.getEndTime().orElse(null);
+    Integer pageSize = parameters.getPageSize().orElse(null);
+    String pageToken = parameters.getPageToken().orElse(null);
+    ConversationMessagesView view = parameters.getView().orElse(null);
+    String messagesSource = parameters.getMessagesSource().map(Enum::name).orElse(null);
+    Boolean onlyRecipientOriginated = parameters.getOnlyRecipientOriginated().orElse(null);
+    ConversationChannel channel = parameters.getChannel().orElse(null);
+
+    ListMessagesResponseInternal response =
+        getApi()
+            .messagesListMessages(
+                uriUUID,
+                conversationId,
+                contactId,
+                appId,
+                channelIdentity,
+                startTime,
+                endTime,
+                pageSize,
+                pageToken,
+                view,
+                messagesSource,
+                onlyRecipientOriginated,
+                channel);
+
+    return mapForPaging(parameters, response);
+  }
+
+  public void delete(String messageId) {
+    delete(messageId, null);
+  }
+
+  public void delete(String messageId, MessageSource messageSource) {
+    getApi()
+        .messagesDeleteMessage(
+            uriUUID, messageId, null == messageSource ? null : messageSource.name());
+  }
+
+  public ConversationMessage update(String messageId, MessageUpdateRequest parameters) {
+    return update(messageId, null, parameters);
+  }
+
+  public ConversationMessage update(
+      String messageId, MessageSource _messageSource, MessageUpdateRequest parameters) {
+
+    String messageSource = null == _messageSource ? null : _messageSource.name();
+
+    ConversationMessageInternal response =
+        getApi().messagesUpdateMessageMetadata(uriUUID, messageId, parameters, messageSource);
+
+    return ConversationMessageMapper.convert(response);
+  }
+
+  private MessagesListResponse mapForPaging(
+      MessagesListRequest parameters, ListMessagesResponseInternal _dto) {
+
+    ListMessagesResponseInternalImpl dto = (ListMessagesResponseInternalImpl) _dto;
+
+    String nextPageToken = dto.nextPageToken().orElse(null);
+    Collection<ConversationMessage> list = dto.messages().orElse(Collections.emptyList());
+
+    Pair<Collection<ConversationMessage>, TokenPageNavigator> paginated =
+        new Pair<>(list, new TokenPageNavigator(nextPageToken));
+
+    return new MessagesListResponse(
+        this, new Page<>(parameters, paginated.getLeft(), paginated.getRight()));
   }
 }

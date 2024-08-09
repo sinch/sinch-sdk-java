@@ -5,10 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.events.types.internal.PaymentStatusUpdateEventInternal;
+import com.sinch.sdk.domains.conversation.models.v1.events.types.internal.PaymentStatusUpdateEventInternalImpl;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({PaymentStatusUpdateEventImpl.JSON_PROPERTY_PAYMENT_STATUS_UPDATE_EVENT})
 @JsonFilter("uninitializedFilter")
@@ -52,8 +61,10 @@ public class PaymentStatusUpdateEventImpl
   }
 
   public OptionalValue<String> referenceId() {
-    return null != paymentStatusUpdateEvent
-        ? paymentStatusUpdateEvent.map(PaymentStatusUpdateEventInternal::getReferenceId)
+    return null != paymentStatusUpdateEvent && paymentStatusUpdateEvent.isPresent()
+        ? paymentStatusUpdateEvent
+            .map(f -> ((PaymentStatusUpdateEventInternalImpl) f).referenceId())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -68,8 +79,10 @@ public class PaymentStatusUpdateEventImpl
   }
 
   public OptionalValue<PaymentStatus> paymentStatus() {
-    return null != paymentStatusUpdateEvent
-        ? paymentStatusUpdateEvent.map(PaymentStatusUpdateEventInternal::getPaymentStatus)
+    return null != paymentStatusUpdateEvent && paymentStatusUpdateEvent.isPresent()
+        ? paymentStatusUpdateEvent
+            .map(f -> ((PaymentStatusUpdateEventInternalImpl) f).paymentStatus())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -84,9 +97,10 @@ public class PaymentStatusUpdateEventImpl
   }
 
   public OptionalValue<PaymentTransactionStatus> paymentTransactionStatus() {
-    return null != paymentStatusUpdateEvent
-        ? paymentStatusUpdateEvent.map(
-            PaymentStatusUpdateEventInternal::getPaymentTransactionStatus)
+    return null != paymentStatusUpdateEvent && paymentStatusUpdateEvent.isPresent()
+        ? paymentStatusUpdateEvent
+            .map(f -> ((PaymentStatusUpdateEventInternalImpl) f).paymentTransactionStatus())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -101,8 +115,10 @@ public class PaymentStatusUpdateEventImpl
   }
 
   public OptionalValue<String> paymentTransactionId() {
-    return null != paymentStatusUpdateEvent
-        ? paymentStatusUpdateEvent.map(PaymentStatusUpdateEventInternal::getPaymentTransactionId)
+    return null != paymentStatusUpdateEvent && paymentStatusUpdateEvent.isPresent()
+        ? paymentStatusUpdateEvent
+            .map(f -> ((PaymentStatusUpdateEventInternalImpl) f).paymentTransactionId())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -198,5 +214,43 @@ public class PaymentStatusUpdateEventImpl
       }
       return new PaymentStatusUpdateEventImpl(paymentStatusUpdateEvent);
     }
+  }
+
+  public static class DelegatedSerializer
+      extends JsonSerializer<OptionalValue<PaymentStatusUpdateEvent>> {
+    @Override
+    public void serialize(
+        OptionalValue<PaymentStatusUpdateEvent> value,
+        JsonGenerator jgen,
+        SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      PaymentStatusUpdateEventImpl impl = (PaymentStatusUpdateEventImpl) value.get();
+      jgen.writeObject(impl.getPaymentStatusUpdateEvent());
+    }
+  }
+
+  public static class DelegatedDeSerializer extends JsonDeserializer<PaymentStatusUpdateEvent> {
+    @Override
+    public PaymentStatusUpdateEvent deserialize(JsonParser jp, DeserializationContext ctxt)
+        throws IOException {
+
+      PaymentStatusUpdateEventImpl.Builder builder = new PaymentStatusUpdateEventImpl.Builder();
+      PaymentStatusUpdateEventInternalImpl deserialized =
+          jp.readValueAs(PaymentStatusUpdateEventInternalImpl.class);
+      builder.setPaymentStatusUpdateEvent(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<PaymentStatusUpdateEvent> delegatedConverter(
+      PaymentStatusUpdateEventInternal internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setPaymentStatusUpdateEvent(internal).build());
   }
 }

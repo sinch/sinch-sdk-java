@@ -22,7 +22,6 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.location.Loca
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessageImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.mediacard.MediaCardMessageImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.productresponse.ProductResponseMessageImpl;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.replyto.ReplyToMessageImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessageImpl;
 import java.io.IOException;
 import java.util.Collections;
@@ -365,46 +364,6 @@ public class ContactMessageInternalImpl extends AbstractOpenApiSchema
         log.log(Level.FINER, "Input data does not match schema 'ProductResponseMessageImpl'", e);
       }
 
-      // deserialize ReplyToMessageImpl
-      try {
-        boolean attemptParsing = true;
-        // ensure that we respect type coercion as set on the client ObjectMapper
-        if (ReplyToMessageImpl.class.equals(Integer.class)
-            || ReplyToMessageImpl.class.equals(Long.class)
-            || ReplyToMessageImpl.class.equals(Float.class)
-            || ReplyToMessageImpl.class.equals(Double.class)
-            || ReplyToMessageImpl.class.equals(Boolean.class)
-            || ReplyToMessageImpl.class.equals(String.class)) {
-          attemptParsing = typeCoercion;
-          if (!attemptParsing) {
-            attemptParsing |=
-                ((ReplyToMessageImpl.class.equals(Integer.class)
-                        || ReplyToMessageImpl.class.equals(Long.class))
-                    && token == JsonToken.VALUE_NUMBER_INT);
-            attemptParsing |=
-                ((ReplyToMessageImpl.class.equals(Float.class)
-                        || ReplyToMessageImpl.class.equals(Double.class))
-                    && token == JsonToken.VALUE_NUMBER_FLOAT);
-            attemptParsing |=
-                (ReplyToMessageImpl.class.equals(Boolean.class)
-                    && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
-            attemptParsing |=
-                (ReplyToMessageImpl.class.equals(String.class) && token == JsonToken.VALUE_STRING);
-          }
-        }
-        if (attemptParsing) {
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(ReplyToMessageImpl.class);
-          // TODO: there is no validation against JSON schema constraints
-          // (min, max, enum, pattern...), this does not perform a strict JSON
-          // validation, which means the 'match' count may be higher than it should be.
-          match++;
-          log.log(Level.FINER, "Input data matches schema 'ReplyToMessageImpl'");
-        }
-      } catch (Exception e) {
-        // deserialization failed, continue
-        log.log(Level.FINER, "Input data does not match schema 'ReplyToMessageImpl'", e);
-      }
-
       // deserialize TextMessageImpl
       try {
         boolean attemptParsing = true;
@@ -507,11 +466,6 @@ public class ContactMessageInternalImpl extends AbstractOpenApiSchema
     setActualInstance(o);
   }
 
-  public ContactMessageInternalImpl(ReplyToMessageImpl o) {
-    super("oneOf", Boolean.FALSE);
-    setActualInstance(o);
-  }
-
   public ContactMessageInternalImpl(TextMessageImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
@@ -525,7 +479,6 @@ public class ContactMessageInternalImpl extends AbstractOpenApiSchema
     schemas.put("MediaCardMessageImpl", MediaCardMessageImpl.class);
     schemas.put("MediaMessageImpl", MediaMessageImpl.class);
     schemas.put("ProductResponseMessageImpl", ProductResponseMessageImpl.class);
-    schemas.put("ReplyToMessageImpl", ReplyToMessageImpl.class);
     schemas.put("TextMessageImpl", TextMessageImpl.class);
     JSONNavigator.registerDescendants(
         ContactMessageInternalImpl.class, Collections.unmodifiableMap(schemas));
@@ -540,7 +493,7 @@ public class ContactMessageInternalImpl extends AbstractOpenApiSchema
    * Set the instance that matches the oneOf child schema, check the instance parameter is valid
    * against the oneOf child schemas: ChannelSpecificContactMessageImpl, ChoiceResponseMessageImpl,
    * FallbackMessageImpl, LocationMessageImpl, MediaCardMessageImpl, MediaMessageImpl,
-   * ProductResponseMessageImpl, ReplyToMessageImpl, TextMessageImpl
+   * ProductResponseMessageImpl, TextMessageImpl
    *
    * <p>It could be an instance of the 'oneOf' schemas. The oneOf child schemas may themselves be a
    * composed schema (allOf, anyOf, oneOf).
@@ -585,11 +538,6 @@ public class ContactMessageInternalImpl extends AbstractOpenApiSchema
       return;
     }
 
-    if (JSONNavigator.isInstanceOf(ReplyToMessageImpl.class, instance, new HashSet<Class<?>>())) {
-      super.setActualInstance(instance);
-      return;
-    }
-
     if (JSONNavigator.isInstanceOf(TextMessageImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
@@ -599,17 +547,17 @@ public class ContactMessageInternalImpl extends AbstractOpenApiSchema
         "Invalid instance type. Must be ChannelSpecificContactMessageImpl,"
             + " ChoiceResponseMessageImpl, FallbackMessageImpl, LocationMessageImpl,"
             + " MediaCardMessageImpl, MediaMessageImpl, ProductResponseMessageImpl,"
-            + " ReplyToMessageImpl, TextMessageImpl");
+            + " TextMessageImpl");
   }
 
   /**
    * Get the actual instance, which can be the following: ChannelSpecificContactMessageImpl,
    * ChoiceResponseMessageImpl, FallbackMessageImpl, LocationMessageImpl, MediaCardMessageImpl,
-   * MediaMessageImpl, ProductResponseMessageImpl, ReplyToMessageImpl, TextMessageImpl
+   * MediaMessageImpl, ProductResponseMessageImpl, TextMessageImpl
    *
    * @return The actual instance (ChannelSpecificContactMessageImpl, ChoiceResponseMessageImpl,
    *     FallbackMessageImpl, LocationMessageImpl, MediaCardMessageImpl, MediaMessageImpl,
-   *     ProductResponseMessageImpl, ReplyToMessageImpl, TextMessageImpl)
+   *     ProductResponseMessageImpl, TextMessageImpl)
    */
   @Override
   public Object getActualInstance() {
@@ -692,17 +640,6 @@ public class ContactMessageInternalImpl extends AbstractOpenApiSchema
    */
   public ProductResponseMessageImpl getProductResponseMessageImpl() throws ClassCastException {
     return (ProductResponseMessageImpl) super.getActualInstance();
-  }
-
-  /**
-   * Get the actual instance of `ReplyToMessageImpl`. If the actual instance is not
-   * `ReplyToMessageImpl`, the ClassCastException will be thrown.
-   *
-   * @return The actual instance of `ReplyToMessageImpl`
-   * @throws ClassCastException if the instance is not `ReplyToMessageImpl`
-   */
-  public ReplyToMessageImpl getReplyToMessageImpl() throws ClassCastException {
-    return (ReplyToMessageImpl) super.getActualInstance();
   }
 
   /**

@@ -129,7 +129,6 @@
                             com.sinch.sdk.http;
                             com.sinch.sdk.pagination.Page*;
                             **.dto.*;
-                            **.api.*;
                             **.adapters.**;
                             **.adapters.converters;
                             **.adapters;
@@ -167,6 +166,11 @@
                                 <name>apiNote</name>
                                 <placement>a</placement>
                                 <head>API Note:</head>
+                            </tag>
+                            <tag>
+                                <name>default</name>
+                                <placement>a</placement>
+                                <head>Default value:</head>
                             </tag>
                         </tags>
                         <groups>

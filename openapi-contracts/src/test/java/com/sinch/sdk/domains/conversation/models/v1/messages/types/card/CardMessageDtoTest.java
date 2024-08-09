@@ -59,7 +59,7 @@ public class CardMessageDtoTest extends BaseTest {
 
   @Test
   void deserializeMessageDto() throws JsonProcessingException {
-    Object deserialized = objectMapper.readValue(jsonCardMessageDto, cardMessageDto.getClass());
+    Object deserialized = objectMapper.readValue(jsonCardMessageDto, CardMessage.class);
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(cardMessageDto);
   }

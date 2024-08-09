@@ -64,6 +64,10 @@ public abstract class ListResponse<T> {
    * @return Stream onto items
    */
   public Stream<T> stream() {
+    if (!iterator().hasNext()) {
+      return Stream.empty();
+    }
+
     Iterable<T> iterable = this::iterator;
     return StreamSupport.stream(iterable.spliterator(), false);
   }

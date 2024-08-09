@@ -13,10 +13,6 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages.types.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.call.CallMessage;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.location.LocationMessage;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.url.UrlMessage;
 
 /**
  * A choice is an action the user can take such as buttons for quick replies or other call to
@@ -30,28 +26,28 @@ public interface ChoiceMessageOneOfInternal {
    *
    * @return callMessage
    */
-  CallMessage getCallMessage();
+  CallMessageInternal getCallMessage();
 
   /**
    * Get locationMessage
    *
    * @return locationMessage
    */
-  LocationMessage getLocationMessage();
+  LocationMessageInternal getLocationMessage();
 
   /**
    * Get textMessage
    *
    * @return textMessage
    */
-  TextMessage getTextMessage();
+  TextMessageInternal getTextMessage();
 
   /**
    * Get urlMessage
    *
    * @return urlMessage
    */
-  UrlMessage getUrlMessage();
+  UrlMessageInternal getUrlMessage();
 
   /**
    * An optional field. This data will be returned in the ChoiceResponseMessage. The default is
@@ -80,7 +76,7 @@ public interface ChoiceMessageOneOfInternal {
      * @return Current builder
      * @see #getCallMessage
      */
-    Builder setCallMessage(CallMessage callMessage);
+    Builder setCallMessage(CallMessageInternal callMessage);
 
     /**
      * see getter
@@ -89,7 +85,7 @@ public interface ChoiceMessageOneOfInternal {
      * @return Current builder
      * @see #getLocationMessage
      */
-    Builder setLocationMessage(LocationMessage locationMessage);
+    Builder setLocationMessage(LocationMessageInternal locationMessage);
 
     /**
      * see getter
@@ -98,7 +94,7 @@ public interface ChoiceMessageOneOfInternal {
      * @return Current builder
      * @see #getTextMessage
      */
-    Builder setTextMessage(TextMessage textMessage);
+    Builder setTextMessage(TextMessageInternal textMessage);
 
     /**
      * see getter
@@ -107,7 +103,7 @@ public interface ChoiceMessageOneOfInternal {
      * @return Current builder
      * @see #getUrlMessage
      */
-    Builder setUrlMessage(UrlMessage urlMessage);
+    Builder setUrlMessage(UrlMessageInternal urlMessage);
 
     /**
      * see getter

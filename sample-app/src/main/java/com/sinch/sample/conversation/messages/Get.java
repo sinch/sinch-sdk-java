@@ -24,7 +24,7 @@ public class Get extends BaseApplication {
 
     MessagesService service = client.conversation().v1().messages();
 
-    LOGGER.info("Get message");
+    LOGGER.info("Get message: " + conversationMessageId);
 
     var result = service.get(conversationMessageId);
 

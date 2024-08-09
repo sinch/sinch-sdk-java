@@ -10,7 +10,7 @@ import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.Recipient;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageWithExtensions;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -32,7 +32,7 @@ import java.util.Objects;
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class SendMessageRequestImpl<T extends AppMessage> implements SendMessageRequest<T> {
+public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMessageRequest<T> {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_APP_ID = "app_id";
@@ -53,7 +53,7 @@ public class SendMessageRequestImpl<T extends AppMessage> implements SendMessage
 
   public static final String JSON_PROPERTY_MESSAGE = "message";
 
-  private OptionalValue<AppMessageWithExtensions<T>> message;
+  private OptionalValue<AppMessage<T>> message;
 
   public static final String JSON_PROPERTY_MESSAGE_METADATA = "message_metadata";
 
@@ -95,7 +95,7 @@ public class SendMessageRequestImpl<T extends AppMessage> implements SendMessage
       OptionalValue<String> callbackUrl,
       OptionalValue<List<ConversationChannel>> channelPriorityOrder,
       OptionalValue<Map<String, String>> channelProperties,
-      OptionalValue<AppMessageWithExtensions<T>> message,
+      OptionalValue<AppMessage<T>> message,
       OptionalValue<String> messageMetadata,
       OptionalValue<Object> conversationMetadata,
       OptionalValue<MessageQueue> queue,
@@ -164,13 +164,13 @@ public class SendMessageRequestImpl<T extends AppMessage> implements SendMessage
   }
 
   @JsonIgnore
-  public AppMessageWithExtensions<T> getMessage() {
+  public AppMessage<T> getMessage() {
     return message.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<AppMessageWithExtensions<T>> message() {
+  public OptionalValue<AppMessage<T>> message() {
     return message;
   }
 
@@ -345,12 +345,12 @@ public class SendMessageRequestImpl<T extends AppMessage> implements SendMessage
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder<T extends AppMessage> implements SendMessageRequest.Builder<T> {
+  static class Builder<T extends AppMessageBody> implements SendMessageRequest.Builder<T> {
     OptionalValue<String> appId = OptionalValue.empty();
     OptionalValue<String> callbackUrl = OptionalValue.empty();
     OptionalValue<List<ConversationChannel>> channelPriorityOrder = OptionalValue.empty();
     OptionalValue<Map<String, String>> channelProperties = OptionalValue.empty();
-    OptionalValue<AppMessageWithExtensions<T>> message = OptionalValue.empty();
+    OptionalValue<AppMessage<T>> message = OptionalValue.empty();
     OptionalValue<String> messageMetadata = OptionalValue.empty();
     OptionalValue<Object> conversationMetadata = OptionalValue.empty();
     OptionalValue<MessageQueue> queue = OptionalValue.empty();
@@ -386,7 +386,7 @@ public class SendMessageRequestImpl<T extends AppMessage> implements SendMessage
     }
 
     @JsonProperty(JSON_PROPERTY_MESSAGE)
-    public Builder<T> setMessage(AppMessageWithExtensions<T> message) {
+    public Builder<T> setMessage(AppMessage<T> message) {
       this.message = OptionalValue.of(message);
       return this;
     }

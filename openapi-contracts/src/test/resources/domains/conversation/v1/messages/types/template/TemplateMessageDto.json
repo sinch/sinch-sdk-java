@@ -1,17 +1,19 @@
 {
-  "channel_template": {
-    "KAKAOTALK": {
-      "template_id": "my template ID value",
-      "version": "a version",
-      "language_code": "en-US"
-    }
-  },
-  "omni_template": {
-    "template_id": "another template ID",
-    "version": "another version",
-    "language_code": "another language",
-    "parameters": {
-      "name": "Value for the name parameter used in the version 1 and language \"en-US\" of the template"
+  "template_message": {
+    "channel_template": {
+      "KAKAOTALK": {
+        "template_id": "my template ID value",
+        "version": "a version",
+        "language_code": "en-US"
+      }
+    },
+    "omni_template": {
+      "template_id": "another template ID",
+      "version": "another version",
+      "language_code": "another language",
+      "parameters": {
+        "name": "Value for the name parameter used in the version 1 and language \"en-US\" of the template"
+      }
     }
   }
 }

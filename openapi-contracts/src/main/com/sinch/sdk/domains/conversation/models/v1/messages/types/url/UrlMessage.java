@@ -14,9 +14,10 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.types.url;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** URL Message */
+/** A generic URL message. */
 @JsonDeserialize(builder = UrlMessageImpl.Builder.class)
-public interface UrlMessage {
+public interface UrlMessage
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceMessageType {
 
   /**
    * The title shown close to the URL. The title can be clickable in some cases.

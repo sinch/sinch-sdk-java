@@ -27,8 +27,7 @@ public class PhoneNumberInfoDtoTest extends BaseTest {
 
   @Test
   void deserializeMessageDto() throws JsonProcessingException {
-    Object deserialized =
-        objectMapper.readValue(jsonPhoneNumberInfoDto, phoneNumberInfoDto.getClass());
+    Object deserialized = objectMapper.readValue(jsonPhoneNumberInfoDto, PhoneNumberInfo.class);
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(phoneNumberInfoDto);
   }

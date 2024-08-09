@@ -5,57 +5,82 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.CallMessageInternal;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.CallMessageInternalImpl;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
-@JsonPropertyOrder({
-  CallMessageImpl.JSON_PROPERTY_PHONE_NUMBER,
-  CallMessageImpl.JSON_PROPERTY_TITLE
-})
+@JsonPropertyOrder({CallMessageImpl.JSON_PROPERTY_CALL_MESSAGE})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class CallMessageImpl implements CallMessage {
+public class CallMessageImpl
+    implements CallMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceMessageType {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_PHONE_NUMBER = "phone_number";
+  public static final String JSON_PROPERTY_CALL_MESSAGE = "call_message";
 
-  private OptionalValue<String> phoneNumber;
-
-  public static final String JSON_PROPERTY_TITLE = "title";
-
-  private OptionalValue<String> title;
+  private OptionalValue<CallMessageInternal> callMessage;
 
   public CallMessageImpl() {}
 
-  protected CallMessageImpl(OptionalValue<String> phoneNumber, OptionalValue<String> title) {
-    this.phoneNumber = phoneNumber;
-    this.title = title;
+  protected CallMessageImpl(OptionalValue<CallMessageInternal> callMessage) {
+    this.callMessage = callMessage;
+  }
+
+  @JsonIgnore
+  public CallMessageInternal getCallMessage() {
+    return callMessage.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CALL_MESSAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<CallMessageInternal> callMessage() {
+    return callMessage;
   }
 
   @JsonIgnore
   public String getPhoneNumber() {
-    return phoneNumber.orElse(null);
+    if (null == callMessage
+        || !callMessage.isPresent()
+        || null == callMessage.get().getPhoneNumber()) {
+      return null;
+    }
+    return callMessage.get().getPhoneNumber();
   }
 
-  @JsonProperty(JSON_PROPERTY_PHONE_NUMBER)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<String> phoneNumber() {
-    return phoneNumber;
+    return null != callMessage && callMessage.isPresent()
+        ? callMessage
+            .map(f -> ((CallMessageInternalImpl) f).phoneNumber())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public String getTitle() {
-    return title.orElse(null);
+    if (null == callMessage || !callMessage.isPresent() || null == callMessage.get().getTitle()) {
+      return null;
+    }
+    return callMessage.get().getTitle();
   }
 
-  @JsonProperty(JSON_PROPERTY_TITLE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<String> title() {
-    return title;
+    return null != callMessage && callMessage.isPresent()
+        ? callMessage.map(f -> ((CallMessageInternalImpl) f).title()).orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
-  /** Return true if this Call_Message object is equal to o. */
+  /** Return true if this CallMessageField object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -64,22 +89,20 @@ public class CallMessageImpl implements CallMessage {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CallMessageImpl callMessage = (CallMessageImpl) o;
-    return Objects.equals(this.phoneNumber, callMessage.phoneNumber)
-        && Objects.equals(this.title, callMessage.title);
+    CallMessageImpl callMessageField = (CallMessageImpl) o;
+    return Objects.equals(this.callMessage, callMessageField.callMessage);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(phoneNumber, title);
+    return Objects.hash(callMessage);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CallMessageImpl {\n");
-    sb.append("    phoneNumber: ").append(toIndentedString(phoneNumber)).append("\n");
-    sb.append("    title: ").append(toIndentedString(title)).append("\n");
+    sb.append("    callMessage: ").append(toIndentedString(callMessage)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -96,23 +119,73 @@ public class CallMessageImpl implements CallMessage {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements CallMessage.Builder {
-    OptionalValue<String> phoneNumber = OptionalValue.empty();
-    OptionalValue<String> title = OptionalValue.empty();
+    OptionalValue<CallMessageInternal> callMessage = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_PHONE_NUMBER)
-    public Builder setPhoneNumber(String phoneNumber) {
-      this.phoneNumber = OptionalValue.of(phoneNumber);
+    CallMessageInternal.Builder _delegatedBuilder = null;
+
+    @JsonProperty(value = JSON_PROPERTY_CALL_MESSAGE, required = true)
+    public Builder setCallMessage(CallMessageInternal callMessage) {
+      this.callMessage = OptionalValue.of(callMessage);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_TITLE)
-    public Builder setTitle(String title) {
-      this.title = OptionalValue.of(title);
+    @JsonIgnore
+    public Builder setPhoneNumber(String phoneNumber) {
+      getDelegatedBuilder().setPhoneNumber(phoneNumber);
       return this;
+    }
+
+    @JsonIgnore
+    public Builder setTitle(String title) {
+      getDelegatedBuilder().setTitle(title);
+      return this;
+    }
+
+    private CallMessageInternal.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = CallMessageInternal.builder();
+      }
+      return this._delegatedBuilder;
     }
 
     public CallMessage build() {
-      return new CallMessageImpl(phoneNumber, title);
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.callMessage = OptionalValue.of(this._delegatedBuilder.build());
+      }
+      return new CallMessageImpl(callMessage);
     }
+  }
+
+  public static class DelegatedSerializer extends JsonSerializer<OptionalValue<CallMessage>> {
+    @Override
+    public void serialize(
+        OptionalValue<CallMessage> value, JsonGenerator jgen, SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      CallMessageImpl impl = (CallMessageImpl) value.get();
+      jgen.writeObject(impl.getCallMessage());
+    }
+  }
+
+  public static class DelegatedDeSerializer extends JsonDeserializer<CallMessage> {
+    @Override
+    public CallMessage deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+
+      CallMessageImpl.Builder builder = new CallMessageImpl.Builder();
+      CallMessageInternalImpl deserialized = jp.readValueAs(CallMessageInternalImpl.class);
+      builder.setCallMessage(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<CallMessage> delegatedConverter(CallMessageInternal internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setCallMessage(internal).build());
   }
 }

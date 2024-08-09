@@ -15,11 +15,11 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.types.list;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 
-/** List Message */
+/** A message containing a list of options to choose from */
 @JsonDeserialize(builder = ListMessageImpl.Builder.class)
 public interface ListMessage
     extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
-        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage {
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody {
 
   /**
    * A title for the message that is displayed near the products or choices.

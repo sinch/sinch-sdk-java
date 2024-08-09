@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.carousel.CarouselMessage;
 import java.util.Objects;
 
 @JsonPropertyOrder({CarouselMessageFieldInternalImpl.JSON_PROPERTY_CAROUSEL_MESSAGE})
@@ -18,22 +17,23 @@ public class CarouselMessageFieldInternalImpl implements CarouselMessageFieldInt
 
   public static final String JSON_PROPERTY_CAROUSEL_MESSAGE = "carousel_message";
 
-  private OptionalValue<CarouselMessage> carouselMessage;
+  private OptionalValue<CarouselMessageInternal> carouselMessage;
 
   public CarouselMessageFieldInternalImpl() {}
 
-  protected CarouselMessageFieldInternalImpl(OptionalValue<CarouselMessage> carouselMessage) {
+  protected CarouselMessageFieldInternalImpl(
+      OptionalValue<CarouselMessageInternal> carouselMessage) {
     this.carouselMessage = carouselMessage;
   }
 
   @JsonIgnore
-  public CarouselMessage getCarouselMessage() {
+  public CarouselMessageInternal getCarouselMessage() {
     return carouselMessage.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CAROUSEL_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<CarouselMessage> carouselMessage() {
+  public OptionalValue<CarouselMessageInternal> carouselMessage() {
     return carouselMessage;
   }
 
@@ -76,10 +76,10 @@ public class CarouselMessageFieldInternalImpl implements CarouselMessageFieldInt
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements CarouselMessageFieldInternal.Builder {
-    OptionalValue<CarouselMessage> carouselMessage = OptionalValue.empty();
+    OptionalValue<CarouselMessageInternal> carouselMessage = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_CAROUSEL_MESSAGE)
-    public Builder setCarouselMessage(CarouselMessage carouselMessage) {
+    @JsonProperty(value = JSON_PROPERTY_CAROUSEL_MESSAGE, required = true)
+    public Builder setCarouselMessage(CarouselMessageInternal carouselMessage) {
       this.carouselMessage = OptionalValue.of(carouselMessage);
       return this;
     }

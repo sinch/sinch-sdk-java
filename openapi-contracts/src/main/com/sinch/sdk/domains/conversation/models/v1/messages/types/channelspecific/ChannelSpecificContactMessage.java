@@ -15,7 +15,6 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspeci
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
-import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ChannelSpecificContactMessageInternal;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -61,7 +60,7 @@ public interface ChannelSpecificContactMessage
    *
    * @return message
    */
-  ChannelSpecificContactMessageInternal getMessage();
+  ChannelSpecificContactMessageContent getMessage();
 
   /**
    * Getting builder
@@ -91,7 +90,7 @@ public interface ChannelSpecificContactMessage
      * @return Current builder
      * @see #getMessage
      */
-    Builder setMessage(ChannelSpecificContactMessageInternal message);
+    Builder setMessage(ChannelSpecificContactMessageContent message);
 
     /**
      * Create instance

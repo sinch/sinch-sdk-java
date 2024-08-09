@@ -5,12 +5,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.contact.internal.DuplicatedContactIdentitiesNotificationInternal;
+import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.contact.internal.DuplicatedContactIdentitiesNotificationInternalImpl;
+import java.io.IOException;
 import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({
   ContactIdentitiesDuplicationEventImpl.JSON_PROPERTY_APP_ID,
@@ -169,8 +178,13 @@ public class ContactIdentitiesDuplicationEventImpl
 
   public OptionalValue<List<DuplicatedIdentities>> duplicatedIdentities() {
     return null != duplicatedContactIdentitiesNotification
-        ? duplicatedContactIdentitiesNotification.map(
-            DuplicatedContactIdentitiesNotificationInternal::getDuplicatedIdentities)
+            && duplicatedContactIdentitiesNotification.isPresent()
+        ? duplicatedContactIdentitiesNotification
+            .map(
+                f ->
+                    ((DuplicatedContactIdentitiesNotificationInternalImpl) f)
+                        .duplicatedIdentities())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -320,5 +334,46 @@ public class ContactIdentitiesDuplicationEventImpl
           correlationId,
           duplicatedContactIdentitiesNotification);
     }
+  }
+
+  public static class DelegatedSerializer
+      extends JsonSerializer<OptionalValue<ContactIdentitiesDuplicationEvent>> {
+    @Override
+    public void serialize(
+        OptionalValue<ContactIdentitiesDuplicationEvent> value,
+        JsonGenerator jgen,
+        SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      ContactIdentitiesDuplicationEventImpl impl =
+          (ContactIdentitiesDuplicationEventImpl) value.get();
+      jgen.writeObject(impl.getDuplicatedContactIdentitiesNotification());
+    }
+  }
+
+  public static class DelegatedDeSerializer
+      extends JsonDeserializer<ContactIdentitiesDuplicationEvent> {
+    @Override
+    public ContactIdentitiesDuplicationEvent deserialize(JsonParser jp, DeserializationContext ctxt)
+        throws IOException {
+
+      ContactIdentitiesDuplicationEventImpl.Builder builder =
+          new ContactIdentitiesDuplicationEventImpl.Builder();
+      DuplicatedContactIdentitiesNotificationInternalImpl deserialized =
+          jp.readValueAs(DuplicatedContactIdentitiesNotificationInternalImpl.class);
+      builder.setDuplicatedContactIdentitiesNotification(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<ContactIdentitiesDuplicationEvent> delegatedConverter(
+      DuplicatedContactIdentitiesNotificationInternal internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setDuplicatedContactIdentitiesNotification(internal).build());
   }
 }

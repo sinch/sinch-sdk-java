@@ -1,7 +1,11 @@
 package com.sinch.sdk.domains.conversation.api.v1;
 
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessageUpdateRequest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesListRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.response.MessagesListResponse;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.carousel.CarouselMessage;
@@ -12,7 +16,6 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.location.Loca
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.template.TemplateMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
-import com.sinch.sdk.domains.conversation.models.v1.response.ConversationMessage;
 
 /**
  * Messages related service
@@ -44,7 +47,7 @@ public interface MessagesService {
    *     com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse})
    * @since _NEXT_VERSION_
    */
-  SendMessageResponse sendMessage(SendMessageRequest<? extends AppMessage> request);
+  SendMessageResponse sendMessage(SendMessageRequest<? extends AppMessageBody> request);
 
   SendMessageResponse sendCardMessage(SendMessageRequest<CardMessage> request);
 
@@ -64,7 +67,107 @@ public interface MessagesService {
 
   SendMessageResponse sendTextMessage(SendMessageRequest<TextMessage> request);
 
+  /**
+   * Helper method for {@link #get(String, MessageSource)}
+   *
+   * @see #get(String, MessageSource)
+   * @param messageId The unique ID of the message.
+   * @return Conversation message
+   */
   ConversationMessage get(String messageId);
 
-  // ConversationMessage get(String messageId, MessageSource );
+  /**
+   * Retrieves a specific message by its ID.
+   *
+   * @param messageId The unique ID of the message.
+   * @param messageSource Specifies the message source for which the request will be processed. Used
+   *     for operations on messages in Dispatch Mode. For more information, see <a
+   *     href="https://developers.sinch.com/docs/conversation/processing-modes">Processing Modes</a>
+   * @default <code>CONVERSATION_SOURCE</code>
+   * @return Conversation message
+   */
+  ConversationMessage get(String messageId, MessageSource messageSource);
+
+  /**
+   * This operation lists all messages sent or received via particular {@link
+   * com.sinch.sdk.domains.conversation.models.v1.ProcessingMode}.
+   *
+   * <p>Setting the <code>messages_source</code> parameter to <code>CONVERSATION_SOURCE</code>
+   * allows for querying messages in <code>CONVERSATION</code> mode, and setting it to <code>
+   * DISPATCH_SOURCE</code> will allow for queries of messages in DISPATCH mode.
+   *
+   * <p>Combining multiple parameters is supported for more detailed filtering of messages, but some
+   * of them are not supported depending on the value specified for <code>messages_source</code>.
+   * The description for each field will inform if that field may not be supported.
+   *
+   * <p>The messages are ordered by their <code>accept_time</code> property in descending order,
+   * where <code>accept_time</code> is a timestamp of when the message was enqueued by the
+   * Conversation API. This means messages received most recently will be listed first.
+   *
+   * @param request Request parameters
+   * @since _NEXT_VERSION_
+   */
+  MessagesListResponse list(MessagesListRequest request);
+
+  /**
+   * Helper method for {@link #delete(String, MessageSource)}
+   *
+   * @see #delete(String, MessageSource)
+   * @param messageId The unique ID of the message.
+   */
+  void delete(String messageId);
+
+  /**
+   * Delete a specific message by its ID.
+   *
+   * @apiNote Removing all messages of a conversation will not automatically delete the
+   *     conversation.
+   * @param messageId The unique ID of the message.
+   * @param messageSource Specifies the message source for which the request will be processed. Used
+   *     for operations on messages in Dispatch Mode. For more information, see <a
+   *     href="https://developers.sinch.com/docs/conversation/processing-modes">Processing Modes</a>
+   * @default <code>CONVERSATION_SOURCE</code>
+   */
+  void delete(String messageId, MessageSource messageSource);
+
+  /**
+   * Helper method for {@link #update(String, MessageSource, MessageUpdateRequest)}
+   *
+   * @see #update(String, MessageSource, MessageUpdateRequest)
+   * @param messageId The unique ID of the message.
+   * @param request Request parameters to be used for updating
+   * @return Updated message
+   */
+  ConversationMessage update(String messageId, MessageUpdateRequest request);
+
+  /**
+   * Update a specific message by its ID.
+   *
+   * @param messageId The unique ID of the message
+   * @param messageSource Specifies the message source for which the request will be processed. Used
+   *     for operations on messages in Dispatch Mode. For more information, see <a
+   *     href="https://developers.sinch.com/docs/conversation/processing-modes">Processing Modes</a>
+   * @default <code>CONVERSATION_SOURCE</code>
+   * @param request Request parameters to be used for updating
+   * @return Updated message
+   */
+  ConversationMessage update(
+      String messageId, MessageSource messageSource, MessageUpdateRequest request);
+
+  /**
+   * Specifies the message source for which the request will be processed. Used for operations on
+   * messages in Dispatch Mode
+   */
+  enum MessageSource {
+    /**
+     * The default messages source. Retrieves messages sent in the default <code>CONVERSATION</code>
+     * processing mode, which associates the messages with a specific conversation and contact.
+     */
+    CONVERSATION_SOURCE,
+    /**
+     * Retrieves messages sent in the <code>DISPATCH</code> processing mode. These types of messages
+     * are not associated with any conversation or contact.
+     */
+    DISPATCH_SOURCE
+  }
 }

@@ -5,11 +5,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.Agent;
 import com.sinch.sdk.domains.conversation.models.v1.events.types.internal.AgentJoinedEventInternal;
+import com.sinch.sdk.domains.conversation.models.v1.events.types.internal.AgentJoinedEventInternalImpl;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({AgentJoinedEventImpl.JSON_PROPERTY_AGENT_JOINED_EVENT})
 @JsonFilter("uninitializedFilter")
@@ -50,8 +59,10 @@ public class AgentJoinedEventImpl
   }
 
   public OptionalValue<Agent> agent() {
-    return null != agentJoinedEvent
-        ? agentJoinedEvent.map(AgentJoinedEventInternal::getAgent)
+    return null != agentJoinedEvent && agentJoinedEvent.isPresent()
+        ? agentJoinedEvent
+            .map(f -> ((AgentJoinedEventInternalImpl) f).agent())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -124,5 +135,39 @@ public class AgentJoinedEventImpl
       }
       return new AgentJoinedEventImpl(agentJoinedEvent);
     }
+  }
+
+  public static class DelegatedSerializer extends JsonSerializer<OptionalValue<AgentJoinedEvent>> {
+    @Override
+    public void serialize(
+        OptionalValue<AgentJoinedEvent> value, JsonGenerator jgen, SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      AgentJoinedEventImpl impl = (AgentJoinedEventImpl) value.get();
+      jgen.writeObject(impl.getAgentJoinedEvent());
+    }
+  }
+
+  public static class DelegatedDeSerializer extends JsonDeserializer<AgentJoinedEvent> {
+    @Override
+    public AgentJoinedEvent deserialize(JsonParser jp, DeserializationContext ctxt)
+        throws IOException {
+
+      AgentJoinedEventImpl.Builder builder = new AgentJoinedEventImpl.Builder();
+      AgentJoinedEventInternalImpl deserialized =
+          jp.readValueAs(AgentJoinedEventInternalImpl.class);
+      builder.setAgentJoinedEvent(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<AgentJoinedEvent> delegatedConverter(AgentJoinedEventInternal internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setAgentJoinedEvent(internal).build());
   }
 }

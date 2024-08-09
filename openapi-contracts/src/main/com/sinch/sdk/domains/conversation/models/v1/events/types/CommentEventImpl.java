@@ -5,11 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.events.types.internal.CommentEventInternal;
 import com.sinch.sdk.domains.conversation.models.v1.events.types.internal.CommentEventInternalImpl;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({CommentEventImpl.JSON_PROPERTY_COMMENT_EVENT})
 @JsonFilter("uninitializedFilter")
@@ -48,8 +56,8 @@ public class CommentEventImpl
   }
 
   public OptionalValue<String> id() {
-    return null != commentEvent
-        ? commentEvent.map(CommentEventInternal::getId)
+    return null != commentEvent && commentEvent.isPresent()
+        ? commentEvent.map(f -> ((CommentEventInternalImpl) f).id()).orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -62,8 +70,8 @@ public class CommentEventImpl
   }
 
   public OptionalValue<String> text() {
-    return null != commentEvent
-        ? commentEvent.map(CommentEventInternal::getText)
+    return null != commentEvent && commentEvent.isPresent()
+        ? commentEvent.map(f -> ((CommentEventInternalImpl) f).text()).orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -78,7 +86,7 @@ public class CommentEventImpl
   }
 
   public OptionalValue<CommentTypeEnum> commentType() {
-    return null != commentEvent
+    return null != commentEvent && commentEvent.isPresent()
         ? commentEvent.map(f -> CommentTypeEnum.from(commentEvent.get().getCommentType().value()))
         : OptionalValue.empty();
   }
@@ -94,8 +102,10 @@ public class CommentEventImpl
   }
 
   public OptionalValue<String> commentedOn() {
-    return null != commentEvent
-        ? commentEvent.map(CommentEventInternal::getCommentedOn)
+    return null != commentEvent && commentEvent.isPresent()
+        ? commentEvent
+            .map(f -> ((CommentEventInternalImpl) f).commentedOn())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -108,8 +118,8 @@ public class CommentEventImpl
   }
 
   public OptionalValue<String> user() {
-    return null != commentEvent
-        ? commentEvent.map(CommentEventInternal::getUser)
+    return null != commentEvent && commentEvent.isPresent()
+        ? commentEvent.map(f -> ((CommentEventInternalImpl) f).user()).orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -210,5 +220,37 @@ public class CommentEventImpl
       }
       return new CommentEventImpl(commentEvent);
     }
+  }
+
+  public static class DelegatedSerializer extends JsonSerializer<OptionalValue<CommentEvent>> {
+    @Override
+    public void serialize(
+        OptionalValue<CommentEvent> value, JsonGenerator jgen, SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      CommentEventImpl impl = (CommentEventImpl) value.get();
+      jgen.writeObject(impl.getCommentEvent());
+    }
+  }
+
+  public static class DelegatedDeSerializer extends JsonDeserializer<CommentEvent> {
+    @Override
+    public CommentEvent deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+
+      CommentEventImpl.Builder builder = new CommentEventImpl.Builder();
+      CommentEventInternalImpl deserialized = jp.readValueAs(CommentEventInternalImpl.class);
+      builder.setCommentEvent(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<CommentEvent> delegatedConverter(CommentEventInternal internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setCommentEvent(internal).build());
   }
 }

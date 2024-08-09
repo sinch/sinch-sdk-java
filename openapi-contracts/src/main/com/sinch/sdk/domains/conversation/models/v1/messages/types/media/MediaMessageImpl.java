@@ -5,10 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.MediaPropertiesInternal;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.MediaPropertiesInternalImpl;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({MediaMessageImpl.JSON_PROPERTY_MEDIA_MESSAGE})
 @JsonFilter("uninitializedFilter")
@@ -16,7 +25,7 @@ import java.util.Objects;
 public class MediaMessageImpl
     implements MediaMessage,
         com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
-        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody,
         com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage {
   private static final long serialVersionUID = 1L;
 
@@ -52,8 +61,10 @@ public class MediaMessageImpl
   }
 
   public OptionalValue<String> thumbnailUrl() {
-    return null != mediaMessage
-        ? mediaMessage.map(MediaPropertiesInternal::getThumbnailUrl)
+    return null != mediaMessage && mediaMessage.isPresent()
+        ? mediaMessage
+            .map(f -> ((MediaPropertiesInternalImpl) f).thumbnailUrl())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -66,8 +77,10 @@ public class MediaMessageImpl
   }
 
   public OptionalValue<String> url() {
-    return null != mediaMessage
-        ? mediaMessage.map(MediaPropertiesInternal::getUrl)
+    return null != mediaMessage && mediaMessage.isPresent()
+        ? mediaMessage
+            .map(f -> ((MediaPropertiesInternalImpl) f).url())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -82,8 +95,10 @@ public class MediaMessageImpl
   }
 
   public OptionalValue<String> filenameOverride() {
-    return null != mediaMessage
-        ? mediaMessage.map(MediaPropertiesInternal::getFilenameOverride)
+    return null != mediaMessage && mediaMessage.isPresent()
+        ? mediaMessage
+            .map(f -> ((MediaPropertiesInternalImpl) f).filenameOverride())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -168,5 +183,37 @@ public class MediaMessageImpl
       }
       return new MediaMessageImpl(mediaMessage);
     }
+  }
+
+  public static class DelegatedSerializer extends JsonSerializer<OptionalValue<MediaMessage>> {
+    @Override
+    public void serialize(
+        OptionalValue<MediaMessage> value, JsonGenerator jgen, SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      MediaMessageImpl impl = (MediaMessageImpl) value.get();
+      jgen.writeObject(impl.getMediaMessage());
+    }
+  }
+
+  public static class DelegatedDeSerializer extends JsonDeserializer<MediaMessage> {
+    @Override
+    public MediaMessage deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+
+      MediaMessageImpl.Builder builder = new MediaMessageImpl.Builder();
+      MediaPropertiesInternalImpl deserialized = jp.readValueAs(MediaPropertiesInternalImpl.class);
+      builder.setMediaMessage(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<MediaMessage> delegatedConverter(MediaPropertiesInternal internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setMediaMessage(internal).build());
   }
 }

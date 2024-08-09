@@ -5,10 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.events.types.internal.GenericEventInternal;
+import com.sinch.sdk.domains.conversation.models.v1.events.types.internal.GenericEventInternalImpl;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({GenericEventImpl.JSON_PROPERTY_GENERIC_EVENT})
 @JsonFilter("uninitializedFilter")
@@ -51,8 +60,10 @@ public class GenericEventImpl
   }
 
   public OptionalValue<Object> payload() {
-    return null != genericEvent
-        ? genericEvent.map(GenericEventInternal::getPayload)
+    return null != genericEvent && genericEvent.isPresent()
+        ? genericEvent
+            .map(f -> ((GenericEventInternalImpl) f).payload())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -125,5 +136,37 @@ public class GenericEventImpl
       }
       return new GenericEventImpl(genericEvent);
     }
+  }
+
+  public static class DelegatedSerializer extends JsonSerializer<OptionalValue<GenericEvent>> {
+    @Override
+    public void serialize(
+        OptionalValue<GenericEvent> value, JsonGenerator jgen, SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      GenericEventImpl impl = (GenericEventImpl) value.get();
+      jgen.writeObject(impl.getGenericEvent());
+    }
+  }
+
+  public static class DelegatedDeSerializer extends JsonDeserializer<GenericEvent> {
+    @Override
+    public GenericEvent deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+
+      GenericEventImpl.Builder builder = new GenericEventImpl.Builder();
+      GenericEventInternalImpl deserialized = jp.readValueAs(GenericEventInternalImpl.class);
+      builder.setGenericEvent(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<GenericEvent> delegatedConverter(GenericEventInternal internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setGenericEvent(internal).build());
   }
 }

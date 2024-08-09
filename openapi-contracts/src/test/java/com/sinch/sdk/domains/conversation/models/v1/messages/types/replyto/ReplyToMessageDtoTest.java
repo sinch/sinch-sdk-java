@@ -1,16 +1,13 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages.types.replyto;
 
-import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
-import org.assertj.core.api.Assertions;
-import org.json.JSONException;
-import org.junit.jupiter.api.Test;
-import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
 public class ReplyToMessageDtoTest extends BaseTest {
+
+  /*
+    TODO Temporary removed: waiting for https://tickets.sinch.com/browse/CACORE-2200 status
 
   public static ReplyToMessage replyToMessageDto =
       ReplyToMessage.builder().setMessageId("message id value").build();
@@ -30,5 +27,5 @@ public class ReplyToMessageDtoTest extends BaseTest {
     Object deserialized = objectMapper.readValue(jsonReplyToMessageDto, ReplyToMessage.class);
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(replyToMessageDto);
-  }
+  }*/
 }

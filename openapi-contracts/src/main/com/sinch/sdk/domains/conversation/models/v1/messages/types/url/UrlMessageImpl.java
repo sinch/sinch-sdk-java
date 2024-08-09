@@ -5,54 +5,78 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.UrlMessageInternal;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.UrlMessageInternalImpl;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
-@JsonPropertyOrder({UrlMessageImpl.JSON_PROPERTY_TITLE, UrlMessageImpl.JSON_PROPERTY_URL})
+@JsonPropertyOrder({UrlMessageImpl.JSON_PROPERTY_URL_MESSAGE})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class UrlMessageImpl implements UrlMessage {
+public class UrlMessageImpl
+    implements UrlMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceMessageType {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_TITLE = "title";
+  public static final String JSON_PROPERTY_URL_MESSAGE = "url_message";
 
-  private OptionalValue<String> title;
-
-  public static final String JSON_PROPERTY_URL = "url";
-
-  private OptionalValue<String> url;
+  private OptionalValue<UrlMessageInternal> urlMessage;
 
   public UrlMessageImpl() {}
 
-  protected UrlMessageImpl(OptionalValue<String> title, OptionalValue<String> url) {
-    this.title = title;
-    this.url = url;
+  protected UrlMessageImpl(OptionalValue<UrlMessageInternal> urlMessage) {
+    this.urlMessage = urlMessage;
+  }
+
+  @JsonIgnore
+  public UrlMessageInternal getUrlMessage() {
+    return urlMessage.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_URL_MESSAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<UrlMessageInternal> urlMessage() {
+    return urlMessage;
   }
 
   @JsonIgnore
   public String getTitle() {
-    return title.orElse(null);
+    if (null == urlMessage || !urlMessage.isPresent() || null == urlMessage.get().getTitle()) {
+      return null;
+    }
+    return urlMessage.get().getTitle();
   }
 
-  @JsonProperty(JSON_PROPERTY_TITLE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<String> title() {
-    return title;
+    return null != urlMessage && urlMessage.isPresent()
+        ? urlMessage.map(f -> ((UrlMessageInternalImpl) f).title()).orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public String getUrl() {
-    return url.orElse(null);
+    if (null == urlMessage || !urlMessage.isPresent() || null == urlMessage.get().getUrl()) {
+      return null;
+    }
+    return urlMessage.get().getUrl();
   }
 
-  @JsonProperty(JSON_PROPERTY_URL)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<String> url() {
-    return url;
+    return null != urlMessage && urlMessage.isPresent()
+        ? urlMessage.map(f -> ((UrlMessageInternalImpl) f).url()).orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
-  /** Return true if this URL_Message object is equal to o. */
+  /** Return true if this UrlMessageField object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -61,21 +85,20 @@ public class UrlMessageImpl implements UrlMessage {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UrlMessageImpl urLMessage = (UrlMessageImpl) o;
-    return Objects.equals(this.title, urLMessage.title) && Objects.equals(this.url, urLMessage.url);
+    UrlMessageImpl urlMessageField = (UrlMessageImpl) o;
+    return Objects.equals(this.urlMessage, urlMessageField.urlMessage);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(title, url);
+    return Objects.hash(urlMessage);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class UrlMessageImpl {\n");
-    sb.append("    title: ").append(toIndentedString(title)).append("\n");
-    sb.append("    url: ").append(toIndentedString(url)).append("\n");
+    sb.append("    urlMessage: ").append(toIndentedString(urlMessage)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -92,23 +115,73 @@ public class UrlMessageImpl implements UrlMessage {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements UrlMessage.Builder {
-    OptionalValue<String> title = OptionalValue.empty();
-    OptionalValue<String> url = OptionalValue.empty();
+    OptionalValue<UrlMessageInternal> urlMessage = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_TITLE)
-    public Builder setTitle(String title) {
-      this.title = OptionalValue.of(title);
+    UrlMessageInternal.Builder _delegatedBuilder = null;
+
+    @JsonProperty(value = JSON_PROPERTY_URL_MESSAGE, required = true)
+    public Builder setUrlMessage(UrlMessageInternal urlMessage) {
+      this.urlMessage = OptionalValue.of(urlMessage);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_URL)
-    public Builder setUrl(String url) {
-      this.url = OptionalValue.of(url);
+    @JsonIgnore
+    public Builder setTitle(String title) {
+      getDelegatedBuilder().setTitle(title);
       return this;
+    }
+
+    @JsonIgnore
+    public Builder setUrl(String url) {
+      getDelegatedBuilder().setUrl(url);
+      return this;
+    }
+
+    private UrlMessageInternal.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = UrlMessageInternal.builder();
+      }
+      return this._delegatedBuilder;
     }
 
     public UrlMessage build() {
-      return new UrlMessageImpl(title, url);
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.urlMessage = OptionalValue.of(this._delegatedBuilder.build());
+      }
+      return new UrlMessageImpl(urlMessage);
     }
+  }
+
+  public static class DelegatedSerializer extends JsonSerializer<OptionalValue<UrlMessage>> {
+    @Override
+    public void serialize(
+        OptionalValue<UrlMessage> value, JsonGenerator jgen, SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      UrlMessageImpl impl = (UrlMessageImpl) value.get();
+      jgen.writeObject(impl.getUrlMessage());
+    }
+  }
+
+  public static class DelegatedDeSerializer extends JsonDeserializer<UrlMessage> {
+    @Override
+    public UrlMessage deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+
+      UrlMessageImpl.Builder builder = new UrlMessageImpl.Builder();
+      UrlMessageInternalImpl deserialized = jp.readValueAs(UrlMessageInternalImpl.class);
+      builder.setUrlMessage(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<UrlMessage> delegatedConverter(UrlMessageInternal internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setUrlMessage(internal).build());
   }
 }

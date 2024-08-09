@@ -16,11 +16,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
 import java.util.List;
 
-/** Choice Message */
+/** Message containing choices/actions. */
 @JsonDeserialize(builder = ChoiceMessageImpl.Builder.class)
 public interface ChoiceMessage
     extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
-        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage {
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody {
 
   /**
    * The number of choices is limited to 10.

@@ -56,7 +56,7 @@ public class WhatsAppInteractiveHeaderDtoTest extends ConversationBaseTest {
   void deserializeDocumentDto() throws JsonProcessingException {
     Object deserialized =
         objectMapper.readValue(
-            jsonFlowChannelSpecificMessageHeaderDocumentDto, headerDocument.getClass());
+            jsonFlowChannelSpecificMessageHeaderDocumentDto, WhatsAppInteractiveHeader.class);
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(headerDocument);
   }
@@ -72,7 +72,7 @@ public class WhatsAppInteractiveHeaderDtoTest extends ConversationBaseTest {
   void deserializeImageDto() throws JsonProcessingException {
     Object deserialized =
         objectMapper.readValue(
-            jsonFlowChannelSpecificMessageHeaderImageDto, headerImage.getClass());
+            jsonFlowChannelSpecificMessageHeaderImageDto, WhatsAppInteractiveHeader.class);
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(headerImage);
   }
@@ -87,7 +87,8 @@ public class WhatsAppInteractiveHeaderDtoTest extends ConversationBaseTest {
   @Test
   void deserializeTextDto() throws JsonProcessingException {
     Object deserialized =
-        objectMapper.readValue(jsonFlowChannelSpecificMessageHeaderTextDto, headerText.getClass());
+        objectMapper.readValue(
+            jsonFlowChannelSpecificMessageHeaderTextDto, WhatsAppInteractiveHeader.class);
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(headerText);
   }
@@ -103,7 +104,7 @@ public class WhatsAppInteractiveHeaderDtoTest extends ConversationBaseTest {
   void deserializeVideoDto() throws JsonProcessingException {
     Object deserialized =
         objectMapper.readValue(
-            jsonFlowChannelSpecificMessageHeaderVideoDto, headerVideo.getClass());
+            jsonFlowChannelSpecificMessageHeaderVideoDto, WhatsAppInteractiveHeader.class);
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(headerVideo);
   }

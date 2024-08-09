@@ -5,12 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ChannelSpecificContactInternal;
-import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ChannelSpecificContactInternalImpl;
-import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ChannelSpecificContactMessageInternal;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ChannelSpecificContactMessageMessageInternal;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ChannelSpecificContactMessageMessageInternalImpl;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({ChannelSpecificContactMessageImpl.JSON_PROPERTY_CHANNEL_SPECIFIC_MESSAGE})
 @JsonFilter("uninitializedFilter")
@@ -22,23 +29,23 @@ public class ChannelSpecificContactMessageImpl
 
   public static final String JSON_PROPERTY_CHANNEL_SPECIFIC_MESSAGE = "channel_specific_message";
 
-  private OptionalValue<ChannelSpecificContactInternal> channelSpecificMessage;
+  private OptionalValue<ChannelSpecificContactMessageMessageInternal> channelSpecificMessage;
 
   public ChannelSpecificContactMessageImpl() {}
 
   protected ChannelSpecificContactMessageImpl(
-      OptionalValue<ChannelSpecificContactInternal> channelSpecificMessage) {
+      OptionalValue<ChannelSpecificContactMessageMessageInternal> channelSpecificMessage) {
     this.channelSpecificMessage = channelSpecificMessage;
   }
 
   @JsonIgnore
-  public ChannelSpecificContactInternal getChannelSpecificMessage() {
+  public ChannelSpecificContactMessageMessageInternal getChannelSpecificMessage() {
     return channelSpecificMessage.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CHANNEL_SPECIFIC_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<ChannelSpecificContactInternal> channelSpecificMessage() {
+  public OptionalValue<ChannelSpecificContactMessageMessageInternal> channelSpecificMessage() {
     return channelSpecificMessage;
   }
 
@@ -53,14 +60,14 @@ public class ChannelSpecificContactMessageImpl
   }
 
   public OptionalValue<MessageTypeEnum> messageType() {
-    return null != channelSpecificMessage
+    return null != channelSpecificMessage && channelSpecificMessage.isPresent()
         ? channelSpecificMessage.map(
             f -> MessageTypeEnum.from(channelSpecificMessage.get().getMessageType().value()))
         : OptionalValue.empty();
   }
 
   @JsonIgnore
-  public ChannelSpecificContactMessageInternal getMessage() {
+  public ChannelSpecificContactMessageContent getMessage() {
     if (null == channelSpecificMessage
         || !channelSpecificMessage.isPresent()
         || null == channelSpecificMessage.get().getMessage()) {
@@ -69,9 +76,11 @@ public class ChannelSpecificContactMessageImpl
     return channelSpecificMessage.get().getMessage();
   }
 
-  public OptionalValue<ChannelSpecificContactMessageInternal> message() {
-    return null != channelSpecificMessage
-        ? channelSpecificMessage.map(ChannelSpecificContactInternal::getMessage)
+  public OptionalValue<ChannelSpecificContactMessageContent> message() {
+    return null != channelSpecificMessage && channelSpecificMessage.isPresent()
+        ? channelSpecificMessage
+            .map(f -> ((ChannelSpecificContactMessageMessageInternalImpl) f).message())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -118,13 +127,14 @@ public class ChannelSpecificContactMessageImpl
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements ChannelSpecificContactMessage.Builder {
-    OptionalValue<ChannelSpecificContactInternal> channelSpecificMessage = OptionalValue.empty();
+    OptionalValue<ChannelSpecificContactMessageMessageInternal> channelSpecificMessage =
+        OptionalValue.empty();
 
-    ChannelSpecificContactInternal.Builder _delegatedBuilder = null;
+    ChannelSpecificContactMessageMessageInternal.Builder _delegatedBuilder = null;
 
     @JsonProperty(value = JSON_PROPERTY_CHANNEL_SPECIFIC_MESSAGE, required = true)
     public Builder setChannelSpecificMessage(
-        ChannelSpecificContactInternal channelSpecificMessage) {
+        ChannelSpecificContactMessageMessageInternal channelSpecificMessage) {
       this.channelSpecificMessage = OptionalValue.of(channelSpecificMessage);
       return this;
     }
@@ -134,20 +144,21 @@ public class ChannelSpecificContactMessageImpl
       getDelegatedBuilder()
           .setMessageType(
               null != messageType
-                  ? ChannelSpecificContactInternalImpl.MessageTypeEnum.from(messageType.value())
+                  ? ChannelSpecificContactMessageMessageInternalImpl.MessageTypeEnum.from(
+                      messageType.value())
                   : null);
       return this;
     }
 
     @JsonIgnore
-    public Builder setMessage(ChannelSpecificContactMessageInternal message) {
+    public Builder setMessage(ChannelSpecificContactMessageContent message) {
       getDelegatedBuilder().setMessage(message);
       return this;
     }
 
-    private ChannelSpecificContactInternal.Builder getDelegatedBuilder() {
+    private ChannelSpecificContactMessageMessageInternal.Builder getDelegatedBuilder() {
       if (null == _delegatedBuilder) {
-        this._delegatedBuilder = ChannelSpecificContactInternal.builder();
+        this._delegatedBuilder = ChannelSpecificContactMessageMessageInternal.builder();
       }
       return this._delegatedBuilder;
     }
@@ -159,5 +170,45 @@ public class ChannelSpecificContactMessageImpl
       }
       return new ChannelSpecificContactMessageImpl(channelSpecificMessage);
     }
+  }
+
+  public static class DelegatedSerializer
+      extends JsonSerializer<OptionalValue<ChannelSpecificContactMessage>> {
+    @Override
+    public void serialize(
+        OptionalValue<ChannelSpecificContactMessage> value,
+        JsonGenerator jgen,
+        SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      ChannelSpecificContactMessageImpl impl = (ChannelSpecificContactMessageImpl) value.get();
+      jgen.writeObject(impl.getChannelSpecificMessage());
+    }
+  }
+
+  public static class DelegatedDeSerializer
+      extends JsonDeserializer<ChannelSpecificContactMessage> {
+    @Override
+    public ChannelSpecificContactMessage deserialize(JsonParser jp, DeserializationContext ctxt)
+        throws IOException {
+
+      ChannelSpecificContactMessageImpl.Builder builder =
+          new ChannelSpecificContactMessageImpl.Builder();
+      ChannelSpecificContactMessageMessageInternalImpl deserialized =
+          jp.readValueAs(ChannelSpecificContactMessageMessageInternalImpl.class);
+      builder.setChannelSpecificMessage(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<ChannelSpecificContactMessage> delegatedConverter(
+      ChannelSpecificContactMessageMessageInternal internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setChannelSpecificMessage(internal).build());
   }
 }

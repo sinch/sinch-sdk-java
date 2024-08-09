@@ -5,11 +5,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.Reason;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.FallbackMessageInternal;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.FallbackMessageInternalImpl;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({FallbackMessageImpl.JSON_PROPERTY_FALLBACK_MESSAGE})
 @JsonFilter("uninitializedFilter")
@@ -51,8 +60,10 @@ public class FallbackMessageImpl
   }
 
   public OptionalValue<String> rawMessage() {
-    return null != fallbackMessage
-        ? fallbackMessage.map(FallbackMessageInternal::getRawMessage)
+    return null != fallbackMessage && fallbackMessage.isPresent()
+        ? fallbackMessage
+            .map(f -> ((FallbackMessageInternalImpl) f).rawMessage())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -67,8 +78,10 @@ public class FallbackMessageImpl
   }
 
   public OptionalValue<Reason> reason() {
-    return null != fallbackMessage
-        ? fallbackMessage.map(FallbackMessageInternal::getReason)
+    return null != fallbackMessage && fallbackMessage.isPresent()
+        ? fallbackMessage
+            .map(f -> ((FallbackMessageInternalImpl) f).reason())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -147,5 +160,38 @@ public class FallbackMessageImpl
       }
       return new FallbackMessageImpl(fallbackMessage);
     }
+  }
+
+  public static class DelegatedSerializer extends JsonSerializer<OptionalValue<FallbackMessage>> {
+    @Override
+    public void serialize(
+        OptionalValue<FallbackMessage> value, JsonGenerator jgen, SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      FallbackMessageImpl impl = (FallbackMessageImpl) value.get();
+      jgen.writeObject(impl.getFallbackMessage());
+    }
+  }
+
+  public static class DelegatedDeSerializer extends JsonDeserializer<FallbackMessage> {
+    @Override
+    public FallbackMessage deserialize(JsonParser jp, DeserializationContext ctxt)
+        throws IOException {
+
+      FallbackMessageImpl.Builder builder = new FallbackMessageImpl.Builder();
+      FallbackMessageInternalImpl deserialized = jp.readValueAs(FallbackMessageInternalImpl.class);
+      builder.setFallbackMessage(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<FallbackMessage> delegatedConverter(FallbackMessageInternal internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setFallbackMessage(internal).build());
   }
 }

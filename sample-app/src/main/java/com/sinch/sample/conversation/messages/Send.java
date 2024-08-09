@@ -7,12 +7,13 @@ import com.sinch.sdk.domains.conversation.models.v1.AgentType;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentities;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageWithExtensions;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.call.CallMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.Choice;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceCallMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.location.Coordinates;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.location.LocationMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class Send extends BaseApplication {
     LOGGER.info("Send message with Conversation");
 
     var parameters = createRCSSendMessage();
+    // createSMSSendMessage();
 
     var result = service.sendMessage(parameters);
 
@@ -49,26 +51,39 @@ public class Send extends BaseApplication {
   SendMessageRequest<?> createRCSSendMessage() {
     var textMessage =
         TextMessage.builder()
-            .setText("[Java SDK: Conversation Message] Please select a phone number to be called")
+            .setText("[Java SDK: Conversation Message] Please select an action")
             .build();
 
     var choices = new ArrayList<Choice<?>>();
-    for (int i = 0; i < 4; i++) {
-      choices.add(
-          ChoiceCallMessage.builder()
-              .setMessage(
-                  CallMessage.builder()
-                      .setTitle("Phone call choice " + (i + 1))
-                      .setPhoneNumber(phoneNumber)
-                      .build())
-              .setPostbackData("postback call_message data value " + (i + 1))
-              .build());
-    }
+    choices.add(
+        Choice.<CallMessage>builder()
+            .setMessage(
+                CallMessage.builder()
+                    .setTitle("Phone call choice")
+                    .setPhoneNumber(phoneNumber)
+                    .build())
+            .setPostbackData("Call message selected")
+            .build());
+    choices.add(
+        Choice.<TextMessage>builder()
+            .setMessage(TextMessage.builder().setText("This is the text choice").build())
+            .setPostbackData("Text message selected")
+            .build());
+    choices.add(
+        Choice.builder()
+            .setMessage(
+                LocationMessage.builder()
+                    .setTitle("Location message title")
+                    .setCoordinates(
+                        Coordinates.builder().setLatitude(47.5720F).setLongitude(-2.8881F).build())
+                    .build())
+            .setPostbackData("Location message selected")
+            .build());
 
     return SendMessageRequest.<ChoiceMessage>builder()
         .setAppId(conversationAppId)
         .setMessage(
-            AppMessageWithExtensions.<ChoiceMessage>builder()
+            AppMessage.<ChoiceMessage>builder()
                 .setMessage(
                     ChoiceMessage.builder().setChoices(choices).setTextMessage(textMessage).build())
                 .setAgent(
@@ -88,7 +103,7 @@ public class Send extends BaseApplication {
     return SendMessageRequest.<TextMessage>builder()
         .setAppId(conversationAppId)
         .setMessage(
-            AppMessageWithExtensions.<TextMessage>builder()
+            AppMessage.<TextMessage>builder()
                 .setMessage(
                     TextMessage.builder()
                         .setText("[Java SDK: Conversation Message] Sample text message")

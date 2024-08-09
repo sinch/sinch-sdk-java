@@ -5,10 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.LocationMessageInternal;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.LocationMessageInternalImpl;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({LocationMessageImpl.JSON_PROPERTY_LOCATION_MESSAGE})
 @JsonFilter("uninitializedFilter")
@@ -16,8 +25,9 @@ import java.util.Objects;
 public class LocationMessageImpl
     implements LocationMessage,
         com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
-        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage,
-        com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage {
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody,
+        com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceMessageType {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_LOCATION_MESSAGE = "location_message";
@@ -52,8 +62,10 @@ public class LocationMessageImpl
   }
 
   public OptionalValue<Coordinates> coordinates() {
-    return null != locationMessage
-        ? locationMessage.map(LocationMessageInternal::getCoordinates)
+    return null != locationMessage && locationMessage.isPresent()
+        ? locationMessage
+            .map(f -> ((LocationMessageInternalImpl) f).coordinates())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -68,8 +80,10 @@ public class LocationMessageImpl
   }
 
   public OptionalValue<String> label() {
-    return null != locationMessage
-        ? locationMessage.map(LocationMessageInternal::getLabel)
+    return null != locationMessage && locationMessage.isPresent()
+        ? locationMessage
+            .map(f -> ((LocationMessageInternalImpl) f).label())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -84,8 +98,10 @@ public class LocationMessageImpl
   }
 
   public OptionalValue<String> title() {
-    return null != locationMessage
-        ? locationMessage.map(LocationMessageInternal::getTitle)
+    return null != locationMessage && locationMessage.isPresent()
+        ? locationMessage
+            .map(f -> ((LocationMessageInternalImpl) f).title())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -170,5 +186,38 @@ public class LocationMessageImpl
       }
       return new LocationMessageImpl(locationMessage);
     }
+  }
+
+  public static class DelegatedSerializer extends JsonSerializer<OptionalValue<LocationMessage>> {
+    @Override
+    public void serialize(
+        OptionalValue<LocationMessage> value, JsonGenerator jgen, SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      LocationMessageImpl impl = (LocationMessageImpl) value.get();
+      jgen.writeObject(impl.getLocationMessage());
+    }
+  }
+
+  public static class DelegatedDeSerializer extends JsonDeserializer<LocationMessage> {
+    @Override
+    public LocationMessage deserialize(JsonParser jp, DeserializationContext ctxt)
+        throws IOException {
+
+      LocationMessageImpl.Builder builder = new LocationMessageImpl.Builder();
+      LocationMessageInternalImpl deserialized = jp.readValueAs(LocationMessageInternalImpl.class);
+      builder.setLocationMessage(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<LocationMessage> delegatedConverter(LocationMessageInternal internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setLocationMessage(internal).build());
   }
 }

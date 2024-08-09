@@ -1,0 +1,26 @@
+{
+  "accept_time": "2020-11-17T16:05:51.724083Z",
+  "channel_identity": {
+    "app_id": "an app id",
+    "channel": "MESSENGER",
+    "identity": "an identity"
+  },
+  "contact_id": "contact id value",
+  "conversation_id": "conversation id value",
+  "direction": "TO_APP",
+  "id": "id value",
+  "metadata": "metadata value",
+  "injected": true,
+  "sender_id": "sender id",
+  "processing_mode": "CONVERSATION",
+  "contact_message": {
+    "location_message": {
+      "coordinates": {
+        "latitude": 47.627980,
+        "longitude": -2.822915
+      },
+      "title": "title value",
+      "label": "label value"
+    }
+  }
+}

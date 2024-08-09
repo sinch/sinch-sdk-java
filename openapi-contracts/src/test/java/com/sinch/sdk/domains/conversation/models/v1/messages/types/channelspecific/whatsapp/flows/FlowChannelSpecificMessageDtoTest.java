@@ -81,8 +81,7 @@ public class FlowChannelSpecificMessageDtoTest extends ConversationBaseTest {
   void deserializeFlowChannelSpecificMessageDocumentDto() throws JsonProcessingException {
     Object deserialized =
         objectMapper.readValue(
-            jsonFlowChannelSpecificMessageHeaderDocumentDto,
-            flowChannelSpecificMessageHeaderDocument.getClass());
+            jsonFlowChannelSpecificMessageHeaderDocumentDto, FlowChannelSpecificMessage.class);
 
     Assertions.assertThat(deserialized)
         .usingRecursiveComparison()
@@ -101,8 +100,7 @@ public class FlowChannelSpecificMessageDtoTest extends ConversationBaseTest {
   void deserializeFlowChannelSpecificMessageImageDto() throws JsonProcessingException {
     Object deserialized =
         objectMapper.readValue(
-            jsonFlowChannelSpecificMessageHeaderImageDto,
-            flowChannelSpecificMessageHeaderImage.getClass());
+            jsonFlowChannelSpecificMessageHeaderImageDto, FlowChannelSpecificMessage.class);
 
     Assertions.assertThat(deserialized)
         .usingRecursiveComparison()
@@ -120,8 +118,7 @@ public class FlowChannelSpecificMessageDtoTest extends ConversationBaseTest {
   void deserializeFlowChannelSpecificMessageTextDto() throws JsonProcessingException {
     Object deserialized =
         objectMapper.readValue(
-            jsonFlowChannelSpecificMessageHeaderTextDto,
-            flowChannelSpecificMessageHeaderText.getClass());
+            jsonFlowChannelSpecificMessageHeaderTextDto, FlowChannelSpecificMessage.class);
 
     Assertions.assertThat(deserialized)
         .usingRecursiveComparison()
@@ -140,8 +137,7 @@ public class FlowChannelSpecificMessageDtoTest extends ConversationBaseTest {
   void deserializeFlowChannelSpecificMessageVideoDto() throws JsonProcessingException {
     Object deserialized =
         objectMapper.readValue(
-            jsonFlowChannelSpecificMessageHeaderVideoDto,
-            flowChannelSpecificMessageHeaderVideo.getClass());
+            jsonFlowChannelSpecificMessageHeaderVideoDto, FlowChannelSpecificMessage.class);
 
     Assertions.assertThat(deserialized)
         .usingRecursiveComparison()
