@@ -5,12 +5,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.numbers.models.v1.errors.internal.NotFoundError;
 import com.sinch.sdk.domains.numbers.models.v1.errors.internal.NotFoundErrorImpl;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({NotFoundImpl.JSON_PROPERTY_ERROR})
 @JsonFilter("uninitializedFilter")
@@ -48,7 +56,7 @@ public class NotFoundImpl implements NotFound {
   }
 
   public OptionalValue<CodeEnum> code() {
-    return null != error
+    return null != error && error.isPresent()
         ? error.map(f -> CodeEnum.from(error.get().getCode().value()))
         : OptionalValue.empty();
   }
@@ -62,7 +70,9 @@ public class NotFoundImpl implements NotFound {
   }
 
   public OptionalValue<String> message() {
-    return null != error ? error.map(NotFoundError::getMessage) : OptionalValue.empty();
+    return null != error && error.isPresent()
+        ? error.map(f -> ((NotFoundErrorImpl) f).message()).orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
@@ -74,7 +84,7 @@ public class NotFoundImpl implements NotFound {
   }
 
   public OptionalValue<StatusEnum> status() {
-    return null != error
+    return null != error && error.isPresent()
         ? error.map(f -> StatusEnum.from(error.get().getStatus().value()))
         : OptionalValue.empty();
   }
@@ -88,7 +98,9 @@ public class NotFoundImpl implements NotFound {
   }
 
   public OptionalValue<List<Object>> details() {
-    return null != error ? error.map(NotFoundError::getDetails) : OptionalValue.empty();
+    return null != error && error.isPresent()
+        ? error.map(f -> ((NotFoundErrorImpl) f).details()).orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
   /** Return true if this NotFound object is equal to o. */
@@ -180,5 +192,37 @@ public class NotFoundImpl implements NotFound {
       }
       return new NotFoundImpl(error);
     }
+  }
+
+  public static class DelegatedSerializer extends JsonSerializer<OptionalValue<NotFound>> {
+    @Override
+    public void serialize(
+        OptionalValue<NotFound> value, JsonGenerator jgen, SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      NotFoundImpl impl = (NotFoundImpl) value.get();
+      jgen.writeObject(null != impl ? impl.getError() : null);
+    }
+  }
+
+  public static class DelegatedDeSerializer extends JsonDeserializer<NotFound> {
+    @Override
+    public NotFound deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+
+      NotFoundImpl.Builder builder = new NotFoundImpl.Builder();
+      NotFoundErrorImpl deserialized = jp.readValueAs(NotFoundErrorImpl.class);
+      builder.setError(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<NotFound> delegatedConverter(NotFoundError internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setError(internal).build());
   }
 }
