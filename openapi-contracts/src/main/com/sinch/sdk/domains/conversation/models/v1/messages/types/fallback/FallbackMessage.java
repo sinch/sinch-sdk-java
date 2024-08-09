@@ -18,7 +18,7 @@ import com.sinch.sdk.domains.conversation.models.v1.Reason;
 /** Fallback message. Used when original contact message can not be handled. */
 @JsonDeserialize(builder = FallbackMessageImpl.Builder.class)
 public interface FallbackMessage
-    extends com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage {
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessageBody {
 
   /**
    * Optional. The raw fallback message if provided by the channel.

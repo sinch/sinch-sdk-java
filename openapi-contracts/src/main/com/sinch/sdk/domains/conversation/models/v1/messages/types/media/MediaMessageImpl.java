@@ -26,7 +26,7 @@ public class MediaMessageImpl
     implements MediaMessage,
         com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
         com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody,
-        com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage {
+        com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessageBody {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_MEDIA_MESSAGE = "media_message";

@@ -21,6 +21,9 @@
       },
       "title": "title value",
       "label": "label value"
+    },
+    "reply_to": {
+      "message_id": "message id value"
     }
   }
 }

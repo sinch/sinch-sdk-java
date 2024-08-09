@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface MediaMessage
     extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
         com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody,
-        com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage {
+        com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessageBody {
 
   /**
    * An optional parameter. Will be used where it is natively supported.

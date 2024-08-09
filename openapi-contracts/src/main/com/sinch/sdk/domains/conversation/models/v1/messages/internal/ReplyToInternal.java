@@ -10,28 +10,20 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.messages.types.mediacard;
+package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** A message containing a media component, such as an image or video. */
-@JsonDeserialize(builder = MediaCardMessageImpl.Builder.class)
-public interface MediaCardMessage
-    extends com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessageBody {
+/** Reply To */
+@JsonDeserialize(builder = ReplyToInternalImpl.Builder.class)
+public interface ReplyToInternal {
 
   /**
-   * Caption for the media on supported channels.
+   * Required. The Id of the message that this is a response to
    *
-   * @return caption
+   * @return messageId
    */
-  String getCaption();
-
-  /**
-   * Url to the media file.
-   *
-   * @return url
-   */
-  String getUrl();
+  String getMessageId();
 
   /**
    * Getting builder
@@ -39,7 +31,7 @@ public interface MediaCardMessage
    * @return New Builder instance
    */
   static Builder builder() {
-    return new MediaCardMessageImpl.Builder();
+    return new ReplyToInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -48,26 +40,17 @@ public interface MediaCardMessage
     /**
      * see getter
      *
-     * @param caption see getter
+     * @param messageId see getter
      * @return Current builder
-     * @see #getCaption
+     * @see #getMessageId
      */
-    Builder setCaption(String caption);
-
-    /**
-     * see getter
-     *
-     * @param url see getter
-     * @return Current builder
-     * @see #getUrl
-     */
-    Builder setUrl(String url);
+    Builder setMessageId(String messageId);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    MediaCardMessage build();
+    ReplyToInternal build();
   }
 }

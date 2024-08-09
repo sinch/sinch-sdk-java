@@ -84,7 +84,7 @@ public class Send extends BaseApplication {
         .setAppId(conversationAppId)
         .setMessage(
             AppMessage.<ChoiceMessage>builder()
-                .setMessage(
+                .setBody(
                     ChoiceMessage.builder().setChoices(choices).setTextMessage(textMessage).build())
                 .setAgent(
                     Agent.builder().setType(AgentType.HUMAN).setDisplayName("Agent Name").build())
@@ -104,7 +104,7 @@ public class Send extends BaseApplication {
         .setAppId(conversationAppId)
         .setMessage(
             AppMessage.<TextMessage>builder()
-                .setMessage(
+                .setBody(
                     TextMessage.builder()
                         .setText("[Java SDK: Conversation Message] Sample text message")
                         .build())

@@ -9,19 +9,19 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
-@JsonPropertyOrder({ReplyToMessageInternalImpl.JSON_PROPERTY_MESSAGE_ID})
+@JsonPropertyOrder({ReplyToInternalImpl.JSON_PROPERTY_MESSAGE_ID})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class ReplyToMessageInternalImpl implements ReplyToMessageInternal {
+public class ReplyToInternalImpl implements ReplyToInternal {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_MESSAGE_ID = "message_id";
 
   private OptionalValue<String> messageId;
 
-  public ReplyToMessageInternalImpl() {}
+  public ReplyToInternalImpl() {}
 
-  protected ReplyToMessageInternalImpl(OptionalValue<String> messageId) {
+  protected ReplyToInternalImpl(OptionalValue<String> messageId) {
     this.messageId = messageId;
   }
 
@@ -36,7 +36,7 @@ public class ReplyToMessageInternalImpl implements ReplyToMessageInternal {
     return messageId;
   }
 
-  /** Return true if this Reply_To_Message object is equal to o. */
+  /** Return true if this Reply_To object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -45,8 +45,8 @@ public class ReplyToMessageInternalImpl implements ReplyToMessageInternal {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ReplyToMessageInternalImpl replyToMessage = (ReplyToMessageInternalImpl) o;
-    return Objects.equals(this.messageId, replyToMessage.messageId);
+    ReplyToInternalImpl replyTo = (ReplyToInternalImpl) o;
+    return Objects.equals(this.messageId, replyTo.messageId);
   }
 
   @Override
@@ -57,7 +57,7 @@ public class ReplyToMessageInternalImpl implements ReplyToMessageInternal {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ReplyToMessageInternalImpl {\n");
+    sb.append("class ReplyToInternalImpl {\n");
     sb.append("    messageId: ").append(toIndentedString(messageId)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -74,7 +74,7 @@ public class ReplyToMessageInternalImpl implements ReplyToMessageInternal {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements ReplyToMessageInternal.Builder {
+  static class Builder implements ReplyToInternal.Builder {
     OptionalValue<String> messageId = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_MESSAGE_ID)
@@ -83,8 +83,8 @@ public class ReplyToMessageInternalImpl implements ReplyToMessageInternal {
       return this;
     }
 
-    public ReplyToMessageInternal build() {
-      return new ReplyToMessageInternalImpl(messageId);
+    public ReplyToInternal build() {
+      return new ReplyToInternalImpl(messageId);
     }
   }
 }

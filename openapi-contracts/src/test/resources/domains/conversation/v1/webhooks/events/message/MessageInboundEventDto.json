@@ -23,6 +23,9 @@
     "contact_message": {
       "text_message": {
         "text": "This is a text message."
+      },
+      "reply_to": {
+        "message_id": "message id value"
       }
     }
   }

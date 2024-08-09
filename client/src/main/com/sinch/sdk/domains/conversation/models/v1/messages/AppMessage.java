@@ -69,7 +69,14 @@ public interface AppMessage<T extends AppMessageBody> extends ConversationMessag
   /** Dedicated Builder */
   interface Builder<T extends AppMessageBody> {
 
-    Builder<T> setMessage(T message);
+    /**
+     * see getter
+     *
+     * @param message see getter
+     * @return Current builder
+     * @see #getBody()
+     */
+    Builder<T> setBody(T message);
 
     /**
      * see getter

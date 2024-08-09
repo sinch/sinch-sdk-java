@@ -34,7 +34,7 @@ public class AppMessageImpl<T extends AppMessageBody> implements AppMessage<T> {
     return message.orElse(null);
   }
 
-  public OptionalValue<T> message() {
+  public OptionalValue<T> body() {
     return message;
   }
 
@@ -99,7 +99,7 @@ public class AppMessageImpl<T extends AppMessageBody> implements AppMessage<T> {
         OptionalValue.empty();
     OptionalValue<Agent> agent = OptionalValue.empty();
 
-    public Builder<T> setMessage(T message) {
+    public Builder<T> setBody(T message) {
       this.message = OptionalValue.of(message);
       return this;
     }

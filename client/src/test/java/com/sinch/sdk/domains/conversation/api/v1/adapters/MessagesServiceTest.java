@@ -18,13 +18,13 @@ import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ConversationM
 import com.sinch.sdk.domains.conversation.api.v1.internal.MessagesApi;
 import com.sinch.sdk.domains.conversation.models.v1.internal.ConversationMessageInternal;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ListMessagesResponseInternal;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessageUpdateRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesListRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.MessagesListResponse;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
-import com.sinch.sdk.domains.conversation.models.v1.response.ConversationMessageDtoTest;
 import com.sinch.sdk.models.ConversationContext;
 import java.time.Instant;
 import java.util.Map;

@@ -24,7 +24,7 @@ import java.util.Optional;
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class MediaCardMessageImpl
     implements MediaCardMessage,
-        com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage {
+        com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessageBody {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_MEDIA_CARD_MESSAGE = "media_card_message";

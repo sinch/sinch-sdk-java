@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 /** A contact message containing a channel specific message (not supported by OMNI types). */
 @JsonDeserialize(builder = ChannelSpecificContactMessageImpl.Builder.class)
 public interface ChannelSpecificContactMessage
-    extends com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage {
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessageBody {
 
   /** The message type. */
   public class MessageTypeEnum extends EnumDynamic<String, MessageTypeEnum> {
