@@ -350,7 +350,7 @@ public class ContactIdentitiesDuplicationEventImpl
       }
       ContactIdentitiesDuplicationEventImpl impl =
           (ContactIdentitiesDuplicationEventImpl) value.get();
-      jgen.writeObject(impl.getDuplicatedContactIdentitiesNotification());
+      jgen.writeObject(null != impl ? impl.getDuplicatedContactIdentitiesNotification() : null);
     }
   }
 

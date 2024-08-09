@@ -163,7 +163,7 @@ public class UrlMessageImpl
         return;
       }
       UrlMessageImpl impl = (UrlMessageImpl) value.get();
-      jgen.writeObject(impl.getUrlMessage());
+      jgen.writeObject(null != impl ? impl.getUrlMessage() : null);
     }
   }
 

@@ -146,7 +146,7 @@ public class TextMessageImpl
         return;
       }
       TextMessageImpl impl = (TextMessageImpl) value.get();
-      jgen.writeObject(impl.getTextMessage());
+      jgen.writeObject(null != impl ? impl.getTextMessage() : null);
     }
   }
 

@@ -185,7 +185,7 @@ public class ChannelSpecificContactMessageImpl
         return;
       }
       ChannelSpecificContactMessageImpl impl = (ChannelSpecificContactMessageImpl) value.get();
-      jgen.writeObject(impl.getChannelSpecificMessage());
+      jgen.writeObject(null != impl ? impl.getChannelSpecificMessage() : null);
     }
   }
 

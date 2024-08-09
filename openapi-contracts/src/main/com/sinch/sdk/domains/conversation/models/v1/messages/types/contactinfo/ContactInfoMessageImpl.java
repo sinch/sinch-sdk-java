@@ -293,7 +293,7 @@ public class ContactInfoMessageImpl
         return;
       }
       ContactInfoMessageImpl impl = (ContactInfoMessageImpl) value.get();
-      jgen.writeObject(impl.getContactInfoMessage());
+      jgen.writeObject(null != impl ? impl.getContactInfoMessage() : null);
     }
   }
 

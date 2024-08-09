@@ -147,7 +147,7 @@ public class AgentJoinedEventImpl
         return;
       }
       AgentJoinedEventImpl impl = (AgentJoinedEventImpl) value.get();
-      jgen.writeObject(impl.getAgentJoinedEvent());
+      jgen.writeObject(null != impl ? impl.getAgentJoinedEvent() : null);
     }
   }
 

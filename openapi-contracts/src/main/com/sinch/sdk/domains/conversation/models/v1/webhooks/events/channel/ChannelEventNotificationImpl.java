@@ -200,7 +200,7 @@ public class ChannelEventNotificationImpl implements ChannelEventNotification {
         return;
       }
       ChannelEventNotificationImpl impl = (ChannelEventNotificationImpl) value.get();
-      jgen.writeObject(impl.getChannelEvent());
+      jgen.writeObject(null != impl ? impl.getChannelEvent() : null);
     }
   }
 

@@ -167,7 +167,7 @@ public class CallMessageImpl
         return;
       }
       CallMessageImpl impl = (CallMessageImpl) value.get();
-      jgen.writeObject(impl.getCallMessage());
+      jgen.writeObject(null != impl ? impl.getCallMessage() : null);
     }
   }
 

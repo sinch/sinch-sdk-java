@@ -232,7 +232,7 @@ public class CommentEventImpl
         return;
       }
       CommentEventImpl impl = (CommentEventImpl) value.get();
-      jgen.writeObject(impl.getCommentEvent());
+      jgen.writeObject(null != impl ? impl.getCommentEvent() : null);
     }
   }
 

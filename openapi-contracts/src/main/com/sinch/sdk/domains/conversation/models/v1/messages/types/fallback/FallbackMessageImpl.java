@@ -172,7 +172,7 @@ public class FallbackMessageImpl
         return;
       }
       FallbackMessageImpl impl = (FallbackMessageImpl) value.get();
-      jgen.writeObject(impl.getFallbackMessage());
+      jgen.writeObject(null != impl ? impl.getFallbackMessage() : null);
     }
   }
 

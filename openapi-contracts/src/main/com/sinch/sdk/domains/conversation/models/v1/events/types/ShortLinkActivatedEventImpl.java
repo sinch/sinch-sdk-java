@@ -274,7 +274,7 @@ public class ShortLinkActivatedEventImpl
         return;
       }
       ShortLinkActivatedEventImpl impl = (ShortLinkActivatedEventImpl) value.get();
-      jgen.writeObject(impl.getShortlinkActivatedEvent());
+      jgen.writeObject(null != impl ? impl.getShortlinkActivatedEvent() : null);
     }
   }
 
