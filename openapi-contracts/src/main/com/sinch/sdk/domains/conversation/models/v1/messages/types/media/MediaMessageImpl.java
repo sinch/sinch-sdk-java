@@ -195,7 +195,7 @@ public class MediaMessageImpl
         return;
       }
       MediaMessageImpl impl = (MediaMessageImpl) value.get();
-      jgen.writeObject(impl.getMediaMessage());
+      jgen.writeObject(null != impl ? impl.getMediaMessage() : null);
     }
   }
 

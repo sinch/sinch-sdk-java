@@ -174,7 +174,7 @@ public class ChoiceMessageImpl
         return;
       }
       ChoiceMessageImpl impl = (ChoiceMessageImpl) value.get();
-      jgen.writeObject(impl.getChoiceMessage());
+      jgen.writeObject(null != impl ? impl.getChoiceMessage() : null);
     }
   }
 

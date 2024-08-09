@@ -219,7 +219,7 @@ public class ReactionEventImpl
         return;
       }
       ReactionEventImpl impl = (ReactionEventImpl) value.get();
-      jgen.writeObject(impl.getReactionEvent());
+      jgen.writeObject(null != impl ? impl.getReactionEvent() : null);
     }
   }
 

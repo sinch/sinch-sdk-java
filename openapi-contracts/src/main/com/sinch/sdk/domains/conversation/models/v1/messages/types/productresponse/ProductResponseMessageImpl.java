@@ -205,7 +205,7 @@ public class ProductResponseMessageImpl
         return;
       }
       ProductResponseMessageImpl impl = (ProductResponseMessageImpl) value.get();
-      jgen.writeObject(impl.getProductResponseMessage());
+      jgen.writeObject(null != impl ? impl.getProductResponseMessage() : null);
     }
   }
 

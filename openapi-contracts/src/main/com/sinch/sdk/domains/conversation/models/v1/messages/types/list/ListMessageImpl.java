@@ -217,7 +217,7 @@ public class ListMessageImpl
         return;
       }
       ListMessageImpl impl = (ListMessageImpl) value.get();
-      jgen.writeObject(impl.getListMessage());
+      jgen.writeObject(null != impl ? impl.getListMessage() : null);
     }
   }
 

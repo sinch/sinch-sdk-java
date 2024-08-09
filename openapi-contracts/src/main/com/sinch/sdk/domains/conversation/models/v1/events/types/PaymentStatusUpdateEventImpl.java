@@ -229,7 +229,7 @@ public class PaymentStatusUpdateEventImpl
         return;
       }
       PaymentStatusUpdateEventImpl impl = (PaymentStatusUpdateEventImpl) value.get();
-      jgen.writeObject(impl.getPaymentStatusUpdateEvent());
+      jgen.writeObject(null != impl ? impl.getPaymentStatusUpdateEvent() : null);
     }
   }
 

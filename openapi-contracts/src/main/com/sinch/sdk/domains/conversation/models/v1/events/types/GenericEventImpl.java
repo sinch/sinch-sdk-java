@@ -148,7 +148,7 @@ public class GenericEventImpl
         return;
       }
       GenericEventImpl impl = (GenericEventImpl) value.get();
-      jgen.writeObject(impl.getGenericEvent());
+      jgen.writeObject(null != impl ? impl.getGenericEvent() : null);
     }
   }
 

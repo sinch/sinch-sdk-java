@@ -171,7 +171,7 @@ public class MediaCardMessageImpl
         return;
       }
       MediaCardMessageImpl impl = (MediaCardMessageImpl) value.get();
-      jgen.writeObject(impl.getMediaCardMessage());
+      jgen.writeObject(null != impl ? impl.getMediaCardMessage() : null);
     }
   }
 

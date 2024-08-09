@@ -146,7 +146,7 @@ public class CommentReplyEventImpl
         return;
       }
       CommentReplyEventImpl impl = (CommentReplyEventImpl) value.get();
-      jgen.writeObject(impl.getCommentReplyEvent());
+      jgen.writeObject(null != impl ? impl.getCommentReplyEvent() : null);
     }
   }
 

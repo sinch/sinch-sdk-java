@@ -232,7 +232,7 @@ public class CardMessageImpl
         return;
       }
       CardMessageImpl impl = (CardMessageImpl) value.get();
-      jgen.writeObject(impl.getCardMessage());
+      jgen.writeObject(null != impl ? impl.getCardMessage() : null);
     }
   }
 

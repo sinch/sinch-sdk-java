@@ -147,7 +147,7 @@ public class AgentLeftEventImpl
         return;
       }
       AgentLeftEventImpl impl = (AgentLeftEventImpl) value.get();
-      jgen.writeObject(impl.getAgentLeftEvent());
+      jgen.writeObject(null != impl ? impl.getAgentLeftEvent() : null);
     }
   }
 

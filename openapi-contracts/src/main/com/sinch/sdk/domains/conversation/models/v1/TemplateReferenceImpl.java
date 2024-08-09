@@ -220,7 +220,7 @@ public class TemplateReferenceImpl
         return;
       }
       TemplateReferenceImpl impl = (TemplateReferenceImpl) value.get();
-      jgen.writeObject(impl.getTemplateReference());
+      jgen.writeObject(null != impl ? impl.getTemplateReference() : null);
     }
   }
 

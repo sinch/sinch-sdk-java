@@ -198,7 +198,7 @@ public class LocationMessageImpl
         return;
       }
       LocationMessageImpl impl = (LocationMessageImpl) value.get();
-      jgen.writeObject(impl.getLocationMessage());
+      jgen.writeObject(null != impl ? impl.getLocationMessage() : null);
     }
   }
 
