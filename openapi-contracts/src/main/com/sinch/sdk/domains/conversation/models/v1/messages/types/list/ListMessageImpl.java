@@ -26,7 +26,7 @@ import java.util.Optional;
 public class ListMessageImpl
     implements ListMessage,
         com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
-        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage {
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_LIST_MESSAGE = "list_message";

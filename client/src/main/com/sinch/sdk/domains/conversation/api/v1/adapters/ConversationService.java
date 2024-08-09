@@ -9,7 +9,7 @@ import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.events.app.AppEventMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.events.contactmessage.internal.ContactMessageEventMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.events.contacts.internal.ContactEventMapper;
-import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.AppMessageWithExtensionsMapper;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.AppMessageMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ChannelSpecificContactMessageMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ContactMessageMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ConversationMessageMapper;
@@ -118,7 +118,7 @@ public class ConversationService
 
     private LocalLazyInit() {
       AppEventMapper.initMapper();
-      AppMessageWithExtensionsMapper.initMapper();
+      AppMessageMapper.initMapper();
       AppMessageInternalMapper.initMapper();
       CarouselMessageMapper.initMapper();
       ChannelSpecificContactMessageMapper.initMapper();

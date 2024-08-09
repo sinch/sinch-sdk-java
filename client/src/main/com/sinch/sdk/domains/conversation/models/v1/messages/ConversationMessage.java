@@ -19,7 +19,7 @@ import java.time.Instant;
 
 public interface ConversationMessage {
 
-  ConversationMessageContent getContent();
+  ConversationMessageBody getBody();
 
   /**
    * The time Conversation API processed the message.
@@ -109,9 +109,9 @@ public interface ConversationMessage {
      *
      * @param content see getter
      * @return Current builder
-     * @see #getContent
+     * @see #getBody
      */
-    Builder setContent(ConversationMessageContent content);
+    Builder setContent(ConversationMessageBody content);
 
     /**
      * see getter

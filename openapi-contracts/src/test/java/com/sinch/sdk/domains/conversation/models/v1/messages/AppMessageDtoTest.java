@@ -36,10 +36,10 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-public class AppMessageWithExtensionsDtoTest extends ConversationBaseTest {
+public class AppMessageDtoTest extends ConversationBaseTest {
 
-  public static AppMessageWithExtensions<CardMessage> appCardMessageDto =
-      AppMessageWithExtensions.<CardMessage>builder()
+  public static AppMessage<CardMessage> appCardMessageDto =
+      AppMessage.<CardMessage>builder()
           .setMessage(CardMessageDtoTest.cardMessageDto)
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
@@ -47,8 +47,8 @@ public class AppMessageWithExtensionsDtoTest extends ConversationBaseTest {
           .setAgent(AgentDtoTest.expectedDto)
           .build();
 
-  public static AppMessageWithExtensions<CarouselMessage> appCarouselMessageDto =
-      AppMessageWithExtensions.<CarouselMessage>builder()
+  public static AppMessage<CarouselMessage> appCarouselMessageDto =
+      AppMessage.<CarouselMessage>builder()
           .setMessage(CarouselMessageDtoTest.carouselMessageDto)
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
@@ -56,16 +56,16 @@ public class AppMessageWithExtensionsDtoTest extends ConversationBaseTest {
           .setAgent(AgentDtoTest.expectedDto)
           .build();
 
-  public static AppMessageWithExtensions<ChoiceMessage> appChoiceMessageDto =
-      AppMessageWithExtensions.<ChoiceMessage>builder()
+  public static AppMessage<ChoiceMessage> appChoiceMessageDto =
+      AppMessage.<ChoiceMessage>builder()
           .setMessage(ChoiceMessageDtoTest.choiceMessageDto)
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
           .setChannelSpecificMessage(createChannelSpecificMessage())
           .setAgent(AgentDtoTest.expectedDto)
           .build();
-  public static AppMessageWithExtensions<ContactInfoMessage> appContactInfoMessageDto =
-      AppMessageWithExtensions.<ContactInfoMessage>builder()
+  public static AppMessage<ContactInfoMessage> appContactInfoMessageDto =
+      AppMessage.<ContactInfoMessage>builder()
           .setMessage(ContactInfoMessageDtoTest.contactInfoMessageDto)
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
@@ -73,8 +73,8 @@ public class AppMessageWithExtensionsDtoTest extends ConversationBaseTest {
           .setAgent(AgentDtoTest.expectedDto)
           .build();
 
-  public static AppMessageWithExtensions<ListMessage> appListMessageDto =
-      AppMessageWithExtensions.<ListMessage>builder()
+  public static AppMessage<ListMessage> appListMessageDto =
+      AppMessage.<ListMessage>builder()
           .setMessage(ListMessageDtoTest.listMessageChoiceDto)
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
@@ -82,16 +82,16 @@ public class AppMessageWithExtensionsDtoTest extends ConversationBaseTest {
           .setAgent(AgentDtoTest.expectedDto)
           .build();
 
-  public static AppMessageWithExtensions<LocationMessage> appLocationMessageDto =
-      AppMessageWithExtensions.<LocationMessage>builder()
+  public static AppMessage<LocationMessage> appLocationMessageDto =
+      AppMessage.<LocationMessage>builder()
           .setMessage(LocationMessageDtoTest.locationMessageDto)
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
           .setChannelSpecificMessage(createChannelSpecificMessage())
           .setAgent(AgentDtoTest.expectedDto)
           .build();
-  public static AppMessageWithExtensions<MediaMessage> appMediaMessageDto =
-      AppMessageWithExtensions.<MediaMessage>builder()
+  public static AppMessage<MediaMessage> appMediaMessageDto =
+      AppMessage.<MediaMessage>builder()
           .setMessage(MediaMessageDtoTest.mediaMessageDto)
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
@@ -99,16 +99,16 @@ public class AppMessageWithExtensionsDtoTest extends ConversationBaseTest {
           .setAgent(AgentDtoTest.expectedDto)
           .build();
 
-  public static AppMessageWithExtensions<TemplateMessage> appTemplateMessageDto =
-      AppMessageWithExtensions.<TemplateMessage>builder()
+  public static AppMessage<TemplateMessage> appTemplateMessageDto =
+      AppMessage.<TemplateMessage>builder()
           .setMessage(TemplateMessageDtoTest.templateMessageDto)
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
           .setChannelSpecificMessage(createChannelSpecificMessage())
           .setAgent(AgentDtoTest.expectedDto)
           .build();
-  public static AppMessageWithExtensions<TextMessage> appTextMessageDto =
-      AppMessageWithExtensions.<TextMessage>builder()
+  public static AppMessage<TextMessage> appTextMessageDto =
+      AppMessage.<TextMessage>builder()
           .setMessage(TextMessageDtoTest.textMessageDto)
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
@@ -116,32 +116,31 @@ public class AppMessageWithExtensionsDtoTest extends ConversationBaseTest {
           .setAgent(AgentDtoTest.expectedDto)
           .build();
 
-  @GivenTextResource("/domains/conversation/v1/messages/AppMessageWithExtensionsCardDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/AppMessageCardDto.json")
   static String jsonAppMessageCardRequestDto;
 
-  @GivenTextResource("/domains/conversation/v1/messages/AppMessageWithExtensionsCarouselDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/AppMessageCarouselDto.json")
   static String jsonAppMessageCarouselRequestDto;
 
-  @GivenTextResource("/domains/conversation/v1/messages/AppMessageWithExtensionsChoiceDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/AppMessageChoiceDto.json")
   static String jsonAppMessageChoiceRequestDto;
 
-  @GivenTextResource(
-      "/domains/conversation/v1/messages/AppMessageWithExtensionsContactInfoDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/AppMessageContactInfoDto.json")
   static String jsonAppMessageContactInfoRequestDto;
 
-  @GivenTextResource("/domains/conversation/v1/messages/AppMessageWithExtensionsListDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/AppMessageListDto.json")
   static String jsonAppMessageListMessageRequestDto;
 
-  @GivenTextResource("/domains/conversation/v1/messages/AppMessageWithExtensionsLocationDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/AppMessageLocationDto.json")
   static String jsonAppMessageLocationMessageRequestDto;
 
-  @GivenTextResource("/domains/conversation/v1/messages/AppMessageWithExtensionsMediaDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/AppMessageMediaDto.json")
   static String jsonAppMessageMediaRequestDto;
 
-  @GivenTextResource("/domains/conversation/v1/messages/AppMessageWithExtensionsTemplateDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/AppMessageTemplateDto.json")
   static String jsonAppMessageTemplateRequestDto;
 
-  @GivenTextResource("/domains/conversation/v1/messages/AppMessageWithExtensionsTextDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/AppMessageTextDto.json")
   static String jsonAppMessageTextRequestDto;
 
   private static Map<ConversationChannel, Object> createExplicitChannelMessage() {
@@ -174,8 +173,7 @@ public class AppMessageWithExtensionsDtoTest extends ConversationBaseTest {
 
   @Test
   void deserializeCardMessageRequestDto() throws JsonProcessingException {
-    Object deserialized =
-        objectMapper.readValue(jsonAppMessageCardRequestDto, AppMessageWithExtensions.class);
+    Object deserialized = objectMapper.readValue(jsonAppMessageCardRequestDto, AppMessage.class);
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appCardMessageDto);
   }
@@ -190,7 +188,7 @@ public class AppMessageWithExtensionsDtoTest extends ConversationBaseTest {
   @Test
   void deserializeCarouselMessageRequestDto() throws JsonProcessingException {
     Object deserialized =
-        objectMapper.readValue(jsonAppMessageCarouselRequestDto, AppMessageWithExtensions.class);
+        objectMapper.readValue(jsonAppMessageCarouselRequestDto, AppMessage.class);
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appCarouselMessageDto);
   }
@@ -204,8 +202,7 @@ public class AppMessageWithExtensionsDtoTest extends ConversationBaseTest {
 
   @Test
   void deserializeChoiceMessageRequestDto() throws JsonProcessingException {
-    Object deserialized =
-        objectMapper.readValue(jsonAppMessageChoiceRequestDto, AppMessageWithExtensions.class);
+    Object deserialized = objectMapper.readValue(jsonAppMessageChoiceRequestDto, AppMessage.class);
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appChoiceMessageDto);
   }
@@ -220,7 +217,7 @@ public class AppMessageWithExtensionsDtoTest extends ConversationBaseTest {
   @Test
   void deserializeContactInfoMessageRequestDto() throws JsonProcessingException {
     Object deserialized =
-        objectMapper.readValue(jsonAppMessageContactInfoRequestDto, AppMessageWithExtensions.class);
+        objectMapper.readValue(jsonAppMessageContactInfoRequestDto, AppMessage.class);
 
     Assertions.assertThat(deserialized)
         .usingRecursiveComparison()
@@ -237,7 +234,7 @@ public class AppMessageWithExtensionsDtoTest extends ConversationBaseTest {
   @Test
   void deserializeListMessageRequestDto() throws JsonProcessingException {
     Object deserialized =
-        objectMapper.readValue(jsonAppMessageListMessageRequestDto, AppMessageWithExtensions.class);
+        objectMapper.readValue(jsonAppMessageListMessageRequestDto, AppMessage.class);
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appListMessageDto);
   }
@@ -252,8 +249,7 @@ public class AppMessageWithExtensionsDtoTest extends ConversationBaseTest {
   @Test
   void deserializeLocationMessageRequestDto() throws JsonProcessingException, JSONException {
     Object deserialized =
-        objectMapper.readValue(
-            jsonAppMessageLocationMessageRequestDto, AppMessageWithExtensions.class);
+        objectMapper.readValue(jsonAppMessageLocationMessageRequestDto, AppMessage.class);
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appLocationMessageDto);
   }
@@ -267,8 +263,7 @@ public class AppMessageWithExtensionsDtoTest extends ConversationBaseTest {
 
   @Test
   void deserializeMediaMessageRequestDto() throws JsonProcessingException {
-    Object deserialized =
-        objectMapper.readValue(jsonAppMessageMediaRequestDto, AppMessageWithExtensions.class);
+    Object deserialized = objectMapper.readValue(jsonAppMessageMediaRequestDto, AppMessage.class);
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appMediaMessageDto);
   }
@@ -283,7 +278,7 @@ public class AppMessageWithExtensionsDtoTest extends ConversationBaseTest {
   @Test
   void deserializeTemplateMessageRequestDto() throws JsonProcessingException {
     Object deserialized =
-        objectMapper.readValue(jsonAppMessageTemplateRequestDto, AppMessageWithExtensions.class);
+        objectMapper.readValue(jsonAppMessageTemplateRequestDto, AppMessage.class);
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appTemplateMessageDto);
   }
@@ -297,8 +292,7 @@ public class AppMessageWithExtensionsDtoTest extends ConversationBaseTest {
 
   @Test
   void deserializeTextMessageRequestDto() throws JsonProcessingException {
-    Object deserialized =
-        objectMapper.readValue(jsonAppMessageTextRequestDto, AppMessageWithExtensions.class);
+    Object deserialized = objectMapper.readValue(jsonAppMessageTextRequestDto, AppMessage.class);
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appTextMessageDto);
   }

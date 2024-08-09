@@ -11,7 +11,7 @@ import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ConversationM
 import com.sinch.sdk.domains.conversation.api.v1.internal.MessagesApi;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.internal.ConversationMessageInternal;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ListMessagesResponseInternal;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ListMessagesResponseInternalImpl;
@@ -54,7 +54,7 @@ public class MessagesService implements com.sinch.sdk.domains.conversation.api.v
     return this.api;
   }
 
-  public SendMessageResponse sendMessage(SendMessageRequest<? extends AppMessage> request)
+  public SendMessageResponse sendMessage(SendMessageRequest<? extends AppMessageBody> request)
       throws ApiException {
     return getApi().messagesSendMessage(uriUUID, request);
   }

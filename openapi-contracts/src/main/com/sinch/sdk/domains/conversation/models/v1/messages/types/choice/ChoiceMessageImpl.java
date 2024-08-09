@@ -27,7 +27,7 @@ import java.util.Optional;
 public class ChoiceMessageImpl
     implements ChoiceMessage,
         com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
-        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage {
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CHOICE_MESSAGE = "choice_message";

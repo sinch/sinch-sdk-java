@@ -25,7 +25,7 @@ import java.util.Optional;
 public class ContactInfoMessageImpl
     implements ContactInfoMessage,
         com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
-        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage {
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CONTACT_INFO_MESSAGE = "contact_info_message";

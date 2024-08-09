@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages.types.carousel;
 
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.Choice;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.Objects;
 public class CarouselMessageImpl
     implements CarouselMessage,
         com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
-        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage {
+        AppMessageBody {
 
   private final OptionalValue<List<CardMessage>> cards;
 

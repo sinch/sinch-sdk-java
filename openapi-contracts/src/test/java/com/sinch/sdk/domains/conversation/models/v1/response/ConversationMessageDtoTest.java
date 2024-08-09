@@ -7,7 +7,7 @@ import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentityDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationDirection;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageWithExtensionsDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
 import java.time.Instant;
@@ -31,7 +31,7 @@ public class ConversationMessageDtoTest extends ConversationBaseTest {
           .setInjected(true)
           .setSenderId("sender id")
           .setProcessingMode(ProcessingMode.CONVERSATION)
-          .setContent(AppMessageWithExtensionsDtoTest.appTextMessageDto)
+          .setContent(AppMessageDtoTest.appTextMessageDto)
           .build();
   public static ConversationMessage contactConversationMessage =
       ConversationMessage.builder()

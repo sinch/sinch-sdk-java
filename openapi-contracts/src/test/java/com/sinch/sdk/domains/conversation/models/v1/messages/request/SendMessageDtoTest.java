@@ -6,8 +6,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.ContactId;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageWithExtensionsDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.carousel.CarouselMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceMessage;
@@ -29,39 +29,39 @@ public class SendMessageDtoTest extends ConversationBaseTest {
 
   public static SendMessageRequest<CardMessage> sendCardMessageRequestDto =
       SendMessageDtoTest.<CardMessage>builder()
-          .setMessage(AppMessageWithExtensionsDtoTest.appCardMessageDto)
+          .setMessage(AppMessageDtoTest.appCardMessageDto)
           .build();
   public static SendMessageRequest<CarouselMessage> sendCarouselMessageRequestDto =
       SendMessageDtoTest.<CarouselMessage>builder()
-          .setMessage(AppMessageWithExtensionsDtoTest.appCarouselMessageDto)
+          .setMessage(AppMessageDtoTest.appCarouselMessageDto)
           .build();
   public static SendMessageRequest<ChoiceMessage> sendChoiceMessageRequestDto =
       SendMessageDtoTest.<ChoiceMessage>builder()
-          .setMessage(AppMessageWithExtensionsDtoTest.appChoiceMessageDto)
+          .setMessage(AppMessageDtoTest.appChoiceMessageDto)
           .build();
   public static SendMessageRequest<ContactInfoMessage> sendContactInfoMessageRequestDto =
       SendMessageDtoTest.<ContactInfoMessage>builder()
-          .setMessage(AppMessageWithExtensionsDtoTest.appContactInfoMessageDto)
+          .setMessage(AppMessageDtoTest.appContactInfoMessageDto)
           .build();
   public static SendMessageRequest<ListMessage> sendListMessageRequestDto =
       SendMessageDtoTest.<ListMessage>builder()
-          .setMessage(AppMessageWithExtensionsDtoTest.appListMessageDto)
+          .setMessage(AppMessageDtoTest.appListMessageDto)
           .build();
   public static SendMessageRequest<LocationMessage> sendLocationMessageRequestDto =
       SendMessageDtoTest.<LocationMessage>builder()
-          .setMessage(AppMessageWithExtensionsDtoTest.appLocationMessageDto)
+          .setMessage(AppMessageDtoTest.appLocationMessageDto)
           .build();
   public static SendMessageRequest<MediaMessage> sendMediaMessageRequestDto =
       SendMessageDtoTest.<MediaMessage>builder()
-          .setMessage(AppMessageWithExtensionsDtoTest.appMediaMessageDto)
+          .setMessage(AppMessageDtoTest.appMediaMessageDto)
           .build();
   public static SendMessageRequest<TemplateMessage> sendTemplateMessageRequestDto =
       SendMessageDtoTest.<TemplateMessage>builder()
-          .setMessage(AppMessageWithExtensionsDtoTest.appTemplateMessageDto)
+          .setMessage(AppMessageDtoTest.appTemplateMessageDto)
           .build();
   public static SendMessageRequest<TextMessage> sendTextMessageRequestDto =
       SendMessageDtoTest.<TextMessage>builder()
-          .setMessage(AppMessageWithExtensionsDtoTest.appTextMessageDto)
+          .setMessage(AppMessageDtoTest.appTextMessageDto)
           .build();
 
   @GivenTextResource("/domains/conversation/v1/messages/request/SendCardMessageRequestDto.json")
@@ -92,7 +92,7 @@ public class SendMessageDtoTest extends ConversationBaseTest {
   @GivenTextResource("/domains/conversation/v1/messages/request/SendTextMessageRequestDto.json")
   static String jsonSendTextMessageRequestDto;
 
-  private static <T extends AppMessage> SendMessageRequest.Builder<T> builder() {
+  private static <T extends AppMessageBody> SendMessageRequest.Builder<T> builder() {
     Map<String, String> map = new HashMap<>();
     map.put("a property key", "a property value");
     return SendMessageRequest.<T>builder()

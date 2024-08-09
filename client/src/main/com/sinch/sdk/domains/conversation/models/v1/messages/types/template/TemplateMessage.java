@@ -2,11 +2,11 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.types.template;
 
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.TemplateReference;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody;
 import java.util.Map;
 
 /** Template Message */
-public interface TemplateMessage extends AppMessage {
+public interface TemplateMessage extends AppMessageBody {
 
   /**
    * Optional. Channel specific template reference with parameters per channel. The channel template

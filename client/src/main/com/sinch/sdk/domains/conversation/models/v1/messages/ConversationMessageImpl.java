@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public class ConversationMessageImpl implements ConversationMessage {
 
-  private OptionalValue<ConversationMessageContent> content;
+  private OptionalValue<ConversationMessageBody> content;
 
   private OptionalValue<Instant> acceptTime;
 
@@ -36,7 +36,7 @@ public class ConversationMessageImpl implements ConversationMessage {
   public ConversationMessageImpl() {}
 
   protected ConversationMessageImpl(
-      OptionalValue<ConversationMessageContent> content,
+      OptionalValue<ConversationMessageBody> content,
       OptionalValue<Instant> acceptTime,
       OptionalValue<ChannelIdentity> channelIdentity,
       OptionalValue<String> contactId,
@@ -60,11 +60,11 @@ public class ConversationMessageImpl implements ConversationMessage {
     this.processingMode = processingMode;
   }
 
-  public ConversationMessageContent getContent() {
+  public ConversationMessageBody getBody() {
     return content.orElse(null);
   }
 
-  public OptionalValue<ConversationMessageContent> content() {
+  public OptionalValue<ConversationMessageBody> content() {
     return content;
   }
 
@@ -220,7 +220,7 @@ public class ConversationMessageImpl implements ConversationMessage {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements ConversationMessage.Builder {
-    OptionalValue<ConversationMessageContent> content = OptionalValue.empty();
+    OptionalValue<ConversationMessageBody> content = OptionalValue.empty();
     OptionalValue<Instant> acceptTime = OptionalValue.empty();
     OptionalValue<ChannelIdentity> channelIdentity = OptionalValue.empty();
     OptionalValue<String> contactId = OptionalValue.empty();
@@ -232,7 +232,7 @@ public class ConversationMessageImpl implements ConversationMessage {
     OptionalValue<String> senderId = OptionalValue.empty();
     OptionalValue<ProcessingMode> processingMode = OptionalValue.empty();
 
-    public Builder setContent(ConversationMessageContent content) {
+    public Builder setContent(ConversationMessageBody content) {
       this.content = OptionalValue.of(content);
       return this;
     }

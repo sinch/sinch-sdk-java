@@ -8,8 +8,8 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.sinch.sdk.core.utils.databind.Mapper;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageWithExtensions;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageWithExtensionsImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.AppMessageInternal;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.AppMessageInternalImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardMessage;
@@ -24,37 +24,36 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMess
 import java.io.IOException;
 import java.util.logging.Logger;
 
-public class AppMessageWithExtensionsMapper {
+public class AppMessageMapper {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(AppMessageWithExtensionsMapper.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(AppMessageMapper.class.getName());
 
   public static void initMapper() {
     SimpleModule module =
         new SimpleModule()
-            .addSerializer(AppMessageWithExtensions.class, new Serializer())
-            .addDeserializer(AppMessageWithExtensions.class, new Deserializer());
+            .addSerializer(AppMessage.class, new Serializer())
+            .addDeserializer(AppMessage.class, new Deserializer());
     Mapper.getInstance().registerModule(module);
   }
 
-  static class Deserializer extends StdDeserializer<AppMessageWithExtensions<?>> {
+  static class Deserializer extends StdDeserializer<AppMessage<?>> {
 
     public Deserializer() {
       this(null);
     }
 
-    public Deserializer(Class<AppMessageWithExtensions> vc) {
+    public Deserializer(Class<AppMessage> vc) {
       super(vc);
     }
 
     @Override
-    public AppMessageWithExtensions<?> deserialize(JsonParser jp, DeserializationContext ctxt)
+    public AppMessage<?> deserialize(JsonParser jp, DeserializationContext ctxt)
         throws IOException {
 
       AppMessageInternalImpl deserialized =
           (AppMessageInternalImpl) jp.readValueAs(AppMessageInternal.class);
 
-      AppMessageWithExtensions.Builder internal = AppMessageWithExtensions.builder();
+      AppMessage.Builder internal = AppMessage.builder();
       deserialized.explicitChannelMessage().ifPresent(internal::setExplicitChannelMessage);
       deserialized.explicitChannelOmniMessage().ifPresent(internal::setExplicitChannelOmniMessage);
       deserialized.channelSpecificMessage().ifPresent(internal::setChannelSpecificMessage);
@@ -72,22 +71,21 @@ public class AppMessageWithExtensionsMapper {
     }
   }
 
-  static class Serializer extends StdSerializer<AppMessageWithExtensions> {
+  static class Serializer extends StdSerializer<AppMessage> {
 
     public Serializer() {
       this(null);
     }
 
-    public Serializer(Class<AppMessageWithExtensions> t) {
+    public Serializer(Class<AppMessage> t) {
       super(t);
     }
 
     @Override
-    public void serialize(
-        AppMessageWithExtensions raw, JsonGenerator jgen, SerializerProvider provider)
+    public void serialize(AppMessage raw, JsonGenerator jgen, SerializerProvider provider)
         throws IOException {
 
-      AppMessageWithExtensionsImpl<?> value = (AppMessageWithExtensionsImpl<?>) raw;
+      AppMessageImpl<?> value = (AppMessageImpl<?>) raw;
       AppMessageInternal.Builder internal = AppMessageInternal.builder();
 
       value.explicitChannelMessage().ifPresent(internal::setExplicitChannelMessage);

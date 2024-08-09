@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.Recipient;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageWithExtensions;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +25,7 @@ import java.util.Map;
  * <code>message</code> are all required fields.
  */
 @JsonDeserialize(builder = SendMessageRequestImpl.Builder.class)
-public interface SendMessageRequest<T extends AppMessage> {
+public interface SendMessageRequest<T extends AppMessageBody> {
 
   /**
    * The ID of the app sending the message.
@@ -71,7 +71,7 @@ public interface SendMessageRequest<T extends AppMessage> {
    *
    * @return message
    */
-  AppMessageWithExtensions<T> getMessage();
+  AppMessage<T> getMessage();
 
   /**
    * Metadata that should be associated with the message. Returned in the <code>metadata</code>
@@ -155,12 +155,12 @@ public interface SendMessageRequest<T extends AppMessage> {
    *
    * @return New Builder instance
    */
-  static <T extends AppMessage> Builder<T> builder() {
+  static <T extends AppMessageBody> Builder<T> builder() {
     return new SendMessageRequestImpl.Builder<>();
   }
 
   /** Dedicated Builder */
-  interface Builder<T extends AppMessage> {
+  interface Builder<T extends AppMessageBody> {
 
     /**
      * see getter
@@ -205,7 +205,7 @@ public interface SendMessageRequest<T extends AppMessage> {
      * @return Current builder
      * @see #getMessage
      */
-    Builder<T> setMessage(AppMessageWithExtensions<T> message);
+    Builder<T> setMessage(AppMessage<T> message);
 
     /**
      * see getter

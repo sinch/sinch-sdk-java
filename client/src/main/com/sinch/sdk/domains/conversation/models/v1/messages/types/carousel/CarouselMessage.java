@@ -12,6 +12,7 @@
 
 package com.sinch.sdk.domains.conversation.models.v1.messages.types.carousel;
 
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.Choice;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.List;
  */
 public interface CarouselMessage
     extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
-        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage {
+        AppMessageBody {
 
   /**
    * A list of up to 10 cards.

@@ -6,8 +6,7 @@ import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.ChannelSpecificMessage;
 import java.util.Map;
 
-public class AppMessageWithExtensionsImpl<T extends AppMessage>
-    implements AppMessageWithExtensions<T> {
+public class AppMessageImpl<T extends AppMessageBody> implements AppMessage<T> {
 
   private final OptionalValue<T> message;
   private final OptionalValue<Map<ConversationChannel, Object>> explicitChannelMessage;
@@ -17,7 +16,7 @@ public class AppMessageWithExtensionsImpl<T extends AppMessage>
       channelSpecificMessage;
   private final OptionalValue<Agent> agent;
 
-  public AppMessageWithExtensionsImpl(
+  public AppMessageImpl(
       OptionalValue<T> message,
       OptionalValue<Map<ConversationChannel, Object>> explicitChannelMessage,
       OptionalValue<Map<OmniMessageOverride.ChannelSpecificTemplate, OmniMessageOverride>>
@@ -31,7 +30,7 @@ public class AppMessageWithExtensionsImpl<T extends AppMessage>
     this.agent = agent;
   }
 
-  public T getMessage() {
+  public T getBody() {
     return message.orElse(null);
   }
 
@@ -90,7 +89,7 @@ public class AppMessageWithExtensionsImpl<T extends AppMessage>
   }
 
   /** Dedicated Builder */
-  static class Builder<T extends AppMessage> implements AppMessageWithExtensions.Builder<T> {
+  static class Builder<T extends AppMessageBody> implements AppMessage.Builder<T> {
 
     OptionalValue<T> message = OptionalValue.empty();
     OptionalValue<Map<ConversationChannel, Object>> explicitChannelMessage = OptionalValue.empty();
@@ -129,8 +128,8 @@ public class AppMessageWithExtensionsImpl<T extends AppMessage>
       return this;
     }
 
-    public AppMessageWithExtensions<T> build() {
-      return new AppMessageWithExtensionsImpl<>(
+    public AppMessage<T> build() {
+      return new AppMessageImpl<>(
           message,
           explicitChannelMessage,
           explicitChannelOmniMessage,

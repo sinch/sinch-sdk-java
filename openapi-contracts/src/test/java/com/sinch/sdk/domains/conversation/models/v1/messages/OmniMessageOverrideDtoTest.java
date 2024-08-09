@@ -37,33 +37,32 @@ public class OmniMessageOverrideDtoTest extends ConversationBaseTest {
       TemplateReferenceDtoTest.templateReferenceDto;
   public static OmniMessageOverride omniMessageOverrideText = TextMessageDtoTest.textMessageDto;
 
-  @GivenTextResource("/domains/conversation/v1/messages/OmniMessageOverrideMessageCardDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/OmniMessageOverrideCardDto.json")
   static String jsonOmniMessageOverrideCardDto;
 
-  @GivenTextResource("/domains/conversation/v1/messages/OmniMessageOverrideMessageCarouselDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/OmniMessageOverrideCarouselDto.json")
   static String jsonOmniMessageOverrideCarouselDto;
 
-  @GivenTextResource("/domains/conversation/v1/messages/OmniMessageOverrideMessageChoiceDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/OmniMessageOverrideChoiceDto.json")
   static String jsonOmniMessageOverrideChoiceDto;
 
-  @GivenTextResource(
-      "/domains/conversation/v1/messages/OmniMessageOverrideMessageContactInfoDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/OmniMessageOverrideContactInfoDto.json")
   static String jsonOmniMessageOverrideContactInfoDto;
 
-  @GivenTextResource("/domains/conversation/v1/messages/OmniMessageOverrideMessageListDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/OmniMessageOverrideListDto.json")
   static String jsonOmniMessageOverrideListDto;
 
-  @GivenTextResource("/domains/conversation/v1/messages/OmniMessageOverrideMessageLocationDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/OmniMessageOverrideLocationDto.json")
   static String jsonOmniMessageOverrideLocationDto;
 
-  @GivenTextResource("/domains/conversation/v1/messages/OmniMessageOverrideMessageMediaDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/OmniMessageOverrideMediaDto.json")
   static String jsonOmniMessageOverrideMediaDto;
 
   @GivenTextResource(
-      "/domains/conversation/v1/messages/OmniMessageOverrideMessageTemplateReferenceDto.json")
+      "/domains/conversation/v1/messages/OmniMessageOverrideTemplateReferenceDto.json")
   static String jsonOmniMessageOverrideTemplateReferenceDto;
 
-  @GivenTextResource("/domains/conversation/v1/messages/OmniMessageOverrideMessageTextDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/OmniMessageOverrideTextDto.json")
   static String jsonOmniMessageOverrideTextDto;
 
   @Test

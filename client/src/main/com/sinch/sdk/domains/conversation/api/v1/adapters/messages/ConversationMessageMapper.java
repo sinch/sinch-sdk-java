@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.sinch.sdk.core.utils.databind.Mapper;
 import com.sinch.sdk.domains.conversation.models.v1.internal.ConversationMessageInternal;
 import com.sinch.sdk.domains.conversation.models.v1.internal.ConversationMessageInternalImpl;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageWithExtensions;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessageImpl;
@@ -78,8 +78,8 @@ public class ConversationMessageMapper {
 
     if (from.content().isPresent()) {
       Object content = from.content().get();
-      if (content instanceof AppMessageWithExtensions) {
-        internal.setAppMessage((AppMessageWithExtensions<?>) content);
+      if (content instanceof AppMessage) {
+        internal.setAppMessage((AppMessage<?>) content);
       } else {
         internal.setContactMessage((ContactMessage) content);
       }

@@ -8,7 +8,7 @@ import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentityDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageWithExtensionsDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageDtoTest;
 import java.time.Instant;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ public class MessageSubmitEventDtoTest extends ConversationBaseTest {
                   .setConversationId("conversation id")
                   .setChannelIdentity(ChannelIdentityDtoTest.expectedDto)
                   .setContactId("contact ID")
-                  .setSubmittedMessage(AppMessageWithExtensionsDtoTest.appTextMessageDto)
+                  .setSubmittedMessage(AppMessageDtoTest.appTextMessageDto)
                   .setMetadata("metadata value")
                   .setProcessingMode(ProcessingMode.DISPATCH)
                   .build())

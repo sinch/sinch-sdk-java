@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageWithExtensions;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
 import java.util.Objects;
 
 @JsonPropertyOrder({
@@ -44,7 +44,7 @@ public class MessageSubmitEventMessageImpl implements MessageSubmitEventMessage 
 
   public static final String JSON_PROPERTY_SUBMITTED_MESSAGE = "submitted_message";
 
-  private OptionalValue<AppMessageWithExtensions<?>> submittedMessage;
+  private OptionalValue<AppMessage<?>> submittedMessage;
 
   public static final String JSON_PROPERTY_METADATA = "metadata";
 
@@ -61,7 +61,7 @@ public class MessageSubmitEventMessageImpl implements MessageSubmitEventMessage 
       OptionalValue<String> conversationId,
       OptionalValue<ChannelIdentity> channelIdentity,
       OptionalValue<String> contactId,
-      OptionalValue<AppMessageWithExtensions<?>> submittedMessage,
+      OptionalValue<AppMessage<?>> submittedMessage,
       OptionalValue<String> metadata,
       OptionalValue<ProcessingMode> processingMode) {
     this.messageId = messageId;
@@ -118,13 +118,13 @@ public class MessageSubmitEventMessageImpl implements MessageSubmitEventMessage 
   }
 
   @JsonIgnore
-  public AppMessageWithExtensions<?> getSubmittedMessage() {
+  public AppMessage<?> getSubmittedMessage() {
     return submittedMessage.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_SUBMITTED_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<AppMessageWithExtensions<?>> submittedMessage() {
+  public OptionalValue<AppMessage<?>> submittedMessage() {
     return submittedMessage;
   }
 
@@ -222,7 +222,7 @@ public class MessageSubmitEventMessageImpl implements MessageSubmitEventMessage 
     OptionalValue<String> conversationId = OptionalValue.empty();
     OptionalValue<ChannelIdentity> channelIdentity = OptionalValue.empty();
     OptionalValue<String> contactId = OptionalValue.empty();
-    OptionalValue<AppMessageWithExtensions<?>> submittedMessage = OptionalValue.empty();
+    OptionalValue<AppMessage<?>> submittedMessage = OptionalValue.empty();
     OptionalValue<String> metadata = OptionalValue.empty();
     OptionalValue<ProcessingMode> processingMode = OptionalValue.empty();
 
@@ -251,7 +251,7 @@ public class MessageSubmitEventMessageImpl implements MessageSubmitEventMessage 
     }
 
     @JsonProperty(JSON_PROPERTY_SUBMITTED_MESSAGE)
-    public Builder setSubmittedMessage(AppMessageWithExtensions<?> submittedMessage) {
+    public Builder setSubmittedMessage(AppMessage<?> submittedMessage) {
       this.submittedMessage = OptionalValue.of(submittedMessage);
       return this;
     }

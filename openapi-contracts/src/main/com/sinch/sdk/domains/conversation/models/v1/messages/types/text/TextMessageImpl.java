@@ -25,7 +25,7 @@ import java.util.Optional;
 public class TextMessageImpl
     implements TextMessage,
         com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
-        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody,
         com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage,
         com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceMessageType {
   private static final long serialVersionUID = 1L;
