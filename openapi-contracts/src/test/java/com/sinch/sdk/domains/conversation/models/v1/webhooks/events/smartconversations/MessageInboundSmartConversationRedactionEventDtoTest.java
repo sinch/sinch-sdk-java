@@ -8,7 +8,7 @@ import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentityDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessageDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.message.MessageInboundEventMessage;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.message.MessageInboundEventMessage.DirectionEnum;
 import java.time.Instant;
@@ -23,7 +23,7 @@ public class MessageInboundSmartConversationRedactionEventDtoTest extends Conver
       MessageInboundEventMessage.builder()
           .setId("id")
           .setDirection(DirectionEnum.TO_APP)
-          .setContactMessage(MediaMessageDtoTest.mediaMessageDto)
+          .setContactMessage(ContactMessageDtoTest.mediaContactMessageDto)
           .setChannelIdentity(ChannelIdentityDtoTest.expectedDto)
           .setConversationId("conversation id")
           .setContactId("contact id")

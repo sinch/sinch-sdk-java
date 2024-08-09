@@ -10,13 +10,16 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
+package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** Reply To Message */
-@JsonDeserialize(builder = ReplyToMessageInternalImpl.Builder.class)
-public interface ReplyToMessageInternal {
+/**
+ * If the contact message was a response to a previous App message then this field contains
+ * information about that.
+ */
+@JsonDeserialize(builder = ReplyToImpl.Builder.class)
+public interface ReplyTo {
 
   /**
    * Required. The Id of the message that this is a response to
@@ -31,7 +34,7 @@ public interface ReplyToMessageInternal {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ReplyToMessageInternalImpl.Builder();
+    return new ReplyToImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -51,6 +54,6 @@ public interface ReplyToMessageInternal {
      *
      * @return The instance build with current builder values
      */
-    ReplyToMessageInternal build();
+    ReplyTo build();
   }
 }

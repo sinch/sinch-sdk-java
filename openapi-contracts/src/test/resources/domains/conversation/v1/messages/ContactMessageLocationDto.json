@@ -1,0 +1,13 @@
+{
+  "location_message": {
+    "coordinates": {
+      "latitude": 47.62798,
+      "longitude": -2.822915
+    },
+    "label": "label value",
+    "title": "title value"
+  },
+  "reply_to": {
+    "message_id": "message id value"
+  }
+}

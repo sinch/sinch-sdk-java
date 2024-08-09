@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 /** Represents a response to a choice message. */
 @JsonDeserialize(builder = ChoiceResponseMessageImpl.Builder.class)
 public interface ChoiceResponseMessage
-    extends com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage {
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessageBody {
 
   /**
    * The message id containing the choice.

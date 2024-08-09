@@ -8,14 +8,17 @@
   "message_redaction": {
     "id": "id",
     "direction": "TO_APP",
-    "contact_message":{
+    "contact_message": {
       "media_message": {
         "url": "an url value",
         "thumbnail_url": "another url",
         "filename_override": "filename override value"
+      },
+      "reply_to": {
+        "message_id": "message id value"
       }
     },
-    "channel_identity":{
+    "channel_identity": {
       "app_id": "an app id",
       "channel": "MESSENGER",
       "identity": "an identity"

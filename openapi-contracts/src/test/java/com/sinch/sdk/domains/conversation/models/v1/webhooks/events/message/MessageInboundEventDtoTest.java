@@ -8,7 +8,7 @@ import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentityDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessageDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.message.MessageInboundEventMessage.DirectionEnum;
 import java.time.Instant;
 import org.json.JSONException;
@@ -36,7 +36,7 @@ public class MessageInboundEventDtoTest extends ConversationBaseTest {
               MessageInboundEventMessage.builder()
                   .setId("event id")
                   .setDirection(DirectionEnum.TO_APP)
-                  .setContactMessage(TextMessageDtoTest.textMessageDto)
+                  .setContactMessage(ContactMessageDtoTest.textContactMessageDto)
                   .setChannelIdentity(ChannelIdentityDtoTest.expectedDto)
                   .setConversationId("conversation id")
                   .setContactId("contact ID")

@@ -13,6 +13,181 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ReplyTo;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.ChannelSpecificContactMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.choiceresponse.ChoiceResponseMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.fallback.FallbackMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.location.LocationMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.mediacard.MediaCardMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.productresponse.ProductResponseMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
 
-@JsonDeserialize(using = ContactMessageInternalImpl.ContactMessageInternalImplDeserializer.class)
-public interface ContactMessageInternal {}
+/** Message originating from a contact */
+@JsonDeserialize(builder = ContactMessageInternalImpl.Builder.class)
+public interface ContactMessageInternal {
+
+  /**
+   * Get channelSpecificMessage
+   *
+   * @return channelSpecificMessage
+   */
+  ChannelSpecificContactMessage getChannelSpecificMessage();
+
+  /**
+   * Get choiceResponseMessage
+   *
+   * @return choiceResponseMessage
+   */
+  ChoiceResponseMessage getChoiceResponseMessage();
+
+  /**
+   * Get fallbackMessage
+   *
+   * @return fallbackMessage
+   */
+  FallbackMessage getFallbackMessage();
+
+  /**
+   * Get locationMessage
+   *
+   * @return locationMessage
+   */
+  LocationMessage getLocationMessage();
+
+  /**
+   * Get mediaCardMessage
+   *
+   * @return mediaCardMessage
+   */
+  MediaCardMessage getMediaCardMessage();
+
+  /**
+   * Get mediaMessage
+   *
+   * @return mediaMessage
+   */
+  MediaMessage getMediaMessage();
+
+  /**
+   * Get productResponseMessage
+   *
+   * @return productResponseMessage
+   */
+  ProductResponseMessage getProductResponseMessage();
+
+  /**
+   * Get textMessage
+   *
+   * @return textMessage
+   */
+  TextMessage getTextMessage();
+
+  /**
+   * Get replyTo
+   *
+   * @return replyTo
+   */
+  ReplyTo getReplyTo();
+
+  /**
+   * Getting builder
+   *
+   * @return New Builder instance
+   */
+  static Builder builder() {
+    return new ContactMessageInternalImpl.Builder();
+  }
+
+  /** Dedicated Builder */
+  interface Builder {
+
+    /**
+     * see getter
+     *
+     * @param channelSpecificMessage see getter
+     * @return Current builder
+     * @see #getChannelSpecificMessage
+     */
+    Builder setChannelSpecificMessage(ChannelSpecificContactMessage channelSpecificMessage);
+
+    /**
+     * see getter
+     *
+     * @param choiceResponseMessage see getter
+     * @return Current builder
+     * @see #getChoiceResponseMessage
+     */
+    Builder setChoiceResponseMessage(ChoiceResponseMessage choiceResponseMessage);
+
+    /**
+     * see getter
+     *
+     * @param fallbackMessage see getter
+     * @return Current builder
+     * @see #getFallbackMessage
+     */
+    Builder setFallbackMessage(FallbackMessage fallbackMessage);
+
+    /**
+     * see getter
+     *
+     * @param locationMessage see getter
+     * @return Current builder
+     * @see #getLocationMessage
+     */
+    Builder setLocationMessage(LocationMessage locationMessage);
+
+    /**
+     * see getter
+     *
+     * @param mediaCardMessage see getter
+     * @return Current builder
+     * @see #getMediaCardMessage
+     */
+    Builder setMediaCardMessage(MediaCardMessage mediaCardMessage);
+
+    /**
+     * see getter
+     *
+     * @param mediaMessage see getter
+     * @return Current builder
+     * @see #getMediaMessage
+     */
+    Builder setMediaMessage(MediaMessage mediaMessage);
+
+    /**
+     * see getter
+     *
+     * @param productResponseMessage see getter
+     * @return Current builder
+     * @see #getProductResponseMessage
+     */
+    Builder setProductResponseMessage(ProductResponseMessage productResponseMessage);
+
+    /**
+     * see getter
+     *
+     * @param textMessage see getter
+     * @return Current builder
+     * @see #getTextMessage
+     */
+    Builder setTextMessage(TextMessage textMessage);
+
+    /**
+     * see getter
+     *
+     * @param replyTo see getter
+     * @return Current builder
+     * @see #getReplyTo
+     */
+    Builder setReplyTo(ReplyTo replyTo);
+
+    /**
+     * Create instance
+     *
+     * @return The instance build with current builder values
+     */
+    ContactMessageInternal build();
+  }
+}

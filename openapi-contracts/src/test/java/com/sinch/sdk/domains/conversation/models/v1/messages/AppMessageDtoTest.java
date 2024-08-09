@@ -40,7 +40,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
 
   public static AppMessage<CardMessage> appCardMessageDto =
       AppMessage.<CardMessage>builder()
-          .setMessage(CardMessageDtoTest.cardMessageDto)
+          .setBody(CardMessageDtoTest.cardMessageDto)
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
           .setChannelSpecificMessage(createChannelSpecificMessage())
@@ -49,7 +49,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
 
   public static AppMessage<CarouselMessage> appCarouselMessageDto =
       AppMessage.<CarouselMessage>builder()
-          .setMessage(CarouselMessageDtoTest.carouselMessageDto)
+          .setBody(CarouselMessageDtoTest.carouselMessageDto)
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
           .setChannelSpecificMessage(createChannelSpecificMessage())
@@ -58,7 +58,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
 
   public static AppMessage<ChoiceMessage> appChoiceMessageDto =
       AppMessage.<ChoiceMessage>builder()
-          .setMessage(ChoiceMessageDtoTest.choiceMessageDto)
+          .setBody(ChoiceMessageDtoTest.choiceMessageDto)
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
           .setChannelSpecificMessage(createChannelSpecificMessage())
@@ -66,7 +66,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
           .build();
   public static AppMessage<ContactInfoMessage> appContactInfoMessageDto =
       AppMessage.<ContactInfoMessage>builder()
-          .setMessage(ContactInfoMessageDtoTest.contactInfoMessageDto)
+          .setBody(ContactInfoMessageDtoTest.contactInfoMessageDto)
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
           .setChannelSpecificMessage(createChannelSpecificMessage())
@@ -75,7 +75,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
 
   public static AppMessage<ListMessage> appListMessageDto =
       AppMessage.<ListMessage>builder()
-          .setMessage(ListMessageDtoTest.listMessageChoiceDto)
+          .setBody(ListMessageDtoTest.listMessageChoiceDto)
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
           .setChannelSpecificMessage(createChannelSpecificMessage())
@@ -84,7 +84,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
 
   public static AppMessage<LocationMessage> appLocationMessageDto =
       AppMessage.<LocationMessage>builder()
-          .setMessage(LocationMessageDtoTest.locationMessageDto)
+          .setBody(LocationMessageDtoTest.locationMessageDto)
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
           .setChannelSpecificMessage(createChannelSpecificMessage())
@@ -92,7 +92,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
           .build();
   public static AppMessage<MediaMessage> appMediaMessageDto =
       AppMessage.<MediaMessage>builder()
-          .setMessage(MediaMessageDtoTest.mediaMessageDto)
+          .setBody(MediaMessageDtoTest.mediaMessageDto)
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
           .setChannelSpecificMessage(createChannelSpecificMessage())
@@ -101,7 +101,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
 
   public static AppMessage<TemplateMessage> appTemplateMessageDto =
       AppMessage.<TemplateMessage>builder()
-          .setMessage(TemplateMessageDtoTest.templateMessageDto)
+          .setBody(TemplateMessageDtoTest.templateMessageDto)
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
           .setChannelSpecificMessage(createChannelSpecificMessage())
@@ -109,7 +109,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
           .build();
   public static AppMessage<TextMessage> appTextMessageDto =
       AppMessage.<TextMessage>builder()
-          .setMessage(TextMessageDtoTest.textMessageDto)
+          .setBody(TextMessageDtoTest.textMessageDto)
           .setExplicitChannelMessage(createExplicitChannelMessage())
           .setExplicitChannelOmniMessage(createExplicitChannelOmniMessage())
           .setChannelSpecificMessage(createChannelSpecificMessage())

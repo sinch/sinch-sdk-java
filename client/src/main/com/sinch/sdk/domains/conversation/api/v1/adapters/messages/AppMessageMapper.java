@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.sinch.sdk.core.utils.databind.Mapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage.Builder;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.AppMessageInternal;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.AppMessageInternalImpl;
@@ -29,6 +31,7 @@ public class AppMessageMapper {
   private static final Logger LOGGER = Logger.getLogger(AppMessageMapper.class.getName());
 
   public static void initMapper() {
+
     SimpleModule module =
         new SimpleModule()
             .addSerializer(AppMessage.class, new Serializer())
@@ -36,7 +39,7 @@ public class AppMessageMapper {
     Mapper.getInstance().registerModule(module);
   }
 
-  static class Deserializer extends StdDeserializer<AppMessage<?>> {
+  static class Deserializer extends StdDeserializer<AppMessage> {
 
     public Deserializer() {
       this(null);
@@ -53,20 +56,20 @@ public class AppMessageMapper {
       AppMessageInternalImpl deserialized =
           (AppMessageInternalImpl) jp.readValueAs(AppMessageInternal.class);
 
-      AppMessage.Builder internal = AppMessage.builder();
+      Builder<AppMessageBody> internal = AppMessage.builder();
       deserialized.explicitChannelMessage().ifPresent(internal::setExplicitChannelMessage);
       deserialized.explicitChannelOmniMessage().ifPresent(internal::setExplicitChannelOmniMessage);
       deserialized.channelSpecificMessage().ifPresent(internal::setChannelSpecificMessage);
       deserialized.agent().ifPresent(internal::setAgent);
-      deserialized.cardMessage().ifPresent(internal::setMessage);
-      deserialized.carouselMessage().ifPresent(internal::setMessage);
-      deserialized.choiceMessage().ifPresent(internal::setMessage);
-      deserialized.contactInfoMessage().ifPresent(internal::setMessage);
-      deserialized.listMessage().ifPresent(internal::setMessage);
-      deserialized.locationMessage().ifPresent(internal::setMessage);
-      deserialized.mediaMessage().ifPresent(internal::setMessage);
-      deserialized.templateMessage().ifPresent(internal::setMessage);
-      deserialized.textMessage().ifPresent(internal::setMessage);
+      deserialized.cardMessage().ifPresent(internal::setBody);
+      deserialized.carouselMessage().ifPresent(internal::setBody);
+      deserialized.choiceMessage().ifPresent(internal::setBody);
+      deserialized.contactInfoMessage().ifPresent(internal::setBody);
+      deserialized.listMessage().ifPresent(internal::setBody);
+      deserialized.locationMessage().ifPresent(internal::setBody);
+      deserialized.mediaMessage().ifPresent(internal::setBody);
+      deserialized.templateMessage().ifPresent(internal::setBody);
+      deserialized.textMessage().ifPresent(internal::setBody);
       return internal.build();
     }
   }
@@ -93,7 +96,7 @@ public class AppMessageMapper {
       value.channelSpecificMessage().ifPresent(internal::setChannelSpecificMessage);
       value.agent().ifPresent(internal::setAgent);
       value
-          .message()
+          .body()
           .ifPresent(
               message -> {
                 if (message instanceof CardMessage) {

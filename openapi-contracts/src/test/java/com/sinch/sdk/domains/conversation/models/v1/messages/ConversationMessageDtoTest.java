@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.response;
+package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
@@ -7,9 +7,6 @@ import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentityDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationDirection;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
-import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageDtoTest;
-import com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessageDtoTest;
-import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
 import java.time.Instant;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;

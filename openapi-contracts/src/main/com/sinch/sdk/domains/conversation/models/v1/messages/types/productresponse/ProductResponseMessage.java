@@ -19,7 +19,7 @@ import java.util.List;
 /** Represents an interactive WhatsApp message containing ProductItem objects */
 @JsonDeserialize(builder = ProductResponseMessageImpl.Builder.class)
 public interface ProductResponseMessage
-    extends com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage {
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessageBody {
 
   /**
    * The selected products.

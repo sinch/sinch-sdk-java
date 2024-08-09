@@ -26,7 +26,7 @@ public class LocationMessageImpl
     implements LocationMessage,
         com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
         com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody,
-        com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage,
+        com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessageBody,
         com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceMessageType {
   private static final long serialVersionUID = 1L;
 
