@@ -135,6 +135,22 @@ class URLParameterUtilsTest {
   }
 
   @Test
+  void encodeDynamicEnumStringNoExplode() {
+    assertEquals(
+        Optional.of("foo=ENUM1+value"),
+        URLParameterUtils.encode(
+            new URLParameter("foo", AnEnum.ENUM1, URLParameter.STYLE.FORM, false)));
+  }
+
+  @Test
+  void encodeDynamicEnumStringExplode() {
+    assertEquals(
+        Optional.of("foo=ENUM1+value"),
+        URLParameterUtils.encode(
+            new URLParameter("foo", AnEnum.ENUM1, URLParameter.STYLE.FORM, true)));
+  }
+
+  @Test
   void encodeSimpleEmptyStringNoExplode() {
     assertThrows(
         ApiException.class,
