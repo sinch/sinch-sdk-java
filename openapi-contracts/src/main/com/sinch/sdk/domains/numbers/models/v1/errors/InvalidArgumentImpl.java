@@ -5,12 +5,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.numbers.models.v1.errors.internal.InvalidArgumentError;
 import com.sinch.sdk.domains.numbers.models.v1.errors.internal.InvalidArgumentErrorImpl;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({InvalidArgumentImpl.JSON_PROPERTY_ERROR})
 @JsonFilter("uninitializedFilter")
@@ -48,7 +56,7 @@ public class InvalidArgumentImpl implements InvalidArgument {
   }
 
   public OptionalValue<CodeEnum> code() {
-    return null != error
+    return null != error && error.isPresent()
         ? error.map(f -> CodeEnum.from(error.get().getCode().value()))
         : OptionalValue.empty();
   }
@@ -62,7 +70,9 @@ public class InvalidArgumentImpl implements InvalidArgument {
   }
 
   public OptionalValue<String> message() {
-    return null != error ? error.map(InvalidArgumentError::getMessage) : OptionalValue.empty();
+    return null != error && error.isPresent()
+        ? error.map(f -> ((InvalidArgumentErrorImpl) f).message()).orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
@@ -74,7 +84,7 @@ public class InvalidArgumentImpl implements InvalidArgument {
   }
 
   public OptionalValue<StatusEnum> status() {
-    return null != error
+    return null != error && error.isPresent()
         ? error.map(f -> StatusEnum.from(error.get().getStatus().value()))
         : OptionalValue.empty();
   }
@@ -88,7 +98,9 @@ public class InvalidArgumentImpl implements InvalidArgument {
   }
 
   public OptionalValue<List<BadRequest>> details() {
-    return null != error ? error.map(InvalidArgumentError::getDetails) : OptionalValue.empty();
+    return null != error && error.isPresent()
+        ? error.map(f -> ((InvalidArgumentErrorImpl) f).details()).orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
   /** Return true if this InvalidArgument object is equal to o. */
@@ -181,5 +193,38 @@ public class InvalidArgumentImpl implements InvalidArgument {
       }
       return new InvalidArgumentImpl(error);
     }
+  }
+
+  public static class DelegatedSerializer extends JsonSerializer<OptionalValue<InvalidArgument>> {
+    @Override
+    public void serialize(
+        OptionalValue<InvalidArgument> value, JsonGenerator jgen, SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      InvalidArgumentImpl impl = (InvalidArgumentImpl) value.get();
+      jgen.writeObject(null != impl ? impl.getError() : null);
+    }
+  }
+
+  public static class DelegatedDeSerializer extends JsonDeserializer<InvalidArgument> {
+    @Override
+    public InvalidArgument deserialize(JsonParser jp, DeserializationContext ctxt)
+        throws IOException {
+
+      InvalidArgumentImpl.Builder builder = new InvalidArgumentImpl.Builder();
+      InvalidArgumentErrorImpl deserialized = jp.readValueAs(InvalidArgumentErrorImpl.class);
+      builder.setError(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<InvalidArgument> delegatedConverter(InvalidArgumentError internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setError(internal).build());
   }
 }
