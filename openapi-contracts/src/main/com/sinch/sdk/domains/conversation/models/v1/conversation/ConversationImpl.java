@@ -16,11 +16,11 @@ import java.util.Objects;
   ConversationImpl.JSON_PROPERTY_ACTIVE_CHANNEL,
   ConversationImpl.JSON_PROPERTY_APP_ID,
   ConversationImpl.JSON_PROPERTY_CONTACT_ID,
-  ConversationImpl.JSON_PROPERTY_ID,
-  ConversationImpl.JSON_PROPERTY_LAST_RECEIVED,
   ConversationImpl.JSON_PROPERTY_METADATA,
   ConversationImpl.JSON_PROPERTY_METADATA_JSON,
-  ConversationImpl.JSON_PROPERTY_CORRELATION_ID
+  ConversationImpl.JSON_PROPERTY_CORRELATION_ID,
+  ConversationImpl.JSON_PROPERTY_ID,
+  ConversationImpl.JSON_PROPERTY_LAST_RECEIVED
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
@@ -43,14 +43,6 @@ public class ConversationImpl implements Conversation {
 
   private OptionalValue<String> contactId;
 
-  public static final String JSON_PROPERTY_ID = "id";
-
-  private OptionalValue<String> id;
-
-  public static final String JSON_PROPERTY_LAST_RECEIVED = "last_received";
-
-  private OptionalValue<Instant> lastReceived;
-
   public static final String JSON_PROPERTY_METADATA = "metadata";
 
   private OptionalValue<String> metadata;
@@ -63,6 +55,14 @@ public class ConversationImpl implements Conversation {
 
   private OptionalValue<String> correlationId;
 
+  public static final String JSON_PROPERTY_ID = "id";
+
+  private OptionalValue<String> id;
+
+  public static final String JSON_PROPERTY_LAST_RECEIVED = "last_received";
+
+  private OptionalValue<Instant> lastReceived;
+
   public ConversationImpl() {}
 
   protected ConversationImpl(
@@ -70,20 +70,20 @@ public class ConversationImpl implements Conversation {
       OptionalValue<ConversationChannel> activeChannel,
       OptionalValue<String> appId,
       OptionalValue<String> contactId,
-      OptionalValue<String> id,
-      OptionalValue<Instant> lastReceived,
       OptionalValue<String> metadata,
       OptionalValue<Object> metadataJson,
-      OptionalValue<String> correlationId) {
+      OptionalValue<String> correlationId,
+      OptionalValue<String> id,
+      OptionalValue<Instant> lastReceived) {
     this.active = active;
     this.activeChannel = activeChannel;
     this.appId = appId;
     this.contactId = contactId;
-    this.id = id;
-    this.lastReceived = lastReceived;
     this.metadata = metadata;
     this.metadataJson = metadataJson;
     this.correlationId = correlationId;
+    this.id = id;
+    this.lastReceived = lastReceived;
   }
 
   @JsonIgnore
@@ -131,28 +131,6 @@ public class ConversationImpl implements Conversation {
   }
 
   @JsonIgnore
-  public String getId() {
-    return id.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> id() {
-    return id;
-  }
-
-  @JsonIgnore
-  public Instant getLastReceived() {
-    return lastReceived.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_LAST_RECEIVED)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<Instant> lastReceived() {
-    return lastReceived;
-  }
-
-  @JsonIgnore
   public String getMetadata() {
     return metadata.orElse(null);
   }
@@ -185,6 +163,28 @@ public class ConversationImpl implements Conversation {
     return correlationId;
   }
 
+  @JsonIgnore
+  public String getId() {
+    return id.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> id() {
+    return id;
+  }
+
+  @JsonIgnore
+  public Instant getLastReceived() {
+    return lastReceived.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_LAST_RECEIVED)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<Instant> lastReceived() {
+    return lastReceived;
+  }
+
   /** Return true if this Conversation object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -199,11 +199,11 @@ public class ConversationImpl implements Conversation {
         && Objects.equals(this.activeChannel, conversation.activeChannel)
         && Objects.equals(this.appId, conversation.appId)
         && Objects.equals(this.contactId, conversation.contactId)
-        && Objects.equals(this.id, conversation.id)
-        && Objects.equals(this.lastReceived, conversation.lastReceived)
         && Objects.equals(this.metadata, conversation.metadata)
         && Objects.equals(this.metadataJson, conversation.metadataJson)
-        && Objects.equals(this.correlationId, conversation.correlationId);
+        && Objects.equals(this.correlationId, conversation.correlationId)
+        && Objects.equals(this.id, conversation.id)
+        && Objects.equals(this.lastReceived, conversation.lastReceived);
   }
 
   @Override
@@ -213,11 +213,11 @@ public class ConversationImpl implements Conversation {
         activeChannel,
         appId,
         contactId,
-        id,
-        lastReceived,
         metadata,
         metadataJson,
-        correlationId);
+        correlationId,
+        id,
+        lastReceived);
   }
 
   @Override
@@ -228,11 +228,11 @@ public class ConversationImpl implements Conversation {
     sb.append("    activeChannel: ").append(toIndentedString(activeChannel)).append("\n");
     sb.append("    appId: ").append(toIndentedString(appId)).append("\n");
     sb.append("    contactId: ").append(toIndentedString(contactId)).append("\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    lastReceived: ").append(toIndentedString(lastReceived)).append("\n");
     sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
     sb.append("    metadataJson: ").append(toIndentedString(metadataJson)).append("\n");
     sb.append("    correlationId: ").append(toIndentedString(correlationId)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    lastReceived: ").append(toIndentedString(lastReceived)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -253,11 +253,11 @@ public class ConversationImpl implements Conversation {
     OptionalValue<ConversationChannel> activeChannel = OptionalValue.empty();
     OptionalValue<String> appId = OptionalValue.empty();
     OptionalValue<String> contactId = OptionalValue.empty();
-    OptionalValue<String> id = OptionalValue.empty();
-    OptionalValue<Instant> lastReceived = OptionalValue.empty();
     OptionalValue<String> metadata = OptionalValue.empty();
     OptionalValue<Object> metadataJson = OptionalValue.empty();
     OptionalValue<String> correlationId = OptionalValue.empty();
+    OptionalValue<String> id = OptionalValue.empty();
+    OptionalValue<Instant> lastReceived = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_ACTIVE)
     public Builder setActive(Boolean active) {
@@ -283,18 +283,6 @@ public class ConversationImpl implements Conversation {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_ID)
-    public Builder setId(String id) {
-      this.id = OptionalValue.of(id);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_LAST_RECEIVED)
-    public Builder setLastReceived(Instant lastReceived) {
-      this.lastReceived = OptionalValue.of(lastReceived);
-      return this;
-    }
-
     @JsonProperty(JSON_PROPERTY_METADATA)
     public Builder setMetadata(String metadata) {
       this.metadata = OptionalValue.of(metadata);
@@ -313,17 +301,29 @@ public class ConversationImpl implements Conversation {
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_ID)
+    public Builder setId(String id) {
+      this.id = OptionalValue.of(id);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_LAST_RECEIVED)
+    public Builder setLastReceived(Instant lastReceived) {
+      this.lastReceived = OptionalValue.of(lastReceived);
+      return this;
+    }
+
     public Conversation build() {
       return new ConversationImpl(
           active,
           activeChannel,
           appId,
           contactId,
-          id,
-          lastReceived,
           metadata,
           metadataJson,
-          correlationId);
+          correlationId,
+          id,
+          lastReceived);
     }
   }
 }

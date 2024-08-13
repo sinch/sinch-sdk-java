@@ -4,7 +4,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.ConversationDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.ConversationDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.internal.ConversationEventInternal;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.internal.ConversationEventInternalImpl;
 import java.time.Instant;

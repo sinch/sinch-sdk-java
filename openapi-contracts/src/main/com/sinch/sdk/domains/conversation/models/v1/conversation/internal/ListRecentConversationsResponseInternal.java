@@ -10,14 +10,15 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.conversation.response;
+package com.sinch.sdk.domains.conversation.models.v1.conversation.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationRecentMessage;
 import java.util.List;
 
-/** ListRecentConversationsResponse */
-@JsonDeserialize(builder = ListRecentConversationsResponseImpl.Builder.class)
-public interface ListRecentConversationsResponse {
+/** ListRecentConversationsResponseInternal */
+@JsonDeserialize(builder = ListRecentConversationsResponseInternalImpl.Builder.class)
+public interface ListRecentConversationsResponseInternal {
 
   /**
    * List of recent converesations
@@ -46,7 +47,7 @@ public interface ListRecentConversationsResponse {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ListRecentConversationsResponseImpl.Builder();
+    return new ListRecentConversationsResponseInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -84,6 +85,6 @@ public interface ListRecentConversationsResponse {
      *
      * @return The instance build with current builder values
      */
-    ListRecentConversationsResponse build();
+    ListRecentConversationsResponseInternal build();
   }
 }

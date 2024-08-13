@@ -16,6 +16,7 @@ public abstract class BaseApplication {
   public static final String CONFERENCE_ID_KEY = "CONFERENCE_ID";
   private static final String CALL_ID_KEY = "CALL_ID";
   private static final String VERIFICATION_ID_KEY = "VERIFICATION_ID";
+  private static final String CONVERSATION_ID_KEY = "CONVERSATION_ID";
   private static final String CONVERSATION_APP_ID_KEY = "CONVERSATION_APP_ID";
   private static final String CONVERSATION_CONTACT_ID_KEY = "CONVERSATION_CONTACT_ID";
   private static final String CONVERSATION_MESSAGE_ID_KEY = "CONVERSATION_MESSAGE_ID";
@@ -34,6 +35,7 @@ public abstract class BaseApplication {
   protected String conferenceId;
   protected String callId;
   protected String verificationId;
+  protected String conversationId;
   protected String conversationAppId;
   protected String conversationContactId;
   protected String conversationMessageId;
@@ -66,6 +68,7 @@ public abstract class BaseApplication {
     virtualPhoneNumber = getConfigValue(VIRTUAL_PHONE_NUMBER_KEY);
 
     // Conversation related settings
+    conversationId = getConfigValue(CONVERSATION_ID_KEY);
     conversationAppId = getConfigValue(CONVERSATION_APP_ID_KEY);
     conversationContactId = getConfigValue(CONVERSATION_CONTACT_ID_KEY);
     conversationMessageId = getConfigValue(CONVERSATION_MESSAGE_ID_KEY);

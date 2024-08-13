@@ -14,20 +14,20 @@ package com.sinch.sdk.domains.conversation.models.v1.events;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
-import com.sinch.sdk.domains.conversation.models.v1.ConversationDirection;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
+import com.sinch.sdk.domains.conversation.models.v1.events.internal.AppEventInternal;
 import java.time.Instant;
 
-/** An event on a particular channel. */
-@JsonDeserialize(builder = ConversationEventImpl.Builder.class)
-public interface ConversationEvent {
+/** Common properties to ConversationEvent management */
+@JsonDeserialize(builder = ConversationEventBaseImpl.Builder.class)
+public interface ConversationEventBase {
 
   /**
    * Get appEvent
    *
    * @return appEvent
    */
-  AppEvent getAppEvent();
+  AppEventInternal getAppEvent();
 
   /**
    * Optional. The ID of the event's conversation. Will not be present for apps in Dispatch Mode.
@@ -66,26 +66,12 @@ public interface ConversationEvent {
   ProcessingMode getProcessingMode();
 
   /**
-   * Get direction
-   *
-   * @return direction
-   */
-  ConversationDirection getDirection();
-
-  /**
-   * The ID of the event.
-   *
-   * @return id
-   */
-  String getId();
-
-  /**
    * Getting builder
    *
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ConversationEventImpl.Builder();
+    return new ConversationEventBaseImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -98,7 +84,7 @@ public interface ConversationEvent {
      * @return Current builder
      * @see #getAppEvent
      */
-    Builder setAppEvent(AppEvent appEvent);
+    Builder setAppEvent(AppEventInternal appEvent);
 
     /**
      * see getter
@@ -146,28 +132,10 @@ public interface ConversationEvent {
     Builder setProcessingMode(ProcessingMode processingMode);
 
     /**
-     * see getter
-     *
-     * @param direction see getter
-     * @return Current builder
-     * @see #getDirection
-     */
-    Builder setDirection(ConversationDirection direction);
-
-    /**
-     * see getter
-     *
-     * @param id see getter
-     * @return Current builder
-     * @see #getId
-     */
-    Builder setId(String id);
-
-    /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    ConversationEvent build();
+    ConversationEventBase build();
   }
 }

@@ -54,28 +54,15 @@ public interface Conversation {
   String getContactId();
 
   /**
-   * The ID of the conversation.
-   *
-   * @return id
-   */
-  String getId();
-
-  /**
-   * The timestamp of the latest message in the conversation. The timestamp will be Thursday January
-   * 01, 1970 00:00:00 UTC if the conversation contains no messages.
-   *
-   * @return lastReceived
-   */
-  Instant getLastReceived();
-
-  /**
    * Arbitrary data set by the Conversation API clients. Up to 1024 characters long. NOTE: This
    * field has been deprecated due to changes in the system architecture or functionality. It is no
    * longer actively maintained and may be removed in future versions. Please avoid relying on this
    * field in new code.
    *
    * @return metadata
+   * @deprecated
    */
+  @Deprecated
   String getMetadata();
 
   /**
@@ -92,6 +79,21 @@ public interface Conversation {
    * @return correlationId
    */
   String getCorrelationId();
+
+  /**
+   * The ID of the conversation.
+   *
+   * @return id
+   */
+  String getId();
+
+  /**
+   * The timestamp of the latest message in the conversation. The timestamp will be Thursday January
+   * 01, 1970 00:00:00 UTC if the conversation contains no messages.
+   *
+   * @return lastReceived
+   */
+  Instant getLastReceived();
 
   /**
    * Getting builder
@@ -144,28 +146,11 @@ public interface Conversation {
     /**
      * see getter
      *
-     * @param id see getter
-     * @return Current builder
-     * @see #getId
-     */
-    Builder setId(String id);
-
-    /**
-     * see getter
-     *
-     * @param lastReceived see getter
-     * @return Current builder
-     * @see #getLastReceived
-     */
-    Builder setLastReceived(Instant lastReceived);
-
-    /**
-     * see getter
-     *
      * @param metadata see getter
      * @return Current builder
      * @see #getMetadata
      */
+    @Deprecated
     Builder setMetadata(String metadata);
 
     /**
@@ -185,6 +170,24 @@ public interface Conversation {
      * @see #getCorrelationId
      */
     Builder setCorrelationId(String correlationId);
+
+    /**
+     * see getter
+     *
+     * @param id see getter
+     * @return Current builder
+     * @see #getId
+     */
+    Builder setId(String id);
+
+    /**
+     * see getter
+     *
+     * @param lastReceived see getter
+     * @return Current builder
+     * @see #getLastReceived
+     */
+    Builder setLastReceived(Instant lastReceived);
 
     /**
      * Create instance
