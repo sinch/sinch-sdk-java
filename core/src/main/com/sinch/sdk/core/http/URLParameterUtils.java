@@ -1,6 +1,7 @@
 package com.sinch.sdk.core.http;
 
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.StringUtil;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -33,6 +34,10 @@ public class URLParameterUtils {
       return Optional.empty();
     }
     Object value = parameter.getValue();
+
+    if (value instanceof EnumDynamic) {
+      value = ((EnumDynamic<?, ?>) value).value();
+    }
 
     if (value instanceof String || value instanceof Number || value instanceof Boolean) {
       return encodeString(parameter.getStyle(), parameter.getName(), value.toString());
