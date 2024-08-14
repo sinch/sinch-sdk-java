@@ -31,7 +31,7 @@ import com.sinch.sdk.domains.conversation.models.v1.conversation.internal.ListCo
 import com.sinch.sdk.domains.conversation.models.v1.conversation.internal.ListRecentConversationsResponseInternal;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.request.CreateConversationRequest;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.request.InjectConversationEventRequest;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.request.InjectMessageRequest;
+import com.sinch.sdk.domains.conversation.models.v1.conversation.request.InjectMessageRequestBase;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.response.InjectEventResponse;
 import com.sinch.sdk.domains.conversation.models.v1.request.MetadataUpdateStrategy;
 import java.util.ArrayList;
@@ -329,11 +329,11 @@ public class ConversationApi {
    * @param projectId The unique ID of the project. You can find this on the [Sinch
    *     Dashboard](https://dashboard.sinch.com/convapi/apps). (required)
    * @param conversationId The ID of the conversation. (required)
-   * @param injectMessageRequest Message to be injected. (required)
+   * @param injectMessageRequestBase Message to be injected. (required)
    * @throws ApiException if fails to make API call
    */
   public void conversationInjectMessage(
-      String projectId, String conversationId, InjectMessageRequest injectMessageRequest)
+      String projectId, String conversationId, InjectMessageRequestBase injectMessageRequestBase)
       throws ApiException {
 
     LOGGER.finest(
@@ -345,11 +345,12 @@ public class ConversationApi {
             + "conversationId: "
             + conversationId
             + ", "
-            + "injectMessageRequest: "
-            + injectMessageRequest);
+            + "injectMessageRequestBase: "
+            + injectMessageRequestBase);
 
     HttpRequest httpRequest =
-        conversationInjectMessageRequestBuilder(projectId, conversationId, injectMessageRequest);
+        conversationInjectMessageRequestBuilder(
+            projectId, conversationId, injectMessageRequestBase);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -367,7 +368,7 @@ public class ConversationApi {
   }
 
   private HttpRequest conversationInjectMessageRequestBuilder(
-      String projectId, String conversationId, InjectMessageRequest injectMessageRequest)
+      String projectId, String conversationId, InjectMessageRequestBase injectMessageRequestBase)
       throws ApiException {
     // verify the required parameter 'projectId' is set
     if (projectId == null) {
@@ -380,11 +381,11 @@ public class ConversationApi {
           400,
           "Missing the required parameter 'conversationId' when calling conversationInjectMessage");
     }
-    // verify the required parameter 'injectMessageRequest' is set
-    if (injectMessageRequest == null) {
+    // verify the required parameter 'injectMessageRequestBase' is set
+    if (injectMessageRequestBase == null) {
       throw new ApiException(
           400,
-          "Missing the required parameter 'injectMessageRequest' when calling"
+          "Missing the required parameter 'injectMessageRequestBase' when calling"
               + " conversationInjectMessage");
     }
 
@@ -405,7 +406,7 @@ public class ConversationApi {
     final Collection<String> localVarContentTypes = Arrays.asList("application/json");
 
     final Collection<String> localVarAuthNames = Arrays.asList("Basic", "oAuth2");
-    final String serializedBody = mapper.serialize(localVarContentTypes, injectMessageRequest);
+    final String serializedBody = mapper.serialize(localVarContentTypes, injectMessageRequestBase);
 
     return new HttpRequest(
         localVarPath,

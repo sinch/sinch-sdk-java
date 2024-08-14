@@ -4,6 +4,7 @@ import com.sinch.sdk.domains.conversation.models.v1.conversation.Conversation;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.request.ConversationsListRecentRequest;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.request.ConversationsListRequest;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.request.CreateConversationRequest;
+import com.sinch.sdk.domains.conversation.models.v1.conversation.request.InjectMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationsListRecentResponse;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationsListResponse;
 import com.sinch.sdk.domains.conversation.models.v1.request.MetadataUpdateStrategy;
@@ -87,7 +88,17 @@ public interface ConversationsService {
    *
    * @param request Conversation instance with fields to be updated
    * @return Update conversation
+   * @since _NEXT_VERSION_
    */
   Conversation update(
       String conversationId, MetadataUpdateStrategy updateStrategy, Conversation request);
+
+  /**
+   * This operation injects a conversation message in to a specific conversation.
+   *
+   * @param conversationId The ID of the conversation.
+   * @param request Request parameters to inject message
+   * @since _NEXT_VERSION_
+   */
+  void injectMessage(String conversationId, InjectMessageRequest request);
 }

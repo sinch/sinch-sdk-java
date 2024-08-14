@@ -20,12 +20,14 @@ import com.sinch.sdk.domains.conversation.models.v1.conversation.internal.ListRe
 import com.sinch.sdk.domains.conversation.models.v1.conversation.request.ConversationsListRecentRequest;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.request.ConversationsListRecentRequest.OrderEnum;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.request.ConversationsListRequest;
+import com.sinch.sdk.domains.conversation.models.v1.conversation.request.InjectMessageRequestBase;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationRecentMessage;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationsListRecentResponse;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationsListResponse;
 import com.sinch.sdk.domains.conversation.models.v1.conversations.ConversationDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.conversations.request.CreateConversationRequestTest;
 import com.sinch.sdk.domains.conversation.models.v1.conversations.response.ConversationRecentMessageDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.request.InjectMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.request.MetadataUpdateStrategy;
 import com.sinch.sdk.models.ConversationContext;
 import java.util.Collection;
@@ -46,6 +48,7 @@ public class ConversationsServiceTest extends ConversationBaseTest {
   @Mock Map<String, AuthManager> authManagers;
   @Captor ArgumentCaptor<String> projectIdCaptor;
   @Captor ArgumentCaptor<String> conversationIdCaptor;
+  @Captor ArgumentCaptor<InjectMessageRequestBase> injectMessageCaptor;
 
   ConversationsService service;
   String uriPartID = "foovalue";
@@ -242,5 +245,25 @@ public class ConversationsServiceTest extends ConversationBaseTest {
             ConversationDtoTest.conversation);
 
     TestHelpers.recursiveEquals(response, ConversationDtoTest.conversation);
+  }
+
+  @Test
+  void injectMessage() throws ApiException {
+
+    service.injectMessage(
+        InjectMessageDtoTest.injectContactMessage.getConversationId(),
+        InjectMessageDtoTest.injectContactMessage);
+
+    verify(api)
+        .conversationInjectMessage(
+            projectIdCaptor.capture(),
+            conversationIdCaptor.capture(),
+            injectMessageCaptor.capture());
+
+    Assertions.assertThat(projectIdCaptor.getValue()).isEqualTo(uriPartID);
+    Assertions.assertThat(conversationIdCaptor.getValue())
+        .isEqualTo(InjectMessageDtoTest.injectContactMessage.getConversationId());
+    TestHelpers.recursiveEquals(
+        injectMessageCaptor.getValue(), InjectMessageDtoTest.injectContactMessage);
   }
 }

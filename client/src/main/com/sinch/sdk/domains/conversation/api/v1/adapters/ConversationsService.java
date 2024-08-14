@@ -17,6 +17,7 @@ import com.sinch.sdk.domains.conversation.models.v1.conversation.request.Convers
 import com.sinch.sdk.domains.conversation.models.v1.conversation.request.ConversationsListRecentRequest.OrderEnum;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.request.ConversationsListRequest;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.request.CreateConversationRequest;
+import com.sinch.sdk.domains.conversation.models.v1.conversation.request.InjectMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationRecentMessage;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationsListRecentResponse;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationsListResponse;
@@ -100,6 +101,10 @@ public class ConversationsService
       String conversationId, MetadataUpdateStrategy updateStrategy, Conversation request) {
     return getApi()
         .conversationUpdateConversation(uriUUID, conversationId, request, null, updateStrategy);
+  }
+
+  public void injectMessage(String conversationId, InjectMessageRequest request) {
+    getApi().conversationInjectMessage(uriUUID, conversationId, request);
   }
 
   private ConversationsListResponse mapForPaging(

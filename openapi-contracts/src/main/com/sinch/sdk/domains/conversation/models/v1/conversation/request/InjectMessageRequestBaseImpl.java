@@ -10,36 +10,36 @@ import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationDirection;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
+import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage;
-import com.sinch.sdk.domains.conversation.models.v1.messages.internal.AppMessageInternal;
 import java.time.Instant;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  InjectMessageRequestImpl.JSON_PROPERTY_APP_MESSAGE,
-  InjectMessageRequestImpl.JSON_PROPERTY_CONTACT_MESSAGE,
-  InjectMessageRequestImpl.JSON_PROPERTY_ACCEPT_TIME,
-  InjectMessageRequestImpl.JSON_PROPERTY_CHANNEL_IDENTITY,
-  InjectMessageRequestImpl.JSON_PROPERTY_CONTACT_ID,
-  InjectMessageRequestImpl.JSON_PROPERTY_DIRECTION,
-  InjectMessageRequestImpl.JSON_PROPERTY_CONVERSATION_ID,
-  InjectMessageRequestImpl.JSON_PROPERTY_INJECTED,
-  InjectMessageRequestImpl.JSON_PROPERTY_SENDER_ID,
-  InjectMessageRequestImpl.JSON_PROPERTY_PROCESSING_MODE,
-  InjectMessageRequestImpl.JSON_PROPERTY_METADATA
+  InjectMessageRequestBaseImpl.JSON_PROPERTY_APP_MESSAGE,
+  InjectMessageRequestBaseImpl.JSON_PROPERTY_CONTACT_MESSAGE,
+  InjectMessageRequestBaseImpl.JSON_PROPERTY_ACCEPT_TIME,
+  InjectMessageRequestBaseImpl.JSON_PROPERTY_CHANNEL_IDENTITY,
+  InjectMessageRequestBaseImpl.JSON_PROPERTY_CONTACT_ID,
+  InjectMessageRequestBaseImpl.JSON_PROPERTY_DIRECTION,
+  InjectMessageRequestBaseImpl.JSON_PROPERTY_CONVERSATION_ID,
+  InjectMessageRequestBaseImpl.JSON_PROPERTY_INJECTED,
+  InjectMessageRequestBaseImpl.JSON_PROPERTY_SENDER_ID,
+  InjectMessageRequestBaseImpl.JSON_PROPERTY_PROCESSING_MODE,
+  InjectMessageRequestBaseImpl.JSON_PROPERTY_METADATA
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class InjectMessageRequestImpl implements InjectMessageRequest {
+public class InjectMessageRequestBaseImpl implements InjectMessageRequestBase {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_APP_MESSAGE = "app_message";
 
-  private OptionalValue<AppMessageInternal> appMessage;
+  private OptionalValue<AppMessage<?>> appMessage;
 
   public static final String JSON_PROPERTY_CONTACT_MESSAGE = "contact_message";
 
-  private OptionalValue<ContactMessage> contactMessage;
+  private OptionalValue<ContactMessage<?>> contactMessage;
 
   public static final String JSON_PROPERTY_ACCEPT_TIME = "accept_time";
 
@@ -77,11 +77,11 @@ public class InjectMessageRequestImpl implements InjectMessageRequest {
 
   private OptionalValue<String> metadata;
 
-  public InjectMessageRequestImpl() {}
+  public InjectMessageRequestBaseImpl() {}
 
-  protected InjectMessageRequestImpl(
-      OptionalValue<AppMessageInternal> appMessage,
-      OptionalValue<ContactMessage> contactMessage,
+  protected InjectMessageRequestBaseImpl(
+      OptionalValue<AppMessage<?>> appMessage,
+      OptionalValue<ContactMessage<?>> contactMessage,
       OptionalValue<Instant> acceptTime,
       OptionalValue<ChannelIdentity> channelIdentity,
       OptionalValue<String> contactId,
@@ -105,24 +105,24 @@ public class InjectMessageRequestImpl implements InjectMessageRequest {
   }
 
   @JsonIgnore
-  public AppMessageInternal getAppMessage() {
+  public AppMessage<?> getAppMessage() {
     return appMessage.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_APP_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<AppMessageInternal> appMessage() {
+  public OptionalValue<AppMessage<?>> appMessage() {
     return appMessage;
   }
 
   @JsonIgnore
-  public ContactMessage getContactMessage() {
+  public ContactMessage<?> getContactMessage() {
     return contactMessage.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CONTACT_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<ContactMessage> contactMessage() {
+  public OptionalValue<ContactMessage<?>> contactMessage() {
     return contactMessage;
   }
 
@@ -234,7 +234,7 @@ public class InjectMessageRequestImpl implements InjectMessageRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    InjectMessageRequestImpl injectMessageRequest = (InjectMessageRequestImpl) o;
+    InjectMessageRequestBaseImpl injectMessageRequest = (InjectMessageRequestBaseImpl) o;
     return Objects.equals(this.appMessage, injectMessageRequest.appMessage)
         && Objects.equals(this.contactMessage, injectMessageRequest.contactMessage)
         && Objects.equals(this.acceptTime, injectMessageRequest.acceptTime)
@@ -267,7 +267,7 @@ public class InjectMessageRequestImpl implements InjectMessageRequest {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class InjectMessageRequestImpl {\n");
+    sb.append("class InjectMessageRequestBaseImpl {\n");
     sb.append("    appMessage: ").append(toIndentedString(appMessage)).append("\n");
     sb.append("    contactMessage: ").append(toIndentedString(contactMessage)).append("\n");
     sb.append("    acceptTime: ").append(toIndentedString(acceptTime)).append("\n");
@@ -294,9 +294,9 @@ public class InjectMessageRequestImpl implements InjectMessageRequest {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements InjectMessageRequest.Builder {
-    OptionalValue<AppMessageInternal> appMessage = OptionalValue.empty();
-    OptionalValue<ContactMessage> contactMessage = OptionalValue.empty();
+  static class Builder<B extends Builder<B>> implements InjectMessageRequestBase.Builder<B> {
+    OptionalValue<AppMessage<?>> appMessage = OptionalValue.empty();
+    OptionalValue<ContactMessage<?>> contactMessage = OptionalValue.empty();
     OptionalValue<Instant> acceptTime = OptionalValue.empty();
     OptionalValue<ChannelIdentity> channelIdentity = OptionalValue.empty();
     OptionalValue<String> contactId = OptionalValue.empty();
@@ -308,73 +308,78 @@ public class InjectMessageRequestImpl implements InjectMessageRequest {
     OptionalValue<String> metadata = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_APP_MESSAGE)
-    public Builder setAppMessage(AppMessageInternal appMessage) {
+    public B setAppMessage(AppMessage<?> appMessage) {
       this.appMessage = OptionalValue.of(appMessage);
-      return this;
+      return self();
     }
 
     @JsonProperty(JSON_PROPERTY_CONTACT_MESSAGE)
-    public Builder setContactMessage(ContactMessage contactMessage) {
+    public B setContactMessage(ContactMessage<?> contactMessage) {
       this.contactMessage = OptionalValue.of(contactMessage);
-      return this;
+      return self();
     }
 
     @JsonProperty(JSON_PROPERTY_ACCEPT_TIME)
-    public Builder setAcceptTime(Instant acceptTime) {
+    public B setAcceptTime(Instant acceptTime) {
       this.acceptTime = OptionalValue.of(acceptTime);
-      return this;
+      return self();
     }
 
     @JsonProperty(JSON_PROPERTY_CHANNEL_IDENTITY)
-    public Builder setChannelIdentity(ChannelIdentity channelIdentity) {
+    public B setChannelIdentity(ChannelIdentity channelIdentity) {
       this.channelIdentity = OptionalValue.of(channelIdentity);
-      return this;
+      return self();
     }
 
     @JsonProperty(JSON_PROPERTY_CONTACT_ID)
-    public Builder setContactId(String contactId) {
+    public B setContactId(String contactId) {
       this.contactId = OptionalValue.of(contactId);
-      return this;
+      return self();
     }
 
     @JsonProperty(JSON_PROPERTY_DIRECTION)
-    public Builder setDirection(ConversationDirection direction) {
+    public B setDirection(ConversationDirection direction) {
       this.direction = OptionalValue.of(direction);
-      return this;
+      return self();
     }
 
     @JsonProperty(JSON_PROPERTY_CONVERSATION_ID)
-    public Builder setConversationId(String conversationId) {
+    public B setConversationId(String conversationId) {
       this.conversationId = OptionalValue.of(conversationId);
-      return this;
+      return self();
     }
 
     @JsonProperty(JSON_PROPERTY_INJECTED)
-    public Builder setInjected(Boolean injected) {
+    public B setInjected(Boolean injected) {
       this.injected = OptionalValue.of(injected);
-      return this;
+      return self();
     }
 
     @JsonProperty(JSON_PROPERTY_SENDER_ID)
-    public Builder setSenderId(String senderId) {
+    public B setSenderId(String senderId) {
       this.senderId = OptionalValue.of(senderId);
-      return this;
+      return self();
     }
 
     @JsonProperty(JSON_PROPERTY_PROCESSING_MODE)
-    public Builder setProcessingMode(ProcessingMode processingMode) {
+    public B setProcessingMode(ProcessingMode processingMode) {
       this.processingMode = OptionalValue.of(processingMode);
-      return this;
+      return self();
     }
 
     @JsonProperty(JSON_PROPERTY_METADATA)
-    public Builder setMetadata(String metadata) {
+    public B setMetadata(String metadata) {
       this.metadata = OptionalValue.of(metadata);
-      return this;
+      return self();
     }
 
-    public InjectMessageRequest build() {
-      return new InjectMessageRequestImpl(
+    @SuppressWarnings("unchecked")
+    protected B self() {
+      return (B) this;
+    }
+
+    public InjectMessageRequestBase build() {
+      return new InjectMessageRequestBaseImpl(
           appMessage,
           contactMessage,
           acceptTime,
