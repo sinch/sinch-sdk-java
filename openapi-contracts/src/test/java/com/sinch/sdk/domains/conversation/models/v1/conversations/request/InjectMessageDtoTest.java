@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.messages.request;
+package com.sinch.sdk.domains.conversation.models.v1.conversations.request;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;

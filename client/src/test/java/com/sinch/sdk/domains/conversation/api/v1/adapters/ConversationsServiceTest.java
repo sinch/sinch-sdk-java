@@ -20,14 +20,16 @@ import com.sinch.sdk.domains.conversation.models.v1.conversation.internal.ListRe
 import com.sinch.sdk.domains.conversation.models.v1.conversation.request.ConversationsListRecentRequest;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.request.ConversationsListRecentRequest.OrderEnum;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.request.ConversationsListRequest;
+import com.sinch.sdk.domains.conversation.models.v1.conversation.request.InjectEventRequest;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.request.InjectMessageRequestBase;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationRecentMessage;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationsListRecentResponse;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationsListResponse;
 import com.sinch.sdk.domains.conversation.models.v1.conversations.ConversationDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.conversations.request.CreateConversationRequestTest;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.request.InjectEventDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.request.InjectMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.conversations.response.ConversationRecentMessageDtoTest;
-import com.sinch.sdk.domains.conversation.models.v1.messages.request.InjectMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.request.MetadataUpdateStrategy;
 import com.sinch.sdk.models.ConversationContext;
 import java.util.Collection;
@@ -49,6 +51,7 @@ public class ConversationsServiceTest extends ConversationBaseTest {
   @Captor ArgumentCaptor<String> projectIdCaptor;
   @Captor ArgumentCaptor<String> conversationIdCaptor;
   @Captor ArgumentCaptor<InjectMessageRequestBase> injectMessageCaptor;
+  @Captor ArgumentCaptor<InjectEventRequest> injectEventCaptor;
 
   ConversationsService service;
   String uriPartID = "foovalue";
@@ -265,5 +268,21 @@ public class ConversationsServiceTest extends ConversationBaseTest {
         .isEqualTo(InjectMessageDtoTest.injectContactMessage.getConversationId());
     TestHelpers.recursiveEquals(
         injectMessageCaptor.getValue(), InjectMessageDtoTest.injectContactMessage);
+  }
+
+  @Test
+  void injectEvent() throws ApiException {
+
+    service.injectEvent(
+        InjectEventDtoTest.injectEvent.getConversationId(), InjectEventDtoTest.injectEvent);
+
+    verify(api)
+        .eventsInjectEvent(
+            projectIdCaptor.capture(), conversationIdCaptor.capture(), injectEventCaptor.capture());
+
+    Assertions.assertThat(projectIdCaptor.getValue()).isEqualTo(uriPartID);
+    Assertions.assertThat(conversationIdCaptor.getValue())
+        .isEqualTo(InjectEventDtoTest.injectEvent.getConversationId());
+    TestHelpers.recursiveEquals(injectEventCaptor.getValue(), InjectEventDtoTest.injectEvent);
   }
 }
