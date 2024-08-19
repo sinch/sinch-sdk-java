@@ -18,7 +18,9 @@ import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -172,6 +174,35 @@ class HttpClientTestIT extends BaseTest {
     assertEquals("/foo/foo-path", recordedRequest.getPath());
     header = recordedRequest.getHeader("Authorization");
     assertEquals(header, "Bearer another token");
+  }
+
+  @Test
+  void httpRequestBody() throws InterruptedException {
+
+    String sdkBody = "my body with Unicode characters: ✉";
+
+    mockBackEnd.enqueue(
+        new MockResponse().setBody("foo").addHeader("Content-Type", "application/json"));
+
+    try {
+      httpClient.invokeAPI(
+          new ServerConfiguration(String.format("%s/foo/", serverUrl)),
+          null,
+          new HttpRequest(
+              "foo-path",
+              HttpMethod.POST,
+              null,
+              sdkBody,
+              null,
+              null,
+              Arrays.asList("application/json; charset=utf-8"),
+              null));
+    } catch (ApiException ae) {
+      // noop
+    }
+    RecordedRequest recordedRequest = mockBackEnd.takeRequest();
+    String payloadBody = recordedRequest.getBody().readString(StandardCharsets.UTF_8);
+    assertEquals(payloadBody, sdkBody);
   }
 
   @Test
