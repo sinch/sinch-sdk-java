@@ -17,10 +17,12 @@ import com.sinch.sdk.domains.conversation.models.v1.conversation.request.Convers
 import com.sinch.sdk.domains.conversation.models.v1.conversation.request.ConversationsListRecentRequest.OrderEnum;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.request.ConversationsListRequest;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.request.CreateConversationRequest;
+import com.sinch.sdk.domains.conversation.models.v1.conversation.request.InjectEventRequest;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.request.InjectMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationRecentMessage;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationsListRecentResponse;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationsListResponse;
+import com.sinch.sdk.domains.conversation.models.v1.conversation.response.InjectEventResponse;
 import com.sinch.sdk.domains.conversation.models.v1.request.MetadataUpdateStrategy;
 import com.sinch.sdk.models.ConversationContext;
 import java.util.Collection;
@@ -105,6 +107,10 @@ public class ConversationsService
 
   public void injectMessage(String conversationId, InjectMessageRequest request) {
     getApi().conversationInjectMessage(uriUUID, conversationId, request);
+  }
+
+  public InjectEventResponse injectEvent(String conversationId, InjectEventRequest request) {
+    return getApi().eventsInjectEvent(uriUUID, conversationId, request);
   }
 
   private ConversationsListResponse mapForPaging(

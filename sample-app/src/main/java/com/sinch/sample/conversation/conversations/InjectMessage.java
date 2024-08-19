@@ -61,7 +61,7 @@ public class InjectMessage extends BaseApplication {
             .setAcceptTime(Instant.now())
             .build();
 
-    LOGGER.info("Update request: " + request);
+    LOGGER.info("Inject message request: " + request);
 
     service.injectMessage(conversationId, request);
   }

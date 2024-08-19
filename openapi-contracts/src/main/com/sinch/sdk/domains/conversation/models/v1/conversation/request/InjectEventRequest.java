@@ -13,17 +13,57 @@
 package com.sinch.sdk.domains.conversation.models.v1.conversation.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
+import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
+import com.sinch.sdk.domains.conversation.models.v1.events.AppEvent;
+import java.time.Instant;
 
-/** Inject Event Request */
+/** Inject Event request */
 @JsonDeserialize(builder = InjectEventRequestImpl.Builder.class)
 public interface InjectEventRequest {
 
   /**
-   * Get event
+   * Get appEvent
    *
-   * @return event
+   * @return appEvent
    */
-  InjectConversationEventRequest getEvent();
+  AppEvent getAppEvent();
+
+  /**
+   * Optional. The ID of the event's conversation. Will not be present for apps in Dispatch Mode.
+   *
+   * @return conversationId
+   */
+  String getConversationId();
+
+  /**
+   * Optional. The ID of the contact. Will not be present for apps in Dispatch Mode.
+   *
+   * @return contactId
+   */
+  String getContactId();
+
+  /**
+   * Get channelIdentity
+   *
+   * @return channelIdentity
+   */
+  ChannelIdentity getChannelIdentity();
+
+  /**
+   * The processed time of the message in UTC timezone. Must be less than current_time and greater
+   * than (current_time - 30 days).
+   *
+   * @return acceptTime
+   */
+  Instant getAcceptTime();
+
+  /**
+   * Get processingMode
+   *
+   * @return processingMode
+   */
+  ProcessingMode getProcessingMode();
 
   /**
    * Getting builder
@@ -40,11 +80,56 @@ public interface InjectEventRequest {
     /**
      * see getter
      *
-     * @param event see getter
+     * @param appEvent see getter
      * @return Current builder
-     * @see #getEvent
+     * @see #getAppEvent
      */
-    Builder setEvent(InjectConversationEventRequest event);
+    Builder setAppEvent(AppEvent appEvent);
+
+    /**
+     * see getter
+     *
+     * @param conversationId see getter
+     * @return Current builder
+     * @see #getConversationId
+     */
+    Builder setConversationId(String conversationId);
+
+    /**
+     * see getter
+     *
+     * @param contactId see getter
+     * @return Current builder
+     * @see #getContactId
+     */
+    Builder setContactId(String contactId);
+
+    /**
+     * see getter
+     *
+     * @param channelIdentity see getter
+     * @return Current builder
+     * @see #getChannelIdentity
+     */
+    Builder setChannelIdentity(ChannelIdentity channelIdentity);
+
+    /**
+     * see getter
+     *
+     * @param acceptTime see getter
+     * @return Current builder
+     * @see #getAcceptTime
+     */
+    Builder setAcceptTime(Instant acceptTime);
+
+    /**
+     * see getter
+     *
+     * @param processingMode see getter
+     * @return Current builder
+     * @see #getProcessingMode
+     */
+    Builder setProcessingMode(ProcessingMode processingMode);
 
     /**
      * Create instance
