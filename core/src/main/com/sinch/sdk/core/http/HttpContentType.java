@@ -12,7 +12,7 @@ public class HttpContentType {
   public static final String APPLICATION_JSON = "application/json";
   public static final String TEXT_PLAIN = "text/plain";
 
-  static Pattern charsetPattern = Pattern.compile("(.*;$)?\\s*?charset=(.*)");
+  static Pattern charsetPattern = Pattern.compile("(.*;$)?\\s*?charset=\\s*([^;\\s]+)");
 
   public static boolean isMimeJson(Collection<String> mimes) {
     String jsonMime = "(?i)^(" + APPLICATION_JSON + "|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$";
@@ -33,10 +33,6 @@ public class HttpContentType {
     if (!m.find()) {
       return Optional.empty();
     }
-    String group = m.group(2);
-    if (group.contains(";")) {
-      return Optional.of(group.substring(0, group.indexOf(";")));
-    }
-    return Optional.of(group);
+    return Optional.of(m.group(2));
   }
 }
