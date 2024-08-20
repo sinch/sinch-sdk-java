@@ -50,6 +50,14 @@ public interface ConversationService {
   EventsService events();
 
   /**
+   * Transcoding Service instance
+   *
+   * @return service instance for project
+   * @since _NEXT_VERSION_
+   */
+  TranscodingService transcoding();
+
+  /**
    * WebHooksService Service instance
    *
    * @return service instance for project
