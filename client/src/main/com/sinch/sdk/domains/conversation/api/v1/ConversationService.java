@@ -58,6 +58,14 @@ public interface ConversationService {
   TranscodingService transcoding();
 
   /**
+   * Capability Service instance
+   *
+   * @return service instance for project
+   * @since _NEXT_VERSION_
+   */
+  CapabilityService capability();
+
+  /**
    * WebHooksService Service instance
    *
    * @return service instance for project

@@ -1,9 +1,13 @@
 package com.sinch.sdk.domains.conversation.models.v1;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+@JsonDeserialize(builder = ChannelRecipientIdentities.Builder.class)
 public class ChannelRecipientIdentities extends ArrayList<ChannelRecipientIdentity>
     implements com.sinch.sdk.domains.conversation.models.v1.Recipient {
 
@@ -23,10 +27,12 @@ public class ChannelRecipientIdentities extends ArrayList<ChannelRecipientIdenti
     return new Builder();
   }
 
+  @JsonPOJOBuilder(withPrefix = "set")
   public static class Builder {
 
     Collection<ChannelRecipientIdentity> identities;
 
+    @JsonProperty("channel_identities")
     public Builder setRecipientIdentities(Collection<ChannelRecipientIdentity> identities) {
       this.identities = identities;
       return this;

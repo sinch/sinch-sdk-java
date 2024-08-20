@@ -78,7 +78,7 @@ public class ContactIdImpl
   static class Builder implements ContactId.Builder {
     OptionalValue<String> contactId = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_CONTACT_ID)
+    @JsonProperty(value = JSON_PROPERTY_CONTACT_ID, required = true)
     public Builder setContactId(String contactId) {
       this.contactId = OptionalValue.of(contactId);
       return this;
