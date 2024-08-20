@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.Recipient;
-import com.sinch.sdk.domains.conversation.models.v1.events.internal.AppEventFieldInternal;
+import com.sinch.sdk.domains.conversation.models.v1.events.AppEvent;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessageQueue;
 import java.util.List;
 import java.util.Objects;
@@ -42,7 +42,7 @@ public class SendEventRequestImpl implements SendEventRequest {
 
   public static final String JSON_PROPERTY_EVENT = "event";
 
-  private OptionalValue<AppEventFieldInternal> event;
+  private OptionalValue<AppEvent> event;
 
   public static final String JSON_PROPERTY_EVENT_METADATA = "event_metadata";
 
@@ -62,7 +62,7 @@ public class SendEventRequestImpl implements SendEventRequest {
       OptionalValue<String> appId,
       OptionalValue<String> callbackUrl,
       OptionalValue<List<ConversationChannel>> channelPriorityOrder,
-      OptionalValue<AppEventFieldInternal> event,
+      OptionalValue<AppEvent> event,
       OptionalValue<String> eventMetadata,
       OptionalValue<MessageQueue> queue,
       OptionalValue<Recipient> recipient) {
@@ -109,13 +109,13 @@ public class SendEventRequestImpl implements SendEventRequest {
   }
 
   @JsonIgnore
-  public AppEventFieldInternal getEvent() {
+  public AppEvent getEvent() {
     return event.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_EVENT)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<AppEventFieldInternal> event() {
+  public OptionalValue<AppEvent> event() {
     return event;
   }
 
@@ -209,7 +209,7 @@ public class SendEventRequestImpl implements SendEventRequest {
     OptionalValue<String> appId = OptionalValue.empty();
     OptionalValue<String> callbackUrl = OptionalValue.empty();
     OptionalValue<List<ConversationChannel>> channelPriorityOrder = OptionalValue.empty();
-    OptionalValue<AppEventFieldInternal> event = OptionalValue.empty();
+    OptionalValue<AppEvent> event = OptionalValue.empty();
     OptionalValue<String> eventMetadata = OptionalValue.empty();
     OptionalValue<MessageQueue> queue = OptionalValue.empty();
     OptionalValue<Recipient> recipient = OptionalValue.empty();
@@ -233,7 +233,7 @@ public class SendEventRequestImpl implements SendEventRequest {
     }
 
     @JsonProperty(JSON_PROPERTY_EVENT)
-    public Builder setEvent(AppEventFieldInternal event) {
+    public Builder setEvent(AppEvent event) {
       this.event = OptionalValue.of(event);
       return this;
     }

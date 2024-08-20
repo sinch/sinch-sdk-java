@@ -42,6 +42,14 @@ public interface ConversationService {
   ConversationsService conversations();
 
   /**
+   * Events Service instance
+   *
+   * @return service instance for project
+   * @since _NEXT_VERSION_
+   */
+  EventsService events();
+
+  /**
    * WebHooksService Service instance
    *
    * @return service instance for project

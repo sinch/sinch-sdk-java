@@ -46,6 +46,7 @@ public class ConversationService
   private ContactService contact;
   private MessagesService messages;
   private ConversationsService conversations;
+  private EventsService events;
 
   private WebHooksService webhooks;
 
@@ -122,6 +123,13 @@ public class ConversationService
       this.conversations = new ConversationsService(uriUUID, context, httpClient, authManagers);
     }
     return this.conversations;
+  }
+
+  public EventsService events() {
+    if (null == this.events) {
+      this.events = new EventsService(uriUUID, context, httpClient, authManagers);
+    }
+    return this.events;
   }
 
   static final class LocalLazyInit {

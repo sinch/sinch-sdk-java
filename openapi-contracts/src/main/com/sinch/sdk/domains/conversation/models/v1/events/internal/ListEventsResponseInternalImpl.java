@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.events.response;
+package com.sinch.sdk.domains.conversation.models.v1.events.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,12 +12,12 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  ListEventsResponseImpl.JSON_PROPERTY_EVENTS,
-  ListEventsResponseImpl.JSON_PROPERTY_NEXT_PAGE_TOKEN
+  ListEventsResponseInternalImpl.JSON_PROPERTY_EVENTS,
+  ListEventsResponseInternalImpl.JSON_PROPERTY_NEXT_PAGE_TOKEN
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class ListEventsResponseImpl implements ListEventsResponse {
+public class ListEventsResponseInternalImpl implements ListEventsResponseInternal {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_EVENTS = "events";
@@ -28,9 +28,9 @@ public class ListEventsResponseImpl implements ListEventsResponse {
 
   private OptionalValue<String> nextPageToken;
 
-  public ListEventsResponseImpl() {}
+  public ListEventsResponseInternalImpl() {}
 
-  protected ListEventsResponseImpl(
+  protected ListEventsResponseInternalImpl(
       OptionalValue<List<ConversationEvent>> events, OptionalValue<String> nextPageToken) {
     this.events = events;
     this.nextPageToken = nextPageToken;
@@ -67,7 +67,7 @@ public class ListEventsResponseImpl implements ListEventsResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ListEventsResponseImpl listEventsResponse = (ListEventsResponseImpl) o;
+    ListEventsResponseInternalImpl listEventsResponse = (ListEventsResponseInternalImpl) o;
     return Objects.equals(this.events, listEventsResponse.events)
         && Objects.equals(this.nextPageToken, listEventsResponse.nextPageToken);
   }
@@ -80,7 +80,7 @@ public class ListEventsResponseImpl implements ListEventsResponse {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ListEventsResponseImpl {\n");
+    sb.append("class ListEventsResponseInternalImpl {\n");
     sb.append("    events: ").append(toIndentedString(events)).append("\n");
     sb.append("    nextPageToken: ").append(toIndentedString(nextPageToken)).append("\n");
     sb.append("}");
@@ -98,7 +98,7 @@ public class ListEventsResponseImpl implements ListEventsResponse {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements ListEventsResponse.Builder {
+  static class Builder implements ListEventsResponseInternal.Builder {
     OptionalValue<List<ConversationEvent>> events = OptionalValue.empty();
     OptionalValue<String> nextPageToken = OptionalValue.empty();
 
@@ -114,8 +114,8 @@ public class ListEventsResponseImpl implements ListEventsResponse {
       return this;
     }
 
-    public ListEventsResponse build() {
-      return new ListEventsResponseImpl(events, nextPageToken);
+    public ListEventsResponseInternal build() {
+      return new ListEventsResponseInternalImpl(events, nextPageToken);
     }
   }
 }

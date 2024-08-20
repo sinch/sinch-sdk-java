@@ -21,7 +21,6 @@ buildNumber.properties
 sample-app/src/main/resources/config.properties
 
 openapi-contracts/src/main/com/sinch/sdk/domains/conversation/api/v1/internal/CapabilityApi.java
-openapi-contracts/src/main/com/sinch/sdk/domains/conversation/api/v1/internal/EventsApi.java
 openapi-contracts/src/main/com/sinch/sdk/domains/conversation/api/v1/internal/TranscodingApi.java
 openapi-contracts/src/main/com/sinch/sdk/domains/conversation/api/v1/internal/WebhooksApi.java
 

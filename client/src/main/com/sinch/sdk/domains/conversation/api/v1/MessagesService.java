@@ -105,6 +105,7 @@ public interface MessagesService {
    * Conversation API. This means messages received most recently will be listed first.
    *
    * @param request Request parameters
+   * @return List of messages
    * @since _NEXT_VERSION_
    */
   MessagesListResponse list(MessagesListRequest request);

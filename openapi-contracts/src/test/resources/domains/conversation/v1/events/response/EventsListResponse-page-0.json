@@ -1,0 +1,25 @@
+{
+  "events": [
+    {
+      "direction": "TO_APP",
+      "app_event": {
+        "generic_event": {
+          "payload": {
+            "payload_key": "payload value"
+          }
+        }
+      },
+      "id": "event id",
+      "conversation_id": "conversation id",
+      "contact_id": "contact id",
+      "channel_identity": {
+        "app_id": "an app id",
+        "channel": "MESSENGER",
+        "identity": "an identity"
+      },
+      "accept_time": "2020-11-17T16:07:15Z",
+      "processing_mode": "DISPATCH"
+    }
+  ],
+  "next_page_token": "ChowMUhRN1c0WjFSMTI2N0RCQlI4UzQ3TlZQOEoGCP70264G"
+}
