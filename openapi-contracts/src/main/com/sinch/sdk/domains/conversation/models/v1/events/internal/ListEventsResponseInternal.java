@@ -10,15 +10,15 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.events.response;
+package com.sinch.sdk.domains.conversation.models.v1.events.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.events.ConversationEvent;
 import java.util.List;
 
-/** ListEventsResponse */
-@JsonDeserialize(builder = ListEventsResponseImpl.Builder.class)
-public interface ListEventsResponse {
+/** ListEventsResponseInternal */
+@JsonDeserialize(builder = ListEventsResponseInternalImpl.Builder.class)
+public interface ListEventsResponseInternal {
 
   /**
    * List of ConversationsEvents.
@@ -40,7 +40,7 @@ public interface ListEventsResponse {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ListEventsResponseImpl.Builder();
+    return new ListEventsResponseInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -69,6 +69,6 @@ public interface ListEventsResponse {
      *
      * @return The instance build with current builder values
      */
-    ListEventsResponse build();
+    ListEventsResponseInternal build();
   }
 }

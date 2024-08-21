@@ -15,7 +15,7 @@ package com.sinch.sdk.domains.conversation.models.v1.events.request;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.Recipient;
-import com.sinch.sdk.domains.conversation.models.v1.events.internal.AppEventFieldInternal;
+import com.sinch.sdk.domains.conversation.models.v1.events.AppEvent;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessageQueue;
 import java.util.List;
 
@@ -52,7 +52,7 @@ public interface SendEventRequest {
    *
    * @return event
    */
-  AppEventFieldInternal getEvent();
+  AppEvent getEvent();
 
   /**
    * Optional. Eventual metadata that should be associated to the event.
@@ -121,7 +121,7 @@ public interface SendEventRequest {
      * @return Current builder
      * @see #getEvent
      */
-    Builder setEvent(AppEventFieldInternal event);
+    Builder setEvent(AppEvent event);
 
     /**
      * see getter

@@ -1,0 +1,22 @@
+{
+  "app_id": "an app id",
+  "event": {
+    "composing_end_event": {}
+  },
+  "recipient": {
+    "identified_by": {
+      "channel_identities": [
+        {
+          "channel": "RCS",
+          "identity": "+123456789"
+        }
+      ]
+    }
+  },
+  "callback_url": "foo URL",
+  "channel_priority_order": [
+    "RCS"
+  ],
+  "event_metadata": "event metadata value",
+  "queue": "NORMAL_PRIORITY"
+}
