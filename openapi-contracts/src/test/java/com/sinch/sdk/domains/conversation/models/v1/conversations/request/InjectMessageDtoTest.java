@@ -10,7 +10,6 @@ import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.request.InjectMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessageDtoTest;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardMessage;
 import java.time.Instant;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
@@ -20,7 +19,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 public class InjectMessageDtoTest extends ConversationBaseTest {
 
   public static InjectMessageRequest injectAppMessage =
-      InjectMessageRequest.<CardMessage>builder()
+      InjectMessageRequest.builder()
           .setBody(AppMessageDtoTest.appTextMessageDto)
           .setAcceptTime(Instant.parse("2024-08-14T14:03:20.786662Z"))
           .setChannelIdentity(ChannelIdentityDtoTest.expectedDto)
@@ -33,7 +32,7 @@ public class InjectMessageDtoTest extends ConversationBaseTest {
           .setMetadata("metdata value")
           .build();
   public static InjectMessageRequest injectContactMessage =
-      InjectMessageRequest.<CardMessage>builder()
+      InjectMessageRequest.builder()
           .setBody(ContactMessageDtoTest.textContactMessageDto)
           .setAcceptTime(Instant.parse("2024-08-14T14:03:20.786662Z"))
           .setChannelIdentity(ChannelIdentityDtoTest.expectedDto)
