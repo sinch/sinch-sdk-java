@@ -14,7 +14,7 @@ package com.sinch.sdk.domains.conversation.models.v1.conversation.response;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.Conversation;
-import com.sinch.sdk.domains.conversation.models.v1.internal.ConversationMessageInternal;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
 
 /** ConversationRecentMessage */
 @JsonDeserialize(builder = ConversationRecentMessageImpl.Builder.class)
@@ -32,7 +32,7 @@ public interface ConversationRecentMessage {
    *
    * @return lastMessage
    */
-  ConversationMessageInternal getLastMessage();
+  ConversationMessage getLastMessage();
 
   /**
    * Getting builder
@@ -62,7 +62,7 @@ public interface ConversationRecentMessage {
      * @return Current builder
      * @see #getLastMessage
      */
-    Builder setLastMessage(ConversationMessageInternal lastMessage);
+    Builder setLastMessage(ConversationMessage lastMessage);
 
     /**
      * Create instance

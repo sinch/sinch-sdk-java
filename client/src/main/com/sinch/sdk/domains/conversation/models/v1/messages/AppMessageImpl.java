@@ -74,7 +74,7 @@ public class AppMessageImpl<T extends AppMessageBody> implements AppMessage<T> {
 
   @Override
   public String toString() {
-    return "AppMessageWithExtensionsImpl{"
+    return "AppMessageImpl{"
         + "message="
         + message
         + ", explicitChannelMessage="

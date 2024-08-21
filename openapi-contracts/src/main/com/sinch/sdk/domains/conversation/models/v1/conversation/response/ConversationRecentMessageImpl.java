@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.Conversation;
-import com.sinch.sdk.domains.conversation.models.v1.internal.ConversationMessageInternal;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
 import java.util.Objects;
 
 @JsonPropertyOrder({
@@ -26,13 +26,12 @@ public class ConversationRecentMessageImpl implements ConversationRecentMessage 
 
   public static final String JSON_PROPERTY_LAST_MESSAGE = "last_message";
 
-  private OptionalValue<ConversationMessageInternal> lastMessage;
+  private OptionalValue<ConversationMessage> lastMessage;
 
   public ConversationRecentMessageImpl() {}
 
   protected ConversationRecentMessageImpl(
-      OptionalValue<Conversation> conversation,
-      OptionalValue<ConversationMessageInternal> lastMessage) {
+      OptionalValue<Conversation> conversation, OptionalValue<ConversationMessage> lastMessage) {
     this.conversation = conversation;
     this.lastMessage = lastMessage;
   }
@@ -49,13 +48,13 @@ public class ConversationRecentMessageImpl implements ConversationRecentMessage 
   }
 
   @JsonIgnore
-  public ConversationMessageInternal getLastMessage() {
+  public ConversationMessage getLastMessage() {
     return lastMessage.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_LAST_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<ConversationMessageInternal> lastMessage() {
+  public OptionalValue<ConversationMessage> lastMessage() {
     return lastMessage;
   }
 
@@ -101,7 +100,7 @@ public class ConversationRecentMessageImpl implements ConversationRecentMessage 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements ConversationRecentMessage.Builder {
     OptionalValue<Conversation> conversation = OptionalValue.empty();
-    OptionalValue<ConversationMessageInternal> lastMessage = OptionalValue.empty();
+    OptionalValue<ConversationMessage> lastMessage = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CONVERSATION)
     public Builder setConversation(Conversation conversation) {
@@ -110,7 +109,7 @@ public class ConversationRecentMessageImpl implements ConversationRecentMessage 
     }
 
     @JsonProperty(JSON_PROPERTY_LAST_MESSAGE)
-    public Builder setLastMessage(ConversationMessageInternal lastMessage) {
+    public Builder setLastMessage(ConversationMessage lastMessage) {
       this.lastMessage = OptionalValue.of(lastMessage);
       return this;
     }

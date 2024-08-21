@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.messages.request;
+package com.sinch.sdk.domains.conversation.models.v1.request;
 
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;

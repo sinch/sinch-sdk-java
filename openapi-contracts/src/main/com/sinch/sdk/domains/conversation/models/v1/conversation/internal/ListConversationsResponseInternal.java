@@ -10,15 +10,15 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.conversation.response;
+package com.sinch.sdk.domains.conversation.models.v1.conversation.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.Conversation;
 import java.util.List;
 
-/** ListConversationsResponse */
-@JsonDeserialize(builder = ListConversationsResponseImpl.Builder.class)
-public interface ListConversationsResponse {
+/** ListConversationsResponseInternal */
+@JsonDeserialize(builder = ListConversationsResponseInternalImpl.Builder.class)
+public interface ListConversationsResponseInternal {
 
   /**
    * List of conversations matching the search query.
@@ -47,7 +47,7 @@ public interface ListConversationsResponse {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ListConversationsResponseImpl.Builder();
+    return new ListConversationsResponseInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -85,6 +85,6 @@ public interface ListConversationsResponse {
      *
      * @return The instance build with current builder values
      */
-    ListConversationsResponse build();
+    ListConversationsResponseInternal build();
   }
 }

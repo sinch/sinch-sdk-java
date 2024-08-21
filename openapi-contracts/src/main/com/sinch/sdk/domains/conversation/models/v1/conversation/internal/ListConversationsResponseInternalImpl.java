@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.conversation.response;
+package com.sinch.sdk.domains.conversation.models.v1.conversation.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  ListConversationsResponseImpl.JSON_PROPERTY_CONVERSATIONS,
-  ListConversationsResponseImpl.JSON_PROPERTY_NEXT_PAGE_TOKEN,
-  ListConversationsResponseImpl.JSON_PROPERTY_TOTAL_SIZE
+  ListConversationsResponseInternalImpl.JSON_PROPERTY_CONVERSATIONS,
+  ListConversationsResponseInternalImpl.JSON_PROPERTY_NEXT_PAGE_TOKEN,
+  ListConversationsResponseInternalImpl.JSON_PROPERTY_TOTAL_SIZE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class ListConversationsResponseImpl implements ListConversationsResponse {
+public class ListConversationsResponseInternalImpl implements ListConversationsResponseInternal {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CONVERSATIONS = "conversations";
@@ -33,9 +33,9 @@ public class ListConversationsResponseImpl implements ListConversationsResponse 
 
   private OptionalValue<Integer> totalSize;
 
-  public ListConversationsResponseImpl() {}
+  public ListConversationsResponseInternalImpl() {}
 
-  protected ListConversationsResponseImpl(
+  protected ListConversationsResponseInternalImpl(
       OptionalValue<List<Conversation>> conversations,
       OptionalValue<String> nextPageToken,
       OptionalValue<Integer> totalSize) {
@@ -86,7 +86,8 @@ public class ListConversationsResponseImpl implements ListConversationsResponse 
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ListConversationsResponseImpl listConversationsResponse = (ListConversationsResponseImpl) o;
+    ListConversationsResponseInternalImpl listConversationsResponse =
+        (ListConversationsResponseInternalImpl) o;
     return Objects.equals(this.conversations, listConversationsResponse.conversations)
         && Objects.equals(this.nextPageToken, listConversationsResponse.nextPageToken)
         && Objects.equals(this.totalSize, listConversationsResponse.totalSize);
@@ -100,7 +101,7 @@ public class ListConversationsResponseImpl implements ListConversationsResponse 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ListConversationsResponseImpl {\n");
+    sb.append("class ListConversationsResponseInternalImpl {\n");
     sb.append("    conversations: ").append(toIndentedString(conversations)).append("\n");
     sb.append("    nextPageToken: ").append(toIndentedString(nextPageToken)).append("\n");
     sb.append("    totalSize: ").append(toIndentedString(totalSize)).append("\n");
@@ -119,7 +120,7 @@ public class ListConversationsResponseImpl implements ListConversationsResponse 
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements ListConversationsResponse.Builder {
+  static class Builder implements ListConversationsResponseInternal.Builder {
     OptionalValue<List<Conversation>> conversations = OptionalValue.empty();
     OptionalValue<String> nextPageToken = OptionalValue.empty();
     OptionalValue<Integer> totalSize = OptionalValue.empty();
@@ -142,8 +143,8 @@ public class ListConversationsResponseImpl implements ListConversationsResponse 
       return this;
     }
 
-    public ListConversationsResponse build() {
-      return new ListConversationsResponseImpl(conversations, nextPageToken, totalSize);
+    public ListConversationsResponseInternal build() {
+      return new ListConversationsResponseInternalImpl(conversations, nextPageToken, totalSize);
     }
   }
 }

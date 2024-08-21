@@ -1,0 +1,99 @@
+{
+  "app_message": {
+    "text_message": {
+      "text": "This is a text message."
+    },
+    "explicit_channel_message": {
+      "KAKAOTALK": "foo value"
+    },
+    "explicit_channel_omni_message": {
+      "KAKAOTALK": {
+        "choice_message": {
+          "choices": [
+            {
+              "call_message": {
+                "phone_number": "phone number value",
+                "title": "title value"
+              },
+              "postback_data": "postback call_message data value"
+            },
+            {
+              "location_message": {
+                "coordinates": {
+                  "latitude": 47.62798,
+                  "longitude": -2.822915
+                },
+                "label": "label value",
+                "title": "title value"
+              },
+              "postback_data": "postback location_message data value"
+            },
+            {
+              "text_message": {
+                "text": "This is a text message."
+              },
+              "postback_data": "postback text_message data value"
+            },
+            {
+              "url_message": {
+                "title": "title value",
+                "url": "an url value"
+              },
+              "postback_data": "postback url_message data value"
+            }
+          ],
+          "text_message": {
+            "text": "This is a text message."
+          }
+        }
+      }
+    },
+    "channel_specific_message": {
+      "MESSENGER": {
+        "header": {
+          "type": "text",
+          "text": "text header value"
+        },
+        "body": {
+          "text": "Flow message body"
+        },
+        "footer": {
+          "text": "Flow message footer"
+        },
+        "flow_id": "1",
+        "flow_token": "AQAAAAACS5FpgQ_cAAAAAD0QI3s.",
+        "flow_mode": "draft",
+        "flow_cta": "Book!",
+        "flow_action": "navigate",
+        "flow_action_payload": {
+          "screen": "<SCREEN_NAME>",
+          "data": {
+            "product_price": 100,
+            "product_description": "description",
+            "product_name": "name"
+          }
+        }
+      }
+    },
+    "agent": {
+      "display_name": "display_name value",
+      "type": "BOT",
+      "picture_url": "picture_url value"
+    }
+  },
+  "contact_message": null,
+  "accept_time": "2024-08-14T14:03:20.786662Z",
+  "channel_identity": {
+    "app_id": "an app id",
+    "channel": "MESSENGER",
+    "identity": "an identity"
+  },
+  "contact_id": "contact id value",
+  "direction": "TO_CONTACT",
+  "conversation_id": "conversation id",
+  "injected": true,
+  "sender_id": "send id value",
+  "processing_mode": "CONVERSATION",
+  "metadata": "metdata value"
+}
+}

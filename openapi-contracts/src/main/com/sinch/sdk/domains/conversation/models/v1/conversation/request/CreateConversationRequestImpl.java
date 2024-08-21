@@ -15,9 +15,9 @@ import java.util.Objects;
   CreateConversationRequestImpl.JSON_PROPERTY_ACTIVE_CHANNEL,
   CreateConversationRequestImpl.JSON_PROPERTY_APP_ID,
   CreateConversationRequestImpl.JSON_PROPERTY_CONTACT_ID,
-  CreateConversationRequestImpl.JSON_PROPERTY_ID,
   CreateConversationRequestImpl.JSON_PROPERTY_METADATA,
-  CreateConversationRequestImpl.JSON_PROPERTY_METADATA_JSON
+  CreateConversationRequestImpl.JSON_PROPERTY_METADATA_JSON,
+  CreateConversationRequestImpl.JSON_PROPERTY_CORRELATION_ID
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
@@ -40,10 +40,6 @@ public class CreateConversationRequestImpl implements CreateConversationRequest 
 
   private OptionalValue<String> contactId;
 
-  public static final String JSON_PROPERTY_ID = "id";
-
-  private OptionalValue<String> id;
-
   public static final String JSON_PROPERTY_METADATA = "metadata";
 
   private OptionalValue<String> metadata;
@@ -52,6 +48,10 @@ public class CreateConversationRequestImpl implements CreateConversationRequest 
 
   private OptionalValue<Object> metadataJson;
 
+  public static final String JSON_PROPERTY_CORRELATION_ID = "correlation_id";
+
+  private OptionalValue<String> correlationId;
+
   public CreateConversationRequestImpl() {}
 
   protected CreateConversationRequestImpl(
@@ -59,16 +59,16 @@ public class CreateConversationRequestImpl implements CreateConversationRequest 
       OptionalValue<ConversationChannel> activeChannel,
       OptionalValue<String> appId,
       OptionalValue<String> contactId,
-      OptionalValue<String> id,
       OptionalValue<String> metadata,
-      OptionalValue<Object> metadataJson) {
+      OptionalValue<Object> metadataJson,
+      OptionalValue<String> correlationId) {
     this.active = active;
     this.activeChannel = activeChannel;
     this.appId = appId;
     this.contactId = contactId;
-    this.id = id;
     this.metadata = metadata;
     this.metadataJson = metadataJson;
+    this.correlationId = correlationId;
   }
 
   @JsonIgnore
@@ -116,17 +116,6 @@ public class CreateConversationRequestImpl implements CreateConversationRequest 
   }
 
   @JsonIgnore
-  public String getId() {
-    return id.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> id() {
-    return id;
-  }
-
-  @JsonIgnore
   public String getMetadata() {
     return metadata.orElse(null);
   }
@@ -148,6 +137,17 @@ public class CreateConversationRequestImpl implements CreateConversationRequest 
     return metadataJson;
   }
 
+  @JsonIgnore
+  public String getCorrelationId() {
+    return correlationId.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CORRELATION_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> correlationId() {
+    return correlationId;
+  }
+
   /** Return true if this CreateConversationRequest object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -162,14 +162,15 @@ public class CreateConversationRequestImpl implements CreateConversationRequest 
         && Objects.equals(this.activeChannel, createConversationRequest.activeChannel)
         && Objects.equals(this.appId, createConversationRequest.appId)
         && Objects.equals(this.contactId, createConversationRequest.contactId)
-        && Objects.equals(this.id, createConversationRequest.id)
         && Objects.equals(this.metadata, createConversationRequest.metadata)
-        && Objects.equals(this.metadataJson, createConversationRequest.metadataJson);
+        && Objects.equals(this.metadataJson, createConversationRequest.metadataJson)
+        && Objects.equals(this.correlationId, createConversationRequest.correlationId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(active, activeChannel, appId, contactId, id, metadata, metadataJson);
+    return Objects.hash(
+        active, activeChannel, appId, contactId, metadata, metadataJson, correlationId);
   }
 
   @Override
@@ -180,9 +181,9 @@ public class CreateConversationRequestImpl implements CreateConversationRequest 
     sb.append("    activeChannel: ").append(toIndentedString(activeChannel)).append("\n");
     sb.append("    appId: ").append(toIndentedString(appId)).append("\n");
     sb.append("    contactId: ").append(toIndentedString(contactId)).append("\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
     sb.append("    metadataJson: ").append(toIndentedString(metadataJson)).append("\n");
+    sb.append("    correlationId: ").append(toIndentedString(correlationId)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -203,9 +204,9 @@ public class CreateConversationRequestImpl implements CreateConversationRequest 
     OptionalValue<ConversationChannel> activeChannel = OptionalValue.empty();
     OptionalValue<String> appId = OptionalValue.empty();
     OptionalValue<String> contactId = OptionalValue.empty();
-    OptionalValue<String> id = OptionalValue.empty();
     OptionalValue<String> metadata = OptionalValue.empty();
     OptionalValue<Object> metadataJson = OptionalValue.empty();
+    OptionalValue<String> correlationId = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_ACTIVE)
     public Builder setActive(Boolean active) {
@@ -231,12 +232,6 @@ public class CreateConversationRequestImpl implements CreateConversationRequest 
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_ID)
-    public Builder setId(String id) {
-      this.id = OptionalValue.of(id);
-      return this;
-    }
-
     @JsonProperty(JSON_PROPERTY_METADATA)
     public Builder setMetadata(String metadata) {
       this.metadata = OptionalValue.of(metadata);
@@ -249,9 +244,15 @@ public class CreateConversationRequestImpl implements CreateConversationRequest 
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_CORRELATION_ID)
+    public Builder setCorrelationId(String correlationId) {
+      this.correlationId = OptionalValue.of(correlationId);
+      return this;
+    }
+
     public CreateConversationRequest build() {
       return new CreateConversationRequestImpl(
-          active, activeChannel, appId, contactId, id, metadata, metadataJson);
+          active, activeChannel, appId, contactId, metadata, metadataJson, correlationId);
     }
   }
 }

@@ -48,17 +48,15 @@ public interface CreateConversationRequest {
   String getContactId();
 
   /**
-   * The ID of the conversation.
-   *
-   * @return id
-   */
-  String getId();
-
-  /**
-   * Arbitrary data set by the Conversation API clients. Up to 1024 characters long.
+   * Arbitrary data set by the Conversation API clients. Up to 1024 characters long. NOTE: This
+   * field has been deprecated due to changes in the system architecture or functionality. It is no
+   * longer actively maintained and may be removed in future versions. Please avoid relying on this
+   * field in new code.
    *
    * @return metadata
+   * @deprecated
    */
+  @Deprecated
   String getMetadata();
 
   /**
@@ -68,6 +66,13 @@ public interface CreateConversationRequest {
    * @return metadataJson
    */
   Object getMetadataJson();
+
+  /**
+   * Arbitrary correlation ID related to the MT message set by the Conversation API user.
+   *
+   * @return correlationId
+   */
+  String getCorrelationId();
 
   /**
    * Getting builder
@@ -120,19 +125,11 @@ public interface CreateConversationRequest {
     /**
      * see getter
      *
-     * @param id see getter
-     * @return Current builder
-     * @see #getId
-     */
-    Builder setId(String id);
-
-    /**
-     * see getter
-     *
      * @param metadata see getter
      * @return Current builder
      * @see #getMetadata
      */
+    @Deprecated
     Builder setMetadata(String metadata);
 
     /**
@@ -143,6 +140,15 @@ public interface CreateConversationRequest {
      * @see #getMetadataJson
      */
     Builder setMetadataJson(Object metadataJson);
+
+    /**
+     * see getter
+     *
+     * @param correlationId see getter
+     * @return Current builder
+     * @see #getCorrelationId
+     */
+    Builder setCorrelationId(String correlationId);
 
     /**
      * Create instance

@@ -15,13 +15,13 @@ import java.util.Objects;
 
 @JsonPropertyOrder({
   ConversationEventImpl.JSON_PROPERTY_APP_EVENT,
-  ConversationEventImpl.JSON_PROPERTY_DIRECTION,
-  ConversationEventImpl.JSON_PROPERTY_ID,
   ConversationEventImpl.JSON_PROPERTY_CONVERSATION_ID,
   ConversationEventImpl.JSON_PROPERTY_CONTACT_ID,
   ConversationEventImpl.JSON_PROPERTY_CHANNEL_IDENTITY,
   ConversationEventImpl.JSON_PROPERTY_ACCEPT_TIME,
-  ConversationEventImpl.JSON_PROPERTY_PROCESSING_MODE
+  ConversationEventImpl.JSON_PROPERTY_PROCESSING_MODE,
+  ConversationEventImpl.JSON_PROPERTY_DIRECTION,
+  ConversationEventImpl.JSON_PROPERTY_ID
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
@@ -31,14 +31,6 @@ public class ConversationEventImpl implements ConversationEvent {
   public static final String JSON_PROPERTY_APP_EVENT = "app_event";
 
   private OptionalValue<AppEvent> appEvent;
-
-  public static final String JSON_PROPERTY_DIRECTION = "direction";
-
-  private OptionalValue<ConversationDirection> direction;
-
-  public static final String JSON_PROPERTY_ID = "id";
-
-  private OptionalValue<String> id;
 
   public static final String JSON_PROPERTY_CONVERSATION_ID = "conversation_id";
 
@@ -60,25 +52,33 @@ public class ConversationEventImpl implements ConversationEvent {
 
   private OptionalValue<ProcessingMode> processingMode;
 
+  public static final String JSON_PROPERTY_DIRECTION = "direction";
+
+  private OptionalValue<ConversationDirection> direction;
+
+  public static final String JSON_PROPERTY_ID = "id";
+
+  private OptionalValue<String> id;
+
   public ConversationEventImpl() {}
 
   protected ConversationEventImpl(
       OptionalValue<AppEvent> appEvent,
-      OptionalValue<ConversationDirection> direction,
-      OptionalValue<String> id,
       OptionalValue<String> conversationId,
       OptionalValue<String> contactId,
       OptionalValue<ChannelIdentity> channelIdentity,
       OptionalValue<Instant> acceptTime,
-      OptionalValue<ProcessingMode> processingMode) {
+      OptionalValue<ProcessingMode> processingMode,
+      OptionalValue<ConversationDirection> direction,
+      OptionalValue<String> id) {
     this.appEvent = appEvent;
-    this.direction = direction;
-    this.id = id;
     this.conversationId = conversationId;
     this.contactId = contactId;
     this.channelIdentity = channelIdentity;
     this.acceptTime = acceptTime;
     this.processingMode = processingMode;
+    this.direction = direction;
+    this.id = id;
   }
 
   @JsonIgnore
@@ -90,28 +90,6 @@ public class ConversationEventImpl implements ConversationEvent {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<AppEvent> appEvent() {
     return appEvent;
-  }
-
-  @JsonIgnore
-  public ConversationDirection getDirection() {
-    return direction.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_DIRECTION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<ConversationDirection> direction() {
-    return direction;
-  }
-
-  @JsonIgnore
-  public String getId() {
-    return id.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_ID)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<String> id() {
-    return id;
   }
 
   @JsonIgnore
@@ -169,6 +147,28 @@ public class ConversationEventImpl implements ConversationEvent {
     return processingMode;
   }
 
+  @JsonIgnore
+  public ConversationDirection getDirection() {
+    return direction.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_DIRECTION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<ConversationDirection> direction() {
+    return direction;
+  }
+
+  @JsonIgnore
+  public String getId() {
+    return id.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_ID)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<String> id() {
+    return id;
+  }
+
   /** Return true if this ConversationEvent object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -180,26 +180,26 @@ public class ConversationEventImpl implements ConversationEvent {
     }
     ConversationEventImpl conversationEvent = (ConversationEventImpl) o;
     return Objects.equals(this.appEvent, conversationEvent.appEvent)
-        && Objects.equals(this.direction, conversationEvent.direction)
-        && Objects.equals(this.id, conversationEvent.id)
         && Objects.equals(this.conversationId, conversationEvent.conversationId)
         && Objects.equals(this.contactId, conversationEvent.contactId)
         && Objects.equals(this.channelIdentity, conversationEvent.channelIdentity)
         && Objects.equals(this.acceptTime, conversationEvent.acceptTime)
-        && Objects.equals(this.processingMode, conversationEvent.processingMode);
+        && Objects.equals(this.processingMode, conversationEvent.processingMode)
+        && Objects.equals(this.direction, conversationEvent.direction)
+        && Objects.equals(this.id, conversationEvent.id);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(
         appEvent,
-        direction,
-        id,
         conversationId,
         contactId,
         channelIdentity,
         acceptTime,
-        processingMode);
+        processingMode,
+        direction,
+        id);
   }
 
   @Override
@@ -207,13 +207,13 @@ public class ConversationEventImpl implements ConversationEvent {
     StringBuilder sb = new StringBuilder();
     sb.append("class ConversationEventImpl {\n");
     sb.append("    appEvent: ").append(toIndentedString(appEvent)).append("\n");
-    sb.append("    direction: ").append(toIndentedString(direction)).append("\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    conversationId: ").append(toIndentedString(conversationId)).append("\n");
     sb.append("    contactId: ").append(toIndentedString(contactId)).append("\n");
     sb.append("    channelIdentity: ").append(toIndentedString(channelIdentity)).append("\n");
     sb.append("    acceptTime: ").append(toIndentedString(acceptTime)).append("\n");
     sb.append("    processingMode: ").append(toIndentedString(processingMode)).append("\n");
+    sb.append("    direction: ").append(toIndentedString(direction)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -231,29 +231,17 @@ public class ConversationEventImpl implements ConversationEvent {
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements ConversationEvent.Builder {
     OptionalValue<AppEvent> appEvent = OptionalValue.empty();
-    OptionalValue<ConversationDirection> direction = OptionalValue.empty();
-    OptionalValue<String> id = OptionalValue.empty();
     OptionalValue<String> conversationId = OptionalValue.empty();
     OptionalValue<String> contactId = OptionalValue.empty();
     OptionalValue<ChannelIdentity> channelIdentity = OptionalValue.empty();
     OptionalValue<Instant> acceptTime = OptionalValue.empty();
     OptionalValue<ProcessingMode> processingMode = OptionalValue.empty();
+    OptionalValue<ConversationDirection> direction = OptionalValue.empty();
+    OptionalValue<String> id = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_APP_EVENT)
     public Builder setAppEvent(AppEvent appEvent) {
       this.appEvent = OptionalValue.of(appEvent);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_DIRECTION)
-    public Builder setDirection(ConversationDirection direction) {
-      this.direction = OptionalValue.of(direction);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_ID)
-    public Builder setId(String id) {
-      this.id = OptionalValue.of(id);
       return this;
     }
 
@@ -287,16 +275,28 @@ public class ConversationEventImpl implements ConversationEvent {
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_DIRECTION)
+    public Builder setDirection(ConversationDirection direction) {
+      this.direction = OptionalValue.of(direction);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_ID)
+    public Builder setId(String id) {
+      this.id = OptionalValue.of(id);
+      return this;
+    }
+
     public ConversationEvent build() {
       return new ConversationEventImpl(
           appEvent,
-          direction,
-          id,
           conversationId,
           contactId,
           channelIdentity,
           acceptTime,
-          processingMode);
+          processingMode,
+          direction,
+          id);
     }
   }
 }

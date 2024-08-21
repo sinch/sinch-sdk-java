@@ -30,20 +30,6 @@ public interface ConversationEvent {
   AppEvent getAppEvent();
 
   /**
-   * Get direction
-   *
-   * @return direction
-   */
-  ConversationDirection getDirection();
-
-  /**
-   * The ID of the event.
-   *
-   * @return id
-   */
-  String getId();
-
-  /**
    * Optional. The ID of the event's conversation. Will not be present for apps in Dispatch Mode.
    *
    * @return conversationId
@@ -65,7 +51,8 @@ public interface ConversationEvent {
   ChannelIdentity getChannelIdentity();
 
   /**
-   * Get acceptTime
+   * The processed time of the message in UTC timezone. Must be less than current_time and greater
+   * than (current_time - 30 days).
    *
    * @return acceptTime
    */
@@ -77,6 +64,20 @@ public interface ConversationEvent {
    * @return processingMode
    */
   ProcessingMode getProcessingMode();
+
+  /**
+   * Get direction
+   *
+   * @return direction
+   */
+  ConversationDirection getDirection();
+
+  /**
+   * The ID of the event.
+   *
+   * @return id
+   */
+  String getId();
 
   /**
    * Getting builder
@@ -98,24 +99,6 @@ public interface ConversationEvent {
      * @see #getAppEvent
      */
     Builder setAppEvent(AppEvent appEvent);
-
-    /**
-     * see getter
-     *
-     * @param direction see getter
-     * @return Current builder
-     * @see #getDirection
-     */
-    Builder setDirection(ConversationDirection direction);
-
-    /**
-     * see getter
-     *
-     * @param id see getter
-     * @return Current builder
-     * @see #getId
-     */
-    Builder setId(String id);
 
     /**
      * see getter
@@ -161,6 +144,24 @@ public interface ConversationEvent {
      * @see #getProcessingMode
      */
     Builder setProcessingMode(ProcessingMode processingMode);
+
+    /**
+     * see getter
+     *
+     * @param direction see getter
+     * @return Current builder
+     * @see #getDirection
+     */
+    Builder setDirection(ConversationDirection direction);
+
+    /**
+     * see getter
+     *
+     * @param id see getter
+     * @return Current builder
+     * @see #getId
+     */
+    Builder setId(String id);
 
     /**
      * Create instance

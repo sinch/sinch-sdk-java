@@ -16,27 +16,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationDirection;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
-import com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessage;
-import com.sinch.sdk.domains.conversation.models.v1.messages.internal.AppMessageInternal;
 import java.time.Instant;
 
 /** A message on a particular channel. */
-@JsonDeserialize(builder = InjectMessageRequestImpl.Builder.class)
-public interface InjectMessageRequest {
-
-  /**
-   * Get appMessage
-   *
-   * @return appMessage
-   */
-  AppMessageInternal getAppMessage();
-
-  /**
-   * Get contactMessage
-   *
-   * @return contactMessage
-   */
-  ContactMessage getContactMessage();
+@JsonDeserialize(builder = InjectMessageRequestBaseImpl.Builder.class)
+public interface InjectMessageRequestBase {
 
   /**
    * The processed time of the message in UTC timezone. Must be less than current_time and greater
@@ -103,35 +87,8 @@ public interface InjectMessageRequest {
    */
   String getMetadata();
 
-  /**
-   * Getting builder
-   *
-   * @return New Builder instance
-   */
-  static Builder builder() {
-    return new InjectMessageRequestImpl.Builder();
-  }
-
   /** Dedicated Builder */
-  interface Builder {
-
-    /**
-     * see getter
-     *
-     * @param appMessage see getter
-     * @return Current builder
-     * @see #getAppMessage
-     */
-    Builder setAppMessage(AppMessageInternal appMessage);
-
-    /**
-     * see getter
-     *
-     * @param contactMessage see getter
-     * @return Current builder
-     * @see #getContactMessage
-     */
-    Builder setContactMessage(ContactMessage contactMessage);
+  interface Builder<B extends Builder<B>> {
 
     /**
      * see getter
@@ -140,7 +97,7 @@ public interface InjectMessageRequest {
      * @return Current builder
      * @see #getAcceptTime
      */
-    Builder setAcceptTime(Instant acceptTime);
+    B setAcceptTime(Instant acceptTime);
 
     /**
      * see getter
@@ -149,7 +106,7 @@ public interface InjectMessageRequest {
      * @return Current builder
      * @see #getChannelIdentity
      */
-    Builder setChannelIdentity(ChannelIdentity channelIdentity);
+    B setChannelIdentity(ChannelIdentity channelIdentity);
 
     /**
      * see getter
@@ -158,7 +115,7 @@ public interface InjectMessageRequest {
      * @return Current builder
      * @see #getContactId
      */
-    Builder setContactId(String contactId);
+    B setContactId(String contactId);
 
     /**
      * see getter
@@ -167,7 +124,7 @@ public interface InjectMessageRequest {
      * @return Current builder
      * @see #getDirection
      */
-    Builder setDirection(ConversationDirection direction);
+    B setDirection(ConversationDirection direction);
 
     /**
      * see getter
@@ -176,7 +133,7 @@ public interface InjectMessageRequest {
      * @return Current builder
      * @see #getConversationId
      */
-    Builder setConversationId(String conversationId);
+    B setConversationId(String conversationId);
 
     /**
      * see getter
@@ -185,7 +142,7 @@ public interface InjectMessageRequest {
      * @return Current builder
      * @see #getInjected
      */
-    Builder setInjected(Boolean injected);
+    B setInjected(Boolean injected);
 
     /**
      * see getter
@@ -194,7 +151,7 @@ public interface InjectMessageRequest {
      * @return Current builder
      * @see #getSenderId
      */
-    Builder setSenderId(String senderId);
+    B setSenderId(String senderId);
 
     /**
      * see getter
@@ -203,7 +160,7 @@ public interface InjectMessageRequest {
      * @return Current builder
      * @see #getProcessingMode
      */
-    Builder setProcessingMode(ProcessingMode processingMode);
+    B setProcessingMode(ProcessingMode processingMode);
 
     /**
      * see getter
@@ -212,13 +169,13 @@ public interface InjectMessageRequest {
      * @return Current builder
      * @see #getMetadata
      */
-    Builder setMetadata(String metadata);
+    B setMetadata(String metadata);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    InjectMessageRequest build();
+    InjectMessageRequestBase build();
   }
 }

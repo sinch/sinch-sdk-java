@@ -1,19 +1,23 @@
-package com.sinch.sdk.domains.conversation.models.v1.conversation;
+package com.sinch.sdk.domains.conversation.models.v1.conversations;
 
-import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
+import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
+import com.sinch.sdk.domains.conversation.models.v1.conversation.Conversation;
 import java.time.Instant;
 import java.util.Collections;
+import org.json.JSONException;
 import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
 public class ConversationDtoTest extends ConversationBaseTest {
 
-  @GivenJsonResource("domains/conversation/v1/conversation/ConversationDto.json")
-  Conversation dto;
+  @GivenTextResource("domains/conversation/v1/conversations/ConversationDto.json")
+  String jsonConversation;
 
   public static Conversation conversation =
       Conversation.builder()
@@ -29,7 +33,16 @@ public class ConversationDtoTest extends ConversationBaseTest {
           .build();
 
   @Test
-  void deserialize() {
-    TestHelpers.recursiveEquals(dto, conversation);
+  void serialize() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(conversation);
+
+    JSONAssert.assertEquals(jsonConversation, serializedString, true);
+  }
+
+  @Test
+  void deserialize() throws JsonProcessingException {
+    Object deserialized = objectMapper.readValue(jsonConversation, Conversation.class);
+
+    TestHelpers.recursiveEquals(deserialized, conversation);
   }
 }

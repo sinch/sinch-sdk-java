@@ -1,0 +1,17 @@
+{
+  "app_event": {
+    "generic_event": {
+      "payload": {
+        "payload_key": "payload value"
+      }
+    }
+  },
+  "conversation_id": "a conversation Id",
+  "channel_identity": {
+    "app_id": "an app id",
+    "channel": "MESSENGER",
+    "identity": "an identity"
+  },
+  "accept_time": "2024-08-18T14:18:18.117563Z",
+  "processing_mode": "CONVERSATION"
+}

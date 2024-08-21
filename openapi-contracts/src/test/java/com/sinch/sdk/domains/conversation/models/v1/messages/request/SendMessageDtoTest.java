@@ -17,6 +17,7 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.location.Loca
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.template.TemplateMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
+import com.sinch.sdk.domains.conversation.models.v1.request.MetadataUpdateStrategy;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;

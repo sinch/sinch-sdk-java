@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.conversation.request;
+package com.sinch.sdk.domains.conversation.models.v1.events;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -9,26 +9,26 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
-import com.sinch.sdk.domains.conversation.models.v1.events.AppEvent;
+import com.sinch.sdk.domains.conversation.models.v1.events.internal.AppEventInternal;
 import java.time.Instant;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  InjectConversationEventRequestImpl.JSON_PROPERTY_APP_EVENT,
-  InjectConversationEventRequestImpl.JSON_PROPERTY_CONVERSATION_ID,
-  InjectConversationEventRequestImpl.JSON_PROPERTY_CONTACT_ID,
-  InjectConversationEventRequestImpl.JSON_PROPERTY_CHANNEL_IDENTITY,
-  InjectConversationEventRequestImpl.JSON_PROPERTY_ACCEPT_TIME,
-  InjectConversationEventRequestImpl.JSON_PROPERTY_PROCESSING_MODE
+  ConversationEventBaseImpl.JSON_PROPERTY_APP_EVENT,
+  ConversationEventBaseImpl.JSON_PROPERTY_CONVERSATION_ID,
+  ConversationEventBaseImpl.JSON_PROPERTY_CONTACT_ID,
+  ConversationEventBaseImpl.JSON_PROPERTY_CHANNEL_IDENTITY,
+  ConversationEventBaseImpl.JSON_PROPERTY_ACCEPT_TIME,
+  ConversationEventBaseImpl.JSON_PROPERTY_PROCESSING_MODE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class InjectConversationEventRequestImpl implements InjectConversationEventRequest {
+public class ConversationEventBaseImpl implements ConversationEventBase {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_APP_EVENT = "app_event";
 
-  private OptionalValue<AppEvent> appEvent;
+  private OptionalValue<AppEventInternal> appEvent;
 
   public static final String JSON_PROPERTY_CONVERSATION_ID = "conversation_id";
 
@@ -50,10 +50,10 @@ public class InjectConversationEventRequestImpl implements InjectConversationEve
 
   private OptionalValue<ProcessingMode> processingMode;
 
-  public InjectConversationEventRequestImpl() {}
+  public ConversationEventBaseImpl() {}
 
-  protected InjectConversationEventRequestImpl(
-      OptionalValue<AppEvent> appEvent,
+  protected ConversationEventBaseImpl(
+      OptionalValue<AppEventInternal> appEvent,
       OptionalValue<String> conversationId,
       OptionalValue<String> contactId,
       OptionalValue<ChannelIdentity> channelIdentity,
@@ -68,13 +68,13 @@ public class InjectConversationEventRequestImpl implements InjectConversationEve
   }
 
   @JsonIgnore
-  public AppEvent getAppEvent() {
+  public AppEventInternal getAppEvent() {
     return appEvent.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_APP_EVENT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<AppEvent> appEvent() {
+  public OptionalValue<AppEventInternal> appEvent() {
     return appEvent;
   }
 
@@ -117,7 +117,7 @@ public class InjectConversationEventRequestImpl implements InjectConversationEve
   }
 
   @JsonProperty(JSON_PROPERTY_ACCEPT_TIME)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<Instant> acceptTime() {
     return acceptTime;
   }
@@ -133,7 +133,7 @@ public class InjectConversationEventRequestImpl implements InjectConversationEve
     return processingMode;
   }
 
-  /** Return true if this InjectConversationEventRequest object is equal to o. */
+  /** Return true if this ConversationEventBase object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -142,14 +142,13 @@ public class InjectConversationEventRequestImpl implements InjectConversationEve
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    InjectConversationEventRequestImpl injectConversationEventRequest =
-        (InjectConversationEventRequestImpl) o;
-    return Objects.equals(this.appEvent, injectConversationEventRequest.appEvent)
-        && Objects.equals(this.conversationId, injectConversationEventRequest.conversationId)
-        && Objects.equals(this.contactId, injectConversationEventRequest.contactId)
-        && Objects.equals(this.channelIdentity, injectConversationEventRequest.channelIdentity)
-        && Objects.equals(this.acceptTime, injectConversationEventRequest.acceptTime)
-        && Objects.equals(this.processingMode, injectConversationEventRequest.processingMode);
+    ConversationEventBaseImpl conversationEventBase = (ConversationEventBaseImpl) o;
+    return Objects.equals(this.appEvent, conversationEventBase.appEvent)
+        && Objects.equals(this.conversationId, conversationEventBase.conversationId)
+        && Objects.equals(this.contactId, conversationEventBase.contactId)
+        && Objects.equals(this.channelIdentity, conversationEventBase.channelIdentity)
+        && Objects.equals(this.acceptTime, conversationEventBase.acceptTime)
+        && Objects.equals(this.processingMode, conversationEventBase.processingMode);
   }
 
   @Override
@@ -161,7 +160,7 @@ public class InjectConversationEventRequestImpl implements InjectConversationEve
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class InjectConversationEventRequestImpl {\n");
+    sb.append("class ConversationEventBaseImpl {\n");
     sb.append("    appEvent: ").append(toIndentedString(appEvent)).append("\n");
     sb.append("    conversationId: ").append(toIndentedString(conversationId)).append("\n");
     sb.append("    contactId: ").append(toIndentedString(contactId)).append("\n");
@@ -183,8 +182,8 @@ public class InjectConversationEventRequestImpl implements InjectConversationEve
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements InjectConversationEventRequest.Builder {
-    OptionalValue<AppEvent> appEvent = OptionalValue.empty();
+  static class Builder implements ConversationEventBase.Builder {
+    OptionalValue<AppEventInternal> appEvent = OptionalValue.empty();
     OptionalValue<String> conversationId = OptionalValue.empty();
     OptionalValue<String> contactId = OptionalValue.empty();
     OptionalValue<ChannelIdentity> channelIdentity = OptionalValue.empty();
@@ -192,7 +191,7 @@ public class InjectConversationEventRequestImpl implements InjectConversationEve
     OptionalValue<ProcessingMode> processingMode = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_APP_EVENT)
-    public Builder setAppEvent(AppEvent appEvent) {
+    public Builder setAppEvent(AppEventInternal appEvent) {
       this.appEvent = OptionalValue.of(appEvent);
       return this;
     }
@@ -227,8 +226,8 @@ public class InjectConversationEventRequestImpl implements InjectConversationEve
       return this;
     }
 
-    public InjectConversationEventRequest build() {
-      return new InjectConversationEventRequestImpl(
+    public ConversationEventBase build() {
+      return new ConversationEventBaseImpl(
           appEvent, conversationId, contactId, channelIdentity, acceptTime, processingMode);
     }
   }

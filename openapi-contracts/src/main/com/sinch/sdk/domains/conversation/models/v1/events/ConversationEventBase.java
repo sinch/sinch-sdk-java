@@ -10,24 +10,24 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.conversation.request;
+package com.sinch.sdk.domains.conversation.models.v1.events;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
-import com.sinch.sdk.domains.conversation.models.v1.events.AppEvent;
+import com.sinch.sdk.domains.conversation.models.v1.events.internal.AppEventInternal;
 import java.time.Instant;
 
-/** Inject Event request */
-@JsonDeserialize(builder = InjectConversationEventRequestImpl.Builder.class)
-public interface InjectConversationEventRequest {
+/** Common properties to ConversationEvent management */
+@JsonDeserialize(builder = ConversationEventBaseImpl.Builder.class)
+public interface ConversationEventBase {
 
   /**
    * Get appEvent
    *
    * @return appEvent
    */
-  AppEvent getAppEvent();
+  AppEventInternal getAppEvent();
 
   /**
    * Optional. The ID of the event's conversation. Will not be present for apps in Dispatch Mode.
@@ -71,7 +71,7 @@ public interface InjectConversationEventRequest {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new InjectConversationEventRequestImpl.Builder();
+    return new ConversationEventBaseImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -84,7 +84,7 @@ public interface InjectConversationEventRequest {
      * @return Current builder
      * @see #getAppEvent
      */
-    Builder setAppEvent(AppEvent appEvent);
+    Builder setAppEvent(AppEventInternal appEvent);
 
     /**
      * see getter
@@ -136,6 +136,6 @@ public interface InjectConversationEventRequest {
      *
      * @return The instance build with current builder values
      */
-    InjectConversationEventRequest build();
+    ConversationEventBase build();
   }
 }
