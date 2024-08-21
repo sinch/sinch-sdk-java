@@ -47,7 +47,7 @@ public class ConversationService
   private MessagesService messages;
   private ConversationsService conversations;
   private EventsService events;
-
+  private TranscodingService transcoding;
   private WebHooksService webhooks;
 
   static {
@@ -130,6 +130,13 @@ public class ConversationService
       this.events = new EventsService(uriUUID, context, httpClient, authManagers);
     }
     return this.events;
+  }
+
+  public TranscodingService transcoding() {
+    if (null == this.transcoding) {
+      this.transcoding = new TranscodingService(uriUUID, context, httpClient, authManagers);
+    }
+    return this.transcoding;
   }
 
   static final class LocalLazyInit {
