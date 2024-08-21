@@ -5,12 +5,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.VerificationStartResponseDataContent;
+import com.sinch.sdk.domains.verification.models.v1.start.response.internal.VerificationStartResponseDataContentImpl;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({
   VerificationStartResponseDataImpl.JSON_PROPERTY_ID,
@@ -107,8 +116,10 @@ public class VerificationStartResponseDataImpl
   }
 
   public OptionalValue<String> targetUri() {
-    return null != seamless
-        ? seamless.map(VerificationStartResponseDataContent::getTargetUri)
+    return null != seamless && seamless.isPresent()
+        ? seamless
+            .map(f -> ((VerificationStartResponseDataContentImpl) f).targetUri())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -203,5 +214,45 @@ public class VerificationStartResponseDataImpl
       }
       return new VerificationStartResponseDataImpl(id, method, links, seamless);
     }
+  }
+
+  public static class DelegatedSerializer
+      extends JsonSerializer<OptionalValue<VerificationStartResponseData>> {
+    @Override
+    public void serialize(
+        OptionalValue<VerificationStartResponseData> value,
+        JsonGenerator jgen,
+        SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      VerificationStartResponseDataImpl impl = (VerificationStartResponseDataImpl) value.get();
+      jgen.writeObject(null != impl ? impl.getSeamless() : null);
+    }
+  }
+
+  public static class DelegatedDeSerializer
+      extends JsonDeserializer<VerificationStartResponseData> {
+    @Override
+    public VerificationStartResponseData deserialize(JsonParser jp, DeserializationContext ctxt)
+        throws IOException {
+
+      VerificationStartResponseDataImpl.Builder builder =
+          new VerificationStartResponseDataImpl.Builder();
+      VerificationStartResponseDataContentImpl deserialized =
+          jp.readValueAs(VerificationStartResponseDataContentImpl.class);
+      builder.setSeamless(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<VerificationStartResponseData> delegatedConverter(
+      VerificationStartResponseDataContent internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setSeamless(internal).build());
   }
 }

@@ -5,12 +5,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.VerificationStartResponseFlashCallContent;
+import com.sinch.sdk.domains.verification.models.v1.start.response.internal.VerificationStartResponseFlashCallContentImpl;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({
   VerificationStartResponseFlashCallImpl.JSON_PROPERTY_ID,
@@ -107,8 +116,10 @@ public class VerificationStartResponseFlashCallImpl
   }
 
   public OptionalValue<String> cliFilter() {
-    return null != flashCall
-        ? flashCall.map(VerificationStartResponseFlashCallContent::getCliFilter)
+    return null != flashCall && flashCall.isPresent()
+        ? flashCall
+            .map(f -> ((VerificationStartResponseFlashCallContentImpl) f).cliFilter())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -123,8 +134,10 @@ public class VerificationStartResponseFlashCallImpl
   }
 
   public OptionalValue<Integer> interceptionTimeout() {
-    return null != flashCall
-        ? flashCall.map(VerificationStartResponseFlashCallContent::getInterceptionTimeout)
+    return null != flashCall && flashCall.isPresent()
+        ? flashCall
+            .map(f -> ((VerificationStartResponseFlashCallContentImpl) f).interceptionTimeout())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -137,8 +150,10 @@ public class VerificationStartResponseFlashCallImpl
   }
 
   public OptionalValue<Integer> reportTimeout() {
-    return null != flashCall
-        ? flashCall.map(VerificationStartResponseFlashCallContent::getReportTimeout)
+    return null != flashCall && flashCall.isPresent()
+        ? flashCall
+            .map(f -> ((VerificationStartResponseFlashCallContentImpl) f).reportTimeout())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -151,8 +166,10 @@ public class VerificationStartResponseFlashCallImpl
   }
 
   public OptionalValue<Integer> denyCallAfter() {
-    return null != flashCall
-        ? flashCall.map(VerificationStartResponseFlashCallContent::getDenyCallAfter)
+    return null != flashCall && flashCall.isPresent()
+        ? flashCall
+            .map(f -> ((VerificationStartResponseFlashCallContentImpl) f).denyCallAfter())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -265,5 +282,46 @@ public class VerificationStartResponseFlashCallImpl
       }
       return new VerificationStartResponseFlashCallImpl(id, method, links, flashCall);
     }
+  }
+
+  public static class DelegatedSerializer
+      extends JsonSerializer<OptionalValue<VerificationStartResponseFlashCall>> {
+    @Override
+    public void serialize(
+        OptionalValue<VerificationStartResponseFlashCall> value,
+        JsonGenerator jgen,
+        SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      VerificationStartResponseFlashCallImpl impl =
+          (VerificationStartResponseFlashCallImpl) value.get();
+      jgen.writeObject(null != impl ? impl.getFlashCall() : null);
+    }
+  }
+
+  public static class DelegatedDeSerializer
+      extends JsonDeserializer<VerificationStartResponseFlashCall> {
+    @Override
+    public VerificationStartResponseFlashCall deserialize(
+        JsonParser jp, DeserializationContext ctxt) throws IOException {
+
+      VerificationStartResponseFlashCallImpl.Builder builder =
+          new VerificationStartResponseFlashCallImpl.Builder();
+      VerificationStartResponseFlashCallContentImpl deserialized =
+          jp.readValueAs(VerificationStartResponseFlashCallContentImpl.class);
+      builder.setFlashCall(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<VerificationStartResponseFlashCall> delegatedConverter(
+      VerificationStartResponseFlashCallContent internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setFlashCall(internal).build());
   }
 }

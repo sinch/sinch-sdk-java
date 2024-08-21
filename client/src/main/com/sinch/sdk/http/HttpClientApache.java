@@ -8,6 +8,7 @@ import static com.sinch.sdk.core.http.URLParameterUtils.encodeParametersAsString
 import com.sinch.sdk.auth.adapters.OAuthManager;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
+import com.sinch.sdk.core.http.HttpContentType;
 import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
@@ -16,9 +17,11 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.Pair;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -115,13 +118,13 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
 
       setUri(requestBuilder, path, queryParameters);
 
-      addBody(requestBuilder, body);
-
       addCollectionHeader(requestBuilder, CONTENT_TYPE_HEADER, contentType);
       addCollectionHeader(requestBuilder, "Accept", accept);
 
       addHeaders(requestBuilder, headerParams);
       addHeaders(requestBuilder, headersToBeAdded);
+
+      addBody(requestBuilder, body);
 
       addAuth(requestBuilder, authManagersByOasSecuritySchemes, authNames, body);
 
@@ -204,8 +207,10 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
   }
 
   private void addBody(ClassicRequestBuilder requestBuilder, String body) {
+
     if (null != body) {
-      requestBuilder.setEntity(new StringEntity(body));
+      Charset charset = extractCharset(requestBuilder).orElse(StandardCharsets.UTF_8);
+      requestBuilder.setEntity(new StringEntity(body, charset));
     }
   }
 
@@ -261,6 +266,17 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
   private HttpResponse processRequest(CloseableHttpClient client, ClassicHttpRequest request)
       throws IOException {
     return client.execute(request, HttpClientApache::processResponse);
+  }
+
+  private Optional<Charset> extractCharset(ClassicRequestBuilder requestBuilder) {
+
+    Optional<Header> charsetHeader =
+        Arrays.stream(requestBuilder.getHeaders(CONTENT_TYPE_HEADER))
+            .filter(f -> f.getValue().contains("charset="))
+            .findFirst();
+
+    return charsetHeader.flatMap(
+        header -> HttpContentType.getCharsetValue(header.getValue()).map(Charset::forName));
   }
 
   @Override
