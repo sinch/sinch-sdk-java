@@ -1,0 +1,14 @@
+{
+  "app_id": "an app id",
+  "recipient": {
+    "identified_by": {
+      "channel_identities": [
+        {
+          "channel": "MMS",
+          "identity": "+123456789"
+        }
+      ]
+    }
+  },
+  "request_id": "a request id"
+}

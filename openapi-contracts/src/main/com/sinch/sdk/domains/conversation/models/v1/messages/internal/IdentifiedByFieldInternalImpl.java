@@ -78,7 +78,7 @@ public class IdentifiedByFieldInternalImpl implements IdentifiedByFieldInternal 
   static class Builder implements IdentifiedByFieldInternal.Builder {
     OptionalValue<ChannelRecipientIdentities> identifiedBy = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_IDENTIFIED_BY)
+    @JsonProperty(value = JSON_PROPERTY_IDENTIFIED_BY, required = true)
     public Builder setIdentifiedBy(ChannelRecipientIdentities identifiedBy) {
       this.identifiedBy = OptionalValue.of(identifiedBy);
       return this;
