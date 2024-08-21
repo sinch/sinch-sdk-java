@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-// @JsonFilter("uninitializedFilter")
 @JsonSerialize(using = ChoiceImpl.ChoiceSerializer.class)
 public class ChoiceImpl<T extends ChoiceMessageType> implements Choice<T> {
 
@@ -174,45 +173,4 @@ public class ChoiceImpl<T extends ChoiceMessageType> implements Choice<T> {
       return builder.build();
     }
   }
-
-  /*static class ChoiceDeserializerPOC extends StdDeserializer<Choice<?>> {
-
-    public ChoiceDeserializerPOC() {
-      this(null);
-    }
-
-    public ChoiceDeserializerPOC(Class<ChoiceImpl<?>> vc) {
-      super(vc);
-    }
-
-    @Override
-    public Choice<?> deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
-
-      ChoiceMessageOneOfInternalImpl deserialized;
-
-      try {
-        deserialized = jp.readValueAs(ChoiceMessageOneOfInternalImpl.class);
-      } catch (Exception e) {
-        LOGGER.info("error " + e);
-        return null;
-      }
-
-      Choice.Builder<?> builder;
-      if (deserialized.callMessage().isPresent()) {
-        builder = Choice.<CallMessage>builder().setMessage(deserialized.getCallMessage());
-      } else if (deserialized.locationMessage().isPresent()) {
-        builder = ChoiceLocationMessage.builder().setMessage(deserialized.getLocationMessage());
-      } else if (deserialized.textMessage().isPresent()) {
-        builder = ChoiceTextMessage.builder().setMessage(deserialized.getTextMessage());
-      } else if (deserialized.urlMessage().isPresent()) {
-        builder = ChoiceURLMessage.builder().setMessage(deserialized.getUrlMessage());
-      } else {
-        LOGGER.severe("Unexpected content'" + deserialized + "'");
-        return null;
-      }
-
-      deserialized.postbackData().ifPresent(builder::setPostbackData);
-      return builder.build();
-    }
-  }*/
 }
