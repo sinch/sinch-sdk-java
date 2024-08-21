@@ -36,7 +36,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
-public class WebhooksServiceTest extends ConversationBaseTest {
+public class WebHooksServiceTest extends ConversationBaseTest {
+
+  com.sinch.sdk.domains.conversation.api.v1.WebHooksService serverService;
 
   @GivenTextResource("domains/conversation/v1/webhooks/events/capability/CapabilityEventDto.json")
   String jsonCapabilityEvent;
@@ -111,8 +113,6 @@ public class WebhooksServiceTest extends ConversationBaseTest {
       "domains/conversation/v1/webhooks/events/unsupported/UnsupportedCallbackEventDto.json")
   String jsonUnsupportedCallbackEvent;
 
-  com.sinch.sdk.domains.conversation.api.v1.WebHooksService webHooksService;
-
   @Test
   void checkApplicationAuthentication() throws ApiException {
 
@@ -131,7 +131,7 @@ public class WebhooksServiceTest extends ConversationBaseTest {
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     boolean authenticationResult =
-        webHooksService.validateAuthenticationHeader(
+        serverService.validateAuthenticationHeader(
             "foo_secret1234",
             headers,
             "{\"app_id\":\"\",\"accepted_time\":\"2021-10-18T17:49:13.813615Z\",\"project_id\":\"e2df3a34-a71b-4448-9db5-a8d2baad28e4\",\"contact_create_notification\":{\"contact\":{\"id\":\"01FJA8B466Y0R2GNXD78MD9SM1\",\"channel_identities\":[{\"channel\":\"SMS\",\"identity\":\"48123456789\",\"app_id\":\"\"}],\"display_name\":\"New"
@@ -143,121 +143,120 @@ public class WebhooksServiceTest extends ConversationBaseTest {
 
   @Test
   void checkParsedCapabilityEventDto() throws ApiException {
-    assertTrue(webHooksService.parseEvent(jsonCapabilityEvent) instanceof CapabilityEvent);
+    assertTrue(serverService.parseEvent(jsonCapabilityEvent) instanceof CapabilityEvent);
   }
 
   @Test
   void checkParsedChannelEventDto() throws ApiException {
-    assertTrue(webHooksService.parseEvent(jsonChannelEvent) instanceof ChannelEvent);
+    assertTrue(serverService.parseEvent(jsonChannelEvent) instanceof ChannelEvent);
   }
 
   @Test
   void checkParsedContactCreateEventDto() throws ApiException {
-    assertTrue(webHooksService.parseEvent(jsonContactCreateEvent) instanceof ContactCreateEvent);
+    assertTrue(serverService.parseEvent(jsonContactCreateEvent) instanceof ContactCreateEvent);
   }
 
   @Test
   void checkParsedContactDeleteEventEventDto() throws ApiException {
-    assertTrue(webHooksService.parseEvent(jsonContactDeleteEvent) instanceof ContactDeleteEvent);
+    assertTrue(serverService.parseEvent(jsonContactDeleteEvent) instanceof ContactDeleteEvent);
   }
 
   @Test
   void checkParsedContactIdentitiesDuplicationEventDto() throws ApiException {
     assertTrue(
-        webHooksService.parseEvent(jsonContactIdentitiesDuplicationEvent)
+        serverService.parseEvent(jsonContactIdentitiesDuplicationEvent)
             instanceof ContactIdentitiesDuplicationEvent);
   }
 
   @Test
   void checkParsedContactMergeEventDto() throws ApiException {
-    assertTrue(webHooksService.parseEvent(jsonContactMergeEvent) instanceof ContactMergeEvent);
+    assertTrue(serverService.parseEvent(jsonContactMergeEvent) instanceof ContactMergeEvent);
   }
 
   @Test
   void checkParsedContactUpdateEventEventDto() throws ApiException {
-    assertTrue(webHooksService.parseEvent(jsonContactUpdateEvent) instanceof ContactUpdateEvent);
+    assertTrue(serverService.parseEvent(jsonContactUpdateEvent) instanceof ContactUpdateEvent);
   }
 
   @Test
   void checkParsedConversationDeleteEventDto() throws ApiException {
     assertTrue(
-        webHooksService.parseEvent(jsonConversationDeleteEvent) instanceof ConversationDeleteEvent);
+        serverService.parseEvent(jsonConversationDeleteEvent) instanceof ConversationDeleteEvent);
   }
 
   @Test
   void checkParsedConversationStartEventDto() throws ApiException {
     assertTrue(
-        webHooksService.parseEvent(jsonConversationStartEvent) instanceof ConversationStartEvent);
+        serverService.parseEvent(jsonConversationStartEvent) instanceof ConversationStartEvent);
   }
 
   @Test
   void checkParsedConversationStopEventDto() throws ApiException {
     assertTrue(
-        webHooksService.parseEvent(jsonConversationStopEvent) instanceof ConversationStopEvent);
+        serverService.parseEvent(jsonConversationStopEvent) instanceof ConversationStopEvent);
   }
 
   @Test
   void checkParsedEventDeliveryReportDto() throws ApiException {
     assertTrue(
-        webHooksService.parseEvent(jsonEventDeliveryReport) instanceof EventDeliveryReceiptEvent);
+        serverService.parseEvent(jsonEventDeliveryReport) instanceof EventDeliveryReceiptEvent);
   }
 
   @Test
   void checkParsedMessageDeliveryReceiptEventDto() throws ApiException {
     assertTrue(
-        webHooksService.parseEvent(jsonMessageDeliveryReceiptEvent)
+        serverService.parseEvent(jsonMessageDeliveryReceiptEvent)
             instanceof MessageDeliveryReceiptEvent);
   }
 
   @Test
   void checkParsedInboundEventDto() throws ApiException {
-    assertTrue(webHooksService.parseEvent(jsonInboundEvent) instanceof InboundEvent);
+    assertTrue(serverService.parseEvent(jsonInboundEvent) instanceof InboundEvent);
   }
 
   @Test
   void checkMessageInboundEventDto() throws ApiException {
-    assertTrue(webHooksService.parseEvent(jsonMessageInboundEvent) instanceof MessageInboundEvent);
+    assertTrue(serverService.parseEvent(jsonMessageInboundEvent) instanceof MessageInboundEvent);
   }
 
   @Test
   void checkMessageSubmitEventDto() throws ApiException {
-    assertTrue(webHooksService.parseEvent(jsonMessageSubmitEvent) instanceof MessageSubmitEvent);
+    assertTrue(serverService.parseEvent(jsonMessageSubmitEvent) instanceof MessageSubmitEvent);
   }
 
   @Test
   void checkOptInEventDto() throws ApiException {
-    assertTrue(webHooksService.parseEvent(jsonOptInEvent) instanceof OptInEvent);
+    assertTrue(serverService.parseEvent(jsonOptInEvent) instanceof OptInEvent);
   }
 
   @Test
   void checkOptOutEventDto() throws ApiException {
-    assertTrue(webHooksService.parseEvent(jsonOptOutEvent) instanceof OptOutEvent);
+    assertTrue(serverService.parseEvent(jsonOptOutEvent) instanceof OptOutEvent);
   }
 
   @Test
   void checkRecordNotificationEventDto() throws ApiException {
     assertTrue(
-        webHooksService.parseEvent(jsonRecordNotificationEvent) instanceof RecordNotificationEvent);
+        serverService.parseEvent(jsonRecordNotificationEvent) instanceof RecordNotificationEvent);
   }
 
   @Test
   void checkMessageInboundSmartConversationRedactionEventDto() throws ApiException {
     assertTrue(
-        webHooksService.parseEvent(jsonMessageInboundSmartConversationRedactionEvent)
+        serverService.parseEvent(jsonMessageInboundSmartConversationRedactionEvent)
             instanceof MessageInboundSmartConversationRedactionEvent);
   }
 
   @Test
   void checkSmartConversationsEventDto() throws ApiException {
     assertTrue(
-        webHooksService.parseEvent(jsonSmartConversationsEvent) instanceof SmartConversationsEvent);
+        serverService.parseEvent(jsonSmartConversationsEvent) instanceof SmartConversationsEvent);
   }
 
   @Test
   void checkUnsupportedCallbackEventDto() throws ApiException {
     assertTrue(
-        webHooksService.parseEvent(jsonUnsupportedCallbackEvent)
-            instanceof UnsupportedCallbackEvent);
+        serverService.parseEvent(jsonUnsupportedCallbackEvent) instanceof UnsupportedCallbackEvent);
   }
 
   @BeforeEach
@@ -269,6 +268,6 @@ public class WebhooksServiceTest extends ConversationBaseTest {
             .setKeyId("unused")
             .setKeySecret("unused")
             .build();
-    webHooksService = new SinchClient(configuration).conversation().v1().webhooks();
+    serverService = new SinchClient(configuration).conversation().v1().webhooks();
   }
 }

@@ -19,5 +19,3 @@ buildNumber.properties
 *.iml
 
 sample-app/src/main/resources/config.properties
-
-openapi-contracts/src/main/com/sinch/sdk/domains/conversation/api/v1/internal/WebhooksApi.java

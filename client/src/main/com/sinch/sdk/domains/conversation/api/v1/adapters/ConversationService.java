@@ -114,7 +114,13 @@ public class ConversationService
 
   public WebHooksService webhooks() {
     if (null == this.webhooks) {
-      this.webhooks = new WebHooksService(new ConversationWebhooksAuthenticationValidation());
+      this.webhooks =
+          new WebHooksService(
+              uriUUID,
+              context,
+              httpClient,
+              authManagers,
+              new ConversationWebhooksAuthenticationValidation());
     }
     return this.webhooks;
   }

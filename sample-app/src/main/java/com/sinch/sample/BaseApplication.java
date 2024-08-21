@@ -21,6 +21,7 @@ public abstract class BaseApplication {
   private static final String CONVERSATION_CONTACT_ID_KEY = "CONVERSATION_CONTACT_ID";
   private static final String CONVERSATION_MESSAGE_ID_KEY = "CONVERSATION_MESSAGE_ID";
   private static final String CONVERSATION_EVENT_ID_KEY = "CONVERSATION_EVENT_ID";
+  private static final String CONVERSATION_WEBHOOK_ID_KEY = "CONVERSATION_WEBHOOK_ID";
 
   public static final String WEBHOOKS_URL_KEY = "WEBHOOKS_URL";
   public static final String WEBHOOKS_VOICE_PATH_KEY = "WEBHOOKS_VOICE_PATH";
@@ -41,6 +42,7 @@ public abstract class BaseApplication {
   protected String conversationContactId;
   protected String conversationMessageId;
   protected String conversationEventId;
+  protected String conversationWebhookId;
   protected String smsServicePlanId;
   protected String smsApiToken;
   protected String applicationKey;
@@ -75,6 +77,7 @@ public abstract class BaseApplication {
     conversationContactId = getConfigValue(CONVERSATION_CONTACT_ID_KEY);
     conversationMessageId = getConfigValue(CONVERSATION_MESSAGE_ID_KEY);
     conversationEventId = getConfigValue(CONVERSATION_EVENT_ID_KEY);
+    conversationWebhookId = getConfigValue(CONVERSATION_WEBHOOK_ID_KEY);
 
     String webhooksUrl = getConfigValue(WEBHOOKS_URL_KEY);
     if (null != webhooksUrl) {
