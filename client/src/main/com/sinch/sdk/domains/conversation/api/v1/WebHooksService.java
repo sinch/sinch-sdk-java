@@ -1,7 +1,9 @@
 package com.sinch.sdk.domains.conversation.api.v1;
 
 import com.sinch.sdk.core.exceptions.ApiMappingException;
+import com.sinch.sdk.domains.conversation.models.v1.webhooks.Webhook;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.ConversationWebhookEvent;
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -50,4 +52,49 @@ public interface WebHooksService {
    * @since _NEXT_VERSION_
    */
   ConversationWebhookEvent parseEvent(String jsonPayload) throws ApiMappingException;
+
+  /**
+   * List all webhooks for a given app as specified by the App ID.
+   *
+   * @param appId The unique ID of the app
+   * @return List of defined webhooks
+   * @since _NEXT_VERSION_
+   */
+  Collection<Webhook> list(String appId);
+
+  /**
+   * Get a webhook as specified by the webhook ID.
+   *
+   * @param webhookId The unique ID of the webhook.
+   * @return Webhook definition
+   * @since _NEXT_VERSION_
+   */
+  Webhook get(String webhookId);
+
+  /**
+   * Creates a webhook for receiving callbacks on specific triggers
+   *
+   * @param webhook Webhook parameter for creation
+   * @return Created webhook
+   * @since _NEXT_VERSION_
+   */
+  Webhook create(Webhook webhook);
+
+  /**
+   * Updates an existing webhook as specified by the webhook ID.
+   *
+   * @param webhookId The unique ID of the webhook.
+   * @param webhook Webhook parameter for creation
+   * @return Created webhook
+   * @since _NEXT_VERSION_
+   */
+  Webhook update(String webhookId, Webhook webhook);
+
+  /**
+   * Deletes a webhook as specified by the webhook ID
+   *
+   * @param webhookId The unique ID of the webhook.
+   * @since _NEXT_VERSION_
+   */
+  void delete(String webhookId);
 }

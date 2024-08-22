@@ -38,7 +38,7 @@ public class TranscodingServiceTest extends ConversationBaseTest {
   }
 
   @Test
-  void trancode() throws ApiException {
+  void transcode() throws ApiException {
 
     when(api.transcodingTranscodeMessage(
             eq(uriPartID), eq(TranscodeMessageRequestDtoTest.transcodeMessageRequestDto)))
