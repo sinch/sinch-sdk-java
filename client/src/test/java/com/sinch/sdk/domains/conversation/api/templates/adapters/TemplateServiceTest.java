@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.api.v1.adapters;
+package com.sinch.sdk.domains.conversation.api.templates.adapters;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -11,7 +11,7 @@ import com.sinch.sdk.models.UnifiedCredentials;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-class ConversationServiceTest {
+class TemplateServiceTest {
 
   @Mock HttpClient httpClient;
 
@@ -20,11 +20,11 @@ class ConversationServiceTest {
     UnifiedCredentials credentials =
         UnifiedCredentials.builder().setKeyId(null).setKeySecret("foo").setProjectId("foo").build();
     ConversationContext context = ConversationContext.builder().build();
-    ServerConfiguration server = new ServerConfiguration("");
+    ServerConfiguration server = new ServerConfiguration("foo");
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
-            () -> new ConversationService(credentials, context, server, httpClient));
+            () -> new TemplatesService(credentials, context, server, httpClient));
     assertTrue(exception.getMessage().contains("keyId"));
   }
 
@@ -33,11 +33,11 @@ class ConversationServiceTest {
     UnifiedCredentials credentials =
         UnifiedCredentials.builder().setKeyId("foo").setKeySecret(null).setProjectId("foo").build();
     ConversationContext context = ConversationContext.builder().build();
-    ServerConfiguration server = new ServerConfiguration("");
+    ServerConfiguration server = new ServerConfiguration("foo");
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
-            () -> new ConversationService(credentials, context, server, httpClient));
+            () -> new TemplatesService(credentials, context, server, httpClient));
     assertTrue(exception.getMessage().contains("keySecret"));
   }
 
@@ -46,12 +46,11 @@ class ConversationServiceTest {
     UnifiedCredentials credentials =
         UnifiedCredentials.builder().setKeyId("foo").setKeySecret("foo").setProjectId(null).build();
     ConversationContext context = ConversationContext.builder().build();
-    ServerConfiguration server = new ServerConfiguration("");
-
+    ServerConfiguration server = new ServerConfiguration("foo");
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
-            () -> new ConversationService(credentials, context, server, httpClient));
+            () -> new TemplatesService(credentials, context, server, httpClient));
     assertTrue(exception.getMessage().contains("projectId"));
   }
 
@@ -59,13 +58,13 @@ class ConversationServiceTest {
   void doNotAcceptNullCredentials() {
 
     ConversationContext context = ConversationContext.builder().build();
-    ServerConfiguration server = new ServerConfiguration("");
+    ServerConfiguration server = new ServerConfiguration("foo");
     Exception exception =
         assertThrows(
             NullPointerException.class,
-            () -> new ConversationService(null, context, server, httpClient));
+            () -> new TemplatesService(null, context, server, httpClient));
     assertTrue(
-        exception.getMessage().contains("Conversation service requires credentials to be defined"));
+        exception.getMessage().contains("Templates service requires credentials to be defined"));
   }
 
   @Test
@@ -76,35 +75,37 @@ class ConversationServiceTest {
             .setKeySecret("foo")
             .setProjectId("foo")
             .build();
-    ServerConfiguration server = new ServerConfiguration("");
+    ServerConfiguration server = new ServerConfiguration("foo");
     Exception exception =
         assertThrows(
             NullPointerException.class,
-            () -> new ConversationService(credentials, null, server, httpClient));
-    assertTrue(
-        exception.getMessage().contains("Conversation service requires context to be defined"));
+            () -> new TemplatesService(credentials, null, server, httpClient));
+    assertTrue(exception.getMessage().contains("Templates service requires context to be defined"));
   }
 
   @Test
-  void doNotAcceptEmptyURL() {
+  void doNotAcceptEmptyManagementURL() {
     UnifiedCredentials credentials =
         UnifiedCredentials.builder()
             .setKeyId("foo")
             .setKeySecret("foo")
             .setProjectId("foo")
             .build();
-    ConversationContext context = ConversationContext.builder().setUrl("").build();
+    ConversationContext context =
+        ConversationContext.builder().setTemplateManagementUrl("").build();
     ServerConfiguration server = new ServerConfiguration("");
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
-            () -> new ConversationService(credentials, context, server, httpClient));
+            () -> new TemplatesService(credentials, context, server, httpClient));
     assertTrue(
-        exception.getMessage().contains("Conversation service requires 'url' to be defined"));
+        exception
+            .getMessage()
+            .contains("Templates service requires 'templateManagementUrl' to be defined"));
   }
 
   @Test
-  void doNotAcceptNullURL() {
+  void doNotAcceptNullManagementURL() {
     UnifiedCredentials credentials =
         UnifiedCredentials.builder()
             .setKeyId("foo")
@@ -116,9 +117,11 @@ class ConversationServiceTest {
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
-            () -> new ConversationService(credentials, context, server, httpClient));
+            () -> new TemplatesService(credentials, context, server, httpClient));
     assertTrue(
-        exception.getMessage().contains("Conversation service requires 'url' to be defined"));
+        exception
+            .getMessage()
+            .contains("Templates service requires 'templateManagementUrl' to be defined"));
   }
 
   @Test
@@ -129,9 +132,10 @@ class ConversationServiceTest {
             .setKeySecret("foo")
             .setProjectId("foo")
             .build();
-    ConversationContext context = ConversationContext.builder().setUrl("foo").build();
+    ConversationContext context =
+        ConversationContext.builder().setTemplateManagementUrl("foo").build();
     ServerConfiguration server = new ServerConfiguration("foo");
     assertDoesNotThrow(
-        () -> new ConversationService(credentials, context, server, httpClient), "Init passed");
+        () -> new TemplatesService(credentials, context, server, httpClient), "Init passed");
   }
 }
