@@ -438,7 +438,7 @@ public class WebhooksApi {
     if (null != updateMask) {
       localVarQueryParams.add(
           new URLParameter(
-              "update_mask", updateMask, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
+              "update_mask", updateMask, URLParameter.STYLE.valueOf("form".toUpperCase()), false));
     }
 
     Map<String, String> localVarHeaderParams = new HashMap<>();
