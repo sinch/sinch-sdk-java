@@ -27,7 +27,6 @@ import java.util.stream.Stream;
 public class SinchClient {
 
   private static final String DEFAULT_PROPERTIES_FILE_NAME = "/config-default.properties";
-  private static final String VERSION_PROPERTIES_FILE_NAME = "/version.properties";
 
   private static final String OAUTH_URL_KEY = "oauth-url";
   private static final String NUMBERS_SERVER_KEY = "numbers-server";
@@ -41,10 +40,6 @@ public class SinchClient {
 
   private static final String VERIFICATION_SERVER_KEY = "verification-server";
 
-  private static final String PROJECT_NAME_KEY = "project.name";
-  private static final String PROJECT_VERSION_KEY = "project.version";
-  private static final String PROJECT_AUXILIARY_FLAG = "project.auxiliary_flag";
-
   // sinch-sdk/{sdk_version} ({language}/{language_version}; {implementation_type};
   // {auxiliary_flag})
   private static final String SDK_USER_AGENT_HEADER = "User-Agent";
@@ -52,7 +47,6 @@ public class SinchClient {
   private static final Logger LOGGER = Logger.getLogger(SinchClient.class.getName());
 
   private final Configuration configuration;
-  private final Properties versionProperties;
 
   private NumbersService numbers;
   private SMSService sms;
@@ -85,12 +79,7 @@ public class SinchClient {
     checkConfiguration(newConfiguration);
     this.configuration = newConfiguration;
 
-    versionProperties = handlePropertiesFile(VERSION_PROPERTIES_FILE_NAME);
-    LOGGER.fine(
-        String.format(
-            "%s (%s) started",
-            versionProperties.getProperty(PROJECT_NAME_KEY),
-            versionProperties.getProperty(PROJECT_VERSION_KEY)));
+    LOGGER.fine(String.format("%s (%s) started", SDK.NAME, SDK.VERSION));
   }
 
   private void handleDefaultNumbersSettings(
@@ -320,32 +309,32 @@ public class SinchClient {
       this.httpClient = new HttpClientApache();
 
       // set SDK User-Agent
-      String userAgent = formatSdkUserAgentHeader(versionProperties);
+      String userAgent = formatSdkUserAgentHeader();
       this.httpClient.setRequestHeaders(
           Stream.of(new String[][] {{SDK_USER_AGENT_HEADER, userAgent}})
               .collect(Collectors.toMap(data -> data[0], data -> data[1])));
 
-      LOGGER.fine("HTTP client loaded");
+      LOGGER.finest(String.format("HTTP client loaded (%s='%s'", SDK_USER_AGENT_HEADER, userAgent));
     }
     return this.httpClient;
   }
 
-  private String formatSdkUserAgentHeader(Properties versionProperties) {
+  private String formatSdkUserAgentHeader() {
     return String.format(
         SDK_USER_AGENT_FORMAT,
-        versionProperties.get(PROJECT_VERSION_KEY),
+        SDK.VERSION,
         "Java",
         System.getProperty("java.version"),
         "Apache",
-        formatAuxiliaryFlag((String) versionProperties.get(PROJECT_AUXILIARY_FLAG)));
+        formatAuxiliaryFlag());
   }
 
-  private String formatAuxiliaryFlag(String auxiliaryFlag) {
+  private String formatAuxiliaryFlag() {
 
     Collection<String> values = Collections.singletonList(System.getProperty("java.vendor"));
 
-    if (!StringUtil.isEmpty(auxiliaryFlag)) {
-      values.add(auxiliaryFlag);
+    if (!StringUtil.isEmpty(SDK.AUXILIARY_FLAG)) {
+      values.add(SDK.AUXILIARY_FLAG);
     }
     return String.join(",", values);
   }
