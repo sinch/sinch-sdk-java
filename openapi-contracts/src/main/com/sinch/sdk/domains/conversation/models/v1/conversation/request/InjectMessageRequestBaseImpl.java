@@ -110,7 +110,7 @@ public class InjectMessageRequestBaseImpl implements InjectMessageRequestBase {
   }
 
   @JsonProperty(JSON_PROPERTY_APP_MESSAGE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<AppMessage<?>> appMessage() {
     return appMessage;
   }
@@ -121,7 +121,7 @@ public class InjectMessageRequestBaseImpl implements InjectMessageRequestBase {
   }
 
   @JsonProperty(JSON_PROPERTY_CONTACT_MESSAGE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<ContactMessage<?>> contactMessage() {
     return contactMessage;
   }
