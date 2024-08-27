@@ -5,8 +5,8 @@ on:
       releaseVersion:
         description: "Version number to be released (use semver semantic: 'X.Y.Z')"
         required: true
-      developmentVersion:
-        description: "Next development version to be set (use semver semantic: 'X.Y.Z', `-SNAPSHOT` suffix will be automatically added)"
+      nextDevelopmentVersion:
+        description: "Next development version to be set (use semver semantic: 'X.Y.Z', `-SNAPSHOT` artifact's suffix will be automatically added)"
         required: true
 
 permissions:
@@ -58,7 +58,7 @@ jobs:
         run: scripts/release.sh
         env:
           RELEASE_VERSION: ${{ github.event.inputs.releaseVersion }}
-          NEXT_VERSION: ${{ github.event.inputs.developmentVersion }}
+          NEXT_VERSION: ${{ github.event.inputs.nextDevelopmentVersion }}
           OSSRH_USER: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PWD: ${{ secrets.OSSRH_PWD }}
           GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}

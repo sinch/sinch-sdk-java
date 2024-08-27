@@ -20,14 +20,14 @@ if [ ! "${GITHUB_TOKEN}"  ]; then
   exit 1
 fi
 
-SDKFILE="client/src/main/com/sinch/sdk/SDK.java"
+SDKFILE_PATH="client/src/main/com/sinch/sdk/SDK.java"
 
 NEXT_VERSION_SNAPSHOT="${NEXT_VERSION}-SNAPSHOT"
 NEXT_VERSION_DEV="${NEXT_VERSION}-dev"
 
 # Create SDK.java file with version information
-SDK=$(java client/resources/SDKTemplate.java "$RELEASE_VERSION") && echo "$SDK" > "$SDKFILE" || exit 1
-git add "$SDKFILE" && git commit -m "build (release): Bump version to $RELEASE_VERSION for sources" || exit 1
+SDK=$(java client/resources/SDKTemplate.java "$RELEASE_VERSION") && echo "$SDK" > "$SDKFILE_PATH" || exit 1
+git add "$SDKFILE_PATH" && git commit -m "build (release): Bump version to $RELEASE_VERSION for sources" || exit 1
 
 mvn --batch-mode -s settings.xml release:clean release:prepare \
   -Dtag="v$RELEASE_VERSION" \
@@ -42,6 +42,6 @@ mvn --batch-mode -s settings.xml release:perform \
   -DskipTests=true  || exit 1
 
 # Update SDK.java file with next version information
-SDK=$(java client/resources/SDKTemplate.java "$NEXT_VERSION_DEV") && echo "$SDK" > "$SDKFILE" || exit 1
-git add "$SDKFILE" && git commit -m "build (release): Set next version to $NEXT_VERSION_DEV for sources" || exit 1
+SDK=$(java client/resources/SDKTemplate.java "$NEXT_VERSION_DEV") && echo "$SDK" > "$SDKFILE_PATH" || exit 1
+git add "$SDKFILE_PATH" && git commit -m "build (release): Set next version to $NEXT_VERSION_DEV for sources" || exit 1
 git push -u origin HEAD || exit 1

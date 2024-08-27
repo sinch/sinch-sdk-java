@@ -6,15 +6,18 @@ import java.util.stream.Stream;
 
 public class VersionTemplating {
 
-  public static void main(String[] args) throws IOException {
-    String versionFile = "client/src/main/com/sinch/sdk/SDK.java";
+  static final String SDK_FILE_PATH = "client/src/main/com/sinch/sdk/SDK.java";
 
-    Stream<String> lines = Files.lines(Paths.get(versionFile));
+  public static void main(String[] args) throws IOException {
+
+    String versionValue = args[0];
+
+    Stream<String> lines = Files.lines(Paths.get(SDK_FILE_PATH));
     String content = lines.collect(Collectors.joining("\n"));
     lines.close();
 
     System.out.println(
-        content.replaceAll("VERSION = \".*\"", String.format("VERSION = \"%s\"", args[0])));
+        content.replaceAll("VERSION = \".*\"", String.format("VERSION = \"%s\"", versionValue)));
     System.out.println("");
   }
 }
