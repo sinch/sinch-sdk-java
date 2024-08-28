@@ -20,6 +20,8 @@ import org.junit.jupiter.api.Assertions;
 
 public class AppsSteps {
 
+  static final String APP_ID = "01W4FFL35P4NC4K35CONVAPP001";
+
   AppService service;
   AppResponse createResponse;
   Collection<AppResponse> listResponse;
@@ -65,7 +67,7 @@ public class AppsSteps {
   @When("^I send a request to retrieve an app$")
   public void get() {
 
-    getResponse = service.get("foo");
+    getResponse = service.get(APP_ID);
   }
 
   @When("^I send a request to update an app$")
@@ -73,13 +75,13 @@ public class AppsSteps {
 
     AppUpdateRequest request =
         AppUpdateRequest.builder().setDisplayName(" a new display name").build();
-    updateResponse = service.update("foo", request);
+    updateResponse = service.update(APP_ID, request);
   }
 
   @When("^I send a request to delete an app$")
   public void delete() {
 
-    service.delete("foo");
+    service.delete(APP_ID);
     deletePassed = true;
   }
 
