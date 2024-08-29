@@ -13,4 +13,5 @@ import org.junit.platform.suite.api.Suite;
 @SelectClasspathResource("features/conversation/events.feature")
 @SelectClasspathResource("features/conversation/messages.feature")
 @SelectClasspathResource("features/conversation/transcoding.feature")
+@SelectClasspathResource("features/conversation/webhooks.feature")
 public class ConversationIT {}
