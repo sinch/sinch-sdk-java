@@ -15,7 +15,7 @@ public class LocationMessageDtoTest extends ConversationBaseTest {
   public static LocationMessage locationMessageDto =
       LocationMessage.builder()
           .setCoordinates(
-              Coordinates.builder().setLatitude(47.627980F).setLongitude(-2.822915F).build())
+              Coordinates.builder().setLatitude(47.6279809).setLongitude(-2.8229159).build())
           .setTitle("title value")
           .setLabel("label value")
           .build();
