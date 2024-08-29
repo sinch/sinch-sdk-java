@@ -9,4 +9,5 @@ import org.junit.platform.suite.api.Suite;
 @SelectClasspathResource("features/conversation/apps.feature")
 @SelectClasspathResource("features/conversation/capability.feature")
 @SelectClasspathResource("features/conversation/contacts.feature")
+@SelectClasspathResource("features/conversation/conversations.feature")
 public class ConversationIT {}
