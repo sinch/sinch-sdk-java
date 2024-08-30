@@ -104,7 +104,10 @@ class ContactServiceTest extends BaseTest {
             eq(null)))
         .thenReturn(ContactDtoTest.expectedContactResponseDto);
 
-    Contact response = service.update(ContactDtoTest.expectedContactResponseDto);
+    Contact response =
+        service.update(
+            ContactDtoTest.expectedContactResponseDto.getId(),
+            ContactDtoTest.expectedContactResponseDto);
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()

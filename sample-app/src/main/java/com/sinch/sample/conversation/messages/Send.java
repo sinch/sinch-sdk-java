@@ -75,7 +75,7 @@ public class Send extends BaseApplication {
                 LocationMessage.builder()
                     .setTitle("Location message title")
                     .setCoordinates(
-                        Coordinates.builder().setLatitude(47.5720F).setLongitude(-2.8881F).build())
+                        Coordinates.builder().setLatitude(47.5720).setLongitude(-2.8881).build())
                     .build())
             .setPostbackData("Location message selected")
             .build());

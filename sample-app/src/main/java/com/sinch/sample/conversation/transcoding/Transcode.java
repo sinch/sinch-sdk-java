@@ -37,8 +37,8 @@ public class Transcode extends BaseApplication {
                 LocationMessage.builder()
                     .setCoordinates(
                         Coordinates.builder()
-                            .setLatitude(47.627980F)
-                            .setLongitude(-2.822915F)
+                            .setLatitude(47.627980)
+                            .setLongitude(-2.822915)
                             .build())
                     .setTitle("Coordinates title")
                     .build())
