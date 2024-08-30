@@ -423,13 +423,13 @@ public class ConversationApi {
    *
    * @param projectId The unique ID of the project. You can find this on the [Sinch
    *     Dashboard](https://dashboard.sinch.com/convapi/apps). (required)
-   * @param onlyActive Required. True if only active conversations should be listed. (required)
    * @param appId The ID of the app involved in the conversations. Note that either
    *     &#x60;app_id&#x60; or &#x60;contact_id&#x60; is required in order for the operation to
    *     function correctly. (optional)
    * @param contactId Resource name (ID) of the contact. Note that either &#x60;app_id&#x60; or
    *     &#x60;contact_id&#x60; is required in order for the operation to function correctly.
    *     (optional)
+   * @param onlyActive True if only active conversations should be listed. (optional)
    * @param pageSize The maximum number of conversations to fetch. Defaults to 10 and the maximum is
    *     20. (optional)
    * @param pageToken Next page token previously returned if any. (optional)
@@ -439,9 +439,9 @@ public class ConversationApi {
    */
   public ListConversationsResponseInternal conversationListConversations(
       String projectId,
-      Boolean onlyActive,
       String appId,
       String contactId,
+      Boolean onlyActive,
       Integer pageSize,
       String pageToken,
       ConversationChannel activeChannel)
@@ -453,14 +453,14 @@ public class ConversationApi {
             + "projectId: "
             + projectId
             + ", "
-            + "onlyActive: "
-            + onlyActive
-            + ", "
             + "appId: "
             + appId
             + ", "
             + "contactId: "
             + contactId
+            + ", "
+            + "onlyActive: "
+            + onlyActive
             + ", "
             + "pageSize: "
             + pageSize
@@ -473,7 +473,7 @@ public class ConversationApi {
 
     HttpRequest httpRequest =
         conversationListConversationsRequestBuilder(
-            projectId, onlyActive, appId, contactId, pageSize, pageToken, activeChannel);
+            projectId, appId, contactId, onlyActive, pageSize, pageToken, activeChannel);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -494,9 +494,9 @@ public class ConversationApi {
 
   private HttpRequest conversationListConversationsRequestBuilder(
       String projectId,
-      Boolean onlyActive,
       String appId,
       String contactId,
+      Boolean onlyActive,
       Integer pageSize,
       String pageToken,
       ConversationChannel activeChannel)
@@ -506,12 +506,6 @@ public class ConversationApi {
       throw new ApiException(
           400,
           "Missing the required parameter 'projectId' when calling conversationListConversations");
-    }
-    // verify the required parameter 'onlyActive' is set
-    if (onlyActive == null) {
-      throw new ApiException(
-          400,
-          "Missing the required parameter 'onlyActive' when calling conversationListConversations");
     }
 
     String localVarPath =

@@ -112,9 +112,9 @@ public class ConversationsServiceTest extends ConversationBaseTest {
 
     when(api.conversationListConversations(
             eq(uriPartID),
-            eq(true),
             eq("conversation app Id"),
             eq("contact id"),
+            eq(null),
             eq(1),
             eq(null),
             eq(ConversationChannel.MESSENGER)))
@@ -122,9 +122,9 @@ public class ConversationsServiceTest extends ConversationBaseTest {
 
     when(api.conversationListConversations(
             eq(uriPartID),
-            eq(true),
             eq("conversation app Id"),
             eq("contact id"),
+            eq(null),
             eq(1),
             eq("ChowMUo1NUVOVERUSFlGQVlKMFE1WFpaSktSVhIaMDFITkIzMzY0UFdCQkcyR1paV1ZWVDNERDI="),
             eq(ConversationChannel.MESSENGER)))
@@ -132,16 +132,15 @@ public class ConversationsServiceTest extends ConversationBaseTest {
 
     when(api.conversationListConversations(
             eq(uriPartID),
-            eq(true),
             eq("conversation app Id"),
             eq("contact id"),
+            eq(null),
             eq(1),
             eq("ChowMUo1NUVBSk1FNDZQMlI4SFIxRjVZRjYxWhIaMDFITkIzMzY0UFdCQkcyR1paV1ZWVDNERDI="),
             eq(ConversationChannel.MESSENGER)))
         .thenReturn(conversationsListPage2);
     ConversationsListRequest request =
         ConversationsListRequest.builder()
-            .setOnlyActive(true)
             .setAppId("conversation app Id")
             .setContactId("contact id")
             .setPageSize(1)
