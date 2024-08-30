@@ -87,9 +87,9 @@ public class ContactService implements com.sinch.sdk.domains.conversation.api.v1
     getApi().contactDeleteContact(uriUUID, contactId);
   }
 
-  public Contact update(Contact client) {
+  public Contact update(String contactId, Contact client) {
 
-    return getApi().contactUpdateContact(uriUUID, client.getId(), client, null);
+    return getApi().contactUpdateContact(uriUUID, contactId, client, null);
   }
 
   public Contact mergeContact(String destinationId, String sourceId) {

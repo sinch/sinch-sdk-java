@@ -33,7 +33,6 @@ public class Update extends BaseApplication {
 
     var contact =
         Contact.builder()
-            .setId(conversationContactId)
             .setChannelIdentities(
                 Arrays.asList(
                     ChannelIdentity.builder()
@@ -63,7 +62,7 @@ public class Update extends BaseApplication {
             .setLanguage(ContactLanguage.BG)
             .build();
 
-    var result = service.update(contact);
+    var result = service.update(conversationContactId, contact);
 
     LOGGER.info("Response: " + result);
   }

@@ -20,38 +20,38 @@ public class CoordinatesImpl implements Coordinates {
 
   public static final String JSON_PROPERTY_LATITUDE = "latitude";
 
-  private OptionalValue<Float> latitude;
+  private OptionalValue<Double> latitude;
 
   public static final String JSON_PROPERTY_LONGITUDE = "longitude";
 
-  private OptionalValue<Float> longitude;
+  private OptionalValue<Double> longitude;
 
   public CoordinatesImpl() {}
 
-  protected CoordinatesImpl(OptionalValue<Float> latitude, OptionalValue<Float> longitude) {
+  protected CoordinatesImpl(OptionalValue<Double> latitude, OptionalValue<Double> longitude) {
     this.latitude = latitude;
     this.longitude = longitude;
   }
 
   @JsonIgnore
-  public Float getLatitude() {
+  public Double getLatitude() {
     return latitude.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_LATITUDE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<Float> latitude() {
+  public OptionalValue<Double> latitude() {
     return latitude;
   }
 
   @JsonIgnore
-  public Float getLongitude() {
+  public Double getLongitude() {
     return longitude.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_LONGITUDE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<Float> longitude() {
+  public OptionalValue<Double> longitude() {
     return longitude;
   }
 
@@ -96,17 +96,17 @@ public class CoordinatesImpl implements Coordinates {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements Coordinates.Builder {
-    OptionalValue<Float> latitude = OptionalValue.empty();
-    OptionalValue<Float> longitude = OptionalValue.empty();
+    OptionalValue<Double> latitude = OptionalValue.empty();
+    OptionalValue<Double> longitude = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_LATITUDE)
-    public Builder setLatitude(Float latitude) {
+    public Builder setLatitude(Double latitude) {
       this.latitude = OptionalValue.of(latitude);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_LONGITUDE)
-    public Builder setLongitude(Float longitude) {
+    public Builder setLongitude(Double longitude) {
       this.longitude = OptionalValue.of(longitude);
       return this;
     }

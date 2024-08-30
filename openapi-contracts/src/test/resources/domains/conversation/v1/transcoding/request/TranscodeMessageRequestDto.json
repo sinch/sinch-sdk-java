@@ -3,8 +3,8 @@
   "app_message": {
     "location_message": {
       "coordinates": {
-        "latitude": 47.62798,
-        "longitude": -2.822915
+        "latitude": 47.6279809,
+        "longitude": -2.8229159
       },
       "label": "label value",
       "title": "title value"
@@ -26,8 +26,8 @@
             {
               "location_message": {
                 "coordinates": {
-                  "latitude": 47.62798,
-                  "longitude": -2.822915
+                  "latitude": 47.6279809,
+                  "longitude": -2.8229159
                 },
                 "label": "label value",
                 "title": "title value"

@@ -30,11 +30,7 @@ public class List extends BaseApplication {
     LOGGER.info("List conversations for appID:" + conversationAppId);
 
     ConversationsListRequest request =
-        ConversationsListRequest.builder()
-            .setPageSize(1)
-            .setOnlyActive(false)
-            .setAppId(conversationAppId)
-            .build();
+        ConversationsListRequest.builder().setPageSize(1).setAppId(conversationAppId).build();
     ConversationsListResponse response = service.list(request);
 
     LOGGER.info("Response (by stream)");
