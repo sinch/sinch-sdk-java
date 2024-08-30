@@ -1,6 +1,6 @@
 {
   "language_code": "fr-FR",
-  "content": "template translation content value",
+  "content": "{\"text_message\":{\"text\":\"Message from a template v1.\"}}",
   "version": "1",
   "create_time": "2024-07-07T02:59:59Z",
   "update_time": "2024-07-07T06:07:44Z",

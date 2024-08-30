@@ -19,7 +19,7 @@ public class TemplateTranslationDtoTest extends TemplatesBaseTest {
   public static TemplateTranslation expectedDto =
       TemplateTranslation.builder()
           .setLanguageCode("fr-FR")
-          .setContent("template translation content value")
+          .setContent("{\"text_message\":{\"text\":\"Message from a template v1.\"}}")
           .setVersion("1")
           .setCreateTime(Instant.parse("2024-07-07T02:59:59Z"))
           .setUpdateTime(Instant.parse("2024-07-07T06:07:44Z"))

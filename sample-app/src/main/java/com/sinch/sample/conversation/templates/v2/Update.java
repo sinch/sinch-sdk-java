@@ -2,10 +2,8 @@ package com.sinch.sample.conversation.templates.v2;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.conversation.api.templates.v2.TemplatesServiceV2;
-import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
 import com.sinch.sdk.domains.conversation.templates.models.TemplateVariable;
-import com.sinch.sdk.domains.conversation.templates.models.v2.ChannelTemplateOverride;
 import com.sinch.sdk.domains.conversation.templates.models.v2.TemplateTranslation;
 import com.sinch.sdk.domains.conversation.templates.models.v2.TemplateV2;
 import java.io.IOException;
@@ -54,13 +52,6 @@ public class Update extends BaseApplication {
                                 TemplateVariable.builder()
                                     .setKey("they key2")
                                     .setPreviewValue("foo2")
-                                    .build()))
-                        .setChannelTemplateOverrides(
-                            Collections.singletonMap(
-                                ConversationChannel.WHATSAPP,
-                                ChannelTemplateOverride.builder()
-                                    .setParameterMappings(
-                                        Collections.singletonMap("they key1", "they key2"))
                                     .build()))
                         .build()))
             .build();
