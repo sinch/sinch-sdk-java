@@ -82,12 +82,12 @@ public interface ContactService {
   /**
    * Updates a contact as specified by the contact ID.
    *
-   * @param contact Contact information to be updated. {@link Contact#getId() #Id} have to set and
-   *     will be used to identify Contact to be updated
+   * @param contactId Contact ID to be updated
+   * @param contact Contact information to be updated
    * @return Updated contact information
    * @since _NEXT_VERSION_
    */
-  Contact update(Contact contact);
+  Contact update(String contactId, Contact contact);
 
   /**
    * Merge two Contacts.

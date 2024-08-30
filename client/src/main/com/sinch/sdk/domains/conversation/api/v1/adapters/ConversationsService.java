@@ -69,7 +69,7 @@ public class ConversationsService
     ListConversationsResponseInternal response =
         getApi()
             .conversationListConversations(
-                uriUUID, onlyActive, appId, contactId, pageSize, pageToken, activeChannel);
+                uriUUID, appId, contactId, onlyActive, pageSize, pageToken, activeChannel);
 
     return mapForPaging(parameters, response);
   }
