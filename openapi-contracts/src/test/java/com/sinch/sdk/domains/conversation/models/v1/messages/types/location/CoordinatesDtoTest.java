@@ -13,7 +13,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 public class CoordinatesDtoTest extends ConversationBaseTest {
 
   public static Coordinates coordinatesDto =
-      Coordinates.builder().setLatitude(47.627980F).setLongitude(-2.822915F).build();
+      Coordinates.builder().setLatitude(47.6279809).setLongitude(-2.8229159).build();
 
   @GivenTextResource("/domains/conversation/v1/messages/types/location/CoordinatesDto.json")
   String jsonCoordinatesDto;

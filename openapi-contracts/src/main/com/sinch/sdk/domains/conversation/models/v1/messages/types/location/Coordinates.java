@@ -21,14 +21,14 @@ public interface Coordinates {
    *
    * @return latitude
    */
-  Float getLatitude();
+  Double getLatitude();
 
   /**
    * The longitude.
    *
    * @return longitude
    */
-  Float getLongitude();
+  Double getLongitude();
 
   /**
    * Getting builder
@@ -49,7 +49,7 @@ public interface Coordinates {
      * @return Current builder
      * @see #getLatitude
      */
-    Builder setLatitude(Float latitude);
+    Builder setLatitude(Double latitude);
 
     /**
      * see getter
@@ -58,7 +58,7 @@ public interface Coordinates {
      * @return Current builder
      * @see #getLongitude
      */
-    Builder setLongitude(Float longitude);
+    Builder setLongitude(Double longitude);
 
     /**
      * Create instance
