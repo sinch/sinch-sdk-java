@@ -105,6 +105,7 @@ public class TemplateTranslationImpl extends TemplateTranslationBaseImpl
   static class Builder<B extends Builder<B>> extends TemplateTranslationBaseImpl.Builder<B>
       implements TemplateTranslation.Builder<B> {
 
+    @JsonIgnore
     public B setMessage(AppMessageBody message) {
 
       if (message instanceof CardMessage) {

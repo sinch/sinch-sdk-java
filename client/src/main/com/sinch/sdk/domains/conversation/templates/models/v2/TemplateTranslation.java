@@ -1,8 +1,10 @@
 package com.sinch.sdk.domains.conversation.templates.models.v2;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody;
 
 /** Message to be injected */
+@JsonDeserialize(builder = TemplateTranslationImpl.Builder.class)
 public interface TemplateTranslation extends TemplateTranslationBase {
 
   /**

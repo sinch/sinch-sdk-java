@@ -10,6 +10,7 @@ public class TestHelpers {
 
   public static void recursiveEquals(Object o1, Object o2) {
 
+    Assertions.assertThat(o1.getClass()).isEqualTo(o2.getClass());
     Assertions.assertThat(o1)
         .usingRecursiveComparison(recursiveComparisonConfiguration)
         .isEqualTo(o2);
