@@ -6,6 +6,7 @@ import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.StringUtil;
+import com.sinch.sdk.domains.conversation.api.templates.adapters.TemplatesService;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.events.app.AppEventMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.events.contactmessage.internal.ContactMessageEventMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.events.contacts.internal.ContactEventMapper;
@@ -23,6 +24,7 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ContactMes
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.carousel.CarouselMessageMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ChoiceMessageMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.template.TemplateMessageMapper;
+import com.sinch.sdk.domains.conversation.templates.models.v2.TemplateTranslationMapper;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
@@ -39,6 +41,8 @@ public class ConversationService
   private static final String SECURITY_SCHEME_KEYWORD_ = "oAuth2";
 
   private final String uriUUID;
+  private final UnifiedCredentials credentials;
+  private final ServerConfiguration oAuthServer;
   private final ConversationContext context;
   private final HttpClient httpClient;
   private final Map<String, AuthManager> authManagers;
@@ -50,6 +54,7 @@ public class ConversationService
   private TranscodingService transcoding;
   private CapabilityService capability;
   private WebHooksService webhooks;
+  private TemplatesService templates;
 
   static {
     LocalLazyInit.init();
@@ -71,18 +76,15 @@ public class ConversationService
         credentials.getProjectId(), "Conversation service requires 'projectId' to be defined");
     StringUtil.requireNonEmpty(
         context.getUrl(), "Conversation service requires 'url' to be defined");
-    StringUtil.requireNonEmpty(
-        context.getTemplateManagementUrl(),
-        "Conversation service requires  'templateManagementUrl' to be defined");
 
     LOGGER.fine(
-        String.format(
-            "Activate conversation API with server: '%s', template server: '%s",
-            context.getServer().getUrl(), context.getTemplateManagementServer().getUrl()));
+        String.format("Activate conversation API with server: '%s'", context.getServer().getUrl()));
 
     this.uriUUID = credentials.getProjectId();
+    this.credentials = credentials;
     this.context = context;
     this.httpClient = httpClient;
+    this.oAuthServer = oAuthServer;
 
     OAuthManager authManager =
         new OAuthManager(credentials, oAuthServer, new HttpMapper(), httpClient);
@@ -153,7 +155,14 @@ public class ConversationService
     return this.capability;
   }
 
-  static final class LocalLazyInit {
+  public TemplatesService templates() {
+    if (null == this.templates) {
+      this.templates = new TemplatesService(credentials, context, oAuthServer, httpClient);
+    }
+    return this.templates;
+  }
+
+  public static final class LocalLazyInit {
 
     private LocalLazyInit() {
       AppEventMapper.initMapper();
@@ -173,6 +182,7 @@ public class ConversationService
       RecipientMapper.initMapper();
       SendMessageRequestMapper.initMapper();
       TemplateMessageMapper.initMapper();
+      TemplateTranslationMapper.initMapper();
       WhatsAppInteractiveHeaderMapper.initMapper();
     }
 
