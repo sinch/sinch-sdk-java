@@ -12,6 +12,7 @@ public class Config {
   public static final String KEY_SECRET = "keySecret";
   public static final String AUTH_URL = "http://localhost:3011/oauth2/token";
   public static final String CONVERSATION_HOST_NAME = "http://localhost:3014";
+  public static final String CONVERSATION_TEMPLATE_HOST_NAME = "http://localhost:3015";
   public static final ConversationRegion CONVERSATION_REGION = ConversationRegion.US;
 
   private final SinchClient client;
@@ -28,6 +29,7 @@ public class Config {
                 ConversationContext.builder()
                     .setUrl(Config.CONVERSATION_HOST_NAME)
                     .setRegion(Config.CONVERSATION_REGION)
+                    .setTemplateManagementUrl(CONVERSATION_TEMPLATE_HOST_NAME)
                     .build())
             .build();
 
