@@ -34,13 +34,14 @@ import com.sinch.sdk.e2e.Config;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.Instant;
 import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -64,6 +65,8 @@ public class WebhooksEventsSteps {
   static final String E2E_KEYWORD_MESSAGE_INBOUND = "MESSAGE_INBOUND";
   static final String E2E_KEYWORD_MESSAGE_INBOUND_SMART_CONVERSATION_REDACTION =
       "MESSAGE_INBOUND_SMART_CONVERSATION_REDACTION";
+
+  static final String SECRET = "CactusKnight_SurfsWaves";
 
   Map<WebhookTrigger, Class<?>> expectedClasses =
       Stream.of(
@@ -156,14 +159,14 @@ public class WebhooksEventsSteps {
 
   WebHooksService service;
 
-  Map<WebhookTrigger, ConversationWebhookEvent> receivedEvents = new ConcurrentHashMap<>();
+  Map<WebhookTrigger, Response> receivedEvents = new ConcurrentHashMap<>();
 
-  ConversationWebhookEvent eventDeliveryReceiptFailedResponse;
-  ConversationWebhookEvent messageDeliveryReceiptFailedResponse;
-  MessageSubmitEvent messageSubmitMediaResponse;
-  MessageSubmitEvent messageSubmitTextResponse;
-  SmartConversationsEvent smartConversationMediaResponse;
-  SmartConversationsEvent smartConversationTextResponse;
+  Response eventDeliveryReceiptFailedResponse;
+  Response messageDeliveryReceiptFailedResponse;
+  Response messageSubmitMediaResponse;
+  Response messageSubmitTextResponse;
+  Response smartConversationMediaResponse;
+  Response smartConversationTextResponse;
 
   @Given("^the Conversation Webhooks handler is available$")
   public void handlerAvailable() {
@@ -255,44 +258,67 @@ public class WebhooksEventsSteps {
 
   @When("^I send a request to trigger a \"MESSAGE_SUBMIT\" event for a media message$")
   public void triggerMESSAGE_SUBMIT_MEDIA() throws IOException {
-    messageSubmitMediaResponse =
-        (MessageSubmitEvent) callURL(new URL(WEBHOOKS_PATH + "message-submit/media"));
+    messageSubmitMediaResponse = callURL(new URL(WEBHOOKS_PATH + "message-submit/media"));
   }
 
   @When("^I send a request to trigger a \"MESSAGE_SUBMIT\" event for a text message$")
   public void triggerMESSAGE_SUBMIT_TEXT() throws IOException {
-    messageSubmitTextResponse =
-        (MessageSubmitEvent) callURL(new URL(WEBHOOKS_PATH + "message-submit/text"));
+    messageSubmitTextResponse = callURL(new URL(WEBHOOKS_PATH + "message-submit/text"));
   }
 
   @When("^I send a request to trigger a \"SMART_CONVERSATIONS\" event for a media message$")
   public void triggerSMART_CONVERSATIONS_MEDIA() throws IOException {
-    smartConversationMediaResponse =
-        (SmartConversationsEvent) callURL(new URL(WEBHOOKS_PATH + "smart-conversation/media"));
+    smartConversationMediaResponse = callURL(new URL(WEBHOOKS_PATH + "smart-conversation/media"));
   }
 
   @When("^I send a request to trigger a \"SMART_CONVERSATIONS\" event for a text message$")
   public void triggerSMART_CONVERSATIONS_TEXT() throws IOException {
-    smartConversationTextResponse =
-        (SmartConversationsEvent) callURL(new URL(WEBHOOKS_PATH + "smart-conversation/text"));
+    smartConversationTextResponse = callURL(new URL(WEBHOOKS_PATH + "smart-conversation/text"));
   }
 
-  @Then("the Conversation event header contains a valid signature")
-  public void validateHeader() {
-    // FIXME: Current cucumber description od not enable to perform validation in // and multi
-    // thread mode
-    // Which event is having to be validated here ?
-    // Missing a parameter describing event type. Something like:
-    //   "the Conversation event header contains a valid signature for {string} event type"
+  @Then("the header of the Conversation event {string} contains a valid signature")
+  public void validateHeader(String e2eKeyword) {
+
+    Response receivedEvent = receivedEvents.get(e2eKeywordToTrigger.get(e2eKeyword));
+
+    if (null != receivedEvent) {
+      boolean validated =
+          service.validateAuthenticationHeader(
+              SECRET, receivedEvent.headers, receivedEvent.rawPayload);
+      Assertions.assertTrue(validated);
+    }
   }
 
   @Then("the Conversation event describes a {string} event type")
   public void triggerResult(String e2eKeyword) {
     WebhookTrigger trigger = e2eKeywordToTrigger.get(e2eKeyword);
-    ConversationWebhookEvent receivedEvent = receivedEvents.get(trigger);
+    Response receivedEvent = receivedEvents.get(trigger);
     if (null != receivedEvent) {
-      Assertions.assertInstanceOf(expectedClasses.get(trigger), receivedEvent);
+      Assertions.assertInstanceOf(expectedClasses.get(trigger), receivedEvent.event);
     }
+  }
+
+  @Then(
+      "the header of the Conversation event {string} with a {string} status contains a valid"
+          + " signature")
+  public void validateEventDeliveryFailureHeader(String e2eKeyword, String status) {
+
+    Response receivedEvent = null;
+    if (e2eKeyword.equals(E2E_KEYWORD_EVENT_DELIVERY) && status.equals("FAILED")) {
+      receivedEvent = eventDeliveryReceiptFailedResponse;
+    } else if (e2eKeyword.equals(E2E_KEYWORD_EVENT_DELIVERY) && status.equals("DELIVERED")) {
+      receivedEvent = receivedEvents.get(e2eKeywordToTrigger.get(e2eKeyword));
+    } else if (e2eKeyword.equals(E2E_KEYWORD_MESSAGE_DELIVERY) && status.equals("FAILED")) {
+      receivedEvent = messageDeliveryReceiptFailedResponse;
+    } else if (e2eKeyword.equals(E2E_KEYWORD_MESSAGE_DELIVERY) && status.equals("QUEUED")) {
+      receivedEvent = receivedEvents.get(e2eKeywordToTrigger.get(e2eKeyword));
+    } else {
+      Assertions.assertTrue(false);
+    }
+    boolean validated =
+        service.validateAuthenticationHeader(
+            SECRET, receivedEvent.headers, receivedEvent.rawPayload);
+    Assertions.assertTrue(validated);
   }
 
   @Then("the Conversation event describes a FAILED event delivery status and its reason")
@@ -330,7 +356,7 @@ public class WebhooksEventsSteps {
                     .build())
             .build();
 
-    TestHelpers.recursiveEquals(expected, eventDeliveryReceiptFailedResponse);
+    TestHelpers.recursiveEquals(expected, eventDeliveryReceiptFailedResponse.event);
   }
 
   @Then("the Conversation event describes a FAILED message delivery status and its reason")
@@ -369,109 +395,92 @@ public class WebhooksEventsSteps {
                     .build())
             .build();
 
-    TestHelpers.recursiveEquals(expected, messageDeliveryReceiptFailedResponse);
+    TestHelpers.recursiveEquals(expected, messageDeliveryReceiptFailedResponse.event);
+  }
+
+  @Then(
+      "the header of the Conversation event {string} for a {string} message contains a valid"
+          + " signature")
+  public void validateMessageSubmitHeader(String e2eKeyword, String messageType) {
+    Response receivedEvent = null;
+    if (e2eKeyword.equals("MESSAGE_SUBMIT") && messageType.equals("media")) {
+      receivedEvent = messageSubmitMediaResponse;
+    } else if (e2eKeyword.equals("MESSAGE_SUBMIT") && messageType.equals("text")) {
+      receivedEvent = messageSubmitTextResponse;
+    } else if (e2eKeyword.equals("SMART_CONVERSATIONS") && messageType.equals("media")) {
+      receivedEvent = smartConversationMediaResponse;
+    } else if (e2eKeyword.equals("SMART_CONVERSATIONS") && messageType.equals("text")) {
+      receivedEvent = smartConversationTextResponse;
+    } else {
+      Assertions.assertTrue(false);
+    }
+    boolean validated =
+        service.validateAuthenticationHeader(
+            SECRET, receivedEvent.headers, receivedEvent.rawPayload);
+    Assertions.assertTrue(validated);
   }
 
   @Then("the Conversation event describes a \"MESSAGE_SUBMIT\" event type for a media message")
   public void messageSubmitMediaEventResult() {
 
-    Assertions.assertInstanceOf(MessageSubmitEvent.class, messageSubmitMediaResponse);
+    MessageSubmitEvent event = (MessageSubmitEvent) messageSubmitMediaResponse.event;
+
+    Assertions.assertInstanceOf(MessageSubmitEvent.class, event);
     Assertions.assertInstanceOf(
-        MediaMessage.class,
-        messageSubmitMediaResponse.getMessage().getSubmittedMessage().getBody());
+        MediaMessage.class, event.getMessage().getSubmittedMessage().getBody());
   }
 
   @Then("the Conversation event describes a \"MESSAGE_SUBMIT\" event type for a text message")
   public void messageSubmitTextEventResult() {
 
-    Assertions.assertInstanceOf(MessageSubmitEvent.class, messageSubmitTextResponse);
+    MessageSubmitEvent event = (MessageSubmitEvent) messageSubmitTextResponse.event;
+
+    Assertions.assertInstanceOf(MessageSubmitEvent.class, event);
     Assertions.assertInstanceOf(
-        TextMessage.class, messageSubmitTextResponse.getMessage().getSubmittedMessage().getBody());
+        TextMessage.class, event.getMessage().getSubmittedMessage().getBody());
   }
 
   @Then("the Conversation event describes a \"SMART_CONVERSATIONS\" event type for a media message")
   public void smartConversationMediaResult() {
 
-    Assertions.assertInstanceOf(SmartConversationsEvent.class, smartConversationMediaResponse);
+    SmartConversationsEvent event = (SmartConversationsEvent) smartConversationMediaResponse.event;
+    Assertions.assertInstanceOf(SmartConversationsEvent.class, event);
     Assertions.assertEquals(
-        smartConversationMediaResponse
-            .getNotification()
-            .getAnalysisResults()
-            .getMlImageRecognitionResult()
-            .size(),
-        1);
+        event.getNotification().getAnalysisResults().getMlImageRecognitionResult().size(), 1);
     Assertions.assertEquals(
-        smartConversationMediaResponse
-            .getNotification()
-            .getAnalysisResults()
-            .getMlOffensiveAnalysisResult()
-            .size(),
-        1);
+        event.getNotification().getAnalysisResults().getMlOffensiveAnalysisResult().size(), 1);
   }
 
   @Then("the Conversation event describes a \"SMART_CONVERSATIONS\" event type for a text message")
   public void smartConversationTextResult() {
     String loversText = "I ❤️ Sinch";
 
-    Assertions.assertInstanceOf(SmartConversationsEvent.class, smartConversationTextResponse);
+    SmartConversationsEvent event = (SmartConversationsEvent) smartConversationTextResponse.event;
+
+    Assertions.assertInstanceOf(SmartConversationsEvent.class, event);
     Assertions.assertEquals(
-        1,
-        smartConversationTextResponse
-            .getNotification()
-            .getAnalysisResults()
-            .getMlSentimentResult()
-            .size());
+        1, event.getNotification().getAnalysisResults().getMlSentimentResult().size());
     Assertions.assertEquals(
         loversText,
-        smartConversationTextResponse
-            .getNotification()
-            .getAnalysisResults()
-            .getMlSentimentResult()
-            .get(0)
-            .getMessage());
+        event.getNotification().getAnalysisResults().getMlSentimentResult().get(0).getMessage());
 
     Assertions.assertEquals(
-        1,
-        smartConversationTextResponse
-            .getNotification()
-            .getAnalysisResults()
-            .getMlNluResult()
-            .size());
+        1, event.getNotification().getAnalysisResults().getMlNluResult().size());
     Assertions.assertEquals(
         loversText,
-        smartConversationTextResponse
-            .getNotification()
-            .getAnalysisResults()
-            .getMlNluResult()
-            .get(0)
-            .getMessage());
+        event.getNotification().getAnalysisResults().getMlNluResult().get(0).getMessage());
 
     Assertions.assertEquals(
-        1,
-        smartConversationTextResponse
-            .getNotification()
-            .getAnalysisResults()
-            .getMlPiiResult()
-            .size());
+        1, event.getNotification().getAnalysisResults().getMlPiiResult().size());
     Assertions.assertEquals(
         loversText,
-        smartConversationTextResponse
-            .getNotification()
-            .getAnalysisResults()
-            .getMlPiiResult()
-            .get(0)
-            .getMessage());
+        event.getNotification().getAnalysisResults().getMlPiiResult().get(0).getMessage());
 
     Assertions.assertEquals(
-        1,
-        smartConversationTextResponse
-            .getNotification()
-            .getAnalysisResults()
-            .getMlOffensiveAnalysisResult()
-            .size());
+        1, event.getNotification().getAnalysisResults().getMlOffensiveAnalysisResult().size());
     Assertions.assertEquals(
         loversText,
-        smartConversationTextResponse
+        event
             .getNotification()
             .getAnalysisResults()
             .getMlOffensiveAnalysisResult()
@@ -481,21 +490,49 @@ public class WebhooksEventsSteps {
 
   public void handleRequest(String e2eKeyword) throws IOException {
 
-    ConversationWebhookEvent event = callURL(new URL(e2eKeywordToURL.get(e2eKeyword)));
-    receivedEvents.put(e2eKeywordToTrigger.get(e2eKeyword), event);
+    Response response = callURL(new URL(e2eKeywordToURL.get(e2eKeyword)));
+    receivedEvents.put(e2eKeywordToTrigger.get(e2eKeyword), response);
   }
 
-  public ConversationWebhookEvent callURL(URL url) throws IOException {
+  Response callURL(URL url) throws IOException {
 
     HttpURLConnection con = (HttpURLConnection) url.openConnection();
     con.setRequestMethod("GET");
-    BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-    String inputLine;
-    StringBuilder content = new StringBuilder();
-    while ((inputLine = in.readLine()) != null) {
-      content.append(inputLine);
+
+    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+    byte[] buffer = new byte[1024];
+    int bytesRead;
+    while ((bytesRead = con.getInputStream().read(buffer)) != -1) {
+      byteArrayOutputStream.write(buffer, 0, bytesRead);
     }
-    in.close();
-    return service.parseEvent(content.toString());
+    Response response = new Response();
+    response.headers = transformHeaders(con.getHeaderFields());
+    response.rawPayload = byteArrayOutputStream.toString("UTF-8");
+    response.event = service.parseEvent(response.rawPayload);
+    return response;
+  }
+
+  static Map<String, String> transformHeaders(Map<String, List<String>> headers) {
+    if (null == headers) {
+      return null;
+    }
+    HashMap<String, String> newMap = new HashMap<String, String>();
+    headers.forEach((key, value) -> newMap.put(key, concatHeaderValues(value)));
+    return newMap;
+  }
+
+  static String concatHeaderValues(List<String> values) {
+    if (null == values) {
+      return null;
+    }
+    return values.stream()
+        .reduce(null, (previous, current) -> (null != previous ? previous + ";" : "") + current);
+  }
+
+  static class Response {
+    Map<String, String> headers;
+    String rawPayload;
+    ConversationWebhookEvent event;
   }
 }

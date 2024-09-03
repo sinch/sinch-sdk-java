@@ -1,6 +1,7 @@
 package com.sinch.sdk.core.utils;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 public class MapUtils {
@@ -13,6 +14,8 @@ public class MapUtils {
 
     // convert header keys to use case-insensitive map keys
     Map<String, T> caseInsensitiveHeaders = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    // ensure no null key value
+    headers.entrySet().removeIf(entry -> Objects.isNull(entry.getKey()));
     caseInsensitiveHeaders.putAll(headers);
     return caseInsensitiveHeaders;
   }
