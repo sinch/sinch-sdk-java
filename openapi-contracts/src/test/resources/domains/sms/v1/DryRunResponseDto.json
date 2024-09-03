@@ -4,7 +4,7 @@
   "per_recipient": [
     {
       "recipient": "recipient string",
-      "message_part": "message part string",
+      "number_of_parts": 1,
       "body": "body string",
       "encoding": "encoding string"
     }

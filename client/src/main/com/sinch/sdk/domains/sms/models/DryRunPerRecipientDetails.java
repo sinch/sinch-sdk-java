@@ -8,30 +8,79 @@ package com.sinch.sdk.domains.sms.models;
 public class DryRunPerRecipientDetails {
 
   private final String recipient;
-  private final String messagePart;
+  private final Integer numberOfParts;
   private final String body;
   private final String encoding;
 
+  /**
+   * Due to unused <code>messagePart</code> field, prefer the <code>numberOfParts</code> version
+   * usage.
+   *
+   * <p>This constructor will be removed in a next major release
+   *
+   * @deprecated
+   */
+  @Deprecated
   public DryRunPerRecipientDetails(
       String recipient, String messagePart, String body, String encoding) {
     this.recipient = recipient;
-    this.messagePart = messagePart;
+    this.numberOfParts = null;
     this.body = body;
     this.encoding = encoding;
   }
 
+  public DryRunPerRecipientDetails(
+      String recipient, Integer numberOfParts, String body, String encoding) {
+    this.recipient = recipient;
+    this.numberOfParts = numberOfParts;
+    this.body = body;
+    this.encoding = encoding;
+  }
+
+  /**
+   * Get recipient
+   *
+   * @return recipient
+   */
   public String getRecipient() {
     return recipient;
   }
 
+  /**
+   * Due to unused <code>messagePart</code> field, prefer the {@link #getNumberOfParts()} usage.
+   *
+   * <p>This function will be removed in a next major release
+   *
+   * @deprecated
+   */
+  @Deprecated
   public String getMessagePart() {
-    return messagePart;
+    return null;
   }
 
+  /**
+   * Get number of parts
+   *
+   * @return number of parts
+   */
+  public Integer getNumberOfParts() {
+    return numberOfParts;
+  }
+
+  /**
+   * Get body
+   *
+   * @return body
+   */
   public String getBody() {
     return body;
   }
 
+  /**
+   * Get encoding
+   *
+   * @return encoding
+   */
   public String getEncoding() {
     return encoding;
   }
@@ -42,8 +91,8 @@ public class DryRunPerRecipientDetails {
         + "recipient='"
         + recipient
         + '\''
-        + ", messagePart='"
-        + messagePart
+        + ", numberOfParts='"
+        + numberOfParts
         + '\''
         + ", body='"
         + body
@@ -61,7 +110,7 @@ public class DryRunPerRecipientDetails {
   public static class Builder {
 
     private String recipient;
-    private String messagePart;
+    private Integer numberOfParts;
     private String body;
     private String encoding;
 
@@ -70,8 +119,22 @@ public class DryRunPerRecipientDetails {
       return this;
     }
 
-    public Builder setMessagePart(String messagePart) {
-      this.messagePart = messagePart;
+    /**
+     * Due to unused <code>messagePart</code> field, prefer the {@link #setNumberOfParts(Integer)}
+     * usage.
+     *
+     * <p>This function will be removed in a next major release
+     *
+     * @deprecated
+     */
+    @Deprecated
+    public Builder setMessagePart(String messageParts) {
+      // Do nothing
+      return this;
+    }
+
+    public Builder setNumberOfParts(Integer numberOfParts) {
+      this.numberOfParts = numberOfParts;
       return this;
     }
 
@@ -88,7 +151,7 @@ public class DryRunPerRecipientDetails {
     private Builder() {}
 
     public DryRunPerRecipientDetails build() {
-      return new DryRunPerRecipientDetails(recipient, messagePart, body, encoding);
+      return new DryRunPerRecipientDetails(recipient, numberOfParts, body, encoding);
     }
   }
 }

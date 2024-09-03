@@ -1,10 +1,9 @@
 package com.sinch.sdk.domains.sms.adapters.converters;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.sms.models.DryRun;
 import com.sinch.sdk.domains.sms.models.DryRunPerRecipientDetails;
 import com.sinch.sdk.domains.sms.models.dto.v1.DryRun200ResponseDto;
@@ -25,7 +24,7 @@ public class DryRunDtoConverterTest extends BaseTest {
               Collections.singletonList(
                   DryRunPerRecipientDetails.builder()
                       .setRecipient("recipient string")
-                      .setMessagePart("message part string")
+                      .setNumberOfParts(1)
                       .setBody("body string")
                       .setEncoding("encoding string")
                       .build()))
@@ -33,8 +32,6 @@ public class DryRunDtoConverterTest extends BaseTest {
 
   @Test
   void testConvertDryRun() {
-    assertThat(DryRunDtoConverter.convert(loadedDto))
-        .usingRecursiveComparison()
-        .isEqualTo(dryRunClient);
+    TestHelpers.recursiveEquals(DryRunDtoConverter.convert(loadedDto), dryRunClient);
   }
 }

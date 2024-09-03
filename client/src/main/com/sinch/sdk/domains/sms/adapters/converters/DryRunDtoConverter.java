@@ -22,7 +22,7 @@ public class DryRunDtoConverter {
   private static DryRunPerRecipientDetails convert(DryRun200ResponsePerRecipientInnerDto dto) {
     return DryRunPerRecipientDetails.builder()
         .setRecipient(dto.getRecipient())
-        .setMessagePart(dto.getMessagePart())
+        .setNumberOfParts(dto.getNumberOfParts())
         .setBody(dto.getBody())
         .setEncoding(dto.getEncoding())
         .build();
