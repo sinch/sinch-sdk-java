@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.verification.api.v1.adapters;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
@@ -13,8 +14,8 @@ import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.domains.verification.adapters.VerificationBaseTest;
 import com.sinch.sdk.domains.verification.api.v1.internal.VerificationsStartApi;
-import com.sinch.sdk.domains.verification.models.dto.v1.start.VerificationStartRequestTest;
-import com.sinch.sdk.domains.verification.models.dto.v1.start.VerificationStartResponseTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.start.request.VerificationStartRequestTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.start.response.VerificationStartResponseTest;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequest;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSmsImpl;
@@ -33,16 +34,18 @@ import org.mockito.Mock;
 @TestWithResources
 public class VerificationStartServiceTest extends VerificationBaseTest {
 
-  @GivenJsonResource("/domains/verification/v1/start/VerificationStartRequestPhoneCallDto.json")
+  @GivenJsonResource(
+      "/domains/verification/v1/start/request/VerificationStartRequestPhoneCallDto.json")
   public VerificationStartRequestInternal startVerificationPhoneCallRequestDto;
 
-  @GivenJsonResource("/domains/verification/v1/start/VerificationStartRequestFlashCallDto.json")
+  @GivenJsonResource(
+      "/domains/verification/v1/start/request/VerificationStartRequestFlashCallDto.json")
   public VerificationStartRequestInternal startVerificationFlashCallRequestDto;
 
-  @GivenJsonResource("/domains/verification/v1/start/VerificationStartRequestDataDto.json")
+  @GivenJsonResource("/domains/verification/v1/start/request/VerificationStartRequestDataDto.json")
   public VerificationStartRequestInternal startVerificationDataRequestDto;
 
-  @GivenJsonResource("/domains/verification/v1/start/VerificationStartRequestSmsDto.json")
+  @GivenJsonResource("/domains/verification/v1/start/request/VerificationStartRequestSmsDto.json")
   public VerificationStartRequestInternal startVerificationSmsRequestDto;
 
   @Mock VerificationsStartApi api;
@@ -62,7 +65,7 @@ public class VerificationStartServiceTest extends VerificationBaseTest {
   @Test
   void startSms() throws ApiException {
 
-    when(api.startVerification(eq(startVerificationSmsRequestDto), eq(null)))
+    when(api.startVerification(any(VerificationStartRequestInternal.class), eq(null)))
         .thenReturn(VerificationStartResponseTest.expectedStartVerificationSmsDto);
 
     VerificationStartResponseSms response =
@@ -95,7 +98,7 @@ public class VerificationStartServiceTest extends VerificationBaseTest {
         new VerificationStartRequestInternalImpl();
     internalWithAcceptLanguage.setActualInstance(withAcceptLanguage);
 
-    when(api.startVerification(eq(internalWithAcceptLanguage), eq("es-ES")))
+    when(api.startVerification(any(VerificationStartRequestInternal.class), eq("es-ES")))
         .thenReturn(VerificationStartResponseTest.expectedStartVerificationSmsDto);
 
     VerificationStartResponseSms response =
