@@ -17,8 +17,8 @@ import com.sinch.sdk.domains.verification.models.VerificationStatusSMS;
 import com.sinch.sdk.domains.verification.models.VerificationStatusType;
 import com.sinch.sdk.domains.verification.models.dto.v1.report.VerificationReportRequestDtoTest;
 import com.sinch.sdk.domains.verification.models.dto.v1.report.VerificationReportResponseDtoTest;
-import com.sinch.sdk.domains.verification.models.dto.v1.start.VerificationStartRequestTest;
-import com.sinch.sdk.domains.verification.models.dto.v1.start.VerificationStartResponseTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.start.request.VerificationStartRequestTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.start.response.VerificationStartResponseTest;
 import com.sinch.sdk.domains.verification.models.dto.v1.status.VerificationStatusResponseTest;
 import com.sinch.sdk.domains.verification.models.requests.SMSCodeType;
 import com.sinch.sdk.domains.verification.models.requests.StartVerificationCalloutOptions;
@@ -35,6 +35,8 @@ import com.sinch.sdk.domains.verification.models.response.StartVerificationRespo
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSMS;
 import com.sinch.sdk.domains.verification.models.response.StartVerificationResponseSeamless;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequest;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms;
 import java.time.Instant;
 import org.junit.jupiter.api.Test;
 
@@ -136,9 +138,18 @@ public class VerificationsDtoConverterTest extends BaseTest {
   @Test
   void convertStartSmsRequest() {
 
+    VerificationStartRequest expected =
+        VerificationStartRequestSms.builder()
+            .setCustom("a custom")
+            .setReference("a reference")
+            .setIdentity(
+                com.sinch.sdk.domains.verification.models.v1.NumberIdentity.valueOf("+endpoint"))
+            .setExpiry("01:02:03")
+            .setCodeType(VerificationStartRequestSms.CodeTypeEnum.ALPHANUMERIC)
+            .setTemplate("My template require to use '{{CODE}}' code")
+            .build();
     TestHelpers.recursiveEquals(
-        VerificationsDtoConverter.convert(startVerificationSmsRequest),
-        VerificationStartRequestTest.startVerificationSmsDto.getVerificationStartRequestSmsImpl());
+        VerificationsDtoConverter.convert(startVerificationSmsRequest), expected);
   }
 
   @Test
