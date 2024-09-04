@@ -9,6 +9,7 @@
   "smsOptions": {
     "expiry": "01:02:03",
     "codeType": "Alphanumeric",
-    "template": "My template require to use '{{CODE}}' code"
+    "template": "My template require to use '{{CODE}}' code",
+    "my key": "my value"
   }
 }

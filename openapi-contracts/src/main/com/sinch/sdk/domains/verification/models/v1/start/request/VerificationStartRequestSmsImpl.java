@@ -189,6 +189,11 @@ public class VerificationStartRequestSmsImpl
         : OptionalValue.empty();
   }
 
+  @JsonIgnore
+  public Object getExtraOption(String key) {
+    return null != smsOptions && smsOptions.isPresent() ? smsOptions.get().get(key) : null;
+  }
+
   /** Return true if this VerificationStartRequestSms object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -294,6 +299,11 @@ public class VerificationStartRequestSmsImpl
     @JsonIgnore
     public Builder setAcceptLanguage(String acceptLanguage) {
       getDelegatedBuilder().setAcceptLanguage(acceptLanguage);
+      return this;
+    }
+
+    public Builder putExtraOption(String key, Object value) {
+      getDelegatedBuilder().put(key, value);
       return this;
     }
 

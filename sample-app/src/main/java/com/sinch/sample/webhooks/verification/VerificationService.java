@@ -27,7 +27,7 @@ public class VerificationService {
     var method = event.getMethod();
 
     if (MethodEnum.SMS.equals(method)) {
-      builder = VerificationRequestEventResponseSms.builder().setCode("1234");
+      builder = VerificationRequestEventResponseSms.builder();
     } else if (MethodEnum.FLASH_CALL.equals(method)) {
       builder = VerificationRequestEventResponseFlashCall.builder().setDialTimeout(12);
     } else if (MethodEnum.PHONE_CALL.equals(method)) {
