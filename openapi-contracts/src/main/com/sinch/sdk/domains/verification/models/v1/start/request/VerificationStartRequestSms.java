@@ -105,6 +105,14 @@ public interface VerificationStartRequestSms
   String getAcceptLanguage();
 
   /**
+   * Return the additional "smsOptions" with the specified name.
+   *
+   * @param key the name of the property
+   * @return the additional property with the specified name
+   */
+  Object getExtraOption(String key);
+
+  /**
    * Getting builder
    *
    * @return New Builder instance
@@ -180,6 +188,14 @@ public interface VerificationStartRequestSms
      * @see #getAcceptLanguage
      */
     Builder setAcceptLanguage(String acceptLanguage);
+
+    /**
+     * see getter
+     *
+     * @return Current builder
+     * @see #getExtraOption
+     */
+    Builder putExtraOption(String key, Object value);
 
     /**
      * Create instance

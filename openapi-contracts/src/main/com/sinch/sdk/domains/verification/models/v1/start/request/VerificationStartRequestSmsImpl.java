@@ -126,8 +126,10 @@ public class VerificationStartRequestSmsImpl
   }
 
   public OptionalValue<String> expiry() {
-    return null != smsOptions
-        ? smsOptions.map(VerificationStartSmsOptions::getExpiry)
+    return null != smsOptions && smsOptions.isPresent()
+        ? smsOptions
+            .map(f -> ((VerificationStartSmsOptionsImpl) f).expiry())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -140,7 +142,7 @@ public class VerificationStartRequestSmsImpl
   }
 
   public OptionalValue<CodeTypeEnum> codeType() {
-    return null != smsOptions
+    return null != smsOptions && smsOptions.isPresent()
         ? smsOptions.map(f -> CodeTypeEnum.from(smsOptions.get().getCodeType().value()))
         : OptionalValue.empty();
   }
@@ -154,8 +156,10 @@ public class VerificationStartRequestSmsImpl
   }
 
   public OptionalValue<String> template() {
-    return null != smsOptions
-        ? smsOptions.map(VerificationStartSmsOptions::getTemplate)
+    return null != smsOptions && smsOptions.isPresent()
+        ? smsOptions
+            .map(f -> ((VerificationStartSmsOptionsImpl) f).template())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -170,9 +174,16 @@ public class VerificationStartRequestSmsImpl
   }
 
   public OptionalValue<String> acceptLanguage() {
-    return null != smsOptions
-        ? smsOptions.map(VerificationStartSmsOptions::getAcceptLanguage)
+    return null != smsOptions && smsOptions.isPresent()
+        ? smsOptions
+            .map(f -> ((VerificationStartSmsOptionsImpl) f).acceptLanguage())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
+  }
+
+  @JsonIgnore
+  public Object getExtraOption(String key) {
+    return null != smsOptions && smsOptions.isPresent() ? smsOptions.get().get(key) : null;
   }
 
   /** Return true if this VerificationStartRequestSms object is equal to o. */
@@ -280,6 +291,11 @@ public class VerificationStartRequestSmsImpl
     @JsonIgnore
     public Builder setAcceptLanguage(String acceptLanguage) {
       getDelegatedBuilder().setAcceptLanguage(acceptLanguage);
+      return this;
+    }
+
+    public Builder putExtraOption(String key, Object value) {
+      getDelegatedBuilder().put(key, value);
       return this;
     }
 
