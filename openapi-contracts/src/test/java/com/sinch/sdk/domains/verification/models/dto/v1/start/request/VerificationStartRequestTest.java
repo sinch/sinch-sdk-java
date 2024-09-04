@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.verification.models.dto.v1.start;
+package com.sinch.sdk.domains.verification.models.dto.v1.start.request;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
@@ -59,6 +59,7 @@ public class VerificationStartRequestTest extends VerificationBaseTest {
                   .setExpiry("01:02:03")
                   .setCodeType(VerificationStartRequestSms.CodeTypeEnum.ALPHANUMERIC)
                   .setTemplate("My template require to use '{{CODE}}' code")
+                  .putExtraOption("my key", "my value")
                   .build());
 
   public static VerificationStartRequestInternalImpl startVerificationSmsDtoWithAcceptLanguage =
@@ -72,18 +73,21 @@ public class VerificationStartRequestTest extends VerificationBaseTest {
                   .setCodeType(VerificationStartRequestSms.CodeTypeEnum.ALPHANUMERIC)
                   .setTemplate("My template require to use '{{CODE}}' code")
                   .setAcceptLanguage("es-ES")
+                  .putExtraOption("my key", "my value")
                   .build());
 
-  @GivenTextResource("/domains/verification/v1/start/VerificationStartRequestPhoneCallDto.json")
+  @GivenTextResource(
+      "/domains/verification/v1/start/request/VerificationStartRequestPhoneCallDto.json")
   String jsonStartVerificationPhoneCall;
 
-  @GivenTextResource("/domains/verification/v1/start/VerificationStartRequestFlashCallDto.json")
+  @GivenTextResource(
+      "/domains/verification/v1/start/request/VerificationStartRequestFlashCallDto.json")
   String jsonStartVerificationFlashCall;
 
-  @GivenTextResource("/domains/verification/v1/start/VerificationStartRequestDataDto.json")
+  @GivenTextResource("/domains/verification/v1/start/request/VerificationStartRequestDataDto.json")
   String jsonStartVerificationData;
 
-  @GivenTextResource("/domains/verification/v1/start/VerificationStartRequestSmsDto.json")
+  @GivenTextResource("/domains/verification/v1/start/request/VerificationStartRequestSmsDto.json")
   String jsonStartVerificationSms;
 
   @Test

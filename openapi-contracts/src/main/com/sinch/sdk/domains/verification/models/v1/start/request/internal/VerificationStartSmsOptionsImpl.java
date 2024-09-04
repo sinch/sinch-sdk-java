@@ -1,5 +1,7 @@
 package com.sinch.sdk.domains.verification.models.v1.start.request.internal;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -7,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonPropertyOrder({
@@ -33,17 +37,25 @@ public class VerificationStartSmsOptionsImpl implements VerificationStartSmsOpti
 
   private OptionalValue<String> acceptLanguage;
 
+  /**
+   * A container for additional, undeclared properties. This is a holder for any undeclared
+   * properties as specified with the 'additionalProperties' keyword in the OAS document.
+   */
+  private OptionalValue<Map<String, Object>> additionalProperties;
+
   public VerificationStartSmsOptionsImpl() {}
 
   protected VerificationStartSmsOptionsImpl(
       OptionalValue<String> expiry,
       OptionalValue<CodeTypeEnum> codeType,
       OptionalValue<String> template,
-      OptionalValue<String> acceptLanguage) {
+      OptionalValue<String> acceptLanguage,
+      OptionalValue<Map<String, Object>> additionalProperties) {
     this.expiry = expiry;
     this.codeType = codeType;
     this.template = template;
     this.acceptLanguage = acceptLanguage;
+    this.additionalProperties = additionalProperties;
   }
 
   @JsonIgnore
@@ -88,6 +100,23 @@ public class VerificationStartSmsOptionsImpl implements VerificationStartSmsOpti
     return acceptLanguage;
   }
 
+  @JsonIgnore
+  public Object get(String key) {
+
+    if (null == this.additionalProperties || !additionalProperties.isPresent()) {
+      return null;
+    }
+    return this.additionalProperties.get().get(key);
+  }
+
+  @JsonAnyGetter
+  public Map<String, Object> additionalProperties() {
+    if (null == this.additionalProperties || !additionalProperties.isPresent()) {
+      return null;
+    }
+    return additionalProperties.get();
+  }
+
   /** Return true if this VerificationStartRequestSms_allOf_smsOptions object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -103,22 +132,31 @@ public class VerificationStartSmsOptionsImpl implements VerificationStartSmsOpti
         && Objects.equals(this.codeType, verificationStartRequestSmsAllOfSmsOptions.codeType)
         && Objects.equals(this.template, verificationStartRequestSmsAllOfSmsOptions.template)
         && Objects.equals(
-            this.acceptLanguage, verificationStartRequestSmsAllOfSmsOptions.acceptLanguage);
+            this.acceptLanguage, verificationStartRequestSmsAllOfSmsOptions.acceptLanguage)
+        && Objects.equals(
+            this.additionalProperties,
+            verificationStartRequestSmsAllOfSmsOptions.additionalProperties)
+        && super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(expiry, codeType, template, acceptLanguage);
+    return Objects.hash(
+        expiry, codeType, template, acceptLanguage, super.hashCode(), additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class VerificationStartSmsOptionsImpl {\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    expiry: ").append(toIndentedString(expiry)).append("\n");
     sb.append("    codeType: ").append(toIndentedString(codeType)).append("\n");
     sb.append("    template: ").append(toIndentedString(template)).append("\n");
     sb.append("    acceptLanguage: ").append(toIndentedString(acceptLanguage)).append("\n");
+    sb.append("    additionalProperties: ")
+        .append(toIndentedString(additionalProperties))
+        .append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -139,6 +177,7 @@ public class VerificationStartSmsOptionsImpl implements VerificationStartSmsOpti
     OptionalValue<CodeTypeEnum> codeType = OptionalValue.empty();
     OptionalValue<String> template = OptionalValue.empty();
     OptionalValue<String> acceptLanguage = OptionalValue.empty();
+    OptionalValue<Map<String, Object>> additionalProperties = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_EXPIRY)
     public Builder setExpiry(String expiry) {
@@ -164,8 +203,18 @@ public class VerificationStartSmsOptionsImpl implements VerificationStartSmsOpti
       return this;
     }
 
+    @JsonAnySetter
+    public Builder put(String key, Object value) {
+      if (!this.additionalProperties.isPresent()) {
+        this.additionalProperties = OptionalValue.of(new HashMap<String, Object>());
+      }
+      this.additionalProperties.get().put(key, value);
+      return this;
+    }
+
     public VerificationStartSmsOptions build() {
-      return new VerificationStartSmsOptionsImpl(expiry, codeType, template, acceptLanguage);
+      return new VerificationStartSmsOptionsImpl(
+          expiry, codeType, template, acceptLanguage, additionalProperties);
     }
   }
 }
