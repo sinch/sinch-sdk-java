@@ -17,14 +17,14 @@ public class VerificationStartSmsOptionsTest extends VerificationBaseTest {
       VerificationStartSmsOptions.builder()
           .setExpiry("01:02:03")
           .setCodeType(VerificationStartSmsOptions.CodeTypeEnum.ALPHANUMERIC)
-          .setTemplate("My template require to use '{{CODE}}' code")
+          .setTemplate("My template requires to use '{{CODE}}' placeholder")
           .build();
 
   public static VerificationStartSmsOptions startVerificationSmsOptionWithAdditionalPropertiesDto =
       VerificationStartSmsOptions.builder()
           .setExpiry("01:02:03")
           .setCodeType(VerificationStartSmsOptions.CodeTypeEnum.ALPHANUMERIC)
-          .setTemplate("My template require to use '{{CODE}}' code")
+          .setTemplate("My template requires to use '{{CODE}}' placeholder")
           .put("a key", "a value")
           .put("secondKey", "second value")
           .build();
@@ -33,7 +33,7 @@ public class VerificationStartSmsOptionsTest extends VerificationBaseTest {
       VerificationStartSmsOptions.builder()
           .setExpiry("01:02:03")
           .setCodeType(VerificationStartSmsOptions.CodeTypeEnum.ALPHANUMERIC)
-          .setTemplate("My template require to use '{{CODE}}' code")
+          .setTemplate("My template requires to use '{{CODE}}' placeholder")
           .setAcceptLanguage("es-ES")
           .build();
 
@@ -57,7 +57,7 @@ public class VerificationStartSmsOptionsTest extends VerificationBaseTest {
     Object deserialized =
         objectMapper.readValue(jsonVerificationStartSmsOptions, VerificationStartSmsOptions.class);
 
-    TestHelpers.recursiveEquals(deserialized, startVerificationSmsOptionDto);
+    TestHelpers.recursiveEquals(startVerificationSmsOptionDto, deserialized);
   }
 
   @Test
@@ -95,8 +95,8 @@ public class VerificationStartSmsOptionsTest extends VerificationBaseTest {
     Object deserialized =
         objectMapper.readValue(jsonVerificationStartSmsOptions, VerificationStartSmsOptions.class);
 
-    // we are not expecting acceptLanguage to be unserialized because of not sent to network
-    // so this test is based onto startVerificationSmsOptionDto is having same content has the
+    // We are not expecting acceptLanguage to be un-serialized because of not present from body/
+    // So this test is based onto startVerificationSmsOptionDto is having same content has the
     // acceptLanguage instance... but without the language
     TestHelpers.recursiveEquals(deserialized, startVerificationSmsOptionDto);
   }
