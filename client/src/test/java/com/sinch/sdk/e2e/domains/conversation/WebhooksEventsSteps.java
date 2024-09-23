@@ -51,20 +51,6 @@ import org.junit.jupiter.api.Assertions;
 public class WebhooksEventsSteps {
 
   static final String WEBHOOKS_PATH = Config.CONVERSATION_HOST_NAME + "/webhooks/conversation/";
-  static final String E2E_KEYWORD_CAPABILITY = "CAPABILITY";
-  static final String E2E_KEYWORD_CONTACT_CREATE = "CONTACT_CREATE";
-  static final String E2E_KEYWORD_CONTACT_DELETE = "CONTACT_DELETE";
-  static final String E2E_KEYWORD_CONTACT_MERGE = "CONTACT_MERGE";
-  static final String E2E_KEYWORD_CONTACT_UPDATE = "CONTACT_UPDATE";
-  static final String E2E_KEYWORD_CONVERSATION_DELETE = "CONVERSATION_DELETE";
-  static final String E2E_KEYWORD_CONVERSATION_START = "CONVERSATION_START";
-  static final String E2E_KEYWORD_CONVERSATION_STOP = "CONVERSATION_STOP";
-  static final String E2E_KEYWORD_EVENT_DELIVERY = "EVENT_DELIVERY";
-  static final String E2E_KEYWORD_EVENT_INBOUND = "EVENT_INBOUND";
-  static final String E2E_KEYWORD_MESSAGE_DELIVERY = "MESSAGE_DELIVERY";
-  static final String E2E_KEYWORD_MESSAGE_INBOUND = "MESSAGE_INBOUND";
-  static final String E2E_KEYWORD_MESSAGE_INBOUND_SMART_CONVERSATION_REDACTION =
-      "MESSAGE_INBOUND_SMART_CONVERSATION_REDACTION";
 
   static final String SECRET = "CactusKnight_SurfsWaves";
 
@@ -96,64 +82,35 @@ public class WebhooksEventsSteps {
                   MessageInboundSmartConversationRedactionEvent.class))
           .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-  Map<String, WebhookTrigger> e2eKeywordToTrigger =
-      Stream.of(
-              new AbstractMap.SimpleEntry<>(E2E_KEYWORD_CAPABILITY, WebhookTrigger.CAPABILITY),
-              new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_CONTACT_CREATE, WebhookTrigger.CONTACT_CREATE),
-              new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_CONTACT_DELETE, WebhookTrigger.CONTACT_DELETE),
-              new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_CONTACT_MERGE, WebhookTrigger.CONTACT_MERGE),
-              new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_CONTACT_UPDATE, WebhookTrigger.CONTACT_UPDATE),
-              new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_CONVERSATION_DELETE, WebhookTrigger.CONVERSATION_DELETE),
-              new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_CONVERSATION_START, WebhookTrigger.CONVERSATION_START),
-              new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_CONVERSATION_STOP, WebhookTrigger.CONVERSATION_STOP),
-              new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_EVENT_DELIVERY, WebhookTrigger.EVENT_DELIVERY),
-              new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_EVENT_INBOUND, WebhookTrigger.EVENT_INBOUND),
-              new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_MESSAGE_DELIVERY, WebhookTrigger.MESSAGE_DELIVERY),
-              new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_MESSAGE_INBOUND, WebhookTrigger.MESSAGE_INBOUND),
-              new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_MESSAGE_INBOUND_SMART_CONVERSATION_REDACTION,
-                  WebhookTrigger.MESSAGE_INBOUND_SMART_CONVERSATION_REDACTION))
-          .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-  Map<String, String> e2eKeywordToURL =
+  Map<WebhookTrigger, String> triggerToURL =
       Stream.of(
               new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_CAPABILITY, WEBHOOKS_PATH + "capability-lookup"),
+                  WebhookTrigger.CAPABILITY, WEBHOOKS_PATH + "capability-lookup"),
               new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_CONTACT_CREATE, WEBHOOKS_PATH + "contact-create"),
+                  WebhookTrigger.CONTACT_CREATE, WEBHOOKS_PATH + "contact-create"),
               new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_CONTACT_DELETE, WEBHOOKS_PATH + "contact-delete"),
+                  WebhookTrigger.CONTACT_DELETE, WEBHOOKS_PATH + "contact-delete"),
               new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_CONTACT_MERGE, WEBHOOKS_PATH + "contact-merge"),
+                  WebhookTrigger.CONTACT_MERGE, WEBHOOKS_PATH + "contact-merge"),
               new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_CONTACT_UPDATE, WEBHOOKS_PATH + "contact-update"),
+                  WebhookTrigger.CONTACT_UPDATE, WEBHOOKS_PATH + "contact-update"),
               new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_CONVERSATION_DELETE, WEBHOOKS_PATH + "conversation-delete"),
+                  WebhookTrigger.CONVERSATION_DELETE, WEBHOOKS_PATH + "conversation-delete"),
               new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_CONVERSATION_START, WEBHOOKS_PATH + "conversation-start"),
+                  WebhookTrigger.CONVERSATION_START, WEBHOOKS_PATH + "conversation-start"),
               new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_CONVERSATION_STOP, WEBHOOKS_PATH + "conversation-stop"),
+                  WebhookTrigger.CONVERSATION_STOP, WEBHOOKS_PATH + "conversation-stop"),
               new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_EVENT_DELIVERY, WEBHOOKS_PATH + "event-delivery-report/succeeded"),
+                  WebhookTrigger.EVENT_DELIVERY, WEBHOOKS_PATH + "event-delivery-report/succeeded"),
               new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_EVENT_INBOUND, WEBHOOKS_PATH + "event-inbound"),
+                  WebhookTrigger.EVENT_INBOUND, WEBHOOKS_PATH + "event-inbound"),
               new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_MESSAGE_DELIVERY,
+                  WebhookTrigger.MESSAGE_DELIVERY,
                   WEBHOOKS_PATH + "message-delivery-report/succeeded"),
               new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_MESSAGE_INBOUND, WEBHOOKS_PATH + "message-inbound"),
+                  WebhookTrigger.MESSAGE_INBOUND, WEBHOOKS_PATH + "message-inbound"),
               new AbstractMap.SimpleEntry<>(
-                  E2E_KEYWORD_MESSAGE_INBOUND_SMART_CONVERSATION_REDACTION,
+                  WebhookTrigger.MESSAGE_INBOUND_SMART_CONVERSATION_REDACTION,
                   WEBHOOKS_PATH + "message-inbound/smart-conversation-redaction"))
           .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
@@ -173,44 +130,44 @@ public class WebhooksEventsSteps {
     service = Config.getSinchClient().conversation().v1().webhooks();
   }
 
-  @When("^I send a request to trigger a \"" + E2E_KEYWORD_CAPABILITY + "\" event$")
+  @When("^I send a request to trigger a \"CAPABILITY\" event$")
   public void triggerCAPABILITY() throws IOException {
-    handleRequest(E2E_KEYWORD_CAPABILITY);
+    handleRequest(WebhookTrigger.CAPABILITY);
   }
 
-  @When("^I send a request to trigger a \"" + E2E_KEYWORD_CONTACT_CREATE + "\" event$")
+  @When("^I send a request to trigger a \"CONTACT_CREATE\" event$")
   public void triggerCONTACT_CREATE() throws IOException {
-    handleRequest(E2E_KEYWORD_CONTACT_CREATE);
+    handleRequest(WebhookTrigger.CONTACT_CREATE);
   }
 
-  @When("^I send a request to trigger a \"" + E2E_KEYWORD_CONTACT_DELETE + "\" event$")
+  @When("^I send a request to trigger a \"CONTACT_DELETE\" event$")
   public void triggerCONTACT_DELETE() throws IOException {
-    handleRequest(E2E_KEYWORD_CONTACT_DELETE);
+    handleRequest(WebhookTrigger.CONTACT_DELETE);
   }
 
-  @When("^I send a request to trigger a \"" + E2E_KEYWORD_CONTACT_MERGE + "\" event$")
+  @When("^I send a request to trigger a \"CONTACT_MERGE\" event$")
   public void triggerCONTACT_MERGE() throws IOException {
-    handleRequest(E2E_KEYWORD_CONTACT_MERGE);
+    handleRequest(WebhookTrigger.CONTACT_MERGE);
   }
 
-  @When("^I send a request to trigger a \"" + E2E_KEYWORD_CONTACT_UPDATE + "\" event$")
+  @When("^I send a request to trigger a \"CONTACT_UPDATE\" event$")
   public void triggerCONTACT_UPDATE() throws IOException {
-    handleRequest(E2E_KEYWORD_CONTACT_UPDATE);
+    handleRequest(WebhookTrigger.CONTACT_UPDATE);
   }
 
-  @When("^I send a request to trigger a \"" + E2E_KEYWORD_CONVERSATION_DELETE + "\" event$")
+  @When("^I send a request to trigger a \"CONVERSATION_DELETE\" event$")
   public void triggerCONVERSATION_DELETE() throws IOException {
-    handleRequest(E2E_KEYWORD_CONVERSATION_DELETE);
+    handleRequest(WebhookTrigger.CONVERSATION_DELETE);
   }
 
-  @When("^I send a request to trigger a \"" + E2E_KEYWORD_CONVERSATION_START + "\" event$")
+  @When("^I send a request to trigger a \"CONVERSATION_START\" event$")
   public void triggerCONVERSATION_START() throws IOException {
-    handleRequest(E2E_KEYWORD_CONVERSATION_START);
+    handleRequest(WebhookTrigger.CONVERSATION_START);
   }
 
-  @When("^I send a request to trigger a \"" + E2E_KEYWORD_CONVERSATION_STOP + "\" event$")
+  @When("^I send a request to trigger a \"CONVERSATION_STOP\" event$")
   public void triggerCONVERSATION_STOP() throws IOException {
-    handleRequest(E2E_KEYWORD_CONVERSATION_STOP);
+    handleRequest(WebhookTrigger.CONVERSATION_STOP);
   }
 
   @When("^I send a request to trigger a \"EVENT_DELIVERY\" event with a FAILED status$")
@@ -221,12 +178,12 @@ public class WebhooksEventsSteps {
 
   @When("^I send a request to trigger a \"EVENT_DELIVERY\" event with a DELIVERED status$")
   public void triggerEVENT_DELIVERY() throws IOException {
-    handleRequest(E2E_KEYWORD_EVENT_DELIVERY);
+    handleRequest(WebhookTrigger.EVENT_DELIVERY);
   }
 
-  @When("^I send a request to trigger a \"" + E2E_KEYWORD_EVENT_INBOUND + "\" event$")
+  @When("^I send a request to trigger a \"EVENT_INBOUND\" event$")
   public void triggerINBOUND() throws IOException {
-    handleRequest(E2E_KEYWORD_EVENT_INBOUND);
+    handleRequest(WebhookTrigger.EVENT_INBOUND);
   }
 
   @When("^I send a request to trigger a \"MESSAGE_DELIVERY\" event with a FAILED status$")
@@ -235,25 +192,19 @@ public class WebhooksEventsSteps {
         callURL(new URL(WEBHOOKS_PATH + "message-delivery-report/failed"));
   }
 
-  @When(
-      "^I send a request to trigger a \""
-          + E2E_KEYWORD_MESSAGE_DELIVERY
-          + "\" event with a QUEUED status$")
+  @When("^I send a request to trigger a \"MESSAGE_DELIVERY\" event with a QUEUED status$")
   public void triggerMESSAGE_DELIVERY() throws IOException {
-    handleRequest(E2E_KEYWORD_MESSAGE_DELIVERY);
+    handleRequest(WebhookTrigger.MESSAGE_DELIVERY);
   }
 
-  @When("^I send a request to trigger a \"" + E2E_KEYWORD_MESSAGE_INBOUND + "\" event$")
+  @When("^I send a request to trigger a \"MESSAGE_INBOUND\" event$")
   public void triggerMESSAGE_INBOUND() throws IOException {
-    handleRequest(E2E_KEYWORD_MESSAGE_INBOUND);
+    handleRequest(WebhookTrigger.MESSAGE_INBOUND);
   }
 
-  @When(
-      "^I send a request to trigger a \""
-          + E2E_KEYWORD_MESSAGE_INBOUND_SMART_CONVERSATION_REDACTION
-          + "\" event$")
+  @When("^I send a request to trigger a \"MESSAGE_INBOUND_SMART_CONVERSATION_REDACTION\" event$")
   public void triggerMESSAGE_INBOUND_SMART_CONVERSATION_REDACTION() throws IOException {
-    handleRequest(E2E_KEYWORD_MESSAGE_INBOUND_SMART_CONVERSATION_REDACTION);
+    handleRequest(WebhookTrigger.MESSAGE_INBOUND_SMART_CONVERSATION_REDACTION);
   }
 
   @When("^I send a request to trigger a \"MESSAGE_SUBMIT\" event for a media message$")
@@ -279,7 +230,7 @@ public class WebhooksEventsSteps {
   @Then("the header of the Conversation event {string} contains a valid signature")
   public void validateHeader(String e2eKeyword) {
 
-    Response receivedEvent = receivedEvents.get(e2eKeywordToTrigger.get(e2eKeyword));
+    Response receivedEvent = receivedEvents.get(WebhookTrigger.from(e2eKeyword));
 
     if (null != receivedEvent) {
       boolean validated =
@@ -291,7 +242,7 @@ public class WebhooksEventsSteps {
 
   @Then("the Conversation event describes a {string} event type")
   public void triggerResult(String e2eKeyword) {
-    WebhookTrigger trigger = e2eKeywordToTrigger.get(e2eKeyword);
+    WebhookTrigger trigger = WebhookTrigger.from(e2eKeyword);
     Response receivedEvent = receivedEvents.get(trigger);
     if (null != receivedEvent) {
       Assertions.assertInstanceOf(expectedClasses.get(trigger), receivedEvent.event);
@@ -304,14 +255,18 @@ public class WebhooksEventsSteps {
   public void validateEventDeliveryFailureHeader(String e2eKeyword, String status) {
 
     Response receivedEvent = null;
-    if (e2eKeyword.equals(E2E_KEYWORD_EVENT_DELIVERY) && status.equals("FAILED")) {
+    if (e2eKeyword.equals(WebhookTrigger.EVENT_DELIVERY.value())
+        && status.equals(DeliveryStatus.FAILED.value())) {
       receivedEvent = eventDeliveryReceiptFailedResponse;
-    } else if (e2eKeyword.equals(E2E_KEYWORD_EVENT_DELIVERY) && status.equals("DELIVERED")) {
-      receivedEvent = receivedEvents.get(e2eKeywordToTrigger.get(e2eKeyword));
-    } else if (e2eKeyword.equals(E2E_KEYWORD_MESSAGE_DELIVERY) && status.equals("FAILED")) {
+    } else if (e2eKeyword.equals(WebhookTrigger.EVENT_DELIVERY.value())
+        && status.equals(DeliveryStatus.DELIVERED.value())) {
+      receivedEvent = receivedEvents.get(WebhookTrigger.from(e2eKeyword));
+    } else if (e2eKeyword.equals(WebhookTrigger.MESSAGE_DELIVERY.value())
+        && status.equals(DeliveryStatus.FAILED.value())) {
       receivedEvent = messageDeliveryReceiptFailedResponse;
-    } else if (e2eKeyword.equals(E2E_KEYWORD_MESSAGE_DELIVERY) && status.equals("QUEUED")) {
-      receivedEvent = receivedEvents.get(e2eKeywordToTrigger.get(e2eKeyword));
+    } else if (e2eKeyword.equals(WebhookTrigger.MESSAGE_DELIVERY.value())
+        && status.equals("QUEUED")) {
+      receivedEvent = receivedEvents.get(WebhookTrigger.from(e2eKeyword));
     } else {
       Assertions.assertTrue(false);
     }
@@ -488,10 +443,10 @@ public class WebhooksEventsSteps {
             .getMessage());
   }
 
-  public void handleRequest(String e2eKeyword) throws IOException {
+  public void handleRequest(WebhookTrigger trigger) throws IOException {
 
-    Response response = callURL(new URL(e2eKeywordToURL.get(e2eKeyword)));
-    receivedEvents.put(e2eKeywordToTrigger.get(e2eKeyword), response);
+    Response response = callURL(new URL(triggerToURL.get(trigger)));
+    receivedEvents.put(trigger, response);
   }
 
   Response callURL(URL url) throws IOException {
