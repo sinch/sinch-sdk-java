@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.conversation.api.v1.adapters;
 
 import com.sinch.sdk.core.exceptions.ApiAuthException;
+import com.sinch.sdk.core.utils.MapUtils;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -22,8 +23,9 @@ public class ConversationWebhooksAuthenticationValidation {
   static final String SIGNATURE_HEADER = "x-sinch-webhook-signature";
 
   public boolean validateAuthenticationHeader(
-      String secret, Map<String, String> headers, String jsonPayload) {
+      String secret, Map<String, String> _headers, String jsonPayload) {
 
+    Map<String, String> headers = MapUtils.getCaseInsensitiveMap(_headers);
     String timestampHeader = headers.get(TIMESTAMP_HEADER);
     String nonceHeader = headers.get(NONCE_HEADER);
     String algorithmHeader = headers.get(ALGORITHM_HEADER);
