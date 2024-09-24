@@ -12,7 +12,7 @@ import com.sinch.sdk.domains.conversation.models.v1.events.response.SendEventRes
  * @see <a
  *     href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/Events">online
  *     documentation</a>
- * @since _NEXT_VERSION_
+ * @since 1.3
  */
 public interface EventsService {
 
@@ -26,7 +26,7 @@ public interface EventsService {
    *
    * @param request Send event request parameters
    * @return Response related to event enqueued
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   SendEventResponse send(SendEventRequest request);
 
@@ -35,7 +35,7 @@ public interface EventsService {
    *
    * @param eventId The unique ID of the event
    * @return Conversation event
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   ConversationEvent get(String eventId);
 
@@ -43,7 +43,7 @@ public interface EventsService {
    * Delete a specific event by its ID
    *
    * @param eventId The unique ID of the event
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   void delete(String eventId);
 
@@ -52,7 +52,7 @@ public interface EventsService {
    *
    * @param request Request parameters
    * @return List of events
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   EventsListResponse list(EventsListRequest request);
 }

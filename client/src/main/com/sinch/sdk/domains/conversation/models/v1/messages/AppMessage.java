@@ -9,7 +9,7 @@ import java.util.Map;
  * Message originating from an app
  *
  * @param <T> Body type for message
- * @since _NEXT_VERSION_
+ * @since 1.3
  */
 public interface AppMessage<T extends AppMessageBody> extends ConversationMessageBody {
 

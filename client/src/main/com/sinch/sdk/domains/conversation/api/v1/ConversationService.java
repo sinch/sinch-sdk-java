@@ -5,7 +5,7 @@ package com.sinch.sdk.domains.conversation.api.v1;
  *
  * @see <a
  *     href="https://developers.sinch.com/docs/conversation/">https://developers.sinch.com/docs/conversation/</a>
- * @since _NEXT_VERSION_
+ * @since 1.3
  */
 public interface ConversationService {
 
@@ -13,7 +13,7 @@ public interface ConversationService {
    * Applications Service instance
    *
    * @return service instance for project
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   AppService app();
 
@@ -21,7 +21,7 @@ public interface ConversationService {
    * Contact Service instance
    *
    * @return service instance for project
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   ContactService contact();
 
@@ -29,7 +29,7 @@ public interface ConversationService {
    * Messages Service instance
    *
    * @return service instance for project
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   MessagesService messages();
 
@@ -37,7 +37,7 @@ public interface ConversationService {
    * Conversations Service instance
    *
    * @return service instance for project
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   ConversationsService conversations();
 
@@ -45,7 +45,7 @@ public interface ConversationService {
    * Events Service instance
    *
    * @return service instance for project
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   EventsService events();
 
@@ -53,7 +53,7 @@ public interface ConversationService {
    * Transcoding Service instance
    *
    * @return service instance for project
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   TranscodingService transcoding();
 
@@ -61,7 +61,7 @@ public interface ConversationService {
    * Capability Service instance
    *
    * @return service instance for project
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   CapabilityService capability();
 
@@ -69,7 +69,7 @@ public interface ConversationService {
    * WebHooksService Service instance
    *
    * @return service instance for project
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   WebHooksService webhooks();
 }

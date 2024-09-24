@@ -19,7 +19,7 @@ import com.sinch.sdk.domains.conversation.models.v1.capability.response.QueryCap
  * @see <a
  *     href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/Capability/">online
  *     documentation</a>
- * @since _NEXT_VERSION_
+ * @since 1.3
  */
 public interface CapabilityService {
 
@@ -33,7 +33,7 @@ public interface CapabilityService {
    *
    * @param request The request parameters to lookup capability
    * @return The capability response
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   QueryCapabilityResponse lookup(QueryCapabilityRequest request);
 }

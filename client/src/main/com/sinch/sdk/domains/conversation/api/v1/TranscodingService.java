@@ -9,7 +9,7 @@ import com.sinch.sdk.domains.conversation.models.v1.transcoding.response.Transco
  * @see <a
  *     href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/Transcoding">online
  *     documentation</a>
- * @since _NEXT_VERSION_
+ * @since 1.3
  */
 public interface TranscodingService {
 
@@ -22,7 +22,7 @@ public interface TranscodingService {
    * @param request The message to be transcoded, and the app and channels for which the message is
    *     to be transcoded
    * @return Transcoded message
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   TranscodeMessageResponse transcodeMessage(TranscodeMessageRequest request);
 }

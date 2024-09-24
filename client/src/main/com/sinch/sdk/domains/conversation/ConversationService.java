@@ -7,7 +7,7 @@ import com.sinch.sdk.domains.conversation.api.templates.TemplatesService;
  *
  * @see <a
  *     href="https://developers.sinch.com/docs/conversation/">https://developers.sinch.com/docs/conversation/</a>
- * @since _NEXT_VERSION_
+ * @since 1.3
  */
 public interface ConversationService {
 
@@ -17,7 +17,7 @@ public interface ConversationService {
    * @return V1 service instance for project
    * @see <a
    *     href="https://developers.sinch.com/docs/conversation/sdk/java/syntax-reference">Documentation</a>
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   com.sinch.sdk.domains.conversation.api.v1.ConversationService v1();
 
@@ -31,7 +31,7 @@ public interface ConversationService {
    * @return Service instance for project
    * @see <a
    *     href="https://developers.sinch.com/docs/conversation/api-reference/template/overview/#section/Managing-templates">Documentation</a>
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   TemplatesService templates();
 }

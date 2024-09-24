@@ -28,7 +28,7 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMess
  *
  * @see <a
  *     href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/Messages">https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/Messages</a>
- * @since _NEXT_VERSION_
+ * @since 1.3
  */
 public interface MessagesService {
 
@@ -45,7 +45,7 @@ public interface MessagesService {
    *
    * @return Response related to messages sent (from {@link
    *     com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse})
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   SendMessageResponse sendMessage(SendMessageRequest<? extends AppMessageBody> request);
 
@@ -106,7 +106,7 @@ public interface MessagesService {
    *
    * @param request Request parameters
    * @return List of messages
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   MessagesListResponse list(MessagesListRequest request);
 
