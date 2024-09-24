@@ -6,8 +6,9 @@ import java.util.Collection;
 /**
  * Templates V1
  *
- * <p>Version 1 endpoints for managing message templates. Currently maintained for existing users.
- * Version 2 is recommended.
+ * <p>Version 1 endpoints for managing message templates.
+ * <p>Currently maintained for existing users.
+ * <p>Version 2 is recommended.
  *
  * @see <a
  *     href="https://developers.sinch.com/docs/conversation/api-reference/template/tag/Templates-V1">online

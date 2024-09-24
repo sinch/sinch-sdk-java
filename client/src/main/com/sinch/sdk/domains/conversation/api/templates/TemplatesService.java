@@ -4,7 +4,7 @@ import com.sinch.sdk.domains.conversation.api.templates.v1.TemplatesServiceV1;
 import com.sinch.sdk.domains.conversation.api.templates.v2.TemplatesServiceV2;
 
 /**
- * Service for working with templates
+ * Service for working with Conversation templates
  *
  * @see <a
  *     href="https://developers.sinch.com/docs/conversation/api-reference/template/overview/#section/Managing-templates">online

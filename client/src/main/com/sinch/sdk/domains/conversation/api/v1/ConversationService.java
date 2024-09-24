@@ -1,7 +1,7 @@
 package com.sinch.sdk.domains.conversation.api.v1;
 
 /**
- * Conversation Service
+ * Conversation Service V1
  *
  * @see <a
  *     href="https://developers.sinch.com/docs/conversation/">https://developers.sinch.com/docs/conversation/</a>
