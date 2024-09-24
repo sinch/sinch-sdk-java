@@ -5,8 +5,8 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import java.util.Collections;
-import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -28,14 +28,14 @@ class DryRunResponseDtoTest extends BaseTest {
               Collections.singletonList(
                   new DryRun200ResponsePerRecipientInnerDto()
                       .recipient("recipient string")
-                      .messagePart("message part string")
+                      .numberOfParts(1)
                       .body("body string")
                       .encoding("encoding string")));
 
   @Test
   void deserialize() {
 
-    Assertions.assertThat(loadedDto).usingRecursiveComparison().isEqualTo(dto);
+    TestHelpers.recursiveEquals(loadedDto, dto);
   }
 
   @Test

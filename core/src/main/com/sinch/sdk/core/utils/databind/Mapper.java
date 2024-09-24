@@ -1,5 +1,6 @@
 package com.sinch.sdk.core.utils.databind;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
@@ -47,19 +48,24 @@ public class Mapper {
             // Do not serialize uninitialized fields to avoid sending a null value when not required
             boolean serialize;
 
-            // Call getter to obtain value: if of OptionalValue type: use it to check serialization
-            // state
-            Object value = pojo.getClass().getMethod(member.getName()).invoke(pojo);
-            if (value instanceof OptionalValue) {
-              serialize = ((OptionalValue<?>) value).isPresent();
+            if (member.hasAnnotation(JsonAnyGetter.class)) {
+              serialize = true;
             } else {
-              /* @Deprecated
-               * Not find the expected OptionalValue: fallback to xxxDefined function call
-               * The xxDefined function feature will have to be deprecated in favour of OptionalValue usage
-               * This part could be suppressed as soon as all domains had moved to the OptionalValue support from OAS generated files
-               */
-              serialize =
-                  (boolean) pojo.getClass().getMethod(member.getName() + "Defined").invoke(pojo);
+              // Call getter to obtain value: if of OptionalValue type: use it to check
+              // serialization
+              // state
+              Object value = pojo.getClass().getMethod(member.getName()).invoke(pojo);
+              if (value instanceof OptionalValue) {
+                serialize = ((OptionalValue<?>) value).isPresent();
+              } else {
+                /* @Deprecated
+                 * Not find the expected OptionalValue: fallback to xxxDefined function call
+                 * The xxDefined function feature will have to be deprecated in favour of OptionalValue usage
+                 * This part could be suppressed as soon as all domains had moved to the OptionalValue support from OAS generated files
+                 */
+                serialize =
+                    (boolean) pojo.getClass().getMethod(member.getName() + "Defined").invoke(pojo);
+              }
             }
             // not set but is field is required ?
             if (!serialize) {

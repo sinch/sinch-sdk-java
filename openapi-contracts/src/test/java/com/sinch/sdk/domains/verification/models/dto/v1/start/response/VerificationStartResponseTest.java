@@ -1,9 +1,10 @@
-package com.sinch.sdk.domains.verification.models.dto.v1.start;
+package com.sinch.sdk.domains.verification.models.dto.v1.start.response;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
+import com.sinch.sdk.domains.verification.models.dto.v1.start.LinkTest;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseData;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseDataImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseFlashCall;
@@ -19,7 +20,8 @@ import org.junit.jupiter.api.Test;
 @TestWithResources
 public class VerificationStartResponseTest extends BaseTest {
 
-  @GivenJsonResource("/domains/verification/v1/start/VerificationStartResponsePhoneCallDto.json")
+  @GivenJsonResource(
+      "/domains/verification/v1/start/response/VerificationStartResponsePhoneCallDto.json")
   VerificationStartResponseInternal loadedStartVerificationPhoneCallDto;
 
   public static VerificationStartResponseInternalImpl expectedStartVerificationPhoneCallDto =
@@ -30,7 +32,8 @@ public class VerificationStartResponseTest extends BaseTest {
                   .setLinks(LinkTest.expectedLinks)
                   .build());
 
-  @GivenJsonResource("/domains/verification/v1/start/VerificationStartResponseFlashCallDto.json")
+  @GivenJsonResource(
+      "/domains/verification/v1/start/response/VerificationStartResponseFlashCallDto.json")
   VerificationStartResponseInternal loadedStartVerificationFlashCallDto;
 
   public static VerificationStartResponseInternalImpl expectedStartVerificationFlashCallDto =
@@ -45,7 +48,8 @@ public class VerificationStartResponseTest extends BaseTest {
                   .setDenyCallAfter(0)
                   .build());
 
-  @GivenJsonResource("/domains/verification/v1/start/VerificationStartResponseDataDto.json")
+  @GivenJsonResource(
+      "/domains/verification/v1/start/response/VerificationStartResponseDataDto.json")
   VerificationStartResponseInternal loadedStartVerificationDataDto;
 
   public static VerificationStartResponseInternalImpl expectedStartVerificationDataDto =
@@ -57,7 +61,7 @@ public class VerificationStartResponseTest extends BaseTest {
                   .setTargetUri("target URI")
                   .build());
 
-  @GivenJsonResource("/domains/verification/v1/start/VerificationStartResponseSmsDto.json")
+  @GivenJsonResource("/domains/verification/v1/start/response/VerificationStartResponseSmsDto.json")
   VerificationStartResponseInternal loadedStartVerificationSmsDto;
 
   public static VerificationStartResponseInternalImpl expectedStartVerificationSmsDto =
