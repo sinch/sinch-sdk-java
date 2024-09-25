@@ -5,10 +5,10 @@ import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
 import com.sinch.sdk.domains.conversation.models.v1.app.ConversationMetadataReportView;
 import com.sinch.sdk.domains.conversation.models.v1.app.request.AppCreateRequest;
 import com.sinch.sdk.domains.conversation.models.v1.app.request.AppUpdateRequest;
-import com.sinch.sdk.domains.conversation.models.v1.app.request.ConversationChannelCredentialRequest;
-import com.sinch.sdk.domains.conversation.models.v1.app.request.ConversationChannelCredentialsRequestBuilderFactory;
 import com.sinch.sdk.domains.conversation.models.v1.app.response.AppResponse;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.ChannelIntegrationStatus;
+import com.sinch.sdk.domains.conversation.models.v1.credentials.ConversationChannelCredentials;
+import com.sinch.sdk.domains.conversation.models.v1.credentials.ConversationChannelCredentialsBuilderFactory;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.StaticBearerCredentials;
 import com.sinch.sdk.e2e.Config;
 import io.cucumber.java.en.Given;
@@ -41,8 +41,8 @@ public class AppsSteps {
     String token = "00112233445566778899aabbccddeeff";
     String displayName = "E2E Conversation App";
 
-    ConversationChannelCredentialRequest credentials =
-        ConversationChannelCredentialsRequestBuilderFactory.sms(
+    ConversationChannelCredentials credentials =
+        ConversationChannelCredentialsBuilderFactory.sms(
                 StaticBearerCredentials.builder()
                     .setClaimedIdentity(identity)
                     .setToken(token)
