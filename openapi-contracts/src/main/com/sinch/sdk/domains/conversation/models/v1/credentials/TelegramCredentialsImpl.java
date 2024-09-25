@@ -12,7 +12,7 @@ import java.util.Objects;
 @JsonPropertyOrder({TelegramCredentialsImpl.JSON_PROPERTY_TOKEN})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class TelegramCredentialsImpl implements TelegramCredentials {
+public class TelegramCredentialsImpl implements TelegramCredentials, ChannelCredentials {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_TOKEN = "token";

@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  * must include this object.
  */
 @JsonDeserialize(builder = InstagramCredentialsImpl.Builder.class)
-public interface InstagramCredentials {
+public interface InstagramCredentials extends ChannelCredentials {
 
   /**
    * The static token.

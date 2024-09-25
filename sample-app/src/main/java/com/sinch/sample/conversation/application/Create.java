@@ -3,9 +3,9 @@ package com.sinch.sample.conversation.application;
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.conversation.api.v1.AppService;
 import com.sinch.sdk.domains.conversation.models.v1.app.request.AppCreateRequest;
-import com.sinch.sdk.domains.conversation.models.v1.app.request.ConversationChannelCredentialsRequestBuilderFactory;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.AppleBusinessChatCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.BasicAuthCredentials;
+import com.sinch.sdk.domains.conversation.models.v1.credentials.ConversationChannelCredentialsBuilderFactory;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.InstagramCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.KakaoTalkChatCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.KakaoTalkCredentials;
@@ -41,7 +41,7 @@ public class Create extends BaseApplication {
     LOGGER.info("Create conversation Application");
 
     var appleBcChannel =
-        ConversationChannelCredentialsRequestBuilderFactory.appleBc(
+        ConversationChannelCredentialsBuilderFactory.appleBc(
                 AppleBusinessChatCredentials.builder()
                     .setApplePayCertificatePassword("appleBc password")
                     .setApplePayCertificateReference("appleBc certificate reference")
@@ -51,7 +51,7 @@ public class Create extends BaseApplication {
             .build();
 
     var instagramChannel =
-        ConversationChannelCredentialsRequestBuilderFactory.instagram(
+        ConversationChannelCredentialsBuilderFactory.instagram(
                 InstagramCredentials.builder()
                     .setBusinessAccountId("instagramChannel business account id")
                     .setToken("instagramChannel token")
@@ -59,7 +59,7 @@ public class Create extends BaseApplication {
             .build();
 
     var kakaoTalkChannel =
-        ConversationChannelCredentialsRequestBuilderFactory.kakaoTalk(
+        ConversationChannelCredentialsBuilderFactory.kakaoTalk(
                 KakaoTalkCredentials.builder()
                     .setKakaotalkPlusFriendId("kakaoTalkChannel a friend id")
                     .setKakaotalkSenderKey("kakaoTalkChannel a sender key")
@@ -67,7 +67,7 @@ public class Create extends BaseApplication {
             .build();
 
     var kakaoTalkChatChannel =
-        ConversationChannelCredentialsRequestBuilderFactory.kakaoTalkChat(
+        ConversationChannelCredentialsBuilderFactory.kakaoTalkChat(
                 KakaoTalkChatCredentials.builder()
                     .setKakaotalkPlusFriendId("kakaoTalkChatChannel a friend id")
                     .setApiKey("kakaoTalkChatChannel api key")
@@ -75,7 +75,7 @@ public class Create extends BaseApplication {
             .build();
 
     var lineChannel =
-        ConversationChannelCredentialsRequestBuilderFactory.line(
+        ConversationChannelCredentialsBuilderFactory.line(
                 LineCredentials.builder()
                     .setToken("lineChannel a token value")
                     .setSecret("lineChannel a secret value")
@@ -83,12 +83,12 @@ public class Create extends BaseApplication {
             .build();
 
     var messengerChannel =
-        ConversationChannelCredentialsRequestBuilderFactory.messenger(
+        ConversationChannelCredentialsBuilderFactory.messenger(
                 StaticTokenCredentials.builder().setToken("messengerChannel a token value").build())
             .build();
 
     var mmsChannel =
-        ConversationChannelCredentialsRequestBuilderFactory.mms(
+        ConversationChannelCredentialsBuilderFactory.mms(
                 MMSCredentials.builder()
                     .setApiKey("mmsChannel an api key")
                     .setAccountId("mmsChannel an account id")
@@ -102,7 +102,7 @@ public class Create extends BaseApplication {
             .build();
 
     var rcsChannel =
-        ConversationChannelCredentialsRequestBuilderFactory.rcs(
+        ConversationChannelCredentialsBuilderFactory.rcs(
                 StaticBearerCredentials.builder()
                     .setClaimedIdentity("rcsChannel my claimed identity")
                     .setToken("rcsChannel my token")
@@ -110,7 +110,7 @@ public class Create extends BaseApplication {
             .build();
 
     var smsChannel =
-        ConversationChannelCredentialsRequestBuilderFactory.sms(
+        ConversationChannelCredentialsBuilderFactory.sms(
                 StaticBearerCredentials.builder()
                     .setClaimedIdentity(smsServicePlanId)
                     .setToken(smsApiToken)
@@ -118,17 +118,17 @@ public class Create extends BaseApplication {
             .build();
 
     var telegramChannel =
-        ConversationChannelCredentialsRequestBuilderFactory.telegram(
+        ConversationChannelCredentialsBuilderFactory.telegram(
                 TelegramCredentials.builder().setToken("telegramChannel token").build())
             .build();
 
     var viberChannel =
-        ConversationChannelCredentialsRequestBuilderFactory.viber(
+        ConversationChannelCredentialsBuilderFactory.viber(
                 StaticTokenCredentials.builder().setToken("viberChannel token").build())
             .build();
 
     var viberBMChannel =
-        ConversationChannelCredentialsRequestBuilderFactory.viberBm(
+        ConversationChannelCredentialsBuilderFactory.viberBm(
                 StaticBearerCredentials.builder()
                     .setClaimedIdentity("viberBMChannel my claimed identity")
                     .setToken("viberBMChannel my token")
@@ -136,7 +136,7 @@ public class Create extends BaseApplication {
             .build();
 
     var wechatChannel =
-        ConversationChannelCredentialsRequestBuilderFactory.weChat(
+        ConversationChannelCredentialsBuilderFactory.weChat(
                 WeChatCredentials.builder()
                     .setAesKey("wechatChannel AES key")
                     .setAppId("wechatChannel app id")
@@ -145,7 +145,7 @@ public class Create extends BaseApplication {
                     .build())
             .build();
     var whatsAppChannel =
-        ConversationChannelCredentialsRequestBuilderFactory.whatsApp(
+        ConversationChannelCredentialsBuilderFactory.whatsApp(
                 StaticBearerCredentials.builder()
                     .setClaimedIdentity("whatsAppChannel my claimed identity")
                     .setToken("whatsAppChannel my token")

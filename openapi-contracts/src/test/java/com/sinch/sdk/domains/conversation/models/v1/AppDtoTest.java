@@ -15,7 +15,6 @@ import com.sinch.sdk.domains.conversation.models.v1.app.RetentionPolicyType;
 import com.sinch.sdk.domains.conversation.models.v1.app.SmartConversation;
 import com.sinch.sdk.domains.conversation.models.v1.app.request.AppCreateRequest;
 import com.sinch.sdk.domains.conversation.models.v1.app.request.AppUpdateRequest;
-import com.sinch.sdk.domains.conversation.models.v1.app.request.ConversationChannelCredentialRequest;
 import com.sinch.sdk.domains.conversation.models.v1.app.response.AppResponse;
 import com.sinch.sdk.domains.conversation.models.v1.app.response.ListAppsResponse;
 import com.sinch.sdk.domains.conversation.models.v1.app.response.QueueStats;
@@ -42,7 +41,7 @@ public class AppDtoTest extends BaseTest {
               Collections.singletonList(
                   ConversationChannelCredentials.builder()
                       .setChannel(ConversationChannel.MESSENGER)
-                      .setStaticToken(StaticTokenCredentials.builder().setToken("my token").build())
+                      .setCredentials(StaticTokenCredentials.builder().setToken("my token").build())
                       .setCallbackSecret("foo value")
                       .setState(
                           ChannelIntegrationState.builder()
@@ -85,14 +84,14 @@ public class AppDtoTest extends BaseTest {
       AppCreateRequest.builder()
           .setChannelCredentials(
               Arrays.asList(
-                  ConversationChannelCredentialRequest.builder()
+                  ConversationChannelCredentials.builder()
                       .setChannel(ConversationChannel.MESSENGER)
-                      .setStaticToken(StaticTokenCredentials.builder().setToken("my token").build())
+                      .setCredentials(StaticTokenCredentials.builder().setToken("my token").build())
                       .setCallbackSecret("foo value")
                       .build(),
-                  ConversationChannelCredentialRequest.builder()
+                  ConversationChannelCredentials.builder()
                       .setChannel(ConversationChannel.SMS)
-                      .setStaticBearer(
+                      .setCredentials(
                           StaticBearerCredentials.builder()
                               .setClaimedIdentity("my identity")
                               .setToken("sms token")
@@ -120,14 +119,14 @@ public class AppDtoTest extends BaseTest {
       AppUpdateRequest.builder()
           .setChannelCredentials(
               Arrays.asList(
-                  ConversationChannelCredentialRequest.builder()
+                  ConversationChannelCredentials.builder()
                       .setChannel(ConversationChannel.MESSENGER)
-                      .setStaticToken(StaticTokenCredentials.builder().setToken("my token").build())
+                      .setCredentials(StaticTokenCredentials.builder().setToken("my token").build())
                       .setCallbackSecret("foo value")
                       .build(),
-                  ConversationChannelCredentialRequest.builder()
+                  ConversationChannelCredentials.builder()
                       .setChannel(ConversationChannel.SMS)
-                      .setStaticBearer(
+                      .setCredentials(
                           StaticBearerCredentials.builder()
                               .setClaimedIdentity("my identity")
                               .setToken("sms token")

@@ -15,7 +15,7 @@ import java.util.Objects;
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class KakaoTalkCredentialsImpl implements KakaoTalkCredentials {
+public class KakaoTalkCredentialsImpl implements KakaoTalkCredentials, ChannelCredentials {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_KAKAOTALK_PLUS_FRIEND_ID = "kakaotalk_plus_friend_id";

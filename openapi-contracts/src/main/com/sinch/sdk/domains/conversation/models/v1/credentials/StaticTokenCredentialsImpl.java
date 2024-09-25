@@ -12,7 +12,7 @@ import java.util.Objects;
 @JsonPropertyOrder({StaticTokenCredentialsImpl.JSON_PROPERTY_TOKEN})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class StaticTokenCredentialsImpl implements StaticTokenCredentials {
+public class StaticTokenCredentialsImpl implements StaticTokenCredentials, ChannelCredentials {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_TOKEN = "token";

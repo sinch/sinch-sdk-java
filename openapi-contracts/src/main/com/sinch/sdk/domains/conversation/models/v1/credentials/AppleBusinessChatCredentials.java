@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  * must include this object.
  */
 @JsonDeserialize(builder = AppleBusinessChatCredentialsImpl.Builder.class)
-public interface AppleBusinessChatCredentials {
+public interface AppleBusinessChatCredentials extends ChannelCredentials {
 
   /**
    * The ID that identifies a Business Chat Account (BCA).

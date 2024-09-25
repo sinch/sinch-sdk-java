@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /** This object is required for channels which use a static token credential for authentication. */
 @JsonDeserialize(builder = StaticTokenCredentialsImpl.Builder.class)
-public interface StaticTokenCredentials {
+public interface StaticTokenCredentials extends ChannelCredentials {
 
   /**
    * The static token for the channel.

@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  * you must include this object.
  */
 @JsonDeserialize(builder = TelegramCredentialsImpl.Builder.class)
-public interface TelegramCredentials {
+public interface TelegramCredentials extends ChannelCredentials {
 
   /**
    * The token for the Telegram bot to which you are connecting.

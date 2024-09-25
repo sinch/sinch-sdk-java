@@ -18,74 +18,11 @@ import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 public interface ConversationChannelCredentials {
 
   /**
-   * Get staticBearer
+   * Get credentials related to conversation channel
    *
-   * @return staticBearer
+   * @return credentials
    */
-  StaticBearerCredentials getStaticBearer();
-
-  /**
-   * Get staticToken
-   *
-   * @return staticToken
-   */
-  StaticTokenCredentials getStaticToken();
-
-  /**
-   * Get mmsCredentials
-   *
-   * @return mmsCredentials
-   */
-  MMSCredentials getMmsCredentials();
-
-  /**
-   * Get kakaotalkCredentials
-   *
-   * @return kakaotalkCredentials
-   */
-  KakaoTalkCredentials getKakaotalkCredentials();
-
-  /**
-   * Get telegramCredentials
-   *
-   * @return telegramCredentials
-   */
-  TelegramCredentials getTelegramCredentials();
-
-  /**
-   * Get lineCredentials
-   *
-   * @return lineCredentials
-   */
-  LineCredentials getLineCredentials();
-
-  /**
-   * Get wechatCredentials
-   *
-   * @return wechatCredentials
-   */
-  WeChatCredentials getWechatCredentials();
-
-  /**
-   * Get instagramCredentials
-   *
-   * @return instagramCredentials
-   */
-  InstagramCredentials getInstagramCredentials();
-
-  /**
-   * Get applebcCredentials
-   *
-   * @return applebcCredentials
-   */
-  AppleBusinessChatCredentials getApplebcCredentials();
-
-  /**
-   * Get kakaotalkchatCredentials
-   *
-   * @return kakaotalkchatCredentials
-   */
-  KakaoTalkChatCredentials getKakaotalkchatCredentials();
+  ChannelCredentials getCredentials();
 
   /**
    * The secret used to verify the channel callbacks for channels which support callback
@@ -134,92 +71,11 @@ public interface ConversationChannelCredentials {
     /**
      * see getter
      *
-     * @param staticBearer see getter
+     * @param credentials see getter
      * @return Current builder
-     * @see #getStaticBearer
+     * @see #getCredentials
      */
-    Builder setStaticBearer(StaticBearerCredentials staticBearer);
-
-    /**
-     * see getter
-     *
-     * @param staticToken see getter
-     * @return Current builder
-     * @see #getStaticToken
-     */
-    Builder setStaticToken(StaticTokenCredentials staticToken);
-
-    /**
-     * see getter
-     *
-     * @param mmsCredentials see getter
-     * @return Current builder
-     * @see #getMmsCredentials
-     */
-    Builder setMmsCredentials(MMSCredentials mmsCredentials);
-
-    /**
-     * see getter
-     *
-     * @param kakaotalkCredentials see getter
-     * @return Current builder
-     * @see #getKakaotalkCredentials
-     */
-    Builder setKakaotalkCredentials(KakaoTalkCredentials kakaotalkCredentials);
-
-    /**
-     * see getter
-     *
-     * @param telegramCredentials see getter
-     * @return Current builder
-     * @see #getTelegramCredentials
-     */
-    Builder setTelegramCredentials(TelegramCredentials telegramCredentials);
-
-    /**
-     * see getter
-     *
-     * @param lineCredentials see getter
-     * @return Current builder
-     * @see #getLineCredentials
-     */
-    Builder setLineCredentials(LineCredentials lineCredentials);
-
-    /**
-     * see getter
-     *
-     * @param wechatCredentials see getter
-     * @return Current builder
-     * @see #getWechatCredentials
-     */
-    Builder setWechatCredentials(WeChatCredentials wechatCredentials);
-
-    /**
-     * see getter
-     *
-     * @param instagramCredentials see getter
-     * @return Current builder
-     * @see #getInstagramCredentials
-     */
-    Builder setInstagramCredentials(InstagramCredentials instagramCredentials);
-
-    /**
-     * see getter
-     *
-     * @param applebcCredentials see getter
-     * @return Current builder
-     * @see #getApplebcCredentials
-     */
-    Builder setApplebcCredentials(AppleBusinessChatCredentials applebcCredentials);
-
-    /**
-     * see getter
-     *
-     * @param kakaotalkchatCredentials see getter
-     * @return Current builder
-     * @see #getKakaotalkchatCredentials
-     */
-    Builder setKakaotalkchatCredentials(KakaoTalkChatCredentials kakaotalkchatCredentials);
+    Builder setCredentials(ChannelCredentials credentials);
 
     /**
      * see getter
