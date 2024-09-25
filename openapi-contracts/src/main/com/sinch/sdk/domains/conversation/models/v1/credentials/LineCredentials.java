@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  * include this object.
  */
 @JsonDeserialize(builder = LineCredentialsImpl.Builder.class)
-public interface LineCredentials {
+public interface LineCredentials extends ChannelCredentials {
 
   /**
    * The token for the LINE channel to which you are connecting.

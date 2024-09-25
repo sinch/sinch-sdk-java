@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  * you must include this object.
  */
 @JsonDeserialize(builder = KakaoTalkChatCredentialsImpl.Builder.class)
-public interface KakaoTalkChatCredentials {
+public interface KakaoTalkChatCredentials extends ChannelCredentials {
 
   /**
    * Kakaotalk Plus friend ID.

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 @JsonPropertyOrder({
   ConversationChannelCredentialsImpl.JSON_PROPERTY_STATIC_BEARER,
@@ -118,6 +119,25 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
     this.channel = channel;
     this.state = state;
     this.channelKnownId = channelKnownId;
+  }
+
+  @JsonIgnore
+  public ChannelCredentials getCredentials() {
+    return Stream.of(
+            applebcCredentials,
+            instagramCredentials,
+            kakaotalkCredentials,
+            kakaotalkchatCredentials,
+            lineCredentials,
+            mmsCredentials,
+            staticBearer,
+            staticToken,
+            telegramCredentials,
+            wechatCredentials)
+        .filter(OptionalValue::isPresent)
+        .map(OptionalValue::get)
+        .findFirst()
+        .orElse(null);
   }
 
   @JsonIgnore
@@ -381,6 +401,41 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
     OptionalValue<ConversationChannel> channel = OptionalValue.empty();
     OptionalValue<ChannelIntegrationState> state = OptionalValue.empty();
     OptionalValue<String> channelKnownId = OptionalValue.empty();
+
+    @JsonIgnore
+    public Builder setCredentials(ChannelCredentials credentials) {
+      if (credentials instanceof StaticBearerCredentials) {
+        setStaticBearer((StaticBearerCredentials) credentials);
+      }
+      if (credentials instanceof StaticTokenCredentials) {
+        setStaticToken((StaticTokenCredentials) credentials);
+      }
+      if (credentials instanceof MMSCredentials) {
+        setMmsCredentials((MMSCredentials) credentials);
+      }
+      if (credentials instanceof KakaoTalkCredentials) {
+        setKakaotalkCredentials((KakaoTalkCredentials) credentials);
+      }
+      if (credentials instanceof TelegramCredentials) {
+        setTelegramCredentials((TelegramCredentials) credentials);
+      }
+      if (credentials instanceof LineCredentials) {
+        setLineCredentials((LineCredentials) credentials);
+      }
+      if (credentials instanceof WeChatCredentials) {
+        setWechatCredentials((WeChatCredentials) credentials);
+      }
+      if (credentials instanceof InstagramCredentials) {
+        setInstagramCredentials((InstagramCredentials) credentials);
+      }
+      if (credentials instanceof AppleBusinessChatCredentials) {
+        setApplebcCredentials((AppleBusinessChatCredentials) credentials);
+      }
+      if (credentials instanceof KakaoTalkChatCredentials) {
+        setKakaotalkchatCredentials((KakaoTalkChatCredentials) credentials);
+      }
+      return this;
+    }
 
     @JsonProperty(JSON_PROPERTY_STATIC_BEARER)
     public Builder setStaticBearer(StaticBearerCredentials staticBearer) {

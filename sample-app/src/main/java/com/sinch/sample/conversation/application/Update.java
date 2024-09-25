@@ -4,7 +4,7 @@ import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.conversation.api.v1.AppService;
 import com.sinch.sdk.domains.conversation.models.v1.app.CallbackSettings;
 import com.sinch.sdk.domains.conversation.models.v1.app.request.AppUpdateRequest;
-import com.sinch.sdk.domains.conversation.models.v1.app.request.ConversationChannelCredentialsRequestBuilderFactory;
+import com.sinch.sdk.domains.conversation.models.v1.credentials.ConversationChannelCredentialsBuilderFactory;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.StaticBearerCredentials;
 import java.io.IOException;
 import java.util.Arrays;
@@ -32,7 +32,7 @@ public class Update extends BaseApplication {
     LOGGER.info(String.format("Updating application '%s'", conversationAppId));
 
     var smsChannel =
-        ConversationChannelCredentialsRequestBuilderFactory.sms(
+        ConversationChannelCredentialsBuilderFactory.sms(
                 StaticBearerCredentials.builder()
                     .setClaimedIdentity(smsServicePlanId)
                     .setToken(smsApiToken)

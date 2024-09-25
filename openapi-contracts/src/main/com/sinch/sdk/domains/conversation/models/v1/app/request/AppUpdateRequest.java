@@ -19,6 +19,7 @@ import com.sinch.sdk.domains.conversation.models.v1.app.DispatchRetentionPolicy;
 import com.sinch.sdk.domains.conversation.models.v1.app.MessageRetrySettings;
 import com.sinch.sdk.domains.conversation.models.v1.app.RetentionPolicy;
 import com.sinch.sdk.domains.conversation.models.v1.app.SmartConversation;
+import com.sinch.sdk.domains.conversation.models.v1.credentials.ConversationChannelCredentials;
 import java.util.List;
 
 /** The request sent to the API endpoint to update the configuration of an app. */
@@ -30,7 +31,7 @@ public interface AppUpdateRequest {
    *
    * @return channelCredentials
    */
-  List<ConversationChannelCredentialRequest> getChannelCredentials();
+  List<ConversationChannelCredentials> getChannelCredentials();
 
   /**
    * Get conversationMetadataReportView
@@ -114,7 +115,7 @@ public interface AppUpdateRequest {
      * @return Current builder
      * @see #getChannelCredentials
      */
-    Builder setChannelCredentials(List<ConversationChannelCredentialRequest> channelCredentials);
+    Builder setChannelCredentials(List<ConversationChannelCredentials> channelCredentials);
 
     /**
      * see getter

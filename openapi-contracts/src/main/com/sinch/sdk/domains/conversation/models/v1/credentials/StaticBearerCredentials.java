@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  * This object is required for channels which use a bearer-type of credential for authentication.
  */
 @JsonDeserialize(builder = StaticBearerCredentialsImpl.Builder.class)
-public interface StaticBearerCredentials {
+public interface StaticBearerCredentials extends ChannelCredentials {
 
   /**
    * The claimed identity for the channel.
