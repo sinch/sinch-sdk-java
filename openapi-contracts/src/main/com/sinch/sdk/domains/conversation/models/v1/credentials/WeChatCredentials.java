@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  * include this object.
  */
 @JsonDeserialize(builder = WeChatCredentialsImpl.Builder.class)
-public interface WeChatCredentials {
+public interface WeChatCredentials extends ChannelCredentials {
 
   /**
    * The AppID(Developer ID) for the WeChat channel to which you are connecting.

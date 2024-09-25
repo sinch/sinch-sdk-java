@@ -17,7 +17,8 @@ import java.util.Objects;
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class AppleBusinessChatCredentialsImpl implements AppleBusinessChatCredentials {
+public class AppleBusinessChatCredentialsImpl
+    implements AppleBusinessChatCredentials, ChannelCredentials {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_BUSINESS_CHAT_ACCOUNT_ID = "business_chat_account_id";

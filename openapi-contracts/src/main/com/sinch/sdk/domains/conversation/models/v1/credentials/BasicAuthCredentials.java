@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /** It consists of a username and a password. */
 @JsonDeserialize(builder = BasicAuthCredentialsImpl.Builder.class)
-public interface BasicAuthCredentials {
+public interface BasicAuthCredentials extends ChannelCredentials {
 
   /**
    * Basic auth password.

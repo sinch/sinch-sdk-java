@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  * include this object.
  */
 @JsonDeserialize(builder = MMSCredentialsImpl.Builder.class)
-public interface MMSCredentials {
+public interface MMSCredentials extends ChannelCredentials {
 
   /**
    * MMS Account ID.

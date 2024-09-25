@@ -15,6 +15,7 @@ import com.sinch.sdk.domains.conversation.models.v1.app.DispatchRetentionPolicy;
 import com.sinch.sdk.domains.conversation.models.v1.app.MessageRetrySettings;
 import com.sinch.sdk.domains.conversation.models.v1.app.RetentionPolicy;
 import com.sinch.sdk.domains.conversation.models.v1.app.SmartConversation;
+import com.sinch.sdk.domains.conversation.models.v1.credentials.ConversationChannelCredentials;
 import java.util.List;
 import java.util.Objects;
 
@@ -37,7 +38,7 @@ public class AppUpdateRequestImpl implements AppUpdateRequest {
 
   public static final String JSON_PROPERTY_CHANNEL_CREDENTIALS = "channel_credentials";
 
-  private OptionalValue<List<ConversationChannelCredentialRequest>> channelCredentials;
+  private OptionalValue<List<ConversationChannelCredentials>> channelCredentials;
 
   public static final String JSON_PROPERTY_CONVERSATION_METADATA_REPORT_VIEW =
       "conversation_metadata_report_view";
@@ -80,7 +81,7 @@ public class AppUpdateRequestImpl implements AppUpdateRequest {
   public AppUpdateRequestImpl() {}
 
   protected AppUpdateRequestImpl(
-      OptionalValue<List<ConversationChannelCredentialRequest>> channelCredentials,
+      OptionalValue<List<ConversationChannelCredentials>> channelCredentials,
       OptionalValue<ConversationMetadataReportView> conversationMetadataReportView,
       OptionalValue<String> displayName,
       OptionalValue<RetentionPolicy> retentionPolicy,
@@ -103,13 +104,13 @@ public class AppUpdateRequestImpl implements AppUpdateRequest {
   }
 
   @JsonIgnore
-  public List<ConversationChannelCredentialRequest> getChannelCredentials() {
+  public List<ConversationChannelCredentials> getChannelCredentials() {
     return channelCredentials.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CHANNEL_CREDENTIALS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<List<ConversationChannelCredentialRequest>> channelCredentials() {
+  public OptionalValue<List<ConversationChannelCredentials>> channelCredentials() {
     return channelCredentials;
   }
 
@@ -289,8 +290,7 @@ public class AppUpdateRequestImpl implements AppUpdateRequest {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements AppUpdateRequest.Builder {
-    OptionalValue<List<ConversationChannelCredentialRequest>> channelCredentials =
-        OptionalValue.empty();
+    OptionalValue<List<ConversationChannelCredentials>> channelCredentials = OptionalValue.empty();
     OptionalValue<ConversationMetadataReportView> conversationMetadataReportView =
         OptionalValue.empty();
     OptionalValue<String> displayName = OptionalValue.empty();
@@ -303,8 +303,7 @@ public class AppUpdateRequestImpl implements AppUpdateRequest {
     OptionalValue<DeliveryReportBasedFallback> deliveryReportBasedFallback = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CHANNEL_CREDENTIALS)
-    public Builder setChannelCredentials(
-        List<ConversationChannelCredentialRequest> channelCredentials) {
+    public Builder setChannelCredentials(List<ConversationChannelCredentials> channelCredentials) {
       this.channelCredentials = OptionalValue.of(channelCredentials);
       return this;
     }
