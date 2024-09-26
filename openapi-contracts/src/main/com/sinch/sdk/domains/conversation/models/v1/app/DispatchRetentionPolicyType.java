@@ -8,6 +8,10 @@ import java.util.stream.Stream;
 /** Gets or Sets DispatchRetentionPolicyType */
 public class DispatchRetentionPolicyType extends EnumDynamic<String, DispatchRetentionPolicyType> {
 
+  /**
+   * Removes all messages, sent or received by the app, older than the TTL days specified in the
+   * policy.
+   */
   public static final DispatchRetentionPolicyType MESSAGE_EXPIRE_POLICY =
       new DispatchRetentionPolicyType("MESSAGE_EXPIRE_POLICY");
 

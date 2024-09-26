@@ -9,15 +9,19 @@ import java.util.stream.Stream;
 public class GetChannelProfileConversationChannel
     extends EnumDynamic<String, GetChannelProfileConversationChannel> {
 
+  /** The Facebook Messenger channel. */
   public static final GetChannelProfileConversationChannel MESSENGER =
       new GetChannelProfileConversationChannel("MESSENGER");
 
+  /** The Instagram channel. */
   public static final GetChannelProfileConversationChannel INSTAGRAM =
       new GetChannelProfileConversationChannel("INSTAGRAM");
 
+  /** The Viber Bot channel. */
   public static final GetChannelProfileConversationChannel VIBER =
       new GetChannelProfileConversationChannel("VIBER");
 
+  /** The LINE channel. */
   public static final GetChannelProfileConversationChannel LINE =
       new GetChannelProfileConversationChannel("LINE");
 

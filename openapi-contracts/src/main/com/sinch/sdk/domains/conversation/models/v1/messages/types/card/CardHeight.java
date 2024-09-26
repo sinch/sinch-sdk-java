@@ -8,12 +8,16 @@ import java.util.stream.Stream;
 /** You can set the desired size of the card in the message. */
 public class CardHeight extends EnumDynamic<String, CardHeight> {
 
+  /** The height of the card is unspecified. */
   public static final CardHeight UNSPECIFIED_HEIGHT = new CardHeight("UNSPECIFIED_HEIGHT");
 
+  /** The shortest card height. */
   public static final CardHeight SHORT = new CardHeight("SHORT");
 
+  /** Medium card height. */
   public static final CardHeight MEDIUM = new CardHeight("MEDIUM");
 
+  /** The tallest card height. */
   public static final CardHeight TALL = new CardHeight("TALL");
 
   private static final EnumSupportDynamic<String, CardHeight> ENUM_SUPPORT =

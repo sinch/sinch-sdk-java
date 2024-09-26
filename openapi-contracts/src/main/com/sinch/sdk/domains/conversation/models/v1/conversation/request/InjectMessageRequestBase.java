@@ -57,13 +57,6 @@ public interface InjectMessageRequestBase {
   String getConversationId();
 
   /**
-   * Flag for whether this message was injected.
-   *
-   * @return injected
-   */
-  Boolean getInjected();
-
-  /**
    * For Contact Messages the sender ID is the contact sent the message to. For App Messages the
    * sender that was used to send the message, if applicable.
    *
@@ -132,15 +125,6 @@ public interface InjectMessageRequestBase {
      * @see #getConversationId
      */
     B setConversationId(String conversationId);
-
-    /**
-     * see getter
-     *
-     * @param injected see getter
-     * @return Current builder
-     * @see #getInjected
-     */
-    B setInjected(Boolean injected);
 
     /**
      * see getter

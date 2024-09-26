@@ -44,31 +44,31 @@ public class ReasonCode extends EnumDynamic<String, ReasonCode> {
   /**
    * The configuration of the channel for the used App is wrong. The bad configuration caused the
    * channel to reject the message. Please see the <a
-   * href="/docs/conversation/channel-support/">channel support documentation page</a> for how to
-   * set it up correctly.
+   * href="https://developers.sinch.com/docs/conversation/channel-support/">channel support
+   * documentation page</a> for how to set it up correctly.
    */
   public static final ReasonCode CHANNEL_BAD_CONFIGURATION =
       new ReasonCode("CHANNEL_BAD_CONFIGURATION");
 
   /**
    * The configuration of the channel is missing from the used App. Please see the <a
-   * href="/docs/conversation/channel-support/">channel support documentation</a> page for how to
-   * set it up correctly.
+   * href="https://developers.sinch.com/docs/conversation/channel-support/">channel support
+   * documentation</a> page for how to set it up correctly.
    */
   public static final ReasonCode CHANNEL_CONFIGURATION_MISSING =
       new ReasonCode("CHANNEL_CONFIGURATION_MISSING");
 
   /**
    * Some of the referenced media files is of a unsupported media type. Please read the <a
-   * href="/docs/conversation/channel-support/">channel support documentation</a> page to find out
-   * the limitations on media that the different channels impose.
+   * href="https://developers.sinch.com/docs/conversation/channel-support/">channel support
+   * documentation</a> page to find out the limitations on media that the different channels impose.
    */
   public static final ReasonCode MEDIA_TYPE_UNSUPPORTED = new ReasonCode("MEDIA_TYPE_UNSUPPORTED");
 
   /**
    * Some of the referenced media files are too large. Please read the <a
-   * href="/docs/conversation/channel-support/">channel support documentation</a> to find out the
-   * limitations on file size that the different channels impose.
+   * href="https://developers.sinch.com/docs/conversation/channel-support/">channel support
+   * documentation</a> to find out the limitations on file size that the different channels impose.
    */
   public static final ReasonCode MEDIA_TOO_LARGE = new ReasonCode("MEDIA_TOO_LARGE");
 
@@ -104,16 +104,16 @@ public class ReasonCode extends EnumDynamic<String, ReasonCode> {
 
   /**
    * The message delivery, or event delivery, failed due to a channel-imposed timeout. See the <a
-   * href="/docs/conversation/channel-support/">channel support documentation</a> page for further
-   * details about how the different channels behave.
+   * href="https://developers.sinch.com/docs/conversation/channel-support/">channel support
+   * documentation</a> page for further details about how the different channels behave.
    */
   public static final ReasonCode DELIVERY_TIMED_OUT = new ReasonCode("DELIVERY_TIMED_OUT");
 
   /**
    * The message or event was rejected by the channel due to a policy. Some channels have specific
    * policies that must be met to send a message. See the <a
-   * href="/docs/conversation/channel-support/">channel support documentation</a> page for more
-   * information about when this error will be triggered.
+   * href="https://developers.sinch.com/docs/conversation/channel-support/">channel support
+   * documentation</a> page for more information about when this error will be triggered.
    */
   public static final ReasonCode DELIVERY_REJECTED_DUE_TO_POLICY =
       new ReasonCode("DELIVERY_REJECTED_DUE_TO_POLICY");

@@ -14,7 +14,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
  * The retention policy configured for the app. For more information about retention policies, see
- * <a href="/docs/conversation/keyconcepts/#retention-policy">Retention Policy</a>.
+ * <a href="https://developers.sinch.com/docs/conversation/keyconcepts/#retention-policy">Retention
+ * Policy</a>.
  */
 @JsonDeserialize(builder = RetentionPolicyImpl.Builder.class)
 public interface RetentionPolicy {

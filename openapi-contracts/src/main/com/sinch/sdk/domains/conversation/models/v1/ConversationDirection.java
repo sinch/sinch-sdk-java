@@ -8,11 +8,14 @@ import java.util.stream.Stream;
 /** Gets or Sets ConversationDirection */
 public class ConversationDirection extends EnumDynamic<String, ConversationDirection> {
 
+  /** The direction is undefined. */
   public static final ConversationDirection UNDEFINED_DIRECTION =
       new ConversationDirection("UNDEFINED_DIRECTION");
 
+  /** Sent to the Conversation API app. */
   public static final ConversationDirection TO_APP = new ConversationDirection("TO_APP");
 
+  /** Sent to a recipient/contact from the Conversation API app. */
   public static final ConversationDirection TO_CONTACT = new ConversationDirection("TO_CONTACT");
 
   private static final EnumSupportDynamic<String, ConversationDirection> ENUM_SUPPORT =

@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.webhooks;
+package com.sinch.sdk.domains.conversation.models.v1.webhooks.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,21 +7,24 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.webhooks.ClientCredentials;
+import com.sinch.sdk.domains.conversation.models.v1.webhooks.WebhookTargetType;
+import com.sinch.sdk.domains.conversation.models.v1.webhooks.WebhookTrigger;
 import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  WebhookImpl.JSON_PROPERTY_APP_ID,
-  WebhookImpl.JSON_PROPERTY_CLIENT_CREDENTIALS,
-  WebhookImpl.JSON_PROPERTY_ID,
-  WebhookImpl.JSON_PROPERTY_SECRET,
-  WebhookImpl.JSON_PROPERTY_TARGET,
-  WebhookImpl.JSON_PROPERTY_TARGET_TYPE,
-  WebhookImpl.JSON_PROPERTY_TRIGGERS
+  CreateWebhookRequestInternalImpl.JSON_PROPERTY_APP_ID,
+  CreateWebhookRequestInternalImpl.JSON_PROPERTY_CLIENT_CREDENTIALS,
+  CreateWebhookRequestInternalImpl.JSON_PROPERTY_ID,
+  CreateWebhookRequestInternalImpl.JSON_PROPERTY_SECRET,
+  CreateWebhookRequestInternalImpl.JSON_PROPERTY_TARGET,
+  CreateWebhookRequestInternalImpl.JSON_PROPERTY_TARGET_TYPE,
+  CreateWebhookRequestInternalImpl.JSON_PROPERTY_TRIGGERS
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class WebhookImpl implements Webhook {
+public class CreateWebhookRequestInternalImpl implements CreateWebhookRequestInternal {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_APP_ID = "app_id";
@@ -52,9 +55,9 @@ public class WebhookImpl implements Webhook {
 
   private OptionalValue<List<WebhookTrigger>> triggers;
 
-  public WebhookImpl() {}
+  public CreateWebhookRequestInternalImpl() {}
 
-  protected WebhookImpl(
+  protected CreateWebhookRequestInternalImpl(
       OptionalValue<String> appId,
       OptionalValue<ClientCredentials> clientCredentials,
       OptionalValue<String> id,
@@ -77,7 +80,7 @@ public class WebhookImpl implements Webhook {
   }
 
   @JsonProperty(JSON_PROPERTY_APP_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<String> appId() {
     return appId;
   }
@@ -148,7 +151,7 @@ public class WebhookImpl implements Webhook {
     return triggers;
   }
 
-  /** Return true if this Webhook object is equal to o. */
+  /** Return true if this Webhooks_CreateWebhook_request object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -157,14 +160,15 @@ public class WebhookImpl implements Webhook {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    WebhookImpl webhook = (WebhookImpl) o;
-    return Objects.equals(this.appId, webhook.appId)
-        && Objects.equals(this.clientCredentials, webhook.clientCredentials)
-        && Objects.equals(this.id, webhook.id)
-        && Objects.equals(this.secret, webhook.secret)
-        && Objects.equals(this.target, webhook.target)
-        && Objects.equals(this.targetType, webhook.targetType)
-        && Objects.equals(this.triggers, webhook.triggers);
+    CreateWebhookRequestInternalImpl webhooksCreateWebhookRequest =
+        (CreateWebhookRequestInternalImpl) o;
+    return Objects.equals(this.appId, webhooksCreateWebhookRequest.appId)
+        && Objects.equals(this.clientCredentials, webhooksCreateWebhookRequest.clientCredentials)
+        && Objects.equals(this.id, webhooksCreateWebhookRequest.id)
+        && Objects.equals(this.secret, webhooksCreateWebhookRequest.secret)
+        && Objects.equals(this.target, webhooksCreateWebhookRequest.target)
+        && Objects.equals(this.targetType, webhooksCreateWebhookRequest.targetType)
+        && Objects.equals(this.triggers, webhooksCreateWebhookRequest.triggers);
   }
 
   @Override
@@ -175,7 +179,7 @@ public class WebhookImpl implements Webhook {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class WebhookImpl {\n");
+    sb.append("class CreateWebhookRequestInternalImpl {\n");
     sb.append("    appId: ").append(toIndentedString(appId)).append("\n");
     sb.append("    clientCredentials: ").append(toIndentedString(clientCredentials)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
@@ -198,7 +202,7 @@ public class WebhookImpl implements Webhook {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements Webhook.Builder {
+  static class Builder implements CreateWebhookRequestInternal.Builder {
     OptionalValue<String> appId = OptionalValue.empty();
     OptionalValue<ClientCredentials> clientCredentials = OptionalValue.empty();
     OptionalValue<String> id = OptionalValue.empty();
@@ -249,8 +253,9 @@ public class WebhookImpl implements Webhook {
       return this;
     }
 
-    public Webhook build() {
-      return new WebhookImpl(appId, clientCredentials, id, secret, target, targetType, triggers);
+    public CreateWebhookRequestInternal build() {
+      return new CreateWebhookRequestInternalImpl(
+          appId, clientCredentials, id, secret, target, targetType, triggers);
     }
   }
 }

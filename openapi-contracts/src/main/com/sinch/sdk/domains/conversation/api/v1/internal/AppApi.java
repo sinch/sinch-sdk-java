@@ -349,8 +349,8 @@ public class AppApi {
    * Therefore, **if you&#39;d like to add additional configurations to an existing Conversation API
    * app, ensure that you include existing values AND new values in the call**. For example, if
    * you&#39;d like to add new &#x60;channel_credentials&#x60;, you can
-   * [get](/docs/conversation/api-reference/conversation/tag/App/#tag/App/operation/App_GetApp) your
-   * existing Conversation API app, extract the existing &#x60;channel_credentials&#x60; list,
+   * [get](https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/App/#tag/App/operation/App_GetApp)
+   * your existing Conversation API app, extract the existing &#x60;channel_credentials&#x60; list,
    * append your new configuration to that list, and include the updated
    * &#x60;channel_credentials&#x60; list in this update call.
    *
@@ -430,7 +430,7 @@ public class AppApi {
     if (null != updateMask) {
       localVarQueryParams.add(
           new URLParameter(
-              "update_mask", updateMask, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
+              "update_mask", updateMask, URLParameter.STYLE.valueOf("form".toUpperCase()), false));
     }
 
     Map<String, String> localVarHeaderParams = new HashMap<>();

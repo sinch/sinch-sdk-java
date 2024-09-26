@@ -8,8 +8,10 @@ import java.util.stream.Stream;
 /** Gets or Sets WebhookTargetType */
 public class WebhookTargetType extends EnumDynamic<String, WebhookTargetType> {
 
+  /** Events won't be sent. */
   public static final WebhookTargetType DISMISS = new WebhookTargetType("DISMISS");
 
+  /** Events will be sent to an HTTP target. */
   public static final WebhookTargetType HTTP = new WebhookTargetType("HTTP");
 
   private static final EnumSupportDynamic<String, WebhookTargetType> ENUM_SUPPORT =

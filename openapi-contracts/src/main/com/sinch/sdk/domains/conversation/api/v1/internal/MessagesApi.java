@@ -67,8 +67,8 @@ public class MessagesApi {
    * @param messageId The unique ID of the message. (required)
    * @param messagesSource Specifies the message source for which the request will be processed.
    *     Used for operations on messages in Dispatch Mode. For more information, see [Processing
-   *     Modes](../../../../../conversation/processing-modes/). (optional, default to
-   *     CONVERSATION_SOURCE)
+   *     Modes](https://developers.sinch.com/docs/conversation/processing-modes/). (optional,
+   *     default to CONVERSATION_SOURCE)
    * @throws ApiException if fails to make API call
    */
   public void messagesDeleteMessage(String projectId, String messageId, String messagesSource)
@@ -162,8 +162,8 @@ public class MessagesApi {
    * @param messageId The unique ID of the message. (required)
    * @param messagesSource Specifies the message source for which the request will be processed.
    *     Used for operations on messages in Dispatch Mode. For more information, see [Processing
-   *     Modes](../../../../../conversation/processing-modes/). (optional, default to
-   *     CONVERSATION_SOURCE)
+   *     Modes](https://developers.sinch.com/docs/conversation/processing-modes/). (optional,
+   *     default to CONVERSATION_SOURCE)
    * @return ConversationMessageInternal
    * @throws ApiException if fails to make API call
    */
@@ -254,16 +254,16 @@ public class MessagesApi {
 
   /**
    * List messages This operation lists all messages sent or received via particular [Processing
-   * Modes](../../../../../conversation/processing-modes/). Setting the &#x60;messages_source&#x60;
-   * parameter to &#x60;CONVERSATION_SOURCE&#x60; allows for querying messages in
-   * &#x60;CONVERSATION&#x60; mode, and setting it to &#x60;DISPATCH_SOURCE&#x60; will allow for
-   * queries of messages in &#x60;DISPATCH&#x60; mode. Combining multiple parameters is supported
-   * for more detailed filtering of messages, but some of them are not supported depending on the
-   * value specified for &#x60;messages_source&#x60;. The description for each field will inform if
-   * that field may not be supported. The messages are ordered by their &#x60;accept_time&#x60;
-   * property in descending order, where &#x60;accept_time&#x60; is a timestamp of when the message
-   * was enqueued by the Conversation API. This means messages received most recently will be listed
-   * first.
+   * Modes](https://developers.sinch.com/docs/conversation/processing-modes/). Setting the
+   * &#x60;messages_source&#x60; parameter to &#x60;CONVERSATION_SOURCE&#x60; allows for querying
+   * messages in &#x60;CONVERSATION&#x60; mode, and setting it to &#x60;DISPATCH_SOURCE&#x60; will
+   * allow for queries of messages in &#x60;DISPATCH&#x60; mode. Combining multiple parameters is
+   * supported for more detailed filtering of messages, but some of them are not supported depending
+   * on the value specified for &#x60;messages_source&#x60;. The description for each field will
+   * inform if that field may not be supported. The messages are ordered by their
+   * &#x60;accept_time&#x60; property in descending order, where &#x60;accept_time&#x60; is a
+   * timestamp of when the message was enqueued by the Conversation API. This means messages
+   * received most recently will be listed first.
    *
    * @param projectId The unique ID of the project. You can find this on the [Sinch
    *     Dashboard](https://dashboard.sinch.com/convapi/apps). (required)
@@ -284,8 +284,8 @@ public class MessagesApi {
    * @param view (optional, default to WITH_METADATA)
    * @param messagesSource Specifies the message source for which the request will be processed.
    *     Used for operations on messages in Dispatch Mode. For more information, see [Processing
-   *     Modes](../../../../../conversation/processing-modes/). (optional, default to
-   *     CONVERSATION_SOURCE)
+   *     Modes](https://developers.sinch.com/docs/conversation/processing-modes/). (optional,
+   *     default to CONVERSATION_SOURCE)
    * @param onlyRecipientOriginated If true, fetch only recipient originated messages. Available
    *     only when &#x60;messages_source&#x60; is &#x60;DISPATCH_SOURCE&#x60;. (optional)
    * @param channel Only fetch messages from the &#x60;channel&#x60;. (optional)
@@ -598,8 +598,8 @@ public class MessagesApi {
    * @param messageUpdateRequest Update message metadata request. (required)
    * @param messagesSource Specifies the message source for which the request will be processed.
    *     Used for operations on messages in Dispatch Mode. For more information, see [Processing
-   *     Modes](../../../../../conversation/processing-modes/). (optional, default to
-   *     CONVERSATION_SOURCE)
+   *     Modes](https://developers.sinch.com/docs/conversation/processing-modes/). (optional,
+   *     default to CONVERSATION_SOURCE)
    * @return ConversationMessageInternal
    * @throws ApiException if fails to make API call
    */

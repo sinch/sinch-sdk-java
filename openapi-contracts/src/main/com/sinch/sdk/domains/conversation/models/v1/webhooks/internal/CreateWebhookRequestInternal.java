@@ -8,14 +8,17 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.webhooks;
+package com.sinch.sdk.domains.conversation.models.v1.webhooks.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.conversation.models.v1.webhooks.ClientCredentials;
+import com.sinch.sdk.domains.conversation.models.v1.webhooks.WebhookTargetType;
+import com.sinch.sdk.domains.conversation.models.v1.webhooks.WebhookTrigger;
 import java.util.List;
 
-/** Represents a destination for receiving callbacks from the Conversation API. */
-@JsonDeserialize(builder = WebhookImpl.Builder.class)
-public interface Webhook {
+/** CreateWebhookRequestInternal */
+@JsonDeserialize(builder = CreateWebhookRequestInternalImpl.Builder.class)
+public interface CreateWebhookRequestInternal {
 
   /**
    * The app that this webhook belongs to.
@@ -77,7 +80,7 @@ public interface Webhook {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new WebhookImpl.Builder();
+    return new CreateWebhookRequestInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -151,6 +154,6 @@ public interface Webhook {
      *
      * @return The instance build with current builder values
      */
-    Webhook build();
+    CreateWebhookRequestInternal build();
   }
 }

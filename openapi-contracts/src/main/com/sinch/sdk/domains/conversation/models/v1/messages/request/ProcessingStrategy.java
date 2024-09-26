@@ -6,7 +6,8 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 /**
- * Overrides the app's <a href="../../../../../conversation/processing-modes/">Processing Mode</a>.
+ * Overrides the app's <a
+ * href="https://developers.sinch.com/docs/conversation/processing-modes/">Processing Mode</a>.
  * Default value is <code>DEFAULT</code>.
  */
 public class ProcessingStrategy extends EnumDynamic<String, ProcessingStrategy> {

@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 /** Gets or Sets ConversationMergeStrategy */
 public class ConversationMergeStrategy extends EnumDynamic<String, ConversationMergeStrategy> {
 
+  /** Merge the contents of the two subjects. */
   public static final ConversationMergeStrategy MERGE = new ConversationMergeStrategy("MERGE");
 
   private static final EnumSupportDynamic<String, ConversationMergeStrategy> ENUM_SUPPORT =
