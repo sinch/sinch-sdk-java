@@ -43,8 +43,8 @@ public interface MessagesService {
    *
    * <p>You can find all of your IDs and authentication credentials on the Sinch Customer Dashboard.
    *
-   * @return Response related to messages sent (from {@link
-   *     com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse})
+   * @param request Request parameters
+   * @return Response related to sent message
    * @since 1.3
    */
   SendMessageResponse sendMessage(SendMessageRequest<? extends AppMessageBody> request);
@@ -53,8 +53,9 @@ public interface MessagesService {
    * Send a card message
    *
    * @param request CardMessage request
-   * @return Response
+   * @return Response related to sent message
    * @see #sendMessage(SendMessageRequest)
+   * @since 1.3
    */
   SendMessageResponse sendCardMessage(SendMessageRequest<CardMessage> request);
 
@@ -62,8 +63,9 @@ public interface MessagesService {
    * Send a carousel message
    *
    * @param request CarouselMessage request
-   * @return Response
+   * @return Response related to sent message
    * @see #sendMessage(SendMessageRequest)
+   * @since 1.3
    */
   SendMessageResponse sendCarouselMessage(SendMessageRequest<CarouselMessage> request);
 
@@ -71,8 +73,9 @@ public interface MessagesService {
    * Send a choice message
    *
    * @param request ChoiceMessage request
-   * @return Response
+   * @return Response related to sent message
    * @see #sendMessage(SendMessageRequest)
+   * @since 1.3
    */
   SendMessageResponse sendChoiceMessage(SendMessageRequest<ChoiceMessage> request);
 
@@ -80,8 +83,9 @@ public interface MessagesService {
    * Send a contact info message
    *
    * @param request ContactInfoMessage request
-   * @return Response
+   * @return Response related to sent message
    * @see #sendMessage(SendMessageRequest)
+   * @since 1.3
    */
   SendMessageResponse sendContactInfoMessage(SendMessageRequest<ContactInfoMessage> request);
 
@@ -89,8 +93,9 @@ public interface MessagesService {
    * Send a list message
    *
    * @param request ListMessage request
-   * @return Response
+   * @return Response related to sent message
    * @see #sendMessage(SendMessageRequest)
+   * @since 1.3
    */
   SendMessageResponse sendListMessage(SendMessageRequest<ListMessage> request);
 
@@ -98,8 +103,9 @@ public interface MessagesService {
    * Send a location message
    *
    * @param request LocationMessage request
-   * @return Response
+   * @return Response related to sent message
    * @see #sendMessage(SendMessageRequest)
+   * @since 1.3
    */
   SendMessageResponse sendLocationMessage(SendMessageRequest<LocationMessage> request);
 
@@ -107,8 +113,9 @@ public interface MessagesService {
    * Send a media message
    *
    * @param request MediaMessage request
-   * @return Response
+   * @return Response related to sent message
    * @see #sendMessage(SendMessageRequest)
+   * @since 1.3
    */
   SendMessageResponse sendMediaMessage(SendMessageRequest<MediaMessage> request);
 
@@ -116,8 +123,9 @@ public interface MessagesService {
    * Send a template message
    *
    * @param request TemplateMessage request
-   * @return Response
+   * @return Response related to sent message
    * @see #sendMessage(SendMessageRequest)
+   * @since 1.3
    */
   SendMessageResponse sendTemplateMessage(SendMessageRequest<TemplateMessage> request);
 
@@ -125,8 +133,9 @@ public interface MessagesService {
    * Send a send message request message
    *
    * @param request request
-   * @return Response
+   * @return Response related to sent message
    * @see #sendMessage(SendMessageRequest)
+   * @since 1.3
    */
   SendMessageResponse sendTextMessage(SendMessageRequest<TextMessage> request);
 
@@ -136,6 +145,7 @@ public interface MessagesService {
    * @see #get(String, MessageSource)
    * @param messageId The unique ID of the message.
    * @return Conversation message
+   * @since 1.3
    */
   ConversationMessage get(String messageId);
 
@@ -148,6 +158,7 @@ public interface MessagesService {
    *     href="https://developers.sinch.com/docs/conversation/processing-modes">Processing Modes</a>
    * @default <code>CONVERSATION_SOURCE</code>
    * @return Conversation message
+   * @since 1.3
    */
   ConversationMessage get(String messageId, MessageSource messageSource);
 
@@ -178,6 +189,7 @@ public interface MessagesService {
    *
    * @see #delete(String, MessageSource)
    * @param messageId The unique ID of the message.
+   * @since 1.3
    */
   void delete(String messageId);
 
@@ -191,6 +203,7 @@ public interface MessagesService {
    *     for operations on messages in Dispatch Mode. For more information, see <a
    *     href="https://developers.sinch.com/docs/conversation/processing-modes">Processing Modes</a>
    * @default <code>CONVERSATION_SOURCE</code>
+   * @since 1.3
    */
   void delete(String messageId, MessageSource messageSource);
 
@@ -201,6 +214,7 @@ public interface MessagesService {
    * @param messageId The unique ID of the message.
    * @param request Request parameters to be used for updating
    * @return Updated message
+   * @since 1.3
    */
   ConversationMessage update(String messageId, MessageUpdateRequest request);
 
@@ -214,6 +228,7 @@ public interface MessagesService {
    * @default <code>CONVERSATION_SOURCE</code>
    * @param request Request parameters to be used for updating
    * @return Updated message
+   * @since 1.3
    */
   ConversationMessage update(
       String messageId, MessageSource messageSource, MessageUpdateRequest request);

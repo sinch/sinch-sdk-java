@@ -11,8 +11,9 @@ public class ConversationChannelCredentialsBuilderFactory {
    * Create dedicated conversation credential builder for <code>{@link ConversationChannel#APPLEBC}
    * </code> channel
    *
-   * @param credentials Credentials
-   * @return Credentials builder
+   * @param credentials Credentials parameters to be used to init builder
+   * @return Conversation channel credentials builder filled with input parameters
+   * @since 1.3
    */
   public static ConversationChannelCredentials.Builder appleBc(
       AppleBusinessChatCredentials credentials) {
@@ -25,8 +26,9 @@ public class ConversationChannelCredentialsBuilderFactory {
    * Create dedicated conversation credential builder for<code>{@link ConversationChannel#INSTAGRAM}
    * </code> channel
    *
-   * @param credentials Credentials
-   * @return Credentials builder
+   * @param credentials Credentials parameters to be used to init builder
+   * @return Conversation channel credentials builder filled with input parameters
+   * @since 1.3
    */
   public static ConversationChannelCredentials.Builder instagram(InstagramCredentials credentials) {
     return ConversationChannelCredentials.builder()
@@ -38,8 +40,9 @@ public class ConversationChannelCredentialsBuilderFactory {
    * Create dedicated conversation credential builder for<code>{@link ConversationChannel#KAKAOTALK}
    * </code> channel
    *
-   * @param credentials Credentials
-   * @return Credentials builder
+   * @param credentials Credentials parameters to be used to init builder
+   * @return Conversation channel credentials builder filled with input parameters
+   * @since 1.3
    */
   public static ConversationChannelCredentials.Builder kakaoTalk(KakaoTalkCredentials credentials) {
     return ConversationChannelCredentials.builder()
@@ -51,8 +54,9 @@ public class ConversationChannelCredentialsBuilderFactory {
    * Create dedicated conversation credential builder for<code>
    * {@link ConversationChannel#KAKAOTALKCHAT}</code> channel
    *
-   * @param credentials Credentials
-   * @return Credentials builder
+   * @param credentials Credentials parameters to be used to init builder
+   * @return Conversation channel credentials builder filled with input parameters
+   * @since 1.3
    */
   public static ConversationChannelCredentials.Builder kakaoTalkChat(
       KakaoTalkChatCredentials credentials) {
@@ -65,8 +69,9 @@ public class ConversationChannelCredentialsBuilderFactory {
    * Create dedicated conversation credential builder for<code>{@link ConversationChannel#LINE}
    * </code> channel
    *
-   * @param credentials Credentials
-   * @return Credentials builder
+   * @param credentials Credentials parameters to be used to init builder
+   * @return Conversation channel credentials builder filled with input parameters
+   * @since 1.3
    */
   public static ConversationChannelCredentials.Builder line(LineCredentials credentials) {
     return ConversationChannelCredentials.builder()
@@ -78,8 +83,9 @@ public class ConversationChannelCredentialsBuilderFactory {
    * Create dedicated conversation credential builder for<code>{@link ConversationChannel#MESSENGER}
    * </code> channel
    *
-   * @param credentials Credentials
-   * @return Credentials builder
+   * @param credentials Credentials parameters to be used to init builder
+   * @return Conversation channel credentials builder filled with input parameters
+   * @since 1.3
    */
   public static ConversationChannelCredentials.Builder messenger(
       StaticTokenCredentials credentials) {
@@ -92,8 +98,9 @@ public class ConversationChannelCredentialsBuilderFactory {
    * Create dedicated conversation credential builder for<code>{@link ConversationChannel#MMS}
    * </code> channel
    *
-   * @param credentials Credentials
-   * @return Credentials builder
+   * @param credentials Credentials parameters to be used to init builder
+   * @return Conversation channel credentials builder filled with input parameters
+   * @since 1.3
    */
   public static ConversationChannelCredentials.Builder mms(MMSCredentials credentials) {
     return ConversationChannelCredentials.builder()
@@ -105,8 +112,9 @@ public class ConversationChannelCredentialsBuilderFactory {
    * Create dedicated conversation credential builder for<code>{@link ConversationChannel#RCS}
    * </code> channel
    *
-   * @param credentials Credentials
-   * @return Credentials builder
+   * @param credentials Credentials parameters to be used to init builder
+   * @return Conversation channel credentials builder filled with input parameters
+   * @since 1.3
    */
   public static ConversationChannelCredentials.Builder rcs(StaticBearerCredentials credentials) {
     return ConversationChannelCredentials.builder()
@@ -118,8 +126,9 @@ public class ConversationChannelCredentialsBuilderFactory {
    * Create dedicated conversation credential builder for<code>{@link ConversationChannel#SMS}
    * </code> channel
    *
-   * @param credentials Credentials
-   * @return Credentials builder
+   * @param credentials Credentials parameters to be used to init builder
+   * @return Conversation channel credentials builder filled with input parameters
+   * @since 1.3
    */
   public static ConversationChannelCredentials.Builder sms(StaticBearerCredentials credentials) {
     return ConversationChannelCredentials.builder()
@@ -131,8 +140,9 @@ public class ConversationChannelCredentialsBuilderFactory {
    * Create dedicated conversation credential builder for<code>{@link ConversationChannel#TELEGRAM}
    * </code> channel
    *
-   * @param credentials Credentials
-   * @return Credentials builder
+   * @param credentials Credentials parameters to be used to init builder
+   * @return Conversation channel credentials builder filled with input parameters
+   * @since 1.3
    */
   public static ConversationChannelCredentials.Builder telegram(TelegramCredentials credentials) {
     return ConversationChannelCredentials.builder()
@@ -144,8 +154,9 @@ public class ConversationChannelCredentialsBuilderFactory {
    * Create dedicated conversation credential builder for<code>{@link ConversationChannel#VIBER}
    * </code> channel
    *
-   * @param credentials Credentials
-   * @return Credentials builder
+   * @param credentials Credentials parameters to be used to init builder
+   * @return Conversation channel credentials builder filled with input parameters
+   * @since 1.3
    */
   public static ConversationChannelCredentials.Builder viber(StaticTokenCredentials credentials) {
     return ConversationChannelCredentials.builder()
@@ -157,8 +168,9 @@ public class ConversationChannelCredentialsBuilderFactory {
    * Create dedicated conversation credential builder for<code>{@link ConversationChannel#VIBERBM}
    * </code> channel
    *
-   * @param credentials Credentials
-   * @return Credentials builder
+   * @param credentials Credentials parameters to be used to init builder
+   * @return Conversation channel credentials builder filled with input parameters
+   * @since 1.3
    */
   public static ConversationChannelCredentials.Builder viberBm(
       StaticBearerCredentials credentials) {
@@ -171,8 +183,9 @@ public class ConversationChannelCredentialsBuilderFactory {
    * Create dedicated conversation credential builder for<code>{@link ConversationChannel#WECHAT}
    * </code> channel
    *
-   * @param credentials Credentials
-   * @return Credentials builder
+   * @param credentials Credentials parameters to be used to init builder
+   * @return Conversation channel credentials builder filled with input parameters
+   * @since 1.3
    */
   public static ConversationChannelCredentials.Builder weChat(WeChatCredentials credentials) {
     return ConversationChannelCredentials.builder()
@@ -184,8 +197,9 @@ public class ConversationChannelCredentialsBuilderFactory {
    * Create dedicated conversation credential builder for<code>{@link ConversationChannel#WHATSAPP}
    * </code> channel
    *
-   * @param credentials Credentials
-   * @return Credentials builder
+   * @param credentials Credentials parameters to be used to init builder
+   * @return Conversation channel credentials builder filled with input parameters
+   * @since 1.3
    */
   public static ConversationChannelCredentials.Builder whatsApp(
       StaticBearerCredentials credentials) {
