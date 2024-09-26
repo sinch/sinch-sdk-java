@@ -23,7 +23,6 @@ import java.util.Objects;
   InjectMessageRequestBaseImpl.JSON_PROPERTY_CONTACT_ID,
   InjectMessageRequestBaseImpl.JSON_PROPERTY_DIRECTION,
   InjectMessageRequestBaseImpl.JSON_PROPERTY_CONVERSATION_ID,
-  InjectMessageRequestBaseImpl.JSON_PROPERTY_INJECTED,
   InjectMessageRequestBaseImpl.JSON_PROPERTY_SENDER_ID,
   InjectMessageRequestBaseImpl.JSON_PROPERTY_PROCESSING_MODE,
   InjectMessageRequestBaseImpl.JSON_PROPERTY_METADATA
@@ -61,10 +60,6 @@ public class InjectMessageRequestBaseImpl implements InjectMessageRequestBase {
 
   private OptionalValue<String> conversationId;
 
-  public static final String JSON_PROPERTY_INJECTED = "injected";
-
-  private OptionalValue<Boolean> injected;
-
   public static final String JSON_PROPERTY_SENDER_ID = "sender_id";
 
   private OptionalValue<String> senderId;
@@ -87,7 +82,6 @@ public class InjectMessageRequestBaseImpl implements InjectMessageRequestBase {
       OptionalValue<String> contactId,
       OptionalValue<ConversationDirection> direction,
       OptionalValue<String> conversationId,
-      OptionalValue<Boolean> injected,
       OptionalValue<String> senderId,
       OptionalValue<ProcessingMode> processingMode,
       OptionalValue<String> metadata) {
@@ -98,7 +92,6 @@ public class InjectMessageRequestBaseImpl implements InjectMessageRequestBase {
     this.contactId = contactId;
     this.direction = direction;
     this.conversationId = conversationId;
-    this.injected = injected;
     this.senderId = senderId;
     this.processingMode = processingMode;
     this.metadata = metadata;
@@ -110,7 +103,7 @@ public class InjectMessageRequestBaseImpl implements InjectMessageRequestBase {
   }
 
   @JsonProperty(JSON_PROPERTY_APP_MESSAGE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<AppMessage<?>> appMessage() {
     return appMessage;
   }
@@ -121,7 +114,7 @@ public class InjectMessageRequestBaseImpl implements InjectMessageRequestBase {
   }
 
   @JsonProperty(JSON_PROPERTY_CONTACT_MESSAGE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<ContactMessage<?>> contactMessage() {
     return contactMessage;
   }
@@ -182,17 +175,6 @@ public class InjectMessageRequestBaseImpl implements InjectMessageRequestBase {
   }
 
   @JsonIgnore
-  public Boolean getInjected() {
-    return injected.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_INJECTED)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<Boolean> injected() {
-    return injected;
-  }
-
-  @JsonIgnore
   public String getSenderId() {
     return senderId.orElse(null);
   }
@@ -242,7 +224,6 @@ public class InjectMessageRequestBaseImpl implements InjectMessageRequestBase {
         && Objects.equals(this.contactId, injectMessageRequest.contactId)
         && Objects.equals(this.direction, injectMessageRequest.direction)
         && Objects.equals(this.conversationId, injectMessageRequest.conversationId)
-        && Objects.equals(this.injected, injectMessageRequest.injected)
         && Objects.equals(this.senderId, injectMessageRequest.senderId)
         && Objects.equals(this.processingMode, injectMessageRequest.processingMode)
         && Objects.equals(this.metadata, injectMessageRequest.metadata);
@@ -258,7 +239,6 @@ public class InjectMessageRequestBaseImpl implements InjectMessageRequestBase {
         contactId,
         direction,
         conversationId,
-        injected,
         senderId,
         processingMode,
         metadata);
@@ -275,7 +255,6 @@ public class InjectMessageRequestBaseImpl implements InjectMessageRequestBase {
     sb.append("    contactId: ").append(toIndentedString(contactId)).append("\n");
     sb.append("    direction: ").append(toIndentedString(direction)).append("\n");
     sb.append("    conversationId: ").append(toIndentedString(conversationId)).append("\n");
-    sb.append("    injected: ").append(toIndentedString(injected)).append("\n");
     sb.append("    senderId: ").append(toIndentedString(senderId)).append("\n");
     sb.append("    processingMode: ").append(toIndentedString(processingMode)).append("\n");
     sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
@@ -302,7 +281,6 @@ public class InjectMessageRequestBaseImpl implements InjectMessageRequestBase {
     OptionalValue<String> contactId = OptionalValue.empty();
     OptionalValue<ConversationDirection> direction = OptionalValue.empty();
     OptionalValue<String> conversationId = OptionalValue.empty();
-    OptionalValue<Boolean> injected = OptionalValue.empty();
     OptionalValue<String> senderId = OptionalValue.empty();
     OptionalValue<ProcessingMode> processingMode = OptionalValue.empty();
     OptionalValue<String> metadata = OptionalValue.empty();
@@ -349,12 +327,6 @@ public class InjectMessageRequestBaseImpl implements InjectMessageRequestBase {
       return self();
     }
 
-    @JsonProperty(JSON_PROPERTY_INJECTED)
-    public B setInjected(Boolean injected) {
-      this.injected = OptionalValue.of(injected);
-      return self();
-    }
-
     @JsonProperty(JSON_PROPERTY_SENDER_ID)
     public B setSenderId(String senderId) {
       this.senderId = OptionalValue.of(senderId);
@@ -387,7 +359,6 @@ public class InjectMessageRequestBaseImpl implements InjectMessageRequestBase {
           contactId,
           direction,
           conversationId,
-          injected,
           senderId,
           processingMode,
           metadata);

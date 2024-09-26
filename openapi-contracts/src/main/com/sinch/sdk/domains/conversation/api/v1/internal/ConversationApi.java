@@ -429,7 +429,8 @@ public class ConversationApi {
    * @param contactId Resource name (ID) of the contact. Note that either &#x60;app_id&#x60; or
    *     &#x60;contact_id&#x60; is required in order for the operation to function correctly.
    *     (optional)
-   * @param onlyActive True if only active conversations should be listed. (optional)
+   * @param onlyActive Set to &#x60;true&#x60; to list only active conversations. Set to
+   *     &#x60;false&#x60; to list only inactive conversations. (optional)
    * @param pageSize The maximum number of conversations to fetch. Defaults to 10 and the maximum is
    *     20. (optional)
    * @param pageToken Next page token previously returned if any. (optional)
@@ -901,7 +902,7 @@ public class ConversationApi {
     if (null != updateMask) {
       localVarQueryParams.add(
           new URLParameter(
-              "update_mask", updateMask, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
+              "update_mask", updateMask, URLParameter.STYLE.valueOf("form".toUpperCase()), false));
     }
     if (null != metadataUpdateStrategy) {
       localVarQueryParams.add(

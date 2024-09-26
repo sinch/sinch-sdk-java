@@ -14,9 +14,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
  * The retention policy configured for messages in <a
- * href="../../../../../conversation/processing-modes/">Dispatch Mode</a>. Currently only <code>
- * MESSAGE_EXPIRE_POLICY</code> is available. For more information about retention policies, see <a
- * href="/docs/conversation/keyconcepts/#retention-policy">Retention Policy</a>.
+ * href="https://developers.sinch.com/docs/conversation/processing-modes/">Dispatch Mode</a>.
+ * Currently only <code>MESSAGE_EXPIRE_POLICY</code> is available. For more information about
+ * retention policies, see <a
+ * href="https://developers.sinch.com/docs/conversation/keyconcepts/#retention-policy">Retention
+ * Policy</a>.
  */
 @JsonDeserialize(builder = DispatchRetentionPolicyImpl.Builder.class)
 public interface DispatchRetentionPolicy {

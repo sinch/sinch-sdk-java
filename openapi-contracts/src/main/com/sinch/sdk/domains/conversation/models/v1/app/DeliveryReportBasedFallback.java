@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
  * This object contains additional settings related to <a
- * href="../../../../../conversation/keyconcepts/#delivery-report-base-message-fallback">delivery
+ * href="https://developers.sinch.com/docs/conversation/keyconcepts/#delivery-report-base-message-fallback">delivery
  * report based fallback</a>. Note that this <strong>paid</strong> functionality is available for
  * open beta testing.
  */

@@ -94,7 +94,8 @@ public interface SendMessageRequest<T extends AppMessageBody> {
    * metadata value overwrites the existing one. So, future MO callbacks will include the new
    * metadata. - The <code>conversation_metadata</code> only accepts json objects. Currently only
    * returned in the <code>message_metadata</code> field of an <a
-   * href="/docs/conversation/callbacks/#inbound-message">Inbound Message</a> callback.
+   * href="https://developers.sinch.com/docs/conversation/callbacks/#inbound-message">Inbound
+   * Message</a> callback.
    *
    * @return conversationMetadata
    */

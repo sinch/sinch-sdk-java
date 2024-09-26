@@ -29,7 +29,6 @@ public class InjectMessageRequestImpl extends InjectMessageRequestBaseImpl
       OptionalValue<String> contactId,
       OptionalValue<ConversationDirection> direction,
       OptionalValue<String> conversationId,
-      OptionalValue<Boolean> injected,
       OptionalValue<String> senderId,
       OptionalValue<ProcessingMode> processingMode,
       OptionalValue<String> metadata) {
@@ -41,7 +40,6 @@ public class InjectMessageRequestImpl extends InjectMessageRequestBaseImpl
         contactId,
         direction,
         conversationId,
-        injected,
         senderId,
         processingMode,
         metadata);
@@ -53,11 +51,7 @@ public class InjectMessageRequestImpl extends InjectMessageRequestBaseImpl
     public B setBody(ConversationMessageBody body) {
       if (body instanceof AppMessage) {
         this.appMessage = OptionalValue.of((AppMessage<?>) body);
-        // TODO: CACORE-2213 workaround
-        this.contactMessage = OptionalValue.of(null);
       } else if (body instanceof ContactMessage) {
-        // TODO: CACORE-2213 workaround
-        this.appMessage = OptionalValue.of(null);
         this.contactMessage = OptionalValue.of((ContactMessage<?>) body);
       } else {
         throw new IllegalStateException("Unexpected value: " + body);
@@ -80,7 +74,6 @@ public class InjectMessageRequestImpl extends InjectMessageRequestBaseImpl
           contactId,
           direction,
           conversationId,
-          injected,
           senderId,
           processingMode,
           metadata);

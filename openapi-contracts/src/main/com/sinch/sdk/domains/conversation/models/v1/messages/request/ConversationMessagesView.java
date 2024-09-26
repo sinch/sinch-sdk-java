@@ -8,9 +8,11 @@ import java.util.stream.Stream;
 /** Gets or Sets ConversationMessagesView */
 public class ConversationMessagesView extends EnumDynamic<String, ConversationMessagesView> {
 
+  /** View the message with metadata. */
   public static final ConversationMessagesView WITH_METADATA =
       new ConversationMessagesView("WITH_METADATA");
 
+  /** View the message without metadata. */
   public static final ConversationMessagesView WITHOUT_METADATA =
       new ConversationMessagesView("WITHOUT_METADATA");
 

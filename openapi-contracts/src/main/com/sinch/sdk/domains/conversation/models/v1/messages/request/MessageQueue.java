@@ -8,8 +8,10 @@ import java.util.stream.Stream;
 /** Select the priority type for the message */
 public class MessageQueue extends EnumDynamic<String, MessageQueue> {
 
+  /** The normal priority queue. */
   public static final MessageQueue NORMAL_PRIORITY = new MessageQueue("NORMAL_PRIORITY");
 
+  /** The high priority queue. */
   public static final MessageQueue HIGH_PRIORITY = new MessageQueue("HIGH_PRIORITY");
 
   private static final EnumSupportDynamic<String, MessageQueue> ENUM_SUPPORT =

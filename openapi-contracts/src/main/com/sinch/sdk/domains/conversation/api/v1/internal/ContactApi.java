@@ -59,8 +59,9 @@ public class ContactApi {
 
   /**
    * Create a Contact Most Conversation API contacts are [created
-   * automatically](/docs/conversation/contact-management/) when a message is sent to a new
-   * recipient. You can also create a new contact manually using this API call.
+   * automatically](https://developers.sinch.com/docs/conversation/contact-management/) when a
+   * message is sent to a new recipient. You can also create a new contact manually using this API
+   * call.
    *
    * @param projectId The unique ID of the project. You can find this on the [Sinch
    *     Dashboard](https://dashboard.sinch.com/convapi/apps). (required)
@@ -710,7 +711,7 @@ public class ContactApi {
     if (null != updateMask) {
       localVarQueryParams.add(
           new URLParameter(
-              "update_mask", updateMask, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
+              "update_mask", updateMask, URLParameter.STYLE.valueOf("form".toUpperCase()), false));
     }
 
     Map<String, String> localVarHeaderParams = new HashMap<>();

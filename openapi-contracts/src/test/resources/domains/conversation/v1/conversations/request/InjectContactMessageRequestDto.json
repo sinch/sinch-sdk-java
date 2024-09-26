@@ -1,5 +1,4 @@
 {
-  "app_message": null,
   "contact_message": {
     "text_message": {
       "text": "This is a text message."
@@ -17,7 +16,6 @@
   "contact_id": "contact id value",
   "direction": "TO_APP",
   "conversation_id": "conversation id",
-  "injected": true,
   "sender_id": "send id value",
   "processing_mode": "CONVERSATION",
   "metadata": "metdata value"

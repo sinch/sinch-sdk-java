@@ -24,6 +24,7 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.Webhook;
+import com.sinch.sdk.domains.conversation.models.v1.webhooks.internal.CreateWebhookRequestInternal;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.response.ListWebhooksResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,16 +59,25 @@ public class WebhooksApi {
    *
    * @param projectId The unique ID of the project. You can find this on the [Sinch
    *     Dashboard](https://dashboard.sinch.com/convapi/apps). (required)
-   * @param webhook Required. The Webhook to create (required)
+   * @param createWebhookRequestInternal Required. The Webhook to create (required)
    * @return Webhook
    * @throws ApiException if fails to make API call
    */
-  public Webhook webhooksCreateWebhook(String projectId, Webhook webhook) throws ApiException {
+  public Webhook webhooksCreateWebhook(
+      String projectId, CreateWebhookRequestInternal createWebhookRequestInternal)
+      throws ApiException {
 
     LOGGER.finest(
-        "[webhooksCreateWebhook]" + " " + "projectId: " + projectId + ", " + "webhook: " + webhook);
+        "[webhooksCreateWebhook]"
+            + " "
+            + "projectId: "
+            + projectId
+            + ", "
+            + "createWebhookRequestInternal: "
+            + createWebhookRequestInternal);
 
-    HttpRequest httpRequest = webhooksCreateWebhookRequestBuilder(projectId, webhook);
+    HttpRequest httpRequest =
+        webhooksCreateWebhookRequestBuilder(projectId, createWebhookRequestInternal);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -85,17 +95,20 @@ public class WebhooksApi {
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest webhooksCreateWebhookRequestBuilder(String projectId, Webhook webhook)
+  private HttpRequest webhooksCreateWebhookRequestBuilder(
+      String projectId, CreateWebhookRequestInternal createWebhookRequestInternal)
       throws ApiException {
     // verify the required parameter 'projectId' is set
     if (projectId == null) {
       throw new ApiException(
           400, "Missing the required parameter 'projectId' when calling webhooksCreateWebhook");
     }
-    // verify the required parameter 'webhook' is set
-    if (webhook == null) {
+    // verify the required parameter 'createWebhookRequestInternal' is set
+    if (createWebhookRequestInternal == null) {
       throw new ApiException(
-          400, "Missing the required parameter 'webhook' when calling webhooksCreateWebhook");
+          400,
+          "Missing the required parameter 'createWebhookRequestInternal' when calling"
+              + " webhooksCreateWebhook");
     }
 
     String localVarPath =
@@ -112,7 +125,8 @@ public class WebhooksApi {
     final Collection<String> localVarContentTypes = Arrays.asList("application/json");
 
     final Collection<String> localVarAuthNames = Arrays.asList("Basic", "oAuth2");
-    final String serializedBody = mapper.serialize(localVarContentTypes, webhook);
+    final String serializedBody =
+        mapper.serialize(localVarContentTypes, createWebhookRequestInternal);
 
     return new HttpRequest(
         localVarPath,

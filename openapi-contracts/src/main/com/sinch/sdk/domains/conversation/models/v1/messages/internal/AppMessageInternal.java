@@ -104,8 +104,8 @@ public interface AppMessageInternal {
   /**
    * The option to override the omni-channel template configuration with a channel-specific template
    * (for channels on which channel-specific templates can be created. For more information, see <a
-   * href="../../../../../conversation/templates/#channel-specific-templates">Channel Specific
-   * Templates</a>).
+   * href="https://developers.sinch.com/docs/conversation/templates/#channel-specific-templates">Channel
+   * Specific Templates</a>).
    *
    * @return explicitChannelOmniMessage
    */

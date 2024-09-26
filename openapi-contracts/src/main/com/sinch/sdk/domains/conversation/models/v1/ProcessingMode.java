@@ -7,7 +7,8 @@ import java.util.stream.Stream;
 
 /**
  * Whether or not Conversation API should store contacts and conversations for the app. For more
- * information, see <a href="../../../../../conversation/processing-modes/">Processing Modes</a>.
+ * information, see <a
+ * href="https://developers.sinch.com/docs/conversation/processing-modes/">Processing Modes</a>.
  */
 public class ProcessingMode extends EnumDynamic<String, ProcessingMode> {
 
@@ -21,8 +22,10 @@ public class ProcessingMode extends EnumDynamic<String, ProcessingMode> {
    * Does not associate messages with contacts and conversations. This processing mode is mostly
    * intended for unidirectional high volume SMS use cases. The lack of contacts and conversations
    * limits some API features as related data won't be queryable in the <a
-   * href="/docs/conversation/api-reference/conversation/tag/Contact">Contact</a> and <a
-   * href="/docs/conversation/api-reference/conversation/tag/Conversation">Conversation</a> APIs.
+   * href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/Contact/">Contact</a>
+   * and <a
+   * href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/Conversation/">Conversation</a>
+   * APIs.
    */
   public static final ProcessingMode DISPATCH = new ProcessingMode("DISPATCH");
 

@@ -8,10 +8,13 @@ import java.util.stream.Stream;
 /** The most probable sentiment of the analyzed text. */
 public class Sentiment extends EnumDynamic<String, Sentiment> {
 
+  /** The sentiment of the text is most likely positive. */
   public static final Sentiment POSITIVE = new Sentiment("positive");
 
+  /** The sentiment of the text is most likely negative. */
   public static final Sentiment NEGATIVE = new Sentiment("negative");
 
+  /** The sentiment of the text is most likely neutral. */
   public static final Sentiment NEUTRAL = new Sentiment("neutral");
 
   private static final EnumSupportDynamic<String, Sentiment> ENUM_SUPPORT =
