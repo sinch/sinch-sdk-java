@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.types.choice;
 
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
 
+/** Choice text message */
 public interface ChoiceTextMessage extends Choice<TextMessage> {
 
   /**

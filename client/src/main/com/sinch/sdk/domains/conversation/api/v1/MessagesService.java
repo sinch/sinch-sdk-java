@@ -49,22 +49,85 @@ public interface MessagesService {
    */
   SendMessageResponse sendMessage(SendMessageRequest<? extends AppMessageBody> request);
 
+  /**
+   * Send a card message
+   *
+   * @param request CardMessage request
+   * @return Response
+   * @see #sendMessage(SendMessageRequest)
+   */
   SendMessageResponse sendCardMessage(SendMessageRequest<CardMessage> request);
 
+  /**
+   * Send a carousel message
+   *
+   * @param request CarouselMessage request
+   * @return Response
+   * @see #sendMessage(SendMessageRequest)
+   */
   SendMessageResponse sendCarouselMessage(SendMessageRequest<CarouselMessage> request);
 
+  /**
+   * Send a choice message
+   *
+   * @param request ChoiceMessage request
+   * @return Response
+   * @see #sendMessage(SendMessageRequest)
+   */
   SendMessageResponse sendChoiceMessage(SendMessageRequest<ChoiceMessage> request);
 
+  /**
+   * Send a contact info message
+   *
+   * @param request ContactInfoMessage request
+   * @return Response
+   * @see #sendMessage(SendMessageRequest)
+   */
   SendMessageResponse sendContactInfoMessage(SendMessageRequest<ContactInfoMessage> request);
 
+  /**
+   * Send a list message
+   *
+   * @param request ListMessage request
+   * @return Response
+   * @see #sendMessage(SendMessageRequest)
+   */
   SendMessageResponse sendListMessage(SendMessageRequest<ListMessage> request);
 
+  /**
+   * Send a location message
+   *
+   * @param request LocationMessage request
+   * @return Response
+   * @see #sendMessage(SendMessageRequest)
+   */
   SendMessageResponse sendLocationMessage(SendMessageRequest<LocationMessage> request);
 
+  /**
+   * Send a media message
+   *
+   * @param request MediaMessage request
+   * @return Response
+   * @see #sendMessage(SendMessageRequest)
+   */
   SendMessageResponse sendMediaMessage(SendMessageRequest<MediaMessage> request);
 
+  /**
+   * Send a template message
+   *
+   * @param request TemplateMessage request
+   * @return Response
+   * @see #sendMessage(SendMessageRequest)
+   */
   SendMessageResponse sendTemplateMessage(SendMessageRequest<TemplateMessage> request);
 
+  /**
+   * Send a send message request message
+   *
+   * @param request request
+   * @return Response
+   * @see #sendMessage(SendMessageRequest)
+   */
   SendMessageResponse sendTextMessage(SendMessageRequest<TextMessage> request);
 
   /**

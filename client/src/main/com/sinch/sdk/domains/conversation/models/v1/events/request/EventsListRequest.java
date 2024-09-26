@@ -57,6 +57,7 @@ public interface EventsListRequest {
     return new EventsListRequestImpl.Builder(parameters);
   }
 
+  /** Dedicated Builder */
   interface Builder {
 
     /**

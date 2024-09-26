@@ -17,6 +17,7 @@ import com.sinch.sdk.domains.conversation.models.v1.ConversationDirection;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
 import java.time.Instant;
 
+/** Message originating from a Conversation */
 public interface ConversationMessage {
 
   ConversationMessageBody getBody();

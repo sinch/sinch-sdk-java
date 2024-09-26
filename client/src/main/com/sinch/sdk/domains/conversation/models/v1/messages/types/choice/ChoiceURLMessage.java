@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.types.choice;
 
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.url.UrlMessage;
 
+/** Choice URL message */
 public interface ChoiceURLMessage extends Choice<UrlMessage> {
 
   /**

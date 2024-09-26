@@ -7,10 +7,16 @@ import java.util.Collection;
 
 /**
  * Templates V2
- * <p>
- * Version 2 endpoints for managing message templates.
- * <p></p>Recommended version for all users.
- * <p></p>Includes strongly typed <code>translations</code> field (allowing for message definition using JSON structures also used in the send message request of the Conversation API), improved validation, and the ability to override omni-channel templates in favor of channel-specific templates (where available).
+ *
+ * <p>Version 2 endpoints for managing message templates.
+ *
+ * <p>Recommended version for all users.
+ *
+ * <p>Includes strongly typed <code>translations</code> field (allowing for message definition using
+ * JSON structures also used in the send message request of the Conversation API), improved
+ * validation, and the ability to override omni-channel templates in favor of channel-specific
+ * templates (where available).
+ *
  * @see <a
  *     href="https://developers.sinch.com/docs/conversation/api-reference/template/tag/Templates-V2">online
  *     documentation</a>

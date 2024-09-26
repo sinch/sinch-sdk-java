@@ -92,6 +92,11 @@ public interface ConversationsListRecentRequest {
     return new ConversationsListRecentRequestImpl.Builder(parameters);
   }
 
+  /**
+   * Dedicated builder
+   *
+   * @since 1.3
+   */
   interface Builder {
 
     /**

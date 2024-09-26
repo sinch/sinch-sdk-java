@@ -16,6 +16,8 @@ public interface ContactMessage<T extends ContactMessageBody> extends Conversati
   T getBody();
 
   /**
+   * Get replyTo
+   *
    * @see ReplyTo
    * @return reply to
    */

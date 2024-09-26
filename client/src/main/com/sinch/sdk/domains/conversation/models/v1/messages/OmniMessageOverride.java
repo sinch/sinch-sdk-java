@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 
+/** Base class for all classes supported by OmniMessageOverride */
 public interface OmniMessageOverride {
 
   enum ChannelSpecificTemplate {

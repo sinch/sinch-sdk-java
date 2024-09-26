@@ -7,7 +7,9 @@ import java.util.Collection;
  * Templates V1
  *
  * <p>Version 1 endpoints for managing message templates.
+ *
  * <p>Currently maintained for existing users.
+ *
  * <p>Version 2 is recommended.
  *
  * @see <a

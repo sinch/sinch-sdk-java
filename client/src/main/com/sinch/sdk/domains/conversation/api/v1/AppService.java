@@ -81,10 +81,11 @@ public interface AppService {
    * <p>Any specified field values will replace existing values.
    *
    * <p>Therefore, <b>if you'd like to add additional configurations to an existing Conversation API
-   * app, ensure that you include existing values AND new values in the call</b>.
-   * <br> For example, if you'd like to add new <code>channel_credentials</code>, you can get your existing Conversation API app, extract
-   * the existing <code>channel_credentials</code> list, append your new configuration to that list, and include
-   * the updated <code>channel_credentials</code> list in this update call.
+   * app, ensure that you include existing values AND new values in the call</b>. <br>
+   * For example, if you'd like to add new <code>channel_credentials</code>, you can get your
+   * existing Conversation API app, extract the existing <code>channel_credentials</code> list,
+   * append your new configuration to that list, and include the updated <code>channel_credentials
+   * </code> list in this update call.
    *
    * @param appId The unique ID of the app to be updated
    * @param parameters Fields to be updated. Only fields filled within the parameters will be

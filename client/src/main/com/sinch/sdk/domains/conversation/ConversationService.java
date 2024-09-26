@@ -26,8 +26,9 @@ public interface ConversationService {
    *
    * <p>The Template Management API offers a way to manage templates that can be used together with
    * the Conversation API.
-   * <p>Note that you may also use the Message Composer tool on the Sinch
-   * Customer Dashboard to manage templates.
+   *
+   * <p>Note that you may also use the Message Composer tool on the Sinch Customer Dashboard to
+   * manage templates.
    *
    * @return Service instance for project
    * @see <a

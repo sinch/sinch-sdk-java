@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.types.choice;
 
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.location.LocationMessage;
 
+/** Choice location message */
 public interface ChoiceLocationMessage extends Choice<LocationMessage> {
 
   /**

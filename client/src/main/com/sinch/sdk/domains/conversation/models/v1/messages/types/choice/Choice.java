@@ -3,6 +3,11 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.types.choice;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest.Builder;
 
+/**
+ * Base class for message containing choices/actions.
+ *
+ * @param <T> Message body content type
+ */
 @JsonDeserialize(using = ChoiceImpl.ChoiceDeserializer.class)
 public interface Choice<T extends ChoiceMessageType> {
 

@@ -123,6 +123,7 @@ public interface MessagesListRequest {
     return new MessagesListRequestImpl.Builder(parameters);
   }
 
+  /** Dedicated Builder */
   interface Builder {
 
     /**
