@@ -11,6 +11,7 @@ import com.sinch.sdk.domains.conversation.models.v1.webhooks.Webhook;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.WebhookImpl;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.ConversationWebhookEvent;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.internal.ConversationEventInternalImpl;
+import com.sinch.sdk.domains.conversation.models.v1.webhooks.internal.CreateWebhookRequestInternal;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.response.ListWebhooksResponse;
 import com.sinch.sdk.models.ConversationContext;
 import java.util.ArrayList;
@@ -55,8 +56,19 @@ public class WebHooksService implements com.sinch.sdk.domains.conversation.api.v
     return getApi().webhooksGetWebhook(uriUUID, webhookId);
   }
 
-  public Webhook create(Webhook webhook) {
-    return getApi().webhooksCreateWebhook(uriUUID, webhook);
+  public Webhook create(Webhook _webhook) {
+
+    WebhookImpl webhook = (WebhookImpl) _webhook;
+    CreateWebhookRequestInternal.Builder builder = CreateWebhookRequestInternal.builder();
+
+    webhook.appId().ifPresent(builder::setAppId);
+    webhook.clientCredentials().ifPresent(builder::setClientCredentials);
+    webhook.secret().ifPresent(builder::setSecret);
+    webhook.target().ifPresent(builder::setTarget);
+    webhook.targetType().ifPresent(builder::setTargetType);
+    webhook.triggers().ifPresent(builder::setTriggers);
+
+    return getApi().webhooksCreateWebhook(uriUUID, builder.build());
   }
 
   public Webhook update(String webhookId, Webhook _webhook) {

@@ -29,7 +29,6 @@ public class InjectMessageRequestImpl extends InjectMessageRequestBaseImpl
       OptionalValue<String> contactId,
       OptionalValue<ConversationDirection> direction,
       OptionalValue<String> conversationId,
-      OptionalValue<Boolean> injected,
       OptionalValue<String> senderId,
       OptionalValue<ProcessingMode> processingMode,
       OptionalValue<String> metadata) {
@@ -41,7 +40,6 @@ public class InjectMessageRequestImpl extends InjectMessageRequestBaseImpl
         contactId,
         direction,
         conversationId,
-        injected,
         senderId,
         processingMode,
         metadata);
@@ -80,7 +78,6 @@ public class InjectMessageRequestImpl extends InjectMessageRequestBaseImpl
           contactId,
           direction,
           conversationId,
-          injected,
           senderId,
           processingMode,
           metadata);

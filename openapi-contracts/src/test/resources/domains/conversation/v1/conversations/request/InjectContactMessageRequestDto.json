@@ -17,7 +17,6 @@
   "contact_id": "contact id value",
   "direction": "TO_APP",
   "conversation_id": "conversation id",
-  "injected": true,
   "sender_id": "send id value",
   "processing_mode": "CONVERSATION",
   "metadata": "metdata value"

@@ -19,6 +19,7 @@ import com.sinch.sdk.domains.conversation.models.v1.webhooks.WebhookDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.WebhookImpl;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.WebhookTargetType;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.WebhookTrigger;
+import com.sinch.sdk.domains.conversation.models.v1.webhooks.internal.CreateWebhookRequestInternal;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.response.ListWebhookResponseDtoTest;
 import com.sinch.sdk.models.ConversationContext;
 import java.util.ArrayList;
@@ -44,6 +45,8 @@ public class WebHooksClientServiceTest extends ConversationBaseTest {
   @Captor ArgumentCaptor<String> uriPartIDCaptor;
   @Captor ArgumentCaptor<String> idCaptor;
   @Captor ArgumentCaptor<Webhook> webhookCaptor;
+  @Captor ArgumentCaptor<CreateWebhookRequestInternal> webhookCreateRequestCaptor;
+
   @Captor ArgumentCaptor<List<String>> maskCaptor;
 
   WebHooksService service;
@@ -83,10 +86,26 @@ public class WebHooksClientServiceTest extends ConversationBaseTest {
 
   @Test
   void create() throws ApiException {
-    when(api.webhooksCreateWebhook(eq(uriPartID), eq(WebhookDtoTest.expectedDto)))
+
+    when(api.webhooksCreateWebhook(eq(uriPartID), any(CreateWebhookRequestInternal.class)))
         .thenReturn(WebhookDtoTest.expectedDto);
 
     Webhook response = service.create(WebhookDtoTest.expectedDto);
+
+    verify(api)
+        .webhooksCreateWebhook(uriPartIDCaptor.capture(), webhookCreateRequestCaptor.capture());
+
+    WebhookImpl webhook = (WebhookImpl) WebhookDtoTest.expectedDto;
+    CreateWebhookRequestInternal.Builder builder = CreateWebhookRequestInternal.builder();
+    webhook.appId().ifPresent(builder::setAppId);
+    webhook.clientCredentials().ifPresent(builder::setClientCredentials);
+    webhook.secret().ifPresent(builder::setSecret);
+    webhook.target().ifPresent(builder::setTarget);
+    webhook.targetType().ifPresent(builder::setTargetType);
+    webhook.triggers().ifPresent(builder::setTriggers);
+
+    Assertions.assertThat(uriPartIDCaptor.getValue()).isEqualTo(uriPartID);
+    Assertions.assertThat(webhookCreateRequestCaptor.getValue()).isEqualTo(builder.build());
 
     TestHelpers.recursiveEquals(response, WebhookDtoTest.expectedDto);
   }
