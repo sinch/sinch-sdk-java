@@ -24,7 +24,7 @@ class ScheduledSmsProvisioningDtoConverterTest {
 
     ScheduledSmsProvisioning converted =
         ScheduledSmsProvisioningDtoConverter.convert(
-            SmsConfigurationDtoTest.configuration.getScheduledProvisioning());
+            SmsConfigurationDtoTest.configurationResponse.getScheduledProvisioning());
     TestHelpers.recursiveEquals(provisioning, converted);
   }
 }
