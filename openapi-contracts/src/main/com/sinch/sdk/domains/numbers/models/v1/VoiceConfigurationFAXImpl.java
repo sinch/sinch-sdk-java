@@ -69,8 +69,7 @@ public class VoiceConfigurationFAXImpl
     return lastUpdatedTime.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_LAST_UPDATED_TIME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<Instant> lastUpdatedTime() {
     return lastUpdatedTime;
   }

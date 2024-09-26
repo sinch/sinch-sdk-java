@@ -30,6 +30,7 @@ public interface AvailableNumber {
    * leading <code>+</code>.
    *
    * @return phoneNumber
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   String getPhoneNumber();
 
@@ -38,6 +39,7 @@ public interface AvailableNumber {
    * or <code>SE</code>.
    *
    * @return regionCode
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   String getRegionCode();
 
@@ -73,6 +75,7 @@ public interface AvailableNumber {
    * How often the recurring price is charged in months.
    *
    * @return paymentIntervalMonths
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   Integer getPaymentIntervalMonths();
 
@@ -80,6 +83,7 @@ public interface AvailableNumber {
    * Whether or not supplementary documentation will be required to complete the number rental.
    *
    * @return supportingDocumentationRequired
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   Boolean getSupportingDocumentationRequired();
 
@@ -101,6 +105,7 @@ public interface AvailableNumber {
      * @param phoneNumber see getter
      * @return Current builder
      * @see #getPhoneNumber
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setPhoneNumber(String phoneNumber);
 
@@ -110,6 +115,7 @@ public interface AvailableNumber {
      * @param regionCode see getter
      * @return Current builder
      * @see #getRegionCode
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setRegionCode(String regionCode);
 
@@ -155,6 +161,7 @@ public interface AvailableNumber {
      * @param paymentIntervalMonths see getter
      * @return Current builder
      * @see #getPaymentIntervalMonths
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setPaymentIntervalMonths(Integer paymentIntervalMonths);
 
@@ -164,6 +171,7 @@ public interface AvailableNumber {
      * @param supportingDocumentationRequired see getter
      * @return Current builder
      * @see #getSupportingDocumentationRequired
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setSupportingDocumentationRequired(Boolean supportingDocumentationRequired);
 
