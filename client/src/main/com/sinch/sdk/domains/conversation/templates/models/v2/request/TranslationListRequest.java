@@ -8,7 +8,7 @@ import java.util.Optional;
  * @see <a
  *     href="https://developers.sinch.com/docs/conversation/api-reference/template/tag/Templates-V2/#tag/Templates-V2/operation/Templates_v2_ListTranslations">online
  *     documentation</a>
- * @since _NEXT_VERSION_
+ * @since 1.3
  */
 public interface TranslationListRequest {
 

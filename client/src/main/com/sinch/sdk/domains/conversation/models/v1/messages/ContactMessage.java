@@ -4,7 +4,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
  * Message originating from a Contact
  *
  * @param <T> Body type for message
- * @since _NEXT_VERSION_
+ * @since 1.3
  */
 public interface ContactMessage<T extends ContactMessageBody> extends ConversationMessageBody {
 
@@ -16,6 +16,8 @@ public interface ContactMessage<T extends ContactMessageBody> extends Conversati
   T getBody();
 
   /**
+   * Get replyTo
+   *
    * @see ReplyTo
    * @return reply to
    */

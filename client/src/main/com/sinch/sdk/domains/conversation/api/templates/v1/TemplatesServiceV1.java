@@ -6,21 +6,24 @@ import java.util.Collection;
 /**
  * Templates V1
  *
- * <p>Version 1 endpoints for managing message templates. Currently maintained for existing users.
- * Version 2 is recommended.
+ * <p>Version 1 endpoints for managing message templates.
+ *
+ * <p>Currently maintained for existing users.
+ *
+ * <p>Version 2 is recommended.
  *
  * @see <a
  *     href="https://developers.sinch.com/docs/conversation/api-reference/template/tag/Templates-V1">online
  *     documentation</a>
- * @since _NEXT_VERSION_
+ * @since 1.3
  */
 public interface TemplatesServiceV1 {
 
   /**
    * List all templates belonging to a project ID.
    *
-   * @return List of templates * @since _NEXT_VERSION_
-   * @since _NEXT_VERSION_
+   * @return List of templates
+   * @since 1.3
    */
   Collection<TemplateV1> list();
 
@@ -29,7 +32,7 @@ public interface TemplatesServiceV1 {
    *
    * @param template Information for creation
    * @return Created template
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   TemplateV1 create(TemplateV1 template);
 
@@ -37,14 +40,14 @@ public interface TemplatesServiceV1 {
    * Get a template
    * @param templateId  The ID of the template to fetch.
    * @return The template information
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   TemplateV1 get(String templateId);
 
   /***
    * Delete a template
    * @param templateId  The ID of the template to delete.
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   void delete(String templateId);
 
@@ -53,7 +56,7 @@ public interface TemplatesServiceV1 {
    *
    * @param template Information to be updated
    * @return Updated template
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   TemplateV1 update(String templateId, TemplateV1 template);
 }

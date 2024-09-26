@@ -1,5 +1,5 @@
 /**
- * Conversation API interface
+ * Conversation API interface for V1 endpoints
  *
  * <p>The Sinch Conversation API allows you to send and receive messages globally over SMS, RCS,
  * WhatsApp, Viber Business, Facebook Messenger and other popular channels.
@@ -13,6 +13,6 @@
  * Ireland, and additional channels will be supported as they become popular.
  *
  * @see <a href="https://developers.sinch.com/docs/conversation/overview">Conversation</a>
- * @since _NEXT_VERSION_
+ * @since 1.3
  */
 package com.sinch.sdk.domains.conversation.api.v1;

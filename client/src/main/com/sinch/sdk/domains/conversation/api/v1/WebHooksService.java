@@ -15,7 +15,7 @@ import java.util.Map;
  * <p>see <a href="https://developers.sinch.com/docs/conversation/callbacks">online
  * documentation</a>
  *
- * @since _NEXT_VERSION_
+ * @since 1.3
  */
 public interface WebHooksService {
 
@@ -35,7 +35,7 @@ public interface WebHooksService {
    *     <p>see <a
    *     href="https://developers.sinch.com/docs/conversation/callbacks/#validating-callbacks">online
    *     documentation</a>
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   boolean validateAuthenticationHeader(
       String secret, Map<String, String> headers, String jsonPayload);
@@ -49,7 +49,7 @@ public interface WebHooksService {
    *     <p>see <a
    *     href="https://developers.sinch.com/docs/conversation/callbacks/#webhook-triggers">triggered
    *     events</a>
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   ConversationWebhookEvent parseEvent(String jsonPayload) throws ApiMappingException;
 
@@ -58,7 +58,7 @@ public interface WebHooksService {
    *
    * @param appId The unique ID of the app
    * @return List of defined webhooks
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   Collection<Webhook> list(String appId);
 
@@ -67,7 +67,7 @@ public interface WebHooksService {
    *
    * @param webhookId The unique ID of the webhook.
    * @return Webhook definition
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   Webhook get(String webhookId);
 
@@ -76,7 +76,7 @@ public interface WebHooksService {
    *
    * @param webhook Webhook parameter for creation
    * @return Created webhook
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   Webhook create(Webhook webhook);
 
@@ -86,7 +86,7 @@ public interface WebHooksService {
    * @param webhookId The unique ID of the webhook.
    * @param webhook Webhook parameter for creation
    * @return Created webhook
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   Webhook update(String webhookId, Webhook webhook);
 
@@ -94,7 +94,7 @@ public interface WebHooksService {
    * Deletes a webhook as specified by the webhook ID
    *
    * @param webhookId The unique ID of the webhook.
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   void delete(String webhookId);
 }

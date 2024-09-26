@@ -25,7 +25,7 @@ import com.sinch.sdk.domains.conversation.models.v1.contact.response.ContactList
  *
  * @see <a
  *     href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/Contact">https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/Contact</a>
- * @since _NEXT_VERSION_
+ * @since 1.3
  */
 public interface ContactService {
 
@@ -39,7 +39,7 @@ public interface ContactService {
    *
    * @param parameters Filtering parameters
    * @return List of contacts according to search criteria
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   ContactListResponse list(ContactListRequest parameters);
 
@@ -53,7 +53,7 @@ public interface ContactService {
    *
    * @param contactId Contact's Id
    * @return Contact information
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   Contact get(String contactId);
 
@@ -67,7 +67,7 @@ public interface ContactService {
    *
    * @param contact Contact information to be used for creation
    * @return Contact information
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   Contact create(ContactCreateRequest contact);
 
@@ -75,7 +75,7 @@ public interface ContactService {
    * Delete a contact as specified by the contact ID.
    *
    * @param contactId Contact's Id
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   void delete(String contactId);
 
@@ -85,7 +85,7 @@ public interface ContactService {
    * @param contactId Contact ID to be updated
    * @param contact Contact information to be updated
    * @return Updated contact information
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   Contact update(String contactId, Contact contact);
 
@@ -110,7 +110,7 @@ public interface ContactService {
    *     contacts.
    * @param sourceId The ID of the contact that should be removed
    * @return The merged contact details
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   Contact mergeContact(String destinationId, String sourceId);
 
@@ -128,7 +128,7 @@ public interface ContactService {
    *
    * @param parameters The ID of the contact to be used to check profile information
    * @return The profile name
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   String getChannelProfileByContactId(ContactGetChannelProfileByContactIdRequest parameters);
 
@@ -147,7 +147,7 @@ public interface ContactService {
    * @param parameters The identity as specified by the channel to be used to check profile
    *     information
    * @return The profile name
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   String getChannelProfileByChannelIdentity(
       ContactGetChannelProfileByChannelIdentityRequest parameters);

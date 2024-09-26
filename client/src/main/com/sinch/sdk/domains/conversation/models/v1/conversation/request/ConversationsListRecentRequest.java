@@ -12,7 +12,7 @@ import java.util.stream.Stream;
  * @see <a
  *     href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/Conversation/#tag/Conversation/operation/Conversation_ListRecentConversations">online
  *     documentation</a>
- * @since _NEXT_VERSION_
+ * @since 1.3
  */
 public interface ConversationsListRecentRequest {
 
@@ -92,6 +92,11 @@ public interface ConversationsListRecentRequest {
     return new ConversationsListRecentRequestImpl.Builder(parameters);
   }
 
+  /**
+   * Dedicated builder
+   *
+   * @since 1.3
+   */
   interface Builder {
 
     /**

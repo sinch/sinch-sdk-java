@@ -17,7 +17,7 @@ import com.sinch.sdk.domains.conversation.models.v1.request.MetadataUpdateStrate
  * @see <a
  *     href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/Conversation">online
  *     documentation</a>
- * @since _NEXT_VERSION_
+ * @since 1.3
  */
 public interface ConversationsService {
 
@@ -34,7 +34,7 @@ public interface ConversationsService {
    *
    * @param request Conversation request for creation
    * @return Created conversation
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   Conversation create(CreateConversationRequest request);
 
@@ -44,7 +44,7 @@ public interface ConversationsService {
    *
    * @param conversationId The unique ID of the conversation.
    * @return Conversation details
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   Conversation get(String conversationId);
 
@@ -52,7 +52,7 @@ public interface ConversationsService {
    * This operation lists all conversations that are associated with an app and/or a contact.
    *
    * @param request Request parameters
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   ConversationsListResponse list(ConversationsListRequest request);
 
@@ -61,7 +61,7 @@ public interface ConversationsService {
    * recent message was sent for that conversation.
    *
    * @param request Request parameters
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   ConversationsListRecentResponse listRecent(ConversationsListRecentRequest request);
 
@@ -72,7 +72,7 @@ public interface ConversationsService {
    * that was part of the stopped conversation.
    *
    * @param conversationId The unique ID of the conversation.
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   void stopActive(String conversationId);
 
@@ -80,7 +80,7 @@ public interface ConversationsService {
    * Deletes a conversation together with all the messages sent as part of the conversation.
    *
    * @param conversationId The unique ID of the conversation.
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   void delete(String conversationId);
 
@@ -90,7 +90,7 @@ public interface ConversationsService {
    *
    * @param request Conversation instance with fields to be updated
    * @return Update conversation
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   Conversation update(
       String conversationId, MetadataUpdateStrategy updateStrategy, Conversation request);
@@ -100,7 +100,7 @@ public interface ConversationsService {
    *
    * @param conversationId The ID of the conversation.
    * @param request Request parameters to inject message
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   void injectMessage(String conversationId, InjectMessageRequest request);
 
@@ -109,7 +109,7 @@ public interface ConversationsService {
    *
    * @param conversationId The ID of the conversation.
    * @param request Request parameters to inject event
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   InjectEventResponse injectEvent(String conversationId, InjectEventRequest request);
 }

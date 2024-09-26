@@ -9,7 +9,7 @@ import java.util.Optional;
  * @see <a
  *     href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/Conversation/#tag/Conversation/operation/Conversation_ListConversations">online
  *     documentation</a>
- * @since _NEXT_VERSION_
+ * @since 1.3
  */
 public interface ConversationsListRequest {
 

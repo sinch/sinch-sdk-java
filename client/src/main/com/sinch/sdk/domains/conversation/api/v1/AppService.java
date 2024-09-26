@@ -20,7 +20,7 @@ import java.util.Collection;
  *
  * @see <a
  *     href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/App/">https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/App/</a>
- * @since _NEXT_VERSION_
+ * @since 1.3
  */
 public interface AppService {
 
@@ -31,7 +31,7 @@ public interface AppService {
    *
    * @return List of apps related to configured region (from {@link
    *     com.sinch.sdk.models.Configuration.Builder#setConversationRegion(ConversationRegion)})
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   Collection<AppResponse> list();
 
@@ -42,7 +42,7 @@ public interface AppService {
    *
    * @param appId The application identifier
    * @return App information details
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   AppResponse get(String appId);
 
@@ -56,7 +56,7 @@ public interface AppService {
    * deleted).
    *
    * @param appId The application identifier
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   void delete(String appId);
 
@@ -69,7 +69,7 @@ public interface AppService {
    *
    * @param parameters Creation parameters
    * @return Created application
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   AppResponse create(AppCreateRequest parameters);
 
@@ -80,17 +80,18 @@ public interface AppService {
    *
    * <p>Any specified field values will replace existing values.
    *
-   * <p>Therefore, if you'd like to add additional configurations to an existing Conversation API
-   * app, ensure that you include existing values AND new values in the call. For example, if you'd
-   * like to add new channel_credentials, you can get your existing Conversation API app, extract
-   * the existing channel_credentials list, append your new configuration to that list, and include
-   * the updated channel_credentials list in this update call.
+   * <p>Therefore, <b>if you'd like to add additional configurations to an existing Conversation API
+   * app, ensure that you include existing values AND new values in the call</b>. <br>
+   * For example, if you'd like to add new <code>channel_credentials</code>, you can get your
+   * existing Conversation API app, extract the existing <code>channel_credentials</code> list,
+   * append your new configuration to that list, and include the updated <code>channel_credentials
+   * </code> list in this update call.
    *
    * @param appId The unique ID of the app to be updated
    * @param parameters Fields to be updated. Only fields filled within the parameters will be
    *     updated
    * @return Updated application
-   * @since _NEXT_VERSION_
+   * @since 1.3
    */
   AppResponse update(String appId, AppUpdateRequest parameters);
 }

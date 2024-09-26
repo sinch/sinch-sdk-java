@@ -11,7 +11,7 @@ import java.util.Optional;
  * @see <a
  *     href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/Messages/#tag/Messages/operation/Messages_ListMessages">online
  *     documentation</a>
- * @since _NEXT_VERSION_
+ * @since 1.3
  */
 public interface MessagesListRequest {
 
@@ -123,6 +123,7 @@ public interface MessagesListRequest {
     return new MessagesListRequestImpl.Builder(parameters);
   }
 
+  /** Dedicated Builder */
   interface Builder {
 
     /**

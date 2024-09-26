@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 /**
  * Lists all messages response
  *
- * @since _NEXT_VERSION_
+ * @since 1.3
  */
 public class EventsListResponse extends ListResponse<ConversationEvent> {
 
