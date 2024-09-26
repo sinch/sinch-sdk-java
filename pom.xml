@@ -161,6 +161,11 @@
                         </sourceFileExcludes>
                         <tags>
                             <tag>
+                                <name>readOnly</name>
+                                <placement>m</placement>
+                                <head>Read Only</head>
+                            </tag>
+                            <tag>
                                 <name>apiNote</name>
                                 <placement>a</placement>
                                 <head>API Note:</head>
