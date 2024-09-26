@@ -45,8 +45,7 @@ public class RateLimitsImpl implements RateLimits {
     return inbound.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_INBOUND)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<Long> inbound() {
     return inbound;
   }
@@ -56,8 +55,7 @@ public class RateLimitsImpl implements RateLimits {
     return outbound.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_OUTBOUND)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<Long> outbound() {
     return outbound;
   }
@@ -67,8 +65,7 @@ public class RateLimitsImpl implements RateLimits {
     return webhooks.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_WEBHOOKS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<Long> webhooks() {
     return webhooks;
   }

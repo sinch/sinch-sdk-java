@@ -23,6 +23,7 @@ public interface TemplateV2 {
    * ID for you. This must be unique for a given project.
    *
    * @return id
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   String getId();
 
@@ -61,6 +62,7 @@ public interface TemplateV2 {
    * Timestamp when the template was created.
    *
    * @return createTime
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   Instant getCreateTime();
 
@@ -68,6 +70,7 @@ public interface TemplateV2 {
    * Timestamp when the template was updated.
    *
    * @return updateTime
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   Instant getUpdateTime();
 
@@ -89,6 +92,7 @@ public interface TemplateV2 {
      * @param id see getter
      * @return Current builder
      * @see #getId
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setId(String id);
 
@@ -134,6 +138,7 @@ public interface TemplateV2 {
      * @param createTime see getter
      * @return Current builder
      * @see #getCreateTime
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setCreateTime(Instant createTime);
 
@@ -143,6 +148,7 @@ public interface TemplateV2 {
      * @param updateTime see getter
      * @return Current builder
      * @see #getUpdateTime
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setUpdateTime(Instant updateTime);
 

@@ -22,6 +22,7 @@ public interface ListMessagesResponseInternal {
    * List of messages associated to the referenced conversation.
    *
    * @return messages
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   Collection<ConversationMessage> getMessages();
 
@@ -50,6 +51,7 @@ public interface ListMessagesResponseInternal {
      * @param messages see getter
      * @return Current builder
      * @see #getMessages
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setMessages(Collection<ConversationMessage> messages);
 

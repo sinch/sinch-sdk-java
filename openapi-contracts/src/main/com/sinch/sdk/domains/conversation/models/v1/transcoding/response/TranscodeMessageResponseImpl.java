@@ -33,8 +33,7 @@ public class TranscodeMessageResponseImpl implements TranscodeMessageResponse {
     return transcodedMessage.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_TRANSCODED_MESSAGE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<Map<ConversationChannel, String>> transcodedMessage() {
     return transcodedMessage;
   }

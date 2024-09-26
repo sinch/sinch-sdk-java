@@ -138,8 +138,7 @@ public class ConversationMessageInternalImpl implements ConversationMessageInter
     return acceptTime.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_ACCEPT_TIME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<Instant> acceptTime() {
     return acceptTime;
   }
@@ -215,8 +214,7 @@ public class ConversationMessageInternalImpl implements ConversationMessageInter
     return injected.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_INJECTED)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<Boolean> injected() {
     return injected;
   }

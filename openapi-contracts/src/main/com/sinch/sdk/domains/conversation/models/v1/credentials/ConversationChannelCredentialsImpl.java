@@ -277,8 +277,7 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
     return state.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_STATE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<ChannelIntegrationState> state() {
     return state;
   }
@@ -288,8 +287,7 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
     return channelKnownId.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_CHANNEL_KNOWN_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<String> channelKnownId() {
     return channelKnownId;
   }

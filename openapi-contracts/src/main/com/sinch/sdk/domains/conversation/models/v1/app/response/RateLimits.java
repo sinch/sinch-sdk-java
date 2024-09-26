@@ -21,6 +21,7 @@ public interface RateLimits {
    * app. The default rate limit is 25.
    *
    * @return inbound
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   Long getInbound();
 
@@ -29,6 +30,7 @@ public interface RateLimits {
    * Note that underlying channels may have other rate limits. The default rate limit is 25.
    *
    * @return outbound
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   Long getOutbound();
 
@@ -38,6 +40,7 @@ public interface RateLimits {
    * event. The default rate limit is 25.
    *
    * @return webhooks
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   Long getWebhooks();
 
@@ -59,6 +62,7 @@ public interface RateLimits {
      * @param inbound see getter
      * @return Current builder
      * @see #getInbound
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setInbound(Long inbound);
 
@@ -68,6 +72,7 @@ public interface RateLimits {
      * @param outbound see getter
      * @return Current builder
      * @see #getOutbound
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setOutbound(Long outbound);
 
@@ -77,6 +82,7 @@ public interface RateLimits {
      * @param webhooks see getter
      * @return Current builder
      * @see #getWebhooks
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setWebhooks(Long webhooks);
 

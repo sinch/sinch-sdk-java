@@ -90,6 +90,7 @@ public interface Conversation {
    * 01, 1970 00:00:00 UTC if the conversation contains no messages.
    *
    * @return lastReceived
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   Instant getLastReceived();
 
@@ -184,6 +185,7 @@ public interface Conversation {
      * @param lastReceived see getter
      * @return Current builder
      * @see #getLastReceived
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setLastReceived(Instant lastReceived);
 

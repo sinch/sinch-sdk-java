@@ -38,8 +38,7 @@ public class QueueStatsImpl implements QueueStats {
     return outboundSize.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_OUTBOUND_SIZE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<Long> outboundSize() {
     return outboundSize;
   }
@@ -49,8 +48,7 @@ public class QueueStatsImpl implements QueueStats {
     return outboundLimit.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_OUTBOUND_LIMIT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<Long> outboundLimit() {
     return outboundLimit;
   }

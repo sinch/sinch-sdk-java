@@ -98,8 +98,7 @@ public class WebhookImpl implements Webhook {
     return id.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<String> id() {
     return id;
   }
