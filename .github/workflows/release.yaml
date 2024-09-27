@@ -54,6 +54,29 @@ jobs:
         run: |
           git checkout -b "release-${{ github.event.inputs.releaseVersion }}"
 
+      # e2e requirements
+      - name: Checkout sinch-sdk-mockserver repository
+        uses: actions/checkout@v3
+        with:
+          repository: sinch/sinch-sdk-mockserver
+          token: ${{ secrets.MOCKSERVER_REPO_PAT_CI }}
+          fetch-depth: 0
+          path: sinch-sdk-mockserver
+
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
+      - name: Start mock servers with Docker Compose
+        run: |
+          cd sinch-sdk-mockserver
+          docker-compose up -d
+
+      - name: Link to feature files
+        run: |
+          ln -s ${{ github.workspace }}/sinch-sdk-mockserver/features client/src/test/resources
+
       - name: Release
         run: scripts/release.sh
         env:
