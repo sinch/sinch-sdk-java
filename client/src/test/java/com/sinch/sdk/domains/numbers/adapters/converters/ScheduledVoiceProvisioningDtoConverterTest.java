@@ -20,7 +20,7 @@ class ScheduledVoiceProvisioningDtoConverterTest {
 
     ScheduledVoiceProvisioning converted =
         ScheduledVoiceProvisioningDtoConverter.convert(
-            VoiceConfigurationDtoTest.configurationRTC.getScheduledProvisioning());
+            VoiceConfigurationDtoTest.configurationResponseRTC.getScheduledProvisioning());
     TestHelpers.recursiveEquals(provisioning, converted);
   }
 }

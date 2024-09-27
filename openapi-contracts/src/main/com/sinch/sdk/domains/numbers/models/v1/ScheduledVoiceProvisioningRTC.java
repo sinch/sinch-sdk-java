@@ -22,6 +22,7 @@ public interface ScheduledVoiceProvisioningRTC
    * Timestamp when the status was last updated.
    *
    * @return lastUpdatedTime
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   Instant getLastUpdatedTime();
 
@@ -59,6 +60,7 @@ public interface ScheduledVoiceProvisioningRTC
      * @param lastUpdatedTime see getter
      * @return Current builder
      * @see #getLastUpdatedTime
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setLastUpdatedTime(Instant lastUpdatedTime);
 

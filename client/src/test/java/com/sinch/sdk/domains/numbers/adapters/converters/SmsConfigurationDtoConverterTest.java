@@ -15,7 +15,7 @@ class SmsConfigurationDtoConverterTest {
   void convertDto() {
 
     SMSConfiguration converted =
-        SmsConfigurationDtoConverter.convert(SmsConfigurationDtoTest.configuration);
+        SmsConfigurationDtoConverter.convert(SmsConfigurationDtoTest.configurationResponse);
     TestHelpers.recursiveEquals(configuration, converted);
   }
 }

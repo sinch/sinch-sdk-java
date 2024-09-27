@@ -63,8 +63,7 @@ public class ScheduledSmsProvisioningImpl implements ScheduledSmsProvisioning {
     return servicePlanId.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_SERVICE_PLAN_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<String> servicePlanId() {
     return servicePlanId;
   }
@@ -74,8 +73,7 @@ public class ScheduledSmsProvisioningImpl implements ScheduledSmsProvisioning {
     return campaignId.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_CAMPAIGN_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<String> campaignId() {
     return campaignId;
   }
@@ -96,8 +94,7 @@ public class ScheduledSmsProvisioningImpl implements ScheduledSmsProvisioning {
     return lastUpdatedTime.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_LAST_UPDATED_TIME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<Instant> lastUpdatedTime() {
     return lastUpdatedTime;
   }
@@ -107,8 +104,7 @@ public class ScheduledSmsProvisioningImpl implements ScheduledSmsProvisioning {
     return errorCodes.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_ERROR_CODES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<List<SmsErrorCode>> errorCodes() {
     return errorCodes;
   }
