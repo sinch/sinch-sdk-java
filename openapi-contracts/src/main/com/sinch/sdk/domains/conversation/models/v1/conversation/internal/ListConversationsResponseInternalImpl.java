@@ -49,8 +49,7 @@ public class ListConversationsResponseInternalImpl implements ListConversationsR
     return conversations.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_CONVERSATIONS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<List<Conversation>> conversations() {
     return conversations;
   }

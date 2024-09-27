@@ -38,6 +38,7 @@ public interface CreateWebhookRequestInternal {
    * The ID of the webhook.
    *
    * @return id
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   String getId();
 
@@ -110,6 +111,7 @@ public interface CreateWebhookRequestInternal {
      * @param id see getter
      * @return Current builder
      * @see #getId
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setId(String id);
 

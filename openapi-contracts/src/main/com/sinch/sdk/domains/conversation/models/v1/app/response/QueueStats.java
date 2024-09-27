@@ -20,6 +20,7 @@ public interface QueueStats {
    * The current size of the App's MT queue.
    *
    * @return outboundSize
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   Long getOutboundSize();
 
@@ -27,6 +28,7 @@ public interface QueueStats {
    * The limit of the App's MT queue. The default limit is 500000 messages.
    *
    * @return outboundLimit
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   Long getOutboundLimit();
 
@@ -48,6 +50,7 @@ public interface QueueStats {
      * @param outboundSize see getter
      * @return Current builder
      * @see #getOutboundSize
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setOutboundSize(Long outboundSize);
 
@@ -57,6 +60,7 @@ public interface QueueStats {
      * @param outboundLimit see getter
      * @return Current builder
      * @see #getOutboundLimit
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setOutboundLimit(Long outboundLimit);
 

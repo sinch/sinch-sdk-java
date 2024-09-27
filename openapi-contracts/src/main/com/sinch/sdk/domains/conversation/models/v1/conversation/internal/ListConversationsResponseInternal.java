@@ -22,6 +22,7 @@ public interface ListConversationsResponseInternal {
    * List of conversations matching the search query.
    *
    * @return conversations
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   List<Conversation> getConversations();
 
@@ -57,6 +58,7 @@ public interface ListConversationsResponseInternal {
      * @param conversations see getter
      * @return Current builder
      * @see #getConversations
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setConversations(List<Conversation> conversations);
 

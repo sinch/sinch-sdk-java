@@ -23,6 +23,7 @@ public interface TranscodeMessageResponse {
    * names, as defined by the type ConversationChannel.
    *
    * @return transcodedMessage
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   Map<ConversationChannel, String> getTranscodedMessage();
 
@@ -44,6 +45,7 @@ public interface TranscodeMessageResponse {
      * @param transcodedMessage see getter
      * @return Current builder
      * @see #getTranscodedMessage
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setTranscodedMessage(Map<ConversationChannel, String> transcodedMessage);
 

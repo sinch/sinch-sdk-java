@@ -40,8 +40,7 @@ public class SendMessageResponseImpl implements SendMessageResponse {
     return acceptedTime.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_ACCEPTED_TIME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<Instant> acceptedTime() {
     return acceptedTime;
   }
@@ -51,8 +50,7 @@ public class SendMessageResponseImpl implements SendMessageResponse {
     return messageId.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_MESSAGE_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<String> messageId() {
     return messageId;
   }

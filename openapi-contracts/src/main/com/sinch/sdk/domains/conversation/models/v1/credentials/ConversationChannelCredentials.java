@@ -55,6 +55,7 @@ public interface ConversationChannelCredentials {
    * Get state
    *
    * @return state
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   ChannelIntegrationState getState();
 
@@ -62,6 +63,7 @@ public interface ConversationChannelCredentials {
    * Additional identifier set by the channel that represents an specific id used by the channel.
    *
    * @return channelKnownId
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   String getChannelKnownId();
 
@@ -110,6 +112,7 @@ public interface ConversationChannelCredentials {
      * @param state see getter
      * @return Current builder
      * @see #getState
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setState(ChannelIntegrationState state);
 
@@ -119,6 +122,7 @@ public interface ConversationChannelCredentials {
      * @param channelKnownId see getter
      * @return Current builder
      * @see #getChannelKnownId
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setChannelKnownId(String channelKnownId);
 

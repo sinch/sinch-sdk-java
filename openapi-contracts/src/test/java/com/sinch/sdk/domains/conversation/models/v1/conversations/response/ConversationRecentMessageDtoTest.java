@@ -8,9 +8,7 @@ import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationRecentMessage;
 import com.sinch.sdk.domains.conversation.models.v1.conversations.ConversationDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessageDtoTest;
-import org.json.JSONException;
 import org.junit.jupiter.api.Test;
-import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
 public class ConversationRecentMessageDtoTest extends ConversationBaseTest {
@@ -21,16 +19,9 @@ public class ConversationRecentMessageDtoTest extends ConversationBaseTest {
 
   public static ConversationRecentMessage conversationRecentMessage =
       ConversationRecentMessage.builder()
-          .setConversation(ConversationDtoTest.conversation)
-          .setLastMessage(ConversationMessageDtoTest.contactConversationMessage)
+          .setConversation(ConversationDtoTest.conversationResponse)
+          .setLastMessage(ConversationMessageDtoTest.contactConversationMessageResponse)
           .build();
-
-  @Test
-  void serialize() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(conversationRecentMessage);
-
-    JSONAssert.assertEquals(jsonConversationRecentMessageDto, serializedString, true);
-  }
 
   @Test
   void deserialize() throws JsonProcessingException {

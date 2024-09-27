@@ -101,8 +101,7 @@ public class CreateWebhookRequestInternalImpl implements CreateWebhookRequestInt
     return id.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<String> id() {
     return id;
   }

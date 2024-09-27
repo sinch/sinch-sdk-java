@@ -41,8 +41,7 @@ public class ListEventsResponseInternalImpl implements ListEventsResponseInterna
     return events.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_EVENTS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<List<ConversationEvent>> events() {
     return events;
   }

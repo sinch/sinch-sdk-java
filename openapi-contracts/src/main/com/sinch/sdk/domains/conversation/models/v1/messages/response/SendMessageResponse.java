@@ -22,6 +22,7 @@ public interface SendMessageResponse {
    * contact.
    *
    * @return acceptedTime
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   Instant getAcceptedTime();
 
@@ -29,6 +30,7 @@ public interface SendMessageResponse {
    * The ID of the message.
    *
    * @return messageId
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   String getMessageId();
 
@@ -50,6 +52,7 @@ public interface SendMessageResponse {
      * @param acceptedTime see getter
      * @return Current builder
      * @see #getAcceptedTime
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setAcceptedTime(Instant acceptedTime);
 
@@ -59,6 +62,7 @@ public interface SendMessageResponse {
      * @param messageId see getter
      * @return Current builder
      * @see #getMessageId
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setMessageId(String messageId);
 

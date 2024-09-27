@@ -52,23 +52,24 @@ public class TemplatesServiceV2Test extends TemplatesBaseTest {
   @Test
   void create() throws ApiException {
 
-    when(api.templatesV2CreateTemplate(eq(uriPartID), eq(TemplateV2DtoTest.expectedDto)))
-        .thenReturn(TemplateV2DtoTest.expectedDto);
+    when(api.templatesV2CreateTemplate(eq(uriPartID), eq(TemplateV2DtoTest.expectedRequestDto)))
+        .thenReturn(TemplateV2DtoTest.expectedRequestDto);
 
-    TemplateV2 response = service.create(TemplateV2DtoTest.expectedDto);
+    TemplateV2 response = service.create(TemplateV2DtoTest.expectedRequestDto);
 
-    TestHelpers.recursiveEquals(response, TemplateV2DtoTest.expectedDto);
+    TestHelpers.recursiveEquals(response, TemplateV2DtoTest.expectedRequestDto);
   }
 
   @Test
   void get() throws ApiException {
 
-    when(api.templatesV2GetTemplate(eq(uriPartID), eq(TemplateV2DtoTest.expectedDto.getId())))
-        .thenReturn(TemplateV2DtoTest.expectedDto);
+    when(api.templatesV2GetTemplate(
+            eq(uriPartID), eq(TemplateV2DtoTest.expectedRequestDto.getId())))
+        .thenReturn(TemplateV2DtoTest.expectedRequestDto);
 
-    TemplateV2 response = service.get(TemplateV2DtoTest.expectedDto.getId());
+    TemplateV2 response = service.get(TemplateV2DtoTest.expectedRequestDto.getId());
 
-    TestHelpers.recursiveEquals(response, TemplateV2DtoTest.expectedDto);
+    TestHelpers.recursiveEquals(response, TemplateV2DtoTest.expectedRequestDto);
   }
 
   @Test
@@ -92,14 +93,14 @@ public class TemplatesServiceV2Test extends TemplatesBaseTest {
 
     when(api.templatesV2ListTranslations(
             eq(uriPartID),
-            eq(TemplateV2DtoTest.expectedDto.getId()),
+            eq(TemplateV2DtoTest.expectedRequestDto.getId()),
             eq("language code"),
             eq("translation version")))
         .thenReturn(V2ListTranslationsResponseInternalDtoTest.expectedDto);
 
     Collection<TemplateTranslation> response =
         service.listTranslations(
-            TemplateV2DtoTest.expectedDto.getId(),
+            TemplateV2DtoTest.expectedRequestDto.getId(),
             TranslationListRequest.builder()
                 .setLanguageCode("language code")
                 .setTranslationVersion("translation version")
@@ -118,24 +119,26 @@ public class TemplatesServiceV2Test extends TemplatesBaseTest {
 
     when(api.templatesV2UpdateTemplate(
             eq(uriPartID),
-            eq(TemplateV2DtoTest.expectedDto.getId()),
-            eq(TemplateV2DtoTest.expectedDto)))
-        .thenReturn(TemplateV2DtoTest.expectedDto);
+            eq(TemplateV2DtoTest.expectedRequestDto.getId()),
+            eq(TemplateV2DtoTest.expectedRequestDto)))
+        .thenReturn(TemplateV2DtoTest.expectedRequestDto);
 
     TemplateV2 response =
-        service.update(TemplateV2DtoTest.expectedDto.getId(), TemplateV2DtoTest.expectedDto);
+        service.update(
+            TemplateV2DtoTest.expectedRequestDto.getId(), TemplateV2DtoTest.expectedRequestDto);
 
-    TestHelpers.recursiveEquals(response, TemplateV2DtoTest.expectedDto);
+    TestHelpers.recursiveEquals(response, TemplateV2DtoTest.expectedRequestDto);
   }
 
   @Test
   void delete() throws ApiException {
 
-    service.delete(TemplateV2DtoTest.expectedDto.getId());
+    service.delete(TemplateV2DtoTest.expectedRequestDto.getId());
 
     verify(api).templatesV2DeleteTemplate(uriPartIDCaptor.capture(), idCaptor.capture());
 
     Assertions.assertThat(uriPartIDCaptor.getValue()).isEqualTo(uriPartID);
-    Assertions.assertThat(idCaptor.getValue()).isEqualTo(TemplateV2DtoTest.expectedDto.getId());
+    Assertions.assertThat(idCaptor.getValue())
+        .isEqualTo(TemplateV2DtoTest.expectedRequestDto.getId());
   }
 }

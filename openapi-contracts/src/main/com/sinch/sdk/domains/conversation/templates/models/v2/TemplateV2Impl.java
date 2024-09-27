@@ -132,8 +132,7 @@ public class TemplateV2Impl implements TemplateV2 {
     return createTime.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_CREATE_TIME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<Instant> createTime() {
     return createTime;
   }
@@ -143,8 +142,7 @@ public class TemplateV2Impl implements TemplateV2 {
     return updateTime.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_UPDATE_TIME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<Instant> updateTime() {
     return updateTime;
   }

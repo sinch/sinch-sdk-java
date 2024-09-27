@@ -22,6 +22,7 @@ public interface ListEventsResponseInternal {
    * List of ConversationsEvents.
    *
    * @return events
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   List<ConversationEvent> getEvents();
 
@@ -50,6 +51,7 @@ public interface ListEventsResponseInternal {
      * @param events see getter
      * @return Current builder
      * @see #getEvents
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setEvents(List<ConversationEvent> events);
 

@@ -87,24 +87,24 @@ public class ConversationsServiceTest extends ConversationBaseTest {
 
     when(api.conversationCreateConversation(
             eq(uriPartID), eq(CreateConversationRequestTest.createConversationRequestDto)))
-        .thenReturn(ConversationDtoTest.conversation);
+        .thenReturn(ConversationDtoTest.conversationResponse);
 
     Conversation response =
         service.create(CreateConversationRequestTest.createConversationRequestDto);
 
-    TestHelpers.recursiveEquals(response, ConversationDtoTest.conversation);
+    TestHelpers.recursiveEquals(response, ConversationDtoTest.conversationResponse);
   }
 
   @Test
   void get() throws ApiException {
 
     when(api.conversationGetConversation(
-            eq(uriPartID), eq(ConversationDtoTest.conversation.getId())))
-        .thenReturn(ConversationDtoTest.conversation);
+            eq(uriPartID), eq(ConversationDtoTest.conversationRequest.getId())))
+        .thenReturn(ConversationDtoTest.conversationResponse);
 
-    Conversation response = service.get(ConversationDtoTest.conversation.getId());
+    Conversation response = service.get(ConversationDtoTest.conversationRequest.getId());
 
-    TestHelpers.recursiveEquals(response, ConversationDtoTest.conversation);
+    TestHelpers.recursiveEquals(response, ConversationDtoTest.conversationResponse);
   }
 
   @Test
@@ -151,14 +151,14 @@ public class ConversationsServiceTest extends ConversationBaseTest {
     Collection<Conversation> content = response0.getContent();
     Assertions.assertThat(content.size()).isEqualTo(1);
     TestHelpers.recursiveEquals(
-        content.stream().findFirst().orElse(null), ConversationDtoTest.conversation);
+        content.stream().findFirst().orElse(null), ConversationDtoTest.conversationResponse);
     Assertions.assertThat(response0.hasNextPage()).isEqualTo(true);
 
     ConversationsListResponse response1 = response0.nextPage();
     content = response1.getContent();
     Assertions.assertThat(content.size()).isEqualTo(1);
     TestHelpers.recursiveEquals(
-        content.stream().findFirst().orElse(null), ConversationDtoTest.conversation);
+        content.stream().findFirst().orElse(null), ConversationDtoTest.conversationResponse);
     Assertions.assertThat(response1.hasNextPage()).isEqualTo(true);
 
     ConversationsListResponse response2 = response1.nextPage();
@@ -206,7 +206,7 @@ public class ConversationsServiceTest extends ConversationBaseTest {
   @Test
   void stopActive() throws ApiException {
 
-    service.stopActive(ConversationDtoTest.conversation.getId());
+    service.stopActive(ConversationDtoTest.conversationRequest.getId());
 
     verify(api)
         .conversationStopActiveConversation(
@@ -214,39 +214,39 @@ public class ConversationsServiceTest extends ConversationBaseTest {
 
     Assertions.assertThat(projectIdCaptor.getValue()).isEqualTo(uriPartID);
     Assertions.assertThat(conversationIdCaptor.getValue())
-        .isEqualTo(ConversationDtoTest.conversation.getId());
+        .isEqualTo(ConversationDtoTest.conversationResponse.getId());
   }
 
   @Test
   void delete() throws ApiException {
 
-    service.delete(ConversationDtoTest.conversation.getId());
+    service.delete(ConversationDtoTest.conversationRequest.getId());
 
     verify(api)
         .conversationDeleteConversation(projectIdCaptor.capture(), conversationIdCaptor.capture());
 
     Assertions.assertThat(projectIdCaptor.getValue()).isEqualTo(uriPartID);
     Assertions.assertThat(conversationIdCaptor.getValue())
-        .isEqualTo(ConversationDtoTest.conversation.getId());
+        .isEqualTo(ConversationDtoTest.conversationResponse.getId());
   }
 
   @Test
   void update() throws ApiException {
     when(api.conversationUpdateConversation(
             eq(uriPartID),
-            eq(ConversationDtoTest.conversation.getId()),
-            eq(ConversationDtoTest.conversation),
+            eq(ConversationDtoTest.conversationRequest.getId()),
+            eq(ConversationDtoTest.conversationRequest),
             eq(null),
             eq(MetadataUpdateStrategy.MERGE_PATCH)))
-        .thenReturn(ConversationDtoTest.conversation);
+        .thenReturn(ConversationDtoTest.conversationResponse);
 
     Conversation response =
         service.update(
-            ConversationDtoTest.conversation.getId(),
+            ConversationDtoTest.conversationRequest.getId(),
             MetadataUpdateStrategy.MERGE_PATCH,
-            ConversationDtoTest.conversation);
+            ConversationDtoTest.conversationRequest);
 
-    TestHelpers.recursiveEquals(response, ConversationDtoTest.conversation);
+    TestHelpers.recursiveEquals(response, ConversationDtoTest.conversationResponse);
   }
 
   @Test

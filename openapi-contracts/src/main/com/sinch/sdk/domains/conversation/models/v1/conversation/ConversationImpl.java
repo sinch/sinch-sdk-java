@@ -179,8 +179,7 @@ public class ConversationImpl implements Conversation {
     return lastReceived.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_LAST_RECEIVED)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<Instant> lastReceived() {
     return lastReceived;
   }

@@ -15,8 +15,18 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class TemplateV2DtoTest extends TemplatesBaseTest {
 
-  public static TemplateV2 expectedDto =
+  public static TemplateV2 expectedRequestDto =
       TemplateV2.builder()
+          .setId("template ID")
+          .setTranslations(Arrays.asList(TemplateTranslationDtoTest.expectedDto))
+          .setDefaultTranslation("fr-FR")
+          .setDescription("template description value")
+          .setVersion(1)
+          .build();
+
+  public static TemplateV2 expectedResponseDto =
+      TemplateV2.builder()
+          .setId("template ID")
           .setTranslations(Arrays.asList(TemplateTranslationDtoTest.expectedDto))
           .setDefaultTranslation("fr-FR")
           .setDescription("template description value")
@@ -25,20 +35,23 @@ public class TemplateV2DtoTest extends TemplatesBaseTest {
           .setUpdateTime(Instant.parse("2024-08-26T06:07:44Z"))
           .build();
 
-  @GivenTextResource("/domains/conversation/templates/v2/TemplateV2Dto.json")
-  String json;
+  @GivenTextResource("/domains/conversation/templates/v2/TemplateV2RequestDto.json")
+  String requestJSON;
+
+  @GivenTextResource("/domains/conversation/templates/v2/TemplateV2ResponseDto.json")
+  String responseSON;
 
   @Test
   void serialize() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(expectedDto);
+    String serializedString = objectMapper.writeValueAsString(expectedRequestDto);
 
-    JSONAssert.assertEquals(json, serializedString, true);
+    JSONAssert.assertEquals(requestJSON, serializedString, true);
   }
 
   @Test
   void deserialize() throws JsonProcessingException {
-    Object deserialized = objectMapper.readValue(json, TemplateV2.class);
+    Object deserialized = objectMapper.readValue(responseSON, TemplateV2.class);
 
-    TestHelpers.recursiveEquals(deserialized, expectedDto);
+    TestHelpers.recursiveEquals(deserialized, expectedResponseDto);
   }
 }

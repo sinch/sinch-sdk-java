@@ -8,28 +8,19 @@ import com.sinch.sdk.domains.conversation.api.templates.adapters.TemplatesBaseTe
 import com.sinch.sdk.domains.conversation.models.templates.v2.TemplateV2DtoTest;
 import com.sinch.sdk.domains.conversation.templates.models.v2.internal.V2ListTemplatesResponseInternal;
 import java.util.Arrays;
-import org.json.JSONException;
 import org.junit.jupiter.api.Test;
-import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
 public class V2ListTemplatesResponseInternalDtoTest extends TemplatesBaseTest {
 
   public static V2ListTemplatesResponseInternal expectedDto =
       V2ListTemplatesResponseInternal.builder()
-          .setTemplates(Arrays.asList(TemplateV2DtoTest.expectedDto))
+          .setTemplates(Arrays.asList(TemplateV2DtoTest.expectedResponseDto))
           .build();
 
   @GivenTextResource(
       "/domains/conversation/templates/v2/internal/V2ListTemplatesResponseInternalDto.json")
   String json;
-
-  @Test
-  void serialize() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(expectedDto);
-
-    JSONAssert.assertEquals(json, serializedString, true);
-  }
 
   @Test
   void deserialize() throws JsonProcessingException {

@@ -42,8 +42,7 @@ public class ListMessagesResponseInternalImpl implements ListMessagesResponseInt
     return messages.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_MESSAGES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<Collection<ConversationMessage>> messages() {
     return messages;
   }

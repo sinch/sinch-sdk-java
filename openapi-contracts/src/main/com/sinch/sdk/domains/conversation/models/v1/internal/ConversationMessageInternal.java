@@ -40,6 +40,7 @@ public interface ConversationMessageInternal {
    * The time Conversation API processed the message.
    *
    * @return acceptTime
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   Instant getAcceptTime();
 
@@ -89,6 +90,7 @@ public interface ConversationMessageInternal {
    * Flag for whether this message was injected.
    *
    * @return injected
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   Boolean getInjected();
 
@@ -143,6 +145,7 @@ public interface ConversationMessageInternal {
      * @param acceptTime see getter
      * @return Current builder
      * @see #getAcceptTime
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setAcceptTime(Instant acceptTime);
 
@@ -206,6 +209,7 @@ public interface ConversationMessageInternal {
      * @param injected see getter
      * @return Current builder
      * @see #getInjected
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setInjected(Boolean injected);
 

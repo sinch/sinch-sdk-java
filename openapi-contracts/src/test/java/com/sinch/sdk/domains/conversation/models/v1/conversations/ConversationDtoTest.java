@@ -16,10 +16,26 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class ConversationDtoTest extends ConversationBaseTest {
 
-  @GivenTextResource("domains/conversation/v1/conversations/ConversationDto.json")
-  String jsonConversation;
+  @GivenTextResource("domains/conversation/v1/conversations/ConversationRequestDto.json")
+  String jsonConversationRequest;
 
-  public static Conversation conversation =
+  @GivenTextResource("domains/conversation/v1/conversations/ConversationResponseDto.json")
+  String jsonConversationResponse;
+
+  public static Conversation conversationRequest =
+      Conversation.builder()
+          .setActive(true)
+          .setActiveChannel(ConversationChannel.WHATSAPP)
+          .setAppId("conversation app Id")
+          .setContactId("contact ID")
+          .setId("a conversation id")
+          .setLastReceived(Instant.parse("2020-11-17T15:00:00Z"))
+          .setMetadata("metadata value")
+          .setMetadataJson(Collections.singletonMap("metadata_json_key", "metadata json value"))
+          .setCorrelationId("correlation id value")
+          .build();
+
+  public static Conversation conversationResponse =
       Conversation.builder()
           .setActive(true)
           .setActiveChannel(ConversationChannel.WHATSAPP)
@@ -34,15 +50,15 @@ public class ConversationDtoTest extends ConversationBaseTest {
 
   @Test
   void serialize() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(conversation);
+    String serializedString = objectMapper.writeValueAsString(conversationRequest);
 
-    JSONAssert.assertEquals(jsonConversation, serializedString, true);
+    JSONAssert.assertEquals(jsonConversationRequest, serializedString, true);
   }
 
   @Test
   void deserialize() throws JsonProcessingException {
-    Object deserialized = objectMapper.readValue(jsonConversation, Conversation.class);
+    Object deserialized = objectMapper.readValue(jsonConversationResponse, Conversation.class);
 
-    TestHelpers.recursiveEquals(deserialized, conversation);
+    TestHelpers.recursiveEquals(deserialized, conversationResponse);
   }
 }

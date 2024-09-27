@@ -21,6 +21,7 @@ public interface SendEventResponse {
    * Accepted timestamp.
    *
    * @return acceptedTime
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   Instant getAcceptedTime();
 
@@ -28,6 +29,7 @@ public interface SendEventResponse {
    * Event id.
    *
    * @return eventId
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   String getEventId();
 
@@ -49,6 +51,7 @@ public interface SendEventResponse {
      * @param acceptedTime see getter
      * @return Current builder
      * @see #getAcceptedTime
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setAcceptedTime(Instant acceptedTime);
 
@@ -58,6 +61,7 @@ public interface SendEventResponse {
      * @param eventId see getter
      * @return Current builder
      * @see #getEventId
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setEventId(String eventId);
 

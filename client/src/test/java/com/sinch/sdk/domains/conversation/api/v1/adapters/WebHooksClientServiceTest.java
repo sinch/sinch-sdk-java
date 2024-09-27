@@ -65,37 +65,38 @@ public class WebHooksClientServiceTest extends ConversationBaseTest {
   void list() throws ApiException {
     when(api.webhooksListWebhooks(
             eq(uriPartID),
-            eq(ListWebhookResponseDtoTest.expectedDto.getWebhooks().get(0).getAppId())))
-        .thenReturn(ListWebhookResponseDtoTest.expectedDto);
+            eq(ListWebhookResponseDtoTest.expectedRequestDto.getWebhooks().get(0).getAppId())))
+        .thenReturn(ListWebhookResponseDtoTest.expectedResponseDto);
 
     Collection<Webhook> response =
-        service.list(ListWebhookResponseDtoTest.expectedDto.getWebhooks().get(0).getAppId());
+        service.list(ListWebhookResponseDtoTest.expectedRequestDto.getWebhooks().get(0).getAppId());
 
-    TestHelpers.recursiveEquals(response, ListWebhookResponseDtoTest.expectedDto.getWebhooks());
+    TestHelpers.recursiveEquals(
+        response, ListWebhookResponseDtoTest.expectedResponseDto.getWebhooks());
   }
 
   @Test
   void get() throws ApiException {
-    when(api.webhooksGetWebhook(eq(uriPartID), eq(WebhookDtoTest.expectedDto.getId())))
-        .thenReturn(WebhookDtoTest.expectedDto);
+    when(api.webhooksGetWebhook(eq(uriPartID), eq(WebhookDtoTest.expectedRequestDto.getId())))
+        .thenReturn(WebhookDtoTest.expectedRequestDto);
 
-    Webhook response = service.get(WebhookDtoTest.expectedDto.getId());
+    Webhook response = service.get(WebhookDtoTest.expectedRequestDto.getId());
 
-    TestHelpers.recursiveEquals(response, WebhookDtoTest.expectedDto);
+    TestHelpers.recursiveEquals(response, WebhookDtoTest.expectedRequestDto);
   }
 
   @Test
   void create() throws ApiException {
 
     when(api.webhooksCreateWebhook(eq(uriPartID), any(CreateWebhookRequestInternal.class)))
-        .thenReturn(WebhookDtoTest.expectedDto);
+        .thenReturn(WebhookDtoTest.expectedRequestDto);
 
-    Webhook response = service.create(WebhookDtoTest.expectedDto);
+    Webhook response = service.create(WebhookDtoTest.expectedRequestDto);
 
     verify(api)
         .webhooksCreateWebhook(uriPartIDCaptor.capture(), webhookCreateRequestCaptor.capture());
 
-    WebhookImpl webhook = (WebhookImpl) WebhookDtoTest.expectedDto;
+    WebhookImpl webhook = (WebhookImpl) WebhookDtoTest.expectedRequestDto;
     CreateWebhookRequestInternal.Builder builder = CreateWebhookRequestInternal.builder();
     webhook.appId().ifPresent(builder::setAppId);
     webhook.clientCredentials().ifPresent(builder::setClientCredentials);
@@ -107,7 +108,7 @@ public class WebHooksClientServiceTest extends ConversationBaseTest {
     Assertions.assertThat(uriPartIDCaptor.getValue()).isEqualTo(uriPartID);
     Assertions.assertThat(webhookCreateRequestCaptor.getValue()).isEqualTo(builder.build());
 
-    TestHelpers.recursiveEquals(response, WebhookDtoTest.expectedDto);
+    TestHelpers.recursiveEquals(response, WebhookDtoTest.expectedRequestDto);
   }
 
   @Test
@@ -131,10 +132,13 @@ public class WebHooksClientServiceTest extends ConversationBaseTest {
                 WebhookImpl.JSON_PROPERTY_TRIGGERS));
 
     when(api.webhooksUpdateWebhook(
-            eq(uriPartID), eq(WebhookDtoTest.expectedDto.getId()), eq(update), any(List.class)))
-        .thenReturn(WebhookDtoTest.expectedDto);
+            eq(uriPartID),
+            eq(WebhookDtoTest.expectedRequestDto.getId()),
+            eq(update),
+            any(List.class)))
+        .thenReturn(WebhookDtoTest.expectedRequestDto);
 
-    Webhook response = service.update(WebhookDtoTest.expectedDto.getId(), update);
+    Webhook response = service.update(WebhookDtoTest.expectedRequestDto.getId(), update);
 
     verify(api)
         .webhooksUpdateWebhook(
@@ -145,17 +149,17 @@ public class WebHooksClientServiceTest extends ConversationBaseTest {
 
     TestHelpers.recursiveEquals(maskCaptor.getValue(), mask);
 
-    TestHelpers.recursiveEquals(response, WebhookDtoTest.expectedDto);
+    TestHelpers.recursiveEquals(response, WebhookDtoTest.expectedRequestDto);
   }
 
   @Test
   void delete() throws ApiException {
 
-    service.delete(WebhookDtoTest.expectedDto.getId());
+    service.delete(WebhookDtoTest.expectedRequestDto.getId());
 
     verify(api).webhooksDeleteWebhook(uriPartIDCaptor.capture(), idCaptor.capture());
 
     Assertions.assertThat(uriPartIDCaptor.getValue()).isEqualTo(uriPartID);
-    Assertions.assertThat(idCaptor.getValue()).isEqualTo(WebhookDtoTest.expectedDto.getId());
+    Assertions.assertThat(idCaptor.getValue()).isEqualTo(WebhookDtoTest.expectedRequestDto.getId());
   }
 }
