@@ -39,7 +39,7 @@ mvn --batch-mode -s settings.xml release:clean release:prepare \
 mvn --batch-mode -s settings.xml release:perform \
   -Dusername="${GITHUB_USERNAME}" \
   -Dpassword="${GITHUB_TOKEN}" \
-  -DskipTests=true  || exit 1
+  -DskipTests=true -DskipITs || exit 1
 
 # Update SDK.java file with next version information
 SDK=$(java client/resources/SDKTemplate.java "$NEXT_VERSION_DEV") && echo "$SDK" > "$SDKFILE_PATH" || exit 1
