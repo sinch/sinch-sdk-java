@@ -36,16 +36,9 @@ mvn --batch-mode -s settings.xml release:clean release:prepare \
   -DscmReleaseCommitComment="[release] Set release & tag: $RELEASE_VERSION" \
   -DscmDevelopmentCommitComment="[release] Set next version: ${NEXT_VERSION_SNAPSHOT}"  || exit 1
 
-mvn --batch-mode -s settings.xml \
-   -DskipTests=true \
-   -DskipUTs \
-   -DskipITs \
-   -Darguments=-DskipTests \
-   -Darguments=-DskipUTs \
-   -Darguments=-DskipITs \
-   release:perform \
-   -Dusername="${GITHUB_USERNAME}" \
-   -Dpassword="${GITHUB_TOKEN}" || exit 1
+mvn --batch-mode -s settings.xml -DskipTests=true -DskipUTs -DskipITs -Darguments=-DskipTests release:perform \
+  -Dusername="${GITHUB_USERNAME}" \
+  -Dpassword="${GITHUB_TOKEN}" || exit 1
 
 # Update SDK.java file with next version information
 SDK=$(java client/resources/SDKTemplate.java "$NEXT_VERSION_DEV") && echo "$SDK" > "$SDKFILE_PATH" || exit 1
