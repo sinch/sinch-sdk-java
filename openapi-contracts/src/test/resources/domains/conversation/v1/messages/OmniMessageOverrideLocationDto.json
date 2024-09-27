@@ -1,0 +1,10 @@
+{
+  "location_message": {
+    "coordinates": {
+      "latitude": 47.6279809,
+      "longitude": -2.8229159
+    },
+    "title": "title value",
+    "label": "label value"
+  }
+}

@@ -61,12 +61,13 @@ SinchClient client = new SinchClient(configuration);
 
 Here is the list of the Sinch products and their level of support by the Java SDK:
 
-| API Category           | API Name                          | Status |
-|------------------------|-----------------------------------|:------:|
-| Messaging              | SMS API [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/sms/package-summary.html)                          |   ✅   |
-| Voice and Video        | Voice API [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/voice/package-summary.html)                      |   ✅   |
-| Numbers & Connectivity | Numbers API [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/numbers/package-summary.html)                  |   ✅   |
-| Verification           | Verification API [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/verification/package-summary.html)        |   ✅   |
+| API Category           | API Name                                                                                                                            | Status |
+|------------------------|-------------------------------------------------------------------------------------------------------------------------------------|:------:|
+| Conversation           | Conversation API [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/conversation/package-summary.html) |   ✅   |
+| Messaging              | SMS API [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/sms/package-summary.html)                   |   ✅   |
+| Numbers & Connectivity | Numbers API [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/numbers/package-summary.html)           |   ✅   |
+| Verification           | Verification API [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/verification/package-summary.html) |   ✅   |
+| Voice and Video        | Voice API [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/voice/package-summary.html)               |   ✅   |
 
 
 ## Logging

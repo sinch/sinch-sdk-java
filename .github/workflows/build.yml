@@ -1,0 +1,59 @@
+name: Building Java SDK
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build with Maven
+        run: mvn -B -DskipITs clean package javadoc:javadoc --file pom.xml
+
+      # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
+      - name: Update dependency graph
+        uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+
+  e2e-tests:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+      - name: Checkout sinch-sdk-mockserver repository
+        uses: actions/checkout@v3
+        with:
+          repository: sinch/sinch-sdk-mockserver
+          token: ${{ secrets.MOCKSERVER_REPO_PAT_CI }}
+          fetch-depth: 0
+          path: sinch-sdk-mockserver
+
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
+      - name: Start mock servers with Docker Compose
+        run: |
+          cd sinch-sdk-mockserver
+          docker-compose up -d
+
+      - name: Link to feature files
+        run: |
+          ln -s ${{ github.workspace }}/sinch-sdk-mockserver/features client/src/test/resources
+          
+      - name: Run e2e tests
+        run: mvn -B -DskipUTs -Dspotless.check.skip=true verify --file pom.xml

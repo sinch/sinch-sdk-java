@@ -72,8 +72,9 @@
 
         <!-- tests -->
         <mockito.version>5.8.0</mockito.version>
-        <maven.failsafe.plugin.version>3.2.1</maven.failsafe.plugin.version>
-        <maven-surefire-plugin.version>3.2.1</maven-surefire-plugin.version>
+        <maven.failsafe.plugin.version>3.4.0</maven.failsafe.plugin.version>
+        <maven-surefire-plugin.version>3.4.0</maven-surefire-plugin.version>
+        <cucumber.version>7.18.1</cucumber.version>
 
         <!-- releasing -->
         <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
@@ -129,6 +130,7 @@
                             com.sinch.sdk.http;
                             com.sinch.sdk.pagination.Page*;
                             **.dto.*;
+                            **.adapters.**;
                             **.adapters.converters;
                             **.adapters;
                             **.adapters*;
@@ -147,6 +149,8 @@
                             <sourceFileExclude>**/pagination/Page*.java</sourceFileExclude>
                             <sourceFileExclude>**/AbstractOpenApiSchema.java</sourceFileExclude>
                             <sourceFileExclude>**/*Impl.java</sourceFileExclude>
+                            <sourceFileExclude>**/BuildersDelegation.java</sourceFileExclude>
+                            <sourceFileExclude>**/*Mapper.java</sourceFileExclude>
                             <!-- Transition period -->
                             <sourceFileExclude>com/sinch/sdk/domains/verification/models/*.java</sourceFileExclude>
                             <sourceFileExclude>com/sinch/sdk/domains/verification/VerificationsService.java</sourceFileExclude>
@@ -170,6 +174,11 @@
                                 <placement>a</placement>
                                 <head>API Note:</head>
                             </tag>
+                            <tag>
+                                <name>default</name>
+                                <placement>a</placement>
+                                <head>Default value:</head>
+                            </tag>
                         </tags>
                         <groups>
                             <group>
@@ -179,6 +188,10 @@
                             <group>
                                 <title>Core package</title>
                                 <packages>com.sinch.sdk.core*</packages>
+                            </group>
+                            <group>
+                                <title>Conversation</title>
+                                <packages>com.sinch.sdk.domains.conversation*</packages>
                             </group>
                             <group>
                                 <title>Numbers</title>
@@ -286,6 +299,10 @@
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${maven.failsafe.plugin.version}</version>
+                <configuration>
+                    <parallel>all</parallel>
+                    <useUnlimitedThreads>true</useUnlimitedThreads>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -300,6 +317,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <skipTests>${skipUTs}</skipTests>
+                </configuration>
             </plugin>
 
             <!-- deployment/releasing-->
@@ -351,7 +371,7 @@
 
                 <executions>
                     <execution>
-                        <phase>verify</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>check</goal>
                         </goals>
@@ -390,6 +410,20 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>5.10.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.10.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite-engine</artifactId>
+            <version>1.11.0</version>
             <scope>test</scope>
         </dependency>
 
@@ -446,6 +480,20 @@
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>mockwebserver</artifactId>
             <version>4.12.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
             <scope>test</scope>
         </dependency>
 

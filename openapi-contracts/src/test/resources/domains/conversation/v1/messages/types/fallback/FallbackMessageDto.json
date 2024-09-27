@@ -1,0 +1,10 @@
+{
+  "fallback_message": {
+    "raw_message": "raw message value",
+    "reason": {
+      "code": "RECIPIENT_NOT_OPTED_IN",
+      "description": "reason description",
+      "sub_code": "UNSPECIFIED_SUB_CODE"
+    }
+  }
+}

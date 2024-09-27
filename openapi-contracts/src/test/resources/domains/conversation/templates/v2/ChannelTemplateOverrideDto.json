@@ -1,0 +1,13 @@
+{
+  "template_reference": {
+      "language_code": "another language",
+      "parameters": {
+        "name": "Value for the name parameter used in the version 1 and language \"en-US\" of the template"
+      },
+      "template_id": "another template ID",
+      "version": "another version"
+  },
+  "parameter_mappings": {
+    "a key": "a value"
+  }
+}

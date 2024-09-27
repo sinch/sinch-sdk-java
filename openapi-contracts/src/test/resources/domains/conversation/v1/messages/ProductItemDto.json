@@ -1,0 +1,7 @@
+{
+  "id": "product ID value",
+  "marketplace": "marketplace value",
+  "quantity": 4,
+  "item_price": 3.14159,
+  "currency": "currency value"
+}

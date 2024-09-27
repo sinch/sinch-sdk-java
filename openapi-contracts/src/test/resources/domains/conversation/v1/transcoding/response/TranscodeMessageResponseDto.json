@@ -1,0 +1,5 @@
+{
+  "transcoded_message": {
+    "WHATSAPP": "{\"messaging_product\":\"whatsapp\",\"biz_opaque_callback_data\":null,\"to\":\"to value\",\"type\":\"location\",\"recipient_type\":\"individual\",\"location\":{\"longitude\":\"-2.822915\",\"latitude\":\"47.62798\",\"name\":\"Coordinates title\"}}"
+  }
+}

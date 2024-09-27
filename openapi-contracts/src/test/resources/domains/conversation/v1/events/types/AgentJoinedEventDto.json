@@ -1,0 +1,9 @@
+{
+  "agent_joined_event": {
+    "agent": {
+      "display_name": "display_name value",
+      "type": "BOT",
+      "picture_url": "picture_url value"
+    }
+  }
+}

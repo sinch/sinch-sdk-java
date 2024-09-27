@@ -3,6 +3,7 @@ package com.sinch.sample;
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.models.ApplicationCredentials;
 import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.SmsServicePlanCredentials;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -15,6 +16,13 @@ public abstract class BaseApplication {
   public static final String CONFERENCE_ID_KEY = "CONFERENCE_ID";
   private static final String CALL_ID_KEY = "CALL_ID";
   private static final String VERIFICATION_ID_KEY = "VERIFICATION_ID";
+  private static final String CONVERSATION_ID_KEY = "CONVERSATION_ID";
+  private static final String CONVERSATION_APP_ID_KEY = "CONVERSATION_APP_ID";
+  private static final String CONVERSATION_CONTACT_ID_KEY = "CONVERSATION_CONTACT_ID";
+  private static final String CONVERSATION_MESSAGE_ID_KEY = "CONVERSATION_MESSAGE_ID";
+  private static final String CONVERSATION_EVENT_ID_KEY = "CONVERSATION_EVENT_ID";
+  private static final String CONVERSATION_WEBHOOK_ID_KEY = "CONVERSATION_WEBHOOK_ID";
+  private static final String CONVERSATION_TEMPLATE_ID_KEY = "CONVERSATION_TEMPLATE_ID";
 
   public static final String WEBHOOKS_URL_KEY = "WEBHOOKS_URL";
   public static final String WEBHOOKS_VOICE_PATH_KEY = "WEBHOOKS_VOICE_PATH";
@@ -30,7 +38,15 @@ public abstract class BaseApplication {
   protected String conferenceId;
   protected String callId;
   protected String verificationId;
-
+  protected String conversationId;
+  protected String conversationAppId;
+  protected String conversationContactId;
+  protected String conversationMessageId;
+  protected String conversationEventId;
+  protected String conversationWebhookId;
+  protected String conversationTemplateId;
+  protected String smsServicePlanId;
+  protected String smsApiToken;
   protected String applicationKey;
   protected String webhooksVoicePath;
   protected String webhooksSmsPath;
@@ -46,11 +62,26 @@ public abstract class BaseApplication {
     properties = Utils.loadProperties(LOGGER);
 
     phoneNumber = getConfigValue(PHONE_NUMBER_KEY);
+    virtualPhoneNumber = getConfigValue(VIRTUAL_PHONE_NUMBER_KEY);
+
     batchId = getConfigValue(BATCH_ID_KEY);
+
     conferenceId = getConfigValue(CONFERENCE_ID_KEY);
     callId = getConfigValue(CALL_ID_KEY);
+
+    // Verification related settings
     verificationId = getConfigValue(VERIFICATION_ID_KEY);
     virtualPhoneNumber = getConfigValue(VIRTUAL_PHONE_NUMBER_KEY);
+
+    // Conversation related settings
+    conversationId = getConfigValue(CONVERSATION_ID_KEY);
+    conversationAppId = getConfigValue(CONVERSATION_APP_ID_KEY);
+    conversationContactId = getConfigValue(CONVERSATION_CONTACT_ID_KEY);
+    conversationMessageId = getConfigValue(CONVERSATION_MESSAGE_ID_KEY);
+    conversationEventId = getConfigValue(CONVERSATION_EVENT_ID_KEY);
+    conversationWebhookId = getConfigValue(CONVERSATION_WEBHOOK_ID_KEY);
+    conversationTemplateId = getConfigValue(CONVERSATION_TEMPLATE_ID_KEY);
+
     String webhooksUrl = getConfigValue(WEBHOOKS_URL_KEY);
     if (null != webhooksUrl) {
       webhooksVoicePath =
@@ -63,6 +94,19 @@ public abstract class BaseApplication {
             .getApplicationCredentials()
             .map(ApplicationCredentials::getApplicationKey)
             .orElse(null);
+
+    smsServicePlanId =
+        configuration
+            .getSmsServicePlanCredentials()
+            .map(SmsServicePlanCredentials::getServicePlanId)
+            .orElse(null);
+
+    smsApiToken =
+        configuration
+            .getSmsServicePlanCredentials()
+            .map(SmsServicePlanCredentials::getApiToken)
+            .orElse(null);
+
     client = new SinchClient(configuration);
   }
 

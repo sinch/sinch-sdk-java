@@ -1,0 +1,22 @@
+{
+  "webhooks": [
+    {
+      "id": "a webhook id",
+      "app_id": "an app id",
+      "target": "https://fake.url/ConversationEvent",
+      "target_type": "HTTP",
+      "secret": "my secret value",
+      "triggers": [
+        "CAPABILITY",
+        "CHANNEL_EVENT",
+        "CONTACT_CREATE",
+        "UNSUPPORTED"
+      ],
+      "client_credentials": {
+        "client_id": "a client id",
+        "client_secret": "a client secret",
+        "endpoint": "https://fake.url"
+      }
+    }
+  ]
+}

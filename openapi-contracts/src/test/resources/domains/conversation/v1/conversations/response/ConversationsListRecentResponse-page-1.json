@@ -1,0 +1,50 @@
+{
+  "conversations": [
+    {
+      "conversation": {
+        "active": true,
+        "active_channel": "WHATSAPP",
+        "app_id": "conversation app Id",
+        "contact_id": "contact ID",
+        "id": "a conversation id",
+        "last_received": "2020-11-17T15:00:00Z",
+        "metadata": "metadata value",
+        "metadata_json": {
+          "metadata_json_key": "metadata json value"
+        },
+        "correlation_id": "correlation id value"
+      },
+      "last_message": {
+        "accept_time": "2020-11-17T16:05:51.724083Z",
+        "channel_identity": {
+          "app_id": "an app id",
+          "channel": "MESSENGER",
+          "identity": "an identity"
+        },
+        "contact_id": "contact id value",
+        "conversation_id": "conversation id value",
+        "direction": "TO_APP",
+        "id": "id value",
+        "metadata": "metadata value",
+        "injected": true,
+        "sender_id": "sender id",
+        "processing_mode": "CONVERSATION",
+        "contact_message": {
+          "location_message": {
+            "coordinates": {
+              "latitude": 47.6279809,
+              "longitude": -2.8229159
+            },
+            "title": "title value",
+            "label": "label value"
+          },
+          "reply_to": {
+            "message_id": "message id value"
+          }
+        }
+      }
+    }
+  ],
+  "next_page_token": "",
+  "total_size": 2
+}

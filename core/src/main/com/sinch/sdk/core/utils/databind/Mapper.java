@@ -106,6 +106,11 @@ public class Mapper {
     public static final SimpleModule dynamicEnumModule =
         new SimpleModule("dynamicEnumModule")
             .addSerializer(EnumDynamic.class, new EnumDynamicSerializer());
+
+    public static final SimpleModule validationDeserializationModule =
+        new SimpleModule("deserializationModule")
+            .setDeserializerModifier(new BuilderDeserializerWithValidation());
+
     public static final ObjectMapper INSTANCE =
         new ObjectMapper()
             .setAnnotationIntrospector(new FilteringIntrospection())
@@ -119,7 +124,8 @@ public class Mapper {
                 new SimpleFilterProvider().addFilter("uninitializedFilter", uninitializedFilter))
             .registerModule(module)
             .registerModule(dynamicEnumModule)
-            .registerModule(optionalValueModule);
+            .registerModule(optionalValueModule)
+            .registerModule(validationDeserializationModule);
   }
 
   public static final class OffsetDateTimeCustomDeserializer
