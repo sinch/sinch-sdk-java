@@ -17,6 +17,7 @@ public class TemplateV2DtoTest extends TemplatesBaseTest {
 
   public static TemplateV2 expectedRequestDto =
       TemplateV2.builder()
+          .setId("template ID")
           .setTranslations(Arrays.asList(TemplateTranslationDtoTest.expectedDto))
           .setDefaultTranslation("fr-FR")
           .setDescription("template description value")
