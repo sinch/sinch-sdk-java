@@ -22,6 +22,7 @@ public interface AvailableRegion {
    * ISO 3166-1 alpha-2 region code. Examples: <code>US</code>, <code>GB</code> or <code>SE</code>.
    *
    * @return regionCode
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   String getRegionCode();
 
@@ -29,6 +30,7 @@ public interface AvailableRegion {
    * Display name of the region. Examples: United States, United Kingdom or Sweden.
    *
    * @return regionName
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   String getRegionName();
 
@@ -37,6 +39,7 @@ public interface AvailableRegion {
    * </code>.
    *
    * @return types
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   List<NumberType> getTypes();
 
@@ -58,6 +61,7 @@ public interface AvailableRegion {
      * @param regionCode see getter
      * @return Current builder
      * @see #getRegionCode
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setRegionCode(String regionCode);
 
@@ -67,6 +71,7 @@ public interface AvailableRegion {
      * @param regionName see getter
      * @return Current builder
      * @see #getRegionName
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setRegionName(String regionName);
 
@@ -76,6 +81,7 @@ public interface AvailableRegion {
      * @param types see getter
      * @return Current builder
      * @see #getTypes
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setTypes(List<NumberType> types);
 

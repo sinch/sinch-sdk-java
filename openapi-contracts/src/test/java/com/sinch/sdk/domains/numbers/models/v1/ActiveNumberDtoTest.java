@@ -40,8 +40,8 @@ public class ActiveNumberDtoTest extends NumbersBaseTest {
           .setPaymentIntervalMonths(1)
           .setNextChargeDate(Instant.parse("2023-09-22T15:49:58.813424Z"))
           .setExpireAt(Instant.parse("2023-10-06T15:49:58.813381Z"))
-          .setSmsConfiguration(SmsConfigurationDtoTest.configuration)
-          .setVoiceConfiguration(VoiceConfigurationDtoTest.configurationRTC)
+          .setSmsConfiguration(SmsConfigurationDtoTest.configurationResponse)
+          .setVoiceConfiguration(VoiceConfigurationDtoTest.configurationResponseRTC)
           .setCallbackUrl("foo callback")
           .build();
 
@@ -94,14 +94,6 @@ public class ActiveNumberDtoTest extends NumbersBaseTest {
           .setNextPageToken("")
           .setTotalSize(1)
           .build();
-
-  @Test
-  void serialize() throws JsonProcessingException, JSONException {
-
-    String serializedString = objectMapper.writeValueAsString(activeNumber);
-
-    JSONAssert.assertEquals(activeNumberJson, serializedString, true);
-  }
 
   @Test
   void deserialize() throws JsonProcessingException {

@@ -18,7 +18,7 @@ class VoiceConfigurationDtoConverterTest {
   void convert() {
 
     VoiceConfiguration converted =
-        VoiceConfigurationDtoConverter.convert(VoiceConfigurationDtoTest.configurationRTC);
+        VoiceConfigurationDtoConverter.convert(VoiceConfigurationDtoTest.configurationResponseRTC);
     TestHelpers.recursiveEquals(configuration, converted);
   }
 }

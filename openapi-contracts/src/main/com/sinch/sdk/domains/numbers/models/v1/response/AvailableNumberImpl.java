@@ -87,8 +87,7 @@ public class AvailableNumberImpl implements AvailableNumber {
     return phoneNumber.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_PHONE_NUMBER)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<String> phoneNumber() {
     return phoneNumber;
   }
@@ -98,8 +97,7 @@ public class AvailableNumberImpl implements AvailableNumber {
     return regionCode.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_REGION_CODE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<String> regionCode() {
     return regionCode;
   }
@@ -153,8 +151,7 @@ public class AvailableNumberImpl implements AvailableNumber {
     return paymentIntervalMonths.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_PAYMENT_INTERVAL_MONTHS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<Integer> paymentIntervalMonths() {
     return paymentIntervalMonths;
   }
@@ -164,8 +161,7 @@ public class AvailableNumberImpl implements AvailableNumber {
     return supportingDocumentationRequired.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_SUPPORTING_DOCUMENTATION_REQUIRED)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<Boolean> supportingDocumentationRequired() {
     return supportingDocumentationRequired;
   }

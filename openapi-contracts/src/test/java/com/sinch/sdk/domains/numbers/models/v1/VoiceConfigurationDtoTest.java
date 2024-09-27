@@ -14,32 +14,50 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class VoiceConfigurationDtoTest extends NumbersBaseTest {
 
-  @GivenTextResource("/domains/numbers/v1/active/VoiceConfigurationDtoEST.json")
-  String configurationJsonEST;
+  @GivenTextResource("/domains/numbers/v1/active/VoiceConfigurationRequestDtoEST.json")
+  String configurationRequestJsonEST;
 
-  @GivenTextResource("/domains/numbers/v1/active/VoiceConfigurationDtoFAX.json")
-  String configurationJsonFAX;
+  @GivenTextResource("/domains/numbers/v1/active/VoiceConfigurationResponseDtoEST.json")
+  String configurationResponseJsonEST;
 
-  @GivenTextResource("/domains/numbers/v1/active/VoiceConfigurationDtoRTC.json")
-  String configurationJsonRTC;
+  @GivenTextResource("/domains/numbers/v1/active/VoiceConfigurationRequestDtoFAX.json")
+  String configurationRequestJsonFAX;
+
+  @GivenTextResource("/domains/numbers/v1/active/VoiceConfigurationResponseDtoFAX.json")
+  String configurationResponseJsonFAX;
+
+  @GivenTextResource("/domains/numbers/v1/active/VoiceConfigurationRequestDtoRTC.json")
+  String configurationRequestJsonRTC;
+
+  @GivenTextResource("/domains/numbers/v1/active/VoiceConfigurationResponseDtoRTC.json")
+  String configurationResponseJsonRTC;
 
   @GivenTextResource("/domains/numbers/v1/active/VoiceConfigurationDtoRTCSwitchToFAX.json")
   String configurationJsonRTCSwitchToFAX;
 
-  public static VoiceConfigurationEST configurationEST =
+  public static VoiceConfigurationEST configurationRequestEST =
+      VoiceConfigurationEST.builder().setTrunkId("AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE").build();
+
+  public static VoiceConfigurationEST configurationResponseEST =
       VoiceConfigurationEST.builder()
           .setTrunkId("AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE")
           .setLastUpdatedTime(Instant.parse("2024-06-30T07:08:09.10Z"))
           .setScheduledProvisioning(ScheduledVoiceProvisioningDtoTest.provisioningEST)
           .build();
+  public static VoiceConfigurationFAX configurationRequestFAX =
+      VoiceConfigurationFAX.builder().setServiceId("AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE").build();
 
-  public static VoiceConfigurationFAX configurationFAX =
+  public static VoiceConfigurationFAX configurationResponseFAX =
       VoiceConfigurationFAX.builder()
           .setServiceId("AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE")
           .setLastUpdatedTime(Instant.parse("2024-06-30T07:08:09.10Z"))
           .setScheduledProvisioning(ScheduledVoiceProvisioningDtoTest.provisioningFAX)
           .build();
-  public static VoiceConfigurationRTC configurationRTC =
+
+  public static VoiceConfigurationRTC configurationRequestRTC =
+      VoiceConfigurationRTC.builder().setAppId("AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE").build();
+
+  public static VoiceConfigurationRTC configurationResponseRTC =
       VoiceConfigurationRTC.builder()
           .setAppId("AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE")
           .setLastUpdatedTime(Instant.parse("2024-06-30T07:08:09.10Z"))
@@ -56,52 +74,52 @@ public class VoiceConfigurationDtoTest extends NumbersBaseTest {
   @Test
   void serializeEST() throws JsonProcessingException, JSONException {
 
-    String serializedString = objectMapper.writeValueAsString(configurationEST);
+    String serializedString = objectMapper.writeValueAsString(configurationRequestEST);
 
-    JSONAssert.assertEquals(configurationJsonEST, serializedString, true);
+    JSONAssert.assertEquals(configurationRequestJsonEST, serializedString, true);
   }
 
   @Test
   void deserializeEST() throws JsonProcessingException {
 
     VoiceConfiguration deserializedString =
-        objectMapper.readValue(configurationJsonEST, VoiceConfigurationEST.class);
+        objectMapper.readValue(configurationResponseJsonEST, VoiceConfigurationEST.class);
 
-    TestHelpers.recursiveEquals(configurationEST, deserializedString);
+    TestHelpers.recursiveEquals(configurationResponseEST, deserializedString);
   }
 
   @Test
   void serializeFAX() throws JsonProcessingException, JSONException {
 
-    String serializedString = objectMapper.writeValueAsString(configurationFAX);
+    String serializedString = objectMapper.writeValueAsString(configurationRequestFAX);
 
-    JSONAssert.assertEquals(configurationJsonFAX, serializedString, true);
+    JSONAssert.assertEquals(configurationRequestJsonFAX, serializedString, true);
   }
 
   @Test
   void deserializeFAX() throws JsonProcessingException {
 
     VoiceConfiguration deserializedString =
-        objectMapper.readValue(configurationJsonFAX, VoiceConfigurationFAX.class);
+        objectMapper.readValue(configurationResponseJsonFAX, VoiceConfigurationFAX.class);
 
-    TestHelpers.recursiveEquals(configurationFAX, deserializedString);
+    TestHelpers.recursiveEquals(configurationResponseFAX, deserializedString);
   }
 
   @Test
   void serializeRTC() throws JsonProcessingException, JSONException {
 
-    String serializedString = objectMapper.writeValueAsString(configurationRTC);
+    String serializedString = objectMapper.writeValueAsString(configurationRequestRTC);
 
-    JSONAssert.assertEquals(configurationJsonRTC, serializedString, true);
+    JSONAssert.assertEquals(configurationRequestJsonRTC, serializedString, true);
   }
 
   @Test
   void deserializeRTC() throws JsonProcessingException {
 
     VoiceConfiguration deserializedString =
-        objectMapper.readValue(configurationJsonRTC, VoiceConfigurationRTC.class);
+        objectMapper.readValue(configurationResponseJsonRTC, VoiceConfigurationRTC.class);
 
-    TestHelpers.recursiveEquals(configurationRTC, deserializedString);
+    TestHelpers.recursiveEquals(configurationResponseRTC, deserializedString);
   }
 
   @Test
@@ -117,7 +135,7 @@ public class VoiceConfigurationDtoTest extends NumbersBaseTest {
   void deserialize() throws JsonProcessingException {
 
     VoiceConfigurationInternalImpl deserializedString =
-        objectMapper.readValue(configurationJsonRTC, VoiceConfigurationInternalImpl.class);
-    TestHelpers.recursiveEquals(configurationRTC, deserializedString.getActualInstance());
+        objectMapper.readValue(configurationRequestJsonRTC, VoiceConfigurationInternalImpl.class);
+    TestHelpers.recursiveEquals(configurationRequestRTC, deserializedString.getActualInstance());
   }
 }

@@ -47,6 +47,7 @@ public interface ActiveNumber {
    * or <code>SE</code>.
    *
    * @return regionCode
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   String getRegionCode();
 
@@ -75,6 +76,7 @@ public interface ActiveNumber {
    * How often the recurring price is charged in months.
    *
    * @return paymentIntervalMonths
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   Integer getPaymentIntervalMonths();
 
@@ -82,6 +84,7 @@ public interface ActiveNumber {
    * The date of the next charge.
    *
    * @return nextChargeDate
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   Instant getNextChargeDate();
 
@@ -89,6 +92,7 @@ public interface ActiveNumber {
    * The timestamp when the subscription will expire if an expiration date has been set.
    *
    * @return expireAt
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   Instant getExpireAt();
 
@@ -158,6 +162,7 @@ public interface ActiveNumber {
      * @param regionCode see getter
      * @return Current builder
      * @see #getRegionCode
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setRegionCode(String regionCode);
 
@@ -194,6 +199,7 @@ public interface ActiveNumber {
      * @param paymentIntervalMonths see getter
      * @return Current builder
      * @see #getPaymentIntervalMonths
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setPaymentIntervalMonths(Integer paymentIntervalMonths);
 
@@ -203,6 +209,7 @@ public interface ActiveNumber {
      * @param nextChargeDate see getter
      * @return Current builder
      * @see #getNextChargeDate
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setNextChargeDate(Instant nextChargeDate);
 
@@ -212,6 +219,7 @@ public interface ActiveNumber {
      * @param expireAt see getter
      * @return Current builder
      * @see #getExpireAt
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setExpireAt(Instant expireAt);
 

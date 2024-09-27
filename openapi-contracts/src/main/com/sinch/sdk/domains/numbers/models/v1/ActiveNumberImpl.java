@@ -152,8 +152,7 @@ public class ActiveNumberImpl implements ActiveNumber {
     return regionCode.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_REGION_CODE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<String> regionCode() {
     return regionCode;
   }
@@ -196,8 +195,7 @@ public class ActiveNumberImpl implements ActiveNumber {
     return paymentIntervalMonths.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_PAYMENT_INTERVAL_MONTHS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<Integer> paymentIntervalMonths() {
     return paymentIntervalMonths;
   }
@@ -207,8 +205,7 @@ public class ActiveNumberImpl implements ActiveNumber {
     return nextChargeDate.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_NEXT_CHARGE_DATE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<Instant> nextChargeDate() {
     return nextChargeDate;
   }
@@ -218,8 +215,7 @@ public class ActiveNumberImpl implements ActiveNumber {
     return expireAt.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_EXPIRE_AT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<Instant> expireAt() {
     return expireAt;
   }
