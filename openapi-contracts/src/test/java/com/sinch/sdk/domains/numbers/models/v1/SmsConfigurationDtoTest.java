@@ -18,8 +18,11 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class SmsConfigurationDtoTest extends NumbersBaseTest {
 
-  @GivenTextResource("/domains/numbers/v1/active/SmsConfigurationDto.json")
-  String configurationJSON;
+  @GivenTextResource("/domains/numbers/v1/active/SmsConfigurationRequestDto.json")
+  String configurationRequestJSON;
+
+  @GivenTextResource("/domains/numbers/v1/active/SmsConfigurationResponseDto.json")
+  String configurationResponseJSON;
 
   @GivenTextResource("/domains/numbers/v1/active/SmsConfigurationDtoServicePlanIdNull.json")
   String SMSConfigurationDtoServicePlanIdNull;
@@ -27,7 +30,12 @@ public class SmsConfigurationDtoTest extends NumbersBaseTest {
   @GivenTextResource("/domains/numbers/v1/active/SmsConfigurationDtoServicePlanIdValue.json")
   String SMSConfigurationDtoServicePlanIdValue;
 
-  public static SmsConfiguration configuration =
+  public static SmsConfiguration configurationRequest =
+      SmsConfiguration.builder()
+          .setServicePlanId("service plan id")
+          .setCampaignId("campaign id")
+          .build();
+  public static SmsConfiguration configurationResponse =
       SmsConfiguration.builder()
           .setServicePlanId("service plan id")
           .setCampaignId("campaign id")
@@ -44,18 +52,18 @@ public class SmsConfigurationDtoTest extends NumbersBaseTest {
   @Test
   void serialize() throws JsonProcessingException, JSONException {
 
-    String serializedString = objectMapper.writeValueAsString(configuration);
+    String serializedString = objectMapper.writeValueAsString(configurationRequest);
 
-    JSONAssert.assertEquals(configurationJSON, serializedString, true);
+    JSONAssert.assertEquals(configurationRequestJSON, serializedString, true);
   }
 
   @Test
   void deserialize() throws JsonProcessingException {
 
     SmsConfiguration deserializedString =
-        objectMapper.readValue(configurationJSON, configuration.getClass());
+        objectMapper.readValue(configurationResponseJSON, SmsConfiguration.class);
 
-    TestHelpers.recursiveEquals(configuration, deserializedString);
+    TestHelpers.recursiveEquals(configurationResponse, deserializedString);
   }
 
   @Test

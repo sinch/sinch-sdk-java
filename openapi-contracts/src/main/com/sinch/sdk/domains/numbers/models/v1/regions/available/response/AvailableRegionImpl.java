@@ -49,8 +49,7 @@ public class AvailableRegionImpl implements AvailableRegion {
     return regionCode.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_REGION_CODE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<String> regionCode() {
     return regionCode;
   }
@@ -60,8 +59,7 @@ public class AvailableRegionImpl implements AvailableRegion {
     return regionName.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_REGION_NAME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<String> regionName() {
     return regionName;
   }
@@ -71,8 +69,7 @@ public class AvailableRegionImpl implements AvailableRegion {
     return types.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_TYPES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<List<NumberType>> types() {
     return types;
   }
