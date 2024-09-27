@@ -77,7 +77,8 @@ public class TemplateV2Impl implements TemplateV2 {
     return id.orElse(null);
   }
 
-  @JsonIgnore
+  @JsonProperty(JSON_PROPERTY_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> id() {
     return id;
   }

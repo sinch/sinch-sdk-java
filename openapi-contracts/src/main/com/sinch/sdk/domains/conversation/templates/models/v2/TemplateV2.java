@@ -23,7 +23,6 @@ public interface TemplateV2 {
    * ID for you. This must be unique for a given project.
    *
    * @return id
-   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   String getId();
 
@@ -92,7 +91,6 @@ public interface TemplateV2 {
      * @param id see getter
      * @return Current builder
      * @see #getId
-     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setId(String id);
 
