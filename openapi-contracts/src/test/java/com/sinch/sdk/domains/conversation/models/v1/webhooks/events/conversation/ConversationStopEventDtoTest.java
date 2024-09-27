@@ -29,7 +29,7 @@ public class ConversationStopEventDtoTest extends ConversationBaseTest {
                   .setCorrelationId("correlation id value")
                   .setNotification(
                       ConversationNotification.builder()
-                          .setConversation(ConversationDtoTest.conversation)
+                          .setConversation(ConversationDtoTest.conversationResponse)
                           .build())
                   .build());
 

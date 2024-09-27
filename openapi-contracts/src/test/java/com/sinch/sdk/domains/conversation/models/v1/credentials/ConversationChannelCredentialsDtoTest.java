@@ -45,7 +45,6 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.APPLEBC)
           .setCallbackSecret("callback secret")
-          .setChannelKnownId("channel id")
           .setCredentials(
               AppleBusinessChatCredentials.builder()
                   .setBusinessChatAccountId("appleBc business_chat_account_id value")
@@ -83,7 +82,6 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.INSTAGRAM)
           .setCallbackSecret("callback secret")
-          .setChannelKnownId("channel id")
           .setCredentials(
               InstagramCredentials.builder()
                   .setToken("instagramChannel token")
@@ -119,7 +117,6 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.KAKAOTALK)
           .setCallbackSecret("callback secret")
-          .setChannelKnownId("channel id")
           .setCredentials(
               KakaoTalkCredentials.builder()
                   .setKakaotalkPlusFriendId("kakaoTalkChannel a friend id")
@@ -155,7 +152,6 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.KAKAOTALKCHAT)
           .setCallbackSecret("callback secret")
-          .setChannelKnownId("channel id")
           .setCredentials(
               KakaoTalkChatCredentials.builder()
                   .setKakaotalkPlusFriendId("kakaoTalkChatChannel a friend id")
@@ -189,7 +185,6 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.LINE)
           .setCallbackSecret("callback secret")
-          .setChannelKnownId("channel id")
           .setCredentials(
               LineCredentials.builder()
                   .setToken("lineChannel a token value")
@@ -222,7 +217,6 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.MESSENGER)
           .setCallbackSecret("callback secret")
-          .setChannelKnownId("channel id")
           .setCredentials(
               StaticTokenCredentials.builder().setToken("messengerChannel a token value").build())
           .build();
@@ -259,7 +253,6 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.MMS)
           .setCallbackSecret("callback secret")
-          .setChannelKnownId("channel id")
           .setCredentials(
               MMSCredentials.builder()
                   .setBasicAuth(
@@ -299,7 +292,6 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.RCS)
           .setCallbackSecret("callback secret")
-          .setChannelKnownId("channel id")
           .setCredentials(
               StaticBearerCredentials.builder()
                   .setClaimedIdentity("rcsChannel my claimed identity")
@@ -333,7 +325,6 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.SMS)
           .setCallbackSecret("callback secret")
-          .setChannelKnownId("channel id")
           .setCredentials(
               StaticBearerCredentials.builder()
                   .setClaimedIdentity("smsChannel my claimed identity")
@@ -365,7 +356,6 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.TELEGRAM)
           .setCallbackSecret("callback secret")
-          .setChannelKnownId("channel id")
           .setCredentials(TelegramCredentials.builder().setToken("telegramChannel token").build())
           .build();
 
@@ -392,7 +382,6 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.VIBER)
           .setCallbackSecret("callback secret")
-          .setChannelKnownId("channel id")
           .setCredentials(StaticTokenCredentials.builder().setToken("viberChannel token").build())
           .build();
 
@@ -424,7 +413,6 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.VIBERBM)
           .setCallbackSecret("callback secret")
-          .setChannelKnownId("channel id")
           .setCredentials(
               StaticBearerCredentials.builder()
                   .setClaimedIdentity("viberBMChannel my claimed identity")
@@ -462,7 +450,6 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.WECHAT)
           .setCallbackSecret("callback secret")
-          .setChannelKnownId("channel id")
           .setCredentials(
               WeChatCredentials.builder()
                   .setAppId("wechatChannel app id")
@@ -500,7 +487,6 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.WHATSAPP)
           .setCallbackSecret("callback secret")
-          .setChannelKnownId("channel id")
           .setCredentials(
               StaticBearerCredentials.builder()
                   .setClaimedIdentity("whatsAppChannel my claimed identity")

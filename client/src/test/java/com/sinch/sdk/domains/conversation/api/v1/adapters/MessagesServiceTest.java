@@ -61,7 +61,7 @@ public class MessagesServiceTest extends ConversationBaseTest {
           .setAcceptedTime(Instant.now())
           .build();
 
-  @GivenTextResource("/domains/conversation/v1/messages/ConversationMessageAppTextDto.json")
+  @GivenTextResource("/domains/conversation/v1/messages/ConversationMessageAppTextRequestDto.json")
   static String jsonConversationMessageAppTextDto;
 
   @GivenJsonResource("/domains/conversation/v1/messages/response/MessagesListResponse-page-0.json")
@@ -74,16 +74,19 @@ public class MessagesServiceTest extends ConversationBaseTest {
   void getDefault() throws ApiException {
 
     when(api.messagesGetMessage(
-            eq(uriPartID), eq(ConversationMessageDtoTest.appConversationMessage.getId()), eq(null)))
+            eq(uriPartID),
+            eq(ConversationMessageDtoTest.appConversationMessageRequest.getId()),
+            eq(null)))
         .thenReturn(
-            ConversationMessageMapper.convert(ConversationMessageDtoTest.appConversationMessage));
+            ConversationMessageMapper.convert(
+                ConversationMessageDtoTest.appConversationMessageRequest));
 
     ConversationMessage response =
-        service.get(ConversationMessageDtoTest.appConversationMessage.getId());
+        service.get(ConversationMessageDtoTest.appConversationMessageRequest.getId());
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(ConversationMessageDtoTest.appConversationMessage);
+        .isEqualTo(ConversationMessageDtoTest.appConversationMessageRequest);
   }
 
   @Test
@@ -91,19 +94,20 @@ public class MessagesServiceTest extends ConversationBaseTest {
 
     when(api.messagesGetMessage(
             eq(uriPartID),
-            eq(ConversationMessageDtoTest.appConversationMessage.getId()),
+            eq(ConversationMessageDtoTest.appConversationMessageRequest.getId()),
             eq("CONVERSATION_SOURCE")))
         .thenReturn(
-            ConversationMessageMapper.convert(ConversationMessageDtoTest.appConversationMessage));
+            ConversationMessageMapper.convert(
+                ConversationMessageDtoTest.appConversationMessageRequest));
 
     ConversationMessage response =
         service.get(
-            ConversationMessageDtoTest.appConversationMessage.getId(),
+            ConversationMessageDtoTest.appConversationMessageRequest.getId(),
             MessageSource.CONVERSATION_SOURCE);
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(ConversationMessageDtoTest.appConversationMessage);
+        .isEqualTo(ConversationMessageDtoTest.appConversationMessageRequest);
   }
 
   @Test
@@ -234,7 +238,7 @@ public class MessagesServiceTest extends ConversationBaseTest {
   @Test
   void deleteDefault() throws ApiException {
 
-    service.delete(ConversationMessageDtoTest.appConversationMessage.getId());
+    service.delete(ConversationMessageDtoTest.appConversationMessageRequest.getId());
 
     verify(api)
         .messagesDeleteMessage(
@@ -242,7 +246,7 @@ public class MessagesServiceTest extends ConversationBaseTest {
 
     Assertions.assertThat(projectIdCaptor.getValue()).isEqualTo(uriPartID);
     Assertions.assertThat(messageIdCaptor.getValue())
-        .isEqualTo(ConversationMessageDtoTest.appConversationMessage.getId());
+        .isEqualTo(ConversationMessageDtoTest.appConversationMessageRequest.getId());
     Assertions.assertThat(messageSourceCaptor.getValue()).isNull();
   }
 
@@ -250,7 +254,8 @@ public class MessagesServiceTest extends ConversationBaseTest {
   void deleteBySource() throws ApiException {
 
     service.delete(
-        ConversationMessageDtoTest.appConversationMessage.getId(), MessageSource.DISPATCH_SOURCE);
+        ConversationMessageDtoTest.appConversationMessageRequest.getId(),
+        MessageSource.DISPATCH_SOURCE);
 
     verify(api)
         .messagesDeleteMessage(
@@ -258,7 +263,7 @@ public class MessagesServiceTest extends ConversationBaseTest {
 
     Assertions.assertThat(projectIdCaptor.getValue()).isEqualTo(uriPartID);
     Assertions.assertThat(messageIdCaptor.getValue())
-        .isEqualTo(ConversationMessageDtoTest.appConversationMessage.getId());
+        .isEqualTo(ConversationMessageDtoTest.appConversationMessageRequest.getId());
     Assertions.assertThat(messageSourceCaptor.getValue()).isEqualTo("DISPATCH_SOURCE");
   }
 
@@ -274,17 +279,17 @@ public class MessagesServiceTest extends ConversationBaseTest {
 
     when(api.messagesUpdateMessageMetadata(
             eq(uriPartID),
-            eq(ConversationMessageDtoTest.appConversationMessage.getId()),
+            eq(ConversationMessageDtoTest.appConversationMessageRequest.getId()),
             eq(request),
             eq(null)))
         .thenReturn(deserialized);
 
     ConversationMessage response =
-        service.update(ConversationMessageDtoTest.appConversationMessage.getId(), request);
+        service.update(ConversationMessageDtoTest.appConversationMessageRequest.getId(), request);
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(ConversationMessageDtoTest.appConversationMessage);
+        .isEqualTo(ConversationMessageDtoTest.appConversationMessageRequest);
   }
 
   @Test
@@ -299,20 +304,20 @@ public class MessagesServiceTest extends ConversationBaseTest {
 
     when(api.messagesUpdateMessageMetadata(
             eq(uriPartID),
-            eq(ConversationMessageDtoTest.appConversationMessage.getId()),
+            eq(ConversationMessageDtoTest.appConversationMessageRequest.getId()),
             eq(request),
             eq("DISPATCH_SOURCE")))
         .thenReturn(deserialized);
 
     ConversationMessage response =
         service.update(
-            ConversationMessageDtoTest.appConversationMessage.getId(),
+            ConversationMessageDtoTest.appConversationMessageRequest.getId(),
             MessageSource.DISPATCH_SOURCE,
             request);
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(ConversationMessageDtoTest.appConversationMessage);
+        .isEqualTo(ConversationMessageDtoTest.appConversationMessageRequest);
   }
 
   @Test

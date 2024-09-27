@@ -1,6 +1,5 @@
 package com.sinch.sdk.domains.conversation.models.v1.webhooks;
 
-import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -14,7 +13,22 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class WebhookDtoTest extends ConversationBaseTest {
 
-  public static Webhook expectedDto =
+  public static Webhook expectedRequestDto =
+      Webhook.builder()
+          .setAppId("an app id")
+          .setTarget("https://fake.url/ConversationEvent")
+          .setTargetType(WebhookTargetType.HTTP)
+          .setSecret("my secret value")
+          .setTriggers(
+              Arrays.asList(
+                  WebhookTrigger.CAPABILITY,
+                  WebhookTrigger.CHANNEL_EVENT,
+                  WebhookTrigger.CONTACT_CREATE,
+                  WebhookTrigger.UNSUPPORTED))
+          .setClientCredentials(ClientCredentialsDtoTest.expectedDto)
+          .build();
+
+  public static Webhook expectedResponseDto =
       Webhook.builder()
           .setId("a webhook id")
           .setAppId("an app id")
@@ -30,21 +44,23 @@ public class WebhookDtoTest extends ConversationBaseTest {
           .setClientCredentials(ClientCredentialsDtoTest.expectedDto)
           .build();
 
-  @GivenJsonResource("domains/conversation/v1/webhooks/WebhookDto.json")
-  Webhook dto;
+  @GivenTextResource("domains/conversation/v1/webhooks/WebhookRequestDto.json")
+  String requestJSON;
 
-  @GivenTextResource("/domains/conversation/v1/webhooks/WebhookDto.json")
-  String json;
+  @GivenTextResource("/domains/conversation/v1/webhooks/WebhookResponseDto.json")
+  String responseJSON;
 
   @Test
   void serialize() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(expectedDto);
+    String serializedString = objectMapper.writeValueAsString(expectedRequestDto);
 
-    JSONAssert.assertEquals(json, serializedString, true);
+    JSONAssert.assertEquals(requestJSON, serializedString, true);
   }
 
   @Test
-  void deserialize() {
-    TestHelpers.recursiveEquals(dto, expectedDto);
+  void deserialize() throws JsonProcessingException {
+
+    Object deserialized = objectMapper.readValue(responseJSON, Webhook.class);
+    TestHelpers.recursiveEquals(deserialized, expectedResponseDto);
   }
 }

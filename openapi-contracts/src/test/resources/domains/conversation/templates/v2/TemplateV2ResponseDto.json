@@ -1,4 +1,5 @@
 {
+  "id": "template ID",
   "description": "template description value",
   "version": 1,
   "default_translation": "fr-FR",

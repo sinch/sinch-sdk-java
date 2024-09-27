@@ -15,24 +15,30 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class ListWebhookResponseDtoTest extends ConversationBaseTest {
 
-  public static ListWebhooksResponse expectedDto =
-      ListWebhooksResponse.builder().setWebhooks(Arrays.asList(WebhookDtoTest.expectedDto)).build();
+  public static ListWebhooksResponse expectedRequestDto =
+      ListWebhooksResponse.builder()
+          .setWebhooks(Arrays.asList(WebhookDtoTest.expectedRequestDto))
+          .build();
+  public static ListWebhooksResponse expectedResponseDto =
+      ListWebhooksResponse.builder()
+          .setWebhooks(Arrays.asList(WebhookDtoTest.expectedResponseDto))
+          .build();
 
   @GivenJsonResource("domains/conversation/v1/webhooks/response/ListWebhooksResponseDto.json")
   ListWebhooksResponse dto;
 
-  @GivenTextResource("/domains/conversation/v1/webhooks/response/ListWebhooksResponseDto.json")
+  @GivenTextResource("/domains/conversation/v1/webhooks/response/ListWebhooksRequestDto.json")
   String json;
 
   @Test
   void serialize() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(expectedDto);
+    String serializedString = objectMapper.writeValueAsString(expectedRequestDto);
 
     JSONAssert.assertEquals(json, serializedString, true);
   }
 
   @Test
   void deserialize() {
-    TestHelpers.recursiveEquals(dto, expectedDto);
+    TestHelpers.recursiveEquals(dto, expectedResponseDto);
   }
 }
