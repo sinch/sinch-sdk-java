@@ -2,11 +2,15 @@ package com.sinch.sdk.domains.sms.adapters.converters;
 
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.sms.models.Parameters;
+import com.sinch.sdk.domains.sms.models.Parameters.Entry;
 import com.sinch.sdk.domains.sms.models.dto.v1.ParameterObjDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.ParameterObjParameterKeyDto;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ParametersDtoConverter {
 
@@ -14,38 +18,11 @@ public class ParametersDtoConverter {
     if (null == dto) {
       return null;
     }
-    return new Parameters(
-        dto.entrySet().stream()
-            .map(
-                entry -> {
-                  @SuppressWarnings("unchecked")
-                  Map<String, String> entryValue = (Map<String, String>) entry.getValue();
-                  return new Parameters.Entry(
-                      entry.getKey(),
-                      entryValue.entrySet().stream()
-                          .filter(
-                              value ->
-                                  value
-                                          .getKey()
-                                          .compareTo(
-                                              ParameterObjParameterKeyDto.JSON_PROPERTY_DEFAULT)
-                                      != 0)
-                          .map(e -> new Pair<>(e.getKey(), e.getValue()))
-                          .findFirst()
-                          .orElse(null),
-                      entryValue.entrySet().stream()
-                          .filter(
-                              value ->
-                                  value
-                                          .getKey()
-                                          .compareTo(
-                                              ParameterObjParameterKeyDto.JSON_PROPERTY_DEFAULT)
-                                      == 0)
-                          .map(Map.Entry::getValue)
-                          .findFirst()
-                          .orElse(null));
-                })
-            .collect(Collectors.toList()));
+
+    ArrayList<Parameters.Entry> client = new ArrayList<>();
+    dto.forEach((key, value) -> client.addAll(convertParameters(key, value)));
+
+    return new Parameters(client);
   }
 
   public static ParameterObjDto convert(Parameters parameters) {
@@ -54,18 +31,52 @@ public class ParametersDtoConverter {
     parameters
         .entrySet()
         .iterator()
-        .forEachRemaining(
-            entry -> {
-              Map<String, String> obj = new HashMap<>();
-              Pair<String, String> pair = entry.getValue().getValue();
-              obj.put(pair.getLeft(), pair.getRight());
-              entry
-                  .getValue()
-                  .getDefaultValue()
-                  .ifPresent(
-                      def -> obj.put(ParameterObjParameterKeyDto.JSON_PROPERTY_DEFAULT, def));
-              dto.put(entry.getKey(), obj);
-            });
+        .forEachRemaining(entries -> dto.put(entries.getKey(), convert(entries.getValue())));
     return dto;
+  }
+
+  public static HashMap<String, String> convert(Collection<Entry> client) {
+    if (null == client) {
+      return null;
+    }
+    HashMap<String, String> dto = new HashMap<>();
+
+    client.forEach(
+        entry -> {
+          dto.put(entry.getValue().getLeft(), entry.getValue().getRight());
+          entry
+              .getDefaultValue()
+              .ifPresent(def -> dto.put(ParameterObjParameterKeyDto.JSON_PROPERTY_DEFAULT, def));
+        });
+    return dto;
+  }
+
+  public static Collection<Parameters.Entry> convertParameters(String parameterName, Object _dto) {
+    if (!(_dto instanceof Map)) {
+      return null;
+    }
+    ArrayList<Parameters.Entry> client = new ArrayList<>();
+
+    @SuppressWarnings("unchecked")
+    Map<String, String> dto = (Map<String, String>) _dto;
+
+    AtomicReference<Optional<String>> defValue =
+        new AtomicReference<>(
+            dto.entrySet().stream()
+                .filter(
+                    entry ->
+                        entry.getKey().equals(ParameterObjParameterKeyDto.JSON_PROPERTY_DEFAULT))
+                .map(Map.Entry::getValue)
+                .findFirst());
+
+    dto.forEach(
+        (key, value) -> {
+          if (!key.equals(ParameterObjParameterKeyDto.JSON_PROPERTY_DEFAULT)) {
+            client.add(
+                new Entry(parameterName, new Pair<>(key, value), defValue.get().orElse(null)));
+            defValue.set(Optional.empty());
+          }
+        });
+    return client;
   }
 }
