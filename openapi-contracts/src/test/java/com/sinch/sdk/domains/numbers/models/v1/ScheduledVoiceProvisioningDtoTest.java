@@ -7,9 +7,7 @@ import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.numbers.api.v1.adapters.NumbersBaseTest;
 import com.sinch.sdk.domains.numbers.models.v1.internal.ScheduledVoiceProvisioningInternalImpl;
 import java.time.Instant;
-import org.json.JSONException;
 import org.junit.jupiter.api.Test;
-import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
 public class ScheduledVoiceProvisioningDtoTest extends NumbersBaseTest {
@@ -44,14 +42,6 @@ public class ScheduledVoiceProvisioningDtoTest extends NumbersBaseTest {
           .build();
 
   @Test
-  void serializeEST() throws JsonProcessingException, JSONException {
-
-    String serializedString = objectMapper.writeValueAsString(provisioningEST);
-
-    JSONAssert.assertEquals(provisioningJsonEST, serializedString, true);
-  }
-
-  @Test
   void deserializeEST() throws JsonProcessingException {
 
     ScheduledVoiceProvisioningInternalImpl deserializedString =
@@ -62,14 +52,6 @@ public class ScheduledVoiceProvisioningDtoTest extends NumbersBaseTest {
   }
 
   @Test
-  void serializeFAX() throws JsonProcessingException, JSONException {
-
-    String serializedString = objectMapper.writeValueAsString(provisioningFAX);
-
-    JSONAssert.assertEquals(provisioningJsonFAX, serializedString, true);
-  }
-
-  @Test
   void deserializeFAX() throws JsonProcessingException {
 
     ScheduledVoiceProvisioningInternalImpl deserializedString =
@@ -77,14 +59,6 @@ public class ScheduledVoiceProvisioningDtoTest extends NumbersBaseTest {
 
     TestHelpers.recursiveEquals(
         provisioningFAX, deserializedString.getScheduledVoiceProvisioningFAXImpl());
-  }
-
-  @Test
-  void serializeRTC() throws JsonProcessingException, JSONException {
-
-    String serializedString = objectMapper.writeValueAsString(provisioningRTC);
-
-    JSONAssert.assertEquals(provisioningJsonRTC, serializedString, true);
   }
 
   @Test

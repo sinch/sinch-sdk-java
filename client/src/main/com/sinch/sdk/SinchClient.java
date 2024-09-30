@@ -1,12 +1,15 @@
 package com.sinch.sdk;
 
 import com.sinch.sdk.core.utils.StringUtil;
+import com.sinch.sdk.domains.conversation.ConversationService;
 import com.sinch.sdk.domains.numbers.NumbersService;
 import com.sinch.sdk.domains.sms.SMSService;
 import com.sinch.sdk.domains.verification.VerificationService;
 import com.sinch.sdk.domains.voice.VoiceService;
 import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.ConversationContext;
+import com.sinch.sdk.models.ConversationRegion;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.SMSRegion;
 import com.sinch.sdk.models.SmsContext;
@@ -27,7 +30,6 @@ import java.util.stream.Stream;
 public class SinchClient {
 
   private static final String DEFAULT_PROPERTIES_FILE_NAME = "/config-default.properties";
-  private static final String VERSION_PROPERTIES_FILE_NAME = "/version.properties";
 
   private static final String OAUTH_URL_KEY = "oauth-url";
   private static final String NUMBERS_SERVER_KEY = "numbers-server";
@@ -41,9 +43,10 @@ public class SinchClient {
 
   private static final String VERIFICATION_SERVER_KEY = "verification-server";
 
-  private static final String PROJECT_NAME_KEY = "project.name";
-  private static final String PROJECT_VERSION_KEY = "project.version";
-  private static final String PROJECT_AUXILIARY_FLAG = "project.auxiliary_flag";
+  private static final String CONVERSATION_REGION_KEY = "conversation-region";
+  private static final String CONVERSATION_SERVER_KEY = "conversation-server";
+  private static final String CONVERSATION_TEMPLATE_SERVER_KEY =
+      "template-management-conversation-server";
 
   // sinch-sdk/{sdk_version} ({language}/{language_version}; {implementation_type};
   // {auxiliary_flag})
@@ -52,12 +55,12 @@ public class SinchClient {
   private static final Logger LOGGER = Logger.getLogger(SinchClient.class.getName());
 
   private final Configuration configuration;
-  private final Properties versionProperties;
 
   private NumbersService numbers;
   private SMSService sms;
   private VerificationService verification;
   private VoiceService voice;
+  private ConversationService conversation;
 
   private HttpClientApache httpClient;
 
@@ -80,17 +83,13 @@ public class SinchClient {
     handleDefaultSmsSettings(configuration, props, builder);
     handleDefaultVerificationSettings(configuration, props, builder);
     handleDefaultVoiceSettings(configuration, props, builder);
+    handleDefaultConversationSettings(configuration, props, builder);
 
     Configuration newConfiguration = builder.build();
     checkConfiguration(newConfiguration);
     this.configuration = newConfiguration;
 
-    versionProperties = handlePropertiesFile(VERSION_PROPERTIES_FILE_NAME);
-    LOGGER.fine(
-        String.format(
-            "%s (%s) started",
-            versionProperties.getProperty(PROJECT_NAME_KEY),
-            versionProperties.getProperty(PROJECT_VERSION_KEY)));
+    LOGGER.fine(String.format("%s (%s) started", SDK.NAME, SDK.VERSION));
   }
 
   private void handleDefaultNumbersSettings(
@@ -189,6 +188,45 @@ public class SinchClient {
     }
   }
 
+  private void handleDefaultConversationSettings(
+      Configuration configuration, Properties props, Configuration.Builder builder) {
+
+    ConversationRegion region =
+        configuration.getConversationContext().map(ConversationContext::getRegion).orElse(null);
+
+    String url =
+        configuration.getConversationContext().map(ConversationContext::getUrl).orElse(null);
+
+    String templateManagementUrl =
+        configuration
+            .getConversationContext()
+            .map(ConversationContext::getTemplateManagementUrl)
+            .orElse(null);
+
+    if (null == region && props.containsKey(CONVERSATION_REGION_KEY)) {
+      String value = props.getProperty(CONVERSATION_REGION_KEY);
+      if (!StringUtil.isEmpty(value)) {
+        region = ConversationRegion.from(value);
+      }
+    }
+
+    // region is not defined: use the region to set to an existing one and use "us" as a default
+    // fallback
+    region = null == region ? ConversationRegion.US : region;
+
+    builder.setConversationRegion(region);
+
+    if (StringUtil.isEmpty(url)) {
+      builder.setConversationUrl(
+          String.format(props.getProperty(CONVERSATION_SERVER_KEY), region.value()));
+    }
+
+    if (StringUtil.isEmpty(templateManagementUrl)) {
+      builder.setConversationTemplateManagementUrl(
+          String.format(props.getProperty(CONVERSATION_TEMPLATE_SERVER_KEY), region.value()));
+    }
+  }
+
   /**
    * Get current configuration
    *
@@ -259,6 +297,21 @@ public class SinchClient {
     return voice;
   }
 
+  /**
+   * Get Conversation domain service
+   *
+   * @return Return instance onto Conversation API service
+   * @see <a
+   *     href="https://developers.sinch.com/docs/conversation/">https://developers.sinch.com/docs/conversation/</a>
+   * @since 1.0
+   */
+  public ConversationService conversation() {
+    if (null == conversation) {
+      conversation = conversationInit();
+    }
+    return conversation;
+  }
+
   private void checkConfiguration(Configuration configuration) throws NullPointerException {
     Objects.requireNonNull(configuration.getOAuthUrl(), "'oauthUrl' cannot be null");
   }
@@ -301,6 +354,14 @@ public class SinchClient {
         getHttpClient());
   }
 
+  private ConversationService conversationInit() {
+    return new com.sinch.sdk.domains.conversation.adapters.ConversationService(
+        getConfiguration().getUnifiedCredentials().orElse(null),
+        getConfiguration().getConversationContext().orElse(null),
+        getConfiguration().getOAuthServer(),
+        getHttpClient());
+  }
+
   private Properties handlePropertiesFile(String fileName) {
 
     Properties prop = new Properties();
@@ -320,32 +381,32 @@ public class SinchClient {
       this.httpClient = new HttpClientApache();
 
       // set SDK User-Agent
-      String userAgent = formatSdkUserAgentHeader(versionProperties);
+      String userAgent = formatSdkUserAgentHeader();
       this.httpClient.setRequestHeaders(
           Stream.of(new String[][] {{SDK_USER_AGENT_HEADER, userAgent}})
               .collect(Collectors.toMap(data -> data[0], data -> data[1])));
 
-      LOGGER.fine("HTTP client loaded");
+      LOGGER.finest(String.format("HTTP client loaded (%s='%s'", SDK_USER_AGENT_HEADER, userAgent));
     }
     return this.httpClient;
   }
 
-  private String formatSdkUserAgentHeader(Properties versionProperties) {
+  private String formatSdkUserAgentHeader() {
     return String.format(
         SDK_USER_AGENT_FORMAT,
-        versionProperties.get(PROJECT_VERSION_KEY),
+        SDK.VERSION,
         "Java",
         System.getProperty("java.version"),
         "Apache",
-        formatAuxiliaryFlag((String) versionProperties.get(PROJECT_AUXILIARY_FLAG)));
+        formatAuxiliaryFlag());
   }
 
-  private String formatAuxiliaryFlag(String auxiliaryFlag) {
+  private String formatAuxiliaryFlag() {
 
     Collection<String> values = Collections.singletonList(System.getProperty("java.vendor"));
 
-    if (!StringUtil.isEmpty(auxiliaryFlag)) {
-      values.add(auxiliaryFlag);
+    if (!StringUtil.isEmpty(SDK.AUXILIARY_FLAG)) {
+      values.add(SDK.AUXILIARY_FLAG);
     }
     return String.join(",", values);
   }

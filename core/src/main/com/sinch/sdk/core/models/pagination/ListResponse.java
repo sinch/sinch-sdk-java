@@ -64,6 +64,10 @@ public abstract class ListResponse<T> {
    * @return Stream onto items
    */
   public Stream<T> stream() {
+    if (!iterator().hasNext()) {
+      return Stream.empty();
+    }
+
     Iterable<T> iterable = this::iterator;
     return StreamSupport.stream(iterable.spliterator(), false);
   }
@@ -86,7 +90,19 @@ public abstract class ListResponse<T> {
 
     @Override
     public boolean hasNext() {
-      return currentIndex < currentList.size() || response.hasNextPage();
+      // still items from current page to be consumed
+      if (currentIndex < currentList.size()) {
+        return true;
+      }
+      // no more page ?
+      if (!response.hasNextPage()) {
+        return false;
+      }
+      // need to require next page and check if next page is empty before being to claim "hasNext"
+      // true/false
+      response = response.nextPage();
+      syncIteratorWithCurrentPage();
+      return !this.currentList.isEmpty();
     }
 
     @Override

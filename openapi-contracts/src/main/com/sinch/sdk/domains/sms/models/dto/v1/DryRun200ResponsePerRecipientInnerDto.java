@@ -22,7 +22,7 @@ import java.util.Objects;
 /** DryRun200ResponsePerRecipientInnerDto */
 @JsonPropertyOrder({
   DryRun200ResponsePerRecipientInnerDto.JSON_PROPERTY_RECIPIENT,
-  DryRun200ResponsePerRecipientInnerDto.JSON_PROPERTY_MESSAGE_PART,
+  DryRun200ResponsePerRecipientInnerDto.JSON_PROPERTY_NUMBER_OF_PARTS,
   DryRun200ResponsePerRecipientInnerDto.JSON_PROPERTY_BODY,
   DryRun200ResponsePerRecipientInnerDto.JSON_PROPERTY_ENCODING
 })
@@ -34,9 +34,9 @@ public class DryRun200ResponsePerRecipientInnerDto {
   private String recipient;
   private boolean recipientDefined = false;
 
-  public static final String JSON_PROPERTY_MESSAGE_PART = "message_part";
-  private String messagePart;
-  private boolean messagePartDefined = false;
+  public static final String JSON_PROPERTY_NUMBER_OF_PARTS = "number_of_parts";
+  private Integer numberOfParts;
+  private boolean numberOfPartsDefined = false;
 
   public static final String JSON_PROPERTY_BODY = "body";
   private String body;
@@ -77,33 +77,33 @@ public class DryRun200ResponsePerRecipientInnerDto {
     this.recipientDefined = true;
   }
 
-  public DryRun200ResponsePerRecipientInnerDto messagePart(String messagePart) {
-    this.messagePart = messagePart;
-    this.messagePartDefined = true;
+  public DryRun200ResponsePerRecipientInnerDto numberOfParts(Integer numberOfParts) {
+    this.numberOfParts = numberOfParts;
+    this.numberOfPartsDefined = true;
     return this;
   }
 
   /**
-   * Get messagePart
+   * Get number of parts
    *
-   * @return messagePart
+   * @return number of parts
    */
-  @JsonProperty(JSON_PROPERTY_MESSAGE_PART)
+  @JsonProperty(JSON_PROPERTY_NUMBER_OF_PARTS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public String getMessagePart() {
-    return messagePart;
+  public Integer getNumberOfParts() {
+    return numberOfParts;
   }
 
   @JsonIgnore
-  public boolean getMessagePartDefined() {
-    return messagePartDefined;
+  public boolean getNumberOfPartsDefined() {
+    return numberOfPartsDefined;
   }
 
-  @JsonProperty(JSON_PROPERTY_MESSAGE_PART)
+  @JsonProperty(JSON_PROPERTY_NUMBER_OF_PARTS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setMessagePart(String messagePart) {
-    this.messagePart = messagePart;
-    this.messagePartDefined = true;
+  public void setNumberOfParts(Integer numberOfParts) {
+    this.numberOfParts = numberOfParts;
+    this.numberOfPartsDefined = true;
   }
 
   public DryRun200ResponsePerRecipientInnerDto body(String body) {
@@ -176,14 +176,14 @@ public class DryRun200ResponsePerRecipientInnerDto {
     DryRun200ResponsePerRecipientInnerDto dryRun200ResponsePerRecipientInner =
         (DryRun200ResponsePerRecipientInnerDto) o;
     return Objects.equals(this.recipient, dryRun200ResponsePerRecipientInner.recipient)
-        && Objects.equals(this.messagePart, dryRun200ResponsePerRecipientInner.messagePart)
+        && Objects.equals(this.numberOfParts, dryRun200ResponsePerRecipientInner.numberOfParts)
         && Objects.equals(this.body, dryRun200ResponsePerRecipientInner.body)
         && Objects.equals(this.encoding, dryRun200ResponsePerRecipientInner.encoding);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(recipient, messagePart, body, encoding);
+    return Objects.hash(recipient, numberOfParts, body, encoding);
   }
 
   @Override
@@ -191,7 +191,7 @@ public class DryRun200ResponsePerRecipientInnerDto {
     StringBuilder sb = new StringBuilder();
     sb.append("class DryRun200ResponsePerRecipientInnerDto {\n");
     sb.append("    recipient: ").append(toIndentedString(recipient)).append("\n");
-    sb.append("    messagePart: ").append(toIndentedString(messagePart)).append("\n");
+    sb.append("    numberOfParts: ").append(toIndentedString(numberOfParts)).append("\n");
     sb.append("    body: ").append(toIndentedString(body)).append("\n");
     sb.append("    encoding: ").append(toIndentedString(encoding)).append("\n");
     sb.append("}");

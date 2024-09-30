@@ -1,0 +1,12 @@
+{
+  "active": true,
+  "active_channel": "WHATSAPP",
+  "app_id": "conversation app Id",
+  "contact_id": "contact ID",
+  "id": "a conversation id",
+  "metadata": "metadata value",
+  "metadata_json": {
+    "metadata_json_key": "metadata json value"
+  },
+  "correlation_id": "correlation id value"
+}

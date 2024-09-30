@@ -135,6 +135,64 @@ class URLParameterUtilsTest {
   }
 
   @Test
+  void encodeFormStringArrayNoExplode() {
+    assertEquals(
+        Optional.of("foo=value1+with+space+and+%26%2C%2E,value2+with+space+and+%26%2C%2E"),
+        URLParameterUtils.encode(
+            new URLParameter(
+                "foo",
+                Arrays.asList("value1 with space and &,.", "value2 with space and &,."),
+                URLParameter.STYLE.FORM,
+                false)));
+  }
+
+  @Test
+  void encodeFormStringArrayExplode() {
+    assertEquals(
+        Optional.of("foo=value1+with+space+and+%26%2C%2E&foo=value2+with+space+and+%26%2C%2E"),
+        URLParameterUtils.encode(
+            new URLParameter(
+                "foo",
+                Arrays.asList("value1 with space and &,.", "value2 with space and &,."),
+                URLParameter.STYLE.FORM,
+                true)));
+  }
+
+  @Test
+  void encodeDynamicEnumNoExplode() {
+    assertEquals(
+        Optional.of("foo=ENUM1+value"),
+        URLParameterUtils.encode(
+            new URLParameter("foo", AnEnum.ENUM1, URLParameter.STYLE.FORM, false)));
+  }
+
+  @Test
+  void encodeDynamicEnumExplode() {
+    assertEquals(
+        Optional.of("foo=ENUM1+value"),
+        URLParameterUtils.encode(
+            new URLParameter("foo", AnEnum.ENUM1, URLParameter.STYLE.FORM, true)));
+  }
+
+  @Test
+  void encodeDynamicEnumArrayNoExplode() {
+    assertEquals(
+        Optional.of("foo=ENUM1+value,ENUM2+value"),
+        URLParameterUtils.encode(
+            new URLParameter(
+                "foo", Arrays.asList(AnEnum.ENUM1, AnEnum.ENUM2), URLParameter.STYLE.FORM, false)));
+  }
+
+  @Test
+  void encodeDynamicEnumArrayExplode() {
+    assertEquals(
+        Optional.of("foo=ENUM1+value&foo=ENUM2+value"),
+        URLParameterUtils.encode(
+            new URLParameter(
+                "foo", Arrays.asList(AnEnum.ENUM1, AnEnum.ENUM2), URLParameter.STYLE.FORM, true)));
+  }
+
+  @Test
   void encodeSimpleEmptyStringNoExplode() {
     assertThrows(
         ApiException.class,

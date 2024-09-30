@@ -1,0 +1,23 @@
+{
+  "contacts": [
+    {
+      "id": "a contact id",
+      "channel_identities": [
+        {
+          "channel": "SMS",
+          "identity": "a channel identity",
+          "app_id": "an app id"
+        }
+      ],
+      "channel_priority": [
+        "SMS"
+      ],
+      "display_name": "a display name",
+      "email": "an email",
+      "external_id": "an external id",
+      "metadata": "metadata value",
+      "language": "UNSPECIFIED"
+    }
+  ],
+  "next_page_token": "the next page token value"
+}

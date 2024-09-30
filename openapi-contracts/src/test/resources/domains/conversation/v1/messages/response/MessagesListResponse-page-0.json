@@ -1,0 +1,28 @@
+{
+  "messages": [
+    {
+      "id": "Fake ID",
+      "direction": "TO_APP",
+      "contact_message": {
+        "text_message": {
+          "text": "Test2"
+        },
+        "reply_to": null
+      },
+      "channel_identity": {
+        "channel": "SMS",
+        "identity": "12345678901",
+        "app_id": ""
+      },
+      "conversation_id": "Fake ID",
+      "contact_id": "Fake ID",
+      "metadata": "{\"operator\":\"310150\"}",
+      "accept_time": "2024-02-22T07:40:46Z",
+      "sender_id": "Fake ID",
+      "processing_mode": "CONVERSATION",
+      "injected": false,
+      "message_status": null
+    }
+  ],
+  "next_page_token": "ChowMUhRN1c0WjFSMTI2N0RCQlI4UzQ3TlZQOEoGCP70264G"
+}

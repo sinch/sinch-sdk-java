@@ -1,0 +1,16 @@
+{
+  "channel_specific_message": {
+    "message_type": "nfm_reply",
+    "message": {
+      "type": "nfm_reply",
+      "nfm_reply": {
+        "name": "address_message",
+        "response_json": "{\"key\": \"value\"}",
+        "body": "nfm reply body value"
+      }
+    }
+  },
+  "reply_to": {
+    "message_id": "message id value"
+  }
+}

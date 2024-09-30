@@ -3,12 +3,13 @@ package com.sinch.sdk.domains.verification.api.v1.adapters;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.exceptions.ApiMappingException;
 import com.sinch.sdk.core.http.AuthManager;
+import com.sinch.sdk.core.utils.MapUtils;
+import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.core.utils.databind.Mapper;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponse;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.internal.VerificationEventInternalImpl;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.logging.Logger;
 
 public class WebHooksService implements com.sinch.sdk.domains.verification.api.v1.WebHooksService {
@@ -21,18 +22,16 @@ public class WebHooksService implements com.sinch.sdk.domains.verification.api.v
     this.authManagers = authManagers;
   }
 
+  @Override
   public boolean validateAuthenticationHeader(
       String method, String path, Map<String, String> headers, String jsonPayload) {
 
     // convert header keys to use case-insensitive map keys
-    Map<String, String> caseInsensitiveHeaders = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-    caseInsensitiveHeaders.putAll(headers);
-
-    String authorizationHeader = caseInsensitiveHeaders.get("Authorization");
+    String authorizationHeader = MapUtils.getCaseInsensitiveMap(headers).get("Authorization");
 
     // no authorization required
-    if (null == authorizationHeader) {
-      return true;
+    if (StringUtil.isEmpty(authorizationHeader)) {
+      return false;
     }
 
     String[] split = authorizationHeader.split(" ");

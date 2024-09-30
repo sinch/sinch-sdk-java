@@ -29,7 +29,7 @@ public class ApplicationsAssignNumbersRequestParameters {
    * Number list to be edited
    *
    * @return The numbers list
-   * @see Builder#getNumbers() getter
+   * @see Builder#setNumbers setter
    * @since 1.0
    */
   public OptionalValue<Collection<E164PhoneNumber>> getNumbers() {
@@ -40,7 +40,7 @@ public class ApplicationsAssignNumbersRequestParameters {
    * Application key to be assigned to numbers
    *
    * @return The application key
-   * @see Builder#getApplicationKey() getter
+   * @see Builder#setApplicationKey setter
    * @since 1.0
    */
   public OptionalValue<String> getApplicationKey() {
@@ -51,7 +51,7 @@ public class ApplicationsAssignNumbersRequestParameters {
    * Capability to be set
    *
    * @return The capability
-   * @see Builder#getCapability() () getter
+   * @see Builder#setCapability setter
    * @since 1.0
    */
   public OptionalValue<CapabilityType> getCapability() {

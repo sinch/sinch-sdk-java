@@ -103,7 +103,7 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
   public WebHooksService webhooks() {
 
     if (null == this.webhooks) {
-      this.webhooks = new WebHooksService();
+      this.webhooks = new WebHooksService(new NumbersWebhooksAuthenticationValidation());
     }
     return this.webhooks;
   }

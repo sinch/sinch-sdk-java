@@ -1,0 +1,27 @@
+{
+  "flow_id": "1",
+  "flow_cta": "Book!",
+  "header": {
+    "type": "image",
+    "image": {
+      "link": "an image URL link"
+    }
+  },
+  "body": {
+    "text": "Flow message body"
+  },
+  "footer": {
+    "text": "Flow message footer"
+  },
+  "flow_token": "AQAAAAACS5FpgQ_cAAAAAD0QI3s.",
+  "flow_mode": "draft",
+  "flow_action": "navigate",
+  "flow_action_payload": {
+    "screen": "<SCREEN_NAME>",
+    "data": {
+      "product_name": "name",
+      "product_description": "description",
+      "product_price": 100
+    }
+  }
+}

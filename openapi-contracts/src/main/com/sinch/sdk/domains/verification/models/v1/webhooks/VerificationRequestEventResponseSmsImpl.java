@@ -5,11 +5,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.internal.VerificationRequestEventResponseSmsContent;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.internal.VerificationRequestEventResponseSmsContentImpl;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({
   VerificationRequestEventResponseSmsImpl.JSON_PROPERTY_ACTION,
@@ -70,8 +79,9 @@ public class VerificationRequestEventResponseSmsImpl
   }
 
   public OptionalValue<String> code() {
-    return null != sms
-        ? sms.map(VerificationRequestEventResponseSmsContent::getCode)
+    return null != sms && sms.isPresent()
+        ? sms.map(f -> ((VerificationRequestEventResponseSmsContentImpl) f).code())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -84,8 +94,9 @@ public class VerificationRequestEventResponseSmsImpl
   }
 
   public OptionalValue<List<String>> acceptLanguage() {
-    return null != sms
-        ? sms.map(VerificationRequestEventResponseSmsContent::getAcceptLanguage)
+    return null != sms && sms.isPresent()
+        ? sms.map(f -> ((VerificationRequestEventResponseSmsContentImpl) f).acceptLanguage())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -174,5 +185,46 @@ public class VerificationRequestEventResponseSmsImpl
       }
       return new VerificationRequestEventResponseSmsImpl(action, sms);
     }
+  }
+
+  public static class DelegatedSerializer
+      extends JsonSerializer<OptionalValue<VerificationRequestEventResponseSms>> {
+    @Override
+    public void serialize(
+        OptionalValue<VerificationRequestEventResponseSms> value,
+        JsonGenerator jgen,
+        SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      VerificationRequestEventResponseSmsImpl impl =
+          (VerificationRequestEventResponseSmsImpl) value.get();
+      jgen.writeObject(null != impl ? impl.getSms() : null);
+    }
+  }
+
+  public static class DelegatedDeSerializer
+      extends JsonDeserializer<VerificationRequestEventResponseSms> {
+    @Override
+    public VerificationRequestEventResponseSms deserialize(
+        JsonParser jp, DeserializationContext ctxt) throws IOException {
+
+      VerificationRequestEventResponseSmsImpl.Builder builder =
+          new VerificationRequestEventResponseSmsImpl.Builder();
+      VerificationRequestEventResponseSmsContentImpl deserialized =
+          jp.readValueAs(VerificationRequestEventResponseSmsContentImpl.class);
+      builder.setSms(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<VerificationRequestEventResponseSms> delegatedConverter(
+      VerificationRequestEventResponseSmsContent internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setSms(internal).build());
   }
 }

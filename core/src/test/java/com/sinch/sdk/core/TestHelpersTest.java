@@ -26,7 +26,7 @@ public class TestHelpersTest {
   MyObject objectDifferentFromObject1ByNull = new MyObject("my value1", null);
 
   @Test
-  void recursiveDifferentByClass() {
+  void recursiveDifferentByClass1stLevel() {
 
     AssertionError thrown =
         assertThrows(
@@ -34,12 +34,7 @@ public class TestHelpersTest {
             () -> TestHelpers.recursiveEquals("foo string", OffsetDateTime.now()),
             "Expected recursiveEquals() to throw, but it didn't");
     // expected error message hardcoded according to JUnit 5
-    assertTrue(
-        thrown
-            .getMessage()
-            .contains(
-                "actual and expected are considered different since the comparison enforces strict"
-                    + " type check and expected type"));
+    assertTrue(thrown.getMessage().contains("expected: java.time.OffsetDateTime"));
   }
 
   @Test

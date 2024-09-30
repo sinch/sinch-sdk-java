@@ -5,8 +5,8 @@ on:
       releaseVersion:
         description: "Version number to be released (use semver semantic: 'X.Y.Z')"
         required: true
-      developmentVersion:
-        description: "Next development version to be set (use semver semantic: 'X.Y.Z', `-SNAPSHOT` suffix will be automatically added)"
+      nextDevelopmentVersion:
+        description: "Next development version to be set (use semver semantic: 'X.Y.Z', `-SNAPSHOT` artifact's suffix will be automatically added)"
         required: true
 
 permissions:
@@ -52,13 +52,36 @@ jobs:
 
       - name: Create and switch to dedicated release branch
         run: |
-          git checkout -b release-${{ github.event.inputs.releaseVersion }}
+          git checkout -b "release-${{ github.event.inputs.releaseVersion }}"
+
+      # e2e requirements
+      - name: Checkout sinch-sdk-mockserver repository
+        uses: actions/checkout@v3
+        with:
+          repository: sinch/sinch-sdk-mockserver
+          token: ${{ secrets.MOCKSERVER_REPO_PAT_CI }}
+          fetch-depth: 0
+          path: sinch-sdk-mockserver
+
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
+      - name: Start mock servers with Docker Compose
+        run: |
+          cd sinch-sdk-mockserver
+          docker-compose up -d
+
+      - name: Link to feature files
+        run: |
+          ln -s ${{ github.workspace }}/sinch-sdk-mockserver/features client/src/test/resources
 
       - name: Release
-        run: |
-          mvn --batch-mode -s settings.xml release:clean release:prepare -Dtag=v${{ github.event.inputs.releaseVersion }} -DreleaseVersion=${{ github.event.inputs.releaseVersion }} -DdevelopmentVersion=${{ github.event.inputs.developmentVersion }}-SNAPSHOT -DscmReleaseCommitComment="[release] Set release & tag: ${{ github.event.inputs.releaseVersion }}" -DscmDevelopmentCommitComment="[release] Set next version: ${{ github.event.inputs.developmentVersion }}-SNAPSHOT"
-          mvn --batch-mode -s settings.xml release:perform -Dusername=${{ env.GITHUB_USERNAME }} -Dpassword=${{ env.GITHUB_TOKEN }} -DskipTests=true
+        run: scripts/release.sh
         env:
+          RELEASE_VERSION: ${{ github.event.inputs.releaseVersion }}
+          NEXT_VERSION: ${{ github.event.inputs.nextDevelopmentVersion }}
           OSSRH_USER: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PWD: ${{ secrets.OSSRH_PWD }}
           GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
@@ -68,6 +91,7 @@ jobs:
 
 
       - name: Create dedicated release pull request
-        run: gh pr create -d -B main -H release-${{ github.event.inputs.releaseVersion }} --title "Merge release release-${{ github.event.inputs.releaseVersion }} branch into main" --body 'Created by Github action'
+        run: gh pr create -d -B main -H "release-${RELEASE_VERSION}" --title "Merge release '"release-${RELEASE_VERSION}"' branch into main" --body 'Created by Github action'
         env:
+          RELEASE_VERSION: ${{ github.event.inputs.releaseVersion }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -5,10 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.internal.VerificationRequestEventResponseFlashCallContent;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.internal.VerificationRequestEventResponseFlashCallContentImpl;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonPropertyOrder({
   VerificationRequestEventResponseFlashCallImpl.JSON_PROPERTY_ACTION,
@@ -69,8 +78,10 @@ public class VerificationRequestEventResponseFlashCallImpl
   }
 
   public OptionalValue<String> cli() {
-    return null != flashCall
-        ? flashCall.map(VerificationRequestEventResponseFlashCallContent::getCli)
+    return null != flashCall && flashCall.isPresent()
+        ? flashCall
+            .map(f -> ((VerificationRequestEventResponseFlashCallContentImpl) f).cli())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -83,8 +94,10 @@ public class VerificationRequestEventResponseFlashCallImpl
   }
 
   public OptionalValue<Integer> dialTimeout() {
-    return null != flashCall
-        ? flashCall.map(VerificationRequestEventResponseFlashCallContent::getDialTimeout)
+    return null != flashCall && flashCall.isPresent()
+        ? flashCall
+            .map(f -> ((VerificationRequestEventResponseFlashCallContentImpl) f).dialTimeout())
+            .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -174,5 +187,46 @@ public class VerificationRequestEventResponseFlashCallImpl
       }
       return new VerificationRequestEventResponseFlashCallImpl(action, flashCall);
     }
+  }
+
+  public static class DelegatedSerializer
+      extends JsonSerializer<OptionalValue<VerificationRequestEventResponseFlashCall>> {
+    @Override
+    public void serialize(
+        OptionalValue<VerificationRequestEventResponseFlashCall> value,
+        JsonGenerator jgen,
+        SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      VerificationRequestEventResponseFlashCallImpl impl =
+          (VerificationRequestEventResponseFlashCallImpl) value.get();
+      jgen.writeObject(null != impl ? impl.getFlashCall() : null);
+    }
+  }
+
+  public static class DelegatedDeSerializer
+      extends JsonDeserializer<VerificationRequestEventResponseFlashCall> {
+    @Override
+    public VerificationRequestEventResponseFlashCall deserialize(
+        JsonParser jp, DeserializationContext ctxt) throws IOException {
+
+      VerificationRequestEventResponseFlashCallImpl.Builder builder =
+          new VerificationRequestEventResponseFlashCallImpl.Builder();
+      VerificationRequestEventResponseFlashCallContentImpl deserialized =
+          jp.readValueAs(VerificationRequestEventResponseFlashCallContentImpl.class);
+      builder.setFlashCall(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<VerificationRequestEventResponseFlashCall> delegatedConverter(
+      VerificationRequestEventResponseFlashCallContent internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setFlashCall(internal).build());
   }
 }

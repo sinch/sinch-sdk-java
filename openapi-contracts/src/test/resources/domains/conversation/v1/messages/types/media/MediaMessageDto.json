@@ -1,0 +1,7 @@
+{
+  "media_message": {
+    "url": "an url value",
+    "thumbnail_url": "another url",
+    "filename_override": "filename override value"
+  }
+}
