@@ -3,15 +3,19 @@ package com.sinch.sdk.domains.sms.models;
 import com.sinch.sdk.core.utils.Pair;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class Parameters extends HashMap<String, Parameters.Entry> {
+public class Parameters extends HashMap<String, List<Parameters.Entry>> {
 
   private static final long serialVersionUID = 1L;
 
-  public Parameters(Collection<Parameters.Entry> list) {
-    super(list.stream().collect(Collectors.toMap(entry -> entry.key, entry -> entry)));
+  /**
+   * @throws NullPointerException – if the specified map is null
+   */
+  public Parameters(Collection<Parameters.Entry> list) throws NullPointerException {
+    super(list.stream().collect(Collectors.groupingBy(Parameters.Entry::getKey)));
   }
 
   public static class Entry {

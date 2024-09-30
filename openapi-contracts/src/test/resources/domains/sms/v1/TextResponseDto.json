@@ -7,15 +7,17 @@
   "from": "+15551231234",
   "canceled": false,
   "parameters": {
-    "{parameter_key}": {
-      "{msisdn}": "msisdn value",
+    "name": {
+      "15551231234": "name value for 15551231234",
+      "15551256344": "name value for 15551256344",
       "default": "default value"
     },
     "an identifier": {
-      "a key": "a value"
+      "15551231234": "an identifier value for 15551231234",
+      "15551256344": "an identifier value for 15551256344"
     }
   },
-  "body": "Hi ${name}! How are you?",
+  "body": "Hi ${name} ({an identifier}) ! How are you?",
   "type": "mt_text",
   "created_at": "2019-08-24T14:15:22Z",
   "modified_at": "2019-08-24T14:17:22Z",

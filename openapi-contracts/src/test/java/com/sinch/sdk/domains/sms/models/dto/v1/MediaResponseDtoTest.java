@@ -38,7 +38,7 @@ class MediaResponseDtoTest extends BaseTest {
               new MediaBodyDto()
                   .url(
                       "https://en.wikipedia.org/wiki/Sinch_(company)#/media/File:Sinch_LockUp_RGB.png")
-                  .message("Media message from Sinch!"))
+                  .message("Hi ${name} ({an identifier}) ! How are you?"))
           .callbackUrl("callback url")
           .clientReference("client reference")
           .deliveryReport("summary")
@@ -66,20 +66,20 @@ class MediaResponseDtoTest extends BaseTest {
 
   @BeforeEach
   void setUp() {
-    Map<String, String> entry1 =
+    parameterObjDto.put(
+        "an identifier",
         Stream.of(
-                new AbstractMap.SimpleEntry<>(
-                    ParameterObjParameterKeyDto
-                        .JSON_PROPERTY_LEFT_CURLY_BRACKET_MSISDN_RIGHT_CURLY_BRACKET,
-                    "msisdn value"),
+                new AbstractMap.SimpleEntry<>("15551231234", "an identifier value for 15551231234"),
+                new AbstractMap.SimpleEntry<>("15551256344", "an identifier value for 15551256344"))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+
+    parameterObjDto.put(
+        "name",
+        Stream.of(
+                new AbstractMap.SimpleEntry<>("15551231234", "name value for 15551231234"),
+                new AbstractMap.SimpleEntry<>("15551256344", "name value for 15551256344"),
                 new AbstractMap.SimpleEntry<>(
                     ParameterObjParameterKeyDto.JSON_PROPERTY_DEFAULT, "default value"))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-    Map<String, String> entry2 =
-        Stream.of(new AbstractMap.SimpleEntry<>("a key", "a value"))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-    parameterObjDto.put(
-        ParameterObjDto.JSON_PROPERTY_LEFT_CURLY_BRACKET_PARAMETER_KEY_RIGHT_CURLY_BRACKET, entry1);
-    parameterObjDto.put("an identifier", entry2);
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
   }
 }
