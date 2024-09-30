@@ -32,7 +32,7 @@ class UpdateSMSRequestDtoTest extends BaseTest {
         new ApiUpdateBinaryMtMessageDto()
             .toAdd(Arrays.asList("+15551231234", "+15987365412"))
             .toRemove(Arrays.asList("+0123456789", "+9876543210"))
-            .body("Hi ${name}! How are you?")
+            .body("Hi ${name} ({an identifier}) ! How are you?")
             .udh("foo udh")
             .from("+15551231234")
             .type("mt_binary")
@@ -54,22 +54,24 @@ class UpdateSMSRequestDtoTest extends BaseTest {
     ParameterObjDto parameterObjDto = new ParameterObjDto();
     parameterObjDto.put(
         "an identifier",
-        Stream.of(new AbstractMap.SimpleEntry<>("a key", "a value"))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
-    parameterObjDto.put(
-        ParameterObjDto.JSON_PROPERTY_LEFT_CURLY_BRACKET_PARAMETER_KEY_RIGHT_CURLY_BRACKET,
         Stream.of(
-                new AbstractMap.SimpleEntry<>(
-                    ParameterObjParameterKeyDto
-                        .JSON_PROPERTY_LEFT_CURLY_BRACKET_MSISDN_RIGHT_CURLY_BRACKET,
-                    "msisdn value"),
+                new AbstractMap.SimpleEntry<>("15551231234", "an identifier value for 15551231234"),
+                new AbstractMap.SimpleEntry<>("15551256344", "an identifier value for 15551256344"))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+
+    parameterObjDto.put(
+        "name",
+        Stream.of(
+                new AbstractMap.SimpleEntry<>("15551231234", "name value for 15551231234"),
+                new AbstractMap.SimpleEntry<>("15551256344", "name value for 15551256344"),
                 new AbstractMap.SimpleEntry<>(
                     ParameterObjParameterKeyDto.JSON_PROPERTY_DEFAULT, "default value"))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+
     ApiUpdateTextMtMessageDto textRequestDTO =
         new ApiUpdateTextMtMessageDto()
             .toAdd(Arrays.asList("+15551231234", "+15551256344"))
-            .body("Hi ${name}! How are you?")
+            .body("Hi ${name} ({an identifier}) ! How are you?")
             .from("+15551231234")
             .type("mt_text")
             .deliveryReport("none")
@@ -92,15 +94,16 @@ class UpdateSMSRequestDtoTest extends BaseTest {
     ParameterObjDto parameterObjDto = new ParameterObjDto();
     parameterObjDto.put(
         "an identifier",
-        Stream.of(new AbstractMap.SimpleEntry<>("a key", "a value"))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
-    parameterObjDto.put(
-        ParameterObjDto.JSON_PROPERTY_LEFT_CURLY_BRACKET_PARAMETER_KEY_RIGHT_CURLY_BRACKET,
         Stream.of(
-                new AbstractMap.SimpleEntry<>(
-                    ParameterObjParameterKeyDto
-                        .JSON_PROPERTY_LEFT_CURLY_BRACKET_MSISDN_RIGHT_CURLY_BRACKET,
-                    "msisdn value"),
+                new AbstractMap.SimpleEntry<>("15551231234", "an identifier value for 15551231234"),
+                new AbstractMap.SimpleEntry<>("15551256344", "an identifier value for 15551256344"))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+
+    parameterObjDto.put(
+        "name",
+        Stream.of(
+                new AbstractMap.SimpleEntry<>("15551231234", "name value for 15551231234"),
+                new AbstractMap.SimpleEntry<>("15551256344", "name value for 15551256344"),
                 new AbstractMap.SimpleEntry<>(
                     ParameterObjParameterKeyDto.JSON_PROPERTY_DEFAULT, "default value"))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
@@ -113,7 +116,7 @@ class UpdateSMSRequestDtoTest extends BaseTest {
                 new MediaBodyDto()
                     .url(
                         "https://en.wikipedia.org/wiki/Sinch_(company)#/media/File:Sinch_LockUp_RGB.png")
-                    .message("Media message from Sinch!"))
+                    .message("Hi ${name} ({an identifier}) ! How are you?"))
             .from("+15551231234")
             .deliveryReport("summary")
             .sendAt(OffsetDateTime.parse("2019-08-24T14:16:22Z"))
