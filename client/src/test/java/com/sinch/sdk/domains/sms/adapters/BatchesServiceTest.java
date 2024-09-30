@@ -27,8 +27,6 @@ import com.sinch.sdk.domains.sms.models.Parameters;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiBatchListDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.ApiDeliveryFeedbackDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.DryRun200ResponseDto;
-import com.sinch.sdk.domains.sms.models.dto.v1.ParameterObjDto;
-import com.sinch.sdk.domains.sms.models.dto.v1.ParameterObjParameterKeyDto;
 import com.sinch.sdk.domains.sms.models.dto.v1.SendSMS201ResponseDto;
 import com.sinch.sdk.domains.sms.models.requests.SendSmsBatchBinaryRequest;
 import com.sinch.sdk.domains.sms.models.requests.SendSmsBatchMediaRequest;
@@ -73,7 +71,7 @@ public class BatchesServiceTest extends BaseTest {
   static final int fromTon = 6;
   static final int fromNpi = 18;
   static final String udh = "foo udh";
-  static final String body = "Hi ${name}! How are you?";
+  static final String body = "Hi ${name} ({an identifier}) ! How are you?";
   public static final BatchBinary batchBinary =
       BatchBinary.builder()
           .setId(id)
@@ -99,16 +97,17 @@ public class BatchesServiceTest extends BaseTest {
   static final Parameters parameters =
       new Parameters(
           Arrays.asList(
-              new Parameters.Entry("an identifier", new Pair<>("a key", "a value")),
               new Parameters.Entry(
-                  ParameterObjDto
-                      .JSON_PROPERTY_LEFT_CURLY_BRACKET_PARAMETER_KEY_RIGHT_CURLY_BRACKET,
-                  new Pair<>(
-                      ParameterObjParameterKeyDto
-                          .JSON_PROPERTY_LEFT_CURLY_BRACKET_MSISDN_RIGHT_CURLY_BRACKET,
-                      "msisdn value"),
-                  "default value")));
-  public final BatchMedia batchMedia =
+                  "name", new Pair<>("15551231234", "name value for 15551231234"), "default value"),
+              new Parameters.Entry("name", new Pair<>("15551256344", "name value for 15551256344")),
+              new Parameters.Entry(
+                  "an identifier",
+                  new Pair<>("15551231234", "an identifier value for 15551231234")),
+              new Parameters.Entry(
+                  "an identifier",
+                  new Pair<>("15551256344", "an identifier value for 15551256344"))));
+
+  public static final BatchMedia batchMedia =
       BatchMedia.builder()
           .setId(id)
           .setTo(to)
@@ -117,7 +116,7 @@ public class BatchesServiceTest extends BaseTest {
           .setBody(
               new MediaBody(
                   "https://en.wikipedia.org/wiki/Sinch_(company)#/media/File:Sinch_LockUp_RGB.png",
-                  "Media message from Sinch!"))
+                  "Hi ${name} ({an identifier}) ! How are you?"))
           .setCreatedAt(Instant.parse("2019-08-24T14:14:22Z"))
           .setModifiedAt(Instant.parse("2019-08-24T14:15:22Z"))
           .setDeliveryReport(DeliveryReportType.SUMMARY)
@@ -128,7 +127,7 @@ public class BatchesServiceTest extends BaseTest {
           .setFeedbackEnabled(feedbackEnabled)
           .setParameters(parameters)
           .build();
-  public final BatchText batchText =
+  public static final BatchText batchText =
       BatchText.builder()
           .setId(id)
           .setTo(to)
@@ -177,7 +176,7 @@ public class BatchesServiceTest extends BaseTest {
           .setBody(
               new MediaBody(
                   "https://en.wikipedia.org/wiki/Sinch_(company)#/media/File:Sinch_LockUp_RGB.png",
-                  "Media message from Sinch!"))
+                  "Hi ${name} ({an identifier}) ! How are you?"))
           .setDeliveryReport(DeliveryReportType.SUMMARY)
           .setSendAt(Instant.parse("2019-08-24T14:16:22Z"))
           .setExpireAt(Instant.parse("2019-08-24T14:17:22Z"))
@@ -225,7 +224,7 @@ public class BatchesServiceTest extends BaseTest {
           .setBody(
               new MediaBody(
                   "https://en.wikipedia.org/wiki/Sinch_(company)#/media/File:Sinch_LockUp_RGB.png",
-                  "Media message from Sinch!"))
+                  body))
           .setDeliveryReport(DeliveryReportType.SUMMARY)
           .setSendAt(Instant.parse("2019-08-24T14:16:22Z"))
           .setExpireAt(Instant.parse("2019-08-24T14:17:22Z"))
