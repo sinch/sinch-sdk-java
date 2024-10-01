@@ -3,6 +3,7 @@ package com.sinch.sdk.domains.voice.adapters;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.exceptions.ApiMappingException;
 import com.sinch.sdk.core.http.AuthManager;
+import com.sinch.sdk.core.utils.MapUtils;
 import com.sinch.sdk.core.utils.databind.Mapper;
 import com.sinch.sdk.domains.voice.adapters.converters.CallsDtoConverter;
 import com.sinch.sdk.domains.voice.adapters.converters.WebhooksEventDtoConverter;
@@ -11,7 +12,6 @@ import com.sinch.sdk.domains.voice.models.dto.v1.WebhooksEventDto;
 import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
 import com.sinch.sdk.domains.voice.models.webhooks.WebhooksEvent;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.logging.Logger;
 
 public class WebHooksService implements com.sinch.sdk.domains.voice.WebHooksService {
@@ -27,8 +27,7 @@ public class WebHooksService implements com.sinch.sdk.domains.voice.WebHooksServ
       String method, String path, Map<String, String> headers, String jsonPayload) {
 
     // convert header keys to use case-insensitive map keys
-    Map<String, String> caseInsensitiveHeaders = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-    caseInsensitiveHeaders.putAll(headers);
+    Map<String, String> caseInsensitiveHeaders = MapUtils.getCaseInsensitiveMap(headers);
 
     String authorizationHeader = caseInsensitiveHeaders.get("Authorization");
 
