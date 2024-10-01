@@ -7,4 +7,5 @@ import org.junit.platform.suite.api.Suite;
 @Suite
 @IncludeEngines("cucumber")
 @SelectClasspathResource("features/voice/callouts.feature")
+@SelectClasspathResource("features/voice/calls.feature")
 public class VoiceIT {}
