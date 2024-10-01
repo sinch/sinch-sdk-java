@@ -167,7 +167,7 @@ public class SvamlInstructionPlayFilesDto {
    * @return locale
    */
   @JsonProperty(JSON_PROPERTY_LOCALE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getLocale() {
     return locale;
   }
