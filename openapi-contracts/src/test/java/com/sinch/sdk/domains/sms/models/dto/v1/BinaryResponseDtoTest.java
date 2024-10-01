@@ -26,7 +26,7 @@ class BinaryResponseDtoTest extends BaseTest {
               false,
               OffsetDateTime.parse("2019-08-24T14:15:22Z"),
               OffsetDateTime.parse("2019-08-24T14:17:22Z"))
-          .body("Hi ${name}! How are you?")
+          .body("Hi ${name} ({an identifier}) ! How are you?")
           .callbackUrl("callback url")
           .clientReference("myReference")
           .deliveryReport("none")
