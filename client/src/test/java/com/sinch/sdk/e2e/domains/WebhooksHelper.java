@@ -22,10 +22,12 @@ public class WebhooksHelper {
 
     byte[] buffer = new byte[1024];
     int bytesRead;
-    InputStream inputStream = con.getInputStream();
-    while ((bytesRead = inputStream.read(buffer)) != -1) {
-      byteArrayOutputStream.write(buffer, 0, bytesRead);
+    try (InputStream inputStream = con.getInputStream()) {
+      while ((bytesRead = inputStream.read(buffer)) != -1) {
+        byteArrayOutputStream.write(buffer, 0, bytesRead);
+      }
     }
+
     Response<T> response = new Response<>();
     response.headers = transformHeaders(con.getHeaderFields());
     response.rawPayload = byteArrayOutputStream.toString("UTF-8");
@@ -38,16 +40,8 @@ public class WebhooksHelper {
       return null;
     }
     HashMap<String, String> newMap = new HashMap<>();
-    headers.forEach((key, value) -> newMap.put(key, concatHeaderValues(value)));
+    headers.forEach((key, value) -> newMap.put(key, String.join(";", value)));
     return newMap;
-  }
-
-  static String concatHeaderValues(List<String> values) {
-    if (null == values) {
-      return null;
-    }
-    return values.stream()
-        .reduce(null, (previous, current) -> (null != previous ? previous + ";" : "") + current);
   }
 
   public static class Response<T> {
