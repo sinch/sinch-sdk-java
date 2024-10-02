@@ -31,17 +31,14 @@ import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.message.Mess
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.smartconversations.MessageInboundSmartConversationRedactionEvent;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.smartconversations.SmartConversationsEvent;
 import com.sinch.sdk.e2e.Config;
+import com.sinch.sdk.e2e.domains.WebhooksHelper;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.Instant;
 import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -116,14 +113,15 @@ public class WebhooksEventsSteps {
 
   WebHooksService service;
 
-  Map<WebhookTrigger, Response> receivedEvents = new ConcurrentHashMap<>();
+  Map<WebhookTrigger, WebhooksHelper.Response<ConversationWebhookEvent>> receivedEvents =
+      new ConcurrentHashMap<>();
 
-  Response eventDeliveryReceiptFailedResponse;
-  Response messageDeliveryReceiptFailedResponse;
-  Response messageSubmitMediaResponse;
-  Response messageSubmitTextResponse;
-  Response smartConversationMediaResponse;
-  Response smartConversationTextResponse;
+  WebhooksHelper.Response<ConversationWebhookEvent> eventDeliveryReceiptFailedResponse;
+  WebhooksHelper.Response<ConversationWebhookEvent> messageDeliveryReceiptFailedResponse;
+  WebhooksHelper.Response<ConversationWebhookEvent> messageSubmitMediaResponse;
+  WebhooksHelper.Response<ConversationWebhookEvent> messageSubmitTextResponse;
+  WebhooksHelper.Response<ConversationWebhookEvent> smartConversationMediaResponse;
+  WebhooksHelper.Response<ConversationWebhookEvent> smartConversationTextResponse;
 
   @Given("^the Conversation Webhooks handler is available$")
   public void handlerAvailable() {
@@ -173,7 +171,8 @@ public class WebhooksEventsSteps {
   @When("^I send a request to trigger a \"EVENT_DELIVERY\" event with a \"FAILED\" status$")
   public void triggerEVENT_DELIVERY_FAILED() throws IOException {
     eventDeliveryReceiptFailedResponse =
-        callURL(new URL(WEBHOOKS_PATH + "event-delivery-report/failed"));
+        WebhooksHelper.callURL(
+            new URL(WEBHOOKS_PATH + "event-delivery-report/failed"), service::parseEvent);
   }
 
   @When("^I send a request to trigger a \"EVENT_DELIVERY\" event with a \"DELIVERED\" status$")
@@ -189,7 +188,8 @@ public class WebhooksEventsSteps {
   @When("^I send a request to trigger a \"MESSAGE_DELIVERY\" event with a \"FAILED\" status$")
   public void triggerMESSAGE_DELIVERY_FAILED() throws IOException {
     messageDeliveryReceiptFailedResponse =
-        callURL(new URL(WEBHOOKS_PATH + "message-delivery-report/failed"));
+        WebhooksHelper.callURL(
+            new URL(WEBHOOKS_PATH + "message-delivery-report/failed"), service::parseEvent);
   }
 
   @When(
@@ -211,28 +211,36 @@ public class WebhooksEventsSteps {
 
   @When("^I send a request to trigger a \"MESSAGE_SUBMIT\" event for a \"media\" message$")
   public void triggerMESSAGE_SUBMIT_MEDIA() throws IOException {
-    messageSubmitMediaResponse = callURL(new URL(WEBHOOKS_PATH + "message-submit/media"));
+    messageSubmitMediaResponse =
+        WebhooksHelper.callURL(
+            new URL(WEBHOOKS_PATH + "message-submit/media"), service::parseEvent);
   }
 
   @When("^I send a request to trigger a \"MESSAGE_SUBMIT\" event for a \"text\" message$")
   public void triggerMESSAGE_SUBMIT_TEXT() throws IOException {
-    messageSubmitTextResponse = callURL(new URL(WEBHOOKS_PATH + "message-submit/text"));
+    messageSubmitTextResponse =
+        WebhooksHelper.callURL(new URL(WEBHOOKS_PATH + "message-submit/text"), service::parseEvent);
   }
 
   @When("^I send a request to trigger a \"SMART_CONVERSATIONS\" event for a \"media\" message$")
   public void triggerSMART_CONVERSATIONS_MEDIA() throws IOException {
-    smartConversationMediaResponse = callURL(new URL(WEBHOOKS_PATH + "smart-conversations/media"));
+    smartConversationMediaResponse =
+        WebhooksHelper.callURL(
+            new URL(WEBHOOKS_PATH + "smart-conversations/media"), service::parseEvent);
   }
 
   @When("^I send a request to trigger a \"SMART_CONVERSATIONS\" event for a \"text\" message$")
   public void triggerSMART_CONVERSATIONS_TEXT() throws IOException {
-    smartConversationTextResponse = callURL(new URL(WEBHOOKS_PATH + "smart-conversations/text"));
+    smartConversationTextResponse =
+        WebhooksHelper.callURL(
+            new URL(WEBHOOKS_PATH + "smart-conversations/text"), service::parseEvent);
   }
 
   @Then("the header of the Conversation event {string} contains a valid signature")
   public void validateHeader(String e2eKeyword) {
 
-    Response receivedEvent = receivedEvents.get(WebhookTrigger.from(e2eKeyword));
+    WebhooksHelper.Response<ConversationWebhookEvent> receivedEvent =
+        receivedEvents.get(WebhookTrigger.from(e2eKeyword));
 
     if (null != receivedEvent) {
       boolean validated =
@@ -245,7 +253,7 @@ public class WebhooksEventsSteps {
   @Then("the Conversation event describes a {string} event type")
   public void triggerResult(String e2eKeyword) {
     WebhookTrigger trigger = WebhookTrigger.from(e2eKeyword);
-    Response receivedEvent = receivedEvents.get(trigger);
+    WebhooksHelper.Response<ConversationWebhookEvent> receivedEvent = receivedEvents.get(trigger);
     if (null != receivedEvent) {
       Assertions.assertInstanceOf(expectedClasses.get(trigger), receivedEvent.event);
     }
@@ -256,7 +264,7 @@ public class WebhooksEventsSteps {
           + " signature")
   public void validateEventDeliveryFailureHeader(String e2eKeyword, String status) {
 
-    Response receivedEvent = null;
+    WebhooksHelper.Response<ConversationWebhookEvent> receivedEvent = null;
     if (e2eKeyword.equals(WebhookTrigger.EVENT_DELIVERY.value())
         && status.equals(DeliveryStatus.FAILED.value())) {
       receivedEvent = eventDeliveryReceiptFailedResponse;
@@ -359,7 +367,7 @@ public class WebhooksEventsSteps {
       "the header of the Conversation event {string} for a {string} message contains a valid"
           + " signature")
   public void validateMessageSubmitHeader(String e2eKeyword, String messageType) {
-    Response receivedEvent = null;
+    WebhooksHelper.Response<ConversationWebhookEvent> receivedEvent = null;
     if (e2eKeyword.equals("MESSAGE_SUBMIT") && messageType.equals("media")) {
       receivedEvent = messageSubmitMediaResponse;
     } else if (e2eKeyword.equals("MESSAGE_SUBMIT") && messageType.equals("text")) {
@@ -440,49 +448,8 @@ public class WebhooksEventsSteps {
 
   public void handleRequest(WebhookTrigger trigger) throws IOException {
 
-    Response response = callURL(new URL(triggerToURL.get(trigger)));
+    WebhooksHelper.Response<ConversationWebhookEvent> response =
+        WebhooksHelper.callURL(new URL(triggerToURL.get(trigger)), service::parseEvent);
     receivedEvents.put(trigger, response);
-  }
-
-  Response callURL(URL url) throws IOException {
-
-    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-    con.setRequestMethod("GET");
-
-    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
-    byte[] buffer = new byte[1024];
-    int bytesRead;
-    while ((bytesRead = con.getInputStream().read(buffer)) != -1) {
-      byteArrayOutputStream.write(buffer, 0, bytesRead);
-    }
-    Response response = new Response();
-    response.headers = transformHeaders(con.getHeaderFields());
-    response.rawPayload = byteArrayOutputStream.toString("UTF-8");
-    response.event = service.parseEvent(response.rawPayload);
-    return response;
-  }
-
-  static Map<String, String> transformHeaders(Map<String, List<String>> headers) {
-    if (null == headers) {
-      return null;
-    }
-    HashMap<String, String> newMap = new HashMap<>();
-    headers.forEach((key, value) -> newMap.put(key, concatHeaderValues(value)));
-    return newMap;
-  }
-
-  static String concatHeaderValues(List<String> values) {
-    if (null == values) {
-      return null;
-    }
-    return values.stream()
-        .reduce(null, (previous, current) -> (null != previous ? previous + ";" : "") + current);
-  }
-
-  static class Response {
-    Map<String, String> headers;
-    String rawPayload;
-    ConversationWebhookEvent event;
   }
 }

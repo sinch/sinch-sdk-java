@@ -3,6 +3,7 @@ package com.sinch.sdk.auth.adapters;
 import com.sinch.sdk.core.exceptions.ApiAuthException;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
+import com.sinch.sdk.core.utils.MapUtils;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.core.utils.StringUtil;
 import java.net.URI;
@@ -15,7 +16,6 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.logging.Logger;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -107,9 +107,7 @@ public class ApplicationAuthManager implements AuthManager {
       String method, String path, Map<String, String> headers, String jsonPayload) {
 
     // convert header keys to use case-insensitive map keys
-    Map<String, String> caseInsensitiveHeaders = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-    caseInsensitiveHeaders.putAll(headers);
-
+    Map<String, String> caseInsensitiveHeaders = MapUtils.getCaseInsensitiveMap(headers);
     String authorizationHeader = caseInsensitiveHeaders.get("Authorization");
 
     // missing authorization header
