@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Assertions;
 public class WebhooksEventsSteps {
 
   static final String WEBHOOKS_PATH_PREFIX = "/webhooks/voice";
-  static final String WEBHOOKS_URL = Config.VOICE_HOST_NAME + WEBHOOKS_PATH_PREFIX + "/";
+  static final String WEBHOOKS_URL = Config.VOICE_HOST_NAME + WEBHOOKS_PATH_PREFIX;
 
   WebHooksService service;
 
@@ -99,26 +99,26 @@ public class WebhooksEventsSteps {
   public void sendPieReturn() throws IOException {
     pieReturn =
         WebhooksHelper.callURL(
-            new URL(WEBHOOKS_URL + "pie-return"), service::unserializeWebhooksEvent);
+            new URL(WEBHOOKS_URL + "/pie-return"), service::unserializeWebhooksEvent);
   }
 
   @When("^I send a request to trigger a \"PIE\" event with a \"sequence\" type$")
   public void sendPieSequence() throws IOException {
     pieSequence =
         WebhooksHelper.callURL(
-            new URL(WEBHOOKS_URL + "pie-sequence"), service::unserializeWebhooksEvent);
+            new URL(WEBHOOKS_URL + "/pie-sequence"), service::unserializeWebhooksEvent);
   }
 
   @When("^I send a request to trigger a \"DICE\" event$")
   public void sendDICEEvent() throws IOException {
     diceEvent =
-        WebhooksHelper.callURL(new URL(WEBHOOKS_URL + "dice"), service::unserializeWebhooksEvent);
+        WebhooksHelper.callURL(new URL(WEBHOOKS_URL + "/dice"), service::unserializeWebhooksEvent);
   }
 
   @When("^I send a request to trigger a \"ACE\" event$")
   public void sendACEEvent() throws IOException {
     aceEvent =
-        WebhooksHelper.callURL(new URL(WEBHOOKS_URL + "ace"), service::unserializeWebhooksEvent);
+        WebhooksHelper.callURL(new URL(WEBHOOKS_URL + "/ace"), service::unserializeWebhooksEvent);
   }
 
   @Then("the header of the {string} event with a {string} type contains a valid authorization")
