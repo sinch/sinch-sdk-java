@@ -24,18 +24,17 @@ public class Update extends BaseApplication {
   public void run() {
 
     LOGGER.info("Updating batch: " + batchId);
-    BatchText value =
-        client
-            .sms()
-            .batches()
-            .update(
-                batchId,
-                UpdateSmsBatchTextRequest.builder()
-                    .setToRemove(Collections.singletonList("+33745149803"))
-                    .setToAdd(Collections.singletonList("+33745149803"))
-                    .setBody("the body updated")
-                    .setFrom("+33123456789")
-                    .build());
+
+    UpdateSmsBatchTextRequest.Builder builder =
+        UpdateSmsBatchTextRequest.builder()
+            .setToRemove(Collections.singletonList("+33745149803"))
+            .setToAdd(Collections.singletonList("+33745149803"))
+            .setBody("the body updated")
+            .setFrom("+33123456789");
+
+    webhooksSmsPath.ifPresent(builder::setCallbackUrl);
+
+    BatchText value = client.sms().batches().update(batchId, builder.build());
 
     LOGGER.info("Response: " + value);
   }

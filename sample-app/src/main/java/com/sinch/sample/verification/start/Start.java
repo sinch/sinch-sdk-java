@@ -34,7 +34,7 @@ public class Start extends BaseApplication {
     LOGGER.info("Start verification for : " + phoneNumber);
 
     NumberIdentity identity = NumberIdentity.valueOf(phoneNumber);
-    VerificationMethod method = VerificationMethod.FLASH_CALL;
+    VerificationMethod method = VerificationMethod.SMS;
 
     VerificationStartService service = client.verification().v1().verificationStart();
 

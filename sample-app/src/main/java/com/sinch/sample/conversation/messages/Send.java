@@ -49,6 +49,8 @@ public class Send extends BaseApplication {
   }
 
   SendMessageRequest<?> createRCSSendMessage() {
+    SendMessageRequest.Builder<ChoiceMessage> builder = SendMessageRequest.<ChoiceMessage>builder();
+
     var textMessage =
         TextMessage.builder()
             .setText("[Java SDK: Conversation Message] Please select an action")
@@ -80,7 +82,7 @@ public class Send extends BaseApplication {
             .setPostbackData("Location message selected")
             .build());
 
-    return SendMessageRequest.<ChoiceMessage>builder()
+    builder
         .setAppId(conversationAppId)
         .setMessage(
             AppMessage.<ChoiceMessage>builder()
@@ -97,10 +99,15 @@ public class Send extends BaseApplication {
                     .build()))
         .setTtl(25)
         .build();
+
+    webhooksConversationPath.ifPresent(builder::setCallbackUrl);
+    return builder.build();
   }
 
   SendMessageRequest<?> createSMSSendMessage() {
-    return SendMessageRequest.<TextMessage>builder()
+    SendMessageRequest.Builder<TextMessage> builder = SendMessageRequest.<TextMessage>builder();
+
+    builder
         .setAppId(conversationAppId)
         .setMessage(
             AppMessage.<TextMessage>builder()
@@ -119,5 +126,8 @@ public class Send extends BaseApplication {
                     .build()))
         .setTtl(25)
         .build();
+
+    webhooksConversationPath.ifPresent(builder::setCallbackUrl);
+    return builder.build();
   }
 }
