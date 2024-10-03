@@ -35,9 +35,7 @@ public class Send extends BaseApplication {
             .setDeliveryReport(DeliveryReportType.FULL);
 
     // Overload default dashboard webhooks URL if defined
-    if (null != webhooksSmsPath) {
-      builder.setCallbackUrl(webhooksSmsPath);
-    }
+    webhooksSmsPath.ifPresent(builder::setCallbackUrl);
 
     BatchText value = client.sms().batches().send(builder.build());
 

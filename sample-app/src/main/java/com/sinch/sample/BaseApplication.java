@@ -5,6 +5,7 @@ import com.sinch.sdk.models.ApplicationCredentials;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.SmsServicePlanCredentials;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -25,8 +26,10 @@ public abstract class BaseApplication {
   private static final String CONVERSATION_TEMPLATE_ID_KEY = "CONVERSATION_TEMPLATE_ID";
 
   public static final String WEBHOOKS_URL_KEY = "WEBHOOKS_URL";
+  public static final String WEBHOOKS_NUMBERS_PATH_KEY = "WEBHOOKS_NUMBERS_PATH";
   public static final String WEBHOOKS_VOICE_PATH_KEY = "WEBHOOKS_VOICE_PATH";
   public static final String WEBHOOKS_SMS_PATH_KEY = "WEBHOOKS_SMS_PATH";
+  public static final String WEBHOOKS_CONVERSATION_PATH_KEY = "WEBHOOKS_CONVERSATION_PATH";
 
   protected static final Logger LOGGER = Utils.initializeLogger(BaseApplication.class.getName());
 
@@ -48,8 +51,10 @@ public abstract class BaseApplication {
   protected String smsServicePlanId;
   protected String smsApiToken;
   protected String applicationKey;
-  protected String webhooksVoicePath;
-  protected String webhooksSmsPath;
+  protected Optional<String> webhooksConversationPath = Optional.empty();
+  protected Optional<String> webhooksNumbersPath = Optional.empty();
+  protected Optional<String> webhooksSmsPath = Optional.empty();
+  protected Optional<String> webhooksVoicePath = Optional.empty();
 
   Properties properties;
 
@@ -84,9 +89,16 @@ public abstract class BaseApplication {
 
     String webhooksUrl = getConfigValue(WEBHOOKS_URL_KEY);
     if (null != webhooksUrl) {
+      webhooksConversationPath =
+          Optional.of(
+              String.format("%s%s", webhooksUrl, getConfigValue(WEBHOOKS_CONVERSATION_PATH_KEY)));
+      webhooksNumbersPath =
+          Optional.of(
+              String.format("%s%s", webhooksUrl, getConfigValue(WEBHOOKS_NUMBERS_PATH_KEY)));
+      webhooksSmsPath =
+          Optional.of(String.format("%s%s", webhooksUrl, getConfigValue(WEBHOOKS_SMS_PATH_KEY)));
       webhooksVoicePath =
-          String.format("%s%s", webhooksUrl, getConfigValue(WEBHOOKS_VOICE_PATH_KEY));
-      webhooksSmsPath = String.format("%s%s", webhooksUrl, getConfigValue(WEBHOOKS_SMS_PATH_KEY));
+          Optional.of(String.format("%s%s", webhooksUrl, getConfigValue(WEBHOOKS_VOICE_PATH_KEY)));
     }
 
     applicationKey =

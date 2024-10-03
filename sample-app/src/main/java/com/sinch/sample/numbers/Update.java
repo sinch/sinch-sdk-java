@@ -39,14 +39,15 @@ public class Update extends BaseApplication {
     VoiceConfiguration voiceConfiguration =
         VoiceConfigurationRTC.builder().setAppId(applicationKey).build();
 
-    ActiveNumberUpdateRequest parameters =
+    ActiveNumberUpdateRequest.Builder builder =
         ActiveNumberUpdateRequest.builder()
             .setDisplayName(displayName)
             // .setSmsConfiguration(smsConfiguration)
-            .setVoiceConfiguration(voiceConfiguration)
-            .build();
+            .setVoiceConfiguration(voiceConfiguration);
 
-    ActiveNumber value = service.update(virtualPhoneNumber, parameters);
+    webhooksNumbersPath.ifPresent(builder::setCallbackUrl);
+
+    ActiveNumber value = service.update(virtualPhoneNumber, builder.build());
 
     LOGGER.info("Response :" + value);
   }
