@@ -79,8 +79,7 @@ public class VoiceConfigurationFAXImpl
     return scheduledProvisioning.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_SCHEDULED_VOICE_PROVISIONING)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<ScheduledVoiceProvisioning> scheduledProvisioning() {
     return scheduledProvisioning;
   }
