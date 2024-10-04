@@ -69,8 +69,7 @@ public class SmsConfigurationImpl implements SmsConfiguration {
     return scheduledProvisioning.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_SCHEDULED_PROVISIONING)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonIgnore
   public OptionalValue<ScheduledSmsProvisioning> scheduledProvisioning() {
     return scheduledProvisioning;
   }

@@ -45,6 +45,7 @@ public interface SmsConfiguration {
    * Get scheduledProvisioning
    *
    * @return scheduledProvisioning
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   ScheduledSmsProvisioning getScheduledProvisioning();
 
@@ -84,6 +85,7 @@ public interface SmsConfiguration {
      * @param scheduledProvisioning see getter
      * @return Current builder
      * @see #getScheduledProvisioning
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setScheduledProvisioning(ScheduledSmsProvisioning scheduledProvisioning);
 
