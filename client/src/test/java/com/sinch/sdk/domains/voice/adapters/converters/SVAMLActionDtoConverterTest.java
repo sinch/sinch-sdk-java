@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.voice.adapters.converters;
 
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.voice.models.ConferenceDtfmOptions;
 import com.sinch.sdk.domains.voice.models.DestinationSip;
@@ -7,7 +8,6 @@ import com.sinch.sdk.domains.voice.models.DestinationUser;
 import com.sinch.sdk.domains.voice.models.DtfmModeType;
 import com.sinch.sdk.domains.voice.models.MusicOnHoldType;
 import com.sinch.sdk.domains.voice.models.TransportType;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlActionDto;
 import com.sinch.sdk.domains.voice.models.svaml.ActionConnectConference;
 import com.sinch.sdk.domains.voice.models.svaml.ActionConnectMxp;
 import com.sinch.sdk.domains.voice.models.svaml.ActionConnectPstn;
@@ -22,18 +22,17 @@ import com.sinch.sdk.domains.voice.models.svaml.Menu;
 import com.sinch.sdk.domains.voice.models.svaml.MenuOption;
 import com.sinch.sdk.domains.voice.models.svaml.MenuOptionAction;
 import com.sinch.sdk.domains.voice.models.svaml.MenuOptionActionType;
-import com.sinch.sdk.domains.voice.models.v1.svaml.action.ActionConnectConfDtoTest;
-import com.sinch.sdk.domains.voice.models.v1.svaml.action.ActionConnectMxpDtoTest;
-import com.sinch.sdk.domains.voice.models.v1.svaml.action.ActionConnectPstnDtoTest;
-import com.sinch.sdk.domains.voice.models.v1.svaml.action.ActionConnectSipDtoTest;
-import com.sinch.sdk.domains.voice.models.v1.svaml.action.ActionContinueDtoTest;
-import com.sinch.sdk.domains.voice.models.v1.svaml.action.ActionHangUpDtoTest;
-import com.sinch.sdk.domains.voice.models.v1.svaml.action.ActionParkDtoTest;
-import com.sinch.sdk.domains.voice.models.v1.svaml.action.ActionRunMenuDtoTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectConferenceTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectMxpTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectPstnTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectSipTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionContinueTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionHangupTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionParkTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionRunMenuTest;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import com.sinch.sdk.models.E164PhoneNumber;
 import java.util.Collections;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class SVAMLActionDtoConverterTest {
@@ -121,57 +120,50 @@ public class SVAMLActionDtoConverterTest {
 
   @Test
   void convertActionConnectConf() {
-    Assertions.assertThat(SVAMLActionDtoConverter.convert(actionConnectConference))
-        .usingRecursiveComparison()
-        .isEqualTo(new SvamlActionDto(ActionConnectConfDtoTest.dto));
+    TestHelpers.recursiveEquals(
+        SVAMLActionDtoConverter.convert(actionConnectConference),
+        SvamlActionConnectConferenceTest.dto);
   }
 
   @Test
   void convertActionConnectMxp() {
-    Assertions.assertThat(SVAMLActionDtoConverter.convert(actionConnectMxp))
-        .usingRecursiveComparison()
-        .isEqualTo(new SvamlActionDto(ActionConnectMxpDtoTest.dto));
+    TestHelpers.recursiveEquals(
+        SVAMLActionDtoConverter.convert(actionConnectMxp), SvamlActionConnectMxpTest.dto);
   }
 
   @Test
   void convertActionConnectPstn() {
-    Assertions.assertThat(SVAMLActionDtoConverter.convert(actionConnectPstn))
-        .usingRecursiveComparison()
-        .isEqualTo(new SvamlActionDto(ActionConnectPstnDtoTest.dto));
+    TestHelpers.recursiveEquals(
+        SVAMLActionDtoConverter.convert(actionConnectPstn), SvamlActionConnectPstnTest.dto);
   }
 
   @Test
   void convertActionConnectSip() {
-    Assertions.assertThat(SVAMLActionDtoConverter.convert(actionConnectSip))
-        .usingRecursiveComparison()
-        .isEqualTo(new SvamlActionDto(ActionConnectSipDtoTest.dto));
+    TestHelpers.recursiveEquals(
+        SVAMLActionDtoConverter.convert(actionConnectSip), SvamlActionConnectSipTest.dto);
   }
 
   @Test
   void convertActionContinue() {
-    Assertions.assertThat(SVAMLActionDtoConverter.convert(actionContinue))
-        .usingRecursiveComparison()
-        .isEqualTo(new SvamlActionDto(ActionContinueDtoTest.dto));
+    TestHelpers.recursiveEquals(
+        SVAMLActionDtoConverter.convert(actionContinue), SvamlActionContinueTest.dto);
   }
 
   @Test
   void convertActionHangup() {
-    Assertions.assertThat(SVAMLActionDtoConverter.convert(actionHanghup))
-        .usingRecursiveComparison()
-        .isEqualTo(new SvamlActionDto(ActionHangUpDtoTest.dto));
+    TestHelpers.recursiveEquals(
+        SVAMLActionDtoConverter.convert(actionHanghup), SvamlActionHangupTest.dto);
   }
 
   @Test
   void convertActionPark() {
-    Assertions.assertThat(SVAMLActionDtoConverter.convert(actionPark))
-        .usingRecursiveComparison()
-        .isEqualTo(new SvamlActionDto(ActionParkDtoTest.dto));
+    TestHelpers.recursiveEquals(
+        SVAMLActionDtoConverter.convert(actionPark), SvamlActionParkTest.dto);
   }
 
   @Test
   void convertActionRunMenu() {
-    Assertions.assertThat(SVAMLActionDtoConverter.convert(actionRunMenu))
-        .usingRecursiveComparison()
-        .isEqualTo(new SvamlActionDto(ActionRunMenuDtoTest.dto));
+    TestHelpers.recursiveEquals(
+        SVAMLActionDtoConverter.convert(actionRunMenu), SvamlActionRunMenuTest.dto);
   }
 }

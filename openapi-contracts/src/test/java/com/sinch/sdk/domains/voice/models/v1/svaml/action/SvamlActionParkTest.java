@@ -4,19 +4,22 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlActionContinueDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlActionContinueDto.NameEnum;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-public class ActionContinueDtoTest extends BaseTest {
+public class SvamlActionParkTest extends BaseTest {
 
-  public static SvamlActionContinueDto dto =
-      new SvamlActionContinueDto().name(NameEnum.CONTINUE.getValue());
+  public static SvamlActionPark dto =
+      SvamlActionPark.builder()
+          .setLocale("en")
+          .setIntroPrompt("intro prompt")
+          .setHoldPrompt("hold prompt")
+          .setMaxDuration(456)
+          .build();
 
-  @GivenTextResource("/domains/voice/v1/svaml/action/ActionContinueDto.json")
+  @GivenTextResource("/domains/voice/v1/svaml/action/SvamlActionParkDto.json")
   String json;
 
   @Test

@@ -3,20 +3,6 @@ package com.sinch.sdk.domains.voice.adapters.converters;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.common.adapters.converters.EnumDynamicConverter;
 import com.sinch.sdk.domains.voice.models.ConferenceDtfmOptions;
-import com.sinch.sdk.domains.voice.models.dto.v1.CallHeaderDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.MenuDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.OptionDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlActionConnectConfConferenceDtmfOptionsDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlActionConnectConfDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlActionConnectMxpDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlActionConnectPstnAmdDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlActionConnectPstnDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlActionConnectSipDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlActionContinueDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlActionDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlActionHangupDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlActionParkDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlActionRunMenuDto;
 import com.sinch.sdk.domains.voice.models.svaml.Action;
 import com.sinch.sdk.domains.voice.models.svaml.ActionConnectConference;
 import com.sinch.sdk.domains.voice.models.svaml.ActionConnectMxp;
@@ -27,9 +13,24 @@ import com.sinch.sdk.domains.voice.models.svaml.ActionHangUp;
 import com.sinch.sdk.domains.voice.models.svaml.ActionPark;
 import com.sinch.sdk.domains.voice.models.svaml.ActionRunMenu;
 import com.sinch.sdk.domains.voice.models.svaml.AnsweringMachineDetection;
-import com.sinch.sdk.domains.voice.models.svaml.Menu;
-import com.sinch.sdk.domains.voice.models.svaml.MenuOption;
 import com.sinch.sdk.domains.voice.models.svaml.MenuOptionAction;
+import com.sinch.sdk.domains.voice.models.v1.MusicOnHold;
+import com.sinch.sdk.domains.voice.models.v1.conferences.ConferenceDtmfOptions;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.CallHeader;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.ConnectPstnAnsweringMachineDetection;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.Menu;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.MenuOption;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlAction;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectConference;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectMxp;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectPstn;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectPstn.IndicationsEnum;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectSip;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectSip.TransportEnum;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionContinue;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionHangup;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionPark;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionRunMenu;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
@@ -38,13 +39,12 @@ import java.util.stream.Collectors;
 public class SVAMLActionDtoConverter {
   private static final Logger LOGGER = Logger.getLogger(SVAMLActionDtoConverter.class.getName());
 
-  public static SvamlActionDto convert(Action client) {
+  public static SvamlAction convert(Action client) {
     if (null == client) {
       return null;
     }
-    SvamlActionDto dto = new SvamlActionDto();
 
-    Object convertedDto = null;
+    SvamlAction convertedDto = null;
     if (client instanceof ActionConnectConference) {
       ActionConnectConference typedClient = (ActionConnectConference) client;
       convertedDto = convertAction(typedClient);
@@ -73,39 +73,37 @@ public class SVAMLActionDtoConverter {
       LOGGER.severe(String.format("Unexpected class '%s'", client.getClass()));
     }
 
-    dto.setActualInstance(convertedDto);
-    return dto;
+    return convertedDto;
   }
 
-  private static SvamlActionConnectConfDto convertAction(ActionConnectConference client) {
+  private static SvamlActionConnectConference convertAction(ActionConnectConference client) {
     if (null == client) {
       return null;
     }
-    SvamlActionConnectConfDto dto = new SvamlActionConnectConfDto();
-    dto.setName(SvamlActionConnectConfDto.NameEnum.CONNECTCONF.getValue());
+    SvamlActionConnectConference.Builder dto = SvamlActionConnectConference.builder();
     client.getConferenceId().ifPresent(dto::setConferenceId);
-    client.getMusicOnHold().ifPresent(f -> dto.setMoh(EnumDynamicConverter.convert(f)));
+    client
+        .getMusicOnHold()
+        .ifPresent(f -> dto.setMoh(MusicOnHold.from(EnumDynamicConverter.convert(f))));
     client.getDtfmOptions().ifPresent(f -> dto.setConferenceDtmfOptions(convert(f)));
-    return dto;
+    return dto.build();
   }
 
-  private static SvamlActionConnectMxpDto convertAction(ActionConnectMxp client) {
+  private static SvamlActionConnectMxp convertAction(ActionConnectMxp client) {
     if (null == client) {
       return null;
     }
-    SvamlActionConnectMxpDto dto = new SvamlActionConnectMxpDto();
-    dto.setName(SvamlActionConnectMxpDto.NameEnum.CONNECTMXP.getValue());
+    SvamlActionConnectMxp.Builder dto = SvamlActionConnectMxp.builder();
     client.getDestination().ifPresent(f -> dto.setDestination(DestinationDtoConverter.convert(f)));
     client.getCallheaders().ifPresent(f -> dto.setCallheaders(convertHeaderCollection(f)));
-    return dto;
+    return dto.build();
   }
 
-  private static SvamlActionConnectPstnDto convertAction(ActionConnectPstn client) {
+  private static SvamlActionConnectPstn convertAction(ActionConnectPstn client) {
     if (null == client) {
       return null;
     }
-    SvamlActionConnectPstnDto dto = new SvamlActionConnectPstnDto();
-    dto.setName(SvamlActionConnectPstnDto.NameEnum.CONNECTPSTN.getValue());
+    SvamlActionConnectPstn.Builder dto = SvamlActionConnectPstn.builder();
     client.getNumber().ifPresent(f -> dto.setNumber(E164PhoneNumberDtoConverter.convert(f)));
     client.getLocale().ifPresent(dto::setLocale);
     client.getMaxDuration().ifPresent(dto::setMaxDuration);
@@ -115,119 +113,122 @@ public class SVAMLActionDtoConverter {
     client
         .getDualToneMultiFrequency()
         .ifPresent(f -> dto.setDtmf(DualToneMultiFrequencyDtoConverter.convert(f)));
-    client.getIndications().ifPresent(f -> dto.setIndications(EnumDynamicConverter.convert(f)));
+    client
+        .getIndications()
+        .ifPresent(f -> dto.setIndications(IndicationsEnum.from(EnumDynamicConverter.convert(f))));
     client.getAnsweringMachineDetection().ifPresent(f -> dto.setAmd(convert(f)));
-    return dto;
+    return dto.build();
   }
 
-  private static SvamlActionConnectSipDto convertAction(ActionConnectSip client) {
+  private static SvamlActionConnectSip convertAction(ActionConnectSip client) {
     if (null == client) {
       return null;
     }
-    SvamlActionConnectSipDto dto = new SvamlActionConnectSipDto();
-    dto.setName(SvamlActionConnectSipDto.NameEnum.CONNECTSIP.getValue());
+    SvamlActionConnectSip.Builder dto = SvamlActionConnectSip.builder();
     client.getDestination().ifPresent(f -> dto.setDestination(DestinationDtoConverter.convert(f)));
     client.getMaxDuration().ifPresent(dto::setMaxDuration);
     client.getCli().ifPresent(dto::setCli);
-    client.getTransport().ifPresent(f -> dto.setTransport(EnumDynamicConverter.convert(f)));
+    client
+        .getTransport()
+        .ifPresent(f -> dto.setTransport(TransportEnum.from(EnumDynamicConverter.convert(f))));
     client.getSuppressCallbacks().ifPresent(dto::setSuppressCallbacks);
     client.getCallHeaders().ifPresent(f -> dto.setCallHeaders(convertHeaderCollection(f)));
-    client.getMusicOnHold().ifPresent(f -> dto.setMoh(EnumDynamicConverter.convert(f)));
-    return dto;
+    client
+        .getMusicOnHold()
+        .ifPresent(f -> dto.setMoh(MusicOnHold.from(EnumDynamicConverter.convert(f))));
+    return dto.build();
   }
 
-  private static SvamlActionContinueDto convertAction(ActionContinue client) {
+  private static SvamlActionContinue convertAction(ActionContinue client) {
     if (null == client) {
       return null;
     }
-    SvamlActionContinueDto dto = new SvamlActionContinueDto();
-    dto.setName(SvamlActionContinueDto.NameEnum.CONTINUE.getValue());
-    return dto;
+    return SvamlActionContinue.DEFAULT;
   }
 
-  private static SvamlActionHangupDto convertAction(ActionHangUp client) {
+  private static SvamlActionHangup convertAction(ActionHangUp client) {
     if (null == client) {
       return null;
     }
-    SvamlActionHangupDto dto = new SvamlActionHangupDto();
-    dto.setName(SvamlActionHangupDto.NameEnum.HANGUP.getValue());
-    return dto;
+    return SvamlActionHangup.DEFAULT;
   }
 
-  private static SvamlActionParkDto convertAction(ActionPark client) {
+  private static SvamlActionPark convertAction(ActionPark client) {
     if (null == client) {
       return null;
     }
-    SvamlActionParkDto dto = new SvamlActionParkDto();
-    dto.setName(SvamlActionParkDto.NameEnum.PARK.getValue());
+    SvamlActionPark.Builder dto = SvamlActionPark.builder();
     client.getLocale().ifPresent(dto::setLocale);
     client.getIntroPrompt().ifPresent(dto::setIntroPrompt);
     client.getHoldPrompt().ifPresent(dto::setHoldPrompt);
     client.getMaxDuration().ifPresent(dto::setMaxDuration);
 
-    return dto;
+    return dto.build();
   }
 
-  private static SvamlActionRunMenuDto convertAction(ActionRunMenu client) {
+  private static SvamlActionRunMenu convertAction(ActionRunMenu client) {
     if (null == client) {
       return null;
     }
-    SvamlActionRunMenuDto dto = new SvamlActionRunMenuDto();
-    dto.setName(SvamlActionRunMenuDto.NameEnum.RUNMENU.getValue());
+    SvamlActionRunMenu.Builder dto = SvamlActionRunMenu.builder();
     client.getBarge().ifPresent(dto::setBarge);
     client.getLocale().ifPresent(dto::setLocale);
     client.getMainMenu().ifPresent(dto::setMainMenu);
     client.getEnableVoice().ifPresent(dto::setEnableVoice);
     client.getMenus().ifPresent(f -> dto.setMenus(convertMenuCollection(f)));
-    return dto;
+    return dto.build();
   }
 
-  private static SvamlActionConnectConfConferenceDtmfOptionsDto convert(
-      ConferenceDtfmOptions client) {
+  private static ConferenceDtmfOptions convert(ConferenceDtfmOptions client) {
     if (null == client) {
       return null;
     }
-    SvamlActionConnectConfConferenceDtmfOptionsDto dto =
-        new SvamlActionConnectConfConferenceDtmfOptionsDto();
-    client.getMode().ifPresent(f -> dto.setMode(EnumDynamicConverter.convert(f)));
-    client.getMaxDigits().ifPresent(dto::setMaxDigits);
-    client.getTimeoutMills().ifPresent(dto::setTimeoutMills);
-    return dto;
+    ConferenceDtmfOptions.Builder builder = ConferenceDtmfOptions.builder();
+    client
+        .getMode()
+        .ifPresent(
+            f ->
+                builder.setMode(
+                    ConferenceDtmfOptions.ModeEnum.from(EnumDynamicConverter.convert(f))));
+    client.getMaxDigits().ifPresent(builder::setMaxDigits);
+    client.getTimeoutMills().ifPresent(builder::setTimeoutMills);
+    return builder.build();
   }
 
-  private static List<CallHeaderDto> convertHeaderCollection(
-      Collection<Pair<String, String>> client) {
+  private static List<CallHeader> convertHeaderCollection(Collection<Pair<String, String>> client) {
     if (null == client) {
       return null;
     }
     return client.stream()
-        .map(f -> new CallHeaderDto().key(f.getLeft()).value(f.getRight()))
+        .map(f -> CallHeader.builder().setKey(f.getLeft()).setValue(f.getRight()).build())
         .collect(Collectors.toList());
   }
 
-  private static SvamlActionConnectPstnAmdDto convert(AnsweringMachineDetection client) {
+  private static ConnectPstnAnsweringMachineDetection convert(AnsweringMachineDetection client) {
     if (null == client) {
       return null;
     }
 
-    SvamlActionConnectPstnAmdDto dto = new SvamlActionConnectPstnAmdDto();
+    ConnectPstnAnsweringMachineDetection.Builder dto =
+        ConnectPstnAnsweringMachineDetection.builder();
 
     client.getEnabled().ifPresent(dto::setEnabled);
-    return dto;
+    return dto.build();
   }
 
-  private static List<MenuDto> convertMenuCollection(Collection<Menu> client) {
+  private static List<Menu> convertMenuCollection(
+      Collection<com.sinch.sdk.domains.voice.models.svaml.Menu> client) {
     if (null == client) {
       return null;
     }
     return client.stream().map(SVAMLActionDtoConverter::convert).collect(Collectors.toList());
   }
 
-  private static MenuDto convert(Menu client) {
+  private static Menu convert(com.sinch.sdk.domains.voice.models.svaml.Menu client) {
     if (null == client) {
       return null;
     }
-    MenuDto dto = new MenuDto();
+    Menu.Builder dto = Menu.builder();
 
     client.getId().ifPresent(dto::setId);
     client.getMainPrompt().ifPresent(dto::setMainPrompt);
@@ -237,20 +238,22 @@ public class SVAMLActionDtoConverter {
     client.getTimeoutMills().ifPresent(dto::setTimeoutMills);
     client.getMaxTimeoutMills().ifPresent(dto::setMaxTimeoutMills);
     client.getOptions().ifPresent(f -> dto.setOptions(convertMenuOptionCollection(f)));
-    return dto;
+    return dto.build();
   }
 
-  private static List<OptionDto> convertMenuOptionCollection(Collection<MenuOption> client) {
+  private static List<MenuOption> convertMenuOptionCollection(
+      Collection<com.sinch.sdk.domains.voice.models.svaml.MenuOption> client) {
     if (null == client) {
       return null;
     }
     return client.stream()
         .map(
             f -> {
-              OptionDto dto = new OptionDto();
-              f.getAction().ifPresent(f2 -> dto.action(convert(f2)));
-              f.getDtfm().ifPresent(f2 -> dto.dtmf(DualToneMultiFrequencyDtoConverter.convert(f2)));
-              return dto;
+              MenuOption.Builder dto = MenuOption.builder();
+              f.getAction().ifPresent(f2 -> dto.setAction(convert(f2)));
+              f.getDtfm()
+                  .ifPresent(f2 -> dto.setDtmf(DualToneMultiFrequencyDtoConverter.convert(f2)));
+              return dto.build();
             })
         .collect(Collectors.toList());
   }
