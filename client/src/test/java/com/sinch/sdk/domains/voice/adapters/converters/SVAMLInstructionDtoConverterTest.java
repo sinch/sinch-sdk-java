@@ -1,6 +1,6 @@
 package com.sinch.sdk.domains.voice.adapters.converters;
 
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionDto;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionAnswer;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionPlayFiles;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionSay;
@@ -10,16 +10,16 @@ import com.sinch.sdk.domains.voice.models.svaml.InstructionStartRecording;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionStopRecording;
 import com.sinch.sdk.domains.voice.models.svaml.StartRecordingOptions;
 import com.sinch.sdk.domains.voice.models.svaml.TranscriptionOptions;
-import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.InstructionAnswerDtoTest;
-import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.InstructionPlayFilesDtoTest;
-import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.InstructionSayDtoTest;
-import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.InstructionSendDtfmDtoTest;
-import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.InstructionSetCookieDtoTest;
-import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.InstructionStartRecordingDtoTest;
-import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.InstructionStopRecordingDtoTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionAnswerTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionPlayFilesTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionSayTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionSendDtmfDtoTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionSetCookieTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionStartRecordingTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionStopRecordingTest;
 import com.sinch.sdk.models.DualToneMultiFrequency;
+import java.util.ArrayList;
 import java.util.Collections;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class SVAMLInstructionDtoConverterTest {
@@ -58,67 +58,50 @@ public class SVAMLInstructionDtoConverterTest {
 
   @Test
   void convertInstructionAnswer() {
-    Assertions.assertThat(
-            SVAMLInstructionDtoConverter.convert(Collections.singletonList(instructionAnswer)))
-        .usingRecursiveComparison()
-        .isEqualTo(
-            Collections.singletonList(new SvamlInstructionDto(InstructionAnswerDtoTest.dto)));
+    TestHelpers.recursiveEquals(
+        SVAMLInstructionDtoConverter.convert(Collections.singletonList(instructionAnswer)),
+        new ArrayList<>(Collections.singletonList(SvamlInstructionAnswerTest.dto)));
   }
 
   @Test
   void convertInstructionPlayFiles() {
-    Assertions.assertThat(
-            SVAMLInstructionDtoConverter.convert(Collections.singletonList(instructionPlayFiles)))
-        .usingRecursiveComparison()
-        .isEqualTo(
-            Collections.singletonList(new SvamlInstructionDto(InstructionPlayFilesDtoTest.dto)));
+    TestHelpers.recursiveEquals(
+        SVAMLInstructionDtoConverter.convert(Collections.singletonList(instructionPlayFiles)),
+        new ArrayList<>(Collections.singletonList(SvamlInstructionPlayFilesTest.dto)));
   }
 
   @Test
   void convertInstructionSay() {
-    Assertions.assertThat(
-            SVAMLInstructionDtoConverter.convert(Collections.singletonList(instructionSay)))
-        .usingRecursiveComparison()
-        .isEqualTo(Collections.singletonList(new SvamlInstructionDto(InstructionSayDtoTest.dto)));
+    TestHelpers.recursiveEquals(
+        SVAMLInstructionDtoConverter.convert(Collections.singletonList(instructionSay)),
+        new ArrayList<>(Collections.singletonList(SvamlInstructionSayTest.dto)));
   }
 
   @Test
   void convertInstructionSendDtfm() {
-    Assertions.assertThat(
-            SVAMLInstructionDtoConverter.convert(Collections.singletonList(instructionDtfm)))
-        .usingRecursiveComparison()
-        .isEqualTo(
-            Collections.singletonList(new SvamlInstructionDto(InstructionSendDtfmDtoTest.dto)));
+    TestHelpers.recursiveEquals(
+        SVAMLInstructionDtoConverter.convert(Collections.singletonList(instructionDtfm)),
+        new ArrayList<>(Collections.singletonList(SvamlInstructionSendDtmfDtoTest.dto)));
   }
 
   @Test
   void convertInstructionSetCookie() {
-    Assertions.assertThat(
-            SVAMLInstructionDtoConverter.convert(Collections.singletonList(instructionSetCookie)))
-        .usingRecursiveComparison()
-        .isEqualTo(
-            Collections.singletonList(new SvamlInstructionDto(InstructionSetCookieDtoTest.dto)));
+    TestHelpers.recursiveEquals(
+        SVAMLInstructionDtoConverter.convert(Collections.singletonList(instructionSetCookie)),
+        new ArrayList<>(Collections.singletonList(SvamlInstructionSetCookieTest.dto)));
   }
 
   @Test
   void convertInstructionStartRecording() {
-    Assertions.assertThat(
-            SVAMLInstructionDtoConverter.convert(
-                Collections.singletonList(instructionStartRecording)))
-        .usingRecursiveComparison()
-        .isEqualTo(
-            Collections.singletonList(
-                new SvamlInstructionDto(InstructionStartRecordingDtoTest.dto)));
+    TestHelpers.recursiveEquals(
+        SVAMLInstructionDtoConverter.convert(Collections.singletonList(instructionStartRecording)),
+        new ArrayList<>(Collections.singletonList(SvamlInstructionStartRecordingTest.dto)));
   }
 
   @Test
   void convertInstructionStopRecording() {
-    Assertions.assertThat(
-            SVAMLInstructionDtoConverter.convert(
-                Collections.singletonList(instructionStopRecording)))
-        .usingRecursiveComparison()
-        .isEqualTo(
-            Collections.singletonList(
-                new SvamlInstructionDto(InstructionStopRecordingDtoTest.dto)));
+    TestHelpers.recursiveEquals(
+        SVAMLInstructionDtoConverter.convert(Collections.singletonList(instructionStopRecording)),
+        new ArrayList<>(Collections.singletonList(SvamlInstructionStopRecordingTest.dto)));
   }
 }

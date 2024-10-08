@@ -4,19 +4,17 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionSendDtmfDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionSendDtmfDto.NameEnum;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-public class InstructionSendDtfmDtoTest extends BaseTest {
+public class SvamlInstructionSayTest extends BaseTest {
 
-  public static SvamlInstructionSendDtmfDto dto =
-      new SvamlInstructionSendDtmfDto().name(NameEnum.SENDDTMF.getValue()).value("ww123#");
+  public static SvamlInstructionSay dto =
+      SvamlInstructionSay.builder().setText("[Welcome]").setLocale("en").build();
 
-  @GivenTextResource("/domains/voice/v1/svaml/instruction/InstructionSendDtfmDto.json")
+  @GivenTextResource("/domains/voice/v1/svaml/instruction/SvamlInstructionSayDto.json")
   String json;
 
   @Test
