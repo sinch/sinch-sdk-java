@@ -1,12 +1,5 @@
 package com.sinch.sdk.domains.voice.adapters.converters;
 
-import com.sinch.sdk.domains.voice.models.dto.svaml.InstructionAnswerDtoTest;
-import com.sinch.sdk.domains.voice.models.dto.svaml.InstructionPlayFilesDtoTest;
-import com.sinch.sdk.domains.voice.models.dto.svaml.InstructionSayDtoTest;
-import com.sinch.sdk.domains.voice.models.dto.svaml.InstructionSendDtfmDtoTest;
-import com.sinch.sdk.domains.voice.models.dto.svaml.InstructionSetCookieDtoTest;
-import com.sinch.sdk.domains.voice.models.dto.svaml.InstructionStartRecordingDtoTest;
-import com.sinch.sdk.domains.voice.models.dto.svaml.InstructionStopRecordingDtoTest;
 import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionDto;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionAnswer;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionPlayFiles;
@@ -17,6 +10,13 @@ import com.sinch.sdk.domains.voice.models.svaml.InstructionStartRecording;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionStopRecording;
 import com.sinch.sdk.domains.voice.models.svaml.StartRecordingOptions;
 import com.sinch.sdk.domains.voice.models.svaml.TranscriptionOptions;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.InstructionAnswerDtoTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.InstructionPlayFilesDtoTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.InstructionSayDtoTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.InstructionSendDtfmDtoTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.InstructionSetCookieDtoTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.InstructionStartRecordingDtoTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.InstructionStopRecordingDtoTest;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import java.util.Collections;
 import org.assertj.core.api.Assertions;

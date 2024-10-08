@@ -8,7 +8,7 @@ import com.sinch.sdk.domains.voice.models.CallResultType;
 import com.sinch.sdk.domains.voice.models.DestinationNumber;
 import com.sinch.sdk.domains.voice.models.DomainType;
 import com.sinch.sdk.domains.voice.models.Price;
-import com.sinch.sdk.domains.voice.models.dto.v1.WebhooksEventDtoTest;
+import com.sinch.sdk.domains.voice.models.v1.webhooks.WebhooksEventDtoTest;
 import com.sinch.sdk.domains.voice.models.webhooks.AmdAnswer;
 import com.sinch.sdk.domains.voice.models.webhooks.AmdAnswerReasonType;
 import com.sinch.sdk.domains.voice.models.webhooks.AmdAnswerStatusType;

@@ -1,9 +1,9 @@
 package com.sinch.sdk.domains.voice.adapters.converters;
 
-import com.sinch.sdk.domains.voice.models.dto.v1.ConferencesRequestDtoTest;
-import com.sinch.sdk.domains.voice.models.dto.v1.ConferencesResponseDtoTest;
 import com.sinch.sdk.domains.voice.models.requests.ConferenceManageParticipantRequestParametersTest;
 import com.sinch.sdk.domains.voice.models.response.ConferenceParticipant;
+import com.sinch.sdk.domains.voice.models.v1.conferences.ConferencesRequestDtoTest;
+import com.sinch.sdk.domains.voice.models.v1.conferences.ConferencesResponseDtoTest;
 import java.util.Collection;
 import java.util.Collections;
 import org.assertj.core.api.Assertions;
