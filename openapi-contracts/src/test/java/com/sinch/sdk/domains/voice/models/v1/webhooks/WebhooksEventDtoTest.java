@@ -3,30 +3,26 @@ package com.sinch.sdk.domains.voice.models.v1.webhooks;
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.domains.voice.models.dto.v1.AceRequestAllOfAmdDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.AceRequestDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.CallHeaderDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.CallResultDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.DestinationDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.DestinationTypeDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.DiceRequestDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.DomainDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.IceRequestDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.NotifyRequestDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.NotifyRequestDto.EventEnum;
 import com.sinch.sdk.domains.voice.models.dto.v1.PieRequestAllOfMenuResultDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.PieRequestDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.PriceDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.WebhooksEventDto;
+import com.sinch.sdk.domains.voice.models.v1.Destination;
+import com.sinch.sdk.domains.voice.models.v1.DestinationType;
+import com.sinch.sdk.domains.voice.models.v1.Domain;
+import com.sinch.sdk.domains.voice.models.v1.Price;
 import java.time.OffsetDateTime;
-import java.util.Arrays;
 import java.util.Collections;
 import org.assertj.core.api.Assertions;
-import org.json.JSONException;
 import org.junit.jupiter.api.Test;
-import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
 public class WebhooksEventDtoTest extends BaseTest {
@@ -55,12 +51,16 @@ public class WebhooksEventDtoTest extends BaseTest {
               .timestamp(OffsetDateTime.parse("2024-01-16T16:46:36Z"))
               .version(1)
               .custom("my custom")
-              .userRate(new PriceDto().currencyId("USD").amount(0.0F))
+              .userRate(Price.builder().setCurrencyId("USD").setAmount(0.0F).build())
               .cli("cli number")
-              .to(new DestinationDto().type(DestinationTypeDto.NUMBER).endpoint("+123456879"))
-              .domain(DomainDto.MXP)
+              .to(
+                  Destination.builder()
+                      .setType(DestinationType.NUMBER)
+                      .setEndpoint("+123456879")
+                      .build())
+              .domain(Domain.MXP)
               .applicationKey("an app key")
-              .originationType(DomainDto.MXP2)
+              .originationType(Domain.MXP2)
               .rdnis("rdnis value")
               .callHeaders(
                   Collections.singletonList(
@@ -74,15 +74,19 @@ public class WebhooksEventDtoTest extends BaseTest {
               .timestamp(OffsetDateTime.parse("2024-01-19T12:49:53Z"))
               .version(1)
               .custom("my custom value")
-              .userRate(new PriceDto().currencyId("EUR").amount(0.1758F))
-              .to(new DestinationDto().type(DestinationTypeDto.NUMBER).endpoint("123456789"))
+              .userRate(Price.builder().setCurrencyId("EUR").setAmount(0.1758F).build())
+              .to(
+                  Destination.builder()
+                      .setType(DestinationType.NUMBER)
+                      .setEndpoint("123456789")
+                      .build())
               .applicationKey("an app key")
               .result(CallResultDto.ANSWERED)
               .reason(DiceRequestDto.ReasonEnum.MANAGERHANGUP.getValue())
               .from("private")
               .duration(1)
-              .debit(new PriceDto().currencyId("EUR").amount(0.1758F))
-              .userRate(new PriceDto().currencyId("USD").amount(0.345F)));
+              .debit(Price.builder().setCurrencyId("EUR").setAmount(0.1758F).build())
+              .userRate(Price.builder().setCurrencyId("USD").setAmount(0.345F).build()));
 
   public static WebhooksEventDto expectedAceRequestDto =
       new WebhooksEventDto(
