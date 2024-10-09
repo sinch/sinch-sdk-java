@@ -90,8 +90,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
     if (null == this.conferences) {
       checkCredentials();
       this.conferences =
-          new com.sinch.sdk.domains.voice.adapters.ConferencesService(
-              context, httpClient, clientAuthManagers);
+          new com.sinch.sdk.domains.voice.adapters.ConferencesService(v1.conferences());
     }
     return this.conferences;
   }

@@ -1,6 +1,7 @@
-package com.sinch.sdk.domains.voice.adapters;
+package com.sinch.sdk.domains.voice.api.v1.adapters;
 
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -9,16 +10,17 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.domains.voice.adapters.converters.ConferencesDtoConverterTest;
-import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConferenceTest;
-import com.sinch.sdk.domains.voice.models.requests.ConferenceManageParticipantRequestParametersTest;
-import com.sinch.sdk.domains.voice.models.response.ConferenceParticipant;
+import com.sinch.sdk.core.http.AuthManager;
+import com.sinch.sdk.core.http.HttpClient;
+import com.sinch.sdk.domains.voice.api.v1.internal.ConferencesApi;
 import com.sinch.sdk.domains.voice.models.v1.callouts.CalloutRequestDtoTest;
 import com.sinch.sdk.domains.voice.models.v1.callouts.CalloutResponseDtoTest;
 import com.sinch.sdk.domains.voice.models.v1.conferences.request.ConferencesRequestDtoTest;
 import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipant;
 import com.sinch.sdk.domains.voice.models.v1.conferences.response.ConferencesResponseDtoTest;
-import java.util.Collection;
+import com.sinch.sdk.domains.voice.models.v1.conferences.response.GetConferenceInfoResponse;
+import com.sinch.sdk.models.VoiceContext;
+import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,50 +31,56 @@ import org.mockito.Mock;
 @TestWithResources
 public class ConferencesServiceTest extends BaseTest {
 
-  @Mock com.sinch.sdk.domains.voice.api.v1.ConferencesService v1;
-
+  @Mock ConferencesApi api;
+  @Mock VoiceContext context;
+  @Mock HttpClient httpClient;
+  @Mock Map<String, AuthManager> authManagers;
+  @Mock CalloutsService calloutsService;
   @Captor ArgumentCaptor<String> conferenceIdCaptor;
   @Captor ArgumentCaptor<String> callIdCaptor;
   @Captor ArgumentCaptor<ManageConferenceParticipant> participantCaptor;
-  ConferencesService service;
+  static ConferencesService service;
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new ConferencesService(v1));
+    service = spy(new ConferencesService(context, httpClient, authManagers, calloutsService));
   }
 
   @Test
   void call() throws ApiException {
 
-    when(v1.call(eq(CalloutRequestDtoTest.conferenceRequestCalloutDto)))
+    when(calloutsService.conference(eq(CalloutRequestDtoTest.conferenceRequestCalloutDto)))
         .thenReturn(CalloutResponseDtoTest.expectedCalloutResponseDto.getCallId());
 
-    String response =
-        service.call(CalloutRequestParametersConferenceTest.conferenceRequestParameters);
+    String response = service.call(CalloutRequestDtoTest.conferenceRequestCalloutDto);
 
-    Assertions.assertThat(response)
-        .isEqualTo(CalloutResponseDtoTest.expectedCalloutResponseDto.getCallId());
+    TestHelpers.recursiveEquals(
+        response, CalloutResponseDtoTest.expectedCalloutResponseDto.getCallId());
   }
 
   @Test
   void get() throws ApiException {
+    doReturn(api).when(service).getApi();
 
-    when(v1.get(eq(CalloutRequestDtoTest.conferenceRequestCalloutDto.getConferenceId())))
+    when(api.callingGetConferenceInfo(
+            eq(CalloutRequestDtoTest.conferenceRequestCalloutDto.getConferenceId())))
         .thenReturn(ConferencesResponseDtoTest.expectedGetConferenceInfoResponseDto);
 
-    Collection<ConferenceParticipant> response =
+    GetConferenceInfoResponse response =
         service.get(CalloutRequestDtoTest.conferenceRequestCalloutDto.getConferenceId());
 
     TestHelpers.recursiveEquals(
-        response, ConferencesDtoConverterTest.expectedConferenceGetInfoResponse);
+        response, ConferencesResponseDtoTest.expectedGetConferenceInfoResponseDto);
   }
 
   @Test
   void kickParticipant() throws ApiException {
+    doReturn(api).when(service).getApi();
     service.kickParticipant(
         CalloutRequestDtoTest.conferenceRequestCalloutDto.getConferenceId(),
         CalloutResponseDtoTest.expectedCalloutResponseDto.getCallId());
-    verify(v1).kickParticipant(conferenceIdCaptor.capture(), callIdCaptor.capture());
+    verify(api)
+        .callingKickConferenceParticipant(callIdCaptor.capture(), conferenceIdCaptor.capture());
 
     String parameter = callIdCaptor.getValue();
     Assertions.assertThat(parameter)
@@ -84,9 +92,10 @@ public class ConferencesServiceTest extends BaseTest {
 
   @Test
   void kickAll() throws ApiException {
+    doReturn(api).when(service).getApi();
 
     service.kickAll(CalloutRequestDtoTest.conferenceRequestCalloutDto.getConferenceId());
-    verify(v1).kickAll(conferenceIdCaptor.capture());
+    verify(api).callingKickConferenceAll(conferenceIdCaptor.capture());
 
     String parameter = conferenceIdCaptor.getValue();
     Assertions.assertThat(parameter)
@@ -96,15 +105,16 @@ public class ConferencesServiceTest extends BaseTest {
   @Test
   void manageParticipant() throws ApiException {
 
+    doReturn(api).when(service).getApi();
+
     service.manageParticipant(
         CalloutRequestDtoTest.conferenceRequestCalloutDto.getConferenceId(),
         CalloutResponseDtoTest.expectedCalloutResponseDto.getCallId(),
-        ConferenceManageParticipantRequestParametersTest
-            .conferenceManageParticipantRequestParameters);
+        ConferencesRequestDtoTest.manageConferenceParticipantRequestDto);
 
-    verify(v1)
-        .manageParticipant(
-            conferenceIdCaptor.capture(), callIdCaptor.capture(), participantCaptor.capture());
+    verify(api)
+        .callingManageConferenceParticipant(
+            callIdCaptor.capture(), conferenceIdCaptor.capture(), participantCaptor.capture());
 
     String parameter = callIdCaptor.getValue();
     Assertions.assertThat(parameter)
