@@ -1,12 +1,11 @@
 package com.sinch.sdk.domains.voice.adapters.converters;
 
-import com.sinch.sdk.domains.voice.models.Destination;
 import com.sinch.sdk.domains.voice.models.DestinationNumber;
 import com.sinch.sdk.domains.voice.models.DestinationNumberType;
 import com.sinch.sdk.domains.voice.models.DestinationSip;
 import com.sinch.sdk.domains.voice.models.DestinationUser;
-import com.sinch.sdk.domains.voice.models.dto.v1.DestinationDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.DestinationTypeDto;
+import com.sinch.sdk.domains.voice.models.v1.Destination;
+import com.sinch.sdk.domains.voice.models.v1.DestinationType;
 import com.sinch.sdk.models.E164PhoneNumber;
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -15,58 +14,61 @@ public class DestinationDtoConverter {
 
   private static final Logger LOGGER = Logger.getLogger(DestinationDtoConverter.class.getName());
 
-  public static DestinationDto convert(Destination client) {
-    DestinationDto dto = new DestinationDto();
+  public static Destination convert(com.sinch.sdk.domains.voice.models.Destination client) {
+
     if (null == client) {
       return null;
     }
-    DestinationTypeDto type = null;
+    Destination.Builder dto = Destination.builder();
+    DestinationType type = null;
     String endpoint = null;
     if (client instanceof DestinationNumber) {
       DestinationNumber destination = (DestinationNumber) client;
-      DestinationNumberType clientType = destination.getType();
-      if (clientType == DestinationNumberType.DID) {
-        type = DestinationTypeDto.DID;
-      } else if (clientType == DestinationNumberType.PSTN) {
-        type = DestinationTypeDto.NUMBER;
+      if (DestinationNumberType.DID.equals(destination.getType())) {
+        type = DestinationType.DID;
+      } else if (DestinationNumberType.PSTN.equals(destination.getType())) {
+        type = DestinationType.NUMBER;
       } else {
         LOGGER.severe(String.format("Unexpected type '%s'", destination.getType()));
-        return dto;
       }
       endpoint = destination.getPhoneNumber().stringValue();
     } else if (client instanceof DestinationUser) {
       DestinationUser destination = (DestinationUser) client;
-      type = DestinationTypeDto.USERNAME;
+      type = DestinationType.USERNAME;
       endpoint = destination.getUserName();
     } else if (client instanceof DestinationSip) {
       DestinationSip destination = (DestinationSip) client;
-      type = DestinationTypeDto.SIP;
+      type = DestinationType.SIP;
       endpoint = destination.getSIPAddress();
     } else {
       LOGGER.severe(String.format("Unexpected class '%s'", client.getClass()));
     }
-    if (null != type && endpoint != null) {
-      dto.type(type).endpoint(endpoint);
+    if (null != type) {
+      dto.setType(type);
     }
-    return dto;
+    if (null != endpoint) {
+      dto.setEndpoint(endpoint);
+    }
+
+    return dto.build();
   }
 
-  public static Destination convert(DestinationDto dto) {
+  public static com.sinch.sdk.domains.voice.models.Destination convert(Destination dto) {
     if (null == dto) {
       return null;
     }
-    Destination destination = null;
-    if (Objects.equals(dto.getType(), DestinationTypeDto.NUMBER)
-        || Objects.equals(dto.getType(), DestinationTypeDto.NUMBER2)) {
+    com.sinch.sdk.domains.voice.models.Destination destination = null;
+    if (Objects.equals(dto.getType(), DestinationType.NUMBER)
+        || Objects.equals(dto.getType(), DestinationType.NUMBER2)) {
       destination =
           new DestinationNumber(
               E164PhoneNumber.valueOf(dto.getEndpoint()), DestinationNumberType.PSTN);
-    } else if (Objects.equals(dto.getType(), DestinationTypeDto.USERNAME)
-        || Objects.equals(dto.getType(), DestinationTypeDto.USERNAME2)) {
+    } else if (Objects.equals(dto.getType(), DestinationType.USERNAME)
+        || Objects.equals(dto.getType(), DestinationType.USERNAME2)) {
       destination = new DestinationUser(dto.getEndpoint());
-    } else if (Objects.equals(dto.getType(), DestinationTypeDto.SIP)) {
+    } else if (Objects.equals(dto.getType(), DestinationType.SIP)) {
       destination = new DestinationSip(dto.getEndpoint());
-    } else if (Objects.equals(dto.getType(), DestinationTypeDto.DID)) {
+    } else if (Objects.equals(dto.getType(), DestinationType.DID)) {
       destination =
           new DestinationNumber(
               E164PhoneNumber.valueOf(dto.getEndpoint()), DestinationNumberType.DID);
