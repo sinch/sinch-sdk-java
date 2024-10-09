@@ -5,7 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.domains.voice.models.dto.v1.GetQueryNumberDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.GetQueryNumberNumberDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.PriceDto;
+import com.sinch.sdk.domains.voice.models.v1.Price;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +20,7 @@ public class ApplicationsQueryNumberResponseDtoTest extends BaseTest {
                   .numberType("Mobile")
                   .normalizedNumber("+331234567489")
                   .restricted(true)
-                  .rate(new PriceDto().currencyId("USD").amount(0.1850F)));
+                  .rate(Price.builder().setCurrencyId("USD").setAmount(0.1850F).build()));
 
   @GivenJsonResource("/domains/voice/v1/applications/ApplicationsQueryNumberResponseDto.json")
   GetQueryNumberDto loaded;
