@@ -19,14 +19,6 @@ import com.sinch.sdk.domains.voice.models.dto.v1.NotifyRequestDto.EventEnum;
 import com.sinch.sdk.domains.voice.models.dto.v1.PieRequestAllOfMenuResultDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.PieRequestDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.PriceDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SVAMLRequestBodyDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlActionConnectConfDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlActionDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionSayDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionStartRecordingDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionStartRecordingOptionsDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionStartRecordingOptionsTranscriptionOptionsDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.WebhooksEventDto;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
@@ -53,10 +45,7 @@ public class WebhooksEventDtoTest extends BaseTest {
 
   @GivenJsonResource("/domains/voice/v1/webhooks/NotifyRequestDto.json")
   WebhooksEventDto loadedNotifyRequestDto;
-
-  @GivenTextResource("/domains/voice/v1/webhooks/SVAMLResponseDto.json")
-  String jsonSVAMLResponseDto;
-
+  
   public static WebhooksEventDto expectedIceRequestDto =
       new WebhooksEventDto(
           new IceRequestDto()
@@ -132,33 +121,6 @@ public class WebhooksEventDtoTest extends BaseTest {
               .custom("my custom value")
               .type("recording_finished"));
 
-  public static SVAMLRequestBodyDto expectedSVAMLResponseDto =
-      new SVAMLRequestBodyDto()
-          .action(
-              new SvamlActionDto(
-                  new SvamlActionConnectConfDto()
-                      .name(SvamlActionConnectConfDto.NameEnum.CONNECTCONF.getValue())
-                      .conferenceId("My Conference Id")))
-          .instructions(
-              Arrays.asList(
-                  new SvamlInstructionDto(
-                      new SvamlInstructionSayDto()
-                          .name(SvamlInstructionSayDto.NameEnum.SAY.getValue())
-                          .text("Hello from instruction")),
-                  new SvamlInstructionDto(
-                      new SvamlInstructionStartRecordingDto()
-                          .name(
-                              SvamlInstructionStartRecordingDto.NameEnum.STARTRECORDING.getValue())
-                          .options(
-                              new SvamlInstructionStartRecordingOptionsDto()
-                                  .destinationUrl("s3://my-bucket/")
-                                  .credentials(
-                                      "AKIAIOSFODNN7EXAMPLE:wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY:eu-central-1")
-                                  .notificationEvents(true)
-                                  .transcriptionOptions(
-                                      new SvamlInstructionStartRecordingOptionsTranscriptionOptionsDto()
-                                          .enabled(true))))));
-
   @Test
   void deserializeIceRequest() {
     Assertions.assertThat(loadedIceRequestDto)
@@ -192,13 +154,5 @@ public class WebhooksEventDtoTest extends BaseTest {
     Assertions.assertThat(loadedNotifyRequestDto)
         .usingRecursiveComparison()
         .isEqualTo(expectedNotifyRequestDto);
-  }
-
-  @Test
-  void serializeSVAMLResponse() throws JsonProcessingException, JSONException {
-
-    String serializedString = objectMapper.writeValueAsString(expectedSVAMLResponseDto);
-
-    JSONAssert.assertEquals(jsonSVAMLResponseDto, serializedString, true);
   }
 }

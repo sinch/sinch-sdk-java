@@ -4,10 +4,10 @@ import com.sinch.sdk.domains.voice.models.CallReasonType;
 import com.sinch.sdk.domains.voice.models.CallResultType;
 import com.sinch.sdk.domains.voice.models.DomainType;
 import com.sinch.sdk.domains.voice.models.dto.v1.GetCallResponseObjDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SVAMLRequestBodyDto;
 import com.sinch.sdk.domains.voice.models.response.CallInformation;
 import com.sinch.sdk.domains.voice.models.response.CallStatusType;
 import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
+import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
 
 public class CallsDtoConverter {
 
@@ -31,16 +31,16 @@ public class CallsDtoConverter {
         .build();
   }
 
-  public static SVAMLRequestBodyDto convert(SVAMLControl client) {
+  public static SvamlControl convert(SVAMLControl client) {
     if (null == client) {
       return null;
     }
-    SVAMLRequestBodyDto dto = new SVAMLRequestBodyDto();
+    SvamlControl.Builder dto = SvamlControl.builder();
 
     client
         .getInstructions()
-        .ifPresent(f -> dto.instructions(SVAMLInstructionDtoConverter.convert(f)));
-    client.getAction().ifPresent(f -> dto.action(SVAMLActionDtoConverter.convert(f)));
-    return dto;
+        .ifPresent(f -> dto.setInstructions(SVAMLInstructionDtoConverter.convert(f)));
+    client.getAction().ifPresent(f -> dto.setAction(SVAMLActionDtoConverter.convert(f)));
+    return dto.build();
   }
 }

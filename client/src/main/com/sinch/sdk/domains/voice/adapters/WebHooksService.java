@@ -7,9 +7,9 @@ import com.sinch.sdk.core.utils.MapUtils;
 import com.sinch.sdk.core.utils.databind.Mapper;
 import com.sinch.sdk.domains.voice.adapters.converters.CallsDtoConverter;
 import com.sinch.sdk.domains.voice.adapters.converters.WebhooksEventDtoConverter;
-import com.sinch.sdk.domains.voice.models.dto.v1.SVAMLRequestBodyDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.WebhooksEventDto;
 import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
+import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
 import com.sinch.sdk.domains.voice.models.webhooks.WebhooksEvent;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -61,7 +61,7 @@ public class WebHooksService implements com.sinch.sdk.domains.voice.WebHooksServ
 
   @Override
   public String serializeWebhooksResponse(SVAMLControl response) throws ApiMappingException {
-    SVAMLRequestBodyDto dto = CallsDtoConverter.convert(response);
+    SvamlControl dto = CallsDtoConverter.convert(response);
     try {
       return Mapper.getInstance().writeValueAsString(dto);
     } catch (JsonProcessingException e) {

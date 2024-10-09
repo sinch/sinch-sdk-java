@@ -14,10 +14,10 @@ import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.domains.voice.adapters.api.v1.CallsApi;
 import com.sinch.sdk.domains.voice.adapters.converters.CallsDtoConverterTest;
 import com.sinch.sdk.domains.voice.models.CallLegType;
-import com.sinch.sdk.domains.voice.models.dto.v1.SVAMLRequestBodyDto;
 import com.sinch.sdk.domains.voice.models.response.CallInformation;
 import com.sinch.sdk.domains.voice.models.svaml.SVAMLControlTest;
 import com.sinch.sdk.domains.voice.models.v1.calls.CallsResponseDtoTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
 import com.sinch.sdk.models.VoiceContext;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -37,7 +37,7 @@ public class CallsServiceTest extends BaseTest {
 
   @Captor ArgumentCaptor<String> callIdCaptor;
   @Captor ArgumentCaptor<String> callLegCaptor;
-  @Captor ArgumentCaptor<SVAMLRequestBodyDto> updateParametersCaptor;
+  @Captor ArgumentCaptor<SvamlControl> updateParametersCaptor;
   CallsService service;
 
   @BeforeEach

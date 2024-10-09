@@ -8,15 +8,13 @@ import com.sinch.sdk.domains.voice.models.DestinationNumber;
 import com.sinch.sdk.domains.voice.models.DestinationUser;
 import com.sinch.sdk.domains.voice.models.DomainType;
 import com.sinch.sdk.domains.voice.models.Price;
-import com.sinch.sdk.domains.voice.models.dto.v1.SVAMLRequestBodyDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlActionDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionDto;
 import com.sinch.sdk.domains.voice.models.response.CallInformation;
 import com.sinch.sdk.domains.voice.models.response.CallStatusType;
 import com.sinch.sdk.domains.voice.models.svaml.SVAMLControlTest;
 import com.sinch.sdk.domains.voice.models.v1.calls.CallsResponseDtoTest;
-import com.sinch.sdk.domains.voice.models.v1.svaml.action.ActionConnectConfDtoTest;
-import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.InstructionAnswerDtoTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectConferenceTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionAnswerTest;
 import java.time.Instant;
 import java.util.Collections;
 import org.assertj.core.api.Assertions;
@@ -41,11 +39,10 @@ public class CallsDtoConverterTest extends BaseTest {
           .setDebit(Price.builder().setCurrencyId("EUR").setAmount(0.5274F).build())
           .build();
 
-  public static SVAMLRequestBodyDto svamlRequestBodyDto =
-      new SVAMLRequestBodyDto()
-          .action(new SvamlActionDto(ActionConnectConfDtoTest.dto))
-          .instructions(
-              Collections.singletonList(new SvamlInstructionDto(InstructionAnswerDtoTest.dto)));
+  public static SvamlControl.Builder svamlControlDto =
+      SvamlControl.builder()
+          .setAction(SvamlActionConnectConferenceTest.dto)
+          .setInstructions(Collections.singletonList(SvamlInstructionAnswerTest.dto));
 
   @Test
   void convertCallInformation() {
@@ -59,7 +56,7 @@ public class CallsDtoConverterTest extends BaseTest {
   @Test
   void convertCallsUpdateRequestParameters() {
 
-    Assertions.assertThat(svamlRequestBodyDto)
+    Assertions.assertThat(svamlControlDto)
         .usingRecursiveComparison()
         .isEqualTo(CallsDtoConverter.convert(SVAMLControlTest.parameters));
   }
