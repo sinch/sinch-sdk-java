@@ -2,22 +2,23 @@ package com.sinch.sdk.domains.voice.adapters.converters;
 
 import com.sinch.sdk.domains.common.adapters.converters.EnumDynamicConverter;
 import com.sinch.sdk.domains.voice.models.ConferenceDtfmOptions;
-import com.sinch.sdk.domains.voice.models.dto.v1.CalloutRequestDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.CalloutRequestDto.MethodEnum;
-import com.sinch.sdk.domains.voice.models.dto.v1.ConferenceCalloutRequestConferenceDtmfOptionsDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.ConferenceCalloutRequestDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.CustomCalloutRequestDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.GetCalloutResponseObjDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.TtsCalloutRequestDto;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParameters;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConference;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersCustom;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersTTS;
 import com.sinch.sdk.domains.voice.models.v1.Domain;
+import com.sinch.sdk.domains.voice.models.v1.MusicOnHold;
+import com.sinch.sdk.domains.voice.models.v1.callouts.CalloutRequest;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestCustom;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestTTS;
+import com.sinch.sdk.domains.voice.models.v1.conferences.ConferenceDtmfOptions;
+import com.sinch.sdk.models.DualToneMultiFrequency;
 
 public class CalloutsDtoConverter {
 
-  public static CalloutRequestDto convert(CalloutRequestParameters client) {
+  public static CalloutRequest convert(CalloutRequestParameters client) {
 
     if (client instanceof CalloutRequestParametersConference) {
       CalloutRequestParametersConference parameters = (CalloutRequestParametersConference) client;
@@ -39,16 +40,16 @@ public class CalloutsDtoConverter {
     return dto.getCallId();
   }
 
-  private static CalloutRequestDto convert(CalloutRequestParametersConference client) {
+  private static CalloutRequestConference convert(CalloutRequestParametersConference client) {
 
-    ConferenceCalloutRequestDto dto = new ConferenceCalloutRequestDto();
+    CalloutRequestConference.Builder dto = CalloutRequestConference.builder();
 
     client.getDestination().ifPresent(f -> dto.setDestination(DestinationDtoConverter.convert(f)));
     client.getCli().ifPresent(f -> dto.setCli(f.stringValue()));
-    client.getDtfm().ifPresent(f -> dto.setDtmf(f.stringValue()));
+    client.getDtfm().ifPresent(f -> dto.setDtmf(DualToneMultiFrequency.valueOf(f.stringValue())));
     client.getCustom().ifPresent(dto::setCustom);
 
-    client.getConferenceId().ifPresent(dto::conferenceId);
+    client.getConferenceId().ifPresent(dto::setConferenceId);
     client.getDtfmOptions().ifPresent(f -> dto.setConferenceDtmfOptions(convert(f)));
 
     client.getMaxDuration().ifPresent(dto::setMaxDuration);
@@ -57,21 +58,21 @@ public class CalloutsDtoConverter {
     client.getEnablePie().ifPresent(dto::setEnablePie);
     client.getLocale().ifPresent(dto::setLocale);
     client.getGreeting().ifPresent(dto::setGreeting);
-    client.getMusicOnHold().ifPresent(f -> dto.setMohClass(EnumDynamicConverter.convert(f)));
-    client.getDomain().ifPresent(f -> dto.setDomain(EnumDynamicConverter.convert(f)));
+    client
+        .getMusicOnHold()
+        .ifPresent(f -> dto.setMohClass(MusicOnHold.from(EnumDynamicConverter.convert(f))));
+    client.getDomain().ifPresent(f -> dto.setDomain(Domain.from(EnumDynamicConverter.convert(f))));
 
-    return new CalloutRequestDto()
-        .method(MethodEnum.CONFERENCECALLOUT.getValue())
-        .conferenceCallout(dto);
+    return dto.build();
   }
 
-  private static CalloutRequestDto convert(CalloutRequestParametersTTS client) {
+  private static CalloutRequestTTS convert(CalloutRequestParametersTTS client) {
 
-    TtsCalloutRequestDto dto = new TtsCalloutRequestDto();
+    CalloutRequestTTS.Builder dto = CalloutRequestTTS.builder();
 
     client.getDestination().ifPresent(f -> dto.setDestination(DestinationDtoConverter.convert(f)));
     client.getCli().ifPresent(f -> dto.setCli(f.stringValue()));
-    client.getDtfm().ifPresent(f -> dto.setDtmf(f.stringValue()));
+    client.getDtfm().ifPresent(f -> dto.setDtmf(DualToneMultiFrequency.valueOf(f.stringValue())));
     client.getCustom().ifPresent(dto::setCustom);
     client.getEnableAce().ifPresent(dto::setEnableAce);
     client.getEnableDice().ifPresent(dto::setEnableDice);
@@ -80,34 +81,32 @@ public class CalloutsDtoConverter {
     client.getDomain().ifPresent(f -> dto.setDomain(Domain.from(EnumDynamicConverter.convert(f))));
     client.getText().ifPresent(dto::setText);
     client.getPrompts().ifPresent(dto::setPrompts);
-
-    return new CalloutRequestDto().method(MethodEnum.TTSCALLOUT.getValue()).ttsCallout(dto);
+    return dto.build();
   }
 
-  private static CalloutRequestDto convert(CalloutRequestParametersCustom client) {
+  private static CalloutRequestCustom convert(CalloutRequestParametersCustom client) {
 
-    CustomCalloutRequestDto dto = new CustomCalloutRequestDto();
+    CalloutRequestCustom.Builder dto = CalloutRequestCustom.builder();
 
     client.getDestination().ifPresent(f -> dto.setDestination(DestinationDtoConverter.convert(f)));
     client.getCli().ifPresent(f -> dto.setCli(f.stringValue()));
-    client.getDtfm().ifPresent(f -> dto.setDtmf(f.stringValue()));
+    client.getDtfm().ifPresent(f -> dto.setDtmf(DualToneMultiFrequency.valueOf(f.stringValue())));
     client.getCustom().ifPresent(dto::setCustom);
-
     client.getMaxDuration().ifPresent(dto::setMaxDuration);
     client.getIce().ifPresent(f -> dto.setIce(ControlDtoConverter.convert(f)));
     client.getAce().ifPresent(f -> dto.setAce(ControlDtoConverter.convert(f)));
     client.getPie().ifPresent(f -> dto.setPie(ControlDtoConverter.convert(f)));
-
-    return new CalloutRequestDto().method(MethodEnum.CUSTOMCALLOUT.getValue()).customCallout(dto);
+    return dto.build();
   }
 
-  private static ConferenceCalloutRequestConferenceDtmfOptionsDto convert(
-      ConferenceDtfmOptions client) {
-    ConferenceCalloutRequestConferenceDtmfOptionsDto dto =
-        new ConferenceCalloutRequestConferenceDtmfOptionsDto();
-    client.getMode().ifPresent(f -> dto.setMode(EnumDynamicConverter.convert(f)));
+  private static ConferenceDtmfOptions convert(ConferenceDtfmOptions client) {
+    ConferenceDtmfOptions.Builder dto = ConferenceDtmfOptions.builder();
+    client
+        .getMode()
+        .ifPresent(
+            f -> dto.setMode(ConferenceDtmfOptions.ModeEnum.from(EnumDynamicConverter.convert(f))));
     client.getMaxDigits().ifPresent(dto::setMaxDigits);
     client.getTimeoutMills().ifPresent(dto::setTimeoutMills);
-    return dto;
+    return dto.build();
   }
 }

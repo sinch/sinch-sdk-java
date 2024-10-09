@@ -3,22 +3,23 @@ package com.sinch.sdk.domains.voice.models.v1.callouts;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.sinch.sdk.BaseTest;
-import com.sinch.sdk.domains.voice.models.dto.v1.CalloutRequestDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.CalloutRequestDto.MethodEnum;
-import com.sinch.sdk.domains.voice.models.dto.v1.ConferenceCalloutRequestConferenceDtmfOptionsDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.ConferenceCalloutRequestDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.CustomCalloutRequestDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.DestinationDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.DestinationTypeDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.DomainDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.TtsCalloutRequestDto;
+import com.sinch.sdk.domains.voice.adapters.VoiceBaseTest;
+import com.sinch.sdk.domains.voice.models.v1.Destination;
+import com.sinch.sdk.domains.voice.models.v1.DestinationType;
+import com.sinch.sdk.domains.voice.models.v1.Domain;
+import com.sinch.sdk.domains.voice.models.v1.MusicOnHold;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestCustom;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestTTS;
+import com.sinch.sdk.domains.voice.models.v1.conferences.ConferenceDtmfOptions;
+import com.sinch.sdk.domains.voice.models.v1.conferences.ConferenceDtmfOptions.ModeEnum;
+import com.sinch.sdk.models.DualToneMultiFrequency;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-public class CalloutRequestDtoTest extends BaseTest {
+public class CalloutRequestDtoTest extends VoiceBaseTest {
 
   @GivenTextResource("/domains/voice/v1/callouts/CalloutRequestConferenceDto.json")
   String jsonCalloutRequestConference;
@@ -29,74 +30,76 @@ public class CalloutRequestDtoTest extends BaseTest {
   @GivenTextResource("/domains/voice/v1/callouts/CalloutRequestCustomDto.json")
   String jsonCalloutRequestCustom;
 
-  public static CalloutRequestDto conferenceRequestCalloutDto =
-      new CalloutRequestDto()
-          .method(MethodEnum.CONFERENCECALLOUT.getValue())
-          .conferenceCallout(
-              new ConferenceCalloutRequestDto()
-                  .destination(
-                      new DestinationDto().type(DestinationTypeDto.NUMBER).endpoint("+14045005000"))
-                  .cli("+14045001000")
-                  .locale("en-US")
-                  .greeting("Welcome to my conference")
-                  .conferenceId("MyConfId")
-                  .conferenceDtmfOptions(
-                      new ConferenceCalloutRequestConferenceDtmfOptionsDto()
-                          .mode("detect")
-                          .maxDigits(3)
-                          .timeoutMills(456))
-                  .dtmf("w123#")
-                  .maxDuration(32)
-                  .enableAce(true)
-                  .enableDice(true)
-                  .enablePie(true)
-                  .mohClass("music2")
-                  .custom("my custom value")
-                  .domain("pstn"));
+  public static CalloutRequestConference conferenceRequestCalloutDto =
+      CalloutRequestConference.builder()
+          .setDestination(
+              Destination.builder()
+                  .setType(DestinationType.NUMBER)
+                  .setEndpoint("+14045005000")
+                  .build())
+          .setCli("+14045001000")
+          .setLocale("en-US")
+          .setGreeting("Welcome to my conference")
+          .setConferenceId("MyConfId")
+          .setConferenceDtmfOptions(
+              ConferenceDtmfOptions.builder()
+                  .setMode(ModeEnum.DETECT)
+                  .setMaxDigits(3)
+                  .setTimeoutMills(456)
+                  .build())
+          .setDtmf(DualToneMultiFrequency.valueOf("w123#"))
+          .setMaxDuration(32)
+          .setEnableAce(true)
+          .setEnableDice(true)
+          .setEnablePie(true)
+          .setMohClass(MusicOnHold.MUSIC2)
+          .setCustom("my custom value")
+          .setDomain(Domain.PSTN)
+          .build();
 
-  public static CalloutRequestDto ttsRequestDto =
-      new CalloutRequestDto()
-          .method(MethodEnum.TTSCALLOUT.getValue())
-          .ttsCallout(
-              new TtsCalloutRequestDto()
-                  .destination(
-                      new DestinationDto()
-                          .type(DestinationTypeDto.USERNAME)
-                          .endpoint("an user name"))
-                  .cli("+14045001000")
-                  .dtmf("w123#")
-                  .custom("my custom value")
-                  .domain(DomainDto.PSTN)
-                  .locale("en-US")
-                  .text("text value")
-                  .prompts(
-                      "#ssml[<speak><p>Your PIN code is <say-as"
-                          + " interpret-as=\"digits\">1234</say-as></p><p>Please enter it"
-                          + " now</p></speak>]")
-                  .enableAce(true)
-                  .enableDice(true)
-                  .enablePie(true));
+  public static CalloutRequestTTS ttsRequestDto =
+      CalloutRequestTTS.builder()
+          .setDestination(
+              Destination.builder()
+                  .setType(DestinationType.USERNAME)
+                  .setEndpoint("an user name")
+                  .build())
+          .setCli("+14045001000")
+          .setDtmf(DualToneMultiFrequency.valueOf("w123#"))
+          .setCustom("my custom value")
+          .setDomain(Domain.PSTN)
+          .setLocale("en-US")
+          .setText("text value")
+          .setPrompts(
+              "#ssml[<speak><p>Your PIN code is <say-as"
+                  + " interpret-as=\"digits\">1234</say-as></p><p>Please enter it"
+                  + " now</p></speak>]")
+          .setEnableAce(true)
+          .setEnableDice(true)
+          .setEnablePie(true)
+          .build();
 
-  public static CalloutRequestDto customRequestDto =
-      new CalloutRequestDto()
-          .method(MethodEnum.CUSTOMCALLOUT.getValue())
-          .customCallout(
-              new CustomCalloutRequestDto()
-                  .destination(
-                      new DestinationDto().type(DestinationTypeDto.NUMBER).endpoint("+14045005000"))
-                  .cli("+14045001000")
-                  .dtmf("w123#")
-                  .custom("my custom value")
-                  .maxDuration(32)
-                  .ice(
-                      "{\"action\":{\"name\":\"connectPstn\",\"number\":"
-                          + "\"+12233445566\",\"cli\":\"+12234325234\",\"amd\":"
-                          + "{\"enabled\":true}}}")
-                  .ace(
-                      "{\"instructions\":[{\"name\":\"say\",\"text\":\"Hello,"
-                          + " this is a call from Sinch!\"}],\"action\":{\"name\":"
-                          + "\"hangup\"}}")
-                  .pie("https://your-application-server-host/application"));
+  public static CalloutRequestCustom customRequestDto =
+      CalloutRequestCustom.builder()
+          .setDestination(
+              Destination.builder()
+                  .setType(DestinationType.NUMBER)
+                  .setEndpoint("+14045005000")
+                  .build())
+          .setCli("+14045001000")
+          .setDtmf(DualToneMultiFrequency.valueOf("w123#"))
+          .setCustom("my custom value")
+          .setMaxDuration(32)
+          .setIce(
+              "{\"action\":{\"name\":\"connectPstn\",\"number\":"
+                  + "\"+12233445566\",\"cli\":\"+12234325234\",\"amd\":"
+                  + "{\"enabled\":true}}}")
+          .setAce(
+              "{\"instructions\":[{\"name\":\"say\",\"text\":\"Hello,"
+                  + " this is a call from Sinch!\"}],\"action\":{\"name\":"
+                  + "\"hangup\"}}")
+          .setPie("https://your-application-server-host/application")
+          .build();
 
   @Test
   void serializeCalloutConference() throws JsonProcessingException, JSONException {
