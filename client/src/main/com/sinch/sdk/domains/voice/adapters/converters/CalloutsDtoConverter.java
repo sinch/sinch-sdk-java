@@ -2,7 +2,6 @@ package com.sinch.sdk.domains.voice.adapters.converters;
 
 import com.sinch.sdk.domains.common.adapters.converters.EnumDynamicConverter;
 import com.sinch.sdk.domains.voice.models.ConferenceDtfmOptions;
-import com.sinch.sdk.domains.voice.models.dto.v1.GetCalloutResponseObjDto;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParameters;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConference;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersCustom;
@@ -13,6 +12,7 @@ import com.sinch.sdk.domains.voice.models.v1.callouts.CalloutRequest;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestCustom;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestTTS;
+import com.sinch.sdk.domains.voice.models.v1.callouts.response.CalloutResponse;
 import com.sinch.sdk.domains.voice.models.v1.conferences.ConferenceDtmfOptions;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 
@@ -33,7 +33,7 @@ public class CalloutsDtoConverter {
     return null;
   }
 
-  public static String convert(GetCalloutResponseObjDto dto) {
+  public static String convert(CalloutResponse dto) {
     if (null == dto) {
       return null;
     }
