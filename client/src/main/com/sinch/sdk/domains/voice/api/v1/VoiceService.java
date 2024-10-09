@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.voice;
+package com.sinch.sdk.domains.voice.api.v1;
 
 /**
  * Voice service
@@ -10,19 +10,10 @@ package com.sinch.sdk.domains.voice;
 public interface VoiceService {
 
   /**
-   * Voice Service V1
-   *
-   * @return V1 service instance for project
-   * @see <a href="https://developers.sinch.com/docs/voice">Documentation</a>
-   * @since 1.1
-   */
-  com.sinch.sdk.domains.voice.api.v1.VoiceService v1();
-
-  /**
    * Callouts Service instance
    *
    * @return service instance for project
-   * @since 1.0
+   * @since 1.4
    */
   CalloutsService callouts();
 
@@ -30,31 +21,31 @@ public interface VoiceService {
    * Conference Service instance
    *
    * @return service instance for project
-   * @since 1.0
+   * @since 1.4
    */
-  ConferencesService conferences();
+  // ConferencesService conferences();
 
   /**
    * Calls Service instance
    *
    * @return service instance for project
-   * @since 1.0
+   * @since 1.4
    */
-  CallsService calls();
+  // CallsService calls();
 
   /**
    * Applications Service instance
    *
    * @return service instance for project
-   * @since 1.0
+   * @since 1.4
    */
-  ApplicationsService applications();
+  // ApplicationsService applications();
 
   /**
    * Webhooks helpers instance
    *
    * @return instance service related to webhooks helpers
-   * @since 1.0
+   * @since 1.4
    */
-  WebHooksService webhooks();
+  // WebHooksService webhooks();
 }

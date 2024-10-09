@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.voice.adapters;
+package com.sinch.sdk.domains.voice.api.v1.adapters;
 
 import com.sinch.sdk.auth.adapters.ApplicationAuthManager;
 import com.sinch.sdk.auth.adapters.BasicAuthManager;
@@ -6,9 +6,6 @@ import com.sinch.sdk.core.exceptions.ApiAuthException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.utils.StringUtil;
-import com.sinch.sdk.domains.voice.ApplicationsService;
-import com.sinch.sdk.domains.voice.CalloutsService;
-import com.sinch.sdk.domains.voice.WebHooksService;
 import com.sinch.sdk.models.ApplicationCredentials;
 import com.sinch.sdk.models.VoiceContext;
 import java.util.Map;
@@ -16,7 +13,7 @@ import java.util.Objects;
 import java.util.TreeMap;
 import java.util.logging.Logger;
 
-public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
+public class VoiceService implements com.sinch.sdk.domains.voice.api.v1.VoiceService {
   private static final Logger LOGGER = Logger.getLogger(VoiceService.class.getName());
 
   private static final String SECURITY_SCHEME_KEYWORD = "Signed";
@@ -28,15 +25,13 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
   private final VoiceContext context;
   private final HttpClient httpClient;
   private CalloutsService callouts;
-  private ConferencesService conferences;
+  /*private ConferencesService conferences;
   private CallsService calls;
   private ApplicationsService applications;
-  private WebHooksService webhooks;
+  private WebHooksService webhooks;*/
 
   private Map<String, AuthManager> clientAuthManagers;
   private Map<String, AuthManager> webhooksAuthManagers;
-
-  private final com.sinch.sdk.domains.voice.api.v1.VoiceService v1;
 
   public VoiceService(
       ApplicationCredentials credentials, VoiceContext context, HttpClient httpClient) {
@@ -54,10 +49,6 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
     this.context = context;
     this.httpClient = httpClient;
     setApplicationCredentials(credentials);
-
-    this.v1 =
-        new com.sinch.sdk.domains.voice.api.v1.adapters.VoiceService(
-            credentials, context, httpClient);
   }
 
   private void setApplicationCredentials(ApplicationCredentials credentials) {
@@ -81,16 +72,17 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
   public CalloutsService callouts() {
     if (null == this.callouts) {
       checkCredentials();
-      this.callouts = new com.sinch.sdk.domains.voice.adapters.CalloutsService(v1().callouts());
+      this.callouts = new CalloutsService(context, httpClient, clientAuthManagers);
     }
     return this.callouts;
   }
 
+  /*
   public ConferencesService conferences() {
     if (null == this.conferences) {
       checkCredentials();
       this.conferences =
-          new com.sinch.sdk.domains.voice.adapters.ConferencesService(
+          new ConferencesService(
               context, httpClient, clientAuthManagers);
     }
     return this.conferences;
@@ -100,7 +92,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
     if (null == this.calls) {
       checkCredentials();
       this.calls =
-          new com.sinch.sdk.domains.voice.adapters.CallsService(
+          new CallsService(
               context, httpClient, clientAuthManagers);
     }
     return this.calls;
@@ -123,11 +115,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
           new com.sinch.sdk.domains.voice.adapters.WebHooksService(webhooksAuthManagers);
     }
     return this.webhooks;
-  }
-
-  public com.sinch.sdk.domains.voice.api.v1.VoiceService v1() {
-    return this.v1;
-  }
+  }*/
 
   private void checkCredentials() throws ApiAuthException {
     if (null == clientAuthManagers || clientAuthManagers.isEmpty()) {
