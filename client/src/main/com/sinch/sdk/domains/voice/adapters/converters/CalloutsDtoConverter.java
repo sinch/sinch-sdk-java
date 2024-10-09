@@ -7,13 +7,13 @@ import com.sinch.sdk.domains.voice.models.dto.v1.CalloutRequestDto.MethodEnum;
 import com.sinch.sdk.domains.voice.models.dto.v1.ConferenceCalloutRequestConferenceDtmfOptionsDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.ConferenceCalloutRequestDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.CustomCalloutRequestDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.DomainDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.GetCalloutResponseObjDto;
 import com.sinch.sdk.domains.voice.models.dto.v1.TtsCalloutRequestDto;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParameters;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConference;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersCustom;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersTTS;
+import com.sinch.sdk.domains.voice.models.v1.Domain;
 
 public class CalloutsDtoConverter {
 
@@ -77,9 +77,7 @@ public class CalloutsDtoConverter {
     client.getEnableDice().ifPresent(dto::setEnableDice);
     client.getEnablePie().ifPresent(dto::setEnablePie);
     client.getLocale().ifPresent(dto::setLocale);
-    client
-        .getDomain()
-        .ifPresent(f -> dto.setDomain(DomainDto.fromValue(EnumDynamicConverter.convert(f))));
+    client.getDomain().ifPresent(f -> dto.setDomain(Domain.from(EnumDynamicConverter.convert(f))));
     client.getText().ifPresent(dto::setText);
     client.getPrompts().ifPresent(dto::setPrompts);
 

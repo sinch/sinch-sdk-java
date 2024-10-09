@@ -18,7 +18,7 @@ public class CallsDtoConverter {
     return CallInformation.builder()
         .setFrom(DestinationDtoConverter.convert(dto.getFrom()))
         .setTo(DestinationDtoConverter.convert(dto.getTo()))
-        .setDomain(null != dto.getDomain() ? DomainType.from(dto.getDomain()) : null)
+        .setDomain(null != dto.getDomain() ? DomainType.from(dto.getDomain().value()) : null)
         .setCallId(dto.getCallId())
         .setDuration(dto.getDuration())
         .setStatus(null != dto.getStatus() ? CallStatusType.from(dto.getStatus()) : null)
