@@ -25,9 +25,9 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v1.VoiceSer
   private final VoiceContext context;
   private final HttpClient httpClient;
   private CalloutsService callouts;
-  /*private ConferencesService conferences;
+  // private ConferencesService conferences;
   private CallsService calls;
-  private ApplicationsService applications;
+  /*private ApplicationsService applications;
   private WebHooksService webhooks;*/
 
   private Map<String, AuthManager> clientAuthManagers;
@@ -78,26 +78,25 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v1.VoiceSer
   }
 
   /*
-  public ConferencesService conferences() {
-    if (null == this.conferences) {
-      checkCredentials();
-      this.conferences =
-          new ConferencesService(
-              context, httpClient, clientAuthManagers);
+    public ConferencesService conferences() {
+      if (null == this.conferences) {
+        checkCredentials();
+        this.conferences =
+            new ConferencesService(
+                context, httpClient, clientAuthManagers);
+      }
+      return this.conferences;
     }
-    return this.conferences;
-  }
-
+  */
   public CallsService calls() {
     if (null == this.calls) {
       checkCredentials();
-      this.calls =
-          new CallsService(
-              context, httpClient, clientAuthManagers);
+      this.calls = new CallsService(context, httpClient, clientAuthManagers);
     }
     return this.calls;
   }
 
+  /*
   public ApplicationsService applications() {
     if (null == this.applications) {
       checkCredentials();

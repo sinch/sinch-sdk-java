@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-class SvamlControlTest extends BaseTest {
+public class SvamlControlTest extends BaseTest {
 
   public static SvamlControl expectedSvamlControl =
       SvamlControl.builder()

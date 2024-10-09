@@ -99,9 +99,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
   public CallsService calls() {
     if (null == this.calls) {
       checkCredentials();
-      this.calls =
-          new com.sinch.sdk.domains.voice.adapters.CallsService(
-              context, httpClient, clientAuthManagers);
+      this.calls = new com.sinch.sdk.domains.voice.adapters.CallsService(v1.calls());
     }
     return this.calls;
   }
