@@ -39,7 +39,7 @@ public interface VoiceService {
    * @return service instance for project
    * @since 1.4
    */
-  // ApplicationsService applications();
+  ApplicationsService applications();
 
   /**
    * Webhooks helpers instance
