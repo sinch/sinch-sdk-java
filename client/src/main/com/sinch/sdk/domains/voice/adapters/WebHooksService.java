@@ -7,9 +7,10 @@ import com.sinch.sdk.core.utils.MapUtils;
 import com.sinch.sdk.core.utils.databind.Mapper;
 import com.sinch.sdk.domains.voice.adapters.converters.CallsDtoConverter;
 import com.sinch.sdk.domains.voice.adapters.converters.WebhooksEventDtoConverter;
-import com.sinch.sdk.domains.voice.models.dto.v1.WebhooksEventDto;
 import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
 import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
+import com.sinch.sdk.domains.voice.models.v1.webhooks.VoiceWebhookEvent;
+import com.sinch.sdk.domains.voice.models.v1.webhooks.internal.WebhooksEventInternalImpl;
 import com.sinch.sdk.domains.voice.models.webhooks.WebhooksEvent;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -52,8 +53,9 @@ public class WebHooksService implements com.sinch.sdk.domains.voice.WebHooksServ
   @Override
   public WebhooksEvent unserializeWebhooksEvent(String jsonPayload) throws ApiMappingException {
     try {
-      WebhooksEventDto o = Mapper.getInstance().readValue(jsonPayload, WebhooksEventDto.class);
-      return WebhooksEventDtoConverter.convert(o);
+      WebhooksEventInternalImpl o =
+          Mapper.getInstance().readValue(jsonPayload, WebhooksEventInternalImpl.class);
+      return WebhooksEventDtoConverter.convert((VoiceWebhookEvent) o.getActualInstance());
     } catch (JsonProcessingException e) {
       throw new ApiMappingException(jsonPayload, e);
     }

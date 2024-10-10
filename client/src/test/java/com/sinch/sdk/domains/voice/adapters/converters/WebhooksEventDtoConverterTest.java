@@ -2,13 +2,14 @@ package com.sinch.sdk.domains.voice.adapters.converters;
 
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.voice.models.CallReasonType;
 import com.sinch.sdk.domains.voice.models.CallResultType;
 import com.sinch.sdk.domains.voice.models.DestinationNumber;
 import com.sinch.sdk.domains.voice.models.DomainType;
 import com.sinch.sdk.domains.voice.models.Price;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.WebhooksEventDtoTest;
+import com.sinch.sdk.domains.voice.models.v1.webhooks.VoiceWebhookEventTest;
 import com.sinch.sdk.domains.voice.models.webhooks.AmdAnswer;
 import com.sinch.sdk.domains.voice.models.webhooks.AmdAnswerReasonType;
 import com.sinch.sdk.domains.voice.models.webhooks.AmdAnswerStatusType;
@@ -22,7 +23,6 @@ import com.sinch.sdk.domains.voice.models.webhooks.NotifyEvent;
 import com.sinch.sdk.domains.voice.models.webhooks.PromptInputEvent;
 import java.time.Instant;
 import java.util.Collections;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
@@ -102,45 +102,40 @@ public class WebhooksEventDtoConverterTest extends BaseTest {
   @Test
   void convertIncomingCallRequest() {
 
-    Assertions.assertThat(
-            WebhooksEventDtoConverter.convert(WebhooksEventDtoTest.expectedIceRequestDto))
-        .usingRecursiveComparison()
-        .isEqualTo(expectedIncomingCallEvent);
+    TestHelpers.recursiveEquals(
+        WebhooksEventDtoConverter.convert(VoiceWebhookEventTest.expectedIceRequestDto),
+        expectedIncomingCallEvent);
   }
 
   @Test
   void convertDisconnectCallRequest() {
 
-    Assertions.assertThat(
-            WebhooksEventDtoConverter.convert(WebhooksEventDtoTest.expectedDiceRequestDto))
-        .usingRecursiveComparison()
-        .isEqualTo(expectedDisconnectCallEvent);
+    TestHelpers.recursiveEquals(
+        WebhooksEventDtoConverter.convert(VoiceWebhookEventTest.expectedDiceRequestDto),
+        expectedDisconnectCallEvent);
   }
 
   @Test
   void convertAnsweredCallEvent() {
 
-    Assertions.assertThat(
-            WebhooksEventDtoConverter.convert(WebhooksEventDtoTest.expectedAceRequestDto))
-        .usingRecursiveComparison()
-        .isEqualTo(expectedAnsweredCallEvent);
+    TestHelpers.recursiveEquals(
+        WebhooksEventDtoConverter.convert(VoiceWebhookEventTest.expectedAceRequestDto),
+        expectedAnsweredCallEvent);
   }
 
   @Test
   void convertPieEvent() {
 
-    Assertions.assertThat(
-            WebhooksEventDtoConverter.convert(WebhooksEventDtoTest.expectedPieRequestDto))
-        .usingRecursiveComparison()
-        .isEqualTo(expectedPromptInputEvent);
+    TestHelpers.recursiveEquals(
+        WebhooksEventDtoConverter.convert(VoiceWebhookEventTest.expectedPieRequestDto),
+        expectedPromptInputEvent);
   }
 
   @Test
   void convertNotifyEvent() {
 
-    Assertions.assertThat(
-            WebhooksEventDtoConverter.convert(WebhooksEventDtoTest.expectedNotifyRequestDto))
-        .usingRecursiveComparison()
-        .isEqualTo(expectedNotifyEvent);
+    TestHelpers.recursiveEquals(
+        WebhooksEventDtoConverter.convert(VoiceWebhookEventTest.expectedNotifyRequestDto),
+        expectedNotifyEvent);
   }
 }
