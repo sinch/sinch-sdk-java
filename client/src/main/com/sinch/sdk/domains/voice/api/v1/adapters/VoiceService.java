@@ -27,8 +27,8 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v1.VoiceSer
   private CalloutsService callouts;
   private ConferencesService conferences;
   private CallsService calls;
-  /*private ApplicationsService applications;
-  private WebHooksService webhooks;*/
+  // private ApplicationsService applications;
+  private WebHooksService webhooks;
 
   private Map<String, AuthManager> clientAuthManagers;
   private Map<String, AuthManager> webhooksAuthManagers;
@@ -103,16 +103,15 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v1.VoiceSer
               context, httpClient, clientAuthManagers);
     }
     return this.applications;
-  }
+  }*/
 
   public WebHooksService webhooks() {
     checkCredentials();
     if (null == this.webhooks) {
-      this.webhooks =
-          new com.sinch.sdk.domains.voice.adapters.WebHooksService(webhooksAuthManagers);
+      this.webhooks = new WebHooksService(webhooksAuthManagers);
     }
     return this.webhooks;
-  }*/
+  }
 
   private void checkCredentials() throws ApiAuthException {
     if (null == clientAuthManagers || clientAuthManagers.isEmpty()) {

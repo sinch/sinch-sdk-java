@@ -116,8 +116,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
   public WebHooksService webhooks() {
     checkCredentials();
     if (null == this.webhooks) {
-      this.webhooks =
-          new com.sinch.sdk.domains.voice.adapters.WebHooksService(webhooksAuthManagers);
+      this.webhooks = new com.sinch.sdk.domains.voice.adapters.WebHooksService(v1.webhooks());
     }
     return this.webhooks;
   }

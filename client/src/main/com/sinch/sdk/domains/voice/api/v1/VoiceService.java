@@ -5,7 +5,7 @@ package com.sinch.sdk.domains.voice.api.v1;
  *
  * @see <a
  *     href="https://developers.sinch.com/docs/voice/">https://developers.sinch.com/docs/voice/</a>
- * @since 1.0
+ * @since 1.4
  */
 public interface VoiceService {
 
@@ -47,5 +47,5 @@ public interface VoiceService {
    * @return instance service related to webhooks helpers
    * @since 1.4
    */
-  // WebHooksService webhooks();
+  WebHooksService webhooks();
 }
