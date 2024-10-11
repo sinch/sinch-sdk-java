@@ -127,17 +127,13 @@ public class CalloutsSteps {
                                                 MenuOption.builder()
                                                     .setDtmf("1")
                                                     .setAction(
-                                                        MenuOptionActionFactory.build(
-                                                            MenuOptionActionFactory
-                                                                .MenuOptionActionType.MENU,
+                                                        MenuOptionActionFactory.menuAction(
                                                             "confirm"))
                                                     .build(),
                                                 MenuOption.builder()
                                                     .setDtmf("2")
                                                     .setAction(
-                                                        MenuOptionActionFactory.build(
-                                                            MenuOptionActionFactory
-                                                                .MenuOptionActionType.RETURN,
+                                                        MenuOptionActionFactory.returnAction(
                                                             "cancel"))
                                                     .build()))
                                         .build(),

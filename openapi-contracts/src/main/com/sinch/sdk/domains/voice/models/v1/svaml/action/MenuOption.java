@@ -12,7 +12,15 @@ package com.sinch.sdk.domains.voice.models.v1.svaml.action;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** A configured option that the user can trigger to perform an action. */
+/**
+ * A configured option that the user can trigger to perform an action.
+ *
+ * <p>Use the <b>{@link
+ * com.sinch.sdk.domains.voice.models.v1.svaml.action.MenuOptionActionFactory}</b> factory builder
+ * helper to create menu action
+ *
+ * @see com.sinch.sdk.domains.voice.models.v1.svaml.action.MenuOptionActionFactory
+ */
 @JsonDeserialize(builder = MenuOptionImpl.Builder.class)
 public interface MenuOption {
 
