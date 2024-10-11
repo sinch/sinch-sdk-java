@@ -1,7 +1,7 @@
 package com.sinch.sdk.domains.voice.adapters;
 
 import com.sinch.sdk.core.exceptions.ApiMappingException;
-import com.sinch.sdk.domains.voice.adapters.converters.CallsDtoConverter;
+import com.sinch.sdk.domains.voice.adapters.converters.ControlDtoConverter;
 import com.sinch.sdk.domains.voice.adapters.converters.WebhooksEventDtoConverter;
 import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
 import com.sinch.sdk.domains.voice.models.webhooks.WebhooksEvent;
@@ -28,6 +28,6 @@ public class WebHooksService implements com.sinch.sdk.domains.voice.WebHooksServ
 
   @Override
   public String serializeWebhooksResponse(SVAMLControl response) throws ApiMappingException {
-    return v1.serializeResponse(CallsDtoConverter.convert(response));
+    return v1.serializeResponse(ControlDtoConverter.convertControl(response));
   }
 }

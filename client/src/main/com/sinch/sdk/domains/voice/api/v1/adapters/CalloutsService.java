@@ -3,6 +3,7 @@ package com.sinch.sdk.domains.voice.api.v1.adapters;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.domains.voice.api.v1.adapters.mapper.CalloutRequestCustomMapper;
 import com.sinch.sdk.domains.voice.api.v1.internal.CalloutsApi;
 import com.sinch.sdk.domains.voice.models.v1.callouts.CalloutRequest;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
@@ -16,6 +17,10 @@ import java.util.Map;
 public class CalloutsService implements com.sinch.sdk.domains.voice.api.v1.CalloutsService {
 
   private final CalloutsApi api;
+
+  static {
+    LocalLazyInit.init();
+  }
 
   public CalloutsService(
       VoiceContext context, HttpClient httpClient, Map<String, AuthManager> authManagers) {
@@ -51,5 +56,21 @@ public class CalloutsService implements com.sinch.sdk.domains.voice.api.v1.Callo
       return null;
     }
     return response.getCallId();
+  }
+
+  public static final class LocalLazyInit {
+
+    private LocalLazyInit() {
+      CalloutRequestCustomMapper.initMapper();
+    }
+
+    public static LocalLazyInit init() {
+      return LazyHolder.INSTANCE;
+    }
+
+    private static class LazyHolder {
+
+      public static final LocalLazyInit INSTANCE = new LocalLazyInit();
+    }
   }
 }

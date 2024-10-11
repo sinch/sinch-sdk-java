@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.voice.models.v1.Destination;
+import com.sinch.sdk.domains.voice.models.v1.svaml.Control;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import java.util.Objects;
 
@@ -48,15 +49,15 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
 
   public static final String JSON_PROPERTY_ICE = "ice";
 
-  private OptionalValue<String> ice;
+  private OptionalValue<Control> ice;
 
   public static final String JSON_PROPERTY_ACE = "ace";
 
-  private OptionalValue<String> ace;
+  private OptionalValue<Control> ace;
 
   public static final String JSON_PROPERTY_PIE = "pie";
 
-  private OptionalValue<String> pie;
+  private OptionalValue<Control> pie;
 
   public CustomCalloutInternalImpl() {}
 
@@ -66,9 +67,9 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
       OptionalValue<DualToneMultiFrequency> dtmf,
       OptionalValue<String> custom,
       OptionalValue<Integer> maxDuration,
-      OptionalValue<String> ice,
-      OptionalValue<String> ace,
-      OptionalValue<String> pie) {
+      OptionalValue<Control> ice,
+      OptionalValue<Control> ace,
+      OptionalValue<Control> pie) {
     this.cli = cli;
     this.destination = destination;
     this.dtmf = dtmf;
@@ -135,35 +136,35 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
   }
 
   @JsonIgnore
-  public String getIce() {
+  public Control getIce() {
     return ice.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_ICE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> ice() {
+  public OptionalValue<Control> ice() {
     return ice;
   }
 
   @JsonIgnore
-  public String getAce() {
+  public Control getAce() {
     return ace.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_ACE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> ace() {
+  public OptionalValue<Control> ace() {
     return ace;
   }
 
   @JsonIgnore
-  public String getPie() {
+  public Control getPie() {
     return pie.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_PIE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> pie() {
+  public OptionalValue<Control> pie() {
     return pie;
   }
 
@@ -225,9 +226,9 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
     OptionalValue<DualToneMultiFrequency> dtmf = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
     OptionalValue<Integer> maxDuration = OptionalValue.empty();
-    OptionalValue<String> ice = OptionalValue.empty();
-    OptionalValue<String> ace = OptionalValue.empty();
-    OptionalValue<String> pie = OptionalValue.empty();
+    OptionalValue<Control> ice = OptionalValue.empty();
+    OptionalValue<Control> ace = OptionalValue.empty();
+    OptionalValue<Control> pie = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CLI)
     public Builder setCli(String cli) {
@@ -260,19 +261,19 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
     }
 
     @JsonProperty(JSON_PROPERTY_ICE)
-    public Builder setIce(String ice) {
+    public Builder setIce(Control ice) {
       this.ice = OptionalValue.of(ice);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_ACE)
-    public Builder setAce(String ace) {
+    public Builder setAce(Control ace) {
       this.ace = OptionalValue.of(ace);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_PIE)
-    public Builder setPie(String pie) {
+    public Builder setPie(Control pie) {
       this.pie = OptionalValue.of(pie);
       return this;
     }

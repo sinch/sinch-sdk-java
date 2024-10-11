@@ -13,7 +13,14 @@ import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestCust
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestTTS;
 import com.sinch.sdk.domains.voice.models.v1.conferences.ConferenceDtmfOptions;
 import com.sinch.sdk.domains.voice.models.v1.conferences.ConferenceDtmfOptions.ModeEnum;
+import com.sinch.sdk.domains.voice.models.v1.svaml.ControlUrl;
+import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.ConnectPstnAnsweringMachineDetection;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectPstn;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionHangup;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionSay;
 import com.sinch.sdk.models.DualToneMultiFrequency;
+import java.util.Arrays;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -91,14 +98,27 @@ public class CalloutRequestDtoTest extends VoiceBaseTest {
           .setCustom("my custom value")
           .setMaxDuration(32)
           .setIce(
-              "{\"action\":{\"name\":\"connectPstn\",\"number\":"
-                  + "\"+12233445566\",\"cli\":\"+12234325234\",\"amd\":"
-                  + "{\"enabled\":true}}}")
+              SvamlControl.builder()
+                  .setAction(
+                      SvamlActionConnectPstn.builder()
+                          .setNumber("+12233445566")
+                          .setCli("+12234325234")
+                          .setAmd(
+                              ConnectPstnAnsweringMachineDetection.builder()
+                                  .setEnabled(true)
+                                  .build())
+                          .build())
+                  .build())
           .setAce(
-              "{\"instructions\":[{\"name\":\"say\",\"text\":\"Hello,"
-                  + " this is a call from Sinch!\"}],\"action\":{\"name\":"
-                  + "\"hangup\"}}")
-          .setPie("https://your-application-server-host/application")
+              SvamlControl.builder()
+                  .setInstructions(
+                      Arrays.asList(
+                          SvamlInstructionSay.builder()
+                              .setText("Hello, this is a call from Sinch!")
+                              .build()))
+                  .setAction(SvamlActionHangup.DEFAULT)
+                  .build())
+          .setPie(ControlUrl.from("https://your-application-server-host/application"))
           .build();
 
   @Test

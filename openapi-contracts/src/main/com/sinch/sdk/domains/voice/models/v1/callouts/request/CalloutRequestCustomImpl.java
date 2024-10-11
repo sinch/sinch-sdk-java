@@ -16,6 +16,7 @@ import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.voice.models.v1.Destination;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.internal.CustomCalloutInternal;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.internal.CustomCalloutInternalImpl;
+import com.sinch.sdk.domains.voice.models.v1.svaml.Control;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import java.io.IOException;
 import java.util.Objects;
@@ -160,7 +161,7 @@ public class CalloutRequestCustomImpl
   }
 
   @JsonIgnore
-  public String getIce() {
+  public Control getIce() {
     if (null == customCallout
         || !customCallout.isPresent()
         || null == customCallout.get().getIce()) {
@@ -169,7 +170,7 @@ public class CalloutRequestCustomImpl
     return customCallout.get().getIce();
   }
 
-  public OptionalValue<String> ice() {
+  public OptionalValue<Control> ice() {
     return null != customCallout && customCallout.isPresent()
         ? customCallout
             .map(f -> ((CustomCalloutInternalImpl) f).ice())
@@ -178,7 +179,7 @@ public class CalloutRequestCustomImpl
   }
 
   @JsonIgnore
-  public String getAce() {
+  public Control getAce() {
     if (null == customCallout
         || !customCallout.isPresent()
         || null == customCallout.get().getAce()) {
@@ -187,7 +188,7 @@ public class CalloutRequestCustomImpl
     return customCallout.get().getAce();
   }
 
-  public OptionalValue<String> ace() {
+  public OptionalValue<Control> ace() {
     return null != customCallout && customCallout.isPresent()
         ? customCallout
             .map(f -> ((CustomCalloutInternalImpl) f).ace())
@@ -196,7 +197,7 @@ public class CalloutRequestCustomImpl
   }
 
   @JsonIgnore
-  public String getPie() {
+  public Control getPie() {
     if (null == customCallout
         || !customCallout.isPresent()
         || null == customCallout.get().getPie()) {
@@ -205,7 +206,7 @@ public class CalloutRequestCustomImpl
     return customCallout.get().getPie();
   }
 
-  public OptionalValue<String> pie() {
+  public OptionalValue<Control> pie() {
     return null != customCallout && customCallout.isPresent()
         ? customCallout
             .map(f -> ((CustomCalloutInternalImpl) f).pie())
@@ -296,19 +297,19 @@ public class CalloutRequestCustomImpl
     }
 
     @JsonIgnore
-    public Builder setIce(String ice) {
+    public Builder setIce(Control ice) {
       getDelegatedBuilder().setIce(ice);
       return this;
     }
 
     @JsonIgnore
-    public Builder setAce(String ace) {
+    public Builder setAce(Control ace) {
       getDelegatedBuilder().setAce(ace);
       return this;
     }
 
     @JsonIgnore
-    public Builder setPie(String pie) {
+    public Builder setPie(Control pie) {
       getDelegatedBuilder().setPie(pie);
       return this;
     }

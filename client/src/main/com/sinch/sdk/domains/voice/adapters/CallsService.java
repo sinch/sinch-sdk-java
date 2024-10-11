@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.voice.adapters;
 
 import com.sinch.sdk.domains.voice.adapters.converters.CallsDtoConverter;
+import com.sinch.sdk.domains.voice.adapters.converters.ControlDtoConverter;
 import com.sinch.sdk.domains.voice.models.CallLegType;
 import com.sinch.sdk.domains.voice.models.response.CallInformation;
 import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
@@ -19,11 +20,11 @@ public class CallsService implements com.sinch.sdk.domains.voice.CallsService {
   }
 
   public void update(String callId, SVAMLControl parameters) {
-    v1.update(callId, CallsDtoConverter.convert(parameters));
+    v1.update(callId, ControlDtoConverter.convertControl(parameters));
   }
 
   public void manageWithCallLeg(String callId, CallLegType callLeg, SVAMLControl parameters) {
     v1.manageWithCallLeg(
-        callId, CallLeg.from(callLeg.value()), CallsDtoConverter.convert(parameters));
+        callId, CallLeg.from(callLeg.value()), ControlDtoConverter.convertControl(parameters));
   }
 }

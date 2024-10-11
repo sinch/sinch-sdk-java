@@ -57,6 +57,6 @@ public class CallsDtoConverterTest extends BaseTest {
   void convertCallsUpdateRequestParameters() {
 
     TestHelpers.recursiveEquals(
-        svamlControlDto, CallsDtoConverter.convert(SVAMLControlTest.parameters));
+        svamlControlDto, ControlDtoConverter.convertControl(SVAMLControlTest.parameters));
   }
 }

@@ -93,9 +93,9 @@ public class CalloutsDtoConverter {
     client.getDtfm().ifPresent(f -> dto.setDtmf(DualToneMultiFrequency.valueOf(f.stringValue())));
     client.getCustom().ifPresent(dto::setCustom);
     client.getMaxDuration().ifPresent(dto::setMaxDuration);
-    client.getIce().ifPresent(f -> dto.setIce(ControlDtoConverter.convert(f)));
-    client.getAce().ifPresent(f -> dto.setAce(ControlDtoConverter.convert(f)));
-    client.getPie().ifPresent(f -> dto.setPie(ControlDtoConverter.convert(f)));
+    client.getIce().ifPresent(f -> dto.setIce(ControlDtoConverter.convertControl(f)));
+    client.getAce().ifPresent(f -> dto.setAce(ControlDtoConverter.convertControl(f)));
+    client.getPie().ifPresent(f -> dto.setPie(ControlDtoConverter.convertControl(f)));
     return dto.build();
   }
 

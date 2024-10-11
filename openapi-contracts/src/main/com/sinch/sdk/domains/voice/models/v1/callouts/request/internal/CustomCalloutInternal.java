@@ -12,6 +12,7 @@ package com.sinch.sdk.domains.voice.models.v1.callouts.request.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.voice.models.v1.Destination;
+import com.sinch.sdk.domains.voice.models.v1.svaml.Control;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 
 /**
@@ -75,7 +76,7 @@ public interface CustomCalloutInternal {
    *
    * @return ice
    */
-  String getIce();
+  Control getIce();
 
   /**
    * You can use inline <a href="../../../svaml/">SVAML</a> to replace a callback URL when using
@@ -85,7 +86,7 @@ public interface CustomCalloutInternal {
    *
    * @return ace
    */
-  String getAce();
+  Control getAce();
 
   /**
    * <b>Note:</b> PIE callbacks are not available for DATA Calls; only PSTN and SIP calls. You can
@@ -98,7 +99,7 @@ public interface CustomCalloutInternal {
    *
    * @return pie
    */
-  String getPie();
+  Control getPie();
 
   /**
    * Getting builder
@@ -164,7 +165,7 @@ public interface CustomCalloutInternal {
      * @return Current builder
      * @see #getIce
      */
-    Builder setIce(String ice);
+    Builder setIce(Control ice);
 
     /**
      * see getter
@@ -173,7 +174,7 @@ public interface CustomCalloutInternal {
      * @return Current builder
      * @see #getAce
      */
-    Builder setAce(String ace);
+    Builder setAce(Control ace);
 
     /**
      * see getter
@@ -182,7 +183,7 @@ public interface CustomCalloutInternal {
      * @return Current builder
      * @see #getPie
      */
-    Builder setPie(String pie);
+    Builder setPie(Control pie);
 
     /**
      * Create instance

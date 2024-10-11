@@ -5,8 +5,6 @@ import com.sinch.sdk.domains.voice.models.CallResultType;
 import com.sinch.sdk.domains.voice.models.DomainType;
 import com.sinch.sdk.domains.voice.models.response.CallInformation;
 import com.sinch.sdk.domains.voice.models.response.CallStatusType;
-import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
-import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
 
 public class CallsDtoConverter {
 
@@ -29,18 +27,5 @@ public class CallsDtoConverter {
         .setUserRate(PriceDtoConverter.convert(dto.getUserRate()))
         .setDebit(PriceDtoConverter.convert(dto.getDebit()))
         .build();
-  }
-
-  public static SvamlControl convert(SVAMLControl client) {
-    if (null == client) {
-      return null;
-    }
-    SvamlControl.Builder dto = SvamlControl.builder();
-
-    client
-        .getInstructions()
-        .ifPresent(f -> dto.setInstructions(SVAMLInstructionDtoConverter.convert(f)));
-    client.getAction().ifPresent(f -> dto.setAction(SVAMLActionDtoConverter.convert(f)));
-    return dto.build();
   }
 }
