@@ -147,9 +147,9 @@ public interface ConferenceCalloutInternal {
    *
    * </br>If no “music-on-hold” is specified, the user will only hear silence.
    *
-   * @return mohClass
+   * @return MusicOnHold
    */
-  MusicOnHold getMohClass();
+  MusicOnHold getMusicOnHold();
 
   /**
    * can be either “pstn” for PSTN endpoint or “mxp” for data (app or web) clients.
@@ -281,11 +281,11 @@ public interface ConferenceCalloutInternal {
     /**
      * see getter
      *
-     * @param mohClass see getter
+     * @param MusicOnHold see getter
      * @return Current builder
-     * @see #getMohClass
+     * @see #getMusicOnHold
      */
-    Builder setMohClass(MusicOnHold mohClass);
+    Builder setMusicOnHold(MusicOnHold MusicOnHold);
 
     /**
      * see getter

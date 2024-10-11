@@ -1,7 +1,7 @@
 package com.sinch.sdk.domains.voice.api.v1;
 
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
-import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipant;
+import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipantRequest;
 import com.sinch.sdk.domains.voice.models.v1.conferences.response.GetConferenceInfoResponse;
 
 /**
@@ -59,5 +59,5 @@ public interface ConferencesService {
    * @since 1.4
    */
   void manageParticipant(
-      String conferenceId, String callId, ManageConferenceParticipant parameters);
+      String conferenceId, String callId, ManageConferenceParticipantRequest parameters);
 }

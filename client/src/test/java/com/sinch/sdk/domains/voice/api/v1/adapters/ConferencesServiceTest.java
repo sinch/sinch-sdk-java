@@ -16,7 +16,7 @@ import com.sinch.sdk.domains.voice.api.v1.internal.ConferencesApi;
 import com.sinch.sdk.domains.voice.models.v1.callouts.CalloutRequestDtoTest;
 import com.sinch.sdk.domains.voice.models.v1.callouts.CalloutResponseDtoTest;
 import com.sinch.sdk.domains.voice.models.v1.conferences.request.ConferencesRequestDtoTest;
-import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipant;
+import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipantRequest;
 import com.sinch.sdk.domains.voice.models.v1.conferences.response.ConferencesResponseDtoTest;
 import com.sinch.sdk.domains.voice.models.v1.conferences.response.GetConferenceInfoResponse;
 import com.sinch.sdk.models.VoiceContext;
@@ -38,7 +38,7 @@ public class ConferencesServiceTest extends BaseTest {
   @Mock CalloutsService calloutsService;
   @Captor ArgumentCaptor<String> conferenceIdCaptor;
   @Captor ArgumentCaptor<String> callIdCaptor;
-  @Captor ArgumentCaptor<ManageConferenceParticipant> participantCaptor;
+  @Captor ArgumentCaptor<ManageConferenceParticipantRequest> participantCaptor;
   static ConferencesService service;
 
   @BeforeEach
@@ -123,7 +123,7 @@ public class ConferencesServiceTest extends BaseTest {
     Assertions.assertThat(parameter)
         .isEqualTo(CalloutRequestDtoTest.conferenceRequestCalloutDto.getConferenceId());
 
-    ManageConferenceParticipant participant = participantCaptor.getValue();
+    ManageConferenceParticipantRequest participant = participantCaptor.getValue();
     Assertions.assertThat(participant)
         .isEqualTo(ConferencesRequestDtoTest.manageConferenceParticipantRequestDto);
   }

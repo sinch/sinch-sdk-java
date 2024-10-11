@@ -4,8 +4,8 @@ import com.sinch.sdk.domains.common.adapters.converters.EnumDynamicConverter;
 import com.sinch.sdk.domains.voice.models.requests.ConferenceManageParticipantRequestParameters;
 import com.sinch.sdk.domains.voice.models.response.ConferenceParticipant;
 import com.sinch.sdk.domains.voice.models.v1.MusicOnHold;
-import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipant;
-import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipant.CommandEnum;
+import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipantRequest;
+import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipantRequest.CommandEnum;
 import com.sinch.sdk.domains.voice.models.v1.conferences.response.GetConferenceInfoResponse;
 import java.util.Collection;
 import java.util.List;
@@ -35,16 +35,16 @@ public class ConferencesDtoConverter {
         .build();
   }
 
-  public static ManageConferenceParticipant convert(
+  public static ManageConferenceParticipantRequest convert(
       ConferenceManageParticipantRequestParameters client) {
 
-    ManageConferenceParticipant.Builder dto = ManageConferenceParticipant.builder();
+    ManageConferenceParticipantRequest.Builder dto = ManageConferenceParticipantRequest.builder();
     client
         .getCommand()
         .ifPresent(f -> dto.setCommand(CommandEnum.from(EnumDynamicConverter.convert(f))));
     client
         .getMusicOnHold()
-        .ifPresent(f -> dto.setMoh(MusicOnHold.from(EnumDynamicConverter.convert(f))));
+        .ifPresent(f -> dto.setMusicOnHold(MusicOnHold.from(EnumDynamicConverter.convert(f))));
     return dto.build();
   }
 }

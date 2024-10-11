@@ -7,8 +7,8 @@ import com.sinch.sdk.domains.voice.models.v1.DestinationType;
 import com.sinch.sdk.domains.voice.models.v1.MusicOnHold;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
 import com.sinch.sdk.domains.voice.models.v1.conferences.ConferenceParticipant;
-import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipant;
-import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipant.CommandEnum;
+import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipantRequest;
+import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipantRequest.CommandEnum;
 import com.sinch.sdk.domains.voice.models.v1.conferences.response.GetConferenceInfoResponse;
 import com.sinch.sdk.e2e.Config;
 import io.cucumber.java.en.Given;
@@ -61,10 +61,10 @@ public class ConferenceSteps {
   @When("^I send a request to put a participant on hold$")
   public void manageParticipant() {
 
-    ManageConferenceParticipant request =
-        ManageConferenceParticipant.builder()
+    ManageConferenceParticipantRequest request =
+        ManageConferenceParticipantRequest.builder()
             .setCommand(CommandEnum.ONHOLD)
-            .setMoh(MusicOnHold.MUSIC2)
+            .setMusicOnHold(MusicOnHold.MUSIC2)
             .build();
 
     service.manageParticipant(

@@ -291,19 +291,19 @@ public class CalloutRequestConferenceImpl
   }
 
   @JsonIgnore
-  public MusicOnHold getMohClass() {
+  public MusicOnHold getMusicOnHold() {
     if (null == conferenceCallout
         || !conferenceCallout.isPresent()
-        || null == conferenceCallout.get().getMohClass()) {
+        || null == conferenceCallout.get().getMusicOnHold()) {
       return null;
     }
-    return conferenceCallout.get().getMohClass();
+    return conferenceCallout.get().getMusicOnHold();
   }
 
-  public OptionalValue<MusicOnHold> mohClass() {
+  public OptionalValue<MusicOnHold> musicOnHold() {
     return null != conferenceCallout && conferenceCallout.isPresent()
         ? conferenceCallout
-            .map(f -> ((ConferenceCalloutInternalImpl) f).mohClass())
+            .map(f -> ((ConferenceCalloutInternalImpl) f).musicOnHold())
             .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
@@ -452,8 +452,8 @@ public class CalloutRequestConferenceImpl
     }
 
     @JsonIgnore
-    public Builder setMohClass(MusicOnHold mohClass) {
-      getDelegatedBuilder().setMohClass(mohClass);
+    public Builder setMusicOnHold(MusicOnHold MusicOnHold) {
+      getDelegatedBuilder().setMusicOnHold(MusicOnHold);
       return this;
     }
 

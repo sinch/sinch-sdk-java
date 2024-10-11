@@ -59,7 +59,7 @@ public class CalloutRequestDtoTest extends VoiceBaseTest {
           .setEnableAce(true)
           .setEnableDice(true)
           .setEnablePie(true)
-          .setMohClass(MusicOnHold.MUSIC2)
+          .setMusicOnHold(MusicOnHold.MUSIC2)
           .setCustom("my custom value")
           .setDomain(Domain.PSTN)
           .build();

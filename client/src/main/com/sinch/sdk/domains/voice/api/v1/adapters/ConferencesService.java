@@ -5,7 +5,7 @@ import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.domains.voice.api.v1.internal.ConferencesApi;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
-import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipant;
+import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipantRequest;
 import com.sinch.sdk.domains.voice.models.v1.conferences.response.GetConferenceInfoResponse;
 import com.sinch.sdk.models.VoiceContext;
 import java.util.Map;
@@ -46,7 +46,7 @@ public class ConferencesService implements com.sinch.sdk.domains.voice.api.v1.Co
   }
 
   public void manageParticipant(
-      String conferenceId, String callId, ManageConferenceParticipant parameters) {
+      String conferenceId, String callId, ManageConferenceParticipantRequest parameters) {
     getApi().callingManageConferenceParticipant(callId, conferenceId, parameters);
   }
 }

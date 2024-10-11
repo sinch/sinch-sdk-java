@@ -84,7 +84,7 @@ public class SVAMLActionDtoConverter {
     client.getConferenceId().ifPresent(dto::setConferenceId);
     client
         .getMusicOnHold()
-        .ifPresent(f -> dto.setMoh(MusicOnHold.from(EnumDynamicConverter.convert(f))));
+        .ifPresent(f -> dto.setMusicOnHold(MusicOnHold.from(EnumDynamicConverter.convert(f))));
     client.getDtfmOptions().ifPresent(f -> dto.setConferenceDtmfOptions(convert(f)));
     return dto.build();
   }
@@ -133,7 +133,7 @@ public class SVAMLActionDtoConverter {
     client.getCallHeaders().ifPresent(f -> dto.setCallHeaders(convertHeaderCollection(f)));
     client
         .getMusicOnHold()
-        .ifPresent(f -> dto.setMoh(MusicOnHold.from(EnumDynamicConverter.convert(f))));
+        .ifPresent(f -> dto.setMusicOnHold(MusicOnHold.from(EnumDynamicConverter.convert(f))));
     return dto.build();
   }
 

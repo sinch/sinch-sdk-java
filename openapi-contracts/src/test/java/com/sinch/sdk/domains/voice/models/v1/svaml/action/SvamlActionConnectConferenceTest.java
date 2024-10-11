@@ -23,7 +23,7 @@ public class SvamlActionConnectConferenceTest extends BaseTest {
                   .setMaxDigits(45)
                   .setTimeoutMills(456)
                   .build())
-          .setMoh(MusicOnHold.MUSIC3)
+          .setMusicOnHold(MusicOnHold.MUSIC3)
           .build();
 
   @GivenTextResource("/domains/voice/v1/svaml/action/SvamlActionConnectConferenceDto.json")

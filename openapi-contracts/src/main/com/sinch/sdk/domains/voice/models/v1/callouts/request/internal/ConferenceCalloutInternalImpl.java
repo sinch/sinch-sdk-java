@@ -85,7 +85,7 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
 
   public static final String JSON_PROPERTY_MOH_CLASS = "mohClass";
 
-  private OptionalValue<MusicOnHold> mohClass;
+  private OptionalValue<MusicOnHold> MusicOnHold;
 
   public static final String JSON_PROPERTY_DOMAIN = "domain";
 
@@ -106,7 +106,7 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
       OptionalValue<Boolean> enablePie,
       OptionalValue<String> locale,
       OptionalValue<String> greeting,
-      OptionalValue<MusicOnHold> mohClass,
+      OptionalValue<MusicOnHold> MusicOnHold,
       OptionalValue<Domain> domain) {
     this.cli = cli;
     this.destination = destination;
@@ -120,7 +120,7 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
     this.enablePie = enablePie;
     this.locale = locale;
     this.greeting = greeting;
-    this.mohClass = mohClass;
+    this.MusicOnHold = MusicOnHold;
     this.domain = domain;
   }
 
@@ -257,14 +257,14 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
   }
 
   @JsonIgnore
-  public MusicOnHold getMohClass() {
-    return mohClass.orElse(null);
+  public MusicOnHold getMusicOnHold() {
+    return MusicOnHold.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_MOH_CLASS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<MusicOnHold> mohClass() {
-    return mohClass;
+  public OptionalValue<MusicOnHold> musicOnHold() {
+    return MusicOnHold;
   }
 
   @JsonIgnore
@@ -300,7 +300,7 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
         && Objects.equals(this.enablePie, conferenceCallout.enablePie)
         && Objects.equals(this.locale, conferenceCallout.locale)
         && Objects.equals(this.greeting, conferenceCallout.greeting)
-        && Objects.equals(this.mohClass, conferenceCallout.mohClass)
+        && Objects.equals(this.MusicOnHold, conferenceCallout.MusicOnHold)
         && Objects.equals(this.domain, conferenceCallout.domain);
   }
 
@@ -319,7 +319,7 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
         enablePie,
         locale,
         greeting,
-        mohClass,
+        MusicOnHold,
         domain);
   }
 
@@ -341,7 +341,7 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
     sb.append("    enablePie: ").append(toIndentedString(enablePie)).append("\n");
     sb.append("    locale: ").append(toIndentedString(locale)).append("\n");
     sb.append("    greeting: ").append(toIndentedString(greeting)).append("\n");
-    sb.append("    mohClass: ").append(toIndentedString(mohClass)).append("\n");
+    sb.append("    MusicOnHold: ").append(toIndentedString(MusicOnHold)).append("\n");
     sb.append("    domain: ").append(toIndentedString(domain)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -371,7 +371,7 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
     OptionalValue<Boolean> enablePie = OptionalValue.empty();
     OptionalValue<String> locale = OptionalValue.empty();
     OptionalValue<String> greeting = OptionalValue.empty();
-    OptionalValue<MusicOnHold> mohClass = OptionalValue.empty();
+    OptionalValue<MusicOnHold> MusicOnHold = OptionalValue.empty();
     OptionalValue<Domain> domain = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CLI)
@@ -447,8 +447,8 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
     }
 
     @JsonProperty(JSON_PROPERTY_MOH_CLASS)
-    public Builder setMohClass(MusicOnHold mohClass) {
-      this.mohClass = OptionalValue.of(mohClass);
+    public Builder setMusicOnHold(MusicOnHold MusicOnHold) {
+      this.MusicOnHold = OptionalValue.of(MusicOnHold);
       return this;
     }
 
@@ -472,7 +472,7 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
           enablePie,
           locale,
           greeting,
-          mohClass,
+          MusicOnHold,
           domain);
     }
   }

@@ -5,7 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.domains.voice.models.v1.MusicOnHold;
-import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipant.CommandEnum;
+import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipantRequest.CommandEnum;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -17,10 +17,10 @@ public class ConferencesRequestDtoTest extends BaseTest {
       "/domains/voice/v1/conferences/request/ConferenceManageParticipantRequestDto.json")
   String jsonConferenceManageParticipantDto;
 
-  public static ManageConferenceParticipant manageConferenceParticipantRequestDto =
-      ManageConferenceParticipant.builder()
+  public static ManageConferenceParticipantRequest manageConferenceParticipantRequestDto =
+      ManageConferenceParticipantRequest.builder()
           .setCommand(CommandEnum.UNMUTE)
-          .setMoh(MusicOnHold.RING)
+          .setMusicOnHold(MusicOnHold.RING)
           .build();
 
   @Test

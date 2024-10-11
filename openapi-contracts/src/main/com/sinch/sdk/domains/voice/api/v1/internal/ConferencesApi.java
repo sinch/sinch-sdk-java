@@ -25,7 +25,7 @@ import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.internal.CalloutRequestInternal;
 import com.sinch.sdk.domains.voice.models.v1.callouts.response.CalloutResponse;
-import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipant;
+import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipantRequest;
 import com.sinch.sdk.domains.voice.models.v1.conferences.response.GetConferenceInfoResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -281,11 +281,13 @@ public class ConferencesApi {
    *     (required)
    * @param conferenceId The unique identifier of the conference. The user sets this value.
    *     (required)
-   * @param manageConferenceParticipant (optional)
+   * @param manageConferenceParticipantRequest (optional)
    * @throws ApiException if fails to make API call
    */
   public void callingManageConferenceParticipant(
-      String callId, String conferenceId, ManageConferenceParticipant manageConferenceParticipant)
+      String callId,
+      String conferenceId,
+      ManageConferenceParticipantRequest manageConferenceParticipantRequest)
       throws ApiException {
 
     LOGGER.finest(
@@ -297,12 +299,12 @@ public class ConferencesApi {
             + "conferenceId: "
             + conferenceId
             + ", "
-            + "manageConferenceParticipant: "
-            + manageConferenceParticipant);
+            + "manageConferenceParticipantRequest: "
+            + manageConferenceParticipantRequest);
 
     HttpRequest httpRequest =
         callingManageConferenceParticipantRequestBuilder(
-            callId, conferenceId, manageConferenceParticipant);
+            callId, conferenceId, manageConferenceParticipantRequest);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -320,7 +322,9 @@ public class ConferencesApi {
   }
 
   private HttpRequest callingManageConferenceParticipantRequestBuilder(
-      String callId, String conferenceId, ManageConferenceParticipant manageConferenceParticipant)
+      String callId,
+      String conferenceId,
+      ManageConferenceParticipantRequest manageConferenceParticipantRequest)
       throws ApiException {
     // verify the required parameter 'callId' is set
     if (callId == null) {
@@ -354,7 +358,7 @@ public class ConferencesApi {
 
     final Collection<String> localVarAuthNames = Arrays.asList("Basic", "Signed");
     final String serializedBody =
-        mapper.serialize(localVarContentTypes, manageConferenceParticipant);
+        mapper.serialize(localVarContentTypes, manageConferenceParticipantRequest);
 
     return new HttpRequest(
         localVarPath,

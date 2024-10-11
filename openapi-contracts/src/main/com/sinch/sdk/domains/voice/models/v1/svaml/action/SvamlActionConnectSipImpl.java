@@ -59,7 +59,7 @@ public class SvamlActionConnectSipImpl
 
   public static final String JSON_PROPERTY_MOH = "moh";
 
-  private OptionalValue<MusicOnHold> moh;
+  private OptionalValue<MusicOnHold> MusicOnHold;
 
   public SvamlActionConnectSipImpl() {}
 
@@ -71,7 +71,7 @@ public class SvamlActionConnectSipImpl
       OptionalValue<TransportEnum> transport,
       OptionalValue<Boolean> suppressCallbacks,
       OptionalValue<List<CallHeader>> callHeaders,
-      OptionalValue<MusicOnHold> moh) {
+      OptionalValue<MusicOnHold> MusicOnHold) {
     this.name = name;
     this.destination = destination;
     this.maxDuration = maxDuration;
@@ -79,7 +79,7 @@ public class SvamlActionConnectSipImpl
     this.transport = transport;
     this.suppressCallbacks = suppressCallbacks;
     this.callHeaders = callHeaders;
-    this.moh = moh;
+    this.MusicOnHold = MusicOnHold;
   }
 
   @JsonIgnore
@@ -160,14 +160,14 @@ public class SvamlActionConnectSipImpl
   }
 
   @JsonIgnore
-  public MusicOnHold getMoh() {
-    return moh.orElse(null);
+  public MusicOnHold getMusicOnHold() {
+    return MusicOnHold.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_MOH)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<MusicOnHold> moh() {
-    return moh;
+  public OptionalValue<MusicOnHold> musicOnHold() {
+    return MusicOnHold;
   }
 
   /** Return true if this svaml.action.connectSip object is equal to o. */
@@ -187,13 +187,20 @@ public class SvamlActionConnectSipImpl
         && Objects.equals(this.transport, svamlActionConnectSip.transport)
         && Objects.equals(this.suppressCallbacks, svamlActionConnectSip.suppressCallbacks)
         && Objects.equals(this.callHeaders, svamlActionConnectSip.callHeaders)
-        && Objects.equals(this.moh, svamlActionConnectSip.moh);
+        && Objects.equals(this.MusicOnHold, svamlActionConnectSip.MusicOnHold);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(
-        name, destination, maxDuration, cli, transport, suppressCallbacks, callHeaders, moh);
+        name,
+        destination,
+        maxDuration,
+        cli,
+        transport,
+        suppressCallbacks,
+        callHeaders,
+        MusicOnHold);
   }
 
   @Override
@@ -207,7 +214,7 @@ public class SvamlActionConnectSipImpl
     sb.append("    transport: ").append(toIndentedString(transport)).append("\n");
     sb.append("    suppressCallbacks: ").append(toIndentedString(suppressCallbacks)).append("\n");
     sb.append("    callHeaders: ").append(toIndentedString(callHeaders)).append("\n");
-    sb.append("    moh: ").append(toIndentedString(moh)).append("\n");
+    sb.append("    MusicOnHold: ").append(toIndentedString(MusicOnHold)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -231,7 +238,7 @@ public class SvamlActionConnectSipImpl
     OptionalValue<TransportEnum> transport = OptionalValue.empty();
     OptionalValue<Boolean> suppressCallbacks = OptionalValue.empty();
     OptionalValue<List<CallHeader>> callHeaders = OptionalValue.empty();
-    OptionalValue<MusicOnHold> moh = OptionalValue.empty();
+    OptionalValue<MusicOnHold> MusicOnHold = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_DESTINATION)
     public Builder setDestination(Destination destination) {
@@ -270,14 +277,21 @@ public class SvamlActionConnectSipImpl
     }
 
     @JsonProperty(JSON_PROPERTY_MOH)
-    public Builder setMoh(MusicOnHold moh) {
-      this.moh = OptionalValue.of(moh);
+    public Builder setMusicOnHold(MusicOnHold MusicOnHold) {
+      this.MusicOnHold = OptionalValue.of(MusicOnHold);
       return this;
     }
 
     public SvamlActionConnectSip build() {
       return new SvamlActionConnectSipImpl(
-          name, destination, maxDuration, cli, transport, suppressCallbacks, callHeaders, moh);
+          name,
+          destination,
+          maxDuration,
+          cli,
+          transport,
+          suppressCallbacks,
+          callHeaders,
+          MusicOnHold);
     }
   }
 }

@@ -30,7 +30,7 @@ public class SvamlActionConnectSipTest extends BaseTest {
           .setCallHeaders(
               Collections.singletonList(
                   CallHeader.builder().setKey("left string").setValue("right string").build()))
-          .setMoh(MusicOnHold.MUSIC2)
+          .setMusicOnHold(MusicOnHold.MUSIC2)
           .build();
 
   @GivenTextResource("/domains/voice/v1/svaml/action/SvamlActionConnectSipDto.json")

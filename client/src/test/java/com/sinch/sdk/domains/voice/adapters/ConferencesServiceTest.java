@@ -16,7 +16,7 @@ import com.sinch.sdk.domains.voice.models.response.ConferenceParticipant;
 import com.sinch.sdk.domains.voice.models.v1.callouts.CalloutRequestDtoTest;
 import com.sinch.sdk.domains.voice.models.v1.callouts.CalloutResponseDtoTest;
 import com.sinch.sdk.domains.voice.models.v1.conferences.request.ConferencesRequestDtoTest;
-import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipant;
+import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipantRequest;
 import com.sinch.sdk.domains.voice.models.v1.conferences.response.ConferencesResponseDtoTest;
 import java.util.Collection;
 import org.assertj.core.api.Assertions;
@@ -33,7 +33,7 @@ public class ConferencesServiceTest extends BaseTest {
 
   @Captor ArgumentCaptor<String> conferenceIdCaptor;
   @Captor ArgumentCaptor<String> callIdCaptor;
-  @Captor ArgumentCaptor<ManageConferenceParticipant> participantCaptor;
+  @Captor ArgumentCaptor<ManageConferenceParticipantRequest> participantCaptor;
   ConferencesService service;
 
   @BeforeEach
@@ -113,7 +113,7 @@ public class ConferencesServiceTest extends BaseTest {
     Assertions.assertThat(parameter)
         .isEqualTo(CalloutRequestDtoTest.conferenceRequestCalloutDto.getConferenceId());
 
-    ManageConferenceParticipant participant = participantCaptor.getValue();
+    ManageConferenceParticipantRequest participant = participantCaptor.getValue();
     Assertions.assertThat(participant)
         .isEqualTo(ConferencesRequestDtoTest.manageConferenceParticipantRequestDto);
   }

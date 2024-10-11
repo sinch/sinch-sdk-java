@@ -60,7 +60,7 @@ public class CalloutsDtoConverter {
     client.getGreeting().ifPresent(dto::setGreeting);
     client
         .getMusicOnHold()
-        .ifPresent(f -> dto.setMohClass(MusicOnHold.from(EnumDynamicConverter.convert(f))));
+        .ifPresent(f -> dto.setMusicOnHold(MusicOnHold.from(EnumDynamicConverter.convert(f))));
     client.getDomain().ifPresent(f -> dto.setDomain(Domain.from(EnumDynamicConverter.convert(f))));
 
     return dto.build();

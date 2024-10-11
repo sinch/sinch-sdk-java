@@ -136,9 +136,9 @@ public interface SvamlActionConnectSip
    * and the SIP call is placed on hold, the user will only hear silence while during the holding
    * period .
    *
-   * @return moh
+   * @return MusicOnHold
    */
-  MusicOnHold getMoh();
+  MusicOnHold getMusicOnHold();
 
   /**
    * Getting builder
@@ -209,11 +209,11 @@ public interface SvamlActionConnectSip
     /**
      * see getter
      *
-     * @param moh see getter
+     * @param MusicOnHold see getter
      * @return Current builder
-     * @see #getMoh
+     * @see #getMusicOnHold
      */
-    Builder setMoh(MusicOnHold moh);
+    Builder setMusicOnHold(MusicOnHold MusicOnHold);
 
     /**
      * Create instance

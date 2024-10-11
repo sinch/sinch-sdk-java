@@ -18,8 +18,8 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 /** */
-@JsonDeserialize(builder = ManageConferenceParticipantImpl.Builder.class)
-public interface ManageConferenceParticipant {
+@JsonDeserialize(builder = ManageConferenceParticipantRequestImpl.Builder.class)
+public interface ManageConferenceParticipantRequest {
 
   /** Action to apply on conference participant. */
   public class CommandEnum extends EnumDynamic<String, CommandEnum> {
@@ -62,9 +62,9 @@ public interface ManageConferenceParticipant {
    * join. If <code>moh</code> isn't specified, the user will only hear silence while alone in the
    * conference. This property is only available to use with the <code>onhold</code> command.
    *
-   * @return moh
+   * @return MusicOnHold
    */
-  MusicOnHold getMoh();
+  MusicOnHold getMusicOnHold();
 
   /**
    * Getting builder
@@ -72,7 +72,7 @@ public interface ManageConferenceParticipant {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ManageConferenceParticipantImpl.Builder();
+    return new ManageConferenceParticipantRequestImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -90,17 +90,17 @@ public interface ManageConferenceParticipant {
     /**
      * see getter
      *
-     * @param moh see getter
+     * @param MusicOnHold see getter
      * @return Current builder
-     * @see #getMoh
+     * @see #getMusicOnHold
      */
-    Builder setMoh(MusicOnHold moh);
+    Builder setMusicOnHold(MusicOnHold MusicOnHold);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    ManageConferenceParticipant build();
+    ManageConferenceParticipantRequest build();
   }
 }
