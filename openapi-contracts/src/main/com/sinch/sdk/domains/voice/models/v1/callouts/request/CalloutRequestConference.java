@@ -172,7 +172,8 @@ public interface CalloutRequestConference
    *   <li><code>music3</code> (music file)
    * </ul>
    *
-   * </br>If no “music-on-hold” is specified, the user will only hear silence.
+   * <br>
+   * If no “music-on-hold” is specified, the user will only hear silence.
    *
    * @return MusicOnHold
    */

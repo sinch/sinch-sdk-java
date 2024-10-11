@@ -134,7 +134,7 @@ public class CallsApi {
    *     the &#x60;PlayFiles&#x60; and &#x60;Say&#x60; instructions to indicate which channel the
    *     sound will be played on. Valid options are &#x60;caller&#x60;, &#x60;callee&#x60; or
    *     &#x60;both&#x60;. If not specified, the default value is
-   *     &#x60;caller&#x60;.&lt;/br&gt;&lt;Warning&gt;The &#x60;callLeg&#x60; identifier is ignored
+   *     &#x60;caller&#x60;.&lt;br&gt;&lt;Warning&gt;The &#x60;callLeg&#x60; identifier is ignored
    *     for calls that are part of a conference and calls initiated using the Callout
    *     API.&lt;/Warning&gt; (required)
    * @param svamlControl (optional)

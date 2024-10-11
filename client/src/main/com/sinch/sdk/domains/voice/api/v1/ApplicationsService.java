@@ -16,7 +16,7 @@ public interface ApplicationsService {
   /**
    * Get information about your numbers.
    *
-   * <p>It returns a list of numbers that you own, as well as their capability (voice or SMS). For
+   * <p>It returns a list of numbers that you own, as well as their capability (Voice or SMS). For
    * the ones that are assigned to an app, it returns the application key of the app.
    *
    * @return Your numbers
@@ -34,10 +34,20 @@ public interface ApplicationsService {
   Callbacks getCallbackUrls(String applicationKey);
 
   /**
+   * Update the configured callback URLs for the specified application.
+   *
+   * @param applicationKey The unique identifying key of the application
+   * @param parameters Callbacks settings
    * @since 1.4
    */
   void updateCallbackUrls(String applicationKey, Callbacks parameters);
 
+  /**
+   * Returns information about the requested number
+   *
+   * @param number The phone number you want to query
+   * @return Number information
+   */
   QueryNumberResponse queryNumber(String number);
 
   /**

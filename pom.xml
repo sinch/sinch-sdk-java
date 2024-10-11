@@ -162,6 +162,16 @@
                             <sourceFileExclude>com/sinch/sdk/domains/numbers/AvailableRegionService.java</sourceFileExclude>
                             <sourceFileExclude>com/sinch/sdk/domains/numbers/CallbackConfigurationService.java</sourceFileExclude>
                             <sourceFileExclude>com/sinch/sdk/domains/numbers/WebHooksService.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/voice/models/*.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/voice/models/requests/*.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/voice/models/response/*.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/voice/models/svaml/*.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/voice/models/webhooks/*.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/voice/ApplicationsService.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/voice/CalloutsService.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/voice/CallsService.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/voice/ConferencesService.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/voice/WebHooksService.java</sourceFileExclude>
                         </sourceFileExcludes>
                         <tags>
                             <tag>
