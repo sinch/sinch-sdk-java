@@ -18,6 +18,7 @@ import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.StartRecordingOpt
 import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionSay;
 import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionStartRecording;
 import com.sinch.sdk.e2e.Config;
+import com.sinch.sdk.models.DualToneMultiFrequency;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -125,13 +126,13 @@ public class CalloutsSteps {
                                         .setOptions(
                                             Arrays.asList(
                                                 MenuOption.builder()
-                                                    .setDtmf("1")
+                                                    .setDtmf(DualToneMultiFrequency.valueOf("1"))
                                                     .setAction(
                                                         MenuOptionActionFactory.menuAction(
                                                             "confirm"))
                                                     .build(),
                                                 MenuOption.builder()
-                                                    .setDtmf("2")
+                                                    .setDtmf(DualToneMultiFrequency.valueOf("2"))
                                                     .setAction(
                                                         MenuOptionActionFactory.returnAction(
                                                             "cancel"))

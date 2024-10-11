@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.models.DualToneMultiFrequency;
 import java.util.Objects;
 
 @JsonPropertyOrder({
@@ -58,7 +59,7 @@ public class SvamlActionConnectPstnImpl
 
   public static final String JSON_PROPERTY_DTMF = "dtmf";
 
-  private OptionalValue<String> dtmf;
+  private OptionalValue<DualToneMultiFrequency> dtmf;
 
   public static final String JSON_PROPERTY_INDICATIONS = "indications";
 
@@ -78,7 +79,7 @@ public class SvamlActionConnectPstnImpl
       OptionalValue<Integer> dialTimeout,
       OptionalValue<String> cli,
       OptionalValue<Boolean> suppressCallbacks,
-      OptionalValue<String> dtmf,
+      OptionalValue<DualToneMultiFrequency> dtmf,
       OptionalValue<IndicationsEnum> indications,
       OptionalValue<ConnectPstnAnsweringMachineDetection> amd) {
     this.name = name;
@@ -171,13 +172,13 @@ public class SvamlActionConnectPstnImpl
   }
 
   @JsonIgnore
-  public String getDtmf() {
+  public DualToneMultiFrequency getDtmf() {
     return dtmf.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_DTMF)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> dtmf() {
+  public OptionalValue<DualToneMultiFrequency> dtmf() {
     return dtmf;
   }
 
@@ -277,7 +278,7 @@ public class SvamlActionConnectPstnImpl
     OptionalValue<Integer> dialTimeout = OptionalValue.empty();
     OptionalValue<String> cli = OptionalValue.empty();
     OptionalValue<Boolean> suppressCallbacks = OptionalValue.empty();
-    OptionalValue<String> dtmf = OptionalValue.empty();
+    OptionalValue<DualToneMultiFrequency> dtmf = OptionalValue.empty();
     OptionalValue<IndicationsEnum> indications = OptionalValue.empty();
     OptionalValue<ConnectPstnAnsweringMachineDetection> amd = OptionalValue.empty();
 
@@ -318,7 +319,7 @@ public class SvamlActionConnectPstnImpl
     }
 
     @JsonProperty(JSON_PROPERTY_DTMF)
-    public Builder setDtmf(String dtmf) {
+    public Builder setDtmf(DualToneMultiFrequency dtmf) {
       this.dtmf = OptionalValue.of(dtmf);
       return this;
     }

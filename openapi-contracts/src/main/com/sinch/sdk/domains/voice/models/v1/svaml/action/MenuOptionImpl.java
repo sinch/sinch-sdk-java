@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.models.DualToneMultiFrequency;
 import java.util.Objects;
 
 @JsonPropertyOrder({MenuOptionImpl.JSON_PROPERTY_DTMF, MenuOptionImpl.JSON_PROPERTY_ACTION})
@@ -17,7 +18,7 @@ public class MenuOptionImpl implements MenuOption {
 
   public static final String JSON_PROPERTY_DTMF = "dtmf";
 
-  private OptionalValue<String> dtmf;
+  private OptionalValue<DualToneMultiFrequency> dtmf;
 
   public static final String JSON_PROPERTY_ACTION = "action";
 
@@ -25,19 +26,20 @@ public class MenuOptionImpl implements MenuOption {
 
   public MenuOptionImpl() {}
 
-  protected MenuOptionImpl(OptionalValue<String> dtmf, OptionalValue<String> action) {
+  protected MenuOptionImpl(
+      OptionalValue<DualToneMultiFrequency> dtmf, OptionalValue<String> action) {
     this.dtmf = dtmf;
     this.action = action;
   }
 
   @JsonIgnore
-  public String getDtmf() {
+  public DualToneMultiFrequency getDtmf() {
     return dtmf.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_DTMF)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<String> dtmf() {
+  public OptionalValue<DualToneMultiFrequency> dtmf() {
     return dtmf;
   }
 
@@ -92,11 +94,11 @@ public class MenuOptionImpl implements MenuOption {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements MenuOption.Builder {
-    OptionalValue<String> dtmf = OptionalValue.empty();
+    OptionalValue<DualToneMultiFrequency> dtmf = OptionalValue.empty();
     OptionalValue<String> action = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_DTMF)
-    public Builder setDtmf(String dtmf) {
+    public Builder setDtmf(DualToneMultiFrequency dtmf) {
       this.dtmf = OptionalValue.of(dtmf);
       return this;
     }

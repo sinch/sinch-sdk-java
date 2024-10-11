@@ -13,6 +13,7 @@ package com.sinch.sdk.domains.voice.models.v1.svaml.action;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import com.sinch.sdk.models.DualToneMultiFrequency;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -113,7 +114,7 @@ public interface SvamlActionConnectPstn
    *
    * @return dtmf
    */
-  String getDtmf();
+  DualToneMultiFrequency getDtmf();
 
   /** The locale's tone to play while ringing. */
   public class IndicationsEnum extends EnumDynamic<String, IndicationsEnum> {
@@ -269,7 +270,7 @@ public interface SvamlActionConnectPstn
      * @return Current builder
      * @see #getDtmf
      */
-    Builder setDtmf(String dtmf);
+    Builder setDtmf(DualToneMultiFrequency dtmf);
 
     /**
      * see getter

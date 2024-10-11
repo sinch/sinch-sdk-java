@@ -5,6 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectPstn.IndicationsEnum;
+import com.sinch.sdk.models.DualToneMultiFrequency;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -20,7 +21,7 @@ public class SvamlActionConnectPstnTest extends BaseTest {
           .setDialTimeout(456)
           .setCli("cli value")
           .setSuppressCallbacks(true)
-          .setDtmf("#w123")
+          .setDtmf(DualToneMultiFrequency.valueOf("#w123"))
           .setIndications(IndicationsEnum.from("unknown value"))
           .setAmd(ConnectPstnAnsweringMachineDetection.builder().setEnabled(true).build())
           .build();

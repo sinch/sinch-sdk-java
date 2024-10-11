@@ -4,6 +4,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.models.DualToneMultiFrequency;
 import java.util.Collections;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,10 @@ public class SvamlActionRunMenuTest extends BaseTest {
                       .setMaxTimeoutMills(123456)
                       .setOptions(
                           Collections.singletonList(
-                              MenuOption.builder().setDtmf("#w").setAction("menu(foo)").build()))
+                              MenuOption.builder()
+                                  .setDtmf(DualToneMultiFrequency.valueOf("#w"))
+                                  .setAction("menu(foo)")
+                                  .build()))
                       .build()))
           .build();
 

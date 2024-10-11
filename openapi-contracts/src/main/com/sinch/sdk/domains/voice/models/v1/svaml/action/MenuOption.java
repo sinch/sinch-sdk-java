@@ -11,6 +11,7 @@
 package com.sinch.sdk.domains.voice.models.v1.svaml.action;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.models.DualToneMultiFrequency;
 
 /**
  * A configured option that the user can trigger to perform an action.
@@ -29,7 +30,7 @@ public interface MenuOption {
    *
    * @return dtmf
    */
-  String getDtmf();
+  DualToneMultiFrequency getDtmf();
 
   /**
    * Determines which action is taken when the DTMF digit is pressed. The following values are
@@ -60,7 +61,7 @@ public interface MenuOption {
      * @return Current builder
      * @see #getDtmf
      */
-    Builder setDtmf(String dtmf);
+    Builder setDtmf(DualToneMultiFrequency dtmf);
 
     /**
      * see getter
