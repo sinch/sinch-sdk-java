@@ -24,7 +24,7 @@ import java.util.stream.Stream;
 /** CalloutRequestConference */
 @JsonDeserialize(builder = CalloutRequestConferenceImpl.Builder.class)
 public interface CalloutRequestConference
-    extends com.sinch.sdk.domains.voice.models.v1.callouts.CalloutRequest {
+    extends com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequest {
 
   /** Gets or Sets method */
   public class MethodEnum extends EnumDynamic<String, MethodEnum> {

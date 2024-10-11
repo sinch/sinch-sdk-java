@@ -32,7 +32,7 @@ import java.util.Optional;
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class CalloutRequestConferenceImpl
     implements CalloutRequestConference,
-        com.sinch.sdk.domains.voice.models.v1.callouts.CalloutRequest {
+        com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequest {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_METHOD = "method";

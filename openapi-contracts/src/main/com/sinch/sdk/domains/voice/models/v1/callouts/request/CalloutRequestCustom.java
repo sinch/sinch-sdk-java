@@ -22,7 +22,7 @@ import java.util.stream.Stream;
 /** CalloutRequestCustom */
 @JsonDeserialize(builder = CalloutRequestCustomImpl.Builder.class)
 public interface CalloutRequestCustom
-    extends com.sinch.sdk.domains.voice.models.v1.callouts.CalloutRequest {
+    extends com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequest {
 
   /** Gets or Sets method */
   public class MethodEnum extends EnumDynamic<String, MethodEnum> {

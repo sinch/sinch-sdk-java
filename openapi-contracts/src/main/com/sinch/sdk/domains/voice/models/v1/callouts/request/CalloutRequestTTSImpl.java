@@ -29,7 +29,8 @@ import java.util.Optional;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class CalloutRequestTTSImpl
-    implements CalloutRequestTTS, com.sinch.sdk.domains.voice.models.v1.callouts.CalloutRequest {
+    implements CalloutRequestTTS,
+        com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequest {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_METHOD = "method";

@@ -5,7 +5,7 @@ import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.domains.voice.api.v1.adapters.mapper.CalloutRequestCustomMapper;
 import com.sinch.sdk.domains.voice.api.v1.internal.CalloutsApi;
-import com.sinch.sdk.domains.voice.models.v1.callouts.CalloutRequest;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequest;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestCustom;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestTTS;
