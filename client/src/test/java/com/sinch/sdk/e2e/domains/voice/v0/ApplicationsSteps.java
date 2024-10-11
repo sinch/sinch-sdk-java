@@ -1,4 +1,4 @@
-package com.sinch.sdk.e2e.domains.voice;
+package com.sinch.sdk.e2e.domains.voice.v0;
 
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.voice.ApplicationsService;

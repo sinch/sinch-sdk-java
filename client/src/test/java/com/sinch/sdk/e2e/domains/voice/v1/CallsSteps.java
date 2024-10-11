@@ -1,21 +1,22 @@
-package com.sinch.sdk.e2e.domains.voice;
+package com.sinch.sdk.e2e.domains.voice.v1;
 
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.domains.voice.CallsService;
-import com.sinch.sdk.domains.voice.models.CallLegType;
-import com.sinch.sdk.domains.voice.models.CallReasonType;
-import com.sinch.sdk.domains.voice.models.CallResultType;
-import com.sinch.sdk.domains.voice.models.DestinationNumber;
-import com.sinch.sdk.domains.voice.models.DomainType;
-import com.sinch.sdk.domains.voice.models.Price;
-import com.sinch.sdk.domains.voice.models.response.CallInformation;
-import com.sinch.sdk.domains.voice.models.response.CallStatusType;
-import com.sinch.sdk.domains.voice.models.svaml.ActionContinue;
-import com.sinch.sdk.domains.voice.models.svaml.ActionHangUp;
-import com.sinch.sdk.domains.voice.models.svaml.InstructionPlayFiles;
-import com.sinch.sdk.domains.voice.models.svaml.InstructionSay;
-import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
+import com.sinch.sdk.domains.voice.api.v1.CallsService;
+import com.sinch.sdk.domains.voice.models.v1.Destination;
+import com.sinch.sdk.domains.voice.models.v1.DestinationType;
+import com.sinch.sdk.domains.voice.models.v1.Price;
+import com.sinch.sdk.domains.voice.models.v1.calls.request.CallLeg;
+import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformation;
+import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformation.DomainEnum;
+import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformation.ReasonEnum;
+import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformation.StatusEnum;
+import com.sinch.sdk.domains.voice.models.v1.calls.response.CallResult;
+import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionContinue;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionHangup;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionPlayFiles;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionSay;
 import com.sinch.sdk.e2e.Config;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -34,7 +35,7 @@ public class CallsSteps {
 
   @Given("^the Voice service \"Calls\" is available$")
   public void serviceAvailable() {
-    service = Config.getSinchClient().voice().calls();
+    service = Config.getSinchClient().voice().v1().calls();
   }
 
   @When("^I send a request to get a call's information$")
@@ -46,15 +47,15 @@ public class CallsSteps {
   @When("^I send a request to update a call$")
   public void updateCall() {
 
-    SVAMLControl request =
-        SVAMLControl.builder()
+    SvamlControl request =
+        SvamlControl.builder()
             .setInstructions(
                 Arrays.asList(
-                    InstructionSay.builder()
+                    SvamlInstructionSay.builder()
                         .setText("Sorry, the conference has been cancelled. The call will end now.")
                         .setLocale("en-US")
                         .build()))
-            .setAction(ActionHangUp.builder().build())
+            .setAction(SvamlActionHangup.DEFAULT)
             .build();
     service.update("1ce0ffee-ca11-ca11-ca11-abcdef000022", request);
     updatePassed = true;
@@ -63,15 +64,15 @@ public class CallsSteps {
   @When("^I send a request to update a call that doesn't exist$")
   public void updateCallNotExits() {
 
-    SVAMLControl request =
-        SVAMLControl.builder()
+    SvamlControl request =
+        SvamlControl.builder()
             .setInstructions(
                 Arrays.asList(
-                    InstructionSay.builder()
+                    SvamlInstructionSay.builder()
                         .setText("Sorry, the conference has been cancelled. The call will end now.")
                         .setLocale("en-US")
                         .build()))
-            .setAction(ActionHangUp.builder().build())
+            .setAction(SvamlActionHangup.DEFAULT)
             .build();
     try {
       service.update("not-existing-callId", request);
@@ -83,18 +84,18 @@ public class CallsSteps {
   @When("^I send a request to manage a call with callLeg$")
   public void manageCallWithCallLeg() {
 
-    SVAMLControl request =
-        SVAMLControl.builder()
+    SvamlControl request =
+        SvamlControl.builder()
             .setInstructions(
                 Arrays.asList(
-                    InstructionPlayFiles.builder()
+                    SvamlInstructionPlayFiles.builder()
                         .setIds(
                             Arrays.asList(
                                 "https://samples-files.com/samples/Audio/mp3/sample-file-4.mp3"))
                         .build()))
-            .setAction(ActionContinue.builder().build())
+            .setAction(SvamlActionContinue.DEFAULT)
             .build();
-    service.manageWithCallLeg("1ce0ffee-ca11-ca11-ca11-abcdef000022", CallLegType.CALLEE, request);
+    service.manageWithCallLeg("1ce0ffee-ca11-ca11-ca11-abcdef000022", CallLeg.CALLEE, request);
     manageWithCallLegPassed = true;
   }
 
@@ -102,14 +103,18 @@ public class CallsSteps {
   public void getCallResult() {
     CallInformation information =
         CallInformation.builder()
-            .setTo(DestinationNumber.valueOf("+12017777777"))
-            .setDomain(DomainType.PSTN)
+            .setTo(
+                Destination.builder()
+                    .setType(DestinationType.NUMBER2)
+                    .setEndpoint("+12017777777")
+                    .build())
+            .setDomain(DomainEnum.PSTN)
             .setCallId("1ce0ffee-ca11-ca11-ca11-abcdef000003")
             .setDuration(14)
-            .setStatus(CallStatusType.FINAL)
-            .setResult(CallResultType.ANSWERED)
-            .setReason(CallReasonType.MANAGER_HANGUP)
-            .setTimeStamp(Instant.parse("2024-06-06T17:36:00Z"))
+            .setStatus(StatusEnum.FINAL)
+            .setResult(CallResult.ANSWERED)
+            .setReason(ReasonEnum.MANAGERHANGUP)
+            .setTimestamp(Instant.parse("2024-06-06T17:36:00Z"))
             .setCustom("Custom text")
             .setUserRate(Price.builder().setCurrencyId("EUR").setAmount(0.1758F).build())
             .setDebit(Price.builder().setCurrencyId("EUR").setAmount(0.1758F).build())

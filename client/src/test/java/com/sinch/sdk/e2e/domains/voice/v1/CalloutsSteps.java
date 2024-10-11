@@ -1,25 +1,23 @@
-package com.sinch.sdk.e2e.domains.voice;
+package com.sinch.sdk.e2e.domains.voice.v1;
 
-import com.sinch.sdk.domains.voice.CalloutsService;
-import com.sinch.sdk.domains.voice.models.DestinationNumber;
-import com.sinch.sdk.domains.voice.models.MusicOnHoldType;
-import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConference;
-import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersCustom;
-import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersTTS;
-import com.sinch.sdk.domains.voice.models.requests.ControlUrl;
-import com.sinch.sdk.domains.voice.models.svaml.ActionConnectPstn;
-import com.sinch.sdk.domains.voice.models.svaml.ActionRunMenu;
-import com.sinch.sdk.domains.voice.models.svaml.InstructionSay;
-import com.sinch.sdk.domains.voice.models.svaml.InstructionStartRecording;
-import com.sinch.sdk.domains.voice.models.svaml.Menu;
-import com.sinch.sdk.domains.voice.models.svaml.MenuOption;
-import com.sinch.sdk.domains.voice.models.svaml.MenuOptionAction;
-import com.sinch.sdk.domains.voice.models.svaml.MenuOptionActionType;
-import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
-import com.sinch.sdk.domains.voice.models.svaml.StartRecordingOptions;
+import com.sinch.sdk.domains.voice.api.v1.CalloutsService;
+import com.sinch.sdk.domains.voice.models.v1.Destination;
+import com.sinch.sdk.domains.voice.models.v1.DestinationType;
+import com.sinch.sdk.domains.voice.models.v1.MusicOnHold;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestCustom;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestTTS;
+import com.sinch.sdk.domains.voice.models.v1.svaml.ControlUrl;
+import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.Menu;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.MenuOption;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.MenuOptionActionFactory;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectPstn;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionRunMenu;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.StartRecordingOptions;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionSay;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionStartRecording;
 import com.sinch.sdk.e2e.Config;
-import com.sinch.sdk.models.DualToneMultiFrequency;
-import com.sinch.sdk.models.E164PhoneNumber;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -35,17 +33,21 @@ public class CalloutsSteps {
 
   @Given("^the Voice service \"Callouts\" is available$")
   public void serviceAvailable() {
-    service = Config.getSinchClient().voice().callouts();
+    service = Config.getSinchClient().voice().v1().callouts();
   }
 
   @When("^I send a request to make a TTS call$")
   public void createTTS() {
 
-    CalloutRequestParametersTTS request =
-        CalloutRequestParametersTTS.builder()
+    CalloutRequestTTS request =
+        CalloutRequestTTS.builder()
             .setLocale("en-US")
-            .setDestination(DestinationNumber.valueOf("+12017777777"))
-            .setCli(E164PhoneNumber.valueOf("+12015555555"))
+            .setDestination(
+                Destination.builder()
+                    .setType(DestinationType.NUMBER)
+                    .setEndpoint("+12017777777")
+                    .build())
+            .setCli("+12015555555")
             .setText("Hello, this is a call from Sinch.")
             .build();
 
@@ -54,14 +56,18 @@ public class CalloutsSteps {
 
   @When("^I send a request to make a Conference call with the \"Callout\" service$")
   public void createConference() {
-    CalloutRequestParametersConference request =
-        CalloutRequestParametersConference.builder()
+    CalloutRequestConference request =
+        CalloutRequestConference.builder()
             .setLocale("en-US")
-            .setDestination(DestinationNumber.valueOf("+12017777777"))
-            .setCli(E164PhoneNumber.valueOf("+12015555555"))
+            .setDestination(
+                Destination.builder()
+                    .setType(DestinationType.NUMBER)
+                    .setEndpoint("+12017777777")
+                    .build())
+            .setCli("+12015555555")
             .setConferenceId("myConferenceId-E2E")
             .setGreeting("Welcome to this conference call.")
-            .setMusicOnHold(MusicOnHoldType.MUSIC1)
+            .setMusicOnHold(MusicOnHold.MUSIC1)
             .build();
 
     conferenceResponse = service.conference(request);
@@ -69,25 +75,29 @@ public class CalloutsSteps {
 
   @When("^I send a request to make a Custom call$")
   public void createCustom() {
-    CalloutRequestParametersCustom request =
-        CalloutRequestParametersCustom.builder()
-            .setDestination(DestinationNumber.valueOf("+12017777777"))
-            .setCli(E164PhoneNumber.valueOf("+12015555555"))
+    CalloutRequestCustom request =
+        CalloutRequestCustom.builder()
+            .setDestination(
+                Destination.builder()
+                    .setType(DestinationType.NUMBER)
+                    .setEndpoint("+12017777777")
+                    .build())
+            .setCli("+12015555555")
             .setCustom("Custom text")
             .setIce(
-                SVAMLControl.builder()
+                SvamlControl.builder()
                     .setAction(
-                        ActionConnectPstn.builder()
-                            .setNumber(E164PhoneNumber.valueOf("+12017777777"))
+                        SvamlActionConnectPstn.builder()
+                            .setNumber("+12017777777")
                             .setCli("+12015555555")
                             .build())
                     .setInstructions(
                         Arrays.asList(
-                            InstructionSay.builder()
+                            SvamlInstructionSay.builder()
                                 .setText("Welcome to Sinch.")
                                 .setLocale("en-US/male")
                                 .build(),
-                            InstructionStartRecording.builder()
+                            SvamlInstructionStartRecording.builder()
                                 .setOptions(
                                     StartRecordingOptions.builder()
                                         .setDestinationUrl("To specify")
@@ -96,9 +106,9 @@ public class CalloutsSteps {
                                 .build()))
                     .build())
             .setAce(
-                SVAMLControl.builder()
+                SvamlControl.builder()
                     .setAction(
-                        ActionRunMenu.builder()
+                        SvamlActionRunMenu.builder()
                             .setLocale("Kimberly")
                             .setEnableVoice(true)
                             .setBarge(true)
@@ -115,16 +125,20 @@ public class CalloutsSteps {
                                         .setOptions(
                                             Arrays.asList(
                                                 MenuOption.builder()
-                                                    .setDtfm(DualToneMultiFrequency.valueOf("1"))
+                                                    .setDtmf("1")
                                                     .setAction(
-                                                        MenuOptionAction.from(
-                                                            MenuOptionActionType.MENU, "confirm"))
+                                                        MenuOptionActionFactory.build(
+                                                            MenuOptionActionFactory
+                                                                .MenuOptionActionType.MENU,
+                                                            "confirm"))
                                                     .build(),
                                                 MenuOption.builder()
-                                                    .setDtfm(DualToneMultiFrequency.valueOf("2"))
+                                                    .setDtmf("2")
                                                     .setAction(
-                                                        MenuOptionAction.from(
-                                                            MenuOptionActionType.RETURN, "cancel"))
+                                                        MenuOptionActionFactory.build(
+                                                            MenuOptionActionFactory
+                                                                .MenuOptionActionType.RETURN,
+                                                            "cancel"))
                                                     .build()))
                                         .build(),
                                     Menu.builder()
