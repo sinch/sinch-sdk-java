@@ -8,14 +8,17 @@ import static com.sinch.sample.Utils.echoStep;
 import com.sinch.sample.Utils;
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.domains.voice.models.DestinationNumber;
-import com.sinch.sdk.domains.voice.models.MusicOnHoldType;
-import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConference;
-import com.sinch.sdk.domains.voice.models.requests.ConferenceManageParticipantCommandType;
-import com.sinch.sdk.domains.voice.models.requests.ConferenceManageParticipantRequestParameters;
-import com.sinch.sdk.domains.voice.models.response.ConferenceParticipant;
+import com.sinch.sdk.domains.voice.api.v1.CallsService;
+import com.sinch.sdk.domains.voice.api.v1.ConferencesService;
+import com.sinch.sdk.domains.voice.models.v1.Destination;
+import com.sinch.sdk.domains.voice.models.v1.DestinationType;
+import com.sinch.sdk.domains.voice.models.v1.MusicOnHold;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
+import com.sinch.sdk.domains.voice.models.v1.conferences.ConferenceParticipant;
+import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipantRequest;
+import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipantRequest.CommandEnum;
+import com.sinch.sdk.domains.voice.models.v1.conferences.response.GetConferenceInfoResponse;
 import com.sinch.sdk.models.Configuration;
-import com.sinch.sdk.models.E164PhoneNumber;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
@@ -53,56 +56,63 @@ public class ConferencesSampleFlow {
 
     SinchClient sinch = new SinchClient(configuration);
 
+    ConferencesService service = sinch.voice().v1().conferences();
+    CallsService callsService = sinch.voice().v1().calls();
+
     int step = 0;
 
     // 1. Joining conference
-    var callId = joinConference(++step, sinch, conferenceId, phoneNumber);
+    var callId = joinConference(++step, service, conferenceId, phoneNumber);
 
     // 2. Waiting for participant to join the conference (trying during 1 minute)
-    waitForParticipant(++step, sinch, conferenceId, callId);
+    waitForParticipant(++step, service, conferenceId, callId);
 
     // 3. Get participant information
-    getCallInformation(++step, sinch, conferenceId, callId);
+    getCallInformation(++step, callsService, callId);
 
     // 4. Mute participant
-    muteParticipant(++step, sinch, conferenceId, callId);
+    muteParticipant(++step, service, conferenceId, callId);
     Thread.sleep(3000);
 
     // 5. Get conference information
-    getConferenceInfo(++step, sinch, conferenceId);
+    getConferenceInfo(++step, service, conferenceId);
 
     // 6. Get participant information
-    getCallInformation(++step, sinch, conferenceId, callId);
+    getCallInformation(++step, callsService, callId);
 
     // 7. Kick all participants
-    kickAllParticipants(++step, sinch, conferenceId);
+    kickAllParticipants(++step, service, conferenceId);
     Thread.sleep(3000);
 
     // 8. Get participant information
-    getCallInformation(++step, sinch, conferenceId, callId);
+    getCallInformation(++step, callsService, callId);
 
     // 9. Get conference information
-    getConferenceInfo(++step, sinch, conferenceId);
+    getConferenceInfo(++step, service, conferenceId);
   }
 
   String joinConference(
-      int step, SinchClient sinchClient, String conferenceId, String phoneNumber) {
+      int step, ConferencesService service, String conferenceId, String phoneNumber) {
 
     echoStep(
         step, "Join conference '%s' for phone number '%s'".formatted(conferenceId, phoneNumber));
 
     // 1. Build the request payload
     var payload =
-        CalloutRequestParametersConference.builder()
+        CalloutRequestConference.builder()
             .setConferenceId(conferenceId)
-            .setDestination(DestinationNumber.valueOf(phoneNumber))
+            .setDestination(
+                Destination.builder()
+                    .setType(DestinationType.NUMBER)
+                    .setEndpoint(phoneNumber)
+                    .build())
             .setGreeting("Hello from Sinch Conference sample with Jav SDK")
-            .setMusicOnHold(MusicOnHoldType.MUSIC1)
-            .setCli(E164PhoneNumber.valueOf("+1123456789"))
+            .setMusicOnHold(MusicOnHold.MUSIC1)
+            .setCli("+1123456789")
             .build();
 
     // 2. Perform the request
-    var response = sinchClient.voice().conferences().call(payload);
+    var response = service.call(payload);
 
     echo("The callId for conference is '%s'\n".formatted(response));
 
@@ -110,7 +120,7 @@ public class ConferencesSampleFlow {
     return response;
   }
 
-  void waitForParticipant(int step, SinchClient sinchClient, String conferenceId, String callId)
+  void waitForParticipant(int step, ConferencesService service, String conferenceId, String callId)
       throws InterruptedException {
 
     echoStep(step, "Waiting for participant to join the conference'");
@@ -123,7 +133,7 @@ public class ConferencesSampleFlow {
       echo("Attempt: '%d'\n".formatted(i + 1));
 
       // Get conference info
-      var participants = getConferenceInfo(++step, sinchClient, conferenceId);
+      var participants = getConferenceInfo(++step, service, conferenceId);
       //  Looking for participant
       participant = participants.stream().filter(f -> f.getId().equals(callId)).findFirst();
     }
@@ -139,51 +149,49 @@ public class ConferencesSampleFlow {
   }
 
   Collection<ConferenceParticipant> getConferenceInfo(
-      int step, SinchClient sinchClient, String conferenceId) {
+      int step, ConferencesService service, String conferenceId) {
 
     echoStep(step, "Getting information for conference '%s'".formatted(conferenceId));
 
     // 1. Request for conference information
-    Collection<ConferenceParticipant> response = Collections.emptyList();
+    Collection<ConferenceParticipant> list = Collections.emptyList();
     try {
-      response = sinchClient.voice().conferences().get(conferenceId);
+      GetConferenceInfoResponse response = service.get(conferenceId);
+      list = response.getParticipants();
     } catch (ApiException e) {
       // NOP
     }
     // 2. return the phone number
     echo("Conference participants are:");
-    response.stream().iterator().forEachRemaining(f -> echo("- %s".formatted(f)));
+    list.stream().iterator().forEachRemaining(f -> echo("- %s".formatted(f)));
 
-    return response;
+    return list;
   }
 
-  void getCallInformation(int step, SinchClient sinchClient, String conferenceId, String callId) {
+  void getCallInformation(int step, CallsService service, String callId) {
 
     echoStep(step, "Get call information for participant '%s'".formatted(callId));
 
-    var response = sinchClient.voice().calls().get(callId);
+    var response = service.get(callId);
 
     echo("Call information: %s".formatted(response));
   }
 
-  void muteParticipant(int step, SinchClient sinchClient, String conferenceId, String callId) {
+  void muteParticipant(int step, ConferencesService service, String conferenceId, String callId) {
 
     echoStep(step, "Muting participant '%s'".formatted(callId));
 
-    var payload =
-        ConferenceManageParticipantRequestParameters.builder()
-            .setCommand(ConferenceManageParticipantCommandType.MUTE)
-            .build();
+    var payload = ManageConferenceParticipantRequest.builder().setCommand(CommandEnum.MUTE).build();
 
-    sinchClient.voice().conferences().manageParticipant(conferenceId, callId, payload);
+    service.manageParticipant(conferenceId, callId, payload);
 
     echo("Conference participants muted\n");
   }
 
-  void kickAllParticipants(int step, SinchClient sinchClient, String conferenceId) {
+  void kickAllParticipants(int step, ConferencesService service, String conferenceId) {
 
     echoStep(step, "Kicking all participants");
-    sinchClient.voice().conferences().kickAll(conferenceId);
+    service.kickAll(conferenceId);
 
     echo("Done\n");
   }
