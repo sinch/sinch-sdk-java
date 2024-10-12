@@ -11,7 +11,7 @@
 package com.sinch.sdk.domains.voice.models.v1.callouts.request.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationCustom;
 import com.sinch.sdk.domains.voice.models.v1.svaml.Control;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 
@@ -36,7 +36,7 @@ public interface CustomCalloutInternal {
    *
    * @return destination
    */
-  Destination getDestination();
+  DestinationCustom getDestination();
 
   /**
    * When the destination picks up, this DTMF tones will be played to the callee. Valid characters
@@ -129,7 +129,7 @@ public interface CustomCalloutInternal {
      * @return Current builder
      * @see #getDestination
      */
-    Builder setDestination(Destination destination);
+    Builder setDestination(DestinationCustom destination);
 
     /**
      * see getter

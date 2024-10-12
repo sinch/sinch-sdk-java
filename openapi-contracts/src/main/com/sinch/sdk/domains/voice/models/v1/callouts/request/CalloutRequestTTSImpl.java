@@ -13,10 +13,10 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
 import com.sinch.sdk.domains.voice.models.v1.Domain;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.internal.TtsCalloutInternal;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.internal.TtsCalloutInternalImpl;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationTextToSpeech;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import java.io.IOException;
 import java.util.Objects;
@@ -86,7 +86,7 @@ public class CalloutRequestTTSImpl
   }
 
   @JsonIgnore
-  public Destination getDestination() {
+  public DestinationTextToSpeech getDestination() {
     if (null == ttsCallout
         || !ttsCallout.isPresent()
         || null == ttsCallout.get().getDestination()) {
@@ -95,7 +95,7 @@ public class CalloutRequestTTSImpl
     return ttsCallout.get().getDestination();
   }
 
-  public OptionalValue<Destination> destination() {
+  public OptionalValue<DestinationTextToSpeech> destination() {
     return null != ttsCallout && ttsCallout.isPresent()
         ? ttsCallout
             .map(f -> ((TtsCalloutInternalImpl) f).destination())
@@ -294,7 +294,7 @@ public class CalloutRequestTTSImpl
     }
 
     @JsonIgnore
-    public Builder setDestination(Destination destination) {
+    public Builder setDestination(DestinationTextToSpeech destination) {
       getDelegatedBuilder().setDestination(destination);
       return this;
     }

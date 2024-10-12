@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationCustom;
 import com.sinch.sdk.domains.voice.models.v1.svaml.Control;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import java.util.Objects;
@@ -33,7 +33,7 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
 
   public static final String JSON_PROPERTY_DESTINATION = "destination";
 
-  private OptionalValue<Destination> destination;
+  private OptionalValue<DestinationCustom> destination;
 
   public static final String JSON_PROPERTY_DTMF = "dtmf";
 
@@ -63,7 +63,7 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
 
   protected CustomCalloutInternalImpl(
       OptionalValue<String> cli,
-      OptionalValue<Destination> destination,
+      OptionalValue<DestinationCustom> destination,
       OptionalValue<DualToneMultiFrequency> dtmf,
       OptionalValue<String> custom,
       OptionalValue<Integer> maxDuration,
@@ -92,13 +92,13 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
   }
 
   @JsonIgnore
-  public Destination getDestination() {
+  public DestinationCustom getDestination() {
     return destination.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_DESTINATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<Destination> destination() {
+  public OptionalValue<DestinationCustom> destination() {
     return destination;
   }
 
@@ -222,7 +222,7 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements CustomCalloutInternal.Builder {
     OptionalValue<String> cli = OptionalValue.empty();
-    OptionalValue<Destination> destination = OptionalValue.empty();
+    OptionalValue<DestinationCustom> destination = OptionalValue.empty();
     OptionalValue<DualToneMultiFrequency> dtmf = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
     OptionalValue<Integer> maxDuration = OptionalValue.empty();
@@ -237,7 +237,7 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
     }
 
     @JsonProperty(JSON_PROPERTY_DESTINATION)
-    public Builder setDestination(Destination destination) {
+    public Builder setDestination(DestinationCustom destination) {
       this.destination = OptionalValue.of(destination);
       return this;
     }

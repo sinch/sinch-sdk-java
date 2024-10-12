@@ -13,7 +13,6 @@ package com.sinch.sdk.domains.voice.models.v1.calls.response;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
 import com.sinch.sdk.domains.voice.models.v1.Price;
 import java.time.Instant;
 import java.util.Arrays;
@@ -28,14 +27,14 @@ public interface CallInformation {
    *
    * @return from
    */
-  Destination getFrom();
+  CallInformationFrom getFrom();
 
   /**
    * Get to
    *
    * @return to
    */
-  Destination getTo();
+  CallInformationTo getTo();
 
   /** Must be <code>pstn</code> for PSTN. */
   public class DomainEnum extends EnumDynamic<String, DomainEnum> {
@@ -221,7 +220,7 @@ public interface CallInformation {
      * @return Current builder
      * @see #getFrom
      */
-    Builder setFrom(Destination from);
+    Builder setFrom(CallInformationFrom from);
 
     /**
      * see getter
@@ -230,7 +229,7 @@ public interface CallInformation {
      * @return Current builder
      * @see #getTo
      */
-    Builder setTo(Destination to);
+    Builder setTo(CallInformationTo to);
 
     /**
      * see getter

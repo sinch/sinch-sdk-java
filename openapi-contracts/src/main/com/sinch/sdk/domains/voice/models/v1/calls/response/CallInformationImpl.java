@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
 import com.sinch.sdk.domains.voice.models.v1.Price;
 import java.time.Instant;
 import java.util.Objects;
@@ -33,11 +32,11 @@ public class CallInformationImpl implements CallInformation {
 
   public static final String JSON_PROPERTY_FROM = "from";
 
-  private OptionalValue<Destination> from;
+  private OptionalValue<CallInformationFrom> from;
 
   public static final String JSON_PROPERTY_TO = "to";
 
-  private OptionalValue<Destination> to;
+  private OptionalValue<CallInformationTo> to;
 
   public static final String JSON_PROPERTY_DOMAIN = "domain";
 
@@ -82,8 +81,8 @@ public class CallInformationImpl implements CallInformation {
   public CallInformationImpl() {}
 
   protected CallInformationImpl(
-      OptionalValue<Destination> from,
-      OptionalValue<Destination> to,
+      OptionalValue<CallInformationFrom> from,
+      OptionalValue<CallInformationTo> to,
       OptionalValue<DomainEnum> domain,
       OptionalValue<String> callId,
       OptionalValue<Integer> duration,
@@ -109,24 +108,24 @@ public class CallInformationImpl implements CallInformation {
   }
 
   @JsonIgnore
-  public Destination getFrom() {
+  public CallInformationFrom getFrom() {
     return from.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_FROM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<Destination> from() {
+  public OptionalValue<CallInformationFrom> from() {
     return from;
   }
 
   @JsonIgnore
-  public Destination getTo() {
+  public CallInformationTo getTo() {
     return to.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_TO)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<Destination> to() {
+  public OptionalValue<CallInformationTo> to() {
     return to;
   }
 
@@ -303,8 +302,8 @@ public class CallInformationImpl implements CallInformation {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements CallInformation.Builder {
-    OptionalValue<Destination> from = OptionalValue.empty();
-    OptionalValue<Destination> to = OptionalValue.empty();
+    OptionalValue<CallInformationFrom> from = OptionalValue.empty();
+    OptionalValue<CallInformationTo> to = OptionalValue.empty();
     OptionalValue<DomainEnum> domain = OptionalValue.empty();
     OptionalValue<String> callId = OptionalValue.empty();
     OptionalValue<Integer> duration = OptionalValue.empty();
@@ -317,13 +316,13 @@ public class CallInformationImpl implements CallInformation {
     OptionalValue<Price> debit = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_FROM)
-    public Builder setFrom(Destination from) {
+    public Builder setFrom(CallInformationFrom from) {
       this.from = OptionalValue.of(from);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_TO)
-    public Builder setTo(Destination to) {
+    public Builder setTo(CallInformationTo to) {
       this.to = OptionalValue.of(to);
       return this;
     }

@@ -13,8 +13,8 @@ package com.sinch.sdk.domains.voice.models.v1.svaml.action;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
 import com.sinch.sdk.domains.voice.models.v1.MusicOnHold;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationSip;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -57,7 +57,7 @@ public interface SvamlActionConnectSip
    *
    * @return destination
    */
-  Destination getDestination();
+  DestinationSip getDestination();
 
   /**
    * The max duration of the call in seconds (max 14400 seconds). If the call is still connected at
@@ -159,7 +159,7 @@ public interface SvamlActionConnectSip
      * @return Current builder
      * @see #getDestination
      */
-    Builder setDestination(Destination destination);
+    Builder setDestination(DestinationSip destination);
 
     /**
      * see getter

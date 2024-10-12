@@ -13,12 +13,12 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
 import com.sinch.sdk.domains.voice.models.v1.Domain;
 import com.sinch.sdk.domains.voice.models.v1.MusicOnHold;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.internal.ConferenceCalloutInternal;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.internal.ConferenceCalloutInternalImpl;
 import com.sinch.sdk.domains.voice.models.v1.conferences.ConferenceDtmfOptions;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationConference;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import java.io.IOException;
 import java.util.Objects;
@@ -93,24 +93,6 @@ public class CalloutRequestConferenceImpl
   }
 
   @JsonIgnore
-  public Destination getDestination() {
-    if (null == conferenceCallout
-        || !conferenceCallout.isPresent()
-        || null == conferenceCallout.get().getDestination()) {
-      return null;
-    }
-    return conferenceCallout.get().getDestination();
-  }
-
-  public OptionalValue<Destination> destination() {
-    return null != conferenceCallout && conferenceCallout.isPresent()
-        ? conferenceCallout
-            .map(f -> ((ConferenceCalloutInternalImpl) f).destination())
-            .orElse(OptionalValue.empty())
-        : OptionalValue.empty();
-  }
-
-  @JsonIgnore
   public DualToneMultiFrequency getDtmf() {
     if (null == conferenceCallout
         || !conferenceCallout.isPresent()
@@ -142,6 +124,24 @@ public class CalloutRequestConferenceImpl
     return null != conferenceCallout && conferenceCallout.isPresent()
         ? conferenceCallout
             .map(f -> ((ConferenceCalloutInternalImpl) f).custom())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
+  }
+
+  @JsonIgnore
+  public DestinationConference getDestination() {
+    if (null == conferenceCallout
+        || !conferenceCallout.isPresent()
+        || null == conferenceCallout.get().getDestination()) {
+      return null;
+    }
+    return conferenceCallout.get().getDestination();
+  }
+
+  public OptionalValue<DestinationConference> destination() {
+    return null != conferenceCallout && conferenceCallout.isPresent()
+        ? conferenceCallout
+            .map(f -> ((ConferenceCalloutInternalImpl) f).destination())
             .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
@@ -386,12 +386,6 @@ public class CalloutRequestConferenceImpl
     }
 
     @JsonIgnore
-    public Builder setDestination(Destination destination) {
-      getDelegatedBuilder().setDestination(destination);
-      return this;
-    }
-
-    @JsonIgnore
     public Builder setDtmf(DualToneMultiFrequency dtmf) {
       getDelegatedBuilder().setDtmf(dtmf);
       return this;
@@ -400,6 +394,12 @@ public class CalloutRequestConferenceImpl
     @JsonIgnore
     public Builder setCustom(String custom) {
       getDelegatedBuilder().setCustom(custom);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setDestination(DestinationConference destination) {
+      getDelegatedBuilder().setDestination(destination);
       return this;
     }
 

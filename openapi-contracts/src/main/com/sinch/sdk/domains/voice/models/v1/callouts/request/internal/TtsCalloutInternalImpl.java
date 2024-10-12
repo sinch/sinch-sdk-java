@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
 import com.sinch.sdk.domains.voice.models.v1.Domain;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationTextToSpeech;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import java.util.Objects;
 
@@ -36,7 +36,7 @@ public class TtsCalloutInternalImpl implements TtsCalloutInternal {
 
   public static final String JSON_PROPERTY_DESTINATION = "destination";
 
-  private OptionalValue<Destination> destination;
+  private OptionalValue<DestinationTextToSpeech> destination;
 
   public static final String JSON_PROPERTY_DTMF = "dtmf";
 
@@ -78,7 +78,7 @@ public class TtsCalloutInternalImpl implements TtsCalloutInternal {
 
   protected TtsCalloutInternalImpl(
       OptionalValue<String> cli,
-      OptionalValue<Destination> destination,
+      OptionalValue<DestinationTextToSpeech> destination,
       OptionalValue<DualToneMultiFrequency> dtmf,
       OptionalValue<Domain> domain,
       OptionalValue<String> custom,
@@ -113,13 +113,13 @@ public class TtsCalloutInternalImpl implements TtsCalloutInternal {
   }
 
   @JsonIgnore
-  public Destination getDestination() {
+  public DestinationTextToSpeech getDestination() {
     return destination.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_DESTINATION)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<Destination> destination() {
+  public OptionalValue<DestinationTextToSpeech> destination() {
     return destination;
   }
 
@@ -293,7 +293,7 @@ public class TtsCalloutInternalImpl implements TtsCalloutInternal {
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements TtsCalloutInternal.Builder {
     OptionalValue<String> cli = OptionalValue.empty();
-    OptionalValue<Destination> destination = OptionalValue.empty();
+    OptionalValue<DestinationTextToSpeech> destination = OptionalValue.empty();
     OptionalValue<DualToneMultiFrequency> dtmf = OptionalValue.empty();
     OptionalValue<Domain> domain = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
@@ -311,7 +311,7 @@ public class TtsCalloutInternalImpl implements TtsCalloutInternal {
     }
 
     @JsonProperty(JSON_PROPERTY_DESTINATION)
-    public Builder setDestination(Destination destination) {
+    public Builder setDestination(DestinationTextToSpeech destination) {
       this.destination = OptionalValue.of(destination);
       return this;
     }

@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.voice.models.v1;
+package com.sinch.sdk.domains.voice.models.v1.destination;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,37 +7,50 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformationFrom;
+import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformationTo;
+import com.sinch.sdk.domains.voice.models.v1.destination.internal.MxpDestination;
 import java.util.Objects;
 
-@JsonPropertyOrder({DestinationImpl.JSON_PROPERTY_TYPE, DestinationImpl.JSON_PROPERTY_ENDPOINT})
+@JsonPropertyOrder({
+  DestinationMxpImpl.JSON_PROPERTY_TYPE,
+  DestinationMxpImpl.JSON_PROPERTY_ENDPOINT
+})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class DestinationImpl implements Destination {
+public class DestinationMxpImpl
+    implements DestinationMxp,
+        Destination,
+        DestinationConference,
+        DestinationCustom,
+        DestinationTextToSpeech,
+        CallInformationFrom,
+        CallInformationTo {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_TYPE = "type";
 
-  private OptionalValue<DestinationType> type;
+  private OptionalValue<MxpDestination> type;
 
   public static final String JSON_PROPERTY_ENDPOINT = "endpoint";
 
   private OptionalValue<String> endpoint;
 
-  public DestinationImpl() {}
+  public DestinationMxpImpl() {}
 
-  protected DestinationImpl(OptionalValue<DestinationType> type, OptionalValue<String> endpoint) {
+  protected DestinationMxpImpl(OptionalValue<MxpDestination> type, OptionalValue<String> endpoint) {
     this.type = type;
     this.endpoint = endpoint;
   }
 
   @JsonIgnore
-  public DestinationType getType() {
+  public MxpDestination getType() {
     return type.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_TYPE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<DestinationType> type() {
+  public OptionalValue<MxpDestination> type() {
     return type;
   }
 
@@ -52,7 +65,7 @@ public class DestinationImpl implements Destination {
     return endpoint;
   }
 
-  /** Return true if this destination object is equal to o. */
+  /** Return true if this destinationMxp object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -61,9 +74,9 @@ public class DestinationImpl implements Destination {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DestinationImpl destination = (DestinationImpl) o;
-    return Objects.equals(this.type, destination.type)
-        && Objects.equals(this.endpoint, destination.endpoint);
+    DestinationMxpImpl destinationMxp = (DestinationMxpImpl) o;
+    return Objects.equals(this.type, destinationMxp.type)
+        && Objects.equals(this.endpoint, destinationMxp.endpoint);
   }
 
   @Override
@@ -74,7 +87,7 @@ public class DestinationImpl implements Destination {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DestinationImpl {\n");
+    sb.append("class DestinationMxpImpl {\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    endpoint: ").append(toIndentedString(endpoint)).append("\n");
     sb.append("}");
@@ -92,15 +105,9 @@ public class DestinationImpl implements Destination {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements Destination.Builder {
-    OptionalValue<DestinationType> type = OptionalValue.empty();
+  static class Builder implements DestinationMxp.Builder {
+    OptionalValue<MxpDestination> type = OptionalValue.of(MxpDestination.USERNAME);
     OptionalValue<String> endpoint = OptionalValue.empty();
-
-    @JsonProperty(JSON_PROPERTY_TYPE)
-    public Builder setType(DestinationType type) {
-      this.type = OptionalValue.of(type);
-      return this;
-    }
 
     @JsonProperty(JSON_PROPERTY_ENDPOINT)
     public Builder setEndpoint(String endpoint) {
@@ -108,8 +115,8 @@ public class DestinationImpl implements Destination {
       return this;
     }
 
-    public Destination build() {
-      return new DestinationImpl(type, endpoint);
+    public DestinationMxp build() {
+      return new DestinationMxpImpl(type, endpoint);
     }
   }
 }

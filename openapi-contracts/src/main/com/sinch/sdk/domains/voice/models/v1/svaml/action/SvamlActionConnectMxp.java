@@ -13,7 +13,7 @@ package com.sinch.sdk.domains.voice.models.v1.svaml.action;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationMxp;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -57,7 +57,7 @@ public interface SvamlActionConnectMxp
    *
    * @return destination
    */
-  Destination getDestination();
+  DestinationMxp getDestination();
 
   /**
    * An optional parameter that allows you to specify or override call headers provided to the
@@ -87,7 +87,7 @@ public interface SvamlActionConnectMxp
      * @return Current builder
      * @see #getDestination
      */
-    Builder setDestination(Destination destination);
+    Builder setDestination(DestinationMxp destination);
 
     /**
      * see getter

@@ -13,9 +13,9 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.internal.CustomCalloutInternal;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.internal.CustomCalloutInternalImpl;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationCustom;
 import com.sinch.sdk.domains.voice.models.v1.svaml.Control;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import java.io.IOException;
@@ -90,7 +90,7 @@ public class CalloutRequestCustomImpl
   }
 
   @JsonIgnore
-  public Destination getDestination() {
+  public DestinationCustom getDestination() {
     if (null == customCallout
         || !customCallout.isPresent()
         || null == customCallout.get().getDestination()) {
@@ -99,7 +99,7 @@ public class CalloutRequestCustomImpl
     return customCallout.get().getDestination();
   }
 
-  public OptionalValue<Destination> destination() {
+  public OptionalValue<DestinationCustom> destination() {
     return null != customCallout && customCallout.isPresent()
         ? customCallout
             .map(f -> ((CustomCalloutInternalImpl) f).destination())
@@ -274,7 +274,7 @@ public class CalloutRequestCustomImpl
     }
 
     @JsonIgnore
-    public Builder setDestination(Destination destination) {
+    public Builder setDestination(DestinationCustom destination) {
       getDelegatedBuilder().setDestination(destination);
       return this;
     }

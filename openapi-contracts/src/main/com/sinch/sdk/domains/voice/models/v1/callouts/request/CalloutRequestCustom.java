@@ -13,7 +13,7 @@ package com.sinch.sdk.domains.voice.models.v1.callouts.request;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationCustom;
 import com.sinch.sdk.domains.voice.models.v1.svaml.Control;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import java.util.Arrays;
@@ -62,7 +62,7 @@ public interface CalloutRequestCustom
    *
    * @return destination
    */
-  Destination getDestination();
+  DestinationCustom getDestination();
 
   /**
    * When the destination picks up, this DTMF tones will be played to the callee. Valid characters
@@ -155,7 +155,7 @@ public interface CalloutRequestCustom
      * @return Current builder
      * @see #getDestination
      */
-    Builder setDestination(Destination destination);
+    Builder setDestination(DestinationCustom destination);
 
     /**
      * see getter

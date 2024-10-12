@@ -11,10 +11,10 @@
 package com.sinch.sdk.domains.voice.models.v1.callouts.request.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
 import com.sinch.sdk.domains.voice.models.v1.Domain;
 import com.sinch.sdk.domains.voice.models.v1.MusicOnHold;
 import com.sinch.sdk.domains.voice.models.v1.conferences.ConferenceDtmfOptions;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationConference;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 
 /**
@@ -34,13 +34,6 @@ public interface ConferenceCalloutInternal {
   String getCli();
 
   /**
-   * Get destination
-   *
-   * @return destination
-   */
-  Destination getDestination();
-
-  /**
    * When the destination picks up, this DTMF tones will be played to the callee. Valid characters
    * in the string are &quot;0&quot;-&quot;9&quot;, &quot;#&quot; and &quot;w&quot;. A &quot;w&quot;
    * will render a 500 ms pause. Example: &quot;ww1234#w#&quot; will render a 1s pause, the DTMF
@@ -58,6 +51,13 @@ public interface ConferenceCalloutInternal {
    * @return custom
    */
   String getCustom();
+
+  /**
+   * Get destination
+   *
+   * @return destination
+   */
+  DestinationConference getDestination();
 
   /**
    * The conferenceId of the conference to which you want the callee to join. If the conferenceId
@@ -183,15 +183,6 @@ public interface ConferenceCalloutInternal {
     /**
      * see getter
      *
-     * @param destination see getter
-     * @return Current builder
-     * @see #getDestination
-     */
-    Builder setDestination(Destination destination);
-
-    /**
-     * see getter
-     *
      * @param dtmf see getter
      * @return Current builder
      * @see #getDtmf
@@ -206,6 +197,15 @@ public interface ConferenceCalloutInternal {
      * @see #getCustom
      */
     Builder setCustom(String custom);
+
+    /**
+     * see getter
+     *
+     * @param destination see getter
+     * @return Current builder
+     * @see #getDestination
+     */
+    Builder setDestination(DestinationConference destination);
 
     /**
      * see getter

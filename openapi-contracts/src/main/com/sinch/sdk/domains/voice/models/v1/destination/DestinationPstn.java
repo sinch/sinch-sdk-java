@@ -8,24 +8,29 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.voice.models.v1;
+package com.sinch.sdk.domains.voice.models.v1.destination;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformationFrom;
+import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformationTo;
 
 /** The type of device and number or endpoint to call. */
-@JsonDeserialize(builder = DestinationImpl.Builder.class)
-public interface Destination {
+@JsonDeserialize(builder = DestinationPstnImpl.Builder.class)
+public interface DestinationPstn
+    extends Destination,
+        DestinationConference,
+        DestinationCustom,
+        DestinationTextToSpeech,
+        CallInformationFrom,
+        CallInformationTo {
+
+  /** Static builder helper */
+  static DestinationPstn from(String endPoint) {
+    return DestinationPstn.builder().setEndpoint(endPoint).build();
+  }
 
   /**
-   * Get type
-   *
-   * @return type
-   */
-  DestinationType getType();
-
-  /**
-   * If the type is <code>number</code> the value of the endpoint is a phone number. If the type is
-   * <code>username</code> the value is the username for a data endpoint.
+   * If the type is <code>number</code> the value of the endpoint is a phone number.
    *
    * @return endpoint
    */
@@ -37,20 +42,11 @@ public interface Destination {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new DestinationImpl.Builder();
+    return new DestinationPstnImpl.Builder();
   }
 
   /** Dedicated Builder */
   interface Builder {
-
-    /**
-     * see getter
-     *
-     * @param type see getter
-     * @return Current builder
-     * @see #getType
-     */
-    Builder setType(DestinationType type);
 
     /**
      * see getter
@@ -66,6 +62,6 @@ public interface Destination {
      *
      * @return The instance build with current builder values
      */
-    Destination build();
+    DestinationPstn build();
   }
 }

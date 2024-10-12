@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationMxp;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,7 +29,7 @@ public class SvamlActionConnectMxpImpl
 
   public static final String JSON_PROPERTY_DESTINATION = "destination";
 
-  private OptionalValue<Destination> destination;
+  private OptionalValue<DestinationMxp> destination;
 
   public static final String JSON_PROPERTY_CALLHEADERS = "callheaders";
 
@@ -39,7 +39,7 @@ public class SvamlActionConnectMxpImpl
 
   protected SvamlActionConnectMxpImpl(
       OptionalValue<NameEnum> name,
-      OptionalValue<Destination> destination,
+      OptionalValue<DestinationMxp> destination,
       OptionalValue<List<CallHeader>> callheaders) {
     this.name = name;
     this.destination = destination;
@@ -58,13 +58,13 @@ public class SvamlActionConnectMxpImpl
   }
 
   @JsonIgnore
-  public Destination getDestination() {
+  public DestinationMxp getDestination() {
     return destination.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_DESTINATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<Destination> destination() {
+  public OptionalValue<DestinationMxp> destination() {
     return destination;
   }
 
@@ -123,11 +123,11 @@ public class SvamlActionConnectMxpImpl
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements SvamlActionConnectMxp.Builder {
     OptionalValue<NameEnum> name = OptionalValue.of(NameEnum.CONNECT_MXP);
-    OptionalValue<Destination> destination = OptionalValue.empty();
+    OptionalValue<DestinationMxp> destination = OptionalValue.empty();
     OptionalValue<List<CallHeader>> callheaders = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_DESTINATION)
-    public Builder setDestination(Destination destination) {
+    public Builder setDestination(DestinationMxp destination) {
       this.destination = OptionalValue.of(destination);
       return this;
     }

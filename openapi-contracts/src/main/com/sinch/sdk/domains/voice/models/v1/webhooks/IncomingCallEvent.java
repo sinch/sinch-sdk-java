@@ -11,9 +11,9 @@
 package com.sinch.sdk.domains.voice.models.v1.webhooks;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
 import com.sinch.sdk.domains.voice.models.v1.Domain;
 import com.sinch.sdk.domains.voice.models.v1.Price;
+import com.sinch.sdk.domains.voice.models.v1.destination.Destination;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.CallHeader;
 import java.time.Instant;
 import java.util.List;

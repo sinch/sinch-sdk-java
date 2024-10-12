@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
 import com.sinch.sdk.domains.voice.models.v1.MusicOnHold;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationSip;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,7 +35,7 @@ public class SvamlActionConnectSipImpl
 
   public static final String JSON_PROPERTY_DESTINATION = "destination";
 
-  private OptionalValue<Destination> destination;
+  private OptionalValue<DestinationSip> destination;
 
   public static final String JSON_PROPERTY_MAX_DURATION = "maxDuration";
 
@@ -65,7 +65,7 @@ public class SvamlActionConnectSipImpl
 
   protected SvamlActionConnectSipImpl(
       OptionalValue<NameEnum> name,
-      OptionalValue<Destination> destination,
+      OptionalValue<DestinationSip> destination,
       OptionalValue<Integer> maxDuration,
       OptionalValue<String> cli,
       OptionalValue<TransportEnum> transport,
@@ -94,13 +94,13 @@ public class SvamlActionConnectSipImpl
   }
 
   @JsonIgnore
-  public Destination getDestination() {
+  public DestinationSip getDestination() {
     return destination.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_DESTINATION)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<Destination> destination() {
+  public OptionalValue<DestinationSip> destination() {
     return destination;
   }
 
@@ -232,7 +232,7 @@ public class SvamlActionConnectSipImpl
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements SvamlActionConnectSip.Builder {
     OptionalValue<NameEnum> name = OptionalValue.of(NameEnum.CONNECT_SIP);
-    OptionalValue<Destination> destination = OptionalValue.empty();
+    OptionalValue<DestinationSip> destination = OptionalValue.empty();
     OptionalValue<Integer> maxDuration = OptionalValue.empty();
     OptionalValue<String> cli = OptionalValue.empty();
     OptionalValue<TransportEnum> transport = OptionalValue.empty();
@@ -241,7 +241,7 @@ public class SvamlActionConnectSipImpl
     OptionalValue<MusicOnHold> MusicOnHold = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_DESTINATION)
-    public Builder setDestination(Destination destination) {
+    public Builder setDestination(DestinationSip destination) {
       this.destination = OptionalValue.of(destination);
       return this;
     }

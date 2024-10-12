@@ -7,18 +7,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
 import com.sinch.sdk.domains.voice.models.v1.Domain;
 import com.sinch.sdk.domains.voice.models.v1.MusicOnHold;
 import com.sinch.sdk.domains.voice.models.v1.conferences.ConferenceDtmfOptions;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationConference;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import java.util.Objects;
 
 @JsonPropertyOrder({
   ConferenceCalloutInternalImpl.JSON_PROPERTY_CLI,
-  ConferenceCalloutInternalImpl.JSON_PROPERTY_DESTINATION,
   ConferenceCalloutInternalImpl.JSON_PROPERTY_DTMF,
   ConferenceCalloutInternalImpl.JSON_PROPERTY_CUSTOM,
+  ConferenceCalloutInternalImpl.JSON_PROPERTY_DESTINATION,
   ConferenceCalloutInternalImpl.JSON_PROPERTY_CONFERENCE_ID,
   ConferenceCalloutInternalImpl.JSON_PROPERTY_CONFERENCE_DTMF_OPTIONS,
   ConferenceCalloutInternalImpl.JSON_PROPERTY_MAX_DURATION,
@@ -39,10 +39,6 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
 
   private OptionalValue<String> cli;
 
-  public static final String JSON_PROPERTY_DESTINATION = "destination";
-
-  private OptionalValue<Destination> destination;
-
   public static final String JSON_PROPERTY_DTMF = "dtmf";
 
   private OptionalValue<DualToneMultiFrequency> dtmf;
@@ -50,6 +46,10 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
   public static final String JSON_PROPERTY_CUSTOM = "custom";
 
   private OptionalValue<String> custom;
+
+  public static final String JSON_PROPERTY_DESTINATION = "destination";
+
+  private OptionalValue<DestinationConference> destination;
 
   public static final String JSON_PROPERTY_CONFERENCE_ID = "conferenceId";
 
@@ -95,9 +95,9 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
 
   protected ConferenceCalloutInternalImpl(
       OptionalValue<String> cli,
-      OptionalValue<Destination> destination,
       OptionalValue<DualToneMultiFrequency> dtmf,
       OptionalValue<String> custom,
+      OptionalValue<DestinationConference> destination,
       OptionalValue<String> conferenceId,
       OptionalValue<ConferenceDtmfOptions> conferenceDtmfOptions,
       OptionalValue<Integer> maxDuration,
@@ -109,9 +109,9 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
       OptionalValue<MusicOnHold> MusicOnHold,
       OptionalValue<Domain> domain) {
     this.cli = cli;
-    this.destination = destination;
     this.dtmf = dtmf;
     this.custom = custom;
+    this.destination = destination;
     this.conferenceId = conferenceId;
     this.conferenceDtmfOptions = conferenceDtmfOptions;
     this.maxDuration = maxDuration;
@@ -136,17 +136,6 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
   }
 
   @JsonIgnore
-  public Destination getDestination() {
-    return destination.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_DESTINATION)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<Destination> destination() {
-    return destination;
-  }
-
-  @JsonIgnore
   public DualToneMultiFrequency getDtmf() {
     return dtmf.orElse(null);
   }
@@ -166,6 +155,17 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> custom() {
     return custom;
+  }
+
+  @JsonIgnore
+  public DestinationConference getDestination() {
+    return destination.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_DESTINATION)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<DestinationConference> destination() {
+    return destination;
   }
 
   @JsonIgnore
@@ -289,9 +289,9 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
     }
     ConferenceCalloutInternalImpl conferenceCallout = (ConferenceCalloutInternalImpl) o;
     return Objects.equals(this.cli, conferenceCallout.cli)
-        && Objects.equals(this.destination, conferenceCallout.destination)
         && Objects.equals(this.dtmf, conferenceCallout.dtmf)
         && Objects.equals(this.custom, conferenceCallout.custom)
+        && Objects.equals(this.destination, conferenceCallout.destination)
         && Objects.equals(this.conferenceId, conferenceCallout.conferenceId)
         && Objects.equals(this.conferenceDtmfOptions, conferenceCallout.conferenceDtmfOptions)
         && Objects.equals(this.maxDuration, conferenceCallout.maxDuration)
@@ -308,9 +308,9 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
   public int hashCode() {
     return Objects.hash(
         cli,
-        destination,
         dtmf,
         custom,
+        destination,
         conferenceId,
         conferenceDtmfOptions,
         maxDuration,
@@ -328,9 +328,9 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
     StringBuilder sb = new StringBuilder();
     sb.append("class ConferenceCalloutInternalImpl {\n");
     sb.append("    cli: ").append(toIndentedString(cli)).append("\n");
-    sb.append("    destination: ").append(toIndentedString(destination)).append("\n");
     sb.append("    dtmf: ").append(toIndentedString(dtmf)).append("\n");
     sb.append("    custom: ").append(toIndentedString(custom)).append("\n");
+    sb.append("    destination: ").append(toIndentedString(destination)).append("\n");
     sb.append("    conferenceId: ").append(toIndentedString(conferenceId)).append("\n");
     sb.append("    conferenceDtmfOptions: ")
         .append(toIndentedString(conferenceDtmfOptions))
@@ -360,9 +360,9 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements ConferenceCalloutInternal.Builder {
     OptionalValue<String> cli = OptionalValue.empty();
-    OptionalValue<Destination> destination = OptionalValue.empty();
     OptionalValue<DualToneMultiFrequency> dtmf = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
+    OptionalValue<DestinationConference> destination = OptionalValue.empty();
     OptionalValue<String> conferenceId = OptionalValue.empty();
     OptionalValue<ConferenceDtmfOptions> conferenceDtmfOptions = OptionalValue.empty();
     OptionalValue<Integer> maxDuration = OptionalValue.empty();
@@ -380,12 +380,6 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_DESTINATION)
-    public Builder setDestination(Destination destination) {
-      this.destination = OptionalValue.of(destination);
-      return this;
-    }
-
     @JsonProperty(JSON_PROPERTY_DTMF)
     public Builder setDtmf(DualToneMultiFrequency dtmf) {
       this.dtmf = OptionalValue.of(dtmf);
@@ -395,6 +389,12 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
     @JsonProperty(JSON_PROPERTY_CUSTOM)
     public Builder setCustom(String custom) {
       this.custom = OptionalValue.of(custom);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_DESTINATION)
+    public Builder setDestination(DestinationConference destination) {
+      this.destination = OptionalValue.of(destination);
       return this;
     }
 
@@ -461,9 +461,9 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
     public ConferenceCalloutInternal build() {
       return new ConferenceCalloutInternalImpl(
           cli,
-          destination,
           dtmf,
           custom,
+          destination,
           conferenceId,
           conferenceDtmfOptions,
           maxDuration,
