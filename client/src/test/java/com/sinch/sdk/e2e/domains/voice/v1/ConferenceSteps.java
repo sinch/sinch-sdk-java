@@ -2,14 +2,13 @@ package com.sinch.sdk.e2e.domains.voice.v1;
 
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.voice.api.v1.ConferencesService;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
-import com.sinch.sdk.domains.voice.models.v1.DestinationType;
 import com.sinch.sdk.domains.voice.models.v1.MusicOnHold;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
 import com.sinch.sdk.domains.voice.models.v1.conferences.ConferenceParticipant;
 import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipantRequest;
 import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipantRequest.CommandEnum;
 import com.sinch.sdk.domains.voice.models.v1.conferences.response.GetConferenceInfoResponse;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationPstn;
 import com.sinch.sdk.e2e.Config;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -38,11 +37,7 @@ public class ConferenceSteps {
     CalloutRequestConference request =
         CalloutRequestConference.builder()
             .setLocale("en-US")
-            .setDestination(
-                Destination.builder()
-                    .setType(DestinationType.NUMBER)
-                    .setEndpoint("+12017777777")
-                    .build())
+            .setDestination(DestinationPstn.from("+12017777777"))
             .setCli("+12015555555")
             .setConferenceId("myConferenceId-E2E")
             .setGreeting("Welcome to this conference call.")

@@ -4,10 +4,13 @@ import com.sinch.sdk.domains.voice.models.DestinationNumber;
 import com.sinch.sdk.domains.voice.models.DestinationNumberType;
 import com.sinch.sdk.domains.voice.models.DestinationSip;
 import com.sinch.sdk.domains.voice.models.DestinationUser;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
-import com.sinch.sdk.domains.voice.models.v1.DestinationType;
+import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformationFrom;
+import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformationTo;
+import com.sinch.sdk.domains.voice.models.v1.destination.Destination;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationDid;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationMxp;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationPstn;
 import com.sinch.sdk.models.E164PhoneNumber;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 public class DestinationDtoConverter {
@@ -19,62 +22,82 @@ public class DestinationDtoConverter {
     if (null == client) {
       return null;
     }
-    Destination.Builder dto = Destination.builder();
-    DestinationType type = null;
-    String endpoint = null;
+
     if (client instanceof DestinationNumber) {
       DestinationNumber destination = (DestinationNumber) client;
       if (DestinationNumberType.DID.equals(destination.getType())) {
-        type = DestinationType.DID;
-      } else if (DestinationNumberType.PSTN.equals(destination.getType())) {
-        type = DestinationType.NUMBER;
-      } else {
-        LOGGER.severe(String.format("Unexpected type '%s'", destination.getType()));
+        return DestinationDid.from(
+            null != destination.getPhoneNumber()
+                ? destination.getPhoneNumber().stringValue()
+                : null);
       }
-      endpoint = destination.getPhoneNumber().stringValue();
-    } else if (client instanceof DestinationUser) {
-      DestinationUser destination = (DestinationUser) client;
-      type = DestinationType.USERNAME;
-      endpoint = destination.getUserName();
-    } else if (client instanceof DestinationSip) {
-      DestinationSip destination = (DestinationSip) client;
-      type = DestinationType.SIP;
-      endpoint = destination.getSIPAddress();
-    } else {
-      LOGGER.severe(String.format("Unexpected class '%s'", client.getClass()));
-    }
-    if (null != type) {
-      dto.setType(type);
-    }
-    if (null != endpoint) {
-      dto.setEndpoint(endpoint);
+      if (DestinationNumberType.PSTN.equals(destination.getType())) {
+        return DestinationPstn.from(
+            null != destination.getPhoneNumber()
+                ? destination.getPhoneNumber().stringValue()
+                : null);
+      }
+      LOGGER.severe(String.format("Unexpected type '%s': %s", destination.getType(), client));
+      return null;
     }
 
-    return dto.build();
+    if (client instanceof DestinationUser) {
+      return DestinationMxp.from(((DestinationUser) client).getUserName());
+    }
+
+    if (client instanceof DestinationSip) {
+      return com.sinch.sdk.domains.voice.models.v1.destination.DestinationSip.from(
+          ((DestinationSip) client).getSIPAddress());
+    }
+
+    LOGGER.severe(String.format("Unexpected class '%s': '%s'", client.getClass(), client));
+    return null;
   }
 
   public static com.sinch.sdk.domains.voice.models.Destination convert(Destination dto) {
     if (null == dto) {
       return null;
     }
-    com.sinch.sdk.domains.voice.models.Destination destination = null;
-    if (Objects.equals(dto.getType(), DestinationType.NUMBER)
-        || Objects.equals(dto.getType(), DestinationType.NUMBER2)) {
-      destination =
-          new DestinationNumber(
-              E164PhoneNumber.valueOf(dto.getEndpoint()), DestinationNumberType.PSTN);
-    } else if (Objects.equals(dto.getType(), DestinationType.USERNAME)
-        || Objects.equals(dto.getType(), DestinationType.USERNAME2)) {
-      destination = new DestinationUser(dto.getEndpoint());
-    } else if (Objects.equals(dto.getType(), DestinationType.SIP)) {
-      destination = new DestinationSip(dto.getEndpoint());
-    } else if (Objects.equals(dto.getType(), DestinationType.DID)) {
-      destination =
-          new DestinationNumber(
-              E164PhoneNumber.valueOf(dto.getEndpoint()), DestinationNumberType.DID);
-    } else {
-      LOGGER.severe(String.format("Unexpected type value '%s'", dto.getType()));
+    if (dto instanceof DestinationPstn) {
+      return new DestinationNumber(
+          E164PhoneNumber.valueOf(((DestinationPstn) dto).getEndpoint()),
+          DestinationNumberType.PSTN);
     }
-    return destination;
+    if (dto instanceof DestinationMxp) {
+      return new DestinationUser(((DestinationMxp) dto).getEndpoint());
+    }
+    if (dto instanceof com.sinch.sdk.domains.voice.models.v1.destination.DestinationSip) {
+      return new DestinationSip(
+          ((com.sinch.sdk.domains.voice.models.v1.destination.DestinationSip) dto).getEndpoint());
+    }
+    if (dto instanceof DestinationDid) {
+      return new DestinationNumber(
+          E164PhoneNumber.valueOf(((DestinationDid) dto).getEndpoint()), DestinationNumberType.DID);
+    }
+
+    LOGGER.severe(String.format("Unexpected class '%s'", dto));
+    return null;
+  }
+
+  public static com.sinch.sdk.domains.voice.models.Destination convert(CallInformationFrom dto) {
+    if (null == dto) {
+      return null;
+    }
+    if (!(dto instanceof Destination)) {
+      LOGGER.severe(String.format("Unexpected class '%s'", dto));
+      return null;
+    }
+    return convert((Destination) dto);
+  }
+
+  public static com.sinch.sdk.domains.voice.models.Destination convert(CallInformationTo dto) {
+    if (null == dto) {
+      return null;
+    }
+    if (!(dto instanceof Destination)) {
+      LOGGER.severe(String.format("Unexpected class '%s'", dto));
+      return null;
+    }
+    return convert((Destination) dto);
   }
 }

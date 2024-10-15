@@ -2,13 +2,11 @@ package com.sinch.sample.voice.callouts;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.voice.api.v1.CalloutsService;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
-import com.sinch.sdk.domains.voice.models.v1.DestinationType;
 import com.sinch.sdk.domains.voice.models.v1.Domain;
-import com.sinch.sdk.domains.voice.models.v1.callouts.CalloutRequest;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestCustom;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestTTS;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationPstn;
 import com.sinch.sdk.domains.voice.models.v1.svaml.ControlUrl;
 import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.Menu;
@@ -43,9 +41,9 @@ public class Call extends BaseApplication {
 
     LOGGER.info("Start call for: " + phoneNumber);
 
-    CalloutRequest parameters = getTextToSpeechRequest();
-    // getCalloutRequest();
-    // getConferenceRequest();
+    // CalloutRequestTTS parameters = getTextToSpeechRequest();
+    // CalloutRequestCustom parameters =   getCalloutRequest();
+    CalloutRequestConference parameters = getConferenceRequest();
 
     var response = service.call(parameters);
 
@@ -54,8 +52,7 @@ public class Call extends BaseApplication {
 
   private CalloutRequestTTS getTextToSpeechRequest() {
     return CalloutRequestTTS.builder()
-        .setDestination(
-            Destination.builder().setType(DestinationType.NUMBER).setEndpoint(phoneNumber).build())
+        .setDestination(DestinationPstn.from(phoneNumber))
         .setEnableAce(true)
         .setEnableDice(true)
         .setEnablePie(true)
@@ -127,8 +124,7 @@ public class Call extends BaseApplication {
 
   private CalloutRequestConference getConferenceRequest() {
     return CalloutRequestConference.builder()
-        .setDestination(
-            Destination.builder().setType(DestinationType.NUMBER).setEndpoint(phoneNumber).build())
+        .setDestination(DestinationPstn.from(phoneNumber))
         .setConferenceId(conferenceId)
         .setDomain(Domain.PSTN)
         .setCustom("my custom value")

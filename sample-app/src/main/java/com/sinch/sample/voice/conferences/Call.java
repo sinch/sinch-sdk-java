@@ -2,9 +2,8 @@ package com.sinch.sample.voice.conferences;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.voice.api.v1.ConferencesService;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
-import com.sinch.sdk.domains.voice.models.v1.DestinationType;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationPstn;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -32,11 +31,7 @@ public class Call extends BaseApplication {
 
     CalloutRequestConference parameters =
         CalloutRequestConference.builder()
-            .setDestination(
-                Destination.builder()
-                    .setType(DestinationType.NUMBER)
-                    .setEndpoint(phoneNumber)
-                    .build())
+            .setDestination(DestinationPstn.from(phoneNumber))
             .setCli(virtualPhoneNumber)
             .setConferenceId(conferenceId)
             .setCustom("my custom value")

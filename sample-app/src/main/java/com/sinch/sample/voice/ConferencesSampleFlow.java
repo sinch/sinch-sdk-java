@@ -10,14 +10,13 @@ import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.voice.api.v1.CallsService;
 import com.sinch.sdk.domains.voice.api.v1.ConferencesService;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
-import com.sinch.sdk.domains.voice.models.v1.DestinationType;
 import com.sinch.sdk.domains.voice.models.v1.MusicOnHold;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
 import com.sinch.sdk.domains.voice.models.v1.conferences.ConferenceParticipant;
 import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipantRequest;
 import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipantRequest.CommandEnum;
 import com.sinch.sdk.domains.voice.models.v1.conferences.response.GetConferenceInfoResponse;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationPstn;
 import com.sinch.sdk.models.Configuration;
 import java.util.Collection;
 import java.util.Collections;
@@ -101,11 +100,7 @@ public class ConferencesSampleFlow {
     var payload =
         CalloutRequestConference.builder()
             .setConferenceId(conferenceId)
-            .setDestination(
-                Destination.builder()
-                    .setType(DestinationType.NUMBER)
-                    .setEndpoint(phoneNumber)
-                    .build())
+            .setDestination(DestinationPstn.from(phoneNumber))
             .setGreeting("Hello from Sinch Conference sample with Jav SDK")
             .setMusicOnHold(MusicOnHold.MUSIC1)
             .setCli("+1123456789")

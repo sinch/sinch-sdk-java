@@ -3,8 +3,6 @@ package com.sinch.sdk.e2e.domains.voice.v1;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.voice.api.v1.CallsService;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
-import com.sinch.sdk.domains.voice.models.v1.DestinationType;
 import com.sinch.sdk.domains.voice.models.v1.Price;
 import com.sinch.sdk.domains.voice.models.v1.calls.request.CallLeg;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformation;
@@ -12,6 +10,7 @@ import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformation.Doma
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformation.ReasonEnum;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformation.StatusEnum;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallResult;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationPstn;
 import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionContinue;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionHangup;
@@ -103,11 +102,7 @@ public class CallsSteps {
   public void getCallResult() {
     CallInformation information =
         CallInformation.builder()
-            .setTo(
-                Destination.builder()
-                    .setType(DestinationType.NUMBER2)
-                    .setEndpoint("+12017777777")
-                    .build())
+            .setTo(DestinationPstn.from("+12017777777"))
             .setDomain(DomainEnum.PSTN)
             .setCallId("1ce0ffee-ca11-ca11-ca11-abcdef000003")
             .setDuration(14)

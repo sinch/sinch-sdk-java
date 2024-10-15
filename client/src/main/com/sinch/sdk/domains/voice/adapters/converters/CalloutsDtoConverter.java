@@ -14,9 +14,16 @@ import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestCust
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestTTS;
 import com.sinch.sdk.domains.voice.models.v1.callouts.response.CalloutResponse;
 import com.sinch.sdk.domains.voice.models.v1.conferences.ConferenceDtmfOptions;
+import com.sinch.sdk.domains.voice.models.v1.destination.Destination;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationConference;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationCustom;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationTextToSpeech;
 import com.sinch.sdk.models.DualToneMultiFrequency;
+import java.util.logging.Logger;
 
 public class CalloutsDtoConverter {
+
+  private static final Logger LOGGER = Logger.getLogger(CalloutsDtoConverter.class.getName());
 
   public static CalloutRequest convert(CalloutRequestParameters client) {
 
@@ -44,7 +51,17 @@ public class CalloutsDtoConverter {
 
     CalloutRequestConference.Builder dto = CalloutRequestConference.builder();
 
-    client.getDestination().ifPresent(f -> dto.setDestination(DestinationDtoConverter.convert(f)));
+    client
+        .getDestination()
+        .ifPresent(
+            f -> {
+              Destination destination = DestinationDtoConverter.convert(f);
+              if (destination instanceof DestinationConference) {
+                dto.setDestination((DestinationConference) destination);
+                return;
+              }
+              LOGGER.severe(String.format("Unexpected class: %s", f));
+            });
     client.getCli().ifPresent(f -> dto.setCli(f.stringValue()));
     client.getDtfm().ifPresent(f -> dto.setDtmf(DualToneMultiFrequency.valueOf(f.stringValue())));
     client.getCustom().ifPresent(dto::setCustom);
@@ -70,7 +87,17 @@ public class CalloutsDtoConverter {
 
     CalloutRequestTTS.Builder dto = CalloutRequestTTS.builder();
 
-    client.getDestination().ifPresent(f -> dto.setDestination(DestinationDtoConverter.convert(f)));
+    client
+        .getDestination()
+        .ifPresent(
+            f -> {
+              Destination destination = DestinationDtoConverter.convert(f);
+              if (destination instanceof DestinationTextToSpeech) {
+                dto.setDestination((DestinationTextToSpeech) destination);
+                return;
+              }
+              LOGGER.severe(String.format("Unexpected class: %s", f));
+            });
     client.getCli().ifPresent(f -> dto.setCli(f.stringValue()));
     client.getDtfm().ifPresent(f -> dto.setDtmf(DualToneMultiFrequency.valueOf(f.stringValue())));
     client.getCustom().ifPresent(dto::setCustom);
@@ -88,7 +115,17 @@ public class CalloutsDtoConverter {
 
     CalloutRequestCustom.Builder dto = CalloutRequestCustom.builder();
 
-    client.getDestination().ifPresent(f -> dto.setDestination(DestinationDtoConverter.convert(f)));
+    client
+        .getDestination()
+        .ifPresent(
+            f -> {
+              Destination destination = DestinationDtoConverter.convert(f);
+              if (destination instanceof DestinationCustom) {
+                dto.setDestination((DestinationCustom) destination);
+                return;
+              }
+              LOGGER.severe(String.format("Unexpected class: %s", f));
+            });
     client.getCli().ifPresent(f -> dto.setCli(f.stringValue()));
     client.getDtfm().ifPresent(f -> dto.setDtmf(DualToneMultiFrequency.valueOf(f.stringValue())));
     client.getCustom().ifPresent(dto::setCustom);

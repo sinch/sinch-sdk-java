@@ -4,8 +4,6 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.domains.voice.adapters.VoiceBaseTest;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
-import com.sinch.sdk.domains.voice.models.v1.DestinationType;
 import com.sinch.sdk.domains.voice.models.v1.Domain;
 import com.sinch.sdk.domains.voice.models.v1.MusicOnHold;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
@@ -13,6 +11,8 @@ import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestCust
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestTTS;
 import com.sinch.sdk.domains.voice.models.v1.conferences.ConferenceDtmfOptions;
 import com.sinch.sdk.domains.voice.models.v1.conferences.ConferenceDtmfOptions.ModeEnum;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationMxp;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationPstn;
 import com.sinch.sdk.domains.voice.models.v1.svaml.ControlUrl;
 import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.ConnectPstnAnsweringMachineDetection;
@@ -39,11 +39,7 @@ public class CalloutRequestDtoTest extends VoiceBaseTest {
 
   public static CalloutRequestConference conferenceRequestCalloutDto =
       CalloutRequestConference.builder()
-          .setDestination(
-              Destination.builder()
-                  .setType(DestinationType.NUMBER)
-                  .setEndpoint("+14045005000")
-                  .build())
+          .setDestination(DestinationPstn.from("+14045005000"))
           .setCli("+14045001000")
           .setLocale("en-US")
           .setGreeting("Welcome to my conference")
@@ -66,11 +62,7 @@ public class CalloutRequestDtoTest extends VoiceBaseTest {
 
   public static CalloutRequestTTS ttsRequestDto =
       CalloutRequestTTS.builder()
-          .setDestination(
-              Destination.builder()
-                  .setType(DestinationType.USERNAME)
-                  .setEndpoint("an user name")
-                  .build())
+          .setDestination(DestinationMxp.from("an user name"))
           .setCli("+14045001000")
           .setDtmf(DualToneMultiFrequency.valueOf("w123#"))
           .setCustom("my custom value")
@@ -88,11 +80,7 @@ public class CalloutRequestDtoTest extends VoiceBaseTest {
 
   public static CalloutRequestCustom customRequestDto =
       CalloutRequestCustom.builder()
-          .setDestination(
-              Destination.builder()
-                  .setType(DestinationType.NUMBER)
-                  .setEndpoint("+14045005000")
-                  .build())
+          .setDestination(DestinationPstn.from("+14045005000"))
           .setCli("+14045001000")
           .setDtmf(DualToneMultiFrequency.valueOf("w123#"))
           .setCustom("my custom value")

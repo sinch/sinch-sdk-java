@@ -16,6 +16,9 @@ import com.sinch.sdk.domains.voice.models.svaml.AnsweringMachineDetection;
 import com.sinch.sdk.domains.voice.models.svaml.MenuOptionAction;
 import com.sinch.sdk.domains.voice.models.v1.MusicOnHold;
 import com.sinch.sdk.domains.voice.models.v1.conferences.ConferenceDtmfOptions;
+import com.sinch.sdk.domains.voice.models.v1.destination.Destination;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationMxp;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationSip;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.CallHeader;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.ConnectPstnAnsweringMachineDetection;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.Menu;
@@ -94,7 +97,17 @@ public class SVAMLActionDtoConverter {
       return null;
     }
     SvamlActionConnectMxp.Builder dto = SvamlActionConnectMxp.builder();
-    client.getDestination().ifPresent(f -> dto.setDestination(DestinationDtoConverter.convert(f)));
+    client
+        .getDestination()
+        .ifPresent(
+            f -> {
+              Destination destination = DestinationDtoConverter.convert(f);
+              if (!(destination instanceof DestinationMxp)) {
+                LOGGER.severe(String.format("Unexpected class '%s'", destination));
+                return;
+              }
+              dto.setDestination((DestinationMxp) destination);
+            });
     client.getCallheaders().ifPresent(f -> dto.setCallheaders(convertHeaderCollection(f)));
     return dto.build();
   }
@@ -123,7 +136,17 @@ public class SVAMLActionDtoConverter {
       return null;
     }
     SvamlActionConnectSip.Builder dto = SvamlActionConnectSip.builder();
-    client.getDestination().ifPresent(f -> dto.setDestination(DestinationDtoConverter.convert(f)));
+    client
+        .getDestination()
+        .ifPresent(
+            f -> {
+              Destination destination = DestinationDtoConverter.convert(f);
+              if (!(destination instanceof DestinationSip)) {
+                LOGGER.severe(String.format("Unexpected class '%s'", destination));
+                return;
+              }
+              dto.setDestination((DestinationSip) destination);
+            });
     client.getMaxDuration().ifPresent(dto::setMaxDuration);
     client.getCli().ifPresent(dto::setCli);
     client

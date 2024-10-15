@@ -6,6 +6,8 @@ import com.sinch.sdk.core.exceptions.ApiAuthException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.utils.StringUtil;
+import com.sinch.sdk.domains.voice.api.v1.adapters.CallsService.LocalLazyInit;
+import com.sinch.sdk.domains.voice.api.v1.adapters.mapper.DestinationMapper;
 import com.sinch.sdk.models.ApplicationCredentials;
 import com.sinch.sdk.models.VoiceContext;
 import java.util.Map;
@@ -32,6 +34,10 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v1.VoiceSer
 
   private Map<String, AuthManager> clientAuthManagers;
   private Map<String, AuthManager> webhooksAuthManagers;
+
+  static {
+    LocalLazyInit.init();
+  }
 
   public VoiceService(
       ApplicationCredentials credentials, VoiceContext context, HttpClient httpClient) {
@@ -118,6 +124,22 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v1.VoiceSer
           String.format(
               "Service '%s' cannot be called without defined credentials",
               this.getClass().getSimpleName()));
+    }
+  }
+
+  public static final class LocalLazyInit {
+
+    private LocalLazyInit() {
+      DestinationMapper.initMapper();
+    }
+
+    public static LocalLazyInit init() {
+      return LocalLazyInit.LazyHolder.INSTANCE;
+    }
+
+    private static class LazyHolder {
+
+      public static final LocalLazyInit INSTANCE = new LocalLazyInit();
     }
   }
 }

@@ -4,9 +4,8 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
-import com.sinch.sdk.domains.voice.models.v1.DestinationType;
 import com.sinch.sdk.domains.voice.models.v1.MusicOnHold;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationSip;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectSip.TransportEnum;
 import java.util.Collections;
 import org.json.JSONException;
@@ -18,11 +17,7 @@ public class SvamlActionConnectSipTest extends BaseTest {
 
   public static SvamlActionConnectSip dto =
       SvamlActionConnectSip.builder()
-          .setDestination(
-              Destination.builder()
-                  .setType(DestinationType.SIP)
-                  .setEndpoint("a sip string")
-                  .build())
+          .setDestination(DestinationSip.from("a sip string"))
           .setMaxDuration(456)
           .setCli("a cli value")
           .setTransport(TransportEnum.TLS)

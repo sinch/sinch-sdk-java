@@ -4,11 +4,10 @@ import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
-import com.sinch.sdk.domains.voice.models.v1.DestinationType;
 import com.sinch.sdk.domains.voice.models.v1.Domain;
 import com.sinch.sdk.domains.voice.models.v1.Price;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallResult;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationPstn;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.CallHeader;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.AnsweredCallEventAnsweringMachineDetection.StatusEnum;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.DisconnectedCallEvent.ReasonEnum;
@@ -45,11 +44,7 @@ public class VoiceWebhookEventTest extends BaseTest {
           .setCustom("my custom")
           .setUserRate(Price.builder().setCurrencyId("USD").setAmount(0.0F).build())
           .setCli("cli number")
-          .setTo(
-              Destination.builder()
-                  .setType(DestinationType.NUMBER)
-                  .setEndpoint("+123456879")
-                  .build())
+          .setTo(DestinationPstn.from("+123456879"))
           .setDomain(Domain.MXP)
           .setApplicationKey("an app key")
           .setOriginationType(Domain.MXP2)
@@ -65,11 +60,7 @@ public class VoiceWebhookEventTest extends BaseTest {
           .setTimestamp(Instant.parse("2024-01-19T12:49:53Z"))
           .setVersion(1)
           .setCustom("my custom value")
-          .setTo(
-              Destination.builder()
-                  .setType(DestinationType.NUMBER)
-                  .setEndpoint("123456789")
-                  .build())
+          .setTo(DestinationPstn.from("123456789"))
           .setApplicationKey("an app key")
           .setResult(CallResult.ANSWERED)
           .setReason(ReasonEnum.MANAGERHANGUP)

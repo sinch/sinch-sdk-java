@@ -1,12 +1,11 @@
 package com.sinch.sdk.e2e.domains.voice.v1;
 
 import com.sinch.sdk.domains.voice.api.v1.CalloutsService;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
-import com.sinch.sdk.domains.voice.models.v1.DestinationType;
 import com.sinch.sdk.domains.voice.models.v1.MusicOnHold;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestCustom;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestTTS;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationPstn;
 import com.sinch.sdk.domains.voice.models.v1.svaml.ControlUrl;
 import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.Menu;
@@ -43,11 +42,7 @@ public class CalloutsSteps {
     CalloutRequestTTS request =
         CalloutRequestTTS.builder()
             .setLocale("en-US")
-            .setDestination(
-                Destination.builder()
-                    .setType(DestinationType.NUMBER)
-                    .setEndpoint("+12017777777")
-                    .build())
+            .setDestination(DestinationPstn.from("+12017777777"))
             .setCli("+12015555555")
             .setText("Hello, this is a call from Sinch.")
             .build();
@@ -60,11 +55,7 @@ public class CalloutsSteps {
     CalloutRequestConference request =
         CalloutRequestConference.builder()
             .setLocale("en-US")
-            .setDestination(
-                Destination.builder()
-                    .setType(DestinationType.NUMBER)
-                    .setEndpoint("+12017777777")
-                    .build())
+            .setDestination(DestinationPstn.from("+12017777777"))
             .setCli("+12015555555")
             .setConferenceId("myConferenceId-E2E")
             .setGreeting("Welcome to this conference call.")
@@ -78,11 +69,7 @@ public class CalloutsSteps {
   public void createCustom() {
     CalloutRequestCustom request =
         CalloutRequestCustom.builder()
-            .setDestination(
-                Destination.builder()
-                    .setType(DestinationType.NUMBER)
-                    .setEndpoint("+12017777777")
-                    .build())
+            .setDestination(DestinationPstn.from("+12017777777"))
             .setCli("+12015555555")
             .setCustom("Custom text")
             .setIce(

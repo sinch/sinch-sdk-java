@@ -2,10 +2,9 @@ package com.sinch.sdk.e2e.domains.voice.v1;
 
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.voice.api.v1.WebHooksService;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
-import com.sinch.sdk.domains.voice.models.v1.DestinationType;
 import com.sinch.sdk.domains.voice.models.v1.Price;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallResult;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationPstn;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.AnsweredCallEvent;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.DisconnectedCallEvent;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.DisconnectedCallEvent.ReasonEnum;
@@ -78,11 +77,7 @@ public class WebhooksEventsSteps {
           .setCustom("Custom text")
           .setDebit(Price.builder().setCurrencyId("EUR").setAmount(0.0095F).build())
           .setUserRate(Price.builder().setCurrencyId("EUR").setAmount(0.0095F).build())
-          .setTo(
-              Destination.builder()
-                  .setType(DestinationType.NUMBER)
-                  .setEndpoint("12017777777")
-                  .build())
+          .setTo(DestinationPstn.from("12017777777"))
           .setApplicationKey("f00dcafe-abba-c0de-1dea-dabb1ed4caf3")
           .setDuration(12)
           .setFrom("12015555555")

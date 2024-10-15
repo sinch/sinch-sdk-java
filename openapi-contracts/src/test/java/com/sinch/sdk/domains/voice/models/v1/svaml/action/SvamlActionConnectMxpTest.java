@@ -4,8 +4,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
-import com.sinch.sdk.domains.voice.models.v1.Destination;
-import com.sinch.sdk.domains.voice.models.v1.DestinationType;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationMxp;
 import java.util.Collections;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
@@ -16,11 +15,7 @@ public class SvamlActionConnectMxpTest extends BaseTest {
 
   public static SvamlActionConnectMxp dto =
       SvamlActionConnectMxp.builder()
-          .setDestination(
-              Destination.builder()
-                  .setType(DestinationType.USERNAME)
-                  .setEndpoint("a user string")
-                  .build())
+          .setDestination(DestinationMxp.from("a user string"))
           .setCallheaders(
               Collections.singletonList(
                   CallHeader.builder().setKey("left string").setValue("right string").build()))

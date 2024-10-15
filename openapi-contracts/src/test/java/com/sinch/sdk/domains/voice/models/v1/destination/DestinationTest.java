@@ -1,69 +1,62 @@
-package com.sinch.sdk.domains.voice.models.v1;
-
-import static org.junit.jupiter.api.Assertions.*;
+package com.sinch.sdk.domains.voice.models.v1.destination;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
+import com.sinch.sdk.domains.voice.adapters.VoiceBaseTest;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-class DestinationTest extends BaseTest {
+class DestinationTest extends VoiceBaseTest {
 
-  public static Destination userName =
-      Destination.builder()
-          .setType(DestinationType.USERNAME)
-          .setEndpoint("user name value")
-          .build();
+  public static DestinationMxp userName =
+      DestinationMxp.builder().setEndpoint("user name value").build();
 
-  public static Destination number =
-      Destination.builder().setType(DestinationType.NUMBER).setEndpoint("+123456789").build();
+  public static DestinationPstn number =
+      DestinationPstn.builder().setEndpoint("+123456789").build();
 
-  public static Destination sip =
-      Destination.builder().setType(DestinationType.SIP).setEndpoint("sip value").build();
+  public static DestinationSip sip = DestinationSip.builder().setEndpoint("sip value").build();
 
-  public static Destination did =
-      Destination.builder().setType(DestinationType.DID).setEndpoint("did value").build();
+  public static DestinationDid did = DestinationDid.builder().setEndpoint("did value").build();
 
-  @GivenTextResource("/domains/voice/v1/DestinationUserNameDto.json")
+  @GivenTextResource("/domains/voice/v1/destination/DestinationMxpDto.json")
   String jsonUserName;
 
-  @GivenTextResource("/domains/voice/v1/DestinationNumberDto.json")
+  @GivenTextResource("/domains/voice/v1/destination/DestinationPstnDto.json")
   String jsonNumber;
 
-  @GivenTextResource("/domains/voice/v1/DestinationSipDto.json")
+  @GivenTextResource("/domains/voice/v1/destination/DestinationSipDto.json")
   String jsonSip;
 
-  @GivenTextResource("/domains/voice/v1/DestinationDidDto.json")
+  @GivenTextResource("/domains/voice/v1/destination/DestinationDidDto.json")
   String jsonDid;
 
   @Test
-  void serializeUserName() throws JsonProcessingException, JSONException {
+  void serializeMxp() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(userName);
 
     JSONAssert.assertEquals(jsonUserName, serializedString, true);
   }
 
   @Test
-  void deserializeUserName() throws JsonProcessingException {
+  void deserializeMxp() throws JsonProcessingException {
     Destination expected = objectMapper.readValue(jsonUserName, Destination.class);
 
     TestHelpers.recursiveEquals(userName, expected);
   }
 
   @Test
-  void serializeNumber() throws JsonProcessingException, JSONException {
+  void serializePstn() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(number);
 
     JSONAssert.assertEquals(jsonNumber, serializedString, true);
   }
 
   @Test
-  void deserializeNumber() throws JsonProcessingException {
+  void deserializePstn() throws JsonProcessingException {
     Destination expected = objectMapper.readValue(jsonNumber, Destination.class);
 
     TestHelpers.recursiveEquals(number, expected);
