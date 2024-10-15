@@ -2,12 +2,15 @@ package com.sinch.sdk.e2e.domains.voice.v1;
 
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.voice.api.v1.WebHooksService;
+import com.sinch.sdk.domains.voice.models.v1.Domain;
 import com.sinch.sdk.domains.voice.models.v1.Price;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallResult;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationDid;
 import com.sinch.sdk.domains.voice.models.v1.destination.DestinationPstn;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.AnsweredCallEvent;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.DisconnectedCallEvent;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.DisconnectedCallEvent.ReasonEnum;
+import com.sinch.sdk.domains.voice.models.v1.webhooks.IncomingCallEvent;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.MenuResult;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.MenuResult.InputMethodEnum;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.MenuResult.TypeEnum;
@@ -34,6 +37,7 @@ public class WebhooksEventsSteps {
   WebhooksHelper.Response<VoiceWebhookEvent> pieSequence;
   WebhooksHelper.Response<VoiceWebhookEvent> diceEvent;
   WebhooksHelper.Response<VoiceWebhookEvent> aceEvent;
+  WebhooksHelper.Response<VoiceWebhookEvent> iceEvent;
 
   PromptInputEvent expectedPieReturnEvent =
       PromptInputEvent.builder()
@@ -91,6 +95,22 @@ public class WebhooksEventsSteps {
           .setApplicationKey("f00dcafe-abba-c0de-1dea-dabb1ed4caf3")
           .build();
 
+  IncomingCallEvent expectedIceEvent =
+      IncomingCallEvent.builder()
+          .setCallid("1ce0ffee-ca11-ca11-ca11-abcdef000053")
+          .setCallResourceUrl(
+              "https://calling-use1.api.sinch.com/calling/v1/calls/id/1ce0ffee-ca11-ca11-ca11-abcdef000053")
+          .setTimestamp(Instant.parse("2024-06-06T17:20:14Z"))
+          .setVersion(1)
+          .setUserRate(Price.builder().setCurrencyId("USD").setAmount(0.0F).build())
+          .setCli("12015555555")
+          .setTo(DestinationDid.from("+12017777777"))
+          .setDomain(Domain.PSTN)
+          .setApplicationKey("f00dcafe-abba-c0de-1dea-dabb1ed4caf3")
+          .setOriginationType(Domain.PSTN2)
+          .setRdnis("")
+          .build();
+
   @Given("^the Voice Webhooks handler is available$")
   public void serviceAvailable() {
     service = Config.getSinchClient().voice().v1().webhooks();
@@ -115,6 +135,11 @@ public class WebhooksEventsSteps {
   @When("^I send a request to trigger a \"ACE\" event$")
   public void sendACEEvent() throws IOException {
     aceEvent = WebhooksHelper.callURL(new URL(WEBHOOKS_URL + "/ace"), service::parseEvent);
+  }
+
+  @When("^I send a request to trigger a \"ICE\" event$")
+  public void sendICEEvent() throws IOException {
+    iceEvent = WebhooksHelper.callURL(new URL(WEBHOOKS_URL + "/ice"), service::parseEvent);
   }
 
   @Then("the header of the {string} event with a {string} type contains a valid authorization")
@@ -142,6 +167,8 @@ public class WebhooksEventsSteps {
       receivedEvent = diceEvent;
     } else if (event.equals("ACE")) {
       receivedEvent = aceEvent;
+    } else if (event.equals("ICE")) {
+      receivedEvent = iceEvent;
     } else {
       Assertions.fail();
     }
@@ -180,6 +207,9 @@ public class WebhooksEventsSteps {
     } else if (event.equals("ACE")) {
       receivedEvent = aceEvent;
       expectedEvent = expectedAceEvent;
+    } else if (event.equals("ICE")) {
+      receivedEvent = iceEvent;
+      expectedEvent = expectedIceEvent;
     } else {
       Assertions.fail();
     }
