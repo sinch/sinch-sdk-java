@@ -2,19 +2,13 @@ package com.sinch.sdk.domains.voice.adapters.converters;
 
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.utils.Pair;
-import com.sinch.sdk.domains.common.adapters.converters.OffsetDateTimeDtoConverter;
 import com.sinch.sdk.domains.voice.models.CallReasonType;
 import com.sinch.sdk.domains.voice.models.CallResultType;
-import com.sinch.sdk.domains.voice.models.dto.v1.AceRequestAllOfAmdDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.AceRequestDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.CallHeaderDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.DiceRequestDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.IceRequestDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.NotifyRequestDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.PieRequestAllOfMenuResultDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.PieRequestDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.WebhooksEventDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.WebhooksEventRequestDto;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.CallHeader;
+import com.sinch.sdk.domains.voice.models.v1.webhooks.AnsweredCallEventAnsweringMachineDetection;
+import com.sinch.sdk.domains.voice.models.v1.webhooks.DisconnectedCallEvent;
+import com.sinch.sdk.domains.voice.models.v1.webhooks.NotificationEvent;
+import com.sinch.sdk.domains.voice.models.v1.webhooks.VoiceWebhookEvent;
 import com.sinch.sdk.domains.voice.models.webhooks.AmdAnswer;
 import com.sinch.sdk.domains.voice.models.webhooks.AmdAnswerReasonType;
 import com.sinch.sdk.domains.voice.models.webhooks.AmdAnswerStatusType;
@@ -33,7 +27,7 @@ import java.util.stream.Collectors;
 
 public class WebhooksEventDtoConverter {
 
-  public static WebhooksEvent convert(WebhooksEventDto dto) {
+  public static WebhooksEvent convert(VoiceWebhookEvent dto) {
 
     if (null == dto) {
       return null;
@@ -41,25 +35,25 @@ public class WebhooksEventDtoConverter {
 
     WebhooksEvent.Builder<?> builder;
 
-    WebhooksEventRequestDto instance = (WebhooksEventRequestDto) dto.getActualInstance();
-    if (instance instanceof IceRequestDto) {
-      builder = convert((IceRequestDto) instance);
-    } else if (instance instanceof DiceRequestDto) {
-      builder = convert((DiceRequestDto) instance);
-    } else if (instance instanceof AceRequestDto) {
-      builder = convert((AceRequestDto) instance);
-    } else if (instance instanceof PieRequestDto) {
-      builder = convert((PieRequestDto) instance);
-    } else if (instance instanceof NotifyRequestDto) {
-      builder = convert((NotifyRequestDto) instance);
+    if (dto instanceof com.sinch.sdk.domains.voice.models.v1.webhooks.IncomingCallEvent) {
+      builder = convert((com.sinch.sdk.domains.voice.models.v1.webhooks.IncomingCallEvent) dto);
+    } else if (dto instanceof DisconnectedCallEvent) {
+      builder = convert((DisconnectedCallEvent) dto);
+    } else if (dto instanceof com.sinch.sdk.domains.voice.models.v1.webhooks.AnsweredCallEvent) {
+      builder = convert((com.sinch.sdk.domains.voice.models.v1.webhooks.AnsweredCallEvent) dto);
+    } else if (dto instanceof com.sinch.sdk.domains.voice.models.v1.webhooks.PromptInputEvent) {
+      builder = convert((com.sinch.sdk.domains.voice.models.v1.webhooks.PromptInputEvent) dto);
+    } else if (dto instanceof NotificationEvent) {
+      builder = convert((NotificationEvent) dto);
     } else {
       throw new ApiException("Unexpected event:" + dto);
     }
 
-    return builder.setCallId(instance.getCallid()).setVersion(instance.getVersion()).build();
+    return builder.setCallId(dto.getCallid()).setVersion(dto.getVersion()).build();
   }
 
-  private static IncomingCallEvent.Builder<?> convert(IceRequestDto dto) {
+  private static IncomingCallEvent.Builder<?> convert(
+      com.sinch.sdk.domains.voice.models.v1.webhooks.IncomingCallEvent dto) {
 
     IncomingCallEvent.Builder<?> builder = IncomingCallEvent.builder();
     if (null == dto) {
@@ -67,7 +61,7 @@ public class WebhooksEventDtoConverter {
     }
 
     return builder
-        .setTimestamp(OffsetDateTimeDtoConverter.convert(dto.getTimestamp()))
+        .setTimestamp(dto.getTimestamp())
         .setCustom(dto.getCustom())
         .setCallResourceUrl(dto.getCallResourceUrl())
         .setUserRate(PriceDtoConverter.convert(dto.getUserRate()))
@@ -81,17 +75,18 @@ public class WebhooksEventDtoConverter {
         .setCallHeaders(convertHeaderCollection(dto.getCallHeaders()));
   }
 
-  private static DisconnectCallEvent.Builder<?> convert(DiceRequestDto dto) {
+  private static DisconnectCallEvent.Builder<?> convert(
+      com.sinch.sdk.domains.voice.models.v1.webhooks.DisconnectedCallEvent dto) {
 
     DisconnectCallEvent.Builder<?> builder = DisconnectCallEvent.builder();
     if (null == dto) {
       return builder;
     }
     return builder
-        .setTimestamp(OffsetDateTimeDtoConverter.convert(dto.getTimestamp()))
+        .setTimestamp(dto.getTimestamp())
         .setCustom(dto.getCustom())
-        .setReason(null != dto.getReason() ? CallReasonType.from(dto.getReason()) : null)
-        .setResult(null != dto.getResult() ? CallResultType.from(dto.getResult().getValue()) : null)
+        .setReason(null != dto.getReason() ? CallReasonType.from(dto.getReason().value()) : null)
+        .setResult(null != dto.getResult() ? CallResultType.from(dto.getResult().value()) : null)
         .setDebit(PriceDtoConverter.convert(dto.getDebit()))
         .setUserRate(PriceDtoConverter.convert(dto.getUserRate()))
         .setTo(DestinationDtoConverter.convert(dto.getTo()))
@@ -100,26 +95,28 @@ public class WebhooksEventDtoConverter {
         .setFrom(dto.getFrom());
   }
 
-  private static AnsweredCallEvent.Builder<?> convert(AceRequestDto dto) {
+  private static AnsweredCallEvent.Builder<?> convert(
+      com.sinch.sdk.domains.voice.models.v1.webhooks.AnsweredCallEvent dto) {
 
     AnsweredCallEvent.Builder<?> builder = AnsweredCallEvent.builder();
     if (null == dto) {
       return builder;
     }
     return builder
-        .setTimestamp(OffsetDateTimeDtoConverter.convert(dto.getTimestamp()))
+        .setTimestamp(dto.getTimestamp())
         .setCustom(dto.getCustom())
         .setAmd(convert(dto.getAmd()));
   }
 
-  private static PromptInputEvent.Builder<?> convert(PieRequestDto dto) {
+  private static PromptInputEvent.Builder<?> convert(
+      com.sinch.sdk.domains.voice.models.v1.webhooks.PromptInputEvent dto) {
 
     PromptInputEvent.Builder<?> builder = PromptInputEvent.builder();
     if (null == dto) {
       return builder;
     }
     return builder
-        .setTimestamp(OffsetDateTimeDtoConverter.convert(dto.getTimestamp()))
+        .setTimestamp(dto.getTimestamp())
         .setCustom(dto.getCustom())
         .setApplicationKey(dto.getApplicationKey())
         .setCallId(dto.getCallid())
@@ -127,7 +124,8 @@ public class WebhooksEventDtoConverter {
         .setMenuResult(convert(dto.getMenuResult()));
   }
 
-  private static NotifyEvent.Builder<?> convert(NotifyRequestDto dto) {
+  private static NotifyEvent.Builder<?> convert(
+      com.sinch.sdk.domains.voice.models.v1.webhooks.NotificationEvent dto) {
 
     NotifyEvent.Builder<?> builder = NotifyEvent.builder();
     if (null == dto) {
@@ -140,16 +138,20 @@ public class WebhooksEventDtoConverter {
         .setType(dto.getType());
   }
 
-  private static AmdAnswer convert(AceRequestAllOfAmdDto dto) {
+  private static AmdAnswer convert(AnsweredCallEventAnsweringMachineDetection dto) {
 
     if (null == dto) {
       return null;
     }
-    return AmdAnswer.builder()
-        .setReason(convertReason(dto.getReason()))
-        .setStatus(convertStatus(dto.getStatus()))
-        .setDuration(dto.getDuration())
-        .build();
+    AmdAnswer.Builder builder = AmdAnswer.builder().setDuration(dto.getDuration());
+
+    if (null != dto.getReason()) {
+      builder.setReason(convertReason(dto.getReason().value()));
+    }
+    if (null != dto.getStatus()) {
+      builder.setStatus(convertStatus(dto.getStatus().value()));
+    }
+    return builder.build();
   }
 
   private static AmdAnswerReasonType convertReason(String dto) {
@@ -166,19 +168,24 @@ public class WebhooksEventDtoConverter {
     return AmdAnswerStatusType.from(dto);
   }
 
-  private static Collection<Pair<String, String>> convertHeaderCollection(List<CallHeaderDto> dto) {
+  private static Collection<Pair<String, String>> convertHeaderCollection(List<CallHeader> dto) {
     if (null == dto) {
       return null;
     }
     return dto.stream().map(f -> new Pair<>(f.getKey(), f.getValue())).collect(Collectors.toList());
   }
 
-  private static MenuResult convert(PieRequestAllOfMenuResultDto dto) {
-    return MenuResult.builder()
-        .setMenuId(dto.getMenuId())
-        .setType(MenuInputType.from(dto.getType()))
-        .setValue(dto.getValue())
-        .setInputMethod(MenuResultInputMethodType.from(dto.getInputMethod()))
-        .build();
+  private static MenuResult convert(com.sinch.sdk.domains.voice.models.v1.webhooks.MenuResult dto) {
+
+    MenuResult.Builder builder =
+        MenuResult.builder().setMenuId(dto.getMenuId()).setValue(dto.getValue());
+
+    if (null != dto.getType()) {
+      builder.setType(MenuInputType.from(dto.getType().value()));
+    }
+    if (null != dto.getInputMethod()) {
+      builder.setInputMethod(MenuResultInputMethodType.from(dto.getInputMethod().value()));
+    }
+    return builder.build();
   }
 }

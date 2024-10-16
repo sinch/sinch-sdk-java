@@ -1,6 +1,7 @@
 package com.sinch.sample.voice.conferences;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.voice.api.v1.ConferencesService;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -21,9 +22,11 @@ public class Get extends BaseApplication {
 
   public void run() {
 
+    ConferencesService service = client.voice().v1().conferences();
+
     LOGGER.info("Get conference info for conference '%s'".formatted(conferenceId));
 
-    var response = client.voice().conferences().get(conferenceId);
+    var response = service.get(conferenceId);
 
     LOGGER.info("Response: " + response);
   }

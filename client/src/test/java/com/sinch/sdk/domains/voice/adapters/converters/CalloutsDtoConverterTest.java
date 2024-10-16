@@ -2,10 +2,10 @@ package com.sinch.sdk.domains.voice.adapters.converters;
 
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
-import com.sinch.sdk.domains.voice.models.dto.v1.CalloutRequestDtoTest;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConferenceTest;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersCustomTest;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersTTSTest;
+import com.sinch.sdk.domains.voice.models.v1.callouts.CalloutRequestDtoTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

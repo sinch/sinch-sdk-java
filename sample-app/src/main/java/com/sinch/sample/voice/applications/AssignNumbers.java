@@ -1,9 +1,9 @@
 package com.sinch.sample.voice.applications;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.voice.models.CapabilityType;
-import com.sinch.sdk.domains.voice.models.requests.ApplicationsAssignNumbersRequestParameters;
-import com.sinch.sdk.models.E164PhoneNumber;
+import com.sinch.sdk.domains.voice.api.v1.ApplicationsService;
+import com.sinch.sdk.domains.voice.models.v1.applications.Capability;
+import com.sinch.sdk.domains.voice.models.v1.applications.request.UpdateNumbersRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
@@ -25,16 +25,15 @@ public class AssignNumbers extends BaseApplication {
 
   public void run() {
 
-    LOGGER.info("Update numbers '%s'".formatted(phoneNumber));
+    ApplicationsService service = client.voice().v1().applications();
 
-    client
-        .voice()
-        .applications()
-        .assignNumbers(
-            ApplicationsAssignNumbersRequestParameters.builder()
-                .setNumbers(List.of(E164PhoneNumber.valueOf(phoneNumber)))
-                .setApplicationKey(applicationKey)
-                .setCapability(CapabilityType.VOICE)
-                .build());
+    LOGGER.info("Update numbers '%s'".formatted(virtualPhoneNumber));
+
+    service.assignNumbers(
+        UpdateNumbersRequest.builder()
+            .setNumbers(List.of(virtualPhoneNumber))
+            .setApplicationKey(applicationKey)
+            .setCapability(Capability.VOICE)
+            .build());
   }
 }

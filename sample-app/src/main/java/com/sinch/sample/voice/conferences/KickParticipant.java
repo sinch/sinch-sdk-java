@@ -1,6 +1,7 @@
 package com.sinch.sample.voice.conferences;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.voice.api.v1.ConferencesService;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -21,8 +22,10 @@ public class KickParticipant extends BaseApplication {
 
   public void run() {
 
+    ConferencesService service = client.voice().v1().conferences();
+
     LOGGER.info("Kick participant '%s' for conference '%s".formatted(callId, conferenceId));
 
-    client.voice().conferences().kickParticipant(conferenceId, callId);
+    service.kickParticipant(conferenceId, callId);
   }
 }

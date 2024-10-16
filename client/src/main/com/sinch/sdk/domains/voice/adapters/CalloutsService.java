@@ -1,49 +1,39 @@
 package com.sinch.sdk.domains.voice.adapters;
 
-import com.sinch.sdk.core.http.AuthManager;
-import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.core.http.HttpMapper;
-import com.sinch.sdk.domains.voice.adapters.api.v1.CalloutsApi;
 import com.sinch.sdk.domains.voice.adapters.converters.CalloutsDtoConverter;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParameters;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConference;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersCustom;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersTTS;
-import com.sinch.sdk.models.VoiceContext;
-import java.util.Map;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestCustom;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestTTS;
 
 public class CalloutsService implements com.sinch.sdk.domains.voice.CalloutsService {
 
-  private final CalloutsApi api;
+  private final com.sinch.sdk.domains.voice.api.v1.CalloutsService v1;
 
-  public CalloutsService(
-      VoiceContext context, HttpClient httpClient, Map<String, AuthManager> authManagers) {
-    this.api =
-        new CalloutsApi(httpClient, context.getVoiceServer(), authManagers, new HttpMapper());
-  }
-
-  protected CalloutsApi getApi() {
-    return this.api;
+  public CalloutsService(com.sinch.sdk.domains.voice.api.v1.CalloutsService v1) {
+    this.v1 = v1;
   }
 
   public String textToSpeech(CalloutRequestParametersTTS parameters) {
 
-    return call(parameters);
+    return v1.textToSpeech((CalloutRequestTTS) CalloutsDtoConverter.convert(parameters));
   }
 
   public String conference(CalloutRequestParametersConference parameters) {
 
-    return call(parameters);
+    return v1.conference((CalloutRequestConference) CalloutsDtoConverter.convert(parameters));
   }
 
   public String custom(CalloutRequestParametersCustom parameters) {
 
-    return call(parameters);
+    return v1.custom((CalloutRequestCustom) CalloutsDtoConverter.convert(parameters));
   }
 
   public String call(CalloutRequestParameters parameters) {
 
-    return CalloutsDtoConverter.convert(
-        getApi().callouts(CalloutsDtoConverter.convert(parameters)));
+    return v1.call(CalloutsDtoConverter.convert(parameters));
   }
 }

@@ -1,7 +1,7 @@
 package com.sinch.sample.voice.applications;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.models.E164PhoneNumber;
+import com.sinch.sdk.domains.voice.api.v1.ApplicationsService;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -22,9 +22,11 @@ public class QueryNumber extends BaseApplication {
 
   public void run() {
 
-    LOGGER.info("Query number '%s'".formatted(phoneNumber));
+    ApplicationsService service = client.voice().v1().applications();
 
-    var response = client.voice().applications().queryNumber(E164PhoneNumber.valueOf(phoneNumber));
+    LOGGER.info("Query number '%s'".formatted(virtualPhoneNumber));
+
+    var response = service.queryNumber(virtualPhoneNumber);
 
     LOGGER.info("Response: " + response);
   }

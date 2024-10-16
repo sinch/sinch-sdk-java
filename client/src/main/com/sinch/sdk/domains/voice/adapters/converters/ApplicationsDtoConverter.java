@@ -5,27 +5,28 @@ import com.sinch.sdk.domains.voice.models.ApplicationAssignedNumber;
 import com.sinch.sdk.domains.voice.models.ApplicationURL;
 import com.sinch.sdk.domains.voice.models.CallbackUrls;
 import com.sinch.sdk.domains.voice.models.NumberInformation;
-import com.sinch.sdk.domains.voice.models.dto.v1.CallbacksDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.CallbacksUrlDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.GetNumbersResponseObjDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.GetNumbersResponseObjNumbersInnerDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.GetQueryNumberDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.GetQueryNumberNumberDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.UnassignNumbersDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.UpdateNumbersDto;
 import com.sinch.sdk.domains.voice.models.requests.ApplicationsAssignNumbersRequestParameters;
 import com.sinch.sdk.domains.voice.models.response.AssignedNumbers;
+import com.sinch.sdk.domains.voice.models.v1.applications.Callbacks;
+import com.sinch.sdk.domains.voice.models.v1.applications.CallbacksUrl;
+import com.sinch.sdk.domains.voice.models.v1.applications.Capability;
+import com.sinch.sdk.domains.voice.models.v1.applications.request.UnAssignNumberRequest;
+import com.sinch.sdk.domains.voice.models.v1.applications.request.UpdateNumbersRequest;
+import com.sinch.sdk.domains.voice.models.v1.applications.response.OwnedNumberInformation;
+import com.sinch.sdk.domains.voice.models.v1.applications.response.OwnedNumbersResponse;
+import com.sinch.sdk.domains.voice.models.v1.applications.response.QueryNumberInformation;
+import com.sinch.sdk.domains.voice.models.v1.applications.response.QueryNumberResponse;
 import com.sinch.sdk.models.E164PhoneNumber;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ApplicationsDtoConverter {
 
-  public static AssignedNumbers convert(GetNumbersResponseObjDto dto) {
+  public static AssignedNumbers convert(OwnedNumbersResponse dto) {
     if (null == dto) {
       return null;
     }
-    List<GetNumbersResponseObjNumbersInnerDto> list = dto.getNumbers();
+    List<OwnedNumberInformation> list = dto.getNumbers();
     if (null == list) {
       return null;
     }
@@ -35,7 +36,7 @@ public class ApplicationsDtoConverter {
         .build();
   }
 
-  public static CallbackUrls convert(CallbacksDto dto) {
+  public static CallbackUrls convert(Callbacks dto) {
     if (null == dto) {
       return null;
     }
@@ -43,24 +44,30 @@ public class ApplicationsDtoConverter {
     return CallbackUrls.builder().setUrl(convert(dto.getUrl())).build();
   }
 
-  public static CallbacksDto convert(CallbackUrls client) {
+  public static Callbacks convert(CallbackUrls client) {
     if (null == client || null == client.getUrl()) {
       return null;
     }
-    CallbacksDto dto = new CallbacksDto();
-    dto.url(
-        new CallbacksUrlDto()
-            .primary(client.getUrl().getPrimary())
-            .fallback(client.getUrl().getFallback()));
-    return dto;
+    return Callbacks.builder()
+        .setUrl(
+            CallbacksUrl.builder()
+                .setPrimary(client.getUrl().getPrimary())
+                .setFallback(client.getUrl().getFallback())
+                .build())
+        .build();
   }
 
-  public static NumberInformation convert(GetQueryNumberDto dto) {
-    if (null == dto || !dto.getNumberDefined()) {
+  public static NumberInformation convert(QueryNumberResponse dto) {
+    if (null == dto) {
       return null;
     }
-    GetQueryNumberNumberDto item = dto.getNumber();
-    return NumberInformation.builder()
+    NumberInformation.Builder builder = NumberInformation.builder();
+    QueryNumberInformation item = dto.getNumber();
+    if (null == item) {
+      return builder.build();
+    }
+
+    return builder
         .setCountryId(item.getCountryId())
         .setNumberType(NumberTypeDtoConverter.convert(item.getNumberType()))
         .setNormalizedNumber(E164PhoneNumberDtoConverter.convert(item.getNormalizedNumber()))
@@ -69,33 +76,35 @@ public class ApplicationsDtoConverter {
         .build();
   }
 
-  public static UpdateNumbersDto convert(ApplicationsAssignNumbersRequestParameters client) {
+  public static UpdateNumbersRequest convert(ApplicationsAssignNumbersRequestParameters client) {
     if (null == client) {
       return null;
     }
-    UpdateNumbersDto dto = new UpdateNumbersDto();
+    UpdateNumbersRequest.Builder dto = UpdateNumbersRequest.builder();
     client
         .getNumbers()
         .ifPresent(
             f ->
-                dto.numbers(
+                dto.setNumbers(
                     f.stream().map(E164PhoneNumber::stringValue).collect(Collectors.toList())));
-    client.getApplicationKey().ifPresent(dto::applicationkey);
-    client.getCapability().ifPresent(f -> dto.capability(EnumDynamicConverter.convert(f)));
-    return dto;
+    client.getApplicationKey().ifPresent(dto::setApplicationKey);
+    client
+        .getCapability()
+        .ifPresent(f -> dto.setCapability(Capability.from(EnumDynamicConverter.convert(f))));
+    return dto.build();
   }
 
-  public static UnassignNumbersDto convert(E164PhoneNumber phoneNumber, String applicationKey) {
+  public static UnAssignNumberRequest convert(E164PhoneNumber phoneNumber, String applicationKey) {
 
-    UnassignNumbersDto dto = new UnassignNumbersDto();
+    UnAssignNumberRequest.Builder dto = UnAssignNumberRequest.builder();
     if (null != phoneNumber) {
-      dto.number(phoneNumber.stringValue());
+      dto.setNumber(phoneNumber.stringValue());
     }
-    dto.applicationkey(applicationKey);
-    return dto;
+    dto.setApplicationKey(applicationKey);
+    return dto.build();
   }
 
-  private static ApplicationURL convert(CallbacksUrlDto dto) {
+  private static ApplicationURL convert(CallbacksUrl dto) {
     if (null == dto) {
       return null;
     }
@@ -106,14 +115,14 @@ public class ApplicationsDtoConverter {
         .build();
   }
 
-  private static ApplicationAssignedNumber convert(GetNumbersResponseObjNumbersInnerDto dto) {
+  private static ApplicationAssignedNumber convert(OwnedNumberInformation dto) {
     if (null == dto) {
       return null;
     }
 
     return ApplicationAssignedNumber.builder()
         .setNumber(E164PhoneNumberDtoConverter.convert(dto.getNumber()))
-        .setApplicationKey(dto.getApplicationkey())
+        .setApplicationKey(dto.getApplicationKey())
         .setCapability(CapabilityDtoConverter.convert(dto.getCapability()))
         .build();
   }
