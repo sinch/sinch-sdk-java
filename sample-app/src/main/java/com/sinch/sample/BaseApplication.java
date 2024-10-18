@@ -24,6 +24,8 @@ public abstract class BaseApplication {
   private static final String CONVERSATION_EVENT_ID_KEY = "CONVERSATION_EVENT_ID";
   private static final String CONVERSATION_WEBHOOK_ID_KEY = "CONVERSATION_WEBHOOK_ID";
   private static final String CONVERSATION_TEMPLATE_ID_KEY = "CONVERSATION_TEMPLATE_ID";
+  private static final String MAILGUN_DOMAIN = "MAILGUN_DOMAIN";
+  private static final String MAILGUN_FROM = "MAILGUN_FROM";
 
   public static final String WEBHOOKS_URL_KEY = "WEBHOOKS_URL";
   public static final String WEBHOOKS_NUMBERS_PATH_KEY = "WEBHOOKS_NUMBERS_PATH";
@@ -51,6 +53,9 @@ public abstract class BaseApplication {
   protected String smsServicePlanId;
   protected String smsApiToken;
   protected String applicationKey;
+  protected String mailgunDomain;
+  protected String mailgunFrom;
+
   protected Optional<String> webhooksConversationPath = Optional.empty();
   protected Optional<String> webhooksNumbersPath = Optional.empty();
   protected Optional<String> webhooksSmsPath = Optional.empty();
@@ -118,6 +123,9 @@ public abstract class BaseApplication {
             .getSmsServicePlanCredentials()
             .map(SmsServicePlanCredentials::getApiToken)
             .orElse(null);
+
+    mailgunDomain = getConfigValue(MAILGUN_DOMAIN);
+    mailgunFrom = getConfigValue(MAILGUN_FROM);
 
     client = new SinchClient(configuration);
   }
