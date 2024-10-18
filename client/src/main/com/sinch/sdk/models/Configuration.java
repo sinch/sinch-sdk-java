@@ -531,7 +531,7 @@ public class Configuration {
      * @since __TO_BE_DEFINED__
      */
     public Builder setMailgunApiKey(String apiKey) {
-      if (null == this.mailgunContext) {
+      if (null == this.mailgunCredentials) {
         this.mailgunCredentials = MailgunCredentials.builder();
       }
       this.mailgunCredentials.setApiKey(apiKey);
