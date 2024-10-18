@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.MailgunContext;
+import com.sinch.sdk.models.MailgunRegion;
 import com.sinch.sdk.models.SMSRegion;
 import com.sinch.sdk.models.VoiceContext;
 import com.sinch.sdk.models.VoiceRegion;
@@ -125,5 +127,46 @@ class SinchClientTest {
     assertEquals(
         client.getConfiguration().getVoiceContext().get().getVoiceApplicationManagementUrl(),
         "my foo url");
+  }
+
+  @Test
+  void defaultMailgunUrlAvailable() {
+    Configuration configuration = Configuration.builder().build();
+    SinchClient client = new SinchClient(configuration);
+    assertNotNull(client.getConfiguration().getMailgunContext().get().getUrl());
+  }
+
+  @Test
+  void defaultMailgunRegion() {
+    Configuration configuration = Configuration.builder().build();
+    SinchClient client = new SinchClient(configuration);
+    assertNull(client.getConfiguration().getMailgunContext().get().getRegion());
+  }
+
+  @Test
+  void mailgunUrlFromRegion() {
+    Configuration configuration =
+        Configuration.builder()
+            .setMailgunContext(
+                MailgunContext.builder().setRegion(MailgunRegion.from("foo value")).build())
+            .build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(
+        client.getConfiguration().getMailgunContext().get().getUrl(),
+        "https://api.foo value.mailgun.net");
+  }
+
+  @Test
+  void mailgunUrlFromUrl() {
+    Configuration configuration =
+        Configuration.builder()
+            .setMailgunContext(
+                MailgunContext.builder()
+                    .setRegion(MailgunRegion.from("foo value"))
+                    .setUrl("my foo url")
+                    .build())
+            .build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(client.getConfiguration().getMailgunContext().get().getUrl(), "my foo url");
   }
 }

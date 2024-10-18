@@ -2,6 +2,7 @@ package com.sinch.sdk;
 
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.conversation.ConversationService;
+import com.sinch.sdk.domains.mailgun.MailgunService;
 import com.sinch.sdk.domains.numbers.NumbersService;
 import com.sinch.sdk.domains.sms.SMSService;
 import com.sinch.sdk.domains.verification.VerificationService;
@@ -10,6 +11,8 @@ import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.ConversationRegion;
+import com.sinch.sdk.models.MailgunContext;
+import com.sinch.sdk.models.MailgunRegion;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.SMSRegion;
 import com.sinch.sdk.models.SmsContext;
@@ -48,6 +51,10 @@ public class SinchClient {
   private static final String CONVERSATION_TEMPLATE_SERVER_KEY =
       "template-management-conversation-server";
 
+  private static final String MAILGUN_REGION_KEY = "mailgun-region";
+  private static final String MAILGUN_DEFAULT_SERVER_KEY = "mailgun-default-server";
+  private static final String MAILGUN_REGION_SERVER_KEY = "mailgun-region-server";
+
   // sinch-sdk/{sdk_version} ({language}/{language_version}; {implementation_type};
   // {auxiliary_flag})
   private static final String SDK_USER_AGENT_HEADER = "User-Agent";
@@ -61,7 +68,7 @@ public class SinchClient {
   private VerificationService verification;
   private VoiceService voice;
   private ConversationService conversation;
-
+  private MailgunService mailgun;
   private HttpClientApache httpClient;
 
   /**
@@ -84,6 +91,7 @@ public class SinchClient {
     handleDefaultVerificationSettings(configuration, props, builder);
     handleDefaultVoiceSettings(configuration, props, builder);
     handleDefaultConversationSettings(configuration, props, builder);
+    handleDefaultMailgunSettings(configuration, props, builder);
 
     Configuration newConfiguration = builder.build();
     checkConfiguration(newConfiguration);
@@ -227,6 +235,34 @@ public class SinchClient {
     }
   }
 
+  private void handleDefaultMailgunSettings(
+      Configuration configuration, Properties props, Configuration.Builder builder) {
+
+    MailgunRegion region =
+        configuration.getMailgunContext().map(MailgunContext::getRegion).orElse(null);
+    // default region to be used ?
+    if (null == region && props.containsKey(MAILGUN_REGION_KEY)) {
+      String value = props.getProperty(MAILGUN_REGION_KEY);
+      if (!StringUtil.isEmpty(value)) {
+        region = MailgunRegion.from(value);
+      }
+    }
+
+    String url = configuration.getMailgunContext().map(MailgunContext::getUrl).orElse(null);
+
+    // server is not defined: use the region to set to an existing one and use "global" as a default
+    // fallback
+    if (StringUtil.isEmpty(url)) {
+      if (null == region || MailgunRegion.US.value().equals(region.value().toLowerCase())) {
+        url = props.getProperty(MAILGUN_DEFAULT_SERVER_KEY);
+      } else {
+        url = String.format(props.getProperty(MAILGUN_REGION_SERVER_KEY), region.value());
+      }
+    }
+
+    builder.setMailgunContext(MailgunContext.builder().setUrl(url).build());
+  }
+
   /**
    * Get current configuration
    *
@@ -312,6 +348,20 @@ public class SinchClient {
     return conversation;
   }
 
+  /**
+   * Get Mailgun domain service
+   *
+   * @return Return instance onto Mailgun API service
+   * @see <a href="__TO_BE_DEFINED__">__TO_BE_DEFINED__</a>
+   * @since __TO_BE_DEFINED__
+   */
+  public MailgunService mailgun() {
+    if (null == mailgun) {
+      mailgun = mailgunInit();
+    }
+    return mailgun;
+  }
+
   private void checkConfiguration(Configuration configuration) throws NullPointerException {
     Objects.requireNonNull(configuration.getOAuthUrl(), "'oauthUrl' cannot be null");
   }
@@ -359,6 +409,13 @@ public class SinchClient {
         getConfiguration().getUnifiedCredentials().orElse(null),
         getConfiguration().getConversationContext().orElse(null),
         getConfiguration().getOAuthServer(),
+        getHttpClient());
+  }
+
+  private MailgunService mailgunInit() {
+    return new com.sinch.sdk.domains.mailgun.adapters.MailgunService(
+        getConfiguration().getMailgunCredentials().orElse(null),
+        getConfiguration().getMailgunContext().orElse(null),
         getHttpClient());
   }
 

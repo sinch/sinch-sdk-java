@@ -9,32 +9,38 @@ public class Configuration {
   private final UnifiedCredentials unifiedCredentials;
   private final ApplicationCredentials applicationCredentials;
   private final SmsServicePlanCredentials smsServicePlanCredentials;
+  private final MailgunCredentials mailgunCredentials;
   private final String oauthUrl;
   private final NumbersContext numbersContext;
   private final SmsContext smsContext;
   private final VerificationContext verificationContext;
   private final VoiceContext voiceContext;
   private final ConversationContext conversationContext;
+  private final MailgunContext mailgunContext;
 
   private Configuration(
       UnifiedCredentials unifiedCredentials,
       ApplicationCredentials applicationCredentials,
       SmsServicePlanCredentials smsServicePlanCredentials,
+      MailgunCredentials mailgunCredentials,
       String oauthUrl,
       NumbersContext numbersContext,
       SmsContext smsContext,
       VerificationContext verificationContext,
       VoiceContext voiceContext,
-      ConversationContext conversationContext) {
+      ConversationContext conversationContext,
+      MailgunContext mailgunContext) {
     this.unifiedCredentials = unifiedCredentials;
     this.applicationCredentials = applicationCredentials;
     this.smsServicePlanCredentials = smsServicePlanCredentials;
+    this.mailgunCredentials = mailgunCredentials;
     this.oauthUrl = oauthUrl;
     this.numbersContext = numbersContext;
     this.smsContext = smsContext;
     this.voiceContext = voiceContext;
     this.verificationContext = verificationContext;
     this.conversationContext = conversationContext;
+    this.mailgunContext = mailgunContext;
   }
 
   @Override
@@ -55,6 +61,8 @@ public class Configuration {
         + conversationContext
         + ", conversationContext="
         + conversationContext
+        + ", mailgunContext="
+        + mailgunContext
         + "}";
   }
 
@@ -67,6 +75,16 @@ public class Configuration {
    */
   public Optional<UnifiedCredentials> getUnifiedCredentials() {
     return Optional.ofNullable(unifiedCredentials);
+  }
+
+  /**
+   * Get Mailgun service credentials
+   *
+   * @return Credentials
+   * @since __TO_BE_DEFINED__
+   */
+  public Optional<MailgunCredentials> getMailgunCredentials() {
+    return Optional.ofNullable(mailgunCredentials);
   }
 
   /**
@@ -163,6 +181,16 @@ public class Configuration {
   }
 
   /**
+   * Get Mailgun domain related execution context
+   *
+   * @return Current Voice context
+   * @since __TO_BE_DEFINED__
+   */
+  public Optional<MailgunContext> getMailgunContext() {
+    return Optional.ofNullable(mailgunContext);
+  }
+
+  /**
    * Getting Builder
    *
    * @return New Builder instance
@@ -199,6 +227,8 @@ public class Configuration {
     VerificationContext.Builder verificationContext;
     VoiceContext.Builder voiceContext;
     ConversationContext.Builder conversationContext;
+    MailgunCredentials.Builder mailgunCredentials;
+    MailgunContext.Builder mailgunContext;
 
     protected Builder() {}
 
@@ -230,6 +260,11 @@ public class Configuration {
       this.voiceContext = configuration.getVoiceContext().map(VoiceContext::builder).orElse(null);
       this.conversationContext =
           configuration.getConversationContext().map(ConversationContext::builder).orElse(null);
+
+      this.mailgunCredentials =
+          configuration.getMailgunCredentials().map(MailgunCredentials::builder).orElse(null);
+      this.mailgunContext =
+          configuration.getMailgunContext().map(MailgunContext::builder).orElse(null);
     }
 
     /**
@@ -489,6 +524,63 @@ public class Configuration {
     }
 
     /**
+     * Set Mailgun related api key
+     *
+     * @param apiKey {@link MailgunCredentials#getApiKey()}
+     * @return Current builder
+     * @since __TO_BE_DEFINED__
+     */
+    public Builder setMailgunApiKey(String apiKey) {
+      if (null == this.mailgunCredentials) {
+        this.mailgunCredentials = MailgunCredentials.builder();
+      }
+      this.mailgunCredentials.setApiKey(apiKey);
+      return this;
+    }
+
+    /**
+     * Set Mailgun API URL
+     *
+     * @param url Mailgun API URL
+     * @return Current builder
+     * @since __TO_BE_DEFINED__
+     */
+    public Builder setMailgunUrl(String url) {
+      if (null == this.mailgunContext) {
+        this.mailgunContext = MailgunContext.builder();
+      }
+      this.mailgunContext.setUrl(url);
+      return this;
+    }
+
+    /**
+     * Set Mailgun related region
+     *
+     * @param region {@link MailgunContext#getRegion()}
+     * @return Current builder
+     * @since 1.0
+     */
+    public Builder setMailgunRegion(MailgunRegion region) {
+      if (null == this.mailgunContext) {
+        this.mailgunContext = MailgunContext.builder();
+      }
+      this.mailgunContext.setRegion(region);
+      return this;
+    }
+
+    /**
+     * Set Mailgun related context
+     *
+     * @param context {@link #getMailgunContext()}
+     * @return Current builder
+     * @since __TO_BE_DEFINED__
+     */
+    public Builder setMailgunContext(MailgunContext context) {
+      this.mailgunContext = null != context ? MailgunContext.builder(context) : null;
+      return this;
+    }
+
+    /**
      * Build a Configuration instance from builder current state
      *
      * @return Configuration instance build from current builder state
@@ -500,12 +592,14 @@ public class Configuration {
           null != unifiedCredentials ? unifiedCredentials.build() : null,
           null != applicationCredentials ? applicationCredentials.build() : null,
           null != smsServicePlanCredentials ? smsServicePlanCredentials.build() : null,
+          null != mailgunCredentials ? mailgunCredentials.build() : null,
           oauthUrl,
           null != numbersContext ? numbersContext.build() : null,
           null != smsContext ? smsContext.build() : null,
           null != verificationContext ? verificationContext.build() : null,
           null != voiceContext ? voiceContext.build() : null,
-          null != conversationContext ? conversationContext.build() : null);
+          null != conversationContext ? conversationContext.build() : null,
+          null != mailgunContext ? mailgunContext.build() : null);
     }
   }
 }
