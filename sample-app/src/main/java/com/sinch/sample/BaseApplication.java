@@ -26,6 +26,7 @@ public abstract class BaseApplication {
   private static final String CONVERSATION_TEMPLATE_ID_KEY = "CONVERSATION_TEMPLATE_ID";
   private static final String MAILGUN_DOMAIN = "MAILGUN_DOMAIN";
   private static final String MAILGUN_FROM = "MAILGUN_FROM";
+  private static final String MAILGUN_TO = "MAILGUN_TO";
 
   public static final String WEBHOOKS_URL_KEY = "WEBHOOKS_URL";
   public static final String WEBHOOKS_NUMBERS_PATH_KEY = "WEBHOOKS_NUMBERS_PATH";
@@ -55,6 +56,7 @@ public abstract class BaseApplication {
   protected String applicationKey;
   protected String mailgunDomain;
   protected String mailgunFrom;
+  protected String mailgunTo;
 
   protected Optional<String> webhooksConversationPath = Optional.empty();
   protected Optional<String> webhooksNumbersPath = Optional.empty();
@@ -126,6 +128,7 @@ public abstract class BaseApplication {
 
     mailgunDomain = getConfigValue(MAILGUN_DOMAIN);
     mailgunFrom = getConfigValue(MAILGUN_FROM);
+    mailgunTo = getConfigValue(MAILGUN_TO);
 
     client = new SinchClient(configuration);
   }

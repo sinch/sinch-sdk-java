@@ -22,4 +22,9 @@ public class ServerConfiguration {
   public String getUrl() {
     return url;
   }
+
+  @Override
+  public String toString() {
+    return "ServerConfiguration{" + "url='" + url + '\'' + '}';
+  }
 }

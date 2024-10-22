@@ -74,6 +74,6 @@ public class ApiException extends RuntimeException {
 
   @Override
   public String toString() {
-    return "ApiException{" + "code=" + code + ", message=" + super.getMessage();
+    return "ApiException{" + "code=" + code + ", message=" + super.getMessage() + "}";
   }
 }
