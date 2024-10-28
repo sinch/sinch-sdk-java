@@ -34,6 +34,6 @@ public class UnassignNumber extends BaseApplication {
             .setNumber(virtualPhoneNumber)
             .setApplicationKey(applicationKey)
             .build();
-    service.unAssignNumber(request);
+    service.unassignNumber(request);
   }
 }

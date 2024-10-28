@@ -100,7 +100,7 @@ public class ApplicationsServiceTest extends BaseTest {
   void unAssignNumber() {
     service.unassignNumber(E164PhoneNumber.valueOf("+12345678"), "application key");
 
-    verify(v1).unAssignNumber(unAssignNumberRequestDtoCaptor.capture());
+    verify(v1).unassignNumber(unAssignNumberRequestDtoCaptor.capture());
 
     UnAssignNumberRequest body = unAssignNumberRequestDtoCaptor.getValue();
     TestHelpers.recursiveEquals(

@@ -36,6 +36,6 @@ public class ApplicationsService implements com.sinch.sdk.domains.voice.Applicat
   }
 
   public void unassignNumber(E164PhoneNumber phoneNumber, String applicationKey) {
-    v1.unAssignNumber(ApplicationsDtoConverter.convert(phoneNumber, applicationKey));
+    v1.unassignNumber(ApplicationsDtoConverter.convert(phoneNumber, applicationKey));
   }
 }

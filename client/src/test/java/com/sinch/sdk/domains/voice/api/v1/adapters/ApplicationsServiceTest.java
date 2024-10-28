@@ -103,7 +103,7 @@ public class ApplicationsServiceTest extends BaseTest {
   @Test
   void unAssignNumber() {
 
-    service.unAssignNumber(UnAssignNumberRequestTest.unAssignNumberDto);
+    service.unassignNumber(UnAssignNumberRequestTest.unAssignNumberDto);
 
     verify(api).configurationUnassignNumber(unassignNumbersDtoCaptor.capture());
 

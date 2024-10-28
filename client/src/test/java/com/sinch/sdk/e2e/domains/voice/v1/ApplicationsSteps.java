@@ -63,7 +63,7 @@ public class ApplicationsSteps {
 
     UnAssignNumberRequest request =
         UnAssignNumberRequest.builder().setNumber("+12012222222").build();
-    service.unAssignNumber(request);
+    service.unassignNumber(request);
     unassignNumberPassed = true;
   }
 

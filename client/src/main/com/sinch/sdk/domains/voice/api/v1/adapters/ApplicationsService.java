@@ -51,7 +51,7 @@ public class ApplicationsService implements com.sinch.sdk.domains.voice.api.v1.A
     getApi().configurationUpdateNumbers(parameters);
   }
 
-  public void unAssignNumber(UnAssignNumberRequest parameters) {
+  public void unassignNumber(UnAssignNumberRequest parameters) {
     getApi().configurationUnassignNumber(parameters);
   }
 }

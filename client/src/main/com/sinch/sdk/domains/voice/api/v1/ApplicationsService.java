@@ -64,5 +64,5 @@ public interface ApplicationsService {
    * @param parameters Request parameters
    * @since 1.4
    */
-  public void unAssignNumber(UnAssignNumberRequest parameters);
+  public void unassignNumber(UnAssignNumberRequest parameters);
 }
