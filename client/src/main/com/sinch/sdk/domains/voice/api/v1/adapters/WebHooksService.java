@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.exceptions.ApiMappingException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.utils.MapUtils;
+import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.core.utils.databind.Mapper;
 import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.VoiceWebhookEvent;
@@ -28,9 +29,8 @@ public class WebHooksService implements com.sinch.sdk.domains.voice.api.v1.WebHo
 
     String authorizationHeader = caseInsensitiveHeaders.get("Authorization");
 
-    // no authorization required
-    if (null == authorizationHeader) {
-      return true;
+    if (StringUtil.isEmpty(authorizationHeader)) {
+      return false;
     }
 
     String[] split = authorizationHeader.split(" ");
