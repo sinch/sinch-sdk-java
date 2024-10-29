@@ -1,29 +1,24 @@
 package com.sinch.sdk.domains.voice.adapters;
 
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.core.http.AuthManager;
-import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.voice.adapters.api.v1.ApplicationsApi;
 import com.sinch.sdk.domains.voice.adapters.converters.ApplicationsDtoConverter;
 import com.sinch.sdk.domains.voice.adapters.converters.ApplicationsDtoConverterTest;
 import com.sinch.sdk.domains.voice.models.CallbackUrls;
-import com.sinch.sdk.domains.voice.models.dto.v1.ApplicationsCallbackUrlsDtoTest;
-import com.sinch.sdk.domains.voice.models.dto.v1.ApplicationsGetNumbersResponseDtoTest;
-import com.sinch.sdk.domains.voice.models.dto.v1.CallbacksDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.UnassignNumbersDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.UpdateNumbersDto;
 import com.sinch.sdk.domains.voice.models.response.AssignedNumbers;
+import com.sinch.sdk.domains.voice.models.v1.applications.Callbacks;
+import com.sinch.sdk.domains.voice.models.v1.applications.request.UnAssignNumberRequest;
+import com.sinch.sdk.domains.voice.models.v1.applications.request.UpdateNumbersRequest;
+import com.sinch.sdk.domains.voice.models.v1.applications.response.GetCallbackUrlsResponseTest;
+import com.sinch.sdk.domains.voice.models.v1.applications.response.OwnedNumbersResponseTest;
 import com.sinch.sdk.models.E164PhoneNumber;
-import com.sinch.sdk.models.VoiceContext;
-import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,47 +29,39 @@ import org.mockito.Mock;
 @TestWithResources
 public class ApplicationsServiceTest extends BaseTest {
 
-  @Mock ApplicationsApi api;
-  @Mock VoiceContext context;
-  @Mock HttpClient httpClient;
-  @Mock Map<String, AuthManager> authManagers;
+  @Mock com.sinch.sdk.domains.voice.api.v1.ApplicationsService v1;
 
   @Captor ArgumentCaptor<String> applicationKeyCaptor;
-  @Captor ArgumentCaptor<CallbacksDto> callbacksDtoCaptor;
-  @Captor ArgumentCaptor<UpdateNumbersDto> updateNumbersDtoCaptor;
-  @Captor ArgumentCaptor<UnassignNumbersDto> unassignNumbersDtoCaptor;
+  @Captor ArgumentCaptor<Callbacks> callbacksDtoCaptor;
+  @Captor ArgumentCaptor<UpdateNumbersRequest> updateNumbersRequestDtoCaptor;
+  @Captor ArgumentCaptor<UnAssignNumberRequest> unAssignNumberRequestDtoCaptor;
 
   ApplicationsService service;
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new ApplicationsService(context, httpClient, authManagers));
-    doReturn(api).when(service).getApi();
+    service = spy(new ApplicationsService(v1));
   }
 
   @Test
   void getNumbers() throws ApiException {
 
-    when(api.configurationGetNumbers()).thenReturn(ApplicationsGetNumbersResponseDtoTest.expected);
+    when(v1.listNumbers()).thenReturn(OwnedNumbersResponseTest.expected);
 
     AssignedNumbers response = service.listNumbers();
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(ApplicationsDtoConverterTest.expectedAssignedNumbersResponse);
+    TestHelpers.recursiveEquals(
+        response, ApplicationsDtoConverterTest.expectedAssignedNumbersResponse);
   }
 
   @Test
   void getCallbackUrls() throws ApiException {
-
-    when(api.configurationGetCallbackURLs(eq("app id")))
-        .thenReturn(ApplicationsCallbackUrlsDtoTest.expected);
+    when(v1.getCallbackUrls(eq("app id"))).thenReturn(GetCallbackUrlsResponseTest.expected);
 
     CallbackUrls response = service.getCallbackUrls("app id");
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(ApplicationsDtoConverterTest.expectedApplicationsCallbackUrls);
+    TestHelpers.recursiveEquals(
+        response, ApplicationsDtoConverterTest.expectedApplicationsCallbackUrls);
   }
 
   @Test
@@ -83,18 +70,16 @@ public class ApplicationsServiceTest extends BaseTest {
     service.updateCallbackUrls(
         "app key", ApplicationsDtoConverterTest.expectedApplicationsCallbackUrls);
 
-    verify(api)
-        .configurationUpdateCallbackURLs(
-            applicationKeyCaptor.capture(), callbacksDtoCaptor.capture());
+    verify(v1).updateCallbackUrls(applicationKeyCaptor.capture(), callbacksDtoCaptor.capture());
 
     String appKey = applicationKeyCaptor.getValue();
     Assertions.assertThat(appKey).isEqualTo("app key");
 
-    CallbacksDto body = callbacksDtoCaptor.getValue();
-    Assertions.assertThat(body)
-        .isEqualTo(
-            ApplicationsDtoConverter.convert(
-                ApplicationsDtoConverterTest.expectedApplicationsCallbackUrls));
+    Callbacks body = callbacksDtoCaptor.getValue();
+    TestHelpers.recursiveEquals(
+        body,
+        ApplicationsDtoConverter.convert(
+            ApplicationsDtoConverterTest.expectedApplicationsCallbackUrls));
   }
 
   @Test
@@ -102,25 +87,24 @@ public class ApplicationsServiceTest extends BaseTest {
     service.assignNumbers(
         ApplicationsDtoConverterTest.expectedApplicationsAssignNumbersRequestParameters);
 
-    verify(api).configurationUpdateNumbers(updateNumbersDtoCaptor.capture());
+    verify(v1).assignNumbers(updateNumbersRequestDtoCaptor.capture());
 
-    UpdateNumbersDto body = updateNumbersDtoCaptor.getValue();
-    Assertions.assertThat(body)
-        .isEqualTo(
-            ApplicationsDtoConverter.convert(
-                ApplicationsDtoConverterTest.expectedApplicationsAssignNumbersRequestParameters));
+    UpdateNumbersRequest body = updateNumbersRequestDtoCaptor.getValue();
+    TestHelpers.recursiveEquals(
+        body,
+        ApplicationsDtoConverter.convert(
+            ApplicationsDtoConverterTest.expectedApplicationsAssignNumbersRequestParameters));
   }
 
   @Test
   void unassignNumber() {
     service.unassignNumber(E164PhoneNumber.valueOf("+12345678"), "application key");
 
-    verify(api).configurationUnassignNumber(unassignNumbersDtoCaptor.capture());
+    verify(v1).unassignNumber(unAssignNumberRequestDtoCaptor.capture());
 
-    UnassignNumbersDto body = unassignNumbersDtoCaptor.getValue();
-    Assertions.assertThat(body)
-        .isEqualTo(
-            ApplicationsDtoConverter.convert(
-                E164PhoneNumber.valueOf("+12345678"), "application key"));
+    UnAssignNumberRequest body = unAssignNumberRequestDtoCaptor.getValue();
+    TestHelpers.recursiveEquals(
+        body,
+        ApplicationsDtoConverter.convert(E164PhoneNumber.valueOf("+12345678"), "application key"));
   }
 }

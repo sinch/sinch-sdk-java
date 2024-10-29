@@ -1,8 +1,9 @@
 package com.sinch.sample.voice.applications;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.voice.models.ApplicationURL;
-import com.sinch.sdk.domains.voice.models.CallbackUrls;
+import com.sinch.sdk.domains.voice.api.v1.ApplicationsService;
+import com.sinch.sdk.domains.voice.models.v1.applications.Callbacks;
+import com.sinch.sdk.domains.voice.models.v1.applications.CallbacksUrl;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -23,17 +24,20 @@ public class UpdateCallbackUrls extends BaseApplication {
 
   public void run() {
 
+    ApplicationsService service = client.voice().v1().applications();
+
     var urls =
-        CallbackUrls.builder()
+        Callbacks.builder()
             .setUrl(
-                ApplicationURL.builder()
-                    .setPrimary("primary value")
+                CallbacksUrl.builder()
+                    .setPrimary(webhooksVoicePath.get())
                     .setFallback("fallback value")
                     .build())
             .build();
+
     LOGGER.info(
         "Update callback URLs for application key '%s': '%s'".formatted(applicationKey, urls));
 
-    client.voice().applications().updateCallbackUrls(applicationKey, urls);
+    service.updateCallbackUrls(applicationKey, urls);
   }
 }

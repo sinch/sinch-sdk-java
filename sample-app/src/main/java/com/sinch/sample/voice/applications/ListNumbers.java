@@ -1,6 +1,7 @@
 package com.sinch.sample.voice.applications;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.voice.api.v1.ApplicationsService;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -21,9 +22,11 @@ public class ListNumbers extends BaseApplication {
 
   public void run() {
 
+    ApplicationsService service = client.voice().v1().applications();
+
     LOGGER.info("Get assigned numbers");
 
-    var response = client.voice().applications().listNumbers();
+    var response = service.listNumbers();
 
     LOGGER.info("Response: " + response);
   }

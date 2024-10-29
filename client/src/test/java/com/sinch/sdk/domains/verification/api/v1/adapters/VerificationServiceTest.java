@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.verification.api.v1.adapters;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -86,5 +87,17 @@ class VerificationServiceTest {
             IllegalArgumentException.class,
             () -> new VerificationService(credentials, context, httpClient));
     assertTrue(exception.getMessage().contains("verificationUrl"));
+  }
+
+  @Test
+  void passInit() {
+    ApplicationCredentials credentials =
+        ApplicationCredentials.builder()
+            .setApplicationKey("foo key")
+            .setApplicationSecret("Zm9vIHNlY3JldA==")
+            .build();
+
+    assertDoesNotThrow(
+        () -> new VerificationService(credentials, context, httpClient), "Init passed");
   }
 }

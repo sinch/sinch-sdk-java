@@ -6,7 +6,11 @@ import com.sinch.sdk.domains.voice.models.requests.ApplicationsAssignNumbersRequ
 import com.sinch.sdk.domains.voice.models.response.AssignedNumbers;
 import com.sinch.sdk.models.E164PhoneNumber;
 
-/** You can use the API to manage features of applications in your project. */
+/**
+ * You can use the API to manage features of applications in your project.
+ *
+ * @since 1.0
+ */
 public interface ApplicationsService {
 
   /**

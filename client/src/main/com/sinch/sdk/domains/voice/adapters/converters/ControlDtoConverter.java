@@ -1,40 +1,38 @@
 package com.sinch.sdk.domains.voice.adapters.converters;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.sinch.sdk.core.exceptions.ApiMappingException;
-import com.sinch.sdk.core.utils.databind.Mapper;
 import com.sinch.sdk.domains.voice.models.requests.Control;
 import com.sinch.sdk.domains.voice.models.requests.ControlUrl;
 import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
-import java.util.logging.Logger;
+import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
 
 public class ControlDtoConverter {
 
-  private static final Logger LOGGER = Logger.getLogger(SVAMLActionDtoConverter.class.getName());
-
-  public static String convert(Control client) {
-    if (null == client) {
-      return null;
-    }
-    String dto;
-    if (client instanceof SVAMLControl) {
-      SVAMLControl value = (SVAMLControl) client;
-      dto = convertControlToEscapedJSON(value);
-    } else if (client instanceof ControlUrl) {
-      ControlUrl value = (ControlUrl) client;
-      dto = value.getURL();
-    } else {
-      LOGGER.severe(String.format("Unexpected class '%s'", client.getClass()));
-      dto = client.toString();
-    }
-    return dto;
+  public static com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl convertControl(
+      SVAMLControl _client) {
+    return (com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl)
+        convertControl((Control) _client);
   }
 
-  private static String convertControlToEscapedJSON(SVAMLControl client) {
-    try {
-      return Mapper.getInstance().writeValueAsString(CallsDtoConverter.convert(client));
-    } catch (JsonProcessingException e) {
-      throw new ApiMappingException(client.toString(), e);
+  public static com.sinch.sdk.domains.voice.models.v1.svaml.Control convertControl(
+      Control _client) {
+    if (null == _client) {
+      return null;
     }
+
+    if (_client instanceof SVAMLControl) {
+      SVAMLControl client = (SVAMLControl) _client;
+      SvamlControl.Builder dto = SvamlControl.builder();
+      client
+          .getInstructions()
+          .ifPresent(f -> dto.setInstructions(SVAMLInstructionDtoConverter.convert(f)));
+      client.getAction().ifPresent(f -> dto.setAction(SVAMLActionDtoConverter.convert(f)));
+      return dto.build();
+    }
+
+    if (_client instanceof ControlUrl) {
+      ControlUrl client = (ControlUrl) _client;
+      return com.sinch.sdk.domains.voice.models.v1.svaml.ControlUrl.from(client.getURL());
+    }
+    return null;
   }
 }

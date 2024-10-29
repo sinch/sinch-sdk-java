@@ -1,16 +1,5 @@
 package com.sinch.sdk.domains.voice.adapters.converters;
 
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionAnswerDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionPlayFilesDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionPlayFilesDto.NameEnum;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionSayDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionSendDtmfDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionSetCookieDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionStartRecordingDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionStartRecordingOptionsDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionStartRecordingOptionsTranscriptionOptionsDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.SvamlInstructionStopRecordingDto;
 import com.sinch.sdk.domains.voice.models.svaml.Instruction;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionAnswer;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionPlayFiles;
@@ -21,6 +10,14 @@ import com.sinch.sdk.domains.voice.models.svaml.InstructionStartRecording;
 import com.sinch.sdk.domains.voice.models.svaml.InstructionStopRecording;
 import com.sinch.sdk.domains.voice.models.svaml.StartRecordingOptions;
 import com.sinch.sdk.domains.voice.models.svaml.TranscriptionOptions;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstruction;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionAnswer;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionPlayFiles;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionSay;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionSendDtmf;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionSetCookie;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionStartRecording;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionStopRecording;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -32,7 +29,7 @@ public class SVAMLInstructionDtoConverter {
   private static final Logger LOGGER =
       Logger.getLogger(SVAMLInstructionDtoConverter.class.getName());
 
-  public static List<SvamlInstructionDto> convert(Collection<Instruction> instructions) {
+  public static List<SvamlInstruction> convert(Collection<Instruction> instructions) {
     if (null == instructions) {
       return null;
     }
@@ -41,13 +38,12 @@ public class SVAMLInstructionDtoConverter {
         .collect(Collectors.toList());
   }
 
-  private static SvamlInstructionDto convertInstruction(Instruction client) {
+  private static SvamlInstruction convertInstruction(Instruction client) {
     if (null == client) {
       return null;
     }
-    SvamlInstructionDto dto = new SvamlInstructionDto();
 
-    Object convertedDto = null;
+    SvamlInstruction convertedDto = null;
     if (client instanceof InstructionAnswer) {
       InstructionAnswer typedClient = (InstructionAnswer) client;
       convertedDto = convert(typedClient);
@@ -73,105 +69,96 @@ public class SVAMLInstructionDtoConverter {
       LOGGER.severe(String.format("Unexpected class '%s'", client.getClass()));
     }
 
-    dto.setActualInstance(convertedDto);
-    return dto;
+    return convertedDto;
   }
 
-  private static SvamlInstructionAnswerDto convert(InstructionAnswer client) {
+  private static SvamlInstructionAnswer convert(InstructionAnswer client) {
     if (null == client) {
       return null;
     }
-    SvamlInstructionAnswerDto dto = new SvamlInstructionAnswerDto();
-    dto.setName(SvamlInstructionAnswerDto.NameEnum.ANSWER.getValue());
-    return dto;
+    return SvamlInstructionAnswer.DEFAULT;
   }
 
-  private static SvamlInstructionPlayFilesDto convert(InstructionPlayFiles client) {
+  private static SvamlInstructionPlayFiles convert(InstructionPlayFiles client) {
     if (null == client) {
       return null;
     }
-    SvamlInstructionPlayFilesDto dto = new SvamlInstructionPlayFilesDto();
-    dto.setName(NameEnum.PLAYFILES.getValue());
+    SvamlInstructionPlayFiles.Builder dto = SvamlInstructionPlayFiles.builder();
     client.getIds().ifPresent(f -> dto.setIds(new ArrayList<>(f)));
-    client.getLocale().ifPresent(dto::locale);
-    return dto;
+    client.getLocale().ifPresent(dto::setLocale);
+    return dto.build();
   }
 
-  private static SvamlInstructionSayDto convert(InstructionSay client) {
+  private static SvamlInstructionSay convert(InstructionSay client) {
     if (null == client) {
       return null;
     }
-    SvamlInstructionSayDto dto = new SvamlInstructionSayDto();
-    dto.setName(SvamlInstructionSayDto.NameEnum.SAY.getValue());
+    SvamlInstructionSay.Builder dto = SvamlInstructionSay.builder();
     client.getText().ifPresent(dto::setText);
     client.getLocale().ifPresent(dto::setLocale);
-    return dto;
+    return dto.build();
   }
 
-  private static SvamlInstructionSendDtmfDto convert(InstructionSendDtfm client) {
+  private static SvamlInstructionSendDtmf convert(InstructionSendDtfm client) {
     if (null == client) {
       return null;
     }
-    SvamlInstructionSendDtmfDto dto = new SvamlInstructionSendDtmfDto();
-    dto.setName(SvamlInstructionSendDtmfDto.NameEnum.SENDDTMF.getValue());
+    SvamlInstructionSendDtmf.Builder dto = SvamlInstructionSendDtmf.builder();
     client.getTDtfm().ifPresent(f -> dto.setValue(f.stringValue()));
-    return dto;
+    return dto.build();
   }
 
-  private static SvamlInstructionSetCookieDto convert(InstructionSetCookie client) {
+  private static SvamlInstructionSetCookie convert(InstructionSetCookie client) {
     if (null == client) {
       return null;
     }
-    SvamlInstructionSetCookieDto dto = new SvamlInstructionSetCookieDto();
-    dto.setName(SvamlInstructionSetCookieDto.NameEnum.SETCOOKIE.getValue());
-
+    SvamlInstructionSetCookie.Builder dto = SvamlInstructionSetCookie.builder();
     dto.setKey(client.getKey());
     dto.setValue(client.getValue());
-    return dto;
+    return dto.build();
   }
 
-  private static SvamlInstructionStartRecordingDto convert(InstructionStartRecording client) {
+  private static SvamlInstructionStartRecording convert(InstructionStartRecording client) {
     if (null == client) {
       return null;
     }
-    SvamlInstructionStartRecordingDto dto = new SvamlInstructionStartRecordingDto();
-    dto.setName(SvamlInstructionStartRecordingDto.NameEnum.STARTRECORDING.getValue());
+    SvamlInstructionStartRecording.Builder dto = SvamlInstructionStartRecording.builder();
     client.getOptions().ifPresent(f -> dto.setOptions(convert(f)));
-    return dto;
+    return dto.build();
   }
 
-  private static SvamlInstructionStopRecordingDto convert(InstructionStopRecording client) {
+  private static SvamlInstructionStopRecording convert(InstructionStopRecording client) {
     if (null == client) {
       return null;
     }
-    SvamlInstructionStopRecordingDto dto = new SvamlInstructionStopRecordingDto();
-    dto.setName(SvamlInstructionStopRecordingDto.NameEnum.STOPRECORDING.getValue());
-    return dto;
+    return SvamlInstructionStopRecording.DEFAULT;
   }
 
-  private static SvamlInstructionStartRecordingOptionsDto convert(StartRecordingOptions client) {
+  private static com.sinch.sdk.domains.voice.models.v1.svaml.instruction.StartRecordingOptions
+      convert(StartRecordingOptions client) {
     if (null == client) {
       return null;
     }
-    SvamlInstructionStartRecordingOptionsDto dto = new SvamlInstructionStartRecordingOptionsDto();
+    com.sinch.sdk.domains.voice.models.v1.svaml.instruction.StartRecordingOptions.Builder dto =
+        com.sinch.sdk.domains.voice.models.v1.svaml.instruction.StartRecordingOptions.builder();
 
     client.getDestinationUrl().ifPresent(dto::setDestinationUrl);
     client.getCredentials().ifPresent(dto::setCredentials);
     client.getFormat().ifPresent(dto::setFormat);
     client.getNotificationEvents().ifPresent(dto::setNotificationEvents);
     client.getTranscriptionOptions().ifPresent(f -> dto.setTranscriptionOptions(convert(f)));
-    return dto;
+    return dto.build();
   }
 
-  private static SvamlInstructionStartRecordingOptionsTranscriptionOptionsDto convert(
-      TranscriptionOptions client) {
+  private static com.sinch.sdk.domains.voice.models.v1.svaml.instruction.TranscriptionOptions
+      convert(TranscriptionOptions client) {
     if (null == client) {
       return null;
     }
-    SvamlInstructionStartRecordingOptionsTranscriptionOptionsDto dto =
-        new SvamlInstructionStartRecordingOptionsTranscriptionOptionsDto();
+    com.sinch.sdk.domains.voice.models.v1.svaml.instruction.TranscriptionOptions.Builder dto =
+        com.sinch.sdk.domains.voice.models.v1.svaml.instruction.TranscriptionOptions.builder();
     client.getEnabled().ifPresent(dto::setEnabled);
-    client.getLocale().ifPresent(dto::locale);
-    return dto;
+    client.getLocale().ifPresent(dto::setLocale);
+    return dto.build();
   }
 }

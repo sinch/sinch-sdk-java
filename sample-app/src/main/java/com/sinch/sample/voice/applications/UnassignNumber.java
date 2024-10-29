@@ -1,7 +1,8 @@
 package com.sinch.sample.voice.applications;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.models.E164PhoneNumber;
+import com.sinch.sdk.domains.voice.api.v1.ApplicationsService;
+import com.sinch.sdk.domains.voice.models.v1.applications.request.UnAssignNumberRequest;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -22,12 +23,17 @@ public class UnassignNumber extends BaseApplication {
 
   public void run() {
 
-    LOGGER.info(
-        "Un-assign number '%s' from application '%s'".formatted(phoneNumber, applicationKey));
+    ApplicationsService service = client.voice().v1().applications();
 
-    client
-        .voice()
-        .applications()
-        .unassignNumber(E164PhoneNumber.valueOf(phoneNumber), applicationKey);
+    LOGGER.info(
+        "Un-assign number '%s' from application '%s'"
+            .formatted(virtualPhoneNumber, applicationKey));
+
+    UnAssignNumberRequest request =
+        UnAssignNumberRequest.builder()
+            .setNumber(virtualPhoneNumber)
+            .setApplicationKey(applicationKey)
+            .build();
+    service.unassignNumber(request);
   }
 }
