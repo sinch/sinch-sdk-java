@@ -56,7 +56,7 @@ public class CalloutsServiceTest extends VoiceBaseTest {
   }
 
   @Test
-  void callCustom() throws ApiException {
+  void custom() throws ApiException {
 
     when(v1.custom(any(CalloutRequestCustom.class)))
         .thenReturn(CalloutResponseDtoTest.expectedCalloutResponseDto.getCallId());

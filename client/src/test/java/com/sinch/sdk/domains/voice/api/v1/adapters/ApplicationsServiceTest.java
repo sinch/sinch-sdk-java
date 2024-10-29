@@ -101,7 +101,7 @@ public class ApplicationsServiceTest extends BaseTest {
   }
 
   @Test
-  void unAssignNumber() {
+  void unassignNumber() {
 
     service.unassignNumber(UnAssignNumberRequestTest.unAssignNumberDto);
 

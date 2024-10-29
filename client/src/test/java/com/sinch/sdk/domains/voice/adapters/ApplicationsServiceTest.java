@@ -97,7 +97,7 @@ public class ApplicationsServiceTest extends BaseTest {
   }
 
   @Test
-  void unAssignNumber() {
+  void unassignNumber() {
     service.unassignNumber(E164PhoneNumber.valueOf("+12345678"), "application key");
 
     verify(v1).unassignNumber(unAssignNumberRequestDtoCaptor.capture());
