@@ -1,25 +1,21 @@
 package com.sinch.sdk.domains.voice.adapters;
 
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.core.http.AuthManager;
-import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.voice.adapters.api.v1.CallsApi;
 import com.sinch.sdk.domains.voice.adapters.converters.CallsDtoConverterTest;
 import com.sinch.sdk.domains.voice.models.CallLegType;
-import com.sinch.sdk.domains.voice.models.dto.v1.CallsResponseDtoTest;
-import com.sinch.sdk.domains.voice.models.dto.v1.SVAMLRequestBodyDto;
 import com.sinch.sdk.domains.voice.models.response.CallInformation;
 import com.sinch.sdk.domains.voice.models.svaml.SVAMLControlTest;
-import com.sinch.sdk.models.VoiceContext;
-import java.util.Map;
+import com.sinch.sdk.domains.voice.models.v1.calls.CallInformationTest;
+import com.sinch.sdk.domains.voice.models.v1.calls.request.CallLeg;
+import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,49 +26,40 @@ import org.mockito.Mock;
 @TestWithResources
 public class CallsServiceTest extends BaseTest {
 
-  @Mock CallsApi api;
-  @Mock VoiceContext context;
-  @Mock HttpClient httpClient;
-  @Mock Map<String, AuthManager> authManagers;
+  @Mock com.sinch.sdk.domains.voice.api.v1.CallsService v1;
 
   @Captor ArgumentCaptor<String> callIdCaptor;
-  @Captor ArgumentCaptor<String> callLegCaptor;
-  @Captor ArgumentCaptor<SVAMLRequestBodyDto> updateParametersCaptor;
+  @Captor ArgumentCaptor<CallLeg> callLegCaptor;
+  @Captor ArgumentCaptor<SvamlControl> updateParametersCaptor;
   CallsService service;
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new CallsService(context, httpClient, authManagers));
-    doReturn(api).when(service).getApi();
+    service = spy(new CallsService(v1));
   }
 
   @Test
   void get() throws ApiException {
-
-    when(api.callingGetCallResult(
-            eq(CallsResponseDtoTest.expectedCallsGetInformationResponseDto.getCallId())))
-        .thenReturn(CallsResponseDtoTest.expectedCallsGetInformationResponseDto);
+    when(v1.get(eq(CallInformationTest.expectedCallsGetInformationResponseDto.getCallId())))
+        .thenReturn(CallInformationTest.expectedCallsGetInformationResponseDto);
 
     CallInformation response =
-        service.get(CallsResponseDtoTest.expectedCallsGetInformationResponseDto.getCallId());
+        service.get(CallInformationTest.expectedCallsGetInformationResponseDto.getCallId());
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(CallsDtoConverterTest.expectedCallInformation);
+    TestHelpers.recursiveEquals(response, CallsDtoConverterTest.expectedCallInformation);
   }
 
   @Test
   void update() throws ApiException {
-
     service.update("call id", SVAMLControlTest.parameters);
 
-    verify(api).callingUpdateCall(callIdCaptor.capture(), updateParametersCaptor.capture());
+    verify(v1).update(callIdCaptor.capture(), updateParametersCaptor.capture());
 
     String callId = callIdCaptor.getValue();
     Assertions.assertThat(callId).isEqualTo("call id");
 
-    SVAMLRequestBodyDto body = updateParametersCaptor.getValue();
-    Assertions.assertThat(body).isEqualTo(CallsDtoConverterTest.svamlRequestBodyDto);
+    SvamlControl body = updateParametersCaptor.getValue();
+    TestHelpers.recursiveEquals(body, CallsDtoConverterTest.svamlControlDto);
   }
 
   @Test
@@ -80,17 +67,17 @@ public class CallsServiceTest extends BaseTest {
 
     service.manageWithCallLeg("call id", CallLegType.BOTH, SVAMLControlTest.parameters);
 
-    verify(api)
-        .callingManageCallWithCallLeg(
+    verify(v1)
+        .manageWithCallLeg(
             callIdCaptor.capture(), callLegCaptor.capture(), updateParametersCaptor.capture());
 
     String callId = callIdCaptor.getValue();
     Assertions.assertThat(callId).isEqualTo("call id");
 
-    String legType = callLegCaptor.getValue();
-    Assertions.assertThat(legType).isEqualTo("both");
+    CallLeg legType = callLegCaptor.getValue();
+    Assertions.assertThat(legType).isEqualTo(CallLeg.BOTH);
 
-    SVAMLRequestBodyDto body = updateParametersCaptor.getValue();
-    Assertions.assertThat(body).isEqualTo(CallsDtoConverterTest.svamlRequestBodyDto);
+    SvamlControl body = updateParametersCaptor.getValue();
+    Assertions.assertThat(body).isEqualTo(CallsDtoConverterTest.svamlControlDto);
   }
 }

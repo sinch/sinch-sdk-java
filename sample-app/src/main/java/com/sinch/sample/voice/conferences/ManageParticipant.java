@@ -1,9 +1,9 @@
 package com.sinch.sample.voice.conferences;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.voice.models.MusicOnHoldType;
-import com.sinch.sdk.domains.voice.models.requests.ConferenceManageParticipantCommandType;
-import com.sinch.sdk.domains.voice.models.requests.ConferenceManageParticipantRequestParameters;
+import com.sinch.sdk.domains.voice.api.v1.ConferencesService;
+import com.sinch.sdk.domains.voice.models.v1.MusicOnHold;
+import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipantRequest;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -24,22 +24,21 @@ public class ManageParticipant extends BaseApplication {
 
   public void run() {
 
-    var command = ConferenceManageParticipantCommandType.MUTE;
-    var moh = MusicOnHoldType.MUSIC1;
+    ConferencesService service = client.voice().v1().conferences();
+
+    var command = ManageConferenceParticipantRequest.CommandEnum.MUTE;
+    var moh = MusicOnHold.MUSIC1;
 
     LOGGER.info(
         "Manage participant '%s' for conference '%s'. Setting command to '%s' and moh to '%s'"
             .formatted(callId, conferenceId, command, moh));
 
-    client
-        .voice()
-        .conferences()
-        .manageParticipant(
-            conferenceId,
-            callId,
-            ConferenceManageParticipantRequestParameters.builder()
-                .setCommand(command)
-                .setMusicOnHold(moh)
-                .build());
+    service.manageParticipant(
+        conferenceId,
+        callId,
+        ManageConferenceParticipantRequest.builder()
+            .setCommand(command)
+            .setMusicOnHold(moh)
+            .build());
   }
 }

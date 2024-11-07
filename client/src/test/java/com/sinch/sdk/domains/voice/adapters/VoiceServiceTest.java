@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.voice.adapters;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -13,9 +14,10 @@ class VoiceServiceTest {
 
   @Mock HttpClient httpClient;
 
+  VoiceContext context = VoiceContext.builder().build();
+
   @Test
   void doNotAcceptNullApplicationCredentials() {
-    VoiceContext context = VoiceContext.builder().build();
     Exception exception =
         assertThrows(NullPointerException.class, () -> new VoiceService(null, context, httpClient));
 
@@ -40,7 +42,6 @@ class VoiceServiceTest {
             .setApplicationKey(null)
             .setApplicationSecret("foo secret")
             .build();
-    VoiceContext context = VoiceContext.builder().build();
 
     Exception exception =
         assertThrows(
@@ -57,7 +58,6 @@ class VoiceServiceTest {
             .setApplicationKey("foo key")
             .setApplicationSecret(null)
             .build();
-    VoiceContext context = VoiceContext.builder().build();
 
     Exception exception =
         assertThrows(
@@ -65,5 +65,16 @@ class VoiceServiceTest {
             () -> new VoiceService(credentials, context, httpClient));
 
     assertTrue(exception.getMessage().contains("applicationSecret"));
+  }
+
+  @Test
+  void passInit() {
+    ApplicationCredentials credentials =
+        ApplicationCredentials.builder()
+            .setApplicationKey("foo key")
+            .setApplicationSecret("Zm9vIHNlY3JldA==")
+            .build();
+
+    assertDoesNotThrow(() -> new VoiceService(credentials, context, httpClient), "Init passed");
   }
 }

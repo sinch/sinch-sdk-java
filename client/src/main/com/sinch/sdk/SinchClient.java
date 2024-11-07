@@ -19,6 +19,7 @@ import com.sinch.sdk.models.SmsContext;
 import com.sinch.sdk.models.VerificationContext;
 import com.sinch.sdk.models.VoiceContext;
 import com.sinch.sdk.models.VoiceRegion;
+import com.sinch.sdk.models.adapters.DualToneMultiFrequencyMapper;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
@@ -466,5 +467,25 @@ public class SinchClient {
       values.add(SDK.AUXILIARY_FLAG);
     }
     return String.join(",", values);
+  }
+
+  static {
+    LocalLazyInit.init();
+  }
+
+  static final class LocalLazyInit {
+
+    private LocalLazyInit() {
+      DualToneMultiFrequencyMapper.initMapper();
+    }
+
+    public static LocalLazyInit init() {
+      return LocalLazyInit.LazyHolder.INSTANCE;
+    }
+
+    private static class LazyHolder {
+
+      public static final LocalLazyInit INSTANCE = new LocalLazyInit();
+    }
   }
 }

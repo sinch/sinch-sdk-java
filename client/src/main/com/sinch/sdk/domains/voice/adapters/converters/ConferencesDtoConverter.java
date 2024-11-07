@@ -1,43 +1,50 @@
 package com.sinch.sdk.domains.voice.adapters.converters;
 
 import com.sinch.sdk.domains.common.adapters.converters.EnumDynamicConverter;
-import com.sinch.sdk.domains.voice.models.dto.v1.GetConferenceInfoResponseDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.GetConferenceInfoResponseParticipantsInnerDto;
-import com.sinch.sdk.domains.voice.models.dto.v1.ManageConferenceParticipantRequestDto;
 import com.sinch.sdk.domains.voice.models.requests.ConferenceManageParticipantRequestParameters;
 import com.sinch.sdk.domains.voice.models.response.ConferenceParticipant;
+import com.sinch.sdk.domains.voice.models.v1.MusicOnHold;
+import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipantRequest;
+import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipantRequest.CommandEnum;
+import com.sinch.sdk.domains.voice.models.v1.conferences.response.GetConferenceInfoResponse;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ConferencesDtoConverter {
 
-  public static Collection<ConferenceParticipant> convert(GetConferenceInfoResponseDto dto) {
+  public static Collection<ConferenceParticipant> convert(GetConferenceInfoResponse dto) {
     if (null == dto) {
       return null;
     }
-    List<GetConferenceInfoResponseParticipantsInnerDto> list = dto.getParticipants();
+    List<com.sinch.sdk.domains.voice.models.v1.conferences.ConferenceParticipant> list =
+        dto.getParticipants();
 
     return list.stream().map(ConferencesDtoConverter::convert).collect(Collectors.toList());
   }
 
-  private static ConferenceParticipant convert(GetConferenceInfoResponseParticipantsInnerDto dto) {
+  private static ConferenceParticipant convert(
+      com.sinch.sdk.domains.voice.models.v1.conferences.ConferenceParticipant dto) {
 
     return ConferenceParticipant.builder()
         .setCli(dto.getCli())
         .setId(dto.getId())
         .setDuration(dto.getDuration())
         .setMuted(dto.getMuted())
-        .setOnhold(dto.getOnhold())
+        .setOnhold(dto.getOnHold())
         .build();
   }
 
-  public static ManageConferenceParticipantRequestDto convert(
+  public static ManageConferenceParticipantRequest convert(
       ConferenceManageParticipantRequestParameters client) {
 
-    ManageConferenceParticipantRequestDto dto = new ManageConferenceParticipantRequestDto();
-    client.getCommand().ifPresent(f -> dto.command(EnumDynamicConverter.convert(f)));
-    client.getMusicOnHold().ifPresent(f -> dto.moh(EnumDynamicConverter.convert(f)));
-    return dto;
+    ManageConferenceParticipantRequest.Builder dto = ManageConferenceParticipantRequest.builder();
+    client
+        .getCommand()
+        .ifPresent(f -> dto.setCommand(CommandEnum.from(EnumDynamicConverter.convert(f))));
+    client
+        .getMusicOnHold()
+        .ifPresent(f -> dto.setMusicOnHold(MusicOnHold.from(EnumDynamicConverter.convert(f))));
+    return dto.build();
   }
 }

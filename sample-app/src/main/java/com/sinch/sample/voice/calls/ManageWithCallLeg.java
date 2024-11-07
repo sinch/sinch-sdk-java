@@ -1,12 +1,14 @@
 package com.sinch.sample.voice.calls;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.voice.models.CallLegType;
-import com.sinch.sdk.domains.voice.models.svaml.ActionContinue;
-import com.sinch.sdk.domains.voice.models.svaml.Instruction;
-import com.sinch.sdk.domains.voice.models.svaml.InstructionSay;
-import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
+import com.sinch.sdk.domains.voice.api.v1.CallsService;
+import com.sinch.sdk.domains.voice.models.v1.calls.request.CallLeg;
+import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionContinue;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstruction;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionPlayFiles;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.logging.Logger;
@@ -28,16 +30,22 @@ public class ManageWithCallLeg extends BaseApplication {
 
   public void run() {
 
+    CallsService service = client.voice().v1().calls();
+
     LOGGER.info(
         "Updating call information for '%s' (conference '%s')".formatted(callId, conferenceId));
 
-    var action = ActionContinue.builder().build();
+    var action = SvamlActionContinue.DEFAULT;
 
-    Collection<Instruction> instructions =
+    Collection<SvamlInstruction> instructions =
         Collections.singletonList(
-            InstructionSay.builder().setText("Hello from sample app").setLocale("en").build());
+            SvamlInstructionPlayFiles.builder()
+                .setIds(
+                    Arrays.asList("https://samples-files.com/samples/Audio/mp3/sample-file-4.mp3"))
+                .build());
 
-    var parameters = SVAMLControl.builder().setInstructions(instructions).setAction(action).build();
-    client.voice().calls().manageWithCallLeg(callId, CallLegType.BOTH, parameters);
+    var parameters = SvamlControl.builder().setInstructions(instructions).setAction(action).build();
+
+    service.manageWithCallLeg(callId, CallLeg.CALLEE, parameters);
   }
 }

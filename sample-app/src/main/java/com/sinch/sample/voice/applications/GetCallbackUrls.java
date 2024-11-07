@@ -1,6 +1,7 @@
 package com.sinch.sample.voice.applications;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.voice.api.v1.ApplicationsService;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -21,9 +22,11 @@ public class GetCallbackUrls extends BaseApplication {
 
   public void run() {
 
+    ApplicationsService service = client.voice().v1().applications();
+
     LOGGER.info("Get callback URLs for application key '%s'".formatted(applicationKey));
 
-    var response = client.voice().applications().getCallbackUrls(applicationKey);
+    var response = service.getCallbackUrls(applicationKey);
 
     LOGGER.info("Response: " + response);
   }
