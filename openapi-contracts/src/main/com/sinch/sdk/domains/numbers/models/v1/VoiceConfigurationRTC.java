@@ -30,6 +30,7 @@ public interface VoiceConfigurationRTC
    * Get scheduledProvisioning
    *
    * @return scheduledProvisioning
+   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   ScheduledVoiceProvisioning getScheduledProvisioning();
 
@@ -69,6 +70,7 @@ public interface VoiceConfigurationRTC
      * @param scheduledProvisioning see getter
      * @return Current builder
      * @see #getScheduledProvisioning
+     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setScheduledProvisioning(ScheduledVoiceProvisioning scheduledProvisioning);
 

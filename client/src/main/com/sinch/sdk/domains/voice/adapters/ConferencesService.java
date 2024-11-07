@@ -1,53 +1,39 @@
 package com.sinch.sdk.domains.voice.adapters;
 
-import com.sinch.sdk.core.http.AuthManager;
-import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.core.http.HttpMapper;
-import com.sinch.sdk.domains.voice.adapters.api.v1.ConferencesApi;
 import com.sinch.sdk.domains.voice.adapters.converters.CalloutsDtoConverter;
 import com.sinch.sdk.domains.voice.adapters.converters.ConferencesDtoConverter;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConference;
 import com.sinch.sdk.domains.voice.models.requests.ConferenceManageParticipantRequestParameters;
 import com.sinch.sdk.domains.voice.models.response.ConferenceParticipant;
-import com.sinch.sdk.models.VoiceContext;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
 import java.util.Collection;
-import java.util.Map;
 
 public class ConferencesService implements com.sinch.sdk.domains.voice.ConferencesService {
 
-  private final ConferencesApi api;
+  private final com.sinch.sdk.domains.voice.api.v1.ConferencesService v1;
 
-  public ConferencesService(
-      VoiceContext context, HttpClient httpClient, Map<String, AuthManager> authManagers) {
-    this.api =
-        new ConferencesApi(httpClient, context.getVoiceServer(), authManagers, new HttpMapper());
-  }
-
-  protected ConferencesApi getApi() {
-    return this.api;
+  public ConferencesService(com.sinch.sdk.domains.voice.api.v1.ConferencesService v1) {
+    this.v1 = v1;
   }
 
   public String call(CalloutRequestParametersConference parameters) {
-    return CalloutsDtoConverter.convert(
-        getApi().callouts(CalloutsDtoConverter.convert(parameters)));
+    return v1.call((CalloutRequestConference) CalloutsDtoConverter.convert(parameters));
   }
 
   public Collection<ConferenceParticipant> get(String conferenceId) {
-    return ConferencesDtoConverter.convert(getApi().callingGetConferenceInfo(conferenceId));
+    return ConferencesDtoConverter.convert(v1.get(conferenceId));
   }
 
   public void kickAll(String conferenceId) {
-    getApi().callingKickConferenceAll(conferenceId);
+    v1.kickAll(conferenceId);
   }
 
   public void kickParticipant(String conferenceId, String callId) {
-    getApi().callingKickConferenceParticipant(callId, conferenceId);
+    v1.kickParticipant(conferenceId, callId);
   }
 
   public void manageParticipant(
       String conferenceId, String callId, ConferenceManageParticipantRequestParameters parameters) {
-    getApi()
-        .callingManageConferenceParticipant(
-            callId, conferenceId, ConferencesDtoConverter.convert(parameters));
+    v1.manageParticipant(conferenceId, callId, ConferencesDtoConverter.convert(parameters));
   }
 }

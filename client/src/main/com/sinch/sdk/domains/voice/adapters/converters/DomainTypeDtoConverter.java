@@ -1,7 +1,7 @@
 package com.sinch.sdk.domains.voice.adapters.converters;
 
 import com.sinch.sdk.domains.voice.models.DomainType;
-import com.sinch.sdk.domains.voice.models.dto.v1.DomainDto;
+import com.sinch.sdk.domains.voice.models.v1.Domain;
 
 public class DomainTypeDtoConverter {
 
@@ -12,10 +12,10 @@ public class DomainTypeDtoConverter {
     return DomainType.from(dto.toLowerCase());
   }
 
-  public static DomainType convert(DomainDto dto) {
+  public static DomainType convert(Domain dto) {
     if (null == dto) {
       return null;
     }
-    return DomainType.from(dto.getValue().toLowerCase());
+    return DomainType.from(dto.value().toLowerCase());
   }
 }

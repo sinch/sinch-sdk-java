@@ -4,7 +4,7 @@
 
     <groupId>com.sinch.sdk</groupId>
     <artifactId>sinch-sdk-java</artifactId>
-    <version>1.4.0-SNAPSHOT</version>
+    <version>1.4.1-SNAPSHOT</version>
 
     <name>Sinch Java SDK</name>
     <description>
@@ -162,6 +162,16 @@
                             <sourceFileExclude>com/sinch/sdk/domains/numbers/AvailableRegionService.java</sourceFileExclude>
                             <sourceFileExclude>com/sinch/sdk/domains/numbers/CallbackConfigurationService.java</sourceFileExclude>
                             <sourceFileExclude>com/sinch/sdk/domains/numbers/WebHooksService.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/voice/models/*.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/voice/models/requests/*.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/voice/models/response/*.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/voice/models/svaml/*.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/voice/models/webhooks/*.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/voice/ApplicationsService.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/voice/CalloutsService.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/voice/CallsService.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/voice/ConferencesService.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/voice/WebHooksService.java</sourceFileExclude>
                         </sourceFileExcludes>
                         <tags>
                             <tag>
@@ -309,6 +319,14 @@
                             <goal>integration-test</goal>
                             <goal>verify</goal>
                         </goals>
+                        <configuration>
+                            <includes>
+                                <include>com.sinch.sdk.e2e.domains.conversation.ConversationIT</include>
+                                <include>com.sinch.sdk.e2e.domains.voice.v0.VoiceIT</include>
+                                <include>com.sinch.sdk.e2e.domains.voice.v1.VoiceIT</include>
+                            </includes>
+                        </configuration>
+
                     </execution>
                 </executions>
             </plugin>

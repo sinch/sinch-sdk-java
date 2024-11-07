@@ -1,23 +1,21 @@
 package com.sinch.sample.voice.callouts;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.voice.models.DestinationNumber;
-import com.sinch.sdk.domains.voice.models.DomainType;
-import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParameters;
-import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConference;
-import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersCustom;
-import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersTTS;
-import com.sinch.sdk.domains.voice.models.requests.ControlUrl;
-import com.sinch.sdk.domains.voice.models.svaml.ActionConnectPstn;
-import com.sinch.sdk.domains.voice.models.svaml.ActionRunMenu;
-import com.sinch.sdk.domains.voice.models.svaml.InstructionSay;
-import com.sinch.sdk.domains.voice.models.svaml.Menu;
-import com.sinch.sdk.domains.voice.models.svaml.MenuOption;
-import com.sinch.sdk.domains.voice.models.svaml.MenuOptionAction;
-import com.sinch.sdk.domains.voice.models.svaml.MenuOptionActionType;
-import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
+import com.sinch.sdk.domains.voice.api.v1.CalloutsService;
+import com.sinch.sdk.domains.voice.models.v1.Domain;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestCustom;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestTTS;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationPstn;
+import com.sinch.sdk.domains.voice.models.v1.svaml.ControlUrl;
+import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.Menu;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.MenuOption;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.MenuOptionActionFactory;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectPstn;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionRunMenu;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionSay;
 import com.sinch.sdk.models.DualToneMultiFrequency;
-import com.sinch.sdk.models.E164PhoneNumber;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.logging.Logger;
@@ -39,90 +37,96 @@ public class Call extends BaseApplication {
 
   public void run() {
 
+    CalloutsService service = client.voice().v1().callouts();
+
     LOGGER.info("Start call for: " + phoneNumber);
 
-    CalloutRequestParameters parameters =
-        //  getTextToSpeechRequest();
-        //  getCalloutRequest();
-        getConferenceRequest();
+    // CalloutRequestTTS parameters = getTextToSpeechRequest();
+    // CalloutRequestCustom parameters =   getCalloutRequest();
+    CalloutRequestConference parameters = getConferenceRequest();
 
-    var response = client.voice().callouts().call(parameters);
+    var response = service.call(parameters);
 
     LOGGER.info("Response: " + response);
   }
 
-  private CalloutRequestParametersTTS getTextToSpeechRequest() {
-    return CalloutRequestParametersTTS.builder()
-        .setDestination(DestinationNumber.valueOf(phoneNumber))
+  private CalloutRequestTTS getTextToSpeechRequest() {
+    return CalloutRequestTTS.builder()
+        .setDestination(DestinationPstn.from(phoneNumber))
         .setEnableAce(true)
         .setEnableDice(true)
         .setEnablePie(true)
         .setText("Hello")
-        .setDtfm(DualToneMultiFrequency.valueOf("w#1"))
+        .setDtmf(DualToneMultiFrequency.valueOf("w#1"))
         .build();
   }
 
-  private CalloutRequestParametersCustom getCalloutRequest() {
-    return CalloutRequestParametersCustom.builder()
-        .setCustom("my custom value")
-        .setIce(
-            SVAMLControl.builder()
-                .setAction(
-                    ActionConnectPstn.builder()
-                        .setNumber(E164PhoneNumber.valueOf(phoneNumber))
-                        .setCli("+123456789")
-                        .build())
-                .setInstructions(
-                    Arrays.asList(InstructionSay.builder().setText("Hello from Sinch").build()))
-                .build())
-        .setAce(
-            SVAMLControl.builder()
-                .setAction(
-                    ActionRunMenu.builder()
-                        .setLocale("Kimberly")
-                        .setEnableVoice(true)
-                        .setMenus(
-                            Arrays.asList(
-                                Menu.builder()
-                                    .setId("main")
-                                    .setMainPrompt(
-                                        "#tts[Welcome to the main menu. Press 1 to confirm"
-                                            + " order or 4 to cancel]")
-                                    .setRepeatPrompt("#tts[Incorrect value, please try again]")
-                                    .setTimeoutMills(5000)
-                                    .setOptions(
-                                        Arrays.asList(
-                                            MenuOption.builder()
-                                                .setDtfm(DualToneMultiFrequency.valueOf("1"))
-                                                .setAction(
-                                                    MenuOptionAction.from(
-                                                        MenuOptionActionType.MENU, "confirm"))
-                                                .build(),
-                                            MenuOption.builder()
-                                                .setDtfm(DualToneMultiFrequency.valueOf("4"))
-                                                .setAction(
-                                                    MenuOptionAction.from(
-                                                        MenuOptionActionType.RETURN, "cancel"))
-                                                .build()))
-                                    .build(),
-                                Menu.builder()
-                                    .setId("confirm")
-                                    .setMainPrompt(
-                                        "#tts[Thank you for confirming your order. Enter your"
-                                            + " 4-digit PIN.]")
-                                    .setMaxDigits(4)
-                                    .build()))
-                        .build())
-                .build())
-        .setPie(ControlUrl.from(webhooksVoicePath))
-        .build();
+  private CalloutRequestCustom getCalloutRequest() {
+
+    CalloutRequestCustom.Builder builder =
+        CalloutRequestCustom.builder()
+            .setCustom("my custom value")
+            .setIce(
+                SvamlControl.builder()
+                    .setAction(
+                        SvamlActionConnectPstn.builder()
+                            .setNumber(phoneNumber)
+                            .setCli("+123456789")
+                            .build())
+                    .setInstructions(
+                        Arrays.asList(
+                            SvamlInstructionSay.builder().setText("Hello from Sinch").build()))
+                    .build())
+            .setAce(
+                SvamlControl.builder()
+                    .setAction(
+                        SvamlActionRunMenu.builder()
+                            .setLocale("Kimberly")
+                            .setEnableVoice(true)
+                            .setMenus(
+                                Arrays.asList(
+                                    Menu.builder()
+                                        .setId("main")
+                                        .setMainPrompt(
+                                            "#tts[Welcome to the main menu. Press 1 to confirm"
+                                                + " order or 4 to cancel]")
+                                        .setRepeatPrompt("#tts[Incorrect value, please try again]")
+                                        .setTimeoutMills(5000)
+                                        .setOptions(
+                                            Arrays.asList(
+                                                MenuOption.builder()
+                                                    .setDtmf(DualToneMultiFrequency.valueOf("1"))
+                                                    .setAction(
+                                                        MenuOptionActionFactory.menuAction(
+                                                            "confirm"))
+                                                    .build(),
+                                                MenuOption.builder()
+                                                    .setDtmf(DualToneMultiFrequency.valueOf("4"))
+                                                    .setAction(
+                                                        MenuOptionActionFactory.returnAction(
+                                                            "cancel"))
+                                                    .build()))
+                                        .build(),
+                                    Menu.builder()
+                                        .setId("confirm")
+                                        .setMainPrompt(
+                                            "#tts[Thank you for confirming your order. Enter your"
+                                                + " 4-digit PIN.]")
+                                        .setMaxDigits(4)
+                                        .build()))
+                            .build())
+                    .build());
+
+    webhooksVoicePath.ifPresent(c -> builder.setPie(ControlUrl.from(c)));
+
+    return builder.build();
   }
 
-  private CalloutRequestParametersConference getConferenceRequest() {
-    return CalloutRequestParametersConference.builder()
-        .setDestination(DestinationNumber.valueOf(phoneNumber))
+  private CalloutRequestConference getConferenceRequest() {
+    return CalloutRequestConference.builder()
+        .setDestination(DestinationPstn.from(phoneNumber))
         .setConferenceId(conferenceId)
-        .setDomain(DomainType.PSTN)
+        .setDomain(Domain.PSTN)
         .setCustom("my custom value")
         .setEnableAce(true)
         .setEnableDice(true)

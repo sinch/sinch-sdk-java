@@ -1,9 +1,9 @@
 package com.sinch.sample.voice.conferences;
 
 import com.sinch.sample.BaseApplication;
-import com.sinch.sdk.domains.voice.models.DestinationNumber;
-import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConference;
-import com.sinch.sdk.models.E164PhoneNumber;
+import com.sinch.sdk.domains.voice.api.v1.ConferencesService;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
+import com.sinch.sdk.domains.voice.models.v1.destination.DestinationPstn;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -24,17 +24,20 @@ public class Call extends BaseApplication {
 
   public void run() {
 
+    ConferencesService service = client.voice().v1().conferences();
+
     LOGGER.info(
         "Joining conference '%s' for phone number '%s'".formatted(conferenceId, phoneNumber));
 
-    var parameters =
-        CalloutRequestParametersConference.builder()
-            .setDestination(DestinationNumber.valueOf(phoneNumber))
-            .setCli(E164PhoneNumber.valueOf("+123456789"))
+    CalloutRequestConference parameters =
+        CalloutRequestConference.builder()
+            .setDestination(DestinationPstn.from(phoneNumber))
+            .setCli(virtualPhoneNumber)
             .setConferenceId(conferenceId)
             .setCustom("my custom value")
             .build();
-    var response = client.voice().callouts().call(parameters);
+
+    var response = service.call(parameters);
 
     LOGGER.info("Response: '%s'".formatted(response));
   }
