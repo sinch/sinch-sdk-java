@@ -2,6 +2,8 @@ package com.sinch.sdk.models;
 
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.models.ConversationContext.Builder;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
  * Execution context related to Mailgun domains
@@ -10,12 +12,14 @@ import com.sinch.sdk.models.ConversationContext.Builder;
  */
 public class MailgunContext {
 
-  MailgunRegion region;
+  private final MailgunRegion region;
   private final String url;
+  private final Collection<String> storageUrls;
 
-  private MailgunContext(MailgunRegion region, String url) {
+  private MailgunContext(MailgunRegion region, String url, Collection<String> storageUrls) {
     this.region = region;
     this.url = url;
+    this.storageUrls = storageUrls;
   }
 
   /**
@@ -39,6 +43,16 @@ public class MailgunContext {
   }
 
   /**
+   * Mailgun Storage Servers Configuration
+   *
+   * @return Mailgun Storage Server configuration to be used
+   * @since __TO_BE_DEFINED__
+   */
+  public Collection<ServerConfiguration> getStorageServers() {
+    return storageUrls.stream().map(ServerConfiguration::new).collect(Collectors.toList());
+  }
+
+  /**
    * Mailgun URL
    *
    * @return Mailgun Server URL
@@ -46,6 +60,16 @@ public class MailgunContext {
    */
   public String getUrl() {
     return url;
+  }
+
+  /**
+   * Mailgun Storage URLs
+   *
+   * @return Mailgun Storage Server URLs
+   * @since __TO_BE_DEFINED__
+   */
+  public Collection<String> getStorageUrls() {
+    return storageUrls;
   }
 
   /**
@@ -78,12 +102,14 @@ public class MailgunContext {
 
     MailgunRegion region;
     String url;
+    Collection<String> storageUrls;
 
     protected Builder() {}
 
     protected Builder(MailgunContext context) {
       this.region = null != context ? context.getRegion() : null;
       this.url = null != context ? context.getUrl() : null;
+      this.storageUrls = null != context ? context.getStorageUrls() : null;
     }
 
     /**
@@ -111,6 +137,18 @@ public class MailgunContext {
     }
 
     /**
+     * Set Mailgun Storage URLs
+     *
+     * @param storageUrls List of storage URLs
+     * @return Current builder
+     * @since __TO_BE_DEFINED__
+     */
+    public Builder setStorageUrls(Collection<String> storageUrls) {
+      this.storageUrls = storageUrls;
+      return this;
+    }
+
+    /**
      * Create instance
      *
      * @return The instance build with current builder values
@@ -118,7 +156,7 @@ public class MailgunContext {
      */
     public MailgunContext build() {
 
-      return new MailgunContext(region, url);
+      return new MailgunContext(region, url, storageUrls);
     }
   }
 }
