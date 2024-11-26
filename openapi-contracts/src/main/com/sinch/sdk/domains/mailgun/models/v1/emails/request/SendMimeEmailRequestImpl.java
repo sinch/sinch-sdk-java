@@ -1,152 +1,135 @@
 package com.sinch.sdk.domains.mailgun.models.v1.emails.request;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.sinch.sdk.core.databind.annotation.FormSerialize;
+import com.sinch.sdk.core.databind.annotation.PropertiesOrder;
+import com.sinch.sdk.core.databind.annotation.Property;
 import com.sinch.sdk.core.models.OptionalValue;
 import java.io.File;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonPropertyOrder({
-  SendMimeEmailRequestImpl.JSON_PROPERTY_TO,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_MESSAGE,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_TEMPLATE,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_T_COLON_VERSION,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_T_COLON_TEXT,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_T_COLON_VARIABLES,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_O_COLON_TAG,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_O_COLON_DKIM,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_O_COLON_SECONDARY_DKIM,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_O_COLON_SECONDARY_DKIM_PUBLIC,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_O_COLON_DELIVERYTIME,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_O_COLON_DELIVERYTIME_OPTIMIZE_PERIOD,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_O_COLON_TIME_ZONE_LOCALIZE,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_O_COLON_TESTMODE,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_O_COLON_TRACKING,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_O_COLON_TRACKING_CLICKS,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_O_COLON_TRACKING_OPENS,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_O_COLON_REQUIRE_TLS,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_O_COLON_SKIP_VERIFICATION,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_O_COLON_SENDING_IP,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_O_COLON_SENDING_IP_POOL,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_O_COLON_TRACKING_PIXEL_LOCATION_TOP,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_H_COLON_X_MY_HEADER,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_V_COLON_MY_VAR,
-  SendMimeEmailRequestImpl.JSON_PROPERTY_RECIPIENT_VARIABLES
+@PropertiesOrder({
+  SendMimeEmailRequestImpl.PROPERTY_TO,
+  SendMimeEmailRequestImpl.PROPERTY_MESSAGE,
+  SendMimeEmailRequestImpl.PROPERTY_TEMPLATE,
+  SendMimeEmailRequestImpl.PROPERTY_T_COLON_VERSION,
+  SendMimeEmailRequestImpl.PROPERTY_T_COLON_TEXT,
+  SendMimeEmailRequestImpl.PROPERTY_T_COLON_VARIABLES,
+  SendMimeEmailRequestImpl.PROPERTY_O_COLON_TAG,
+  SendMimeEmailRequestImpl.PROPERTY_O_COLON_DKIM,
+  SendMimeEmailRequestImpl.PROPERTY_O_COLON_SECONDARY_DKIM,
+  SendMimeEmailRequestImpl.PROPERTY_O_COLON_SECONDARY_DKIM_PUBLIC,
+  SendMimeEmailRequestImpl.PROPERTY_O_COLON_DELIVERYTIME,
+  SendMimeEmailRequestImpl.PROPERTY_O_COLON_DELIVERYTIME_OPTIMIZE_PERIOD,
+  SendMimeEmailRequestImpl.PROPERTY_O_COLON_TIME_ZONE_LOCALIZE,
+  SendMimeEmailRequestImpl.PROPERTY_O_COLON_TESTMODE,
+  SendMimeEmailRequestImpl.PROPERTY_O_COLON_TRACKING,
+  SendMimeEmailRequestImpl.PROPERTY_O_COLON_TRACKING_CLICKS,
+  SendMimeEmailRequestImpl.PROPERTY_O_COLON_TRACKING_OPENS,
+  SendMimeEmailRequestImpl.PROPERTY_O_COLON_REQUIRE_TLS,
+  SendMimeEmailRequestImpl.PROPERTY_O_COLON_SKIP_VERIFICATION,
+  SendMimeEmailRequestImpl.PROPERTY_O_COLON_SENDING_IP,
+  SendMimeEmailRequestImpl.PROPERTY_O_COLON_SENDING_IP_POOL,
+  SendMimeEmailRequestImpl.PROPERTY_O_COLON_TRACKING_PIXEL_LOCATION_TOP,
+  SendMimeEmailRequestImpl.PROPERTY_RECIPIENT_VARIABLES
 })
-@JsonFilter("uninitializedFilter")
-@JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_TO = "to";
+  public static final String PROPERTY_TO = "to";
 
   private OptionalValue<List<String>> to;
 
-  public static final String JSON_PROPERTY_MESSAGE = "message";
+  public static final String PROPERTY_MESSAGE = "message";
 
   private OptionalValue<File> message;
 
-  public static final String JSON_PROPERTY_TEMPLATE = "template";
+  public static final String PROPERTY_TEMPLATE = "template";
 
   private OptionalValue<String> template;
 
-  public static final String JSON_PROPERTY_T_COLON_VERSION = "t:version";
+  public static final String PROPERTY_T_COLON_VERSION = "t:version";
 
   private OptionalValue<String> templateVersion;
 
-  public static final String JSON_PROPERTY_T_COLON_TEXT = "t:text";
+  public static final String PROPERTY_T_COLON_TEXT = "t:text";
 
   private OptionalValue<TemplateTextEnum> templateText;
 
-  public static final String JSON_PROPERTY_T_COLON_VARIABLES = "t:variables";
+  public static final String PROPERTY_T_COLON_VARIABLES = "t:variables";
 
   private OptionalValue<String> templateVariables;
 
-  public static final String JSON_PROPERTY_O_COLON_TAG = "o:tag";
+  public static final String PROPERTY_O_COLON_TAG = "o:tag";
 
   private OptionalValue<List<String>> tag;
 
-  public static final String JSON_PROPERTY_O_COLON_DKIM = "o:dkim";
+  public static final String PROPERTY_O_COLON_DKIM = "o:dkim";
 
   private OptionalValue<DkimSignatureEnum> enableDkimSignature;
 
-  public static final String JSON_PROPERTY_O_COLON_SECONDARY_DKIM = "o:secondary-dkim";
+  public static final String PROPERTY_O_COLON_SECONDARY_DKIM = "o:secondary-dkim";
 
   private OptionalValue<String> secondaryDkim;
 
-  public static final String JSON_PROPERTY_O_COLON_SECONDARY_DKIM_PUBLIC =
-      "o:secondary-dkim-public";
+  public static final String PROPERTY_O_COLON_SECONDARY_DKIM_PUBLIC = "o:secondary-dkim-public";
 
   private OptionalValue<String> secondaryDkimPublic;
 
-  public static final String JSON_PROPERTY_O_COLON_DELIVERYTIME = "o:deliverytime";
+  public static final String PROPERTY_O_COLON_DELIVERYTIME = "o:deliverytime";
 
-  private OptionalValue<String> deliveryTime;
+  private OptionalValue<Instant> deliveryTime;
 
-  public static final String JSON_PROPERTY_O_COLON_DELIVERYTIME_OPTIMIZE_PERIOD =
+  public static final String PROPERTY_O_COLON_DELIVERYTIME_OPTIMIZE_PERIOD =
       "o:deliverytime-optimize-period";
 
-  private OptionalValue<String> deliveryTimeOptimizePeriod;
+  private OptionalValue<Integer> deliveryTimeOptimizePeriod;
 
-  public static final String JSON_PROPERTY_O_COLON_TIME_ZONE_LOCALIZE = "o:time-zone-localize";
+  public static final String PROPERTY_O_COLON_TIME_ZONE_LOCALIZE = "o:time-zone-localize";
 
   private OptionalValue<String> timezoneLocalize;
 
-  public static final String JSON_PROPERTY_O_COLON_TESTMODE = "o:testmode";
+  public static final String PROPERTY_O_COLON_TESTMODE = "o:testmode";
 
   private OptionalValue<TestModeEnum> isTestMode;
 
-  public static final String JSON_PROPERTY_O_COLON_TRACKING = "o:tracking";
+  public static final String PROPERTY_O_COLON_TRACKING = "o:tracking";
 
   private OptionalValue<TrackingEnum> tracking;
 
-  public static final String JSON_PROPERTY_O_COLON_TRACKING_CLICKS = "o:tracking-clicks";
+  public static final String PROPERTY_O_COLON_TRACKING_CLICKS = "o:tracking-clicks";
 
   private OptionalValue<TrackingClicksEnum> trackingClicks;
 
-  public static final String JSON_PROPERTY_O_COLON_TRACKING_OPENS = "o:tracking-opens";
+  public static final String PROPERTY_O_COLON_TRACKING_OPENS = "o:tracking-opens";
 
   private OptionalValue<TrackingOpensEnum> trackingOpens;
 
-  public static final String JSON_PROPERTY_O_COLON_REQUIRE_TLS = "o:require-tls";
+  public static final String PROPERTY_O_COLON_REQUIRE_TLS = "o:require-tls";
 
   private OptionalValue<RequireTlsEnum> requireTls;
 
-  public static final String JSON_PROPERTY_O_COLON_SKIP_VERIFICATION = "o:skip-verification";
+  public static final String PROPERTY_O_COLON_SKIP_VERIFICATION = "o:skip-verification";
 
   private OptionalValue<SkipVerificationEnum> skipVerification;
 
-  public static final String JSON_PROPERTY_O_COLON_SENDING_IP = "o:sending-ip";
+  public static final String PROPERTY_O_COLON_SENDING_IP = "o:sending-ip";
 
   private OptionalValue<String> sendingIp;
 
-  public static final String JSON_PROPERTY_O_COLON_SENDING_IP_POOL = "o:sending-ip-pool";
+  public static final String PROPERTY_O_COLON_SENDING_IP_POOL = "o:sending-ip-pool";
 
   private OptionalValue<String> sendingIpPool;
 
-  public static final String JSON_PROPERTY_O_COLON_TRACKING_PIXEL_LOCATION_TOP =
+  public static final String PROPERTY_O_COLON_TRACKING_PIXEL_LOCATION_TOP =
       "o:tracking-pixel-location-top";
 
   private OptionalValue<String> trackingPixelLocationTop;
 
-  public static final String JSON_PROPERTY_H_COLON_X_MY_HEADER = "h:X-My-Header";
-
-  private OptionalValue<String> hColonXMyHeader;
-
-  public static final String JSON_PROPERTY_V_COLON_MY_VAR = "v:my-var";
-
-  private OptionalValue<String> vColonMyVar;
-
-  public static final String JSON_PROPERTY_RECIPIENT_VARIABLES = "recipient-variables";
+  public static final String PROPERTY_RECIPIENT_VARIABLES = "recipient-variables";
 
   private OptionalValue<String> recipientVariables;
 
@@ -169,8 +152,8 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
       OptionalValue<DkimSignatureEnum> enableDkimSignature,
       OptionalValue<String> secondaryDkim,
       OptionalValue<String> secondaryDkimPublic,
-      OptionalValue<String> deliveryTime,
-      OptionalValue<String> deliveryTimeOptimizePeriod,
+      OptionalValue<Instant> deliveryTime,
+      OptionalValue<Integer> deliveryTimeOptimizePeriod,
       OptionalValue<String> timezoneLocalize,
       OptionalValue<TestModeEnum> isTestMode,
       OptionalValue<TrackingEnum> tracking,
@@ -181,8 +164,6 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
       OptionalValue<String> sendingIp,
       OptionalValue<String> sendingIpPool,
       OptionalValue<String> trackingPixelLocationTop,
-      OptionalValue<String> hColonXMyHeader,
-      OptionalValue<String> vColonMyVar,
       OptionalValue<String> recipientVariables,
       OptionalValue<Map<String, Object>> additionalProperties) {
     this.to = to;
@@ -207,288 +188,220 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
     this.sendingIp = sendingIp;
     this.sendingIpPool = sendingIpPool;
     this.trackingPixelLocationTop = trackingPixelLocationTop;
-    this.hColonXMyHeader = hColonXMyHeader;
-    this.vColonMyVar = vColonMyVar;
     this.recipientVariables = recipientVariables;
     this.additionalProperties = additionalProperties;
   }
 
-  @JsonIgnore
   public List<String> getTo() {
     return to.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_TO)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @Property(PROPERTY_TO)
   public OptionalValue<List<String>> to() {
     return to;
   }
 
-  @JsonIgnore
   public File getMessage() {
     return message.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_MESSAGE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @Property(PROPERTY_MESSAGE)
   public OptionalValue<File> message() {
     return message;
   }
 
-  @JsonIgnore
   public String getTemplate() {
     return template.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_TEMPLATE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @Property(PROPERTY_TEMPLATE)
   public OptionalValue<String> template() {
     return template;
   }
 
-  @JsonIgnore
   public String getTemplateVersion() {
     return templateVersion.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_T_COLON_VERSION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @Property(PROPERTY_T_COLON_VERSION)
   public OptionalValue<String> templateVersion() {
     return templateVersion;
   }
 
-  @JsonIgnore
   public TemplateTextEnum getTemplateText() {
     return templateText.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_T_COLON_TEXT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @Property(PROPERTY_T_COLON_TEXT)
   public OptionalValue<TemplateTextEnum> templateText() {
     return templateText;
   }
 
-  @JsonIgnore
   public String getTemplateVariables() {
     return templateVariables.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_T_COLON_VARIABLES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @Property(PROPERTY_T_COLON_VARIABLES)
   public OptionalValue<String> templateVariables() {
     return templateVariables;
   }
 
-  @JsonIgnore
   public List<String> getTag() {
     return tag.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_O_COLON_TAG)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @Property(PROPERTY_O_COLON_TAG)
   public OptionalValue<List<String>> tag() {
     return tag;
   }
 
-  @JsonIgnore
   public DkimSignatureEnum getEnableDkimSignature() {
     return enableDkimSignature.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_O_COLON_DKIM)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @Property(PROPERTY_O_COLON_DKIM)
   public OptionalValue<DkimSignatureEnum> enableDkimSignature() {
     return enableDkimSignature;
   }
 
-  @JsonIgnore
   public String getSecondaryDkim() {
     return secondaryDkim.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_O_COLON_SECONDARY_DKIM)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @Property(PROPERTY_O_COLON_SECONDARY_DKIM)
   public OptionalValue<String> secondaryDkim() {
     return secondaryDkim;
   }
 
-  @JsonIgnore
   public String getSecondaryDkimPublic() {
     return secondaryDkimPublic.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_O_COLON_SECONDARY_DKIM_PUBLIC)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @Property(PROPERTY_O_COLON_SECONDARY_DKIM_PUBLIC)
   public OptionalValue<String> secondaryDkimPublic() {
     return secondaryDkimPublic;
   }
 
-  @JsonIgnore
-  public String getDeliveryTime() {
+  public Instant getDeliveryTime() {
     return deliveryTime.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_O_COLON_DELIVERYTIME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> deliveryTime() {
+  @Property(PROPERTY_O_COLON_DELIVERYTIME)
+  @FormSerialize(using = com.sinch.sdk.core.utils.databind.RFC822FormSerializer.class)
+  public OptionalValue<Instant> deliveryTime() {
     return deliveryTime;
   }
 
-  @JsonIgnore
-  public String getDeliveryTimeOptimizePeriod() {
+  public Integer getDeliveryTimeOptimizePeriod() {
     return deliveryTimeOptimizePeriod.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_O_COLON_DELIVERYTIME_OPTIMIZE_PERIOD)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> deliveryTimeOptimizePeriod() {
+  @Property(PROPERTY_O_COLON_DELIVERYTIME_OPTIMIZE_PERIOD)
+  @FormSerialize(
+      using = com.sinch.sdk.domains.mailgun.api.v1.adapters.DeliveryTimeFormSerializer.class)
+  public OptionalValue<Integer> deliveryTimeOptimizePeriod() {
     return deliveryTimeOptimizePeriod;
   }
 
-  @JsonIgnore
   public String getTimezoneLocalize() {
     return timezoneLocalize.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_O_COLON_TIME_ZONE_LOCALIZE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @Property(PROPERTY_O_COLON_TIME_ZONE_LOCALIZE)
   public OptionalValue<String> timezoneLocalize() {
     return timezoneLocalize;
   }
 
-  @JsonIgnore
   public TestModeEnum getIsTestMode() {
     return isTestMode.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_O_COLON_TESTMODE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @Property(PROPERTY_O_COLON_TESTMODE)
   public OptionalValue<TestModeEnum> isTestMode() {
     return isTestMode;
   }
 
-  @JsonIgnore
   public TrackingEnum getTracking() {
     return tracking.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_O_COLON_TRACKING)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @Property(PROPERTY_O_COLON_TRACKING)
   public OptionalValue<TrackingEnum> tracking() {
     return tracking;
   }
 
-  @JsonIgnore
   public TrackingClicksEnum getTrackingClicks() {
     return trackingClicks.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_O_COLON_TRACKING_CLICKS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @Property(PROPERTY_O_COLON_TRACKING_CLICKS)
   public OptionalValue<TrackingClicksEnum> trackingClicks() {
     return trackingClicks;
   }
 
-  @JsonIgnore
   public TrackingOpensEnum getTrackingOpens() {
     return trackingOpens.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_O_COLON_TRACKING_OPENS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @Property(PROPERTY_O_COLON_TRACKING_OPENS)
   public OptionalValue<TrackingOpensEnum> trackingOpens() {
     return trackingOpens;
   }
 
-  @JsonIgnore
   public RequireTlsEnum getRequireTls() {
     return requireTls.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_O_COLON_REQUIRE_TLS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @Property(PROPERTY_O_COLON_REQUIRE_TLS)
   public OptionalValue<RequireTlsEnum> requireTls() {
     return requireTls;
   }
 
-  @JsonIgnore
   public SkipVerificationEnum getSkipVerification() {
     return skipVerification.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_O_COLON_SKIP_VERIFICATION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @Property(PROPERTY_O_COLON_SKIP_VERIFICATION)
   public OptionalValue<SkipVerificationEnum> skipVerification() {
     return skipVerification;
   }
 
-  @JsonIgnore
   public String getSendingIp() {
     return sendingIp.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_O_COLON_SENDING_IP)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @Property(PROPERTY_O_COLON_SENDING_IP)
   public OptionalValue<String> sendingIp() {
     return sendingIp;
   }
 
-  @JsonIgnore
   public String getSendingIpPool() {
     return sendingIpPool.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_O_COLON_SENDING_IP_POOL)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @Property(PROPERTY_O_COLON_SENDING_IP_POOL)
   public OptionalValue<String> sendingIpPool() {
     return sendingIpPool;
   }
 
-  @JsonIgnore
   public String getTrackingPixelLocationTop() {
     return trackingPixelLocationTop.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_O_COLON_TRACKING_PIXEL_LOCATION_TOP)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @Property(PROPERTY_O_COLON_TRACKING_PIXEL_LOCATION_TOP)
   public OptionalValue<String> trackingPixelLocationTop() {
     return trackingPixelLocationTop;
   }
 
-  @JsonIgnore
-  public String gethColonXMyHeader() {
-    return hColonXMyHeader.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_H_COLON_X_MY_HEADER)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> hColonXMyHeader() {
-    return hColonXMyHeader;
-  }
-
-  @JsonIgnore
-  public String getvColonMyVar() {
-    return vColonMyVar.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_V_COLON_MY_VAR)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> vColonMyVar() {
-    return vColonMyVar;
-  }
-
-  @JsonIgnore
   public String getRecipientVariables() {
     return recipientVariables.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_RECIPIENT_VARIABLES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @Property(PROPERTY_RECIPIENT_VARIABLES)
   public OptionalValue<String> recipientVariables() {
     return recipientVariables;
   }
 
-  @JsonIgnore
   public Object get(String key) {
 
     if (null == this.additionalProperties || !additionalProperties.isPresent()) {
@@ -497,7 +410,6 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
     return this.additionalProperties.get().get(key);
   }
 
-  @JsonAnyGetter
   public Map<String, Object> additionalProperties() {
     if (null == this.additionalProperties || !additionalProperties.isPresent()) {
       return null;
@@ -576,11 +488,6 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
             this.trackingPixelLocationTop,
             poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.trackingPixelLocationTop)
         && Objects.equals(
-            this.hColonXMyHeader,
-            poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.hColonXMyHeader)
-        && Objects.equals(
-            this.vColonMyVar, poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.vColonMyVar)
-        && Objects.equals(
             this.recipientVariables,
             poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.recipientVariables)
         && Objects.equals(
@@ -614,8 +521,6 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
         sendingIp,
         sendingIpPool,
         trackingPixelLocationTop,
-        hColonXMyHeader,
-        vColonMyVar,
         recipientVariables,
         super.hashCode(),
         additionalProperties);
@@ -656,8 +561,6 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
     sb.append("    trackingPixelLocationTop: ")
         .append(toIndentedString(trackingPixelLocationTop))
         .append("\n");
-    sb.append("    hColonXMyHeader: ").append(toIndentedString(hColonXMyHeader)).append("\n");
-    sb.append("    vColonMyVar: ").append(toIndentedString(vColonMyVar)).append("\n");
     sb.append("    recipientVariables: ").append(toIndentedString(recipientVariables)).append("\n");
     sb.append("    additionalProperties: ")
         .append(toIndentedString(additionalProperties))
@@ -676,7 +579,6 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
     return o.toString().replace("\n", "\n    ");
   }
 
-  @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements SendMimeEmailRequest.Builder {
     OptionalValue<List<String>> to = OptionalValue.empty();
     OptionalValue<File> message = OptionalValue.empty();
@@ -688,8 +590,8 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
     OptionalValue<DkimSignatureEnum> enableDkimSignature = OptionalValue.empty();
     OptionalValue<String> secondaryDkim = OptionalValue.empty();
     OptionalValue<String> secondaryDkimPublic = OptionalValue.empty();
-    OptionalValue<String> deliveryTime = OptionalValue.empty();
-    OptionalValue<String> deliveryTimeOptimizePeriod = OptionalValue.empty();
+    OptionalValue<Instant> deliveryTime = OptionalValue.empty();
+    OptionalValue<Integer> deliveryTimeOptimizePeriod = OptionalValue.empty();
     OptionalValue<String> timezoneLocalize = OptionalValue.empty();
     OptionalValue<TestModeEnum> isTestMode = OptionalValue.empty();
     OptionalValue<TrackingEnum> tracking = OptionalValue.empty();
@@ -700,162 +602,147 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
     OptionalValue<String> sendingIp = OptionalValue.empty();
     OptionalValue<String> sendingIpPool = OptionalValue.empty();
     OptionalValue<String> trackingPixelLocationTop = OptionalValue.empty();
-    OptionalValue<String> hColonXMyHeader = OptionalValue.empty();
-    OptionalValue<String> vColonMyVar = OptionalValue.empty();
     OptionalValue<String> recipientVariables = OptionalValue.empty();
     OptionalValue<Map<String, Object>> additionalProperties = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_TO)
+    @Property(value = PROPERTY_TO)
     public Builder setTo(List<String> to) {
       this.to = OptionalValue.of(to);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_MESSAGE)
+    @Property(value = PROPERTY_MESSAGE)
     public Builder setMessage(File message) {
       this.message = OptionalValue.of(message);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_TEMPLATE)
+    @Property(value = PROPERTY_TEMPLATE)
     public Builder setTemplate(String template) {
       this.template = OptionalValue.of(template);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_T_COLON_VERSION)
+    @Property(value = PROPERTY_T_COLON_VERSION)
     public Builder setTemplateVersion(String templateVersion) {
       this.templateVersion = OptionalValue.of(templateVersion);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_T_COLON_TEXT)
+    @Property(value = PROPERTY_T_COLON_TEXT)
     public Builder setTemplateText(TemplateTextEnum templateText) {
       this.templateText = OptionalValue.of(templateText);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_T_COLON_VARIABLES)
+    @Property(value = PROPERTY_T_COLON_VARIABLES)
     public Builder setTemplateVariables(String templateVariables) {
       this.templateVariables = OptionalValue.of(templateVariables);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_O_COLON_TAG)
+    @Property(value = PROPERTY_O_COLON_TAG)
     public Builder setTag(List<String> tag) {
       this.tag = OptionalValue.of(tag);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_O_COLON_DKIM)
+    @Property(value = PROPERTY_O_COLON_DKIM)
     public Builder setEnableDkimSignature(DkimSignatureEnum enableDkimSignature) {
       this.enableDkimSignature = OptionalValue.of(enableDkimSignature);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_O_COLON_SECONDARY_DKIM)
+    @Property(value = PROPERTY_O_COLON_SECONDARY_DKIM)
     public Builder setSecondaryDkim(String secondaryDkim) {
       this.secondaryDkim = OptionalValue.of(secondaryDkim);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_O_COLON_SECONDARY_DKIM_PUBLIC)
+    @Property(value = PROPERTY_O_COLON_SECONDARY_DKIM_PUBLIC)
     public Builder setSecondaryDkimPublic(String secondaryDkimPublic) {
       this.secondaryDkimPublic = OptionalValue.of(secondaryDkimPublic);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_O_COLON_DELIVERYTIME)
-    public Builder setDeliveryTime(String deliveryTime) {
+    @Property(value = PROPERTY_O_COLON_DELIVERYTIME)
+    public Builder setDeliveryTime(Instant deliveryTime) {
       this.deliveryTime = OptionalValue.of(deliveryTime);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_O_COLON_DELIVERYTIME_OPTIMIZE_PERIOD)
-    public Builder setDeliveryTimeOptimizePeriod(String deliveryTimeOptimizePeriod) {
+    @Property(value = PROPERTY_O_COLON_DELIVERYTIME_OPTIMIZE_PERIOD)
+    public Builder setDeliveryTimeOptimizePeriod(Integer deliveryTimeOptimizePeriod) {
       this.deliveryTimeOptimizePeriod = OptionalValue.of(deliveryTimeOptimizePeriod);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_O_COLON_TIME_ZONE_LOCALIZE)
+    @Property(value = PROPERTY_O_COLON_TIME_ZONE_LOCALIZE)
     public Builder setTimezoneLocalize(String timezoneLocalize) {
       this.timezoneLocalize = OptionalValue.of(timezoneLocalize);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_O_COLON_TESTMODE)
+    @Property(value = PROPERTY_O_COLON_TESTMODE)
     public Builder setIsTestMode(TestModeEnum isTestMode) {
       this.isTestMode = OptionalValue.of(isTestMode);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_O_COLON_TRACKING)
+    @Property(value = PROPERTY_O_COLON_TRACKING)
     public Builder setTracking(TrackingEnum tracking) {
       this.tracking = OptionalValue.of(tracking);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_O_COLON_TRACKING_CLICKS)
+    @Property(value = PROPERTY_O_COLON_TRACKING_CLICKS)
     public Builder setTrackingClicks(TrackingClicksEnum trackingClicks) {
       this.trackingClicks = OptionalValue.of(trackingClicks);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_O_COLON_TRACKING_OPENS)
+    @Property(value = PROPERTY_O_COLON_TRACKING_OPENS)
     public Builder setTrackingOpens(TrackingOpensEnum trackingOpens) {
       this.trackingOpens = OptionalValue.of(trackingOpens);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_O_COLON_REQUIRE_TLS)
+    @Property(value = PROPERTY_O_COLON_REQUIRE_TLS)
     public Builder setRequireTls(RequireTlsEnum requireTls) {
       this.requireTls = OptionalValue.of(requireTls);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_O_COLON_SKIP_VERIFICATION)
+    @Property(value = PROPERTY_O_COLON_SKIP_VERIFICATION)
     public Builder setSkipVerification(SkipVerificationEnum skipVerification) {
       this.skipVerification = OptionalValue.of(skipVerification);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_O_COLON_SENDING_IP)
+    @Property(value = PROPERTY_O_COLON_SENDING_IP)
     public Builder setSendingIp(String sendingIp) {
       this.sendingIp = OptionalValue.of(sendingIp);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_O_COLON_SENDING_IP_POOL)
+    @Property(value = PROPERTY_O_COLON_SENDING_IP_POOL)
     public Builder setSendingIpPool(String sendingIpPool) {
       this.sendingIpPool = OptionalValue.of(sendingIpPool);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_O_COLON_TRACKING_PIXEL_LOCATION_TOP)
+    @Property(value = PROPERTY_O_COLON_TRACKING_PIXEL_LOCATION_TOP)
     public Builder setTrackingPixelLocationTop(String trackingPixelLocationTop) {
       this.trackingPixelLocationTop = OptionalValue.of(trackingPixelLocationTop);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_H_COLON_X_MY_HEADER)
-    public Builder sethColonXMyHeader(String hColonXMyHeader) {
-      this.hColonXMyHeader = OptionalValue.of(hColonXMyHeader);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_V_COLON_MY_VAR)
-    public Builder setvColonMyVar(String vColonMyVar) {
-      this.vColonMyVar = OptionalValue.of(vColonMyVar);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_RECIPIENT_VARIABLES)
+    @Property(value = PROPERTY_RECIPIENT_VARIABLES)
     public Builder setRecipientVariables(String recipientVariables) {
       this.recipientVariables = OptionalValue.of(recipientVariables);
       return this;
     }
 
-    @JsonAnySetter
     public Builder put(String key, Object value) {
       if (!this.additionalProperties.isPresent()) {
         this.additionalProperties = OptionalValue.of(new HashMap<String, Object>());
@@ -888,8 +775,6 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
           sendingIp,
           sendingIpPool,
           trackingPixelLocationTop,
-          hColonXMyHeader,
-          vColonMyVar,
           recipientVariables,
           additionalProperties);
     }

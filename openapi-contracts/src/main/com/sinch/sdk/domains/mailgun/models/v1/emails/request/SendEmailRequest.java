@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.io.File;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -226,7 +227,7 @@ public interface SendEmailRequest {
    *
    * @return deliveryTime
    */
-  String getDeliveryTime();
+  Instant getDeliveryTime();
 
   /**
    * Toggles Send Time Optimization (STO) on a per-message basis. String should be set to the number
@@ -238,7 +239,7 @@ public interface SendEmailRequest {
    *
    * @return deliveryTimeOptimizePeriod
    */
-  String getDeliveryTimeOptimizePeriod();
+  Integer getDeliveryTimeOptimizePeriod();
 
   /**
    * Toggles Timezone Optimization (TZO) on a per message basis. String should be set to preferred
@@ -531,22 +532,6 @@ public interface SendEmailRequest {
   String getTrackingPixelLocationTop();
 
   /**
-   * h: prefix followed by a Header/Value pair. For example:
-   * h:X-Mailgun-Sending-Ip-Pool=xx.xx.xxx.x.
-   *
-   * @return hColonXMyHeader
-   */
-  String gethColonXMyHeader();
-
-  /**
-   * <code>v:</code> prefix followed by an arbitrary name allows to attach a custom JSON data to the
-   * message. See <strong>Attaching Data to Messages</strong> for more information
-   *
-   * @return vColonMyVar
-   */
-  String getvColonMyVar();
-
-  /**
    * A valid JSON-encoded dictionary, where key is a plain recipient address and value is a
    * dictionary with variables that can be referenced in the message body. See <strong>Batch
    * Sending</strong> for more information
@@ -744,7 +729,7 @@ public interface SendEmailRequest {
      * @return Current builder
      * @see #getDeliveryTime
      */
-    Builder setDeliveryTime(String deliveryTime);
+    Builder setDeliveryTime(Instant deliveryTime);
 
     /**
      * see getter
@@ -753,7 +738,7 @@ public interface SendEmailRequest {
      * @return Current builder
      * @see #getDeliveryTimeOptimizePeriod
      */
-    Builder setDeliveryTimeOptimizePeriod(String deliveryTimeOptimizePeriod);
+    Builder setDeliveryTimeOptimizePeriod(Integer deliveryTimeOptimizePeriod);
 
     /**
      * see getter
@@ -844,24 +829,6 @@ public interface SendEmailRequest {
      * @see #getTrackingPixelLocationTop
      */
     Builder setTrackingPixelLocationTop(String trackingPixelLocationTop);
-
-    /**
-     * see getter
-     *
-     * @param hColonXMyHeader see getter
-     * @return Current builder
-     * @see #gethColonXMyHeader
-     */
-    Builder sethColonXMyHeader(String hColonXMyHeader);
-
-    /**
-     * see getter
-     *
-     * @param vColonMyVar see getter
-     * @return Current builder
-     * @see #getvColonMyVar
-     */
-    Builder setvColonMyVar(String vColonMyVar);
 
     /**
      * see getter
