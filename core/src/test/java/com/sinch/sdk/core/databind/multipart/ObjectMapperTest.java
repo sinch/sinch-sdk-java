@@ -6,6 +6,7 @@ import com.sinch.sdk.core.databind.annotation.FormSerialize;
 import com.sinch.sdk.core.databind.annotation.PropertiesOrder;
 import com.sinch.sdk.core.databind.annotation.Property;
 import com.sinch.sdk.core.databind.multipart.ObjectMapperTest.SerializableObject.AnEnum;
+import com.sinch.sdk.core.models.AdditionalProperties;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
@@ -18,7 +19,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
@@ -29,7 +32,7 @@ class ObjectMapperTest {
   static File fileAttachment1;
   static File fileAttachment2;
 
-  static Map<String, Object> serialized;
+  static Map<String, Object> serialized, defaultAdditionalPropertiesSerialized;
 
   static {
     ClassLoader classLoader = SendEmailRequestTest.class.getClassLoader();
@@ -39,6 +42,9 @@ class ObjectMapperTest {
     fileAttachment2 =
         new File(
             classLoader.getResource("domains/mailgun/v1/emails/request/attachment2.txt").getFile());
+
+    Map<String, Object> additionalProperties =
+        fillMap("header:toto", "toto-value", "variable:foo", "foo-value", "raw", "raw-value");
 
     SerializableObject object =
         new SerializableObject(
@@ -51,10 +57,16 @@ class ObjectMapperTest {
             OptionalValue.of(Arrays.asList(fileAttachment1, fileAttachment2)),
             OptionalValue.of(
                 Arrays.asList(
-                    Instant.parse("2024-11-25T10:06:54Z"), Instant.parse("2024-11-25T09:06:54Z"))));
+                    Instant.parse("2024-11-25T10:06:54Z"), Instant.parse("2024-11-25T09:06:54Z"))),
+            additionalProperties);
+
+    DefaultAdditionalPropertiesSerializableObject defaultAdditionalPropertiesSerializableObject =
+        new DefaultAdditionalPropertiesSerializableObject(additionalProperties);
 
     try {
       serialized = new ObjectMapper().serialize(object);
+      defaultAdditionalPropertiesSerialized =
+          new ObjectMapper().serialize(defaultAdditionalPropertiesSerializableObject);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -62,7 +74,7 @@ class ObjectMapperTest {
 
   @Test
   void countValue() {
-    Assertions.assertEquals(8, serialized.size());
+    Assertions.assertEquals(11, serialized.size());
   }
 
   @Test
@@ -76,7 +88,10 @@ class ObjectMapperTest {
       SerializableObject.PROPERTY_FILE,
       SerializableObject.PROPERTY_ENUM,
       SerializableObject.PROPERTY_ENUM_COLLECTION,
-      SerializableObject.PROPERTY_TEXT_COLLECTION
+      SerializableObject.PROPERTY_TEXT_COLLECTION,
+      "h:toto",
+      "v:foo",
+      "raw"
     };
     String[] keys = serialized.keySet().toArray(new String[0]);
     TestHelpers.recursiveEquals(expectedOrder, keys);
@@ -128,6 +143,20 @@ class ObjectMapperTest {
         serialized.get("aRfc822Collection"));
   }
 
+  @Test
+  void additionalPropertiesValues() {
+    Assertions.assertEquals("toto-value", serialized.get("h:toto"));
+    Assertions.assertEquals("foo-value", serialized.get("v:foo"));
+    Assertions.assertEquals("raw-value", serialized.get("raw"));
+  }
+
+  @Test
+  void defaultAdditionalPropertiesValues() {
+    TestHelpers.recursiveEquals(
+        fillMap("header:toto", "toto-value", "variable:foo", "foo-value", "raw", "raw-value"),
+        defaultAdditionalPropertiesSerialized);
+  }
+
   @PropertiesOrder({
     SerializableObject.PROPERTY_RFC822_COLLECTION,
     SerializableObject.PROPERTY_TEXT,
@@ -139,7 +168,7 @@ class ObjectMapperTest {
     SerializableObject.PROPERTY_RFC822_COLLECTION,
     SerializableObject.PROPERTY_TEXT_COLLECTION
   })
-  static class SerializableObject {
+  static class SerializableObject implements AdditionalProperties {
     public static final String PROPERTY_TEXT = "aText";
     public static final String PROPERTY_ENUM = "anEnum";
     public static final String PROPERTY_FILE = "aFile";
@@ -159,6 +188,7 @@ class ObjectMapperTest {
     private final OptionalValue<Collection<AnEnum>> enumCollection;
     private final OptionalValue<Collection<File>> fileCollection;
     private final OptionalValue<Collection<Instant>> instantCollection;
+    private final Map<String, Object> additionalProperties;
 
     public SerializableObject(
         OptionalValue<String> text,
@@ -168,7 +198,8 @@ class ObjectMapperTest {
         OptionalValue<Collection<String>> textCollection,
         OptionalValue<Collection<AnEnum>> enumCollection,
         OptionalValue<Collection<File>> fileCollection,
-        OptionalValue<Collection<Instant>> instantCollection) {
+        OptionalValue<Collection<Instant>> instantCollection,
+        Map<String, Object> additionalProperties) {
       this.text = text;
       this._enum = _enum;
       this.file = file;
@@ -177,6 +208,7 @@ class ObjectMapperTest {
       this.textCollection = textCollection;
       this.enumCollection = enumCollection;
       this.fileCollection = fileCollection;
+      this.additionalProperties = additionalProperties;
     }
 
     @Property(PROPERTY_TEXT)
@@ -221,6 +253,19 @@ class ObjectMapperTest {
       return instantCollection;
     }
 
+    @FormSerialize(using = AdditionalPropertiesFormSerializer.class)
+    public Map<String, Object> additionalProperties() {
+      return additionalProperties;
+    }
+
+    public Object get(String key) {
+      return null;
+    }
+
+    public Set<String> keys() {
+      return additionalProperties.keySet();
+    }
+
     public static class AnEnum extends EnumDynamic<String, AnEnum> {
       public static final AnEnum YES = new AnEnum("yes");
       public static final AnEnum NO = new AnEnum("no");
@@ -246,15 +291,60 @@ class ObjectMapperTest {
     }
   }
 
+  static class DefaultAdditionalPropertiesSerializableObject implements AdditionalProperties {
+    private final Map<String, Object> additionalProperties;
+
+    public DefaultAdditionalPropertiesSerializableObject(Map<String, Object> additionalProperties) {
+      this.additionalProperties = additionalProperties;
+    }
+
+    public Map<String, Object> additionalProperties() {
+      return additionalProperties;
+    }
+
+    public Object get(String key) {
+      return null;
+    }
+
+    public Set<String> keys() {
+      return additionalProperties.keySet();
+    }
+  }
+
   public static class RFC822ListFormSerializer extends FormSerializer<Collection<Instant>> {
 
     @Override
-    public Collection<String> serialize(Collection<Instant> in) {
-      return in.stream()
-          .map(
-              instant ->
-                  DateTimeFormatter.RFC_1123_DATE_TIME.format(instant.atZone(ZoneId.of("UTC"))))
-          .collect(Collectors.toList());
+    public void serialize(Collection<Instant> in, String fieldName, Map<String, Object> out) {
+      out.put(
+          fieldName,
+          in.stream()
+              .map(
+                  instant ->
+                      DateTimeFormatter.RFC_1123_DATE_TIME.format(instant.atZone(ZoneId.of("UTC"))))
+              .collect(Collectors.toList()));
     }
+  }
+
+  public static class AdditionalPropertiesFormSerializer
+      extends FormSerializer<Map<Object, Object>> {
+
+    @Override
+    public void serialize(Map<Object, Object> in, String fieldName, Map<String, Object> out) {
+
+      in.forEach(
+          (_key, value) -> {
+            String key =
+                ((String) _key).replaceAll("^header:", "h:").replaceAll("^variable:", "v:");
+            out.put(key, value);
+          });
+    }
+  }
+
+  private static Map<String, Object> fillMap(Object... pairs) {
+    LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+    for (int i = 0; i < pairs.length; ) {
+      map.put((String) pairs[i++], pairs[i++]);
+    }
+    return map;
   }
 }

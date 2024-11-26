@@ -11,6 +11,7 @@
 package com.sinch.sdk.domains.mailgun.models.v1.emails.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.models.AdditionalProperties;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.io.File;
@@ -21,7 +22,7 @@ import java.util.stream.Stream;
 
 /** SendEmailRequest */
 @JsonDeserialize(builder = SendEmailRequestImpl.Builder.class)
-public interface SendEmailRequest {
+public interface SendEmailRequest extends AdditionalProperties {
 
   /**
    * Email address for <code>From</code> header
@@ -541,14 +542,6 @@ public interface SendEmailRequest {
   String getRecipientVariables();
 
   /**
-   * Return the additional property with the specified name.
-   *
-   * @param key the name of the property
-   * @return the additional property with the specified name
-   */
-  Object get(String key);
-
-  /**
    * Getting builder
    *
    * @return New Builder instance
@@ -558,7 +551,7 @@ public interface SendEmailRequest {
   }
 
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder extends AdditionalProperties.Builder {
 
     /**
      * see getter

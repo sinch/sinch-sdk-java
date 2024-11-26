@@ -5,6 +5,7 @@ import com.sinch.sdk.core.databind.annotation.FormSerialize;
 import com.sinch.sdk.core.databind.annotation.PropertiesOrder;
 import com.sinch.sdk.core.databind.annotation.Property;
 import com.sinch.sdk.core.exceptions.SerializationException;
+import com.sinch.sdk.core.models.AdditionalProperties;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.Pair;
@@ -16,12 +17,15 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 public class ObjectMapper {
+
+  static final String ADDITIONAL_PROPERTIES_IDENTIFIER = "additionalProperties";
 
   public Map<String, Object> serialize(Object value)
       throws IntrospectionException,
@@ -33,7 +37,13 @@ public class ObjectMapper {
 
     BeanInfo beanInfo = Introspector.getBeanInfo(value.getClass(), Object.class);
     List<Pair<String, Method>> serializableProperties = collectSerializableProperties(beanInfo);
-    return serializeProperties(serializableProperties, value);
+    Map<String, Object> output = serializeProperties(serializableProperties, value);
+    if (value instanceof AdditionalProperties) {
+      serializeAdditionalProperties(
+          getAdditionalPropertiesGetter(beanInfo).getMethod(), value, output);
+    }
+
+    return output;
   }
 
   private List<Pair<String, Method>> collectSerializableProperties(BeanInfo beanInfo) {
@@ -77,49 +87,78 @@ public class ObjectMapper {
     return Optional.of(new Pair<>(property.value(), method));
   }
 
+  private MethodDescriptor getAdditionalPropertiesGetter(BeanInfo beanInfo) {
+
+    return Arrays.stream(beanInfo.getMethodDescriptors())
+        .filter(f -> f.getMethod().getName().equals(ADDITIONAL_PROPERTIES_IDENTIFIER))
+        .findFirst()
+        .orElseThrow(
+            () ->
+                new SerializationException(
+                    String.format("Missing '%s' getter", ADDITIONAL_PROPERTIES_IDENTIFIER)));
+  }
+
   private Map<String, Object> serializeProperties(
       List<Pair<String, Method>> serializableProperties, Object object)
       throws InvocationTargetException, IllegalAccessException {
-    Map<String, Object> properties = new LinkedHashMap<>();
+    Map<String, Object> out = new LinkedHashMap<>();
     for (Pair<String, Method> property : serializableProperties) {
-
-      serializeProperty(object, property.getRight())
-          .ifPresent(v -> properties.put(property.getLeft(), v));
+      serializeProperty(object, property.getRight(), property.getLeft(), out);
     }
-    return properties;
+    return out;
   }
 
-  private OptionalValue<?> serializeProperty(Object object, Method method)
+  private void serializeAdditionalProperties(
+      Method method, Object object, Map<String, Object> output)
+      throws InvocationTargetException, IllegalAccessException {
+
+    @SuppressWarnings("unchecked")
+    Map<String, Object> propertyValue = (Map<String, Object>) method.invoke(object);
+    if (null == propertyValue) {
+      return;
+    }
+
+    FormSerialize formSerialize = method.getDeclaredAnnotation(FormSerialize.class);
+    if (null != formSerialize) {
+      handleOverriddenSerialization(formSerialize, propertyValue, "", output);
+      return;
+    }
+    output.putAll(propertyValue);
+  }
+
+  private void serializeProperty(
+      Object object, Method method, String fieldName, Map<String, Object> out)
       throws InvocationTargetException, IllegalAccessException {
 
     OptionalValue<?> propertyValue = (OptionalValue<?>) method.invoke(object);
-
     if (!propertyValue.isPresent() || null == propertyValue.get()) {
-      return propertyValue;
+      return;
     }
 
     Object value = propertyValue.get();
 
     FormSerialize formSerialize = method.getDeclaredAnnotation(FormSerialize.class);
     if (null != formSerialize) {
-      value = handleOverriddenSerialization(formSerialize, value);
+      handleOverriddenSerialization(formSerialize, value, fieldName, out);
+      return;
     }
 
     if (value instanceof EnumDynamic) {
       EnumDynamic<?, ?> enumDynamic = (EnumDynamic<?, ?>) value;
-      return OptionalValue.of((enumDynamic.value().toString()));
+      out.put(fieldName, enumDynamic.value().toString());
+      return;
     }
-    return OptionalValue.of(value);
+    out.put(fieldName, value);
   }
 
-  private Object handleOverriddenSerialization(FormSerialize formSerialize, Object value) {
+  private void handleOverriddenSerialization(
+      FormSerialize formSerialize, Object in, String fieldName, Map<String, Object> out) {
     try {
       Class<?> clazz = Class.forName(formSerialize.using().getName());
       @SuppressWarnings("unchecked")
       Constructor<FormSerializer<Object>> ctor =
           (Constructor<FormSerializer<Object>>) clazz.getConstructor();
-      FormSerializer<Object> serializer = ctor.newInstance();
-      return serializer.serialize(value);
+      ctor.newInstance().serialize(in, fieldName, out);
     } catch (Exception e) {
       throw new SerializationException(e);
     }
