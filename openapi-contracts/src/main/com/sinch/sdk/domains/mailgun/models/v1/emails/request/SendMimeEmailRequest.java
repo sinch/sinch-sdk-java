@@ -224,9 +224,9 @@ public interface SendMimeEmailRequest extends AdditionalProperties {
    * href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/#sending-in-test-mode">Sending
    * in Test Mode</a>
    *
-   * @return isTestMode
+   * @return testMode
    */
-  TestModeEnum getIsTestMode();
+  TestModeEnum getTestMode();
 
   /**
    * Toggles both click and open tracking on a per-message basis, see <a
@@ -320,10 +320,10 @@ public interface SendMimeEmailRequest extends AdditionalProperties {
    * Opens</a>. Has higher priority than domain-level setting.
    */
   public class TrackingOpensEnum extends EnumDynamic<String, TrackingOpensEnum> {
-    public static final TrackingOpensEnum YES = new TrackingOpensEnum("test:yes");
-    public static final TrackingOpensEnum NO = new TrackingOpensEnum("test:no");
-    public static final TrackingOpensEnum TRUE = new TrackingOpensEnum("test:true");
-    public static final TrackingOpensEnum FALSE = new TrackingOpensEnum("test:false");
+    public static final TrackingOpensEnum YES = new TrackingOpensEnum("yes");
+    public static final TrackingOpensEnum NO = new TrackingOpensEnum("no");
+    public static final TrackingOpensEnum TRUE = new TrackingOpensEnum("true");
+    public static final TrackingOpensEnum FALSE = new TrackingOpensEnum("false");
 
     private static final EnumSupportDynamic<String, TrackingOpensEnum> ENUM_SUPPORT =
         new EnumSupportDynamic<>(
@@ -611,11 +611,11 @@ public interface SendMimeEmailRequest extends AdditionalProperties {
     /**
      * see getter
      *
-     * @param isTestMode see getter
+     * @param testMode see getter
      * @return Current builder
-     * @see #getIsTestMode
+     * @see #getTestMode
      */
-    Builder setIsTestMode(TestModeEnum isTestMode);
+    Builder setTestMode(TestModeEnum testMode);
 
     /**
      * see getter

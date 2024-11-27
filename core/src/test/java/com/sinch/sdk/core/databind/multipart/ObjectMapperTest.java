@@ -27,7 +27,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class ObjectMapperTest {
+public class ObjectMapperTest {
 
   static File fileAttachment1;
   static File fileAttachment2;
@@ -340,7 +340,7 @@ class ObjectMapperTest {
     }
   }
 
-  private static Map<String, Object> fillMap(Object... pairs) {
+  public static Map<String, Object> fillMap(Object... pairs) {
     LinkedHashMap<String, Object> map = new LinkedHashMap<>();
     for (int i = 0; i < pairs.length; ) {
       map.put((String) pairs[i++], pairs[i++]);

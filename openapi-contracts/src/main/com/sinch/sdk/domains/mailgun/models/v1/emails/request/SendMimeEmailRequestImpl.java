@@ -94,7 +94,7 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
 
   public static final String PROPERTY_O_COLON_TESTMODE = "o:testmode";
 
-  private OptionalValue<TestModeEnum> isTestMode;
+  private OptionalValue<TestModeEnum> testMode;
 
   public static final String PROPERTY_O_COLON_TRACKING = "o:tracking";
 
@@ -155,7 +155,7 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
       OptionalValue<Instant> deliveryTime,
       OptionalValue<Integer> deliveryTimeOptimizePeriod,
       OptionalValue<String> timezoneLocalize,
-      OptionalValue<TestModeEnum> isTestMode,
+      OptionalValue<TestModeEnum> testMode,
       OptionalValue<TrackingEnum> tracking,
       OptionalValue<TrackingClicksEnum> trackingClicks,
       OptionalValue<TrackingOpensEnum> trackingOpens,
@@ -179,7 +179,7 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
     this.deliveryTime = deliveryTime;
     this.deliveryTimeOptimizePeriod = deliveryTimeOptimizePeriod;
     this.timezoneLocalize = timezoneLocalize;
-    this.isTestMode = isTestMode;
+    this.testMode = testMode;
     this.tracking = tracking;
     this.trackingClicks = trackingClicks;
     this.trackingOpens = trackingOpens;
@@ -312,13 +312,13 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
     return timezoneLocalize;
   }
 
-  public TestModeEnum getIsTestMode() {
-    return isTestMode.orElse(null);
+  public TestModeEnum getTestMode() {
+    return testMode.orElse(null);
   }
 
   @Property(PROPERTY_O_COLON_TESTMODE)
-  public OptionalValue<TestModeEnum> isTestMode() {
-    return isTestMode;
+  public OptionalValue<TestModeEnum> testMode() {
+    return testMode;
   }
 
   public TrackingEnum getTracking() {
@@ -465,7 +465,7 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
             this.timezoneLocalize,
             poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.timezoneLocalize)
         && Objects.equals(
-            this.isTestMode, poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.isTestMode)
+            this.testMode, poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.testMode)
         && Objects.equals(
             this.tracking, poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.tracking)
         && Objects.equals(
@@ -512,7 +512,7 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
         deliveryTime,
         deliveryTimeOptimizePeriod,
         timezoneLocalize,
-        isTestMode,
+        testMode,
         tracking,
         trackingClicks,
         trackingOpens,
@@ -550,7 +550,7 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
         .append(toIndentedString(deliveryTimeOptimizePeriod))
         .append("\n");
     sb.append("    timezoneLocalize: ").append(toIndentedString(timezoneLocalize)).append("\n");
-    sb.append("    isTestMode: ").append(toIndentedString(isTestMode)).append("\n");
+    sb.append("    testMode: ").append(toIndentedString(testMode)).append("\n");
     sb.append("    tracking: ").append(toIndentedString(tracking)).append("\n");
     sb.append("    trackingClicks: ").append(toIndentedString(trackingClicks)).append("\n");
     sb.append("    trackingOpens: ").append(toIndentedString(trackingOpens)).append("\n");
@@ -593,7 +593,7 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
     OptionalValue<Instant> deliveryTime = OptionalValue.empty();
     OptionalValue<Integer> deliveryTimeOptimizePeriod = OptionalValue.empty();
     OptionalValue<String> timezoneLocalize = OptionalValue.empty();
-    OptionalValue<TestModeEnum> isTestMode = OptionalValue.empty();
+    OptionalValue<TestModeEnum> testMode = OptionalValue.empty();
     OptionalValue<TrackingEnum> tracking = OptionalValue.empty();
     OptionalValue<TrackingClicksEnum> trackingClicks = OptionalValue.empty();
     OptionalValue<TrackingOpensEnum> trackingOpens = OptionalValue.empty();
@@ -684,8 +684,8 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
     }
 
     @Property(value = PROPERTY_O_COLON_TESTMODE)
-    public Builder setIsTestMode(TestModeEnum isTestMode) {
-      this.isTestMode = OptionalValue.of(isTestMode);
+    public Builder setTestMode(TestModeEnum testMode) {
+      this.testMode = OptionalValue.of(testMode);
       return this;
     }
 
@@ -766,7 +766,7 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
           deliveryTime,
           deliveryTimeOptimizePeriod,
           timezoneLocalize,
-          isTestMode,
+          testMode,
           tracking,
           trackingClicks,
           trackingOpens,

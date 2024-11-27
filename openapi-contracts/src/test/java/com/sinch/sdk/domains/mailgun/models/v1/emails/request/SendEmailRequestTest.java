@@ -3,6 +3,7 @@ package com.sinch.sdk.domains.mailgun.models.v1.emails.request;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
+import com.sinch.sdk.core.databind.multipart.ObjectMapperTest;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest.DkimSignatureEnum;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest.RequireTlsEnum;
@@ -15,14 +16,13 @@ import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest.T
 import java.io.File;
 import java.time.Instant;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
 public class SendEmailRequestTest extends BaseTest {
 
-  static Map<Object, Object> expected;
+  static Map<String, Object> expected;
   static File fileAttachment1;
   static File fileAttachment2;
 
@@ -36,7 +36,7 @@ public class SendEmailRequestTest extends BaseTest {
             classLoader.getResource("domains/mailgun/v1/emails/request/attachment2.txt").getFile());
 
     expected =
-        fillMap(
+        ObjectMapperTest.fillMap(
             // spotless:off
               "from", "User <JavaSdkUser@sinch.com>",
               "to", Arrays.asList("aRecipient@mailgun-by-sinch.com"),
@@ -115,13 +115,5 @@ public class SendEmailRequestTest extends BaseTest {
             .serializeFormParameters(Arrays.asList("multipart/form-data"), sendEmailRequest);
 
     TestHelpers.recursiveEquals(expected, serialized);
-  }
-
-  private static Map<Object, Object> fillMap(Object... pairs) {
-    LinkedHashMap<Object, Object> map = new LinkedHashMap<>();
-    for (int i = 0; i < pairs.length; ) {
-      map.put(pairs[i++], pairs[i++]);
-    }
-    return map;
   }
 }
