@@ -18,6 +18,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,28 +55,24 @@ public class ObjectMapper {
     for (MethodDescriptor methodDescriptor : methodDescriptors) {
       getPropertyGetter(methodDescriptor.getMethod()).ifPresent(result::add);
     }
-    return sortProperties(beanInfo, result);
+
+    sortProperties(beanInfo, result);
+    return result;
   }
 
-  private List<Pair<String, Method>> sortProperties(
-      BeanInfo beanInfo, List<Pair<String, Method>> properties) {
+  private void sortProperties(BeanInfo beanInfo, List<Pair<String, Method>> properties) {
 
-    PropertiesOrder propertyOrder =
+    PropertiesOrder propertiesOrder =
         beanInfo.getBeanDescriptor().getBeanClass().getAnnotation(PropertiesOrder.class);
 
-    if (null == propertyOrder) {
-      return properties;
+    if (null == propertiesOrder
+        || null == propertiesOrder.value()
+        || 0 == propertiesOrder.value().length) {
+      return;
     }
 
-    ArrayList<Pair<String, Method>> sorted = new ArrayList<>(properties.size());
-
-    for (String property : propertyOrder.value()) {
-      properties.stream()
-          .filter(p -> p.getLeft().equals(property))
-          .findFirst()
-          .ifPresent(sorted::add);
-    }
-    return sorted;
+    List<String> order = java.util.Arrays.asList(propertiesOrder.value());
+    properties.sort(Comparator.comparingInt(l -> order.indexOf(l.getLeft())));
   }
 
   private Optional<Pair<String, Method>> getPropertyGetter(Method method) {
