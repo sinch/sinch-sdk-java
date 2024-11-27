@@ -165,7 +165,6 @@ public class ObjectMapperTest {
     SerializableObject.PROPERTY_FILE,
     SerializableObject.PROPERTY_ENUM,
     SerializableObject.PROPERTY_ENUM_COLLECTION,
-    SerializableObject.PROPERTY_RFC822_COLLECTION,
     SerializableObject.PROPERTY_TEXT_COLLECTION
   })
   static class SerializableObject implements AdditionalProperties {
