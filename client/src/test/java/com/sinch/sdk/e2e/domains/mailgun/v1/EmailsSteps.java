@@ -47,7 +47,7 @@ public class EmailsSteps {
         SendEmailRequest.builder()
             .setText("Hello, this is a text message for E2E testing.")
             .setTo(Collections.singletonList("destination@e2e.tst"))
-            .setFrom("Excited E2E user \uD83D\uDCE7 <sender@e2e.tst>")
+            .setFrom("Excited E2E user ✉️ <sender@e2e.tst>")
             .setSubject("E2E test text email")
             .build();
 
