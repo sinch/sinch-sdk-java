@@ -321,6 +321,7 @@
                         </goals>
                         <configuration>
                             <includes>
+                                <include>com.sinch.sdk.e2e.domains.mailgun.v1.MailgunIT</include>
                                 <include>com.sinch.sdk.e2e.domains.conversation.ConversationIT</include>
                                 <include>com.sinch.sdk.e2e.domains.voice.v0.VoiceIT</include>
                                 <include>com.sinch.sdk.e2e.domains.voice.v1.VoiceIT</include>

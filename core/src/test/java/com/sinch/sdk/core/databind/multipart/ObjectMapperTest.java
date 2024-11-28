@@ -3,7 +3,6 @@ package com.sinch.sdk.core.databind.multipart;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.databind.FormSerializer;
 import com.sinch.sdk.core.databind.annotation.FormSerialize;
-import com.sinch.sdk.core.databind.annotation.PropertiesOrder;
 import com.sinch.sdk.core.databind.annotation.Property;
 import com.sinch.sdk.core.databind.multipart.ObjectMapperTest.SerializableObject.AnEnum;
 import com.sinch.sdk.core.models.AdditionalProperties;
@@ -14,8 +13,6 @@ import com.sinch.sdk.core.utils.databind.RFC822FormSerializer;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequestTest;
 import java.io.File;
 import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -27,7 +24,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class ObjectMapperTest {
+public class ObjectMapperTest {
 
   static File fileAttachment1;
   static File fileAttachment2;
@@ -75,26 +72,6 @@ class ObjectMapperTest {
   @Test
   void countValue() {
     Assertions.assertEquals(11, serialized.size());
-  }
-
-  @Test
-  void order() {
-
-    String[] expectedOrder = {
-      SerializableObject.PROPERTY_RFC822_COLLECTION,
-      SerializableObject.PROPERTY_TEXT,
-      SerializableObject.PROPERTY_FILE_COLLECTION,
-      SerializableObject.PROPERTY_RFC822,
-      SerializableObject.PROPERTY_FILE,
-      SerializableObject.PROPERTY_ENUM,
-      SerializableObject.PROPERTY_ENUM_COLLECTION,
-      SerializableObject.PROPERTY_TEXT_COLLECTION,
-      "h:toto",
-      "v:foo",
-      "raw"
-    };
-    String[] keys = serialized.keySet().toArray(new String[0]);
-    TestHelpers.recursiveEquals(expectedOrder, keys);
   }
 
   @Test
@@ -157,17 +134,6 @@ class ObjectMapperTest {
         defaultAdditionalPropertiesSerialized);
   }
 
-  @PropertiesOrder({
-    SerializableObject.PROPERTY_RFC822_COLLECTION,
-    SerializableObject.PROPERTY_TEXT,
-    SerializableObject.PROPERTY_FILE_COLLECTION,
-    SerializableObject.PROPERTY_RFC822,
-    SerializableObject.PROPERTY_FILE,
-    SerializableObject.PROPERTY_ENUM,
-    SerializableObject.PROPERTY_ENUM_COLLECTION,
-    SerializableObject.PROPERTY_RFC822_COLLECTION,
-    SerializableObject.PROPERTY_TEXT_COLLECTION
-  })
   static class SerializableObject implements AdditionalProperties {
     public static final String PROPERTY_TEXT = "aText";
     public static final String PROPERTY_ENUM = "anEnum";
@@ -315,13 +281,11 @@ class ObjectMapperTest {
 
     @Override
     public void serialize(Collection<Instant> in, String fieldName, Map<String, Object> out) {
-      out.put(
-          fieldName,
-          in.stream()
-              .map(
-                  instant ->
-                      DateTimeFormatter.RFC_1123_DATE_TIME.format(instant.atZone(ZoneId.of("UTC"))))
-              .collect(Collectors.toList()));
+
+      Collection<String> formatted =
+          in.stream().map(RFC822FormSerializer::format).collect(Collectors.toList());
+
+      out.put(fieldName, formatted);
     }
   }
 
@@ -340,7 +304,7 @@ class ObjectMapperTest {
     }
   }
 
-  private static Map<String, Object> fillMap(Object... pairs) {
+  public static Map<String, Object> fillMap(Object... pairs) {
     LinkedHashMap<String, Object> map = new LinkedHashMap<>();
     for (int i = 0; i < pairs.length; ) {
       map.put((String) pairs[i++], pairs[i++]);

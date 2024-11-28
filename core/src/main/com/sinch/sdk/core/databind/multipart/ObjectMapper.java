@@ -2,7 +2,6 @@ package com.sinch.sdk.core.databind.multipart;
 
 import com.sinch.sdk.core.databind.FormSerializer;
 import com.sinch.sdk.core.databind.annotation.FormSerialize;
-import com.sinch.sdk.core.databind.annotation.PropertiesOrder;
 import com.sinch.sdk.core.databind.annotation.Property;
 import com.sinch.sdk.core.exceptions.SerializationException;
 import com.sinch.sdk.core.models.AdditionalProperties;
@@ -54,28 +53,8 @@ public class ObjectMapper {
     for (MethodDescriptor methodDescriptor : methodDescriptors) {
       getPropertyGetter(methodDescriptor.getMethod()).ifPresent(result::add);
     }
-    return sortProperties(beanInfo, result);
-  }
 
-  private List<Pair<String, Method>> sortProperties(
-      BeanInfo beanInfo, List<Pair<String, Method>> properties) {
-
-    PropertiesOrder propertyOrder =
-        beanInfo.getBeanDescriptor().getBeanClass().getAnnotation(PropertiesOrder.class);
-
-    if (null == propertyOrder) {
-      return properties;
-    }
-
-    ArrayList<Pair<String, Method>> sorted = new ArrayList<>(properties.size());
-
-    for (String property : propertyOrder.value()) {
-      properties.stream()
-          .filter(p -> p.getLeft().equals(property))
-          .findFirst()
-          .ifPresent(sorted::add);
-    }
-    return sorted;
+    return result;
   }
 
   private Optional<Pair<String, Method>> getPropertyGetter(Method method) {
