@@ -13,8 +13,6 @@ import com.sinch.sdk.core.utils.databind.RFC822FormSerializer;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequestTest;
 import java.io.File;
 import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -283,13 +281,11 @@ public class ObjectMapperTest {
 
     @Override
     public void serialize(Collection<Instant> in, String fieldName, Map<String, Object> out) {
-      out.put(
-          fieldName,
-          in.stream()
-              .map(
-                  instant ->
-                      DateTimeFormatter.RFC_1123_DATE_TIME.format(instant.atZone(ZoneId.of("UTC"))))
-              .collect(Collectors.toList()));
+
+      Collection<String> formatted =
+          in.stream().map(RFC822FormSerializer::format).collect(Collectors.toList());
+
+      out.put(fieldName, formatted);
     }
   }
 
