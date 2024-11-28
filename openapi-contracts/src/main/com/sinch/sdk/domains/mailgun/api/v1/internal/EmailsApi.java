@@ -24,9 +24,7 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest;
-import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequestImpl;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendMimeEmailRequest;
-import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendMimeEmailRequestImpl;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.response.GetStoredEmailResponse;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.response.SendEmailResponse;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.response.SendingQueuesStatusResponse;
@@ -324,8 +322,8 @@ public class EmailsApi {
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest sendEmailRequestBuilder(
-      String domainName, SendEmailRequest _requestParameters) throws ApiException {
+  private HttpRequest sendEmailRequestBuilder(String domainName, SendEmailRequest requestParameters)
+      throws ApiException {
     // verify the required parameter 'domainName' is set
     if (domainName == null) {
       throw new ApiException(
@@ -338,79 +336,15 @@ public class EmailsApi {
                 "\\{" + "domain_name" + "\\}",
                 URLPathUtils.encodePathSegment(domainName.toString()));
 
-    SendEmailRequestImpl requestParameters = (SendEmailRequestImpl) _requestParameters;
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
     Map<String, String> localVarHeaderParams = new HashMap<>();
 
     final Collection<String> localVarAccepts = Arrays.asList("application/json");
-
     final Collection<String> localVarContentTypes = Arrays.asList("multipart/form-data");
-
     final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
-
-    HashMap<String, Object> localFormParams = new HashMap<>();
-    requestParameters.from().ifPresent(value -> localFormParams.put("from", value));
-    requestParameters.to().ifPresent(value -> localFormParams.put("to", value));
-    requestParameters.cc().ifPresent(value -> localFormParams.put("cc", value));
-    requestParameters.bcc().ifPresent(value -> localFormParams.put("bcc", value));
-    requestParameters.subject().ifPresent(value -> localFormParams.put("subject", value));
-    requestParameters.text().ifPresent(value -> localFormParams.put("text", value));
-    requestParameters.html().ifPresent(value -> localFormParams.put("html", value));
-    requestParameters.ampHtml().ifPresent(value -> localFormParams.put("amp-html", value));
-    requestParameters.attachment().ifPresent(value -> localFormParams.put("attachment", value));
-    requestParameters.inline().ifPresent(value -> localFormParams.put("inline", value));
-    requestParameters.template().ifPresent(value -> localFormParams.put("template", value));
-    requestParameters.templateVersion().ifPresent(value -> localFormParams.put("t:version", value));
-    requestParameters.templateText().ifPresent(value -> localFormParams.put("t:text", value));
-    requestParameters
-        .templateVariables()
-        .ifPresent(value -> localFormParams.put("t:variables", value));
-    requestParameters.tag().ifPresent(value -> localFormParams.put("o:tag", value));
-    requestParameters
-        .enableDkimSignature()
-        .ifPresent(value -> localFormParams.put("o:dkim", value));
-    requestParameters
-        .secondaryDkim()
-        .ifPresent(value -> localFormParams.put("o:secondary-dkim", value));
-    requestParameters
-        .secondaryDkimPublic()
-        .ifPresent(value -> localFormParams.put("o:secondary-dkim-public", value));
-    requestParameters
-        .deliveryTime()
-        .ifPresent(value -> localFormParams.put("o:deliverytime", value));
-    requestParameters
-        .deliveryTimeOptimizePeriod()
-        .ifPresent(value -> localFormParams.put("o:deliverytime-optimize-period", value));
-    requestParameters
-        .timezoneLocalize()
-        .ifPresent(value -> localFormParams.put("o:time-zone-localize", value));
-    requestParameters.testMode().ifPresent(value -> localFormParams.put("o:testmode", value));
-    requestParameters.tracking().ifPresent(value -> localFormParams.put("o:tracking", value));
-    requestParameters
-        .trackingClicks()
-        .ifPresent(value -> localFormParams.put("o:tracking-clicks", value));
-    requestParameters
-        .trackingOpens()
-        .ifPresent(value -> localFormParams.put("o:tracking-opens", value));
-    requestParameters.requireTls().ifPresent(value -> localFormParams.put("o:require-tls", value));
-    requestParameters
-        .skipVerification()
-        .ifPresent(value -> localFormParams.put("o:skip-verification", value));
-    requestParameters.sendingIp().ifPresent(value -> localFormParams.put("o:sending-ip", value));
-    requestParameters
-        .sendingIpPool()
-        .ifPresent(value -> localFormParams.put("o:sending-ip-pool", value));
-    requestParameters
-        .trackingPixelLocationTop()
-        .ifPresent(value -> localFormParams.put("o:tracking-pixel-location-top", value));
-    requestParameters
-        .hColonXMyHeader()
-        .ifPresent(value -> localFormParams.put("h:X-My-Header", value));
-    requestParameters.vColonMyVar().ifPresent(value -> localFormParams.put("v:my-var", value));
-    requestParameters
-        .recipientVariables()
-        .ifPresent(value -> localFormParams.put("recipient-variables", value));
+    final Map<String, Object> localFormParams =
+        mapper.serializeFormParameters(localVarContentTypes, requestParameters);
 
     return new HttpRequest(
         localVarPath,
@@ -457,7 +391,7 @@ public class EmailsApi {
   }
 
   private HttpRequest sendMimeEmailRequestBuilder(
-      String domainName, SendMimeEmailRequest _requestParameters) throws ApiException {
+      String domainName, SendMimeEmailRequest requestParameters) throws ApiException {
     // verify the required parameter 'domainName' is set
     if (domainName == null) {
       throw new ApiException(
@@ -470,71 +404,15 @@ public class EmailsApi {
                 "\\{" + "domain_name" + "\\}",
                 URLPathUtils.encodePathSegment(domainName.toString()));
 
-    SendMimeEmailRequestImpl requestParameters = (SendMimeEmailRequestImpl) _requestParameters;
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
     Map<String, String> localVarHeaderParams = new HashMap<>();
 
     final Collection<String> localVarAccepts = Arrays.asList("application/json");
-
     final Collection<String> localVarContentTypes = Arrays.asList("multipart/form-data");
-
     final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
-
-    HashMap<String, Object> localFormParams = new HashMap<>();
-    requestParameters.to().ifPresent(value -> localFormParams.put("to", value));
-    requestParameters.message().ifPresent(value -> localFormParams.put("message", value));
-    requestParameters.template().ifPresent(value -> localFormParams.put("template", value));
-    requestParameters.templateVersion().ifPresent(value -> localFormParams.put("t:version", value));
-    requestParameters.templateText().ifPresent(value -> localFormParams.put("t:text", value));
-    requestParameters
-        .templateVariables()
-        .ifPresent(value -> localFormParams.put("t:variables", value));
-    requestParameters.tag().ifPresent(value -> localFormParams.put("o:tag", value));
-    requestParameters
-        .enableDkimSignature()
-        .ifPresent(value -> localFormParams.put("o:dkim", value));
-    requestParameters
-        .secondaryDkim()
-        .ifPresent(value -> localFormParams.put("o:secondary-dkim", value));
-    requestParameters
-        .secondaryDkimPublic()
-        .ifPresent(value -> localFormParams.put("o:secondary-dkim-public", value));
-    requestParameters
-        .deliveryTime()
-        .ifPresent(value -> localFormParams.put("o:deliverytime", value));
-    requestParameters
-        .deliveryTimeOptimizePeriod()
-        .ifPresent(value -> localFormParams.put("o:deliverytime-optimize-period", value));
-    requestParameters
-        .timezoneLocalize()
-        .ifPresent(value -> localFormParams.put("o:time-zone-localize", value));
-    requestParameters.isTestMode().ifPresent(value -> localFormParams.put("o:testmode", value));
-    requestParameters.tracking().ifPresent(value -> localFormParams.put("o:tracking", value));
-    requestParameters
-        .trackingClicks()
-        .ifPresent(value -> localFormParams.put("o:tracking-clicks", value));
-    requestParameters
-        .trackingOpens()
-        .ifPresent(value -> localFormParams.put("o:tracking-opens", value));
-    requestParameters.requireTls().ifPresent(value -> localFormParams.put("o:require-tls", value));
-    requestParameters
-        .skipVerification()
-        .ifPresent(value -> localFormParams.put("o:skip-verification", value));
-    requestParameters.sendingIp().ifPresent(value -> localFormParams.put("o:sending-ip", value));
-    requestParameters
-        .sendingIpPool()
-        .ifPresent(value -> localFormParams.put("o:sending-ip-pool", value));
-    requestParameters
-        .trackingPixelLocationTop()
-        .ifPresent(value -> localFormParams.put("o:tracking-pixel-location-top", value));
-    requestParameters
-        .hColonXMyHeader()
-        .ifPresent(value -> localFormParams.put("h:X-My-Header", value));
-    requestParameters.vColonMyVar().ifPresent(value -> localFormParams.put("v:my-var", value));
-    requestParameters
-        .recipientVariables()
-        .ifPresent(value -> localFormParams.put("recipient-variables", value));
+    final Map<String, Object> localFormParams =
+        mapper.serializeFormParameters(localVarContentTypes, requestParameters);
 
     return new HttpRequest(
         localVarPath,

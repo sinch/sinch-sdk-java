@@ -4,7 +4,9 @@ import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.ConversationRegion;
+import com.sinch.sdk.models.MailgunContext;
 import com.sinch.sdk.models.VoiceContext;
+import java.util.Arrays;
 
 public class Config {
 
@@ -20,6 +22,10 @@ public class Config {
   public static final String APPLICATION_SECRET = "YXBwU2VjcmV0";
   public static final String VOICE_HOST_NAME = "http://localhost:3019";
   public static final String VOICE_MANAGEMENT_HOST_NAME = "http://localhost:3020";
+
+  public static final String MAILGUN_HOST_NAME = "http://localhost:3021";
+  public static final String MAILGUN_API_KEY = "apiKey";
+  public static final String MAILGUN_STORAGE = "http://localhost:3021";
 
   private final SinchClient client;
 
@@ -44,6 +50,10 @@ public class Config {
                     .setVoiceApplicationMngmtUrl(VOICE_MANAGEMENT_HOST_NAME)
                     .setVoiceUrl(VOICE_HOST_NAME)
                     .build())
+            .setMailgunContext(
+                MailgunContext.builder().setStorageUrls(Arrays.asList(MAILGUN_STORAGE)).build())
+            .setMailgunApiKey(MAILGUN_API_KEY)
+            .setMailgunUrl(MAILGUN_HOST_NAME)
             .build();
 
     client = new SinchClient(configuration);

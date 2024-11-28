@@ -11,16 +11,18 @@
 package com.sinch.sdk.domains.mailgun.models.v1.emails.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.models.AdditionalProperties;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.io.File;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
 /** SendMimeEmailRequest */
 @JsonDeserialize(builder = SendMimeEmailRequestImpl.Builder.class)
-public interface SendMimeEmailRequest {
+public interface SendMimeEmailRequest extends AdditionalProperties {
 
   /**
    * Email address of the recipient(s). Example: <code>\&quot;Bob &lt;bob@host.com&gt;\&quot;</code>
@@ -164,7 +166,7 @@ public interface SendMimeEmailRequest {
    *
    * @return deliveryTime
    */
-  String getDeliveryTime();
+  Instant getDeliveryTime();
 
   /**
    * Toggles Send Time Optimization (STO) on a per-message basis. String should be set to the number
@@ -176,7 +178,7 @@ public interface SendMimeEmailRequest {
    *
    * @return deliveryTimeOptimizePeriod
    */
-  String getDeliveryTimeOptimizePeriod();
+  Integer getDeliveryTimeOptimizePeriod();
 
   /**
    * Toggles Timezone Optimization (TZO) on a per message basis. String should be set to preferred
@@ -222,9 +224,9 @@ public interface SendMimeEmailRequest {
    * href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/#sending-in-test-mode">Sending
    * in Test Mode</a>
    *
-   * @return isTestMode
+   * @return testMode
    */
-  TestModeEnum getIsTestMode();
+  TestModeEnum getTestMode();
 
   /**
    * Toggles both click and open tracking on a per-message basis, see <a
@@ -318,10 +320,10 @@ public interface SendMimeEmailRequest {
    * Opens</a>. Has higher priority than domain-level setting.
    */
   public class TrackingOpensEnum extends EnumDynamic<String, TrackingOpensEnum> {
-    public static final TrackingOpensEnum YES = new TrackingOpensEnum("test:yes");
-    public static final TrackingOpensEnum NO = new TrackingOpensEnum("test:no");
-    public static final TrackingOpensEnum TRUE = new TrackingOpensEnum("test:true");
-    public static final TrackingOpensEnum FALSE = new TrackingOpensEnum("test:false");
+    public static final TrackingOpensEnum YES = new TrackingOpensEnum("yes");
+    public static final TrackingOpensEnum NO = new TrackingOpensEnum("no");
+    public static final TrackingOpensEnum TRUE = new TrackingOpensEnum("true");
+    public static final TrackingOpensEnum FALSE = new TrackingOpensEnum("false");
 
     private static final EnumSupportDynamic<String, TrackingOpensEnum> ENUM_SUPPORT =
         new EnumSupportDynamic<>(
@@ -469,22 +471,6 @@ public interface SendMimeEmailRequest {
   String getTrackingPixelLocationTop();
 
   /**
-   * h: prefix followed by a Header/Value pair. For example:
-   * h:X-Mailgun-Sending-Ip-Pool=xx.xx.xxx.x.
-   *
-   * @return hColonXMyHeader
-   */
-  String gethColonXMyHeader();
-
-  /**
-   * <code>v:</code> prefix followed by an arbitrary name allows to attach a custom JSON data to the
-   * message. See <strong>Attaching Data to Messages</strong> for more information
-   *
-   * @return vColonMyVar
-   */
-  String getvColonMyVar();
-
-  /**
    * A valid JSON-encoded dictionary, where key is a plain recipient address and value is a
    * dictionary with variables that can be referenced in the message body. See <strong>Batch
    * Sending</strong> for more information
@@ -492,14 +478,6 @@ public interface SendMimeEmailRequest {
    * @return recipientVariables
    */
   String getRecipientVariables();
-
-  /**
-   * Return the additional property with the specified name.
-   *
-   * @param key the name of the property
-   * @return the additional property with the specified name
-   */
-  Object get(String key);
 
   /**
    * Getting builder
@@ -511,7 +489,7 @@ public interface SendMimeEmailRequest {
   }
 
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder extends AdditionalProperties.Builder {
 
     /**
      * see getter
@@ -610,7 +588,7 @@ public interface SendMimeEmailRequest {
      * @return Current builder
      * @see #getDeliveryTime
      */
-    Builder setDeliveryTime(String deliveryTime);
+    Builder setDeliveryTime(Instant deliveryTime);
 
     /**
      * see getter
@@ -619,7 +597,7 @@ public interface SendMimeEmailRequest {
      * @return Current builder
      * @see #getDeliveryTimeOptimizePeriod
      */
-    Builder setDeliveryTimeOptimizePeriod(String deliveryTimeOptimizePeriod);
+    Builder setDeliveryTimeOptimizePeriod(Integer deliveryTimeOptimizePeriod);
 
     /**
      * see getter
@@ -633,11 +611,11 @@ public interface SendMimeEmailRequest {
     /**
      * see getter
      *
-     * @param isTestMode see getter
+     * @param testMode see getter
      * @return Current builder
-     * @see #getIsTestMode
+     * @see #getTestMode
      */
-    Builder setIsTestMode(TestModeEnum isTestMode);
+    Builder setTestMode(TestModeEnum testMode);
 
     /**
      * see getter
@@ -710,24 +688,6 @@ public interface SendMimeEmailRequest {
      * @see #getTrackingPixelLocationTop
      */
     Builder setTrackingPixelLocationTop(String trackingPixelLocationTop);
-
-    /**
-     * see getter
-     *
-     * @param hColonXMyHeader see getter
-     * @return Current builder
-     * @see #gethColonXMyHeader
-     */
-    Builder sethColonXMyHeader(String hColonXMyHeader);
-
-    /**
-     * see getter
-     *
-     * @param vColonMyVar see getter
-     * @return Current builder
-     * @see #getvColonMyVar
-     */
-    Builder setvColonMyVar(String vColonMyVar);
 
     /**
      * see getter
