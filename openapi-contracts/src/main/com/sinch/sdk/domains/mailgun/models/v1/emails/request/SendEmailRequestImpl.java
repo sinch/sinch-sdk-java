@@ -1,7 +1,6 @@
 package com.sinch.sdk.domains.mailgun.models.v1.emails.request;
 
 import com.sinch.sdk.core.databind.annotation.FormSerialize;
-import com.sinch.sdk.core.databind.annotation.PropertiesOrder;
 import com.sinch.sdk.core.databind.annotation.Property;
 import com.sinch.sdk.core.models.OptionalValue;
 import java.io.File;
@@ -11,39 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@PropertiesOrder({
-  SendEmailRequestImpl.PROPERTY_FROM,
-  SendEmailRequestImpl.PROPERTY_TO,
-  SendEmailRequestImpl.PROPERTY_CC,
-  SendEmailRequestImpl.PROPERTY_BCC,
-  SendEmailRequestImpl.PROPERTY_SUBJECT,
-  SendEmailRequestImpl.PROPERTY_TEXT,
-  SendEmailRequestImpl.PROPERTY_HTML,
-  SendEmailRequestImpl.PROPERTY_AMP_HTML,
-  SendEmailRequestImpl.PROPERTY_ATTACHMENT,
-  SendEmailRequestImpl.PROPERTY_INLINE,
-  SendEmailRequestImpl.PROPERTY_TEMPLATE,
-  SendEmailRequestImpl.PROPERTY_T_COLON_VERSION,
-  SendEmailRequestImpl.PROPERTY_T_COLON_TEXT,
-  SendEmailRequestImpl.PROPERTY_T_COLON_VARIABLES,
-  SendEmailRequestImpl.PROPERTY_O_COLON_TAG,
-  SendEmailRequestImpl.PROPERTY_O_COLON_DKIM,
-  SendEmailRequestImpl.PROPERTY_O_COLON_SECONDARY_DKIM,
-  SendEmailRequestImpl.PROPERTY_O_COLON_SECONDARY_DKIM_PUBLIC,
-  SendEmailRequestImpl.PROPERTY_O_COLON_DELIVERYTIME,
-  SendEmailRequestImpl.PROPERTY_O_COLON_DELIVERYTIME_OPTIMIZE_PERIOD,
-  SendEmailRequestImpl.PROPERTY_O_COLON_TIME_ZONE_LOCALIZE,
-  SendEmailRequestImpl.PROPERTY_O_COLON_TESTMODE,
-  SendEmailRequestImpl.PROPERTY_O_COLON_TRACKING,
-  SendEmailRequestImpl.PROPERTY_O_COLON_TRACKING_CLICKS,
-  SendEmailRequestImpl.PROPERTY_O_COLON_TRACKING_OPENS,
-  SendEmailRequestImpl.PROPERTY_O_COLON_REQUIRE_TLS,
-  SendEmailRequestImpl.PROPERTY_O_COLON_SKIP_VERIFICATION,
-  SendEmailRequestImpl.PROPERTY_O_COLON_SENDING_IP,
-  SendEmailRequestImpl.PROPERTY_O_COLON_SENDING_IP_POOL,
-  SendEmailRequestImpl.PROPERTY_O_COLON_TRACKING_PIXEL_LOCATION_TOP,
-  SendEmailRequestImpl.PROPERTY_RECIPIENT_VARIABLES
-})
 public class SendEmailRequestImpl implements SendEmailRequest {
   private static final long serialVersionUID = 1L;
 

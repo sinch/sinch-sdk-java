@@ -34,8 +34,7 @@ public class MailgunService implements com.sinch.sdk.domains.mailgun.api.v1.Mail
         credentials.getApiUser(), "Mailgun service requires 'apiUser' to be defined");
     StringUtil.requireNonEmpty(
         credentials.getApiKey(), "Mailgun service requires 'apiKey' to be defined");
-    StringUtil.requireNonEmpty(
-        context.getUrl(), "'Mailgun service requires mailgunUrl' to be defined");
+    StringUtil.requireNonEmpty(context.getUrl(), "'Mailgun service requires 'url' to be defined");
 
     LOGGER.fine("Activate Mailgun API with server='" + context.getServer().getUrl() + "'");
 

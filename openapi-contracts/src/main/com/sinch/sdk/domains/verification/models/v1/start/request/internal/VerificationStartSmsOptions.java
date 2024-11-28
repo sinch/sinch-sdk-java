@@ -11,6 +11,7 @@
 package com.sinch.sdk.domains.verification.models.v1.start.request.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.models.AdditionalProperties;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
@@ -21,7 +22,7 @@ import java.util.stream.Stream;
  * not provided.
  */
 @JsonDeserialize(builder = VerificationStartSmsOptionsImpl.Builder.class)
-public interface VerificationStartSmsOptions {
+public interface VerificationStartSmsOptions extends AdditionalProperties {
 
   /**
    * The expiration time for a verification process is represented in the format <code>HH:MM:SS
@@ -83,14 +84,6 @@ public interface VerificationStartSmsOptions {
   String getAcceptLanguage();
 
   /**
-   * Return the additional property with the specified name.
-   *
-   * @param key the name of the property
-   * @return the additional property with the specified name
-   */
-  Object get(String key);
-
-  /**
    * Getting builder
    *
    * @return New Builder instance
@@ -100,7 +93,7 @@ public interface VerificationStartSmsOptions {
   }
 
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder extends AdditionalProperties.Builder {
 
     /**
      * see getter

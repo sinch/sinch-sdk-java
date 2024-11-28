@@ -134,7 +134,7 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
         addBody(requestBuilder, body);
       }
 
-      addFormParams(requestBuilder, formParams);
+      addFormParams(requestBuilder, contentType, formParams);
 
       addAuth(requestBuilder, authManagersByOasSecuritySchemes, authNames, body);
 
@@ -225,14 +225,19 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
     requestBuilder.setEntity(new StringEntity(body, charset));
   }
 
-  private void addFormParams(ClassicRequestBuilder requestBuilder, Map<String, Object> formParams) {
+  private void addFormParams(
+      ClassicRequestBuilder requestBuilder,
+      Collection<String> contentType,
+      Map<String, Object> formParams) {
 
     if (null == formParams) {
       return;
     }
 
     MultipartEntityBuilder multiPartBuilder = MultipartEntityBuilder.create();
-
+    if (contentType.stream().noneMatch(cType -> cType.toLowerCase().contains("charset="))) {
+      multiPartBuilder.setCharset(StandardCharsets.UTF_8);
+    }
     formParams.forEach((key, value) -> addMultiPart(requestBuilder, multiPartBuilder, key, value));
 
     requestBuilder.setEntity(multiPartBuilder.build());
