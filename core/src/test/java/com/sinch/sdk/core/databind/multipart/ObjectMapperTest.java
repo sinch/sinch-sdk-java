@@ -3,7 +3,6 @@ package com.sinch.sdk.core.databind.multipart;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.databind.FormSerializer;
 import com.sinch.sdk.core.databind.annotation.FormSerialize;
-import com.sinch.sdk.core.databind.annotation.PropertiesOrder;
 import com.sinch.sdk.core.databind.annotation.Property;
 import com.sinch.sdk.core.databind.multipart.ObjectMapperTest.SerializableObject.AnEnum;
 import com.sinch.sdk.core.models.AdditionalProperties;
@@ -78,26 +77,6 @@ public class ObjectMapperTest {
   }
 
   @Test
-  void order() {
-
-    String[] expectedOrder = {
-      SerializableObject.PROPERTY_RFC822_COLLECTION,
-      SerializableObject.PROPERTY_TEXT,
-      SerializableObject.PROPERTY_FILE_COLLECTION,
-      SerializableObject.PROPERTY_RFC822,
-      SerializableObject.PROPERTY_FILE,
-      SerializableObject.PROPERTY_ENUM,
-      SerializableObject.PROPERTY_ENUM_COLLECTION,
-      SerializableObject.PROPERTY_TEXT_COLLECTION,
-      "h:toto",
-      "v:foo",
-      "raw"
-    };
-    String[] keys = serialized.keySet().toArray(new String[0]);
-    TestHelpers.recursiveEquals(expectedOrder, keys);
-  }
-
-  @Test
   void textValue() {
     TestHelpers.recursiveEquals("text value", serialized.get("aText"));
   }
@@ -157,16 +136,6 @@ public class ObjectMapperTest {
         defaultAdditionalPropertiesSerialized);
   }
 
-  @PropertiesOrder({
-    SerializableObject.PROPERTY_RFC822_COLLECTION,
-    SerializableObject.PROPERTY_TEXT,
-    SerializableObject.PROPERTY_FILE_COLLECTION,
-    SerializableObject.PROPERTY_RFC822,
-    SerializableObject.PROPERTY_FILE,
-    SerializableObject.PROPERTY_ENUM,
-    SerializableObject.PROPERTY_ENUM_COLLECTION,
-    SerializableObject.PROPERTY_TEXT_COLLECTION
-  })
   static class SerializableObject implements AdditionalProperties {
     public static final String PROPERTY_TEXT = "aText";
     public static final String PROPERTY_ENUM = "anEnum";

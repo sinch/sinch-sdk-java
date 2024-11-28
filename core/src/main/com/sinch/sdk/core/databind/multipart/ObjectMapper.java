@@ -2,7 +2,6 @@ package com.sinch.sdk.core.databind.multipart;
 
 import com.sinch.sdk.core.databind.FormSerializer;
 import com.sinch.sdk.core.databind.annotation.FormSerialize;
-import com.sinch.sdk.core.databind.annotation.PropertiesOrder;
 import com.sinch.sdk.core.databind.annotation.Property;
 import com.sinch.sdk.core.exceptions.SerializationException;
 import com.sinch.sdk.core.models.AdditionalProperties;
@@ -18,7 +17,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,23 +54,7 @@ public class ObjectMapper {
       getPropertyGetter(methodDescriptor.getMethod()).ifPresent(result::add);
     }
 
-    sortProperties(beanInfo, result);
     return result;
-  }
-
-  private void sortProperties(BeanInfo beanInfo, List<Pair<String, Method>> properties) {
-
-    PropertiesOrder propertiesOrder =
-        beanInfo.getBeanDescriptor().getBeanClass().getAnnotation(PropertiesOrder.class);
-
-    if (null == propertiesOrder
-        || null == propertiesOrder.value()
-        || 0 == propertiesOrder.value().length) {
-      return;
-    }
-
-    List<String> order = java.util.Arrays.asList(propertiesOrder.value());
-    properties.sort(Comparator.comparingInt(l -> order.indexOf(l.getLeft())));
   }
 
   private Optional<Pair<String, Method>> getPropertyGetter(Method method) {

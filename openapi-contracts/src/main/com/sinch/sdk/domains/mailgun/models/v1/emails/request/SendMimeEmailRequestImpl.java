@@ -1,7 +1,6 @@
 package com.sinch.sdk.domains.mailgun.models.v1.emails.request;
 
 import com.sinch.sdk.core.databind.annotation.FormSerialize;
-import com.sinch.sdk.core.databind.annotation.PropertiesOrder;
 import com.sinch.sdk.core.databind.annotation.Property;
 import com.sinch.sdk.core.models.OptionalValue;
 import java.io.File;
@@ -11,31 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@PropertiesOrder({
-  SendMimeEmailRequestImpl.PROPERTY_TO,
-  SendMimeEmailRequestImpl.PROPERTY_MESSAGE,
-  SendMimeEmailRequestImpl.PROPERTY_TEMPLATE,
-  SendMimeEmailRequestImpl.PROPERTY_T_COLON_VERSION,
-  SendMimeEmailRequestImpl.PROPERTY_T_COLON_TEXT,
-  SendMimeEmailRequestImpl.PROPERTY_T_COLON_VARIABLES,
-  SendMimeEmailRequestImpl.PROPERTY_O_COLON_TAG,
-  SendMimeEmailRequestImpl.PROPERTY_O_COLON_DKIM,
-  SendMimeEmailRequestImpl.PROPERTY_O_COLON_SECONDARY_DKIM,
-  SendMimeEmailRequestImpl.PROPERTY_O_COLON_SECONDARY_DKIM_PUBLIC,
-  SendMimeEmailRequestImpl.PROPERTY_O_COLON_DELIVERYTIME,
-  SendMimeEmailRequestImpl.PROPERTY_O_COLON_DELIVERYTIME_OPTIMIZE_PERIOD,
-  SendMimeEmailRequestImpl.PROPERTY_O_COLON_TIME_ZONE_LOCALIZE,
-  SendMimeEmailRequestImpl.PROPERTY_O_COLON_TESTMODE,
-  SendMimeEmailRequestImpl.PROPERTY_O_COLON_TRACKING,
-  SendMimeEmailRequestImpl.PROPERTY_O_COLON_TRACKING_CLICKS,
-  SendMimeEmailRequestImpl.PROPERTY_O_COLON_TRACKING_OPENS,
-  SendMimeEmailRequestImpl.PROPERTY_O_COLON_REQUIRE_TLS,
-  SendMimeEmailRequestImpl.PROPERTY_O_COLON_SKIP_VERIFICATION,
-  SendMimeEmailRequestImpl.PROPERTY_O_COLON_SENDING_IP,
-  SendMimeEmailRequestImpl.PROPERTY_O_COLON_SENDING_IP_POOL,
-  SendMimeEmailRequestImpl.PROPERTY_O_COLON_TRACKING_PIXEL_LOCATION_TOP,
-  SendMimeEmailRequestImpl.PROPERTY_RECIPIENT_VARIABLES
-})
 public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
   private static final long serialVersionUID = 1L;
 
