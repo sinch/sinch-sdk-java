@@ -14,11 +14,11 @@ import com.sinch.sdk.domains.mailgun.models.v1.emails.response.SendingQueuesStat
  */
 public interface EmailsService {
 
-  SendEmailResponse send(String domain, SendEmailRequest request);
+  SendEmailResponse sendEmail(String domain, SendEmailRequest request);
 
-  SendEmailResponse sendMime(String domain, SendMimeEmailRequest request);
+  SendEmailResponse sendMimeEmail(String domain, SendMimeEmailRequest request);
 
-  GetStoredEmailResponse get(String domain, String storageKey);
+  GetStoredEmailResponse getStoredEmail(String domain, String storageKey);
 
   SendingQueuesStatusResponse getSendingQueuesStatus(String domain);
 

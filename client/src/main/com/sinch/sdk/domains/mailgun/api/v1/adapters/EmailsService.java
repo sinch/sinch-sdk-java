@@ -31,15 +31,15 @@ public class EmailsService implements com.sinch.sdk.domains.mailgun.api.v1.Email
     return this.api;
   }
 
-  public SendEmailResponse send(String domain, SendEmailRequest request) {
+  public SendEmailResponse sendEmail(String domain, SendEmailRequest request) {
     return getApi().sendEmail(domain, request);
   }
 
-  public SendEmailResponse sendMime(String domain, SendMimeEmailRequest request) {
+  public SendEmailResponse sendMimeEmail(String domain, SendMimeEmailRequest request) {
     return getApi().sendMimeEmail(domain, request);
   }
 
-  public GetStoredEmailResponse get(String domain, String storageKey) {
+  public GetStoredEmailResponse getStoredEmail(String domain, String storageKey) {
     return getApi().getStoredEmail(domain, storageKey);
   }
 

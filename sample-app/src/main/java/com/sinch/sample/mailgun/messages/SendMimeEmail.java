@@ -11,15 +11,15 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
-public class SendMime extends BaseApplication {
+public class SendMimeEmail extends BaseApplication {
 
-  private static final Logger LOGGER = Logger.getLogger(SendMime.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(SendMimeEmail.class.getName());
 
-  public SendMime() throws IOException {}
+  public SendMimeEmail() throws IOException {}
 
   public static void main(String[] args) {
     try {
-      new SendMime().run();
+      new SendMimeEmail().run();
     } catch (Exception e) {
       LOGGER.severe(e.getMessage());
       e.printStackTrace();
@@ -30,11 +30,11 @@ public class SendMime extends BaseApplication {
 
     EmailsService service = client.mailgun().v1().emails();
 
-    LOGGER.info("Send message with Mailgun to: " + mailgunTo);
+    LOGGER.info("Send MIME email with Mailgun to: " + mailgunTo);
 
     SendMimeEmailRequest parameters = createMime();
 
-    SendEmailResponse response = service.sendMime(mailgunDomain, parameters);
+    SendEmailResponse response = service.sendMimeEmail(mailgunDomain, parameters);
 
     LOGGER.info("Response: " + response);
   }

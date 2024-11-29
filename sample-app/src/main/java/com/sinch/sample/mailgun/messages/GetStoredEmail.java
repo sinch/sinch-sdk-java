@@ -6,15 +6,15 @@ import com.sinch.sdk.domains.mailgun.models.v1.emails.response.GetStoredEmailRes
 import java.io.IOException;
 import java.util.logging.Logger;
 
-public class Get extends BaseApplication {
+public class GetStoredEmail extends BaseApplication {
 
-  private static final Logger LOGGER = Logger.getLogger(Get.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(GetStoredEmail.class.getName());
 
-  public Get() throws IOException {}
+  public GetStoredEmail() throws IOException {}
 
   public static void main(String[] args) {
     try {
-      new Get().run();
+      new GetStoredEmail().run();
     } catch (Exception e) {
       LOGGER.severe(e.getMessage());
       e.printStackTrace();
@@ -26,9 +26,9 @@ public class Get extends BaseApplication {
     EmailsService service = client.mailgun().v1().emails();
 
     String storageKey = "value";
-    LOGGER.info("Get message with storageKey: " + storageKey);
+    LOGGER.info("Get stored email with storageKey: " + storageKey);
 
-    GetStoredEmailResponse response = service.get(mailgunDomain, storageKey);
+    GetStoredEmailResponse response = service.getStoredEmail(mailgunDomain, storageKey);
 
     LOGGER.info("Response: " + response);
   }

@@ -51,7 +51,7 @@ public class EmailsSteps {
             .setSubject("E2E test text email")
             .build();
 
-    sendEmailResponse = service.send(domainName, request);
+    sendEmailResponse = service.sendEmail(domainName, request);
   }
 
   @When("^I send a request to send a MIME email$")
@@ -71,13 +71,13 @@ public class EmailsSteps {
             .setMessage(tempFile)
             .build();
 
-    sendMimeEmailResponse = service.sendMime(domainName, request);
+    sendMimeEmailResponse = service.sendMimeEmail(domainName, request);
   }
 
   @When("^I send a request to retrieve a stored email$")
   public void getStoredEmail() {
 
-    getStoredEmailResponse = service.get(domainName, storageKey);
+    getStoredEmailResponse = service.getStoredEmail(domainName, storageKey);
   }
 
   @When("^I send a request to get the sending queue status$")

@@ -54,7 +54,8 @@ class EmailsServiceTest extends BaseTest {
     when(api.sendEmail(eq(domainName), eq(SendEmailRequestTest.sendEmailRequest)))
         .thenReturn(SendEmailResponseTest.expectedSendEmailResponse);
 
-    SendEmailResponse response = service.send(domainName, SendEmailRequestTest.sendEmailRequest);
+    SendEmailResponse response =
+        service.sendEmail(domainName, SendEmailRequestTest.sendEmailRequest);
 
     TestHelpers.recursiveEquals(response, SendEmailResponseTest.expectedSendEmailResponse);
   }
@@ -65,7 +66,7 @@ class EmailsServiceTest extends BaseTest {
         .thenReturn(SendEmailResponseTest.expectedSendEmailResponse);
 
     SendEmailResponse response =
-        service.sendMime(domainName, SendMimeEmailRequestTest.sendMimEmailRequest);
+        service.sendMimeEmail(domainName, SendMimeEmailRequestTest.sendMimEmailRequest);
 
     TestHelpers.recursiveEquals(response, SendEmailResponseTest.expectedSendEmailResponse);
   }
@@ -75,7 +76,7 @@ class EmailsServiceTest extends BaseTest {
     when(api.getStoredEmail(eq(domainName), eq(storageKey)))
         .thenReturn(GetStoredEmailResponseTest.expectedGetEmailResponse);
 
-    GetStoredEmailResponse response = service.get(domainName, storageKey);
+    GetStoredEmailResponse response = service.getStoredEmail(domainName, storageKey);
 
     TestHelpers.recursiveEquals(response, GetStoredEmailResponseTest.expectedGetEmailResponse);
   }
