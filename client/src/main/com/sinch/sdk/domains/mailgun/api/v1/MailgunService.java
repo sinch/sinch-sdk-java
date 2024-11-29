@@ -9,10 +9,10 @@ package com.sinch.sdk.domains.mailgun.api.v1;
 public interface MailgunService {
 
   /**
-   * Messages Service instance
+   * Emails Service instance
    *
    * @return service instance for project
    * @since __TO_BE_DEFINED__
    */
-  MessagesService messages();
+  EmailsService emails();
 }

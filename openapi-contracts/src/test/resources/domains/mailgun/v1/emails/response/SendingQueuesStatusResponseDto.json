@@ -1,0 +1,16 @@
+{
+  "scheduled": {
+    "is_disabled": true,
+    "disabled": {
+      "until": "Mon, 12 Jan 2006 15:04:05 MST",
+      "reason": "You have too many messages in scheduled queue"
+    }
+  },
+  "regular": {
+    "is_disabled": true,
+    "disabled": {
+      "until": "Mon, 24 Jan 2006 16:00:00 MST",
+      "reason": "You have too many messages in regular queue"
+    }
+  }
+}

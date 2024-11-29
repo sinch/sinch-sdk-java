@@ -11,7 +11,7 @@ public class HttpContentType {
   public static final String CONTENT_TYPE_HEADER = "content-type";
   public static final String APPLICATION_JSON = "application/json";
   public static final String TEXT_PLAIN = "text/plain";
-
+  public static final String MULTIPART_FORM_DATA = "multipart/form-data";
   static Pattern charsetPattern = Pattern.compile("(.*;$)?\\s*?charset=\\s*([^;\\s]+)");
 
   public static boolean isMimeJson(Collection<String> mimes) {
@@ -22,6 +22,10 @@ public class HttpContentType {
 
   public static boolean isMimeTextPlain(Collection<String> mimes) {
     return mimes.stream().anyMatch(TEXT_PLAIN::equalsIgnoreCase);
+  }
+
+  public static boolean isMimeMultiPartFormData(Collection<String> mimes) {
+    return null != mimes && mimes.stream().anyMatch(MULTIPART_FORM_DATA::equalsIgnoreCase);
   }
 
   public static Optional<String> getCharsetValue(String contentTypeHeader) {

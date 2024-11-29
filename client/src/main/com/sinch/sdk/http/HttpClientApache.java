@@ -16,6 +16,7 @@ import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.Pair;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -30,14 +31,17 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.ClassicHttpRequest;
 import org.apache.hc.core5.http.ClassicHttpResponse;
+import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.Header;
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.http.io.support.ClassicRequestBuilder;
+import org.apache.hc.core5.http.support.AbstractMessageBuilder;
 
 public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
 
@@ -101,6 +105,7 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
       Collection<URLParameter> queryParameters = httpRequest.getQueryParameters();
 
       String body = httpRequest.getBody();
+      Map<String, Object> formParams = httpRequest.getFormParams();
       Map<String, String> headerParams = httpRequest.getHeaderParams();
       Collection<String> accept = httpRequest.getAccept();
       Collection<String> contentType = httpRequest.getContentType();
@@ -109,6 +114,7 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
       LOGGER.fine("Invoke '" + method + "' onto '" + path + "'");
       LOGGER.fine("queryParameters: " + queryParameters);
       LOGGER.fine("body: " + body);
+      LOGGER.fine("formParams: " + formParams);
       LOGGER.fine("headerParams: " + headerParams);
       LOGGER.fine("accept: " + accept);
       LOGGER.fine("contentType: " + contentType);
@@ -118,13 +124,17 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
 
       setUri(requestBuilder, path, queryParameters);
 
-      addCollectionHeader(requestBuilder, CONTENT_TYPE_HEADER, contentType);
       addCollectionHeader(requestBuilder, "Accept", accept);
 
       addHeaders(requestBuilder, headerParams);
       addHeaders(requestBuilder, headersToBeAdded);
 
-      addBody(requestBuilder, body);
+      if (null != body) {
+        addCollectionHeader(requestBuilder, CONTENT_TYPE_HEADER, contentType);
+        addBody(requestBuilder, body);
+      }
+
+      addFormParams(requestBuilder, contentType, formParams);
 
       addAuth(requestBuilder, authManagersByOasSecuritySchemes, authNames, body);
 
@@ -208,10 +218,66 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
 
   private void addBody(ClassicRequestBuilder requestBuilder, String body) {
 
-    if (null != body) {
-      Charset charset = extractCharset(requestBuilder).orElse(StandardCharsets.UTF_8);
-      requestBuilder.setEntity(new StringEntity(body, charset));
+    if (null == body) {
+      return;
     }
+    Charset charset = extractCharset(requestBuilder).orElse(StandardCharsets.UTF_8);
+    requestBuilder.setEntity(new StringEntity(body, charset));
+  }
+
+  private void addFormParams(
+      ClassicRequestBuilder requestBuilder,
+      Collection<String> contentType,
+      Map<String, Object> formParams) {
+
+    if (null == formParams) {
+      return;
+    }
+
+    MultipartEntityBuilder multiPartBuilder = MultipartEntityBuilder.create();
+    if (contentType.stream().noneMatch(cType -> cType.toLowerCase().contains("charset="))) {
+      multiPartBuilder.setCharset(StandardCharsets.UTF_8);
+    }
+    formParams.forEach((key, value) -> addMultiPart(requestBuilder, multiPartBuilder, key, value));
+
+    requestBuilder.setEntity(multiPartBuilder.build());
+  }
+
+  private void addMultiPart(
+      AbstractMessageBuilder<?> messageBuilder,
+      MultipartEntityBuilder multiPartBuilder,
+      String name,
+      Object value) {
+
+    if (value instanceof File) {
+      addMultiPartFile(multiPartBuilder, name, (File) value);
+    } else if (value instanceof byte[]) {
+      addMultiPartByteArray(multiPartBuilder, name, (byte[]) value);
+    } else if (value instanceof Collection) {
+      addMultiPartCollection(messageBuilder, multiPartBuilder, name, (Collection<?>) value);
+    } else {
+      Charset charset = extractCharset(messageBuilder).orElse(StandardCharsets.UTF_8);
+      ContentType customContentType =
+          ContentType.create(ContentType.TEXT_PLAIN.getMimeType(), charset);
+      multiPartBuilder.addTextBody(name, (String) value, customContentType);
+    }
+  }
+
+  private void addMultiPartFile(MultipartEntityBuilder multiPartBuilder, String name, File file) {
+    multiPartBuilder.addBinaryBody(name, file);
+  }
+
+  private void addMultiPartByteArray(
+      MultipartEntityBuilder multiPartBuilder, String name, byte[] bytes) {
+    multiPartBuilder.addBinaryBody(name, bytes);
+  }
+
+  private void addMultiPartCollection(
+      AbstractMessageBuilder<?> messageBuilder,
+      MultipartEntityBuilder multiPartBuilder,
+      String name,
+      Collection<?> collection) {
+    collection.forEach(item -> addMultiPart(messageBuilder, multiPartBuilder, name, item));
   }
 
   private void addCollectionHeader(
@@ -268,12 +334,14 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
     return client.execute(request, HttpClientApache::processResponse);
   }
 
-  private Optional<Charset> extractCharset(ClassicRequestBuilder requestBuilder) {
+  private Optional<Charset> extractCharset(AbstractMessageBuilder<?> messageBuilder) {
 
+    Header[] headers = messageBuilder.getHeaders(CONTENT_TYPE_HEADER);
+    if (null == headers) {
+      return Optional.empty();
+    }
     Optional<Header> charsetHeader =
-        Arrays.stream(requestBuilder.getHeaders(CONTENT_TYPE_HEADER))
-            .filter(f -> f.getValue().contains("charset="))
-            .findFirst();
+        Arrays.stream(headers).filter(f -> f.getValue().contains("charset=")).findFirst();
 
     return charsetHeader.flatMap(
         header -> HttpContentType.getCharsetValue(header.getValue()).map(Charset::forName));

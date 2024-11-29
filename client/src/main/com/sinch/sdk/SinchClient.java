@@ -22,9 +22,11 @@ import com.sinch.sdk.models.VoiceRegion;
 import com.sinch.sdk.models.adapters.DualToneMultiFrequencyMapper;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -55,6 +57,7 @@ public class SinchClient {
   private static final String MAILGUN_REGION_KEY = "mailgun-region";
   private static final String MAILGUN_DEFAULT_SERVER_KEY = "mailgun-default-server";
   private static final String MAILGUN_REGION_SERVER_KEY = "mailgun-region-server";
+  private static final String MAILGUN_STORAGE_BY_REGION_SERVER_KEY = "mailgun-%s-storage";
 
   // sinch-sdk/{sdk_version} ({language}/{language_version}; {implementation_type};
   // {auxiliary_flag})
@@ -239,8 +242,12 @@ public class SinchClient {
   private void handleDefaultMailgunSettings(
       Configuration configuration, Properties props, Configuration.Builder builder) {
 
-    MailgunRegion region =
-        configuration.getMailgunContext().map(MailgunContext::getRegion).orElse(null);
+    MailgunRegion defaultRegion = MailgunRegion.US;
+
+    Optional<MailgunContext> previousContext = configuration.getMailgunContext();
+    MailgunContext.Builder contextBuilder = MailgunContext.builder();
+
+    MailgunRegion region = previousContext.map(MailgunContext::getRegion).orElse(null);
     // default region to be used ?
     if (null == region && props.containsKey(MAILGUN_REGION_KEY)) {
       String value = props.getProperty(MAILGUN_REGION_KEY);
@@ -249,19 +256,34 @@ public class SinchClient {
       }
     }
 
-    String url = configuration.getMailgunContext().map(MailgunContext::getUrl).orElse(null);
-
-    // server is not defined: use the region to set to an existing one and use "global" as a default
+    // url is not defined: use the region to set to an existing one and use "global" as a default
     // fallback
+    String url = previousContext.map(MailgunContext::getUrl).orElse(null);
     if (StringUtil.isEmpty(url)) {
-      if (null == region || MailgunRegion.US.value().equals(region.value().toLowerCase())) {
+      if (null == region || defaultRegion.value().equals(region.value().toLowerCase())) {
         url = props.getProperty(MAILGUN_DEFAULT_SERVER_KEY);
       } else {
         url = String.format(props.getProperty(MAILGUN_REGION_SERVER_KEY), region.value());
       }
     }
 
-    builder.setMailgunContext(MailgunContext.builder().setUrl(url).build());
+    // storage URls are not defined: set a default set related to region in use
+    Collection<String> storageUrls =
+        previousContext.map(MailgunContext::getStorageUrls).orElse(null);
+    if (null == storageUrls || storageUrls.isEmpty()) {
+      MailgunRegion storageKeyRegion = null == region ? defaultRegion : region;
+      String storageKey =
+          String.format(
+              MAILGUN_STORAGE_BY_REGION_SERVER_KEY, storageKeyRegion.value().toLowerCase());
+      String value = props.getProperty(storageKey);
+      if (!StringUtil.isEmpty(value)) {
+        storageUrls =
+            Arrays.stream(value.split(",")).map(String::trim).collect(Collectors.toList());
+        contextBuilder.setStorageUrls(storageUrls);
+      }
+    }
+
+    builder.setMailgunContext(contextBuilder.setUrl(url).setStorageUrls(storageUrls).build());
   }
 
   /**

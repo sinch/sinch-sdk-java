@@ -16,14 +16,14 @@ import java.util.stream.Stream;
 public class MailgunService implements com.sinch.sdk.domains.mailgun.api.v1.MailgunService {
 
   private static final Logger LOGGER = Logger.getLogger(MailgunService.class.getName());
-  private static final String SECURITY_SCHEME_KEYWORD_NUMBERS = "BasicAuth";
+  private static final String SECURITY_SCHEME_KEYWORD_NUMBERS = "basicAuth";
 
   private final MailgunContext context;
   private final HttpClient httpClient;
 
   private final Map<String, AuthManager> authManagers;
 
-  private MessagesService messages;
+  private EmailsService emails;
 
   public MailgunService(
       MailgunCredentials credentials, MailgunContext context, HttpClient httpClient) {
@@ -34,8 +34,7 @@ public class MailgunService implements com.sinch.sdk.domains.mailgun.api.v1.Mail
         credentials.getApiUser(), "Mailgun service requires 'apiUser' to be defined");
     StringUtil.requireNonEmpty(
         credentials.getApiKey(), "Mailgun service requires 'apiKey' to be defined");
-    StringUtil.requireNonEmpty(
-        context.getUrl(), "'Mailgun service requires mailgunUrl' to be defined");
+    StringUtil.requireNonEmpty(context.getUrl(), "'Mailgun service requires 'url' to be defined");
 
     LOGGER.fine("Activate Mailgun API with server='" + context.getServer().getUrl() + "'");
 
@@ -50,10 +49,10 @@ public class MailgunService implements com.sinch.sdk.domains.mailgun.api.v1.Mail
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 
-  public MessagesService messages() {
-    if (null == this.messages) {
-      this.messages = new MessagesService(context, httpClient, authManagers);
+  public EmailsService emails() {
+    if (null == this.emails) {
+      this.emails = new EmailsService(context, httpClient, authManagers);
     }
-    return this.messages;
+    return this.emails;
   }
 }

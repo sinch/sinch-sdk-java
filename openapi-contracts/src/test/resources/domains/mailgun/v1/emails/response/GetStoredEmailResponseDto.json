@@ -1,0 +1,67 @@
+{
+  "Content-Type": "multipart/mixed; boundary=\"12fbc3b931c5f35e57a508a0daaa479e1fce01151c18d31d385e3586ec05\"",
+  "From": "Excited User <mailgun@sandboxABCDE.mailgun.org>",
+  "Message-Id": "<20241120145053.ABCDE8abde764661c8@sandboxABCDE.mailgun.org>",
+  "Mime-Version": "1.0",
+  "Subject": "📧 Hello from Sinch SDK Java",
+  "To": "SinchSdkJava@sinch.com",
+  "X-Mailgun-Tag": "my tag 2",
+  "sender": "Excited User <mailgun@sandboxABCDE.mailgun.org>",
+  "recipients": "SinchSdkJava@sinch.com",
+  "from": "Excited User <mailgun@sandboxABCDE.mailgun.org>",
+  "subject": "📧 Hello from Sinch SDK Java",
+  "body-html": "&#128231; HTML sent with <bold>Sinch SDK Java</bold>",
+  "body-plain": "📧 Text sent with Sinch SDK Java",
+  "attachments": [
+    {
+      "name": "sinch-sdk-java-1.txt",
+      "content-type": "text/plain",
+      "size": 24,
+      "url": "https://storage-us-west1.api.mailgun.net/v3/domains/sandboxABCDE.mailgun.org/messages/AAA/attachments/0"
+    },
+    {
+      "name": "sinch-sdk-java-2.txt",
+      "content-type": "text/plain",
+      "size": 26,
+      "url": "https://storage-us-west1.api.mailgun.net/v3/domains/sandboxABCDE.mailgun.org/messages/BBB/attachments/1"
+    }
+  ],
+  "content-id-map": {},
+  "message-headers": [
+    [
+      "Mime-Version",
+      "1.0"
+    ],
+    [
+      "Content-Type",
+      "multipart/mixed; boundary=\"12fbc3b931c5f35e57a508a0daaa479e1fce01151c18d31d385e3586ec05\""
+    ],
+    [
+      "Subject",
+      "📧 Hello from Sinch SDK Java"
+    ],
+    [
+      "From",
+      "Excited User <mailgun@sandboxABCDE.mailgun.org>"
+    ],
+    [
+      "To",
+      "SinchSdkJava@sinch.com"
+    ],
+    [
+      "X-Mailgun-Tag",
+      "my tag 1"
+    ],
+    [
+      "X-Mailgun-Tag",
+      "my tag 2"
+    ],
+    [
+      "Message-Id",
+      "<20241120145053.ABCDE8abde764661c8@sandboxABCDE.mailgun.org>"
+    ]
+  ],
+  "stripped-html": "&#128231; HTML sent with <bold>Sinch SDK Java</bold>",
+  "stripped-text": "📧 Text sent with Sinch SDK Java",
+  "stripped-signature": "a signature"
+}
