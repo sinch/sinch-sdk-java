@@ -46,7 +46,7 @@ From: %s
 Subject: SendMime Email Example
 Content-Type: multipart/alternative; boundary="boundary-string"
 
---your-boundary
+--boundary-string
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 Content-Disposition: inline
