@@ -1,8 +1,8 @@
 package com.sinch.sdk.models;
 
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.models.ConversationContext.Builder;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 /**
@@ -19,7 +19,7 @@ public class MailgunContext {
   private MailgunContext(MailgunRegion region, String url, Collection<String> storageUrls) {
     this.region = region;
     this.url = url;
-    this.storageUrls = storageUrls;
+    this.storageUrls = null == storageUrls ? Collections.emptyList() : storageUrls;
   }
 
   /**
