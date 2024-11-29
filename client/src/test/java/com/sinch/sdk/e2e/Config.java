@@ -4,6 +4,7 @@ import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.ConversationRegion;
+import com.sinch.sdk.models.SmsContext;
 import com.sinch.sdk.models.VoiceContext;
 
 public class Config {
@@ -21,6 +22,7 @@ public class Config {
   public static final String VOICE_HOST_NAME = "http://localhost:3019";
   public static final String VOICE_MANAGEMENT_HOST_NAME = "http://localhost:3020";
 
+  public static final String SMS_HOST_NAME = "http://localhost:3017";
   private final SinchClient client;
 
   private Config() {
@@ -44,6 +46,7 @@ public class Config {
                     .setVoiceApplicationMngmtUrl(VOICE_MANAGEMENT_HOST_NAME)
                     .setVoiceUrl(VOICE_HOST_NAME)
                     .build())
+            .setSmsContext(SmsContext.builder().setSmsUrl(SMS_HOST_NAME).build())
             .build();
 
     client = new SinchClient(configuration);
