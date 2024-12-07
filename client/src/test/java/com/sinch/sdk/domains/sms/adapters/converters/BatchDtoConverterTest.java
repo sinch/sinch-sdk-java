@@ -27,22 +27,22 @@ import org.junit.jupiter.api.Test;
 @TestWithResources
 class BatchDtoConverterTest extends BaseTest {
 
-  @GivenJsonResource("/domains/sms/v1/BinaryResponseDto.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/BatchBinaryDto.json")
   public SendSMS201ResponseDto binaryResponseDto;
 
-  @GivenJsonResource("/domains/sms/v1/TextResponseDto.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/BatchTextDto.json")
   public SendSMS201ResponseDto textResponseDto;
 
-  @GivenJsonResource("/domains/sms/v1/MediaResponseDto.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/BatchMediaDto.json")
   public SendSMS201ResponseDto mediaResponseDto;
 
-  @GivenJsonResource("/domains/sms/v1/SendSMSBinaryRequestDto.json")
+  @GivenJsonResource("/domains/sms/v1/batches/request/BinaryRequestDto.json")
   public SendSMSRequestDto sendBinaryRequestDto;
 
-  @GivenJsonResource("/domains/sms/v1/SendSMSTextRequestDto.json")
+  @GivenJsonResource("/domains/sms/v1/batches/request/TextRequestDto.json")
   public SendSMSRequestDto sendTextRequestDto;
 
-  @GivenJsonResource("/domains/sms/v1/SendSMSMediaRequestDto.json")
+  @GivenJsonResource("/domains/sms/v1/batches/request/MediaRequestDto.json")
   public SendSMSRequestDto sendMediaRequestDto;
 
   @GivenJsonResource("/domains/sms/v1/UpdateSMSTextRequestDto.json")
