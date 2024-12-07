@@ -77,4 +77,11 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 
+  @Override
+  public BatchesService batches() {
+    if (null == this.batches) {
+      this.batches = new BatchesService(uriUUID, context, httpClient, authManagers);
+    }
+    return this.batches;
+  }
 }
