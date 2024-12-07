@@ -14,10 +14,10 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 class DryRunResponseDtoTest extends BaseTest {
 
-  @GivenJsonResource("/domains/sms/v1/DryRunResponseDto.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/DryRunResponseDto.json")
   DryRun200ResponseDto loadedDto;
 
-  @GivenTextResource("/domains/sms/v1/DryRunResponseDto.json")
+  @GivenTextResource("/domains/sms/v1/batches/response/DryRunResponseDto.json")
   String jsonStringDto;
 
   DryRun200ResponseDto dto =

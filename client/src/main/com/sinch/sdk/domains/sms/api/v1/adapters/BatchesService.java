@@ -10,6 +10,7 @@ import com.sinch.sdk.domains.sms.models.v1.batches.internal.SMSCursorPageNavigat
 import com.sinch.sdk.domains.sms.models.v1.batches.request.BatchRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.Batch;
+import com.sinch.sdk.domains.sms.models.v1.batches.response.DryRunResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.ListBatchesResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.internal.ApiBatchList;
 import com.sinch.sdk.models.SmsContext;
@@ -57,5 +58,9 @@ public class BatchesService implements com.sinch.sdk.domains.sms.api.v1.BatchesS
 
     return new ListBatchesResponse(
         this, new Page<>(guardParameters, response.getBatches(), navigator));
+  }
+
+  public DryRunResponse dryRun(boolean perRecipient, int numberOfRecipient, BatchRequest batch) {
+    return getApi().dryRun(perRecipient, numberOfRecipient, batch);
   }
 }

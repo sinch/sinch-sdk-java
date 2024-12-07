@@ -255,7 +255,7 @@ public class BatchesServiceTest extends BaseTest {
   @GivenJsonResource("/domains/sms/v1/batches/response/BatchTextDto.json")
   SendSMS201ResponseDto textResponseDto;
 
-  @GivenJsonResource("/domains/sms/v1/DryRunResponseDto.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/DryRunResponseDto.json")
   DryRun200ResponseDto dryRunResponseDto;
 
   @GivenJsonResource("/domains/sms/v1/batches/response/ListBatchesResponseDtoPage0.json")

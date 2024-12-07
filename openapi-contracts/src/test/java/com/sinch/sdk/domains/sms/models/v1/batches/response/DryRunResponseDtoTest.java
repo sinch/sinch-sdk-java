@@ -1,23 +1,20 @@
-package com.sinch.sdk.domains.sms.adapters.converters;
+package com.sinch.sdk.domains.sms.models.v1.batches.response;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
-import com.sinch.sdk.domains.sms.models.DryRun;
-import com.sinch.sdk.domains.sms.models.DryRunPerRecipientDetails;
-import com.sinch.sdk.domains.sms.models.dto.v1.DryRun200ResponseDto;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
-public class DryRunDtoConverterTest extends BaseTest {
+class DryRunResponseDtoTest extends BaseTest {
 
   @GivenJsonResource("/domains/sms/v1/batches/response/DryRunResponseDto.json")
-  DryRun200ResponseDto loadedDto;
+  DryRunResponse loadedDto;
 
-  public static DryRun dryRunClient =
-      DryRun.builder()
+  DryRunResponse dto =
+      DryRunResponse.builder()
           .setNumberOfRecipients(123)
           .setNumberOfMessages(456)
           .setPerRecipient(
@@ -31,7 +28,8 @@ public class DryRunDtoConverterTest extends BaseTest {
           .build();
 
   @Test
-  void testConvertDryRun() {
-    TestHelpers.recursiveEquals(DryRunDtoConverter.convert(loadedDto), dryRunClient);
+  void deserialize() {
+
+    TestHelpers.recursiveEquals(loadedDto, dto);
   }
 }
