@@ -4,10 +4,16 @@ import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.domains.sms.api.v1.internal.BatchesApi;
+import com.sinch.sdk.domains.sms.models.v1.batches.internal.SMSCursorPageNavigator;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.BatchRequest;
+import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.Batch;
+import com.sinch.sdk.domains.sms.models.v1.batches.response.ListBatchesResponse;
+import com.sinch.sdk.domains.sms.models.v1.batches.response.internal.ApiBatchList;
 import com.sinch.sdk.models.SmsContext;
+import java.time.Instant;
 import java.util.Map;
 
 public class BatchesService implements com.sinch.sdk.domains.sms.api.v1.BatchesService {
@@ -31,4 +37,25 @@ public class BatchesService implements com.sinch.sdk.domains.sms.api.v1.BatchesS
     return getApi().send(batch);
   }
 
+  public ListBatchesResponse list(ListBatchesRequest parameters) throws ApiException {
+
+    ListBatchesRequest guardParameters =
+        null != parameters ? parameters : ListBatchesRequest.builder().build();
+
+    ApiBatchList response =
+        getApi()
+            .list(
+                guardParameters.getPage().orElse(null),
+                guardParameters.getPageSize().orElse(null),
+                guardParameters.getFrom().orElse(null),
+                guardParameters.getStartDate().map(Instant::toString).orElse(null),
+                guardParameters.getEndDate().map(Instant::toString).orElse(null),
+                guardParameters.getClientReference().orElse(null));
+
+    SMSCursorPageNavigator navigator =
+        new SMSCursorPageNavigator(response.getPage(), response.getPageSize());
+
+    return new ListBatchesResponse(
+        this, new Page<>(guardParameters, response.getBatches(), navigator));
+  }
 }

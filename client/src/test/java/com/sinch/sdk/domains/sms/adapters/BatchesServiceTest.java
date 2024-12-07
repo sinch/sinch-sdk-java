@@ -258,13 +258,13 @@ public class BatchesServiceTest extends BaseTest {
   @GivenJsonResource("/domains/sms/v1/DryRunResponseDto.json")
   DryRun200ResponseDto dryRunResponseDto;
 
-  @GivenJsonResource("/domains/sms/v1/ListBatchesResponseDtoPage0.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/ListBatchesResponseDtoPage0.json")
   ApiBatchListDto listBatchesResponseDtoPage0;
 
-  @GivenJsonResource("/domains/sms/v1/ListBatchesResponseDtoPage1.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/ListBatchesResponseDtoPage1.json")
   ApiBatchListDto listBatchesResponseDtoPage1;
 
-  @GivenJsonResource("/domains/sms/v1/ListBatchesResponseDtoPage2.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/ListBatchesResponseDtoPage2.json")
   ApiBatchListDto listBatchesResponseDtoPage2;
 
   @Mock SmsContext context;
