@@ -63,4 +63,8 @@ public class BatchesService implements com.sinch.sdk.domains.sms.api.v1.BatchesS
   public DryRunResponse dryRun(boolean perRecipient, int numberOfRecipient, BatchRequest batch) {
     return getApi().dryRun(perRecipient, numberOfRecipient, batch);
   }
+
+  public Batch get(String batchId) throws ApiException {
+    return getApi().get(batchId);
+  }
 }
