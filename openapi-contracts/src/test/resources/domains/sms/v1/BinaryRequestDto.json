@@ -12,6 +12,9 @@
   "callback_url": "callback url",
   "client_reference": "myReference",
   "feedback_enabled": false,
+  "flash_message": true,
+  "truncate_concat": true,
+  "max_number_of_message_parts": 1,
   "from_ton": 6,
   "from_npi": 18,
   "udh": "foo udh"

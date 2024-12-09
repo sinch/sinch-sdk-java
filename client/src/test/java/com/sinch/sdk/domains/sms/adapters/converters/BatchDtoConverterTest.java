@@ -36,7 +36,7 @@ class BatchDtoConverterTest extends BaseTest {
   @GivenJsonResource("/domains/sms/v1/batches/response/BatchMediaDto.json")
   public SendSMS201ResponseDto mediaResponseDto;
 
-  @GivenJsonResource("/domains/sms/v1/batches/request/BinaryRequestDto.json")
+  @GivenJsonResource("/domains/sms/v1/BinaryRequestDto.json")
   public SendSMSRequestDto sendBinaryRequestDto;
 
   @GivenJsonResource("/domains/sms/v1/batches/request/TextRequestDto.json")

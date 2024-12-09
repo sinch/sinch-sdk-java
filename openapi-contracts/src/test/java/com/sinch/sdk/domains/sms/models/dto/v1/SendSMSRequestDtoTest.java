@@ -16,7 +16,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
 class SendSMSRequestDtoTest extends BaseTest {
-  @GivenTextResource("/domains/sms/v1/batches/request/BinaryRequestDto.json")
+  @GivenTextResource("/domains/sms/v1/BinaryRequestDto.json")
   String jsonRequestBinaryDto;
 
   @GivenTextResource("/domains/sms/v1/batches/request/TextRequestDto.json")
