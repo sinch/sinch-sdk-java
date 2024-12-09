@@ -18,4 +18,6 @@ public interface BatchesService {
   Batch get(String batchId) throws ApiException;
 
   Batch replace(String batchId, BatchRequest batch) throws ApiException;
+
+  Batch cancel(String batchId) throws ApiException;
 }

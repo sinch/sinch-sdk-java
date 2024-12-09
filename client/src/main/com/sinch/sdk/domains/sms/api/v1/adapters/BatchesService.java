@@ -71,4 +71,8 @@ public class BatchesService implements com.sinch.sdk.domains.sms.api.v1.BatchesS
   public Batch replace(String batchId, BatchRequest batch) throws ApiException {
     return getApi().replace(batchId, batch);
   }
+
+  public Batch cancel(String batchId) throws ApiException {
+    return getApi().cancel(batchId);
+  }
 }
