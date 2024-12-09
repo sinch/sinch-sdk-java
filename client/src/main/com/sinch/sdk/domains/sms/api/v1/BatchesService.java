@@ -4,6 +4,7 @@ import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.BatchRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.SendDeliveryFeedbackRequest;
+import com.sinch.sdk.domains.sms.models.v1.batches.request.UpdateBatchRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.Batch;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.DryRunResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.ListBatchesResponse;
@@ -24,4 +25,6 @@ public interface BatchesService {
 
   void sendDeliveryFeedback(String batchId, SendDeliveryFeedbackRequest recipients)
       throws ApiException;
+
+  Batch update(String batchId, UpdateBatchRequest request) throws ApiException;
 }

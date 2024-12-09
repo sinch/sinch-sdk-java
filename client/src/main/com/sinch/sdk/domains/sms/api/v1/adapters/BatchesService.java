@@ -10,6 +10,7 @@ import com.sinch.sdk.domains.sms.models.v1.batches.internal.SMSCursorPageNavigat
 import com.sinch.sdk.domains.sms.models.v1.batches.request.BatchRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.SendDeliveryFeedbackRequest;
+import com.sinch.sdk.domains.sms.models.v1.batches.request.UpdateBatchRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.Batch;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.DryRunResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.ListBatchesResponse;
@@ -80,5 +81,9 @@ public class BatchesService implements com.sinch.sdk.domains.sms.api.v1.BatchesS
   public void sendDeliveryFeedback(String batchId, SendDeliveryFeedbackRequest request)
       throws ApiException {
     getApi().sendDeliveryFeedback(batchId, request);
+  }
+
+  public Batch update(String batchId, UpdateBatchRequest request) throws ApiException {
+    return getApi().update(batchId, request);
   }
 }
