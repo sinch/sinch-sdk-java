@@ -16,4 +16,6 @@ public interface BatchesService {
   DryRunResponse dryRun(boolean perRecipient, int numberOfRecipient, BatchRequest batch);
 
   Batch get(String batchId) throws ApiException;
+
+  Batch replace(String batchId, BatchRequest batch) throws ApiException;
 }
