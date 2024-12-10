@@ -89,7 +89,7 @@ public class EmailsSteps {
   @When("^I send a request to purge the domain queues$")
   public void purgeDomainQueues() {
 
-    service.purgeDomainQueues(domainName);
+    service.purgeDomainQueues(domainName, Config.MAILGUN_STORAGE);
     purgeDomainQueuesPassed = true;
   }
 

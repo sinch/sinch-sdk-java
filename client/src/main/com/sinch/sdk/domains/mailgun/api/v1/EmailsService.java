@@ -22,5 +22,5 @@ public interface EmailsService {
 
   SendingQueuesStatusResponse getSendingQueuesStatus(String domain);
 
-  void purgeDomainQueues(String domainName);
+  void purgeDomainQueues(String domainName, String storageURL);
 }

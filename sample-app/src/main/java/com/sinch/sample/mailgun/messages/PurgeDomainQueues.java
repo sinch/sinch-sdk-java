@@ -26,6 +26,6 @@ public class PurgeDomainQueues extends BaseApplication {
 
     LOGGER.info("Purge domain: " + mailgunDomain);
 
-    service.purgeDomainQueues(mailgunDomain);
+    service.purgeDomainQueues(mailgunDomain, "https://storage-us-east4.api.mailgun.net");
   }
 }
