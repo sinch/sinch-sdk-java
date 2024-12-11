@@ -56,36 +56,12 @@ public interface SendMimeEmailRequest extends AdditionalProperties {
    */
   String getTemplateVersion();
 
-  /** Render template in case of template sending */
-  public class TemplateTextEnum extends EnumDynamic<String, TemplateTextEnum> {
-    public static final TemplateTextEnum YES = new TemplateTextEnum("yes");
-
-    private static final EnumSupportDynamic<String, TemplateTextEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(TemplateTextEnum.class, TemplateTextEnum::new, Arrays.asList(YES));
-
-    private TemplateTextEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<TemplateTextEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static TemplateTextEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(TemplateTextEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
-
   /**
    * Render template in case of template sending
    *
    * @return templateText
    */
-  TemplateTextEnum getTemplateText();
+  Boolean getTemplateText();
 
   /**
    * A valid JSON-encoded dictionary used as the input for template variable expansion. See
@@ -102,40 +78,12 @@ public interface SendMimeEmailRequest extends AdditionalProperties {
    */
   List<String> getTag();
 
-  /** Enables/disables DKIM signatures on a per-message basis */
-  public class DkimSignatureEnum extends EnumDynamic<String, DkimSignatureEnum> {
-    public static final DkimSignatureEnum YES = new DkimSignatureEnum("yes");
-    public static final DkimSignatureEnum NO = new DkimSignatureEnum("no");
-    public static final DkimSignatureEnum TRUE = new DkimSignatureEnum("true");
-    public static final DkimSignatureEnum FALSE = new DkimSignatureEnum("false");
-
-    private static final EnumSupportDynamic<String, DkimSignatureEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(
-            DkimSignatureEnum.class, DkimSignatureEnum::new, Arrays.asList(YES, NO, TRUE, FALSE));
-
-    private DkimSignatureEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<DkimSignatureEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static DkimSignatureEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(DkimSignatureEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
-
   /**
    * Enables/disables DKIM signatures on a per-message basis
    *
    * @return enableDkimSignature
    */
-  DkimSignatureEnum getEnableDkimSignature();
+  Boolean getEnableDkimSignature();
 
   /**
    * Specify a second domain key to sign the email with. The value is formatted as <code>
@@ -195,38 +143,10 @@ public interface SendMimeEmailRequest extends AdditionalProperties {
    * Enables sending in test mode. See <a
    * href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/#sending-in-test-mode">Sending
    * in Test Mode</a>
-   */
-  public class TestModeEnum extends EnumDynamic<String, TestModeEnum> {
-    public static final TestModeEnum YES = new TestModeEnum("yes");
-
-    private static final EnumSupportDynamic<String, TestModeEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(TestModeEnum.class, TestModeEnum::new, Arrays.asList(YES));
-
-    private TestModeEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<TestModeEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static TestModeEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(TestModeEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
-
-  /**
-   * Enables sending in test mode. See <a
-   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/#sending-in-test-mode">Sending
-   * in Test Mode</a>
    *
    * @return testMode
    */
-  TestModeEnum getTestMode();
+  Boolean getTestMode();
 
   /**
    * Toggles both click and open tracking on a per-message basis, see <a
@@ -318,77 +238,10 @@ public interface SendMimeEmailRequest extends AdditionalProperties {
    * Toggles opens tracking on a per-message basis, see <a
    * href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/#tracking-opens">Tracking
    * Opens</a>. Has higher priority than domain-level setting.
-   */
-  public class TrackingOpensEnum extends EnumDynamic<String, TrackingOpensEnum> {
-    public static final TrackingOpensEnum YES = new TrackingOpensEnum("yes");
-    public static final TrackingOpensEnum NO = new TrackingOpensEnum("no");
-    public static final TrackingOpensEnum TRUE = new TrackingOpensEnum("true");
-    public static final TrackingOpensEnum FALSE = new TrackingOpensEnum("false");
-
-    private static final EnumSupportDynamic<String, TrackingOpensEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(
-            TrackingOpensEnum.class, TrackingOpensEnum::new, Arrays.asList(YES, NO, TRUE, FALSE));
-
-    private TrackingOpensEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<TrackingOpensEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static TrackingOpensEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(TrackingOpensEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
-
-  /**
-   * Toggles opens tracking on a per-message basis, see <a
-   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/#tracking-opens">Tracking
-   * Opens</a>. Has higher priority than domain-level setting.
    *
    * @return trackingOpens
    */
-  TrackingOpensEnum getTrackingOpens();
-
-  /**
-   * Requires the message only be sent over a TLS connection, see <a
-   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/tls-sending/">TLS Sending
-   * Connection Settings</a>. If a TLS connection can not be established, Mailgun will not deliver
-   * the message. If set to <code>false</code> or <code>no</code>, Mailgun will still try and
-   * upgrade the connection, but if Mailgun cannot, the message will be delivered over a plaintext
-   * SMTP connection. The default is <code>false</code>
-   */
-  public class RequireTlsEnum extends EnumDynamic<String, RequireTlsEnum> {
-    public static final RequireTlsEnum YES = new RequireTlsEnum("yes");
-    public static final RequireTlsEnum NO = new RequireTlsEnum("no");
-    public static final RequireTlsEnum TRUE = new RequireTlsEnum("true");
-    public static final RequireTlsEnum FALSE = new RequireTlsEnum("false");
-
-    private static final EnumSupportDynamic<String, RequireTlsEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(
-            RequireTlsEnum.class, RequireTlsEnum::new, Arrays.asList(YES, NO, TRUE, FALSE));
-
-    private RequireTlsEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<RequireTlsEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static RequireTlsEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(RequireTlsEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
+  Boolean getTrackingOpens();
 
   /**
    * Requires the message only be sent over a TLS connection, see <a
@@ -400,42 +253,7 @@ public interface SendMimeEmailRequest extends AdditionalProperties {
    *
    * @return requireTls
    */
-  RequireTlsEnum getRequireTls();
-
-  /**
-   * If <code>skip</code> activated, the certificate and hostname of the resolved MX Host will not
-   * be verified when trying to establish a TLS connection. If not, Mailgun will verify the
-   * certificate and hostname. If either one can not be verified, a TLS connection will not be
-   * established. The default is <code>false</code>
-   */
-  public class SkipVerificationEnum extends EnumDynamic<String, SkipVerificationEnum> {
-    public static final SkipVerificationEnum YES = new SkipVerificationEnum("yes");
-    public static final SkipVerificationEnum NO = new SkipVerificationEnum("no");
-    public static final SkipVerificationEnum TRUE = new SkipVerificationEnum("true");
-    public static final SkipVerificationEnum FALSE = new SkipVerificationEnum("false");
-
-    private static final EnumSupportDynamic<String, SkipVerificationEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(
-            SkipVerificationEnum.class,
-            SkipVerificationEnum::new,
-            Arrays.asList(YES, NO, TRUE, FALSE));
-
-    private SkipVerificationEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<SkipVerificationEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static SkipVerificationEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(SkipVerificationEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
+  Boolean getRequireTls();
 
   /**
    * If <code>skip</code> activated, the certificate and hostname of the resolved MX Host will not
@@ -445,7 +263,7 @@ public interface SendMimeEmailRequest extends AdditionalProperties {
    *
    * @return skipVerification
    */
-  SkipVerificationEnum getSkipVerification();
+  Boolean getSkipVerification();
 
   /**
    * Used to specify an IP Address to send an email that is owned by your account
@@ -534,7 +352,7 @@ public interface SendMimeEmailRequest extends AdditionalProperties {
      * @return Current builder
      * @see #getTemplateText
      */
-    Builder setTemplateText(TemplateTextEnum templateText);
+    Builder setTemplateText(Boolean templateText);
 
     /**
      * see getter
@@ -561,7 +379,7 @@ public interface SendMimeEmailRequest extends AdditionalProperties {
      * @return Current builder
      * @see #getEnableDkimSignature
      */
-    Builder setEnableDkimSignature(DkimSignatureEnum enableDkimSignature);
+    Builder setEnableDkimSignature(Boolean enableDkimSignature);
 
     /**
      * see getter
@@ -615,7 +433,7 @@ public interface SendMimeEmailRequest extends AdditionalProperties {
      * @return Current builder
      * @see #getTestMode
      */
-    Builder setTestMode(TestModeEnum testMode);
+    Builder setTestMode(Boolean testMode);
 
     /**
      * see getter
@@ -642,7 +460,7 @@ public interface SendMimeEmailRequest extends AdditionalProperties {
      * @return Current builder
      * @see #getTrackingOpens
      */
-    Builder setTrackingOpens(TrackingOpensEnum trackingOpens);
+    Builder setTrackingOpens(Boolean trackingOpens);
 
     /**
      * see getter
@@ -651,7 +469,7 @@ public interface SendMimeEmailRequest extends AdditionalProperties {
      * @return Current builder
      * @see #getRequireTls
      */
-    Builder setRequireTls(RequireTlsEnum requireTls);
+    Builder setRequireTls(Boolean requireTls);
 
     /**
      * see getter
@@ -660,7 +478,7 @@ public interface SendMimeEmailRequest extends AdditionalProperties {
      * @return Current builder
      * @see #getSkipVerification
      */
-    Builder setSkipVerification(SkipVerificationEnum skipVerification);
+    Builder setSkipVerification(Boolean skipVerification);
 
     /**
      * see getter

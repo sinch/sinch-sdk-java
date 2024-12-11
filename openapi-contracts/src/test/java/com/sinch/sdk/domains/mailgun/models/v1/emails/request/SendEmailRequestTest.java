@@ -5,14 +5,8 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.databind.multipart.ObjectMapperTest;
 import com.sinch.sdk.core.http.HttpMapper;
-import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest.DkimSignatureEnum;
-import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest.RequireTlsEnum;
-import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest.SkipVerificationEnum;
-import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest.TemplateTextEnum;
-import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest.TestModeEnum;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest.TrackingClicksEnum;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest.TrackingEnum;
-import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest.TrackingOpensEnum;
 import java.io.File;
 import java.time.Instant;
 import java.util.Arrays;
@@ -50,7 +44,7 @@ public class SendEmailRequestTest extends BaseTest {
               "inline",Arrays.asList( fileAttachment2),
               "template","template value",
               "t:version","2",
-              "t:text","yes",
+              "t:text","true",
               "t:variables","{\"key\": \"value\"}",
               "o:tag", Arrays.asList("tag1", "tag2"),
               "o:dkim","true",
@@ -59,12 +53,12 @@ public class SendEmailRequestTest extends BaseTest {
               "o:deliverytime", "Sat, 22 Jan 2000 11:23:45 GMT",
               "o:deliverytime-optimize-period", "29h",
               "o:time-zone-localize","02:04PM",
-              "o:testmode", "no",
+              "o:testmode", "false",
               "o:tracking","htmlonly",
               "o:tracking-clicks","true",
               "o:tracking-opens","false",
               "o:require-tls","true",
-              "o:skip-verification","no",
+              "o:skip-verification","true",
               "o:sending-ip","192.168.0.10",
               "o:sending-ip-pool","sending pool ID",
               "o:tracking-pixel-location-top","foo",
@@ -79,11 +73,11 @@ public class SendEmailRequestTest extends BaseTest {
           .setAttachment(Arrays.asList(fileAttachment1, fileAttachment2))
           .setTag(Arrays.asList("tag1", "tag2"))
           .setDeliveryTime(Instant.parse("2000-01-22T11:23:45Z"))
-          .setTestMode(TestModeEnum.from("no"))
+          .setTestMode(false)
           .setTo(Arrays.asList("aRecipient@mailgun-by-sinch.com"))
           .setFrom("User <JavaSdkUser@sinch.com>")
           .setText("Sent from Sinch SDK Java with 📧")
-          .setTemplateText(TemplateTextEnum.YES)
+          .setTemplateText(true)
           .setHtml("&#128231; HTML sent with <bold>Sinch SDK Java</bold>")
           .setSubject("📧 From Sinch SDK Java")
           .setCc(Arrays.asList("cc-dest@sinch.com"))
@@ -91,16 +85,16 @@ public class SendEmailRequestTest extends BaseTest {
           .setAmpHtml("amp html value")
           .setTemplateVersion("2")
           .setTemplateVariables("{\"key\": \"value\"}")
-          .setEnableDkimSignature(DkimSignatureEnum.TRUE)
+          .setEnableDkimSignature(true)
           .setSecondaryDkim("example.com/s1")
           .setSecondaryDkimPublic("public.example.com/s1")
           .setDeliveryTimeOptimizePeriod(29)
           .setTimezoneLocalize("02:04PM")
           .setTracking(TrackingEnum.HTMLONLY)
           .setTrackingClicks(TrackingClicksEnum.TRUE)
-          .setTrackingOpens(TrackingOpensEnum.FALSE)
-          .setRequireTls(RequireTlsEnum.TRUE)
-          .setSkipVerification(SkipVerificationEnum.NO)
+          .setTrackingOpens(false)
+          .setRequireTls(true)
+          .setSkipVerification(true)
           .setSendingIp("192.168.0.10")
           .setSendingIpPool("sending pool ID")
           .setTrackingPixelLocationTop("foo")

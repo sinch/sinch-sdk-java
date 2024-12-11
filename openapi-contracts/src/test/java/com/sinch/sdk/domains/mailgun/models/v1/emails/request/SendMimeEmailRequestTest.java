@@ -5,6 +5,7 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.databind.multipart.ObjectMapperTest;
 import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendMimeEmailRequest.TrackingClicksEnum;
 import java.io.File;
 import java.time.Instant;
 import java.util.Arrays;
@@ -34,7 +35,7 @@ public class SendMimeEmailRequestTest extends BaseTest {
             "message", fileAttachment1,
             "template","template value",
             "t:version","2",
-            "t:text","yes",
+            "t:text","true",
             "t:variables","{\"key\": \"value\"}",
             "o:tag", Arrays.asList("tag1", "tag2"),
             "o:dkim","true",
@@ -43,12 +44,12 @@ public class SendMimeEmailRequestTest extends BaseTest {
             "o:deliverytime", "Sat, 22 Jan 2000 11:23:45 GMT",
             "o:deliverytime-optimize-period", "29h",
             "o:time-zone-localize","02:04PM",
-            "o:testmode", "no",
+            "o:testmode", "false",
             "o:tracking","htmlonly",
             "o:tracking-clicks","true",
             "o:tracking-opens","false",
             "o:require-tls","true",
-            "o:skip-verification","no",
+            "o:skip-verification","false",
             "o:sending-ip","192.168.0.10",
             "o:sending-ip-pool","sending pool ID",
             "o:tracking-pixel-location-top","foo",
@@ -62,21 +63,21 @@ public class SendMimeEmailRequestTest extends BaseTest {
           .setMessage(fileAttachment1)
           .setTag(Arrays.asList("tag1", "tag2"))
           .setDeliveryTime(Instant.parse("2000-01-22T11:23:45Z"))
-          .setTestMode(SendMimeEmailRequest.TestModeEnum.from("no"))
+          .setTestMode(false)
           .setTo(Arrays.asList("aRecipient@mailgun-by-sinch.com"))
-          .setTemplateText(SendMimeEmailRequest.TemplateTextEnum.YES)
+          .setTemplateText(true)
           .setTemplateVersion("2")
           .setTemplateVariables("{\"key\": \"value\"}")
-          .setEnableDkimSignature(SendMimeEmailRequest.DkimSignatureEnum.TRUE)
+          .setEnableDkimSignature(true)
           .setSecondaryDkim("example.com/s1")
           .setSecondaryDkimPublic("public.example.com/s1")
           .setDeliveryTimeOptimizePeriod(29)
           .setTimezoneLocalize("02:04PM")
           .setTracking(SendMimeEmailRequest.TrackingEnum.HTMLONLY)
-          .setTrackingClicks(SendMimeEmailRequest.TrackingClicksEnum.TRUE)
-          .setTrackingOpens(SendMimeEmailRequest.TrackingOpensEnum.FALSE)
-          .setRequireTls(SendMimeEmailRequest.RequireTlsEnum.TRUE)
-          .setSkipVerification(SendMimeEmailRequest.SkipVerificationEnum.NO)
+          .setTrackingClicks(TrackingClicksEnum.TRUE)
+          .setTrackingOpens(false)
+          .setRequireTls(true)
+          .setSkipVerification(false)
           .setSendingIp("192.168.0.10")
           .setSendingIpPool("sending pool ID")
           .setTrackingPixelLocationTop("foo")

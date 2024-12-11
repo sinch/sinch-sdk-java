@@ -3,7 +3,6 @@ package com.sinch.sample.mailgun.messages;
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.mailgun.api.v1.EmailsService;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest;
-import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest.TrackingEnum;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.response.SendEmailResponse;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -79,7 +78,7 @@ public class SendEmail extends BaseApplication {
         .setAttachment(Arrays.asList(tempFile, tempFile2))
         .setSubject("\uD83D\uDCE7 Hello from Sinch SDK Java")
         .setTag(Arrays.asList("my tag 1", "my tag 2"))
-        .setTracking(TrackingEnum.YES)
+        .setTrackingOpens(true)
         .setDeliveryTime(Instant.now().plus(10, ChronoUnit.SECONDS))
         .put("v:myvarkey", "myvar-value")
         .build();
