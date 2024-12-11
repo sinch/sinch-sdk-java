@@ -63,7 +63,7 @@ public class SendEmailRequestImpl implements SendEmailRequest {
 
   public static final String PROPERTY_T_COLON_TEXT = "t:text";
 
-  private OptionalValue<TemplateTextEnum> templateText;
+  private OptionalValue<Boolean> templateText;
 
   public static final String PROPERTY_T_COLON_VARIABLES = "t:variables";
 
@@ -75,7 +75,7 @@ public class SendEmailRequestImpl implements SendEmailRequest {
 
   public static final String PROPERTY_O_COLON_DKIM = "o:dkim";
 
-  private OptionalValue<DkimSignatureEnum> enableDkimSignature;
+  private OptionalValue<Boolean> enableDkimSignature;
 
   public static final String PROPERTY_O_COLON_SECONDARY_DKIM = "o:secondary-dkim";
 
@@ -100,7 +100,7 @@ public class SendEmailRequestImpl implements SendEmailRequest {
 
   public static final String PROPERTY_O_COLON_TESTMODE = "o:testmode";
 
-  private OptionalValue<TestModeEnum> testMode;
+  private OptionalValue<Boolean> testMode;
 
   public static final String PROPERTY_O_COLON_TRACKING = "o:tracking";
 
@@ -112,15 +112,15 @@ public class SendEmailRequestImpl implements SendEmailRequest {
 
   public static final String PROPERTY_O_COLON_TRACKING_OPENS = "o:tracking-opens";
 
-  private OptionalValue<TrackingOpensEnum> trackingOpens;
+  private OptionalValue<Boolean> trackingOpens;
 
   public static final String PROPERTY_O_COLON_REQUIRE_TLS = "o:require-tls";
 
-  private OptionalValue<RequireTlsEnum> requireTls;
+  private OptionalValue<Boolean> requireTls;
 
   public static final String PROPERTY_O_COLON_SKIP_VERIFICATION = "o:skip-verification";
 
-  private OptionalValue<SkipVerificationEnum> skipVerification;
+  private OptionalValue<Boolean> skipVerification;
 
   public static final String PROPERTY_O_COLON_SENDING_IP = "o:sending-ip";
 
@@ -160,21 +160,21 @@ public class SendEmailRequestImpl implements SendEmailRequest {
       OptionalValue<List<File>> inline,
       OptionalValue<String> template,
       OptionalValue<String> templateVersion,
-      OptionalValue<TemplateTextEnum> templateText,
+      OptionalValue<Boolean> templateText,
       OptionalValue<String> templateVariables,
       OptionalValue<List<String>> tag,
-      OptionalValue<DkimSignatureEnum> enableDkimSignature,
+      OptionalValue<Boolean> enableDkimSignature,
       OptionalValue<String> secondaryDkim,
       OptionalValue<String> secondaryDkimPublic,
       OptionalValue<Instant> deliveryTime,
       OptionalValue<Integer> deliveryTimeOptimizePeriod,
       OptionalValue<String> timezoneLocalize,
-      OptionalValue<TestModeEnum> testMode,
+      OptionalValue<Boolean> testMode,
       OptionalValue<TrackingEnum> tracking,
       OptionalValue<TrackingClicksEnum> trackingClicks,
-      OptionalValue<TrackingOpensEnum> trackingOpens,
-      OptionalValue<RequireTlsEnum> requireTls,
-      OptionalValue<SkipVerificationEnum> skipVerification,
+      OptionalValue<Boolean> trackingOpens,
+      OptionalValue<Boolean> requireTls,
+      OptionalValue<Boolean> skipVerification,
       OptionalValue<String> sendingIp,
       OptionalValue<String> sendingIpPool,
       OptionalValue<String> trackingPixelLocationTop,
@@ -322,12 +322,13 @@ public class SendEmailRequestImpl implements SendEmailRequest {
     return templateVersion;
   }
 
-  public TemplateTextEnum getTemplateText() {
+  public Boolean getTemplateText() {
     return templateText.orElse(null);
   }
 
   @Property(PROPERTY_T_COLON_TEXT)
-  public OptionalValue<TemplateTextEnum> templateText() {
+  @FormSerialize(using = com.sinch.sdk.domains.mailgun.api.v1.adapters.BooleanFormSerializer.class)
+  public OptionalValue<Boolean> templateText() {
     return templateText;
   }
 
@@ -349,12 +350,13 @@ public class SendEmailRequestImpl implements SendEmailRequest {
     return tag;
   }
 
-  public DkimSignatureEnum getEnableDkimSignature() {
+  public Boolean getEnableDkimSignature() {
     return enableDkimSignature.orElse(null);
   }
 
   @Property(PROPERTY_O_COLON_DKIM)
-  public OptionalValue<DkimSignatureEnum> enableDkimSignature() {
+  @FormSerialize(using = com.sinch.sdk.domains.mailgun.api.v1.adapters.BooleanFormSerializer.class)
+  public OptionalValue<Boolean> enableDkimSignature() {
     return enableDkimSignature;
   }
 
@@ -406,12 +408,13 @@ public class SendEmailRequestImpl implements SendEmailRequest {
     return timezoneLocalize;
   }
 
-  public TestModeEnum getTestMode() {
+  public Boolean getTestMode() {
     return testMode.orElse(null);
   }
 
   @Property(PROPERTY_O_COLON_TESTMODE)
-  public OptionalValue<TestModeEnum> testMode() {
+  @FormSerialize(using = com.sinch.sdk.domains.mailgun.api.v1.adapters.BooleanFormSerializer.class)
+  public OptionalValue<Boolean> testMode() {
     return testMode;
   }
 
@@ -433,30 +436,33 @@ public class SendEmailRequestImpl implements SendEmailRequest {
     return trackingClicks;
   }
 
-  public TrackingOpensEnum getTrackingOpens() {
+  public Boolean getTrackingOpens() {
     return trackingOpens.orElse(null);
   }
 
   @Property(PROPERTY_O_COLON_TRACKING_OPENS)
-  public OptionalValue<TrackingOpensEnum> trackingOpens() {
+  @FormSerialize(using = com.sinch.sdk.domains.mailgun.api.v1.adapters.BooleanFormSerializer.class)
+  public OptionalValue<Boolean> trackingOpens() {
     return trackingOpens;
   }
 
-  public RequireTlsEnum getRequireTls() {
+  public Boolean getRequireTls() {
     return requireTls.orElse(null);
   }
 
   @Property(PROPERTY_O_COLON_REQUIRE_TLS)
-  public OptionalValue<RequireTlsEnum> requireTls() {
+  @FormSerialize(using = com.sinch.sdk.domains.mailgun.api.v1.adapters.BooleanFormSerializer.class)
+  public OptionalValue<Boolean> requireTls() {
     return requireTls;
   }
 
-  public SkipVerificationEnum getSkipVerification() {
+  public Boolean getSkipVerification() {
     return skipVerification.orElse(null);
   }
 
   @Property(PROPERTY_O_COLON_SKIP_VERIFICATION)
-  public OptionalValue<SkipVerificationEnum> skipVerification() {
+  @FormSerialize(using = com.sinch.sdk.domains.mailgun.api.v1.adapters.BooleanFormSerializer.class)
+  public OptionalValue<Boolean> skipVerification() {
     return skipVerification;
   }
 
@@ -707,21 +713,21 @@ public class SendEmailRequestImpl implements SendEmailRequest {
     OptionalValue<List<File>> inline = OptionalValue.empty();
     OptionalValue<String> template = OptionalValue.empty();
     OptionalValue<String> templateVersion = OptionalValue.empty();
-    OptionalValue<TemplateTextEnum> templateText = OptionalValue.empty();
+    OptionalValue<Boolean> templateText = OptionalValue.empty();
     OptionalValue<String> templateVariables = OptionalValue.empty();
     OptionalValue<List<String>> tag = OptionalValue.empty();
-    OptionalValue<DkimSignatureEnum> enableDkimSignature = OptionalValue.empty();
+    OptionalValue<Boolean> enableDkimSignature = OptionalValue.empty();
     OptionalValue<String> secondaryDkim = OptionalValue.empty();
     OptionalValue<String> secondaryDkimPublic = OptionalValue.empty();
     OptionalValue<Instant> deliveryTime = OptionalValue.empty();
     OptionalValue<Integer> deliveryTimeOptimizePeriod = OptionalValue.empty();
     OptionalValue<String> timezoneLocalize = OptionalValue.empty();
-    OptionalValue<TestModeEnum> testMode = OptionalValue.empty();
+    OptionalValue<Boolean> testMode = OptionalValue.empty();
     OptionalValue<TrackingEnum> tracking = OptionalValue.empty();
     OptionalValue<TrackingClicksEnum> trackingClicks = OptionalValue.empty();
-    OptionalValue<TrackingOpensEnum> trackingOpens = OptionalValue.empty();
-    OptionalValue<RequireTlsEnum> requireTls = OptionalValue.empty();
-    OptionalValue<SkipVerificationEnum> skipVerification = OptionalValue.empty();
+    OptionalValue<Boolean> trackingOpens = OptionalValue.empty();
+    OptionalValue<Boolean> requireTls = OptionalValue.empty();
+    OptionalValue<Boolean> skipVerification = OptionalValue.empty();
     OptionalValue<String> sendingIp = OptionalValue.empty();
     OptionalValue<String> sendingIpPool = OptionalValue.empty();
     OptionalValue<String> trackingPixelLocationTop = OptionalValue.empty();
@@ -801,7 +807,7 @@ public class SendEmailRequestImpl implements SendEmailRequest {
     }
 
     @Property(value = PROPERTY_T_COLON_TEXT)
-    public Builder setTemplateText(TemplateTextEnum templateText) {
+    public Builder setTemplateText(Boolean templateText) {
       this.templateText = OptionalValue.of(templateText);
       return this;
     }
@@ -819,7 +825,7 @@ public class SendEmailRequestImpl implements SendEmailRequest {
     }
 
     @Property(value = PROPERTY_O_COLON_DKIM)
-    public Builder setEnableDkimSignature(DkimSignatureEnum enableDkimSignature) {
+    public Builder setEnableDkimSignature(Boolean enableDkimSignature) {
       this.enableDkimSignature = OptionalValue.of(enableDkimSignature);
       return this;
     }
@@ -855,7 +861,7 @@ public class SendEmailRequestImpl implements SendEmailRequest {
     }
 
     @Property(value = PROPERTY_O_COLON_TESTMODE)
-    public Builder setTestMode(TestModeEnum testMode) {
+    public Builder setTestMode(Boolean testMode) {
       this.testMode = OptionalValue.of(testMode);
       return this;
     }
@@ -873,19 +879,19 @@ public class SendEmailRequestImpl implements SendEmailRequest {
     }
 
     @Property(value = PROPERTY_O_COLON_TRACKING_OPENS)
-    public Builder setTrackingOpens(TrackingOpensEnum trackingOpens) {
+    public Builder setTrackingOpens(Boolean trackingOpens) {
       this.trackingOpens = OptionalValue.of(trackingOpens);
       return this;
     }
 
     @Property(value = PROPERTY_O_COLON_REQUIRE_TLS)
-    public Builder setRequireTls(RequireTlsEnum requireTls) {
+    public Builder setRequireTls(Boolean requireTls) {
       this.requireTls = OptionalValue.of(requireTls);
       return this;
     }
 
     @Property(value = PROPERTY_O_COLON_SKIP_VERIFICATION)
-    public Builder setSkipVerification(SkipVerificationEnum skipVerification) {
+    public Builder setSkipVerification(Boolean skipVerification) {
       this.skipVerification = OptionalValue.of(skipVerification);
       return this;
     }
