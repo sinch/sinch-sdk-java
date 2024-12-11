@@ -7,6 +7,8 @@ public class DeliveryTimeFormSerializer extends FormSerializer<Integer> {
 
   @Override
   public void serialize(Integer in, String fieldName, Map<String, Object> out) {
-    out.put(fieldName, String.format("%dh", in));
+    if (null != in) {
+      out.put(fieldName, String.format("%dh", in));
+    }
   }
 }
