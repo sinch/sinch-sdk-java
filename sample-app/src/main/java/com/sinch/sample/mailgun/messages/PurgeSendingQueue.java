@@ -5,15 +5,15 @@ import com.sinch.sdk.domains.mailgun.api.v1.EmailsService;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-public class PurgeDomainQueues extends BaseApplication {
+public class PurgeSendingQueue extends BaseApplication {
 
-  private static final Logger LOGGER = Logger.getLogger(PurgeDomainQueues.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(PurgeSendingQueue.class.getName());
 
-  public PurgeDomainQueues() throws IOException {}
+  public PurgeSendingQueue() throws IOException {}
 
   public static void main(String[] args) {
     try {
-      new PurgeDomainQueues().run();
+      new PurgeSendingQueue().run();
     } catch (Exception e) {
       LOGGER.severe(e.getMessage());
       e.printStackTrace();
@@ -26,6 +26,6 @@ public class PurgeDomainQueues extends BaseApplication {
 
     LOGGER.info("Purge domain: " + mailgunDomain);
 
-    service.purgeDomainQueues(mailgunDomain, "https://storage-us-east4.api.mailgun.net");
+    service.purgeSendingQueue(mailgunDomain, "https://storage-us-east4.api.mailgun.net");
   }
 }

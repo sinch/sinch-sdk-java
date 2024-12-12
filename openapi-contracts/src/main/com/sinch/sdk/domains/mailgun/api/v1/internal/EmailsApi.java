@@ -354,10 +354,10 @@ public class EmailsApi {
    * @return GenericResponse
    * @throws ApiException if fails to make API call
    */
-  public void purgeDomainQueues(String domainName, String storageURL) throws ApiException {
+  public void purgeSendingQueue(String domainName, String storageURL) throws ApiException {
 
     LOGGER.finest(
-        "[purgeDomainQueues]"
+        "[purgeSendingQueue]"
             + " "
             + "domainName: "
             + domainName

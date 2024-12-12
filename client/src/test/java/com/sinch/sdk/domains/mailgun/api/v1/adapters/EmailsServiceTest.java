@@ -94,11 +94,11 @@ class EmailsServiceTest extends BaseTest {
   }
 
   @Test
-  void purgeDomainQueues() {
+  void purgeSendingQueue() {
 
-    service.purgeDomainQueues(domainName, "my foo URL");
+    service.purgeSendingQueue(domainName, "my foo URL");
 
-    verify(api).purgeDomainQueues(domainNameCaptor.capture(), storageUrlCapture.capture());
+    verify(api).purgeSendingQueue(domainNameCaptor.capture(), storageUrlCapture.capture());
 
     Assertions.assertThat(domainNameCaptor.getValue()).isEqualTo(domainName);
     Assertions.assertThat(storageUrlCapture.getValue()).isEqualTo("my foo URL");

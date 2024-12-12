@@ -41,7 +41,7 @@ public class EmailsService implements com.sinch.sdk.domains.mailgun.api.v1.Email
     return getApi().getSendingQueuesStatus(domain);
   }
 
-  public void purgeDomainQueues(String domainName, String storageURL) {
-    getApi().purgeDomainQueues(domainName, storageURL);
+  public void purgeSendingQueue(String domainName, String storageURL) {
+    getApi().purgeSendingQueue(domainName, storageURL);
   }
 }
