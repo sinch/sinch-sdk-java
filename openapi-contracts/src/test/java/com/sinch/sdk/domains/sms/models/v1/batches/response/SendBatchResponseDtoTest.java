@@ -5,7 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.sms.models.v1.batches.DeliveryReportType;
-import com.sinch.sdk.domains.sms.models.v1.batches.MediaBody;
+import com.sinch.sdk.domains.sms.models.v1.batches.MediaBodyDtoTest;
 import java.time.Instant;
 import java.util.AbstractMap;
 import java.util.Arrays;
@@ -92,12 +92,7 @@ class SendBatchResponseDtoTest extends BaseTest {
           .setCanceled(false)
           .setCreatedAt(Instant.parse("2019-08-24T14:14:22Z"))
           .setModifiedAt(Instant.parse("2019-08-24T14:15:22Z"))
-          .setBody(
-              MediaBody.builder()
-                  .setUrl(
-                      "https://en.wikipedia.org/wiki/Sinch_(company)#/media/File:Sinch_LockUp_RGB.png")
-                  .setMessage("Hi ${name} ({an identifier}) ! How are you?")
-                  .build())
+          .setBody(MediaBodyDtoTest.mediaBodyDto)
           .setCallbackUrl("callback url")
           .setClientReference("client reference")
           .setDeliveryReport(DeliveryReportType.SUMMARY)

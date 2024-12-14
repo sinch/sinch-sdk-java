@@ -1,0 +1,5 @@
+{
+  "subject": "subject field",
+  "message": "Hi ${name} ({an identifier}) ! How are you?",
+  "url": "https://en.wikipedia.org/wiki/Sinch_(company)#/media/File:Sinch_LockUp_RGB.png"
+}

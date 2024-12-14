@@ -22,7 +22,7 @@ class SendSMSRequestDtoTest extends BaseTest {
   @GivenTextResource("/domains/sms/v1/batches/request/TextRequestDto.json")
   String jsonRequestTextDto;
 
-  @GivenTextResource("/domains/sms/v1/batches/request/MediaRequestDto.json")
+  @GivenTextResource("/domains/sms/v1/MediaRequestDto.json")
   String jsonRequestMediaDto;
 
   @Test

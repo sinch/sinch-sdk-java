@@ -5,7 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.domains.sms.models.v1.batches.DeliveryReportType;
-import com.sinch.sdk.domains.sms.models.v1.batches.MediaBody;
+import com.sinch.sdk.domains.sms.models.v1.batches.MediaBodyDtoTest;
 import java.time.Instant;
 import java.util.AbstractMap;
 import java.util.Arrays;
@@ -122,12 +122,7 @@ class SendBatchRequestDtoTest extends BaseTest {
     MediaRequest mediaRequestDTO =
         MediaRequest.builder()
             .setTo(Arrays.asList("+15551231234", "+15551256344"))
-            .setBody(
-                MediaBody.builder()
-                    .setUrl(
-                        "https://en.wikipedia.org/wiki/Sinch_(company)#/media/File:Sinch_LockUp_RGB.png")
-                    .setMessage("Hi ${name} ({an identifier}) ! How are you?")
-                    .build())
+            .setBody(MediaBodyDtoTest.mediaBodyDto)
             .setFrom("+15551231234")
             .setDeliveryReport(DeliveryReportType.SUMMARY)
             .setSendAt(Instant.parse("2019-08-24T14:16:22Z"))

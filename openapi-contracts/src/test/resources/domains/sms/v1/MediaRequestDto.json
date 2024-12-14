@@ -1,15 +1,12 @@
 {
-  "id": "01FC66621XXXXX119Z8PMV1QPQ",
   "to": [
     "+15551231234",
     "+15551256344"
   ],
   "from": "+15551231234",
-  "canceled": false,
   "body": {
     "message": "Hi ${name} ({an identifier}) ! How are you?",
-    "url": "https://en.wikipedia.org/wiki/Sinch_(company)#/media/File:Sinch_LockUp_RGB.png",
-    "subject": "subject field"
+    "url": "https://en.wikipedia.org/wiki/Sinch_(company)#/media/File:Sinch_LockUp_RGB.png"
   },
   "parameters": {
     "name": {
@@ -23,8 +20,6 @@
     }
   },
   "type": "mt_media",
-  "created_at": "2019-08-24T14:14:22Z",
-  "modified_at": "2019-08-24T14:15:22Z",
   "delivery_report": "summary",
   "send_at": "2019-08-24T14:16:22Z",
   "expire_at": "2019-08-24T14:17:22Z",
