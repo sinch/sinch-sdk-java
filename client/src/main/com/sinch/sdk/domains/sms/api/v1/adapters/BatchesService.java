@@ -8,7 +8,8 @@ import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.domains.sms.api.v1.internal.BatchesApi;
 import com.sinch.sdk.domains.sms.models.v1.batches.internal.SMSCursorPageNavigator;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.BatchRequest;
-import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesRequest;
+import com.sinch.sdk.domains.sms.models.v1.batches.request.DryRunQueryParameters;
+import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesQueryParameters;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.SendDeliveryFeedbackRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.UpdateBatchRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.BatchResponse;
@@ -16,7 +17,6 @@ import com.sinch.sdk.domains.sms.models.v1.batches.response.DryRunResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.ListBatchesResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.internal.ApiBatchList;
 import com.sinch.sdk.models.SmsContext;
-import java.time.Instant;
 import java.util.Map;
 
 public class BatchesService implements com.sinch.sdk.domains.sms.api.v1.BatchesService {
@@ -40,20 +40,12 @@ public class BatchesService implements com.sinch.sdk.domains.sms.api.v1.BatchesS
     return getApi().send(batch);
   }
 
-  public ListBatchesResponse list(ListBatchesRequest parameters) throws ApiException {
+  public ListBatchesResponse list(ListBatchesQueryParameters parameters) throws ApiException {
 
-    ListBatchesRequest guardParameters =
-        null != parameters ? parameters : ListBatchesRequest.builder().build();
+    ListBatchesQueryParameters guardParameters =
+        null != parameters ? parameters : ListBatchesQueryParameters.builder().build();
 
-    ApiBatchList response =
-        getApi()
-            .list(
-                guardParameters.getPage().orElse(null),
-                guardParameters.getPageSize().orElse(null),
-                guardParameters.getFrom().orElse(null),
-                guardParameters.getStartDate().map(Instant::toString).orElse(null),
-                guardParameters.getEndDate().map(Instant::toString).orElse(null),
-                guardParameters.getClientReference().orElse(null));
+    ApiBatchList response = getApi().list(parameters);
 
     SMSCursorPageNavigator navigator =
         new SMSCursorPageNavigator(response.getPage(), response.getPageSize());
@@ -62,8 +54,8 @@ public class BatchesService implements com.sinch.sdk.domains.sms.api.v1.BatchesS
         this, new Page<>(guardParameters, response.getBatches(), navigator));
   }
 
-  public DryRunResponse dryRun(boolean perRecipient, int numberOfRecipient, BatchRequest batch) {
-    return getApi().dryRun(perRecipient, numberOfRecipient, batch);
+  public DryRunResponse dryRun(DryRunQueryParameters queryParameters, BatchRequest batch) {
+    return getApi().dryRun(queryParameters, batch);
   }
 
   public BatchResponse get(String batchId) throws ApiException {
