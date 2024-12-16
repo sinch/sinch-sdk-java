@@ -35,10 +35,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 public class EmailsApi {
 
@@ -48,19 +45,15 @@ public class EmailsApi {
   private Map<String, AuthManager> authManagersByOasSecuritySchemes;
   private HttpMapper mapper;
 
-  private final Collection<ServerConfiguration> storageServers;
-
   public EmailsApi(
       HttpClient httpClient,
       ServerConfiguration serverConfiguration,
       Map<String, AuthManager> authManagersByOasSecuritySchemes,
-      HttpMapper mapper,
-      Collection<ServerConfiguration> storageServers) {
+      HttpMapper mapper) {
     this.httpClient = httpClient;
     this.serverConfiguration = serverConfiguration;
     this.authManagersByOasSecuritySchemes = authManagersByOasSecuritySchemes;
     this.mapper = mapper;
-    this.storageServers = storageServers;
   }
 
   /**
@@ -139,83 +132,6 @@ public class EmailsApi {
     return new HttpRequest(
         localVarPath,
         HttpMethod.GET,
-        localVarQueryParams,
-        serializedBody,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  /**
-   * Delete scheduled and undelivered mail Deletes all scheduled and undelivered mail from the
-   * domain queue. This endpoint must be called on the storage API host and in the domain&#39;s
-   * region. e.g. https://storage-us-east4.api.mailgun.net/v3/example.com/envelopes The storage
-   * hosts are &#x60;storage-us-east4.api.mailgun.net&#x60;,
-   * &#x60;storage-us-west1.api.mailgun.net&#x60;, and
-   * &#x60;storage-europe-west1.api.mailgun.net&#x60;.
-   *
-   * @param domainName The name of the domain you want to delete envelope from (required)
-   * @param serverConf (required)
-   * @return GenericResponse
-   * @throws ApiException if fails to make API call
-   */
-  private GenericResponse purgeQueue(String domainName, ServerConfiguration serverConf)
-      throws ApiException {
-
-    LOGGER.finest(
-        "[purgeQueue]" + " " + "domainName: " + domainName + ", " + "serverConf: " + serverConf);
-
-    HttpRequest httpRequest = purgeQueueRequestBuilder(domainName, serverConf);
-    HttpResponse response =
-        httpClient.invokeAPI(serverConf, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<GenericResponse> localVarReturnType = new TypeReference<GenericResponse>() {};
-      return mapper.deserialize(response, localVarReturnType);
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest purgeQueueRequestBuilder(String domainName, ServerConfiguration serverConf)
-      throws ApiException {
-    // verify the required parameter 'domainName' is set
-    if (domainName == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'domainName' when calling purgeQueue");
-    }
-    // verify the required parameter 'serverConf' is set
-    if (serverConf == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'serverConf' when calling purgeQueue");
-    }
-
-    String localVarPath =
-        "/v3/{domain_name}/envelopes"
-            .replaceAll(
-                "\\{" + "domain_name" + "\\}",
-                URLPathUtils.encodePathSegment(domainName.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-
-    final Collection<String> localVarContentTypes = Arrays.asList();
-
-    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
-    final String serializedBody = null;
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.DELETE,
         localVarQueryParams,
         serializedBody,
         localVarHeaderParams,
@@ -425,51 +341,81 @@ public class EmailsApi {
         localVarAuthNames);
   }
 
-  private String handleError(
-      String domainName, ServerConfiguration serverConfiguration, Throwable throwable) {
-    String message =
-        String.format(
-            "Exception for '%s' domain onto '%s': %s",
-            domainName, serverConfiguration.getUrl(), throwable.getMessage());
-    LOGGER.finest(message);
-    return message;
-  }
-
   /**
    * Delete scheduled and undelivered mail Deletes all scheduled and undelivered mail from the
-   * domain queue.
+   * domain queue. This endpoint must be called on the storage API host and in the domain&#39;s
+   * region. e.g. https://storage-us-east4.api.mailgun.net/v3/example.com/envelopes The storage
+   * hosts are &#x60;storage-us-east4.api.mailgun.net&#x60;,
+   * &#x60;storage-us-west1.api.mailgun.net&#x60;, and
+   * &#x60;storage-europe-west1.api.mailgun.net&#x60;.
    *
    * @param domainName The name of the domain you want to delete envelope from (required)
+   * @param storageURL (required)
+   * @return GenericResponse
    * @throws ApiException if fails to make API call
    */
-  public void purgeDomainQueues(String domainName) throws ApiException {
+  public void purgeSendingQueue(String domainName, String storageURL) throws ApiException {
 
-    LOGGER.finest("[purgeDomainQueues]" + " " + "domainName: " + domainName);
-    List<CompletableFuture<String>> purgeDomainQueuesFutures =
-        storageServers.stream()
-            .map(
-                server -> {
-                  CompletableFuture<GenericResponse> future =
-                      CompletableFuture.supplyAsync(() -> purgeQueue(domainName, server));
-                  return future
-                      .thenApplyAsync(response -> (String) null)
-                      .exceptionally(e -> handleError(domainName, server, e));
-                })
-            .collect(Collectors.toList());
+    LOGGER.finest(
+        "[purgeSendingQueue]"
+            + " "
+            + "domainName: "
+            + domainName
+            + ", "
+            + "storageURL: "
+            + storageURL);
 
-    Map<Boolean, List<String>> result =
-        purgeDomainQueuesFutures.stream()
-            .map(CompletableFuture::join)
-            .collect(Collectors.partitioningBy(Objects::nonNull));
+    ServerConfiguration serverConf = new ServerConfiguration(storageURL);
+    HttpRequest httpRequest = purgeQueueRequestBuilder(domainName);
+    HttpResponse response =
+        httpClient.invokeAPI(serverConf, this.authManagersByOasSecuritySchemes, httpRequest);
 
-    // all requests were executed fine: no errors
-    if (result.containsKey(Boolean.FALSE)
-        && result.get(Boolean.FALSE).size() == storageServers.size()) {
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+      TypeReference<GenericResponse> localVarReturnType = new TypeReference<GenericResponse>() {};
+      mapper.deserialize(response, localVarReturnType);
       return;
     }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
 
-    StringBuilder sb = new StringBuilder("Errors during domain queues purge:");
-    result.get(Boolean.TRUE).forEach(error -> sb.append("\n - ").append(error));
-    throw new ApiException(sb.toString());
+  private HttpRequest purgeQueueRequestBuilder(String domainName) throws ApiException {
+    // verify the required parameter 'domainName' is set
+    if (domainName == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'domainName' when calling purgeQueue");
+    }
+
+    String localVarPath =
+        "/v3/{domain_name}/envelopes"
+            .replaceAll(
+                "\\{" + "domain_name" + "\\}",
+                URLPathUtils.encodePathSegment(domainName.toString()));
+
+    final List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    final Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.DELETE,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
   }
 }

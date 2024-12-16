@@ -86,10 +86,10 @@ public class EmailsSteps {
     sendingQueuesStatusResponse = service.getSendingQueuesStatus(domainName);
   }
 
-  @When("^I send a request to purge the domain queues$")
+  @When("^I send a request to purge a sending queue$")
   public void purgeDomainQueues() {
 
-    service.purgeDomainQueues(domainName);
+    service.purgeSendingQueue(domainName, Config.MAILGUN_STORAGE);
     purgeDomainQueuesPassed = true;
   }
 

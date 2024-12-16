@@ -37,6 +37,7 @@ class EmailsServiceTest extends BaseTest {
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
   @Captor ArgumentCaptor<String> domainNameCaptor;
+  @Captor ArgumentCaptor<String> storageUrlCapture;
 
   EmailsService service;
 
@@ -93,12 +94,13 @@ class EmailsServiceTest extends BaseTest {
   }
 
   @Test
-  void purgeDomainQueues() {
+  void purgeSendingQueue() {
 
-    service.purgeDomainQueues(domainName);
+    service.purgeSendingQueue(domainName, "my foo URL");
 
-    verify(api).purgeDomainQueues(domainNameCaptor.capture());
+    verify(api).purgeSendingQueue(domainNameCaptor.capture(), storageUrlCapture.capture());
 
     Assertions.assertThat(domainNameCaptor.getValue()).isEqualTo(domainName);
+    Assertions.assertThat(storageUrlCapture.getValue()).isEqualTo("my foo URL");
   }
 }

@@ -18,13 +18,7 @@ public class EmailsService implements com.sinch.sdk.domains.mailgun.api.v1.Email
 
   public EmailsService(
       MailgunContext context, HttpClient httpClient, Map<String, AuthManager> authManagers) {
-    this.api =
-        new EmailsApi(
-            httpClient,
-            context.getServer(),
-            authManagers,
-            new HttpMapper(),
-            context.getStorageServers());
+    this.api = new EmailsApi(httpClient, context.getServer(), authManagers, new HttpMapper());
   }
 
   protected EmailsApi getApi() {
@@ -47,7 +41,7 @@ public class EmailsService implements com.sinch.sdk.domains.mailgun.api.v1.Email
     return getApi().getSendingQueuesStatus(domain);
   }
 
-  public void purgeDomainQueues(String domainName) {
-    getApi().purgeDomainQueues(domainName);
+  public void purgeSendingQueue(String domainName, String storageURL) {
+    getApi().purgeSendingQueue(domainName, storageURL);
   }
 }
