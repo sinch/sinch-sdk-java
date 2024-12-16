@@ -11,6 +11,7 @@
 package com.sinch.sdk.domains.sms.api.v1.internal;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.sinch.sdk.core.databind.query_parameter.InstantToIso8601Serializer;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.exceptions.ApiExceptionBuilder;
 import com.sinch.sdk.core.http.AuthManager;
@@ -24,6 +25,8 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.BatchRequest;
+import com.sinch.sdk.domains.sms.models.v1.batches.request.DryRunQueryParameters;
+import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesQueryParameters;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.SendDeliveryFeedbackRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.UpdateBatchRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.BatchResponse;
@@ -74,14 +77,7 @@ public class BatchesApi {
    */
   public BatchResponse cancel(String batchId) throws ApiException {
 
-    LOGGER.finest(
-        "[cancel]"
-            + " "
-            + "this.servicePlanId: "
-            + this.servicePlanId
-            + ", "
-            + "batchId: "
-            + batchId);
+    LOGGER.finest("[cancel]" + " " + "batchId: " + batchId);
 
     HttpRequest httpRequest = cancelRequestBuilder(batchId);
     HttpResponse response =
@@ -146,33 +142,24 @@ public class BatchesApi {
    * Dry run This operation will perform a dry run of a batch which calculates the bodies and number
    * of parts for all messages in the batch without actually sending any messages.
    *
-   * @param perRecipient Whether to include per recipient details in the response (optional)
-   * @param numberOfRecipients Max number of recipients to include per recipient details for in the
-   *     response (optional, default to 100)
+   * @param queryParameter (optional)
    * @param sendRequest (optional)
    * @return DryRunResponse
    * @throws ApiException if fails to make API call
    */
-  public DryRunResponse dryRun(
-      Boolean perRecipient, Integer numberOfRecipients, BatchRequest sendRequest)
+  public DryRunResponse dryRun(DryRunQueryParameters queryParameter, BatchRequest sendRequest)
       throws ApiException {
 
     LOGGER.finest(
         "[dryRun]"
             + " "
-            + "this.servicePlanId: "
-            + this.servicePlanId
-            + ", "
-            + "perRecipient: "
-            + perRecipient
-            + ", "
-            + "numberOfRecipients: "
-            + numberOfRecipients
+            + "queryParameter: "
+            + queryParameter
             + ", "
             + "sendRequest: "
             + sendRequest);
 
-    HttpRequest httpRequest = dryRunRequestBuilder(perRecipient, numberOfRecipients, sendRequest);
+    HttpRequest httpRequest = dryRunRequestBuilder(queryParameter, sendRequest);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -191,8 +178,7 @@ public class BatchesApi {
   }
 
   private HttpRequest dryRunRequestBuilder(
-      Boolean perRecipient, Integer numberOfRecipients, BatchRequest sendRequest)
-      throws ApiException {
+      DryRunQueryParameters queryParameter, BatchRequest sendRequest) throws ApiException {
     // verify the required parameter 'this.servicePlanId' is set
     if (this.servicePlanId == null) {
       throw new ApiException(
@@ -206,22 +192,30 @@ public class BatchesApi {
                 URLPathUtils.encodePathSegment(this.servicePlanId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
-    if (null != perRecipient) {
-      localVarQueryParams.add(
-          new URLParameter(
-              "per_recipient",
-              perRecipient,
-              URLParameter.STYLE.valueOf("form".toUpperCase()),
-              true));
-    }
-    if (null != numberOfRecipients) {
-      localVarQueryParams.add(
-          new URLParameter(
-              "number_of_recipients",
-              numberOfRecipients,
-              URLParameter.STYLE.valueOf("form".toUpperCase()),
-              true));
-    }
+    DryRunQueryParameters guardParameters =
+        null != queryParameter ? queryParameter : DryRunQueryParameters.builder().build();
+
+    guardParameters
+        .getPerRecipient()
+        .ifPresent(
+            g ->
+                localVarQueryParams.add(
+                    new URLParameter(
+                        "per_recipient",
+                        g,
+                        URLParameter.STYLE.valueOf("form".toUpperCase()),
+                        true)));
+
+    guardParameters
+        .getNumberOfRecipients()
+        .ifPresent(
+            g ->
+                localVarQueryParams.add(
+                    new URLParameter(
+                        "number_of_recipients",
+                        g,
+                        URLParameter.STYLE.valueOf("form".toUpperCase()),
+                        true)));
 
     Map<String, String> localVarHeaderParams = new HashMap<>();
 
@@ -252,8 +246,7 @@ public class BatchesApi {
    */
   public BatchResponse get(String batchId) throws ApiException {
 
-    LOGGER.finest(
-        "[get]" + " " + "this.servicePlanId: " + this.servicePlanId + ", " + "batchId: " + batchId);
+    LOGGER.finest("[get]" + " " + "batchId: " + batchId);
 
     HttpRequest httpRequest = getRequestBuilder(batchId);
     HttpResponse response =
@@ -318,55 +311,15 @@ public class BatchesApi {
    * List Batches With the list operation you can list batch messages created in the last 14 days
    * that you have created. This operation supports pagination.
    *
-   * @param page The page number starting from 0. (optional, default to 0)
-   * @param pageSize Determines the size of a page. (optional, default to 30)
-   * @param from Only list messages sent from this sender number. Multiple originating numbers can
-   *     be comma separated. Must be phone numbers or short code. (optional)
-   * @param startDate Only list messages received at or after this date/time. Formatted as
-   *     [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601): &#x60;YYYY-MM-DDThh:mm:ss.SSSZ&#x60;.
-   *     Default: Now-24 (optional)
-   * @param endDate Only list messages received before this date/time. Formatted as
-   *     [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601): &#x60;YYYY-MM-DDThh:mm:ss.SSSZ&#x60;.
-   *     (optional)
-   * @param clientReference Client reference to include (optional)
+   * @param queryParameter (optional)
    * @return ApiBatchList
    * @throws ApiException if fails to make API call
    */
-  public ApiBatchList list(
-      Integer page,
-      Integer pageSize,
-      String from,
-      String startDate,
-      String endDate,
-      String clientReference)
-      throws ApiException {
+  public ApiBatchList list(ListBatchesQueryParameters queryParameter) throws ApiException {
 
-    LOGGER.finest(
-        "[list]"
-            + " "
-            + "this.servicePlanId: "
-            + this.servicePlanId
-            + ", "
-            + "page: "
-            + page
-            + ", "
-            + "pageSize: "
-            + pageSize
-            + ", "
-            + "from: "
-            + from
-            + ", "
-            + "startDate: "
-            + startDate
-            + ", "
-            + "endDate: "
-            + endDate
-            + ", "
-            + "clientReference: "
-            + clientReference);
+    LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
-    HttpRequest httpRequest =
-        listRequestBuilder(page, pageSize, from, startDate, endDate, clientReference);
+    HttpRequest httpRequest = listRequestBuilder(queryParameter);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -384,13 +337,7 @@ public class BatchesApi {
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest listRequestBuilder(
-      Integer page,
-      Integer pageSize,
-      String from,
-      String startDate,
-      String endDate,
-      String clientReference)
+  private HttpRequest listRequestBuilder(ListBatchesQueryParameters queryParameter)
       throws ApiException {
     // verify the required parameter 'this.servicePlanId' is set
     if (this.servicePlanId == null) {
@@ -405,37 +352,65 @@ public class BatchesApi {
                 URLPathUtils.encodePathSegment(this.servicePlanId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
-    if (null != page) {
-      localVarQueryParams.add(
-          new URLParameter("page", page, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
-    }
-    if (null != pageSize) {
-      localVarQueryParams.add(
-          new URLParameter(
-              "page_size", pageSize, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
-    }
-    if (null != from) {
-      localVarQueryParams.add(
-          new URLParameter("from", from, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
-    }
-    if (null != startDate) {
-      localVarQueryParams.add(
-          new URLParameter(
-              "start_date", startDate, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
-    }
-    if (null != endDate) {
-      localVarQueryParams.add(
-          new URLParameter(
-              "end_date", endDate, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
-    }
-    if (null != clientReference) {
-      localVarQueryParams.add(
-          new URLParameter(
-              "client_reference",
-              clientReference,
-              URLParameter.STYLE.valueOf("form".toUpperCase()),
-              true));
-    }
+    ListBatchesQueryParameters guardParameters =
+        null != queryParameter ? queryParameter : ListBatchesQueryParameters.builder().build();
+
+    guardParameters
+        .getPage()
+        .ifPresent(
+            g ->
+                localVarQueryParams.add(
+                    new URLParameter(
+                        "page", g, URLParameter.STYLE.valueOf("form".toUpperCase()), true)));
+
+    guardParameters
+        .getPageSize()
+        .ifPresent(
+            g ->
+                localVarQueryParams.add(
+                    new URLParameter(
+                        "page_size", g, URLParameter.STYLE.valueOf("form".toUpperCase()), true)));
+
+    guardParameters
+        .getFrom()
+        .ifPresent(
+            g ->
+                localVarQueryParams.add(
+                    new URLParameter(
+                        "from", g, URLParameter.STYLE.valueOf("form".toUpperCase()), true)));
+
+    guardParameters
+        .getStartDate()
+        .ifPresent(
+            g ->
+                localVarQueryParams.add(
+                    new URLParameter(
+                        "start_date",
+                        InstantToIso8601Serializer.getInstance().apply(g),
+                        URLParameter.STYLE.valueOf("form".toUpperCase()),
+                        true)));
+
+    guardParameters
+        .getEndDate()
+        .ifPresent(
+            g ->
+                localVarQueryParams.add(
+                    new URLParameter(
+                        "end_date",
+                        InstantToIso8601Serializer.getInstance().apply(g),
+                        URLParameter.STYLE.valueOf("form".toUpperCase()),
+                        true)));
+
+    guardParameters
+        .getClientReference()
+        .ifPresent(
+            g ->
+                localVarQueryParams.add(
+                    new URLParameter(
+                        "client_reference",
+                        g,
+                        URLParameter.STYLE.valueOf("form".toUpperCase()),
+                        true)));
 
     Map<String, String> localVarHeaderParams = new HashMap<>();
 
@@ -468,17 +443,7 @@ public class BatchesApi {
    */
   public BatchResponse replace(String batchId, BatchRequest sendRequest) throws ApiException {
 
-    LOGGER.finest(
-        "[replace]"
-            + " "
-            + "this.servicePlanId: "
-            + this.servicePlanId
-            + ", "
-            + "batchId: "
-            + batchId
-            + ", "
-            + "sendRequest: "
-            + sendRequest);
+    LOGGER.finest("[replace]" + " " + "batchId: " + batchId + ", " + "sendRequest: " + sendRequest);
 
     HttpRequest httpRequest = replaceRequestBuilder(batchId, sendRequest);
     HttpResponse response =
@@ -561,9 +526,6 @@ public class BatchesApi {
     LOGGER.finest(
         "[sendDeliveryFeedback]"
             + " "
-            + "this.servicePlanId: "
-            + this.servicePlanId
-            + ", "
             + "batchId: "
             + batchId
             + ", "
@@ -653,14 +615,7 @@ public class BatchesApi {
    */
   public BatchResponse send(BatchRequest sendRequest) throws ApiException {
 
-    LOGGER.finest(
-        "[send]"
-            + " "
-            + "this.servicePlanId: "
-            + this.servicePlanId
-            + ", "
-            + "sendRequest: "
-            + sendRequest);
+    LOGGER.finest("[send]" + " " + "sendRequest: " + sendRequest);
 
     HttpRequest httpRequest = sendRequestBuilder(sendRequest);
     HttpResponse response =
@@ -730,9 +685,6 @@ public class BatchesApi {
     LOGGER.finest(
         "[update]"
             + " "
-            + "this.servicePlanId: "
-            + this.servicePlanId
-            + ", "
             + "batchId: "
             + batchId
             + ", "
