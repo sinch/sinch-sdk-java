@@ -26,7 +26,7 @@ import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.BatchRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.SendDeliveryFeedbackRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.UpdateBatchRequest;
-import com.sinch.sdk.domains.sms.models.v1.batches.response.Batch;
+import com.sinch.sdk.domains.sms.models.v1.batches.response.BatchResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.DryRunResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.internal.ApiBatchList;
 import java.util.ArrayList;
@@ -69,10 +69,10 @@ public class BatchesApi {
    * report.
    *
    * @param batchId The batch ID you received from sending a message. (required)
-   * @return Batch
+   * @return BatchResponse
    * @throws ApiException if fails to make API call
    */
-  public Batch cancel(String batchId) throws ApiException {
+  public BatchResponse cancel(String batchId) throws ApiException {
 
     LOGGER.finest(
         "[cancel]"
@@ -89,7 +89,7 @@ public class BatchesApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<Batch> localVarReturnType = new TypeReference<Batch>() {};
+      TypeReference<BatchResponse> localVarReturnType = new TypeReference<BatchResponse>() {};
       return mapper.deserialize(response, localVarReturnType);
     }
     // fallback to default errors handling:
@@ -247,10 +247,10 @@ public class BatchesApi {
    * Get a batch message This operation returns a specific batch that matches the provided batch ID.
    *
    * @param batchId The batch ID you received from sending a message. (required)
-   * @return Batch
+   * @return BatchResponse
    * @throws ApiException if fails to make API call
    */
-  public Batch get(String batchId) throws ApiException {
+  public BatchResponse get(String batchId) throws ApiException {
 
     LOGGER.finest(
         "[get]" + " " + "this.servicePlanId: " + this.servicePlanId + ", " + "batchId: " + batchId);
@@ -261,7 +261,7 @@ public class BatchesApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<Batch> localVarReturnType = new TypeReference<Batch>() {};
+      TypeReference<BatchResponse> localVarReturnType = new TypeReference<BatchResponse>() {};
       return mapper.deserialize(response, localVarReturnType);
     }
     // fallback to default errors handling:
@@ -463,10 +463,10 @@ public class BatchesApi {
    *
    * @param batchId The batch ID you received from sending a message. (required)
    * @param sendRequest (optional)
-   * @return Batch
+   * @return BatchResponse
    * @throws ApiException if fails to make API call
    */
-  public Batch replace(String batchId, BatchRequest sendRequest) throws ApiException {
+  public BatchResponse replace(String batchId, BatchRequest sendRequest) throws ApiException {
 
     LOGGER.finest(
         "[replace]"
@@ -486,7 +486,7 @@ public class BatchesApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<Batch> localVarReturnType = new TypeReference<Batch>() {};
+      TypeReference<BatchResponse> localVarReturnType = new TypeReference<BatchResponse>() {};
       return mapper.deserialize(response, localVarReturnType);
     }
     // fallback to default errors handling:
@@ -648,10 +648,10 @@ public class BatchesApi {
    * [region](/docs/sms/api-reference/#base-url) in the server URL.
    *
    * @param sendRequest Default schema is Text if type is not specified. (optional)
-   * @return Batch
+   * @return BatchResponse
    * @throws ApiException if fails to make API call
    */
-  public Batch send(BatchRequest sendRequest) throws ApiException {
+  public BatchResponse send(BatchRequest sendRequest) throws ApiException {
 
     LOGGER.finest(
         "[send]"
@@ -668,7 +668,7 @@ public class BatchesApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<Batch> localVarReturnType = new TypeReference<Batch>() {};
+      TypeReference<BatchResponse> localVarReturnType = new TypeReference<BatchResponse>() {};
       return mapper.deserialize(response, localVarReturnType);
     }
     // fallback to default errors handling:
@@ -721,10 +721,11 @@ public class BatchesApi {
    *
    * @param batchId The batch ID you received from sending a message. (required)
    * @param updateBatchRequest (optional)
-   * @return Batch
+   * @return BatchResponse
    * @throws ApiException if fails to make API call
    */
-  public Batch update(String batchId, UpdateBatchRequest updateBatchRequest) throws ApiException {
+  public BatchResponse update(String batchId, UpdateBatchRequest updateBatchRequest)
+      throws ApiException {
 
     LOGGER.finest(
         "[update]"
@@ -744,7 +745,7 @@ public class BatchesApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<Batch> localVarReturnType = new TypeReference<Batch>() {};
+      TypeReference<BatchResponse> localVarReturnType = new TypeReference<BatchResponse>() {};
       return mapper.deserialize(response, localVarReturnType);
     }
     // fallback to default errors handling:

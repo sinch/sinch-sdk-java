@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 
 /** Update binary message */
 @JsonDeserialize(builder = UpdateBinaryRequestImpl.Builder.class)
-public interface UpdateBinaryRequest extends UpdateBatchRequest, BatchRequest {
+public interface UpdateBinaryRequest extends UpdateBatchRequest {
 
   /**
    * Sender number. Must be valid phone number, short code or alphanumeric.

@@ -34,7 +34,7 @@ import java.util.Objects;
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class UpdateTextRequestImpl implements UpdateTextRequest, UpdateBatchRequest, BatchRequest {
+public class UpdateTextRequestImpl implements UpdateTextRequest, UpdateBatchRequest {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_FROM = "from";

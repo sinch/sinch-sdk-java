@@ -19,9 +19,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-/** BatchBinary */
-@JsonDeserialize(builder = BatchBinaryImpl.Builder.class)
-public interface BatchBinary extends Batch {
+/** BinaryResponse */
+@JsonDeserialize(builder = BinaryResponseImpl.Builder.class)
+public interface BinaryResponse extends BatchResponse {
 
   /**
    * Unique identifier for batch.
@@ -190,7 +190,7 @@ public interface BatchBinary extends Batch {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new BatchBinaryImpl.Builder();
+    return new BinaryResponseImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -349,6 +349,6 @@ public interface BatchBinary extends Batch {
      *
      * @return The instance build with current builder values
      */
-    BatchBinary build();
+    BinaryResponse build();
   }
 }

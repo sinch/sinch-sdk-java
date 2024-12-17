@@ -11,7 +11,7 @@
 package com.sinch.sdk.domains.sms.models.v1.batches.response.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.sms.models.v1.batches.response.Batch;
+import com.sinch.sdk.domains.sms.models.v1.batches.response.BatchResponse;
 import java.util.List;
 
 /** ApiBatchList */
@@ -37,7 +37,7 @@ public interface ApiBatchList {
    *
    * @return batches
    */
-  List<Batch> getBatches();
+  List<BatchResponse> getBatches();
 
   /**
    * The number of entries returned in this request.
@@ -83,7 +83,7 @@ public interface ApiBatchList {
      * @return Current builder
      * @see #getBatches
      */
-    Builder setBatches(List<Batch> batches);
+    Builder setBatches(List<BatchResponse> batches);
 
     /**
      * see getter

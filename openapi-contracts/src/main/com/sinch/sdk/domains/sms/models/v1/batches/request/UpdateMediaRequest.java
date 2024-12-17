@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 
 /** Update media message */
 @JsonDeserialize(builder = UpdateMediaRequestImpl.Builder.class)
-public interface UpdateMediaRequest extends UpdateBatchRequest, BatchRequest {
+public interface UpdateMediaRequest extends UpdateBatchRequest {
 
   /**
    * Sender number. Must be valid phone number, short code or alphanumeric.

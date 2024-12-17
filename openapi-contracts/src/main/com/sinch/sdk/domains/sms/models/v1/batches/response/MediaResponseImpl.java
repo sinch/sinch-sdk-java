@@ -8,36 +8,33 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.sms.models.v1.batches.DeliveryReportType;
+import com.sinch.sdk.domains.sms.models.v1.batches.MediaBody;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  BatchTextImpl.JSON_PROPERTY_ID,
-  BatchTextImpl.JSON_PROPERTY_TO,
-  BatchTextImpl.JSON_PROPERTY_FROM,
-  BatchTextImpl.JSON_PROPERTY_CANCELED,
-  BatchTextImpl.JSON_PROPERTY_PARAMETERS,
-  BatchTextImpl.JSON_PROPERTY_BODY,
-  BatchTextImpl.JSON_PROPERTY_TYPE,
-  BatchTextImpl.JSON_PROPERTY_CREATED_AT,
-  BatchTextImpl.JSON_PROPERTY_MODIFIED_AT,
-  BatchTextImpl.JSON_PROPERTY_DELIVERY_REPORT,
-  BatchTextImpl.JSON_PROPERTY_SEND_AT,
-  BatchTextImpl.JSON_PROPERTY_EXPIRE_AT,
-  BatchTextImpl.JSON_PROPERTY_CALLBACK_URL,
-  BatchTextImpl.JSON_PROPERTY_CLIENT_REFERENCE,
-  BatchTextImpl.JSON_PROPERTY_FEEDBACK_ENABLED,
-  BatchTextImpl.JSON_PROPERTY_FLASH_MESSAGE,
-  BatchTextImpl.JSON_PROPERTY_TRUNCATE_CONCAT,
-  BatchTextImpl.JSON_PROPERTY_MAX_NUMBER_OF_MESSAGE_PARTS,
-  BatchTextImpl.JSON_PROPERTY_FROM_TON,
-  BatchTextImpl.JSON_PROPERTY_FROM_NPI
+  MediaResponseImpl.JSON_PROPERTY_ID,
+  MediaResponseImpl.JSON_PROPERTY_TO,
+  MediaResponseImpl.JSON_PROPERTY_FROM,
+  MediaResponseImpl.JSON_PROPERTY_CANCELED,
+  MediaResponseImpl.JSON_PROPERTY_BODY,
+  MediaResponseImpl.JSON_PROPERTY_PARAMETERS,
+  MediaResponseImpl.JSON_PROPERTY_TYPE,
+  MediaResponseImpl.JSON_PROPERTY_CREATED_AT,
+  MediaResponseImpl.JSON_PROPERTY_MODIFIED_AT,
+  MediaResponseImpl.JSON_PROPERTY_DELIVERY_REPORT,
+  MediaResponseImpl.JSON_PROPERTY_SEND_AT,
+  MediaResponseImpl.JSON_PROPERTY_EXPIRE_AT,
+  MediaResponseImpl.JSON_PROPERTY_CALLBACK_URL,
+  MediaResponseImpl.JSON_PROPERTY_CLIENT_REFERENCE,
+  MediaResponseImpl.JSON_PROPERTY_FEEDBACK_ENABLED,
+  MediaResponseImpl.JSON_PROPERTY_STRICT_VALIDATION
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class BatchTextImpl implements BatchText, Batch {
+public class MediaResponseImpl implements MediaResponse, BatchResponse {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ID = "id";
@@ -56,13 +53,13 @@ public class BatchTextImpl implements BatchText, Batch {
 
   private OptionalValue<Boolean> canceled;
 
+  public static final String JSON_PROPERTY_BODY = "body";
+
+  private OptionalValue<MediaBody> body;
+
   public static final String JSON_PROPERTY_PARAMETERS = "parameters";
 
   private OptionalValue<Map<String, Map<String, String>>> parameters;
-
-  public static final String JSON_PROPERTY_BODY = "body";
-
-  private OptionalValue<String> body;
 
   public static final String JSON_PROPERTY_TYPE = "type";
 
@@ -100,36 +97,19 @@ public class BatchTextImpl implements BatchText, Batch {
 
   private OptionalValue<Boolean> feedbackEnabled;
 
-  public static final String JSON_PROPERTY_FLASH_MESSAGE = "flash_message";
+  public static final String JSON_PROPERTY_STRICT_VALIDATION = "strict_validation";
 
-  private OptionalValue<Boolean> flashMessage;
+  private OptionalValue<Boolean> strictValidation;
 
-  public static final String JSON_PROPERTY_TRUNCATE_CONCAT = "truncate_concat";
+  public MediaResponseImpl() {}
 
-  private OptionalValue<Boolean> truncateConcat;
-
-  public static final String JSON_PROPERTY_MAX_NUMBER_OF_MESSAGE_PARTS =
-      "max_number_of_message_parts";
-
-  private OptionalValue<Integer> maxNumberOfMessageParts;
-
-  public static final String JSON_PROPERTY_FROM_TON = "from_ton";
-
-  private OptionalValue<Integer> fromTon;
-
-  public static final String JSON_PROPERTY_FROM_NPI = "from_npi";
-
-  private OptionalValue<Integer> fromNpi;
-
-  public BatchTextImpl() {}
-
-  protected BatchTextImpl(
+  protected MediaResponseImpl(
       OptionalValue<String> id,
       OptionalValue<List<String>> to,
       OptionalValue<String> from,
       OptionalValue<Boolean> canceled,
+      OptionalValue<MediaBody> body,
       OptionalValue<Map<String, Map<String, String>>> parameters,
-      OptionalValue<String> body,
       OptionalValue<TypeEnum> type,
       OptionalValue<Instant> createdAt,
       OptionalValue<Instant> modifiedAt,
@@ -139,17 +119,13 @@ public class BatchTextImpl implements BatchText, Batch {
       OptionalValue<String> callbackUrl,
       OptionalValue<String> clientReference,
       OptionalValue<Boolean> feedbackEnabled,
-      OptionalValue<Boolean> flashMessage,
-      OptionalValue<Boolean> truncateConcat,
-      OptionalValue<Integer> maxNumberOfMessageParts,
-      OptionalValue<Integer> fromTon,
-      OptionalValue<Integer> fromNpi) {
+      OptionalValue<Boolean> strictValidation) {
     this.id = id;
     this.to = to;
     this.from = from;
     this.canceled = canceled;
-    this.parameters = parameters;
     this.body = body;
+    this.parameters = parameters;
     this.type = type;
     this.createdAt = createdAt;
     this.modifiedAt = modifiedAt;
@@ -159,11 +135,7 @@ public class BatchTextImpl implements BatchText, Batch {
     this.callbackUrl = callbackUrl;
     this.clientReference = clientReference;
     this.feedbackEnabled = feedbackEnabled;
-    this.flashMessage = flashMessage;
-    this.truncateConcat = truncateConcat;
-    this.maxNumberOfMessageParts = maxNumberOfMessageParts;
-    this.fromTon = fromTon;
-    this.fromNpi = fromNpi;
+    this.strictValidation = strictValidation;
   }
 
   @JsonIgnore
@@ -209,6 +181,17 @@ public class BatchTextImpl implements BatchText, Batch {
   }
 
   @JsonIgnore
+  public MediaBody getBody() {
+    return body.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_BODY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<MediaBody> body() {
+    return body;
+  }
+
+  @JsonIgnore
   public Map<String, Map<String, String>> getParameters() {
     return parameters.orElse(null);
   }
@@ -217,17 +200,6 @@ public class BatchTextImpl implements BatchText, Batch {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<Map<String, Map<String, String>>> parameters() {
     return parameters;
-  }
-
-  @JsonIgnore
-  public String getBody() {
-    return body.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_BODY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> body() {
-    return body;
   }
 
   @JsonIgnore
@@ -327,61 +299,17 @@ public class BatchTextImpl implements BatchText, Batch {
   }
 
   @JsonIgnore
-  public Boolean getFlashMessage() {
-    return flashMessage.orElse(null);
+  public Boolean getStrictValidation() {
+    return strictValidation.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_FLASH_MESSAGE)
+  @JsonProperty(JSON_PROPERTY_STRICT_VALIDATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<Boolean> flashMessage() {
-    return flashMessage;
+  public OptionalValue<Boolean> strictValidation() {
+    return strictValidation;
   }
 
-  @JsonIgnore
-  public Boolean getTruncateConcat() {
-    return truncateConcat.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_TRUNCATE_CONCAT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<Boolean> truncateConcat() {
-    return truncateConcat;
-  }
-
-  @JsonIgnore
-  public Integer getMaxNumberOfMessageParts() {
-    return maxNumberOfMessageParts.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_MAX_NUMBER_OF_MESSAGE_PARTS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<Integer> maxNumberOfMessageParts() {
-    return maxNumberOfMessageParts;
-  }
-
-  @JsonIgnore
-  public Integer getFromTon() {
-    return fromTon.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_FROM_TON)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<Integer> fromTon() {
-    return fromTon;
-  }
-
-  @JsonIgnore
-  public Integer getFromNpi() {
-    return fromNpi.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_FROM_NPI)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<Integer> fromNpi() {
-    return fromNpi;
-  }
-
-  /** Return true if this TextResponse object is equal to o. */
+  /** Return true if this MediaResponse object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -390,27 +318,23 @@ public class BatchTextImpl implements BatchText, Batch {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BatchTextImpl textResponse = (BatchTextImpl) o;
-    return Objects.equals(this.id, textResponse.id)
-        && Objects.equals(this.to, textResponse.to)
-        && Objects.equals(this.from, textResponse.from)
-        && Objects.equals(this.canceled, textResponse.canceled)
-        && Objects.equals(this.parameters, textResponse.parameters)
-        && Objects.equals(this.body, textResponse.body)
-        && Objects.equals(this.type, textResponse.type)
-        && Objects.equals(this.createdAt, textResponse.createdAt)
-        && Objects.equals(this.modifiedAt, textResponse.modifiedAt)
-        && Objects.equals(this.deliveryReport, textResponse.deliveryReport)
-        && Objects.equals(this.sendAt, textResponse.sendAt)
-        && Objects.equals(this.expireAt, textResponse.expireAt)
-        && Objects.equals(this.callbackUrl, textResponse.callbackUrl)
-        && Objects.equals(this.clientReference, textResponse.clientReference)
-        && Objects.equals(this.feedbackEnabled, textResponse.feedbackEnabled)
-        && Objects.equals(this.flashMessage, textResponse.flashMessage)
-        && Objects.equals(this.truncateConcat, textResponse.truncateConcat)
-        && Objects.equals(this.maxNumberOfMessageParts, textResponse.maxNumberOfMessageParts)
-        && Objects.equals(this.fromTon, textResponse.fromTon)
-        && Objects.equals(this.fromNpi, textResponse.fromNpi);
+    MediaResponseImpl mediaResponse = (MediaResponseImpl) o;
+    return Objects.equals(this.id, mediaResponse.id)
+        && Objects.equals(this.to, mediaResponse.to)
+        && Objects.equals(this.from, mediaResponse.from)
+        && Objects.equals(this.canceled, mediaResponse.canceled)
+        && Objects.equals(this.body, mediaResponse.body)
+        && Objects.equals(this.parameters, mediaResponse.parameters)
+        && Objects.equals(this.type, mediaResponse.type)
+        && Objects.equals(this.createdAt, mediaResponse.createdAt)
+        && Objects.equals(this.modifiedAt, mediaResponse.modifiedAt)
+        && Objects.equals(this.deliveryReport, mediaResponse.deliveryReport)
+        && Objects.equals(this.sendAt, mediaResponse.sendAt)
+        && Objects.equals(this.expireAt, mediaResponse.expireAt)
+        && Objects.equals(this.callbackUrl, mediaResponse.callbackUrl)
+        && Objects.equals(this.clientReference, mediaResponse.clientReference)
+        && Objects.equals(this.feedbackEnabled, mediaResponse.feedbackEnabled)
+        && Objects.equals(this.strictValidation, mediaResponse.strictValidation);
   }
 
   @Override
@@ -420,8 +344,8 @@ public class BatchTextImpl implements BatchText, Batch {
         to,
         from,
         canceled,
-        parameters,
         body,
+        parameters,
         type,
         createdAt,
         modifiedAt,
@@ -431,23 +355,19 @@ public class BatchTextImpl implements BatchText, Batch {
         callbackUrl,
         clientReference,
         feedbackEnabled,
-        flashMessage,
-        truncateConcat,
-        maxNumberOfMessageParts,
-        fromTon,
-        fromNpi);
+        strictValidation);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class BatchTextImpl {\n");
+    sb.append("class MediaResponseImpl {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    to: ").append(toIndentedString(to)).append("\n");
     sb.append("    from: ").append(toIndentedString(from)).append("\n");
     sb.append("    canceled: ").append(toIndentedString(canceled)).append("\n");
-    sb.append("    parameters: ").append(toIndentedString(parameters)).append("\n");
     sb.append("    body: ").append(toIndentedString(body)).append("\n");
+    sb.append("    parameters: ").append(toIndentedString(parameters)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    modifiedAt: ").append(toIndentedString(modifiedAt)).append("\n");
@@ -457,13 +377,7 @@ public class BatchTextImpl implements BatchText, Batch {
     sb.append("    callbackUrl: ").append(toIndentedString(callbackUrl)).append("\n");
     sb.append("    clientReference: ").append(toIndentedString(clientReference)).append("\n");
     sb.append("    feedbackEnabled: ").append(toIndentedString(feedbackEnabled)).append("\n");
-    sb.append("    flashMessage: ").append(toIndentedString(flashMessage)).append("\n");
-    sb.append("    truncateConcat: ").append(toIndentedString(truncateConcat)).append("\n");
-    sb.append("    maxNumberOfMessageParts: ")
-        .append(toIndentedString(maxNumberOfMessageParts))
-        .append("\n");
-    sb.append("    fromTon: ").append(toIndentedString(fromTon)).append("\n");
-    sb.append("    fromNpi: ").append(toIndentedString(fromNpi)).append("\n");
+    sb.append("    strictValidation: ").append(toIndentedString(strictValidation)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -479,14 +393,14 @@ public class BatchTextImpl implements BatchText, Batch {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements BatchText.Builder {
+  static class Builder implements MediaResponse.Builder {
     OptionalValue<String> id = OptionalValue.empty();
     OptionalValue<List<String>> to = OptionalValue.empty();
     OptionalValue<String> from = OptionalValue.empty();
     OptionalValue<Boolean> canceled = OptionalValue.empty();
+    OptionalValue<MediaBody> body = OptionalValue.empty();
     OptionalValue<Map<String, Map<String, String>>> parameters = OptionalValue.empty();
-    OptionalValue<String> body = OptionalValue.empty();
-    OptionalValue<TypeEnum> type = OptionalValue.of(TypeEnum.MT_TEXT);
+    OptionalValue<TypeEnum> type = OptionalValue.of(TypeEnum.MT_MEDIA);
     OptionalValue<Instant> createdAt = OptionalValue.empty();
     OptionalValue<Instant> modifiedAt = OptionalValue.empty();
     OptionalValue<DeliveryReportType> deliveryReport = OptionalValue.empty();
@@ -495,11 +409,7 @@ public class BatchTextImpl implements BatchText, Batch {
     OptionalValue<String> callbackUrl = OptionalValue.empty();
     OptionalValue<String> clientReference = OptionalValue.empty();
     OptionalValue<Boolean> feedbackEnabled = OptionalValue.empty();
-    OptionalValue<Boolean> flashMessage = OptionalValue.empty();
-    OptionalValue<Boolean> truncateConcat = OptionalValue.empty();
-    OptionalValue<Integer> maxNumberOfMessageParts = OptionalValue.empty();
-    OptionalValue<Integer> fromTon = OptionalValue.empty();
-    OptionalValue<Integer> fromNpi = OptionalValue.empty();
+    OptionalValue<Boolean> strictValidation = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_ID)
     public Builder setId(String id) {
@@ -525,15 +435,15 @@ public class BatchTextImpl implements BatchText, Batch {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_PARAMETERS)
-    public Builder setParameters(Map<String, Map<String, String>> parameters) {
-      this.parameters = OptionalValue.of(parameters);
+    @JsonProperty(JSON_PROPERTY_BODY)
+    public Builder setBody(MediaBody body) {
+      this.body = OptionalValue.of(body);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_BODY)
-    public Builder setBody(String body) {
-      this.body = OptionalValue.of(body);
+    @JsonProperty(JSON_PROPERTY_PARAMETERS)
+    public Builder setParameters(Map<String, Map<String, String>> parameters) {
+      this.parameters = OptionalValue.of(parameters);
       return this;
     }
 
@@ -585,44 +495,20 @@ public class BatchTextImpl implements BatchText, Batch {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_FLASH_MESSAGE)
-    public Builder setFlashMessage(Boolean flashMessage) {
-      this.flashMessage = OptionalValue.of(flashMessage);
+    @JsonProperty(JSON_PROPERTY_STRICT_VALIDATION)
+    public Builder setStrictValidation(Boolean strictValidation) {
+      this.strictValidation = OptionalValue.of(strictValidation);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_TRUNCATE_CONCAT)
-    public Builder setTruncateConcat(Boolean truncateConcat) {
-      this.truncateConcat = OptionalValue.of(truncateConcat);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_MAX_NUMBER_OF_MESSAGE_PARTS)
-    public Builder setMaxNumberOfMessageParts(Integer maxNumberOfMessageParts) {
-      this.maxNumberOfMessageParts = OptionalValue.of(maxNumberOfMessageParts);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_FROM_TON)
-    public Builder setFromTon(Integer fromTon) {
-      this.fromTon = OptionalValue.of(fromTon);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_FROM_NPI)
-    public Builder setFromNpi(Integer fromNpi) {
-      this.fromNpi = OptionalValue.of(fromNpi);
-      return this;
-    }
-
-    public BatchText build() {
-      return new BatchTextImpl(
+    public MediaResponse build() {
+      return new MediaResponseImpl(
           id,
           to,
           from,
           canceled,
-          parameters,
           body,
+          parameters,
           type,
           createdAt,
           modifiedAt,
@@ -632,11 +518,7 @@ public class BatchTextImpl implements BatchText, Batch {
           callbackUrl,
           clientReference,
           feedbackEnabled,
-          flashMessage,
-          truncateConcat,
-          maxNumberOfMessageParts,
-          fromTon,
-          fromNpi);
+          strictValidation);
     }
   }
 }

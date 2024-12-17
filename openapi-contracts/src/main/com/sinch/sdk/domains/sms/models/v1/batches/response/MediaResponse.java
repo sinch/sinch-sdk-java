@@ -14,15 +14,16 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import com.sinch.sdk.domains.sms.models.v1.batches.DeliveryReportType;
+import com.sinch.sdk.domains.sms.models.v1.batches.MediaBody;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-/** BatchText */
-@JsonDeserialize(builder = BatchTextImpl.Builder.class)
-public interface BatchText extends Batch {
+/** MediaResponse */
+@JsonDeserialize(builder = MediaResponseImpl.Builder.class)
+public interface MediaResponse extends BatchResponse {
 
   /**
    * Unique identifier for batch
@@ -41,8 +42,7 @@ public interface BatchText extends Batch {
   List<String> getTo();
 
   /**
-   * Sender number. Must be valid phone number, short code or alphanumeric. Required if Automatic
-   * Default Originator not configured.
+   * Sender number. Required if Automatic Default Originator not configured.
    *
    * @return from
    */
@@ -57,6 +57,13 @@ public interface BatchText extends Batch {
   Boolean getCanceled();
 
   /**
+   * Get body
+   *
+   * @return body
+   */
+  MediaBody getBody();
+
+  /**
    * Contains the parameters that will be used for customizing the message for each recipient. <a
    * href="/docs/sms/resources/message-info/message-parameterization">Click here to learn more about
    * parameterization</a>.
@@ -65,19 +72,12 @@ public interface BatchText extends Batch {
    */
   Map<String, Map<String, String>> getParameters();
 
-  /**
-   * The message content
-   *
-   * @return body
-   */
-  String getBody();
-
-  /** Regular SMS */
+  /** Media message */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
-    public static final TypeEnum MT_TEXT = new TypeEnum("mt_text");
+    public static final TypeEnum MT_MEDIA = new TypeEnum("mt_media");
 
     private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(TypeEnum.class, TypeEnum::new, Arrays.asList(MT_TEXT));
+        new EnumSupportDynamic<>(TypeEnum.class, TypeEnum::new, Arrays.asList(MT_MEDIA));
 
     private TypeEnum(String value) {
       super(value);
@@ -97,9 +97,7 @@ public interface BatchText extends Batch {
   }
 
   /**
-   * Timestamp for when batch was created. Formatted as <a
-   * href="https://en.wikipedia.org/wiki/ISO_8601">ISO-8601</a>:<code>YYYY-MM-DDThh:mm:ss.SSSZ
-   * </code>.
+   * Timestamp for when batch was created. YYYY-MM-DDThh:mm:ss.SSSZ format
    *
    * @return createdAt
    * @readOnly <em>This field is returned by the server and cannot be modified</em>
@@ -107,9 +105,7 @@ public interface BatchText extends Batch {
   Instant getCreatedAt();
 
   /**
-   * Timestamp for when batch was last updated. Formatted as <a
-   * href="https://en.wikipedia.org/wiki/ISO_8601">ISO-8601</a>:<code>YYYY-MM-DDThh:mm:ss.SSSZ
-   * </code>.
+   * Timestamp for when batch was last updated. YYYY-MM-DDThh:mm:ss.SSSZ format
    *
    * @return modifiedAt
    * @readOnly <em>This field is returned by the server and cannot be modified</em>
@@ -124,20 +120,17 @@ public interface BatchText extends Batch {
   DeliveryReportType getDeliveryReport();
 
   /**
-   * If set in the future, the message will be delayed until <code>send_at</code> occurs. Must be
-   * before <code>expire_at</code>. If set in the past, messages will be sent immediately. Formatted
-   * as <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO-8601</a>: <code>
-   * YYYY-MM-DDThh:mm:ss.SSSZ</code>.
+   * If set in the future the message will be delayed until send_at occurs. Must be before <code>
+   * expire_at</code>. If set in the past messages will be sent immediately.
+   * YYYY-MM-DDThh:mm:ss.SSSZ format
    *
    * @return sendAt
    */
   Instant getSendAt();
 
   /**
-   * If set, the system will stop trying to deliver the message at this point. Must be after <code>
-   * send_at</code>. Default and max is 3 days after <code>send_at</code>. Formatted as <a
-   * href="https://en.wikipedia.org/wiki/ISO_8601">ISO-8601</a>: <code>YYYY-MM-DDThh:mm:ss.SSSZ
-   * </code>.
+   * If set the system will stop trying to deliver the message at this point. Must be after <code>
+   * send_at</code>. Default and max is 3 days after send_at. YYYY-MM-DDThh:mm:ss.SSSZ format
    *
    * @return expireAt
    */
@@ -159,7 +152,7 @@ public interface BatchText extends Batch {
   String getClientReference();
 
   /**
-   * If set to <code>true</code>, then <a
+   * If set to true then <a
    * href="/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/deliveryFeedback">feedback</a>
    * is expected after successful delivery.
    *
@@ -168,46 +161,14 @@ public interface BatchText extends Batch {
   Boolean getFeedbackEnabled();
 
   /**
-   * Shows message on screen without user interaction while not saving the message to the inbox.
+   * Whether or not you want the media included in your message to be checked against <a
+   * href="/docs/mms/bestpractices/">Sinch MMS channel best practices</a>. If set to true, your
+   * message will be rejected if it doesn't conform to the listed recommendations, otherwise no
+   * validation will be performed.
    *
-   * @return flashMessage
+   * @return strictValidation
    */
-  Boolean getFlashMessage();
-
-  /**
-   * If set to <code>true</code> the message will be shortened when exceeding one part.
-   *
-   * @return truncateConcat
-   */
-  Boolean getTruncateConcat();
-
-  /**
-   * Message will be dispatched only if it is not split to more parts than Max Number of Message
-   * Parts
-   *
-   * <p>minimum: 1
-   *
-   * @return maxNumberOfMessageParts
-   */
-  Integer getMaxNumberOfMessageParts();
-
-  /**
-   * The type of number for the sender number. Use to override the automatic detection.
-   *
-   * <p>minimum: 0 maximum: 6
-   *
-   * @return fromTon
-   */
-  Integer getFromTon();
-
-  /**
-   * Number Plan Indicator for the sender number. Use to override the automatic detection.
-   *
-   * <p>minimum: 0 maximum: 18
-   *
-   * @return fromNpi
-   */
-  Integer getFromNpi();
+  Boolean getStrictValidation();
 
   /**
    * Getting builder
@@ -215,7 +176,7 @@ public interface BatchText extends Batch {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new BatchTextImpl.Builder();
+    return new MediaResponseImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -262,20 +223,20 @@ public interface BatchText extends Batch {
     /**
      * see getter
      *
+     * @param body see getter
+     * @return Current builder
+     * @see #getBody
+     */
+    Builder setBody(MediaBody body);
+
+    /**
+     * see getter
+     *
      * @param parameters see getter
      * @return Current builder
      * @see #getParameters
      */
     Builder setParameters(Map<String, Map<String, String>> parameters);
-
-    /**
-     * see getter
-     *
-     * @param body see getter
-     * @return Current builder
-     * @see #getBody
-     */
-    Builder setBody(String body);
 
     /**
      * see getter
@@ -354,53 +315,17 @@ public interface BatchText extends Batch {
     /**
      * see getter
      *
-     * @param flashMessage see getter
+     * @param strictValidation see getter
      * @return Current builder
-     * @see #getFlashMessage
+     * @see #getStrictValidation
      */
-    Builder setFlashMessage(Boolean flashMessage);
-
-    /**
-     * see getter
-     *
-     * @param truncateConcat see getter
-     * @return Current builder
-     * @see #getTruncateConcat
-     */
-    Builder setTruncateConcat(Boolean truncateConcat);
-
-    /**
-     * see getter
-     *
-     * @param maxNumberOfMessageParts see getter
-     * @return Current builder
-     * @see #getMaxNumberOfMessageParts
-     */
-    Builder setMaxNumberOfMessageParts(Integer maxNumberOfMessageParts);
-
-    /**
-     * see getter
-     *
-     * @param fromTon see getter
-     * @return Current builder
-     * @see #getFromTon
-     */
-    Builder setFromTon(Integer fromTon);
-
-    /**
-     * see getter
-     *
-     * @param fromNpi see getter
-     * @return Current builder
-     * @see #getFromNpi
-     */
-    Builder setFromNpi(Integer fromNpi);
+    Builder setStrictValidation(Boolean strictValidation);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    BatchText build();
+    MediaResponse build();
   }
 }

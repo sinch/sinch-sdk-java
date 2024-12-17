@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.sms.models.v1.batches.response.Batch;
+import com.sinch.sdk.domains.sms.models.v1.batches.response.BatchResponse;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,7 +32,7 @@ public class ApiBatchListImpl implements ApiBatchList {
 
   public static final String JSON_PROPERTY_BATCHES = "batches";
 
-  private OptionalValue<List<Batch>> batches;
+  private OptionalValue<List<BatchResponse>> batches;
 
   public static final String JSON_PROPERTY_PAGE_SIZE = "page_size";
 
@@ -43,7 +43,7 @@ public class ApiBatchListImpl implements ApiBatchList {
   protected ApiBatchListImpl(
       OptionalValue<Long> count,
       OptionalValue<Integer> page,
-      OptionalValue<List<Batch>> batches,
+      OptionalValue<List<BatchResponse>> batches,
       OptionalValue<Integer> pageSize) {
     this.count = count;
     this.page = page;
@@ -74,13 +74,13 @@ public class ApiBatchListImpl implements ApiBatchList {
   }
 
   @JsonIgnore
-  public List<Batch> getBatches() {
+  public List<BatchResponse> getBatches() {
     return batches.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_BATCHES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<List<Batch>> batches() {
+  public OptionalValue<List<BatchResponse>> batches() {
     return batches;
   }
 
@@ -142,7 +142,7 @@ public class ApiBatchListImpl implements ApiBatchList {
   static class Builder implements ApiBatchList.Builder {
     OptionalValue<Long> count = OptionalValue.empty();
     OptionalValue<Integer> page = OptionalValue.empty();
-    OptionalValue<List<Batch>> batches = OptionalValue.empty();
+    OptionalValue<List<BatchResponse>> batches = OptionalValue.empty();
     OptionalValue<Integer> pageSize = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_COUNT)
@@ -158,7 +158,7 @@ public class ApiBatchListImpl implements ApiBatchList {
     }
 
     @JsonProperty(JSON_PROPERTY_BATCHES)
-    public Builder setBatches(List<Batch> batches) {
+    public Builder setBatches(List<BatchResponse> batches) {
       this.batches = OptionalValue.of(batches);
       return this;
     }

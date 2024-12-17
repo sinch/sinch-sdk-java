@@ -13,27 +13,27 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  BatchBinaryImpl.JSON_PROPERTY_ID,
-  BatchBinaryImpl.JSON_PROPERTY_TO,
-  BatchBinaryImpl.JSON_PROPERTY_FROM,
-  BatchBinaryImpl.JSON_PROPERTY_CANCELED,
-  BatchBinaryImpl.JSON_PROPERTY_BODY,
-  BatchBinaryImpl.JSON_PROPERTY_UDH,
-  BatchBinaryImpl.JSON_PROPERTY_TYPE,
-  BatchBinaryImpl.JSON_PROPERTY_CREATED_AT,
-  BatchBinaryImpl.JSON_PROPERTY_MODIFIED_AT,
-  BatchBinaryImpl.JSON_PROPERTY_DELIVERY_REPORT,
-  BatchBinaryImpl.JSON_PROPERTY_SEND_AT,
-  BatchBinaryImpl.JSON_PROPERTY_EXPIRE_AT,
-  BatchBinaryImpl.JSON_PROPERTY_CALLBACK_URL,
-  BatchBinaryImpl.JSON_PROPERTY_CLIENT_REFERENCE,
-  BatchBinaryImpl.JSON_PROPERTY_FEEDBACK_ENABLED,
-  BatchBinaryImpl.JSON_PROPERTY_FROM_TON,
-  BatchBinaryImpl.JSON_PROPERTY_FROM_NPI
+  BinaryResponseImpl.JSON_PROPERTY_ID,
+  BinaryResponseImpl.JSON_PROPERTY_TO,
+  BinaryResponseImpl.JSON_PROPERTY_FROM,
+  BinaryResponseImpl.JSON_PROPERTY_CANCELED,
+  BinaryResponseImpl.JSON_PROPERTY_BODY,
+  BinaryResponseImpl.JSON_PROPERTY_UDH,
+  BinaryResponseImpl.JSON_PROPERTY_TYPE,
+  BinaryResponseImpl.JSON_PROPERTY_CREATED_AT,
+  BinaryResponseImpl.JSON_PROPERTY_MODIFIED_AT,
+  BinaryResponseImpl.JSON_PROPERTY_DELIVERY_REPORT,
+  BinaryResponseImpl.JSON_PROPERTY_SEND_AT,
+  BinaryResponseImpl.JSON_PROPERTY_EXPIRE_AT,
+  BinaryResponseImpl.JSON_PROPERTY_CALLBACK_URL,
+  BinaryResponseImpl.JSON_PROPERTY_CLIENT_REFERENCE,
+  BinaryResponseImpl.JSON_PROPERTY_FEEDBACK_ENABLED,
+  BinaryResponseImpl.JSON_PROPERTY_FROM_TON,
+  BinaryResponseImpl.JSON_PROPERTY_FROM_NPI
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class BatchBinaryImpl implements BatchBinary, Batch {
+public class BinaryResponseImpl implements BinaryResponse, BatchResponse {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ID = "id";
@@ -104,9 +104,9 @@ public class BatchBinaryImpl implements BatchBinary, Batch {
 
   private OptionalValue<Integer> fromNpi;
 
-  public BatchBinaryImpl() {}
+  public BinaryResponseImpl() {}
 
-  protected BatchBinaryImpl(
+  protected BinaryResponseImpl(
       OptionalValue<String> id,
       OptionalValue<List<String>> to,
       OptionalValue<String> from,
@@ -335,7 +335,7 @@ public class BatchBinaryImpl implements BatchBinary, Batch {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BatchBinaryImpl binaryResponse = (BatchBinaryImpl) o;
+    BinaryResponseImpl binaryResponse = (BinaryResponseImpl) o;
     return Objects.equals(this.id, binaryResponse.id)
         && Objects.equals(this.to, binaryResponse.to)
         && Objects.equals(this.from, binaryResponse.from)
@@ -380,7 +380,7 @@ public class BatchBinaryImpl implements BatchBinary, Batch {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class BatchBinaryImpl {\n");
+    sb.append("class BinaryResponseImpl {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    to: ").append(toIndentedString(to)).append("\n");
     sb.append("    from: ").append(toIndentedString(from)).append("\n");
@@ -413,7 +413,7 @@ public class BatchBinaryImpl implements BatchBinary, Batch {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements BatchBinary.Builder {
+  static class Builder implements BinaryResponse.Builder {
     OptionalValue<String> id = OptionalValue.empty();
     OptionalValue<List<String>> to = OptionalValue.empty();
     OptionalValue<String> from = OptionalValue.empty();
@@ -528,8 +528,8 @@ public class BatchBinaryImpl implements BatchBinary, Batch {
       return this;
     }
 
-    public BatchBinary build() {
-      return new BatchBinaryImpl(
+    public BinaryResponse build() {
+      return new BinaryResponseImpl(
           id,
           to,
           from,

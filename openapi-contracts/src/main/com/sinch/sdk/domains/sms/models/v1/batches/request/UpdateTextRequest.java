@@ -22,7 +22,7 @@ import java.util.stream.Stream;
 
 /** Update text message */
 @JsonDeserialize(builder = UpdateTextRequestImpl.Builder.class)
-public interface UpdateTextRequest extends UpdateBatchRequest, BatchRequest {
+public interface UpdateTextRequest extends UpdateBatchRequest {
 
   /**
    * Sender number. Must be valid phone number, short code or alphanumeric.
