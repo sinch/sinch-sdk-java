@@ -2,7 +2,7 @@ package com.sinch.sample.sms.v1.batches;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.sms.api.v1.BatchesService;
-import com.sinch.sdk.domains.sms.models.v1.batches.response.Batch;
+import com.sinch.sdk.domains.sms.models.v1.batches.response.BatchResponse;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -25,7 +25,7 @@ public class Cancel extends BaseApplication {
     BatchesService service = client.sms().v1().batches();
 
     LOGGER.info("Cancelling batch: " + batchId);
-    Batch value = service.cancel(batchId);
+    BatchResponse value = service.cancel(batchId);
 
     LOGGER.info("Response: " + value);
   }

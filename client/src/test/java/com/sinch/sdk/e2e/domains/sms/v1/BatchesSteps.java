@@ -7,11 +7,11 @@ import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.SendDeliveryFeedbackRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.TextRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.UpdateTextRequest;
-import com.sinch.sdk.domains.sms.models.v1.batches.response.Batch;
-import com.sinch.sdk.domains.sms.models.v1.batches.response.BatchText;
+import com.sinch.sdk.domains.sms.models.v1.batches.response.BatchResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.DryRunPerRecipientDetails;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.DryRunResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.ListBatchesResponse;
+import com.sinch.sdk.domains.sms.models.v1.batches.response.TextResponse;
 import com.sinch.sdk.e2e.Config;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -30,16 +30,16 @@ public class BatchesSteps {
 
   BatchesService service;
 
-  Batch sendTextResponse;
-  Batch sendTextWithParametersResponse;
+  BatchResponse sendTextResponse;
+  BatchResponse sendTextWithParametersResponse;
   DryRunResponse dryRunResponse;
   ListBatchesResponse listOnePageResponse;
   ListBatchesResponse listAllResponse;
   ListBatchesResponse listAllByPageResponse;
-  Batch getBatchResponse;
-  Batch updateResponse;
-  Batch replaceResponse;
-  Batch cancelResponse;
+  BatchResponse getBatchResponse;
+  BatchResponse updateResponse;
+  BatchResponse replaceResponse;
+  BatchResponse cancelResponse;
   Boolean sendDeliveryFeedbackPassed;
 
   @Given("^the SMS service \"Batches\" is available")
@@ -191,8 +191,8 @@ public class BatchesSteps {
 
   @Then("the response contains the text SMS details")
   public void sendResult() {
-    BatchText expected =
-        BatchText.builder()
+    TextResponse expected =
+        TextResponse.builder()
             .setId("01W4FFL35P4NC4K35SMSBATCH1")
             .setTo(Collections.singletonList("12017777777"))
             .setFrom("12015555555")
@@ -230,8 +230,8 @@ public class BatchesSteps {
                 new AbstractMap.SimpleEntry<>("code", codeParameters))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-    BatchText expected =
-        BatchText.builder()
+    TextResponse expected =
+        TextResponse.builder()
             .setId("01W4FFL35P4NC4K35SMSBATCH2")
             .setTo(Arrays.asList("12017777777", "12018888888"))
             .setFrom("12015555555")
@@ -313,8 +313,8 @@ public class BatchesSteps {
   @Then("the response contains the SMS batch details")
   public void getResult() {
 
-    BatchText expected =
-        BatchText.builder()
+    TextResponse expected =
+        TextResponse.builder()
             .setId("01W4FFL35P4NC4K35SMSBATCH1")
             .setTo(Collections.singletonList("12017777777"))
             .setFrom("12015555555")
@@ -335,8 +335,8 @@ public class BatchesSteps {
   @Then("the response contains the SMS batch details with updated data")
   public void updateResult() {
 
-    BatchText expected =
-        BatchText.builder()
+    TextResponse expected =
+        TextResponse.builder()
             .setId("01W4FFL35P4NC4K35SMSBATCH1")
             .setTo(Arrays.asList("12017777777", "01W4FFL35P4NC4K35SMSGROUP1"))
             .setFrom("12016666666")
@@ -357,8 +357,8 @@ public class BatchesSteps {
   @Then("the response contains the new SMS batch details with the provided data for replacement")
   public void replaceResult() {
 
-    BatchText expected =
-        BatchText.builder()
+    TextResponse expected =
+        TextResponse.builder()
             .setId("01W4FFL35P4NC4K35SMSBATCH1")
             .setTo(Arrays.asList("12018888888"))
             .setFrom("12016666666")
@@ -378,8 +378,8 @@ public class BatchesSteps {
   @Then("the response contains the SMS batch details with a cancelled status")
   public void cancelResult() {
 
-    BatchText expected =
-        BatchText.builder()
+    TextResponse expected =
+        TextResponse.builder()
             .setId("01W4FFL35P4NC4K35SMSBATCH1")
             .setTo(Arrays.asList("12017777777"))
             .setFrom("12015555555")

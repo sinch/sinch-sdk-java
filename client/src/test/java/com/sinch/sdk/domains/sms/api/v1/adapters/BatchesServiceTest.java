@@ -24,12 +24,12 @@ import com.sinch.sdk.domains.sms.models.v1.batches.request.TextRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.UpdateBinaryRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.UpdateMediaRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.UpdateTextRequest;
-import com.sinch.sdk.domains.sms.models.v1.batches.response.Batch;
-import com.sinch.sdk.domains.sms.models.v1.batches.response.BatchBinary;
-import com.sinch.sdk.domains.sms.models.v1.batches.response.BatchMedia;
-import com.sinch.sdk.domains.sms.models.v1.batches.response.BatchText;
+import com.sinch.sdk.domains.sms.models.v1.batches.response.BatchResponse;
+import com.sinch.sdk.domains.sms.models.v1.batches.response.BinaryResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.DryRunResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.ListBatchesResponse;
+import com.sinch.sdk.domains.sms.models.v1.batches.response.MediaResponse;
+import com.sinch.sdk.domains.sms.models.v1.batches.response.TextResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.internal.ApiBatchList;
 import com.sinch.sdk.models.SmsContext;
 import java.time.Instant;
@@ -70,8 +70,8 @@ public class BatchesServiceTest extends BaseTest {
   static final int fromNpi = 18;
   static final String udh = "foo udh";
   static final String body = "Hi ${name} ({an identifier}) ! How are you?";
-  public static final BatchBinary batchBinary =
-      BatchBinary.builder()
+  public static final BinaryResponse batchBinary =
+      BinaryResponse.builder()
           .setId(id)
           .setTo(to)
           .setFrom(from)
@@ -109,8 +109,8 @@ public class BatchesServiceTest extends BaseTest {
               new AbstractMap.SimpleEntry<>("an identifier", anIdentifierParameters))
           .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-  public static final BatchMedia batchMedia =
-      BatchMedia.builder()
+  public static final MediaResponse batchMedia =
+      MediaResponse.builder()
           .setId(id)
           .setTo(to)
           .setFrom(from)
@@ -133,8 +133,8 @@ public class BatchesServiceTest extends BaseTest {
           .setStrictValidation(true)
           .setParameters(parameters)
           .build();
-  public static final BatchText batchText =
-      BatchText.builder()
+  public static final TextResponse batchText =
+      TextResponse.builder()
           .setId(id)
           .setTo(to)
           .setFrom(from)
@@ -248,14 +248,14 @@ public class BatchesServiceTest extends BaseTest {
           .setUdh(udh)
           .build();
 
-  @GivenJsonResource("/domains/sms/v1/batches/response/BatchBinaryDto.json")
-  public Batch binaryResponseDto;
+  @GivenJsonResource("/domains/sms/v1/batches/response/BinaryResponseDto.json")
+  public BatchResponse binaryResponseDto;
 
-  @GivenJsonResource("/domains/sms/v1/batches/response/BatchMediaDto.json")
-  Batch mediaResponseDto;
+  @GivenJsonResource("/domains/sms/v1/batches/response/MediaResponseDto.json")
+  BatchResponse mediaResponseDto;
 
-  @GivenJsonResource("/domains/sms/v1/batches/response/BatchTextDto.json")
-  Batch textResponseDto;
+  @GivenJsonResource("/domains/sms/v1/batches/response/TextResponseDto.json")
+  BatchResponse textResponseDto;
 
   @GivenJsonResource("/domains/sms/v1/batches/response/DryRunResponseDto.json")
   DryRunResponse dryRunResponseDto;
@@ -289,7 +289,7 @@ public class BatchesServiceTest extends BaseTest {
 
     when(api.get(eq("foo binary batch id"))).thenReturn(binaryResponseDto);
 
-    Batch response = service.get("foo binary batch id");
+    BatchResponse response = service.get("foo binary batch id");
 
     TestHelpers.recursiveEquals(response, batchBinary);
   }
@@ -299,7 +299,7 @@ public class BatchesServiceTest extends BaseTest {
 
     when(api.get(eq("foo media batch id"))).thenReturn(mediaResponseDto);
 
-    Batch response = service.get("foo media batch id");
+    BatchResponse response = service.get("foo media batch id");
 
     TestHelpers.recursiveEquals(response, batchMedia);
   }
@@ -309,7 +309,7 @@ public class BatchesServiceTest extends BaseTest {
 
     when(api.get(eq("foo text batch id"))).thenReturn(textResponseDto);
 
-    Batch response = service.get("foo text batch id");
+    BatchResponse response = service.get("foo text batch id");
 
     TestHelpers.recursiveEquals(response, batchText);
   }
@@ -319,7 +319,7 @@ public class BatchesServiceTest extends BaseTest {
 
     when(api.send(sendSmsBatchBinaryRequest)).thenReturn(binaryResponseDto);
 
-    Batch response = service.send(sendSmsBatchBinaryRequest);
+    BatchResponse response = service.send(sendSmsBatchBinaryRequest);
 
     TestHelpers.recursiveEquals(response, batchBinary);
   }
@@ -329,7 +329,7 @@ public class BatchesServiceTest extends BaseTest {
 
     when(api.send(sendSmsBatchMediaRequest)).thenReturn(mediaResponseDto);
 
-    Batch response = service.send(sendSmsBatchMediaRequest);
+    BatchResponse response = service.send(sendSmsBatchMediaRequest);
 
     TestHelpers.recursiveEquals(response, batchMedia);
   }
@@ -339,7 +339,7 @@ public class BatchesServiceTest extends BaseTest {
 
     when(api.send(sendSmsBatchTextRequest)).thenReturn(textResponseDto);
 
-    Batch response = service.send(sendSmsBatchTextRequest);
+    BatchResponse response = service.send(sendSmsBatchTextRequest);
 
     TestHelpers.recursiveEquals(response, batchText);
   }
@@ -365,12 +365,12 @@ public class BatchesServiceTest extends BaseTest {
         .thenReturn(listBatchesResponseDtoPage2);
     ListBatchesResponse response = service.list(null);
 
-    Iterator<Batch> iterator = response.iterator();
-    Batch batch = iterator.next();
+    Iterator<BatchResponse> iterator = response.iterator();
+    BatchResponse batch = iterator.next();
     Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
     TestHelpers.recursiveEquals(
         batch,
-        BatchBinary.builder()
+        BinaryResponse.builder()
             .setId("01HEAWCHESCXG8SDG5R10VF8E1")
             .setTo(Collections.singletonList("339876543213"))
             .setFrom("33123456789")
@@ -388,7 +388,7 @@ public class BatchesServiceTest extends BaseTest {
     Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
     TestHelpers.recursiveEquals(
         batch,
-        BatchText.builder()
+        TextResponse.builder()
             .setId("01HEAC0AG69SVYYQ675VPYT28Q")
             .setTo(Collections.singletonList("3300000000"))
             .setCanceled(false)
@@ -405,7 +405,7 @@ public class BatchesServiceTest extends BaseTest {
     Assertions.assertThat(iterator.hasNext()).isEqualTo(false);
     TestHelpers.recursiveEquals(
         batch,
-        BatchMedia.builder()
+        MediaResponse.builder()
             .setId("01HEABZ9S80D4ENE3X6CPMATZR")
             .setTo(Collections.singletonList("331111111"))
             .setCanceled(false)
@@ -424,7 +424,7 @@ public class BatchesServiceTest extends BaseTest {
     when(api.update(eq("foo text batch id"), eq(updateSmsBatchTextRequest)))
         .thenReturn(textResponseDto);
 
-    Batch response = service.update("foo text batch id", updateSmsBatchTextRequest);
+    BatchResponse response = service.update("foo text batch id", updateSmsBatchTextRequest);
 
     TestHelpers.recursiveEquals(response, batchText);
   }
@@ -435,7 +435,7 @@ public class BatchesServiceTest extends BaseTest {
     when(api.update(eq("foo text batch id"), eq(updateSmsBatchMediaRequest)))
         .thenReturn(mediaResponseDto);
 
-    Batch response = service.update("foo text batch id", updateSmsBatchMediaRequest);
+    BatchResponse response = service.update("foo text batch id", updateSmsBatchMediaRequest);
 
     TestHelpers.recursiveEquals(response, batchMedia);
   }
@@ -446,7 +446,7 @@ public class BatchesServiceTest extends BaseTest {
     when(api.update(eq("foo text batch id"), eq(updateSmsBatchBinaryRequest)))
         .thenReturn(binaryResponseDto);
 
-    Batch response = service.update("foo text batch id", updateSmsBatchBinaryRequest);
+    BatchResponse response = service.update("foo text batch id", updateSmsBatchBinaryRequest);
 
     TestHelpers.recursiveEquals(response, batchBinary);
   }
@@ -457,7 +457,7 @@ public class BatchesServiceTest extends BaseTest {
     when(api.replace(eq("foo text batch id"), eq(sendSmsBatchBinaryRequest)))
         .thenReturn(binaryResponseDto);
 
-    Batch response = service.replace("foo text batch id", sendSmsBatchBinaryRequest);
+    BatchResponse response = service.replace("foo text batch id", sendSmsBatchBinaryRequest);
 
     TestHelpers.recursiveEquals(response, batchBinary);
   }
@@ -468,7 +468,7 @@ public class BatchesServiceTest extends BaseTest {
     when(api.replace(eq("foo text batch id"), eq(sendSmsBatchMediaRequest)))
         .thenReturn(mediaResponseDto);
 
-    Batch response = service.replace("foo text batch id", sendSmsBatchMediaRequest);
+    BatchResponse response = service.replace("foo text batch id", sendSmsBatchMediaRequest);
 
     TestHelpers.recursiveEquals(response, batchMedia);
   }
@@ -479,7 +479,7 @@ public class BatchesServiceTest extends BaseTest {
     when(api.replace(eq("foo text batch id"), eq(sendSmsBatchTextRequest)))
         .thenReturn(textResponseDto);
 
-    Batch response = service.replace("foo text batch id", sendSmsBatchTextRequest);
+    BatchResponse response = service.replace("foo text batch id", sendSmsBatchTextRequest);
 
     TestHelpers.recursiveEquals(response, batchText);
   }
@@ -489,7 +489,7 @@ public class BatchesServiceTest extends BaseTest {
 
     when(api.cancel(eq("foo text batch id"))).thenReturn(textResponseDto);
 
-    Batch response = service.cancel("foo text batch id");
+    BatchResponse response = service.cancel("foo text batch id");
 
     TestHelpers.recursiveEquals(response, batchText);
   }

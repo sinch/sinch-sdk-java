@@ -7,14 +7,14 @@ import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesRequest;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
-public class ListBatchesResponse extends ListResponse<Batch> {
+public class ListBatchesResponse extends ListResponse<BatchResponse> {
 
-  private final Page<ListBatchesRequest, Batch, Integer> page;
+  private final Page<ListBatchesRequest, BatchResponse, Integer> page;
   private final BatchesService service;
   private ListBatchesResponse nextPage;
 
   public ListBatchesResponse(
-      BatchesService service, Page<ListBatchesRequest, Batch, Integer> page) {
+      BatchesService service, Page<ListBatchesRequest, BatchResponse, Integer> page) {
     this.service = service;
     this.page = page;
   }
@@ -40,7 +40,7 @@ public class ListBatchesResponse extends ListResponse<Batch> {
     return response;
   }
 
-  public Collection<Batch> getContent() {
+  public Collection<BatchResponse> getContent() {
     return page.getEntities();
   }
 

@@ -11,7 +11,7 @@ import com.sinch.sdk.domains.sms.models.v1.batches.request.BatchRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.SendDeliveryFeedbackRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.UpdateBatchRequest;
-import com.sinch.sdk.domains.sms.models.v1.batches.response.Batch;
+import com.sinch.sdk.domains.sms.models.v1.batches.response.BatchResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.DryRunResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.ListBatchesResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.internal.ApiBatchList;
@@ -36,7 +36,7 @@ public class BatchesService implements com.sinch.sdk.domains.sms.api.v1.BatchesS
     return this.api;
   }
 
-  public Batch send(BatchRequest batch) throws ApiException {
+  public BatchResponse send(BatchRequest batch) throws ApiException {
     return getApi().send(batch);
   }
 
@@ -66,15 +66,15 @@ public class BatchesService implements com.sinch.sdk.domains.sms.api.v1.BatchesS
     return getApi().dryRun(perRecipient, numberOfRecipient, batch);
   }
 
-  public Batch get(String batchId) throws ApiException {
+  public BatchResponse get(String batchId) throws ApiException {
     return getApi().get(batchId);
   }
 
-  public Batch replace(String batchId, BatchRequest batch) throws ApiException {
+  public BatchResponse replace(String batchId, BatchRequest batch) throws ApiException {
     return getApi().replace(batchId, batch);
   }
 
-  public Batch cancel(String batchId) throws ApiException {
+  public BatchResponse cancel(String batchId) throws ApiException {
     return getApi().cancel(batchId);
   }
 
@@ -83,7 +83,7 @@ public class BatchesService implements com.sinch.sdk.domains.sms.api.v1.BatchesS
     getApi().sendDeliveryFeedback(batchId, request);
   }
 
-  public Batch update(String batchId, UpdateBatchRequest request) throws ApiException {
+  public BatchResponse update(String batchId, UpdateBatchRequest request) throws ApiException {
     return getApi().update(batchId, request);
   }
 }

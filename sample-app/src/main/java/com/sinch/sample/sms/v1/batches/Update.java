@@ -3,7 +3,7 @@ package com.sinch.sample.sms.v1.batches;
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.sms.api.v1.BatchesService;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.UpdateTextRequest;
-import com.sinch.sdk.domains.sms.models.v1.batches.response.Batch;
+import com.sinch.sdk.domains.sms.models.v1.batches.response.BatchResponse;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.logging.Logger;
@@ -37,7 +37,7 @@ public class Update extends BaseApplication {
 
     webhooksSmsPath.ifPresent(builder::setCallbackUrl);
 
-    Batch value = service.update(batchId, builder.build());
+    BatchResponse value = service.update(batchId, builder.build());
 
     LOGGER.info("Response: " + value);
   }

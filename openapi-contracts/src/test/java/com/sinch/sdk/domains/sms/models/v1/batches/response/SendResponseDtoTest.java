@@ -16,17 +16,17 @@ import org.junit.jupiter.api.Test;
 
 @TestWithResources
 class SendResponseDtoTest extends BaseTest {
-  @GivenJsonResource("/domains/sms/v1/batches/response/BatchBinaryDto.json")
-  Batch loadedBinaryDto;
+  @GivenJsonResource("/domains/sms/v1/batches/response/BinaryResponseDto.json")
+  BatchResponse loadedBinaryDto;
 
-  @GivenJsonResource("/domains/sms/v1/batches/response/BatchTextDto.json")
-  Batch loadedTextDto;
+  @GivenJsonResource("/domains/sms/v1/batches/response/TextResponseDto.json")
+  BatchResponse loadedTextDto;
 
-  @GivenJsonResource("/domains/sms/v1/batches/response/BatchMediaDto.json")
-  Batch loadedMediaDto;
+  @GivenJsonResource("/domains/sms/v1/batches/response/MediaResponseDto.json")
+  BatchResponse loadedMediaDto;
 
-  BatchBinary binaryResponseDto =
-      BatchBinary.builder()
+  BinaryResponse binaryResponseDto =
+      BinaryResponse.builder()
           .setBody("Hi ${name} ({an identifier}) ! How are you?")
           .setCallbackUrl("callback url")
           .setClientReference("myReference")
@@ -63,8 +63,8 @@ class SendResponseDtoTest extends BaseTest {
               new AbstractMap.SimpleEntry<>("name", nameParameters),
               new AbstractMap.SimpleEntry<>("an identifier", anIdentifierParameters))
           .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-  BatchText textResponseDto =
-      BatchText.builder()
+  TextResponse textResponseDto =
+      TextResponse.builder()
           .setId("01FC66621XXXXX119Z8PMV1QPQ")
           .setCreatedAt(Instant.parse("2019-08-24T14:15:22Z"))
           .setCanceled(false)
@@ -86,8 +86,8 @@ class SendResponseDtoTest extends BaseTest {
           .setTruncateConcat(true)
           .build();
 
-  BatchMedia mediaResponseDto =
-      BatchMedia.builder()
+  MediaResponse mediaResponseDto =
+      MediaResponse.builder()
           .setId("01FC66621XXXXX119Z8PMV1QPQ")
           .setCanceled(false)
           .setCreatedAt(Instant.parse("2019-08-24T14:14:22Z"))

@@ -246,13 +246,13 @@ public class BatchesServiceTest extends BaseTest {
           .setUdh(udh)
           .build();
 
-  @GivenJsonResource("/domains/sms/v1/batches/response/BatchBinaryDto.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/BinaryResponseDto.json")
   public SendSMS201ResponseDto binaryResponseDto;
 
-  @GivenJsonResource("/domains/sms/v1/batches/response/BatchMediaDto.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/MediaResponseDto.json")
   SendSMS201ResponseDto mediaResponseDto;
 
-  @GivenJsonResource("/domains/sms/v1/batches/response/BatchTextDto.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/TextResponseDto.json")
   SendSMS201ResponseDto textResponseDto;
 
   @GivenJsonResource("/domains/sms/v1/batches/response/DryRunResponseDto.json")

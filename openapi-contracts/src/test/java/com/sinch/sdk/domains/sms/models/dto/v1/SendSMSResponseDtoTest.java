@@ -17,13 +17,13 @@ import org.junit.jupiter.api.Test;
 @TestWithResources
 class SendSMSResponseDtoTest extends BaseTest {
 
-  @GivenJsonResource("/domains/sms/v1/batches/response/BatchBinaryDto.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/BinaryResponseDto.json")
   SendSMS201ResponseDto loadedBinary;
 
-  @GivenJsonResource("/domains/sms/v1/batches/response/BatchTextDto.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/TextResponseDto.json")
   SendSMS201ResponseDto loadedText;
 
-  @GivenJsonResource("/domains/sms/v1/batches/response/BatchMediaDto.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/MediaResponseDto.json")
   SendSMS201ResponseDto loadedMedia;
 
   ParameterObjDto parameterObjDto = new ParameterObjDto();

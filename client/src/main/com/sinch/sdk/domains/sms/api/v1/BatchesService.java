@@ -5,26 +5,26 @@ import com.sinch.sdk.domains.sms.models.v1.batches.request.BatchRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.SendDeliveryFeedbackRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.UpdateBatchRequest;
-import com.sinch.sdk.domains.sms.models.v1.batches.response.Batch;
+import com.sinch.sdk.domains.sms.models.v1.batches.response.BatchResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.DryRunResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.ListBatchesResponse;
 
 public interface BatchesService {
 
-  Batch send(BatchRequest batch) throws ApiException;
+  BatchResponse send(BatchRequest batch) throws ApiException;
 
   ListBatchesResponse list(ListBatchesRequest parameters) throws ApiException;
 
   DryRunResponse dryRun(boolean perRecipient, int numberOfRecipient, BatchRequest batch);
 
-  Batch get(String batchId) throws ApiException;
+  BatchResponse get(String batchId) throws ApiException;
 
-  Batch replace(String batchId, BatchRequest batch) throws ApiException;
+  BatchResponse replace(String batchId, BatchRequest batch) throws ApiException;
 
-  Batch cancel(String batchId) throws ApiException;
+  BatchResponse cancel(String batchId) throws ApiException;
 
   void sendDeliveryFeedback(String batchId, SendDeliveryFeedbackRequest recipients)
       throws ApiException;
 
-  Batch update(String batchId, UpdateBatchRequest request) throws ApiException;
+  BatchResponse update(String batchId, UpdateBatchRequest request) throws ApiException;
 }

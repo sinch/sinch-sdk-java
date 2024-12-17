@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 @TestWithResources
 class MediaResponseDtoTest extends BaseTest {
-  @GivenJsonResource("/domains/sms/v1/batches/response/BatchMediaDto.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/MediaResponseDto.json")
   MediaResponseDto loadedDto;
 
   ParameterObjDto parameterObjDto = new ParameterObjDto();
