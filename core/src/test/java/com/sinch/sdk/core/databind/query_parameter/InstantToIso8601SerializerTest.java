@@ -1,7 +1,5 @@
 package com.sinch.sdk.core.databind.query_parameter;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.sinch.sdk.core.TestHelpers;
 import java.time.Instant;
 import org.junit.jupiter.api.Assertions;

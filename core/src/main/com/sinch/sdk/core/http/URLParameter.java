@@ -69,6 +69,17 @@ public class URLParameter {
     SIMPLE,
     SPACE_DELIMITED,
     PIPE_DELIMITED,
-    DEEP_OBJECT
+    DEEP_OBJECT;
   }
+
+  // the following constants do not follow java standard by purpose
+  // Aim is to  have direct access to OpenApi Spec authorized values as constant without overhead
+  // ref: https://spec.openapis.org/oas/latest.html#style-values
+  public static final STYLE matrix = STYLE.MATRIX;
+  public static final STYLE label = STYLE.LABEL;
+  public static final STYLE form = STYLE.FORM;
+  public static final STYLE simple = STYLE.SIMPLE;
+  public static final STYLE spaceDelimited = STYLE.SPACE_DELIMITED;
+  public static final STYLE pipeDelimited = STYLE.PIPE_DELIMITED;
+  public static final STYLE deepObject = STYLE.DEEP_OBJECT;
 }

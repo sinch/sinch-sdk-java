@@ -1,6 +1,9 @@
 package com.sinch.sdk.core.http;
 
+import com.sinch.sdk.core.databind.QueryParameterSerializer;
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.core.http.URLParameter.STYLE;
+import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.StringUtil;
 import java.io.UnsupportedEncodingException;
@@ -8,6 +11,7 @@ import java.net.URLEncoder;
 import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -26,7 +30,7 @@ public class URLParameterUtils {
         .collect(Collectors.joining("&"));
   }
 
-  public static Optional<String> encode(URLParameter parameter) {
+  protected static Optional<String> encode(URLParameter parameter) {
 
     if (null == parameter
         || StringUtil.isEmpty(parameter.getName())
@@ -195,12 +199,29 @@ public class URLParameterUtils {
     throw new ApiException("Not yet implemented '" + parameter + "'");
   }
 
-  public static String encodeParameterValue(String value) {
+  private static String encodeParameterValue(String value) {
 
     try {
       return URLEncoder.encode(value, "UTF-8").replaceAll("\\.", "%2E");
     } catch (UnsupportedEncodingException e) {
       return value;
     }
+  }
+
+  public static <T> void addQueryParam(
+      OptionalValue<T> optionalValue,
+      String paramName,
+      STYLE paramStyle,
+      QueryParameterSerializer<T, ?> serializer,
+      List<URLParameter> queryParametersList,
+      boolean explode) {
+    optionalValue.ifPresent(
+        value ->
+            queryParametersList.add(
+                new URLParameter(
+                    paramName,
+                    null == serializer ? value : serializer.apply(value),
+                    paramStyle,
+                    explode)));
   }
 }
