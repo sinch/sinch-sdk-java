@@ -7,6 +7,7 @@ import com.sinch.sdk.core.databind.multipart.ObjectMapperTest;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest.TrackingClicksEnum;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest.TrackingEnum;
+import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest.TrackingPixelLocationTopEnum;
 import java.io.File;
 import java.time.Instant;
 import java.util.Arrays;
@@ -61,7 +62,7 @@ public class SendEmailRequestTest extends BaseTest {
               "o:skip-verification","true",
               "o:sending-ip","192.168.0.10",
               "o:sending-ip-pool","sending pool ID",
-              "o:tracking-pixel-location-top","foo",
+              "o:tracking-pixel-location-top","htmlonly",
               "recipient-variables","{\"cc-dest@sinch.com\": {\"variable1\": \"value1\"}}"
               // spotless:on
             );
@@ -97,7 +98,7 @@ public class SendEmailRequestTest extends BaseTest {
           .setSkipVerification(true)
           .setSendingIp("192.168.0.10")
           .setSendingIpPool("sending pool ID")
-          .setTrackingPixelLocationTop("foo")
+          .setTrackingPixelLocationTop(TrackingPixelLocationTopEnum.HTMLONLY)
           .setRecipientVariables("{\"cc-dest@sinch.com\": {\"variable1\": \"value1\"}}")
           .setTemplate("template value")
           .build();

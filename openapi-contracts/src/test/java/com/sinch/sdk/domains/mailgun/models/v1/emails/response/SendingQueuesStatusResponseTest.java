@@ -12,18 +12,18 @@ public class SendingQueuesStatusResponseTest extends BaseTest {
   public static SendingQueuesStatusResponse expectedSendingQueuesStatusResponse =
       SendingQueuesStatusResponse.builder()
           .setRegular(
-              ExceededQueueQuotaRegular.builder()
+              ExceededQueueQuota.builder()
                   .setIsDisabled(true)
-                  .setDisabled(
+                  .setDetails(
                       QueueStatusDisabledDetails.builder()
                           .setUntil("Mon, 24 Jan 2006 16:00:00 MST")
                           .setReason("You have too many messages in regular queue")
                           .build())
                   .build())
           .setScheduled(
-              ExceededQueueQuotaScheduled.builder()
+              ExceededQueueQuota.builder()
                   .setIsDisabled(true)
-                  .setDisabled(
+                  .setDetails(
                       QueueStatusDisabledDetails.builder()
                           .setUntil("Mon, 12 Jan 2006 15:04:05 MST")
                           .setReason("You have too many messages in scheduled queue")
