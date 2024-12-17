@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
-class SendBatchResponseDtoTest extends BaseTest {
+class SendResponseDtoTest extends BaseTest {
   @GivenJsonResource("/domains/sms/v1/batches/response/BatchBinaryDto.json")
   Batch loadedBinaryDto;
 

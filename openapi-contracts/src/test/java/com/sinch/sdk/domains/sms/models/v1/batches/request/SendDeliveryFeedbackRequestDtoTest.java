@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-class SendDeliveryFeedbackRequestTest extends BaseTest {
+class SendDeliveryFeedbackRequestDtoTest extends BaseTest {
   @GivenTextResource("/domains/sms/v1/batches/request/SendDeliveryFeedbackRequestDto.json")
   String jsonSendDeliveryFeedbackRequestDto;
 

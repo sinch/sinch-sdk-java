@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-class SendBatchRequestDtoTest extends BaseTest {
+class SendRequestDtoTest extends BaseTest {
   @GivenTextResource("/domains/sms/v1/batches/request/BinaryRequestDto.json")
   String jsonRequestBinaryDto;
 
