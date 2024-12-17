@@ -19,7 +19,7 @@ class SendDeliveryFeedbackRequestTest extends BaseTest {
 
     SendDeliveryFeedbackRequest requestDTO =
         SendDeliveryFeedbackRequest.builder()
-            .setRecipients(Arrays.asList("foo number 1", "foo number 2"))
+            .setRecipients(Arrays.asList("+15551231234", "+15987365412"))
             .build();
 
     String serializedString = objectMapper.writeValueAsString(requestDTO);
