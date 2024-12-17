@@ -57,7 +57,7 @@ public interface SendMimeEmailRequest extends AdditionalProperties {
   String getTemplateVersion();
 
   /**
-   * Render template in case of template sending
+   * Render template in the text part of the message in case of template sending
    *
    * @return templateText
    */
@@ -256,8 +256,8 @@ public interface SendMimeEmailRequest extends AdditionalProperties {
   Boolean getRequireTls();
 
   /**
-   * If <code>skip</code> activated, the certificate and hostname of the resolved MX Host will not
-   * be verified when trying to establish a TLS connection. If not, Mailgun will verify the
+   * If <code>true</code>, the certificate and hostname of the resolved MX Host will not be verified
+   * when trying to establish a TLS connection. If <code>false</code>, Mailgun will verify the
    * certificate and hostname. If either one can not be verified, a TLS connection will not be
    * established. The default is <code>false</code>
    *
@@ -283,10 +283,49 @@ public interface SendMimeEmailRequest extends AdditionalProperties {
    * If you send long emails that experience truncation or other rendering issues at the recipient,
    * you can ensure opens are being tracked accurately with placement of the tracking pixel at the
    * top of your emails
+   */
+  public class TrackingPixelLocationTopEnum
+      extends EnumDynamic<String, TrackingPixelLocationTopEnum> {
+    public static final TrackingPixelLocationTopEnum YES = new TrackingPixelLocationTopEnum("yes");
+    public static final TrackingPixelLocationTopEnum NO = new TrackingPixelLocationTopEnum("no");
+    public static final TrackingPixelLocationTopEnum TRUE =
+        new TrackingPixelLocationTopEnum("true");
+    public static final TrackingPixelLocationTopEnum FALSE =
+        new TrackingPixelLocationTopEnum("false");
+    public static final TrackingPixelLocationTopEnum HTMLONLY =
+        new TrackingPixelLocationTopEnum("htmlonly");
+
+    private static final EnumSupportDynamic<String, TrackingPixelLocationTopEnum> ENUM_SUPPORT =
+        new EnumSupportDynamic<>(
+            TrackingPixelLocationTopEnum.class,
+            TrackingPixelLocationTopEnum::new,
+            Arrays.asList(YES, NO, TRUE, FALSE, HTMLONLY));
+
+    private TrackingPixelLocationTopEnum(String value) {
+      super(value);
+    }
+
+    public static Stream<TrackingPixelLocationTopEnum> values() {
+      return ENUM_SUPPORT.values();
+    }
+
+    public static TrackingPixelLocationTopEnum from(String value) {
+      return ENUM_SUPPORT.from(value);
+    }
+
+    public static String valueOf(TrackingPixelLocationTopEnum e) {
+      return ENUM_SUPPORT.valueOf(e);
+    }
+  }
+
+  /**
+   * If you send long emails that experience truncation or other rendering issues at the recipient,
+   * you can ensure opens are being tracked accurately with placement of the tracking pixel at the
+   * top of your emails
    *
    * @return trackingPixelLocationTop
    */
-  String getTrackingPixelLocationTop();
+  TrackingPixelLocationTopEnum getTrackingPixelLocationTop();
 
   /**
    * A valid JSON-encoded dictionary, where key is a plain recipient address and value is a
@@ -505,7 +544,7 @@ public interface SendMimeEmailRequest extends AdditionalProperties {
      * @return Current builder
      * @see #getTrackingPixelLocationTop
      */
-    Builder setTrackingPixelLocationTop(String trackingPixelLocationTop);
+    Builder setTrackingPixelLocationTop(TrackingPixelLocationTopEnum trackingPixelLocationTop);
 
     /**
      * see getter

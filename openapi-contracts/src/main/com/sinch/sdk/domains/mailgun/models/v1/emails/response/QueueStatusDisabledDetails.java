@@ -17,18 +17,18 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface QueueStatusDisabledDetails {
 
   /**
-   * Get reason
-   *
-   * @return reason
-   */
-  String getReason();
-
-  /**
    * Get until
    *
    * @return until
    */
   String getUntil();
+
+  /**
+   * Get reason
+   *
+   * @return reason
+   */
+  String getReason();
 
   /**
    * Getting builder
@@ -45,20 +45,20 @@ public interface QueueStatusDisabledDetails {
     /**
      * see getter
      *
-     * @param reason see getter
-     * @return Current builder
-     * @see #getReason
-     */
-    Builder setReason(String reason);
-
-    /**
-     * see getter
-     *
      * @param until see getter
      * @return Current builder
      * @see #getUntil
      */
     Builder setUntil(String until);
+
+    /**
+     * see getter
+     *
+     * @param reason see getter
+     * @return Current builder
+     * @see #getReason
+     */
+    Builder setReason(String reason);
 
     /**
      * Create instance

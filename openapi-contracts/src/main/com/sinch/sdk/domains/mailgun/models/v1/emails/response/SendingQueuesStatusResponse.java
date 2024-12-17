@@ -17,18 +17,18 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface SendingQueuesStatusResponse {
 
   /**
-   * Get scheduled
-   *
-   * @return scheduled
-   */
-  ExceededQueueQuotaScheduled getScheduled();
-
-  /**
    * Get regular
    *
    * @return regular
    */
-  ExceededQueueQuotaRegular getRegular();
+  ExceededQueueQuota getRegular();
+
+  /**
+   * Get scheduled
+   *
+   * @return scheduled
+   */
+  ExceededQueueQuota getScheduled();
 
   /**
    * Getting builder
@@ -45,20 +45,20 @@ public interface SendingQueuesStatusResponse {
     /**
      * see getter
      *
-     * @param scheduled see getter
-     * @return Current builder
-     * @see #getScheduled
-     */
-    Builder setScheduled(ExceededQueueQuotaScheduled scheduled);
-
-    /**
-     * see getter
-     *
      * @param regular see getter
      * @return Current builder
      * @see #getRegular
      */
-    Builder setRegular(ExceededQueueQuotaRegular regular);
+    Builder setRegular(ExceededQueueQuota regular);
+
+    /**
+     * see getter
+     *
+     * @param scheduled see getter
+     * @return Current builder
+     * @see #getScheduled
+     */
+    Builder setScheduled(ExceededQueueQuota scheduled);
 
     /**
      * Create instance

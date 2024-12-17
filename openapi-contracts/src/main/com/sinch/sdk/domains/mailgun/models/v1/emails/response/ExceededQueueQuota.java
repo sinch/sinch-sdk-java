@@ -12,16 +12,9 @@ package com.sinch.sdk.domains.mailgun.models.v1.emails.response;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** ExceededQueueQuotaRegular */
-@JsonDeserialize(builder = ExceededQueueQuotaRegularImpl.Builder.class)
-public interface ExceededQueueQuotaRegular {
-
-  /**
-   * Get disabled
-   *
-   * @return disabled
-   */
-  QueueStatusDisabledDetails getDisabled();
+/** ExceededQueueQuota */
+@JsonDeserialize(builder = ExceededQueueQuotaImpl.Builder.class)
+public interface ExceededQueueQuota {
 
   /**
    * Get isDisabled
@@ -31,25 +24,23 @@ public interface ExceededQueueQuotaRegular {
   Boolean getIsDisabled();
 
   /**
+   * Get details
+   *
+   * @return details
+   */
+  QueueStatusDisabledDetails getDetails();
+
+  /**
    * Getting builder
    *
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ExceededQueueQuotaRegularImpl.Builder();
+    return new ExceededQueueQuotaImpl.Builder();
   }
 
   /** Dedicated Builder */
   interface Builder {
-
-    /**
-     * see getter
-     *
-     * @param disabled see getter
-     * @return Current builder
-     * @see #getDisabled
-     */
-    Builder setDisabled(QueueStatusDisabledDetails disabled);
 
     /**
      * see getter
@@ -61,10 +52,19 @@ public interface ExceededQueueQuotaRegular {
     Builder setIsDisabled(Boolean isDisabled);
 
     /**
+     * see getter
+     *
+     * @param details see getter
+     * @return Current builder
+     * @see #getDetails
+     */
+    Builder setDetails(QueueStatusDisabledDetails details);
+
+    /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    ExceededQueueQuotaRegular build();
+    ExceededQueueQuota build();
   }
 }
