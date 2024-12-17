@@ -61,6 +61,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
     Objects.requireNonNull(context, "Context must be defined");
     StringUtil.requireNonEmpty(credentials.getServicePlanId(), "'servicePlanId' must be defined");
     StringUtil.requireNonEmpty(credentials.getApiToken(), "'apiToken' must be defined");
+    StringUtil.requireNonEmpty(context.getSmsUrl(), "'smsUrl' must be defined");
 
     LOGGER.fine(
         "Activate SMS API with service plan ID support and server='"
