@@ -22,6 +22,7 @@ import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
+import com.sinch.sdk.core.http.URLParameterUtils;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.BatchRequest;
@@ -192,30 +193,24 @@ public class BatchesApi {
                 URLPathUtils.encodePathSegment(this.servicePlanId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
-    DryRunQueryParameters guardParameters =
-        null != queryParameter ? queryParameter : DryRunQueryParameters.builder().build();
+    if (null != queryParameter) {
 
-    guardParameters
-        .getPerRecipient()
-        .ifPresent(
-            g ->
-                localVarQueryParams.add(
-                    new URLParameter(
-                        "per_recipient",
-                        g,
-                        URLParameter.STYLE.valueOf("form".toUpperCase()),
-                        true)));
+      URLParameterUtils.addQueryParam(
+          queryParameter.getPerRecipient(),
+          "per_recipient",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
 
-    guardParameters
-        .getNumberOfRecipients()
-        .ifPresent(
-            g ->
-                localVarQueryParams.add(
-                    new URLParameter(
-                        "number_of_recipients",
-                        g,
-                        URLParameter.STYLE.valueOf("form".toUpperCase()),
-                        true)));
+      URLParameterUtils.addQueryParam(
+          queryParameter.getNumberOfRecipients(),
+          "number_of_recipients",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
+    }
 
     Map<String, String> localVarHeaderParams = new HashMap<>();
 
@@ -352,65 +347,46 @@ public class BatchesApi {
                 URLPathUtils.encodePathSegment(this.servicePlanId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
-    ListBatchesQueryParameters guardParameters =
-        null != queryParameter ? queryParameter : ListBatchesQueryParameters.builder().build();
+    if (null != queryParameter) {
 
-    guardParameters
-        .getPage()
-        .ifPresent(
-            g ->
-                localVarQueryParams.add(
-                    new URLParameter(
-                        "page", g, URLParameter.STYLE.valueOf("form".toUpperCase()), true)));
+      URLParameterUtils.addQueryParam(
+          queryParameter.getPage(), "page", URLParameter.form, null, localVarQueryParams, true);
 
-    guardParameters
-        .getPageSize()
-        .ifPresent(
-            g ->
-                localVarQueryParams.add(
-                    new URLParameter(
-                        "page_size", g, URLParameter.STYLE.valueOf("form".toUpperCase()), true)));
+      URLParameterUtils.addQueryParam(
+          queryParameter.getPageSize(),
+          "page_size",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
 
-    guardParameters
-        .getFrom()
-        .ifPresent(
-            g ->
-                localVarQueryParams.add(
-                    new URLParameter(
-                        "from", g, URLParameter.STYLE.valueOf("form".toUpperCase()), true)));
+      URLParameterUtils.addQueryParam(
+          queryParameter.getFrom(), "from", URLParameter.form, null, localVarQueryParams, true);
 
-    guardParameters
-        .getStartDate()
-        .ifPresent(
-            g ->
-                localVarQueryParams.add(
-                    new URLParameter(
-                        "start_date",
-                        InstantToIso8601Serializer.getInstance().apply(g),
-                        URLParameter.STYLE.valueOf("form".toUpperCase()),
-                        true)));
+      URLParameterUtils.addQueryParam(
+          queryParameter.getStartDate(),
+          "start_date",
+          URLParameter.form,
+          InstantToIso8601Serializer.getInstance(),
+          localVarQueryParams,
+          true);
 
-    guardParameters
-        .getEndDate()
-        .ifPresent(
-            g ->
-                localVarQueryParams.add(
-                    new URLParameter(
-                        "end_date",
-                        InstantToIso8601Serializer.getInstance().apply(g),
-                        URLParameter.STYLE.valueOf("form".toUpperCase()),
-                        true)));
+      URLParameterUtils.addQueryParam(
+          queryParameter.getEndDate(),
+          "end_date",
+          URLParameter.form,
+          InstantToIso8601Serializer.getInstance(),
+          localVarQueryParams,
+          true);
 
-    guardParameters
-        .getClientReference()
-        .ifPresent(
-            g ->
-                localVarQueryParams.add(
-                    new URLParameter(
-                        "client_reference",
-                        g,
-                        URLParameter.STYLE.valueOf("form".toUpperCase()),
-                        true)));
+      URLParameterUtils.addQueryParam(
+          queryParameter.getClientReference(),
+          "client_reference",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
+    }
 
     Map<String, String> localVarHeaderParams = new HashMap<>();
 
