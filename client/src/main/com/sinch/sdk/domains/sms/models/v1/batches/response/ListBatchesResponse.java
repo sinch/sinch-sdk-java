@@ -3,18 +3,18 @@ package com.sinch.sdk.domains.sms.models.v1.batches.response;
 import com.sinch.sdk.core.models.pagination.ListResponse;
 import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.domains.sms.api.v1.BatchesService;
-import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesRequest;
+import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesQueryParameters;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
 public class ListBatchesResponse extends ListResponse<BatchResponse> {
 
-  private final Page<ListBatchesRequest, BatchResponse, Integer> page;
+  private final Page<ListBatchesQueryParameters, BatchResponse, Integer> page;
   private final BatchesService service;
   private ListBatchesResponse nextPage;
 
   public ListBatchesResponse(
-      BatchesService service, Page<ListBatchesRequest, BatchResponse, Integer> page) {
+      BatchesService service, Page<ListBatchesQueryParameters, BatchResponse, Integer> page) {
     this.service = service;
     this.page = page;
   }
@@ -22,7 +22,8 @@ public class ListBatchesResponse extends ListResponse<BatchResponse> {
   public boolean hasNextPage() {
 
     if (null == nextPage) {
-      ListBatchesRequest.Builder newParameters = ListBatchesRequest.builder(page.getParameters());
+      ListBatchesQueryParameters.Builder newParameters =
+          ListBatchesQueryParameters.builder(page.getParameters());
       newParameters.setPage(page.getNextPageToken());
       nextPage = service.list(newParameters.build());
     }

@@ -2,6 +2,7 @@ package com.sinch.sample.sms.v1.batches;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.sms.api.v1.BatchesService;
+import com.sinch.sdk.domains.sms.models.v1.batches.request.DryRunQueryParameters;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.TextRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.DryRunResponse;
 import java.io.IOException;
@@ -28,10 +29,12 @@ public class dryRun extends BaseApplication {
     BatchesService service = client.sms().v1().batches();
     LOGGER.info("DryRun Request");
 
+    DryRunQueryParameters queryParameters =
+        DryRunQueryParameters.builder().setPerRecipient(true).setNumberOfRecipients(3).build();
+
     DryRunResponse value =
         service.dryRun(
-            true,
-            3,
+            queryParameters,
             TextRequest.builder()
                 .setTo(Collections.singletonList(phoneNumber))
                 .setBody("the body")

@@ -30,7 +30,7 @@ public class SendDeliveryFeedback extends BaseApplication {
 
     SendDeliveryFeedbackRequest request =
         SendDeliveryFeedbackRequest.builder()
-            .setRecipients(Arrays.asList("foo number 1", "foo number 2"))
+            .setRecipients(Arrays.asList("+1234567890", "+0987654321"))
             .build();
     service.sendDeliveryFeedback(batchId, request);
     LOGGER.info("Done");

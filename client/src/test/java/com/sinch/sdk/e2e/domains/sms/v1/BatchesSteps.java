@@ -3,7 +3,8 @@ package com.sinch.sdk.e2e.domains.sms.v1;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.sms.api.v1.BatchesService;
 import com.sinch.sdk.domains.sms.models.v1.batches.DeliveryReportType;
-import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesRequest;
+import com.sinch.sdk.domains.sms.models.v1.batches.request.DryRunQueryParameters;
+import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesQueryParameters;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.SendDeliveryFeedbackRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.TextRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.UpdateTextRequest;
@@ -117,26 +118,31 @@ public class BatchesSteps {
             .setDeliveryReport(DeliveryReportType.NONE)
             .build();
 
-    dryRunResponse = service.dryRun(true, 3, request);
+    DryRunQueryParameters queryParameters =
+        DryRunQueryParameters.builder().setPerRecipient(true).setNumberOfRecipients(3).build();
+    dryRunResponse = service.dryRun(queryParameters, request);
   }
 
   @When("^I send a request to list the SMS batches$")
   public void listOnePage() {
-    ListBatchesRequest request = ListBatchesRequest.builder().setPageSize(2).build();
+    ListBatchesQueryParameters request =
+        ListBatchesQueryParameters.builder().setPageSize(2).build();
 
     listOnePageResponse = service.list(request);
   }
 
   @When("^I send a request to list all the SMS batches$")
   public void listAll() {
-    ListBatchesRequest request = ListBatchesRequest.builder().setPageSize(2).build();
+    ListBatchesQueryParameters request =
+        ListBatchesQueryParameters.builder().setPageSize(2).build();
 
     listAllResponse = service.list(request);
   }
 
   @When("^I iterate manually over the SMS batches pages$")
   public void listAllByPage() {
-    ListBatchesRequest request = ListBatchesRequest.builder().setPageSize(2).build();
+    ListBatchesQueryParameters request =
+        ListBatchesQueryParameters.builder().setPageSize(2).build();
 
     listAllByPageResponse = service.list(request);
   }

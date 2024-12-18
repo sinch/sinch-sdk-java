@@ -18,6 +18,8 @@ import com.sinch.sdk.domains.sms.models.v1.batches.DeliveryReportType;
 import com.sinch.sdk.domains.sms.models.v1.batches.MediaBody;
 import com.sinch.sdk.domains.sms.models.v1.batches.MediaBodyDtoTest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.BinaryRequest;
+import com.sinch.sdk.domains.sms.models.v1.batches.request.DryRunQueryParameters;
+import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesQueryParameters;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.MediaRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.SendDeliveryFeedbackRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.TextRequest;
@@ -347,9 +349,12 @@ public class BatchesServiceTest extends BaseTest {
   @Test
   void dryRun() throws ApiException {
 
-    when(api.dryRun(eq(true), eq(456), eq(sendSmsBatchTextRequest))).thenReturn(dryRunResponseDto);
+    DryRunQueryParameters queryParameters =
+        DryRunQueryParameters.builder().setPerRecipient(true).setNumberOfRecipients(456).build();
+    when(api.dryRun(eq(queryParameters), eq(sendSmsBatchTextRequest)))
+        .thenReturn(dryRunResponseDto);
 
-    DryRunResponse response = service.dryRun(true, 456, sendSmsBatchTextRequest);
+    DryRunResponse response = service.dryRun(queryParameters, sendSmsBatchTextRequest);
 
     TestHelpers.recursiveEquals(response, dryRunResponseDto);
   }
@@ -357,13 +362,14 @@ public class BatchesServiceTest extends BaseTest {
   @Test
   void list() throws ApiException {
 
-    when(api.list(eq(null), eq(null), eq(null), eq(null), eq(null), eq(null)))
-        .thenReturn(listBatchesResponseDtoPage0);
-    when(api.list(eq(1), eq(null), eq(null), eq(null), eq(null), eq(null)))
-        .thenReturn(listBatchesResponseDtoPage1);
-    when(api.list(eq(2), eq(null), eq(null), eq(null), eq(null), eq(null)))
-        .thenReturn(listBatchesResponseDtoPage2);
-    ListBatchesResponse response = service.list(null);
+    ListBatchesQueryParameters initialRequest = ListBatchesQueryParameters.builder().build();
+    ListBatchesQueryParameters page1 = ListBatchesQueryParameters.builder().setPage(1).build();
+    ListBatchesQueryParameters page2 = ListBatchesQueryParameters.builder().setPage(2).build();
+
+    when(api.list(initialRequest)).thenReturn(listBatchesResponseDtoPage0);
+    when(api.list(page1)).thenReturn(listBatchesResponseDtoPage1);
+    when(api.list(page2)).thenReturn(listBatchesResponseDtoPage2);
+    ListBatchesResponse response = service.list(initialRequest);
 
     Iterator<BatchResponse> iterator = response.iterator();
     BatchResponse batch = iterator.next();

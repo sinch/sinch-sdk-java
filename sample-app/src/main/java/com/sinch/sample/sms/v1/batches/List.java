@@ -2,8 +2,10 @@ package com.sinch.sample.sms.v1.batches;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.sms.api.v1.BatchesService;
-import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesRequest;
+import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesQueryParameters;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.Period;
 import java.util.logging.Logger;
 
 public class List extends BaseApplication {
@@ -29,12 +31,12 @@ public class List extends BaseApplication {
     LOGGER.info("Response:");
     service
         .list(
-            ListBatchesRequest.builder()
+            ListBatchesQueryParameters.builder()
                 // .setFrom(phoneNumber)
                 // .setPage(15)
                 .setPageSize(2)
                 // .setClientReference("a client reference")
-                // .setStartDate(Instant.now())
+                .setStartDate(Instant.now().minus(Period.ofWeeks(3)))
                 .build())
         .iterator()
         .forEachRemaining(f -> LOGGER.info(f.toString()));
