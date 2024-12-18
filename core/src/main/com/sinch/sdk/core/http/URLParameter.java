@@ -1,5 +1,7 @@
 package com.sinch.sdk.core.http;
 
+import java.util.Objects;
+
 public class URLParameter {
   private final String name;
   private final Object value;
@@ -60,6 +62,26 @@ public class URLParameter {
         + ", explode="
         + explode
         + '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof URLParameter)) {
+      return false;
+    }
+    URLParameter that = (URLParameter) o;
+    return isExplode() == that.isExplode()
+        && Objects.equals(getName(), that.getName())
+        && Objects.equals(getValue(), that.getValue())
+        && getStyle() == that.getStyle();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getName(), getValue(), getStyle(), isExplode());
   }
 
   public enum STYLE {
