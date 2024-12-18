@@ -4,8 +4,7 @@ import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.mailgun.api.v1.EmailsService;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendMimeEmailRequest;
-import com.sinch.sdk.domains.mailgun.models.v1.emails.response.ExceededQueueQuotaRegular;
-import com.sinch.sdk.domains.mailgun.models.v1.emails.response.ExceededQueueQuotaScheduled;
+import com.sinch.sdk.domains.mailgun.models.v1.emails.response.ExceededQueueQuota;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.response.GetStoredEmailResponse;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.response.QueueStatusDisabledDetails;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.response.SendEmailResponse;
@@ -160,15 +159,15 @@ public class EmailsSteps {
     SendingQueuesStatusResponse expected =
         SendingQueuesStatusResponse.builder()
             .setRegular(
-                ExceededQueueQuotaRegular.builder()
+                ExceededQueueQuota.builder()
                     .setIsDisabled(false)
-                    .setDisabled(
+                    .setDetails(
                         QueueStatusDisabledDetails.builder().setUntil("").setReason("").build())
                     .build())
             .setScheduled(
-                ExceededQueueQuotaScheduled.builder()
+                ExceededQueueQuota.builder()
                     .setIsDisabled(false)
-                    .setDisabled(
+                    .setDetails(
                         QueueStatusDisabledDetails.builder().setUntil("").setReason("").build())
                     .build())
             .build();

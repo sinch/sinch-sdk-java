@@ -133,7 +133,7 @@ public class SendEmailRequestImpl implements SendEmailRequest {
   public static final String PROPERTY_O_COLON_TRACKING_PIXEL_LOCATION_TOP =
       "o:tracking-pixel-location-top";
 
-  private OptionalValue<String> trackingPixelLocationTop;
+  private OptionalValue<TrackingPixelLocationTopEnum> trackingPixelLocationTop;
 
   public static final String PROPERTY_RECIPIENT_VARIABLES = "recipient-variables";
 
@@ -177,7 +177,7 @@ public class SendEmailRequestImpl implements SendEmailRequest {
       OptionalValue<Boolean> skipVerification,
       OptionalValue<String> sendingIp,
       OptionalValue<String> sendingIpPool,
-      OptionalValue<String> trackingPixelLocationTop,
+      OptionalValue<TrackingPixelLocationTopEnum> trackingPixelLocationTop,
       OptionalValue<String> recipientVariables,
       OptionalValue<Map<String, Object>> additionalProperties) {
     this.from = from;
@@ -484,12 +484,12 @@ public class SendEmailRequestImpl implements SendEmailRequest {
     return sendingIpPool;
   }
 
-  public String getTrackingPixelLocationTop() {
+  public TrackingPixelLocationTopEnum getTrackingPixelLocationTop() {
     return trackingPixelLocationTop.orElse(null);
   }
 
   @Property(PROPERTY_O_COLON_TRACKING_PIXEL_LOCATION_TOP)
-  public OptionalValue<String> trackingPixelLocationTop() {
+  public OptionalValue<TrackingPixelLocationTopEnum> trackingPixelLocationTop() {
     return trackingPixelLocationTop;
   }
 
@@ -730,7 +730,7 @@ public class SendEmailRequestImpl implements SendEmailRequest {
     OptionalValue<Boolean> skipVerification = OptionalValue.empty();
     OptionalValue<String> sendingIp = OptionalValue.empty();
     OptionalValue<String> sendingIpPool = OptionalValue.empty();
-    OptionalValue<String> trackingPixelLocationTop = OptionalValue.empty();
+    OptionalValue<TrackingPixelLocationTopEnum> trackingPixelLocationTop = OptionalValue.empty();
     OptionalValue<String> recipientVariables = OptionalValue.empty();
     OptionalValue<Map<String, Object>> additionalProperties = OptionalValue.empty();
 
@@ -909,7 +909,8 @@ public class SendEmailRequestImpl implements SendEmailRequest {
     }
 
     @Property(value = PROPERTY_O_COLON_TRACKING_PIXEL_LOCATION_TOP)
-    public Builder setTrackingPixelLocationTop(String trackingPixelLocationTop) {
+    public Builder setTrackingPixelLocationTop(
+        TrackingPixelLocationTopEnum trackingPixelLocationTop) {
       this.trackingPixelLocationTop = OptionalValue.of(trackingPixelLocationTop);
       return this;
     }

@@ -10,39 +10,28 @@ import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  QueueStatusDisabledDetailsImpl.JSON_PROPERTY_REASON,
-  QueueStatusDisabledDetailsImpl.JSON_PROPERTY_UNTIL
+  QueueStatusDisabledDetailsImpl.JSON_PROPERTY_UNTIL,
+  QueueStatusDisabledDetailsImpl.JSON_PROPERTY_REASON
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class QueueStatusDisabledDetailsImpl implements QueueStatusDisabledDetails {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_REASON = "reason";
-
-  private OptionalValue<String> reason;
-
   public static final String JSON_PROPERTY_UNTIL = "until";
 
   private OptionalValue<String> until;
 
+  public static final String JSON_PROPERTY_REASON = "reason";
+
+  private OptionalValue<String> reason;
+
   public QueueStatusDisabledDetailsImpl() {}
 
   protected QueueStatusDisabledDetailsImpl(
-      OptionalValue<String> reason, OptionalValue<String> until) {
-    this.reason = reason;
+      OptionalValue<String> until, OptionalValue<String> reason) {
     this.until = until;
-  }
-
-  @JsonIgnore
-  public String getReason() {
-    return reason.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_REASON)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<String> reason() {
-    return reason;
+    this.reason = reason;
   }
 
   @JsonIgnore
@@ -54,6 +43,17 @@ public class QueueStatusDisabledDetailsImpl implements QueueStatusDisabledDetail
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<String> until() {
     return until;
+  }
+
+  @JsonIgnore
+  public String getReason() {
+    return reason.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_REASON)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<String> reason() {
+    return reason;
   }
 
   /**
@@ -71,22 +71,22 @@ public class QueueStatusDisabledDetailsImpl implements QueueStatusDisabledDetail
     QueueStatusDisabledDetailsImpl githubComMailgunDomainsHttpapiExceededQueueQuotaDisabledJSON =
         (QueueStatusDisabledDetailsImpl) o;
     return Objects.equals(
-            this.reason, githubComMailgunDomainsHttpapiExceededQueueQuotaDisabledJSON.reason)
+            this.until, githubComMailgunDomainsHttpapiExceededQueueQuotaDisabledJSON.until)
         && Objects.equals(
-            this.until, githubComMailgunDomainsHttpapiExceededQueueQuotaDisabledJSON.until);
+            this.reason, githubComMailgunDomainsHttpapiExceededQueueQuotaDisabledJSON.reason);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(reason, until);
+    return Objects.hash(until, reason);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class QueueStatusDisabledDetailsImpl {\n");
-    sb.append("    reason: ").append(toIndentedString(reason)).append("\n");
     sb.append("    until: ").append(toIndentedString(until)).append("\n");
+    sb.append("    reason: ").append(toIndentedString(reason)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -103,14 +103,8 @@ public class QueueStatusDisabledDetailsImpl implements QueueStatusDisabledDetail
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements QueueStatusDisabledDetails.Builder {
-    OptionalValue<String> reason = OptionalValue.empty();
     OptionalValue<String> until = OptionalValue.empty();
-
-    @JsonProperty(JSON_PROPERTY_REASON)
-    public Builder setReason(String reason) {
-      this.reason = OptionalValue.of(reason);
-      return this;
-    }
+    OptionalValue<String> reason = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_UNTIL)
     public Builder setUntil(String until) {
@@ -118,8 +112,14 @@ public class QueueStatusDisabledDetailsImpl implements QueueStatusDisabledDetail
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_REASON)
+    public Builder setReason(String reason) {
+      this.reason = OptionalValue.of(reason);
+      return this;
+    }
+
     public QueueStatusDisabledDetails build() {
-      return new QueueStatusDisabledDetailsImpl(reason, until);
+      return new QueueStatusDisabledDetailsImpl(until, reason);
     }
   }
 }

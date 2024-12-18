@@ -10,51 +10,50 @@ import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  SendingQueuesStatusResponseImpl.JSON_PROPERTY_SCHEDULED,
-  SendingQueuesStatusResponseImpl.JSON_PROPERTY_REGULAR
+  SendingQueuesStatusResponseImpl.JSON_PROPERTY_REGULAR,
+  SendingQueuesStatusResponseImpl.JSON_PROPERTY_SCHEDULED
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SendingQueuesStatusResponseImpl implements SendingQueuesStatusResponse {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_SCHEDULED = "scheduled";
-
-  private OptionalValue<ExceededQueueQuotaScheduled> scheduled;
-
   public static final String JSON_PROPERTY_REGULAR = "regular";
 
-  private OptionalValue<ExceededQueueQuotaRegular> regular;
+  private OptionalValue<ExceededQueueQuota> regular;
+
+  public static final String JSON_PROPERTY_SCHEDULED = "scheduled";
+
+  private OptionalValue<ExceededQueueQuota> scheduled;
 
   public SendingQueuesStatusResponseImpl() {}
 
   protected SendingQueuesStatusResponseImpl(
-      OptionalValue<ExceededQueueQuotaScheduled> scheduled,
-      OptionalValue<ExceededQueueQuotaRegular> regular) {
-    this.scheduled = scheduled;
+      OptionalValue<ExceededQueueQuota> regular, OptionalValue<ExceededQueueQuota> scheduled) {
     this.regular = regular;
+    this.scheduled = scheduled;
   }
 
   @JsonIgnore
-  public ExceededQueueQuotaScheduled getScheduled() {
-    return scheduled.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_SCHEDULED)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<ExceededQueueQuotaScheduled> scheduled() {
-    return scheduled;
-  }
-
-  @JsonIgnore
-  public ExceededQueueQuotaRegular getRegular() {
+  public ExceededQueueQuota getRegular() {
     return regular.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_REGULAR)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<ExceededQueueQuotaRegular> regular() {
+  public OptionalValue<ExceededQueueQuota> regular() {
     return regular;
+  }
+
+  @JsonIgnore
+  public ExceededQueueQuota getScheduled() {
+    return scheduled.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_SCHEDULED)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<ExceededQueueQuota> scheduled() {
+    return scheduled;
   }
 
   /**
@@ -72,22 +71,22 @@ public class SendingQueuesStatusResponseImpl implements SendingQueuesStatusRespo
     SendingQueuesStatusResponseImpl githubComMailgunDomainsHttpapiGetDomainSendingQueuesResp =
         (SendingQueuesStatusResponseImpl) o;
     return Objects.equals(
-            this.scheduled, githubComMailgunDomainsHttpapiGetDomainSendingQueuesResp.scheduled)
+            this.regular, githubComMailgunDomainsHttpapiGetDomainSendingQueuesResp.regular)
         && Objects.equals(
-            this.regular, githubComMailgunDomainsHttpapiGetDomainSendingQueuesResp.regular);
+            this.scheduled, githubComMailgunDomainsHttpapiGetDomainSendingQueuesResp.scheduled);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(scheduled, regular);
+    return Objects.hash(regular, scheduled);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class SendingQueuesStatusResponseImpl {\n");
-    sb.append("    scheduled: ").append(toIndentedString(scheduled)).append("\n");
     sb.append("    regular: ").append(toIndentedString(regular)).append("\n");
+    sb.append("    scheduled: ").append(toIndentedString(scheduled)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -104,23 +103,23 @@ public class SendingQueuesStatusResponseImpl implements SendingQueuesStatusRespo
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements SendingQueuesStatusResponse.Builder {
-    OptionalValue<ExceededQueueQuotaScheduled> scheduled = OptionalValue.empty();
-    OptionalValue<ExceededQueueQuotaRegular> regular = OptionalValue.empty();
-
-    @JsonProperty(JSON_PROPERTY_SCHEDULED)
-    public Builder setScheduled(ExceededQueueQuotaScheduled scheduled) {
-      this.scheduled = OptionalValue.of(scheduled);
-      return this;
-    }
+    OptionalValue<ExceededQueueQuota> regular = OptionalValue.empty();
+    OptionalValue<ExceededQueueQuota> scheduled = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_REGULAR)
-    public Builder setRegular(ExceededQueueQuotaRegular regular) {
+    public Builder setRegular(ExceededQueueQuota regular) {
       this.regular = OptionalValue.of(regular);
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_SCHEDULED)
+    public Builder setScheduled(ExceededQueueQuota scheduled) {
+      this.scheduled = OptionalValue.of(scheduled);
+      return this;
+    }
+
     public SendingQueuesStatusResponse build() {
-      return new SendingQueuesStatusResponseImpl(scheduled, regular);
+      return new SendingQueuesStatusResponseImpl(regular, scheduled);
     }
   }
 }

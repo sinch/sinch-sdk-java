@@ -10,39 +10,28 @@ import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  ExceededQueueQuotaScheduledImpl.JSON_PROPERTY_DISABLED,
-  ExceededQueueQuotaScheduledImpl.JSON_PROPERTY_IS_DISABLED
+  ExceededQueueQuotaImpl.JSON_PROPERTY_IS_DISABLED,
+  ExceededQueueQuotaImpl.JSON_PROPERTY_DISABLED
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class ExceededQueueQuotaScheduledImpl implements ExceededQueueQuotaScheduled {
+public class ExceededQueueQuotaImpl implements ExceededQueueQuota {
   private static final long serialVersionUID = 1L;
-
-  public static final String JSON_PROPERTY_DISABLED = "disabled";
-
-  private OptionalValue<QueueStatusDisabledDetails> disabled;
 
   public static final String JSON_PROPERTY_IS_DISABLED = "is_disabled";
 
   private OptionalValue<Boolean> isDisabled;
 
-  public ExceededQueueQuotaScheduledImpl() {}
+  public static final String JSON_PROPERTY_DISABLED = "disabled";
 
-  protected ExceededQueueQuotaScheduledImpl(
-      OptionalValue<QueueStatusDisabledDetails> disabled, OptionalValue<Boolean> isDisabled) {
-    this.disabled = disabled;
+  private OptionalValue<QueueStatusDisabledDetails> details;
+
+  public ExceededQueueQuotaImpl() {}
+
+  protected ExceededQueueQuotaImpl(
+      OptionalValue<Boolean> isDisabled, OptionalValue<QueueStatusDisabledDetails> details) {
     this.isDisabled = isDisabled;
-  }
-
-  @JsonIgnore
-  public QueueStatusDisabledDetails getDisabled() {
-    return disabled.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_DISABLED)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<QueueStatusDisabledDetails> disabled() {
-    return disabled;
+    this.details = details;
   }
 
   @JsonIgnore
@@ -56,9 +45,20 @@ public class ExceededQueueQuotaScheduledImpl implements ExceededQueueQuotaSchedu
     return isDisabled;
   }
 
+  @JsonIgnore
+  public QueueStatusDisabledDetails getDetails() {
+    return details.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_DISABLED)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<QueueStatusDisabledDetails> details() {
+    return details;
+  }
+
   /**
-   * Return true if this github_com_mailgun_domains_httpapi_GetDomainSendingQueuesResp_scheduled
-   * object is equal to o.
+   * Return true if this github.com-mailgun-domains-httpapi-ExceededQueueQuotaJSON object is equal
+   * to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -68,28 +68,25 @@ public class ExceededQueueQuotaScheduledImpl implements ExceededQueueQuotaSchedu
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ExceededQueueQuotaScheduledImpl
-        githubComMailgunDomainsHttpapiGetDomainSendingQueuesRespScheduled =
-            (ExceededQueueQuotaScheduledImpl) o;
+    ExceededQueueQuotaImpl githubComMailgunDomainsHttpapiExceededQueueQuotaJSON =
+        (ExceededQueueQuotaImpl) o;
     return Objects.equals(
-            this.disabled,
-            githubComMailgunDomainsHttpapiGetDomainSendingQueuesRespScheduled.disabled)
+            this.isDisabled, githubComMailgunDomainsHttpapiExceededQueueQuotaJSON.isDisabled)
         && Objects.equals(
-            this.isDisabled,
-            githubComMailgunDomainsHttpapiGetDomainSendingQueuesRespScheduled.isDisabled);
+            this.details, githubComMailgunDomainsHttpapiExceededQueueQuotaJSON.details);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(disabled, isDisabled);
+    return Objects.hash(isDisabled, details);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ExceededQueueQuotaScheduledImpl {\n");
-    sb.append("    disabled: ").append(toIndentedString(disabled)).append("\n");
+    sb.append("class ExceededQueueQuotaImpl {\n");
     sb.append("    isDisabled: ").append(toIndentedString(isDisabled)).append("\n");
+    sb.append("    details: ").append(toIndentedString(details)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -105,15 +102,9 @@ public class ExceededQueueQuotaScheduledImpl implements ExceededQueueQuotaSchedu
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements ExceededQueueQuotaScheduled.Builder {
-    OptionalValue<QueueStatusDisabledDetails> disabled = OptionalValue.empty();
+  static class Builder implements ExceededQueueQuota.Builder {
     OptionalValue<Boolean> isDisabled = OptionalValue.empty();
-
-    @JsonProperty(JSON_PROPERTY_DISABLED)
-    public Builder setDisabled(QueueStatusDisabledDetails disabled) {
-      this.disabled = OptionalValue.of(disabled);
-      return this;
-    }
+    OptionalValue<QueueStatusDisabledDetails> details = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_IS_DISABLED)
     public Builder setIsDisabled(Boolean isDisabled) {
@@ -121,8 +112,14 @@ public class ExceededQueueQuotaScheduledImpl implements ExceededQueueQuotaSchedu
       return this;
     }
 
-    public ExceededQueueQuotaScheduled build() {
-      return new ExceededQueueQuotaScheduledImpl(disabled, isDisabled);
+    @JsonProperty(JSON_PROPERTY_DISABLED)
+    public Builder setDetails(QueueStatusDisabledDetails details) {
+      this.details = OptionalValue.of(details);
+      return this;
+    }
+
+    public ExceededQueueQuota build() {
+      return new ExceededQueueQuotaImpl(isDisabled, details);
     }
   }
 }
