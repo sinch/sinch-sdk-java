@@ -12,5 +12,6 @@ import org.junit.platform.suite.api.SuiteDisplayName;
 @SuiteDisplayName("SMS V1")
 @IncludeEngines("cucumber")
 @SelectClasspathResource("features/sms/batches.feature")
+@SelectClasspathResource("features/sms/inbounds.feature")
 @ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.sinch.sdk.e2e.domains.sms.v1")
 public class SmsIT {}
