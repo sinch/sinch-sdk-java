@@ -40,19 +40,19 @@ class InboundsServiceTest extends BaseTest {
 
   String uriPartID = "foovalue";
 
-  @GivenJsonResource("/domains/sms/v1/MOBinaryDto.json")
+  @GivenJsonResource("/domains/sms/v1/inbounds/MOBinaryDto.json")
   InboundDto binary;
 
-  @GivenJsonResource("/domains/sms/v1/MOTextDto.json")
+  @GivenJsonResource("/domains/sms/v1/inbounds/MOTextDto.json")
   InboundDto text;
 
-  @GivenJsonResource("/domains/sms/v1/InboundsListResponseDtoPage0.json")
+  @GivenJsonResource("/domains/sms/v1/inbounds/response/internal/InboundsListResponseDtoPage0.json")
   ApiInboundListDto inboundsLisResponseDtoPage0;
 
-  @GivenJsonResource("/domains/sms/v1/InboundsListResponseDtoPage1.json")
+  @GivenJsonResource("/domains/sms/v1/inbounds/response/internal/InboundsListResponseDtoPage1.json")
   ApiInboundListDto inboundsLisResponseDtoPage1;
 
-  @GivenJsonResource("/domains/sms/v1/InboundsListResponseDtoPage2.json")
+  @GivenJsonResource("/domains/sms/v1/inbounds/response/internal/InboundsListResponseDtoPage2.json")
   ApiInboundListDto inboundsLisResponseDtoPage2;
 
   @BeforeEach

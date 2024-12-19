@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 @TestWithResources
 class InboundDtoTest extends BaseTest {
 
-  @GivenJsonResource("/domains/sms/v1/MOBinaryDto.json")
+  @GivenJsonResource("/domains/sms/v1/inbounds/MOBinaryDto.json")
   InboundDto loadedBinaryMessage;
 
-  @GivenJsonResource("/domains/sms/v1/MOTextDto.json")
+  @GivenJsonResource("/domains/sms/v1/inbounds/MOTextDto.json")
   InboundDto loadedTextMessage;
 
   MOBinaryDto binaryDTO =
