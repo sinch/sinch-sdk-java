@@ -28,10 +28,10 @@ import org.mockito.InjectMocks;
 @TestWithResources
 public class WebHooksServiceTest extends BaseTest {
 
-  @GivenTextResource("/domains/sms/v1/inbounds/MOBinaryDto.json")
+  @GivenTextResource("/domains/sms/v1/inbounds/InboundBinaryDto.json")
   String incomingSMSBinaryJsonString;
 
-  @GivenTextResource("/domains/sms/v1/inbounds/MOTextDto.json")
+  @GivenTextResource("/domains/sms/v1/inbounds/InboundTextDto.json")
   String incomingSMSTextJsonString;
 
   @GivenTextResource("/domains/sms/v1/DeliveryReportRecipientSMSDto.json")

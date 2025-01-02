@@ -40,10 +40,10 @@ public class InboundsApiTest extends BaseTest {
 
   static final String SMS_AUTH_NAMES = "BearerAuth";
 
-  @GivenTextResource("/domains/sms/v1/inbounds/MOTextDto.json")
+  @GivenTextResource("/domains/sms/v1/inbounds/InboundTextDto.json")
   String jsonTextMessageDto;
 
-  @GivenJsonResource("/domains/sms/v1/inbounds/MOTextDto.json")
+  @GivenJsonResource("/domains/sms/v1/inbounds/InboundTextDto.json")
   TextMessage textMessageDto;
 
   @GivenTextResource("/domains/sms/v1/inbounds/response/internal/InboundsListResponseDtoPage0.json")

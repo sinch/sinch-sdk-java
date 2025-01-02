@@ -40,10 +40,10 @@ class InboundsServiceTest extends BaseTest {
 
   String uriPartID = "foovalue";
 
-  @GivenJsonResource("/domains/sms/v1/inbounds/MOBinaryDto.json")
+  @GivenJsonResource("/domains/sms/v1/inbounds/InboundBinaryDto.json")
   InboundDto binary;
 
-  @GivenJsonResource("/domains/sms/v1/inbounds/MOTextDto.json")
+  @GivenJsonResource("/domains/sms/v1/inbounds/InboundTextDto.json")
   InboundDto text;
 
   @GivenJsonResource("/domains/sms/v1/inbounds/response/internal/InboundsListResponseDtoPage0.json")

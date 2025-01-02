@@ -14,10 +14,10 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class MOTextDtoTest extends BaseTest {
 
-  @GivenJsonResource("/domains/sms/v1/inbounds/MOTextDto.json")
+  @GivenJsonResource("/domains/sms/v1/inbounds/InboundTextDto.json")
   MOTextDto loadedDto;
 
-  @GivenTextResource("/domains/sms/v1/inbounds/MOTextDto.json")
+  @GivenTextResource("/domains/sms/v1/inbounds/InboundTextDto.json")
   String jsonStringDto;
 
   public static MOTextDto dto =
