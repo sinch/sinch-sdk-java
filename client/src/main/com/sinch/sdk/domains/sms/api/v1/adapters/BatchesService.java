@@ -42,16 +42,12 @@ public class BatchesService implements com.sinch.sdk.domains.sms.api.v1.BatchesS
 
   public ListBatchesResponse list(ListBatchesQueryParameters parameters) throws ApiException {
 
-    ListBatchesQueryParameters guardParameters =
-        null != parameters ? parameters : ListBatchesQueryParameters.builder().build();
-
     ApiBatchList response = getApi().list(parameters);
 
     SMSCursorPageNavigator navigator =
         new SMSCursorPageNavigator(response.getPage(), response.getPageSize());
 
-    return new ListBatchesResponse(
-        this, new Page<>(guardParameters, response.getBatches(), navigator));
+    return new ListBatchesResponse(this, new Page<>(parameters, response.getBatches(), navigator));
   }
 
   public DryRunResponse dryRun(DryRunQueryParameters queryParameters, BatchRequest batch) {

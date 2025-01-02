@@ -68,6 +68,9 @@ public class DryRunQueryParametersImpl implements DryRunQueryParameters {
     protected Builder() {}
 
     protected Builder(DryRunQueryParameters _parameters) {
+      if (null == _parameters) {
+        return;
+      }
       DryRunQueryParametersImpl parameters = (DryRunQueryParametersImpl) _parameters;
       this.perRecipient = parameters.getPerRecipient();
       this.numberOfRecipients = parameters.getNumberOfRecipients();

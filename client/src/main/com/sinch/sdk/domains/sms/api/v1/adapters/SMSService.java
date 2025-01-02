@@ -25,8 +25,10 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   private final String uriUUID;
   private final SmsContext context;
   private final HttpClient httpClient;
-  private BatchesService batches;
   private final Map<String, AuthManager> authManagers;
+
+  private BatchesService batches;
+  private InboundsService inbounds;
 
   public SMSService(
       UnifiedCredentials credentials,
@@ -84,5 +86,13 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
       this.batches = new BatchesService(uriUUID, context, httpClient, authManagers);
     }
     return this.batches;
+  }
+
+  @Override
+  public InboundsService inbounds() {
+    if (null == this.inbounds) {
+      this.inbounds = new InboundsService(uriUUID, context, httpClient, authManagers);
+    }
+    return this.inbounds;
   }
 }

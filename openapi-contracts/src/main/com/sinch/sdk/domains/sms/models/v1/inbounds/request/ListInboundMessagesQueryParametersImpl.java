@@ -1,28 +1,29 @@
-package com.sinch.sdk.domains.sms.models.v1.batches.request;
+package com.sinch.sdk.domains.sms.models.v1.inbounds.request;
 
 import com.sinch.sdk.core.models.OptionalValue;
 import java.time.Instant;
+import java.util.Collection;
 import java.util.Objects;
 
-public class ListBatchesQueryParametersImpl implements ListBatchesQueryParameters {
+public class ListInboundMessagesQueryParametersImpl implements ListInboundMessagesQueryParameters {
 
   private final OptionalValue<Integer> page;
   private final OptionalValue<Integer> pageSize;
-  private final OptionalValue<String> from;
+  private final OptionalValue<Collection<String>> to;
   private final OptionalValue<Instant> startDate;
   private final OptionalValue<Instant> endDate;
   private final OptionalValue<String> clientReference;
 
-  private ListBatchesQueryParametersImpl(
+  private ListInboundMessagesQueryParametersImpl(
       OptionalValue<Integer> page,
       OptionalValue<Integer> pageSize,
-      OptionalValue<String> from,
+      OptionalValue<Collection<String>> to,
       OptionalValue<Instant> startDate,
       OptionalValue<Instant> endDate,
       OptionalValue<String> clientReference) {
     this.page = page;
     this.pageSize = pageSize;
-    this.from = from;
+    this.to = to;
     this.startDate = startDate;
     this.endDate = endDate;
     this.clientReference = clientReference;
@@ -36,8 +37,8 @@ public class ListBatchesQueryParametersImpl implements ListBatchesQueryParameter
     return pageSize;
   }
 
-  public OptionalValue<String> getFrom() {
-    return from;
+  public OptionalValue<Collection<String>> getTo() {
+    return to;
   }
 
   public OptionalValue<Instant> getStartDate() {
@@ -52,7 +53,7 @@ public class ListBatchesQueryParametersImpl implements ListBatchesQueryParameter
     return clientReference;
   }
 
-  /** Return true if this ListBatchesQueryParameters object is equal to o. */
+  /** Return true if this ListInboundMessagesQueryParameters object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -61,27 +62,28 @@ public class ListBatchesQueryParametersImpl implements ListBatchesQueryParameter
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ListBatchesQueryParametersImpl listBatchesQueryParameters = (ListBatchesQueryParametersImpl) o;
-    return Objects.equals(this.page, listBatchesQueryParameters.page)
-        && Objects.equals(this.pageSize, listBatchesQueryParameters.pageSize)
-        && Objects.equals(this.from, listBatchesQueryParameters.from)
-        && Objects.equals(this.startDate, listBatchesQueryParameters.startDate)
-        && Objects.equals(this.endDate, listBatchesQueryParameters.endDate)
-        && Objects.equals(this.clientReference, listBatchesQueryParameters.clientReference);
+    ListInboundMessagesQueryParametersImpl listInboundMessagesQueryParameters =
+        (ListInboundMessagesQueryParametersImpl) o;
+    return Objects.equals(this.page, listInboundMessagesQueryParameters.page)
+        && Objects.equals(this.pageSize, listInboundMessagesQueryParameters.pageSize)
+        && Objects.equals(this.to, listInboundMessagesQueryParameters.to)
+        && Objects.equals(this.startDate, listInboundMessagesQueryParameters.startDate)
+        && Objects.equals(this.endDate, listInboundMessagesQueryParameters.endDate)
+        && Objects.equals(this.clientReference, listInboundMessagesQueryParameters.clientReference);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(page, pageSize, from, startDate, endDate, clientReference);
+    return Objects.hash(page, pageSize, to, startDate, endDate, clientReference);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ListBatchesQueryParametersImpl {\n");
+    sb.append("class ListInboundMessagesQueryParametersImpl {\n");
     sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    pageSize: ").append(toIndentedString(pageSize)).append("\n");
-    sb.append("    from: ").append(toIndentedString(from)).append("\n");
+    sb.append("    to: ").append(toIndentedString(to)).append("\n");
     sb.append("    startDate: ").append(toIndentedString(startDate)).append("\n");
     sb.append("    endDate: ").append(toIndentedString(endDate)).append("\n");
     sb.append("    clientReference: ").append(toIndentedString(clientReference)).append("\n");
@@ -99,24 +101,25 @@ public class ListBatchesQueryParametersImpl implements ListBatchesQueryParameter
     return o.toString().replace("\n", "\n    ");
   }
 
-  static class Builder implements ListBatchesQueryParameters.Builder {
+  static class Builder implements ListInboundMessagesQueryParameters.Builder {
     OptionalValue<Integer> page = OptionalValue.empty();
     OptionalValue<Integer> pageSize = OptionalValue.empty();
-    OptionalValue<String> from = OptionalValue.empty();
+    OptionalValue<Collection<String>> to = OptionalValue.empty();
     OptionalValue<Instant> startDate = OptionalValue.empty();
     OptionalValue<Instant> endDate = OptionalValue.empty();
     OptionalValue<String> clientReference = OptionalValue.empty();
 
     protected Builder() {}
 
-    protected Builder(ListBatchesQueryParameters _parameters) {
+    protected Builder(ListInboundMessagesQueryParameters _parameters) {
       if (null == _parameters) {
         return;
       }
-      ListBatchesQueryParametersImpl parameters = (ListBatchesQueryParametersImpl) _parameters;
+      ListInboundMessagesQueryParametersImpl parameters =
+          (ListInboundMessagesQueryParametersImpl) _parameters;
       this.page = parameters.getPage();
       this.pageSize = parameters.getPageSize();
-      this.from = parameters.getFrom();
+      this.to = parameters.getTo();
       this.startDate = parameters.getStartDate();
       this.endDate = parameters.getEndDate();
       this.clientReference = parameters.getClientReference();
@@ -132,8 +135,8 @@ public class ListBatchesQueryParametersImpl implements ListBatchesQueryParameter
       return this;
     }
 
-    public Builder setFrom(String from) {
-      this.from = OptionalValue.of(from);
+    public Builder setTo(Collection<String> to) {
+      this.to = OptionalValue.of(to);
       return this;
     }
 
@@ -152,9 +155,9 @@ public class ListBatchesQueryParametersImpl implements ListBatchesQueryParameter
       return this;
     }
 
-    public ListBatchesQueryParameters build() {
-      return new ListBatchesQueryParametersImpl(
-          page, pageSize, from, startDate, endDate, clientReference);
+    public ListInboundMessagesQueryParameters build() {
+      return new ListInboundMessagesQueryParametersImpl(
+          page, pageSize, to, startDate, endDate, clientReference);
     }
   }
 }

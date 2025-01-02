@@ -1,6 +1,5 @@
-package com.sinch.sdk.domains.sms.adapters;
+package com.sinch.sdk.domains.sms.api.v1.adapters;
 
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
@@ -9,17 +8,17 @@ import static org.mockito.Mockito.when;
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.sms.adapters.api.v1.InboundsApi;
-import com.sinch.sdk.domains.sms.adapters.converters.InboundsDtoConverter;
-import com.sinch.sdk.domains.sms.models.Inbound;
-import com.sinch.sdk.domains.sms.models.InboundBinary;
-import com.sinch.sdk.domains.sms.models.InboundText;
-import com.sinch.sdk.domains.sms.models.dto.v1.ApiInboundListDto;
-import com.sinch.sdk.domains.sms.models.dto.v1.InboundDto;
-import com.sinch.sdk.domains.sms.models.responses.InboundsListResponse;
+import com.sinch.sdk.domains.sms.api.v1.internal.InboundsApi;
+import com.sinch.sdk.domains.sms.models.v1.inbounds.BinaryMessage;
+import com.sinch.sdk.domains.sms.models.v1.inbounds.InboundMessage;
+import com.sinch.sdk.domains.sms.models.v1.inbounds.TextMessage;
+import com.sinch.sdk.domains.sms.models.v1.inbounds.request.ListInboundMessagesQueryParameters;
+import com.sinch.sdk.domains.sms.models.v1.inbounds.response.ListInboundsResponse;
+import com.sinch.sdk.domains.sms.models.v1.inbounds.response.internal.ApiInboundList;
 import com.sinch.sdk.models.SmsContext;
 import java.time.Instant;
 import java.util.Iterator;
@@ -41,19 +40,22 @@ class InboundsServiceTest extends BaseTest {
   String uriPartID = "foovalue";
 
   @GivenJsonResource("/domains/sms/v1/inbounds/InboundBinaryDto.json")
-  InboundDto binary;
+  InboundMessage binary;
 
   @GivenJsonResource("/domains/sms/v1/inbounds/InboundTextDto.json")
-  InboundDto text;
+  InboundMessage text;
+
+  @GivenJsonResource("/domains/sms/v1/inbounds/InboundMediaDto.json")
+  InboundMessage media;
 
   @GivenJsonResource("/domains/sms/v1/inbounds/response/internal/InboundsListResponseDtoPage0.json")
-  ApiInboundListDto inboundsLisResponseDtoPage0;
+  ApiInboundList inboundsLisResponseDtoPage0;
 
   @GivenJsonResource("/domains/sms/v1/inbounds/response/internal/InboundsListResponseDtoPage1.json")
-  ApiInboundListDto inboundsLisResponseDtoPage1;
+  ApiInboundList inboundsLisResponseDtoPage1;
 
   @GivenJsonResource("/domains/sms/v1/inbounds/response/internal/InboundsListResponseDtoPage2.json")
-  ApiInboundListDto inboundsLisResponseDtoPage2;
+  ApiInboundList inboundsLisResponseDtoPage2;
 
   @BeforeEach
   public void initMocks() {
@@ -64,52 +66,55 @@ class InboundsServiceTest extends BaseTest {
   @Test
   void getBinary() throws ApiException {
 
-    when(api.retrieveInboundMessage(eq(uriPartID), eq("foo inbound ID"))).thenReturn(binary);
+    when(api.get(eq("foo inbound ID"))).thenReturn(binary);
 
-    Inbound<?> response = service.get("foo inbound ID");
+    InboundMessage response = service.get("foo inbound ID");
 
-    assertInstanceOf(InboundBinary.class, response);
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(InboundsDtoConverter.convert(binary));
+    TestHelpers.recursiveEquals(response, binary);
   }
 
   @Test
   void getText() throws ApiException {
 
-    when(api.retrieveInboundMessage(eq(uriPartID), eq("foo inbound ID"))).thenReturn(text);
+    when(api.get(eq("foo inbound ID"))).thenReturn(text);
 
-    Inbound<?> response = service.get("foo inbound ID");
+    InboundMessage response = service.get("foo inbound ID");
 
-    assertInstanceOf(InboundText.class, response);
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(InboundsDtoConverter.convert(text));
+    TestHelpers.recursiveEquals(response, text);
+  }
+
+  @Test
+  void getMedia() throws ApiException {
+
+    when(api.get(eq("foo inbound ID"))).thenReturn(media);
+
+    InboundMessage response = service.get("foo inbound ID");
+
+    TestHelpers.recursiveEquals(response, media);
   }
 
   @Test
   void list() throws ApiException {
 
-    when(api.listInboundMessages(
-            eq(uriPartID), eq(null), eq(null), eq(null), eq(null), eq(null), eq(null)))
-        .thenReturn(inboundsLisResponseDtoPage0);
-    when(api.listInboundMessages(
-            eq(uriPartID), eq(1), eq(null), eq(null), eq(null), eq(null), eq(null)))
-        .thenReturn(inboundsLisResponseDtoPage1);
-    when(api.listInboundMessages(
-            eq(uriPartID), eq(2), eq(null), eq(null), eq(null), eq(null), eq(null)))
-        .thenReturn(inboundsLisResponseDtoPage2);
-    InboundsListResponse response = service.list(null);
+    ListInboundMessagesQueryParameters initialRequest =
+        ListInboundMessagesQueryParameters.builder().build();
+    ListInboundMessagesQueryParameters page1 =
+        ListInboundMessagesQueryParameters.builder().setPage(1).build();
+    ListInboundMessagesQueryParameters page2 =
+        ListInboundMessagesQueryParameters.builder().setPage(2).build();
 
-    Iterator<Inbound<?>> iterator = response.iterator();
-    Inbound<?> item = iterator.next();
-    Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
+    when(api.list(initialRequest)).thenReturn(inboundsLisResponseDtoPage0);
+    when(api.list(page1)).thenReturn(inboundsLisResponseDtoPage1);
+    when(api.list(page2)).thenReturn(inboundsLisResponseDtoPage2);
 
-    assertInstanceOf(InboundBinary.class, item);
+    ListInboundsResponse response = service.list(initialRequest);
+
+    Iterator<InboundMessage> iterator = response.iterator();
+    InboundMessage item = iterator.next();
     Assertions.assertThat(item)
         .usingRecursiveComparison()
         .isEqualTo(
-            InboundBinary.builder()
+            BinaryMessage.builder()
                 .setBody("a body")
                 .setClientReference("a client reference")
                 .setFrom("+11203494390")
@@ -123,11 +128,10 @@ class InboundsServiceTest extends BaseTest {
 
     item = iterator.next();
     Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
-    assertInstanceOf(InboundText.class, item);
     Assertions.assertThat(item)
         .usingRecursiveComparison()
         .isEqualTo(
-            InboundText.builder()
+            TextMessage.builder()
                 .setBody("a body")
                 .setClientReference("a client reference")
                 .setFrom("+11203494390")
@@ -140,11 +144,10 @@ class InboundsServiceTest extends BaseTest {
 
     item = iterator.next();
     Assertions.assertThat(iterator.hasNext()).isEqualTo(false);
-    assertInstanceOf(InboundBinary.class, item);
     Assertions.assertThat(item)
         .usingRecursiveComparison()
         .isEqualTo(
-            InboundBinary.builder()
+            BinaryMessage.builder()
                 .setBody("a body")
                 .setClientReference("a client reference")
                 .setFrom("+11203494390")

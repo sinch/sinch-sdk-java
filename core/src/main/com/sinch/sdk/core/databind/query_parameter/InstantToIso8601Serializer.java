@@ -22,5 +22,4 @@ public class InstantToIso8601Serializer implements QueryParameterSerializer<Inst
   }
 
   private InstantToIso8601Serializer() {}
-  ;
 }
