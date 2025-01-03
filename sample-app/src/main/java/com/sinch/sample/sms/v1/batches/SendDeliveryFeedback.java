@@ -29,9 +29,7 @@ public class SendDeliveryFeedback extends BaseApplication {
     LOGGER.info("Send Delivery Feedback for batch ID:" + batchId);
 
     SendDeliveryFeedbackRequest request =
-        SendDeliveryFeedbackRequest.builder()
-            .setRecipients(Arrays.asList("+1234567890", "+0987654321"))
-            .build();
+        SendDeliveryFeedbackRequest.builder().setRecipients(Arrays.asList(phoneNumber)).build();
     service.sendDeliveryFeedback(batchId, request);
     LOGGER.info("Done");
   }

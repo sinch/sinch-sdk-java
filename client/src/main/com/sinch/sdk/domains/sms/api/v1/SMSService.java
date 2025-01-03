@@ -5,4 +5,6 @@ public interface SMSService {
   BatchesService batches();
 
   InboundsService inbounds();
+
+  DeliveryReportsService deliveryReports();
 }
