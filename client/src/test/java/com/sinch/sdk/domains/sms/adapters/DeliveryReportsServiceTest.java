@@ -50,25 +50,28 @@ class DeliveryReportsServiceTest extends BaseTest {
   DeliveryReportsService service;
   String uriPartID = "foovalue";
 
-  @GivenJsonResource("/domains/sms/v1/DeliveryReportBatchSMSDto.json")
+  @GivenJsonResource("/domains/sms/v1/deliveryreports/BatchDeliveryReportSMSDto.json")
   DeliveryReportDto deliveryReportBatchSMSDto;
 
-  @GivenJsonResource("/domains/sms/v1/DeliveryReportBatchMMSDto.json")
+  @GivenJsonResource("/domains/sms/v1/deliveryreports/BatchDeliveryReportMMSDto.json")
   DeliveryReportDto deliveryReportBatchMMSDto;
 
-  @GivenJsonResource("/domains/sms/v1/DeliveryReportRecipientSMSDto.json")
+  @GivenJsonResource("/domains/sms/v1/deliveryreports/RecipientDeliveryReportSMSDto.json")
   RecipientDeliveryReportDto deliveryReportRecipientSMSDto;
 
-  @GivenJsonResource("/domains/sms/v1/DeliveryReportRecipientMMSDto.json")
+  @GivenJsonResource("/domains/sms/v1/deliveryreports/RecipientDeliveryReportMMSDto.json")
   RecipientDeliveryReportDto deliveryReportRecipientMMSDto;
 
-  @GivenJsonResource("/domains/sms/v1/ListDeliveryReportResponseDtoPage0.json")
+  @GivenJsonResource(
+      "/domains/sms/v1/deliveryreports/response/ListDeliveryReportResponseDtoPage0.json")
   DeliveryReportListDto listDeliveryReportResponseDtoPage0;
 
-  @GivenJsonResource("/domains/sms/v1/ListDeliveryReportResponseDtoPage1.json")
+  @GivenJsonResource(
+      "/domains/sms/v1/deliveryreports/response/ListDeliveryReportResponseDtoPage1.json")
   DeliveryReportListDto listDeliveryReportResponseDtoPage1;
 
-  @GivenJsonResource("/domains/sms/v1/ListDeliveryReportResponseDtoPage2.json")
+  @GivenJsonResource(
+      "/domains/sms/v1/deliveryreports/response/ListDeliveryReportResponseDtoPage2.json")
   DeliveryReportListDto listDeliveryReportResponseDtoPage2;
 
   @BeforeEach
