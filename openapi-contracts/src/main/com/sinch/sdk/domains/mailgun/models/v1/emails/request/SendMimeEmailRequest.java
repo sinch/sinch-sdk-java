@@ -10,19 +10,14 @@
 
 package com.sinch.sdk.domains.mailgun.models.v1.emails.request;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.core.models.AdditionalProperties;
-import com.sinch.sdk.core.utils.EnumDynamic;
-import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import com.sinch.sdk.core.utils.Pair;
 import java.io.File;
-import java.time.Instant;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.Map;
 
 /** SendMimeEmailRequest */
-@JsonDeserialize(builder = SendMimeEmailRequestImpl.Builder.class)
-public interface SendMimeEmailRequest extends AdditionalProperties {
+public interface SendMimeEmailRequest {
 
   /**
    * Email address of the recipient(s). Example: <code>\&quot;Bob &lt;bob@host.com&gt;\&quot;</code>
@@ -49,292 +44,39 @@ public interface SendMimeEmailRequest extends AdditionalProperties {
   String getTemplate();
 
   /**
-   * Render a specific version of the given template instead of the latest version. <code>o:template
-   * </code> option must also be provided.
-   *
-   * @return templateVersion
-   */
-  String getTemplateVersion();
-
-  /**
-   * Render template in the text part of the message in case of template sending
-   *
-   * @return templateText
-   */
-  Boolean getTemplateText();
-
-  /**
-   * A valid JSON-encoded dictionary used as the input for template variable expansion. See
-   * <strong>Templates</strong> for more information
-   *
-   * @return templateVariables
-   */
-  String getTemplateVariables();
-
-  /**
-   * Tag string. See <strong>Tagging</strong> for more information
-   *
-   * @return tag
-   */
-  List<String> getTag();
-
-  /**
-   * Enables/disables DKIM signatures on a per-message basis
-   *
-   * @return enableDkimSignature
-   */
-  Boolean getEnableDkimSignature();
-
-  /**
-   * Specify a second domain key to sign the email with. The value is formatted as <code>
-   * signing_domain/selector</code>, e.g. <code>example.com/s1</code>. This tells Mailgun to sign
-   * the message with the signing domain <code>example.com</code> using the selector <code>s1</code>
-   * . Note: the domain key specified must have been previously created and activated.
-   *
-   * @return secondaryDkim
-   */
-  String getSecondaryDkim();
-
-  /**
-   * Specify an alias of the domain key specified in <code>o:secondary-dkim</code>. Also formatted
-   * as <code>public_signing_domain/selector</code>. <code>o:secondary-dkim</code> option must also
-   * be provided. Mailgun will sign the message with the provided key of the secondary DKIM, but use
-   * the public secondary DKIM name and selector. Note: We will perform a DNS check prior to singing
-   * the message to ensure the public keys matches the secondary DKIM.
-   *
-   * @return secondaryDkimPublic
-   */
-  String getSecondaryDkimPublic();
-
-  /**
-   * Specifies the scheduled delivery time in RFC-2822 format
-   * (https://mailgun-docs.redoc.ly/docs/mailgun/api-reference/intro/#date-format). Depending on
-   * your plan, you can schedule messages up to 3 or 7 days in advance. If your domain has a custom
-   * message_ttl (time-to-live) setting, this value determines the maximum scheduling duration.
-   *
-   * @return deliveryTime
-   */
-  Instant getDeliveryTime();
-
-  /**
-   * Toggles Send Time Optimization (STO) on a per-message basis. String should be set to the number
-   * of hours in <code>[0-9]+h</code> format, with the minimum being <code>24h</code> and the
-   * maximum being <code>72h</code>. This value defines the time window in which Mailgun will run
-   * the optimization algorithm based on prior engagement data of a given recipient. See
-   * <strong>Sending a Message with STO</strong> for details. <em>Please note that STO is only
-   * available on certain plans. See www.mailgun.com/pricing for more info</em>
-   *
-   * @return deliveryTimeOptimizePeriod
-   */
-  Integer getDeliveryTimeOptimizePeriod();
-
-  /**
-   * Toggles Timezone Optimization (TZO) on a per message basis. String should be set to preferred
-   * delivery time in <code>HH:mm</code> or <code>hh:mmaa</code> format, where <code>HH:mm</code> is
-   * used for 24 hour format without AM/PM and hh:mmaa is used for 12 hour format with AM/PM. See
-   * <strong>Sending a Message with TZO</strong> for details. <em>Please note that TZO is only
-   * available on certain plans. See www.mailgun.com/pricing for more info</em>
-   *
-   * @return timezoneLocalize
-   */
-  String getTimezoneLocalize();
-
-  /**
-   * Enables sending in test mode. See <a
-   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/#sending-in-test-mode">Sending
-   * in Test Mode</a>
-   *
-   * @return testMode
-   */
-  Boolean getTestMode();
-
-  /**
-   * Toggles both click and open tracking on a per-message basis, see <a
-   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages">Tracking
-   * Messages</a> for details.
-   */
-  public class TrackingEnum extends EnumDynamic<String, TrackingEnum> {
-    public static final TrackingEnum YES = new TrackingEnum("yes");
-    public static final TrackingEnum NO = new TrackingEnum("no");
-    public static final TrackingEnum TRUE = new TrackingEnum("true");
-    public static final TrackingEnum FALSE = new TrackingEnum("false");
-    public static final TrackingEnum HTMLONLY = new TrackingEnum("htmlonly");
-
-    private static final EnumSupportDynamic<String, TrackingEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(
-            TrackingEnum.class, TrackingEnum::new, Arrays.asList(YES, NO, TRUE, FALSE, HTMLONLY));
-
-    private TrackingEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<TrackingEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static TrackingEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(TrackingEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
-
-  /**
-   * Toggles both click and open tracking on a per-message basis, see <a
-   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages">Tracking
-   * Messages</a> for details.
-   *
-   * @return tracking
-   */
-  TrackingEnum getTracking();
-
-  /**
-   * Toggles click tracking on a per-message basis, see <a
-   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/#tracking-clicks">Tracking
-   * Clicks</a>. Has higher priority than domain-level setting.
-   */
-  public class TrackingClicksEnum extends EnumDynamic<String, TrackingClicksEnum> {
-    public static final TrackingClicksEnum YES = new TrackingClicksEnum("yes");
-    public static final TrackingClicksEnum NO = new TrackingClicksEnum("no");
-    public static final TrackingClicksEnum TRUE = new TrackingClicksEnum("true");
-    public static final TrackingClicksEnum FALSE = new TrackingClicksEnum("false");
-    public static final TrackingClicksEnum HTMLONLY = new TrackingClicksEnum("htmlonly");
-
-    private static final EnumSupportDynamic<String, TrackingClicksEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(
-            TrackingClicksEnum.class,
-            TrackingClicksEnum::new,
-            Arrays.asList(YES, NO, TRUE, FALSE, HTMLONLY));
-
-    private TrackingClicksEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<TrackingClicksEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static TrackingClicksEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(TrackingClicksEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
-
-  /**
-   * Toggles click tracking on a per-message basis, see <a
-   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/#tracking-clicks">Tracking
-   * Clicks</a>. Has higher priority than domain-level setting.
-   *
-   * @return trackingClicks
-   */
-  TrackingClicksEnum getTrackingClicks();
-
-  /**
-   * Toggles opens tracking on a per-message basis, see <a
-   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/#tracking-opens">Tracking
-   * Opens</a>. Has higher priority than domain-level setting.
-   *
-   * @return trackingOpens
-   */
-  Boolean getTrackingOpens();
-
-  /**
-   * Requires the message only be sent over a TLS connection, see <a
-   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/tls-sending/">TLS Sending
-   * Connection Settings</a>. If a TLS connection can not be established, Mailgun will not deliver
-   * the message. If set to <code>false</code> or <code>no</code>, Mailgun will still try and
-   * upgrade the connection, but if Mailgun cannot, the message will be delivered over a plaintext
-   * SMTP connection. The default is <code>false</code>
-   *
-   * @return requireTls
-   */
-  Boolean getRequireTls();
-
-  /**
-   * If <code>true</code>, the certificate and hostname of the resolved MX Host will not be verified
-   * when trying to establish a TLS connection. If <code>false</code>, Mailgun will verify the
-   * certificate and hostname. If either one can not be verified, a TLS connection will not be
-   * established. The default is <code>false</code>
-   *
-   * @return skipVerification
-   */
-  Boolean getSkipVerification();
-
-  /**
-   * Used to specify an IP Address to send an email that is owned by your account
-   *
-   * @return sendingIp
-   */
-  String getSendingIp();
-
-  /**
-   * If an IP Pool ID is provided, the email will be delivered with an IP that belongs in that pool
-   *
-   * @return sendingIpPool
-   */
-  String getSendingIpPool();
-
-  /**
-   * If you send long emails that experience truncation or other rendering issues at the recipient,
-   * you can ensure opens are being tracked accurately with placement of the tracking pixel at the
-   * top of your emails
-   */
-  public class TrackingPixelLocationTopEnum
-      extends EnumDynamic<String, TrackingPixelLocationTopEnum> {
-    public static final TrackingPixelLocationTopEnum YES = new TrackingPixelLocationTopEnum("yes");
-    public static final TrackingPixelLocationTopEnum NO = new TrackingPixelLocationTopEnum("no");
-    public static final TrackingPixelLocationTopEnum TRUE =
-        new TrackingPixelLocationTopEnum("true");
-    public static final TrackingPixelLocationTopEnum FALSE =
-        new TrackingPixelLocationTopEnum("false");
-    public static final TrackingPixelLocationTopEnum HTMLONLY =
-        new TrackingPixelLocationTopEnum("htmlonly");
-
-    private static final EnumSupportDynamic<String, TrackingPixelLocationTopEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(
-            TrackingPixelLocationTopEnum.class,
-            TrackingPixelLocationTopEnum::new,
-            Arrays.asList(YES, NO, TRUE, FALSE, HTMLONLY));
-
-    private TrackingPixelLocationTopEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<TrackingPixelLocationTopEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static TrackingPixelLocationTopEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(TrackingPixelLocationTopEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
-
-  /**
-   * If you send long emails that experience truncation or other rendering issues at the recipient,
-   * you can ensure opens are being tracked accurately with placement of the tracking pixel at the
-   * top of your emails
-   *
-   * @return trackingPixelLocationTop
-   */
-  TrackingPixelLocationTopEnum getTrackingPixelLocationTop();
-
-  /**
-   * A valid JSON-encoded dictionary, where key is a plain recipient address and value is a
-   * dictionary with variables that can be referenced in the message body. See <strong>Batch
-   * Sending</strong> for more information
+   * Get recipientVariables
    *
    * @return recipientVariables
    */
-  String getRecipientVariables();
+  Map<String, Collection<Pair<String, String>>> getRecipientVariables();
+
+  /**
+   * Get templateProperties
+   *
+   * @return templateProperties
+   */
+  TemplateProperties getTemplateProperties();
+
+  /**
+   * Get overrideProperties
+   *
+   * @return overrideProperties
+   */
+  OverrideProperties getOverrideProperties();
+
+  /**
+   * Get customVariables
+   *
+   * @return customVariables
+   */
+  List<Pair<String, String>> getCustomVariables();
+
+  /**
+   * Get customHeaders
+   *
+   * @return customHeaders
+   */
+  List<Pair<String, String>> getCustomHeaders();
 
   /**
    * Getting builder
@@ -346,7 +88,7 @@ public interface SendMimeEmailRequest extends AdditionalProperties {
   }
 
   /** Dedicated Builder */
-  interface Builder extends AdditionalProperties.Builder {
+  interface Builder {
 
     /**
      * see getter
@@ -378,190 +120,47 @@ public interface SendMimeEmailRequest extends AdditionalProperties {
     /**
      * see getter
      *
-     * @param templateVersion see getter
-     * @return Current builder
-     * @see #getTemplateVersion
-     */
-    Builder setTemplateVersion(String templateVersion);
-
-    /**
-     * see getter
-     *
-     * @param templateText see getter
-     * @return Current builder
-     * @see #getTemplateText
-     */
-    Builder setTemplateText(Boolean templateText);
-
-    /**
-     * see getter
-     *
-     * @param templateVariables see getter
-     * @return Current builder
-     * @see #getTemplateVariables
-     */
-    Builder setTemplateVariables(String templateVariables);
-
-    /**
-     * see getter
-     *
-     * @param tag see getter
-     * @return Current builder
-     * @see #getTag
-     */
-    Builder setTag(List<String> tag);
-
-    /**
-     * see getter
-     *
-     * @param enableDkimSignature see getter
-     * @return Current builder
-     * @see #getEnableDkimSignature
-     */
-    Builder setEnableDkimSignature(Boolean enableDkimSignature);
-
-    /**
-     * see getter
-     *
-     * @param secondaryDkim see getter
-     * @return Current builder
-     * @see #getSecondaryDkim
-     */
-    Builder setSecondaryDkim(String secondaryDkim);
-
-    /**
-     * see getter
-     *
-     * @param secondaryDkimPublic see getter
-     * @return Current builder
-     * @see #getSecondaryDkimPublic
-     */
-    Builder setSecondaryDkimPublic(String secondaryDkimPublic);
-
-    /**
-     * see getter
-     *
-     * @param deliveryTime see getter
-     * @return Current builder
-     * @see #getDeliveryTime
-     */
-    Builder setDeliveryTime(Instant deliveryTime);
-
-    /**
-     * see getter
-     *
-     * @param deliveryTimeOptimizePeriod see getter
-     * @return Current builder
-     * @see #getDeliveryTimeOptimizePeriod
-     */
-    Builder setDeliveryTimeOptimizePeriod(Integer deliveryTimeOptimizePeriod);
-
-    /**
-     * see getter
-     *
-     * @param timezoneLocalize see getter
-     * @return Current builder
-     * @see #getTimezoneLocalize
-     */
-    Builder setTimezoneLocalize(String timezoneLocalize);
-
-    /**
-     * see getter
-     *
-     * @param testMode see getter
-     * @return Current builder
-     * @see #getTestMode
-     */
-    Builder setTestMode(Boolean testMode);
-
-    /**
-     * see getter
-     *
-     * @param tracking see getter
-     * @return Current builder
-     * @see #getTracking
-     */
-    Builder setTracking(TrackingEnum tracking);
-
-    /**
-     * see getter
-     *
-     * @param trackingClicks see getter
-     * @return Current builder
-     * @see #getTrackingClicks
-     */
-    Builder setTrackingClicks(TrackingClicksEnum trackingClicks);
-
-    /**
-     * see getter
-     *
-     * @param trackingOpens see getter
-     * @return Current builder
-     * @see #getTrackingOpens
-     */
-    Builder setTrackingOpens(Boolean trackingOpens);
-
-    /**
-     * see getter
-     *
-     * @param requireTls see getter
-     * @return Current builder
-     * @see #getRequireTls
-     */
-    Builder setRequireTls(Boolean requireTls);
-
-    /**
-     * see getter
-     *
-     * @param skipVerification see getter
-     * @return Current builder
-     * @see #getSkipVerification
-     */
-    Builder setSkipVerification(Boolean skipVerification);
-
-    /**
-     * see getter
-     *
-     * @param sendingIp see getter
-     * @return Current builder
-     * @see #getSendingIp
-     */
-    Builder setSendingIp(String sendingIp);
-
-    /**
-     * see getter
-     *
-     * @param sendingIpPool see getter
-     * @return Current builder
-     * @see #getSendingIpPool
-     */
-    Builder setSendingIpPool(String sendingIpPool);
-
-    /**
-     * see getter
-     *
-     * @param trackingPixelLocationTop see getter
-     * @return Current builder
-     * @see #getTrackingPixelLocationTop
-     */
-    Builder setTrackingPixelLocationTop(TrackingPixelLocationTopEnum trackingPixelLocationTop);
-
-    /**
-     * see getter
-     *
      * @param recipientVariables see getter
      * @return Current builder
      * @see #getRecipientVariables
      */
-    Builder setRecipientVariables(String recipientVariables);
+    Builder setRecipientVariables(Map<String, Collection<Pair<String, String>>> recipientVariables);
 
     /**
      * see getter
      *
+     * @param templateProperties see getter
      * @return Current builder
-     * @see #get
+     * @see #getTemplateProperties
      */
-    Builder put(String key, Object value);
+    Builder setTemplateProperties(TemplateProperties templateProperties);
+
+    /**
+     * see getter
+     *
+     * @param overrideProperties see getter
+     * @return Current builder
+     * @see #getOverrideProperties
+     */
+    Builder setOverrideProperties(OverrideProperties overrideProperties);
+
+    /**
+     * see getter
+     *
+     * @param customVariables see getter
+     * @return Current builder
+     * @see #getCustomVariables
+     */
+    Builder setCustomVariables(List<Pair<String, String>> customVariables);
+
+    /**
+     * see getter
+     *
+     * @param customHeaders see getter
+     * @return Current builder
+     * @see #getCustomHeaders
+     */
+    Builder setCustomHeaders(List<Pair<String, String>> customHeaders);
 
     /**
      * Create instance

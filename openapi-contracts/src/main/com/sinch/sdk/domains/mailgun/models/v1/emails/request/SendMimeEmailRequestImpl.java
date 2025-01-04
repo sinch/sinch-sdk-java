@@ -3,9 +3,9 @@ package com.sinch.sdk.domains.mailgun.models.v1.emails.request;
 import com.sinch.sdk.core.databind.annotation.FormSerialize;
 import com.sinch.sdk.core.databind.annotation.Property;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.core.utils.Pair;
 import java.io.File;
-import java.time.Instant;
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -25,93 +25,25 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
 
   private OptionalValue<String> template;
 
-  public static final String PROPERTY_T_COLON_VERSION = "t:version";
-
-  private OptionalValue<String> templateVersion;
-
-  public static final String PROPERTY_T_COLON_TEXT = "t:text";
-
-  private OptionalValue<Boolean> templateText;
-
-  public static final String PROPERTY_T_COLON_VARIABLES = "t:variables";
-
-  private OptionalValue<String> templateVariables;
-
-  public static final String PROPERTY_O_COLON_TAG = "o:tag";
-
-  private OptionalValue<List<String>> tag;
-
-  public static final String PROPERTY_O_COLON_DKIM = "o:dkim";
-
-  private OptionalValue<Boolean> enableDkimSignature;
-
-  public static final String PROPERTY_O_COLON_SECONDARY_DKIM = "o:secondary-dkim";
-
-  private OptionalValue<String> secondaryDkim;
-
-  public static final String PROPERTY_O_COLON_SECONDARY_DKIM_PUBLIC = "o:secondary-dkim-public";
-
-  private OptionalValue<String> secondaryDkimPublic;
-
-  public static final String PROPERTY_O_COLON_DELIVERYTIME = "o:deliverytime";
-
-  private OptionalValue<Instant> deliveryTime;
-
-  public static final String PROPERTY_O_COLON_DELIVERYTIME_OPTIMIZE_PERIOD =
-      "o:deliverytime-optimize-period";
-
-  private OptionalValue<Integer> deliveryTimeOptimizePeriod;
-
-  public static final String PROPERTY_O_COLON_TIME_ZONE_LOCALIZE = "o:time-zone-localize";
-
-  private OptionalValue<String> timezoneLocalize;
-
-  public static final String PROPERTY_O_COLON_TESTMODE = "o:testmode";
-
-  private OptionalValue<Boolean> testMode;
-
-  public static final String PROPERTY_O_COLON_TRACKING = "o:tracking";
-
-  private OptionalValue<TrackingEnum> tracking;
-
-  public static final String PROPERTY_O_COLON_TRACKING_CLICKS = "o:tracking-clicks";
-
-  private OptionalValue<TrackingClicksEnum> trackingClicks;
-
-  public static final String PROPERTY_O_COLON_TRACKING_OPENS = "o:tracking-opens";
-
-  private OptionalValue<Boolean> trackingOpens;
-
-  public static final String PROPERTY_O_COLON_REQUIRE_TLS = "o:require-tls";
-
-  private OptionalValue<Boolean> requireTls;
-
-  public static final String PROPERTY_O_COLON_SKIP_VERIFICATION = "o:skip-verification";
-
-  private OptionalValue<Boolean> skipVerification;
-
-  public static final String PROPERTY_O_COLON_SENDING_IP = "o:sending-ip";
-
-  private OptionalValue<String> sendingIp;
-
-  public static final String PROPERTY_O_COLON_SENDING_IP_POOL = "o:sending-ip-pool";
-
-  private OptionalValue<String> sendingIpPool;
-
-  public static final String PROPERTY_O_COLON_TRACKING_PIXEL_LOCATION_TOP =
-      "o:tracking-pixel-location-top";
-
-  private OptionalValue<TrackingPixelLocationTopEnum> trackingPixelLocationTop;
-
   public static final String PROPERTY_RECIPIENT_VARIABLES = "recipient-variables";
 
-  private OptionalValue<String> recipientVariables;
+  private OptionalValue<Map<String, Collection<Pair<String, String>>>> recipientVariables;
 
-  /**
-   * A container for additional, undeclared properties. This is a holder for any undeclared
-   * properties as specified with the 'additionalProperties' keyword in the OAS document.
-   */
-  private OptionalValue<Map<String, Object>> additionalProperties;
+  public static final String PROPERTY_TEMPLATE_PROPERTIES = "templateProperties";
+
+  private OptionalValue<TemplateProperties> templateProperties;
+
+  public static final String PROPERTY_OVERRIDE_PROPERTIES = "overrideProperties";
+
+  private OptionalValue<OverrideProperties> overrideProperties;
+
+  public static final String PROPERTY_CUSTOM_VARIABLES = "customVariables";
+
+  private OptionalValue<List<Pair<String, String>>> customVariables;
+
+  public static final String PROPERTY_CUSTOM_HEADERS = "customHeaders";
+
+  private OptionalValue<List<Pair<String, String>>> customHeaders;
 
   public SendMimeEmailRequestImpl() {}
 
@@ -119,51 +51,19 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
       OptionalValue<List<String>> to,
       OptionalValue<File> message,
       OptionalValue<String> template,
-      OptionalValue<String> templateVersion,
-      OptionalValue<Boolean> templateText,
-      OptionalValue<String> templateVariables,
-      OptionalValue<List<String>> tag,
-      OptionalValue<Boolean> enableDkimSignature,
-      OptionalValue<String> secondaryDkim,
-      OptionalValue<String> secondaryDkimPublic,
-      OptionalValue<Instant> deliveryTime,
-      OptionalValue<Integer> deliveryTimeOptimizePeriod,
-      OptionalValue<String> timezoneLocalize,
-      OptionalValue<Boolean> testMode,
-      OptionalValue<TrackingEnum> tracking,
-      OptionalValue<TrackingClicksEnum> trackingClicks,
-      OptionalValue<Boolean> trackingOpens,
-      OptionalValue<Boolean> requireTls,
-      OptionalValue<Boolean> skipVerification,
-      OptionalValue<String> sendingIp,
-      OptionalValue<String> sendingIpPool,
-      OptionalValue<TrackingPixelLocationTopEnum> trackingPixelLocationTop,
-      OptionalValue<String> recipientVariables,
-      OptionalValue<Map<String, Object>> additionalProperties) {
+      OptionalValue<Map<String, Collection<Pair<String, String>>>> recipientVariables,
+      OptionalValue<TemplateProperties> templateProperties,
+      OptionalValue<OverrideProperties> overrideProperties,
+      OptionalValue<List<Pair<String, String>>> customVariables,
+      OptionalValue<List<Pair<String, String>>> customHeaders) {
     this.to = to;
     this.message = message;
     this.template = template;
-    this.templateVersion = templateVersion;
-    this.templateText = templateText;
-    this.templateVariables = templateVariables;
-    this.tag = tag;
-    this.enableDkimSignature = enableDkimSignature;
-    this.secondaryDkim = secondaryDkim;
-    this.secondaryDkimPublic = secondaryDkimPublic;
-    this.deliveryTime = deliveryTime;
-    this.deliveryTimeOptimizePeriod = deliveryTimeOptimizePeriod;
-    this.timezoneLocalize = timezoneLocalize;
-    this.testMode = testMode;
-    this.tracking = tracking;
-    this.trackingClicks = trackingClicks;
-    this.trackingOpens = trackingOpens;
-    this.requireTls = requireTls;
-    this.skipVerification = skipVerification;
-    this.sendingIp = sendingIp;
-    this.sendingIpPool = sendingIpPool;
-    this.trackingPixelLocationTop = trackingPixelLocationTop;
     this.recipientVariables = recipientVariables;
-    this.additionalProperties = additionalProperties;
+    this.templateProperties = templateProperties;
+    this.overrideProperties = overrideProperties;
+    this.customVariables = customVariables;
+    this.customHeaders = customHeaders;
   }
 
   public List<String> getTo() {
@@ -193,214 +93,62 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
     return template;
   }
 
-  public String getTemplateVersion() {
-    return templateVersion.orElse(null);
-  }
-
-  @Property(PROPERTY_T_COLON_VERSION)
-  public OptionalValue<String> templateVersion() {
-    return templateVersion;
-  }
-
-  public Boolean getTemplateText() {
-    return templateText.orElse(null);
-  }
-
-  @Property(PROPERTY_T_COLON_TEXT)
-  @FormSerialize(using = com.sinch.sdk.domains.mailgun.api.v1.adapters.BooleanFormSerializer.class)
-  public OptionalValue<Boolean> templateText() {
-    return templateText;
-  }
-
-  public String getTemplateVariables() {
-    return templateVariables.orElse(null);
-  }
-
-  @Property(PROPERTY_T_COLON_VARIABLES)
-  public OptionalValue<String> templateVariables() {
-    return templateVariables;
-  }
-
-  public List<String> getTag() {
-    return tag.orElse(null);
-  }
-
-  @Property(PROPERTY_O_COLON_TAG)
-  public OptionalValue<List<String>> tag() {
-    return tag;
-  }
-
-  public Boolean getEnableDkimSignature() {
-    return enableDkimSignature.orElse(null);
-  }
-
-  @Property(PROPERTY_O_COLON_DKIM)
-  @FormSerialize(using = com.sinch.sdk.domains.mailgun.api.v1.adapters.BooleanFormSerializer.class)
-  public OptionalValue<Boolean> enableDkimSignature() {
-    return enableDkimSignature;
-  }
-
-  public String getSecondaryDkim() {
-    return secondaryDkim.orElse(null);
-  }
-
-  @Property(PROPERTY_O_COLON_SECONDARY_DKIM)
-  public OptionalValue<String> secondaryDkim() {
-    return secondaryDkim;
-  }
-
-  public String getSecondaryDkimPublic() {
-    return secondaryDkimPublic.orElse(null);
-  }
-
-  @Property(PROPERTY_O_COLON_SECONDARY_DKIM_PUBLIC)
-  public OptionalValue<String> secondaryDkimPublic() {
-    return secondaryDkimPublic;
-  }
-
-  public Instant getDeliveryTime() {
-    return deliveryTime.orElse(null);
-  }
-
-  @Property(PROPERTY_O_COLON_DELIVERYTIME)
-  @FormSerialize(using = com.sinch.sdk.core.utils.databind.RFC822FormSerializer.class)
-  public OptionalValue<Instant> deliveryTime() {
-    return deliveryTime;
-  }
-
-  public Integer getDeliveryTimeOptimizePeriod() {
-    return deliveryTimeOptimizePeriod.orElse(null);
-  }
-
-  @Property(PROPERTY_O_COLON_DELIVERYTIME_OPTIMIZE_PERIOD)
-  @FormSerialize(
-      using = com.sinch.sdk.domains.mailgun.api.v1.adapters.DeliveryTimeFormSerializer.class)
-  public OptionalValue<Integer> deliveryTimeOptimizePeriod() {
-    return deliveryTimeOptimizePeriod;
-  }
-
-  public String getTimezoneLocalize() {
-    return timezoneLocalize.orElse(null);
-  }
-
-  @Property(PROPERTY_O_COLON_TIME_ZONE_LOCALIZE)
-  public OptionalValue<String> timezoneLocalize() {
-    return timezoneLocalize;
-  }
-
-  public Boolean getTestMode() {
-    return testMode.orElse(null);
-  }
-
-  @Property(PROPERTY_O_COLON_TESTMODE)
-  @FormSerialize(using = com.sinch.sdk.domains.mailgun.api.v1.adapters.BooleanFormSerializer.class)
-  public OptionalValue<Boolean> testMode() {
-    return testMode;
-  }
-
-  public TrackingEnum getTracking() {
-    return tracking.orElse(null);
-  }
-
-  @Property(PROPERTY_O_COLON_TRACKING)
-  public OptionalValue<TrackingEnum> tracking() {
-    return tracking;
-  }
-
-  public TrackingClicksEnum getTrackingClicks() {
-    return trackingClicks.orElse(null);
-  }
-
-  @Property(PROPERTY_O_COLON_TRACKING_CLICKS)
-  public OptionalValue<TrackingClicksEnum> trackingClicks() {
-    return trackingClicks;
-  }
-
-  public Boolean getTrackingOpens() {
-    return trackingOpens.orElse(null);
-  }
-
-  @Property(PROPERTY_O_COLON_TRACKING_OPENS)
-  @FormSerialize(using = com.sinch.sdk.domains.mailgun.api.v1.adapters.BooleanFormSerializer.class)
-  public OptionalValue<Boolean> trackingOpens() {
-    return trackingOpens;
-  }
-
-  public Boolean getRequireTls() {
-    return requireTls.orElse(null);
-  }
-
-  @Property(PROPERTY_O_COLON_REQUIRE_TLS)
-  @FormSerialize(using = com.sinch.sdk.domains.mailgun.api.v1.adapters.BooleanFormSerializer.class)
-  public OptionalValue<Boolean> requireTls() {
-    return requireTls;
-  }
-
-  public Boolean getSkipVerification() {
-    return skipVerification.orElse(null);
-  }
-
-  @Property(PROPERTY_O_COLON_SKIP_VERIFICATION)
-  @FormSerialize(using = com.sinch.sdk.domains.mailgun.api.v1.adapters.BooleanFormSerializer.class)
-  public OptionalValue<Boolean> skipVerification() {
-    return skipVerification;
-  }
-
-  public String getSendingIp() {
-    return sendingIp.orElse(null);
-  }
-
-  @Property(PROPERTY_O_COLON_SENDING_IP)
-  public OptionalValue<String> sendingIp() {
-    return sendingIp;
-  }
-
-  public String getSendingIpPool() {
-    return sendingIpPool.orElse(null);
-  }
-
-  @Property(PROPERTY_O_COLON_SENDING_IP_POOL)
-  public OptionalValue<String> sendingIpPool() {
-    return sendingIpPool;
-  }
-
-  public TrackingPixelLocationTopEnum getTrackingPixelLocationTop() {
-    return trackingPixelLocationTop.orElse(null);
-  }
-
-  @Property(PROPERTY_O_COLON_TRACKING_PIXEL_LOCATION_TOP)
-  public OptionalValue<TrackingPixelLocationTopEnum> trackingPixelLocationTop() {
-    return trackingPixelLocationTop;
-  }
-
-  public String getRecipientVariables() {
+  public Map<String, Collection<Pair<String, String>>> getRecipientVariables() {
     return recipientVariables.orElse(null);
   }
 
   @Property(PROPERTY_RECIPIENT_VARIABLES)
-  public OptionalValue<String> recipientVariables() {
+  @FormSerialize(
+      using = com.sinch.sdk.domains.mailgun.api.v1.adapters.MapOfPairsToJSONFormSerializer.class)
+  public OptionalValue<Map<String, Collection<Pair<String, String>>>> recipientVariables() {
     return recipientVariables;
   }
 
-  public Object get(String key) {
-
-    if (null == this.additionalProperties || !additionalProperties.isPresent()) {
-      return null;
-    }
-    return this.additionalProperties.get().get(key);
+  public TemplateProperties getTemplateProperties() {
+    return templateProperties.orElse(null);
   }
 
-  public Map<String, Object> additionalProperties() {
-    if (null == this.additionalProperties || !additionalProperties.isPresent()) {
-      return null;
-    }
-    return additionalProperties.get();
+  @Property(PROPERTY_TEMPLATE_PROPERTIES)
+  @FormSerialize(
+      using = com.sinch.sdk.domains.mailgun.api.v1.adapters.NestedFieldFormSerializer.class)
+  public OptionalValue<TemplateProperties> templateProperties() {
+    return templateProperties;
   }
 
-  /**
-   * Return true if this POST-v3-domain_name-messages-mime-multipart-form-data-RequestBody object is
-   * equal to o.
-   */
+  public OverrideProperties getOverrideProperties() {
+    return overrideProperties.orElse(null);
+  }
+
+  @Property(PROPERTY_OVERRIDE_PROPERTIES)
+  @FormSerialize(
+      using = com.sinch.sdk.domains.mailgun.api.v1.adapters.NestedFieldFormSerializer.class)
+  public OptionalValue<OverrideProperties> overrideProperties() {
+    return overrideProperties;
+  }
+
+  public List<Pair<String, String>> getCustomVariables() {
+    return customVariables.orElse(null);
+  }
+
+  @Property(PROPERTY_CUSTOM_VARIABLES)
+  @FormSerialize(
+      using = com.sinch.sdk.domains.mailgun.api.v1.adapters.CustomVariablesFormSerializer.class)
+  public OptionalValue<List<Pair<String, String>>> customVariables() {
+    return customVariables;
+  }
+
+  public List<Pair<String, String>> getCustomHeaders() {
+    return customHeaders.orElse(null);
+  }
+
+  @Property(PROPERTY_CUSTOM_HEADERS)
+  @FormSerialize(
+      using = com.sinch.sdk.domains.mailgun.api.v1.adapters.CustomHeadersFormSerializer.class)
+  public OptionalValue<List<Pair<String, String>>> customHeaders() {
+    return customHeaders;
+  }
+
+  /** Return true if this sendMimeEmailRequest object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -409,71 +157,15 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SendMimeEmailRequestImpl poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody =
-        (SendMimeEmailRequestImpl) o;
-    return Objects.equals(this.to, poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.to)
-        && Objects.equals(
-            this.message, poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.message)
-        && Objects.equals(
-            this.template, poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.template)
-        && Objects.equals(
-            this.templateVersion,
-            poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.templateVersion)
-        && Objects.equals(
-            this.templateText,
-            poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.templateText)
-        && Objects.equals(
-            this.templateVariables,
-            poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.templateVariables)
-        && Objects.equals(this.tag, poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.tag)
-        && Objects.equals(
-            this.enableDkimSignature,
-            poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.enableDkimSignature)
-        && Objects.equals(
-            this.secondaryDkim,
-            poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.secondaryDkim)
-        && Objects.equals(
-            this.secondaryDkimPublic,
-            poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.secondaryDkimPublic)
-        && Objects.equals(
-            this.deliveryTime,
-            poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.deliveryTime)
-        && Objects.equals(
-            this.deliveryTimeOptimizePeriod,
-            poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.deliveryTimeOptimizePeriod)
-        && Objects.equals(
-            this.timezoneLocalize,
-            poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.timezoneLocalize)
-        && Objects.equals(
-            this.testMode, poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.testMode)
-        && Objects.equals(
-            this.tracking, poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.tracking)
-        && Objects.equals(
-            this.trackingClicks,
-            poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.trackingClicks)
-        && Objects.equals(
-            this.trackingOpens,
-            poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.trackingOpens)
-        && Objects.equals(
-            this.requireTls, poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.requireTls)
-        && Objects.equals(
-            this.skipVerification,
-            poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.skipVerification)
-        && Objects.equals(
-            this.sendingIp, poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.sendingIp)
-        && Objects.equals(
-            this.sendingIpPool,
-            poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.sendingIpPool)
-        && Objects.equals(
-            this.trackingPixelLocationTop,
-            poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.trackingPixelLocationTop)
-        && Objects.equals(
-            this.recipientVariables,
-            poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.recipientVariables)
-        && Objects.equals(
-            this.additionalProperties,
-            poSTV3DomainNameMessagesMimeMultipartFormDataRequestBody.additionalProperties)
-        && super.equals(o);
+    SendMimeEmailRequestImpl sendMimeEmailRequest = (SendMimeEmailRequestImpl) o;
+    return Objects.equals(this.to, sendMimeEmailRequest.to)
+        && Objects.equals(this.message, sendMimeEmailRequest.message)
+        && Objects.equals(this.template, sendMimeEmailRequest.template)
+        && Objects.equals(this.recipientVariables, sendMimeEmailRequest.recipientVariables)
+        && Objects.equals(this.templateProperties, sendMimeEmailRequest.templateProperties)
+        && Objects.equals(this.overrideProperties, sendMimeEmailRequest.overrideProperties)
+        && Objects.equals(this.customVariables, sendMimeEmailRequest.customVariables)
+        && Objects.equals(this.customHeaders, sendMimeEmailRequest.customHeaders);
   }
 
   @Override
@@ -482,69 +174,25 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
         to,
         message,
         template,
-        templateVersion,
-        templateText,
-        templateVariables,
-        tag,
-        enableDkimSignature,
-        secondaryDkim,
-        secondaryDkimPublic,
-        deliveryTime,
-        deliveryTimeOptimizePeriod,
-        timezoneLocalize,
-        testMode,
-        tracking,
-        trackingClicks,
-        trackingOpens,
-        requireTls,
-        skipVerification,
-        sendingIp,
-        sendingIpPool,
-        trackingPixelLocationTop,
         recipientVariables,
-        super.hashCode(),
-        additionalProperties);
+        templateProperties,
+        overrideProperties,
+        customVariables,
+        customHeaders);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class SendMimeEmailRequestImpl {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    to: ").append(toIndentedString(to)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("    template: ").append(toIndentedString(template)).append("\n");
-    sb.append("    templateVersion: ").append(toIndentedString(templateVersion)).append("\n");
-    sb.append("    templateText: ").append(toIndentedString(templateText)).append("\n");
-    sb.append("    templateVariables: ").append(toIndentedString(templateVariables)).append("\n");
-    sb.append("    tag: ").append(toIndentedString(tag)).append("\n");
-    sb.append("    enableDkimSignature: ")
-        .append(toIndentedString(enableDkimSignature))
-        .append("\n");
-    sb.append("    secondaryDkim: ").append(toIndentedString(secondaryDkim)).append("\n");
-    sb.append("    secondaryDkimPublic: ")
-        .append(toIndentedString(secondaryDkimPublic))
-        .append("\n");
-    sb.append("    deliveryTime: ").append(toIndentedString(deliveryTime)).append("\n");
-    sb.append("    deliveryTimeOptimizePeriod: ")
-        .append(toIndentedString(deliveryTimeOptimizePeriod))
-        .append("\n");
-    sb.append("    timezoneLocalize: ").append(toIndentedString(timezoneLocalize)).append("\n");
-    sb.append("    testMode: ").append(toIndentedString(testMode)).append("\n");
-    sb.append("    tracking: ").append(toIndentedString(tracking)).append("\n");
-    sb.append("    trackingClicks: ").append(toIndentedString(trackingClicks)).append("\n");
-    sb.append("    trackingOpens: ").append(toIndentedString(trackingOpens)).append("\n");
-    sb.append("    requireTls: ").append(toIndentedString(requireTls)).append("\n");
-    sb.append("    skipVerification: ").append(toIndentedString(skipVerification)).append("\n");
-    sb.append("    sendingIp: ").append(toIndentedString(sendingIp)).append("\n");
-    sb.append("    sendingIpPool: ").append(toIndentedString(sendingIpPool)).append("\n");
-    sb.append("    trackingPixelLocationTop: ")
-        .append(toIndentedString(trackingPixelLocationTop))
-        .append("\n");
     sb.append("    recipientVariables: ").append(toIndentedString(recipientVariables)).append("\n");
-    sb.append("    additionalProperties: ")
-        .append(toIndentedString(additionalProperties))
-        .append("\n");
+    sb.append("    templateProperties: ").append(toIndentedString(templateProperties)).append("\n");
+    sb.append("    overrideProperties: ").append(toIndentedString(overrideProperties)).append("\n");
+    sb.append("    customVariables: ").append(toIndentedString(customVariables)).append("\n");
+    sb.append("    customHeaders: ").append(toIndentedString(customHeaders)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -563,27 +211,12 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
     OptionalValue<List<String>> to = OptionalValue.empty();
     OptionalValue<File> message = OptionalValue.empty();
     OptionalValue<String> template = OptionalValue.empty();
-    OptionalValue<String> templateVersion = OptionalValue.empty();
-    OptionalValue<Boolean> templateText = OptionalValue.empty();
-    OptionalValue<String> templateVariables = OptionalValue.empty();
-    OptionalValue<List<String>> tag = OptionalValue.empty();
-    OptionalValue<Boolean> enableDkimSignature = OptionalValue.empty();
-    OptionalValue<String> secondaryDkim = OptionalValue.empty();
-    OptionalValue<String> secondaryDkimPublic = OptionalValue.empty();
-    OptionalValue<Instant> deliveryTime = OptionalValue.empty();
-    OptionalValue<Integer> deliveryTimeOptimizePeriod = OptionalValue.empty();
-    OptionalValue<String> timezoneLocalize = OptionalValue.empty();
-    OptionalValue<Boolean> testMode = OptionalValue.empty();
-    OptionalValue<TrackingEnum> tracking = OptionalValue.empty();
-    OptionalValue<TrackingClicksEnum> trackingClicks = OptionalValue.empty();
-    OptionalValue<Boolean> trackingOpens = OptionalValue.empty();
-    OptionalValue<Boolean> requireTls = OptionalValue.empty();
-    OptionalValue<Boolean> skipVerification = OptionalValue.empty();
-    OptionalValue<String> sendingIp = OptionalValue.empty();
-    OptionalValue<String> sendingIpPool = OptionalValue.empty();
-    OptionalValue<TrackingPixelLocationTopEnum> trackingPixelLocationTop = OptionalValue.empty();
-    OptionalValue<String> recipientVariables = OptionalValue.empty();
-    OptionalValue<Map<String, Object>> additionalProperties = OptionalValue.empty();
+    OptionalValue<Map<String, Collection<Pair<String, String>>>> recipientVariables =
+        OptionalValue.empty();
+    OptionalValue<TemplateProperties> templateProperties = OptionalValue.empty();
+    OptionalValue<OverrideProperties> overrideProperties = OptionalValue.empty();
+    OptionalValue<List<Pair<String, String>>> customVariables = OptionalValue.empty();
+    OptionalValue<List<Pair<String, String>>> customHeaders = OptionalValue.empty();
 
     @Property(value = PROPERTY_TO)
     public Builder setTo(List<String> to) {
@@ -603,132 +236,34 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
       return this;
     }
 
-    @Property(value = PROPERTY_T_COLON_VERSION)
-    public Builder setTemplateVersion(String templateVersion) {
-      this.templateVersion = OptionalValue.of(templateVersion);
-      return this;
-    }
-
-    @Property(value = PROPERTY_T_COLON_TEXT)
-    public Builder setTemplateText(Boolean templateText) {
-      this.templateText = OptionalValue.of(templateText);
-      return this;
-    }
-
-    @Property(value = PROPERTY_T_COLON_VARIABLES)
-    public Builder setTemplateVariables(String templateVariables) {
-      this.templateVariables = OptionalValue.of(templateVariables);
-      return this;
-    }
-
-    @Property(value = PROPERTY_O_COLON_TAG)
-    public Builder setTag(List<String> tag) {
-      this.tag = OptionalValue.of(tag);
-      return this;
-    }
-
-    @Property(value = PROPERTY_O_COLON_DKIM)
-    public Builder setEnableDkimSignature(Boolean enableDkimSignature) {
-      this.enableDkimSignature = OptionalValue.of(enableDkimSignature);
-      return this;
-    }
-
-    @Property(value = PROPERTY_O_COLON_SECONDARY_DKIM)
-    public Builder setSecondaryDkim(String secondaryDkim) {
-      this.secondaryDkim = OptionalValue.of(secondaryDkim);
-      return this;
-    }
-
-    @Property(value = PROPERTY_O_COLON_SECONDARY_DKIM_PUBLIC)
-    public Builder setSecondaryDkimPublic(String secondaryDkimPublic) {
-      this.secondaryDkimPublic = OptionalValue.of(secondaryDkimPublic);
-      return this;
-    }
-
-    @Property(value = PROPERTY_O_COLON_DELIVERYTIME)
-    public Builder setDeliveryTime(Instant deliveryTime) {
-      this.deliveryTime = OptionalValue.of(deliveryTime);
-      return this;
-    }
-
-    @Property(value = PROPERTY_O_COLON_DELIVERYTIME_OPTIMIZE_PERIOD)
-    public Builder setDeliveryTimeOptimizePeriod(Integer deliveryTimeOptimizePeriod) {
-      this.deliveryTimeOptimizePeriod = OptionalValue.of(deliveryTimeOptimizePeriod);
-      return this;
-    }
-
-    @Property(value = PROPERTY_O_COLON_TIME_ZONE_LOCALIZE)
-    public Builder setTimezoneLocalize(String timezoneLocalize) {
-      this.timezoneLocalize = OptionalValue.of(timezoneLocalize);
-      return this;
-    }
-
-    @Property(value = PROPERTY_O_COLON_TESTMODE)
-    public Builder setTestMode(Boolean testMode) {
-      this.testMode = OptionalValue.of(testMode);
-      return this;
-    }
-
-    @Property(value = PROPERTY_O_COLON_TRACKING)
-    public Builder setTracking(TrackingEnum tracking) {
-      this.tracking = OptionalValue.of(tracking);
-      return this;
-    }
-
-    @Property(value = PROPERTY_O_COLON_TRACKING_CLICKS)
-    public Builder setTrackingClicks(TrackingClicksEnum trackingClicks) {
-      this.trackingClicks = OptionalValue.of(trackingClicks);
-      return this;
-    }
-
-    @Property(value = PROPERTY_O_COLON_TRACKING_OPENS)
-    public Builder setTrackingOpens(Boolean trackingOpens) {
-      this.trackingOpens = OptionalValue.of(trackingOpens);
-      return this;
-    }
-
-    @Property(value = PROPERTY_O_COLON_REQUIRE_TLS)
-    public Builder setRequireTls(Boolean requireTls) {
-      this.requireTls = OptionalValue.of(requireTls);
-      return this;
-    }
-
-    @Property(value = PROPERTY_O_COLON_SKIP_VERIFICATION)
-    public Builder setSkipVerification(Boolean skipVerification) {
-      this.skipVerification = OptionalValue.of(skipVerification);
-      return this;
-    }
-
-    @Property(value = PROPERTY_O_COLON_SENDING_IP)
-    public Builder setSendingIp(String sendingIp) {
-      this.sendingIp = OptionalValue.of(sendingIp);
-      return this;
-    }
-
-    @Property(value = PROPERTY_O_COLON_SENDING_IP_POOL)
-    public Builder setSendingIpPool(String sendingIpPool) {
-      this.sendingIpPool = OptionalValue.of(sendingIpPool);
-      return this;
-    }
-
-    @Property(value = PROPERTY_O_COLON_TRACKING_PIXEL_LOCATION_TOP)
-    public Builder setTrackingPixelLocationTop(
-        TrackingPixelLocationTopEnum trackingPixelLocationTop) {
-      this.trackingPixelLocationTop = OptionalValue.of(trackingPixelLocationTop);
-      return this;
-    }
-
     @Property(value = PROPERTY_RECIPIENT_VARIABLES)
-    public Builder setRecipientVariables(String recipientVariables) {
+    public Builder setRecipientVariables(
+        Map<String, Collection<Pair<String, String>>> recipientVariables) {
       this.recipientVariables = OptionalValue.of(recipientVariables);
       return this;
     }
 
-    public Builder put(String key, Object value) {
-      if (!this.additionalProperties.isPresent()) {
-        this.additionalProperties = OptionalValue.of(new HashMap<String, Object>());
-      }
-      this.additionalProperties.get().put(key, value);
+    @Property(value = PROPERTY_TEMPLATE_PROPERTIES)
+    public Builder setTemplateProperties(TemplateProperties templateProperties) {
+      this.templateProperties = OptionalValue.of(templateProperties);
+      return this;
+    }
+
+    @Property(value = PROPERTY_OVERRIDE_PROPERTIES)
+    public Builder setOverrideProperties(OverrideProperties overrideProperties) {
+      this.overrideProperties = OptionalValue.of(overrideProperties);
+      return this;
+    }
+
+    @Property(value = PROPERTY_CUSTOM_VARIABLES)
+    public Builder setCustomVariables(List<Pair<String, String>> customVariables) {
+      this.customVariables = OptionalValue.of(customVariables);
+      return this;
+    }
+
+    @Property(value = PROPERTY_CUSTOM_HEADERS)
+    public Builder setCustomHeaders(List<Pair<String, String>> customHeaders) {
+      this.customHeaders = OptionalValue.of(customHeaders);
       return this;
     }
 
@@ -737,27 +272,11 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
           to,
           message,
           template,
-          templateVersion,
-          templateText,
-          templateVariables,
-          tag,
-          enableDkimSignature,
-          secondaryDkim,
-          secondaryDkimPublic,
-          deliveryTime,
-          deliveryTimeOptimizePeriod,
-          timezoneLocalize,
-          testMode,
-          tracking,
-          trackingClicks,
-          trackingOpens,
-          requireTls,
-          skipVerification,
-          sendingIp,
-          sendingIpPool,
-          trackingPixelLocationTop,
           recipientVariables,
-          additionalProperties);
+          templateProperties,
+          overrideProperties,
+          customVariables,
+          customHeaders);
     }
   }
 }
