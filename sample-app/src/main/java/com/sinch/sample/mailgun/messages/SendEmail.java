@@ -2,6 +2,8 @@ package com.sinch.sample.mailgun.messages;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.mailgun.api.v1.EmailsService;
+import com.sinch.sdk.domains.mailgun.models.v1.emails.request.OverrideProperties;
+import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailHtmlInlineRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.response.SendEmailResponse;
 import java.io.BufferedWriter;
@@ -70,17 +72,21 @@ public class SendEmail extends BaseApplication {
       throw new RuntimeException(e);
     }
 
-    return SendEmailRequest.builder()
+    return SendEmailHtmlInlineRequest.builder()
         .setFrom(mailgunFrom)
         .setTo(Arrays.asList(mailgunTo))
         .setText("\uD83D\uDCE7 Text sent with Sinch SDK Java")
         .setHtml("&#128231; HTML sent with <bold>Sinch SDK Java</bold>")
         .setAttachment(Arrays.asList(tempFile, tempFile2))
         .setSubject("\uD83D\uDCE7 Hello from Sinch SDK Java")
-        .setTag(Arrays.asList("my tag 1", "my tag 2"))
-        .setTrackingOpens(true)
-        .setDeliveryTime(Instant.now().plus(10, ChronoUnit.SECONDS))
-        .put("v:myvarkey", "myvar-value")
+        .setOverrideProperties(
+            OverrideProperties.builder()
+                .setTag(Arrays.asList("my tag 1", "my tag 2"))
+                .setTrackingOpens(true)
+                .setDeliveryTime(Instant.now().plus(10, ChronoUnit.SECONDS))
+                .build())
+        .put("v:my-varkey", "var-value")
+        .put("h:my-headerkey", "header-value")
         .build();
   }
 }

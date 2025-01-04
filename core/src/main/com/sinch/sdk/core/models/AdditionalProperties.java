@@ -1,7 +1,5 @@
 package com.sinch.sdk.core.models;
 
-import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest.Builder;
-
 /** Interface definition for schemas supporting additional properties */
 public interface AdditionalProperties {
 

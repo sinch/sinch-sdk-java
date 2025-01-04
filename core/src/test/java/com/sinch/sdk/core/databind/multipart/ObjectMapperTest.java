@@ -29,7 +29,10 @@ public class ObjectMapperTest {
   static File fileAttachment1;
   static File fileAttachment2;
 
-  static Map<String, Object> serialized, defaultAdditionalPropertiesSerialized;
+  static Map<String, Object> serialized;
+  static Map<String, Object> defaultAdditionalPropertiesSerialized;
+
+  public static SerializableObject object;
 
   static {
     ClassLoader classLoader = SendEmailRequestTest.class.getClassLoader();
@@ -43,7 +46,7 @@ public class ObjectMapperTest {
     Map<String, Object> additionalProperties =
         fillMap("header:toto", "toto-value", "variable:foo", "foo-value", "raw", "raw-value");
 
-    SerializableObject object =
+    object =
         new SerializableObject(
             OptionalValue.of("text value"),
             OptionalValue.of(AnEnum.from("a dyn value")),

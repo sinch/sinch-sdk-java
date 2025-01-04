@@ -15,7 +15,6 @@ public class GetStoredEmailResponseTest extends BaseTest {
 
   public static GetStoredEmailResponse expectedGetEmailResponse =
       GetStoredEmailResponse.builder()
-          .setTo("SinchSdkJava@sinch.com")
           .setSender("Excited User <mailgun@sandboxABCDE.mailgun.org>")
           .setRecipients("SinchSdkJava@sinch.com")
           .setFrom("Excited User <mailgun@sandboxABCDE.mailgun.org>")
