@@ -39,6 +39,19 @@ public class Pair<N, V> {
     return this.right;
   }
 
+  /**
+   * Helper to create new instance of Pair
+   *
+   * @param key key value
+   * @param value value of value
+   * @param <K> Key type
+   * @param <V> Value type
+   * @return Right value
+   */
+  public static <K, V> Pair<K, V> of(K key, V value) {
+    return new Pair<>(key, value);
+  }
+
   @Override
   public String toString() {
     return "Pair{" + "left='" + left + '\'' + ", right='" + right + '\'' + '}';

@@ -8,6 +8,7 @@ import com.sinch.sdk.core.http.HttpMapper;
 import java.io.File;
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
@@ -26,6 +27,17 @@ public class SendEmailRequestTest extends BaseTest {
     fileAttachment2 =
         new File(
             classLoader.getResource("domains/mailgun/v1/emails/request/attachment2.txt").getFile());
+
+    CUSTOM_VARIABLES =
+        Arrays.asList(
+            Pair.of("my-var-key1", "a-var-value1"),
+            Pair.of("my-var-key1", "a-var-value2"),
+            Pair.of("my-var-key2", "a-var-value3"));
+    CUSTOM_HEADERS =
+        Arrays.asList(
+            Pair.of("my-header-key1", "a-header-value1"),
+            Pair.of("my-header-key1", "a-header-value2"),
+            Pair.of("my-header-key2", "a-header-value3"));
 
     expectedEmailHtmlInline =
         ObjectMapperTest.fillMap(
@@ -57,8 +69,10 @@ public class SendEmailRequestTest extends BaseTest {
             "o:sending-ip-pool","sending pool ID",
             "o:tracking-pixel-location-top","htmlonly",
             "recipient-variables","{\"cc-dest@sinch.com\": {\"variable1\": \"value1\"}}",
-            "v:my-var-key", "a-var-value",
-            "h:my-header-key", "a-header-value"
+            "v:my-var-key1", Arrays.asList("a-var-value1","a-var-value2"),
+            "v:my-var-key2", Arrays.asList("a-var-value3"),
+            "h:my-header-key1", Arrays.asList("a-header-value1","a-header-value2"),
+            "h:my-header-key2", Arrays.asList("a-header-value3")
             // spotless:on
             );
 
@@ -95,8 +109,10 @@ public class SendEmailRequestTest extends BaseTest {
               "o:sending-ip-pool","sending pool ID",
               "o:tracking-pixel-location-top","htmlonly",
               "recipient-variables","{\"cc-dest@sinch.com\": {\"variable1\": \"value1\"}}",
-              "v:my-var-key", "a-var-value",
-              "h:my-header-key", "a-header-value"
+              "v:my-var-key1", Arrays.asList("a-var-value1","a-var-value2"),
+              "v:my-var-key2", Arrays.asList("a-var-value3"),
+              "h:my-header-key1", Arrays.asList("a-header-value1","a-header-value2"),
+              "h:my-header-key2", Arrays.asList("a-header-value3")
               // spotless:on
             );
   }
@@ -133,8 +149,8 @@ public class SendEmailRequestTest extends BaseTest {
                   .setSendingIpPool("sending pool ID")
                   .setTrackingPixelLocationTop(TrueFalseHtmlonlyEnum.HTMLONLY)
                   .build())
-          .put("v:my-var-key", "a-var-value")
-          .put("h:my-header-key", "a-header-value")
+          .setCustomVariables(CUSTOM_VARIABLES)
+          .setCustomHeaders(CUSTOM_HEADERS)
           .build();
 
   public static SendEmailRequest sendEmailHtmlInTemplateRequest =
@@ -175,8 +191,8 @@ public class SendEmailRequestTest extends BaseTest {
                   .setVersion("2")
                   .setVariables("{\"key\": \"value\"}")
                   .build())
-          .put("v:my-var-key", "a-var-value")
-          .put("h:my-header-key", "a-header-value")
+          .setCustomVariables(CUSTOM_VARIABLES)
+          .setCustomHeaders(CUSTOM_HEADERS)
           .build();
 
   @Test

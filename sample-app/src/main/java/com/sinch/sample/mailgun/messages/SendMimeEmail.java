@@ -1,6 +1,7 @@
 package com.sinch.sample.mailgun.messages;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.mailgun.api.v1.EmailsService;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.OverrideProperties;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendMimeEmailRequest;
@@ -85,10 +86,12 @@ Content-Disposition: inline
         .setTo(Arrays.asList(mailgunTo))
         .setMessage(tempFile)
         .setOverrideProperties(
-            OverrideProperties.builder().setTag(Arrays.asList("my tag 1", "my tag 2")).build())
-        .put("v:my-varkey", "var-value")
-        .put("h:my-headerkey", "header-value")
-        // .setTestMode(TestMode.YES)
+            OverrideProperties.builder()
+                .setTestMode(false)
+                .setTag(Arrays.asList("my tag 1", "my tag 2"))
+                .build())
+        .setCustomVariables(Arrays.asList(Pair.of("my-varkey", "var-value")))
+        .setCustomHeaders(Arrays.asList(Pair.of("my-headerkey", "header-value")))
         .build();
   }
 }

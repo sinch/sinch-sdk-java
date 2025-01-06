@@ -8,6 +8,7 @@ import com.sinch.sdk.core.http.HttpMapper;
 import java.io.File;
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
@@ -53,8 +54,10 @@ public class SendMimeEmailRequestTest extends BaseTest {
             "o:sending-ip-pool","sending pool ID",
             "o:tracking-pixel-location-top","htmlonly",
             "recipient-variables","{\"cc-dest@sinch.com\": {\"variable1\": \"value1\"}}",
-            "v:my-var-key", "a-var-value",
-            "h:my-header-key", "a-header-value"
+            "v:my-var-key1", Arrays.asList("a-var-value1","a-var-value2"),
+            "v:my-var-key2", Arrays.asList("a-var-value3"),
+            "h:my-header-key1", Arrays.asList("a-header-value1","a-header-value2"),
+            "h:my-header-key2", Arrays.asList("a-header-value3")
             // spotless:on
             );
   }
@@ -90,8 +93,8 @@ public class SendMimeEmailRequestTest extends BaseTest {
                   .setVersion("2")
                   .setVariables("{\"key\": \"value\"}")
                   .build())
-          .put("v:my-var-key", "a-var-value")
-          .put("h:my-header-key", "a-header-value")
+          .setCustomVariables(Collections.singletonMap("my-var-key", "a-var-value"))
+          .setCustomHeaders(Collections.singletonMap("my-header-key", "a-header-value"))
           .build();
 
   @Test

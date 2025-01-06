@@ -1,6 +1,7 @@
 package com.sinch.sample.mailgun.messages;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.mailgun.api.v1.EmailsService;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.OverrideProperties;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailHtmlInlineRequest;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.logging.Logger;
 
 public class SendEmail extends BaseApplication {
@@ -85,8 +87,11 @@ public class SendEmail extends BaseApplication {
                 .setTrackingOpens(true)
                 .setDeliveryTime(Instant.now().plus(10, ChronoUnit.SECONDS))
                 .build())
-        .put("v:my-varkey", "var-value")
-        .put("h:my-headerkey", "header-value")
+        .setCustomVariables(
+            Arrays.asList(Pair.of("my-varkey", "var-value1"), Pair.of("my-varkey", "var-value2")))
+        .setCustomHeaders(
+            Arrays.asList(
+                Pair.of("my-headerkey", "header-value1"), Pair.of("my-headerkey", "header-value2")))
         .build();
   }
 }
