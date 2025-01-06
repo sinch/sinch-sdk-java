@@ -6,11 +6,11 @@ import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.domains.sms.api.v1.internal.InboundsApi;
-import com.sinch.sdk.domains.sms.models.v1.batches.internal.SMSCursorPageNavigator;
 import com.sinch.sdk.domains.sms.models.v1.inbounds.InboundMessage;
 import com.sinch.sdk.domains.sms.models.v1.inbounds.request.ListInboundMessagesQueryParameters;
 import com.sinch.sdk.domains.sms.models.v1.inbounds.response.ListInboundsResponse;
 import com.sinch.sdk.domains.sms.models.v1.inbounds.response.internal.ApiInboundList;
+import com.sinch.sdk.domains.sms.models.v1.internal.SMSCursorPageNavigator;
 import com.sinch.sdk.models.SmsContext;
 import java.util.Map;
 
