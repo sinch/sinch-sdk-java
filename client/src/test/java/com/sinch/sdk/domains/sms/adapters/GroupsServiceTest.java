@@ -51,16 +51,16 @@ class GroupsServiceTest extends BaseTest {
 
   @Captor ArgumentCaptor<String> groupIdCaptor;
 
-  @GivenJsonResource("/domains/sms/v1/GroupResponseDto.json")
+  @GivenJsonResource("/domains/sms/v1/groups/GroupDto.json")
   CreateGroupResponseDto createGroupResponseDto;
 
-  @GivenJsonResource("/domains/sms/v1/GroupsListResponseDtoPage0.json")
+  @GivenJsonResource("/domains/sms/v1/groups/response/ListGroupsResponseDtoPage0.json")
   ApiGroupListDto groupsListResponseDtoPage0;
 
-  @GivenJsonResource("/domains/sms/v1/GroupsListResponseDtoPage1.json")
+  @GivenJsonResource("/domains/sms/v1/groups/response/ListGroupsResponseDtoPage1.json")
   ApiGroupListDto groupsListResponseDtoPage1;
 
-  @GivenJsonResource("/domains/sms/v1/GroupsListResponseDtoPage2.json")
+  @GivenJsonResource("/domains/sms/v1/groups/response/ListGroupsResponseDtoPage2.json")
   ApiGroupListDto groupsListResponseDtoPage2;
 
   @BeforeEach

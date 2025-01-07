@@ -11,7 +11,8 @@
   "auto_update": {
     "to": 15551231234,
     "add": {
-      "first_word": "Add 1st keyword"
+      "first_word": "Add 1st keyword",
+      "second_word": "Add 2nd keyword"
     },
     "remove":{
       "first_word": "remove 1st keyword",

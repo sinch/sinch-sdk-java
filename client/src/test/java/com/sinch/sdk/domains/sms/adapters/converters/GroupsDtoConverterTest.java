@@ -27,16 +27,16 @@ import org.junit.jupiter.api.Test;
 @TestWithResources
 class GroupsDtoConverterTest extends BaseTest {
 
-  @GivenJsonResource("/domains/sms/v1/GroupResponseDto.json")
+  @GivenJsonResource("/domains/sms/v1/groups/GroupDto.json")
   CreateGroupResponseDto createGroupResponseDto;
 
-  @GivenJsonResource("/domains/sms/v1/GroupCreateRequestParametersDto.json")
+  @GivenJsonResource("/domains/sms/v1/CreateGroupRequestDto.json")
   GroupObjectDto createGroupRequestParametersDto;
 
-  @GivenJsonResource("/domains/sms/v1/GroupUpdateRequestParametersDto.json")
+  @GivenJsonResource("/domains/sms/v1/groups/request/GroupUpdateRequestDto.json")
   UpdateGroupRequestDto groupUpdateRequestParametersDto;
 
-  @GivenJsonResource("/domains/sms/v1/GroupReplaceRequestParametersDto.json")
+  @GivenJsonResource("/domains/sms/v1/ReplaceGroupRequestDto.json")
   ReplaceGroupRequestDto groupReplaceRequestParametersDto;
 
   static void compareWithDto(Group client, CreateGroupResponseDto dto) {
