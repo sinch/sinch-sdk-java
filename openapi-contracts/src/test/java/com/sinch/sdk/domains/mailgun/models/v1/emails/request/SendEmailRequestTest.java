@@ -5,10 +5,13 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.databind.multipart.ObjectMapperTest;
 import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.core.utils.Pair;
 import java.io.File;
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +21,12 @@ public class SendEmailRequestTest extends BaseTest {
   static Map<String, Object> expectedEmailHtmlInline, expectedEmailHtmlInTemplate;
   static File fileAttachment1;
   static File fileAttachment2;
+
+  public static Map<String, Collection<Pair<String, String>>> RECIPIENT_VARIABLES =
+      Collections.singletonMap(
+          "cc-dest@sinch.com", Collections.singletonList(Pair.of("variable1", "value1")));
+  public static List<Pair<String, String>> CUSTOM_VARIABLES;
+  public static List<Pair<String, String>> CUSTOM_HEADERS;
 
   static {
     ClassLoader classLoader = SendEmailRequestTest.class.getClassLoader();
@@ -68,7 +77,7 @@ public class SendEmailRequestTest extends BaseTest {
             "o:sending-ip","192.168.0.10",
             "o:sending-ip-pool","sending pool ID",
             "o:tracking-pixel-location-top","htmlonly",
-            "recipient-variables","{\"cc-dest@sinch.com\": {\"variable1\": \"value1\"}}",
+            "recipient-variables","{\"cc-dest@sinch.com\":{\"variable1\":\"value1\"}}",
             "v:my-var-key1", Arrays.asList("a-var-value1","a-var-value2"),
             "v:my-var-key2", Arrays.asList("a-var-value3"),
             "h:my-header-key1", Arrays.asList("a-header-value1","a-header-value2"),
@@ -108,7 +117,7 @@ public class SendEmailRequestTest extends BaseTest {
               "o:sending-ip","192.168.0.10",
               "o:sending-ip-pool","sending pool ID",
               "o:tracking-pixel-location-top","htmlonly",
-              "recipient-variables","{\"cc-dest@sinch.com\": {\"variable1\": \"value1\"}}",
+              "recipient-variables","{\"cc-dest@sinch.com\":{\"variable1\":\"value1\"}}",
               "v:my-var-key1", Arrays.asList("a-var-value1","a-var-value2"),
               "v:my-var-key2", Arrays.asList("a-var-value3"),
               "h:my-header-key1", Arrays.asList("a-header-value1","a-header-value2"),
@@ -129,7 +138,7 @@ public class SendEmailRequestTest extends BaseTest {
           .setCc(Arrays.asList("cc-dest@sinch.com"))
           .setBcc(Arrays.asList("bcc-dest@sinch.com"))
           .setAmpHtml("amp html value")
-          .setRecipientVariables("{\"cc-dest@sinch.com\": {\"variable1\": \"value1\"}}")
+          .setRecipientVariables(RECIPIENT_VARIABLES)
           .setOverrideProperties(
               OverrideProperties.builder()
                   .setTag(Arrays.asList("tag1", "tag2"))
@@ -164,7 +173,7 @@ public class SendEmailRequestTest extends BaseTest {
           .setCc(Arrays.asList("cc-dest@sinch.com"))
           .setBcc(Arrays.asList("bcc-dest@sinch.com"))
           .setAmpHtml("amp html value")
-          .setRecipientVariables("{\"cc-dest@sinch.com\": {\"variable1\": \"value1\"}}")
+          .setRecipientVariables(RECIPIENT_VARIABLES)
           .setTemplate("template value")
           .setOverrideProperties(
               OverrideProperties.builder()

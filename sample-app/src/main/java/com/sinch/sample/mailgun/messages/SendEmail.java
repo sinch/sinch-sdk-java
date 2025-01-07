@@ -77,8 +77,8 @@ public class SendEmail extends BaseApplication {
     return SendEmailHtmlInlineRequest.builder()
         .setFrom(mailgunFrom)
         .setTo(Arrays.asList(mailgunTo))
-        .setText("\uD83D\uDCE7 Text sent with Sinch SDK Java")
-        .setHtml("&#128231; HTML sent with <bold>Sinch SDK Java</bold>")
+        .setText("\uD83D\uDCE7 Text sent with Sinch SDK Java to %recipient.nickname%")
+        .setHtml("&#128231; HTML sent with <bold>Sinch SDK Java</bold> to %recipient.nickname%")
         .setAttachment(Arrays.asList(tempFile, tempFile2))
         .setSubject("\uD83D\uDCE7 Hello from Sinch SDK Java")
         .setOverrideProperties(
@@ -87,6 +87,8 @@ public class SendEmail extends BaseApplication {
                 .setTrackingOpens(true)
                 .setDeliveryTime(Instant.now().plus(10, ChronoUnit.SECONDS))
                 .build())
+        .setRecipientVariables(
+            Collections.singletonMap(mailgunTo, Arrays.asList(Pair.of("nickname", "John"))))
         .setCustomVariables(
             Arrays.asList(Pair.of("my-varkey", "var-value1"), Pair.of("my-varkey", "var-value2")))
         .setCustomHeaders(
