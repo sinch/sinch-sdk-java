@@ -3,13 +3,13 @@ package com.sinch.sdk.domains.sms.models.v1.inbounds;
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import java.time.Instant;
 import java.util.Arrays;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
-class InboundMessageDtoTest extends BaseTest {
+public class InboundMessageDtoTest extends BaseTest {
 
   @GivenJsonResource("/domains/sms/v1/inbounds/InboundBinaryDto.json")
   InboundMessage loadedBinaryMessage;
@@ -20,7 +20,7 @@ class InboundMessageDtoTest extends BaseTest {
   @GivenJsonResource("/domains/sms/v1/inbounds/InboundMediaDto.json")
   InboundMessage loadedMediaMessage;
 
-  BinaryMessage binaryDTO =
+  public static BinaryMessage binaryDTO =
       BinaryMessage.builder()
           .setClientReference("a client reference")
           .setFrom("+11203494390")
@@ -33,7 +33,7 @@ class InboundMessageDtoTest extends BaseTest {
           .setUdh("foo udh")
           .build();
 
-  TextMessage textDTO =
+  public static TextMessage textDTO =
       TextMessage.builder()
           .setClientReference("a client reference")
           .setFrom("+11203494390")
@@ -45,7 +45,7 @@ class InboundMessageDtoTest extends BaseTest {
           .setBody("a body")
           .build();
 
-  MediaMessage mediaDTO =
+  public static MediaMessage mediaDTO =
       MediaMessage.builder()
           .setClientReference("a client reference")
           .setFrom("+11203494390")
@@ -72,18 +72,18 @@ class InboundMessageDtoTest extends BaseTest {
   @Test
   void deserializeBinaryMessage() {
 
-    Assertions.assertThat(loadedBinaryMessage).usingRecursiveComparison().isEqualTo(binaryDTO);
+    TestHelpers.recursiveEquals(binaryDTO, loadedBinaryMessage);
   }
 
   @Test
   void deserializeTextMessage() {
 
-    Assertions.assertThat(loadedTextMessage).usingRecursiveComparison().isEqualTo(textDTO);
+    TestHelpers.recursiveEquals(textDTO, loadedTextMessage);
   }
 
   @Test
   void deserializeMediaMessage() {
 
-    Assertions.assertThat(loadedMediaMessage).usingRecursiveComparison().isEqualTo(mediaDTO);
+    TestHelpers.recursiveEquals(mediaDTO, loadedMediaMessage);
   }
 }

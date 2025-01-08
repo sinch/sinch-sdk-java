@@ -7,4 +7,6 @@ public interface SMSService {
   InboundsService inbounds();
 
   DeliveryReportsService deliveryReports();
+
+  WebHooksService webhooks();
 }
