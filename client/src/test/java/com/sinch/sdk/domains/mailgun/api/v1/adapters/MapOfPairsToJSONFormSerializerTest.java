@@ -18,12 +18,12 @@ class MapOfPairsToJSONFormSerializerTest {
     serializer.serialize(
         Collections.singletonMap(
             "cc-dest@sinch.com", Collections.singletonList(Pair.of("variable1", "value1"))),
-        "foo name",
+        null,
         map);
 
     String expected = "{\"cc-dest@sinch.com\":{\"variable1\":\"value1\"}}";
 
-    TestHelpers.recursiveEquals(expected, map.get("foo name"));
+    TestHelpers.recursiveEquals(expected, map.get(null));
   }
 
   @Test
@@ -31,7 +31,7 @@ class MapOfPairsToJSONFormSerializerTest {
 
     HashMap<String, Object> map = new HashMap<>();
 
-    serializer.serialize(null, "key name", map);
+    serializer.serialize(null, null, map);
 
     Assertions.assertTrue(map.isEmpty());
   }

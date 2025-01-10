@@ -24,7 +24,7 @@ class CustomVariablesFormSerializerTest {
             Pair.of("my-var-key1", "a-var-value1"),
             Pair.of("my-var-key1", "a-var-value2"),
             Pair.of("my-var-key2", "a-var-value3")),
-        "foo name",
+        null,
         map);
 
     Map<String, Object> expected =
@@ -42,7 +42,7 @@ class CustomVariablesFormSerializerTest {
 
     HashMap<String, Object> map = new HashMap<>();
 
-    serializer.serialize(null, "key name", map);
+    serializer.serialize(null, null, map);
 
     Assertions.assertTrue(map.isEmpty());
   }

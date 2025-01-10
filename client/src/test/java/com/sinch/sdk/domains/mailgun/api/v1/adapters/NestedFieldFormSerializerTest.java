@@ -13,7 +13,7 @@ class NestedFieldFormSerializerTest {
 
     HashMap<String, Object> map = new HashMap<>();
 
-    serializer.serialize(ObjectMapperTest.object, "foo name", map);
+    serializer.serialize(ObjectMapperTest.object, null, map);
 
     Assertions.assertFalse(map.isEmpty());
   }
@@ -23,7 +23,7 @@ class NestedFieldFormSerializerTest {
 
     HashMap<String, Object> map = new HashMap<>();
 
-    serializer.serialize(null, "key name", map);
+    serializer.serialize(null, null, map);
 
     Assertions.assertTrue(map.isEmpty());
   }

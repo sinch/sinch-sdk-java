@@ -24,7 +24,7 @@ class CustomHeadersFormSerializerTest {
             Pair.of("my-header-key1", "a-header-value1"),
             Pair.of("my-header-key1", "a-header-value2"),
             Pair.of("my-header-key2", "a-header-value3")),
-        "foo name",
+        null,
         map);
 
     Map<String, Object> expected =
@@ -42,7 +42,7 @@ class CustomHeadersFormSerializerTest {
 
     HashMap<String, Object> map = new HashMap<>();
 
-    serializer.serialize(null, "key name", map);
+    serializer.serialize(null, null, map);
 
     Assertions.assertTrue(map.isEmpty());
   }
