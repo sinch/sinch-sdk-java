@@ -65,6 +65,19 @@ public class InboundsApi {
    * received. This operation supports pagination. Inbounds are returned in reverse chronological
    * order.
    *
+   * @return ApiInboundList
+   * @throws ApiException if fails to make API call
+   */
+  public ApiInboundList list() throws ApiException {
+
+    return list(null);
+  }
+
+  /**
+   * List incoming messages With the list operation, you can list all inbound messages that you have
+   * received. This operation supports pagination. Inbounds are returned in reverse chronological
+   * order.
+   *
    * @param queryParameter (optional)
    * @return ApiInboundList
    * @throws ApiException if fails to make API call

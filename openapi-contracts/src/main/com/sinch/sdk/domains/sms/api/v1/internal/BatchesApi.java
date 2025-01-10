@@ -143,6 +143,19 @@ public class BatchesApi {
    * Dry run This operation will perform a dry run of a batch which calculates the bodies and number
    * of parts for all messages in the batch without actually sending any messages.
    *
+   * @param sendRequest (optional)
+   * @return DryRunResponse
+   * @throws ApiException if fails to make API call
+   */
+  public DryRunResponse dryRun(BatchRequest sendRequest) throws ApiException {
+
+    return dryRun(null, sendRequest);
+  }
+
+  /**
+   * Dry run This operation will perform a dry run of a batch which calculates the bodies and number
+   * of parts for all messages in the batch without actually sending any messages.
+   *
    * @param queryParameter (optional)
    * @param sendRequest (optional)
    * @return DryRunResponse
@@ -300,6 +313,18 @@ public class BatchesApi {
         localVarAccepts,
         localVarContentTypes,
         localVarAuthNames);
+  }
+
+  /**
+   * List Batches With the list operation you can list batch messages created in the last 14 days
+   * that you have created. This operation supports pagination.
+   *
+   * @return ApiBatchList
+   * @throws ApiException if fails to make API call
+   */
+  public ApiBatchList list() throws ApiException {
+
+    return list(null);
   }
 
   /**

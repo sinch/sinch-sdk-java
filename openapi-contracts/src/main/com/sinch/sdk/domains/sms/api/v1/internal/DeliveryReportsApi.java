@@ -63,8 +63,23 @@ public class DeliveryReportsApi {
   /**
    * Retrieve a delivery report Delivery reports can be retrieved even if no callback was requested.
    * The difference between a summary and a full report is only that the full report contains the
-   * phone numbers in [&gt;E.164](https://community.sinch.com/t5/Glossary/E-164/ta-p/7537\&quot;)
-   * format for each status code.
+   * phone numbers in [E.164](https://community.sinch.com/t5/Glossary/E-164/ta-p/7537) format for
+   * each status code.
+   *
+   * @param batchId The batch ID you received from sending a message. (required)
+   * @return BatchDeliveryReport
+   * @throws ApiException if fails to make API call
+   */
+  public BatchDeliveryReport get(String batchId) throws ApiException {
+
+    return get(batchId, null);
+  }
+
+  /**
+   * Retrieve a delivery report Delivery reports can be retrieved even if no callback was requested.
+   * The difference between a summary and a full report is only that the full report contains the
+   * phone numbers in [E.164](https://community.sinch.com/t5/Glossary/E-164/ta-p/7537) format for
+   * each status code.
    *
    * @param batchId The batch ID you received from sending a message. (required)
    * @param queryParameter (optional)
@@ -243,6 +258,18 @@ public class DeliveryReportsApi {
         localVarAccepts,
         localVarContentTypes,
         localVarAuthNames);
+  }
+
+  /**
+   * Retrieve a list of delivery reports Get a list of finished delivery reports. This operation
+   * supports pagination.
+   *
+   * @return DeliveryReportList
+   * @throws ApiException if fails to make API call
+   */
+  public DeliveryReportList list() throws ApiException {
+
+    return list(null);
   }
 
   /**
