@@ -35,6 +35,11 @@ public class DeliveryReportsService
             httpClient, context.getSmsServer(), authManagers, new HttpMapper(), uriUUID);
   }
 
+  public BatchDeliveryReport get(String batchId) throws ApiException {
+
+    return getApi().get(batchId);
+  }
+
   public BatchDeliveryReport get(String batchId, BatchDeliveryReportQueryParameters parameters)
       throws ApiException {
 

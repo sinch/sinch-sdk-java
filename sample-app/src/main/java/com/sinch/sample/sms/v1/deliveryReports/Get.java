@@ -26,7 +26,7 @@ public class Get extends BaseApplication {
 
     LOGGER.info("Get for :" + batchId);
 
-    BatchDeliveryReport response = service.get(batchId, null);
+    BatchDeliveryReport response = service.get(batchId);
 
     LOGGER.info("Response :" + response);
   }

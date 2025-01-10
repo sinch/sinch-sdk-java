@@ -77,6 +77,16 @@ class DeliveryReportsServiceTest extends BaseTest {
   }
 
   @Test
+  void getSimplifiedDeliveryReport() throws ApiException {
+
+    when(api.get(eq("foo binary batch id"))).thenReturn(deliveryReportBatchSMSDto);
+
+    BatchDeliveryReport response = service.get("foo binary batch id");
+
+    TestHelpers.recursiveEquals(response, deliveryReportBatchSMSDto);
+  }
+
+  @Test
   void getBatchDeliveryReportSMS() throws ApiException {
 
     BatchDeliveryReportQueryParameters queryParameters =
