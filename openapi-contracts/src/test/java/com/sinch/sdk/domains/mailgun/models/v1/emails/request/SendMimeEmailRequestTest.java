@@ -5,8 +5,6 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.databind.multipart.ObjectMapperTest;
 import com.sinch.sdk.core.http.HttpMapper;
-import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendMimeEmailRequest.TrackingClicksEnum;
-import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendMimeEmailRequest.TrackingPixelLocationTopEnum;
 import java.io.File;
 import java.time.Instant;
 import java.util.Arrays;
@@ -32,7 +30,7 @@ public class SendMimeEmailRequestTest extends BaseTest {
     expected =
         ObjectMapperTest.fillMap(
             // spotless:off
-              "to", Arrays.asList("aRecipient@mailgun-by-sinch.com"),
+            "to", Arrays.asList("aRecipient@mailgun-by-sinch.com"),
             "message", fileAttachment1,
             "template","template value",
             "t:version","2",
@@ -54,36 +52,48 @@ public class SendMimeEmailRequestTest extends BaseTest {
             "o:sending-ip","192.168.0.10",
             "o:sending-ip-pool","sending pool ID",
             "o:tracking-pixel-location-top","htmlonly",
-            "recipient-variables","{\"cc-dest@sinch.com\": {\"variable1\": \"value1\"}}"
-              // spotless:on
+            "recipient-variables","{\"cc-dest@sinch.com\":{\"variable1\":\"value1\"}}",
+            "v:my-var-key1", Arrays.asList("a-var-value1","a-var-value2"),
+            "v:my-var-key2", Arrays.asList("a-var-value3"),
+            "h:my-header-key1", Arrays.asList("a-header-value1","a-header-value2"),
+            "h:my-header-key2", Arrays.asList("a-header-value3")
+            // spotless:on
             );
   }
 
   public static SendMimeEmailRequest sendMimEmailRequest =
       SendMimeEmailRequest.builder()
           .setMessage(fileAttachment1)
-          .setTag(Arrays.asList("tag1", "tag2"))
-          .setDeliveryTime(Instant.parse("2000-01-22T11:23:45Z"))
-          .setTestMode(false)
           .setTo(Arrays.asList("aRecipient@mailgun-by-sinch.com"))
-          .setTemplateText(true)
-          .setTemplateVersion("2")
-          .setTemplateVariables("{\"key\": \"value\"}")
-          .setEnableDkimSignature(true)
-          .setSecondaryDkim("example.com/s1")
-          .setSecondaryDkimPublic("public.example.com/s1")
-          .setDeliveryTimeOptimizePeriod(29)
-          .setTimezoneLocalize("02:04PM")
-          .setTracking(SendMimeEmailRequest.TrackingEnum.HTMLONLY)
-          .setTrackingClicks(TrackingClicksEnum.TRUE)
-          .setTrackingOpens(false)
-          .setRequireTls(true)
-          .setSkipVerification(false)
-          .setSendingIp("192.168.0.10")
-          .setSendingIpPool("sending pool ID")
-          .setTrackingPixelLocationTop(TrackingPixelLocationTopEnum.HTMLONLY)
-          .setRecipientVariables("{\"cc-dest@sinch.com\": {\"variable1\": \"value1\"}}")
+          .setRecipientVariables(SendEmailRequestTest.RECIPIENT_VARIABLES)
           .setTemplate("template value")
+          .setOverrideProperties(
+              OverrideProperties.builder()
+                  .setTag(Arrays.asList("tag1", "tag2"))
+                  .setDeliveryTime(Instant.parse("2000-01-22T11:23:45Z"))
+                  .setTestMode(false)
+                  .setEnableDkimSignature(true)
+                  .setSecondaryDkim("example.com/s1")
+                  .setSecondaryDkimPublic("public.example.com/s1")
+                  .setDeliveryTimeOptimizePeriod(29)
+                  .setTimeZoneLocalize("02:04PM")
+                  .setTracking(TrueFalseHtmlonlyEnum.HTMLONLY)
+                  .setTrackingClicks(TrueFalseHtmlonlyEnum.TRUE)
+                  .setTrackingOpens(false)
+                  .setRequireTls(true)
+                  .setSkipVerification(false)
+                  .setSendingIp("192.168.0.10")
+                  .setSendingIpPool("sending pool ID")
+                  .setTrackingPixelLocationTop(TrueFalseHtmlonlyEnum.HTMLONLY)
+                  .build())
+          .setTemplateProperties(
+              TemplateProperties.builder()
+                  .setText(true)
+                  .setVersion("2")
+                  .setVariables("{\"key\": \"value\"}")
+                  .build())
+          .setCustomVariables(SendEmailRequestTest.CUSTOM_VARIABLES)
+          .setCustomHeaders(SendEmailRequestTest.CUSTOM_HEADERS)
           .build();
 
   @Test

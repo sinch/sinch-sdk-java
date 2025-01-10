@@ -52,11 +52,11 @@ class EmailsServiceTest extends BaseTest {
 
   @Test
   void send() {
-    when(api.sendEmail(eq(domainName), eq(SendEmailRequestTest.sendEmailRequest)))
+    when(api.sendEmail(eq(domainName), eq(SendEmailRequestTest.sendEmailHtmlInlineRequest)))
         .thenReturn(SendEmailResponseTest.expectedSendEmailResponse);
 
     SendEmailResponse response =
-        service.sendEmail(domainName, SendEmailRequestTest.sendEmailRequest);
+        service.sendEmail(domainName, SendEmailRequestTest.sendEmailHtmlInlineRequest);
 
     TestHelpers.recursiveEquals(response, SendEmailResponseTest.expectedSendEmailResponse);
   }

@@ -1,7 +1,5 @@
 package com.sinch.sdk.domains.mailgun.api.v1.adapters;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.sinch.sdk.core.TestHelpers;
 import java.util.HashMap;
 import org.junit.jupiter.api.Assertions;

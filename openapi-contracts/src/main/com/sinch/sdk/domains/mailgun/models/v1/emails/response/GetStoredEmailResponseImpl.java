@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  GetStoredEmailResponseImpl.JSON_PROPERTY_TO,
   GetStoredEmailResponseImpl.JSON_PROPERTY_SENDER,
   GetStoredEmailResponseImpl.JSON_PROPERTY_RECIPIENTS,
   GetStoredEmailResponseImpl.JSON_PROPERTY_FROM,
@@ -27,10 +26,6 @@ import java.util.Objects;
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class GetStoredEmailResponseImpl implements GetStoredEmailResponse {
   private static final long serialVersionUID = 1L;
-
-  public static final String JSON_PROPERTY_TO = "To";
-
-  private OptionalValue<String> to;
 
   public static final String JSON_PROPERTY_SENDER = "sender";
 
@@ -75,7 +70,6 @@ public class GetStoredEmailResponseImpl implements GetStoredEmailResponse {
   public GetStoredEmailResponseImpl() {}
 
   protected GetStoredEmailResponseImpl(
-      OptionalValue<String> to,
       OptionalValue<String> sender,
       OptionalValue<String> recipients,
       OptionalValue<String> from,
@@ -86,7 +80,6 @@ public class GetStoredEmailResponseImpl implements GetStoredEmailResponse {
       OptionalValue<String> strippedText,
       OptionalValue<String> strippedSignature,
       OptionalValue<List<List<String>>> messageHeaders) {
-    this.to = to;
     this.sender = sender;
     this.recipients = recipients;
     this.from = from;
@@ -97,17 +90,6 @@ public class GetStoredEmailResponseImpl implements GetStoredEmailResponse {
     this.strippedText = strippedText;
     this.strippedSignature = strippedSignature;
     this.messageHeaders = messageHeaders;
-  }
-
-  @JsonIgnore
-  public String getTo() {
-    return to.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_TO)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<String> to() {
-    return to;
   }
 
   @JsonIgnore
@@ -234,8 +216,7 @@ public class GetStoredEmailResponseImpl implements GetStoredEmailResponse {
     }
     GetStoredEmailResponseImpl githubComMailgunInfluxHttpapiGetMessageResponseBasicExample =
         (GetStoredEmailResponseImpl) o;
-    return Objects.equals(this.to, githubComMailgunInfluxHttpapiGetMessageResponseBasicExample.to)
-        && Objects.equals(
+    return Objects.equals(
             this.sender, githubComMailgunInfluxHttpapiGetMessageResponseBasicExample.sender)
         && Objects.equals(
             this.recipients, githubComMailgunInfluxHttpapiGetMessageResponseBasicExample.recipients)
@@ -264,7 +245,6 @@ public class GetStoredEmailResponseImpl implements GetStoredEmailResponse {
   @Override
   public int hashCode() {
     return Objects.hash(
-        to,
         sender,
         recipients,
         from,
@@ -281,7 +261,6 @@ public class GetStoredEmailResponseImpl implements GetStoredEmailResponse {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class GetStoredEmailResponseImpl {\n");
-    sb.append("    to: ").append(toIndentedString(to)).append("\n");
     sb.append("    sender: ").append(toIndentedString(sender)).append("\n");
     sb.append("    recipients: ").append(toIndentedString(recipients)).append("\n");
     sb.append("    from: ").append(toIndentedString(from)).append("\n");
@@ -308,7 +287,6 @@ public class GetStoredEmailResponseImpl implements GetStoredEmailResponse {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements GetStoredEmailResponse.Builder {
-    OptionalValue<String> to = OptionalValue.empty();
     OptionalValue<String> sender = OptionalValue.empty();
     OptionalValue<String> recipients = OptionalValue.empty();
     OptionalValue<String> from = OptionalValue.empty();
@@ -319,12 +297,6 @@ public class GetStoredEmailResponseImpl implements GetStoredEmailResponse {
     OptionalValue<String> strippedText = OptionalValue.empty();
     OptionalValue<String> strippedSignature = OptionalValue.empty();
     OptionalValue<List<List<String>>> messageHeaders = OptionalValue.empty();
-
-    @JsonProperty(JSON_PROPERTY_TO)
-    public Builder setTo(String to) {
-      this.to = OptionalValue.of(to);
-      return this;
-    }
 
     @JsonProperty(JSON_PROPERTY_SENDER)
     public Builder setSender(String sender) {
@@ -388,7 +360,6 @@ public class GetStoredEmailResponseImpl implements GetStoredEmailResponse {
 
     public GetStoredEmailResponse build() {
       return new GetStoredEmailResponseImpl(
-          to,
           sender,
           recipients,
           from,

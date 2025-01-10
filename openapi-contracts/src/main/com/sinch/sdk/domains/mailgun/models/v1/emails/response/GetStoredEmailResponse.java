@@ -18,13 +18,6 @@ import java.util.List;
 public interface GetStoredEmailResponse {
 
   /**
-   * Get to
-   *
-   * @return to
-   */
-  String getTo();
-
-  /**
    * Get sender
    *
    * @return sender
@@ -105,15 +98,6 @@ public interface GetStoredEmailResponse {
 
   /** Dedicated Builder */
   interface Builder {
-
-    /**
-     * see getter
-     *
-     * @param to see getter
-     * @return Current builder
-     * @see #getTo
-     */
-    Builder setTo(String to);
 
     /**
      * see getter

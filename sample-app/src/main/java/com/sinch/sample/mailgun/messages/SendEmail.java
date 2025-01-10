@@ -1,7 +1,10 @@
 package com.sinch.sample.mailgun.messages;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.mailgun.api.v1.EmailsService;
+import com.sinch.sdk.domains.mailgun.models.v1.emails.request.OverrideProperties;
+import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailHtmlInlineRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.response.SendEmailResponse;
 import java.io.BufferedWriter;
@@ -11,6 +14,7 @@ import java.io.IOException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.logging.Logger;
 
 public class SendEmail extends BaseApplication {
@@ -70,17 +74,26 @@ public class SendEmail extends BaseApplication {
       throw new RuntimeException(e);
     }
 
-    return SendEmailRequest.builder()
+    return SendEmailHtmlInlineRequest.builder()
         .setFrom(mailgunFrom)
         .setTo(Arrays.asList(mailgunTo))
-        .setText("\uD83D\uDCE7 Text sent with Sinch SDK Java")
-        .setHtml("&#128231; HTML sent with <bold>Sinch SDK Java</bold>")
+        .setText("\uD83D\uDCE7 Text sent with Sinch SDK Java to %recipient.nickname%")
+        .setHtml("&#128231; HTML sent with <bold>Sinch SDK Java</bold> to %recipient.nickname%")
         .setAttachment(Arrays.asList(tempFile, tempFile2))
         .setSubject("\uD83D\uDCE7 Hello from Sinch SDK Java")
-        .setTag(Arrays.asList("my tag 1", "my tag 2"))
-        .setTrackingOpens(true)
-        .setDeliveryTime(Instant.now().plus(10, ChronoUnit.SECONDS))
-        .put("v:myvarkey", "myvar-value")
+        .setOverrideProperties(
+            OverrideProperties.builder()
+                .setTag(Arrays.asList("my tag 1", "my tag 2"))
+                .setTrackingOpens(true)
+                .setDeliveryTime(Instant.now().plus(10, ChronoUnit.SECONDS))
+                .build())
+        .setRecipientVariables(
+            Collections.singletonMap(mailgunTo, Arrays.asList(Pair.of("nickname", "John"))))
+        .setCustomVariables(
+            Arrays.asList(Pair.of("my-varkey", "var-value1"), Pair.of("my-varkey", "var-value2")))
+        .setCustomHeaders(
+            Arrays.asList(
+                Pair.of("my-headerkey", "header-value1"), Pair.of("my-headerkey", "header-value2")))
         .build();
   }
 }

@@ -2,6 +2,7 @@ package com.sinch.sdk.e2e.domains.mailgun.v1;
 
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.mailgun.api.v1.EmailsService;
+import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailHtmlInlineRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendMimeEmailRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.response.ExceededQueueQuota;
@@ -43,7 +44,7 @@ public class EmailsSteps {
   public void send() {
 
     SendEmailRequest request =
-        SendEmailRequest.builder()
+        SendEmailHtmlInlineRequest.builder()
             .setText("Hello, this is a text message for E2E testing.")
             .setTo(Collections.singletonList("destination@e2e.tst"))
             .setFrom("Excited E2E user ✉️ <sender@e2e.tst>")
@@ -123,7 +124,6 @@ public class EmailsSteps {
         GetStoredEmailResponse.builder()
             .setFrom("sender@e2e.tst")
             .setSubject("Hello from mailgun")
-            .setTo("%recipient%")
             .setSender("postmaster@sandbox123.mailgun.org")
             .setRecipients("recipient@e2e.tst")
             .setBodyHtml(
