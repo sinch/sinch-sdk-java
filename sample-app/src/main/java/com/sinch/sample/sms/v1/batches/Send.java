@@ -56,7 +56,8 @@ public class Send extends BaseApplication {
             .setClientReference("a client reference")
             .setFrom("+33123456789")
             .setParameters(parameters)
-            .setDeliveryReport(DeliveryReportType.FULL);
+            .setFeedbackEnabled(true)
+            .setDeliveryReport(DeliveryReportType.PER_RECIPIENT_FINAL);
 
     // Overload default dashboard webhooks URL if defined
     webhooksSmsPath.ifPresent(builder::setCallbackUrl);

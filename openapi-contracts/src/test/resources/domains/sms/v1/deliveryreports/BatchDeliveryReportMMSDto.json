@@ -11,5 +11,6 @@
       "status": "Delivered"
     }
   ],
-  "total_message_count": 1
+  "total_message_count": 1,
+  "client_reference": "a client reference"
 }

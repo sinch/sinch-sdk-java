@@ -21,6 +21,9 @@ public class ListBatchesResponse extends ListResponse<BatchResponse> {
 
   public boolean hasNextPage() {
 
+    if (null == page.getNextPageToken() || null == getContent() || getContent().isEmpty()) {
+      return false;
+    }
     if (null == nextPage) {
       ListBatchesQueryParameters.Builder newParameters =
           ListBatchesQueryParameters.builder(page.getParameters());

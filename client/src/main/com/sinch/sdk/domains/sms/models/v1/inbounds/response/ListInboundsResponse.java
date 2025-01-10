@@ -23,6 +23,10 @@ public class ListInboundsResponse extends ListResponse<InboundMessage> {
 
   public boolean hasNextPage() {
 
+    if (null == page.getNextPageToken() || null == getContent() || getContent().isEmpty()) {
+      return false;
+    }
+
     if (null == nextPage) {
       ListInboundMessagesQueryParameters.Builder newParameters =
           ListInboundMessagesQueryParameters.builder(page.getParameters());

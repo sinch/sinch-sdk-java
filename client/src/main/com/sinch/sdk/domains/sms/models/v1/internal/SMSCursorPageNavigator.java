@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.sms.models.v1.batches.internal;
+package com.sinch.sdk.domains.sms.models.v1.internal;
 
 import com.sinch.sdk.core.models.pagination.PageNavigator;
 

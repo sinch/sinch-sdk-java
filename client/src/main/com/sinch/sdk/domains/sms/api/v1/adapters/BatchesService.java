@@ -6,7 +6,6 @@ import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.domains.sms.api.v1.internal.BatchesApi;
-import com.sinch.sdk.domains.sms.models.v1.batches.internal.SMSCursorPageNavigator;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.BatchRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.DryRunQueryParameters;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesQueryParameters;
@@ -16,6 +15,7 @@ import com.sinch.sdk.domains.sms.models.v1.batches.response.BatchResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.DryRunResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.ListBatchesResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.internal.ApiBatchList;
+import com.sinch.sdk.domains.sms.models.v1.internal.SMSCursorPageNavigator;
 import com.sinch.sdk.models.SmsContext;
 import java.util.Map;
 

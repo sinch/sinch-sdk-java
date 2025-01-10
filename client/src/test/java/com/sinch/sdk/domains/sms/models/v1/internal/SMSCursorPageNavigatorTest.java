@@ -1,6 +1,5 @@
 package com.sinch.sdk.domains.sms.models.v1.internal;
 
-import com.sinch.sdk.domains.sms.models.v1.batches.internal.SMSCursorPageNavigator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
