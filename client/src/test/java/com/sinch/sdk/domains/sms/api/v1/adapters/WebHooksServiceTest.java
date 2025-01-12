@@ -41,7 +41,7 @@ public class WebHooksServiceTest extends BaseTest {
   @Test
   void incomingSMSBinary() throws ApiException {
 
-    SmsEvent response = service.parse(loadedInboundBinaryEvent);
+    SmsEvent response = service.parseEvent(loadedInboundBinaryEvent);
 
     TestHelpers.recursiveEquals(InboundMessageDtoTest.binaryDTO, response);
   }
@@ -49,7 +49,7 @@ public class WebHooksServiceTest extends BaseTest {
   @Test
   void incomingSMSText() throws ApiException {
 
-    SmsEvent response = service.parse(loadedInboundTextEvent);
+    SmsEvent response = service.parseEvent(loadedInboundTextEvent);
 
     TestHelpers.recursiveEquals(InboundMessageDtoTest.textDTO, response);
   }
@@ -57,7 +57,7 @@ public class WebHooksServiceTest extends BaseTest {
   @Test
   void incomingSMSMedia() throws ApiException {
 
-    SmsEvent response = service.parse(loadedInboundMediaEvent);
+    SmsEvent response = service.parseEvent(loadedInboundMediaEvent);
 
     TestHelpers.recursiveEquals(InboundMessageDtoTest.mediaDTO, response);
   }
@@ -65,7 +65,7 @@ public class WebHooksServiceTest extends BaseTest {
   @Test
   void deliveryReportRecipientDeliveryReportSms() throws ApiException {
 
-    SmsEvent response = service.parse(loadedRecipientDeliveryReportSMSEvent);
+    SmsEvent response = service.parseEvent(loadedRecipientDeliveryReportSMSEvent);
 
     TestHelpers.recursiveEquals(
         RecipientDeliveryReportDtoTest.deliveryReportRecipientSMS, response);
@@ -74,7 +74,7 @@ public class WebHooksServiceTest extends BaseTest {
   @Test
   void deliveryReportRecipientDeliveryReportMms() throws ApiException {
 
-    SmsEvent response = service.parse(loadedRecipientDeliveryReportMMSEvent);
+    SmsEvent response = service.parseEvent(loadedRecipientDeliveryReportMMSEvent);
 
     TestHelpers.recursiveEquals(
         RecipientDeliveryReportDtoTest.deliveryReportRecipientMMS, response);
@@ -83,7 +83,7 @@ public class WebHooksServiceTest extends BaseTest {
   @Test
   void deliveryReportBatchDeliveryReportSms() throws ApiException {
 
-    SmsEvent response = service.parse(loadedBatchDeliveryReportSMSEvent);
+    SmsEvent response = service.parseEvent(loadedBatchDeliveryReportSMSEvent);
 
     TestHelpers.recursiveEquals(BatchDeliveryReportDtoTest.deliveryReportBatchSMS, response);
   }
@@ -91,7 +91,7 @@ public class WebHooksServiceTest extends BaseTest {
   @Test
   void deliveryReportBatchDeliveryReportMms() throws ApiException {
 
-    SmsEvent response = service.parse(loadedBatchDeliveryReportMMSEvent);
+    SmsEvent response = service.parseEvent(loadedBatchDeliveryReportMMSEvent);
 
     TestHelpers.recursiveEquals(BatchDeliveryReportDtoTest.deliveryReportBatchMMS, response);
   }

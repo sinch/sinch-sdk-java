@@ -7,7 +7,7 @@ import com.sinch.sdk.domains.sms.models.v1.webhooks.SmsEvent;
 
 public class WebHooksService implements com.sinch.sdk.domains.sms.api.v1.WebHooksService {
 
-  public SmsEvent parse(String jsonPayload) throws ApiMappingException {
+  public SmsEvent parseEvent(String jsonPayload) throws ApiMappingException {
 
     try {
       return Mapper.getInstance().readValue(jsonPayload, SmsEvent.class);

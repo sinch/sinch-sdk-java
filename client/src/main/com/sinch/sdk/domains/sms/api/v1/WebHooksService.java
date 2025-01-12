@@ -5,5 +5,5 @@ import com.sinch.sdk.domains.sms.models.v1.webhooks.SmsEvent;
 
 public interface WebHooksService {
 
-  SmsEvent parse(String jsonPayload) throws ApiMappingException;
+  SmsEvent parseEvent(String jsonPayload) throws ApiMappingException;
 }

@@ -40,14 +40,14 @@ public class WebhooksSteps {
   @When("^I send a request to trigger an \"incoming SMS\" event")
   public void incoming() throws IOException {
 
-    incoming = WebhooksHelper.callURL(new URL(WEBHOOKS_URL + "/incoming-sms"), service::parse);
+    incoming = WebhooksHelper.callURL(new URL(WEBHOOKS_URL + "/incoming-sms"), service::parseEvent);
   }
 
   @When("^I send a request to trigger an \"SMS delivery report\" event")
   public void deliveryReport() throws IOException {
 
     deliveryReport =
-        WebhooksHelper.callURL(new URL(WEBHOOKS_URL + "/delivery-report-sms"), service::parse);
+        WebhooksHelper.callURL(new URL(WEBHOOKS_URL + "/delivery-report-sms"), service::parseEvent);
   }
 
   @When(
@@ -57,7 +57,8 @@ public class WebhooksSteps {
 
     deliveryReportRecipientDelivered =
         WebhooksHelper.callURL(
-            new URL(WEBHOOKS_URL + "/recipient-delivery-report-sms-delivered"), service::parse);
+            new URL(WEBHOOKS_URL + "/recipient-delivery-report-sms-delivered"),
+            service::parseEvent);
   }
 
   @When(
@@ -67,7 +68,7 @@ public class WebhooksSteps {
 
     deliveryReportRecipientAborted =
         WebhooksHelper.callURL(
-            new URL(WEBHOOKS_URL + "/recipient-delivery-report-sms-aborted"), service::parse);
+            new URL(WEBHOOKS_URL + "/recipient-delivery-report-sms-aborted"), service::parseEvent);
   }
 
   @Then("the SMS event describes an \"incoming SMS\" event")
