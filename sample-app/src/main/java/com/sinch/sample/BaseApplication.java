@@ -12,6 +12,8 @@ import java.util.logging.Logger;
 public abstract class BaseApplication {
 
   private static final String BATCH_ID_KEY = "BATCH_ID";
+  private static final String SMS_GROUP_ID_KEY = "SMS_GROUP_ID";
+
   public static final String PHONE_NUMBER_KEY = "PHONE_NUMBER";
   private static final String VIRTUAL_PHONE_NUMBER_KEY = "VIRTUAL_PHONE_NUMBER";
   public static final String CONFERENCE_ID_KEY = "CONFERENCE_ID";
@@ -38,6 +40,7 @@ public abstract class BaseApplication {
   protected String phoneNumber;
   protected String virtualPhoneNumber;
   protected String batchId;
+  protected String smsGroupId;
   protected String conferenceId;
   protected String callId;
   protected String verificationId;
@@ -70,6 +73,7 @@ public abstract class BaseApplication {
     virtualPhoneNumber = getConfigValue(VIRTUAL_PHONE_NUMBER_KEY);
 
     batchId = getConfigValue(BATCH_ID_KEY);
+    smsGroupId = getConfigValue(SMS_GROUP_ID_KEY);
 
     conferenceId = getConfigValue(CONFERENCE_ID_KEY);
     callId = getConfigValue(CALL_ID_KEY);

@@ -30,6 +30,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   private BatchesService batches;
   private InboundsService inbounds;
   private DeliveryReportsService deliveryReports;
+  private GroupsService groups;
   private WebHooksService webhooks;
 
   public SMSService(
@@ -104,6 +105,14 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
       this.deliveryReports = new DeliveryReportsService(uriUUID, context, httpClient, authManagers);
     }
     return this.deliveryReports;
+  }
+
+  @Override
+  public GroupsService groups() {
+    if (null == this.groups) {
+      this.groups = new GroupsService(uriUUID, context, httpClient, authManagers);
+    }
+    return this.groups;
   }
 
   @Override

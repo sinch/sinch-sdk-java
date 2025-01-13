@@ -28,8 +28,10 @@ class GroupResponseDtoTest extends BaseTest {
           .autoUpdate(
               new GroupAutoUpdateDto()
                   .to("15551231234")
-                  .add(new AddKeywordDto().firstWord("Add 1st keyword")
-                      .secondWord("Add 2nd keyword"))
+                  .add(
+                      new AddKeywordDto()
+                          .firstWord("Add 1st keyword")
+                          .secondWord("Add 2nd keyword"))
                   .remove(
                       new RemoveKeywordDto()
                           .firstWord("remove 1st keyword")

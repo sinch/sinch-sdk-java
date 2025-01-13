@@ -8,5 +8,7 @@ public interface SMSService {
 
   DeliveryReportsService deliveryReports();
 
+  GroupsService groups();
+
   WebHooksService webhooks();
 }

@@ -115,6 +115,7 @@ class GroupsDtoConverterTest extends BaseTest {
                     .setAdd(
                         GroupAutoUpdateKeywordRequestParameters.builder()
                             .setFirstWord("Add 1st keyword")
+                            .setSecondWord("Add 2nd keyword")
                             .build())
                     .setRemove(
                         GroupAutoUpdateKeywordRequestParameters.builder()
