@@ -22,7 +22,7 @@ public class SendEmailRequestTest extends BaseTest {
   static File fileAttachment1;
   static File fileAttachment2;
 
-  public static Map<String, Collection<Pair<String, String>>> RECIPIENT_VARIABLES =
+  public static Map<String, Collection<Pair<String, Object>>> RECIPIENT_VARIABLES =
       Collections.singletonMap(
           "cc-dest@sinch.com", Collections.singletonList(Pair.of("variable1", "value1")));
   public static List<Pair<String, String>> CUSTOM_VARIABLES;
@@ -212,6 +212,23 @@ public class SendEmailRequestTest extends BaseTest {
                 Arrays.asList("multipart/form-data"), sendEmailHtmlInlineRequest);
 
     TestHelpers.recursiveEquals(expectedEmailHtmlInline, serialized);
+  }
+
+  @Test
+  void serializeSendEmailHtmlInlineRequestRawRecipientVariables() {
+
+    Object serialized =
+        new HttpMapper()
+            .serializeFormParameters(
+                Arrays.asList("multipart/form-data"),
+                SendEmailHtmlInlineRequest.builder()
+                    .setRecipientVariables("{\"cc-dest@sinch.com\":{\"variable1\":\"value1\"}}")
+                    .build());
+
+    TestHelpers.recursiveEquals(
+        ObjectMapperTest.fillMap(
+            "recipient-variables", "{\"cc-dest@sinch.com\":{\"variable1\":\"value1\"}}"),
+        serialized);
   }
 
   @Test

@@ -104,4 +104,21 @@ public class SendMimeEmailRequestTest extends BaseTest {
 
     TestHelpers.recursiveEquals(expected, serialized);
   }
+
+  @Test
+  void serializeSendEmailHtmlInlineRequestRawRecipientVariables() {
+
+    Object serialized =
+        new HttpMapper()
+            .serializeFormParameters(
+                Arrays.asList("multipart/form-data"),
+                SendMimeEmailRequest.builder()
+                    .setRecipientVariables("{\"cc-dest@sinch.com\":{\"variable1\":\"value1\"}}")
+                    .build());
+
+    TestHelpers.recursiveEquals(
+        ObjectMapperTest.fillMap(
+            "recipient-variables", "{\"cc-dest@sinch.com\":{\"variable1\":\"value1\"}}"),
+        serialized);
+  }
 }

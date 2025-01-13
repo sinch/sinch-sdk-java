@@ -8,7 +8,9 @@ import com.sinch.sdk.core.utils.Pair;
 import java.util.List;
 import java.util.Map;
 
-public class PrefixedListFormSerializerHelper {
+public final class PrefixedListFormSerializerHelper {
+
+  private PrefixedListFormSerializerHelper() {}
 
   public static void serialize(
       String prefix, List<Pair<String, String>> in, Map<String, Object> out) {

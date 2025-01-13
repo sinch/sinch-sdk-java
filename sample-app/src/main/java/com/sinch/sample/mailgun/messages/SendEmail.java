@@ -4,8 +4,10 @@ import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.mailgun.api.v1.EmailsService;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.OverrideProperties;
+import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailHtmlInTemplateRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailHtmlInlineRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest;
+import com.sinch.sdk.domains.mailgun.models.v1.emails.request.TemplateProperties;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.response.SendEmailResponse;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -74,26 +76,62 @@ public class SendEmail extends BaseApplication {
       throw new RuntimeException(e);
     }
 
-    return SendEmailHtmlInlineRequest.builder()
-        .setFrom(mailgunFrom)
-        .setTo(Arrays.asList(mailgunTo))
-        .setText("\uD83D\uDCE7 Text sent with Sinch SDK Java to %recipient.nickname%")
-        .setHtml("&#128231; HTML sent with <bold>Sinch SDK Java</bold> to %recipient.nickname%")
-        .setAttachment(Arrays.asList(tempFile, tempFile2))
-        .setSubject("\uD83D\uDCE7 Hello from Sinch SDK Java")
-        .setOverrideProperties(
-            OverrideProperties.builder()
-                .setTag(Arrays.asList("my tag 1", "my tag 2"))
-                .setTrackingOpens(true)
-                .setDeliveryTime(Instant.now().plus(10, ChronoUnit.SECONDS))
-                .build())
-        .setRecipientVariables(
-            Collections.singletonMap(mailgunTo, Arrays.asList(Pair.of("nickname", "John"))))
-        .setCustomVariables(
-            Arrays.asList(Pair.of("my-varkey", "var-value1"), Pair.of("my-varkey", "var-value2")))
-        .setCustomHeaders(
-            Arrays.asList(
-                Pair.of("my-headerkey", "header-value1"), Pair.of("my-headerkey", "header-value2")))
-        .build();
+    SendEmailRequest inline =
+        SendEmailHtmlInlineRequest.builder()
+            .setFrom(mailgunFrom)
+            .setTo(Arrays.asList(mailgunTo))
+            .setText("\uD83D\uDCE7 Text sent with Sinch SDK Java to %recipient.nickname%")
+            .setHtml("&#128231; HTML sent with <bold>Sinch SDK Java</bold> to %recipient.nickname%")
+            .setAttachment(Arrays.asList(tempFile, tempFile2))
+            .setSubject("\uD83D\uDCE7 Hello from Sinch SDK Java (inline)")
+            .setOverrideProperties(
+                OverrideProperties.builder()
+                    .setTag(Arrays.asList("my tag 1", "my tag 2"))
+                    .setTrackingOpens(true)
+                    .setDeliveryTime(Instant.now().plus(10, ChronoUnit.SECONDS))
+                    .build())
+            .setRecipientVariables(
+                Collections.singletonMap(mailgunTo, Arrays.asList(Pair.of("nickname", "John"))))
+            .setCustomVariables(
+                Arrays.asList(
+                    Pair.of("my-varkey", "var-value1"), Pair.of("my-varkey", "var-value2")))
+            .setCustomHeaders(
+                Arrays.asList(
+                    Pair.of("my-headerkey", "header-value1"),
+                    Pair.of("my-headerkey", "header-value2")))
+            .build();
+
+    SendEmailRequest inTemplate =
+        SendEmailHtmlInTemplateRequest.builder()
+            .setFrom(mailgunFrom)
+            .setTo(Arrays.asList(mailgunTo))
+            .setText("\uD83D\uDCE7 Text sent with Sinch SDK Java to %recipient.nickname%")
+            .setAttachment(Arrays.asList(tempFile, tempFile2))
+            .setSubject("\uD83D\uDCE7 Hello from Sinch SDK Java  (template)")
+            .setOverrideProperties(
+                OverrideProperties.builder()
+                    .setTag(Arrays.asList("my tag 1", "my tag 2"))
+                    .setTrackingOpens(true)
+                    .setDeliveryTime(Instant.now().plus(10, ChronoUnit.SECONDS))
+                    .build())
+            .setRecipientVariables(
+                Collections.singletonMap(mailgunTo, Arrays.asList(Pair.of("nickname", "John"))))
+            .setCustomVariables(
+                Arrays.asList(
+                    Pair.of("my-varkey", "var-value1"), Pair.of("my-varkey", "var-value2")))
+            .setCustomHeaders(
+                Arrays.asList(
+                    Pair.of("my-headerkey", "header-value1"),
+                    Pair.of("my-headerkey", "header-value2")))
+            .setTemplate("template.test")
+            .setTemplateProperties(
+                TemplateProperties.builder()
+                    .setVariables(
+                        "{\"title\": \"Sinch SDK Java\", \"ident\":{\"name\": false }, \"body\":"
+                            + " \"Sending messages with templates\"}")
+                    .build())
+            .build();
+
+    return inTemplate;
   }
 }
