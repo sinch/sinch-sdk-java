@@ -30,6 +30,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   private BatchesService batches;
   private InboundsService inbounds;
   private DeliveryReportsService deliveryReports;
+  private WebHooksService webhooks;
 
   public SMSService(
       UnifiedCredentials credentials,
@@ -103,5 +104,13 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
       this.deliveryReports = new DeliveryReportsService(uriUUID, context, httpClient, authManagers);
     }
     return this.deliveryReports;
+  }
+
+  @Override
+  public WebHooksService webhooks() {
+    if (null == this.webhooks) {
+      this.webhooks = new WebHooksService();
+    }
+    return this.webhooks;
   }
 }

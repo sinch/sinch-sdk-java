@@ -4,4 +4,4 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.internal.RecipientDeliveryReportOneOfImpl;
 
 @JsonDeserialize(using = RecipientDeliveryReportOneOfImpl.Deserializer.class)
-public interface RecipientDeliveryReport {}
+public interface RecipientDeliveryReport extends DeliveryReport {}

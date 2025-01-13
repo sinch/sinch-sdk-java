@@ -11,10 +11,10 @@ import org.junit.jupiter.api.Test;
 public class RecipientDeliveryReportDtoTest extends BaseTest {
 
   @GivenJsonResource("/domains/sms/v1/deliveryreports/RecipientDeliveryReportSMSDto.json")
-  RecipientDeliveryReportSMS RecipientDeliveryReportSMSDto;
+  RecipientDeliveryReport RecipientDeliveryReportSMSDto;
 
   @GivenJsonResource("/domains/sms/v1/deliveryreports/RecipientDeliveryReportMMSDto.json")
-  RecipientDeliveryReportMMS RecipientDeliveryReportMMSDto;
+  RecipientDeliveryReport RecipientDeliveryReportMMSDto;
 
   public static RecipientDeliveryReportSMS deliveryReportRecipientSMS =
       RecipientDeliveryReportSMS.builder()
