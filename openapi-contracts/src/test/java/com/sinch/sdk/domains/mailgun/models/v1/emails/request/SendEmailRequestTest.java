@@ -100,7 +100,7 @@ public class SendEmailRequestTest extends BaseTest {
               "template","template value",
               "t:version","2",
               "t:text","true",
-              "t:variables","{\"key\": \"value\"}",
+              "t:variables","{\"key\":\"value\"}",
               "o:tag", Arrays.asList("tag1", "tag2"),
               "o:dkim","true",
               "o:secondary-dkim","example.com/s1",
@@ -198,7 +198,7 @@ public class SendEmailRequestTest extends BaseTest {
               TemplateProperties.builder()
                   .setText(true)
                   .setVersion("2")
-                  .setVariables("{\"key\": \"value\"}")
+                  .setVariables(Collections.singletonMap("key", "value"))
                   .build())
           .setCustomVariables(CUSTOM_VARIABLES)
           .setCustomHeaders(CUSTOM_HEADERS)
@@ -239,5 +239,21 @@ public class SendEmailRequestTest extends BaseTest {
                 Arrays.asList("multipart/form-data"), sendEmailHtmlInTemplateRequest);
 
     TestHelpers.recursiveEquals(expectedEmailHtmlInTemplate, serialized);
+  }
+
+  @Test
+  void serializeSendEmailHtmlInTemplateRequestRawVariables() {
+
+    Object serialized =
+        new HttpMapper()
+            .serializeFormParameters(
+                Arrays.asList("multipart/form-data"),
+                SendEmailHtmlInTemplateRequest.builder()
+                    .setTemplateProperties(
+                        TemplateProperties.builder().setVariables("{\"key\":\"value\"}").build())
+                    .build());
+
+    TestHelpers.recursiveEquals(
+        ObjectMapperTest.fillMap("t:variables", "{\"key\":\"value\"}"), serialized);
   }
 }

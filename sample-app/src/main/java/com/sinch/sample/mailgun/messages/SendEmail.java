@@ -15,9 +15,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Map;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SendEmail extends BaseApplication {
 
@@ -105,7 +109,6 @@ public class SendEmail extends BaseApplication {
         SendEmailHtmlInTemplateRequest.builder()
             .setFrom(mailgunFrom)
             .setTo(Arrays.asList(mailgunTo))
-            .setText("\uD83D\uDCE7 Text sent with Sinch SDK Java to %recipient.nickname%")
             .setAttachment(Arrays.asList(tempFile, tempFile2))
             .setSubject("\uD83D\uDCE7 Hello from Sinch SDK Java  (template)")
             .setOverrideProperties(
@@ -114,21 +117,17 @@ public class SendEmail extends BaseApplication {
                     .setTrackingOpens(true)
                     .setDeliveryTime(Instant.now().plus(10, ChronoUnit.SECONDS))
                     .build())
-            .setRecipientVariables(
-                Collections.singletonMap(mailgunTo, Arrays.asList(Pair.of("nickname", "John"))))
-            .setCustomVariables(
-                Arrays.asList(
-                    Pair.of("my-varkey", "var-value1"), Pair.of("my-varkey", "var-value2")))
-            .setCustomHeaders(
-                Arrays.asList(
-                    Pair.of("my-headerkey", "header-value1"),
-                    Pair.of("my-headerkey", "header-value2")))
             .setTemplate("template.test")
             .setTemplateProperties(
                 TemplateProperties.builder()
                     .setVariables(
-                        "{\"title\": \"Sinch SDK Java\", \"ident\":{\"name\": false }, \"body\":"
-                            + " \"Sending messages with templates\"}")
+                        Stream.of(
+                                new AbstractMap.SimpleEntry<>("title", "Sinch SDK Java"),
+                                new AbstractMap.SimpleEntry<>(
+                                    "ident", Collections.singletonMap("name", "John")),
+                                new AbstractMap.SimpleEntry<>(
+                                    "body", "Sending messages with templates"))
+                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)))
                     .build())
             .build();
 

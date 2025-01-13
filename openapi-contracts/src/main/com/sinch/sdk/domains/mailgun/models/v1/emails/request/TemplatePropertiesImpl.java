@@ -3,6 +3,8 @@ package com.sinch.sdk.domains.mailgun.models.v1.emails.request;
 import com.sinch.sdk.core.databind.annotation.FormSerialize;
 import com.sinch.sdk.core.databind.annotation.Property;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.mailgun.api.v1.adapters.MapToJSONStringHelper;
+import java.util.Map;
 import java.util.Objects;
 
 public class TemplatePropertiesImpl implements TemplateProperties {
@@ -102,6 +104,10 @@ public class TemplatePropertiesImpl implements TemplateProperties {
     OptionalValue<Boolean> text = OptionalValue.empty();
     OptionalValue<String> version = OptionalValue.empty();
     OptionalValue<String> variables = OptionalValue.empty();
+
+    public Builder setVariables(Map<String, Object> variables) {
+      return setVariables(MapToJSONStringHelper.serialize(variables));
+    }
 
     @Property(value = PROPERTY_TEXT)
     public Builder setText(Boolean text) {
