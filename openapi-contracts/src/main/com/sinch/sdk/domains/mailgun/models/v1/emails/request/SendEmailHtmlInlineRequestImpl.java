@@ -4,6 +4,7 @@ import com.sinch.sdk.core.databind.annotation.FormSerialize;
 import com.sinch.sdk.core.databind.annotation.Property;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.Pair;
+import com.sinch.sdk.domains.mailgun.api.v1.adapters.MapOfPairsToJSONHelper;
 import java.io.File;
 import java.util.Collection;
 import java.util.List;
@@ -52,7 +53,7 @@ public class SendEmailHtmlInlineRequestImpl
 
   public static final String PROPERTY_RECIPIENT_VARIABLES = "recipient-variables";
 
-  private OptionalValue<Map<String, Collection<Pair<String, String>>>> recipientVariables;
+  private OptionalValue<String> recipientVariables;
 
   public static final String PROPERTY_OVERRIDE_PROPERTIES = "overrideProperties";
 
@@ -82,7 +83,7 @@ public class SendEmailHtmlInlineRequestImpl
       OptionalValue<String> ampHtml,
       OptionalValue<List<File>> attachment,
       OptionalValue<List<File>> inline,
-      OptionalValue<Map<String, Collection<Pair<String, String>>>> recipientVariables,
+      OptionalValue<String> recipientVariables,
       OptionalValue<OverrideProperties> overrideProperties,
       OptionalValue<List<Pair<String, String>>> customVariables,
       OptionalValue<List<Pair<String, String>>> customHeaders,
@@ -184,14 +185,12 @@ public class SendEmailHtmlInlineRequestImpl
     return inline;
   }
 
-  public Map<String, Collection<Pair<String, String>>> getRecipientVariables() {
+  public String getRecipientVariables() {
     return recipientVariables.orElse(null);
   }
 
   @Property(PROPERTY_RECIPIENT_VARIABLES)
-  @FormSerialize(
-      using = com.sinch.sdk.domains.mailgun.api.v1.adapters.MapOfPairsToJSONFormSerializer.class)
-  public OptionalValue<Map<String, Collection<Pair<String, String>>>> recipientVariables() {
+  public OptionalValue<String> recipientVariables() {
     return recipientVariables;
   }
 
@@ -324,12 +323,16 @@ public class SendEmailHtmlInlineRequestImpl
     OptionalValue<String> ampHtml = OptionalValue.empty();
     OptionalValue<List<File>> attachment = OptionalValue.empty();
     OptionalValue<List<File>> inline = OptionalValue.empty();
-    OptionalValue<Map<String, Collection<Pair<String, String>>>> recipientVariables =
-        OptionalValue.empty();
+    OptionalValue<String> recipientVariables = OptionalValue.empty();
     OptionalValue<OverrideProperties> overrideProperties = OptionalValue.empty();
     OptionalValue<List<Pair<String, String>>> customVariables = OptionalValue.empty();
     OptionalValue<List<Pair<String, String>>> customHeaders = OptionalValue.empty();
     OptionalValue<String> html = OptionalValue.empty();
+
+    public Builder setRecipientVariables(
+        Map<String, Collection<Pair<String, Object>>> recipientVariables) {
+      return setRecipientVariables(MapOfPairsToJSONHelper.serialize(recipientVariables));
+    }
 
     @Property(value = PROPERTY_TO)
     public Builder setTo(List<String> to) {
@@ -386,8 +389,7 @@ public class SendEmailHtmlInlineRequestImpl
     }
 
     @Property(value = PROPERTY_RECIPIENT_VARIABLES)
-    public Builder setRecipientVariables(
-        Map<String, Collection<Pair<String, String>>> recipientVariables) {
+    public Builder setRecipientVariables(String recipientVariables) {
       this.recipientVariables = OptionalValue.of(recipientVariables);
       return this;
     }

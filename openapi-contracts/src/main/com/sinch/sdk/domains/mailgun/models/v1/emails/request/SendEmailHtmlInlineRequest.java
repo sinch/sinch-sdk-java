@@ -87,11 +87,13 @@ public interface SendEmailHtmlInlineRequest extends SendEmailRequest {
   List<File> getInline();
 
   /**
-   * Get recipientVariables
+   * A valid JSON-encoded dictionary, where key is a plain recipient address and value is a
+   * dictionary with variables that can be referenced in the message body. See <strong>Batch
+   * Sending</strong> for more information
    *
    * @return recipientVariables
    */
-  Map<String, Collection<Pair<String, String>>> getRecipientVariables();
+  String getRecipientVariables();
 
   /**
    * Get overrideProperties
@@ -132,6 +134,19 @@ public interface SendEmailHtmlInlineRequest extends SendEmailRequest {
 
   /** Dedicated Builder */
   interface Builder {
+
+    /**
+     * Helper method for setRecipientVariables(String).
+     *
+     * <p>`recipientVariables` parameter will be serialized to JSON
+     *
+     * @param recipientVariables values to be encoded to JSON string
+     *     <p>Each map value is a collection of Pair with key/value to be used as recipient
+     *     variables names and values
+     * @return Current builder
+     * @see #setRecipientVariables(String)
+     */
+    Builder setRecipientVariables(Map<String, Collection<Pair<String, Object>>> recipientVariables);
 
     /**
      * see getter
@@ -221,7 +236,7 @@ public interface SendEmailHtmlInlineRequest extends SendEmailRequest {
      * @return Current builder
      * @see #getRecipientVariables
      */
-    Builder setRecipientVariables(Map<String, Collection<Pair<String, String>>> recipientVariables);
+    Builder setRecipientVariables(String recipientVariables);
 
     /**
      * see getter
