@@ -81,9 +81,10 @@ class GroupsServiceTest extends BaseTest {
   @Test
   void create() throws ApiException {
 
-    when(api.createGroup(eq(null))).thenReturn(groupResponseDto);
+    when(api.createGroup(eq(GroupRequest.builder().setName("foo").build())))
+        .thenReturn(groupResponseDto);
 
-    Group response = service.create(null);
+    Group response = service.create(GroupRequest.builder().setName("foo").build());
 
     TestHelpers.recursiveEquals(response, groupResponseDto);
   }
