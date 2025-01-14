@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.api.v1.adapters;
+package com.sinch.sdk.auth;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,23 +9,21 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 
-class ConversationWebhooksAuthenticationValidationTest {
+class HmacAuthenticationValidationTest {
 
-  ConversationWebhooksAuthenticationValidation webhooksService =
-      new ConversationWebhooksAuthenticationValidation();
+  HmacAuthenticationValidation webhooksService = new HmacAuthenticationValidation();
 
   Map<String, String> headers =
       Stream.of(
               new AbstractMap.SimpleEntry<>(
-                  ConversationWebhooksAuthenticationValidation.SIGNATURE_HEADER,
+                  HmacAuthenticationValidation.SIGNATURE_HEADER,
                   "6bpJoRmFoXVjfJIVglMoJzYXxnoxRujzR4k2GOXewOE="),
               new AbstractMap.SimpleEntry<>(
-                  ConversationWebhooksAuthenticationValidation.ALGORITHM_HEADER, "HmacSHA256"),
+                  HmacAuthenticationValidation.ALGORITHM_HEADER, "HmacSHA256"),
               new AbstractMap.SimpleEntry<>(
-                  ConversationWebhooksAuthenticationValidation.NONCE_HEADER,
-                  "01FJA8B4A7BM43YGWSG9GBV067"),
+                  HmacAuthenticationValidation.NONCE_HEADER, "01FJA8B4A7BM43YGWSG9GBV067"),
               new AbstractMap.SimpleEntry<>(
-                  ConversationWebhooksAuthenticationValidation.TIMESTAMP_HEADER, "1634579353"))
+                  HmacAuthenticationValidation.TIMESTAMP_HEADER, "1634579353"))
           .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
   String secret = "foo_secret1234";
@@ -66,11 +64,7 @@ class ConversationWebhooksAuthenticationValidationTest {
 
     Map<String, String> headerSet =
         headers.entrySet().stream()
-            .filter(
-                entry ->
-                    !entry
-                        .getKey()
-                        .equals(ConversationWebhooksAuthenticationValidation.SIGNATURE_HEADER))
+            .filter(entry -> !entry.getKey().equals(HmacAuthenticationValidation.SIGNATURE_HEADER))
             .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 
     boolean authenticationResult =
@@ -84,11 +78,7 @@ class ConversationWebhooksAuthenticationValidationTest {
 
     Map<String, String> headerSet =
         headers.entrySet().stream()
-            .filter(
-                entry ->
-                    !entry
-                        .getKey()
-                        .equals(ConversationWebhooksAuthenticationValidation.ALGORITHM_HEADER))
+            .filter(entry -> !entry.getKey().equals(HmacAuthenticationValidation.ALGORITHM_HEADER))
             .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 
     boolean authenticationResult =
@@ -102,11 +92,7 @@ class ConversationWebhooksAuthenticationValidationTest {
 
     Map<String, String> headerSet =
         headers.entrySet().stream()
-            .filter(
-                entry ->
-                    !entry
-                        .getKey()
-                        .equals(ConversationWebhooksAuthenticationValidation.NONCE_HEADER))
+            .filter(entry -> !entry.getKey().equals(HmacAuthenticationValidation.NONCE_HEADER))
             .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 
     boolean authenticationResult =
@@ -120,11 +106,7 @@ class ConversationWebhooksAuthenticationValidationTest {
 
     Map<String, String> headerSet =
         headers.entrySet().stream()
-            .filter(
-                entry ->
-                    !entry
-                        .getKey()
-                        .equals(ConversationWebhooksAuthenticationValidation.TIMESTAMP_HEADER))
+            .filter(entry -> !entry.getKey().equals(HmacAuthenticationValidation.TIMESTAMP_HEADER))
             .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 
     boolean authenticationResult =

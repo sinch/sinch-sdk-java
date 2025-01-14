@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
+import com.sinch.sdk.auth.HmacAuthenticationValidation;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
@@ -40,7 +41,7 @@ public class WebHooksClientServiceTest extends ConversationBaseTest {
   @Mock WebhooksApi api;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
-  @Mock ConversationWebhooksAuthenticationValidation authenticationValidation;
+  @Mock HmacAuthenticationValidation authenticationValidation;
 
   @Captor ArgumentCaptor<String> uriPartIDCaptor;
   @Captor ArgumentCaptor<String> idCaptor;

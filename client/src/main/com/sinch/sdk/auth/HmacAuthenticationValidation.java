@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.api.v1.adapters;
+package com.sinch.sdk.auth;
 
 import com.sinch.sdk.core.exceptions.ApiAuthException;
 import com.sinch.sdk.core.utils.MapUtils;
@@ -12,15 +12,15 @@ import java.util.logging.Logger;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-public class ConversationWebhooksAuthenticationValidation {
+public class HmacAuthenticationValidation {
 
   private static final Logger LOGGER =
-      Logger.getLogger(ConversationWebhooksAuthenticationValidation.class.getName());
+      Logger.getLogger(HmacAuthenticationValidation.class.getName());
 
-  static final String TIMESTAMP_HEADER = "x-sinch-webhook-signature-timestamp";
-  static final String NONCE_HEADER = "x-sinch-webhook-signature-nonce";
-  static final String ALGORITHM_HEADER = "x-sinch-webhook-signature-algorithm";
-  static final String SIGNATURE_HEADER = "x-sinch-webhook-signature";
+  public static final String TIMESTAMP_HEADER = "x-sinch-webhook-signature-timestamp";
+  public static final String NONCE_HEADER = "x-sinch-webhook-signature-nonce";
+  public static final String ALGORITHM_HEADER = "x-sinch-webhook-signature-algorithm";
+  public static final String SIGNATURE_HEADER = "x-sinch-webhook-signature";
 
   public boolean validateAuthenticationHeader(
       String secret, Map<String, String> _headers, String jsonPayload) {
