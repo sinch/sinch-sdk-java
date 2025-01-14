@@ -19,11 +19,14 @@ import java.net.URL;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.HashSet;
+import org.junit.jupiter.api.Assertions;
 
 public class WebhooksSteps {
 
   static final String WEBHOOKS_PATH_PREFIX = "/webhooks/sms";
   static final String WEBHOOKS_URL = Config.SMS_HOST_NAME + WEBHOOKS_PATH_PREFIX;
+
+  static final String SECRET = "KayakingTheSwell";
 
   WebHooksService service;
   WebhooksHelper.Response<SmsEvent> incoming;
@@ -138,5 +141,35 @@ public class WebhooksSteps {
             .build();
 
     TestHelpers.recursiveEquals(deliveryReportRecipientAborted.event, expected);
+  }
+
+  @Then("the header of the event {string} contains a valid signature")
+  public void validateHeader(String event) {
+
+    WebhooksHelper.Response<SmsEvent> response = null;
+    if (event.equals("IncomingSMS")) {
+      response = incoming;
+    } else if (event.equals("DeliveryReport")) {
+      response = deliveryReport;
+    }
+
+    boolean validated =
+        service.validateAuthenticationHeader(SECRET, response.headers, response.rawPayload);
+    Assertions.assertTrue(validated);
+  }
+
+  @Then("the header of the event {string} with the status {string} contains a valid signature")
+  public void validateHeader(String _unused, String status) {
+
+    WebhooksHelper.Response<SmsEvent> response = null;
+    if (status.equals("Delivered")) {
+      response = deliveryReportRecipientDelivered;
+    } else if (status.equals("Aborted")) {
+      response = deliveryReportRecipientAborted;
+    }
+
+    boolean validated =
+        service.validateAuthenticationHeader(SECRET, response.headers, response.rawPayload);
+    Assertions.assertTrue(validated);
   }
 }
