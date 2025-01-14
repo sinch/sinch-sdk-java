@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.sms.api.v1.adapters;
 
+import com.sinch.sdk.auth.HmacAuthenticationValidation;
 import com.sinch.sdk.auth.adapters.BearerAuthManager;
 import com.sinch.sdk.auth.adapters.OAuthManager;
 import com.sinch.sdk.core.http.AuthManager;
@@ -109,7 +110,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   @Override
   public WebHooksService webhooks() {
     if (null == this.webhooks) {
-      this.webhooks = new WebHooksService();
+      this.webhooks = new WebHooksService(new HmacAuthenticationValidation());
     }
     return this.webhooks;
   }

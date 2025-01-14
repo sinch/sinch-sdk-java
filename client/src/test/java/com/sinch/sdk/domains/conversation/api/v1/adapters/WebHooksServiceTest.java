@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.SinchClient;
+import com.sinch.sdk.auth.HmacAuthenticationValidation;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.capability.CapabilityEvent;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.channel.ChannelEvent;
@@ -119,15 +120,14 @@ public class WebHooksServiceTest extends ConversationBaseTest {
     Map<String, String> headers =
         Stream.of(
                 new AbstractMap.SimpleEntry<>(
-                    ConversationWebhooksAuthenticationValidation.SIGNATURE_HEADER,
+                    HmacAuthenticationValidation.SIGNATURE_HEADER,
                     "6bpJoRmFoXVjfJIVglMoJzYXxnoxRujzR4k2GOXewOE="),
                 new AbstractMap.SimpleEntry<>(
-                    ConversationWebhooksAuthenticationValidation.ALGORITHM_HEADER, "HmacSHA256"),
+                    HmacAuthenticationValidation.ALGORITHM_HEADER, "HmacSHA256"),
                 new AbstractMap.SimpleEntry<>(
-                    ConversationWebhooksAuthenticationValidation.NONCE_HEADER,
-                    "01FJA8B4A7BM43YGWSG9GBV067"),
+                    HmacAuthenticationValidation.NONCE_HEADER, "01FJA8B4A7BM43YGWSG9GBV067"),
                 new AbstractMap.SimpleEntry<>(
-                    ConversationWebhooksAuthenticationValidation.TIMESTAMP_HEADER, "1634579353"))
+                    HmacAuthenticationValidation.TIMESTAMP_HEADER, "1634579353"))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     boolean authenticationResult =
