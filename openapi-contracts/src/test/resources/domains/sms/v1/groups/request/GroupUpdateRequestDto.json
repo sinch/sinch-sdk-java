@@ -1,0 +1,23 @@
+{
+  "name": "My new customers",
+  "add": [
+    "+12345674890"
+  ],
+  "remove": [
+    "+0987654321",
+    "+3456789123"
+  ],
+  "add_from_group": "01FC66621XXXXX119Z8PMV1AHY",
+  "remove_from_group": "01FC66621XXXXX119Z8PMV1A00",
+  "auto_update": {
+    "to": "15551231234",
+    "add": {
+      "first_word": "Add 1st keyword",
+      "second_word": "Add 2nd keyword"
+    },
+    "remove": {
+      "first_word": "remove 1st keyword",
+      "second_word": "remove 2nd keyword"
+    }
+  }
+}

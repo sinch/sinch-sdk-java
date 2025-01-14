@@ -1,6 +1,7 @@
-package com.sinch.sample.sms.groups;
+package com.sinch.sample.sms.v1.groups;
 
 import com.sinch.sample.BaseApplication;
+import com.sinch.sdk.domains.sms.api.v1.GroupsService;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.logging.Logger;
@@ -22,9 +23,11 @@ public class ListMembers extends BaseApplication {
 
   public void run() {
 
+    GroupsService service = client.sms().v1().groups();
+
     LOGGER.info("List members for groupId: " + smsGroupId);
 
-    Collection<String> response = client.sms().groups().listMembers(smsGroupId);
+    Collection<String> response = service.listMembers(smsGroupId);
 
     response.iterator().forEachRemaining(LOGGER::info);
   }
