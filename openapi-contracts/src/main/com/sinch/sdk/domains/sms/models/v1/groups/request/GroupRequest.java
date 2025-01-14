@@ -98,51 +98,11 @@ public interface GroupRequest {
     /**
      * see getter
      *
-     * @param id see getter
-     * @return Current builder
-     * @see #getId
-     * @readOnly <em>This field is returned by the server and cannot be modified</em>
-     */
-    Builder setId(String id);
-
-    /**
-     * see getter
-     *
      * @param name see getter
      * @return Current builder
      * @see #getName
      */
     Builder setName(String name);
-
-    /**
-     * see getter
-     *
-     * @param size see getter
-     * @return Current builder
-     * @see #getSize
-     * @readOnly <em>This field is returned by the server and cannot be modified</em>
-     */
-    Builder setSize(Integer size);
-
-    /**
-     * see getter
-     *
-     * @param createdAt see getter
-     * @return Current builder
-     * @see #getCreatedAt
-     * @readOnly <em>This field is returned by the server and cannot be modified</em>
-     */
-    Builder setCreatedAt(Instant createdAt);
-
-    /**
-     * see getter
-     *
-     * @param modifiedAt see getter
-     * @return Current builder
-     * @see #getModifiedAt
-     * @readOnly <em>This field is returned by the server and cannot be modified</em>
-     */
-    Builder setModifiedAt(Instant modifiedAt);
 
     /**
      * see getter
