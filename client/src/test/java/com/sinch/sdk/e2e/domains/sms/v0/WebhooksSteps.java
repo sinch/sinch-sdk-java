@@ -138,4 +138,14 @@ public class WebhooksSteps {
 
     TestHelpers.recursiveEquals(deliveryReportRecipientAborted.event, expected);
   }
+
+  @Then("the header of the event {string} contains a valid signature")
+  public void validateHeader(String _unused) {
+    // dummy empty validation: V0 do not support authentication
+  }
+
+  @Then("the header of the event {string} with the status {string} contains a valid signature")
+  public void validateHeader(String _unused, String status) {
+    // dummy empty validation: V0 do not support authentication
+  }
 }
