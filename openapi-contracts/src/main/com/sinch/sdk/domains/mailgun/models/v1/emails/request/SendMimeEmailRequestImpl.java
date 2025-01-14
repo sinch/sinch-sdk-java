@@ -4,6 +4,7 @@ import com.sinch.sdk.core.databind.annotation.FormSerialize;
 import com.sinch.sdk.core.databind.annotation.Property;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.Pair;
+import com.sinch.sdk.domains.mailgun.api.v1.adapters.MapOfPairsToJSONHelper;
 import java.io.File;
 import java.util.Collection;
 import java.util.List;
@@ -27,7 +28,7 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
 
   public static final String PROPERTY_RECIPIENT_VARIABLES = "recipient-variables";
 
-  private OptionalValue<Map<String, Collection<Pair<String, String>>>> recipientVariables;
+  private OptionalValue<String> recipientVariables;
 
   public static final String PROPERTY_TEMPLATE_PROPERTIES = "templateProperties";
 
@@ -51,7 +52,7 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
       OptionalValue<List<String>> to,
       OptionalValue<File> message,
       OptionalValue<String> template,
-      OptionalValue<Map<String, Collection<Pair<String, String>>>> recipientVariables,
+      OptionalValue<String> recipientVariables,
       OptionalValue<TemplateProperties> templateProperties,
       OptionalValue<OverrideProperties> overrideProperties,
       OptionalValue<List<Pair<String, String>>> customVariables,
@@ -93,14 +94,12 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
     return template;
   }
 
-  public Map<String, Collection<Pair<String, String>>> getRecipientVariables() {
+  public String getRecipientVariables() {
     return recipientVariables.orElse(null);
   }
 
   @Property(PROPERTY_RECIPIENT_VARIABLES)
-  @FormSerialize(
-      using = com.sinch.sdk.domains.mailgun.api.v1.adapters.MapOfPairsToJSONFormSerializer.class)
-  public OptionalValue<Map<String, Collection<Pair<String, String>>>> recipientVariables() {
+  public OptionalValue<String> recipientVariables() {
     return recipientVariables;
   }
 
@@ -211,12 +210,16 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
     OptionalValue<List<String>> to = OptionalValue.empty();
     OptionalValue<File> message = OptionalValue.empty();
     OptionalValue<String> template = OptionalValue.empty();
-    OptionalValue<Map<String, Collection<Pair<String, String>>>> recipientVariables =
-        OptionalValue.empty();
+    OptionalValue<String> recipientVariables = OptionalValue.empty();
     OptionalValue<TemplateProperties> templateProperties = OptionalValue.empty();
     OptionalValue<OverrideProperties> overrideProperties = OptionalValue.empty();
     OptionalValue<List<Pair<String, String>>> customVariables = OptionalValue.empty();
     OptionalValue<List<Pair<String, String>>> customHeaders = OptionalValue.empty();
+
+    public Builder setRecipientVariables(
+        Map<String, Collection<Pair<String, Object>>> recipientVariables) {
+      return setRecipientVariables(MapOfPairsToJSONHelper.serialize(recipientVariables));
+    }
 
     @Property(value = PROPERTY_TO)
     public Builder setTo(List<String> to) {
@@ -237,8 +240,7 @@ public class SendMimeEmailRequestImpl implements SendMimeEmailRequest {
     }
 
     @Property(value = PROPERTY_RECIPIENT_VARIABLES)
-    public Builder setRecipientVariables(
-        Map<String, Collection<Pair<String, String>>> recipientVariables) {
+    public Builder setRecipientVariables(String recipientVariables) {
       this.recipientVariables = OptionalValue.of(recipientVariables);
       return this;
     }

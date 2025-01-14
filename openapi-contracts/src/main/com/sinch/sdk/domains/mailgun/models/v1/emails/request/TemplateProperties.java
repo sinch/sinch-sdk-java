@@ -10,6 +10,8 @@
 
 package com.sinch.sdk.domains.mailgun.models.v1.emails.request;
 
+import java.util.Map;
+
 /** TemplateProperties */
 public interface TemplateProperties {
 
@@ -48,6 +50,18 @@ public interface TemplateProperties {
 
   /** Dedicated Builder */
   interface Builder {
+
+    /**
+     * Helper method for setVariables(String).
+     *
+     * <p>`variables` parameter will be serialized to JSON
+     *
+     * @param variables Map of values to be encoded to JSON string
+     *     <p>Helper method only support map value a map of values or a native type
+     * @return Current builder
+     * @see #setVariables(String)
+     */
+    Builder setVariables(Map<String, Object> variables);
 
     /**
      * see getter

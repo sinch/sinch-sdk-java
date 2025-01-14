@@ -22,7 +22,7 @@ public class SendEmailRequestTest extends BaseTest {
   static File fileAttachment1;
   static File fileAttachment2;
 
-  public static Map<String, Collection<Pair<String, String>>> RECIPIENT_VARIABLES =
+  public static Map<String, Collection<Pair<String, Object>>> RECIPIENT_VARIABLES =
       Collections.singletonMap(
           "cc-dest@sinch.com", Collections.singletonList(Pair.of("variable1", "value1")));
   public static List<Pair<String, String>> CUSTOM_VARIABLES;
@@ -100,7 +100,7 @@ public class SendEmailRequestTest extends BaseTest {
               "template","template value",
               "t:version","2",
               "t:text","true",
-              "t:variables","{\"key\": \"value\"}",
+              "t:variables","{\"key\":\"value\"}",
               "o:tag", Arrays.asList("tag1", "tag2"),
               "o:dkim","true",
               "o:secondary-dkim","example.com/s1",
@@ -198,7 +198,7 @@ public class SendEmailRequestTest extends BaseTest {
               TemplateProperties.builder()
                   .setText(true)
                   .setVersion("2")
-                  .setVariables("{\"key\": \"value\"}")
+                  .setVariables(Collections.singletonMap("key", "value"))
                   .build())
           .setCustomVariables(CUSTOM_VARIABLES)
           .setCustomHeaders(CUSTOM_HEADERS)
@@ -215,6 +215,23 @@ public class SendEmailRequestTest extends BaseTest {
   }
 
   @Test
+  void serializeSendEmailHtmlInlineRequestRawRecipientVariables() {
+
+    Object serialized =
+        new HttpMapper()
+            .serializeFormParameters(
+                Arrays.asList("multipart/form-data"),
+                SendEmailHtmlInlineRequest.builder()
+                    .setRecipientVariables("{\"cc-dest@sinch.com\":{\"variable1\":\"value1\"}}")
+                    .build());
+
+    TestHelpers.recursiveEquals(
+        ObjectMapperTest.fillMap(
+            "recipient-variables", "{\"cc-dest@sinch.com\":{\"variable1\":\"value1\"}}"),
+        serialized);
+  }
+
+  @Test
   void serializeSendEmailHtmlInTemplateRequest() {
     Object serialized =
         new HttpMapper()
@@ -222,5 +239,21 @@ public class SendEmailRequestTest extends BaseTest {
                 Arrays.asList("multipart/form-data"), sendEmailHtmlInTemplateRequest);
 
     TestHelpers.recursiveEquals(expectedEmailHtmlInTemplate, serialized);
+  }
+
+  @Test
+  void serializeSendEmailHtmlInTemplateRequestRawVariables() {
+
+    Object serialized =
+        new HttpMapper()
+            .serializeFormParameters(
+                Arrays.asList("multipart/form-data"),
+                SendEmailHtmlInTemplateRequest.builder()
+                    .setTemplateProperties(
+                        TemplateProperties.builder().setVariables("{\"key\":\"value\"}").build())
+                    .build());
+
+    TestHelpers.recursiveEquals(
+        ObjectMapperTest.fillMap("t:variables", "{\"key\":\"value\"}"), serialized);
   }
 }
