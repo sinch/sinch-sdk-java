@@ -105,10 +105,10 @@ class GroupsDtoConverterTest extends BaseTest {
     GroupUpdateRequestParameters client =
         GroupUpdateRequestParameters.builder()
             .setName("My new customers")
-            .setAdd(Collections.singletonList("foo"))
-            .setRemove(Arrays.asList("01FC66621XXXXX119Z8PMV1AHY", "01FC66621XXXXX119Z8PMV1A00"))
-            .setAddFromGroup("add from group string")
-            .setRemoveFromGroup("remove from group string")
+            .setAdd(Collections.singletonList("+12345674890"))
+            .setRemove(Arrays.asList("+0987654321", "+3456789123"))
+            .setAddFromGroup("01FC66621XXXXX119Z8PMV1AHY")
+            .setRemoveFromGroup("01FC66621XXXXX119Z8PMV1A00")
             .setAutoUpdate(
                 GroupAutoUpdateRequestParameters.builder()
                     .setTo("15551231234")

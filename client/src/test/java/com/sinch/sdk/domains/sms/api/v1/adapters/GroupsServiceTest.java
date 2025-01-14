@@ -115,11 +115,11 @@ class GroupsServiceTest extends BaseTest {
             .setAutoUpdate(
                 GroupAutoUpdate.builder()
                     .setTo("15551231234")
-                    .setAdd(AddKeyword.builder().setFirstWord("Add 1st keyword").build())
+                    .setAdd(AddKeyword.builder().setFirstWord("1stKeyword").build())
                     .setRemove(
                         RemoveKeyword.builder()
-                            .setFirstWord("remove 1st keyword")
-                            .setSecondWord("remove 2nd keyword")
+                            .setFirstWord("1stKeyword")
+                            .setSecondWord("2ndKeyword")
                             .build())
                     .build())
             .setChildGroups(
@@ -144,11 +144,11 @@ class GroupsServiceTest extends BaseTest {
             .setAutoUpdate(
                 GroupAutoUpdate.builder()
                     .setTo("15551231234")
-                    .setAdd(AddKeyword.builder().setFirstWord("Add 1st keyword").build())
+                    .setAdd(AddKeyword.builder().setFirstWord("1stKeyword").build())
                     .setRemove(
                         RemoveKeyword.builder()
-                            .setFirstWord("remove 1st keyword")
-                            .setSecondWord("remove 2nd keyword")
+                            .setFirstWord("1stKeyword")
+                            .setSecondWord("2ndKeyword")
                             .build())
                     .build())
             .setChildGroups(

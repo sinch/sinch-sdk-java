@@ -1,14 +1,14 @@
 {
   "name": "My new customers",
   "add": [
-    "foo"
+    "+12345674890"
   ],
   "remove": [
-    "01FC66621XXXXX119Z8PMV1AHY",
-    "01FC66621XXXXX119Z8PMV1A00"
+    "+0987654321",
+    "+3456789123"
   ],
-  "add_from_group": "add from group string",
-  "remove_from_group": "remove from group string",
+  "add_from_group": "01FC66621XXXXX119Z8PMV1AHY",
+  "remove_from_group": "01FC66621XXXXX119Z8PMV1A00",
   "auto_update": {
     "to": "15551231234",
     "add": {
