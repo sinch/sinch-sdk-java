@@ -11,22 +11,22 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-class GroupUpdateRequestDtoTest extends BaseTest {
+public class GroupUpdateRequestDtoTest extends BaseTest {
   @GivenTextResource("/domains/sms/v1/groups/request/GroupUpdateRequestDto.json")
   String jsonGroupUpdateRequestDto;
 
+  public static GroupUpdateRequest requestDTO =
+      GroupUpdateRequest.builder()
+          .setName("My new customers")
+          .setAdd(Arrays.asList("+12345674890"))
+          .setRemove(Arrays.asList("+0987654321", "+3456789123"))
+          .setAddFromGroup("01FC66621XXXXX119Z8PMV1AHY")
+          .setRemoveFromGroup("01FC66621XXXXX119Z8PMV1A00")
+          .setAutoUpdate(GroupDtoTest.groupResponse.getAutoUpdate())
+          .build();
+
   @Test
   void serialize() throws JsonProcessingException, JSONException {
-
-    GroupUpdateRequest requestDTO =
-        GroupUpdateRequest.builder()
-            .setName("My new customers")
-            .setAdd(Arrays.asList("+12345674890"))
-            .setRemove(Arrays.asList("+0987654321", "+3456789123"))
-            .setAddFromGroup("01FC66621XXXXX119Z8PMV1AHY")
-            .setRemoveFromGroup("01FC66621XXXXX119Z8PMV1A00")
-            .setAutoUpdate(GroupDtoTest.groupResponse.getAutoUpdate())
-            .build();
 
     String serializedString = objectMapper.writeValueAsString(requestDTO);
 

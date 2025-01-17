@@ -1,217 +1,364 @@
 package com.sinch.sdk.domains.sms.api.v1.adapters;
 
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
+import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.sms.api.v1.internal.GroupsApi;
-import com.sinch.sdk.domains.sms.models.v1.groups.AddKeyword;
+import com.sinch.sdk.core.http.HttpContentType;
+import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.core.http.HttpMethod;
+import com.sinch.sdk.core.http.HttpRequest;
+import com.sinch.sdk.core.http.HttpRequestTest.HttpRequestMatcher;
+import com.sinch.sdk.core.http.HttpResponse;
+import com.sinch.sdk.core.http.URLParameter;
+import com.sinch.sdk.core.http.URLParameter.STYLE;
+import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.domains.PaginationFillerHelper;
+import com.sinch.sdk.domains.sms.api.v1.GroupsService;
 import com.sinch.sdk.domains.sms.models.v1.groups.Group;
-import com.sinch.sdk.domains.sms.models.v1.groups.GroupAutoUpdate;
-import com.sinch.sdk.domains.sms.models.v1.groups.RemoveKeyword;
 import com.sinch.sdk.domains.sms.models.v1.groups.request.GroupRequest;
-import com.sinch.sdk.domains.sms.models.v1.groups.request.GroupUpdateRequest;
+import com.sinch.sdk.domains.sms.models.v1.groups.request.GroupUpdateRequestDtoTest;
 import com.sinch.sdk.domains.sms.models.v1.groups.request.ListGroupsQueryParameters;
 import com.sinch.sdk.domains.sms.models.v1.groups.response.ListGroupsResponse;
 import com.sinch.sdk.domains.sms.models.v1.groups.response.internal.ApiGroupList;
-import com.sinch.sdk.models.SmsContext;
-import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
 
 @TestWithResources
 class GroupsServiceTest extends BaseTest {
 
-  @Mock SmsContext context;
-  @Mock HttpClient httpClient;
-  @Mock Map<String, AuthManager> authManagers;
-  @Mock GroupsApi api;
-  GroupsService service;
-  String uriPartID = "foovalue";
+  static final String SMS_AUTH_NAMES = "BearerAuth";
 
-  @Captor ArgumentCaptor<String> groupIdCaptor;
+  @GivenTextResource("/domains/sms/v1/groups/GroupDto.json")
+  String jsonGroupDto;
 
   @GivenJsonResource("/domains/sms/v1/groups/GroupDto.json")
-  Group groupResponseDto;
+  Group groupDto;
+
+  @GivenTextResource("/domains/sms/v1/groups/response/ListGroupsResponseDtoPage0.json")
+  String jsonListGroupsResponseDtoPage0;
 
   @GivenJsonResource("/domains/sms/v1/groups/response/ListGroupsResponseDtoPage0.json")
-  ApiGroupList groupsListResponseDtoPage0;
+  ApiGroupList listGroupsResponseDtoPage0;
+
+  @GivenTextResource("/domains/sms/v1/groups/response/ListGroupsResponseDtoPage1.json")
+  String jsonListGroupsResponseDtoPage1;
 
   @GivenJsonResource("/domains/sms/v1/groups/response/ListGroupsResponseDtoPage1.json")
-  ApiGroupList groupsListResponseDtoPage1;
+  ApiGroupList listGroupsResponseDtoPage1;
 
-  @GivenJsonResource("/domains/sms/v1/groups/response/ListGroupsResponseDtoPage2.json")
-  ApiGroupList groupsListResponseDtoPage2;
+  @GivenTextResource("/domains/sms/v1/groups/response/ListGroupsResponseDtoPage2.json")
+  String jsonListGroupsResponseDtoPage2;
+
+  @Mock ServerConfiguration serverConfiguration;
+  @Mock HttpClient httpClient;
+  @Mock Map<String, AuthManager> authManagers;
+  GroupsService service;
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new GroupsService(uriPartID, context, httpClient, authManagers));
-    doReturn(api).when(service).getApi();
+    service =
+        new GroupsServiceImpl(
+            httpClient, serverConfiguration, authManagers, HttpMapper.getInstance(), "foovalue");
   }
 
   @Test
   void get() throws ApiException {
 
-    when(api.retrieveGroup(eq("foo group ID"))).thenReturn(groupResponseDto);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/xms/v1/foovalue/groups/foo%20group%20ID",
+            HttpMethod.GET,
+            Collections.emptyList(),
+            null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonGroupDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     Group response = service.get("foo group ID");
 
-    TestHelpers.recursiveEquals(response, groupResponseDto);
+    TestHelpers.recursiveEquals(response, groupDto);
   }
 
   @Test
   void create() throws ApiException {
 
-    when(api.createGroup(eq(GroupRequest.builder().setName("foo").build())))
-        .thenReturn(groupResponseDto);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/xms/v1/foovalue/groups",
+            HttpMethod.POST,
+            Collections.emptyList(),
+            HttpMapper.getInstance()
+                .serialize(
+                    Collections.singletonList(HttpContentType.APPLICATION_JSON),
+                    GroupRequest.builder().setName("foo").build()),
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonGroupDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     Group response = service.create(GroupRequest.builder().setName("foo").build());
 
-    TestHelpers.recursiveEquals(response, groupResponseDto);
+    TestHelpers.recursiveEquals(response, groupDto);
+  }
+
+  @Test
+  void listDefault() throws ApiException {
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/xms/v1/foovalue/groups",
+            HttpMethod.GET,
+            Collections.emptyList(),
+            null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonListGroupsResponseDtoPage0.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    ListGroupsResponse response = service.list();
+    TestHelpers.recursiveEquals(response.getContent(), listGroupsResponseDtoPage0.getItems());
   }
 
   @Test
   void list() throws ApiException {
 
-    ListGroupsQueryParameters page1 = ListGroupsQueryParameters.builder().setPage(1).build();
-    ListGroupsQueryParameters page2 = ListGroupsQueryParameters.builder().setPage(2).build();
+    List<Object> commonParameters = Arrays.asList("page_size", 2, STYLE.FORM, true);
 
-    when(api.listGroups(eq(null))).thenReturn(groupsListResponseDtoPage0);
-    when(api.listGroups(page1)).thenReturn(groupsListResponseDtoPage1);
-    when(api.listGroups(page2)).thenReturn(groupsListResponseDtoPage2);
+    Collection<URLParameter> urlParameters0 =
+        PaginationFillerHelper.parametersFiller("page", 0, STYLE.FORM, true, commonParameters);
+    Collection<URLParameter> urlParameters1 =
+        PaginationFillerHelper.parametersFiller("page", 1, STYLE.FORM, true, commonParameters);
+    Collection<URLParameter> urlParameters2 =
+        PaginationFillerHelper.parametersFiller("page", 2, STYLE.FORM, true, commonParameters);
 
-    ListGroupsResponse response = service.list(null);
+    HttpRequest httpRequest0 =
+        new HttpRequest(
+            "/xms/v1/foovalue/groups",
+            HttpMethod.GET,
+            urlParameters0,
+            null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpRequest httpRequest1 =
+        new HttpRequest(
+            "/xms/v1/foovalue/groups",
+            HttpMethod.GET,
+            urlParameters1,
+            null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpRequest httpRequest2 =
+        new HttpRequest(
+            "/xms/v1/foovalue/groups",
+            HttpMethod.GET,
+            urlParameters2,
+            null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse0 =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonListGroupsResponseDtoPage0.getBytes());
+    HttpResponse httpResponse1 =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonListGroupsResponseDtoPage1.getBytes());
+    HttpResponse httpResponse2 =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonListGroupsResponseDtoPage2.getBytes());
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest0))))
+        .thenReturn(httpResponse0);
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest1))))
+        .thenReturn(httpResponse1);
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest2))))
+        .thenReturn(httpResponse2);
+
+    ListGroupsQueryParameters initialRequest =
+        ListGroupsQueryParameters.builder().setPage(0).setPageSize(2).build();
+
+    ListGroupsResponse response = service.list(initialRequest);
 
     Iterator<Group> iterator = response.iterator();
+
     Group item = iterator.next();
+    TestHelpers.recursiveEquals(item, listGroupsResponseDtoPage0.getItems().get(0));
     Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
 
-    TestHelpers.recursiveEquals(
-        item,
-        Group.builder()
-            .setId("01FC66621XXXXX119Z8PMV1QPU")
-            .setName("My new customers")
-            .setSize(2)
-            .setCreatedAt(Instant.parse("2019-08-24T14:15:22Z"))
-            .setModifiedAt(Instant.parse("2019-08-24T14:15:44Z"))
-            .setAutoUpdate(
-                GroupAutoUpdate.builder()
-                    .setTo("15551231234")
-                    .setAdd(AddKeyword.builder().setFirstWord("1stKeyword").build())
-                    .setRemove(
-                        RemoveKeyword.builder()
-                            .setFirstWord("1stKeyword")
-                            .setSecondWord("2ndKeyword")
-                            .build())
-                    .build())
-            .setChildGroups(
-                new HashSet<>(
-                    Arrays.asList("01FC66621XXXXX119Z8PMV1AHY", "01FC66621XXXXX119Z8PMV1A00")))
-            .build());
-
     item = iterator.next();
+    TestHelpers.recursiveEquals(item, listGroupsResponseDtoPage0.getItems().get(1));
     Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
-    TestHelpers.recursiveEquals(item, Group.builder().setId("foo id").build());
 
     item = iterator.next();
+    TestHelpers.recursiveEquals(item, listGroupsResponseDtoPage1.getItems().get(0));
+
     Assertions.assertThat(iterator.hasNext()).isEqualTo(false);
-    TestHelpers.recursiveEquals(
-        item,
-        Group.builder()
-            .setId("01FC66621XXXXX119Z8PMV1QPU")
-            .setName("My new customers")
-            .setSize(2)
-            .setCreatedAt(Instant.parse("2019-08-24T14:15:22Z"))
-            .setModifiedAt(Instant.parse("2019-08-24T14:15:44Z"))
-            .setAutoUpdate(
-                GroupAutoUpdate.builder()
-                    .setTo("15551231234")
-                    .setAdd(AddKeyword.builder().setFirstWord("1stKeyword").build())
-                    .setRemove(
-                        RemoveKeyword.builder()
-                            .setFirstWord("1stKeyword")
-                            .setSecondWord("2ndKeyword")
-                            .build())
-                    .build())
-            .setChildGroups(
-                new HashSet<>(
-                    Arrays.asList("01FC66621XXXXX119Z8PMV1AHY", "01FC66621XXXXX119Z8PMV1A00")))
-            .build());
   }
 
   @Test
   void replace() throws ApiException {
 
-    when(api.replaceGroup(
-            eq("group id"),
-            eq(
-                GroupRequest.builder()
-                    .setName("foo name")
-                    .setMembers(Collections.singleton("foo member"))
-                    .build())))
-        .thenReturn(groupResponseDto);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/xms/v1/foovalue/groups/group%20id",
+            HttpMethod.PUT,
+            Collections.emptyList(),
+            HttpMapper.getInstance()
+                .serialize(
+                    Collections.singletonList(HttpContentType.APPLICATION_JSON),
+                    GroupRequest.builder().setName("foo").build()),
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonGroupDto.getBytes());
 
-    Group response =
-        service.replace(
-            "group id",
-            GroupRequest.builder()
-                .setName("foo name")
-                .setMembers(Collections.singleton("foo member"))
-                .build());
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
-    TestHelpers.recursiveEquals(response, groupResponseDto);
+    Group response = service.replace("group id", GroupRequest.builder().setName("foo").build());
+
+    TestHelpers.recursiveEquals(response, groupDto);
   }
 
   @Test
   void update() throws ApiException {
 
-    when(api.updateGroup(
-            eq("group id"), eq(GroupUpdateRequest.builder().setName("foo name").build())))
-        .thenReturn(groupResponseDto);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/xms/v1/foovalue/groups/group%20id",
+            HttpMethod.POST,
+            Collections.emptyList(),
+            HttpMapper.getInstance()
+                .serialize(
+                    Collections.singletonList(HttpContentType.APPLICATION_JSON),
+                    GroupUpdateRequestDtoTest.requestDTO),
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonGroupDto.getBytes());
 
-    Group response =
-        service.update("group id", GroupUpdateRequest.builder().setName("foo name").build());
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
-    TestHelpers.recursiveEquals(response, groupResponseDto);
+    Group response = service.update("group id", GroupUpdateRequestDtoTest.requestDTO);
+
+    TestHelpers.recursiveEquals(response, groupDto);
   }
 
   @Test
   void delete() throws ApiException {
 
-    service.delete("foo group id");
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/xms/v1/foovalue/groups/group%20id",
+            HttpMethod.DELETE,
+            Collections.emptyList(),
+            null,
+            Collections.emptyMap(),
+            Collections.emptyList(),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse = new HttpResponse(200, null, Collections.emptyMap(), null);
 
-    verify(api).deleteGroup(groupIdCaptor.capture());
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
-    String parameter = groupIdCaptor.getValue();
-    Assertions.assertThat(parameter).isEqualTo("foo group id");
+    service.delete("group id");
   }
 
   @Test
   void listMembers() throws ApiException {
 
-    when(api.getMembers(eq("group id"))).thenReturn(Arrays.asList("entry 1", "entry 2"));
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/xms/v1/foovalue/groups/group%20id/members",
+            HttpMethod.GET,
+            Collections.emptyList(),
+            null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), "[\"entry 1\", \"entry 2\"]".getBytes());
 
-    Collection<String> response = service.listMembers("group id");
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
-    TestHelpers.recursiveEquals(response, Arrays.asList("entry 1", "entry 2"));
+    Collection<String> members = service.listMembers("group id");
+    TestHelpers.recursiveEquals(members, new ArrayList<>(Arrays.asList("entry 1", "entry 2")));
   }
 }

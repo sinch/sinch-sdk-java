@@ -15,7 +15,11 @@ public class HttpRequestTest {
 
     @Override
     public boolean matches(HttpRequest right) {
-      TestHelpers.recursiveEquals(right, left);
+      try {
+        TestHelpers.recursiveEquals(right, left);
+      } catch (AssertionError e) {
+        return false;
+      }
       return true;
     }
   }

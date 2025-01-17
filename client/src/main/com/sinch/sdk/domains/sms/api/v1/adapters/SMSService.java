@@ -8,6 +8,10 @@ import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.StringUtil;
+import com.sinch.sdk.domains.sms.api.v1.BatchesService;
+import com.sinch.sdk.domains.sms.api.v1.DeliveryReportsService;
+import com.sinch.sdk.domains.sms.api.v1.GroupsService;
+import com.sinch.sdk.domains.sms.api.v1.InboundsService;
 import com.sinch.sdk.models.SmsContext;
 import com.sinch.sdk.models.SmsServicePlanCredentials;
 import com.sinch.sdk.models.UnifiedCredentials;
@@ -50,7 +54,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
     LOGGER.fine("Activate SMS API with server='" + context.getSmsServer().getUrl() + "'");
 
     OAuthManager oAuthManager =
-        new OAuthManager(credentials, oAuthServer, new HttpMapper(), httpClient);
+        new OAuthManager(credentials, oAuthServer, HttpMapper.getInstance(), httpClient);
 
     this.uriUUID = credentials.getProjectId();
     this.context = context;
@@ -87,7 +91,9 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   @Override
   public BatchesService batches() {
     if (null == this.batches) {
-      this.batches = new BatchesService(uriUUID, context, httpClient, authManagers);
+      this.batches =
+          new BatchesServiceImpl(
+              httpClient, context.getSmsServer(), authManagers, HttpMapper.getInstance(), uriUUID);
     }
     return this.batches;
   }
@@ -95,7 +101,9 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   @Override
   public InboundsService inbounds() {
     if (null == this.inbounds) {
-      this.inbounds = new InboundsService(uriUUID, context, httpClient, authManagers);
+      this.inbounds =
+          new InboundsServiceImpl(
+              httpClient, context.getSmsServer(), authManagers, HttpMapper.getInstance(), uriUUID);
     }
     return this.inbounds;
   }
@@ -103,7 +111,9 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   @Override
   public DeliveryReportsService deliveryReports() {
     if (null == this.deliveryReports) {
-      this.deliveryReports = new DeliveryReportsService(uriUUID, context, httpClient, authManagers);
+      this.deliveryReports =
+          new DeliveryReportsServiceImpl(
+              httpClient, context.getSmsServer(), authManagers, HttpMapper.getInstance(), uriUUID);
     }
     return this.deliveryReports;
   }
@@ -111,7 +121,9 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   @Override
   public GroupsService groups() {
     if (null == this.groups) {
-      this.groups = new GroupsService(uriUUID, context, httpClient, authManagers);
+      this.groups =
+          new GroupsServiceImpl(
+              httpClient, context.getSmsServer(), authManagers, HttpMapper.getInstance(), uriUUID);
     }
     return this.groups;
   }

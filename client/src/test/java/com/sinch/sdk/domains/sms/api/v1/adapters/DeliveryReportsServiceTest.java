@@ -1,34 +1,41 @@
 package com.sinch.sdk.domains.sms.api.v1.adapters;
 
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
+import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.sms.api.v1.internal.DeliveryReportsApi;
+import com.sinch.sdk.core.http.HttpContentType;
+import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.core.http.HttpMethod;
+import com.sinch.sdk.core.http.HttpRequest;
+import com.sinch.sdk.core.http.HttpRequestTest.HttpRequestMatcher;
+import com.sinch.sdk.core.http.HttpResponse;
+import com.sinch.sdk.core.http.URLParameter;
+import com.sinch.sdk.core.http.URLParameter.STYLE;
+import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.domains.PaginationFillerHelper;
+import com.sinch.sdk.domains.sms.api.v1.DeliveryReportsService;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.BatchDeliveryReport;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReceiptErrorCode;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryStatus;
-import com.sinch.sdk.domains.sms.models.v1.deliveryreports.EncodingType;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.RecipientDeliveryReport;
-import com.sinch.sdk.domains.sms.models.v1.deliveryreports.RecipientDeliveryReportMMS;
-import com.sinch.sdk.domains.sms.models.v1.deliveryreports.RecipientDeliveryReportSMS;
-import com.sinch.sdk.domains.sms.models.v1.deliveryreports.request.BatchDeliveryReportQueryParameters;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.request.ListDeliveryReportsQueryParameters;
-import com.sinch.sdk.domains.sms.models.v1.deliveryreports.request.QueryReportType;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.response.ListDeliveryReportsResponse;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.response.internal.DeliveryReportList;
-import com.sinch.sdk.models.SmsContext;
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,185 +44,259 @@ import org.mockito.Mock;
 
 @TestWithResources
 class DeliveryReportsServiceTest extends BaseTest {
+  static final String SMS_AUTH_NAMES = "BearerAuth";
 
-  @Mock SmsContext context;
-  @Mock HttpClient httpClient;
-  @Mock Map<String, AuthManager> authManagers;
-
-  @Mock DeliveryReportsApi api;
-  DeliveryReportsService service;
-  String uriPartID = "foovalue";
+  @GivenTextResource("/domains/sms/v1/deliveryreports/BatchDeliveryReportSMSDto.json")
+  String jsonBatchDeliveryReportSMSDto;
 
   @GivenJsonResource("/domains/sms/v1/deliveryreports/BatchDeliveryReportSMSDto.json")
-  BatchDeliveryReport deliveryReportBatchSMSDto;
+  BatchDeliveryReport batchDeliveryReportSMSDto;
 
-  @GivenJsonResource("/domains/sms/v1/deliveryreports/BatchDeliveryReportMMSDto.json")
-  BatchDeliveryReport deliveryReportBatchMMSDto;
-
-  @GivenJsonResource("/domains/sms/v1/deliveryreports/RecipientDeliveryReportSMSDto.json")
-  RecipientDeliveryReport deliveryReportRecipientSMSDto;
+  @GivenTextResource("/domains/sms/v1/deliveryreports/RecipientDeliveryReportMMSDto.json")
+  String jsonRecipientDeliveryReportMMSDto;
 
   @GivenJsonResource("/domains/sms/v1/deliveryreports/RecipientDeliveryReportMMSDto.json")
-  RecipientDeliveryReport deliveryReportRecipientMMSDto;
+  RecipientDeliveryReport recipientDeliveryReportMMSDto;
+
+  @GivenTextResource(
+      "/domains/sms/v1/deliveryreports/response/ListDeliveryReportResponseDtoPage0.json")
+  String jsonListDeliveryReportResponseDtoPage0;
 
   @GivenJsonResource(
       "/domains/sms/v1/deliveryreports/response/ListDeliveryReportResponseDtoPage0.json")
   DeliveryReportList listDeliveryReportResponseDtoPage0;
 
+  @GivenTextResource(
+      "/domains/sms/v1/deliveryreports/response/ListDeliveryReportResponseDtoPage1.json")
+  String jsonListDeliveryReportResponseDtoPage1;
+
   @GivenJsonResource(
       "/domains/sms/v1/deliveryreports/response/ListDeliveryReportResponseDtoPage1.json")
   DeliveryReportList listDeliveryReportResponseDtoPage1;
 
-  @GivenJsonResource(
+  @GivenTextResource(
       "/domains/sms/v1/deliveryreports/response/ListDeliveryReportResponseDtoPage2.json")
-  DeliveryReportList listDeliveryReportResponseDtoPage2;
+  String jsonListDeliveryReportResponseDtoPage2;
+
+  @Mock ServerConfiguration serverConfiguration;
+  @Mock HttpClient httpClient;
+  @Mock Map<String, AuthManager> authManagers;
+
+  DeliveryReportsService service;
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new DeliveryReportsService(uriPartID, context, httpClient, authManagers));
-    doReturn(api).when(service).getApi();
+    service =
+        new DeliveryReportsServiceImpl(
+            httpClient, serverConfiguration, authManagers, HttpMapper.getInstance(), "foovalue");
   }
 
   @Test
-  void getSimplifiedDeliveryReport() throws ApiException {
+  void getBatchDeliveryReport() throws ApiException {
 
-    when(api.get(eq("foo binary batch id"))).thenReturn(deliveryReportBatchSMSDto);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/xms/v1/foovalue/batches/foo%20binary%20batch%20id/delivery_report",
+            HttpMethod.GET,
+            Collections.emptyList(),
+            null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonBatchDeliveryReportSMSDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     BatchDeliveryReport response = service.get("foo binary batch id");
 
-    TestHelpers.recursiveEquals(response, deliveryReportBatchSMSDto);
+    TestHelpers.recursiveEquals(response, batchDeliveryReportSMSDto);
   }
 
   @Test
-  void getBatchDeliveryReportSMS() throws ApiException {
+  void getRecipientDeliveryReport() throws ApiException {
 
-    BatchDeliveryReportQueryParameters queryParameters =
-        BatchDeliveryReportQueryParameters.builder()
-            .setCode(
-                Arrays.asList(
-                    DeliveryReceiptErrorCode.from(456), DeliveryReceiptErrorCode.from(789)))
-            .setStatus(Arrays.asList(DeliveryStatus.from("foo status1"), DeliveryStatus.CANCELLED))
-            .setType(QueryReportType.from("foo type"))
-            .build();
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/xms/v1/foovalue/batches/foo%20binary%20batch%20id/delivery_report/foo%20number",
+            HttpMethod.GET,
+            Collections.emptyList(),
+            null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonRecipientDeliveryReportMMSDto.getBytes());
 
-    when(api.get(eq("foo binary batch id"), eq(queryParameters)))
-        .thenReturn(deliveryReportBatchSMSDto);
-
-    BatchDeliveryReport response = service.get("foo binary batch id", queryParameters);
-
-    TestHelpers.recursiveEquals(response, deliveryReportBatchSMSDto);
-  }
-
-  @Test
-  void getBatchDeliveryReportMMS() throws ApiException {
-
-    BatchDeliveryReportQueryParameters queryParameters =
-        BatchDeliveryReportQueryParameters.builder()
-            .setCode(
-                Arrays.asList(
-                    DeliveryReceiptErrorCode.from(456), DeliveryReceiptErrorCode.from(789)))
-            .setStatus(Arrays.asList(DeliveryStatus.from("foo status1"), DeliveryStatus.CANCELLED))
-            .setType(QueryReportType.from("foo type"))
-            .build();
-
-    when(api.get(eq("foo binary batch id"), eq(queryParameters)))
-        .thenReturn(deliveryReportBatchMMSDto);
-
-    BatchDeliveryReport response = service.get("foo binary batch id", queryParameters);
-
-    TestHelpers.recursiveEquals(response, deliveryReportBatchMMSDto);
-  }
-
-  @Test
-  void getRecipientDeliveryReportSMS() throws ApiException {
-
-    when(api.getForNumber(eq("foo binary batch id"), eq("foo number")))
-        .thenReturn(deliveryReportRecipientSMSDto);
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     RecipientDeliveryReport response = service.getForNumber("foo binary batch id", "foo number");
 
-    TestHelpers.recursiveEquals(response, deliveryReportRecipientSMSDto);
+    TestHelpers.recursiveEquals(response, recipientDeliveryReportMMSDto);
   }
 
   @Test
-  void getRecipientDeliveryReportMMS() throws ApiException {
+  void listDefault() throws ApiException {
 
-    when(api.getForNumber(eq("foo binary batch id"), eq("foo number")))
-        .thenReturn(deliveryReportRecipientMMSDto);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/xms/v1/foovalue/delivery_reports",
+            HttpMethod.GET,
+            Collections.emptyList(),
+            null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonListDeliveryReportResponseDtoPage0.getBytes());
 
-    RecipientDeliveryReport response = service.getForNumber("foo binary batch id", "foo number");
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
-    TestHelpers.recursiveEquals(response, deliveryReportRecipientMMSDto);
+    ListDeliveryReportsResponse response = service.list();
+    TestHelpers.recursiveEquals(
+        response.getContent(), listDeliveryReportResponseDtoPage0.getItems());
   }
 
   @Test
   void list() throws ApiException {
 
-    ListDeliveryReportsQueryParameters page1 =
-        ListDeliveryReportsQueryParameters.builder().setPage(1).build();
-    ListDeliveryReportsQueryParameters page2 =
-        ListDeliveryReportsQueryParameters.builder().setPage(2).build();
+    List<Object> commonParameters =
+        Arrays.asList(
+            "page_size",
+            2,
+            STYLE.FORM,
+            true,
+            "start_date",
+            "2023-11-03T15:21:21.113Z",
+            STYLE.FORM,
+            true,
+            "end_date",
+            "2023-12-12T15:54:21.321Z",
+            STYLE.FORM,
+            true,
+            "status",
+            Arrays.asList(DeliveryStatus.QUEUED, DeliveryStatus.DISPATCHED),
+            STYLE.FORM,
+            false,
+            "code",
+            Arrays.asList(
+                DeliveryReceiptErrorCode.DISPATCHED, DeliveryReceiptErrorCode.UNPROVISIONED_REGION),
+            STYLE.FORM,
+            false,
+            "client_reference",
+            "client reference",
+            STYLE.FORM,
+            true);
 
-    when(api.list(eq(null))).thenReturn(listDeliveryReportResponseDtoPage0);
-    when(api.list(eq(page1))).thenReturn(listDeliveryReportResponseDtoPage1);
-    when(api.list(eq(page2))).thenReturn(listDeliveryReportResponseDtoPage2);
+    Collection<URLParameter> urlParameters0 =
+        PaginationFillerHelper.parametersFiller("page", 0, STYLE.FORM, true, commonParameters);
+    Collection<URLParameter> urlParameters1 =
+        PaginationFillerHelper.parametersFiller("page", 1, STYLE.FORM, true, commonParameters);
+    Collection<URLParameter> urlParameters2 =
+        PaginationFillerHelper.parametersFiller("page", 2, STYLE.FORM, true, commonParameters);
 
-    ListDeliveryReportsResponse response = service.list(null);
+    HttpRequest httpRequest0 =
+        new HttpRequest(
+            "/xms/v1/foovalue/delivery_reports",
+            HttpMethod.GET,
+            urlParameters0,
+            null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpRequest httpRequest1 =
+        new HttpRequest(
+            "/xms/v1/foovalue/delivery_reports",
+            HttpMethod.GET,
+            urlParameters1,
+            null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpRequest httpRequest2 =
+        new HttpRequest(
+            "/xms/v1/foovalue/delivery_reports",
+            HttpMethod.GET,
+            urlParameters2,
+            null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse0 =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonListDeliveryReportResponseDtoPage0.getBytes());
+    HttpResponse httpResponse1 =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonListDeliveryReportResponseDtoPage1.getBytes());
+    HttpResponse httpResponse2 =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonListDeliveryReportResponseDtoPage2.getBytes());
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest0))))
+        .thenReturn(httpResponse0);
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest1))))
+        .thenReturn(httpResponse1);
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest2))))
+        .thenReturn(httpResponse2);
+
+    ListDeliveryReportsQueryParameters initialRequest =
+        ListDeliveryReportsQueryParameters.builder()
+            .setPage(0)
+            .setPageSize(2)
+            .setStartDate(Instant.parse("2023-11-03T15:21:21.113Z"))
+            .setEndDate(Instant.parse("2023-12-12T15:54:21.321Z"))
+            .setStatus(Arrays.asList(DeliveryStatus.QUEUED, DeliveryStatus.DISPATCHED))
+            .setCode(
+                Arrays.asList(
+                    DeliveryReceiptErrorCode.DISPATCHED,
+                    DeliveryReceiptErrorCode.UNPROVISIONED_REGION))
+            .setClientReference("client reference")
+            .build();
+
+    ListDeliveryReportsResponse response = service.list(initialRequest);
 
     Iterator<RecipientDeliveryReport> iterator = response.iterator();
+
     RecipientDeliveryReport item = iterator.next();
+    TestHelpers.recursiveEquals(item, listDeliveryReportResponseDtoPage0.getItems().get(0));
     Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
 
-    TestHelpers.recursiveEquals(
-        item,
-        RecipientDeliveryReportSMS.builder()
-            .setBatchId("01FC66621XXXXX119Z8PMV1QPQ")
-            .setRecipient("+44231235674")
-            .setCode(DeliveryReceiptErrorCode.DISPATCHED)
-            .setStatus(DeliveryStatus.DISPATCHED)
-            .setCreatedAt(Instant.parse("2022-08-30T08:16:08.930Z"))
-            .setOperator("operator")
-            .setAppliedOriginator("applied originator")
-            .setClientReference("client reference")
-            .setEncoding(EncodingType.from("encoding"))
-            .setNumberOfMessageParts(123)
-            .setOperatorStatusAt(Instant.parse("2022-08-30T08:16:08.150Z"))
-            .build());
-
     item = iterator.next();
+    TestHelpers.recursiveEquals(item, listDeliveryReportResponseDtoPage0.getItems().get(1));
     Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
-    TestHelpers.recursiveEquals(
-        item,
-        RecipientDeliveryReportMMS.builder()
-            .setBatchId("01FC66621XXXXX119Z8PMV1QPQ")
-            .setRecipient("+44231235674")
-            .setCode(DeliveryReceiptErrorCode.DISPATCHED)
-            .setStatus(DeliveryStatus.DISPATCHED)
-            .setCreatedAt(Instant.parse("2022-08-30T08:16:08.930Z"))
-            .setOperator("operator")
-            .setAppliedOriginator("applied originator")
-            .setClientReference("client reference")
-            .setEncoding(EncodingType.from("encoding"))
-            .setNumberOfMessageParts(123)
-            .setOperatorStatusAt(Instant.parse("2022-08-30T08:16:08.150Z"))
-            .build());
 
     item = iterator.next();
+    TestHelpers.recursiveEquals(item, listDeliveryReportResponseDtoPage1.getItems().get(0));
+
     Assertions.assertThat(iterator.hasNext()).isEqualTo(false);
-    TestHelpers.recursiveEquals(
-        item,
-        RecipientDeliveryReportSMS.builder()
-            .setBatchId("01FC66621XXXXX119Z8PMV1QPQ")
-            .setRecipient("+44231235674")
-            .setCode(DeliveryReceiptErrorCode.from(401))
-            .setStatus(DeliveryStatus.DISPATCHED)
-            .setCreatedAt(Instant.parse("2022-08-30T08:16:08.930Z"))
-            .setOperator("operator")
-            .setAppliedOriginator("applied originator")
-            .setClientReference("client reference")
-            .setEncoding(EncodingType.from("encoding"))
-            .setNumberOfMessageParts(123)
-            .setOperatorStatusAt(Instant.parse("2022-08-30T08:16:08.150Z"))
-            .build());
   }
 }
