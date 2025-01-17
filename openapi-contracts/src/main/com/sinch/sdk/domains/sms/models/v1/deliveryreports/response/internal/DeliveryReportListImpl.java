@@ -36,7 +36,7 @@ public class DeliveryReportListImpl implements DeliveryReportList {
 
   public static final String JSON_PROPERTY_DELIVERY_REPORTS = "delivery_reports";
 
-  private OptionalValue<List<RecipientDeliveryReport>> deliveryReports;
+  private OptionalValue<List<RecipientDeliveryReport>> items;
 
   public DeliveryReportListImpl() {}
 
@@ -44,11 +44,11 @@ public class DeliveryReportListImpl implements DeliveryReportList {
       OptionalValue<Long> count,
       OptionalValue<Integer> page,
       OptionalValue<Integer> pageSize,
-      OptionalValue<List<RecipientDeliveryReport>> deliveryReports) {
+      OptionalValue<List<RecipientDeliveryReport>> items) {
     this.count = count;
     this.page = page;
     this.pageSize = pageSize;
-    this.deliveryReports = deliveryReports;
+    this.items = items;
   }
 
   @JsonIgnore
@@ -85,14 +85,14 @@ public class DeliveryReportListImpl implements DeliveryReportList {
   }
 
   @JsonIgnore
-  public List<RecipientDeliveryReport> getDeliveryReports() {
-    return deliveryReports.orElse(null);
+  public List<RecipientDeliveryReport> getItems() {
+    return items.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_DELIVERY_REPORTS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<List<RecipientDeliveryReport>> deliveryReports() {
-    return deliveryReports;
+  public OptionalValue<List<RecipientDeliveryReport>> items() {
+    return items;
   }
 
   /** Return true if this DeliveryReportList object is equal to o. */
@@ -108,12 +108,12 @@ public class DeliveryReportListImpl implements DeliveryReportList {
     return Objects.equals(this.count, deliveryReportList.count)
         && Objects.equals(this.page, deliveryReportList.page)
         && Objects.equals(this.pageSize, deliveryReportList.pageSize)
-        && Objects.equals(this.deliveryReports, deliveryReportList.deliveryReports);
+        && Objects.equals(this.items, deliveryReportList.items);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(count, page, pageSize, deliveryReports);
+    return Objects.hash(count, page, pageSize, items);
   }
 
   @Override
@@ -123,7 +123,7 @@ public class DeliveryReportListImpl implements DeliveryReportList {
     sb.append("    count: ").append(toIndentedString(count)).append("\n");
     sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    pageSize: ").append(toIndentedString(pageSize)).append("\n");
-    sb.append("    deliveryReports: ").append(toIndentedString(deliveryReports)).append("\n");
+    sb.append("    items: ").append(toIndentedString(items)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -143,7 +143,7 @@ public class DeliveryReportListImpl implements DeliveryReportList {
     OptionalValue<Long> count = OptionalValue.empty();
     OptionalValue<Integer> page = OptionalValue.empty();
     OptionalValue<Integer> pageSize = OptionalValue.empty();
-    OptionalValue<List<RecipientDeliveryReport>> deliveryReports = OptionalValue.empty();
+    OptionalValue<List<RecipientDeliveryReport>> items = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_COUNT)
     public Builder setCount(Long count) {
@@ -164,13 +164,13 @@ public class DeliveryReportListImpl implements DeliveryReportList {
     }
 
     @JsonProperty(JSON_PROPERTY_DELIVERY_REPORTS)
-    public Builder setDeliveryReports(List<RecipientDeliveryReport> deliveryReports) {
-      this.deliveryReports = OptionalValue.of(deliveryReports);
+    public Builder setItems(List<RecipientDeliveryReport> items) {
+      this.items = OptionalValue.of(items);
       return this;
     }
 
     public DeliveryReportList build() {
-      return new DeliveryReportListImpl(count, page, pageSize, deliveryReports);
+      return new DeliveryReportListImpl(count, page, pageSize, items);
     }
   }
 }

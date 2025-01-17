@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.sms.api.v1.internal;
+package com.sinch.sdk.domains.sms.api.v1.adapters;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sinch.sdk.core.exceptions.ApiException;
@@ -24,11 +24,14 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameterUtils;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.domains.sms.models.v1.groups.Group;
 import com.sinch.sdk.domains.sms.models.v1.groups.request.GroupRequest;
 import com.sinch.sdk.domains.sms.models.v1.groups.request.GroupUpdateRequest;
 import com.sinch.sdk.domains.sms.models.v1.groups.request.ListGroupsQueryParameters;
+import com.sinch.sdk.domains.sms.models.v1.groups.response.ListGroupsResponse;
 import com.sinch.sdk.domains.sms.models.v1.groups.response.internal.ApiGroupList;
+import com.sinch.sdk.domains.sms.models.v1.internal.SMSCursorPageNavigator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -37,17 +40,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class GroupsApi {
+public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.GroupsService {
 
-  private static final Logger LOGGER = Logger.getLogger(GroupsApi.class.getName());
-  private HttpClient httpClient;
-  private ServerConfiguration serverConfiguration;
-  private Map<String, AuthManager> authManagersByOasSecuritySchemes;
-  private HttpMapper mapper;
+  private static final Logger LOGGER = Logger.getLogger(GroupsServiceImpl.class.getName());
+  private final HttpClient httpClient;
+  private final ServerConfiguration serverConfiguration;
+  private final Map<String, AuthManager> authManagersByOasSecuritySchemes;
+  private final HttpMapper mapper;
 
   private final String servicePlanId;
 
-  public GroupsApi(
+  public GroupsServiceImpl(
       HttpClient httpClient,
       ServerConfiguration serverConfiguration,
       Map<String, AuthManager> authManagersByOasSecuritySchemes,
@@ -60,32 +63,17 @@ public class GroupsApi {
     this.servicePlanId = servicePlanId;
   }
 
-  /**
-   * Create a group This endpoint allows you to create a group of recipients. A new group must be
-   * created with a group name. This is represented by the &#x60;name&#x60; field which can be up to
-   * 20 charecters. In addition, there are a number of optional fields: - &#x60;members&#x60; field
-   * enables groups to be created with an initial list of contacts - &#x60;auto_update&#x60; allows
-   * customers to auto subscribe to a new group. This contains three fields. The &#x60;to&#x60;
-   * field contains the group creator&#39;s number. (This number **must be provisioned by contacting
-   * your account manager**.) The &#x60;add&#x60; and &#x60;remove&#x60; fields are objects
-   * containing the keywords that customers need to text to join or leave a group.
-   *
-   * @param groupRequest (optional)
-   * @return Group
-   * @throws ApiException if fails to make API call
-   */
-  public Group createGroup(GroupRequest groupRequest) throws ApiException {
+  public Group create(GroupRequest groupRequest) throws ApiException {
 
-    LOGGER.finest("[createGroup]" + " " + "groupRequest: " + groupRequest);
+    LOGGER.finest("[create]" + " " + "groupRequest: " + groupRequest);
 
-    HttpRequest httpRequest = createGroupRequestBuilder(groupRequest);
+    HttpRequest httpRequest = createRequestBuilder(groupRequest);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<Group> localVarReturnType = new TypeReference<Group>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<Group>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -96,11 +84,11 @@ public class GroupsApi {
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest createGroupRequestBuilder(GroupRequest groupRequest) throws ApiException {
+  private HttpRequest createRequestBuilder(GroupRequest groupRequest) throws ApiException {
     // verify the required parameter 'this.servicePlanId' is set
     if (this.servicePlanId == null) {
       throw new ApiException(
-          400, "Missing the required parameter 'this.servicePlanId' when calling createGroup");
+          400, "Missing the required parameter 'this.servicePlanId' when calling create");
     }
 
     String localVarPath =
@@ -131,17 +119,11 @@ public class GroupsApi {
         localVarAuthNames);
   }
 
-  /**
-   * Delete a group This operation deletes the group with the provided group ID.
-   *
-   * @param groupId ID of a group that you are interested in getting. (required)
-   * @throws ApiException if fails to make API call
-   */
-  public void deleteGroup(String groupId) throws ApiException {
+  public void delete(String groupId) throws ApiException {
 
-    LOGGER.finest("[deleteGroup]" + " " + "groupId: " + groupId);
+    LOGGER.finest("[delete]" + " " + "groupId: " + groupId);
 
-    HttpRequest httpRequest = deleteGroupRequestBuilder(groupId);
+    HttpRequest httpRequest = deleteRequestBuilder(groupId);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -158,16 +140,15 @@ public class GroupsApi {
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest deleteGroupRequestBuilder(String groupId) throws ApiException {
+  private HttpRequest deleteRequestBuilder(String groupId) throws ApiException {
     // verify the required parameter 'this.servicePlanId' is set
     if (this.servicePlanId == null) {
       throw new ApiException(
-          400, "Missing the required parameter 'this.servicePlanId' when calling deleteGroup");
+          400, "Missing the required parameter 'this.servicePlanId' when calling delete");
     }
     // verify the required parameter 'groupId' is set
     if (groupId == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'groupId' when calling deleteGroup");
+      throw new ApiException(400, "Missing the required parameter 'groupId' when calling delete");
     }
 
     String localVarPath =
@@ -200,26 +181,17 @@ public class GroupsApi {
         localVarAuthNames);
   }
 
-  /**
-   * Get phone numbers for a group This operation retrieves the members of the group with the
-   * provided group ID.
-   *
-   * @param groupId ID of a group that you are interested in getting. (required)
-   * @return List&lt;String&gt;
-   * @throws ApiException if fails to make API call
-   */
-  public List<String> getMembers(String groupId) throws ApiException {
+  public List<String> listMembers(String groupId) throws ApiException {
 
-    LOGGER.finest("[getMembers]" + " " + "groupId: " + groupId);
+    LOGGER.finest("[listMembers]" + " " + "groupId: " + groupId);
 
-    HttpRequest httpRequest = getMembersRequestBuilder(groupId);
+    HttpRequest httpRequest = listMembersRequestBuilder(groupId);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<List<String>> localVarReturnType = new TypeReference<List<String>>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<List<String>>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -230,16 +202,16 @@ public class GroupsApi {
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest getMembersRequestBuilder(String groupId) throws ApiException {
+  private HttpRequest listMembersRequestBuilder(String groupId) throws ApiException {
     // verify the required parameter 'this.servicePlanId' is set
     if (this.servicePlanId == null) {
       throw new ApiException(
-          400, "Missing the required parameter 'this.servicePlanId' when calling getMembers");
+          400, "Missing the required parameter 'this.servicePlanId' when calling listMembers");
     }
     // verify the required parameter 'groupId' is set
     if (groupId == null) {
       throw new ApiException(
-          400, "Missing the required parameter 'groupId' when calling getMembers");
+          400, "Missing the required parameter 'groupId' when calling listMembers");
     }
 
     String localVarPath =
@@ -272,38 +244,31 @@ public class GroupsApi {
         localVarAuthNames);
   }
 
-  /**
-   * List Groups With the list operation you can list all groups that you have created. This
-   * operation supports pagination. Groups are returned in reverse chronological order.
-   *
-   * @return ApiGroupList
-   * @throws ApiException if fails to make API call
-   */
-  public ApiGroupList listGroups() throws ApiException {
+  public ListGroupsResponse list() throws ApiException {
 
-    return listGroups(null);
+    return list(null);
   }
 
-  /**
-   * List Groups With the list operation you can list all groups that you have created. This
-   * operation supports pagination. Groups are returned in reverse chronological order.
-   *
-   * @param queryParameter (optional)
-   * @return ApiGroupList
-   * @throws ApiException if fails to make API call
-   */
-  public ApiGroupList listGroups(ListGroupsQueryParameters queryParameter) throws ApiException {
+  public ListGroupsResponse list(ListGroupsQueryParameters queryParameter) throws ApiException {
 
-    LOGGER.finest("[listGroups]" + " " + "queryParameter: " + queryParameter);
+    LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
-    HttpRequest httpRequest = listGroupsRequestBuilder(queryParameter);
+    HttpRequest httpRequest = listRequestBuilder(queryParameter);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<ApiGroupList> localVarReturnType = new TypeReference<ApiGroupList>() {};
-      return mapper.deserialize(response, localVarReturnType);
+
+      ApiGroupList deserialized =
+          mapper.deserialize(response, new TypeReference<ApiGroupList>() {});
+
+      return new ListGroupsResponse(
+          this,
+          new Page<>(
+              queryParameter,
+              deserialized.getItems(),
+              new SMSCursorPageNavigator(deserialized.getPage(), deserialized.getPageSize())));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -314,12 +279,12 @@ public class GroupsApi {
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest listGroupsRequestBuilder(ListGroupsQueryParameters queryParameter)
+  private HttpRequest listRequestBuilder(ListGroupsQueryParameters queryParameter)
       throws ApiException {
     // verify the required parameter 'this.servicePlanId' is set
     if (this.servicePlanId == null) {
       throw new ApiException(
-          400, "Missing the required parameter 'this.servicePlanId' when calling listGroups");
+          400, "Missing the required parameter 'this.servicePlanId' when calling list");
     }
 
     String localVarPath =
@@ -363,29 +328,18 @@ public class GroupsApi {
         localVarAuthNames);
   }
 
-  /**
-   * Replace a group The replace operation will replace all parameters, including members, of an
-   * existing group with new values. Replacing a group targeted by a batch message scheduled in the
-   * future is allowed and changes will be reflected when the batch is sent.
-   *
-   * @param groupId ID of a group that you are interested in getting. (required)
-   * @param groupRequest (optional)
-   * @return Group
-   * @throws ApiException if fails to make API call
-   */
-  public Group replaceGroup(String groupId, GroupRequest groupRequest) throws ApiException {
+  public Group replace(String groupId, GroupRequest groupRequest) throws ApiException {
 
     LOGGER.finest(
-        "[replaceGroup]" + " " + "groupId: " + groupId + ", " + "groupRequest: " + groupRequest);
+        "[replace]" + " " + "groupId: " + groupId + ", " + "groupRequest: " + groupRequest);
 
-    HttpRequest httpRequest = replaceGroupRequestBuilder(groupId, groupRequest);
+    HttpRequest httpRequest = replaceRequestBuilder(groupId, groupRequest);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<Group> localVarReturnType = new TypeReference<Group>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<Group>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -396,17 +350,16 @@ public class GroupsApi {
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest replaceGroupRequestBuilder(String groupId, GroupRequest groupRequest)
+  private HttpRequest replaceRequestBuilder(String groupId, GroupRequest groupRequest)
       throws ApiException {
     // verify the required parameter 'this.servicePlanId' is set
     if (this.servicePlanId == null) {
       throw new ApiException(
-          400, "Missing the required parameter 'this.servicePlanId' when calling replaceGroup");
+          400, "Missing the required parameter 'this.servicePlanId' when calling replace");
     }
     // verify the required parameter 'groupId' is set
     if (groupId == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'groupId' when calling replaceGroup");
+      throw new ApiException(400, "Missing the required parameter 'groupId' when calling replace");
     }
 
     String localVarPath =
@@ -439,25 +392,17 @@ public class GroupsApi {
         localVarAuthNames);
   }
 
-  /**
-   * Retrieve a group This operation retrieves a specific group with the provided group ID.
-   *
-   * @param groupId ID of a group that you are interested in getting. (required)
-   * @return Group
-   * @throws ApiException if fails to make API call
-   */
-  public Group retrieveGroup(String groupId) throws ApiException {
+  public Group get(String groupId) throws ApiException {
 
-    LOGGER.finest("[retrieveGroup]" + " " + "groupId: " + groupId);
+    LOGGER.finest("[get]" + " " + "groupId: " + groupId);
 
-    HttpRequest httpRequest = retrieveGroupRequestBuilder(groupId);
+    HttpRequest httpRequest = getRequestBuilder(groupId);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<Group> localVarReturnType = new TypeReference<Group>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<Group>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -468,16 +413,15 @@ public class GroupsApi {
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest retrieveGroupRequestBuilder(String groupId) throws ApiException {
+  private HttpRequest getRequestBuilder(String groupId) throws ApiException {
     // verify the required parameter 'this.servicePlanId' is set
     if (this.servicePlanId == null) {
       throw new ApiException(
-          400, "Missing the required parameter 'this.servicePlanId' when calling retrieveGroup");
+          400, "Missing the required parameter 'this.servicePlanId' when calling get");
     }
     // verify the required parameter 'groupId' is set
     if (groupId == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'groupId' when calling retrieveGroup");
+      throw new ApiException(400, "Missing the required parameter 'groupId' when calling get");
     }
 
     String localVarPath =
@@ -510,29 +454,10 @@ public class GroupsApi {
         localVarAuthNames);
   }
 
-  /**
-   * Update a group With the update group operation, you can add and remove members in an existing
-   * group as well as rename the group. This method encompasses a few ways to update a group: 1. By
-   * using &#x60;add&#x60; and &#x60;remove&#x60; arrays containing phone numbers, you control the
-   * group movements. Any list of valid numbers in E.164 format can be added. 2. By using the
-   * &#x60;auto_update&#x60; object, your customer can add or remove themselves from groups. 3. You
-   * can also add or remove other groups into this group with &#x60;add_from_group&#x60; and
-   * &#x60;remove_from_group&#x60;. #### Other group update info - The request will not be rejected
-   * for duplicate adds or unknown removes. - The additions will be done before the deletions. If an
-   * phone number is on both lists, it will not be apart of the resulting group. - Updating a group
-   * targeted by a batch message scheduled in the future is allowed. Changes will be reflected when
-   * the batch is sent.
-   *
-   * @param groupId ID of a group that you are interested in getting. (required)
-   * @param groupUpdateRequest (optional)
-   * @return Group
-   * @throws ApiException if fails to make API call
-   */
-  public Group updateGroup(String groupId, GroupUpdateRequest groupUpdateRequest)
-      throws ApiException {
+  public Group update(String groupId, GroupUpdateRequest groupUpdateRequest) throws ApiException {
 
     LOGGER.finest(
-        "[updateGroup]"
+        "[update]"
             + " "
             + "groupId: "
             + groupId
@@ -540,14 +465,13 @@ public class GroupsApi {
             + "groupUpdateRequest: "
             + groupUpdateRequest);
 
-    HttpRequest httpRequest = updateGroupRequestBuilder(groupId, groupUpdateRequest);
+    HttpRequest httpRequest = updateRequestBuilder(groupId, groupUpdateRequest);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<Group> localVarReturnType = new TypeReference<Group>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<Group>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -558,17 +482,16 @@ public class GroupsApi {
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest updateGroupRequestBuilder(
-      String groupId, GroupUpdateRequest groupUpdateRequest) throws ApiException {
+  private HttpRequest updateRequestBuilder(String groupId, GroupUpdateRequest groupUpdateRequest)
+      throws ApiException {
     // verify the required parameter 'this.servicePlanId' is set
     if (this.servicePlanId == null) {
       throw new ApiException(
-          400, "Missing the required parameter 'this.servicePlanId' when calling updateGroup");
+          400, "Missing the required parameter 'this.servicePlanId' when calling update");
     }
     // verify the required parameter 'groupId' is set
     if (groupId == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'groupId' when calling updateGroup");
+      throw new ApiException(400, "Missing the required parameter 'groupId' when calling update");
     }
 
     String localVarPath =

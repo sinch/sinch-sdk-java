@@ -36,7 +36,7 @@ public class ApiGroupListImpl implements ApiGroupList {
 
   public static final String JSON_PROPERTY_GROUPS = "groups";
 
-  private OptionalValue<List<Group>> groups;
+  private OptionalValue<List<Group>> items;
 
   public ApiGroupListImpl() {}
 
@@ -44,11 +44,11 @@ public class ApiGroupListImpl implements ApiGroupList {
       OptionalValue<Integer> page,
       OptionalValue<Integer> pageSize,
       OptionalValue<Integer> count,
-      OptionalValue<List<Group>> groups) {
+      OptionalValue<List<Group>> items) {
     this.page = page;
     this.pageSize = pageSize;
     this.count = count;
-    this.groups = groups;
+    this.items = items;
   }
 
   @JsonIgnore
@@ -85,14 +85,14 @@ public class ApiGroupListImpl implements ApiGroupList {
   }
 
   @JsonIgnore
-  public List<Group> getGroups() {
-    return groups.orElse(null);
+  public List<Group> getItems() {
+    return items.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_GROUPS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<List<Group>> groups() {
-    return groups;
+  public OptionalValue<List<Group>> items() {
+    return items;
   }
 
   /** Return true if this ApiGroupList object is equal to o. */
@@ -108,12 +108,12 @@ public class ApiGroupListImpl implements ApiGroupList {
     return Objects.equals(this.page, apiGroupList.page)
         && Objects.equals(this.pageSize, apiGroupList.pageSize)
         && Objects.equals(this.count, apiGroupList.count)
-        && Objects.equals(this.groups, apiGroupList.groups);
+        && Objects.equals(this.items, apiGroupList.items);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(page, pageSize, count, groups);
+    return Objects.hash(page, pageSize, count, items);
   }
 
   @Override
@@ -123,7 +123,7 @@ public class ApiGroupListImpl implements ApiGroupList {
     sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    pageSize: ").append(toIndentedString(pageSize)).append("\n");
     sb.append("    count: ").append(toIndentedString(count)).append("\n");
-    sb.append("    groups: ").append(toIndentedString(groups)).append("\n");
+    sb.append("    items: ").append(toIndentedString(items)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -143,7 +143,7 @@ public class ApiGroupListImpl implements ApiGroupList {
     OptionalValue<Integer> page = OptionalValue.empty();
     OptionalValue<Integer> pageSize = OptionalValue.empty();
     OptionalValue<Integer> count = OptionalValue.empty();
-    OptionalValue<List<Group>> groups = OptionalValue.empty();
+    OptionalValue<List<Group>> items = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_PAGE)
     public Builder setPage(Integer page) {
@@ -164,13 +164,13 @@ public class ApiGroupListImpl implements ApiGroupList {
     }
 
     @JsonProperty(JSON_PROPERTY_GROUPS)
-    public Builder setGroups(List<Group> groups) {
-      this.groups = OptionalValue.of(groups);
+    public Builder setItems(List<Group> items) {
+      this.items = OptionalValue.of(items);
       return this;
     }
 
     public ApiGroupList build() {
-      return new ApiGroupListImpl(page, pageSize, count, groups);
+      return new ApiGroupListImpl(page, pageSize, count, items);
     }
   }
 }

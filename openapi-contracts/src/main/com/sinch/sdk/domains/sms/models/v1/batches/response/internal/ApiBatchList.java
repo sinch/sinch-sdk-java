@@ -35,9 +35,9 @@ public interface ApiBatchList {
   /**
    * The page of batches matching the given filters.
    *
-   * @return batches
+   * @return items
    */
-  List<BatchResponse> getBatches();
+  List<BatchResponse> getItems();
 
   /**
    * The number of entries returned in this request.
@@ -79,11 +79,11 @@ public interface ApiBatchList {
     /**
      * see getter
      *
-     * @param batches see getter
+     * @param items see getter
      * @return Current builder
-     * @see #getBatches
+     * @see #getItems
      */
-    Builder setBatches(List<BatchResponse> batches);
+    Builder setItems(List<BatchResponse> items);
 
     /**
      * see getter

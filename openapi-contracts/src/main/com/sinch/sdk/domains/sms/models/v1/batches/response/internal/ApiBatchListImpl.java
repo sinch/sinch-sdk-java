@@ -32,7 +32,7 @@ public class ApiBatchListImpl implements ApiBatchList {
 
   public static final String JSON_PROPERTY_BATCHES = "batches";
 
-  private OptionalValue<List<BatchResponse>> batches;
+  private OptionalValue<List<BatchResponse>> items;
 
   public static final String JSON_PROPERTY_PAGE_SIZE = "page_size";
 
@@ -43,11 +43,11 @@ public class ApiBatchListImpl implements ApiBatchList {
   protected ApiBatchListImpl(
       OptionalValue<Long> count,
       OptionalValue<Integer> page,
-      OptionalValue<List<BatchResponse>> batches,
+      OptionalValue<List<BatchResponse>> items,
       OptionalValue<Integer> pageSize) {
     this.count = count;
     this.page = page;
-    this.batches = batches;
+    this.items = items;
     this.pageSize = pageSize;
   }
 
@@ -74,14 +74,14 @@ public class ApiBatchListImpl implements ApiBatchList {
   }
 
   @JsonIgnore
-  public List<BatchResponse> getBatches() {
-    return batches.orElse(null);
+  public List<BatchResponse> getItems() {
+    return items.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_BATCHES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<List<BatchResponse>> batches() {
-    return batches;
+  public OptionalValue<List<BatchResponse>> items() {
+    return items;
   }
 
   @JsonIgnore
@@ -107,13 +107,13 @@ public class ApiBatchListImpl implements ApiBatchList {
     ApiBatchListImpl apiBatchList = (ApiBatchListImpl) o;
     return Objects.equals(this.count, apiBatchList.count)
         && Objects.equals(this.page, apiBatchList.page)
-        && Objects.equals(this.batches, apiBatchList.batches)
+        && Objects.equals(this.items, apiBatchList.items)
         && Objects.equals(this.pageSize, apiBatchList.pageSize);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(count, page, batches, pageSize);
+    return Objects.hash(count, page, items, pageSize);
   }
 
   @Override
@@ -122,7 +122,7 @@ public class ApiBatchListImpl implements ApiBatchList {
     sb.append("class ApiBatchListImpl {\n");
     sb.append("    count: ").append(toIndentedString(count)).append("\n");
     sb.append("    page: ").append(toIndentedString(page)).append("\n");
-    sb.append("    batches: ").append(toIndentedString(batches)).append("\n");
+    sb.append("    items: ").append(toIndentedString(items)).append("\n");
     sb.append("    pageSize: ").append(toIndentedString(pageSize)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -142,7 +142,7 @@ public class ApiBatchListImpl implements ApiBatchList {
   static class Builder implements ApiBatchList.Builder {
     OptionalValue<Long> count = OptionalValue.empty();
     OptionalValue<Integer> page = OptionalValue.empty();
-    OptionalValue<List<BatchResponse>> batches = OptionalValue.empty();
+    OptionalValue<List<BatchResponse>> items = OptionalValue.empty();
     OptionalValue<Integer> pageSize = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_COUNT)
@@ -158,8 +158,8 @@ public class ApiBatchListImpl implements ApiBatchList {
     }
 
     @JsonProperty(JSON_PROPERTY_BATCHES)
-    public Builder setBatches(List<BatchResponse> batches) {
-      this.batches = OptionalValue.of(batches);
+    public Builder setItems(List<BatchResponse> items) {
+      this.items = OptionalValue.of(items);
       return this;
     }
 
@@ -170,7 +170,7 @@ public class ApiBatchListImpl implements ApiBatchList {
     }
 
     public ApiBatchList build() {
-      return new ApiBatchListImpl(count, page, batches, pageSize);
+      return new ApiBatchListImpl(count, page, items, pageSize);
     }
   }
 }
