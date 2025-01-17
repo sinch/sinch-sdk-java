@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 @TestWithResources
 public class SendMimeEmailRequestTest extends BaseTest {
 
-  static Map<String, Object> expected;
+  public static Map<String, Object> expected;
   static File fileAttachment1;
   static File fileAttachment2;
 

@@ -3,7 +3,9 @@ package com.sinch.sdk.domains.mailgun.api.v1.adapters;
 import com.sinch.sdk.auth.adapters.BasicAuthManager;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
+import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.utils.StringUtil;
+import com.sinch.sdk.domains.mailgun.api.v1.EmailsService;
 import com.sinch.sdk.models.MailgunContext;
 import com.sinch.sdk.models.MailgunCredentials;
 import java.util.AbstractMap;
@@ -51,7 +53,9 @@ public class MailgunService implements com.sinch.sdk.domains.mailgun.api.v1.Mail
 
   public EmailsService emails() {
     if (null == this.emails) {
-      this.emails = new EmailsService(context, httpClient, authManagers);
+      this.emails =
+          new EmailsServiceImpl(
+              httpClient, context.getServer(), authManagers, HttpMapper.getInstance());
     }
     return this.emails;
   }
