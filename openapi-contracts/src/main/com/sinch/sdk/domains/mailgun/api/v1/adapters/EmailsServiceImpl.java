@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.mailgun.api.v1.internal;
+package com.sinch.sdk.domains.mailgun.api.v1.adapters;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sinch.sdk.core.exceptions.ApiException;
@@ -37,15 +37,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class EmailsApi {
+public class EmailsServiceImpl implements com.sinch.sdk.domains.mailgun.api.v1.EmailsService {
 
-  private static final Logger LOGGER = Logger.getLogger(EmailsApi.class.getName());
-  private HttpClient httpClient;
-  private ServerConfiguration serverConfiguration;
-  private Map<String, AuthManager> authManagersByOasSecuritySchemes;
-  private HttpMapper mapper;
+  private static final Logger LOGGER = Logger.getLogger(EmailsServiceImpl.class.getName());
+  private final HttpClient httpClient;
+  private final ServerConfiguration serverConfiguration;
+  private final Map<String, AuthManager> authManagersByOasSecuritySchemes;
+  private final HttpMapper mapper;
 
-  public EmailsApi(
+  public EmailsServiceImpl(
       HttpClient httpClient,
       ServerConfiguration serverConfiguration,
       Map<String, AuthManager> authManagersByOasSecuritySchemes,
@@ -56,15 +56,6 @@ public class EmailsApi {
     this.mapper = mapper;
   }
 
-  /**
-   * Retrieve a stored email Event(s) created from sending an email with Mailgun will contain a
-   * &#x60;storage.key&#x60; to use to retrieve the email.
-   *
-   * @param domainName Domain name that was used to send the email (required)
-   * @param storageKey Storage key from the emails associated events (required)
-   * @return GetStoredEmailResponse
-   * @throws ApiException if fails to make API call
-   */
   public GetStoredEmailResponse getStoredEmail(String domainName, String storageKey)
       throws ApiException {
 
@@ -83,9 +74,7 @@ public class EmailsApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<GetStoredEmailResponse> localVarReturnType =
-          new TypeReference<GetStoredEmailResponse>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<GetStoredEmailResponse>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -140,13 +129,6 @@ public class EmailsApi {
         localVarAuthNames);
   }
 
-  /**
-   * Get messages queue status Provides default and scheduled message queue information.
-   *
-   * @param name The name of the domain you want get sending queues from (required)
-   * @return SendingQueuesStatusResponse
-   * @throws ApiException if fails to make API call
-   */
   public SendingQueuesStatusResponse getSendingQueuesStatus(String name) throws ApiException {
 
     LOGGER.finest("[getSendingQueuesStatus]" + " " + "name: " + name);
@@ -157,9 +139,7 @@ public class EmailsApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<SendingQueuesStatusResponse> localVarReturnType =
-          new TypeReference<SendingQueuesStatusResponse>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<SendingQueuesStatusResponse>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -203,17 +183,6 @@ public class EmailsApi {
         localVarAuthNames);
   }
 
-  /**
-   * Send an email Pass the components of the messages such as To, From, Subject, HTML and text
-   * parts, attachments, etc. Mailgun will build a MIME representation of the message and send it.
-   * Note: In order to send you must provide one of the following parameters: &#39;text&#39;,
-   * &#39;html&#39;, &#39;amp-html&#39; or &#39;template&#39;
-   *
-   * @param domainName Domain name used to send the message (required)
-   * @param requestParameters Request parameters
-   * @return SendEmailResponse
-   * @throws ApiException if fails to make API call
-   */
   public SendEmailResponse sendEmail(String domainName, SendEmailRequest requestParameters)
       throws ApiException {
 
@@ -225,9 +194,7 @@ public class EmailsApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<SendEmailResponse> localVarReturnType =
-          new TypeReference<SendEmailResponse>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<SendEmailResponse>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -273,15 +240,6 @@ public class EmailsApi {
         localVarAuthNames);
   }
 
-  /**
-   * Send an email in MIME format Build a MIME string yourself using a MIME library for your
-   * programming language and submit it to Mailgun.
-   *
-   * @param domainName Domain name used to send the message (required)
-   * @param requestParameters Request parameters
-   * @return SendEmailResponse
-   * @throws ApiException if fails to make API call
-   */
   public SendEmailResponse sendMimeEmail(String domainName, SendMimeEmailRequest requestParameters)
       throws ApiException {
 
@@ -293,9 +251,7 @@ public class EmailsApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<SendEmailResponse> localVarReturnType =
-          new TypeReference<SendEmailResponse>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<SendEmailResponse>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -341,19 +297,6 @@ public class EmailsApi {
         localVarAuthNames);
   }
 
-  /**
-   * Delete scheduled and undelivered mail Deletes all scheduled and undelivered mail from the
-   * domain queue. This endpoint must be called on the storage API host and in the domain&#39;s
-   * region. e.g. https://storage-us-east4.api.mailgun.net/v3/example.com/envelopes The storage
-   * hosts are &#x60;storage-us-east4.api.mailgun.net&#x60;,
-   * &#x60;storage-us-west1.api.mailgun.net&#x60;, and
-   * &#x60;storage-europe-west1.api.mailgun.net&#x60;.
-   *
-   * @param domainName The name of the domain you want to delete envelope from (required)
-   * @param storageURL (required)
-   * @return GenericResponse
-   * @throws ApiException if fails to make API call
-   */
   public void purgeSendingQueue(String domainName, String storageURL) throws ApiException {
 
     LOGGER.finest(
