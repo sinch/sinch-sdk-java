@@ -20,6 +20,7 @@ import com.sinch.sdk.core.http.HttpRequestTest.HttpRequestMatcher;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameter.STYLE;
+import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.PaginationFillerHelper;
 import com.sinch.sdk.domains.sms.api.v1.InboundsService;
@@ -44,6 +45,8 @@ import org.mockito.Mock;
 public class InboundsServiceTest extends BaseTest {
 
   static final String SMS_AUTH_NAMES = "BearerAuth";
+  static final String SERVICE_PLAN_ID = "foo value";
+  static final String BATCH_ID = "foo batchID";
 
   @GivenTextResource("/domains/sms/v1/inbounds/InboundTextDto.json")
   String jsonTextMessageDto;
@@ -76,7 +79,11 @@ public class InboundsServiceTest extends BaseTest {
   public void initMocks() {
     service =
         new InboundsServiceImpl(
-            httpClient, serverConfiguration, authManagers, HttpMapper.getInstance(), "foovalue");
+            httpClient,
+            serverConfiguration,
+            authManagers,
+            HttpMapper.getInstance(),
+            SERVICE_PLAN_ID);
   }
 
   @Test
@@ -84,7 +91,10 @@ public class InboundsServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/xms/v1/foovalue/inbounds/foo%20binary%20batch%20id",
+            "/xms/v1/"
+                + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID)
+                + "/inbounds/"
+                + URLPathUtils.encodePathSegment(BATCH_ID),
             HttpMethod.GET,
             Collections.emptyList(),
             null,
@@ -101,7 +111,7 @@ public class InboundsServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    InboundMessage response = service.get("foo binary batch id");
+    InboundMessage response = service.get(BATCH_ID);
 
     TestHelpers.recursiveEquals(response, textMessageDto);
   }
@@ -111,7 +121,7 @@ public class InboundsServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/xms/v1/foovalue/inbounds",
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/inbounds",
             HttpMethod.GET,
             Collections.emptyList(),
             null,
@@ -168,7 +178,7 @@ public class InboundsServiceTest extends BaseTest {
 
     HttpRequest httpRequest0 =
         new HttpRequest(
-            "/xms/v1/foovalue/inbounds",
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/inbounds",
             HttpMethod.GET,
             urlParameters0,
             null,
@@ -178,7 +188,7 @@ public class InboundsServiceTest extends BaseTest {
             Collections.singletonList(SMS_AUTH_NAMES));
     HttpRequest httpRequest1 =
         new HttpRequest(
-            "/xms/v1/foovalue/inbounds",
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/inbounds",
             HttpMethod.GET,
             urlParameters1,
             null,
@@ -188,7 +198,7 @@ public class InboundsServiceTest extends BaseTest {
             Collections.singletonList(SMS_AUTH_NAMES));
     HttpRequest httpRequest2 =
         new HttpRequest(
-            "/xms/v1/foovalue/inbounds",
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/inbounds",
             HttpMethod.GET,
             urlParameters2,
             null,

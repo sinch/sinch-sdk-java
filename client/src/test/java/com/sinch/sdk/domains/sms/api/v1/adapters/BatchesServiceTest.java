@@ -20,6 +20,7 @@ import com.sinch.sdk.core.http.HttpRequestTest.HttpRequestMatcher;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameter.STYLE;
+import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.PaginationFillerHelper;
 import com.sinch.sdk.domains.sms.api.v1.BatchesService;
@@ -48,6 +49,9 @@ import org.mockito.Mock;
 public class BatchesServiceTest extends BaseTest {
 
   static final String SMS_AUTH_NAMES = "BearerAuth";
+
+  static final String SERVICE_PLAN_ID = "foo value";
+  static final String BATCH_ID = "foo batchID";
 
   @GivenJsonResource("/domains/sms/v1/batches/request/TextRequestDto.json")
   TextRequest textRequestDto;
@@ -95,7 +99,11 @@ public class BatchesServiceTest extends BaseTest {
   public void initMocks() {
     service =
         new BatchesServiceImpl(
-            httpClient, serverConfiguration, authManagers, HttpMapper.getInstance(), "foovalue");
+            httpClient,
+            serverConfiguration,
+            authManagers,
+            HttpMapper.getInstance(),
+            SERVICE_PLAN_ID);
   }
 
   @Test
@@ -103,7 +111,10 @@ public class BatchesServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/xms/v1/foovalue/batches/foo%20binary%20batch%20id",
+            "/xms/v1/"
+                + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID)
+                + "/batches/"
+                + URLPathUtils.encodePathSegment(BATCH_ID),
             HttpMethod.GET,
             Collections.emptyList(),
             null,
@@ -120,7 +131,7 @@ public class BatchesServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    BatchResponse response = service.get("foo binary batch id");
+    BatchResponse response = service.get(BATCH_ID);
 
     TestHelpers.recursiveEquals(response, textResponseDto);
   }
@@ -130,7 +141,7 @@ public class BatchesServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/xms/v1/foovalue/batches",
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/batches",
             HttpMethod.POST,
             Collections.emptyList(),
             HttpMapper.getInstance()
@@ -159,7 +170,7 @@ public class BatchesServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/xms/v1/foovalue/batches/dry_run",
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/batches/dry_run",
             HttpMethod.POST,
             Collections.emptyList(),
             HttpMapper.getInstance()
@@ -196,7 +207,7 @@ public class BatchesServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/xms/v1/foovalue/batches/dry_run",
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/batches/dry_run",
             HttpMethod.POST,
             urlParameters,
             HttpMapper.getInstance()
@@ -225,7 +236,7 @@ public class BatchesServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/xms/v1/foovalue/batches",
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/batches",
             HttpMethod.GET,
             Collections.emptyList(),
             null,
@@ -282,7 +293,7 @@ public class BatchesServiceTest extends BaseTest {
 
     HttpRequest httpRequest0 =
         new HttpRequest(
-            "/xms/v1/foovalue/batches",
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/batches",
             HttpMethod.GET,
             urlParametersPage0,
             null,
@@ -293,7 +304,7 @@ public class BatchesServiceTest extends BaseTest {
 
     HttpRequest httpRequest1 =
         new HttpRequest(
-            "/xms/v1/foovalue/batches",
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/batches",
             HttpMethod.GET,
             urlParametersPage1,
             null,
@@ -304,7 +315,7 @@ public class BatchesServiceTest extends BaseTest {
 
     HttpRequest httpRequest2 =
         new HttpRequest(
-            "/xms/v1/foovalue/batches",
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/batches",
             HttpMethod.GET,
             urlParametersPage2,
             null,
@@ -371,7 +382,10 @@ public class BatchesServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/xms/v1/foovalue/batches/foo%20text%20batch%20id",
+            "/xms/v1/"
+                + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID)
+                + "/batches/"
+                + URLPathUtils.encodePathSegment(BATCH_ID),
             HttpMethod.POST,
             Collections.emptyList(),
             HttpMapper.getInstance()
@@ -391,7 +405,7 @@ public class BatchesServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    BatchResponse response = service.update("foo text batch id", updateTextRequestDto);
+    BatchResponse response = service.update(BATCH_ID, updateTextRequestDto);
 
     TestHelpers.recursiveEquals(response, textResponseDto);
   }
@@ -401,7 +415,10 @@ public class BatchesServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/xms/v1/foovalue/batches/foo%20text%20batch%20id",
+            "/xms/v1/"
+                + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID)
+                + "/batches/"
+                + URLPathUtils.encodePathSegment(BATCH_ID),
             HttpMethod.PUT,
             Collections.emptyList(),
             HttpMapper.getInstance()
@@ -420,7 +437,7 @@ public class BatchesServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    BatchResponse response = service.replace("foo text batch id", textRequestDto);
+    BatchResponse response = service.replace(BATCH_ID, textRequestDto);
 
     TestHelpers.recursiveEquals(response, textResponseDto);
   }
@@ -430,7 +447,10 @@ public class BatchesServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/xms/v1/foovalue/batches/foo%20text%20batch%20id",
+            "/xms/v1/"
+                + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID)
+                + "/batches/"
+                + URLPathUtils.encodePathSegment(BATCH_ID),
             HttpMethod.DELETE,
             Collections.emptyList(),
             null,
@@ -447,7 +467,7 @@ public class BatchesServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    BatchResponse response = service.cancel("foo text batch id");
+    BatchResponse response = service.cancel(BATCH_ID);
 
     TestHelpers.recursiveEquals(response, textResponseDto);
   }
@@ -457,7 +477,11 @@ public class BatchesServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/xms/v1/foovalue/batches/foo%20text%20batch%20id/delivery_feedback",
+            "/xms/v1/"
+                + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID)
+                + "/batches/"
+                + URLPathUtils.encodePathSegment(BATCH_ID)
+                + "/delivery_feedback",
             HttpMethod.POST,
             Collections.emptyList(),
             HttpMapper.getInstance()
@@ -476,6 +500,6 @@ public class BatchesServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    service.sendDeliveryFeedback("foo text batch id", sendDeliveryFeedbackRequestDto);
+    service.sendDeliveryFeedback(BATCH_ID, sendDeliveryFeedbackRequestDto);
   }
 }

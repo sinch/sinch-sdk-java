@@ -20,6 +20,7 @@ import com.sinch.sdk.core.http.HttpRequestTest.HttpRequestMatcher;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameter.STYLE;
+import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.PaginationFillerHelper;
 import com.sinch.sdk.domains.sms.api.v1.DeliveryReportsService;
@@ -45,6 +46,8 @@ import org.mockito.Mock;
 @TestWithResources
 class DeliveryReportsServiceTest extends BaseTest {
   static final String SMS_AUTH_NAMES = "BearerAuth";
+  static final String SERVICE_PLAN_ID = "foo value";
+  static final String BATCH_ID = "foo batchID";
 
   @GivenTextResource("/domains/sms/v1/deliveryreports/BatchDeliveryReportSMSDto.json")
   String jsonBatchDeliveryReportSMSDto;
@@ -88,7 +91,11 @@ class DeliveryReportsServiceTest extends BaseTest {
   public void initMocks() {
     service =
         new DeliveryReportsServiceImpl(
-            httpClient, serverConfiguration, authManagers, HttpMapper.getInstance(), "foovalue");
+            httpClient,
+            serverConfiguration,
+            authManagers,
+            HttpMapper.getInstance(),
+            SERVICE_PLAN_ID);
   }
 
   @Test
@@ -96,7 +103,11 @@ class DeliveryReportsServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/xms/v1/foovalue/batches/foo%20binary%20batch%20id/delivery_report",
+            "/xms/v1/"
+                + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID)
+                + "/batches/"
+                + URLPathUtils.encodePathSegment(BATCH_ID)
+                + "/delivery_report",
             HttpMethod.GET,
             Collections.emptyList(),
             null,
@@ -114,7 +125,7 @@ class DeliveryReportsServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    BatchDeliveryReport response = service.get("foo binary batch id");
+    BatchDeliveryReport response = service.get(BATCH_ID);
 
     TestHelpers.recursiveEquals(response, batchDeliveryReportSMSDto);
   }
@@ -124,7 +135,12 @@ class DeliveryReportsServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/xms/v1/foovalue/batches/foo%20binary%20batch%20id/delivery_report/foo%20number",
+            "/xms/v1/"
+                + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID)
+                + "/batches/"
+                + URLPathUtils.encodePathSegment(BATCH_ID)
+                + "/delivery_report/"
+                + URLPathUtils.encodePathSegment("+1234567890"),
             HttpMethod.GET,
             Collections.emptyList(),
             null,
@@ -142,7 +158,7 @@ class DeliveryReportsServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    RecipientDeliveryReport response = service.getForNumber("foo binary batch id", "foo number");
+    RecipientDeliveryReport response = service.getForNumber(BATCH_ID, "+1234567890");
 
     TestHelpers.recursiveEquals(response, recipientDeliveryReportMMSDto);
   }
@@ -152,7 +168,7 @@ class DeliveryReportsServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/xms/v1/foovalue/delivery_reports",
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/delivery_reports",
             HttpMethod.GET,
             Collections.emptyList(),
             null,
@@ -215,7 +231,7 @@ class DeliveryReportsServiceTest extends BaseTest {
 
     HttpRequest httpRequest0 =
         new HttpRequest(
-            "/xms/v1/foovalue/delivery_reports",
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/delivery_reports",
             HttpMethod.GET,
             urlParameters0,
             null,
@@ -225,7 +241,7 @@ class DeliveryReportsServiceTest extends BaseTest {
             Collections.singletonList(SMS_AUTH_NAMES));
     HttpRequest httpRequest1 =
         new HttpRequest(
-            "/xms/v1/foovalue/delivery_reports",
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/delivery_reports",
             HttpMethod.GET,
             urlParameters1,
             null,
@@ -235,7 +251,7 @@ class DeliveryReportsServiceTest extends BaseTest {
             Collections.singletonList(SMS_AUTH_NAMES));
     HttpRequest httpRequest2 =
         new HttpRequest(
-            "/xms/v1/foovalue/delivery_reports",
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/delivery_reports",
             HttpMethod.GET,
             urlParameters2,
             null,

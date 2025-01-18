@@ -20,6 +20,7 @@ import com.sinch.sdk.core.http.HttpRequestTest.HttpRequestMatcher;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameter.STYLE;
+import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.PaginationFillerHelper;
 import com.sinch.sdk.domains.sms.api.v1.GroupsService;
@@ -45,6 +46,9 @@ import org.mockito.Mock;
 class GroupsServiceTest extends BaseTest {
 
   static final String SMS_AUTH_NAMES = "BearerAuth";
+
+  static final String SERVICE_PLAN_ID = "foo value";
+  static final String GROUP_ID = "foo groupID";
 
   @GivenTextResource("/domains/sms/v1/groups/GroupDto.json")
   String jsonGroupDto;
@@ -76,7 +80,11 @@ class GroupsServiceTest extends BaseTest {
   public void initMocks() {
     service =
         new GroupsServiceImpl(
-            httpClient, serverConfiguration, authManagers, HttpMapper.getInstance(), "foovalue");
+            httpClient,
+            serverConfiguration,
+            authManagers,
+            HttpMapper.getInstance(),
+            SERVICE_PLAN_ID);
   }
 
   @Test
@@ -84,7 +92,10 @@ class GroupsServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/xms/v1/foovalue/groups/foo%20group%20ID",
+            "/xms/v1/"
+                + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID)
+                + "/groups/"
+                + URLPathUtils.encodePathSegment(GROUP_ID),
             HttpMethod.GET,
             Collections.emptyList(),
             null,
@@ -101,7 +112,7 @@ class GroupsServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    Group response = service.get("foo group ID");
+    Group response = service.get(GROUP_ID);
 
     TestHelpers.recursiveEquals(response, groupDto);
   }
@@ -111,7 +122,7 @@ class GroupsServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/xms/v1/foovalue/groups",
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/groups",
             HttpMethod.POST,
             Collections.emptyList(),
             HttpMapper.getInstance()
@@ -141,7 +152,7 @@ class GroupsServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/xms/v1/foovalue/groups",
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/groups",
             HttpMethod.GET,
             Collections.emptyList(),
             null,
@@ -177,7 +188,7 @@ class GroupsServiceTest extends BaseTest {
 
     HttpRequest httpRequest0 =
         new HttpRequest(
-            "/xms/v1/foovalue/groups",
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/groups",
             HttpMethod.GET,
             urlParameters0,
             null,
@@ -187,7 +198,7 @@ class GroupsServiceTest extends BaseTest {
             Collections.singletonList(SMS_AUTH_NAMES));
     HttpRequest httpRequest1 =
         new HttpRequest(
-            "/xms/v1/foovalue/groups",
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/groups",
             HttpMethod.GET,
             urlParameters1,
             null,
@@ -197,7 +208,7 @@ class GroupsServiceTest extends BaseTest {
             Collections.singletonList(SMS_AUTH_NAMES));
     HttpRequest httpRequest2 =
         new HttpRequest(
-            "/xms/v1/foovalue/groups",
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/groups",
             HttpMethod.GET,
             urlParameters2,
             null,
@@ -256,7 +267,10 @@ class GroupsServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/xms/v1/foovalue/groups/group%20id",
+            "/xms/v1/"
+                + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID)
+                + "/groups/"
+                + URLPathUtils.encodePathSegment(GROUP_ID),
             HttpMethod.PUT,
             Collections.emptyList(),
             HttpMapper.getInstance()
@@ -276,7 +290,7 @@ class GroupsServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    Group response = service.replace("group id", GroupRequest.builder().setName("foo").build());
+    Group response = service.replace(GROUP_ID, GroupRequest.builder().setName("foo").build());
 
     TestHelpers.recursiveEquals(response, groupDto);
   }
@@ -286,7 +300,10 @@ class GroupsServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/xms/v1/foovalue/groups/group%20id",
+            "/xms/v1/"
+                + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID)
+                + "/groups/"
+                + URLPathUtils.encodePathSegment(GROUP_ID),
             HttpMethod.POST,
             Collections.emptyList(),
             HttpMapper.getInstance()
@@ -306,7 +323,7 @@ class GroupsServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    Group response = service.update("group id", GroupUpdateRequestDtoTest.requestDTO);
+    Group response = service.update(GROUP_ID, GroupUpdateRequestDtoTest.requestDTO);
 
     TestHelpers.recursiveEquals(response, groupDto);
   }
@@ -316,7 +333,10 @@ class GroupsServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/xms/v1/foovalue/groups/group%20id",
+            "/xms/v1/"
+                + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID)
+                + "/groups/"
+                + URLPathUtils.encodePathSegment(GROUP_ID),
             HttpMethod.DELETE,
             Collections.emptyList(),
             null,
@@ -332,7 +352,7 @@ class GroupsServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    service.delete("group id");
+    service.delete(GROUP_ID);
   }
 
   @Test
@@ -340,7 +360,11 @@ class GroupsServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/xms/v1/foovalue/groups/group%20id/members",
+            "/xms/v1/"
+                + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID)
+                + "/groups/"
+                + URLPathUtils.encodePathSegment(GROUP_ID)
+                + "/members",
             HttpMethod.GET,
             Collections.emptyList(),
             null,
@@ -358,7 +382,7 @@ class GroupsServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    Collection<String> members = service.listMembers("group id");
+    Collection<String> members = service.listMembers(GROUP_ID);
     TestHelpers.recursiveEquals(members, new ArrayList<>(Arrays.asList("entry 1", "entry 2")));
   }
 }
