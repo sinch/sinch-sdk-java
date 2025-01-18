@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 @TestWithResources
 public class SendEmailRequestTest extends BaseTest {
 
-  static Map<String, Object> expectedEmailHtmlInline, expectedEmailHtmlInTemplate;
+  public static Map<String, Object> expectedEmailHtmlInline, expectedEmailHtmlInTemplate;
   static File fileAttachment1;
   static File fileAttachment2;
 
