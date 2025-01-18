@@ -16,6 +16,7 @@ import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpRequestTest.HttpRequestMatcher;
 import com.sinch.sdk.core.http.HttpResponse;
+import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.models.ServerConfigurationTest.ServerConfigurationMatcher;
 import com.sinch.sdk.domains.mailgun.api.v1.EmailsService;
@@ -68,7 +69,7 @@ class EmailsServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/v3/foo%20Domain/messages",
+            "/v3/" + URLPathUtils.encodePathSegment(domainName) + "/messages",
             HttpMethod.POST,
             Collections.emptyList(),
             SendEmailRequestTest.expectedEmailHtmlInline,
@@ -95,7 +96,7 @@ class EmailsServiceTest extends BaseTest {
   void sendMime() {
     HttpRequest httpRequest =
         new HttpRequest(
-            "/v3/foo%20Domain/messages.mime",
+            "/v3/" + URLPathUtils.encodePathSegment(domainName) + "/messages.mime",
             HttpMethod.POST,
             Collections.emptyList(),
             SendMimeEmailRequestTest.expected,
@@ -123,7 +124,9 @@ class EmailsServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/v3/domains/foo%20Domain/messages/foo%20StorageKey",
+            "/v3/domains/"
+                + URLPathUtils.encodePathSegment(domainName)
+                + "/messages/foo%20StorageKey",
             HttpMethod.GET,
             Collections.emptyList(),
             (Map) null,
@@ -149,7 +152,7 @@ class EmailsServiceTest extends BaseTest {
   void getSendingQueuesStatus() {
     HttpRequest httpRequest =
         new HttpRequest(
-            "/v3/domains/foo%20Domain/sending_queues",
+            "/v3/domains/" + URLPathUtils.encodePathSegment(domainName) + "/sending_queues",
             HttpMethod.GET,
             Collections.emptyList(),
             (Map) null,
@@ -178,7 +181,7 @@ class EmailsServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/v3/foo%20Domain/envelopes",
+            "/v3/" + URLPathUtils.encodePathSegment(domainName) + "/envelopes",
             HttpMethod.DELETE,
             Collections.emptyList(),
             (String) null,
