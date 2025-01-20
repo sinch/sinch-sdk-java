@@ -35,9 +35,9 @@ public interface ApiInboundList {
   /**
    * The page of inbounds matching the given filters.
    *
-   * @return inbounds
+   * @return items
    */
-  List<InboundMessage> getInbounds();
+  List<InboundMessage> getItems();
 
   /**
    * The number of inbounds returned in this request.
@@ -79,11 +79,11 @@ public interface ApiInboundList {
     /**
      * see getter
      *
-     * @param inbounds see getter
+     * @param items see getter
      * @return Current builder
-     * @see #getInbounds
+     * @see #getItems
      */
-    Builder setInbounds(List<InboundMessage> inbounds);
+    Builder setItems(List<InboundMessage> items);
 
     /**
      * see getter

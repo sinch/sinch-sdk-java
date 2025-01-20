@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.sms.api.v1.internal;
+package com.sinch.sdk.domains.sms.api.v1.adapters;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sinch.sdk.core.databind.query_parameter.CollectionStringToCommaSerializer;
@@ -26,9 +26,12 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameterUtils;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.domains.sms.models.v1.inbounds.InboundMessage;
 import com.sinch.sdk.domains.sms.models.v1.inbounds.request.ListInboundMessagesQueryParameters;
+import com.sinch.sdk.domains.sms.models.v1.inbounds.response.ListInboundsResponse;
 import com.sinch.sdk.domains.sms.models.v1.inbounds.response.internal.ApiInboundList;
+import com.sinch.sdk.domains.sms.models.v1.internal.SMSCursorPageNavigator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -37,17 +40,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class InboundsApi {
+public class InboundsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.InboundsService {
 
-  private static final Logger LOGGER = Logger.getLogger(InboundsApi.class.getName());
-  private HttpClient httpClient;
-  private ServerConfiguration serverConfiguration;
-  private Map<String, AuthManager> authManagersByOasSecuritySchemes;
-  private HttpMapper mapper;
+  private static final Logger LOGGER = Logger.getLogger(InboundsServiceImpl.class.getName());
+  private final HttpClient httpClient;
+  private final ServerConfiguration serverConfiguration;
+  private final Map<String, AuthManager> authManagersByOasSecuritySchemes;
+  private final HttpMapper mapper;
 
   private final String servicePlanId;
 
-  public InboundsApi(
+  public InboundsServiceImpl(
       HttpClient httpClient,
       ServerConfiguration serverConfiguration,
       Map<String, AuthManager> authManagersByOasSecuritySchemes,
@@ -60,29 +63,12 @@ public class InboundsApi {
     this.servicePlanId = servicePlanId;
   }
 
-  /**
-   * List incoming messages With the list operation, you can list all inbound messages that you have
-   * received. This operation supports pagination. Inbounds are returned in reverse chronological
-   * order.
-   *
-   * @return ApiInboundList
-   * @throws ApiException if fails to make API call
-   */
-  public ApiInboundList list() throws ApiException {
+  public ListInboundsResponse list() throws ApiException {
 
     return list(null);
   }
 
-  /**
-   * List incoming messages With the list operation, you can list all inbound messages that you have
-   * received. This operation supports pagination. Inbounds are returned in reverse chronological
-   * order.
-   *
-   * @param queryParameter (optional)
-   * @return ApiInboundList
-   * @throws ApiException if fails to make API call
-   */
-  public ApiInboundList list(ListInboundMessagesQueryParameters queryParameter)
+  public ListInboundsResponse list(ListInboundMessagesQueryParameters queryParameter)
       throws ApiException {
 
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
@@ -93,8 +79,16 @@ public class InboundsApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<ApiInboundList> localVarReturnType = new TypeReference<ApiInboundList>() {};
-      return mapper.deserialize(response, localVarReturnType);
+
+      ApiInboundList deserialized =
+          mapper.deserialize(response, new TypeReference<ApiInboundList>() {});
+
+      return new ListInboundsResponse(
+          this,
+          new Page<>(
+              queryParameter,
+              deserialized.getItems(),
+              new SMSCursorPageNavigator(deserialized.getPage(), deserialized.getPageSize())));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -186,14 +180,6 @@ public class InboundsApi {
         localVarAuthNames);
   }
 
-  /**
-   * Retrieve inbound message This operation retrieves a specific inbound message with the provided
-   * inbound ID.
-   *
-   * @param inboundId The inbound ID found when listing inbound messages. (required)
-   * @return InboundMessage
-   * @throws ApiException if fails to make API call
-   */
   public InboundMessage get(String inboundId) throws ApiException {
 
     LOGGER.finest("[get]" + " " + "inboundId: " + inboundId);
@@ -204,8 +190,7 @@ public class InboundsApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<InboundMessage> localVarReturnType = new TypeReference<InboundMessage>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<InboundMessage>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

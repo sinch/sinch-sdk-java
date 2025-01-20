@@ -40,11 +40,11 @@ public interface ApiGroupList {
   Integer getCount();
 
   /**
-   * Get groups
+   * Get items
    *
-   * @return groups
+   * @return items
    */
-  List<Group> getGroups();
+  List<Group> getItems();
 
   /**
    * Getting builder
@@ -88,11 +88,11 @@ public interface ApiGroupList {
     /**
      * see getter
      *
-     * @param groups see getter
+     * @param items see getter
      * @return Current builder
-     * @see #getGroups
+     * @see #getItems
      */
-    Builder setGroups(List<Group> groups);
+    Builder setItems(List<Group> items);
 
     /**
      * Create instance

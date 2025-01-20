@@ -42,9 +42,9 @@ public interface DeliveryReportList {
   /**
    * The page of delivery reports matching the given filters.
    *
-   * @return deliveryReports
+   * @return items
    */
-  List<RecipientDeliveryReport> getDeliveryReports();
+  List<RecipientDeliveryReport> getItems();
 
   /**
    * Getting builder
@@ -88,11 +88,11 @@ public interface DeliveryReportList {
     /**
      * see getter
      *
-     * @param deliveryReports see getter
+     * @param items see getter
      * @return Current builder
-     * @see #getDeliveryReports
+     * @see #getItems
      */
-    Builder setDeliveryReports(List<RecipientDeliveryReport> deliveryReports);
+    Builder setItems(List<RecipientDeliveryReport> items);
 
     /**
      * Create instance

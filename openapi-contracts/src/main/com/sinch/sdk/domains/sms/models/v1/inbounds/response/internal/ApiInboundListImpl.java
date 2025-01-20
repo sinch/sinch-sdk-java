@@ -32,7 +32,7 @@ public class ApiInboundListImpl implements ApiInboundList {
 
   public static final String JSON_PROPERTY_INBOUNDS = "inbounds";
 
-  private OptionalValue<List<InboundMessage>> inbounds;
+  private OptionalValue<List<InboundMessage>> items;
 
   public static final String JSON_PROPERTY_PAGE_SIZE = "page_size";
 
@@ -43,11 +43,11 @@ public class ApiInboundListImpl implements ApiInboundList {
   protected ApiInboundListImpl(
       OptionalValue<Long> count,
       OptionalValue<Integer> page,
-      OptionalValue<List<InboundMessage>> inbounds,
+      OptionalValue<List<InboundMessage>> items,
       OptionalValue<Integer> pageSize) {
     this.count = count;
     this.page = page;
-    this.inbounds = inbounds;
+    this.items = items;
     this.pageSize = pageSize;
   }
 
@@ -74,14 +74,14 @@ public class ApiInboundListImpl implements ApiInboundList {
   }
 
   @JsonIgnore
-  public List<InboundMessage> getInbounds() {
-    return inbounds.orElse(null);
+  public List<InboundMessage> getItems() {
+    return items.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_INBOUNDS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<List<InboundMessage>> inbounds() {
-    return inbounds;
+  public OptionalValue<List<InboundMessage>> items() {
+    return items;
   }
 
   @JsonIgnore
@@ -107,13 +107,13 @@ public class ApiInboundListImpl implements ApiInboundList {
     ApiInboundListImpl apiInboundList = (ApiInboundListImpl) o;
     return Objects.equals(this.count, apiInboundList.count)
         && Objects.equals(this.page, apiInboundList.page)
-        && Objects.equals(this.inbounds, apiInboundList.inbounds)
+        && Objects.equals(this.items, apiInboundList.items)
         && Objects.equals(this.pageSize, apiInboundList.pageSize);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(count, page, inbounds, pageSize);
+    return Objects.hash(count, page, items, pageSize);
   }
 
   @Override
@@ -122,7 +122,7 @@ public class ApiInboundListImpl implements ApiInboundList {
     sb.append("class ApiInboundListImpl {\n");
     sb.append("    count: ").append(toIndentedString(count)).append("\n");
     sb.append("    page: ").append(toIndentedString(page)).append("\n");
-    sb.append("    inbounds: ").append(toIndentedString(inbounds)).append("\n");
+    sb.append("    items: ").append(toIndentedString(items)).append("\n");
     sb.append("    pageSize: ").append(toIndentedString(pageSize)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -142,7 +142,7 @@ public class ApiInboundListImpl implements ApiInboundList {
   static class Builder implements ApiInboundList.Builder {
     OptionalValue<Long> count = OptionalValue.empty();
     OptionalValue<Integer> page = OptionalValue.empty();
-    OptionalValue<List<InboundMessage>> inbounds = OptionalValue.empty();
+    OptionalValue<List<InboundMessage>> items = OptionalValue.empty();
     OptionalValue<Integer> pageSize = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_COUNT)
@@ -158,8 +158,8 @@ public class ApiInboundListImpl implements ApiInboundList {
     }
 
     @JsonProperty(JSON_PROPERTY_INBOUNDS)
-    public Builder setInbounds(List<InboundMessage> inbounds) {
-      this.inbounds = OptionalValue.of(inbounds);
+    public Builder setItems(List<InboundMessage> items) {
+      this.items = OptionalValue.of(items);
       return this;
     }
 
@@ -170,7 +170,7 @@ public class ApiInboundListImpl implements ApiInboundList {
     }
 
     public ApiInboundList build() {
-      return new ApiInboundListImpl(count, page, inbounds, pageSize);
+      return new ApiInboundListImpl(count, page, items, pageSize);
     }
   }
 }

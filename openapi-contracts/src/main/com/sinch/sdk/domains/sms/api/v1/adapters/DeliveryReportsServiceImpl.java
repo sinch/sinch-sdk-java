@@ -8,9 +8,10 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.sms.api.v1.internal;
+package com.sinch.sdk.domains.sms.api.v1.adapters;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.sinch.sdk.core.databind.query_parameter.InstantToIso8601Serializer;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.exceptions.ApiExceptionBuilder;
 import com.sinch.sdk.core.http.AuthManager;
@@ -24,11 +25,14 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameterUtils;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.BatchDeliveryReport;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.RecipientDeliveryReport;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.request.BatchDeliveryReportQueryParameters;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.request.ListDeliveryReportsQueryParameters;
+import com.sinch.sdk.domains.sms.models.v1.deliveryreports.response.ListDeliveryReportsResponse;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.response.internal.DeliveryReportList;
+import com.sinch.sdk.domains.sms.models.v1.internal.SMSCursorPageNavigator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -37,17 +41,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class DeliveryReportsApi {
+public class DeliveryReportsServiceImpl
+    implements com.sinch.sdk.domains.sms.api.v1.DeliveryReportsService {
 
-  private static final Logger LOGGER = Logger.getLogger(DeliveryReportsApi.class.getName());
-  private HttpClient httpClient;
-  private ServerConfiguration serverConfiguration;
-  private Map<String, AuthManager> authManagersByOasSecuritySchemes;
-  private HttpMapper mapper;
+  private static final Logger LOGGER = Logger.getLogger(DeliveryReportsServiceImpl.class.getName());
+  private final HttpClient httpClient;
+  private final ServerConfiguration serverConfiguration;
+  private final Map<String, AuthManager> authManagersByOasSecuritySchemes;
+  private final HttpMapper mapper;
 
   private final String servicePlanId;
 
-  public DeliveryReportsApi(
+  public DeliveryReportsServiceImpl(
       HttpClient httpClient,
       ServerConfiguration serverConfiguration,
       Map<String, AuthManager> authManagersByOasSecuritySchemes,
@@ -60,32 +65,11 @@ public class DeliveryReportsApi {
     this.servicePlanId = servicePlanId;
   }
 
-  /**
-   * Retrieve a delivery report Delivery reports can be retrieved even if no callback was requested.
-   * The difference between a summary and a full report is only that the full report contains the
-   * phone numbers in [E.164](https://community.sinch.com/t5/Glossary/E-164/ta-p/7537) format for
-   * each status code.
-   *
-   * @param batchId The batch ID you received from sending a message. (required)
-   * @return BatchDeliveryReport
-   * @throws ApiException if fails to make API call
-   */
   public BatchDeliveryReport get(String batchId) throws ApiException {
 
     return get(batchId, null);
   }
 
-  /**
-   * Retrieve a delivery report Delivery reports can be retrieved even if no callback was requested.
-   * The difference between a summary and a full report is only that the full report contains the
-   * phone numbers in [E.164](https://community.sinch.com/t5/Glossary/E-164/ta-p/7537) format for
-   * each status code.
-   *
-   * @param batchId The batch ID you received from sending a message. (required)
-   * @param queryParameter (optional)
-   * @return BatchDeliveryReport
-   * @throws ApiException if fails to make API call
-   */
   public BatchDeliveryReport get(String batchId, BatchDeliveryReportQueryParameters queryParameter)
       throws ApiException {
 
@@ -98,9 +82,7 @@ public class DeliveryReportsApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<BatchDeliveryReport> localVarReturnType =
-          new TypeReference<BatchDeliveryReport>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<BatchDeliveryReport>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -169,15 +151,6 @@ public class DeliveryReportsApi {
         localVarAuthNames);
   }
 
-  /**
-   * Retrieve a recipient delivery report A recipient delivery report contains the message status
-   * for a single recipient phone number.
-   *
-   * @param batchId The batch ID you received from sending a message. (required)
-   * @param recipientMsisdn Phone number for which you to want to search. (required)
-   * @return RecipientDeliveryReport
-   * @throws ApiException if fails to make API call
-   */
   public RecipientDeliveryReport getForNumber(String batchId, String recipientMsisdn)
       throws ApiException {
 
@@ -196,9 +169,7 @@ public class DeliveryReportsApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<RecipientDeliveryReport> localVarReturnType =
-          new TypeReference<RecipientDeliveryReport>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<RecipientDeliveryReport>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -260,27 +231,12 @@ public class DeliveryReportsApi {
         localVarAuthNames);
   }
 
-  /**
-   * Retrieve a list of delivery reports Get a list of finished delivery reports. This operation
-   * supports pagination.
-   *
-   * @return DeliveryReportList
-   * @throws ApiException if fails to make API call
-   */
-  public DeliveryReportList list() throws ApiException {
+  public ListDeliveryReportsResponse list() throws ApiException {
 
     return list(null);
   }
 
-  /**
-   * Retrieve a list of delivery reports Get a list of finished delivery reports. This operation
-   * supports pagination.
-   *
-   * @param queryParameter (optional)
-   * @return DeliveryReportList
-   * @throws ApiException if fails to make API call
-   */
-  public DeliveryReportList list(ListDeliveryReportsQueryParameters queryParameter)
+  public ListDeliveryReportsResponse list(ListDeliveryReportsQueryParameters queryParameter)
       throws ApiException {
 
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
@@ -291,9 +247,16 @@ public class DeliveryReportsApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<DeliveryReportList> localVarReturnType =
-          new TypeReference<DeliveryReportList>() {};
-      return mapper.deserialize(response, localVarReturnType);
+
+      DeliveryReportList deserialized =
+          mapper.deserialize(response, new TypeReference<DeliveryReportList>() {});
+
+      return new ListDeliveryReportsResponse(
+          this,
+          new Page<>(
+              queryParameter,
+              deserialized.getItems(),
+              new SMSCursorPageNavigator(deserialized.getPage(), deserialized.getPageSize())));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -336,7 +299,7 @@ public class DeliveryReportsApi {
           queryParameter.getStartDate(),
           "start_date",
           URLParameter.form,
-          null,
+          InstantToIso8601Serializer.getInstance(),
           localVarQueryParams,
           true);
 
@@ -344,7 +307,7 @@ public class DeliveryReportsApi {
           queryParameter.getEndDate(),
           "end_date",
           URLParameter.form,
-          null,
+          InstantToIso8601Serializer.getInstance(),
           localVarQueryParams,
           true);
 

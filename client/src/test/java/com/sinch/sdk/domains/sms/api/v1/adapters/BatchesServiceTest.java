@@ -1,349 +1,197 @@
 package com.sinch.sdk.domains.sms.api.v1.adapters;
 
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
+import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.sms.api.v1.internal.BatchesApi;
-import com.sinch.sdk.domains.sms.models.v1.batches.DeliveryReportType;
-import com.sinch.sdk.domains.sms.models.v1.batches.MediaBody;
-import com.sinch.sdk.domains.sms.models.v1.batches.MediaBodyDtoTest;
-import com.sinch.sdk.domains.sms.models.v1.batches.request.BinaryRequest;
+import com.sinch.sdk.core.http.HttpContentType;
+import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.core.http.HttpMethod;
+import com.sinch.sdk.core.http.HttpRequest;
+import com.sinch.sdk.core.http.HttpRequestTest.HttpRequestMatcher;
+import com.sinch.sdk.core.http.HttpResponse;
+import com.sinch.sdk.core.http.URLParameter;
+import com.sinch.sdk.core.http.URLParameter.STYLE;
+import com.sinch.sdk.core.http.URLPathUtils;
+import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.domains.PaginationFillerHelper;
+import com.sinch.sdk.domains.sms.api.v1.BatchesService;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.DryRunQueryParameters;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesQueryParameters;
-import com.sinch.sdk.domains.sms.models.v1.batches.request.MediaRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.SendDeliveryFeedbackRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.TextRequest;
-import com.sinch.sdk.domains.sms.models.v1.batches.request.UpdateBinaryRequest;
-import com.sinch.sdk.domains.sms.models.v1.batches.request.UpdateMediaRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.UpdateTextRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.BatchResponse;
-import com.sinch.sdk.domains.sms.models.v1.batches.response.BinaryResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.DryRunResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.ListBatchesResponse;
-import com.sinch.sdk.domains.sms.models.v1.batches.response.MediaResponse;
-import com.sinch.sdk.domains.sms.models.v1.batches.response.TextResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.internal.ApiBatchList;
-import com.sinch.sdk.models.SmsContext;
 import java.time.Instant;
-import java.util.AbstractMap;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
 
 @TestWithResources
 public class BatchesServiceTest extends BaseTest {
 
-  static final String id = "01FC66621XXXXX119Z8PMV1QPQ";
-  static final List<String> to = Arrays.asList("+15551231234", "+15551256344");
-  static final String from = "+15551231234";
-  static final boolean canceled = false;
-  static final Instant createdAt = Instant.parse("2019-08-24T14:15:22Z");
-  static final Instant modifiedAt = Instant.parse("2019-08-24T14:17:22Z");
-  static final DeliveryReportType deliveryReport = DeliveryReportType.NONE;
-  static final Instant sendAt = Instant.parse("2019-08-24T14:19:22Z");
-  static final Instant expireAt = Instant.parse("2019-08-24T14:21:22Z");
-  static final String callbackUrl = "callback url";
-  static final String clientReference = "myReference";
-  static final boolean flashMessage = true;
-  static final boolean feedbackEnabled = false;
-  static final boolean truncateConcat = true;
-  static final int maxNumberOfMessageParts = 1;
-  static final int fromTon = 6;
-  static final int fromNpi = 18;
-  static final String udh = "foo udh";
-  static final String body = "Hi ${name} ({an identifier}) ! How are you?";
-  public static final BinaryResponse batchBinary =
-      BinaryResponse.builder()
-          .setId(id)
-          .setTo(to)
-          .setFrom(from)
-          .setCanceled(canceled)
-          .setBody(body)
-          .setCreatedAt(createdAt)
-          .setModifiedAt(modifiedAt)
-          .setDeliveryReport(deliveryReport)
-          .setSendAt(sendAt)
-          .setExpireAt(expireAt)
-          .setCallbackUrl(callbackUrl)
-          .setClientReference(clientReference)
-          .setFeedbackEnabled(feedbackEnabled)
-          .setFromTon(fromTon)
-          .setFromNpi(fromNpi)
-          .setUdh(udh)
-          .build();
+  static final String SMS_AUTH_NAMES = "BearerAuth";
 
-  static final Map<String, String> anIdentifierParameters =
-      Stream.of(
-              new AbstractMap.SimpleEntry<>("15551231234", "an identifier value for 15551231234"),
-              new AbstractMap.SimpleEntry<>("15551256344", "an identifier value for 15551256344"))
-          .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+  static final String SERVICE_PLAN_ID = "foo value";
+  static final String BATCH_ID = "foo batchID";
 
-  static final Map<String, String> nameParameters =
-      Stream.of(
-              new AbstractMap.SimpleEntry<>("15551231234", "name value for 15551231234"),
-              new AbstractMap.SimpleEntry<>("15551256344", "name value for 15551256344"),
-              new AbstractMap.SimpleEntry<>("default", "default value"))
-          .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+  @GivenJsonResource("/domains/sms/v1/batches/request/TextRequestDto.json")
+  TextRequest textRequestDto;
 
-  static final Map<String, Map<String, String>> parameters =
-      Stream.of(
-              new AbstractMap.SimpleEntry<>("name", nameParameters),
-              new AbstractMap.SimpleEntry<>("an identifier", anIdentifierParameters))
-          .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-
-  public static final MediaResponse batchMedia =
-      MediaResponse.builder()
-          .setId(id)
-          .setTo(to)
-          .setFrom(from)
-          .setCanceled(canceled)
-          .setBody(
-              MediaBody.builder()
-                  .setSubject("subject field")
-                  .setUrl(
-                      "https://en.wikipedia.org/wiki/Sinch_(company)#/media/File:Sinch_LockUp_RGB.png")
-                  .setMessage("Hi ${name} ({an identifier}) ! How are you?")
-                  .build())
-          .setCreatedAt(Instant.parse("2019-08-24T14:14:22Z"))
-          .setModifiedAt(Instant.parse("2019-08-24T14:15:22Z"))
-          .setDeliveryReport(DeliveryReportType.SUMMARY)
-          .setSendAt(Instant.parse("2019-08-24T14:16:22Z"))
-          .setExpireAt(Instant.parse("2019-08-24T14:17:22Z"))
-          .setCallbackUrl(callbackUrl)
-          .setClientReference("client reference")
-          .setFeedbackEnabled(feedbackEnabled)
-          .setStrictValidation(true)
-          .setParameters(parameters)
-          .build();
-  public static final TextResponse batchText =
-      TextResponse.builder()
-          .setId(id)
-          .setTo(to)
-          .setFrom(from)
-          .setCanceled(canceled)
-          .setBody(body)
-          .setCreatedAt(createdAt)
-          .setModifiedAt(modifiedAt)
-          .setDeliveryReport(deliveryReport)
-          .setSendAt(sendAt)
-          .setExpireAt(expireAt)
-          .setCallbackUrl(callbackUrl)
-          .setClientReference(clientReference)
-          .setFlashMessage(flashMessage)
-          .setFeedbackEnabled(feedbackEnabled)
-          .setTruncateConcat(truncateConcat)
-          .setMaxNumberOfMessageParts(maxNumberOfMessageParts)
-          .setFromTon(fromTon)
-          .setFromNpi(fromNpi)
-          .setParameters(parameters)
-          .build();
-
-  public static final BinaryRequest sendSmsBatchBinaryRequest =
-      BinaryRequest.builder()
-          .setTo(to)
-          .setFrom(from)
-          .setBody(body)
-          .setDeliveryReport(deliveryReport)
-          .setSendAt(sendAt)
-          .setExpireAt(expireAt)
-          .setCallbackUrl(callbackUrl)
-          .setClientReference(clientReference)
-          .setFeedbackEnabled(feedbackEnabled)
-          .setFromTon(fromTon)
-          .setFromNpi(fromNpi)
-          .setUdh(udh)
-          .build();
-
-  public static final MediaRequest sendSmsBatchMediaRequest =
-      MediaRequest.builder()
-          .setTo(to)
-          .setFrom(from)
-          .setBody(
-              MediaBody.builder()
-                  .setUrl(
-                      "https://en.wikipedia.org/wiki/Sinch_(company)#/media/File:Sinch_LockUp_RGB.png")
-                  .setMessage("Hi ${name} ({an identifier}) ! How are you?")
-                  .build())
-          .setDeliveryReport(DeliveryReportType.SUMMARY)
-          .setSendAt(Instant.parse("2019-08-24T14:16:22Z"))
-          .setExpireAt(Instant.parse("2019-08-24T14:17:22Z"))
-          .setCallbackUrl(callbackUrl)
-          .setClientReference("client reference")
-          .setFeedbackEnabled(feedbackEnabled)
-          .setStrictValidation(true)
-          .setParameters(parameters)
-          .build();
-  public static final TextRequest sendSmsBatchTextRequest =
-      TextRequest.builder()
-          .setTo(to)
-          .setFrom(from)
-          .setBody(body)
-          .setDeliveryReport(deliveryReport)
-          .setSendAt(sendAt)
-          .setExpireAt(expireAt)
-          .setCallbackUrl(callbackUrl)
-          .setClientReference(clientReference)
-          .setFlashMessage(flashMessage)
-          .setFeedbackEnabled(feedbackEnabled)
-          .setTruncateConcat(truncateConcat)
-          .setMaxNumberOfMessageParts(maxNumberOfMessageParts)
-          .setFromTon(fromTon)
-          .setFromNpi(fromNpi)
-          .setParameters(parameters)
-          .build();
-
-  public static final UpdateTextRequest updateSmsBatchTextRequest =
-      UpdateTextRequest.builder()
-          .setToAdd(to)
-          .setFrom(from)
-          .setBody(body)
-          .setDeliveryReport(deliveryReport)
-          .setSendAt(sendAt)
-          .setExpireAt(expireAt)
-          .setCallbackUrl(callbackUrl)
-          .setParameters(parameters)
-          .build();
-
-  public static final UpdateMediaRequest updateSmsBatchMediaRequest =
-      UpdateMediaRequest.builder()
-          .setToRemove(to)
-          .setFrom(from)
-          .setBody(MediaBodyDtoTest.mediaBodyDto)
-          .setDeliveryReport(DeliveryReportType.SUMMARY)
-          .setSendAt(Instant.parse("2019-08-24T14:16:22Z"))
-          .setExpireAt(Instant.parse("2019-08-24T14:17:22Z"))
-          .setCallbackUrl(callbackUrl)
-          .setStrictValidation(true)
-          .setParameters(parameters)
-          .build();
-
-  public static final UpdateBinaryRequest updateSmsBatchBinaryRequest =
-      UpdateBinaryRequest.builder()
-          .setToAdd(Arrays.asList("+15551231234", "+15987365412"))
-          .setToRemove(Arrays.asList("+0123456789", "+9876543210"))
-          .setFrom(from)
-          .setBody(body)
-          .setDeliveryReport(DeliveryReportType.FULL)
-          .setSendAt(sendAt)
-          .setExpireAt(expireAt)
-          .setCallbackUrl(callbackUrl)
-          .setUdh(udh)
-          .build();
-
-  @GivenJsonResource("/domains/sms/v1/batches/response/BinaryResponseDto.json")
-  public BatchResponse binaryResponseDto;
-
-  @GivenJsonResource("/domains/sms/v1/batches/response/MediaResponseDto.json")
-  BatchResponse mediaResponseDto;
+  @GivenTextResource("/domains/sms/v1/batches/response/TextResponseDto.json")
+  String jsonTextResponseDto;
 
   @GivenJsonResource("/domains/sms/v1/batches/response/TextResponseDto.json")
   BatchResponse textResponseDto;
 
+  @GivenTextResource("/domains/sms/v1/batches/response/DryRunResponseDto.json")
+  String jsonDryRunResponseDto;
+
   @GivenJsonResource("/domains/sms/v1/batches/response/DryRunResponseDto.json")
   DryRunResponse dryRunResponseDto;
+
+  @GivenTextResource("/domains/sms/v1/batches/response/ListBatchesResponseDtoPage0.json")
+  String jsonBatchesResponseDtoPage0;
 
   @GivenJsonResource("/domains/sms/v1/batches/response/ListBatchesResponseDtoPage0.json")
   ApiBatchList listBatchesResponseDtoPage0;
 
+  @GivenTextResource("/domains/sms/v1/batches/response/ListBatchesResponseDtoPage1.json")
+  String jsonBatchesResponseDtoPage1;
+
   @GivenJsonResource("/domains/sms/v1/batches/response/ListBatchesResponseDtoPage1.json")
   ApiBatchList listBatchesResponseDtoPage1;
 
-  @GivenJsonResource("/domains/sms/v1/batches/response/ListBatchesResponseDtoPage2.json")
-  ApiBatchList listBatchesResponseDtoPage2;
+  @GivenTextResource("/domains/sms/v1/batches/response/ListBatchesResponseDtoPage2.json")
+  String jsonBatchesResponseDtoPage2;
 
-  @Mock SmsContext context;
+  @GivenJsonResource("/domains/sms/v1/batches/request/UpdateTextRequestDto.json")
+  UpdateTextRequest updateTextRequestDto;
+
+  @GivenJsonResource("/domains/sms/v1/batches/request/SendDeliveryFeedbackRequestDto.json")
+  SendDeliveryFeedbackRequest sendDeliveryFeedbackRequestDto;
+
   @Mock HttpClient httpClient;
+  @Mock ServerConfiguration serverConfiguration;
   @Mock Map<String, AuthManager> authManagers;
-  @Mock BatchesApi api;
-  BatchesService service;
-  String uriPartID = "foovalue";
 
-  @Captor ArgumentCaptor<SendDeliveryFeedbackRequest> recipientsCaptor;
+  BatchesService service;
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new BatchesService(uriPartID, context, httpClient, authManagers));
-    doReturn(api).when(service).getApi();
+    service =
+        new BatchesServiceImpl(
+            httpClient,
+            serverConfiguration,
+            authManagers,
+            HttpMapper.getInstance(),
+            SERVICE_PLAN_ID);
   }
 
   @Test
-  void getBinary() throws ApiException {
+  void get() throws ApiException {
 
-    when(api.get(eq("foo binary batch id"))).thenReturn(binaryResponseDto);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/xms/v1/"
+                + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID)
+                + "/batches/"
+                + URLPathUtils.encodePathSegment(BATCH_ID),
+            HttpMethod.GET,
+            Collections.emptyList(),
+            null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonTextResponseDto.getBytes());
 
-    BatchResponse response = service.get("foo binary batch id");
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
-    TestHelpers.recursiveEquals(response, batchBinary);
+    BatchResponse response = service.get(BATCH_ID);
+
+    TestHelpers.recursiveEquals(response, textResponseDto);
   }
 
   @Test
-  void getMedia() throws ApiException {
+  void send() throws ApiException {
 
-    when(api.get(eq("foo media batch id"))).thenReturn(mediaResponseDto);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/batches",
+            HttpMethod.POST,
+            Collections.emptyList(),
+            HttpMapper.getInstance()
+                .serialize(
+                    Collections.singletonList(HttpContentType.APPLICATION_JSON), textRequestDto),
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonTextResponseDto.getBytes());
 
-    BatchResponse response = service.get("foo media batch id");
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
-    TestHelpers.recursiveEquals(response, batchMedia);
+    BatchResponse response = service.send(textRequestDto);
+
+    TestHelpers.recursiveEquals(response, textResponseDto);
   }
 
   @Test
-  void getText() throws ApiException {
+  void dryRunDefault() throws ApiException {
 
-    when(api.get(eq("foo text batch id"))).thenReturn(textResponseDto);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/batches/dry_run",
+            HttpMethod.POST,
+            Collections.emptyList(),
+            HttpMapper.getInstance()
+                .serialize(
+                    Collections.singletonList(HttpContentType.APPLICATION_JSON), textRequestDto),
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonDryRunResponseDto.getBytes());
 
-    BatchResponse response = service.get("foo text batch id");
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
-    TestHelpers.recursiveEquals(response, batchText);
-  }
+    DryRunResponse response = service.dryRun(textRequestDto);
 
-  @Test
-  void sendBinary() throws ApiException {
-
-    when(api.send(sendSmsBatchBinaryRequest)).thenReturn(binaryResponseDto);
-
-    BatchResponse response = service.send(sendSmsBatchBinaryRequest);
-
-    TestHelpers.recursiveEquals(response, batchBinary);
-  }
-
-  @Test
-  void sendMedia() throws ApiException {
-
-    when(api.send(sendSmsBatchMediaRequest)).thenReturn(mediaResponseDto);
-
-    BatchResponse response = service.send(sendSmsBatchMediaRequest);
-
-    TestHelpers.recursiveEquals(response, batchMedia);
-  }
-
-  @Test
-  void sendText() throws ApiException {
-
-    when(api.send(sendSmsBatchTextRequest)).thenReturn(textResponseDto);
-
-    BatchResponse response = service.send(sendSmsBatchTextRequest);
-
-    TestHelpers.recursiveEquals(response, batchText);
+    TestHelpers.recursiveEquals(response, dryRunResponseDto);
   }
 
   @Test
@@ -351,165 +199,307 @@ public class BatchesServiceTest extends BaseTest {
 
     DryRunQueryParameters queryParameters =
         DryRunQueryParameters.builder().setPerRecipient(true).setNumberOfRecipients(456).build();
-    when(api.dryRun(eq(queryParameters), eq(sendSmsBatchTextRequest)))
-        .thenReturn(dryRunResponseDto);
 
-    DryRunResponse response = service.dryRun(queryParameters, sendSmsBatchTextRequest);
+    Collection<URLParameter> urlParameters =
+        Arrays.asList(
+            new URLParameter("per_recipient", true, STYLE.FORM, true),
+            new URLParameter("number_of_recipients", 456, STYLE.FORM, true));
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/batches/dry_run",
+            HttpMethod.POST,
+            urlParameters,
+            HttpMapper.getInstance()
+                .serialize(
+                    Collections.singletonList(HttpContentType.APPLICATION_JSON), textRequestDto),
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonDryRunResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    DryRunResponse response = service.dryRun(queryParameters, textRequestDto);
 
     TestHelpers.recursiveEquals(response, dryRunResponseDto);
   }
 
   @Test
+  void listDefault() throws ApiException {
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/batches",
+            HttpMethod.GET,
+            Collections.emptyList(),
+            null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonBatchesResponseDtoPage0.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    ListBatchesResponse response = service.list();
+
+    TestHelpers.recursiveEquals(response.getContent(), listBatchesResponseDtoPage0.getItems());
+  }
+
+  @Test
   void list() throws ApiException {
 
-    ListBatchesQueryParameters initialRequest = ListBatchesQueryParameters.builder().build();
-    ListBatchesQueryParameters page1 = ListBatchesQueryParameters.builder().setPage(1).build();
-    ListBatchesQueryParameters page2 = ListBatchesQueryParameters.builder().setPage(2).build();
+    List<Object> commonParameters =
+        Arrays.asList(
+            "page_size",
+            2,
+            STYLE.FORM,
+            true,
+            "from",
+            "+1234567890",
+            STYLE.FORM,
+            true,
+            "start_date",
+            "2023-11-03T15:21:21.113Z",
+            STYLE.FORM,
+            true,
+            "end_date",
+            "2023-12-12T15:54:21.321Z",
+            STYLE.FORM,
+            true,
+            "client_reference",
+            "client reference",
+            STYLE.FORM,
+            true);
 
-    when(api.list(initialRequest)).thenReturn(listBatchesResponseDtoPage0);
-    when(api.list(page1)).thenReturn(listBatchesResponseDtoPage1);
-    when(api.list(page2)).thenReturn(listBatchesResponseDtoPage2);
+    Collection<URLParameter> urlParametersPage0 =
+        PaginationFillerHelper.parametersFiller("page", 0, STYLE.FORM, true, commonParameters);
+    Collection<URLParameter> urlParametersPage1 =
+        PaginationFillerHelper.parametersFiller("page", 1, STYLE.FORM, true, commonParameters);
+    Collection<URLParameter> urlParametersPage2 =
+        PaginationFillerHelper.parametersFiller("page", 2, STYLE.FORM, true, commonParameters);
+
+    HttpRequest httpRequest0 =
+        new HttpRequest(
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/batches",
+            HttpMethod.GET,
+            urlParametersPage0,
+            null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+
+    HttpRequest httpRequest1 =
+        new HttpRequest(
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/batches",
+            HttpMethod.GET,
+            urlParametersPage1,
+            null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+
+    HttpRequest httpRequest2 =
+        new HttpRequest(
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/batches",
+            HttpMethod.GET,
+            urlParametersPage2,
+            null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+
+    HttpResponse httpResponse0 =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonBatchesResponseDtoPage0.getBytes());
+    HttpResponse httpResponse1 =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonBatchesResponseDtoPage1.getBytes());
+    HttpResponse httpResponse2 =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonBatchesResponseDtoPage2.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest0))))
+        .thenReturn(httpResponse0);
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest1))))
+        .thenReturn(httpResponse1);
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest2))))
+        .thenReturn(httpResponse2);
+
+    ListBatchesQueryParameters initialRequest =
+        ListBatchesQueryParameters.builder()
+            .setPage(0)
+            .setPageSize(2)
+            .setFrom("+1234567890")
+            .setClientReference("client reference")
+            .setStartDate(Instant.parse("2023-11-03T15:21:21.113Z"))
+            .setEndDate(Instant.parse("2023-12-12T15:54:21.321Z"))
+            .build();
+
     ListBatchesResponse response = service.list(initialRequest);
 
     Iterator<BatchResponse> iterator = response.iterator();
-    BatchResponse batch = iterator.next();
-    Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
-    TestHelpers.recursiveEquals(
-        batch,
-        BinaryResponse.builder()
-            .setId("01HEAWCHESCXG8SDG5R10VF8E1")
-            .setTo(Collections.singletonList("339876543213"))
-            .setFrom("33123456789")
-            .setCanceled(false)
-            .setBody("the body")
-            .setCreatedAt(Instant.parse("2023-11-03T15:21:21.113Z"))
-            .setModifiedAt(Instant.parse("2023-11-03T15:21:21.568Z"))
-            .setDeliveryReport(DeliveryReportType.NONE)
-            .setExpireAt(Instant.parse("2023-11-06T15:21:21.973Z"))
-            .setClientReference("a client reference")
-            .setFeedbackEnabled(false)
-            .build());
 
-    batch = iterator.next();
+    BatchResponse item = iterator.next();
+    TestHelpers.recursiveEquals(item, listBatchesResponseDtoPage0.getItems().get(0));
     Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
-    TestHelpers.recursiveEquals(
-        batch,
-        TextResponse.builder()
-            .setId("01HEAC0AG69SVYYQ675VPYT28Q")
-            .setTo(Collections.singletonList("3300000000"))
-            .setCanceled(false)
-            .setBody("the body")
-            .setCreatedAt(Instant.parse("2023-11-03T10:35:03.558Z"))
-            .setModifiedAt(Instant.parse("2023-11-03T10:35:03.666Z"))
-            .setDeliveryReport(DeliveryReportType.NONE)
-            .setExpireAt(Instant.parse("2023-11-03T10:35:03.558Z"))
-            .setFeedbackEnabled(true)
-            .setFlashMessage(false)
-            .build());
 
-    batch = iterator.next();
+    item = iterator.next();
+    TestHelpers.recursiveEquals(item, listBatchesResponseDtoPage0.getItems().get(1));
+    Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
+
+    item = iterator.next();
+    TestHelpers.recursiveEquals(item, listBatchesResponseDtoPage1.getItems().get(0));
+
     Assertions.assertThat(iterator.hasNext()).isEqualTo(false);
-    TestHelpers.recursiveEquals(
-        batch,
-        MediaResponse.builder()
-            .setId("01HEABZ9S80D4ENE3X6CPMATZR")
-            .setTo(Collections.singletonList("331111111"))
-            .setCanceled(false)
-            .setBody(MediaBody.builder().setUrl("an URL").build())
-            .setCreatedAt(Instant.parse("2023-11-03T10:34:30.056Z"))
-            .setModifiedAt(Instant.parse("2023-11-03T10:34:30.156Z"))
-            .setDeliveryReport(DeliveryReportType.SUMMARY)
-            .setExpireAt(Instant.parse("2023-11-06T10:34:30.256Z"))
-            .setFeedbackEnabled(false)
-            .build());
   }
 
   @Test
-  void updateText() throws ApiException {
+  void update() throws ApiException {
 
-    when(api.update(eq("foo text batch id"), eq(updateSmsBatchTextRequest)))
-        .thenReturn(textResponseDto);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/xms/v1/"
+                + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID)
+                + "/batches/"
+                + URLPathUtils.encodePathSegment(BATCH_ID),
+            HttpMethod.POST,
+            Collections.emptyList(),
+            HttpMapper.getInstance()
+                .serialize(
+                    Collections.singletonList(HttpContentType.APPLICATION_JSON),
+                    updateTextRequestDto),
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonTextResponseDto.getBytes());
 
-    BatchResponse response = service.update("foo text batch id", updateSmsBatchTextRequest);
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
-    TestHelpers.recursiveEquals(response, batchText);
+    BatchResponse response = service.update(BATCH_ID, updateTextRequestDto);
+
+    TestHelpers.recursiveEquals(response, textResponseDto);
   }
 
   @Test
-  void updateMedia() throws ApiException {
+  void replace() throws ApiException {
 
-    when(api.update(eq("foo text batch id"), eq(updateSmsBatchMediaRequest)))
-        .thenReturn(mediaResponseDto);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/xms/v1/"
+                + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID)
+                + "/batches/"
+                + URLPathUtils.encodePathSegment(BATCH_ID),
+            HttpMethod.PUT,
+            Collections.emptyList(),
+            HttpMapper.getInstance()
+                .serialize(
+                    Collections.singletonList(HttpContentType.APPLICATION_JSON), textRequestDto),
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonTextResponseDto.getBytes());
 
-    BatchResponse response = service.update("foo text batch id", updateSmsBatchMediaRequest);
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
-    TestHelpers.recursiveEquals(response, batchMedia);
+    BatchResponse response = service.replace(BATCH_ID, textRequestDto);
+
+    TestHelpers.recursiveEquals(response, textResponseDto);
   }
 
   @Test
-  void updateBinary() throws ApiException {
+  void cancel() throws ApiException {
 
-    when(api.update(eq("foo text batch id"), eq(updateSmsBatchBinaryRequest)))
-        .thenReturn(binaryResponseDto);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/xms/v1/"
+                + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID)
+                + "/batches/"
+                + URLPathUtils.encodePathSegment(BATCH_ID),
+            HttpMethod.DELETE,
+            Collections.emptyList(),
+            null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonTextResponseDto.getBytes());
 
-    BatchResponse response = service.update("foo text batch id", updateSmsBatchBinaryRequest);
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
-    TestHelpers.recursiveEquals(response, batchBinary);
-  }
+    BatchResponse response = service.cancel(BATCH_ID);
 
-  @Test
-  void replaceBinary() throws ApiException {
-
-    when(api.replace(eq("foo text batch id"), eq(sendSmsBatchBinaryRequest)))
-        .thenReturn(binaryResponseDto);
-
-    BatchResponse response = service.replace("foo text batch id", sendSmsBatchBinaryRequest);
-
-    TestHelpers.recursiveEquals(response, batchBinary);
-  }
-
-  @Test
-  void replaceMedia() throws ApiException {
-
-    when(api.replace(eq("foo text batch id"), eq(sendSmsBatchMediaRequest)))
-        .thenReturn(mediaResponseDto);
-
-    BatchResponse response = service.replace("foo text batch id", sendSmsBatchMediaRequest);
-
-    TestHelpers.recursiveEquals(response, batchMedia);
-  }
-
-  @Test
-  void replaceText() throws ApiException {
-
-    when(api.replace(eq("foo text batch id"), eq(sendSmsBatchTextRequest)))
-        .thenReturn(textResponseDto);
-
-    BatchResponse response = service.replace("foo text batch id", sendSmsBatchTextRequest);
-
-    TestHelpers.recursiveEquals(response, batchText);
-  }
-
-  @Test
-  void cancelBatch() throws ApiException {
-
-    when(api.cancel(eq("foo text batch id"))).thenReturn(textResponseDto);
-
-    BatchResponse response = service.cancel("foo text batch id");
-
-    TestHelpers.recursiveEquals(response, batchText);
+    TestHelpers.recursiveEquals(response, textResponseDto);
   }
 
   @Test
   void sendDeliveryFeedback() throws ApiException {
-    SendDeliveryFeedbackRequest request =
-        SendDeliveryFeedbackRequest.builder().setRecipients(Arrays.asList("foo", "foo2")).build();
 
-    service.sendDeliveryFeedback("foo text batch id", request);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/xms/v1/"
+                + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID)
+                + "/batches/"
+                + URLPathUtils.encodePathSegment(BATCH_ID)
+                + "/delivery_feedback",
+            HttpMethod.POST,
+            Collections.emptyList(),
+            HttpMapper.getInstance()
+                .serialize(
+                    Collections.singletonList(HttpContentType.APPLICATION_JSON),
+                    sendDeliveryFeedbackRequestDto),
+            Collections.emptyMap(),
+            Collections.emptyList(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse = new HttpResponse(200, null, Collections.emptyMap(), null);
 
-    verify(api).sendDeliveryFeedback(eq("foo text batch id"), recipientsCaptor.capture());
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
-    SendDeliveryFeedbackRequest dto = recipientsCaptor.getValue();
-    TestHelpers.recursiveEquals(dto, request);
+    service.sendDeliveryFeedback(BATCH_ID, sendDeliveryFeedbackRequestDto);
   }
 }

@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.sms.api.v1.internal;
+package com.sinch.sdk.domains.sms.api.v1.adapters;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sinch.sdk.core.databind.query_parameter.InstantToIso8601Serializer;
@@ -25,6 +25,7 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameterUtils;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.BatchRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.DryRunQueryParameters;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesQueryParameters;
@@ -32,7 +33,9 @@ import com.sinch.sdk.domains.sms.models.v1.batches.request.SendDeliveryFeedbackR
 import com.sinch.sdk.domains.sms.models.v1.batches.request.UpdateBatchRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.BatchResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.DryRunResponse;
+import com.sinch.sdk.domains.sms.models.v1.batches.response.ListBatchesResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.internal.ApiBatchList;
+import com.sinch.sdk.domains.sms.models.v1.internal.SMSCursorPageNavigator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -41,17 +44,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class BatchesApi {
+public class BatchesServiceImpl implements com.sinch.sdk.domains.sms.api.v1.BatchesService {
 
-  private static final Logger LOGGER = Logger.getLogger(BatchesApi.class.getName());
-  private HttpClient httpClient;
-  private ServerConfiguration serverConfiguration;
-  private Map<String, AuthManager> authManagersByOasSecuritySchemes;
-  private HttpMapper mapper;
+  private static final Logger LOGGER = Logger.getLogger(BatchesServiceImpl.class.getName());
+  private final HttpClient httpClient;
+  private final ServerConfiguration serverConfiguration;
+  private final Map<String, AuthManager> authManagersByOasSecuritySchemes;
+  private final HttpMapper mapper;
 
   private final String servicePlanId;
 
-  public BatchesApi(
+  public BatchesServiceImpl(
       HttpClient httpClient,
       ServerConfiguration serverConfiguration,
       Map<String, AuthManager> authManagersByOasSecuritySchemes,
@@ -64,18 +67,6 @@ public class BatchesApi {
     this.servicePlanId = servicePlanId;
   }
 
-  /**
-   * Cancel a batch message A batch can be canceled at any point. If a batch is canceled while
-   * it&#39;s currently being delivered some messages currently being processed might still be
-   * delivered. The delivery report will indicate which messages were canceled and which
-   * weren&#39;t. Canceling a batch scheduled in the future will result in an empty delivery report
-   * while canceling an already sent batch would result in no change to the completed delivery
-   * report.
-   *
-   * @param batchId The batch ID you received from sending a message. (required)
-   * @return BatchResponse
-   * @throws ApiException if fails to make API call
-   */
   public BatchResponse cancel(String batchId) throws ApiException {
 
     LOGGER.finest("[cancel]" + " " + "batchId: " + batchId);
@@ -86,8 +77,7 @@ public class BatchesApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<BatchResponse> localVarReturnType = new TypeReference<BatchResponse>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<BatchResponse>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -139,28 +129,11 @@ public class BatchesApi {
         localVarAuthNames);
   }
 
-  /**
-   * Dry run This operation will perform a dry run of a batch which calculates the bodies and number
-   * of parts for all messages in the batch without actually sending any messages.
-   *
-   * @param sendRequest (optional)
-   * @return DryRunResponse
-   * @throws ApiException if fails to make API call
-   */
   public DryRunResponse dryRun(BatchRequest sendRequest) throws ApiException {
 
     return dryRun(null, sendRequest);
   }
 
-  /**
-   * Dry run This operation will perform a dry run of a batch which calculates the bodies and number
-   * of parts for all messages in the batch without actually sending any messages.
-   *
-   * @param queryParameter (optional)
-   * @param sendRequest (optional)
-   * @return DryRunResponse
-   * @throws ApiException if fails to make API call
-   */
   public DryRunResponse dryRun(DryRunQueryParameters queryParameter, BatchRequest sendRequest)
       throws ApiException {
 
@@ -179,8 +152,7 @@ public class BatchesApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<DryRunResponse> localVarReturnType = new TypeReference<DryRunResponse>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<DryRunResponse>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -245,13 +217,6 @@ public class BatchesApi {
         localVarAuthNames);
   }
 
-  /**
-   * Get a batch message This operation returns a specific batch that matches the provided batch ID.
-   *
-   * @param batchId The batch ID you received from sending a message. (required)
-   * @return BatchResponse
-   * @throws ApiException if fails to make API call
-   */
   public BatchResponse get(String batchId) throws ApiException {
 
     LOGGER.finest("[get]" + " " + "batchId: " + batchId);
@@ -262,8 +227,7 @@ public class BatchesApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<BatchResponse> localVarReturnType = new TypeReference<BatchResponse>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<BatchResponse>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -315,27 +279,12 @@ public class BatchesApi {
         localVarAuthNames);
   }
 
-  /**
-   * List Batches With the list operation you can list batch messages created in the last 14 days
-   * that you have created. This operation supports pagination.
-   *
-   * @return ApiBatchList
-   * @throws ApiException if fails to make API call
-   */
-  public ApiBatchList list() throws ApiException {
+  public ListBatchesResponse list() throws ApiException {
 
     return list(null);
   }
 
-  /**
-   * List Batches With the list operation you can list batch messages created in the last 14 days
-   * that you have created. This operation supports pagination.
-   *
-   * @param queryParameter (optional)
-   * @return ApiBatchList
-   * @throws ApiException if fails to make API call
-   */
-  public ApiBatchList list(ListBatchesQueryParameters queryParameter) throws ApiException {
+  public ListBatchesResponse list(ListBatchesQueryParameters queryParameter) throws ApiException {
 
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
@@ -345,8 +294,16 @@ public class BatchesApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<ApiBatchList> localVarReturnType = new TypeReference<ApiBatchList>() {};
-      return mapper.deserialize(response, localVarReturnType);
+
+      ApiBatchList deserialized =
+          mapper.deserialize(response, new TypeReference<ApiBatchList>() {});
+
+      return new ListBatchesResponse(
+          this,
+          new Page<>(
+              queryParameter,
+              deserialized.getItems(),
+              new SMSCursorPageNavigator(deserialized.getPage(), deserialized.getPageSize())));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -433,15 +390,6 @@ public class BatchesApi {
         localVarAuthNames);
   }
 
-  /**
-   * Replace a batch This operation will replace all the parameters of a batch with the provided
-   * values. It is the same as cancelling a batch and sending a new one instead.
-   *
-   * @param batchId The batch ID you received from sending a message. (required)
-   * @param sendRequest (optional)
-   * @return BatchResponse
-   * @throws ApiException if fails to make API call
-   */
   public BatchResponse replace(String batchId, BatchRequest sendRequest) throws ApiException {
 
     LOGGER.finest("[replace]" + " " + "batchId: " + batchId + ", " + "sendRequest: " + sendRequest);
@@ -452,8 +400,7 @@ public class BatchesApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<BatchResponse> localVarReturnType = new TypeReference<BatchResponse>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<BatchResponse>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -506,21 +453,6 @@ public class BatchesApi {
         localVarAuthNames);
   }
 
-  /**
-   * Send delivery feedback for a message Send feedback if your system can confirm successful
-   * message delivery. Feedback can only be provided if &#x60;feedback_enabled&#x60; was set when
-   * batch was submitted. **Batches**: It is possible to submit feedback multiple times for the same
-   * batch for different recipients. Feedback without specified recipients is treated as successful
-   * message delivery to all recipients referenced in the batch. Note that the
-   * &#x60;recipients&#x60; key is still required even if the value is empty. **Groups**: If the
-   * batch message was creating using a group ID, at least one recipient is required. Excluding
-   * recipients (an empty recipient list) does not work and will result in a failed request.
-   *
-   * @param batchId The batch ID you received from sending a message. (required)
-   * @param sendDeliveryFeedbackRequest A list of phone numbers (MSISDNs) that successfully received
-   *     the message. (required)
-   * @throws ApiException if fails to make API call
-   */
   public void sendDeliveryFeedback(
       String batchId, SendDeliveryFeedbackRequest sendDeliveryFeedbackRequest) throws ApiException {
 
@@ -603,17 +535,6 @@ public class BatchesApi {
         localVarAuthNames);
   }
 
-  /**
-   * Send Send a message or a batch of messages. Depending on the length of the body, one message
-   * might be split into multiple parts and charged accordingly. Any groups targeted in a scheduled
-   * batch will be evaluated at the time of sending. If a group is deleted between batch creation
-   * and scheduled date, it will be considered empty. Be sure to use the correct
-   * [region](/docs/sms/api-reference/#base-url) in the server URL.
-   *
-   * @param sendRequest Default schema is Text if type is not specified. (optional)
-   * @return BatchResponse
-   * @throws ApiException if fails to make API call
-   */
   public BatchResponse send(BatchRequest sendRequest) throws ApiException {
 
     LOGGER.finest("[send]" + " " + "sendRequest: " + sendRequest);
@@ -624,8 +545,7 @@ public class BatchesApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<BatchResponse> localVarReturnType = new TypeReference<BatchResponse>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<BatchResponse>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -671,15 +591,6 @@ public class BatchesApi {
         localVarAuthNames);
   }
 
-  /**
-   * Update a Batch message This operation updates all specified parameters of a batch that matches
-   * the provided batch ID.
-   *
-   * @param batchId The batch ID you received from sending a message. (required)
-   * @param updateBatchRequest (optional)
-   * @return BatchResponse
-   * @throws ApiException if fails to make API call
-   */
   public BatchResponse update(String batchId, UpdateBatchRequest updateBatchRequest)
       throws ApiException {
 
@@ -698,8 +609,7 @@ public class BatchesApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<BatchResponse> localVarReturnType = new TypeReference<BatchResponse>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<BatchResponse>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
