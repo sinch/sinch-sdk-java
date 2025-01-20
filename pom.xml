@@ -126,6 +126,8 @@
                             com.sinch.sdk.auth*;
                             com.sinch.sdk.core.http;
                             com.sinch.sdk.core.http.*;
+                            com.sinch.sdk.core.databind:
+                            com.sinch.sdk.core.databind.**;
                             com.sinch.sdk.core.utils.databind;
                             com.sinch.sdk.http;
                             com.sinch.sdk.pagination.Page*;
@@ -151,6 +153,9 @@
                             <sourceFileExclude>**/*Impl.java</sourceFileExclude>
                             <sourceFileExclude>**/BuildersDelegation.java</sourceFileExclude>
                             <sourceFileExclude>**/*Mapper.java</sourceFileExclude>
+
+                            <sourceFileExclude>**/mailgun/models/v1/response/GenericResponse.java</sourceFileExclude>
+
                             <!-- Transition period -->
                             <sourceFileExclude>com/sinch/sdk/domains/verification/models/*.java</sourceFileExclude>
                             <sourceFileExclude>com/sinch/sdk/domains/verification/VerificationsService.java</sourceFileExclude>
@@ -202,6 +207,10 @@
                             <group>
                                 <title>Conversation</title>
                                 <packages>com.sinch.sdk.domains.conversation*</packages>
+                            </group>
+                            <group>
+                                <title>Mailgun</title>
+                                <packages>com.sinch.sdk.domains.mailgun*</packages>
                             </group>
                             <group>
                                 <title>Numbers</title>

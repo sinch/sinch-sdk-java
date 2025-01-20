@@ -16,7 +16,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-/** SendEmailHtmlInTemplateRequest */
+/**
+ * Sending email message request. Use to send with HTML content built from template. See <a
+ * href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/#templates">Templates</a>
+ */
 public interface SendEmailHtmlInTemplateRequest extends SendEmailRequest {
 
   /**

@@ -17,6 +17,7 @@ import com.sinch.sdk.domains.mailgun.models.v1.emails.response.GetStoredEmailRes
 import com.sinch.sdk.domains.mailgun.models.v1.emails.response.SendEmailResponse;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.response.SendingQueuesStatusResponse;
 
+/** Emails Service */
 public interface EmailsService {
 
   /**
@@ -67,12 +68,18 @@ public interface EmailsService {
 
   /**
    * Delete scheduled and undelivered mail Deletes all scheduled and undelivered mail from the
-   * domain queue. This endpoint must be called on the storage API host and in the domain&#39;s
-   * region. e.g. <a
-   * href="https://storage-us-east4.api.mailgun.net/v3/example.com/envelopes">...</a> The storage
-   * hosts are &#x60;storage-us-east4.api.mailgun.net&#x60;,
-   * &#x60;storage-us-west1.api.mailgun.net&#x60;, and
-   * &#x60;storage-europe-west1.api.mailgun.net&#x60;.
+   * domain queue.
+   *
+   * <p>This endpoint must be called on the storage API host and in the domain&#39;s region. e.g.
+   * <code>https://storage-us-east4.api.mailgun.net/v3/example.com/envelopes</code>.
+   *
+   * <p>The storage hosts are
+   *
+   * <ul>
+   *   <li><code>storage-us-east4.api.mailgun.net</code>
+   *   <li><code>storage-us-west1.api.mailgun.net</code>
+   *   <li><code>storage-europe-west1.api.mailgun.net</code>
+   * </ul>
    *
    * @param domainName The name of the domain you want to delete envelope from (required)
    * @param storageURL (required)

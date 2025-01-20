@@ -13,7 +13,11 @@ package com.sinch.sdk.domains.mailgun.models.v1.emails.request;
 import java.time.Instant;
 import java.util.List;
 
-/** OverrideProperties */
+/**
+ * Per-message basis overload parameters. See <a
+ * href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/#passing-sending-options">Passing
+ * Sending Options</a>
+ */
 public interface OverrideProperties {
 
   /**

@@ -12,7 +12,10 @@ package com.sinch.sdk.domains.mailgun.models.v1.emails.request;
 
 import java.util.Map;
 
-/** TemplateProperties */
+/**
+ * Template's related properties. Define template's related information &amp; <a
+ * href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/#template-variables">variables</a>
+ */
 public interface TemplateProperties {
 
   /**
