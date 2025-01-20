@@ -15,6 +15,7 @@ import com.sinch.sdk.domains.sms.models.v1.inbounds.InboundMessage;
 import com.sinch.sdk.domains.sms.models.v1.inbounds.request.ListInboundMessagesQueryParameters;
 import com.sinch.sdk.domains.sms.models.v1.inbounds.response.ListInboundsResponse;
 
+/** Inbounds Service */
 public interface InboundsService {
 
   /**

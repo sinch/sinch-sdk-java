@@ -15,7 +15,7 @@ public interface SMSService {
    * @return V1 service instance for project
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/sdks/java/syntax-reference/">Documentation</a>
-   * @since
+   * @since 1,5
    */
   com.sinch.sdk.domains.sms.api.v1.SMSService v1();
 

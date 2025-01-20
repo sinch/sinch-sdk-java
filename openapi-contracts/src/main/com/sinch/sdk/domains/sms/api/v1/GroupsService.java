@@ -18,6 +18,7 @@ import com.sinch.sdk.domains.sms.models.v1.groups.request.ListGroupsQueryParamet
 import com.sinch.sdk.domains.sms.models.v1.groups.response.ListGroupsResponse;
 import java.util.List;
 
+/** Groups Service */
 public interface GroupsService {
 
   /**

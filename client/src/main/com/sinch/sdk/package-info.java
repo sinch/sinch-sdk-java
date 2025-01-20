@@ -1,5 +1,5 @@
 /**
- * Sinch Java SDK for Numbers, SMS &amp; Verification
+ * Sinch Java SDK for Conversation, Numbers, SMS, Verification &amp; Voice
  *
  * <p>Provides the client necessary to interface with Sinch APIS
  *
