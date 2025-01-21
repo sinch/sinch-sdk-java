@@ -36,7 +36,7 @@ import java.util.Map;
  *
  * @see <a
  *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Webhooks/">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Webhooks/</a>
- * @since 1,5
+ * @since 1.5
  */
 public interface WebHooksService {
 

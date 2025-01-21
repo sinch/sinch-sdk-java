@@ -9,7 +9,8 @@ import com.sinch.sdk.domains.sms.models.v1.deliveryreports.request.BatchDelivery
  *
  * @see com.sinch.sdk.domains.sms.api.v1.DeliveryReportsService#get(String,
  *     BatchDeliveryReportQueryParameters)
- * @since 1,5
+ * @see com.sinch.sdk.domains.sms.api.v1.WebHooksService#parseEvent(String)
+ * @since 1.5
  */
 @JsonDeserialize(using = BatchDeliveryReportOneOfImpl.Deserializer.class)
 public interface BatchDeliveryReport extends DeliveryReport {}

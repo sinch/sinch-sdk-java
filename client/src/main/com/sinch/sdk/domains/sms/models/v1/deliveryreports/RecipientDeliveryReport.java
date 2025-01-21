@@ -10,7 +10,8 @@ import com.sinch.sdk.domains.sms.models.v1.deliveryreports.request.ListDeliveryR
  * @see com.sinch.sdk.domains.sms.api.v1.DeliveryReportsService#getForNumber(String, String)
  * @see
  *     com.sinch.sdk.domains.sms.api.v1.DeliveryReportsService#list(ListDeliveryReportsQueryParameters)
- * @since 1,5
+ * @see com.sinch.sdk.domains.sms.api.v1.WebHooksService#parseEvent(String)
+ * @since 1.5
  */
 @JsonDeserialize(using = RecipientDeliveryReportOneOfImpl.Deserializer.class)
 public interface RecipientDeliveryReport extends DeliveryReport {}

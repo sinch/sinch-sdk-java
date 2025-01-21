@@ -1,5 +1,5 @@
 /**
- * Inbounds API response related models
+ * Inbounds API responses related models
  *
  * @since 1.5
  */

@@ -1,5 +1,5 @@
 /**
- * Batches API response related models
+ * Batches API responses related models
  *
  * @since 1.5
  */

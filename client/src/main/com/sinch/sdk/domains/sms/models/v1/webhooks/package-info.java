@@ -52,6 +52,6 @@
  * See <a
  * href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Webhooks/#tag/Webhooks/operation/deliveryReport">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Webhooks/#tag/Webhooks/operation/deliveryReport</a>
  *
- * @since 1.0
+ * @since 1.5
  */
 package com.sinch.sdk.domains.sms.models.v1.webhooks;

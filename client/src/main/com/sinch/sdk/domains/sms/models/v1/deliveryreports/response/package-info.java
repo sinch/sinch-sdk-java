@@ -1,5 +1,5 @@
 /**
- * Delivery Reports API response related models
+ * Delivery Reports API responses related models
  *
  * @since 1.5
  */

@@ -1,5 +1,5 @@
 /**
- * Groups API response related models
+ * Groups API responses related models
  *
  * @since 1.5
  */

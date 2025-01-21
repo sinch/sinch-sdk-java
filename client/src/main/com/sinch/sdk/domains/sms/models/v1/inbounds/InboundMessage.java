@@ -11,7 +11,7 @@ import com.sinch.sdk.domains.sms.models.v1.webhooks.SmsEvent;
  * @see com.sinch.sdk.domains.sms.api.v1.InboundsService#get(String)
  * @see com.sinch.sdk.domains.sms.api.v1.InboundsService#list(ListInboundMessagesQueryParameters)
  * @see com.sinch.sdk.domains.sms.api.v1.WebHooksService#parseEvent(String)
- * @since 1,5
+ * @since 1.5
  */
 @JsonDeserialize(using = InboundInternalImpl.Deserializer.class)
 public interface InboundMessage extends SmsEvent {}
