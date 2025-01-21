@@ -16,7 +16,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-/** SendMimeEmailRequest */
+/**
+ * Sending email message request. Build a MIME string yourself using a MIME library for your
+ * programming language and submit it to Mailgun.
+ */
 public interface SendMimeEmailRequest {
 
   /**

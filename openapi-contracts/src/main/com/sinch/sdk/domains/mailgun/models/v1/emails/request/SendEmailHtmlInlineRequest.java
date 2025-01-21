@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-/** SendEmailHtmlInlineRequest */
+/** Sending email message request. Use to send with HTML content inline within message. */
 public interface SendEmailHtmlInlineRequest extends SendEmailRequest {
 
   /**
