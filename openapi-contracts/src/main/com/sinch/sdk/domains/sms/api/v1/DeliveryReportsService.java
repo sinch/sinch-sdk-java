@@ -17,6 +17,7 @@ import com.sinch.sdk.domains.sms.models.v1.deliveryreports.request.BatchDelivery
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.request.ListDeliveryReportsQueryParameters;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.response.ListDeliveryReportsResponse;
 
+/** Delivery reports Service */
 public interface DeliveryReportsService {
 
   /**
