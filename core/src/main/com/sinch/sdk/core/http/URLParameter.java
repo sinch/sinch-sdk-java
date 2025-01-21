@@ -1,5 +1,7 @@
 package com.sinch.sdk.core.http;
 
+import java.util.Objects;
+
 public class URLParameter {
   private final String name;
   private final Object value;
@@ -62,6 +64,26 @@ public class URLParameter {
         + '}';
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof URLParameter)) {
+      return false;
+    }
+    URLParameter that = (URLParameter) o;
+    return isExplode() == that.isExplode()
+        && Objects.equals(getName(), that.getName())
+        && Objects.equals(getValue(), that.getValue())
+        && getStyle() == that.getStyle();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getName(), getValue(), getStyle(), isExplode());
+  }
+
   public enum STYLE {
     MATRIX,
     LABEL,
@@ -69,6 +91,17 @@ public class URLParameter {
     SIMPLE,
     SPACE_DELIMITED,
     PIPE_DELIMITED,
-    DEEP_OBJECT
+    DEEP_OBJECT;
   }
+
+  // the following constants do not follow java standard by purpose
+  // Aim is to  have direct access to OpenApi Spec authorized values as constant without overhead
+  // ref: https://spec.openapis.org/oas/latest.html#style-values
+  public static final STYLE matrix = STYLE.MATRIX;
+  public static final STYLE label = STYLE.LABEL;
+  public static final STYLE form = STYLE.FORM;
+  public static final STYLE simple = STYLE.SIMPLE;
+  public static final STYLE spaceDelimited = STYLE.SPACE_DELIMITED;
+  public static final STYLE pipeDelimited = STYLE.PIPE_DELIMITED;
+  public static final STYLE deepObject = STYLE.DEEP_OBJECT;
 }

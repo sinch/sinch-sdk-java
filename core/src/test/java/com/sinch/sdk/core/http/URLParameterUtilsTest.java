@@ -1,10 +1,18 @@
 package com.sinch.sdk.core.http;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.sinch.sdk.core.TestHelpers;
+import com.sinch.sdk.core.databind.query_parameter.InstantToIso8601Serializer;
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.core.http.URLParameter.STYLE;
+import com.sinch.sdk.core.models.OptionalValue;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -373,5 +381,52 @@ class URLParameterUtilsTest {
                     Arrays.asList("value1 with space and &,.", "value2 with space and &,."),
                     URLParameter.STYLE.PIPE_DELIMITED,
                     true)));
+  }
+
+  @Test
+  void addQueryParamNotPresent() {
+
+    // Collections.emptyList() is not modifiable and will throw an exception if trying to add an
+    // entry
+    assertDoesNotThrow(
+        () ->
+            URLParameterUtils.addQueryParam(
+                OptionalValue.empty(),
+                "foo name",
+                STYLE.DEEP_OBJECT,
+                null,
+                Collections.emptyList(),
+                false),
+        "Ignored empty value");
+  }
+
+  @Test
+  void addQueryParamInteger() {
+    ArrayList<URLParameter> list = new ArrayList<>();
+
+    URLParameterUtils.addQueryParam(
+        OptionalValue.of(15), "foo name", STYLE.DEEP_OBJECT, null, list, true);
+    assertEquals(1, list.size());
+
+    TestHelpers.recursiveEquals(
+        list.get(0), new URLParameter("foo name", 15, STYLE.DEEP_OBJECT, true));
+  }
+
+  @Test
+  void addQueryParamInstant() {
+    ArrayList<URLParameter> list = new ArrayList<>();
+
+    URLParameterUtils.addQueryParam(
+        OptionalValue.of(Instant.parse("2024-05-04T10:00:00.123Z")),
+        "foo name",
+        STYLE.DEEP_OBJECT,
+        InstantToIso8601Serializer.getInstance(),
+        list,
+        true);
+    assertEquals(1, list.size());
+
+    TestHelpers.recursiveEquals(
+        list.get(0),
+        new URLParameter("foo name", "2024-05-04T10:00:00.123Z", STYLE.DEEP_OBJECT, true));
   }
 }

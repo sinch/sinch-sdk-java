@@ -1,0 +1,35 @@
+{
+  "to_add": [
+    "+15551231234",
+    "+15551256344"
+  ],
+  "to_remove": [
+    "+0123456789",
+    "+9876543210"
+  ],
+  "from": "+15551231234",
+  "body": "Hi ${name} ({an identifier}) ! How are you?",
+  "type": "mt_text",
+  "delivery_report": "none",
+  "send_at": "2019-08-24T14:19:22Z",
+  "expire_at": "2019-08-24T14:21:22Z",
+  "callback_url": "callback url",
+  "client_reference": "a client reference",
+  "feedback_enabled": true,
+  "from_ton": 3,
+  "from_npi": 15,
+  "flash_message": false,
+  "max_number_of_message_parts": 4,
+  "truncate_concat": true,
+  "parameters": {
+    "name": {
+      "15551231234": "name value for 15551231234",
+      "15551256344": "name value for 15551256344",
+      "default": "default value"
+    },
+    "an identifier": {
+      "15551231234": "an identifier value for 15551231234",
+      "15551256344": "an identifier value for 15551256344"
+    }
+  }
+}

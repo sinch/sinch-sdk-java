@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.conversation.api.v1.adapters;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.sinch.sdk.auth.HmacAuthenticationValidation;
 import com.sinch.sdk.core.exceptions.ApiMappingException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
@@ -22,7 +23,7 @@ import java.util.Map;
 
 public class WebHooksService implements com.sinch.sdk.domains.conversation.api.v1.WebHooksService {
 
-  private final ConversationWebhooksAuthenticationValidation authenticationChecker;
+  private final HmacAuthenticationValidation authenticationChecker;
 
   private final String uriUUID;
   private final WebhooksApi api;
@@ -32,7 +33,7 @@ public class WebHooksService implements com.sinch.sdk.domains.conversation.api.v
       ConversationContext context,
       HttpClient httpClient,
       Map<String, AuthManager> authManagers,
-      ConversationWebhooksAuthenticationValidation authenticationChecker) {
+      HmacAuthenticationValidation authenticationChecker) {
     this.authenticationChecker = authenticationChecker;
     this.uriUUID = uriUUID;
     this.api = new WebhooksApi(httpClient, context.getServer(), authManagers, new HttpMapper());

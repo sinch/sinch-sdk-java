@@ -1,0 +1,19 @@
+{
+  "name": "My new customers",
+  "child_groups": [
+    "01FC66621XXXXX119Z8PMV1AHY",
+    "01FC66621XXXXX119Z8PMV1A00"
+  ],
+  "auto_update": {
+    "to": "15551231234",
+    "add": {
+      "first_word": "Add 1st keyword",
+      "second_word": "Add 2nd keyword"
+    },
+    "remove": {
+      "first_word": "remove 1st keyword",
+      "second_word": "remove 2nd keyword"
+    }
+  },
+  "members": [ "+15551231234" ]
+}

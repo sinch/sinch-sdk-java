@@ -29,6 +29,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
   private final String uriUUID;
   private final SmsContext context;
   private final HttpClient httpClient;
+  private com.sinch.sdk.domains.sms.api.v1.SMSService v1;
   private BatchesService batches;
   private WebHooksService webHooks;
   private DeliveryReportsService deliveryReports;
@@ -60,6 +61,10 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
     this.authManagers =
         Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_SMS, oAuthManager))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+    this.v1 =
+        new com.sinch.sdk.domains.sms.api.v1.adapters.SMSService(
+            credentials, context, oAuthServer, httpClient);
   }
 
   public SMSService(
@@ -83,6 +88,14 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
     this.authManagers =
         Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_SMS, authManager))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+    this.v1 =
+        new com.sinch.sdk.domains.sms.api.v1.adapters.SMSService(credentials, context, httpClient);
+  }
+
+  @Override
+  public com.sinch.sdk.domains.sms.api.v1.SMSService v1() {
+    return this.v1;
   }
 
   @Override

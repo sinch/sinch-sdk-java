@@ -10,6 +10,16 @@ package com.sinch.sdk.domains.sms;
 public interface SMSService {
 
   /**
+   * SMS Service V1
+   *
+   * @return V1 service instance for project
+   * @see <a
+   *     href="https://developers.sinch.com/docs/sms/sdks/java/syntax-reference/">Documentation</a>
+   * @since 1.5
+   */
+  com.sinch.sdk.domains.sms.api.v1.SMSService v1();
+
+  /**
    * Batches Service instance
    *
    * @return service instance for project

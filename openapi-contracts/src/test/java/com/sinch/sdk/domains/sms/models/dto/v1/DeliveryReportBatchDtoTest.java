@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 @TestWithResources
 public class DeliveryReportBatchDtoTest extends BaseTest {
 
-  @GivenJsonResource("/domains/sms/v1/DeliveryReportBatchSMSDto.json")
+  @GivenJsonResource("/domains/sms/v1/deliveryreports/BatchDeliveryReportSMSDto.json")
   DeliveryReportDto deliveryReportBatchSMSDto;
 
-  @GivenJsonResource("/domains/sms/v1/DeliveryReportBatchMMSDto.json")
+  @GivenJsonResource("/domains/sms/v1/deliveryreports/BatchDeliveryReportMMSDto.json")
   DeliveryReportDto deliveryReportBatchMMSDto;
 
   public static DeliveryReportDto deliveryReportBatchSMS =
@@ -26,7 +26,8 @@ public class DeliveryReportBatchDtoTest extends BaseTest {
                       .count(1)
                       .addRecipientsItem("44231235674")
                       .status("Delivered")))
-          .totalMessageCount(1);
+          .totalMessageCount(1)
+          .clientReference("a client reference");
 
   public static DeliveryReportDto deliveryReportBatchMMS =
       new DeliveryReportDto("01FC66621XXXXX119Z8PMV1QPQ")
@@ -38,7 +39,8 @@ public class DeliveryReportBatchDtoTest extends BaseTest {
                       .count(1)
                       .addRecipientsItem("44231235674")
                       .status("Delivered")))
-          .totalMessageCount(1);
+          .totalMessageCount(1)
+          .clientReference("a client reference");
 
   @Test
   void deserializeDeliveryReportBatchSMS() {
