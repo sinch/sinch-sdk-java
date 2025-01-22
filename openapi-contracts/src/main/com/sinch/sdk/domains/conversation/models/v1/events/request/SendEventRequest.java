@@ -67,7 +67,9 @@ public interface SendEventRequest {
   MessageQueue getQueue();
 
   /**
-   * Get recipient
+   * Identifies the recipient. If <a
+   * href="https://developers.sinch.com/docs/conversation/processing-modes/">Dispatch Mode</a> is
+   * used, you must use the <code>identified_by</code> field.
    *
    * @return recipient
    */
