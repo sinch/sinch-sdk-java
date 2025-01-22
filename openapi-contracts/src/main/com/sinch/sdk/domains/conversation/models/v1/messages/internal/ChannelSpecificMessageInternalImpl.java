@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.ChannelSpecificMessage;
 import java.util.Objects;
 
 @JsonPropertyOrder({
@@ -25,12 +24,13 @@ public class ChannelSpecificMessageInternalImpl implements ChannelSpecificMessag
 
   public static final String JSON_PROPERTY_MESSAGE = "message";
 
-  private OptionalValue<ChannelSpecificMessage> message;
+  private OptionalValue<ChannelSpecificMessageMessageInternal> message;
 
   public ChannelSpecificMessageInternalImpl() {}
 
   protected ChannelSpecificMessageInternalImpl(
-      OptionalValue<MessageTypeEnum> messageType, OptionalValue<ChannelSpecificMessage> message) {
+      OptionalValue<MessageTypeEnum> messageType,
+      OptionalValue<ChannelSpecificMessageMessageInternal> message) {
     this.messageType = messageType;
     this.message = message;
   }
@@ -47,13 +47,13 @@ public class ChannelSpecificMessageInternalImpl implements ChannelSpecificMessag
   }
 
   @JsonIgnore
-  public ChannelSpecificMessage getMessage() {
+  public ChannelSpecificMessageMessageInternal getMessage() {
     return message.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<ChannelSpecificMessage> message() {
+  public OptionalValue<ChannelSpecificMessageMessageInternal> message() {
     return message;
   }
 
@@ -100,7 +100,7 @@ public class ChannelSpecificMessageInternalImpl implements ChannelSpecificMessag
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements ChannelSpecificMessageInternal.Builder {
     OptionalValue<MessageTypeEnum> messageType = OptionalValue.empty();
-    OptionalValue<ChannelSpecificMessage> message = OptionalValue.empty();
+    OptionalValue<ChannelSpecificMessageMessageInternal> message = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_MESSAGE_TYPE)
     public Builder setMessageType(MessageTypeEnum messageType) {
@@ -109,7 +109,7 @@ public class ChannelSpecificMessageInternalImpl implements ChannelSpecificMessag
     }
 
     @JsonProperty(JSON_PROPERTY_MESSAGE)
-    public Builder setMessage(ChannelSpecificMessage message) {
+    public Builder setMessage(ChannelSpecificMessageMessageInternal message) {
       this.message = OptionalValue.of(message);
       return this;
     }
