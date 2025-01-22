@@ -4,10 +4,12 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.databind.Mapper;
+import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardMessageImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.carousel.CarouselMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.carousel.CarouselMessageMapper;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.ChannelSpecificMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceMessageImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.contactinfo.ContactInfoMessage;
@@ -22,6 +24,7 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.template.Temp
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.template.TemplateMessageMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessageImpl;
+import java.util.Map;
 
 public class AppMessageInternalMapper {
 
@@ -86,6 +89,14 @@ public class AppMessageInternalMapper {
     @JsonSerialize(using = TextMessageImpl.DelegatedSerializer.class)
     public OptionalValue<TextMessage> textMessage() {
       return super.textMessage();
+    }
+
+    @Override
+    @JsonSerialize(
+        using = ChannelSpecificMessageInternalMapper.ChannelSpecificMessageMapSerializer.class)
+    public OptionalValue<Map<ConversationChannel, ChannelSpecificMessage>>
+        channelSpecificMessage() {
+      return super.channelSpecificMessage();
     }
   }
 
