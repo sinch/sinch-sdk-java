@@ -36,7 +36,9 @@ import com.sinch.sdk.domains.sms.models.webhooks.WebhooksEvent;
  * @see <a
  *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Webhooks/">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Webhooks/</a>
  * @since 1.0
+ * @deprecated use {@link com.sinch.sdk.domains.sms.api.v1.WebHooksService} instead.
  */
+@Deprecated
 public interface WebHooksService {
 
   /**
@@ -45,6 +47,9 @@ public interface WebHooksService {
    * @param jsonPayload The incoming payload received onto webhooks call
    * @return Un serialized object instance (see inherited classes) and {@link
    *     com.sinch.sdk.domains.sms.models.webhooks package documentation}
+   * @deprecated use {@link com.sinch.sdk.domains.sms.api.v1.WebHooksService#parseEvent(String)}
+   *     instead.
    */
+  @Deprecated
   WebhooksEvent parse(String jsonPayload) throws ApiMappingException;
 }
