@@ -7,8 +7,7 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 public class Get extends BaseApplication {
-  private static final Logger LOGGER =
-      Logger.getLogger(com.sinch.sample.sms.deliveryReports.Get.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(Get.class.getName());
 
   public Get() throws IOException {}
 
