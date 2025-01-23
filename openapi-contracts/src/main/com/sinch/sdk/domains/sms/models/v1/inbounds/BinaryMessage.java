@@ -79,7 +79,10 @@ public interface BinaryMessage extends InboundMessage {
    */
   String getTo();
 
-  /** SMS in binary format */
+  /**
+   * SMS in <a href="https://community.sinch.com/t5/Glossary/Binary-SMS/ta-p/7470">binary</a>
+   * format.
+   */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
     public static final TypeEnum MO_BINARY = new TypeEnum("mo_binary");
 
