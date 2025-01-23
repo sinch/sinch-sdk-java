@@ -4,7 +4,7 @@ package com.sinch.sdk.domains.numbers;
  * Numbers Service
  *
  * @see <a
- *     href="https://developers.sinch.com/docs/numbers/api-reference/">https://developers.sinch.com/docs/numbers/api-reference/</a>
+ *     href="https://developers.sinch.com/docs/numbers">https://developers.sinch.com/docs/numbers</a>
  * @since 1.0
  */
 public interface NumbersService {
@@ -26,7 +26,9 @@ public interface NumbersService {
    *     com.sinch.sdk.domains.numbers.api.v1.NumbersService}
    * @return service instance for project
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.numbers.api.v1.NumbersService} instead.
    */
+  @Deprecated
   AvailableNumberService available();
 
   /**
@@ -36,7 +38,9 @@ public interface NumbersService {
    *     com.sinch.sdk.domains.numbers.api.v1.AvailableRegionService}
    * @return service instance for project
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.numbers.api.v1.NumbersService#regions()} instead.
    */
+  @Deprecated
   AvailableRegionService regions();
 
   /**
@@ -45,8 +49,10 @@ public interface NumbersService {
    * @apiNote This version is no longer updated, to get updates use V1 version: {@link
    *     com.sinch.sdk.domains.numbers.api.v1.NumbersService}
    * @return service instance for project
+   * @deprecated use {@link com.sinch.sdk.domains.numbers.api.v1.NumbersService} instead.
    * @since 1.0
    */
+  @Deprecated
   ActiveNumberService active();
 
   /**
@@ -56,7 +62,9 @@ public interface NumbersService {
    *     com.sinch.sdk.domains.numbers.api.v1.CallbackConfigurationService}
    * @return service instance for project
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.numbers.api.v1.NumbersService#callback()} instead.
    */
+  @Deprecated
   CallbackConfigurationService callback();
 
   /**
@@ -66,6 +74,8 @@ public interface NumbersService {
    *     com.sinch.sdk.domains.numbers.api.v1.WebHooksService}
    * @return instance service related to webhooks helpers
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.numbers.api.v1.NumbersService#webhooks()} instead.
    */
+  @Deprecated
   WebHooksService webhooks();
 }
