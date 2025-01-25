@@ -30,7 +30,10 @@ public interface UpdateBinaryRequest extends UpdateBatchRequest {
    */
   String getFrom();
 
-  /** SMS in binary format */
+  /**
+   * SMS in <a href="https://community.sinch.com/t5/Glossary/Binary-SMS/ta-p/7470">binary</a>
+   * format.
+   */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
     public static final TypeEnum MT_BINARY = new TypeEnum("mt_binary");
 
