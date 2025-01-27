@@ -98,34 +98,34 @@ java.util.logging.ConsoleHandler.formatter = java.util.logging.SimpleFormatter
 java.util.logging.SimpleFormatter.format=[%1$tF %1$tT] [%4$-7s %2$s] %5$s %n
 java.util.logging.ConsoleHandler.level = FINEST
 ```
-If using another logging framework (SL4F, Spring) see your framework documentation
+If you are using a different logging framework (such as SLF4J or Spring), please refer to the documentation for your specific framework.
 
 ## Onboarding
 
-To improve onboarding experience, following resources are available:
-- Sinch's developers online documentation: https://developers.sinch.com 
-- A dedicated Java SDK quickstart repository with tutorials and templates enabling to start quickly a new project: https://github.com/sinch/sinch-sdk-java-quickstart
-- A dedicated Java SDK snippets repository with basic code snippets: https://github.com/sinch/sinch-sdk-java-snippets
-- Java SDK online javadoc: https://developers.sinch.com/java-sdk/apidocs
+To enhance the onboarding experience, the following resources are available:
+- **Sinch Online Developers Documentation**: https://developers.sinch.com 
+- **Java SDK Quickstart Repository**: A repository with tutorials and templates to help you quickly start a new project: https://github.com/sinch/sinch-sdk-java-quickstart
+- **Java SDK Snippets Repository**: A collection of basic code snippets for reference: https://github.com/sinch/sinch-sdk-java-snippets
+- **Java SDK Online Javadoc**: https://developers.sinch.com/java-sdk/apidocs
 
 ## 3rd party dependencies
-SDK's third party dependencies are:
-- [Jackson's library](https://github.com/FasterXML/jackson-jakarta-rs-providers) for JSON serialization/deserialization features
-- [Apache HTTP client](https://hc.apache.org/httpcomponents-client-5.4.x/5.4.1/httpclient5/project-info.html) to handle communication with Sinch products/REST APIs 
+The SDK relies on the following third-party dependencies:
+- [Jackson's library](https://github.com/FasterXML/jackson-jakarta-rs-providers): Provides JSON serialization/deserialization functionality.
+- [Apache HTTP client](https://hc.apache.org/httpcomponents-client-5.4.x/5.4.1/httpclient5/project-info.html): Manages communication with Sinch products' REST APIs 
 
-### Jackson/JavaEE/jaxrs/jakarta conflict consideration
-<code>jakarta</code> namespace used by Jackson could cause issue following migration from <code>javax</code> with Java EE transition (see [Oracle site note about transition](https://blogs.oracle.com/javamagazine/post/transition-from-java-ee-to-jakarta-ee) for details)
+### Jackson/Java EE/jaxrs/Jakarta Compatibility Consideration
+The transition from <code>javax</code> to <code>jakarta</code> namespaces with the Java EE to Jakarta EE migration may cause compatibility issues. Refer to [Oracle's note about the transition](https://blogs.oracle.com/javamagazine/post/transition-from-java-ee-to-jakarta-ee) for additional details.
 
-Following notes for Jackson maintainers, there is 2 Jackson available versions.
+Jackson maintainers provide two variants of the library:
 > (*) NOTE: Jakarta-RS is the package under jakarta.ws.rs, replacing older JAX-RS which lived under javax.ws.rs. For JAX-RS variant, see repo jackson-jaxrs-providers
 
-By default, Sinch SDK Java is using "new" [jackson-jakarta-rs-providers](https://github.com/FasterXML/jackson-jakarta-rs-providers) but you could switch to "old" [jackson-jaxrs-providers](https://github.com/FasterXML/jackson-jaxrs-providers) if required.
+By default, the Sinch Java SDK uses the "new" [jackson-jakarta-rs-providers](https://github.com/FasterXML/jackson-jakarta-rs-providers). However, you can switch to the "older" [jackson-jaxrs-providers](https://github.com/FasterXML/jackson-jaxrs-providers) if required.
 
 #### Switching to <code>jackson-jaxrs-providers</code>
-According to your use case, dependencies could have to be tuned if you need <code>jaxrs</code> usage.
+Depending on your use case, you may need to adjust dependencies to enable <code>jaxrs</code> usage.
 
-Add following to your dependency list:
-Note: Replace <code>VERSION-YOU-WANT-TO-BE-USED</code> by a Jackson minimal version of `2.15.2`
+Add the following dependency to your configuration:
+Note: Replace <code>VERSION-YOU-WANT-TO-BE-USED</code> by a Jackson version of at least `2.15.2`.
 ```xml
 ...
     <dependency>
