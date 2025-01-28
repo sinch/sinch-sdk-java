@@ -10,7 +10,10 @@ For more information on the Sinch APIs on which this SDK is based, refer to the 
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Getting started](#getting-started)
-- [Logging]()
+- [Supported APIs](#supported-apis)
+- [Logging](#logging)
+- [Onboarding](#onboarding)
+- [3rd party dependencies](#3rd-party-dependencies)
 
 ## Prerequisites
 
@@ -57,7 +60,7 @@ Configuration configuration = Configuration.builder().setKeyId(PARAM_KEY_ID)
 SinchClient client = new SinchClient(configuration);
 ```
 
-## Products
+## Supported APIs
 
 Here is the list of the Sinch products and their level of support by the Java SDK:
 
