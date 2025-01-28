@@ -43,7 +43,9 @@ Once the SDK is installed, you must start by initializing the main client class.
 
 ### Client initialization
 
-To initialize communication with the Sinch servers, credentials obtained from the Sinch dashboard must be provided to the main client class of this SDK. It's highly recommended to not hardcode these credentials and to load them from environment variables instead.
+To initialize communication with the Sinch servers, credentials obtained from the Sinch dashboard must be provided to the main client class of this SDK.
+
+It's highly recommended to not hardcode these credentials and to load them from environment variables instead.
 
 Sample:
 
@@ -52,10 +54,11 @@ import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.models.Configuration;
 
 ...
-Configuration configuration = Configuration.builder().setKeyId(PARAM_KEY_ID)
-                                                     .setKeySecret(PARAM_KEY_SECRET)
-                                                     .setProjectId(PARAM_PROJECT_ID)
-                                                     .build();
+Configuration configuration = Configuration.builder()
+                                .setKeyId(PARAM_KEY_ID)
+                                .setKeySecret(PARAM_KEY_SECRET)
+                                .setProjectId(PARAM_PROJECT_ID)
+                                .build();
 ...
 SinchClient client = new SinchClient(configuration);
 ```
@@ -106,10 +109,10 @@ If you are using a different logging framework (such as SLF4J or Spring), please
 ## Onboarding
 
 To enhance the onboarding experience, the following resources are available:
-- **Sinch Online Developers Documentation**: https://developers.sinch.com 
-- **Java SDK Quickstart Repository**: A repository with tutorials and templates to help you quickly start a new project: https://github.com/sinch/sinch-sdk-java-quickstart
-- **Java SDK Snippets Repository**: A collection of basic code snippets for reference: https://github.com/sinch/sinch-sdk-java-snippets
-- **Java SDK Online Javadoc**: https://developers.sinch.com/java-sdk/apidocs
+- Sinch Online Developers Documentation: https://developers.sinch.com 
+- Java SDK Online Javadoc: https://developers.sinch.com/java-sdk/apidocs 
+- Java SDK Quickstart Repository: A repository with tutorials and templates to help you quickly start a new project: https://github.com/sinch/sinch-sdk-java-quickstart
+- Java SDK Snippets Repository: A collection of basic code snippets for reference: https://github.com/sinch/sinch-sdk-java-snippets
 
 ## 3rd party dependencies
 The SDK relies on the following third-party dependencies:
