@@ -67,7 +67,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- 3rd party dependencies -->
-        <jackson.version>2.15.2</jackson.version>
+        <jackson.version>2.18.2</jackson.version>
         <httpclient5.version>5.2.1</httpclient5.version>
 
         <!-- tests -->
@@ -420,8 +420,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.fasterxml.jackson.jaxrs</groupId>
-            <artifactId>jackson-jaxrs-json-provider</artifactId>
+            <groupId>com.fasterxml.jackson.jakarta.rs</groupId>
+            <artifactId>jackson-jakarta-rs-json-provider</artifactId>
             <version>${jackson.version}</version>
         </dependency>
 
