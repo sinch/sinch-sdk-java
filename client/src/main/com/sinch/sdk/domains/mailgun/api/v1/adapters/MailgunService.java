@@ -6,6 +6,7 @@ import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.mailgun.api.v1.EmailsService;
+import com.sinch.sdk.domains.mailgun.api.v1.TemplatesService;
 import com.sinch.sdk.models.MailgunContext;
 import com.sinch.sdk.models.MailgunCredentials;
 import java.util.AbstractMap;
@@ -26,6 +27,7 @@ public class MailgunService implements com.sinch.sdk.domains.mailgun.api.v1.Mail
   private final Map<String, AuthManager> authManagers;
 
   private EmailsService emails;
+  private TemplatesService templates;
 
   public MailgunService(
       MailgunCredentials credentials, MailgunContext context, HttpClient httpClient) {
@@ -58,5 +60,14 @@ public class MailgunService implements com.sinch.sdk.domains.mailgun.api.v1.Mail
               httpClient, context.getServer(), authManagers, HttpMapper.getInstance());
     }
     return this.emails;
+  }
+
+  public TemplatesService templates() {
+    if (null == this.templates) {
+      this.templates =
+          new TemplatesServiceImpl(
+              httpClient, context.getServer(), authManagers, HttpMapper.getInstance());
+    }
+    return this.templates;
   }
 }
