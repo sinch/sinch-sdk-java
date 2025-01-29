@@ -67,7 +67,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- 3rd party dependencies -->
-        <jackson.version>2.15.2</jackson.version>
+        <jackson.version>2.18.2</jackson.version>
         <httpclient5.version>5.2.1</httpclient5.version>
 
         <!-- tests -->
@@ -126,8 +126,8 @@
                             com.sinch.sdk.auth*;
                             com.sinch.sdk.core.http;
                             com.sinch.sdk.core.http.*;
-                            com.sinch.sdk.core.databind:
-                            com.sinch.sdk.core.databind.**;
+                            com.sinch.sdk.core.databind;
+                            com.sinch.sdk.core.databind.*;
                             com.sinch.sdk.core.utils.databind;
                             com.sinch.sdk.http;
                             com.sinch.sdk.pagination.Page*;
@@ -198,7 +198,7 @@
                         <groups>
                             <group>
                                 <title>Sinch Client</title>
-                                <packages>com.sinch.sdk*</packages>
+                                <packages>com.sinch.sdk:com.sinch.sdk.models</packages>
                             </group>
                             <group>
                                 <title>Core package</title>
@@ -216,19 +216,22 @@
                                 <title>Numbers</title>
                                 <packages>com.sinch.sdk.domains.numbers*</packages>
                             </group>
+
                             <group>
                                 <title>SMS</title>
-                                <packages>com.sinch.sdk.domains.sms*</packages>
+                                <packages>com.sinch.sdk.domains.sms.models.v1*:com.sinch.sdk.domains.sms.api.v1*</packages>
                             </group>
 
                             <group>
                                 <title>Verification</title>
-                                <packages>com.sinch.sdk.domains.verification.models.v1*:com.sinch.sdk.domains.verification.api.v1*</packages>
+                                <packages>com.sinch.sdk.domains.verification:com.sinch.sdk.domains.verification.models.v1*:com.sinch.sdk.domains.verification.api.v1*</packages>
                             </group>
                             <group>
                                 <title>Voice</title>
                                 <packages>com.sinch.sdk.domains.voice*</packages>
                             </group>
+
+
                         </groups>
                     </configuration>
                 </plugin>
@@ -332,6 +335,8 @@
                             <includes>
                                 <include>com.sinch.sdk.e2e.domains.mailgun.v1.MailgunIT</include>
                                 <include>com.sinch.sdk.e2e.domains.conversation.ConversationIT</include>
+                                <include>com.sinch.sdk.e2e.domains.sms.v0.SmsIT</include>
+                                <include>com.sinch.sdk.e2e.domains.sms.v1.SmsIT</include>
                                 <include>com.sinch.sdk.e2e.domains.voice.v0.VoiceIT</include>
                                 <include>com.sinch.sdk.e2e.domains.voice.v1.VoiceIT</include>
                             </includes>
@@ -423,8 +428,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.fasterxml.jackson.jaxrs</groupId>
-            <artifactId>jackson-jaxrs-json-provider</artifactId>
+            <groupId>com.fasterxml.jackson.jakarta.rs</groupId>
+            <artifactId>jackson-jakarta-rs-json-provider</artifactId>
             <version>${jackson.version}</version>
         </dependency>
 

@@ -27,16 +27,16 @@ import org.junit.jupiter.api.Test;
 @TestWithResources
 class GroupsDtoConverterTest extends BaseTest {
 
-  @GivenJsonResource("/domains/sms/v1/GroupResponseDto.json")
+  @GivenJsonResource("/domains/sms/v1/groups/GroupDto.json")
   CreateGroupResponseDto createGroupResponseDto;
 
-  @GivenJsonResource("/domains/sms/v1/GroupCreateRequestParametersDto.json")
+  @GivenJsonResource("/domains/sms/v1/CreateGroupRequestDto.json")
   GroupObjectDto createGroupRequestParametersDto;
 
-  @GivenJsonResource("/domains/sms/v1/GroupUpdateRequestParametersDto.json")
+  @GivenJsonResource("/domains/sms/v1/groups/request/GroupUpdateRequestDto.json")
   UpdateGroupRequestDto groupUpdateRequestParametersDto;
 
-  @GivenJsonResource("/domains/sms/v1/GroupReplaceRequestParametersDto.json")
+  @GivenJsonResource("/domains/sms/v1/ReplaceGroupRequestDto.json")
   ReplaceGroupRequestDto groupReplaceRequestParametersDto;
 
   static void compareWithDto(Group client, CreateGroupResponseDto dto) {
@@ -105,16 +105,17 @@ class GroupsDtoConverterTest extends BaseTest {
     GroupUpdateRequestParameters client =
         GroupUpdateRequestParameters.builder()
             .setName("My new customers")
-            .setAdd(Collections.singletonList("foo"))
-            .setRemove(Arrays.asList("01FC66621XXXXX119Z8PMV1AHY", "01FC66621XXXXX119Z8PMV1A00"))
-            .setAddFromGroup("add from group string")
-            .setRemoveFromGroup("remove from group string")
+            .setAdd(Collections.singletonList("+12345674890"))
+            .setRemove(Arrays.asList("+0987654321", "+3456789123"))
+            .setAddFromGroup("01FC66621XXXXX119Z8PMV1AHY")
+            .setRemoveFromGroup("01FC66621XXXXX119Z8PMV1A00")
             .setAutoUpdate(
                 GroupAutoUpdateRequestParameters.builder()
                     .setTo("15551231234")
                     .setAdd(
                         GroupAutoUpdateKeywordRequestParameters.builder()
                             .setFirstWord("Add 1st keyword")
+                            .setSecondWord("Add 2nd keyword")
                             .build())
                     .setRemove(
                         GroupAutoUpdateKeywordRequestParameters.builder()

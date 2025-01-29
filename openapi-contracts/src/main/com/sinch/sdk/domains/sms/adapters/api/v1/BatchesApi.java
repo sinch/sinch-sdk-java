@@ -761,8 +761,8 @@ public class BatchesApi {
   }
 
   /**
-   * Update a Batch message This operation updates all specified parameters of a batch that matches
-   * the provided batch ID.
+   * Update a BatchResponse message This operation updates all specified parameters of a batch that
+   * matches the provided batch ID.
    *
    * @param servicePlanId Your service plan ID. You can find this on your
    *     [Dashboard](https://dashboard.sinch.com/sms/api/rest). (required)

@@ -515,31 +515,37 @@ public class ConversationApi {
                 "\\{" + "project_id" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
+
     if (null != appId) {
       localVarQueryParams.add(
           new URLParameter(
               "app_id", appId, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
+
     if (null != contactId) {
       localVarQueryParams.add(
           new URLParameter(
               "contact_id", contactId, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
+
     if (null != onlyActive) {
       localVarQueryParams.add(
           new URLParameter(
               "only_active", onlyActive, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
+
     if (null != pageSize) {
       localVarQueryParams.add(
           new URLParameter(
               "page_size", pageSize, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
+
     if (null != pageToken) {
       localVarQueryParams.add(
           new URLParameter(
               "page_token", pageToken, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
+
     if (null != activeChannel) {
       localVarQueryParams.add(
           new URLParameter(
@@ -668,26 +674,31 @@ public class ConversationApi {
                 "\\{" + "project_id" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
+
     if (null != appId) {
       localVarQueryParams.add(
           new URLParameter(
               "app_id", appId, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
+
     if (null != onlyActive) {
       localVarQueryParams.add(
           new URLParameter(
               "only_active", onlyActive, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
+
     if (null != pageSize) {
       localVarQueryParams.add(
           new URLParameter(
               "page_size", pageSize, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
+
     if (null != pageToken) {
       localVarQueryParams.add(
           new URLParameter(
               "page_token", pageToken, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
+
     if (null != order) {
       localVarQueryParams.add(
           new URLParameter("order", order, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
@@ -899,11 +910,13 @@ public class ConversationApi {
                 URLPathUtils.encodePathSegment(conversationId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
+
     if (null != updateMask) {
       localVarQueryParams.add(
           new URLParameter(
               "update_mask", updateMask, URLParameter.STYLE.valueOf("form".toUpperCase()), false));
     }
+
     if (null != metadataUpdateStrategy) {
       localVarQueryParams.add(
           new URLParameter(

@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.conversation.api.v1.adapters;
 
+import com.sinch.sdk.auth.HmacAuthenticationValidation;
 import com.sinch.sdk.auth.adapters.OAuthManager;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
@@ -118,11 +119,7 @@ public class ConversationService
     if (null == this.webhooks) {
       this.webhooks =
           new WebHooksService(
-              uriUUID,
-              context,
-              httpClient,
-              authManagers,
-              new ConversationWebhooksAuthenticationValidation());
+              uriUUID, context, httpClient, authManagers, new HmacAuthenticationValidation());
     }
     return this.webhooks;
   }

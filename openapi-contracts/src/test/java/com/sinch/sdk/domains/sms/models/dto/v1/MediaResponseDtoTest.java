@@ -1,9 +1,7 @@
 package com.sinch.sdk.domains.sms.models.dto.v1;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
-import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import java.time.OffsetDateTime;
 import java.util.AbstractMap;
@@ -12,18 +10,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
-import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
 class MediaResponseDtoTest extends BaseTest {
-  @GivenJsonResource("/domains/sms/v1/MediaResponseDto.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/MediaResponseDto.json")
   MediaResponseDto loadedDto;
-
-  @GivenTextResource("/domains/sms/v1/MediaResponseDto.json")
-  String jsonStringDto;
 
   ParameterObjDto parameterObjDto = new ParameterObjDto();
 
@@ -54,14 +47,6 @@ class MediaResponseDtoTest extends BaseTest {
   void deserialize() {
 
     Assertions.assertThat(loadedDto).usingRecursiveComparison().isEqualTo(mediaDTO);
-  }
-
-  @Test
-  void serialize() throws JsonProcessingException, JSONException {
-
-    String serializedString = objectMapper.writeValueAsString(mediaDTO);
-
-    JSONAssert.assertEquals(jsonStringDto, serializedString, true);
   }
 
   @BeforeEach

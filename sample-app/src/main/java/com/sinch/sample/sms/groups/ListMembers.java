@@ -22,11 +22,9 @@ public class ListMembers extends BaseApplication {
 
   public void run() {
 
-    String groupId = "01HF714PHPH9SQ2BNWSCY2068R";
+    LOGGER.info("List members for groupId: " + smsGroupId);
 
-    LOGGER.info("List members for groupId: " + groupId);
-
-    Collection<String> response = client.sms().groups().listMembers(groupId);
+    Collection<String> response = client.sms().groups().listMembers(smsGroupId);
 
     response.iterator().forEachRemaining(LOGGER::info);
   }

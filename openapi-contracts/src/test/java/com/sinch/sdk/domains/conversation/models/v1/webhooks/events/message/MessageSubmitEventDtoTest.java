@@ -21,7 +21,7 @@ public class MessageSubmitEventDtoTest extends ConversationBaseTest {
   MessageSubmitEvent messageSubmitEventDto;
 
   @GivenTextResource("domains/conversation/v1/webhooks/events/message/MessageSubmitEventDto.json")
-  String jsonMessageInboundEventDto;
+  String jsonMessageSubmitEventDto;
 
   public static MessageSubmitEvent expectedMessageInboundEvent =
       MessageSubmitEvent.builder()
@@ -46,7 +46,7 @@ public class MessageSubmitEventDtoTest extends ConversationBaseTest {
   @Test
   void serialize() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(expectedMessageInboundEvent);
-    JSONAssert.assertEquals(jsonMessageInboundEventDto, serializedString, true);
+    JSONAssert.assertEquals(jsonMessageSubmitEventDto, serializedString, true);
   }
 
   @Test

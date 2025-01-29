@@ -28,22 +28,22 @@ import org.mockito.InjectMocks;
 @TestWithResources
 public class WebHooksServiceTest extends BaseTest {
 
-  @GivenTextResource("/domains/sms/v1/MOBinaryDto.json")
+  @GivenTextResource("/domains/sms/v1/inbounds/InboundBinaryDto.json")
   String incomingSMSBinaryJsonString;
 
-  @GivenTextResource("/domains/sms/v1/MOTextDto.json")
+  @GivenTextResource("/domains/sms/v1/inbounds/InboundTextDto.json")
   String incomingSMSTextJsonString;
 
-  @GivenTextResource("/domains/sms/v1/DeliveryReportRecipientSMSDto.json")
+  @GivenTextResource("/domains/sms/v1/deliveryreports/RecipientDeliveryReportSMSDto.json")
   String deliveryReportRecipientSMSJsonString;
 
-  @GivenTextResource("/domains/sms/v1/DeliveryReportRecipientMMSDto.json")
+  @GivenTextResource("/domains/sms/v1/deliveryreports/RecipientDeliveryReportMMSDto.json")
   String deliveryReportRecipientMMSJsonString;
 
-  @GivenTextResource("/domains/sms/v1/DeliveryReportBatchSMSDto.json")
+  @GivenTextResource("/domains/sms/v1/deliveryreports/BatchDeliveryReportSMSDto.json")
   String deliveryReportBatchSMSJsonString;
 
-  @GivenTextResource("/domains/sms/v1/DeliveryReportBatchMMSDto.json")
+  @GivenTextResource("/domains/sms/v1/deliveryreports/BatchDeliveryReportMMSDto.json")
   String deliveryReportBatchMMSJsonString;
 
   @InjectMocks WebHooksService service;

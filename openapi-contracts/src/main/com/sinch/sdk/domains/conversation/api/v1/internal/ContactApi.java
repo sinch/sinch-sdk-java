@@ -483,26 +483,31 @@ public class ContactApi {
                 "\\{" + "project_id" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
+
     if (null != pageSize) {
       localVarQueryParams.add(
           new URLParameter(
               "page_size", pageSize, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
+
     if (null != pageToken) {
       localVarQueryParams.add(
           new URLParameter(
               "page_token", pageToken, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
+
     if (null != externalId) {
       localVarQueryParams.add(
           new URLParameter(
               "external_id", externalId, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
+
     if (null != channel) {
       localVarQueryParams.add(
           new URLParameter(
               "channel", channel, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
+
     if (null != identity) {
       localVarQueryParams.add(
           new URLParameter(
@@ -708,6 +713,7 @@ public class ContactApi {
                 "\\{" + "contact_id" + "\\}", URLPathUtils.encodePathSegment(contactId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
+
     if (null != updateMask) {
       localVarQueryParams.add(
           new URLParameter(

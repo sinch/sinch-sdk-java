@@ -246,25 +246,25 @@ public class BatchesServiceTest extends BaseTest {
           .setUdh(udh)
           .build();
 
-  @GivenJsonResource("/domains/sms/v1/BinaryResponseDto.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/BinaryResponseDto.json")
   public SendSMS201ResponseDto binaryResponseDto;
 
-  @GivenJsonResource("/domains/sms/v1/MediaResponseDto.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/MediaResponseDto.json")
   SendSMS201ResponseDto mediaResponseDto;
 
-  @GivenJsonResource("/domains/sms/v1/TextResponseDto.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/TextResponseDto.json")
   SendSMS201ResponseDto textResponseDto;
 
-  @GivenJsonResource("/domains/sms/v1/DryRunResponseDto.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/DryRunResponseDto.json")
   DryRun200ResponseDto dryRunResponseDto;
 
-  @GivenJsonResource("/domains/sms/v1/ListBatchesResponseDtoPage0.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/ListBatchesResponseDtoPage0.json")
   ApiBatchListDto listBatchesResponseDtoPage0;
 
-  @GivenJsonResource("/domains/sms/v1/ListBatchesResponseDtoPage1.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/ListBatchesResponseDtoPage1.json")
   ApiBatchListDto listBatchesResponseDtoPage1;
 
-  @GivenJsonResource("/domains/sms/v1/ListBatchesResponseDtoPage2.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/ListBatchesResponseDtoPage2.json")
   ApiBatchListDto listBatchesResponseDtoPage2;
 
   @Mock SmsContext context;

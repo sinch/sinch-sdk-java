@@ -25,7 +25,7 @@ public interface GetChannelProfileRequest {
   String getAppId();
 
   /**
-   * Get recipient
+   * Identifies the recipient.
    *
    * @return recipient
    */

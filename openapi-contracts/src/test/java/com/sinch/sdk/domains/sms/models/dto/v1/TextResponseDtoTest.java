@@ -19,10 +19,10 @@ import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
 class TextResponseDtoTest extends BaseTest {
-  @GivenJsonResource("/domains/sms/v1/TextResponseDto.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/TextResponseDto.json")
   TextResponseDto loadedDto;
 
-  @GivenTextResource("/domains/sms/v1/TextResponseDto.json")
+  @GivenTextResource("/domains/sms/v1/batches/response/TextResponseDto.json")
   String jsonStringDto;
 
   ParameterObjDto parameterObjDto = new ParameterObjDto();
