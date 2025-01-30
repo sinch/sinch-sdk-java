@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import java.time.Instant;
 import java.util.Objects;
 
 @JsonPropertyOrder({
@@ -20,7 +21,7 @@ public class QueueStatusDisabledDetailsImpl implements QueueStatusDisabledDetail
 
   public static final String JSON_PROPERTY_UNTIL = "until";
 
-  private OptionalValue<String> until;
+  private OptionalValue<Instant> until;
 
   public static final String JSON_PROPERTY_REASON = "reason";
 
@@ -29,19 +30,19 @@ public class QueueStatusDisabledDetailsImpl implements QueueStatusDisabledDetail
   public QueueStatusDisabledDetailsImpl() {}
 
   protected QueueStatusDisabledDetailsImpl(
-      OptionalValue<String> until, OptionalValue<String> reason) {
+      OptionalValue<Instant> until, OptionalValue<String> reason) {
     this.until = until;
     this.reason = reason;
   }
 
   @JsonIgnore
-  public String getUntil() {
+  public Instant getUntil() {
     return until.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_UNTIL)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<String> until() {
+  public OptionalValue<Instant> until() {
     return until;
   }
 
@@ -103,11 +104,11 @@ public class QueueStatusDisabledDetailsImpl implements QueueStatusDisabledDetail
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements QueueStatusDisabledDetails.Builder {
-    OptionalValue<String> until = OptionalValue.empty();
+    OptionalValue<Instant> until = OptionalValue.empty();
     OptionalValue<String> reason = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_UNTIL)
-    public Builder setUntil(String until) {
+    public Builder setUntil(Instant until) {
       this.until = OptionalValue.of(until);
       return this;
     }

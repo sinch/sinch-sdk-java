@@ -34,7 +34,7 @@ import java.util.Map;
 
 public class Mapper {
 
-  public static final PropertyFilter uninitializedFilter =
+  private static final PropertyFilter uninitializedFilter =
       new SimpleBeanPropertyFilter() {
         @Override
         public void serializeAsField(
@@ -95,19 +95,19 @@ public class Mapper {
 
   private static class LazyHolder {
 
-    public static final SimpleModule module =
+    static final SimpleModule module =
         new JavaTimeModule()
             .addDeserializer(OffsetDateTime.class, new OffsetDateTimeCustomDeserializer())
             .addDeserializer(Instant.class, new InstantCustomDeserializer());
 
-    public static final SimpleModule optionalValueModule =
+    static final SimpleModule optionalValueModule =
         new SimpleModule("optionalValueModule")
             .addSerializer(OptionalValue.class, new OptionalValueSerializer());
-    public static final SimpleModule dynamicEnumModule =
+    static final SimpleModule dynamicEnumModule =
         new SimpleModule("dynamicEnumModule")
             .addSerializer(EnumDynamic.class, new EnumDynamicSerializer());
 
-    public static final SimpleModule validationDeserializationModule =
+    static final SimpleModule validationDeserializationModule =
         new SimpleModule("deserializationModule")
             .setDeserializerModifier(new BuilderDeserializerWithValidation());
 
@@ -128,7 +128,7 @@ public class Mapper {
             .registerModule(validationDeserializationModule);
   }
 
-  public static final class OffsetDateTimeCustomDeserializer
+  private static final class OffsetDateTimeCustomDeserializer
       extends JsonDeserializer<OffsetDateTime> {
 
     @Override
@@ -148,18 +148,24 @@ public class Mapper {
     }
   }
 
-  public static final class InstantCustomDeserializer extends JsonDeserializer<Instant> {
+  private static final class InstantCustomDeserializer extends JsonDeserializer<Instant> {
 
     @Override
     public Instant deserialize(JsonParser parser, DeserializationContext context)
         throws IOException {
 
       String text = parser.getText();
-      return DateUtil.failSafeTimeStampToInstant(text);
+      Instant deserialized;
+      try {
+        deserialized = DateUtil.failSafeTimeStampToInstant(text);
+      } catch (Exception e) {
+        deserialized = DateUtil.RFC822StringToInstant(text);
+      }
+      return deserialized;
     }
   }
 
-  public static class EnumDynamicSerializer extends JsonSerializer<EnumDynamic> {
+  private static class EnumDynamicSerializer extends JsonSerializer<EnumDynamic> {
 
     @Override
     public void serialize(EnumDynamic value, JsonGenerator jgen, SerializerProvider provider)
@@ -168,7 +174,7 @@ public class Mapper {
     }
   }
 
-  public static class OptionalValueSerializer extends JsonSerializer<OptionalValue> {
+  private static class OptionalValueSerializer extends JsonSerializer<OptionalValue> {
 
     @Override
     public void serialize(OptionalValue value, JsonGenerator jgen, SerializerProvider provider)

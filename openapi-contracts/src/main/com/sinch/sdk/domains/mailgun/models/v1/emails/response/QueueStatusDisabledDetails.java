@@ -11,6 +11,7 @@
 package com.sinch.sdk.domains.mailgun.models.v1.emails.response;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.time.Instant;
 
 /** QueueStatusDisabledDetails */
 @JsonDeserialize(builder = QueueStatusDisabledDetailsImpl.Builder.class)
@@ -21,7 +22,7 @@ public interface QueueStatusDisabledDetails {
    *
    * @return until
    */
-  String getUntil();
+  Instant getUntil();
 
   /**
    * Get reason
@@ -49,7 +50,7 @@ public interface QueueStatusDisabledDetails {
      * @return Current builder
      * @see #getUntil
      */
-    Builder setUntil(String until);
+    Builder setUntil(Instant until);
 
     /**
      * see getter
