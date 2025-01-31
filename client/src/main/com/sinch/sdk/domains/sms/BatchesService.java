@@ -7,6 +7,11 @@ import com.sinch.sdk.domains.sms.models.DryRun;
 import com.sinch.sdk.domains.sms.models.requests.BatchesListRequestParameters;
 import com.sinch.sdk.domains.sms.models.requests.UpdateBaseBatchRequest;
 import com.sinch.sdk.domains.sms.models.responses.BatchesListResponse;
+import com.sinch.sdk.domains.sms.models.v1.batches.request.BatchRequest;
+import com.sinch.sdk.domains.sms.models.v1.batches.request.DryRunQueryParameters;
+import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesQueryParameters;
+import com.sinch.sdk.domains.sms.models.v1.batches.request.SendDeliveryFeedbackRequest;
+import com.sinch.sdk.domains.sms.models.v1.batches.request.UpdateBatchRequest;
 import java.util.Collection;
 
 /**
@@ -15,7 +20,9 @@ import java.util.Collection;
  * @see <a
  *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Batches">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Batches/</a>
  * @since 1.0
+ * @deprecated use {@link com.sinch.sdk.domains.sms.api.v1.BatchesService} instead.
  */
+@Deprecated
 public interface BatchesService {
 
   /**
@@ -29,7 +36,9 @@ public interface BatchesService {
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/GetBatchMessage">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/GetBatchMessage</a>
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.sms.api.v1.BatchesService#get(String)} instead.
    */
+  @Deprecated
   <T extends Batch<?>> T get(String batchId) throws ApiException;
 
   /**
@@ -47,7 +56,10 @@ public interface BatchesService {
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/SendSMS">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/SendSMS</a>
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.sms.api.v1.BatchesService#send(BatchRequest)}
+   *     instead.
    */
+  @Deprecated
   <T extends Batch<?>> T send(BaseBatch<?> batch) throws ApiException;
 
   /**
@@ -64,7 +76,11 @@ public interface BatchesService {
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/Dry_Run">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/Dry_Run</a>
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.sms.api.v1.BatchesService#dryRun(DryRunQueryParameters,
+   *     BatchRequest)} instead.
    */
+  @Deprecated
   DryRun dryRun(boolean perRecipient, int numberOfRecipient, BaseBatch<?> batch)
       throws ApiException;
 
@@ -79,7 +95,10 @@ public interface BatchesService {
    * @since 1.0
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/ListBatches">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/ListBatches</a>
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.sms.api.v1.BatchesService#list(ListBatchesQueryParameters)} instead
    */
+  @Deprecated
   BatchesListResponse list(BatchesListRequestParameters parameters) throws ApiException;
 
   /**
@@ -95,7 +114,10 @@ public interface BatchesService {
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/UpdateBatchMessage">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/UpdateBatchMessage</a>
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.sms.api.v1.BatchesService#update(String,
+   *     UpdateBatchRequest)} instead.
    */
+  @Deprecated
   <T extends Batch<?>> T update(String batchId, UpdateBaseBatchRequest<?> batch)
       throws ApiException;
 
@@ -112,7 +134,10 @@ public interface BatchesService {
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/ReplaceBatch">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/ReplaceBatch</a>
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.sms.api.v1.BatchesService#replace(String,
+   *     BatchRequest)} instead.
    */
+  @Deprecated
   <T extends Batch<?>> T replace(String batchId, BaseBatch<?> batch) throws ApiException;
 
   /**
@@ -130,7 +155,9 @@ public interface BatchesService {
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/CancelBatchMessage">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/CancelBatchMessage</a>
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.sms.api.v1.BatchesService#cancel(String)} instead.
    */
+  @Deprecated
   <T extends Batch<?>> T cancel(String batchId) throws ApiException;
 
   /**
@@ -156,6 +183,10 @@ public interface BatchesService {
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/deliveryFeedback">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/deliveryFeedback</a>
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.sms.api.v1.BatchesService#sendDeliveryFeedback(String,
+   *     SendDeliveryFeedbackRequest)} instead.
    */
+  @Deprecated
   void sendDeliveryFeedback(String batchId, Collection<String> recipients) throws ApiException;
 }
