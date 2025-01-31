@@ -4,6 +4,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
+import java.time.Instant;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
@@ -16,7 +17,7 @@ public class SendingQueuesStatusResponseTest extends BaseTest {
                   .setIsDisabled(true)
                   .setDetails(
                       QueueStatusDisabledDetails.builder()
-                          .setUntil("Mon, 24 Jan 2006 16:00:00 MST")
+                          .setUntil(Instant.parse("2025-01-30T04:14:04Z"))
                           .setReason("You have too many messages in regular queue")
                           .build())
                   .build())
@@ -25,7 +26,7 @@ public class SendingQueuesStatusResponseTest extends BaseTest {
                   .setIsDisabled(true)
                   .setDetails(
                       QueueStatusDisabledDetails.builder()
-                          .setUntil("Mon, 12 Jan 2006 15:04:05 MST")
+                          .setUntil(Instant.parse("2025-01-30T15:14:04Z"))
                           .setReason("You have too many messages in scheduled queue")
                           .build())
                   .build())

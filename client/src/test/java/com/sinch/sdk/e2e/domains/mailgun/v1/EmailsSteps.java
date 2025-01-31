@@ -162,13 +162,13 @@ public class EmailsSteps {
                 ExceededQueueQuota.builder()
                     .setIsDisabled(false)
                     .setDetails(
-                        QueueStatusDisabledDetails.builder().setUntil("").setReason("").build())
+                        QueueStatusDisabledDetails.builder().setUntil(null).setReason("").build())
                     .build())
             .setScheduled(
                 ExceededQueueQuota.builder()
                     .setIsDisabled(false)
                     .setDetails(
-                        QueueStatusDisabledDetails.builder().setUntil("").setReason("").build())
+                        QueueStatusDisabledDetails.builder().setUntil(null).setReason("").build())
                     .build())
             .build();
 
