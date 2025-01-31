@@ -155,13 +155,22 @@ public class Mapper {
         throws IOException {
 
       String text = parser.getText();
-      Instant deserialized;
-      try {
-        deserialized = DateUtil.failSafeTimeStampToInstant(text);
-      } catch (Exception e) {
-        deserialized = DateUtil.RFC822StringToInstant(text);
+
+      if (null == text) {
+        return null;
       }
-      return deserialized;
+
+      String trimmed = text.trim();
+      if (trimmed.isEmpty()) {
+        return null;
+      }
+
+      // RFC Date are starting with character not a digit
+      if (Character.isDigit(text.charAt(0))) {
+        return DateUtil.failSafeTimeStampToInstant(text);
+      }
+
+      return DateUtil.RFC822StringToInstant(text);
     }
   }
 

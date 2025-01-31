@@ -33,6 +33,18 @@ class DateUtilTest {
   }
 
   @Test
+  void failSafeTimeStampFromBlankString() {
+    Instant instant = DateUtil.failSafeTimeStampToInstant("    ");
+    assertNull(instant);
+  }
+
+  @Test
+  void failSafeTimeStampFromStringWithBlanks() {
+    Instant instant = DateUtil.failSafeTimeStampToInstant("  2024-05-04T10:00:00.1234   ");
+    assertEquals("2024-05-04T10:00:00.123400Z", instant.toString());
+  }
+
+  @Test
   void failSafeTimeStampNoTZ() {
     Instant instant = DateUtil.failSafeTimeStampToInstant("2024-05-04T10:00:00.1234");
     assertEquals("2024-05-04T10:00:00.123400Z", instant.toString());
@@ -51,9 +63,27 @@ class DateUtilTest {
   }
 
   @Test
+  void failSafeTimeStampInvalid() {
+    Instant instant = DateUtil.failSafeTimeStampToInstant("2024 05 04 10 00 00 1234 ");
+    assertNull(instant);
+  }
+
+  @Test
   void RFC822NullGuard() {
     Instant instant = DateUtil.RFC822StringToInstant(null);
     assertNull(instant);
+  }
+
+  @Test
+  void RFC822FromBlankString() {
+    Instant instant = DateUtil.RFC822StringToInstant("    ");
+    assertNull(instant);
+  }
+
+  @Test
+  void RFC822FromStringWithBlanks() {
+    Instant instant = DateUtil.RFC822StringToInstant("  Mon, 2 Jan 2006 15:04:05 MST  ");
+    assertEquals("2006-01-02T22:04:05Z", instant.toString());
   }
 
   @Test
@@ -89,7 +119,7 @@ class DateUtilTest {
   @Test
   void RFC822NoOffset() {
     Instant instant = DateUtil.RFC822StringToInstant("Mon, 2 Jan 2006 15:04:05");
-    assertNull(instant);
+    assertEquals("2006-01-02T15:04:05Z", instant.toString());
   }
 
   @Test
