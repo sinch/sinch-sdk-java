@@ -118,6 +118,34 @@ class GroupsServiceTest extends BaseTest {
   }
 
   @Test
+  void createDefault() throws ApiException {
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/groups",
+            HttpMethod.POST,
+            Collections.emptyList(),
+            // SMS is expecting an empty body but do not accept a NULL one
+            "{}",
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonGroupDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    Group response = service.create();
+
+    TestHelpers.recursiveEquals(response, groupDto);
+  }
+
+  @Test
   void create() throws ApiException {
 
     HttpRequest httpRequest =
