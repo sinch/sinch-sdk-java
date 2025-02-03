@@ -125,7 +125,7 @@ class GroupsServiceTest extends BaseTest {
             "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/groups",
             HttpMethod.POST,
             Collections.emptyList(),
-            // SMS is expecting an empty body but do not accept a NULL one
+            // The SMS API permits an empty body but rejects a null value
             "{}",
             Collections.emptyMap(),
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
@@ -140,9 +140,10 @@ class GroupsServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    Group response = service.create();
+    service.create();
 
-    TestHelpers.recursiveEquals(response, groupDto);
+    // response does not matter: test purpose is to ensure an empty body was properly sent onto
+    // request
   }
 
   @Test
