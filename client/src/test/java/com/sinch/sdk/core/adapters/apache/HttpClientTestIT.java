@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import okhttp3.HttpUrl;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -185,6 +186,57 @@ class HttpClientTestIT extends BaseTest {
     assertEquals("/foo/foo-path", recordedRequest.getPath());
     header = recordedRequest.getHeader("Authorization");
     assertEquals(header, "Bearer another token");
+  }
+
+  @Test
+  void httpRequestUrlFromServerConfiguration() throws InterruptedException {
+
+    mockBackEnd.enqueue(new MockResponse().setBody("@&"));
+
+    try {
+      httpClient.invokeAPI(
+          new ServerConfiguration(String.format("%s/foo/", serverUrl)),
+          null,
+          new HttpRequest(
+              "foo-path",
+              HttpMethod.POST,
+              null,
+              "foo",
+              null,
+              null,
+              Arrays.asList("application/json; charset=utf-8"),
+              null));
+    } catch (ApiException ae) {
+      // noop
+    }
+    RecordedRequest recordedRequest = mockBackEnd.takeRequest();
+    HttpUrl url = recordedRequest.getRequestUrl();
+    assertEquals(url.url().toExternalForm(), String.format("%s/foo/foo-path", serverUrl));
+  }
+
+  @Test
+  void httpRequestUrlFromHttpRequest() throws InterruptedException {
+
+    mockBackEnd.enqueue(new MockResponse().setBody("@&"));
+
+    try {
+      httpClient.invokeAPI(
+          new ServerConfiguration("https://this-url-have-to-be-ignored.com"),
+          null,
+          new HttpRequest(
+              String.format("%s/foo?query", serverUrl),
+              HttpMethod.POST,
+              null,
+              null,
+              null,
+              Arrays.asList("application/json; charset=utf-8"),
+              null));
+    } catch (ApiException ae) {
+      // noop
+    }
+    RecordedRequest recordedRequest = mockBackEnd.takeRequest();
+    HttpUrl url = recordedRequest.getRequestUrl();
+    assertEquals(url.url().toExternalForm(), String.format("%s/foo?query", serverUrl));
   }
 
   @Test
