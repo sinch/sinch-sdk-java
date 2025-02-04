@@ -100,7 +100,10 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
       throws ApiException {
 
     try {
-      String path = serverConfiguration.getUrl() + httpRequest.getPath().orElse("");
+      String path =
+          httpRequest
+              .getFullUrl()
+              .orElse(serverConfiguration.getUrl() + httpRequest.getPath().orElse(""));
       HttpMethod method = httpRequest.getMethod();
       Collection<URLParameter> queryParameters = httpRequest.getQueryParameters();
 
