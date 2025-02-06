@@ -9,6 +9,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
+import com.sinch.sdk.core.databind.multipart.ObjectMapperTest;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
@@ -24,7 +25,9 @@ import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.mailgun.api.v1.TemplatesService;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.Template;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.request.CreateTemplateRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.GetTemplateQueryParameters;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.response.CreateTemplateResponseTest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.response.GetTemplateResponseTest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.response.ListTemplatesResponse;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.response.internal.ListTemplatesResponseInternal;
@@ -59,6 +62,9 @@ class TemplatesServiceTest extends BaseTest {
 
   @GivenTextResource("/domains/mailgun/v1/templates/response/ListTemplatesResponseDtoPage2.json")
   String jsonListTemplatesResponseDtoPage2;
+
+  @GivenTextResource("/domains/mailgun/v1/templates/response/CreateTemplateResponseDto.json")
+  String jsonCreateTemplateResponseDto;
 
   @Mock ServerConfiguration serverConfiguration;
   @Mock HttpClient httpClient;
@@ -244,5 +250,36 @@ class TemplatesServiceTest extends BaseTest {
     TestHelpers.recursiveEquals(item, listTemplatesResponseDtoPage1.getItems().get(0));
 
     Assertions.assertThat(iterator.hasNext()).isEqualTo(false);
+  }
+
+  @Test
+  void create() {
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v3/" + URLPathUtils.encodePathSegment(domainName) + "/templates",
+            HttpMethod.POST,
+            Collections.emptyList(),
+            ObjectMapperTest.fillMap("name", "template name"),
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.MULTIPART_FORM_DATA),
+            Collections.singletonList(AUTH_NAME));
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonCreateTemplateResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    CreateTemplateRequest request =
+        CreateTemplateRequest.builder().setName("template name").build();
+    Template response = service.create(domainName, request);
+
+    TestHelpers.recursiveEquals(
+        response, CreateTemplateResponseTest.expectedTemplate.getTemplate());
   }
 }
