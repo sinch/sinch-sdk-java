@@ -8,7 +8,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
-import com.sinch.sdk.auth.HmacAuthenticationValidation;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
@@ -36,12 +35,11 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 
 @TestWithResources
-public class WebHooksClientServiceTest extends ConversationBaseTest {
+public class WebHooksApiServiceTest extends ConversationBaseTest {
   @Mock ConversationContext context;
   @Mock WebhooksApi api;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
-  @Mock HmacAuthenticationValidation authenticationValidation;
 
   @Captor ArgumentCaptor<String> uriPartIDCaptor;
   @Captor ArgumentCaptor<String> idCaptor;
@@ -50,15 +48,12 @@ public class WebHooksClientServiceTest extends ConversationBaseTest {
 
   @Captor ArgumentCaptor<List<String>> maskCaptor;
 
-  WebHooksService service;
+  WebHooksApiService service;
   String uriPartID = "foovalue";
 
   @BeforeEach
   public void initMocks() {
-    service =
-        spy(
-            new WebHooksService(
-                uriPartID, context, httpClient, authManagers, authenticationValidation));
+    service = spy(new WebHooksApiService(uriPartID, context, httpClient, authManagers));
     doReturn(api).when(service).getApi();
   }
 

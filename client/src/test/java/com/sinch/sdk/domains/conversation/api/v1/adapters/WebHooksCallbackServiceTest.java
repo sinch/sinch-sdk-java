@@ -28,7 +28,6 @@ import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.record.Recor
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.smartconversations.MessageInboundSmartConversationRedactionEvent;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.smartconversations.SmartConversationsEvent;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.unsupported.UnsupportedCallbackEvent;
-import com.sinch.sdk.models.Configuration;
 import java.util.AbstractMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -37,7 +36,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
-public class WebHooksServiceTest extends ConversationBaseTest {
+public class WebHooksCallbackServiceTest extends ConversationBaseTest {
 
   com.sinch.sdk.domains.conversation.api.v1.WebHooksService serverService;
 
@@ -261,13 +260,6 @@ public class WebHooksServiceTest extends ConversationBaseTest {
 
   @BeforeEach
   public void setUp() {
-
-    Configuration configuration =
-        Configuration.builder()
-            .setProjectId("unused")
-            .setKeyId("unused")
-            .setKeySecret("unused")
-            .build();
-    serverService = new SinchClient(configuration).conversation().v1().webhooks();
+    serverService = new SinchClient().conversation().v1().webhooks();
   }
 }

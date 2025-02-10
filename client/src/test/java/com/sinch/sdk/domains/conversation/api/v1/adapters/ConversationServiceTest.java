@@ -1,13 +1,6 @@
 package com.sinch.sdk.domains.conversation.api.v1.adapters;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.models.ConversationContext;
-import com.sinch.sdk.models.UnifiedCredentials;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
@@ -16,122 +9,37 @@ class ConversationServiceTest {
   @Mock HttpClient httpClient;
 
   @Test
-  void doNotAcceptNullKey() {
-    UnifiedCredentials credentials =
-        UnifiedCredentials.builder().setKeyId(null).setKeySecret("foo").setProjectId("foo").build();
-    ConversationContext context = ConversationContext.builder().build();
-    ServerConfiguration server = new ServerConfiguration("");
-    Exception exception =
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> new ConversationService(credentials, context, server, httpClient));
-    assertTrue(exception.getMessage().contains("keyId"));
+  void checkCredentialsApp() {
+    CredentialsValidationHelper.checkCredentials(httpClient, ConversationService::app);
   }
 
   @Test
-  void doNotAcceptNullKeySecret() {
-    UnifiedCredentials credentials =
-        UnifiedCredentials.builder().setKeyId("foo").setKeySecret(null).setProjectId("foo").build();
-    ConversationContext context = ConversationContext.builder().build();
-    ServerConfiguration server = new ServerConfiguration("");
-    Exception exception =
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> new ConversationService(credentials, context, server, httpClient));
-    assertTrue(exception.getMessage().contains("keySecret"));
+  void checkCredentialsCapability() {
+    CredentialsValidationHelper.checkCredentials(httpClient, ConversationService::capability);
   }
 
   @Test
-  void doNotAcceptNullProject() {
-    UnifiedCredentials credentials =
-        UnifiedCredentials.builder().setKeyId("foo").setKeySecret("foo").setProjectId(null).build();
-    ConversationContext context = ConversationContext.builder().build();
-    ServerConfiguration server = new ServerConfiguration("");
-
-    Exception exception =
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> new ConversationService(credentials, context, server, httpClient));
-    assertTrue(exception.getMessage().contains("projectId"));
+  void checkCredentialsContact() {
+    CredentialsValidationHelper.checkCredentials(httpClient, ConversationService::contact);
   }
 
   @Test
-  void doNotAcceptNullCredentials() {
-
-    ConversationContext context = ConversationContext.builder().build();
-    ServerConfiguration server = new ServerConfiguration("");
-    Exception exception =
-        assertThrows(
-            NullPointerException.class,
-            () -> new ConversationService(null, context, server, httpClient));
-    assertTrue(
-        exception.getMessage().contains("Conversation service requires credentials to be defined"));
+  void checkCredentialsConversations() {
+    CredentialsValidationHelper.checkCredentials(httpClient, ConversationService::conversations);
   }
 
   @Test
-  void doNotAcceptNullContext() {
-    UnifiedCredentials credentials =
-        UnifiedCredentials.builder()
-            .setKeyId("foo")
-            .setKeySecret("foo")
-            .setProjectId("foo")
-            .build();
-    ServerConfiguration server = new ServerConfiguration("");
-    Exception exception =
-        assertThrows(
-            NullPointerException.class,
-            () -> new ConversationService(credentials, null, server, httpClient));
-    assertTrue(
-        exception.getMessage().contains("Conversation service requires context to be defined"));
+  void checkCredentialsEvents() {
+    CredentialsValidationHelper.checkCredentials(httpClient, ConversationService::events);
   }
 
   @Test
-  void doNotAcceptEmptyURL() {
-    UnifiedCredentials credentials =
-        UnifiedCredentials.builder()
-            .setKeyId("foo")
-            .setKeySecret("foo")
-            .setProjectId("foo")
-            .build();
-    ConversationContext context = ConversationContext.builder().setUrl("").build();
-    ServerConfiguration server = new ServerConfiguration("");
-    Exception exception =
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> new ConversationService(credentials, context, server, httpClient));
-    assertTrue(
-        exception.getMessage().contains("Conversation service requires 'url' to be defined"));
+  void checkCredentialsMessages() {
+    CredentialsValidationHelper.checkCredentials(httpClient, ConversationService::messages);
   }
 
   @Test
-  void doNotAcceptNullURL() {
-    UnifiedCredentials credentials =
-        UnifiedCredentials.builder()
-            .setKeyId("foo")
-            .setKeySecret("foo")
-            .setProjectId("foo")
-            .build();
-    ConversationContext context = ConversationContext.builder().build();
-    ServerConfiguration server = new ServerConfiguration("");
-    Exception exception =
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> new ConversationService(credentials, context, server, httpClient));
-    assertTrue(
-        exception.getMessage().contains("Conversation service requires 'url' to be defined"));
-  }
-
-  @Test
-  void passInit() {
-    UnifiedCredentials credentials =
-        UnifiedCredentials.builder()
-            .setKeyId("foo")
-            .setKeySecret("foo")
-            .setProjectId("foo")
-            .build();
-    ConversationContext context = ConversationContext.builder().setUrl("foo").build();
-    ServerConfiguration server = new ServerConfiguration("foo");
-    assertDoesNotThrow(
-        () -> new ConversationService(credentials, context, server, httpClient), "Init passed");
+  void checkCredentialsTranscoding() {
+    CredentialsValidationHelper.checkCredentials(httpClient, ConversationService::transcoding);
   }
 }
