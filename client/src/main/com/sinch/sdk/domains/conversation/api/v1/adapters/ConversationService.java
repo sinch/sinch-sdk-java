@@ -57,8 +57,6 @@ public class ConversationService
   private volatile TranscodingService transcoding;
   private volatile CapabilityService capability;
   private volatile WebHooksService webhooks;
-  private volatile WebHooksService webhooksCallbackService;
-
   private volatile TemplatesService templates;
 
   static {
@@ -105,7 +103,7 @@ public class ConversationService
   public WebHooksService webhooks() {
     if (null == this.webhooks) {
       this.webhooks =
-          new WebHooksProxyService(
+          new WebHooksAdaptorService(
               this::processCredentials,
               new WebHooksApiService(uriUUID, context, httpClient, authManagers),
               new WebHooksCallbackService(new HmacAuthenticationValidation()));

@@ -6,14 +6,14 @@ import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.Conversation
 import java.util.Collection;
 import java.util.Map;
 
-public class WebHooksProxyService
+public class WebHooksAdaptorService
     implements com.sinch.sdk.domains.conversation.api.v1.WebHooksService {
 
   private final WebHooksApiService apiService;
   private final WebHooksCallbackService callbackService;
   private final Runnable credentialValidation;
 
-  public WebHooksProxyService(
+  public WebHooksAdaptorService(
       Runnable credentialValidation,
       WebHooksApiService apiService,
       WebHooksCallbackService callbackService) {

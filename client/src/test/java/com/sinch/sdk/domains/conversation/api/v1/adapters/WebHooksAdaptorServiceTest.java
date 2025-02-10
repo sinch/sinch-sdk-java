@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 @TestWithResources
-public class WebHooksProxyServiceTest extends ConversationBaseTest {
+public class WebHooksAdaptorServiceTest extends ConversationBaseTest {
 
   WebHooksService service;
 
@@ -23,7 +23,7 @@ public class WebHooksProxyServiceTest extends ConversationBaseTest {
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new WebHooksProxyService(credentialValidation, apiService, callbackService));
+    service = spy(new WebHooksAdaptorService(credentialValidation, apiService, callbackService));
   }
 
   @Test
