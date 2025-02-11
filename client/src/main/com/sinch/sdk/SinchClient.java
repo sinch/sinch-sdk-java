@@ -374,7 +374,7 @@ public class SinchClient {
         getConfiguration().getUnifiedCredentials().orElse(null),
         getConfiguration().getConversationContext().orElse(null),
         getConfiguration().getOAuthServer(),
-        getHttpClient());
+        this::getHttpClient);
   }
 
   private Properties handlePropertiesFile(String fileName) {

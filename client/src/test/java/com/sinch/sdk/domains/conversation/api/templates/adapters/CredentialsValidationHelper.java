@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.api.v1.adapters;
+package com.sinch.sdk.domains.conversation.api.templates.adapters;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -12,21 +12,22 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 class CredentialsValidationHelper {
-  static void checkCredentials(
-      Supplier<HttpClient> httpClientSupplier, Consumer<ConversationService> service) {
 
-    doNotAcceptNullKey(httpClientSupplier, service);
-    doNotAcceptNullKeySecret(httpClientSupplier, service);
-    doNotAcceptNullProject(httpClientSupplier, service);
-    doNotAcceptNullCredentials(httpClientSupplier, service);
-    doNotAcceptNullContext(httpClientSupplier, service);
-    doNotAcceptEmptyURL(httpClientSupplier, service);
-    doNotAcceptNullURL(httpClientSupplier, service);
-    passInit(httpClientSupplier, service);
+  static void checkCredentialsTemplates(
+      Supplier<HttpClient> httpClientSupplier, Consumer<TemplatesService> service) {
+
+    doNotAcceptNullKeyTemplates(httpClientSupplier, service);
+    doNotAcceptNullKeySecretTemplates(httpClientSupplier, service);
+    doNotAcceptNullProjectTemplates(httpClientSupplier, service);
+    doNotAcceptNullCredentialsTemplates(httpClientSupplier, service);
+    doNotAcceptNullContextTemplates(httpClientSupplier, service);
+    doNotAcceptEmptyURLTemplates(httpClientSupplier, service);
+    doNotAcceptNullURLTemplates(httpClientSupplier, service);
+    passInitTemplates(httpClientSupplier, service);
   }
 
-  private static void doNotAcceptNullKey(
-      Supplier<HttpClient> httpClientSupplier, Consumer<ConversationService> service) {
+  private static void doNotAcceptNullKeyTemplates(
+      Supplier<HttpClient> httpClientSupplier, Consumer<TemplatesService> service) {
     UnifiedCredentials credentials =
         UnifiedCredentials.builder().setKeyId(null).setKeySecret("foo").setProjectId("foo").build();
     ConversationContext context = ConversationContext.builder().build();
@@ -36,12 +37,12 @@ class CredentialsValidationHelper {
             IllegalArgumentException.class,
             () ->
                 service.accept(
-                    new ConversationService(credentials, context, server, httpClientSupplier)));
+                    new TemplatesService(credentials, context, server, httpClientSupplier)));
     assertTrue(exception.getMessage().contains("keyId"));
   }
 
-  private static void doNotAcceptNullKeySecret(
-      Supplier<HttpClient> httpClientSupplier, Consumer<ConversationService> service) {
+  private static void doNotAcceptNullKeySecretTemplates(
+      Supplier<HttpClient> httpClientSupplier, Consumer<TemplatesService> service) {
     UnifiedCredentials credentials =
         UnifiedCredentials.builder().setKeyId("foo").setKeySecret(null).setProjectId("foo").build();
     ConversationContext context = ConversationContext.builder().build();
@@ -51,12 +52,12 @@ class CredentialsValidationHelper {
             IllegalArgumentException.class,
             () ->
                 service.accept(
-                    new ConversationService(credentials, context, server, httpClientSupplier)));
+                    new TemplatesService(credentials, context, server, httpClientSupplier)));
     assertTrue(exception.getMessage().contains("keySecret"));
   }
 
-  private static void doNotAcceptNullProject(
-      Supplier<HttpClient> httpClientSupplier, Consumer<ConversationService> service) {
+  private static void doNotAcceptNullProjectTemplates(
+      Supplier<HttpClient> httpClientSupplier, Consumer<TemplatesService> service) {
     UnifiedCredentials credentials =
         UnifiedCredentials.builder().setKeyId("foo").setKeySecret("foo").setProjectId(null).build();
     ConversationContext context = ConversationContext.builder().build();
@@ -67,25 +68,24 @@ class CredentialsValidationHelper {
             IllegalArgumentException.class,
             () ->
                 service.accept(
-                    new ConversationService(credentials, context, server, httpClientSupplier)));
+                    new TemplatesService(credentials, context, server, httpClientSupplier)));
     assertTrue(exception.getMessage().contains("projectId"));
   }
 
-  private static void doNotAcceptNullCredentials(
-      Supplier<HttpClient> httpClientSupplier, Consumer<ConversationService> service) {
+  private static void doNotAcceptNullCredentialsTemplates(
+      Supplier<HttpClient> httpClientSupplier, Consumer<TemplatesService> service) {
     ConversationContext context = ConversationContext.builder().build();
     ServerConfiguration server = new ServerConfiguration("");
     Exception exception =
         assertThrows(
             NullPointerException.class,
-            () ->
-                service.accept(new ConversationService(null, context, server, httpClientSupplier)));
+            () -> service.accept(new TemplatesService(null, context, server, httpClientSupplier)));
     assertTrue(
-        exception.getMessage().contains("Conversation service requires credentials to be defined"));
+        exception.getMessage().contains("Templates service requires credentials to be defined"));
   }
 
-  private static void doNotAcceptNullContext(
-      Supplier<HttpClient> httpClientSupplier, Consumer<ConversationService> service) {
+  private static void doNotAcceptNullContextTemplates(
+      Supplier<HttpClient> httpClientSupplier, Consumer<TemplatesService> service) {
     UnifiedCredentials credentials =
         UnifiedCredentials.builder()
             .setKeyId("foo")
@@ -98,13 +98,12 @@ class CredentialsValidationHelper {
             NullPointerException.class,
             () ->
                 service.accept(
-                    new ConversationService(credentials, null, server, httpClientSupplier)));
-    assertTrue(
-        exception.getMessage().contains("Conversation service requires context to be defined"));
+                    new TemplatesService(credentials, null, server, httpClientSupplier)));
+    assertTrue(exception.getMessage().contains("Templates service requires context to be defined"));
   }
 
-  private static void doNotAcceptEmptyURL(
-      Supplier<HttpClient> httpClientSupplier, Consumer<ConversationService> service) {
+  private static void doNotAcceptEmptyURLTemplates(
+      Supplier<HttpClient> httpClientSupplier, Consumer<TemplatesService> service) {
     UnifiedCredentials credentials =
         UnifiedCredentials.builder()
             .setKeyId("foo")
@@ -118,13 +117,15 @@ class CredentialsValidationHelper {
             IllegalArgumentException.class,
             () ->
                 service.accept(
-                    new ConversationService(credentials, context, server, httpClientSupplier)));
+                    new TemplatesService(credentials, context, server, httpClientSupplier)));
     assertTrue(
-        exception.getMessage().contains("Conversation service requires 'url' to be defined"));
+        exception
+            .getMessage()
+            .contains("Templates service requires 'templateManagementUrl' to be defined"));
   }
 
-  private static void doNotAcceptNullURL(
-      Supplier<HttpClient> httpClientSupplier, Consumer<ConversationService> service) {
+  private static void doNotAcceptNullURLTemplates(
+      Supplier<HttpClient> httpClientSupplier, Consumer<TemplatesService> service) {
     UnifiedCredentials credentials =
         UnifiedCredentials.builder()
             .setKeyId("foo")
@@ -138,25 +139,27 @@ class CredentialsValidationHelper {
             IllegalArgumentException.class,
             () ->
                 service.accept(
-                    new ConversationService(credentials, context, server, httpClientSupplier)));
+                    new TemplatesService(credentials, context, server, httpClientSupplier)));
     assertTrue(
-        exception.getMessage().contains("Conversation service requires 'url' to be defined"));
+        exception
+            .getMessage()
+            .contains("Templates service requires 'templateManagementUrl' to be defined"));
   }
 
-  private static void passInit(
-      Supplier<HttpClient> httpClientSupplier, Consumer<ConversationService> service) {
+  private static void passInitTemplates(
+      Supplier<HttpClient> httpClientSupplier, Consumer<TemplatesService> service) {
     UnifiedCredentials credentials =
         UnifiedCredentials.builder()
             .setKeyId("foo")
             .setKeySecret("foo")
             .setProjectId("foo")
             .build();
-    ConversationContext context = ConversationContext.builder().setUrl("foo").build();
+    ConversationContext context =
+        ConversationContext.builder().setTemplateManagementUrl("foo").build();
     ServerConfiguration server = new ServerConfiguration("foo");
     assertDoesNotThrow(
         () ->
-            service.accept(
-                new ConversationService(credentials, context, server, httpClientSupplier)),
+            service.accept(new TemplatesService(credentials, context, server, httpClientSupplier)),
         "Init passed");
   }
 }

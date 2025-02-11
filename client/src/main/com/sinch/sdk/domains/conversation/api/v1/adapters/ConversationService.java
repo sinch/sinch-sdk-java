@@ -1,6 +1,5 @@
 package com.sinch.sdk.domains.conversation.api.v1.adapters;
 
-import com.sinch.sdk.auth.HmacAuthenticationValidation;
 import com.sinch.sdk.auth.adapters.OAuthManager;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
@@ -33,6 +32,7 @@ import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Supplier;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -47,7 +47,8 @@ public class ConversationService
   private final UnifiedCredentials credentials;
   private final ServerConfiguration oAuthServer;
   private final ConversationContext context;
-  private final HttpClient httpClient;
+  private final Supplier<HttpClient> httpClientSupplier;
+
   private volatile Map<String, AuthManager> authManagers;
   private volatile AppService app;
   private volatile ContactService contact;
@@ -67,111 +68,119 @@ public class ConversationService
       UnifiedCredentials credentials,
       ConversationContext context,
       ServerConfiguration oAuthServer,
-      HttpClient httpClient) {
+      Supplier<HttpClient> httpClientSupplier) {
 
     this.uriUUID = null != credentials ? credentials.getProjectId() : null;
     this.credentials = credentials;
     this.context = context;
-    this.httpClient = httpClient;
+    this.httpClientSupplier = httpClientSupplier;
     this.oAuthServer = oAuthServer;
   }
 
   public AppService app() {
     if (null == this.app) {
-      processCredentials();
-      this.app = new AppService(uriUUID, context, httpClient, authManagers);
+      instanceLazyInit();
+      this.app = new AppService(uriUUID, context, httpClientSupplier.get(), authManagers);
     }
     return this.app;
   }
 
   public ContactService contact() {
     if (null == this.contact) {
-      processCredentials();
-      this.contact = new ContactService(uriUUID, context, httpClient, authManagers);
+      instanceLazyInit();
+      this.contact = new ContactService(uriUUID, context, httpClientSupplier.get(), authManagers);
     }
     return this.contact;
   }
 
   public MessagesService messages() {
     if (null == this.messages) {
-      processCredentials();
-      this.messages = new MessagesService(uriUUID, context, httpClient, authManagers);
+      instanceLazyInit();
+      this.messages = new MessagesService(uriUUID, context, httpClientSupplier.get(), authManagers);
     }
     return this.messages;
   }
 
-  public WebHooksService webhooks() {
-    if (null == this.webhooks) {
-      this.webhooks =
-          new WebHooksAdaptorService(
-              this::processCredentials,
-              new WebHooksApiService(uriUUID, context, httpClient, authManagers),
-              new WebHooksCallbackService(new HmacAuthenticationValidation()));
-    }
-    return this.webhooks;
-  }
-
   public ConversationsService conversations() {
     if (null == this.conversations) {
-      processCredentials();
-      this.conversations = new ConversationsService(uriUUID, context, httpClient, authManagers);
+      instanceLazyInit();
+      this.conversations =
+          new ConversationsService(uriUUID, context, httpClientSupplier.get(), authManagers);
     }
     return this.conversations;
   }
 
   public EventsService events() {
     if (null == this.events) {
-      processCredentials();
-      this.events = new EventsService(uriUUID, context, httpClient, authManagers);
+      instanceLazyInit();
+      this.events = new EventsService(uriUUID, context, httpClientSupplier.get(), authManagers);
     }
     return this.events;
   }
 
   public TranscodingService transcoding() {
     if (null == this.transcoding) {
-      processCredentials();
-      this.transcoding = new TranscodingService(uriUUID, context, httpClient, authManagers);
+      instanceLazyInit();
+      this.transcoding =
+          new TranscodingService(uriUUID, context, httpClientSupplier.get(), authManagers);
     }
     return this.transcoding;
   }
 
   public CapabilityService capability() {
     if (null == this.capability) {
-      processCredentials();
-      this.capability = new CapabilityService(uriUUID, context, httpClient, authManagers);
+      instanceLazyInit();
+      this.capability =
+          new CapabilityService(uriUUID, context, httpClientSupplier.get(), authManagers);
     }
     return this.capability;
   }
 
   public TemplatesService templates() {
     if (null == this.templates) {
-      processCredentials();
-      this.templates = new TemplatesService(credentials, context, oAuthServer, httpClient);
+      this.templates = new TemplatesService(credentials, context, oAuthServer, httpClientSupplier);
     }
     return this.templates;
   }
 
-  private void processCredentials() {
+  public WebHooksService webhooks() {
+    if (null == this.webhooks) {
+      this.webhooks =
+          new WebHooksAdaptorService(
+              uriUUID, context, this::instanceLazyInit, httpClientSupplier, () -> authManagers);
+    }
+    return this.webhooks;
+  }
 
-    Objects.requireNonNull(credentials, "Conversation service requires credentials to be defined");
-    Objects.requireNonNull(context, "Conversation service requires context to be defined");
-    StringUtil.requireNonEmpty(
-        credentials.getKeyId(), "Conversation service requires 'keyId' to be defined");
-    StringUtil.requireNonEmpty(
-        credentials.getKeySecret(), "Conversation service requires 'keySecret' to be defined");
-    StringUtil.requireNonEmpty(
-        credentials.getProjectId(), "Conversation service requires 'projectId' to be defined");
-    StringUtil.requireNonEmpty(
-        context.getUrl(), "Conversation service requires 'url' to be defined");
+  private void instanceLazyInit() {
+    if (null != this.authManagers) {
+      return;
+    }
+    synchronized (this) {
+      if (null == this.authManagers) {
+        Objects.requireNonNull(
+            credentials, "Conversation service requires credentials to be defined");
+        Objects.requireNonNull(context, "Conversation service requires context to be defined");
+        StringUtil.requireNonEmpty(
+            credentials.getKeyId(), "Conversation service requires 'keyId' to be defined");
+        StringUtil.requireNonEmpty(
+            credentials.getKeySecret(), "Conversation service requires 'keySecret' to be defined");
+        StringUtil.requireNonEmpty(
+            credentials.getProjectId(), "Conversation service requires 'projectId' to be defined");
+        StringUtil.requireNonEmpty(
+            context.getUrl(), "Conversation service requires 'url' to be defined");
 
-    OAuthManager authManager =
-        new OAuthManager(credentials, oAuthServer, new HttpMapper(), httpClient);
-    authManagers =
-        Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_, authManager))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        OAuthManager authManager =
+            new OAuthManager(credentials, oAuthServer, new HttpMapper(), httpClientSupplier);
+        authManagers =
+            Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_, authManager))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-    LOGGER.fine(
-        String.format("Activate conversation API with server: '%s'", context.getServer().getUrl()));
+        LOGGER.fine(
+            String.format(
+                "Activate conversation API with server: '%s'", context.getServer().getUrl()));
+      }
+    }
   }
 
   public static final class LocalLazyInit {

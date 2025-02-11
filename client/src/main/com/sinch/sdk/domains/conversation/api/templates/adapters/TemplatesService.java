@@ -15,6 +15,7 @@ import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Supplier;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -26,11 +27,15 @@ public class TemplatesService
   private static final String SECURITY_SCHEME_KEYWORD_ = "oAuth2";
 
   private final String uriUUID;
+  private final UnifiedCredentials credentials;
+  private final ServerConfiguration oAuthServer;
+
   private final ConversationContext context;
-  private final HttpClient httpClient;
-  private final Map<String, AuthManager> authManagers;
-  private TemplatesServiceV1 v1;
-  private TemplatesServiceV2 v2;
+  private final Supplier<HttpClient> httpClientSupplier;
+
+  private volatile Map<String, AuthManager> authManagers;
+  private volatile TemplatesServiceV1 v1;
+  private volatile TemplatesServiceV2 v2;
 
   static {
     LocalLazyInit.init();
@@ -40,49 +45,62 @@ public class TemplatesService
       UnifiedCredentials credentials,
       ConversationContext context,
       ServerConfiguration oAuthServer,
-      HttpClient httpClient) {
+      Supplier<HttpClient> httpClientSupplier) {
 
-    Objects.requireNonNull(credentials, "Templates service requires credentials to be defined");
-    Objects.requireNonNull(context, "Templates service requires context to be defined");
-    StringUtil.requireNonEmpty(
-        credentials.getKeyId(), "Templates service requires 'keyId' to be defined");
-    StringUtil.requireNonEmpty(
-        credentials.getKeySecret(), "Templates service requires 'keySecret' to be defined");
-    StringUtil.requireNonEmpty(
-        credentials.getProjectId(), "Templates service requires 'projectId' to be defined");
-
-    StringUtil.requireNonEmpty(
-        context.getTemplateManagementUrl(),
-        "Templates service requires 'templateManagementUrl' to be defined");
-
-    LOGGER.fine(
-        String.format(
-            "Activate templates API with template server: '%s",
-            context.getTemplateManagementServer().getUrl()));
-
-    this.uriUUID = credentials.getProjectId();
+    this.uriUUID = null != credentials ? credentials.getProjectId() : null;
     this.context = context;
-    this.httpClient = httpClient;
-
-    OAuthManager authManager =
-        new OAuthManager(credentials, oAuthServer, new HttpMapper(), httpClient);
-    authManagers =
-        Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_, authManager))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    this.credentials = credentials;
+    this.oAuthServer = oAuthServer;
+    this.httpClientSupplier = httpClientSupplier;
   }
 
   public TemplatesServiceV1 v1() {
     if (null == this.v1) {
-      this.v1 = new TemplatesServiceV1(uriUUID, context, httpClient, authManagers);
+      instanceLazyInit();
+      this.v1 = new TemplatesServiceV1(uriUUID, context, httpClientSupplier.get(), authManagers);
     }
     return this.v1;
   }
 
   public TemplatesServiceV2 v2() {
     if (null == this.v2) {
-      this.v2 = new TemplatesServiceV2(uriUUID, context, httpClient, authManagers);
+      instanceLazyInit();
+      this.v2 = new TemplatesServiceV2(uriUUID, context, httpClientSupplier.get(), authManagers);
     }
     return this.v2;
+  }
+
+  private void instanceLazyInit() {
+    if (null != this.authManagers) {
+      return;
+    }
+    synchronized (this) {
+      if (null == this.authManagers) {
+        Objects.requireNonNull(credentials, "Templates service requires credentials to be defined");
+        Objects.requireNonNull(context, "Templates service requires context to be defined");
+        StringUtil.requireNonEmpty(
+            credentials.getKeyId(), "Templates service requires 'keyId' to be defined");
+        StringUtil.requireNonEmpty(
+            credentials.getKeySecret(), "Templates service requires 'keySecret' to be defined");
+        StringUtil.requireNonEmpty(
+            credentials.getProjectId(), "Templates service requires 'projectId' to be defined");
+
+        StringUtil.requireNonEmpty(
+            context.getTemplateManagementUrl(),
+            "Templates service requires 'templateManagementUrl' to be defined");
+
+        OAuthManager authManager =
+            new OAuthManager(credentials, oAuthServer, new HttpMapper(), httpClientSupplier);
+        authManagers =
+            Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_, authManager))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        LOGGER.fine(
+            String.format(
+                "Activate templates API with template server: '%s",
+                context.getTemplateManagementServer().getUrl()));
+      }
+    }
   }
 
   static final class LocalLazyInit {
