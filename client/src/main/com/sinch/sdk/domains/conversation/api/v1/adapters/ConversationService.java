@@ -171,7 +171,8 @@ public class ConversationService
             context.getUrl(), "Conversation service requires 'url' to be defined");
 
         OAuthManager authManager =
-            new OAuthManager(credentials, oAuthServer, new HttpMapper(), httpClientSupplier);
+            new OAuthManager(
+                credentials, oAuthServer, HttpMapper.getInstance(), httpClientSupplier);
         authManagers =
             Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_, authManager))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));

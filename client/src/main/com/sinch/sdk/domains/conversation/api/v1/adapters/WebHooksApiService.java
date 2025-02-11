@@ -29,7 +29,8 @@ public class WebHooksApiService
       HttpClient httpClient,
       Map<String, AuthManager> authManagers) {
     this.uriUUID = uriUUID;
-    this.api = new WebhooksApi(httpClient, context.getServer(), authManagers, new HttpMapper());
+    this.api =
+        new WebhooksApi(httpClient, context.getServer(), authManagers, HttpMapper.getInstance());
   }
 
   protected WebhooksApi getApi() {
