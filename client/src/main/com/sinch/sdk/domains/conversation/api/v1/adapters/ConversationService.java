@@ -19,6 +19,7 @@ import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ListSectionMa
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.OmniMessageOverrideMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.SendMessageRequestMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.WhatsAppInteractiveHeaderMapper;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ChoiceItemMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.AppMessageInternalMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ChannelSpecificMessageInternalMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ContactMessageInternalMapper;
@@ -166,6 +167,7 @@ public class ConversationService
       AppMessageMapper.initMapper();
       AppMessageInternalMapper.initMapper();
       CarouselMessageMapper.initMapper();
+      ChoiceItemMapper.initMapper();
       ChannelSpecificContactMessageMapper.initMapper();
       ChannelSpecificMessageInternalMapper.initMapper();
       ChoiceMessageMapper.initMapper();

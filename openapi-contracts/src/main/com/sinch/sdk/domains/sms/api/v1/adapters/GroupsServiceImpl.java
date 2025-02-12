@@ -523,4 +523,8 @@ public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Group
         localVarContentTypes,
         localVarAuthNames);
   }
+
+  public Group create() throws ApiException {
+    return this.create(GroupRequest.builder().build());
+  }
 }

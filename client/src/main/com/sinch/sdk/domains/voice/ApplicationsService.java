@@ -4,13 +4,18 @@ import com.sinch.sdk.domains.voice.models.CallbackUrls;
 import com.sinch.sdk.domains.voice.models.NumberInformation;
 import com.sinch.sdk.domains.voice.models.requests.ApplicationsAssignNumbersRequestParameters;
 import com.sinch.sdk.domains.voice.models.response.AssignedNumbers;
+import com.sinch.sdk.domains.voice.models.v1.applications.Callbacks;
+import com.sinch.sdk.domains.voice.models.v1.applications.request.UnAssignNumberRequest;
+import com.sinch.sdk.domains.voice.models.v1.applications.request.UpdateNumbersRequest;
 import com.sinch.sdk.models.E164PhoneNumber;
 
 /**
  * You can use the API to manage features of applications in your project.
  *
  * @since 1.0
+ * @deprecated use {@link com.sinch.sdk.domains.voice.api.v1.ApplicationsService} instead.
  */
+@Deprecated
 public interface ApplicationsService {
 
   /**
@@ -21,7 +26,10 @@ public interface ApplicationsService {
    *
    * @return Your numbers
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.voice.api.v1.ApplicationsService#listNumbers()}
+   *     instead.
    */
+  @Deprecated
   AssignedNumbers listNumbers();
 
   /**
@@ -30,14 +38,26 @@ public interface ApplicationsService {
    * @param applicationKey The unique identifying key of the application
    * @return Assigned callback to application
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.voice.api.v1.ApplicationsService#getCallbackUrls(String)} instead.
    */
+  @Deprecated
   CallbackUrls getCallbackUrls(String applicationKey);
 
   /**
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.voice.api.v1.ApplicationsService#updateCallbackUrls(String,
+   *     Callbacks)} instead.
    */
+  @Deprecated
   void updateCallbackUrls(String applicationKey, CallbackUrls parameters);
 
+  /**
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.voice.api.v1.ApplicationsService#queryNumber(String)} instead.
+   */
+  @Deprecated
   NumberInformation queryNumber(E164PhoneNumber number);
 
   /**
@@ -45,7 +65,11 @@ public interface ApplicationsService {
    *
    * @param parameters Request parameters
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.voice.api.v1.ApplicationsService#assignNumbers(UpdateNumbersRequest)}
+   *     instead.
    */
+  @Deprecated
   void assignNumbers(ApplicationsAssignNumbersRequestParameters parameters);
 
   /**
@@ -54,7 +78,11 @@ public interface ApplicationsService {
    * @param phoneNumber The phone number
    * @param applicationKey Indicates the application where the number was assigned.
    *     <p>If empty, the application key that is used to authenticate
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.voice.api.v1.ApplicationsService#unassignNumber(UnAssignNumberRequest)}
+   *     instead.
    * @since 1.0
    */
+  @Deprecated
   public void unassignNumber(E164PhoneNumber phoneNumber, String applicationKey);
 }

@@ -4,6 +4,10 @@ import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParameters;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersConference;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersCustom;
 import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersTTS;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequest;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestCustom;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestTTS;
 
 /**
  * A callout is a call made to a phone number or app using the API.
@@ -11,7 +15,9 @@ import com.sinch.sdk.domains.voice.models.requests.CalloutRequestParametersTTS;
  * @see <a
  *     href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callouts">https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callouts</a>
  * @since 1.0
+ * @deprecated use {@link com.sinch.sdk.domains.voice.api.v1.CalloutsService} instead.
  */
+@Deprecated
 public interface CalloutsService {
 
   /**
@@ -21,7 +27,11 @@ public interface CalloutsService {
    * @param parameters Text to speech parameters
    * @return The returned call identifier (callId)
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.voice.api.v1.CalloutsService#textToSpeech(CalloutRequestTTS)}
+   *     instead.
    */
+  @Deprecated
   String textToSpeech(CalloutRequestParametersTTS parameters);
 
   /**
@@ -31,7 +41,11 @@ public interface CalloutsService {
    * @param parameters Conference parameters
    * @return The returned call identifier (callId)
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.voice.api.v1.CalloutsService#conference(CalloutRequestConference)}
+   *     instead.
    */
+  @Deprecated
   String conference(CalloutRequestParametersConference parameters);
 
   /**
@@ -41,7 +55,10 @@ public interface CalloutsService {
    * @param parameters Custom parameters
    * @return The returned call identifier (callId)
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.voice.api.v1.CalloutsService#custom(CalloutRequestCustom)} instead.
    */
+  @Deprecated
   String custom(CalloutRequestParametersCustom parameters);
 
   /**
@@ -52,6 +69,9 @@ public interface CalloutsService {
    * @param parameters Callout type to be performed
    * @return The returned call identifier (callId)
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.voice.api.v1.CalloutsService#call(CalloutRequest)}
+   *     instead.
    */
+  @Deprecated
   String call(CalloutRequestParameters parameters);
 }

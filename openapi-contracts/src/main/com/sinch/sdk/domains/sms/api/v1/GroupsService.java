@@ -115,4 +115,12 @@ public interface GroupsService {
    * @throws ApiException if fails to make API call
    */
   Group update(String groupId, GroupUpdateRequest groupUpdateRequest) throws ApiException;
+
+  /**
+   * Create an unnamed and empty group
+   *
+   * @return See {@link #create(GroupRequest)}
+   * @since 1.5
+   */
+  Group create() throws ApiException;
 }

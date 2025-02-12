@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.voice;
 
 import com.sinch.sdk.core.exceptions.ApiMappingException;
 import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
+import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
 import com.sinch.sdk.domains.voice.models.webhooks.WebhooksEvent;
 import java.util.Map;
 
@@ -11,7 +12,9 @@ import java.util.Map;
  * @see <a
  *     href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks">https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/</a>
  * @since 1.0
+ * @deprecated use {@link com.sinch.sdk.domains.voice.api.v1.WebHooksService} instead.
  */
+@Deprecated
 public interface WebHooksService {
 
   /**
@@ -30,7 +33,11 @@ public interface WebHooksService {
    *     <p>see <a
    *     href="https://developers.sinch.com/docs/voice/api-reference/authentication/callback-signed-request">https://developers.sinch.com/docs/voice/api-reference/authentication/callback-signed-request/</a>
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.voice.api.v1.WebHooksService#validateAuthenticationHeader(String,
+   *     String, Map, String)} instead.
    */
+  @Deprecated
   boolean validateAuthenticatedRequest(
       String method, String path, Map<String, String> headers, String jsonPayload);
 
@@ -43,7 +50,10 @@ public interface WebHooksService {
    *     <p>see <a
    *     href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/">https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/</a>
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.voice.api.v1.WebHooksService#parseEvent(String)}
+   *     instead.
    */
+  @Deprecated
   WebhooksEvent unserializeWebhooksEvent(String jsonPayload) throws ApiMappingException;
 
   /**
@@ -54,6 +64,10 @@ public interface WebHooksService {
    *     <p>see <a
    *     href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/">https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/</a>
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.voice.api.v1.WebHooksService#serializeResponse(SvamlControl)}
+   *     instead.
    */
+  @Deprecated
   String serializeWebhooksResponse(SVAMLControl response) throws ApiMappingException;
 }

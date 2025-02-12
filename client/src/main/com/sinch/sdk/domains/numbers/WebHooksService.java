@@ -13,7 +13,9 @@ import com.sinch.sdk.domains.numbers.models.webhooks.EventNotification;
  * href="https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Callbacks/#tag/Callbacks/operation/ImportedNumberService_EventsCallback">https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Callbacks/#tag/Callbacks/operation/ImportedNumberService_EventsCallback</a>
  *
  * @since 1.0
+ * @deprecated use {@link com.sinch.sdk.domains.numbers.api.v1.WebHooksService} instead.
  */
+@Deprecated
 public interface WebHooksService {
 
   /**
@@ -23,6 +25,9 @@ public interface WebHooksService {
    * @param jsonPayload Received payload to be un-serialized
    * @return The decoded event notification instance class
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.numbers.api.v1.WebHooksService#parseEvent(String)}
+   *     instead.
    */
+  @Deprecated
   EventNotification unserializeEventNotification(String jsonPayload) throws ApiMappingException;
 }

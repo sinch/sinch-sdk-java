@@ -16,45 +16,53 @@ import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
  * @see <a
  *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-status">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-status</a>
  * @since 1.0
+ * @deprecated use {@link com.sinch.sdk.domains.verification.api.v1.VerificationStatusService}
+ *     instead.
  */
+@Deprecated
 public interface VerificationStatusService {
 
   /**
    * Queries the verification result by sending the verification Identity (usually a phone number)
    * and its method. With this query you can get the result of a verification.
    *
-   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
-   *     com.sinch.sdk.domains.verification.api.v1.VerificationStatusService#getByIdentity(com.sinch.sdk.domains.verification.models.v1.NumberIdentity,
-   *     VerificationMethod)}
    * @param identity Currently <b>Only</b> {@link
    *     com.sinch.sdk.domains.verification.models.NumberIdentity NumberIdentity} is supported
    * @param method Method used for verification
    * @return Verification status response
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationStatusService#getByIdentity(com.sinch.sdk.domains.verification.models.v1.NumberIdentity,
+   *     VerificationMethod)} instead.
    */
+  @Deprecated
   VerificationStatus getByIdentity(NumberIdentity identity, VerificationMethodType method);
 
   /**
    * Queries the verification result by sending the verification ID. With this query you can get the
    * result of a verification.
    *
-   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
-   *     com.sinch.sdk.domains.verification.api.v1.VerificationStatusService#getById(String)}
    * @param id The ID of the verification
    * @return Verification status response
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationStatusService#getById(String)}
+   *     instead.
    */
+  @Deprecated
   VerificationStatus getById(VerificationId id);
 
   /**
    * Queries the verification result by sending the verification Reference. With this query you can
    * get the result of a verification
    *
-   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
-   *     com.sinch.sdk.domains.verification.api.v1.VerificationStatusService#getByReference(String)}
    * @param reference The custom reference of the verification
    * @return Verification status response
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationStatusService#getByReference(String)}
+   *     instead.
    */
+  @Deprecated
   VerificationStatus getByReference(VerificationReference reference);
 }
