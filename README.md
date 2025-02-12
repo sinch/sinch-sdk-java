@@ -14,7 +14,7 @@ For more information on the Sinch APIs on which this SDK is based, refer to the 
 - [Logging](#logging)
 - [Onboarding](#onboarding)
 - [3rd party dependencies](#3rd-party-dependencies)
-- [Migration guide from previous SDK versions](#migration)
+- [Migration guide from previous SDK versions](#migration-guides)
 
 ## Prerequisites
 
@@ -154,8 +154,12 @@ Note: Replace <code>VERSION-YOU-WANT-TO-BE-USED</code> by a Jackson version of a
 ...
 ```
 
-## Migration
-Migration guide can be found onto [developer documentation portal](https://developers.sinch.com/migration-guide-java-sdk-sms/docs/sms/sdks/java/migration-guides).
+## Migration guides
+The migration guides can be found on the developers documentation portal:
+- [Messaging](https://developers.sinch.com/docs/sms/sdks/java/migration-guides)
+- [Numbers](https://developers.sinch.com/docs/numbers/sdk/java/migration-guides/migration-to-versioned)
+- [Verification](https://developers.sinch.com/docs/verification/sdk/java/migration-guides/migration-to-versioned)
+- [Voice](https://developers.sinch.com/docs/voice/sdk/java/migration-guides/migration-to-versioned)
 
 ## License
 
