@@ -68,13 +68,13 @@ SinchClient client = new SinchClient(configuration);
 
 Here is the list of the Sinch products and their level of support by the Java SDK:
 
-| API Category           | API Name                                                                                                                             | Status |
-|------------------------|--------------------------------------------------------------------------------------------------------------------------------------|:------:|
-| Conversation           | Conversation API [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/conversation/package-summary.html)  |   ✅    |
-| Messaging              | SMS API [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/sms/package-summary.html)                    |   ✅    |
-| Numbers & Connectivity | Numbers API [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/numbers/package-summary.html)            |   ✅    |
-| Verification           | Verification API [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/verification/package-summary.html)  |   ✅    |
-| Voice and Video        | Voice API [(javadoc)](https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/voice/package-summary.html)                |   ✅    |
+| API Category           | API Name                                                                                                                                             | Status |
+|------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|:------:|
+| Conversation           | Conversation API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/conversation/package-summary.html) |   ✅    |
+| SMS                    | SMS API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/sms/package-summary.html)                   |   ✅    |
+| Numbers & Connectivity | Numbers API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/numbers/package-summary.html)           |   ✅    |
+| Verification           | Verification API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/verification/package-summary.html) |   ✅    |
+| Voice and Video        | Voice API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/voice/package-summary.html)               |   ✅    |
 
 
 ## Logging
@@ -111,7 +111,7 @@ If you are using a different logging framework (such as SLF4J or Spring), please
 
 To enhance the onboarding experience, the following resources are available:
 - Sinch Online Developers Documentation: https://developers.sinch.com 
-- Java SDK Online Javadoc: https://developers.sinch.com/java-sdk/apidocs 
+- Java SDK Online Javadoc: https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest
 - Java SDK Quickstart Repository: A repository with tutorials and templates to help you quickly start a new project: https://github.com/sinch/sinch-sdk-java-quickstart
 - Java SDK Snippets Repository: A collection of basic code snippets for reference: https://github.com/sinch/sinch-sdk-java-snippets
 
