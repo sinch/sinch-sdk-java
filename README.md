@@ -6,15 +6,15 @@ To use Sinch services, you'll need a Sinch account and access keys. You can sign
 
 For more information on the Sinch APIs on which this SDK is based, refer to the official [developer documentation portal](https://developers.sinch.com).
 
-
+## Table of contents:
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Getting started](#getting-started)
 - [Supported APIs](#supported-apis)
 - [Logging](#logging)
 - [Onboarding](#onboarding)
-- [3rd party dependencies](#3rd-party-dependencies)
-- [Migration guide from previous SDK versions](#migration-guides)
+- [Third-party dependencies](#third-party-dependencies)
+- [Migration guide for previous SDK versions](#migration-guides)
 
 ## Prerequisites
 
@@ -115,7 +115,7 @@ To enhance the onboarding experience, the following resources are available:
 - Java SDK Quickstart Repository: A repository with tutorials and templates to help you quickly start a new project: https://github.com/sinch/sinch-sdk-java-quickstart
 - Java SDK Snippets Repository: A collection of basic code snippets for reference: https://github.com/sinch/sinch-sdk-java-snippets
 
-## 3rd party dependencies
+## Third party dependencies
 The SDK relies on the following third-party dependencies:
 - [Jackson's library](https://github.com/FasterXML/jackson-jakarta-rs-providers): Provides JSON serialization/deserialization functionality.
 - [Apache HTTP client](https://hc.apache.org/httpcomponents-client-5.4.x/5.4.1/httpclient5/project-info.html): Manages communication with Sinch products' REST APIs 
@@ -123,7 +123,7 @@ The SDK relies on the following third-party dependencies:
 ### Jackson/Java EE/jaxrs/Jakarta Compatibility Consideration
 The transition from <code>javax</code> to <code>jakarta</code> namespaces with the Java EE to Jakarta EE migration may cause compatibility issues. Refer to [Oracle's note about the transition](https://blogs.oracle.com/javamagazine/post/transition-from-java-ee-to-jakarta-ee) for additional details.
 
-Jackson's maintainers provide two variants of the library:
+Jackson maintainers provide two variants of the library:
 > (*) NOTE: Jakarta-RS is the package under jakarta.ws.rs, replacing older JAX-RS which lived under javax.ws.rs. For JAX-RS variant, see repo jackson-jaxrs-providers
 
 By default, the Sinch Java SDK uses the "new" [jackson-jakarta-rs-providers](https://github.com/FasterXML/jackson-jakarta-rs-providers). However, you can switch to the "older" [jackson-jaxrs-providers](https://github.com/FasterXML/jackson-jaxrs-providers) if required.
@@ -155,7 +155,7 @@ Note: Replace <code>VERSION-YOU-WANT-TO-BE-USED</code> by a Jackson version of a
 ```
 
 ## Migration guides
-The migration guides can be found on the developers documentation portal:
+Find migration guides in the developer documentation portal:
 - [Messaging](https://developers.sinch.com/docs/sms/sdks/java/migration-guides)
 - [Numbers](https://developers.sinch.com/docs/numbers/sdk/java/migration-guides/migration-to-versioned)
 - [Verification](https://developers.sinch.com/docs/verification/sdk/java/migration-guides/migration-to-versioned)
