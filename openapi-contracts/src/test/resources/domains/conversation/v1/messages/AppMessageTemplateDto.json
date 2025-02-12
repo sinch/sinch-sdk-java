@@ -64,27 +64,30 @@
   },
   "channel_specific_message": {
     "MESSENGER": {
-      "flow_id": "1",
-      "flow_cta": "Book!",
-      "header": {
-        "type": "text",
-        "text": "text header value"
-      },
-      "body": {
-        "text": "Flow message body"
-      },
-      "footer": {
-        "text": "Flow message footer"
-      },
-      "flow_token": "AQAAAAACS5FpgQ_cAAAAAD0QI3s.",
-      "flow_mode": "draft",
-      "flow_action": "navigate",
-      "flow_action_payload": {
-        "screen": "<SCREEN_NAME>",
-        "data": {
-          "product_name": "name",
-          "product_description": "description",
-          "product_price": 100
+      "message_type": "FLOWS",
+      "message": {
+        "flow_id": "1",
+        "flow_cta": "Book!",
+        "header": {
+          "type": "text",
+          "text": "text header value"
+        },
+        "body": {
+          "text": "Flow message body"
+        },
+        "footer": {
+          "text": "Flow message footer"
+        },
+        "flow_token": "AQAAAAACS5FpgQ_cAAAAAD0QI3s.",
+        "flow_mode": "draft",
+        "flow_action": "navigate",
+        "flow_action_payload": {
+          "screen": "<SCREEN_NAME>",
+          "data": {
+            "product_name": "name",
+            "product_description": "description",
+            "product_price": 100
+          }
         }
       }
     }

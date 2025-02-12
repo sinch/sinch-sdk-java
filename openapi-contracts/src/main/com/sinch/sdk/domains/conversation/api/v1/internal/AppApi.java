@@ -427,6 +427,7 @@ public class AppApi {
             .replaceAll("\\{" + "app_id" + "\\}", URLPathUtils.encodePathSegment(appId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
+
     if (null != updateMask) {
       localVarQueryParams.add(
           new URLParameter(

@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.conversation.api.v1.adapters;
 
+import com.sinch.sdk.auth.HmacAuthenticationValidation;
 import com.sinch.sdk.auth.adapters.OAuthManager;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
@@ -18,6 +19,7 @@ import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ListSectionMa
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.OmniMessageOverrideMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.SendMessageRequestMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.WhatsAppInteractiveHeaderMapper;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ChoiceItemMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.AppMessageInternalMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ChannelSpecificMessageInternalMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ContactMessageInternalMapper;
@@ -118,11 +120,7 @@ public class ConversationService
     if (null == this.webhooks) {
       this.webhooks =
           new WebHooksService(
-              uriUUID,
-              context,
-              httpClient,
-              authManagers,
-              new ConversationWebhooksAuthenticationValidation());
+              uriUUID, context, httpClient, authManagers, new HmacAuthenticationValidation());
     }
     return this.webhooks;
   }
@@ -169,6 +167,7 @@ public class ConversationService
       AppMessageMapper.initMapper();
       AppMessageInternalMapper.initMapper();
       CarouselMessageMapper.initMapper();
+      ChoiceItemMapper.initMapper();
       ChannelSpecificContactMessageMapper.initMapper();
       ChannelSpecificMessageInternalMapper.initMapper();
       ChoiceMessageMapper.initMapper();

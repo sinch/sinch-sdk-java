@@ -275,6 +275,7 @@ public class EventsApi {
                 "\\{" + "project_id" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
+
     if (null != conversationId) {
       localVarQueryParams.add(
           new URLParameter(
@@ -283,16 +284,19 @@ public class EventsApi {
               URLParameter.STYLE.valueOf("form".toUpperCase()),
               true));
     }
+
     if (null != contactId) {
       localVarQueryParams.add(
           new URLParameter(
               "contact_id", contactId, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
+
     if (null != pageSize) {
       localVarQueryParams.add(
           new URLParameter(
               "page_size", pageSize, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
+
     if (null != pageToken) {
       localVarQueryParams.add(
           new URLParameter(

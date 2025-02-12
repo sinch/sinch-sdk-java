@@ -6,6 +6,8 @@ import com.sinch.sdk.domains.sms.models.DeliveryReportRecipient;
 import com.sinch.sdk.domains.sms.models.requests.DeliveryReportBatchGetRequestParameters;
 import com.sinch.sdk.domains.sms.models.requests.DeliveryReportListRequestParameters;
 import com.sinch.sdk.domains.sms.models.responses.DeliveryReportsListResponse;
+import com.sinch.sdk.domains.sms.models.v1.deliveryreports.request.BatchDeliveryReportQueryParameters;
+import com.sinch.sdk.domains.sms.models.v1.deliveryreports.request.ListDeliveryReportsQueryParameters;
 
 /**
  * Delivery reports Service.
@@ -18,7 +20,9 @@ import com.sinch.sdk.domains.sms.models.responses.DeliveryReportsListResponse;
  * @see <a
  *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports</a>
  * @since 1.0
+ * @deprecated use {@link com.sinch.sdk.domains.sms.api.v1.DeliveryReportsService} instead.
  */
+@Deprecated
 public interface DeliveryReportsService {
 
   /**
@@ -36,7 +40,10 @@ public interface DeliveryReportsService {
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/operation/GetDeliveryReportByBatchId">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/operation/GetDeliveryReportByBatchId</a>
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.sms.api.v1.DeliveryReportsService#get(String,
+   *     BatchDeliveryReportQueryParameters)} instead.
    */
+  @Deprecated
   DeliveryReportBatch get(String batchId, DeliveryReportBatchGetRequestParameters parameters)
       throws ApiException;
 
@@ -52,7 +59,11 @@ public interface DeliveryReportsService {
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/operation/GetDeliveryReportByPhoneNumber">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/operation/GetDeliveryReportByPhoneNumber</a>
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.sms.api.v1.DeliveryReportsService#getForNumber(String, String)}
+   *     instead.
    */
+  @Deprecated
   DeliveryReportRecipient getForNumber(String batchId, String recipient) throws ApiException;
 
   /**
@@ -65,7 +76,11 @@ public interface DeliveryReportsService {
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/operation/getDeliveryReports">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/operation/getDeliveryReports</a>
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.sms.api.v1.DeliveryReportsService#list(ListDeliveryReportsQueryParameters)}
+   *     instead.
    */
+  @Deprecated
   DeliveryReportsListResponse list(DeliveryReportListRequestParameters parameters)
       throws ApiException;
 }

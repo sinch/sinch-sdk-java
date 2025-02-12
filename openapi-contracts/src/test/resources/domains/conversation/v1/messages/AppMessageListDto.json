@@ -10,11 +10,9 @@
               "title": "choice title",
               "description": "description value",
               "media": {
-                "media_message": {
-                  "url": "an url value",
-                  "thumbnail_url": "another url",
-                  "filename_override": "filename override value"
-                }
+                "url": "an url value",
+                "thumbnail_url": "another url",
+                "filename_override": "filename override value"
               },
               "postback_data": "postback value"
             }
@@ -27,8 +25,7 @@
       "catalog_id": "catalog ID value",
       "menu": "menu value"
     }
-  }
-,
+  },
   "explicit_channel_message": {
     "KAKAOTALK": "foo value"
   },
@@ -76,27 +73,30 @@
   },
   "channel_specific_message": {
     "MESSENGER": {
-      "flow_id": "1",
-      "flow_cta": "Book!",
-      "header": {
-        "type": "text",
-        "text": "text header value"
-      },
-      "body": {
-        "text": "Flow message body"
-      },
-      "footer": {
-        "text": "Flow message footer"
-      },
-      "flow_token": "AQAAAAACS5FpgQ_cAAAAAD0QI3s.",
-      "flow_mode": "draft",
-      "flow_action": "navigate",
-      "flow_action_payload": {
-        "screen": "<SCREEN_NAME>",
-        "data": {
-          "product_name": "name",
-          "product_description": "description",
-          "product_price": 100
+      "message_type": "FLOWS",
+      "message": {
+        "flow_id": "1",
+        "flow_cta": "Book!",
+        "header": {
+          "type": "text",
+          "text": "text header value"
+        },
+        "body": {
+          "text": "Flow message body"
+        },
+        "footer": {
+          "text": "Flow message footer"
+        },
+        "flow_token": "AQAAAAACS5FpgQ_cAAAAAD0QI3s.",
+        "flow_mode": "draft",
+        "flow_action": "navigate",
+        "flow_action_payload": {
+          "screen": "<SCREEN_NAME>",
+          "data": {
+            "product_name": "name",
+            "product_description": "description",
+            "product_price": 100
+          }
         }
       }
     }

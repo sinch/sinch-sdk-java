@@ -108,16 +108,6 @@ public interface CreateWebhookRequestInternal {
     /**
      * see getter
      *
-     * @param id see getter
-     * @return Current builder
-     * @see #getId
-     * @readOnly <em>This field is returned by the server and cannot be modified</em>
-     */
-    Builder setId(String id);
-
-    /**
-     * see getter
-     *
      * @param secret see getter
      * @return Current builder
      * @see #getSecret

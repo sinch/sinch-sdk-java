@@ -62,4 +62,13 @@ public class HttpMapper {
     throw new ApiException(
         "Deserialization for content type '" + contentTypes + "' not supported ");
   }
+
+  public static HttpMapper getInstance() {
+    return LazyHolder.INSTANCE;
+  }
+
+  private static class LazyHolder {
+
+    public static final HttpMapper INSTANCE = new HttpMapper();
+  }
 }

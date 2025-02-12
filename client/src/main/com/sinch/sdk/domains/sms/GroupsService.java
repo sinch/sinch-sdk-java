@@ -7,6 +7,9 @@ import com.sinch.sdk.domains.sms.models.requests.GroupReplaceRequestParameters;
 import com.sinch.sdk.domains.sms.models.requests.GroupUpdateRequestParameters;
 import com.sinch.sdk.domains.sms.models.requests.GroupsListRequestParameters;
 import com.sinch.sdk.domains.sms.models.responses.GroupsListResponse;
+import com.sinch.sdk.domains.sms.models.v1.groups.request.GroupRequest;
+import com.sinch.sdk.domains.sms.models.v1.groups.request.GroupUpdateRequest;
+import com.sinch.sdk.domains.sms.models.v1.groups.request.ListGroupsQueryParameters;
 import java.util.Collection;
 
 /**
@@ -19,7 +22,9 @@ import java.util.Collection;
  * @see <a
  *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Groups">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Groups</a>
  * @since 1.0
+ * @deprecated use {@link com.sinch.sdk.domains.sms.api.v1.GroupsService} instead.
  */
+@Deprecated
 public interface GroupsService {
 
   /**
@@ -32,7 +37,9 @@ public interface GroupsService {
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Groups/#tag/Groups/operation/RetrieveGroup">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Groups/#tag/Groups/operation/RetrieveGroup</a>
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.sms.api.v1.GroupsService#get(String)} instead.
    */
+  @Deprecated
   Group get(String groupId) throws ApiException;
 
   /**
@@ -47,7 +54,10 @@ public interface GroupsService {
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Groups/#tag/Groups/operation/CreateGroup">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Groups/#tag/Groups/operation/CreateGroup</a>
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.sms.api.v1.GroupsService#create(GroupRequest)}
+   *     instead.
    */
+  @Deprecated
   Group create(GroupCreateRequestParameters parameters) throws ApiException;
 
   /**
@@ -55,7 +65,10 @@ public interface GroupsService {
    *
    * @return See {@link #create(GroupCreateRequestParameters)}
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.sms.api.v1.GroupsService#create(GroupRequest)}
+   *     instead.
    */
+  @Deprecated
   Group create() throws ApiException;
 
   /**
@@ -71,7 +84,10 @@ public interface GroupsService {
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Groups/#tag/Groups/operation/ListGroups">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Groups/#tag/Groups/operation/ListGroups</a>
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.sms.api.v1.GroupsService#list(ListGroupsQueryParameters)} instead.
    */
+  @Deprecated
   GroupsListResponse list(GroupsListRequestParameters parameters) throws ApiException;
 
   /**
@@ -79,7 +95,9 @@ public interface GroupsService {
    *
    * @return See {@link #list(GroupsListRequestParameters)}
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.sms.api.v1.GroupsService#list()} instead.
    */
+  @Deprecated
   GroupsListResponse list() throws ApiException;
 
   /**
@@ -97,7 +115,10 @@ public interface GroupsService {
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Groups/#tag/Groups/operation/ReplaceGroup">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Groups/#tag/Groups/operation/ReplaceGroup</a>
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.sms.api.v1.GroupsService#replace(String,
+   *     GroupRequest)} instead.
    */
+  @Deprecated
   Group replace(String groupId, GroupReplaceRequestParameters parameters) throws ApiException;
 
   /**
@@ -109,7 +130,10 @@ public interface GroupsService {
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Groups/#tag/Groups/operation/UpdateGroup">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Groups/#tag/Groups/operation/UpdateGroup</a>
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.sms.api.v1.GroupsService#update(String,
+   *     GroupUpdateRequest)} instead.
    */
+  @Deprecated
   Group update(String groupId, GroupUpdateRequestParameters parameters) throws ApiException;
 
   /**
@@ -119,7 +143,9 @@ public interface GroupsService {
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Groups/#tag/Groups/operation/deleteGroup">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Groups/#tag/Groups/operation/deleteGroup</a>
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.sms.api.v1.GroupsService#delete(String)} instead.
    */
+  @Deprecated
   void delete(String groupId) throws ApiException;
 
   /**
@@ -130,6 +156,9 @@ public interface GroupsService {
    * @see <a
    *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Groups/#tag/Groups/operation/deleteGroup">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Groups/#tag/Groups/operation/deleteGroup</a>
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.sms.api.v1.GroupsService#listMembers(String)}
+   *     instead.
    */
+  @Deprecated
   Collection<String> listMembers(String groupId) throws ApiException;
 }

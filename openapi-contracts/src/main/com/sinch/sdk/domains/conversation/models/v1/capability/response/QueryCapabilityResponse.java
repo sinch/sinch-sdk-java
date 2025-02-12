@@ -28,7 +28,7 @@ public interface QueryCapabilityResponse {
   String getAppId();
 
   /**
-   * Get recipient
+   * Identifies the recipient.
    *
    * @return recipient
    */

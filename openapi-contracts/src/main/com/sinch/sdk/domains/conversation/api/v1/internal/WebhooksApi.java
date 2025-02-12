@@ -449,6 +449,7 @@ public class WebhooksApi {
                 "\\{" + "webhook_id" + "\\}", URLPathUtils.encodePathSegment(webhookId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
+
     if (null != updateMask) {
       localVarQueryParams.add(
           new URLParameter(

@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 @TestWithResources
 public class DryRunDtoConverterTest extends BaseTest {
 
-  @GivenJsonResource("/domains/sms/v1/DryRunResponseDto.json")
+  @GivenJsonResource("/domains/sms/v1/batches/response/DryRunResponseDto.json")
   DryRun200ResponseDto loadedDto;
 
   public static DryRun dryRunClient =

@@ -7,6 +7,9 @@ import com.sinch.sdk.domains.numbers.models.requests.AvailableNumberListAllReque
 import com.sinch.sdk.domains.numbers.models.requests.AvailableNumberRentAnyRequestParameters;
 import com.sinch.sdk.domains.numbers.models.requests.AvailableNumberRentRequestParameters;
 import com.sinch.sdk.domains.numbers.models.responses.AvailableNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentAnyRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentRequest;
 
 /**
  * Available Number Service
@@ -14,7 +17,9 @@ import com.sinch.sdk.domains.numbers.models.responses.AvailableNumberListRespons
  * @see <a
  *     href="https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Available-Number">https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Available-Number</a>
  * @since 1.0
+ * @deprecated use {@link com.sinch.sdk.domains.numbers.api.v1.NumbersService} instead.
  */
+@Deprecated
 public interface AvailableNumberService {
 
   /**
@@ -29,7 +34,11 @@ public interface AvailableNumberService {
    * @param parameters Filtering criteria
    * @return List of available numbers according to search criteria
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.numbers.api.v1.NumbersService#searchForAvailableNumbers(AvailableNumberListRequest)}
+   *     instead.
    */
+  @Deprecated
   AvailableNumberListResponse list(AvailableNumberListAllRequestParameters parameters)
       throws ApiException;
 
@@ -41,7 +50,10 @@ public interface AvailableNumberService {
    * @param phoneNumber Phone number
    * @return Available number information
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.numbers.api.v1.NumbersService#checkAvailability(String)} instead.
    */
+  @Deprecated
   AvailableNumber checkAvailability(String phoneNumber) throws ApiException;
 
   /**
@@ -61,7 +73,10 @@ public interface AvailableNumberService {
    * @param parameters Activation parameters
    * @return Activated number
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.numbers.api.v1.NumbersService#rent(String,
+   *     AvailableNumberRentRequest)} instead.
    */
+  @Deprecated
   ActiveNumber rent(String phoneNumber, AvailableNumberRentRequestParameters parameters)
       throws ApiException;
 
@@ -74,6 +89,10 @@ public interface AvailableNumberService {
    * @param parameters Selection and activation parameters
    * @return Activated number according to criteria
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.numbers.api.v1.NumbersService#rentAny(AvailableNumberRentAnyRequest)}
+   *     instead.
    */
+  @Deprecated
   ActiveNumber rentAny(AvailableNumberRentAnyRequestParameters parameters) throws ApiException;
 }

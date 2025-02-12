@@ -32,7 +32,10 @@ import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationSt
  * @see <a
  *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verifications">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verifications</a>
  * @since 1.0
+ * @deprecated use {@link com.sinch.sdk.domains.verification.api.v1.VerificationStartService}
+ *     instead.
  */
+@Deprecated
 public interface VerificationsService {
 
   /**
@@ -42,12 +45,14 @@ public interface VerificationsService {
    * <p>This method is used by the mobile and web Verification SDKs to start a verification. It can
    * also be used to request a verification from your backend, by making a request.
    *
-   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
-   *     com.sinch.sdk.domains.verification.api.v1.VerificationStartService#startSms(VerificationStartRequestSms)}
    * @param parameters Parameters to be used to start verification
    * @return Verification response
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationStartService#startSms(VerificationStartRequestSms)}
+   *     instead.
    * @since 1.0
    */
+  @Deprecated
   StartVerificationResponseSMS startSms(StartVerificationSMSRequestParameters parameters);
 
   /**
@@ -57,12 +62,14 @@ public interface VerificationsService {
    * <p>This method is used by the mobile and web Verification SDKs to start a verification. It can
    * also be used to request a verification from your backend, by making a request.
    *
-   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
-   *     com.sinch.sdk.domains.verification.api.v1.VerificationStartService#startFlashCall(VerificationStartRequestFlashCall)}
    * @param parameters Parameters to be used to start verification
    * @return Verification response
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationStartService#startFlashCall(VerificationStartRequestFlashCall)}
+   *     instead.
    */
+  @Deprecated
   StartVerificationResponseFlashCall startFlashCall(
       StartVerificationFlashCallRequestParameters parameters);
 
@@ -73,12 +80,14 @@ public interface VerificationsService {
    * <p>This method is used by the mobile and web Verification SDKs to start a verification. It can
    * also be used to request a verification from your backend, by making a request.
    *
-   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
-   *     com.sinch.sdk.domains.verification.api.v1.VerificationStartService#startPhoneCall(VerificationStartRequestPhoneCall)}
    * @param parameters Parameters to be used to start verification
    * @return Verification response
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationStartService#startPhoneCall(VerificationStartRequestPhoneCall)}
+   *     instead.
    * @since 1.0
    */
+  @Deprecated
   StartVerificationResponseCallout startCallout(
       StartVerificationCalloutRequestParameters parameters);
 
@@ -89,12 +98,14 @@ public interface VerificationsService {
    * <p>This method is used by the mobile and web Verification SDKs to start a verification. It can
    * also be used to request a verification from your backend, by making a request.
    *
-   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
-   *     com.sinch.sdk.domains.verification.api.v1.VerificationStartService#startData(VerificationStartRequestData)}
    * @param parameters Parameters to be used to start verification
    * @return Verification response
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationStartService#startData(VerificationStartRequestData)}
+   *     instead.
    */
+  @Deprecated
   StartVerificationResponseSeamless startSeamless(
       StartVerificationSeamlessRequestParameters parameters);
 
@@ -104,15 +115,16 @@ public interface VerificationsService {
    *
    * <p>Report the received verification code to verify it, using the identity of the user
    *
-   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
-   *     com.sinch.sdk.domains.verification.api.v1.VerificationReportService#reportSmsByIdentity(com.sinch.sdk.domains.verification.models.v1.NumberIdentity,
-   *     VerificationReportRequestSms)}
    * @param identity Currently <b>Only</b> {@link
    *     com.sinch.sdk.domains.verification.models.NumberIdentity NumberIdentity} is supported
    * @param parameters Parameters to be used to get report
    * @return Verification report response
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationReportService#reportSmsByIdentity(com.sinch.sdk.domains.verification.models.v1.NumberIdentity,
+   *     VerificationReportRequestSms)} instead.
    */
+  @Deprecated
   VerificationReportSMS reportSmsByIdentity(
       NumberIdentity identity, VerificationReportSMSRequestParameters parameters);
 
@@ -123,15 +135,16 @@ public interface VerificationsService {
    *
    * <p>Report the received verification code to verify it, using the identity of the user
    *
-   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
-   *     com.sinch.sdk.domains.verification.api.v1.VerificationReportService#reportFlashCallByIdentity(com.sinch.sdk.domains.verification.models.v1.NumberIdentity,
-   *     VerificationReportRequestFlashCall)}
    * @param identity Currently <b>Only</b> {@link
    *     com.sinch.sdk.domains.verification.models.NumberIdentity NumberIdentity} is supported
    * @param parameters Parameters to be used to get report
    * @return Verification report response
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationReportService#reportFlashCallByIdentity(com.sinch.sdk.domains.verification.models.v1.NumberIdentity,
+   *     VerificationReportRequestFlashCall)} instead.
    */
+  @Deprecated
   VerificationReportFlashCall reportFlashCallByIdentity(
       NumberIdentity identity, VerificationReportFlashCallRequestParameters parameters);
 
@@ -142,15 +155,16 @@ public interface VerificationsService {
    *
    * <p>Report the received verification code to verify it, using the identity of the user
    *
-   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
-   *     com.sinch.sdk.domains.verification.api.v1.VerificationReportService#reportPhoneCallByIdentity(com.sinch.sdk.domains.verification.models.v1.NumberIdentity,
-   *     VerificationReportRequestPhoneCall)}
    * @param identity Currently <b>Only</b> {@link
    *     com.sinch.sdk.domains.verification.models.NumberIdentity NumberIdentity} is supported
    * @param parameters Parameters to be used to get report
    * @return Verification report response
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationReportService#reportPhoneCallByIdentity(com.sinch.sdk.domains.verification.models.v1.NumberIdentity,
+   *     VerificationReportRequestPhoneCall)} instead.
    */
+  @Deprecated
   VerificationReportCallout reportCalloutByIdentity(
       NumberIdentity identity, VerificationReportCalloutRequestParameters parameters);
 
@@ -158,14 +172,15 @@ public interface VerificationsService {
    * Report the received verification code to verify it, using the Verification ID of the {@link
    * com.sinch.sdk.domains.verification.models.VerificationMethodType#SMS SMS} Verification request
    *
-   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
-   *     com.sinch.sdk.domains.verification.api.v1.VerificationReportService#reportSmsById(String,
-   *     VerificationReportRequestSms)}
    * @param id ID returned from start verification
    * @param parameters Parameters to be used to get report
    * @return Verification report response
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationReportService#reportSmsById(String,
+   *     VerificationReportRequestSms)} instead.
    */
+  @Deprecated
   VerificationReportSMS reportSmsById(
       VerificationId id, VerificationReportSMSRequestParameters parameters);
 
@@ -174,14 +189,15 @@ public interface VerificationsService {
    * com.sinch.sdk.domains.verification.models.VerificationMethodType#FLASH_CALL FLASH_CALL}
    * Verification request
    *
-   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
-   *     com.sinch.sdk.domains.verification.api.v1.VerificationReportService#reportFlashCallById(String,
-   *     VerificationReportRequestFlashCall)}
    * @param id ID returned from start verification
    * @param parameters Parameters to be used to get report
    * @return Verification report response
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationReportService#reportFlashCallById(String,
+   *     VerificationReportRequestFlashCall)} instead.
    */
+  @Deprecated
   VerificationReportFlashCall reportFlashCallById(
       VerificationId id, VerificationReportFlashCallRequestParameters parameters);
 
@@ -190,14 +206,15 @@ public interface VerificationsService {
    * com.sinch.sdk.domains.verification.models.VerificationMethodType#CALLOUT CALLOUT} Verification
    * request
    *
-   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
-   *     com.sinch.sdk.domains.verification.api.v1.VerificationReportService#reportPhoneCallById(String,
-   *     VerificationReportRequestPhoneCall)}
    * @param id ID returned from start verification
    * @param parameters Parameters to be used to get report
    * @return Verification report response
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationReportService#reportPhoneCallByIdentity(com.sinch.sdk.domains.verification.models.v1.NumberIdentity,
+   *     VerificationReportRequestPhoneCall)} instead.
    */
+  @Deprecated
   VerificationReportCallout reportCalloutById(
       VerificationId id, VerificationReportCalloutRequestParameters parameters);
 }

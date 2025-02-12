@@ -112,6 +112,7 @@ public class SendSmsBatchBinaryRequest extends BaseBatch<String> {
     /**
      * @param flashMessage If sent as a flash message, displays true.
      * @return current builder
+     * @deprecated
      */
     public Builder setFlashMessage(boolean flashMessage) {
       this.flashMessage = OptionalValue.of(flashMessage);
@@ -121,6 +122,7 @@ public class SendSmsBatchBinaryRequest extends BaseBatch<String> {
     /**
      * @param truncateConcat If set to true, the message was shortened when exceeding one part.
      * @return current builder
+     * @deprecated
      */
     public Builder setTruncateConcat(boolean truncateConcat) {
       this.truncateConcat = OptionalValue.of(truncateConcat);
@@ -130,6 +132,7 @@ public class SendSmsBatchBinaryRequest extends BaseBatch<String> {
     /**
      * @param maxNumberOfMessageParts Displays the number of message parts set in the request.
      * @return current builder
+     * @deprecated
      */
     public Builder setMaxNumberOfMessageParts(int maxNumberOfMessageParts) {
       this.maxNumberOfMessageParts = OptionalValue.of(maxNumberOfMessageParts);

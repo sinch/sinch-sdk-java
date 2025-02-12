@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 @TestWithResources
 class GroupResponseDtoTest extends BaseTest {
 
-  @GivenJsonResource("/domains/sms/v1/GroupResponseDto.json")
+  @GivenJsonResource("/domains/sms/v1/groups/GroupDto.json")
   CreateGroupResponseDto createGroupResponseDto;
 
   Integer size = 2;
@@ -28,7 +28,10 @@ class GroupResponseDtoTest extends BaseTest {
           .autoUpdate(
               new GroupAutoUpdateDto()
                   .to("15551231234")
-                  .add(new AddKeywordDto().firstWord("Add 1st keyword"))
+                  .add(
+                      new AddKeywordDto()
+                          .firstWord("Add 1st keyword")
+                          .secondWord("Add 2nd keyword"))
                   .remove(
                       new RemoveKeywordDto()
                           .firstWord("remove 1st keyword")

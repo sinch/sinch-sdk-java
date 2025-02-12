@@ -50,27 +50,30 @@
     },
     "channel_specific_message": {
       "MESSENGER": {
-        "header": {
-          "type": "text",
-          "text": "text header value"
-        },
-        "body": {
-          "text": "Flow message body"
-        },
-        "footer": {
-          "text": "Flow message footer"
-        },
-        "flow_id": "1",
-        "flow_token": "AQAAAAACS5FpgQ_cAAAAAD0QI3s.",
-        "flow_mode": "draft",
-        "flow_cta": "Book!",
-        "flow_action": "navigate",
-        "flow_action_payload": {
-          "screen": "<SCREEN_NAME>",
-          "data": {
-            "product_price": 100,
-            "product_description": "description",
-            "product_name": "name"
+        "message_type": "FLOWS",
+        "message": {
+          "header": {
+            "type": "text",
+            "text": "text header value"
+          },
+          "body": {
+            "text": "Flow message body"
+          },
+          "footer": {
+            "text": "Flow message footer"
+          },
+          "flow_id": "1",
+          "flow_token": "AQAAAAACS5FpgQ_cAAAAAD0QI3s.",
+          "flow_mode": "draft",
+          "flow_cta": "Book!",
+          "flow_action": "navigate",
+          "flow_action_payload": {
+            "screen": "<SCREEN_NAME>",
+            "data": {
+              "product_price": 100,
+              "product_description": "description",
+              "product_name": "name"
+            }
           }
         }
       }
@@ -93,5 +96,4 @@
   "sender_id": "send id value",
   "processing_mode": "CONVERSATION",
   "metadata": "metdata value"
-}
 }

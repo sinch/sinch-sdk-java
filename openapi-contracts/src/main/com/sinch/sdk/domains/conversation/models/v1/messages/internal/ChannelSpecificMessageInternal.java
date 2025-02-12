@@ -13,7 +13,6 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.internal;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.ChannelSpecificMessage;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -57,7 +56,7 @@ public interface ChannelSpecificMessageInternal {
    *
    * @return message
    */
-  ChannelSpecificMessage getMessage();
+  ChannelSpecificMessageMessageInternal getMessage();
 
   /**
    * Getting builder
@@ -87,7 +86,7 @@ public interface ChannelSpecificMessageInternal {
      * @return Current builder
      * @see #getMessage
      */
-    Builder setMessage(ChannelSpecificMessage message);
+    Builder setMessage(ChannelSpecificMessageMessageInternal message);
 
     /**
      * Create instance
