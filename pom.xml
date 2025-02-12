@@ -4,7 +4,7 @@
 
     <groupId>com.sinch.sdk</groupId>
     <artifactId>sinch-sdk-java</artifactId>
-    <version>1.4.1-SNAPSHOT</version>
+    <version>1.6.0-SNAPSHOT</version>
 
     <name>Sinch Java SDK</name>
     <description>
@@ -138,6 +138,7 @@
                             **.adapters*;
                             **.internal;
                             com.sinch.sdk.domains.numbers.models.v1.errors;
+                            com.sinch.sdk.domains.sms.models;
                             com.sinch.sdk.domains.verification.models;
                             com.sinch.sdk.domains.verification.models.requests;
                             com.sinch.sdk.domains.verification.models.response;
@@ -157,6 +158,12 @@
                             <sourceFileExclude>**/mailgun/models/v1/response/GenericResponse.java</sourceFileExclude>
 
                             <!-- Transition period -->
+                            <sourceFileExclude>com/sinch/sdk/domains/sms/BatchesService.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/sms/DeliveryReportsService.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/sms/GroupsService.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/sms/InboundsService.java</sourceFileExclude>
+                            <sourceFileExclude>com/sinch/sdk/domains/sms/WebHooksService.java</sourceFileExclude>
+
                             <sourceFileExclude>com/sinch/sdk/domains/verification/models/*.java</sourceFileExclude>
                             <sourceFileExclude>com/sinch/sdk/domains/verification/VerificationsService.java</sourceFileExclude>
                             <sourceFileExclude>com/sinch/sdk/domains/verification/VerificationStatusService.java</sourceFileExclude>
@@ -219,7 +226,7 @@
 
                             <group>
                                 <title>SMS</title>
-                                <packages>com.sinch.sdk.domains.sms.models.v1*:com.sinch.sdk.domains.sms.api.v1*</packages>
+                                <packages>com.sinch.sdk.domains.sms:com.sinch.sdk.domains.sms.models.v1*:com.sinch.sdk.domains.sms.api.v1*</packages>
                             </group>
 
                             <group>

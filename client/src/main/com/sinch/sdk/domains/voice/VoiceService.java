@@ -23,7 +23,9 @@ public interface VoiceService {
    *
    * @return service instance for project
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.voice.api.v1.VoiceService#callouts()} instead.
    */
+  @Deprecated
   CalloutsService callouts();
 
   /**
@@ -31,7 +33,9 @@ public interface VoiceService {
    *
    * @return service instance for project
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.voice.api.v1.VoiceService#conferences()} instead.
    */
+  @Deprecated
   ConferencesService conferences();
 
   /**
@@ -39,7 +43,9 @@ public interface VoiceService {
    *
    * @return service instance for project
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.voice.api.v1.VoiceService#calls()} instead.
    */
+  @Deprecated
   CallsService calls();
 
   /**
@@ -47,7 +53,9 @@ public interface VoiceService {
    *
    * @return service instance for project
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.voice.api.v1.VoiceService#applications()} instead.
    */
+  @Deprecated
   ApplicationsService applications();
 
   /**
@@ -55,6 +63,8 @@ public interface VoiceService {
    *
    * @return instance service related to webhooks helpers
    * @since 1.0
+   * @deprecated use {@link com.sinch.sdk.domains.voice.api.v1.VoiceService#webhooks()} instead.
    */
+  @Deprecated
   WebHooksService webhooks();
 }

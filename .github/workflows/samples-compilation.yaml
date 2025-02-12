@@ -20,7 +20,6 @@ jobs:
           mvn clean install -DskipTests=true -Dspotless.apply.skip=true
           cd sample-app
           mvn -B clean package
-          mvn -B -f pom-webhooks.xml clean package
           cd ../examples
           ./compile.sh
       # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive

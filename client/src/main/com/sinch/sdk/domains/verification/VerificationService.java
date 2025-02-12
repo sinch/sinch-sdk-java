@@ -22,37 +22,42 @@ public interface VerificationService {
   /**
    * Non versioned Verifications Service instance
    *
-   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
-   *     com.sinch.sdk.domains.verification.api.v1.VerificationService#verificationStart()} or
-   *     {@link com.sinch.sdk.domains.verification.api.v1.VerificationService#verificationReport()}
    * @return service instance for project
    * @see <a
    *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verifications/">Documentation</a>
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationService#verificationReport()} and
+   *     {@link com.sinch.sdk.domains.verification.api.v1.VerificationService#verificationStart()}
+   *     instead.
    */
+  @Deprecated
   VerificationsService verifications();
 
   /**
    * Non versioned Status Service instance
    *
-   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
-   *     com.sinch.sdk.domains.verification.api.v1.VerificationService#verificationStatus()}
    * @return service instance for project
    * @see <a
    *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-status/">Documentation</a>
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationService#verificationStatus()}
+   *     instead.
    */
+  @Deprecated
   VerificationStatusService verificationStatus();
 
   /**
    * Non versioned Webhooks helpers instance
    *
-   * @apiNote This version is no longer updated, to get updates use V1 version: {@link
-   *     com.sinch.sdk.domains.verification.api.v1.VerificationService#webhooks()}
    * @return instance service related to webhooks helpers
    * @see <a
    *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/">Documentation</a>
    * @since 1.0
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.verification.api.v1.VerificationService#webhooks()} instead.
    */
+  @Deprecated
   WebHooksService webhooks();
 }
