@@ -12,12 +12,14 @@ import com.sinch.sdk.domains.sms.api.v1.BatchesService;
 import com.sinch.sdk.domains.sms.api.v1.DeliveryReportsService;
 import com.sinch.sdk.domains.sms.api.v1.GroupsService;
 import com.sinch.sdk.domains.sms.api.v1.InboundsService;
+import com.sinch.sdk.models.Credentials;
 import com.sinch.sdk.models.SmsContext;
 import com.sinch.sdk.models.SmsServicePlanCredentials;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Supplier;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -27,73 +29,51 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   private static final Logger LOGGER = Logger.getLogger(SMSService.class.getName());
 
   private static final String SECURITY_SCHEME_KEYWORD_SMS = "BearerAuth";
-  private final String uriUUID;
+  private final Credentials credentials;
   private final SmsContext context;
-  private final HttpClient httpClient;
-  private final Map<String, AuthManager> authManagers;
+  private final ServerConfiguration oAuthServer;
+  private final Supplier<HttpClient> httpClientSupplier;
+  private volatile String uriUUID;
+  private volatile Map<String, AuthManager> authManagers;
 
-  private BatchesService batches;
-  private InboundsService inbounds;
-  private DeliveryReportsService deliveryReports;
-  private GroupsService groups;
-  private WebHooksService webhooks;
+  private volatile BatchesService batches;
+  private volatile InboundsService inbounds;
+  private volatile DeliveryReportsService deliveryReports;
+  private volatile GroupsService groups;
+  private volatile WebHooksService webhooks;
 
   public SMSService(
       UnifiedCredentials credentials,
       SmsContext context,
       ServerConfiguration oAuthServer,
-      HttpClient httpClient) {
-
-    Objects.requireNonNull(credentials, "Credentials must be defined");
-    Objects.requireNonNull(context, "Context must be defined");
-    StringUtil.requireNonEmpty(credentials.getKeyId(), "'keyId' must be defined");
-    StringUtil.requireNonEmpty(credentials.getKeySecret(), "'keySecret' must be defined");
-    StringUtil.requireNonEmpty(credentials.getProjectId(), "'projectId' must be defined");
-    StringUtil.requireNonEmpty(context.getSmsUrl(), "'smsUrl' must be defined");
-
-    LOGGER.fine("Activate SMS API with server='" + context.getSmsServer().getUrl() + "'");
-
-    OAuthManager oAuthManager =
-        new OAuthManager(credentials, oAuthServer, HttpMapper.getInstance(), () -> httpClient);
-
-    this.uriUUID = credentials.getProjectId();
+      Supplier<HttpClient> httpClientSupplier) {
+    this.credentials = credentials;
+    this.oAuthServer = oAuthServer;
     this.context = context;
-    this.httpClient = httpClient;
-    this.authManagers =
-        Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_SMS, oAuthManager))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    this.httpClientSupplier = httpClientSupplier;
   }
 
   public SMSService(
-      SmsServicePlanCredentials credentials, SmsContext context, HttpClient httpClient) {
-
-    Objects.requireNonNull(credentials, "Credentials must be defined");
-    Objects.requireNonNull(context, "Context must be defined");
-    StringUtil.requireNonEmpty(credentials.getServicePlanId(), "'servicePlanId' must be defined");
-    StringUtil.requireNonEmpty(credentials.getApiToken(), "'apiToken' must be defined");
-    StringUtil.requireNonEmpty(context.getSmsUrl(), "'smsUrl' must be defined");
-
-    LOGGER.fine(
-        "Activate SMS API with service plan ID support and server='"
-            + context.getSmsServer().getUrl()
-            + "'");
-
-    BearerAuthManager authManager = new BearerAuthManager(credentials.getApiToken());
-
-    this.uriUUID = credentials.getServicePlanId();
+      SmsServicePlanCredentials credentials,
+      SmsContext context,
+      Supplier<HttpClient> httpClientSupplier) {
+    this.credentials = credentials;
     this.context = context;
-    this.httpClient = httpClient;
-    this.authManagers =
-        Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_SMS, authManager))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    this.httpClientSupplier = httpClientSupplier;
+    this.oAuthServer = null;
   }
 
   @Override
   public BatchesService batches() {
     if (null == this.batches) {
+      instanceLazyInit();
       this.batches =
           new BatchesServiceImpl(
-              httpClient, context.getSmsServer(), authManagers, HttpMapper.getInstance(), uriUUID);
+              httpClientSupplier.get(),
+              context.getSmsServer(),
+              authManagers,
+              HttpMapper.getInstance(),
+              uriUUID);
     }
     return this.batches;
   }
@@ -101,9 +81,14 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   @Override
   public InboundsService inbounds() {
     if (null == this.inbounds) {
+      instanceLazyInit();
       this.inbounds =
           new InboundsServiceImpl(
-              httpClient, context.getSmsServer(), authManagers, HttpMapper.getInstance(), uriUUID);
+              httpClientSupplier.get(),
+              context.getSmsServer(),
+              authManagers,
+              HttpMapper.getInstance(),
+              uriUUID);
     }
     return this.inbounds;
   }
@@ -111,9 +96,14 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   @Override
   public DeliveryReportsService deliveryReports() {
     if (null == this.deliveryReports) {
+      instanceLazyInit();
       this.deliveryReports =
           new DeliveryReportsServiceImpl(
-              httpClient, context.getSmsServer(), authManagers, HttpMapper.getInstance(), uriUUID);
+              httpClientSupplier.get(),
+              context.getSmsServer(),
+              authManagers,
+              HttpMapper.getInstance(),
+              uriUUID);
     }
     return this.deliveryReports;
   }
@@ -121,9 +111,14 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   @Override
   public GroupsService groups() {
     if (null == this.groups) {
+      instanceLazyInit();
       this.groups =
           new GroupsServiceImpl(
-              httpClient, context.getSmsServer(), authManagers, HttpMapper.getInstance(), uriUUID);
+              httpClientSupplier.get(),
+              context.getSmsServer(),
+              authManagers,
+              HttpMapper.getInstance(),
+              uriUUID);
     }
     return this.groups;
   }
@@ -134,5 +129,52 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
       this.webhooks = new WebHooksService(new HmacAuthenticationValidation());
     }
     return this.webhooks;
+  }
+
+  private void instanceLazyInit() {
+    if (null != this.authManagers) {
+      return;
+    }
+    synchronized (this) {
+      if (null == this.authManagers) {
+        AuthManager oAuthManager = null;
+        Objects.requireNonNull(credentials, "Credentials must be defined");
+        Objects.requireNonNull(context, "Context must be defined");
+        StringUtil.requireNonEmpty(context.getSmsUrl(), "'smsUrl' must be defined");
+
+        if (credentials instanceof UnifiedCredentials) {
+          UnifiedCredentials unifiedCredentials = (UnifiedCredentials) credentials;
+          StringUtil.requireNonEmpty(unifiedCredentials.getKeyId(), "'keyId' must be defined");
+          StringUtil.requireNonEmpty(
+              unifiedCredentials.getKeySecret(), "'keySecret' must be defined");
+          StringUtil.requireNonEmpty(
+              unifiedCredentials.getProjectId(), "'projectId' must be defined");
+          LOGGER.fine("Activate SMS API with server='" + context.getSmsServer().getUrl() + "'");
+
+          uriUUID = unifiedCredentials.getProjectId();
+          oAuthManager =
+              new OAuthManager(
+                  unifiedCredentials, oAuthServer, HttpMapper.getInstance(), httpClientSupplier);
+
+        } else if (credentials instanceof SmsServicePlanCredentials) {
+          SmsServicePlanCredentials servicePlanCredentials =
+              (SmsServicePlanCredentials) credentials;
+          StringUtil.requireNonEmpty(
+              servicePlanCredentials.getServicePlanId(), "'servicePlanId' must be defined");
+          StringUtil.requireNonEmpty(
+              servicePlanCredentials.getApiToken(), "'apiToken' must be defined");
+          LOGGER.fine(
+              "Activate SMS API with service plan ID support and server='"
+                  + context.getSmsServer().getUrl()
+                  + "'");
+          uriUUID = servicePlanCredentials.getServicePlanId();
+          oAuthManager = new BearerAuthManager(servicePlanCredentials.getApiToken());
+        }
+
+        this.authManagers =
+            Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_SMS, oAuthManager))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+      }
+    }
   }
 }

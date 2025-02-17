@@ -345,14 +345,14 @@ public class SinchClient {
         .map(
             f ->
                 new com.sinch.sdk.domains.sms.adapters.SMSService(
-                    f, getConfiguration().getSmsContext().orElse(null), getHttpClient()))
+                    f, getConfiguration().getSmsContext().orElse(null), this::getHttpClient))
         .orElseGet(
             () ->
                 new com.sinch.sdk.domains.sms.adapters.SMSService(
                     getConfiguration().getUnifiedCredentials().orElse(null),
                     getConfiguration().getSmsContext().orElse(null),
                     configuration.getOAuthServer(),
-                    getHttpClient()));
+                    this::getHttpClient));
   }
 
   private VerificationService verificationInit() {
