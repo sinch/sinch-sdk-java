@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -30,7 +31,7 @@ public class OAuthManager implements AuthManager {
   private static final int maxRefreshAttempt = 5;
   private final ServerConfiguration oAuthServer;
   private final HttpMapper mapper;
-  private final HttpClient httpClient;
+  private final Supplier<HttpClient> httpClientSupplier;
   private final Map<String, AuthManager> authManagers;
   private String token;
 
@@ -38,8 +39,13 @@ public class OAuthManager implements AuthManager {
       UnifiedCredentials credentials,
       ServerConfiguration oAuthServer,
       HttpMapper mapper,
-      HttpClient httpClient) {
-    this(credentials.getKeyId(), credentials.getKeySecret(), oAuthServer, mapper, httpClient);
+      Supplier<HttpClient> httpClientSupplier) {
+    this(
+        credentials.getKeyId(),
+        credentials.getKeySecret(),
+        oAuthServer,
+        mapper,
+        httpClientSupplier);
   }
 
   public OAuthManager(
@@ -47,10 +53,10 @@ public class OAuthManager implements AuthManager {
       String keySecret,
       ServerConfiguration oAuthServer,
       HttpMapper mapper,
-      HttpClient httpClient) {
+      Supplier<HttpClient> httpClientSupplier) {
     this.oAuthServer = oAuthServer;
     this.mapper = mapper;
-    this.httpClient = httpClient;
+    this.httpClientSupplier = httpClientSupplier;
 
     AuthManager basicAuthManager = new BasicAuthManager(keyId, keySecret);
     authManagers =
@@ -105,7 +111,8 @@ public class OAuthManager implements AuthManager {
             Collections.singletonList("application/x-www-form-urlencoded"),
             Collections.singletonList(SCHEMA_KEYWORD_BASIC));
     try {
-      HttpResponse httpResponse = httpClient.invokeAPI(oAuthServer, authManagers, request);
+      HttpResponse httpResponse =
+          httpClientSupplier.get().invokeAPI(oAuthServer, authManagers, request);
       BearerAuthResponse authResponse =
           mapper.deserialize(httpResponse, new TypeReference<BearerAuthResponse>() {});
       return Optional.ofNullable(authResponse.getAccessToken());

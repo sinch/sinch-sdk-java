@@ -21,7 +21,8 @@ public class CapabilityService
       HttpClient httpClient,
       Map<String, AuthManager> authManagers) {
     this.uriUUID = uriUUID;
-    this.api = new CapabilityApi(httpClient, context.getServer(), authManagers, new HttpMapper());
+    this.api =
+        new CapabilityApi(httpClient, context.getServer(), authManagers, HttpMapper.getInstance());
   }
 
   protected CapabilityApi getApi() {

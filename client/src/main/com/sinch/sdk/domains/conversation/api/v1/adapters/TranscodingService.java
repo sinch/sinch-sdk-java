@@ -21,7 +21,8 @@ public class TranscodingService
       HttpClient httpClient,
       Map<String, AuthManager> authManagers) {
     this.uriUUID = uriUUID;
-    this.api = new TranscodingApi(httpClient, context.getServer(), authManagers, new HttpMapper());
+    this.api =
+        new TranscodingApi(httpClient, context.getServer(), authManagers, HttpMapper.getInstance());
   }
 
   protected TranscodingApi getApi() {

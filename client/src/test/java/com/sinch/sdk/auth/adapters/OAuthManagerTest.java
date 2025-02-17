@@ -47,7 +47,7 @@ public class OAuthManagerTest extends BaseTest {
   public void initEach() {
     authManager =
         new OAuthManager(
-            credentials, new ServerConfiguration("OAuth url"), new HttpMapper(), httpClient);
+            credentials, new ServerConfiguration("OAuth url"), new HttpMapper(), () -> httpClient);
   }
 
   @Test
