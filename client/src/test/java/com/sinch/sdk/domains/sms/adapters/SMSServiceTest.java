@@ -23,7 +23,7 @@ class SMSServiceTest {
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
-            () -> new SMSService(credentials, context, server, httpClient));
+            () -> new SMSService(credentials, context, server, () -> httpClient));
     assertTrue(exception.getMessage().contains("keyId"));
   }
 
@@ -36,7 +36,7 @@ class SMSServiceTest {
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
-            () -> new SMSService(credentials, context, server, httpClient));
+            () -> new SMSService(credentials, context, server, () -> httpClient));
     assertTrue(exception.getMessage().contains("keySecret"));
   }
 
@@ -50,7 +50,7 @@ class SMSServiceTest {
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
-            () -> new SMSService(credentials, context, server, httpClient));
+            () -> new SMSService(credentials, context, server, () -> httpClient));
     assertTrue(exception.getMessage().contains("projectId"));
   }
 
@@ -61,7 +61,8 @@ class SMSServiceTest {
     ServerConfiguration server = new ServerConfiguration("");
     Exception exception =
         assertThrows(
-            NullPointerException.class, () -> new SMSService(null, context, server, httpClient));
+            NullPointerException.class,
+            () -> new SMSService(null, context, server, () -> httpClient));
     assertTrue(exception.getMessage().contains("Credentials must be defined"));
   }
 
@@ -77,7 +78,7 @@ class SMSServiceTest {
     Exception exception =
         assertThrows(
             NullPointerException.class,
-            () -> new SMSService(credentials, null, server, httpClient));
+            () -> new SMSService(credentials, null, server, () -> httpClient));
     assertTrue(exception.getMessage().contains("Context must be defined"));
   }
 }
