@@ -25,7 +25,10 @@ public class CallbackConfigurationService
     this.uriUUID = uriUUID;
     this.api =
         new CallbacksApi(
-            httpClientSupplier.get(), context.getNumbersServer(), authManagers, new HttpMapper());
+            httpClientSupplier.get(),
+            context.getNumbersServer(),
+            authManagers,
+            HttpMapper.getInstance());
   }
 
   protected CallbacksApi getApi() {

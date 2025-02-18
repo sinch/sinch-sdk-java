@@ -29,7 +29,10 @@ public class AvailableRegionService
     this.uriUUID = uriUUID;
     this.api =
         new AvailableRegionsApi(
-            httpClientSupplier.get(), context.getNumbersServer(), authManagers, new HttpMapper());
+            httpClientSupplier.get(),
+            context.getNumbersServer(),
+            authManagers,
+            HttpMapper.getInstance());
   }
 
   protected AvailableRegionsApi getApi() {

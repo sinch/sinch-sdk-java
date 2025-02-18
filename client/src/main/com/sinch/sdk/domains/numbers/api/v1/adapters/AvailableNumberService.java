@@ -37,7 +37,10 @@ public class AvailableNumberService {
     this.uriUUID = uriUUID;
     this.api =
         new AvailableNumberApi(
-            httpClientSupplier.get(), context.getNumbersServer(), authManagers, new HttpMapper());
+            httpClientSupplier.get(),
+            context.getNumbersServer(),
+            authManagers,
+            HttpMapper.getInstance());
   }
 
   protected AvailableNumberApi getApi() {

@@ -42,7 +42,10 @@ public class ActiveNumberService {
     this.numbersService = numbersService;
     this.api =
         new ActiveNumberApi(
-            httpClientSupplier.get(), context.getNumbersServer(), authManagers, new HttpMapper());
+            httpClientSupplier.get(),
+            context.getNumbersServer(),
+            authManagers,
+            HttpMapper.getInstance());
   }
 
   protected ActiveNumberApi getApi() {
