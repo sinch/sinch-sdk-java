@@ -46,7 +46,7 @@ class HttpClientTestIT extends BaseTest {
 
   AuthManager basicAuthManager = new BasicAuthManager(credentials);
   OAuthManager oAuthManager =
-      new OAuthManager(credentials, server, new HttpMapper(), () -> httpClient);
+      new OAuthManager(credentials, server, HttpMapper.getInstance(), () -> httpClient);
 
   Map<String, AuthManager> authManagers =
       Stream.of(basicAuthManager, oAuthManager)
