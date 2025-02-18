@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class ActiveNumberService {
@@ -35,12 +36,13 @@ public class ActiveNumberService {
       String uriUUID,
       NumbersService numbersService,
       NumbersContext context,
-      HttpClient httpClient,
+      Supplier<HttpClient> httpClientSupplier,
       Map<String, AuthManager> authManagers) {
     this.uriUUID = uriUUID;
     this.numbersService = numbersService;
     this.api =
-        new ActiveNumberApi(httpClient, context.getNumbersServer(), authManagers, new HttpMapper());
+        new ActiveNumberApi(
+            httpClientSupplier.get(), context.getNumbersServer(), authManagers, new HttpMapper());
   }
 
   protected ActiveNumberApi getApi() {

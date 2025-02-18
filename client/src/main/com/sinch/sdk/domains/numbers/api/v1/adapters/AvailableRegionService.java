@@ -12,6 +12,7 @@ import com.sinch.sdk.domains.numbers.models.v1.regions.available.response.intern
 import com.sinch.sdk.models.NumbersContext;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class AvailableRegionService
@@ -23,12 +24,12 @@ public class AvailableRegionService
   public AvailableRegionService(
       String uriUUID,
       NumbersContext context,
-      HttpClient httpClient,
+      Supplier<HttpClient> httpClientSupplier,
       Map<String, AuthManager> authManagers) {
     this.uriUUID = uriUUID;
     this.api =
         new AvailableRegionsApi(
-            httpClient, context.getNumbersServer(), authManagers, new HttpMapper());
+            httpClientSupplier.get(), context.getNumbersServer(), authManagers, new HttpMapper());
   }
 
   protected AvailableRegionsApi getApi() {

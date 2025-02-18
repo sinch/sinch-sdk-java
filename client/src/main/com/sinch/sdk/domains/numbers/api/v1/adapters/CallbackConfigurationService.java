@@ -9,6 +9,7 @@ import com.sinch.sdk.domains.numbers.models.v1.callbacks.request.CallbackConfigu
 import com.sinch.sdk.domains.numbers.models.v1.callbacks.response.CallbackConfigurationResponse;
 import com.sinch.sdk.models.NumbersContext;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class CallbackConfigurationService
     implements com.sinch.sdk.domains.numbers.api.v1.CallbackConfigurationService {
@@ -19,11 +20,12 @@ public class CallbackConfigurationService
   public CallbackConfigurationService(
       String uriUUID,
       NumbersContext context,
-      HttpClient httpClient,
+      Supplier<HttpClient> httpClientSupplier,
       Map<String, AuthManager> authManagers) {
     this.uriUUID = uriUUID;
     this.api =
-        new CallbacksApi(httpClient, context.getNumbersServer(), authManagers, new HttpMapper());
+        new CallbacksApi(
+            httpClientSupplier.get(), context.getNumbersServer(), authManagers, new HttpMapper());
   }
 
   protected CallbacksApi getApi() {

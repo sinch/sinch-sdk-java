@@ -21,6 +21,7 @@ import com.sinch.sdk.models.NumbersContext;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class AvailableNumberService {
@@ -31,12 +32,12 @@ public class AvailableNumberService {
   public AvailableNumberService(
       String uriUUID,
       NumbersContext context,
-      HttpClient httpClient,
+      Supplier<HttpClient> httpClientSupplier,
       Map<String, AuthManager> authManagers) {
     this.uriUUID = uriUUID;
     this.api =
         new AvailableNumberApi(
-            httpClient, context.getNumbersServer(), authManagers, new HttpMapper());
+            httpClientSupplier.get(), context.getNumbersServer(), authManagers, new HttpMapper());
   }
 
   protected AvailableNumberApi getApi() {
