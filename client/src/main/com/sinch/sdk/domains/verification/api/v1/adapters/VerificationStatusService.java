@@ -20,7 +20,7 @@ public class VerificationStatusService
       VerificationContext context, HttpClient httpClient, Map<String, AuthManager> authManagers) {
     this.api =
         new VerificationStatusApi(
-            httpClient, context.getVerificationServer(), authManagers, new HttpMapper());
+            httpClient, context.getVerificationServer(), authManagers, HttpMapper.getInstance());
   }
 
   protected VerificationStatusApi getApi() {
