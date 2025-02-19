@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 
 public class HttpMapperTest {
 
-  final HttpMapper mapper = new HttpMapper();
+  final HttpMapper mapper = HttpMapper.getInstance();
 
   @Test
   void deserializeNullResponse() throws ApiException {
