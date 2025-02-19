@@ -32,7 +32,8 @@ public class BatchesService implements com.sinch.sdk.domains.sms.BatchesService 
       HttpClient httpClient,
       Map<String, AuthManager> authManagers) {
     this.uriUUID = uriUUID;
-    this.api = new BatchesApi(httpClient, context.getSmsServer(), authManagers, new HttpMapper());
+    this.api =
+        new BatchesApi(httpClient, context.getSmsServer(), authManagers, HttpMapper.getInstance());
   }
 
   protected BatchesApi getApi() {

@@ -54,7 +54,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
     LOGGER.fine("Activate SMS API with server='" + context.getSmsServer().getUrl() + "'");
 
     OAuthManager oAuthManager =
-        new OAuthManager(credentials, oAuthServer, new HttpMapper(), httpClientSupplier);
+        new OAuthManager(credentials, oAuthServer, HttpMapper.getInstance(), httpClientSupplier);
 
     this.uriUUID = credentials.getProjectId();
     this.context = context;
