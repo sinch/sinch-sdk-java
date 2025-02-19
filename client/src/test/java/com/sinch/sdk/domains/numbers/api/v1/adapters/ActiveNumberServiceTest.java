@@ -63,7 +63,7 @@ class ActiveNumberServiceTest extends NumbersBaseTest {
   @BeforeEach
   public void initMocks() {
     ActiveNumberService v1 =
-        new ActiveNumberService(uriUUID, numbersService, context, httpClient, authManagers);
+        new ActiveNumberService(uriUUID, numbersService, context, () -> httpClient, authManagers);
     service = spy(v1);
     doReturn(api).when(service).getApi();
   }

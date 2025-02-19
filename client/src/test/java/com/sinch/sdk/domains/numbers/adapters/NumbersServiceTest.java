@@ -1,11 +1,8 @@
 package com.sinch.sdk.domains.numbers.adapters;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.models.NumbersContext;
-import com.sinch.sdk.models.UnifiedCredentials;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
@@ -13,69 +10,34 @@ class NumbersServiceTest {
 
   @Mock HttpClient httpClient;
 
-  NumbersContext context = NumbersContext.builder().setNumbersUrl("foo url").build();
+  /*
+  Due to V1 wrapper usage context: credentials are checked at request level  when calling a dedicated V1 function
+  So test do not have sense here and is covered by V1 unit tests
+   @Test
+   void checkCredentialsAvailable() {
+     CredentialsValidationHelper.checkCredentials(() -> httpClient, NumbersService::available);
+   }*/
+
+  /*
+   Due to V1 wrapper usage context: credentials are checked at request level  when calling a dedicated V1 function
+   So test do not have sense here and is covered by V1 unit tests @Test
+    void checkCredentialsActive() {
+      CredentialsValidationHelper.checkCredentials(() -> httpClient, NumbersService::active);
+    }
+  */
 
   @Test
-  void doNotAcceptNullKey() {
-    UnifiedCredentials credentials =
-        UnifiedCredentials.builder().setKeyId(null).setKeySecret("foo").setProjectId("foo").build();
-    Exception exception =
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> new NumbersService(credentials, context, httpClient));
-    assertTrue(exception.getMessage().contains("keyId"));
+  void checkCredentialsRegions() {
+    CredentialsValidationHelper.checkCredentials(() -> httpClient, NumbersService::regions);
   }
 
   @Test
-  void doNotAcceptNullKeySecret() {
-    UnifiedCredentials credentials =
-        UnifiedCredentials.builder().setKeyId("foo").setKeySecret(null).setProjectId("foo").build();
-    Exception exception =
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> new NumbersService(credentials, context, httpClient));
-    assertTrue(exception.getMessage().contains("keySecret"));
+  void checkCredentialsCallback() {
+    CredentialsValidationHelper.checkCredentials(() -> httpClient, NumbersService::callback);
   }
 
   @Test
-  void doNotAcceptNullProject() {
-    UnifiedCredentials credentials =
-        UnifiedCredentials.builder().setKeyId("foo").setKeySecret("foo").setProjectId(null).build();
-    Exception exception =
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> new NumbersService(credentials, context, httpClient));
-    assertTrue(exception.getMessage().contains("projectId"));
-  }
-
-  @Test
-  void doNotAcceptNullContext() {
-    UnifiedCredentials credentials =
-        UnifiedCredentials.builder()
-            .setKeyId("foo")
-            .setKeySecret("foo")
-            .setProjectId("foo")
-            .build();
-    Exception exception =
-        assertThrows(
-            NullPointerException.class, () -> new NumbersService(credentials, null, httpClient));
-    assertTrue(exception.getMessage().contains("Numbers service requires context to be defined"));
-  }
-
-  @Test
-  void doNotAcceptNullNumbersUrl() {
-    UnifiedCredentials credentials =
-        UnifiedCredentials.builder()
-            .setKeyId("foo")
-            .setKeySecret("foo")
-            .setProjectId("foo")
-            .build();
-    NumbersContext context = NumbersContext.builder().build();
-
-    Exception exception =
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> new NumbersService(credentials, context, httpClient));
-    assertTrue(exception.getMessage().contains("numbersUrl"));
+  void checkCredentialsWebhooks() {
+    assertDoesNotThrow(() -> new NumbersService(null, null, null).webhooks(), "Init passed");
   }
 }

@@ -335,7 +335,7 @@ public class SinchClient {
     return new com.sinch.sdk.domains.numbers.adapters.NumbersService(
         getConfiguration().getUnifiedCredentials().orElse(null),
         configuration.getNumbersContext().orElse(null),
-        getHttpClient());
+        this::getHttpClient);
   }
 
   private SMSService smsInit() {
