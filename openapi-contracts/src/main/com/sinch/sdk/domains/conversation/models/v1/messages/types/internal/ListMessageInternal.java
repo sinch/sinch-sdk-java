@@ -13,6 +13,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.types.internal;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.list.ListAdditionalProperties;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.list.ListSection;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessage;
 import java.util.List;
 
 /** List Message */
@@ -32,6 +33,13 @@ public interface ListMessageInternal {
    * @return description
    */
   String getDescription();
+
+  /**
+   * Get media
+   *
+   * @return media
+   */
+  MediaMessage getMedia();
 
   /**
    * List of ListSection objects containing choices to be presented in the list message.
@@ -76,6 +84,15 @@ public interface ListMessageInternal {
      * @see #getDescription
      */
     Builder setDescription(String description);
+
+    /**
+     * see getter
+     *
+     * @param media see getter
+     * @return Current builder
+     * @see #getMedia
+     */
+    Builder setMedia(MediaMessage media);
 
     /**
      * see getter

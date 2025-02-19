@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ListMessageInternal;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ListMessageInternalImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessage;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -79,6 +80,20 @@ public class ListMessageImpl
         ? listMessage
             .map(f -> ((ListMessageInternalImpl) f).description())
             .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
+  }
+
+  @JsonIgnore
+  public MediaMessage getMedia() {
+    if (null == listMessage || !listMessage.isPresent() || null == listMessage.get().getMedia()) {
+      return null;
+    }
+    return listMessage.get().getMedia();
+  }
+
+  public OptionalValue<MediaMessage> media() {
+    return null != listMessage && listMessage.isPresent()
+        ? listMessage.map(f -> ((ListMessageInternalImpl) f).media()).orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -176,6 +191,12 @@ public class ListMessageImpl
     @JsonIgnore
     public Builder setDescription(String description) {
       getDelegatedBuilder().setDescription(description);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setMedia(MediaMessage media) {
+      getDelegatedBuilder().setMedia(media);
       return this;
     }
 
