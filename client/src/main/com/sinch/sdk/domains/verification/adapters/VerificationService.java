@@ -6,6 +6,7 @@ import com.sinch.sdk.domains.verification.VerificationsService;
 import com.sinch.sdk.domains.verification.WebHooksService;
 import com.sinch.sdk.models.ApplicationCredentials;
 import com.sinch.sdk.models.VerificationContext;
+import java.util.function.Supplier;
 
 public class VerificationService implements com.sinch.sdk.domains.verification.VerificationService {
 
@@ -20,11 +21,13 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
   }
 
   public VerificationService(
-      ApplicationCredentials credentials, VerificationContext context, HttpClient httpClient) {
+      ApplicationCredentials credentials,
+      VerificationContext context,
+      Supplier<HttpClient> httpClientSupplier) {
 
     this.v1 =
         new com.sinch.sdk.domains.verification.api.v1.adapters.VerificationService(
-            credentials, context, httpClient);
+            credentials, context, httpClientSupplier);
   }
 
   public com.sinch.sdk.domains.verification.api.v1.VerificationService v1() {
