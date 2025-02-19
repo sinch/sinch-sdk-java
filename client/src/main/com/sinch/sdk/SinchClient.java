@@ -359,7 +359,7 @@ public class SinchClient {
     return new com.sinch.sdk.domains.verification.adapters.VerificationService(
         getConfiguration().getApplicationCredentials().orElse(null),
         getConfiguration().getVerificationContext().orElse(null),
-        getHttpClient());
+        this::getHttpClient);
   }
 
   private VoiceService voiceInit() {
