@@ -366,7 +366,7 @@ public class SinchClient {
     return new com.sinch.sdk.domains.voice.adapters.VoiceService(
         getConfiguration().getApplicationCredentials().orElse(null),
         getConfiguration().getVoiceContext().orElse(null),
-        getHttpClient());
+        this::getHttpClient);
   }
 
   private ConversationService conversationInit() {
