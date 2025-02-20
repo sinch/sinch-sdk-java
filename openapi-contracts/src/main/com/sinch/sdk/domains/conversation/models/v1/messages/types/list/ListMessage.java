@@ -11,9 +11,10 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages.types.list;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessage;
 import java.util.List;
 
-/** A message containing a list of options to choose from */
+/** A message containing a list of options to choose from. All items must be of the same type. */
 @JsonDeserialize(builder = ListMessageImpl.Builder.class)
 public interface ListMessage
     extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride,
@@ -32,6 +33,13 @@ public interface ListMessage
    * @return description
    */
   String getDescription();
+
+  /**
+   * Get media
+   *
+   * @return media
+   */
+  MediaMessage getMedia();
 
   /**
    * List of ListSection objects containing choices to be presented in the list message.
@@ -76,6 +84,15 @@ public interface ListMessage
      * @see #getDescription
      */
     Builder setDescription(String description);
+
+    /**
+     * see getter
+     *
+     * @param media see getter
+     * @return Current builder
+     * @see #getMedia
+     */
+    Builder setMedia(MediaMessage media);
 
     /**
      * see getter

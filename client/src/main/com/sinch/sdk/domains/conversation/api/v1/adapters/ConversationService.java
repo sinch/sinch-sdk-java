@@ -25,6 +25,7 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ChannelSpe
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ContactMessageInternalMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.carousel.CarouselMessageMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ChoiceMessageMapper;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ListMessageInternalMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.template.TemplateMessageMapper;
 import com.sinch.sdk.domains.conversation.templates.models.v2.TemplateTranslationMapper;
 import com.sinch.sdk.models.ConversationContext;
@@ -200,6 +201,7 @@ public class ConversationService
       ContactMessageMapper.initMapper();
       ContactMessageInternalMapper.initMapper();
       ConversationMessageMapper.initMapper();
+      ListMessageInternalMapper.initMapper();
       ListSectionMapper.initMapper();
       OmniMessageOverrideMapper.initMapper();
       RecipientMapper.initMapper();

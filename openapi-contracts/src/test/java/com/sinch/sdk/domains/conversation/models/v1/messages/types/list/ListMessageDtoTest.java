@@ -8,6 +8,7 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.ChoiceItem;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ChoiceItemDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ProductItem;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ProductItemDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessageDtoTest;
 import java.util.Collections;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
@@ -32,6 +33,7 @@ public class ListMessageDtoTest extends ConversationBaseTest {
                       .setTitle("a list section title value")
                       .setItems(Collections.singletonList(ChoiceItemDtoTest.choiceItemDto))
                       .build()))
+          .setMedia(MediaMessageDtoTest.mediaMessageDto)
           .build();
 
   public static ListMessage listMessageProductDto =
@@ -49,6 +51,7 @@ public class ListMessageDtoTest extends ConversationBaseTest {
                       .setTitle("a list section title value")
                       .setItems(Collections.singletonList(ProductItemDtoTest.productItemDto))
                       .build()))
+          .setMedia(MediaMessageDtoTest.mediaMessageDto)
           .build();
 
   @GivenTextResource("/domains/conversation/v1/messages/types/list/ListMessageChoiceDto.json")
