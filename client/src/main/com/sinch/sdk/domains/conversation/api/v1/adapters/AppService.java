@@ -23,7 +23,7 @@ public class AppService implements com.sinch.sdk.domains.conversation.api.v1.App
       HttpClient httpClient,
       Map<String, AuthManager> authManagers) {
     this.uriUUID = uriUUID;
-    this.api = new AppApi(httpClient, context.getServer(), authManagers, new HttpMapper());
+    this.api = new AppApi(httpClient, context.getServer(), authManagers, HttpMapper.getInstance());
   }
 
   protected AppApi getApi() {

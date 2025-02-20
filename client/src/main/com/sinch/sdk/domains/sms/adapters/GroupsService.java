@@ -35,7 +35,8 @@ public class GroupsService implements com.sinch.sdk.domains.sms.GroupsService {
       HttpClient httpClient,
       Map<String, AuthManager> authManagers) {
     this.uriUUID = uriUUID;
-    this.api = new GroupsApi(httpClient, context.getSmsServer(), authManagers, new HttpMapper());
+    this.api =
+        new GroupsApi(httpClient, context.getSmsServer(), authManagers, HttpMapper.getInstance());
   }
 
   public Group get(String groupId) throws ApiException {

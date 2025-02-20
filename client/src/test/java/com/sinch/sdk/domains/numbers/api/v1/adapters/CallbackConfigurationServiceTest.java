@@ -42,7 +42,7 @@ class CallbackConfigurationServiceTest extends BaseTest {
   @BeforeEach
   public void initMocks() {
     CallbackConfigurationService v1 =
-        new CallbackConfigurationService(uriUUID, context, httpClient, authManagers);
+        new CallbackConfigurationService(uriUUID, context, () -> httpClient, authManagers);
     service = spy(v1);
     doReturn(api).when(service).getApi();
   }

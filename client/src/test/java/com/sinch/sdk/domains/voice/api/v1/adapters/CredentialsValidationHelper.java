@@ -1,0 +1,116 @@
+package com.sinch.sdk.domains.voice.api.v1.adapters;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import com.sinch.sdk.core.http.HttpClient;
+import com.sinch.sdk.models.ApplicationCredentials;
+import com.sinch.sdk.models.VoiceContext;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
+class CredentialsValidationHelper {
+
+  static void checkCredentials(
+      Supplier<HttpClient> httpClientSupplier, Consumer<VoiceService> service) {
+
+    doNotAcceptNullApplicationCredentials(httpClientSupplier, service);
+    doNotAcceptNullApplicationKey(httpClientSupplier, service);
+    doNotAcceptNullApplicationSecret(httpClientSupplier, service);
+    doNotAcceptNullContext(httpClientSupplier, service);
+    doNotAcceptNullVerificationUrl(httpClientSupplier, service);
+    passInit(httpClientSupplier, service);
+  }
+
+  static void doNotAcceptNullApplicationCredentials(
+      Supplier<HttpClient> httpClientSupplier, Consumer<VoiceService> service) {
+
+    VoiceContext context = VoiceContext.builder().setVoiceUrl("foo url").build();
+    Exception exception =
+        assertThrows(
+            NullPointerException.class,
+            () -> service.accept(new VoiceService(null, context, httpClientSupplier)));
+
+    assertTrue(
+        exception
+            .getMessage()
+            .contains("Voice service requires application credentials to be defined"));
+  }
+
+  static void doNotAcceptNullApplicationKey(
+      Supplier<HttpClient> httpClientSupplier, Consumer<VoiceService> service) {
+    VoiceContext context = VoiceContext.builder().setVoiceUrl("foo url").build();
+    ApplicationCredentials credentials =
+        ApplicationCredentials.builder()
+            .setApplicationKey(null)
+            .setApplicationSecret("foo secret")
+            .build();
+
+    Exception exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> service.accept(new VoiceService(credentials, context, httpClientSupplier)));
+
+    assertTrue(exception.getMessage().contains("applicationKey"));
+  }
+
+  static void doNotAcceptNullApplicationSecret(
+      Supplier<HttpClient> httpClientSupplier, Consumer<VoiceService> service) {
+    VoiceContext context = VoiceContext.builder().setVoiceUrl("foo url").build();
+    ApplicationCredentials credentials =
+        ApplicationCredentials.builder()
+            .setApplicationKey("foo key")
+            .setApplicationSecret(null)
+            .build();
+
+    Exception exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> service.accept(new VoiceService(credentials, context, httpClientSupplier)));
+
+    assertTrue(exception.getMessage().contains("applicationSecret"));
+  }
+
+  static void doNotAcceptNullContext(
+      Supplier<HttpClient> httpClientSupplier, Consumer<VoiceService> service) {
+    ApplicationCredentials credentials =
+        ApplicationCredentials.builder()
+            .setApplicationKey("foo key")
+            .setApplicationSecret("foo secret")
+            .build();
+    Exception exception =
+        assertThrows(
+            NullPointerException.class,
+            () -> service.accept(new VoiceService(credentials, null, httpClientSupplier)));
+    assertTrue(exception.getMessage().contains("Voice service requires context to be defined"));
+  }
+
+  static void doNotAcceptNullVerificationUrl(
+      Supplier<HttpClient> httpClientSupplier, Consumer<VoiceService> service) {
+    ApplicationCredentials credentials =
+        ApplicationCredentials.builder()
+            .setApplicationKey("foo key")
+            .setApplicationSecret("foo secret")
+            .build();
+    VoiceContext context = VoiceContext.builder().build();
+    Exception exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> service.accept(new VoiceService(credentials, context, httpClientSupplier)));
+    assertTrue(exception.getMessage().contains("verificationUrl"));
+  }
+
+  static void passInit(Supplier<HttpClient> httpClientSupplier, Consumer<VoiceService> service) {
+    VoiceContext context = VoiceContext.builder().setVoiceUrl("foo url").build();
+    ApplicationCredentials credentials =
+        ApplicationCredentials.builder()
+            .setApplicationKey("foo key")
+            .setApplicationSecret("Zm9vIHNlY3JldA==")
+            .build();
+
+    assertDoesNotThrow(
+        () -> service.accept(new VoiceService(credentials, context, httpClientSupplier)),
+        "Init passed");
+  }
+}

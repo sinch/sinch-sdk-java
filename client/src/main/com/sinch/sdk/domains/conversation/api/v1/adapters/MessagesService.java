@@ -47,7 +47,8 @@ public class MessagesService implements com.sinch.sdk.domains.conversation.api.v
       HttpClient httpClient,
       Map<String, AuthManager> authManagers) {
     this.uriUUID = uriUUID;
-    this.api = new MessagesApi(httpClient, context.getServer(), authManagers, new HttpMapper());
+    this.api =
+        new MessagesApi(httpClient, context.getServer(), authManagers, HttpMapper.getInstance());
   }
 
   protected MessagesApi getApi() {

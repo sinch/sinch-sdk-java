@@ -6,7 +6,7 @@ package com.sinch.sdk.models;
  * @see <a href="https://dashboard.sinch.com/sms/api/services">Dashboard</a>
  * @since 1.0
  */
-public class SmsServicePlanCredentials {
+public class SmsServicePlanCredentials implements Credentials {
 
   private final String servicePlanId;
   private final String apiToken;

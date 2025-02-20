@@ -2,7 +2,6 @@ package com.sinch.sdk.domains.voice.api.v1.adapters;
 
 import com.sinch.sdk.auth.adapters.ApplicationAuthManager;
 import com.sinch.sdk.auth.adapters.BasicAuthManager;
-import com.sinch.sdk.core.exceptions.ApiAuthException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.utils.StringUtil;
@@ -13,6 +12,7 @@ import com.sinch.sdk.models.VoiceContext;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
+import java.util.function.Supplier;
 import java.util.logging.Logger;
 
 public class VoiceService implements com.sinch.sdk.domains.voice.api.v1.VoiceService {
@@ -24,40 +24,33 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v1.VoiceSer
 
   private static final String APPLICATION_SECURITY_SCHEME_KEYWORD = "Application";
 
+  private final ApplicationCredentials credentials;
   private final VoiceContext context;
-  private final HttpClient httpClient;
-  private CalloutsService callouts;
-  private ConferencesService conferences;
-  private CallsService calls;
-  private ApplicationsService applications;
-  private WebHooksService webhooks;
+  private final Supplier<HttpClient> httpClientSupplier;
+  private volatile CalloutsService callouts;
+  private volatile ConferencesService conferences;
+  private volatile CallsService calls;
+  private volatile ApplicationsService applications;
+  private volatile WebHooksService webhooks;
 
-  private Map<String, AuthManager> clientAuthManagers;
-  private Map<String, AuthManager> webhooksAuthManagers;
+  private volatile Map<String, AuthManager> clientAuthManagers;
+  private volatile Map<String, AuthManager> webhooksAuthManagers;
 
   static {
     LocalLazyInit.init();
   }
 
   public VoiceService(
-      ApplicationCredentials credentials, VoiceContext context, HttpClient httpClient) {
+      ApplicationCredentials credentials,
+      VoiceContext context,
+      Supplier<HttpClient> httpClientSupplier) {
 
-    // Currently, we are not supporting unified credentials: ensure application credentials are
-    // defined
-    Objects.requireNonNull(credentials, "Credentials must be defined");
-    Objects.requireNonNull(context, "Context must be defined");
-    StringUtil.requireNonEmpty(credentials.getApplicationKey(), "'applicationKey' must be defined");
-    StringUtil.requireNonEmpty(
-        credentials.getApplicationSecret(), "'applicationSecret' must be defined");
-
-    LOGGER.fine("Activate voice API with server='" + context.getVoiceServer().getUrl() + "'");
-
+    this.credentials = credentials;
     this.context = context;
-    this.httpClient = httpClient;
-    setApplicationCredentials(credentials);
+    this.httpClientSupplier = httpClientSupplier;
   }
 
-  private void setApplicationCredentials(ApplicationCredentials credentials) {
+  private void createAuthManagers(ApplicationCredentials credentials) {
 
     AuthManager basicAuthManager =
         new BasicAuthManager(credentials.getApplicationKey(), credentials.getApplicationSecret());
@@ -77,53 +70,72 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v1.VoiceSer
 
   public CalloutsService callouts() {
     if (null == this.callouts) {
-      checkCredentials();
-      this.callouts = new CalloutsService(context, httpClient, clientAuthManagers);
+      instanceLazyInit();
+      this.callouts = new CalloutsService(context, httpClientSupplier.get(), clientAuthManagers);
     }
     return this.callouts;
   }
 
   public ConferencesService conferences() {
     if (null == this.conferences) {
-      checkCredentials();
+      instanceLazyInit();
       this.conferences =
-          new ConferencesService(context, httpClient, clientAuthManagers, this.callouts());
+          new ConferencesService(
+              context, httpClientSupplier.get(), clientAuthManagers, this.callouts());
     }
     return this.conferences;
   }
 
   public CallsService calls() {
     if (null == this.calls) {
-      checkCredentials();
-      this.calls = new CallsService(context, httpClient, clientAuthManagers);
+      instanceLazyInit();
+      this.calls = new CallsService(context, httpClientSupplier.get(), clientAuthManagers);
     }
     return this.calls;
   }
 
   public ApplicationsService applications() {
     if (null == this.applications) {
-      checkCredentials();
+      instanceLazyInit();
       this.applications =
           new com.sinch.sdk.domains.voice.api.v1.adapters.ApplicationsService(
-              context, httpClient, clientAuthManagers);
+              context, httpClientSupplier.get(), clientAuthManagers);
     }
     return this.applications;
   }
 
   public WebHooksService webhooks() {
-    checkCredentials();
     if (null == this.webhooks) {
+      instanceLazyInit();
       this.webhooks = new WebHooksService(webhooksAuthManagers);
     }
     return this.webhooks;
   }
 
-  private void checkCredentials() throws ApiAuthException {
-    if (null == clientAuthManagers || clientAuthManagers.isEmpty()) {
-      throw new ApiAuthException(
-          String.format(
-              "Service '%s' cannot be called without defined credentials",
-              this.getClass().getSimpleName()));
+  private void instanceLazyInit() {
+    if (null != this.clientAuthManagers && null != this.webhooksAuthManagers) {
+      return;
+    }
+    synchronized (this) {
+      if (null == this.clientAuthManagers || null == this.webhooksAuthManagers) {
+
+        // Currently, we are not supporting unified credentials: ensure application credentials are
+        // defined
+        Objects.requireNonNull(
+            credentials, "Voice service requires application credentials to be defined");
+        Objects.requireNonNull(context, "Voice service requires context to be defined");
+        StringUtil.requireNonEmpty(
+            credentials.getApplicationKey(),
+            "Voice service requires 'applicationKey' to be defined");
+        StringUtil.requireNonEmpty(
+            credentials.getApplicationSecret(),
+            "Voice service requires 'applicationSecret' to be defined");
+        StringUtil.requireNonEmpty(
+            context.getVoiceUrl(), "Voice service requires 'verificationUrl' to be defined");
+
+        LOGGER.fine("Activate voice API with server='" + context.getVoiceServer().getUrl() + "'");
+        createAuthManagers(credentials);
+      }
     }
   }
 

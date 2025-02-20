@@ -25,7 +25,8 @@ public class CalloutsService implements com.sinch.sdk.domains.voice.api.v1.Callo
   public CalloutsService(
       VoiceContext context, HttpClient httpClient, Map<String, AuthManager> authManagers) {
     this.api =
-        new CalloutsApi(httpClient, context.getVoiceServer(), authManagers, new HttpMapper());
+        new CalloutsApi(
+            httpClient, context.getVoiceServer(), authManagers, HttpMapper.getInstance());
   }
 
   protected CalloutsApi getApi() {

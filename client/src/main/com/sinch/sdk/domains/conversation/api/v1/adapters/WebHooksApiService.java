@@ -1,17 +1,13 @@
 package com.sinch.sdk.domains.conversation.api.v1.adapters;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.sinch.sdk.auth.HmacAuthenticationValidation;
 import com.sinch.sdk.core.exceptions.ApiMappingException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
-import com.sinch.sdk.core.utils.databind.Mapper;
 import com.sinch.sdk.domains.conversation.api.v1.internal.WebhooksApi;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.Webhook;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.WebhookImpl;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.ConversationWebhookEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.internal.ConversationEventInternalImpl;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.internal.CreateWebhookRequestInternal;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.response.ListWebhooksResponse;
 import com.sinch.sdk.models.ConversationContext;
@@ -21,22 +17,20 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class WebHooksService implements com.sinch.sdk.domains.conversation.api.v1.WebHooksService {
-
-  private final HmacAuthenticationValidation authenticationChecker;
+public class WebHooksApiService
+    implements com.sinch.sdk.domains.conversation.api.v1.WebHooksService {
 
   private final String uriUUID;
   private final WebhooksApi api;
 
-  public WebHooksService(
+  public WebHooksApiService(
       String uriUUID,
       ConversationContext context,
       HttpClient httpClient,
-      Map<String, AuthManager> authManagers,
-      HmacAuthenticationValidation authenticationChecker) {
-    this.authenticationChecker = authenticationChecker;
+      Map<String, AuthManager> authManagers) {
     this.uriUUID = uriUUID;
-    this.api = new WebhooksApi(httpClient, context.getServer(), authManagers, new HttpMapper());
+    this.api =
+        new WebhooksApi(httpClient, context.getServer(), authManagers, HttpMapper.getInstance());
   }
 
   protected WebhooksApi getApi() {
@@ -95,18 +89,11 @@ public class WebHooksService implements com.sinch.sdk.domains.conversation.api.v
 
   public boolean validateAuthenticationHeader(
       String secret, Map<String, String> headers, String jsonPayload) {
-
-    return authenticationChecker.validateAuthenticationHeader(secret, headers, jsonPayload);
+    throw new UnsupportedOperationException();
   }
 
   @Override
   public ConversationWebhookEvent parseEvent(String jsonPayload) throws ApiMappingException {
-    try {
-      ConversationEventInternalImpl dto =
-          Mapper.getInstance().readValue(jsonPayload, ConversationEventInternalImpl.class);
-      return (ConversationWebhookEvent) dto.getActualInstance();
-    } catch (JsonProcessingException e) {
-      throw new ApiMappingException(jsonPayload, e);
-    }
+    throw new UnsupportedOperationException();
   }
 }

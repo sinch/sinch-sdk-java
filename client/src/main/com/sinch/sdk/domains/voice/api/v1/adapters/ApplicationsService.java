@@ -23,7 +23,7 @@ public class ApplicationsService implements com.sinch.sdk.domains.voice.api.v1.A
             httpClient,
             context.getVoiceApplicationManagementServer(),
             authManagers,
-            new HttpMapper());
+            HttpMapper.getInstance());
   }
 
   protected ApplicationsApi getApi() {

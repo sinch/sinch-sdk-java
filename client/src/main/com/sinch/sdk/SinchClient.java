@@ -73,24 +73,38 @@ public class SinchClient {
    */
   public SinchClient(Configuration configuration) {
 
-    Configuration.Builder builder = Configuration.builder(configuration);
+    Configuration configurationGuard =
+        null != configuration ? configuration : Configuration.builder().build();
+
+    Configuration.Builder builder = Configuration.builder(configurationGuard);
     Properties props = handlePropertiesFile(DEFAULT_PROPERTIES_FILE_NAME);
 
-    if (null == configuration.getOAuthUrl() && props.containsKey(OAUTH_URL_KEY)) {
+    if (null == configurationGuard.getOAuthUrl() && props.containsKey(OAUTH_URL_KEY)) {
       builder.setOAuthUrl(props.getProperty(OAUTH_URL_KEY));
     }
 
-    handleDefaultNumbersSettings(configuration, props, builder);
-    handleDefaultSmsSettings(configuration, props, builder);
-    handleDefaultVerificationSettings(configuration, props, builder);
-    handleDefaultVoiceSettings(configuration, props, builder);
-    handleDefaultConversationSettings(configuration, props, builder);
+    handleDefaultNumbersSettings(configurationGuard, props, builder);
+    handleDefaultSmsSettings(configurationGuard, props, builder);
+    handleDefaultVerificationSettings(configurationGuard, props, builder);
+    handleDefaultVoiceSettings(configurationGuard, props, builder);
+    handleDefaultConversationSettings(configurationGuard, props, builder);
 
     Configuration newConfiguration = builder.build();
     checkConfiguration(newConfiguration);
     this.configuration = newConfiguration;
 
     LOGGER.fine(String.format("%s (%s) started", SDK.NAME, SDK.VERSION));
+  }
+
+  /**
+   * Create a Sinch Client instance without any dedicated configuration
+   *
+   * <p>Can be used to address webhooks feature not requiring credentials
+   *
+   * @since __TO_BE_DEFINED__
+   */
+  public SinchClient() {
+    this(null);
   }
 
   private void handleDefaultNumbersSettings(
@@ -321,7 +335,7 @@ public class SinchClient {
     return new com.sinch.sdk.domains.numbers.adapters.NumbersService(
         getConfiguration().getUnifiedCredentials().orElse(null),
         configuration.getNumbersContext().orElse(null),
-        getHttpClient());
+        this::getHttpClient);
   }
 
   private SMSService smsInit() {
@@ -331,28 +345,28 @@ public class SinchClient {
         .map(
             f ->
                 new com.sinch.sdk.domains.sms.adapters.SMSService(
-                    f, getConfiguration().getSmsContext().orElse(null), getHttpClient()))
+                    f, getConfiguration().getSmsContext().orElse(null), this::getHttpClient))
         .orElseGet(
             () ->
                 new com.sinch.sdk.domains.sms.adapters.SMSService(
                     getConfiguration().getUnifiedCredentials().orElse(null),
                     getConfiguration().getSmsContext().orElse(null),
                     configuration.getOAuthServer(),
-                    getHttpClient()));
+                    this::getHttpClient));
   }
 
   private VerificationService verificationInit() {
     return new com.sinch.sdk.domains.verification.adapters.VerificationService(
         getConfiguration().getApplicationCredentials().orElse(null),
         getConfiguration().getVerificationContext().orElse(null),
-        getHttpClient());
+        this::getHttpClient);
   }
 
   private VoiceService voiceInit() {
     return new com.sinch.sdk.domains.voice.adapters.VoiceService(
         getConfiguration().getApplicationCredentials().orElse(null),
         getConfiguration().getVoiceContext().orElse(null),
-        getHttpClient());
+        this::getHttpClient);
   }
 
   private ConversationService conversationInit() {
@@ -360,7 +374,7 @@ public class SinchClient {
         getConfiguration().getUnifiedCredentials().orElse(null),
         getConfiguration().getConversationContext().orElse(null),
         getConfiguration().getOAuthServer(),
-        getHttpClient());
+        this::getHttpClient);
   }
 
   private Properties handlePropertiesFile(String fileName) {

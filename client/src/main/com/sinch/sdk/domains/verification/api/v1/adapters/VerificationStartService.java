@@ -29,7 +29,7 @@ public class VerificationStartService
       VerificationContext context, HttpClient httpClient, Map<String, AuthManager> authManagers) {
     this.api =
         new VerificationsStartApi(
-            httpClient, context.getVerificationServer(), authManagers, new HttpMapper());
+            httpClient, context.getVerificationServer(), authManagers, HttpMapper.getInstance());
   }
 
   protected VerificationsStartApi getApi() {
