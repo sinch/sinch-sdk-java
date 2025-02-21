@@ -170,6 +170,11 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Batc
       throw new ApiException(
           400, "Missing the required parameter 'this.servicePlanId' when calling dryRun");
     }
+    // verify the required parameter 'sendRequest' is set
+    if (sendRequest == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'sendRequest' when calling dryRun");
+    }
 
     String localVarPath =
         "/xms/v1/{service_plan_id}/batches/dry_run"
@@ -343,7 +348,7 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Batc
           true);
 
       URLParameterUtils.addQueryParam(
-          queryParameter.getFrom(), "from", URLParameter.form, null, localVarQueryParams, true);
+          queryParameter.getFrom(), "from", URLParameter.form, null, localVarQueryParams, false);
 
       URLParameterUtils.addQueryParam(
           queryParameter.getStartDate(),
@@ -421,6 +426,11 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Batc
     // verify the required parameter 'batchId' is set
     if (batchId == null) {
       throw new ApiException(400, "Missing the required parameter 'batchId' when calling replace");
+    }
+    // verify the required parameter 'sendRequest' is set
+    if (sendRequest == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'sendRequest' when calling replace");
     }
 
     String localVarPath =
@@ -630,6 +640,11 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Batc
     // verify the required parameter 'batchId' is set
     if (batchId == null) {
       throw new ApiException(400, "Missing the required parameter 'batchId' when calling update");
+    }
+    // verify the required parameter 'updateBatchRequest' is set
+    if (updateBatchRequest == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'updateBatchRequest' when calling update");
     }
 
     String localVarPath =

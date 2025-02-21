@@ -7,46 +7,85 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.core.utils.EnumDynamic;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  MediaMessageBodyDetailsImpl.JSON_PROPERTY_URL,
+  MediaMessageBodyDetailsImpl.JSON_PROPERTY_CODE,
   MediaMessageBodyDetailsImpl.JSON_PROPERTY_CONTENT_TYPE,
   MediaMessageBodyDetailsImpl.JSON_PROPERTY_STATUS,
-  MediaMessageBodyDetailsImpl.JSON_PROPERTY_CODE
+  MediaMessageBodyDetailsImpl.JSON_PROPERTY_URL
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class MediaMessageBodyDetailsImpl implements MediaMessageBodyDetails {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_URL = "url";
+  public static final String JSON_PROPERTY_CODE = "code";
 
-  private OptionalValue<String> url;
+  private OptionalValue<Integer> code;
 
-  public static final String JSON_PROPERTY_CONTENT_TYPE = "contentType";
+  public static final String JSON_PROPERTY_CONTENT_TYPE = "content_type";
 
   private OptionalValue<String> contentType;
 
   public static final String JSON_PROPERTY_STATUS = "status";
 
-  private OptionalValue<String> status;
+  private OptionalValue<StatusEnum> StatusEnum;
 
-  public static final String JSON_PROPERTY_CODE = "code";
+  public static final String JSON_PROPERTY_URL = "url";
 
-  private OptionalValue<Integer> code;
+  private OptionalValue<String> url;
 
   public MediaMessageBodyDetailsImpl() {}
 
   protected MediaMessageBodyDetailsImpl(
-      OptionalValue<String> url,
+      OptionalValue<Integer> code,
       OptionalValue<String> contentType,
-      OptionalValue<String> status,
-      OptionalValue<Integer> code) {
-    this.url = url;
-    this.contentType = contentType;
-    this.status = status;
+      OptionalValue<StatusEnum> StatusEnum,
+      OptionalValue<String> url) {
     this.code = code;
+    this.contentType = contentType;
+    this.StatusEnum = StatusEnum;
+    this.url = url;
+  }
+
+  @JsonIgnore
+  public String getStatus() {
+    return statusEnum().map(EnumDynamic::value).orElse(null);
+  }
+
+  @JsonIgnore
+  public Integer getCode() {
+    return code.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CODE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<Integer> code() {
+    return code;
+  }
+
+  @JsonIgnore
+  public String getContentType() {
+    return contentType.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CONTENT_TYPE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<String> contentType() {
+    return contentType;
+  }
+
+  @JsonIgnore
+  public StatusEnum getStatusEnum() {
+    return StatusEnum.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_STATUS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<StatusEnum> statusEnum() {
+    return StatusEnum;
   }
 
   @JsonIgnore
@@ -60,40 +99,7 @@ public class MediaMessageBodyDetailsImpl implements MediaMessageBodyDetails {
     return url;
   }
 
-  @JsonIgnore
-  public String getContentType() {
-    return contentType.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_CONTENT_TYPE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> contentType() {
-    return contentType;
-  }
-
-  @JsonIgnore
-  public String getStatus() {
-    return status.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_STATUS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> status() {
-    return status;
-  }
-
-  @JsonIgnore
-  public Integer getCode() {
-    return code.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_CODE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<Integer> code() {
-    return code;
-  }
-
-  /** Return true if this MOMediaBody_media_inner object is equal to o. */
+  /** Return true if this MmsMedia object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -102,26 +108,26 @@ public class MediaMessageBodyDetailsImpl implements MediaMessageBodyDetails {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    MediaMessageBodyDetailsImpl moMediaBodyMediaInner = (MediaMessageBodyDetailsImpl) o;
-    return Objects.equals(this.url, moMediaBodyMediaInner.url)
-        && Objects.equals(this.contentType, moMediaBodyMediaInner.contentType)
-        && Objects.equals(this.status, moMediaBodyMediaInner.status)
-        && Objects.equals(this.code, moMediaBodyMediaInner.code);
+    MediaMessageBodyDetailsImpl mmsMedia = (MediaMessageBodyDetailsImpl) o;
+    return Objects.equals(this.code, mmsMedia.code)
+        && Objects.equals(this.contentType, mmsMedia.contentType)
+        && Objects.equals(this.StatusEnum, mmsMedia.StatusEnum)
+        && Objects.equals(this.url, mmsMedia.url);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(url, contentType, status, code);
+    return Objects.hash(code, contentType, StatusEnum, url);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class MediaMessageBodyDetailsImpl {\n");
-    sb.append("    url: ").append(toIndentedString(url)).append("\n");
-    sb.append("    contentType: ").append(toIndentedString(contentType)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
+    sb.append("    contentType: ").append(toIndentedString(contentType)).append("\n");
+    sb.append("    StatusEnum: ").append(toIndentedString(StatusEnum)).append("\n");
+    sb.append("    url: ").append(toIndentedString(url)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -138,14 +144,19 @@ public class MediaMessageBodyDetailsImpl implements MediaMessageBodyDetails {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements MediaMessageBodyDetails.Builder {
-    OptionalValue<String> url = OptionalValue.empty();
-    OptionalValue<String> contentType = OptionalValue.empty();
-    OptionalValue<String> status = OptionalValue.empty();
     OptionalValue<Integer> code = OptionalValue.empty();
+    OptionalValue<String> contentType = OptionalValue.empty();
+    OptionalValue<StatusEnum> StatusEnum = OptionalValue.empty();
+    OptionalValue<String> url = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_URL)
-    public Builder setUrl(String url) {
-      this.url = OptionalValue.of(url);
+    public Builder setStatus(String status) {
+      setStatusEnum(MediaMessageBodyDetails.StatusEnum.from(status));
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_CODE)
+    public Builder setCode(Integer code) {
+      this.code = OptionalValue.of(code);
       return this;
     }
 
@@ -156,19 +167,19 @@ public class MediaMessageBodyDetailsImpl implements MediaMessageBodyDetails {
     }
 
     @JsonProperty(JSON_PROPERTY_STATUS)
-    public Builder setStatus(String status) {
-      this.status = OptionalValue.of(status);
+    public Builder setStatusEnum(StatusEnum StatusEnum) {
+      this.StatusEnum = OptionalValue.of(StatusEnum);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_CODE)
-    public Builder setCode(Integer code) {
-      this.code = OptionalValue.of(code);
+    @JsonProperty(JSON_PROPERTY_URL)
+    public Builder setUrl(String url) {
+      this.url = OptionalValue.of(url);
       return this;
     }
 
     public MediaMessageBodyDetails build() {
-      return new MediaMessageBodyDetailsImpl(url, contentType, status, code);
+      return new MediaMessageBodyDetailsImpl(code, contentType, StatusEnum, url);
     }
   }
 }

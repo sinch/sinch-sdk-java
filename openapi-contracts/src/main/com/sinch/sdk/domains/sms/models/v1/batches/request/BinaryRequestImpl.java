@@ -258,7 +258,7 @@ public class BinaryRequestImpl implements BinaryRequest, BatchRequest {
     return fromNpi;
   }
 
-  /** Return true if this BinaryRequest object is equal to o. */
+  /** Return true if this Binary object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -267,20 +267,20 @@ public class BinaryRequestImpl implements BinaryRequest, BatchRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BinaryRequestImpl binaryRequest = (BinaryRequestImpl) o;
-    return Objects.equals(this.to, binaryRequest.to)
-        && Objects.equals(this.from, binaryRequest.from)
-        && Objects.equals(this.body, binaryRequest.body)
-        && Objects.equals(this.udh, binaryRequest.udh)
-        && Objects.equals(this.type, binaryRequest.type)
-        && Objects.equals(this.deliveryReport, binaryRequest.deliveryReport)
-        && Objects.equals(this.sendAt, binaryRequest.sendAt)
-        && Objects.equals(this.expireAt, binaryRequest.expireAt)
-        && Objects.equals(this.callbackUrl, binaryRequest.callbackUrl)
-        && Objects.equals(this.clientReference, binaryRequest.clientReference)
-        && Objects.equals(this.feedbackEnabled, binaryRequest.feedbackEnabled)
-        && Objects.equals(this.fromTon, binaryRequest.fromTon)
-        && Objects.equals(this.fromNpi, binaryRequest.fromNpi);
+    BinaryRequestImpl binary = (BinaryRequestImpl) o;
+    return Objects.equals(this.to, binary.to)
+        && Objects.equals(this.from, binary.from)
+        && Objects.equals(this.body, binary.body)
+        && Objects.equals(this.udh, binary.udh)
+        && Objects.equals(this.type, binary.type)
+        && Objects.equals(this.deliveryReport, binary.deliveryReport)
+        && Objects.equals(this.sendAt, binary.sendAt)
+        && Objects.equals(this.expireAt, binary.expireAt)
+        && Objects.equals(this.callbackUrl, binary.callbackUrl)
+        && Objects.equals(this.clientReference, binary.clientReference)
+        && Objects.equals(this.feedbackEnabled, binary.feedbackEnabled)
+        && Objects.equals(this.fromTon, binary.fromTon)
+        && Objects.equals(this.fromNpi, binary.fromNpi);
   }
 
   @Override

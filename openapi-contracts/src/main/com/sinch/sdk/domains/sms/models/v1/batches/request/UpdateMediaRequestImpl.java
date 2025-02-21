@@ -260,7 +260,7 @@ public class UpdateMediaRequestImpl implements UpdateMediaRequest, UpdateBatchRe
     return strictValidation;
   }
 
-  /** Return true if this ApiUpdateMmsMtMessage object is equal to o. */
+  /** Return true if this update_media_message object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -269,20 +269,20 @@ public class UpdateMediaRequestImpl implements UpdateMediaRequest, UpdateBatchRe
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UpdateMediaRequestImpl apiUpdateMmsMtMessage = (UpdateMediaRequestImpl) o;
-    return Objects.equals(this.from, apiUpdateMmsMtMessage.from)
-        && Objects.equals(this.type, apiUpdateMmsMtMessage.type)
-        && Objects.equals(this.toAdd, apiUpdateMmsMtMessage.toAdd)
-        && Objects.equals(this.toRemove, apiUpdateMmsMtMessage.toRemove)
-        && Objects.equals(this.deliveryReport, apiUpdateMmsMtMessage.deliveryReport)
-        && Objects.equals(this.sendAt, apiUpdateMmsMtMessage.sendAt)
-        && Objects.equals(this.expireAt, apiUpdateMmsMtMessage.expireAt)
-        && Objects.equals(this.callbackUrl, apiUpdateMmsMtMessage.callbackUrl)
-        && Objects.equals(this.clientReference, apiUpdateMmsMtMessage.clientReference)
-        && Objects.equals(this.feedbackEnabled, apiUpdateMmsMtMessage.feedbackEnabled)
-        && Objects.equals(this.body, apiUpdateMmsMtMessage.body)
-        && Objects.equals(this.parameters, apiUpdateMmsMtMessage.parameters)
-        && Objects.equals(this.strictValidation, apiUpdateMmsMtMessage.strictValidation);
+    UpdateMediaRequestImpl updateMediaMessage = (UpdateMediaRequestImpl) o;
+    return Objects.equals(this.from, updateMediaMessage.from)
+        && Objects.equals(this.type, updateMediaMessage.type)
+        && Objects.equals(this.toAdd, updateMediaMessage.toAdd)
+        && Objects.equals(this.toRemove, updateMediaMessage.toRemove)
+        && Objects.equals(this.deliveryReport, updateMediaMessage.deliveryReport)
+        && Objects.equals(this.sendAt, updateMediaMessage.sendAt)
+        && Objects.equals(this.expireAt, updateMediaMessage.expireAt)
+        && Objects.equals(this.callbackUrl, updateMediaMessage.callbackUrl)
+        && Objects.equals(this.clientReference, updateMediaMessage.clientReference)
+        && Objects.equals(this.feedbackEnabled, updateMediaMessage.feedbackEnabled)
+        && Objects.equals(this.body, updateMediaMessage.body)
+        && Objects.equals(this.parameters, updateMediaMessage.parameters)
+        && Objects.equals(this.strictValidation, updateMediaMessage.strictValidation);
   }
 
   @Override

@@ -32,7 +32,7 @@ public interface MediaMessageBody {
   String getMessage();
 
   /**
-   * Get media
+   * Collection of attachments in incoming message.
    *
    * @return media
    */

@@ -11,7 +11,6 @@
 package com.sinch.sdk.domains.sms.api.v1.adapters;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.sinch.sdk.core.databind.query_parameter.CollectionStringToCommaSerializer;
 import com.sinch.sdk.core.databind.query_parameter.InstantToIso8601Serializer;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.exceptions.ApiExceptionBuilder;
@@ -128,12 +127,7 @@ public class InboundsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Inb
           true);
 
       URLParameterUtils.addQueryParam(
-          queryParameter.getTo(),
-          "to",
-          URLParameter.form,
-          CollectionStringToCommaSerializer.getInstance(),
-          localVarQueryParams,
-          true);
+          queryParameter.getTo(), "to", URLParameter.form, null, localVarQueryParams, false);
 
       URLParameterUtils.addQueryParam(
           queryParameter.getStartDate(),
