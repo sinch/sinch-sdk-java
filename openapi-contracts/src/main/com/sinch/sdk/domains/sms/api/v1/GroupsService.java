@@ -31,7 +31,7 @@ public interface GroupsService {
    * your account manager**.) The &#x60;add&#x60; and &#x60;remove&#x60; fields are objects
    * containing the keywords that customers need to text to join or leave a group.
    *
-   * @param groupRequest (optional)
+   * @param groupRequest (required)
    * @return Group
    * @throws ApiException if fails to make API call
    */
@@ -110,7 +110,7 @@ public interface GroupsService {
    * the batch is sent.
    *
    * @param groupId ID of a group that you are interested in getting. (required)
-   * @param groupUpdateRequest (optional)
+   * @param groupUpdateRequest (required)
    * @return Group
    * @throws ApiException if fails to make API call
    */

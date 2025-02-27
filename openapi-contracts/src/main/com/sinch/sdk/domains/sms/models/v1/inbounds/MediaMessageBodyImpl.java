@@ -76,7 +76,7 @@ public class MediaMessageBodyImpl implements MediaMessageBody {
     return media;
   }
 
-  /** Return true if this MOMediaBody object is equal to o. */
+  /** Return true if this MmsMoBody object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -85,10 +85,10 @@ public class MediaMessageBodyImpl implements MediaMessageBody {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    MediaMessageBodyImpl moMediaBody = (MediaMessageBodyImpl) o;
-    return Objects.equals(this.subject, moMediaBody.subject)
-        && Objects.equals(this.message, moMediaBody.message)
-        && Objects.equals(this.media, moMediaBody.media);
+    MediaMessageBodyImpl mmsMoBody = (MediaMessageBodyImpl) o;
+    return Objects.equals(this.subject, mmsMoBody.subject)
+        && Objects.equals(this.message, mmsMoBody.message)
+        && Objects.equals(this.media, mmsMoBody.media);
   }
 
   @Override

@@ -242,7 +242,7 @@ public class MediaRequestImpl implements MediaRequest, BatchRequest {
     return strictValidation;
   }
 
-  /** Return true if this MediaRequest object is equal to o. */
+  /** Return true if this Media object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -251,19 +251,19 @@ public class MediaRequestImpl implements MediaRequest, BatchRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    MediaRequestImpl mediaRequest = (MediaRequestImpl) o;
-    return Objects.equals(this.to, mediaRequest.to)
-        && Objects.equals(this.from, mediaRequest.from)
-        && Objects.equals(this.body, mediaRequest.body)
-        && Objects.equals(this.parameters, mediaRequest.parameters)
-        && Objects.equals(this.type, mediaRequest.type)
-        && Objects.equals(this.deliveryReport, mediaRequest.deliveryReport)
-        && Objects.equals(this.sendAt, mediaRequest.sendAt)
-        && Objects.equals(this.expireAt, mediaRequest.expireAt)
-        && Objects.equals(this.callbackUrl, mediaRequest.callbackUrl)
-        && Objects.equals(this.clientReference, mediaRequest.clientReference)
-        && Objects.equals(this.feedbackEnabled, mediaRequest.feedbackEnabled)
-        && Objects.equals(this.strictValidation, mediaRequest.strictValidation);
+    MediaRequestImpl media = (MediaRequestImpl) o;
+    return Objects.equals(this.to, media.to)
+        && Objects.equals(this.from, media.from)
+        && Objects.equals(this.body, media.body)
+        && Objects.equals(this.parameters, media.parameters)
+        && Objects.equals(this.type, media.type)
+        && Objects.equals(this.deliveryReport, media.deliveryReport)
+        && Objects.equals(this.sendAt, media.sendAt)
+        && Objects.equals(this.expireAt, media.expireAt)
+        && Objects.equals(this.callbackUrl, media.callbackUrl)
+        && Objects.equals(this.clientReference, media.clientReference)
+        && Objects.equals(this.feedbackEnabled, media.feedbackEnabled)
+        && Objects.equals(this.strictValidation, media.strictValidation);
   }
 
   @Override

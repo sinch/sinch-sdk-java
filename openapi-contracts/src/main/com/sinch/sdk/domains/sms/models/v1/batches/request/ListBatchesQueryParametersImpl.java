@@ -2,13 +2,14 @@ package com.sinch.sdk.domains.sms.models.v1.batches.request;
 
 import com.sinch.sdk.core.models.OptionalValue;
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 
 public class ListBatchesQueryParametersImpl implements ListBatchesQueryParameters {
 
   private final OptionalValue<Integer> page;
   private final OptionalValue<Integer> pageSize;
-  private final OptionalValue<String> from;
+  private final OptionalValue<List<String>> from;
   private final OptionalValue<Instant> startDate;
   private final OptionalValue<Instant> endDate;
   private final OptionalValue<String> clientReference;
@@ -16,7 +17,7 @@ public class ListBatchesQueryParametersImpl implements ListBatchesQueryParameter
   private ListBatchesQueryParametersImpl(
       OptionalValue<Integer> page,
       OptionalValue<Integer> pageSize,
-      OptionalValue<String> from,
+      OptionalValue<List<String>> from,
       OptionalValue<Instant> startDate,
       OptionalValue<Instant> endDate,
       OptionalValue<String> clientReference) {
@@ -36,7 +37,7 @@ public class ListBatchesQueryParametersImpl implements ListBatchesQueryParameter
     return pageSize;
   }
 
-  public OptionalValue<String> getFrom() {
+  public OptionalValue<List<String>> getFrom() {
     return from;
   }
 
@@ -102,7 +103,7 @@ public class ListBatchesQueryParametersImpl implements ListBatchesQueryParameter
   static class Builder implements ListBatchesQueryParameters.Builder {
     OptionalValue<Integer> page = OptionalValue.empty();
     OptionalValue<Integer> pageSize = OptionalValue.empty();
-    OptionalValue<String> from = OptionalValue.empty();
+    OptionalValue<List<String>> from = OptionalValue.empty();
     OptionalValue<Instant> startDate = OptionalValue.empty();
     OptionalValue<Instant> endDate = OptionalValue.empty();
     OptionalValue<String> clientReference = OptionalValue.empty();
@@ -122,6 +123,11 @@ public class ListBatchesQueryParametersImpl implements ListBatchesQueryParameter
       this.clientReference = parameters.getClientReference();
     }
 
+    public Builder setFrom(String from) {
+      setFrom(java.util.Collections.singletonList(from));
+      return this;
+    }
+
     public Builder setPage(Integer page) {
       this.page = OptionalValue.of(page);
       return this;
@@ -132,7 +138,7 @@ public class ListBatchesQueryParametersImpl implements ListBatchesQueryParameter
       return this;
     }
 
-    public Builder setFrom(String from) {
+    public Builder setFrom(List<String> from) {
       this.from = OptionalValue.of(from);
       return this;
     }

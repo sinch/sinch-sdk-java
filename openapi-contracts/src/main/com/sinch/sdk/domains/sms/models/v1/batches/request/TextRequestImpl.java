@@ -314,7 +314,7 @@ public class TextRequestImpl implements TextRequest, BatchRequest {
     return fromNpi;
   }
 
-  /** Return true if this TextRequest object is equal to o. */
+  /** Return true if this Text object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -323,23 +323,23 @@ public class TextRequestImpl implements TextRequest, BatchRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    TextRequestImpl textRequest = (TextRequestImpl) o;
-    return Objects.equals(this.to, textRequest.to)
-        && Objects.equals(this.from, textRequest.from)
-        && Objects.equals(this.parameters, textRequest.parameters)
-        && Objects.equals(this.body, textRequest.body)
-        && Objects.equals(this.type, textRequest.type)
-        && Objects.equals(this.deliveryReport, textRequest.deliveryReport)
-        && Objects.equals(this.sendAt, textRequest.sendAt)
-        && Objects.equals(this.expireAt, textRequest.expireAt)
-        && Objects.equals(this.callbackUrl, textRequest.callbackUrl)
-        && Objects.equals(this.clientReference, textRequest.clientReference)
-        && Objects.equals(this.feedbackEnabled, textRequest.feedbackEnabled)
-        && Objects.equals(this.flashMessage, textRequest.flashMessage)
-        && Objects.equals(this.truncateConcat, textRequest.truncateConcat)
-        && Objects.equals(this.maxNumberOfMessageParts, textRequest.maxNumberOfMessageParts)
-        && Objects.equals(this.fromTon, textRequest.fromTon)
-        && Objects.equals(this.fromNpi, textRequest.fromNpi);
+    TextRequestImpl text = (TextRequestImpl) o;
+    return Objects.equals(this.to, text.to)
+        && Objects.equals(this.from, text.from)
+        && Objects.equals(this.parameters, text.parameters)
+        && Objects.equals(this.body, text.body)
+        && Objects.equals(this.type, text.type)
+        && Objects.equals(this.deliveryReport, text.deliveryReport)
+        && Objects.equals(this.sendAt, text.sendAt)
+        && Objects.equals(this.expireAt, text.expireAt)
+        && Objects.equals(this.callbackUrl, text.callbackUrl)
+        && Objects.equals(this.clientReference, text.clientReference)
+        && Objects.equals(this.feedbackEnabled, text.feedbackEnabled)
+        && Objects.equals(this.flashMessage, text.flashMessage)
+        && Objects.equals(this.truncateConcat, text.truncateConcat)
+        && Objects.equals(this.maxNumberOfMessageParts, text.maxNumberOfMessageParts)
+        && Objects.equals(this.fromTon, text.fromTon)
+        && Objects.equals(this.fromNpi, text.fromNpi);
   }
 
   @Override
