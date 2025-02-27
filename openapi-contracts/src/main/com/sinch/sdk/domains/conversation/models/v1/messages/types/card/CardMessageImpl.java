@@ -100,14 +100,14 @@ public class CardMessageImpl
   }
 
   @JsonIgnore
-  public CardMessageMedia getMedia() {
+  public MediaMessageBody getMedia() {
     if (null == cardMessage || !cardMessage.isPresent() || null == cardMessage.get().getMedia()) {
       return null;
     }
     return cardMessage.get().getMedia();
   }
 
-  public OptionalValue<CardMessageMedia> media() {
+  public OptionalValue<MediaMessageBody> media() {
     return null != cardMessage && cardMessage.isPresent()
         ? cardMessage.map(f -> ((CardMessageInternalImpl) f).media()).orElse(OptionalValue.empty())
         : OptionalValue.empty();
@@ -195,7 +195,7 @@ public class CardMessageImpl
     }
 
     @JsonIgnore
-    public Builder setMedia(CardMessageMedia media) {
+    public Builder setMedia(MediaMessageBody media) {
       getDelegatedBuilder().setMedia(media);
       return this;
     }

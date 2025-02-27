@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardHeight;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardMessageMedia;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.MediaMessageBody;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.Choice;
 import java.util.List;
 import java.util.Objects;
@@ -39,7 +39,7 @@ public class CardMessageInternalImpl implements CardMessageInternal {
 
   public static final String JSON_PROPERTY_MEDIA_MESSAGE = "media_message";
 
-  private OptionalValue<CardMessageMedia> media;
+  private OptionalValue<MediaMessageBody> media;
 
   public static final String JSON_PROPERTY_TITLE = "title";
 
@@ -51,7 +51,7 @@ public class CardMessageInternalImpl implements CardMessageInternal {
       OptionalValue<List<Choice<?>>> choices,
       OptionalValue<String> description,
       OptionalValue<CardHeight> height,
-      OptionalValue<CardMessageMedia> media,
+      OptionalValue<MediaMessageBody> media,
       OptionalValue<String> title) {
     this.choices = choices;
     this.description = description;
@@ -94,13 +94,13 @@ public class CardMessageInternalImpl implements CardMessageInternal {
   }
 
   @JsonIgnore
-  public CardMessageMedia getMedia() {
+  public MediaMessageBody getMedia() {
     return media.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_MEDIA_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<CardMessageMedia> media() {
+  public OptionalValue<MediaMessageBody> media() {
     return media;
   }
 
@@ -165,7 +165,7 @@ public class CardMessageInternalImpl implements CardMessageInternal {
     OptionalValue<List<Choice<?>>> choices = OptionalValue.empty();
     OptionalValue<String> description = OptionalValue.empty();
     OptionalValue<CardHeight> height = OptionalValue.empty();
-    OptionalValue<CardMessageMedia> media = OptionalValue.empty();
+    OptionalValue<MediaMessageBody> media = OptionalValue.empty();
     OptionalValue<String> title = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CHOICES)
@@ -187,7 +187,7 @@ public class CardMessageInternalImpl implements CardMessageInternal {
     }
 
     @JsonProperty(JSON_PROPERTY_MEDIA_MESSAGE)
-    public Builder setMedia(CardMessageMedia media) {
+    public Builder setMedia(MediaMessageBody media) {
       this.media = OptionalValue.of(media);
       return this;
     }

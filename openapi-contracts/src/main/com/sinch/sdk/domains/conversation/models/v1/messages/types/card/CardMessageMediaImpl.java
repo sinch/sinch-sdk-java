@@ -12,7 +12,9 @@ import java.util.Objects;
 @JsonPropertyOrder({CardMessageMediaImpl.JSON_PROPERTY_URL})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class CardMessageMediaImpl implements CardMessageMedia {
+public class CardMessageMediaImpl
+    implements CardMessageMedia,
+        com.sinch.sdk.domains.conversation.models.v1.messages.types.card.MediaMessageBody {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_URL = "url";

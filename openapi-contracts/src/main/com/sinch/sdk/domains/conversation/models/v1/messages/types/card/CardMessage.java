@@ -46,7 +46,7 @@ public interface CardMessage
    *
    * @return media
    */
-  CardMessageMedia getMedia();
+  MediaMessageBody getMedia();
 
   /**
    * The title of the card message.
@@ -101,7 +101,7 @@ public interface CardMessage
      * @return Current builder
      * @see #getMedia
      */
-    Builder setMedia(CardMessageMedia media);
+    Builder setMedia(MediaMessageBody media);
 
     /**
      * see getter

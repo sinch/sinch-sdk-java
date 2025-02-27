@@ -14,7 +14,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /** A message containing an image media component. */
 @JsonDeserialize(builder = CardMessageMediaImpl.Builder.class)
-public interface CardMessageMedia {
+public interface CardMessageMedia
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.types.card.MediaMessageBody {
 
   /**
    * Url to the media file.
