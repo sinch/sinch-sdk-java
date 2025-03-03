@@ -16,6 +16,7 @@ import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.Choice;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.CardMessageInternal;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.CardMessageInternalImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessage;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -100,14 +101,14 @@ public class CardMessageImpl
   }
 
   @JsonIgnore
-  public MediaMessageBody getMedia() {
+  public MediaMessage getMedia() {
     if (null == cardMessage || !cardMessage.isPresent() || null == cardMessage.get().getMedia()) {
       return null;
     }
     return cardMessage.get().getMedia();
   }
 
-  public OptionalValue<MediaMessageBody> media() {
+  public OptionalValue<MediaMessage> media() {
     return null != cardMessage && cardMessage.isPresent()
         ? cardMessage.map(f -> ((CardMessageInternalImpl) f).media()).orElse(OptionalValue.empty())
         : OptionalValue.empty();
@@ -195,7 +196,7 @@ public class CardMessageImpl
     }
 
     @JsonIgnore
-    public Builder setMedia(MediaMessageBody media) {
+    public Builder setMedia(MediaMessage media) {
       getDelegatedBuilder().setMedia(media);
       return this;
     }

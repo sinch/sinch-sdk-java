@@ -12,6 +12,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.types.card;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.Choice;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessage;
 import java.util.List;
 
 /** Field containing a Card Message */
@@ -46,7 +47,7 @@ public interface CardMessage
    *
    * @return media
    */
-  MediaMessageBody getMedia();
+  MediaMessage getMedia();
 
   /**
    * The title of the card message.
@@ -101,7 +102,7 @@ public interface CardMessage
      * @return Current builder
      * @see #getMedia
      */
-    Builder setMedia(MediaMessageBody media);
+    Builder setMedia(MediaMessage media);
 
     /**
      * see getter

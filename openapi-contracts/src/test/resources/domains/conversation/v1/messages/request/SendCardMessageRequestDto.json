@@ -8,7 +8,9 @@
       "title": "title value",
       "description": "description value",
       "media_message": {
-        "url": "url value"
+        "url": "an url value",
+        "thumbnail_url": "another url",
+        "filename_override": "filename override value"
       },
       "height": "MEDIUM",
       "choices": [
