@@ -2,8 +2,8 @@ package com.sinch.sdk.domains.voice.models.v1.webhooks;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
-import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
+import com.sinch.sdk.domains.voice.adapters.VoiceBaseTest;
 import com.sinch.sdk.domains.voice.models.v1.Domain;
 import com.sinch.sdk.domains.voice.models.v1.Price;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallResult;
@@ -18,7 +18,7 @@ import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
-public class VoiceWebhookEventTest extends BaseTest {
+public class VoiceWebhookEventTest extends VoiceBaseTest {
 
   @GivenJsonResource("/domains/voice/v1/webhooks/IncomingCallEventDto.json")
   IncomingCallEvent loadedIceRequestDto;
