@@ -24,6 +24,7 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.internal.AppMessage
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ChannelSpecificMessageInternalMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ContactMessageInternalMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.carousel.CarouselMessageMapper;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.CardMessageMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ChoiceMessageMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ListMessageInternalMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.template.TemplateMessageMapper;
@@ -191,6 +192,7 @@ public class ConversationService
       AppEventMapper.initMapper();
       AppMessageMapper.initMapper();
       AppMessageInternalMapper.initMapper();
+      CardMessageMapper.initMapper();
       CarouselMessageMapper.initMapper();
       ChoiceItemMapper.initMapper();
       ChannelSpecificContactMessageMapper.initMapper();
