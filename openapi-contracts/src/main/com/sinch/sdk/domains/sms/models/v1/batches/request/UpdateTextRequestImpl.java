@@ -332,7 +332,7 @@ public class UpdateTextRequestImpl implements UpdateTextRequest, UpdateBatchRequ
     return flashMessage;
   }
 
-  /** Return true if this ApiUpdateTextMtMessage object is equal to o. */
+  /** Return true if this update_text_message object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -341,25 +341,24 @@ public class UpdateTextRequestImpl implements UpdateTextRequest, UpdateBatchRequ
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UpdateTextRequestImpl apiUpdateTextMtMessage = (UpdateTextRequestImpl) o;
-    return Objects.equals(this.from, apiUpdateTextMtMessage.from)
-        && Objects.equals(this.type, apiUpdateTextMtMessage.type)
-        && Objects.equals(this.toAdd, apiUpdateTextMtMessage.toAdd)
-        && Objects.equals(this.toRemove, apiUpdateTextMtMessage.toRemove)
-        && Objects.equals(this.deliveryReport, apiUpdateTextMtMessage.deliveryReport)
-        && Objects.equals(this.sendAt, apiUpdateTextMtMessage.sendAt)
-        && Objects.equals(this.expireAt, apiUpdateTextMtMessage.expireAt)
-        && Objects.equals(this.callbackUrl, apiUpdateTextMtMessage.callbackUrl)
-        && Objects.equals(this.clientReference, apiUpdateTextMtMessage.clientReference)
-        && Objects.equals(this.feedbackEnabled, apiUpdateTextMtMessage.feedbackEnabled)
-        && Objects.equals(this.parameters, apiUpdateTextMtMessage.parameters)
-        && Objects.equals(this.body, apiUpdateTextMtMessage.body)
-        && Objects.equals(this.fromTon, apiUpdateTextMtMessage.fromTon)
-        && Objects.equals(this.fromNpi, apiUpdateTextMtMessage.fromNpi)
-        && Objects.equals(
-            this.maxNumberOfMessageParts, apiUpdateTextMtMessage.maxNumberOfMessageParts)
-        && Objects.equals(this.truncateConcat, apiUpdateTextMtMessage.truncateConcat)
-        && Objects.equals(this.flashMessage, apiUpdateTextMtMessage.flashMessage);
+    UpdateTextRequestImpl updateTextMessage = (UpdateTextRequestImpl) o;
+    return Objects.equals(this.from, updateTextMessage.from)
+        && Objects.equals(this.type, updateTextMessage.type)
+        && Objects.equals(this.toAdd, updateTextMessage.toAdd)
+        && Objects.equals(this.toRemove, updateTextMessage.toRemove)
+        && Objects.equals(this.deliveryReport, updateTextMessage.deliveryReport)
+        && Objects.equals(this.sendAt, updateTextMessage.sendAt)
+        && Objects.equals(this.expireAt, updateTextMessage.expireAt)
+        && Objects.equals(this.callbackUrl, updateTextMessage.callbackUrl)
+        && Objects.equals(this.clientReference, updateTextMessage.clientReference)
+        && Objects.equals(this.feedbackEnabled, updateTextMessage.feedbackEnabled)
+        && Objects.equals(this.parameters, updateTextMessage.parameters)
+        && Objects.equals(this.body, updateTextMessage.body)
+        && Objects.equals(this.fromTon, updateTextMessage.fromTon)
+        && Objects.equals(this.fromNpi, updateTextMessage.fromNpi)
+        && Objects.equals(this.maxNumberOfMessageParts, updateTextMessage.maxNumberOfMessageParts)
+        && Objects.equals(this.truncateConcat, updateTextMessage.truncateConcat)
+        && Objects.equals(this.flashMessage, updateTextMessage.flashMessage);
   }
 
   @Override

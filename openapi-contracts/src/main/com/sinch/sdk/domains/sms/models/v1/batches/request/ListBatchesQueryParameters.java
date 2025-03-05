@@ -12,6 +12,7 @@ package com.sinch.sdk.domains.sms.models.v1.batches.request;
 
 import com.sinch.sdk.core.models.OptionalValue;
 import java.time.Instant;
+import java.util.List;
 
 /** ListBatchesQueryParameters */
 public interface ListBatchesQueryParameters {
@@ -35,7 +36,7 @@ public interface ListBatchesQueryParameters {
    *
    * @return from
    */
-  OptionalValue<String> getFrom();
+  OptionalValue<List<String>> getFrom();
 
   /**
    * Get startDate
@@ -80,6 +81,15 @@ public interface ListBatchesQueryParameters {
   interface Builder {
 
     /**
+     * @param from see #setFrom()
+     * @return Current builder
+     * @see #setFrom
+     * @deprecated use {@link #setFrom} instead.
+     */
+    @Deprecated
+    Builder setFrom(String from);
+
+    /**
      * see getter
      *
      * @param page see getter
@@ -104,7 +114,7 @@ public interface ListBatchesQueryParameters {
      * @return Current builder
      * @see #getFrom
      */
-    Builder setFrom(String from);
+    Builder setFrom(List<String> from);
 
     /**
      * see getter

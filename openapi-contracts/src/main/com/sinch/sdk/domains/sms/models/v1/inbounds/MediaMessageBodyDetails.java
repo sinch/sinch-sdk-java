@@ -11,38 +11,79 @@
 package com.sinch.sdk.domains.sms.models.v1.inbounds;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.utils.EnumDynamic;
+import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
-/** MediaMessageBodyDetails */
+/** Collection of attachments in incoming message. */
 @JsonDeserialize(builder = MediaMessageBodyDetailsImpl.Builder.class)
 public interface MediaMessageBodyDetails {
 
   /**
-   * URL to the media file
-   *
-   * @return url
+   * @return Current status
+   * @see #getStatusEnum()
+   * @deprecated use {@link #getStatusEnum()} instead.
    */
-  String getUrl();
+  @Deprecated
+  String getStatus();
 
   /**
-   * The type of media file included in the message
+   * The result code. Possible values: 0 (success), 1 (content upload error), 2 (cloud bucket
+   * error), 3 (bucket key error).
+   *
+   * @return code
+   */
+  Integer getCode();
+
+  /**
+   * Content type of binary. <a
+   * href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types">More
+   * info</a>
    *
    * @return contentType
    */
   String getContentType();
 
-  /**
-   * The status of the media upload
-   *
-   * @return status
-   */
-  String getStatus();
+  /** Status of the uploaded media. */
+  public class StatusEnum extends EnumDynamic<String, StatusEnum> {
+    public static final StatusEnum UPLOADED = new StatusEnum("Uploaded");
+    public static final StatusEnum FAILED = new StatusEnum("Failed");
+
+    private static final EnumSupportDynamic<String, StatusEnum> ENUM_SUPPORT =
+        new EnumSupportDynamic<>(
+            StatusEnum.class, StatusEnum::new, Arrays.asList(UPLOADED, FAILED));
+
+    private StatusEnum(String value) {
+      super(value);
+    }
+
+    public static Stream<StatusEnum> values() {
+      return ENUM_SUPPORT.values();
+    }
+
+    public static StatusEnum from(String value) {
+      return ENUM_SUPPORT.from(value);
+    }
+
+    public static String valueOf(StatusEnum e) {
+      return ENUM_SUPPORT.valueOf(e);
+    }
+  }
 
   /**
-   * Get code
+   * Status of the uploaded media.
    *
-   * @return code
+   * @return StatusEnum
    */
-  Integer getCode();
+  StatusEnum getStatusEnum();
+
+  /**
+   * URL to be used to download attachment.
+   *
+   * @return url
+   */
+  String getUrl();
 
   /**
    * Getting builder
@@ -57,13 +98,22 @@ public interface MediaMessageBodyDetails {
   interface Builder {
 
     /**
+     * @param status see {@link #setStatusEnum(StatusEnum)}
+     * @return Current builder
+     * @see #setStatusEnum(StatusEnum)
+     * @deprecated use {@link #setStatusEnum(StatusEnum)} instead.
+     */
+    @Deprecated
+    Builder setStatus(String status);
+
+    /**
      * see getter
      *
-     * @param url see getter
+     * @param code see getter
      * @return Current builder
-     * @see #getUrl
+     * @see #getCode
      */
-    Builder setUrl(String url);
+    Builder setCode(Integer code);
 
     /**
      * see getter
@@ -77,20 +127,20 @@ public interface MediaMessageBodyDetails {
     /**
      * see getter
      *
-     * @param status see getter
+     * @param StatusEnum see getter
      * @return Current builder
-     * @see #getStatus
+     * @see #getStatusEnum
      */
-    Builder setStatus(String status);
+    Builder setStatusEnum(StatusEnum StatusEnum);
 
     /**
      * see getter
      *
-     * @param code see getter
+     * @param url see getter
      * @return Current builder
-     * @see #getCode
+     * @see #getUrl
      */
-    Builder setCode(Integer code);
+    Builder setUrl(String url);
 
     /**
      * Create instance

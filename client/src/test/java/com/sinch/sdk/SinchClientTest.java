@@ -15,6 +15,18 @@ import org.junit.jupiter.api.Test;
 class SinchClientTest {
 
   @Test
+  void configurationNullGuard() {
+    SinchClient client = new SinchClient(null);
+    assertNotNull(client);
+  }
+
+  @Test
+  void noConfiguration() {
+    SinchClient client = new SinchClient();
+    assertNotNull(client);
+  }
+
+  @Test
   void defaultOAuthUrlAvailable() {
     Configuration configuration =
         Configuration.builder().setKeyId("foo").setKeySecret("foo").setProjectId("foo").build();

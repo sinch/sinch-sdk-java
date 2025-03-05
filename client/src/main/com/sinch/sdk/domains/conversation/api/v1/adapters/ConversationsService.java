@@ -41,7 +41,9 @@ public class ConversationsService
       HttpClient httpClient,
       Map<String, AuthManager> authManagers) {
     this.uriUUID = uriUUID;
-    this.api = new ConversationApi(httpClient, context.getServer(), authManagers, new HttpMapper());
+    this.api =
+        new ConversationApi(
+            httpClient, context.getServer(), authManagers, HttpMapper.getInstance());
   }
 
   protected ConversationApi getApi() {

@@ -21,7 +21,8 @@ public class CallsService implements com.sinch.sdk.domains.voice.api.v1.CallsSer
 
   public CallsService(
       VoiceContext context, HttpClient httpClient, Map<String, AuthManager> authManagers) {
-    this.api = new CallsApi(httpClient, context.getVoiceServer(), authManagers, new HttpMapper());
+    this.api =
+        new CallsApi(httpClient, context.getVoiceServer(), authManagers, HttpMapper.getInstance());
   }
 
   protected CallsApi getApi() {

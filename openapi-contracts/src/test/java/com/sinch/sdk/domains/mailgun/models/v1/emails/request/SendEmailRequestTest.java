@@ -207,7 +207,7 @@ public class SendEmailRequestTest extends BaseTest {
   @Test
   void serializeSendEmailHtmlInlineRequest() {
     Object serialized =
-        new HttpMapper()
+        HttpMapper.getInstance()
             .serializeFormParameters(
                 Arrays.asList("multipart/form-data"), sendEmailHtmlInlineRequest);
 
@@ -218,7 +218,7 @@ public class SendEmailRequestTest extends BaseTest {
   void serializeSendEmailHtmlInlineRequestRawRecipientVariables() {
 
     Object serialized =
-        new HttpMapper()
+        HttpMapper.getInstance()
             .serializeFormParameters(
                 Arrays.asList("multipart/form-data"),
                 SendEmailHtmlInlineRequest.builder()
@@ -234,7 +234,7 @@ public class SendEmailRequestTest extends BaseTest {
   @Test
   void serializeSendEmailHtmlInTemplateRequest() {
     Object serialized =
-        new HttpMapper()
+        HttpMapper.getInstance()
             .serializeFormParameters(
                 Arrays.asList("multipart/form-data"), sendEmailHtmlInTemplateRequest);
 
@@ -245,7 +245,7 @@ public class SendEmailRequestTest extends BaseTest {
   void serializeSendEmailHtmlInTemplateRequestRawVariables() {
 
     Object serialized =
-        new HttpMapper()
+        HttpMapper.getInstance()
             .serializeFormParameters(
                 Arrays.asList("multipart/form-data"),
                 SendEmailHtmlInTemplateRequest.builder()

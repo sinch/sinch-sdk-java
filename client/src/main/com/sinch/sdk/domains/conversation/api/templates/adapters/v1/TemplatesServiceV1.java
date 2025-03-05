@@ -23,7 +23,10 @@ public class TemplatesServiceV1
     this.uriUUID = uriUUID;
     this.api =
         new TemplatesV1Api(
-            httpClient, context.getTemplateManagementServer(), authManagers, new HttpMapper());
+            httpClient,
+            context.getTemplateManagementServer(),
+            authManagers,
+            HttpMapper.getInstance());
   }
 
   protected TemplatesV1Api getApi() {

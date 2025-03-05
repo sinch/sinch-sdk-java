@@ -37,7 +37,7 @@ class AvailableRegionServiceTest extends BaseTest {
   @BeforeEach
   public void initMocks() {
     AvailableRegionService v1 =
-        new AvailableRegionService(uriUUID, context, httpClient, authManagers);
+        new AvailableRegionService(uriUUID, context, () -> httpClient, authManagers);
     service = spy(v1);
     doReturn(api).when(service).getApi();
   }

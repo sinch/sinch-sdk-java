@@ -21,7 +21,8 @@ public class ConferencesService implements com.sinch.sdk.domains.voice.api.v1.Co
       Map<String, AuthManager> authManagers,
       CalloutsService calloutsService) {
     this.api =
-        new ConferencesApi(httpClient, context.getVoiceServer(), authManagers, new HttpMapper());
+        new ConferencesApi(
+            httpClient, context.getVoiceServer(), authManagers, HttpMapper.getInstance());
     this.calloutsService = calloutsService;
   }
 

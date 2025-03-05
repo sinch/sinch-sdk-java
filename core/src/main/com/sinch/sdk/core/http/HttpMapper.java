@@ -14,6 +14,8 @@ import java.util.Map;
 
 public class HttpMapper {
 
+  private HttpMapper() {}
+
   public <T> T deserialize(HttpResponse response, TypeReference<T> valueType) throws ApiException {
     if (null == valueType || null == response) {
       return null;

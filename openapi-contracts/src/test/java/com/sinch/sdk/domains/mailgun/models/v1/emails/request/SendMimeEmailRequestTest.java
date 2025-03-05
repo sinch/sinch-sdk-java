@@ -99,7 +99,7 @@ public class SendMimeEmailRequestTest extends BaseTest {
   @Test
   void serialize() {
     Object serialized =
-        new HttpMapper()
+        HttpMapper.getInstance()
             .serializeFormParameters(Arrays.asList("multipart/form-data"), sendMimEmailRequest);
 
     TestHelpers.recursiveEquals(expected, serialized);
@@ -109,7 +109,7 @@ public class SendMimeEmailRequestTest extends BaseTest {
   void serializeSendEmailHtmlInlineRequestRawRecipientVariables() {
 
     Object serialized =
-        new HttpMapper()
+        HttpMapper.getInstance()
             .serializeFormParameters(
                 Arrays.asList("multipart/form-data"),
                 SendMimeEmailRequest.builder()

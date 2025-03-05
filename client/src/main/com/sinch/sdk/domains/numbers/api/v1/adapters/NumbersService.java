@@ -19,6 +19,7 @@ import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Supplier;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -28,74 +29,62 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
   private static final Logger LOGGER = Logger.getLogger(NumbersService.class.getName());
   private static final String SECURITY_SCHEME_KEYWORD_NUMBERS = "BasicAuth";
 
-  private final String uriUUID;
+  private final UnifiedCredentials credentials;
   private final NumbersContext context;
-  private final HttpClient httpClient;
-  private AvailableNumberService available;
-  private ActiveNumberService active;
-  private AvailableRegionService regions;
-  private CallbackConfigurationService callback;
-  private WebHooksService webhooks;
+  private final Supplier<HttpClient> httpClientSupplier;
 
-  private final Map<String, AuthManager> authManagers;
+  private volatile String uriUUID;
+  private volatile Map<String, AuthManager> authManagers;
+  private volatile AvailableNumberService available;
+  private volatile ActiveNumberService active;
+  private volatile AvailableRegionService regions;
+  private volatile CallbackConfigurationService callback;
+  private volatile WebHooksService webhooks;
 
   static {
     LocalLazyInit.init();
   }
 
   public NumbersService(
-      UnifiedCredentials credentials, NumbersContext context, HttpClient httpClient) {
-
-    Objects.requireNonNull(
-        credentials, "Numbers service require unified credentials to be defined");
-    Objects.requireNonNull(context, "Numbers service requires context to be defined");
-    StringUtil.requireNonEmpty(
-        credentials.getKeyId(), "Numbers service requires 'keyId' to be defined");
-    StringUtil.requireNonEmpty(
-        credentials.getKeySecret(), "Numbers service requires 'keySecret' to be defined");
-    StringUtil.requireNonEmpty(
-        credentials.getProjectId(), "Numbers service requires 'projectId' to be defined");
-    StringUtil.requireNonEmpty(
-        context.getNumbersUrl(), "'Numbers service requires numbersUrl' to be defined");
-
-    LOGGER.fine("Activate numbers API with server='" + context.getNumbersServer().getUrl() + "'");
-
-    this.uriUUID = credentials.getProjectId();
+      UnifiedCredentials credentials,
+      NumbersContext context,
+      Supplier<HttpClient> httpClientSupplier) {
+    this.credentials = credentials;
     this.context = context;
-    this.httpClient = httpClient;
-
-    AuthManager basicAuthManager =
-        new BasicAuthManager(credentials.getKeyId(), credentials.getKeySecret());
-
-    authManagers =
-        Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_NUMBERS, basicAuthManager))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    this.httpClientSupplier = httpClientSupplier;
   }
 
   AvailableNumberService available() {
     if (null == this.available) {
-      this.available = new AvailableNumberService(uriUUID, context, httpClient, authManagers);
+      instanceLazyInit();
+      this.available =
+          new AvailableNumberService(uriUUID, context, httpClientSupplier, authManagers);
     }
     return this.available;
   }
 
   public AvailableRegionService regions() {
     if (null == this.regions) {
-      this.regions = new AvailableRegionService(uriUUID, context, httpClient, authManagers);
+      instanceLazyInit();
+      this.regions = new AvailableRegionService(uriUUID, context, httpClientSupplier, authManagers);
     }
     return this.regions;
   }
 
   ActiveNumberService active() {
     if (null == this.active) {
-      this.active = new ActiveNumberService(uriUUID, this, context, httpClient, authManagers);
+      instanceLazyInit();
+      this.active =
+          new ActiveNumberService(uriUUID, this, context, httpClientSupplier, authManagers);
     }
     return this.active;
   }
 
   public CallbackConfigurationService callback() {
     if (null == this.callback) {
-      this.callback = new CallbackConfigurationService(uriUUID, context, httpClient, authManagers);
+      instanceLazyInit();
+      this.callback =
+          new CallbackConfigurationService(uriUUID, context, httpClientSupplier, authManagers);
     }
     return this.callback;
   }
@@ -141,6 +130,40 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
 
   public ActiveNumber release(String phoneNumber) throws ApiException {
     return active().release(phoneNumber);
+  }
+
+  private void instanceLazyInit() {
+    if (null != this.authManagers) {
+      return;
+    }
+    synchronized (this) {
+      if (null == this.authManagers) {
+        Objects.requireNonNull(
+            credentials, "Numbers service require unified credentials to be defined");
+        Objects.requireNonNull(context, "Numbers service requires context to be defined");
+        StringUtil.requireNonEmpty(
+            credentials.getKeyId(), "Numbers service requires 'keyId' to be defined");
+        StringUtil.requireNonEmpty(
+            credentials.getKeySecret(), "Numbers service requires 'keySecret' to be defined");
+        StringUtil.requireNonEmpty(
+            credentials.getProjectId(), "Numbers service requires 'projectId' to be defined");
+        StringUtil.requireNonEmpty(
+            context.getNumbersUrl(), "'Numbers service requires numbersUrl' to be defined");
+
+        LOGGER.fine(
+            "Activate numbers API with server='" + context.getNumbersServer().getUrl() + "'");
+
+        AuthManager basicAuthManager =
+            new BasicAuthManager(credentials.getKeyId(), credentials.getKeySecret());
+
+        uriUUID = credentials.getProjectId();
+        authManagers =
+            Stream.of(
+                    new AbstractMap.SimpleEntry<>(
+                        SECURITY_SCHEME_KEYWORD_NUMBERS, basicAuthManager))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+      }
+    }
   }
 
   static final class LocalLazyInit {

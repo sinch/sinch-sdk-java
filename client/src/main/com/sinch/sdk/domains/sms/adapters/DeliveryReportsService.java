@@ -50,7 +50,8 @@ public class DeliveryReportsService implements com.sinch.sdk.domains.sms.Deliver
       Map<String, AuthManager> authManagers) {
     this.uriUUID = uriUUID;
     this.api =
-        new DeliveryReportsApi(httpClient, context.getSmsServer(), authManagers, new HttpMapper());
+        new DeliveryReportsApi(
+            httpClient, context.getSmsServer(), authManagers, HttpMapper.getInstance());
   }
 
   public DeliveryReportBatch get(String batchId, DeliveryReportBatchGetRequestParameters parameters)

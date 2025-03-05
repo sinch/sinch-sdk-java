@@ -42,7 +42,8 @@ public class ContactService implements com.sinch.sdk.domains.conversation.api.v1
       HttpClient httpClient,
       Map<String, AuthManager> authManagers) {
     this.uriUUID = uriUUID;
-    this.api = new ContactApi(httpClient, context.getServer(), authManagers, new HttpMapper());
+    this.api =
+        new ContactApi(httpClient, context.getServer(), authManagers, HttpMapper.getInstance());
   }
 
   protected ContactApi getApi() {

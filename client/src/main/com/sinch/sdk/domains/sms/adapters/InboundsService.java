@@ -33,7 +33,8 @@ public class InboundsService implements com.sinch.sdk.domains.sms.InboundsServic
       HttpClient httpClient,
       Map<String, AuthManager> authManagers) {
     this.uriUUID = uriUUID;
-    this.api = new InboundsApi(httpClient, context.getSmsServer(), authManagers, new HttpMapper());
+    this.api =
+        new InboundsApi(httpClient, context.getSmsServer(), authManagers, HttpMapper.getInstance());
   }
 
   public InboundsListResponse list() throws ApiException {
