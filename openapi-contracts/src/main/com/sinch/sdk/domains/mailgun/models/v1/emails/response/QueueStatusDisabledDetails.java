@@ -18,14 +18,14 @@ import java.time.Instant;
 public interface QueueStatusDisabledDetails {
 
   /**
-   * Get until
+   * End date in RFC822 date format
    *
    * @return until
    */
   Instant getUntil();
 
   /**
-   * Get reason
+   * Cause description
    *
    * @return reason
    */

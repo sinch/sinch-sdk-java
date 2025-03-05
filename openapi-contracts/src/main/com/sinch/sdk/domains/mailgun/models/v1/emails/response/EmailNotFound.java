@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface EmailNotFound {
 
   /**
-   * Get message
+   * A failure message
    *
    * @return message
    */
