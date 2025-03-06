@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface BadRequest {
 
   /**
-   * Get message
+   * A failure message
    *
    * @return message
    */

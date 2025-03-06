@@ -18,70 +18,70 @@ import java.util.List;
 public interface GetStoredEmailResponse {
 
   /**
-   * Get sender
-   *
-   * @return sender
-   */
-  String getSender();
-
-  /**
-   * Get recipients
-   *
-   * @return recipients
-   */
-  String getRecipients();
-
-  /**
-   * Get from
+   * The full 'From' email address entry of the email
    *
    * @return from
    */
   String getFrom();
 
   /**
-   * Get subject
+   * Subject of the email
    *
    * @return subject
    */
   String getSubject();
 
   /**
-   * Get bodyHtml
+   * Just the email address from the provided 'From'' field
+   *
+   * @return sender
+   */
+  String getSender();
+
+  /**
+   * A list of email addresses from the 'To'' field
+   *
+   * @return recipients
+   */
+  String getRecipients();
+
+  /**
+   * The full HTML body of the full message
    *
    * @return bodyHtml
    */
   String getBodyHtml();
 
   /**
-   * Get bodyPlain
+   * The plain text body of the full message
    *
    * @return bodyPlain
    */
   String getBodyPlain();
 
   /**
-   * Get strippedHtml
+   * Only the body of the email in HTML
    *
    * @return strippedHtml
    */
   String getStrippedHtml();
 
   /**
-   * Get strippedText
+   * Only the body of the email in plain text
    *
    * @return strippedText
    */
   String getStrippedText();
 
   /**
-   * Get strippedSignature
+   * The signature stripped from the body
    *
    * @return strippedSignature
    */
   String getStrippedSignature();
 
   /**
-   * Get messageHeaders
+   * The full list of headers of the MIME upon send
    *
    * @return messageHeaders
    */
@@ -102,24 +102,6 @@ public interface GetStoredEmailResponse {
     /**
      * see getter
      *
-     * @param sender see getter
-     * @return Current builder
-     * @see #getSender
-     */
-    Builder setSender(String sender);
-
-    /**
-     * see getter
-     *
-     * @param recipients see getter
-     * @return Current builder
-     * @see #getRecipients
-     */
-    Builder setRecipients(String recipients);
-
-    /**
-     * see getter
-     *
      * @param from see getter
      * @return Current builder
      * @see #getFrom
@@ -134,6 +116,24 @@ public interface GetStoredEmailResponse {
      * @see #getSubject
      */
     Builder setSubject(String subject);
+
+    /**
+     * see getter
+     *
+     * @param sender see getter
+     * @return Current builder
+     * @see #getSender
+     */
+    Builder setSender(String sender);
+
+    /**
+     * see getter
+     *
+     * @param recipients see getter
+     * @return Current builder
+     * @see #getRecipients
+     */
+    Builder setRecipients(String recipients);
 
     /**
      * see getter

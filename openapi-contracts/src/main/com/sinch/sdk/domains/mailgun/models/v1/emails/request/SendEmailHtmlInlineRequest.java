@@ -28,7 +28,8 @@ public interface SendEmailHtmlInlineRequest extends SendEmailRequest {
   List<String> getTo();
 
   /**
-   * Email address for <code>From</code> header
+   * Email address for the <code>From</code> header. Note: not required if sending with a template
+   * that has a pre-set From header, but it will override it if provided.
    *
    * @return from
    */
@@ -49,7 +50,8 @@ public interface SendEmailHtmlInlineRequest extends SendEmailRequest {
   List<String> getBcc();
 
   /**
-   * Message subject
+   * Message subject. Note: not required if sending with a template that has a pre-set Subject
+   * header, but it will override it if provided.
    *
    * @return subject
    */

@@ -17,14 +17,15 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface SendEmailResponse {
 
   /**
-   * Get id
+   * The unique identifier of the message as defined by <a
+   * href="https://datatracker.ietf.org/doc/html/rfc2392">RFC-2392</a>.
    *
    * @return id
    */
   String getId();
 
   /**
-   * Get message
+   * A success message
    *
    * @return message
    */

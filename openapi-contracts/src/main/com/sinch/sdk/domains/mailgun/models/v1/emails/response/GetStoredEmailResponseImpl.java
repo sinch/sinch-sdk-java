@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  GetStoredEmailResponseImpl.JSON_PROPERTY_SENDER,
-  GetStoredEmailResponseImpl.JSON_PROPERTY_RECIPIENTS,
   GetStoredEmailResponseImpl.JSON_PROPERTY_FROM,
   GetStoredEmailResponseImpl.JSON_PROPERTY_SUBJECT,
+  GetStoredEmailResponseImpl.JSON_PROPERTY_SENDER,
+  GetStoredEmailResponseImpl.JSON_PROPERTY_RECIPIENTS,
   GetStoredEmailResponseImpl.JSON_PROPERTY_BODY_HTML,
   GetStoredEmailResponseImpl.JSON_PROPERTY_BODY_PLAIN,
   GetStoredEmailResponseImpl.JSON_PROPERTY_STRIPPED_HTML,
@@ -27,6 +27,14 @@ import java.util.Objects;
 public class GetStoredEmailResponseImpl implements GetStoredEmailResponse {
   private static final long serialVersionUID = 1L;
 
+  public static final String JSON_PROPERTY_FROM = "From";
+
+  private OptionalValue<String> from;
+
+  public static final String JSON_PROPERTY_SUBJECT = "Subject";
+
+  private OptionalValue<String> subject;
+
   public static final String JSON_PROPERTY_SENDER = "sender";
 
   private OptionalValue<String> sender;
@@ -34,14 +42,6 @@ public class GetStoredEmailResponseImpl implements GetStoredEmailResponse {
   public static final String JSON_PROPERTY_RECIPIENTS = "recipients";
 
   private OptionalValue<String> recipients;
-
-  public static final String JSON_PROPERTY_FROM = "from";
-
-  private OptionalValue<String> from;
-
-  public static final String JSON_PROPERTY_SUBJECT = "subject";
-
-  private OptionalValue<String> subject;
 
   public static final String JSON_PROPERTY_BODY_HTML = "body-html";
 
@@ -70,48 +70,26 @@ public class GetStoredEmailResponseImpl implements GetStoredEmailResponse {
   public GetStoredEmailResponseImpl() {}
 
   protected GetStoredEmailResponseImpl(
-      OptionalValue<String> sender,
-      OptionalValue<String> recipients,
       OptionalValue<String> from,
       OptionalValue<String> subject,
+      OptionalValue<String> sender,
+      OptionalValue<String> recipients,
       OptionalValue<String> bodyHtml,
       OptionalValue<String> bodyPlain,
       OptionalValue<String> strippedHtml,
       OptionalValue<String> strippedText,
       OptionalValue<String> strippedSignature,
       OptionalValue<List<List<String>>> messageHeaders) {
-    this.sender = sender;
-    this.recipients = recipients;
     this.from = from;
     this.subject = subject;
+    this.sender = sender;
+    this.recipients = recipients;
     this.bodyHtml = bodyHtml;
     this.bodyPlain = bodyPlain;
     this.strippedHtml = strippedHtml;
     this.strippedText = strippedText;
     this.strippedSignature = strippedSignature;
     this.messageHeaders = messageHeaders;
-  }
-
-  @JsonIgnore
-  public String getSender() {
-    return sender.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_SENDER)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<String> sender() {
-    return sender;
-  }
-
-  @JsonIgnore
-  public String getRecipients() {
-    return recipients.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_RECIPIENTS)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<String> recipients() {
-    return recipients;
   }
 
   @JsonIgnore
@@ -137,12 +115,34 @@ public class GetStoredEmailResponseImpl implements GetStoredEmailResponse {
   }
 
   @JsonIgnore
+  public String getSender() {
+    return sender.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_SENDER)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<String> sender() {
+    return sender;
+  }
+
+  @JsonIgnore
+  public String getRecipients() {
+    return recipients.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_RECIPIENTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<String> recipients() {
+    return recipients;
+  }
+
+  @JsonIgnore
   public String getBodyHtml() {
     return bodyHtml.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_BODY_HTML)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> bodyHtml() {
     return bodyHtml;
   }
@@ -217,13 +217,13 @@ public class GetStoredEmailResponseImpl implements GetStoredEmailResponse {
     GetStoredEmailResponseImpl githubComMailgunInfluxHttpapiGetMessageResponseBasicExample =
         (GetStoredEmailResponseImpl) o;
     return Objects.equals(
-            this.sender, githubComMailgunInfluxHttpapiGetMessageResponseBasicExample.sender)
-        && Objects.equals(
-            this.recipients, githubComMailgunInfluxHttpapiGetMessageResponseBasicExample.recipients)
-        && Objects.equals(
             this.from, githubComMailgunInfluxHttpapiGetMessageResponseBasicExample.from)
         && Objects.equals(
             this.subject, githubComMailgunInfluxHttpapiGetMessageResponseBasicExample.subject)
+        && Objects.equals(
+            this.sender, githubComMailgunInfluxHttpapiGetMessageResponseBasicExample.sender)
+        && Objects.equals(
+            this.recipients, githubComMailgunInfluxHttpapiGetMessageResponseBasicExample.recipients)
         && Objects.equals(
             this.bodyHtml, githubComMailgunInfluxHttpapiGetMessageResponseBasicExample.bodyHtml)
         && Objects.equals(
@@ -245,10 +245,10 @@ public class GetStoredEmailResponseImpl implements GetStoredEmailResponse {
   @Override
   public int hashCode() {
     return Objects.hash(
-        sender,
-        recipients,
         from,
         subject,
+        sender,
+        recipients,
         bodyHtml,
         bodyPlain,
         strippedHtml,
@@ -261,10 +261,10 @@ public class GetStoredEmailResponseImpl implements GetStoredEmailResponse {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class GetStoredEmailResponseImpl {\n");
-    sb.append("    sender: ").append(toIndentedString(sender)).append("\n");
-    sb.append("    recipients: ").append(toIndentedString(recipients)).append("\n");
     sb.append("    from: ").append(toIndentedString(from)).append("\n");
     sb.append("    subject: ").append(toIndentedString(subject)).append("\n");
+    sb.append("    sender: ").append(toIndentedString(sender)).append("\n");
+    sb.append("    recipients: ").append(toIndentedString(recipients)).append("\n");
     sb.append("    bodyHtml: ").append(toIndentedString(bodyHtml)).append("\n");
     sb.append("    bodyPlain: ").append(toIndentedString(bodyPlain)).append("\n");
     sb.append("    strippedHtml: ").append(toIndentedString(strippedHtml)).append("\n");
@@ -287,28 +287,16 @@ public class GetStoredEmailResponseImpl implements GetStoredEmailResponse {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements GetStoredEmailResponse.Builder {
-    OptionalValue<String> sender = OptionalValue.empty();
-    OptionalValue<String> recipients = OptionalValue.empty();
     OptionalValue<String> from = OptionalValue.empty();
     OptionalValue<String> subject = OptionalValue.empty();
+    OptionalValue<String> sender = OptionalValue.empty();
+    OptionalValue<String> recipients = OptionalValue.empty();
     OptionalValue<String> bodyHtml = OptionalValue.empty();
     OptionalValue<String> bodyPlain = OptionalValue.empty();
     OptionalValue<String> strippedHtml = OptionalValue.empty();
     OptionalValue<String> strippedText = OptionalValue.empty();
     OptionalValue<String> strippedSignature = OptionalValue.empty();
     OptionalValue<List<List<String>>> messageHeaders = OptionalValue.empty();
-
-    @JsonProperty(JSON_PROPERTY_SENDER)
-    public Builder setSender(String sender) {
-      this.sender = OptionalValue.of(sender);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_RECIPIENTS)
-    public Builder setRecipients(String recipients) {
-      this.recipients = OptionalValue.of(recipients);
-      return this;
-    }
 
     @JsonProperty(JSON_PROPERTY_FROM)
     public Builder setFrom(String from) {
@@ -319,6 +307,18 @@ public class GetStoredEmailResponseImpl implements GetStoredEmailResponse {
     @JsonProperty(JSON_PROPERTY_SUBJECT)
     public Builder setSubject(String subject) {
       this.subject = OptionalValue.of(subject);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_SENDER)
+    public Builder setSender(String sender) {
+      this.sender = OptionalValue.of(sender);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_RECIPIENTS)
+    public Builder setRecipients(String recipients) {
+      this.recipients = OptionalValue.of(recipients);
       return this;
     }
 
@@ -360,10 +360,10 @@ public class GetStoredEmailResponseImpl implements GetStoredEmailResponse {
 
     public GetStoredEmailResponse build() {
       return new GetStoredEmailResponseImpl(
-          sender,
-          recipients,
           from,
           subject,
+          sender,
+          recipients,
           bodyHtml,
           bodyPlain,
           strippedHtml,
