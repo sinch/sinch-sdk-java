@@ -39,6 +39,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setApplePayCertificateReference("appleBc apple_pay_certificate_reference value")
                   .setApplePayCertificatePassword("appleBc apple_pay_certificate_password value")
                   .build())
+          .setCredentialOrdinalNumber(0)
           .build();
 
   public static ConversationChannelCredentials conversationChannelAppleBcRequestDto =
@@ -52,6 +53,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setApplePayCertificateReference("appleBc apple_pay_certificate_reference value")
                   .setApplePayCertificatePassword("appleBc apple_pay_certificate_password value")
                   .build())
+          .setCredentialOrdinalNumber(0)
           .build();
 
   @GivenTextResource(
@@ -77,6 +79,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setToken("instagramChannel token")
                   .setBusinessAccountId("instagramChannel business account id")
                   .build())
+          .setCredentialOrdinalNumber(0)
           .build();
   public static ConversationChannelCredentials conversationChannelInstagramRequestDto =
       ConversationChannelCredentials.builder()
@@ -87,6 +90,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setToken("instagramChannel token")
                   .setBusinessAccountId("instagramChannel business account id")
                   .build())
+          .setCredentialOrdinalNumber(0)
           .build();
 
   @GivenTextResource(
@@ -112,6 +116,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setKakaotalkPlusFriendId("kakaoTalkChannel a friend id")
                   .setKakaotalkSenderKey("kakaoTalkChannel a sender key")
                   .build())
+          .setCredentialOrdinalNumber(0)
           .build();
   public static ConversationChannelCredentials conversationChannelKakaoTalkRequestDto =
       ConversationChannelCredentials.builder()
@@ -122,6 +127,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setKakaotalkPlusFriendId("kakaoTalkChannel a friend id")
                   .setKakaotalkSenderKey("kakaoTalkChannel a sender key")
                   .build())
+          .setCredentialOrdinalNumber(0)
           .build();
 
   @GivenTextResource(
@@ -147,6 +153,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setKakaotalkPlusFriendId("kakaoTalkChatChannel a friend id")
                   .setApiKey("")
                   .build())
+          .setCredentialOrdinalNumber(0)
           .build();
   public static ConversationChannelCredentials conversationChannelKakaoTalkChatRequestDto =
       ConversationChannelCredentials.builder()
@@ -157,6 +164,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setKakaotalkPlusFriendId("kakaoTalkChatChannel a friend id")
                   .setApiKey("")
                   .build())
+          .setCredentialOrdinalNumber(0)
           .build();
 
   @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelLineRequestDto.json")
@@ -179,7 +187,9 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
               LineCredentials.builder()
                   .setToken("lineChannel a token value")
                   .setSecret("lineChannel a secret value")
+                  .setIsDefault(true)
                   .build())
+          .setCredentialOrdinalNumber(1)
           .build();
   public static ConversationChannelCredentials conversationChannelLineRequestDto =
       ConversationChannelCredentials.builder()
@@ -189,7 +199,9 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
               LineCredentials.builder()
                   .setToken("lineChannel a token value")
                   .setSecret("lineChannel a secret value")
+                  .setIsDefault(true)
                   .build())
+          .setCredentialOrdinalNumber(1)
           .build();
 
   @GivenTextResource(
@@ -212,6 +224,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .build())
           .setCredentials(
               StaticTokenCredentials.builder().setToken("messengerChannel a token value").build())
+          .setCredentialOrdinalNumber(0)
           .build();
   public static ConversationChannelCredentials conversationChannelMessengerRequestDto =
       ConversationChannelCredentials.builder()
@@ -219,6 +232,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
           .setCallbackSecret("callback secret")
           .setCredentials(
               StaticTokenCredentials.builder().setToken("messengerChannel a token value").build())
+          .setCredentialOrdinalNumber(0)
           .build();
 
   @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelMMSRequestDto.json")
@@ -248,6 +262,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setApiKey("mmsChannel an api key")
                   // TODO ? .setDefaultSender("mmsChannel default sender")
                   .build())
+          .setCredentialOrdinalNumber(0)
           .build();
   public static ConversationChannelCredentials conversationChannelMMSRequestDto =
       ConversationChannelCredentials.builder()
@@ -264,6 +279,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setApiKey("mmsChannel an api key")
                   // TODO ? .setDefaultSender("mmsChannel default sender")
                   .build())
+          .setCredentialOrdinalNumber(0)
           .build();
 
   @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelRCSRequestDto.json")
@@ -287,6 +303,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setClaimedIdentity("rcsChannel my claimed identity")
                   .setToken("rcsChannel my token")
                   .build())
+          .setCredentialOrdinalNumber(0)
           .build();
   public static ConversationChannelCredentials conversationChannelRCSRequestDto =
       ConversationChannelCredentials.builder()
@@ -297,6 +314,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setClaimedIdentity("rcsChannel my claimed identity")
                   .setToken("rcsChannel my token")
                   .build())
+          .setCredentialOrdinalNumber(0)
           .build();
 
   @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelSMSRequestDto.json")
@@ -320,6 +338,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setClaimedIdentity("smsChannel my claimed identity")
                   .setToken("smsChannel my token")
                   .build())
+          .setCredentialOrdinalNumber(0)
           .build();
   public static ConversationChannelCredentials conversationChannelSMSRequestDto =
       ConversationChannelCredentials.builder()
@@ -330,6 +349,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setClaimedIdentity("smsChannel my claimed identity")
                   .setToken("smsChannel my token")
                   .build())
+          .setCredentialOrdinalNumber(0)
           .build();
 
   @GivenTextResource(
@@ -351,12 +371,14 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setDescription("description value")
                   .build())
           .setCredentials(TelegramCredentials.builder().setToken("telegramChannel token").build())
+          .setCredentialOrdinalNumber(0)
           .build();
   public static ConversationChannelCredentials conversationChannelTelegramRequestDto =
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.TELEGRAM)
           .setCallbackSecret("callback secret")
           .setCredentials(TelegramCredentials.builder().setToken("telegramChannel token").build())
+          .setCredentialOrdinalNumber(0)
           .build();
 
   @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelViberRequestDto.json")
@@ -377,12 +399,14 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setDescription("description value")
                   .build())
           .setCredentials(StaticTokenCredentials.builder().setToken("viberChannel token").build())
+          .setCredentialOrdinalNumber(0)
           .build();
   public static ConversationChannelCredentials conversationChannelViberRequestDto =
       ConversationChannelCredentials.builder()
           .setChannel(ConversationChannel.VIBER)
           .setCallbackSecret("callback secret")
           .setCredentials(StaticTokenCredentials.builder().setToken("viberChannel token").build())
+          .setCredentialOrdinalNumber(0)
           .build();
 
   @GivenTextResource(
@@ -408,6 +432,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setClaimedIdentity("viberBMChannel my claimed identity")
                   .setToken("viberBMChannel my token")
                   .build())
+          .setCredentialOrdinalNumber(0)
           .build();
   public static ConversationChannelCredentials conversationChannelViberBmRequestDto =
       ConversationChannelCredentials.builder()
@@ -418,6 +443,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setClaimedIdentity("viberBMChannel my claimed identity")
                   .setToken("viberBMChannel my token")
                   .build())
+          .setCredentialOrdinalNumber(0)
           .build();
 
   @GivenTextResource(
@@ -445,6 +471,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setToken("wechatChannel token")
                   .setAesKey("wechatChannel AES key")
                   .build())
+          .setCredentialOrdinalNumber(0)
           .build();
   public static ConversationChannelCredentials conversationChannelWeChatRequestDto =
       ConversationChannelCredentials.builder()
@@ -457,6 +484,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setToken("wechatChannel token")
                   .setAesKey("wechatChannel AES key")
                   .build())
+          .setCredentialOrdinalNumber(0)
           .build();
 
   @GivenTextResource(
@@ -482,6 +510,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setClaimedIdentity("whatsAppChannel my claimed identity")
                   .setToken("whatsAppChannel my token")
                   .build())
+          .setCredentialOrdinalNumber(0)
           .build();
   public static ConversationChannelCredentials conversationChannelWhatsAppRequestDto =
       ConversationChannelCredentials.builder()
@@ -492,6 +521,7 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
                   .setClaimedIdentity("whatsAppChannel my claimed identity")
                   .setToken("whatsAppChannel my token")
                   .build())
+          .setCredentialOrdinalNumber(0)
           .build();
 
   @Test
