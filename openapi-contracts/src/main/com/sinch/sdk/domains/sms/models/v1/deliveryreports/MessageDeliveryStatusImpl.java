@@ -78,7 +78,7 @@ public class MessageDeliveryStatusImpl implements MessageDeliveryStatus {
   }
 
   @JsonProperty(JSON_PROPERTY_RECIPIENTS)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<Set<String>> recipients() {
     return recipients;
   }
@@ -156,7 +156,7 @@ public class MessageDeliveryStatusImpl implements MessageDeliveryStatus {
       return this;
     }
 
-    @JsonProperty(value = JSON_PROPERTY_RECIPIENTS, required = true)
+    @JsonProperty(JSON_PROPERTY_RECIPIENTS)
     public Builder setRecipients(Set<String> recipients) {
       this.recipients = OptionalValue.of(recipients);
       return this;
