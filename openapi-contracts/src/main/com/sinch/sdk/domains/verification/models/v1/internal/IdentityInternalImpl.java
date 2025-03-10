@@ -99,13 +99,13 @@ public class IdentityInternalImpl implements IdentityInternal {
     OptionalValue<TypeEnum> type = OptionalValue.empty();
     OptionalValue<String> endpoint = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_TYPE)
+    @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
     public Builder setType(TypeEnum type) {
       this.type = OptionalValue.of(type);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_ENDPOINT)
+    @JsonProperty(value = JSON_PROPERTY_ENDPOINT, required = true)
     public Builder setEndpoint(String endpoint) {
       this.endpoint = OptionalValue.of(endpoint);
       return this;

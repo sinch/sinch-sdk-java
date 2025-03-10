@@ -170,7 +170,7 @@ public class CommentEventInternalImpl implements CommentEventInternal {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_TEXT)
+    @JsonProperty(value = JSON_PROPERTY_TEXT, required = true)
     public Builder setText(String text) {
       this.text = OptionalValue.of(text);
       return this;

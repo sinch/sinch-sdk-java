@@ -362,7 +362,7 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
     OptionalValue<MetadataUpdateStrategy> conversationMetadataUpdateStrategy =
         OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_APP_ID)
+    @JsonProperty(value = JSON_PROPERTY_APP_ID, required = true)
     public Builder<T> setAppId(String appId) {
       this.appId = OptionalValue.of(appId);
       return this;
@@ -386,7 +386,7 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_MESSAGE)
+    @JsonProperty(value = JSON_PROPERTY_MESSAGE, required = true)
     public Builder<T> setMessage(AppMessage<T> message) {
       this.message = OptionalValue.of(message);
       return this;
@@ -410,7 +410,7 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_RECIPIENT)
+    @JsonProperty(value = JSON_PROPERTY_RECIPIENT, required = true)
     public Builder<T> setRecipient(Recipient recipient) {
       this.recipient = OptionalValue.of(recipient);
       return this;

@@ -77,7 +77,7 @@ public class GenericEventInternalImpl implements GenericEventInternal {
   static class Builder implements GenericEventInternal.Builder {
     OptionalValue<Object> payload = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_PAYLOAD)
+    @JsonProperty(value = JSON_PROPERTY_PAYLOAD, required = true)
     public Builder setPayload(Object payload) {
       this.payload = OptionalValue.of(payload);
       return this;

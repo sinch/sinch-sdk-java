@@ -105,7 +105,7 @@ public class WhatsAppInteractiveHeaderDocumentImpl
         OptionalValue.of(WhatsAppInteractiveHeaderDocument.TypeEnum.DOCUMENT);
     OptionalValue<WhatsAppInteractiveHeaderMedia> document = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_DOCUMENT)
+    @JsonProperty(value = JSON_PROPERTY_DOCUMENT, required = true)
     public Builder setDocument(WhatsAppInteractiveHeaderMedia document) {
       this.document = OptionalValue.of(document);
       return this;

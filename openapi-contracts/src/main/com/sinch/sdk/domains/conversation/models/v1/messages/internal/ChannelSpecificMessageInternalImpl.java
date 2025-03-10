@@ -102,13 +102,13 @@ public class ChannelSpecificMessageInternalImpl implements ChannelSpecificMessag
     OptionalValue<MessageTypeEnum> messageType = OptionalValue.empty();
     OptionalValue<ChannelSpecificMessageMessageInternal> message = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_MESSAGE_TYPE)
+    @JsonProperty(value = JSON_PROPERTY_MESSAGE_TYPE, required = true)
     public Builder setMessageType(MessageTypeEnum messageType) {
       this.messageType = OptionalValue.of(messageType);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_MESSAGE)
+    @JsonProperty(value = JSON_PROPERTY_MESSAGE, required = true)
     public Builder setMessage(ChannelSpecificMessageMessageInternal message) {
       this.message = OptionalValue.of(message);
       return this;

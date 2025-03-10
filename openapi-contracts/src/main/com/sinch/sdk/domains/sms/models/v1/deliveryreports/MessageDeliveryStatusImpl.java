@@ -144,25 +144,25 @@ public class MessageDeliveryStatusImpl implements MessageDeliveryStatus {
     OptionalValue<Set<String>> recipients = OptionalValue.empty();
     OptionalValue<DeliveryStatus> status = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_CODE)
+    @JsonProperty(value = JSON_PROPERTY_CODE, required = true)
     public Builder setCode(DeliveryReceiptErrorCode code) {
       this.code = OptionalValue.of(code);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_COUNT)
+    @JsonProperty(value = JSON_PROPERTY_COUNT, required = true)
     public Builder setCount(Integer count) {
       this.count = OptionalValue.of(count);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_RECIPIENTS)
+    @JsonProperty(value = JSON_PROPERTY_RECIPIENTS, required = true)
     public Builder setRecipients(Set<String> recipients) {
       this.recipients = OptionalValue.of(recipients);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_STATUS)
+    @JsonProperty(value = JSON_PROPERTY_STATUS, required = true)
     public Builder setStatus(DeliveryStatus status) {
       this.status = OptionalValue.of(status);
       return this;

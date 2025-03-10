@@ -176,7 +176,7 @@ public class VerificationStartResponseDataImpl
 
     VerificationStartResponseDataContent.Builder _delegatedBuilder = null;
 
-    @JsonProperty(JSON_PROPERTY_ID)
+    @JsonProperty(value = JSON_PROPERTY_ID, required = true)
     public Builder setId(String id) {
       this.id = OptionalValue.of(id);
       return this;
@@ -188,7 +188,7 @@ public class VerificationStartResponseDataImpl
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_SEAMLESS)
+    @JsonProperty(value = JSON_PROPERTY_SEAMLESS, required = true)
     public Builder setSeamless(VerificationStartResponseDataContent seamless) {
       this.seamless = OptionalValue.of(seamless);
       return this;

@@ -132,7 +132,7 @@ public class VerificationReportRequestFlashCallImpl
 
     VerificationReportRequestFlashCallOptions.Builder _delegatedBuilder = null;
 
-    @JsonProperty(JSON_PROPERTY_FLASH_CALL)
+    @JsonProperty(value = JSON_PROPERTY_FLASH_CALL, required = true)
     public Builder setFlashCall(VerificationReportRequestFlashCallOptions flashCall) {
       this.flashCall = OptionalValue.of(flashCall);
       return this;

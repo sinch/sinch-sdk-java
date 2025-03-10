@@ -144,19 +144,19 @@ public class ReactionEventInternalImpl implements ReactionEventInternal {
     OptionalValue<String> messageId = OptionalValue.empty();
     OptionalValue<String> reactionCategory = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_EMOJI)
+    @JsonProperty(value = JSON_PROPERTY_EMOJI, required = true)
     public Builder setEmoji(String emoji) {
       this.emoji = OptionalValue.of(emoji);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_ACTION)
+    @JsonProperty(value = JSON_PROPERTY_ACTION, required = true)
     public Builder setAction(ReactionAction action) {
       this.action = OptionalValue.of(action);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_MESSAGE_ID)
+    @JsonProperty(value = JSON_PROPERTY_MESSAGE_ID, required = true)
     public Builder setMessageId(String messageId) {
       this.messageId = OptionalValue.of(messageId);
       return this;

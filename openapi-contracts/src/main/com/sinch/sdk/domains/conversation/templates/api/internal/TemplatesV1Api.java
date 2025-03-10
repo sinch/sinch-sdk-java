@@ -432,6 +432,7 @@ public class TemplatesV1Api {
                 URLPathUtils.encodePathSegment(templateId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
+
     if (null != updateMask) {
       localVarQueryParams.add(
           new URLParameter(

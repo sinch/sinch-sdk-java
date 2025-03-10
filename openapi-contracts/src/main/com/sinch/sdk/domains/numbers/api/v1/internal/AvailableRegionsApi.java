@@ -112,6 +112,7 @@ public class AvailableRegionsApi {
                 "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
+
     if (null != types) {
       localVarQueryParams.add(
           new URLParameter("types", types, URLParameter.STYLE.valueOf("form".toUpperCase()), true));

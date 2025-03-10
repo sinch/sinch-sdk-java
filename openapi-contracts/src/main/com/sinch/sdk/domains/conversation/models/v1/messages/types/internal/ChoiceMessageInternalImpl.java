@@ -103,7 +103,7 @@ public class ChoiceMessageInternalImpl implements ChoiceMessageInternal {
     OptionalValue<List<Choice<?>>> choices = OptionalValue.empty();
     OptionalValue<TextMessage> textMessage = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_CHOICES)
+    @JsonProperty(value = JSON_PROPERTY_CHOICES, required = true)
     public Builder setChoices(List<Choice<?>> choices) {
       this.choices = OptionalValue.of(choices);
       return this;

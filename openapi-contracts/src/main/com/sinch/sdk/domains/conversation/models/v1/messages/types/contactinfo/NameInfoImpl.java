@@ -185,7 +185,7 @@ public class NameInfoImpl implements NameInfo {
     OptionalValue<String> prefix = OptionalValue.empty();
     OptionalValue<String> suffix = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_FULL_NAME)
+    @JsonProperty(value = JSON_PROPERTY_FULL_NAME, required = true)
     public Builder setFullName(String fullName) {
       this.fullName = OptionalValue.of(fullName);
       return this;

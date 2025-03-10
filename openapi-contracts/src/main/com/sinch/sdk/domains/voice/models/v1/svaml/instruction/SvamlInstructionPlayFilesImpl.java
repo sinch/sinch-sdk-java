@@ -123,7 +123,7 @@ public class SvamlInstructionPlayFilesImpl
     OptionalValue<List<String>> ids = OptionalValue.empty();
     OptionalValue<String> locale = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_IDS)
+    @JsonProperty(value = JSON_PROPERTY_IDS, required = true)
     public Builder setIds(List<String> ids) {
       this.ids = OptionalValue.of(ids);
       return this;

@@ -123,7 +123,7 @@ public class SmsConfigurationImpl implements SmsConfiguration {
     OptionalValue<String> campaignId = OptionalValue.empty();
     OptionalValue<ScheduledSmsProvisioning> scheduledProvisioning = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_SERVICE_PLAN_ID)
+    @JsonProperty(value = JSON_PROPERTY_SERVICE_PLAN_ID, required = true)
     public Builder setServicePlanId(String servicePlanId) {
       this.servicePlanId = OptionalValue.of(servicePlanId);
       return this;

@@ -191,7 +191,7 @@ public class BatchDeliveryReportMMSImpl implements BatchDeliveryReportMMS, Batch
     OptionalValue<Integer> totalMessageCount = OptionalValue.empty();
     OptionalValue<TypeEnum> type = OptionalValue.of(TypeEnum.DELIVERY_REPORT_MMS);
 
-    @JsonProperty(JSON_PROPERTY_BATCH_ID)
+    @JsonProperty(value = JSON_PROPERTY_BATCH_ID, required = true)
     public Builder setBatchId(String batchId) {
       this.batchId = OptionalValue.of(batchId);
       return this;
@@ -203,13 +203,13 @@ public class BatchDeliveryReportMMSImpl implements BatchDeliveryReportMMS, Batch
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_STATUSES)
+    @JsonProperty(value = JSON_PROPERTY_STATUSES, required = true)
     public Builder setStatuses(List<MessageDeliveryStatus> statuses) {
       this.statuses = OptionalValue.of(statuses);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_TOTAL_MESSAGE_COUNT)
+    @JsonProperty(value = JSON_PROPERTY_TOTAL_MESSAGE_COUNT, required = true)
     public Builder setTotalMessageCount(Integer totalMessageCount) {
       this.totalMessageCount = OptionalValue.of(totalMessageCount);
       return this;

@@ -302,7 +302,7 @@ public class AppCreateRequestImpl implements AppCreateRequest {
     OptionalValue<MessageRetrySettings> messageRetrySettings = OptionalValue.empty();
     OptionalValue<DeliveryReportBasedFallback> deliveryReportBasedFallback = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_CHANNEL_CREDENTIALS)
+    @JsonProperty(value = JSON_PROPERTY_CHANNEL_CREDENTIALS, required = true)
     public Builder setChannelCredentials(List<ConversationChannelCredentials> channelCredentials) {
       this.channelCredentials = OptionalValue.of(channelCredentials);
       return this;
@@ -315,7 +315,7 @@ public class AppCreateRequestImpl implements AppCreateRequest {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_DISPLAY_NAME)
+    @JsonProperty(value = JSON_PROPERTY_DISPLAY_NAME, required = true)
     public Builder setDisplayName(String displayName) {
       this.displayName = OptionalValue.of(displayName);
       return this;

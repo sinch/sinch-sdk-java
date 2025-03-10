@@ -147,7 +147,7 @@ public class VerificationRequestEventResponseSmsImpl
 
     VerificationRequestEventResponseSmsContent.Builder _delegatedBuilder = null;
 
-    @JsonProperty(JSON_PROPERTY_ACTION)
+    @JsonProperty(value = JSON_PROPERTY_ACTION, required = true)
     public Builder setAction(VerificationEventResponseAction action) {
       this.action = OptionalValue.of(action);
       return this;

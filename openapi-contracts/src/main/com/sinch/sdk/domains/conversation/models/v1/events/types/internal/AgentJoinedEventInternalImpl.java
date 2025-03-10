@@ -78,7 +78,7 @@ public class AgentJoinedEventInternalImpl implements AgentJoinedEventInternal {
   static class Builder implements AgentJoinedEventInternal.Builder {
     OptionalValue<Agent> agent = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_AGENT)
+    @JsonProperty(value = JSON_PROPERTY_AGENT, required = true)
     public Builder setAgent(Agent agent) {
       this.agent = OptionalValue.of(agent);
       return this;

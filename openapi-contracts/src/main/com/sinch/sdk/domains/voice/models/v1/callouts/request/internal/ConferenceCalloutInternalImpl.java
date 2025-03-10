@@ -392,13 +392,13 @@ public class ConferenceCalloutInternalImpl implements ConferenceCalloutInternal 
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_DESTINATION)
+    @JsonProperty(value = JSON_PROPERTY_DESTINATION, required = true)
     public Builder setDestination(DestinationConference destination) {
       this.destination = OptionalValue.of(destination);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_CONFERENCE_ID)
+    @JsonProperty(value = JSON_PROPERTY_CONFERENCE_ID, required = true)
     public Builder setConferenceId(String conferenceId) {
       this.conferenceId = OptionalValue.of(conferenceId);
       return this;

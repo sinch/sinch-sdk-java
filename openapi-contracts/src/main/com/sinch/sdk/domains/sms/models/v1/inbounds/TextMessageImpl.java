@@ -254,13 +254,13 @@ public class TextMessageImpl implements TextMessage, InboundMessage {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_FROM)
+    @JsonProperty(value = JSON_PROPERTY_FROM, required = true)
     public Builder setFrom(String from) {
       this.from = OptionalValue.of(from);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_ID)
+    @JsonProperty(value = JSON_PROPERTY_ID, required = true)
     public Builder setId(String id) {
       this.id = OptionalValue.of(id);
       return this;
@@ -272,7 +272,7 @@ public class TextMessageImpl implements TextMessage, InboundMessage {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_RECEIVED_AT)
+    @JsonProperty(value = JSON_PROPERTY_RECEIVED_AT, required = true)
     public Builder setReceivedAt(Instant receivedAt) {
       this.receivedAt = OptionalValue.of(receivedAt);
       return this;
@@ -284,13 +284,13 @@ public class TextMessageImpl implements TextMessage, InboundMessage {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_TO)
+    @JsonProperty(value = JSON_PROPERTY_TO, required = true)
     public Builder setTo(String to) {
       this.to = OptionalValue.of(to);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_BODY)
+    @JsonProperty(value = JSON_PROPERTY_BODY, required = true)
     public Builder setBody(String body) {
       this.body = OptionalValue.of(body);
       return this;

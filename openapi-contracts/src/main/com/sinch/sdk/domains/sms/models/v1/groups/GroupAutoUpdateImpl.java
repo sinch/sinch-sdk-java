@@ -122,7 +122,7 @@ public class GroupAutoUpdateImpl implements GroupAutoUpdate {
     OptionalValue<AddKeyword> add = OptionalValue.empty();
     OptionalValue<RemoveKeyword> remove = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_TO)
+    @JsonProperty(value = JSON_PROPERTY_TO, required = true)
     public Builder setTo(String to) {
       this.to = OptionalValue.of(to);
       return this;

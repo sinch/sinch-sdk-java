@@ -132,7 +132,7 @@ public class VerificationReportRequestPhoneCallImpl
 
     VerificationReportRequestPhoneCallOptions.Builder _delegatedBuilder = null;
 
-    @JsonProperty(JSON_PROPERTY_CALLOUT)
+    @JsonProperty(value = JSON_PROPERTY_CALLOUT, required = true)
     public Builder setCallout(VerificationReportRequestPhoneCallOptions callout) {
       this.callout = OptionalValue.of(callout);
       return this;

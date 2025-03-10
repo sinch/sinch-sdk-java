@@ -232,19 +232,19 @@ public class VerificationRequestEventImpl
     OptionalValue<Price> price = OptionalValue.empty();
     OptionalValue<List<String>> acceptLanguage = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_ID)
+    @JsonProperty(value = JSON_PROPERTY_ID, required = true)
     public Builder setId(String id) {
       this.id = OptionalValue.of(id);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_EVENT)
+    @JsonProperty(value = JSON_PROPERTY_EVENT, required = true)
     public Builder setEvent(EventEnum event) {
       this.event = OptionalValue.of(event);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_IDENTITY)
+    @JsonProperty(value = JSON_PROPERTY_IDENTITY, required = true)
     public Builder setIdentity(Identity identity) {
       this.identity = OptionalValue.of(identity);
       return this;
@@ -262,7 +262,7 @@ public class VerificationRequestEventImpl
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_METHOD)
+    @JsonProperty(value = JSON_PROPERTY_METHOD, required = true)
     public Builder setMethod(MethodEnum method) {
       this.method = OptionalValue.of(method);
       return this;

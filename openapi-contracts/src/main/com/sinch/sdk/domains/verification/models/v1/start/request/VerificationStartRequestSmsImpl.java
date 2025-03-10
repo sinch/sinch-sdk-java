@@ -250,7 +250,7 @@ public class VerificationStartRequestSmsImpl
 
     VerificationStartSmsOptions.Builder _delegatedBuilder = null;
 
-    @JsonProperty(JSON_PROPERTY_IDENTITY)
+    @JsonProperty(value = JSON_PROPERTY_IDENTITY, required = true)
     public Builder setIdentity(Identity identity) {
       this.identity = OptionalValue.of(identity);
       return this;

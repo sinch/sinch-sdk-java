@@ -229,7 +229,7 @@ public class MenuImpl implements Menu {
     OptionalValue<Integer> maxTimeoutMills = OptionalValue.empty();
     OptionalValue<List<MenuOption>> options = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_ID)
+    @JsonProperty(value = JSON_PROPERTY_ID, required = true)
     public Builder setId(String id) {
       this.id = OptionalValue.of(id);
       return this;

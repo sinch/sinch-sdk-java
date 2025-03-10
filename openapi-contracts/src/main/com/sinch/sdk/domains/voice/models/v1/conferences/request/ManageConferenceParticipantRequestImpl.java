@@ -102,7 +102,7 @@ public class ManageConferenceParticipantRequestImpl implements ManageConferenceP
     OptionalValue<CommandEnum> command = OptionalValue.empty();
     OptionalValue<MusicOnHold> MusicOnHold = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_COMMAND)
+    @JsonProperty(value = JSON_PROPERTY_COMMAND, required = true)
     public Builder setCommand(CommandEnum command) {
       this.command = OptionalValue.of(command);
       return this;

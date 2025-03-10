@@ -103,7 +103,7 @@ public class ListSectionImpl<T> implements ListSection<T> {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_ITEMS)
+    @JsonProperty(value = JSON_PROPERTY_ITEMS, required = true)
     public Builder<T> setItems(List<ListItem<T>> items) {
       this.items = OptionalValue.of(items);
       return this;
