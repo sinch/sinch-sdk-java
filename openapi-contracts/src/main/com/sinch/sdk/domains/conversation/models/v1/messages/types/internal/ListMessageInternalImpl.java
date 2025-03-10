@@ -168,7 +168,7 @@ public class ListMessageInternalImpl implements ListMessageInternal {
     OptionalValue<List<ListSection<?>>> sections = OptionalValue.empty();
     OptionalValue<ListAdditionalProperties> messageProperties = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_TITLE)
+    @JsonProperty(value = JSON_PROPERTY_TITLE, required = true)
     public Builder setTitle(String title) {
       this.title = OptionalValue.of(title);
       return this;
@@ -186,7 +186,7 @@ public class ListMessageInternalImpl implements ListMessageInternal {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_SECTIONS)
+    @JsonProperty(value = JSON_PROPERTY_SECTIONS, required = true)
     public Builder setSections(List<ListSection<?>> sections) {
       this.sections = OptionalValue.of(sections);
       return this;

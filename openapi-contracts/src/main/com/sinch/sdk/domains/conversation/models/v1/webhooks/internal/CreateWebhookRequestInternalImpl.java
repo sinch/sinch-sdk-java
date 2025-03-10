@@ -210,7 +210,7 @@ public class CreateWebhookRequestInternalImpl implements CreateWebhookRequestInt
     OptionalValue<WebhookTargetType> targetType = OptionalValue.empty();
     OptionalValue<List<WebhookTrigger>> triggers = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_APP_ID)
+    @JsonProperty(value = JSON_PROPERTY_APP_ID, required = true)
     public Builder setAppId(String appId) {
       this.appId = OptionalValue.of(appId);
       return this;
@@ -234,7 +234,7 @@ public class CreateWebhookRequestInternalImpl implements CreateWebhookRequestInt
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_TARGET)
+    @JsonProperty(value = JSON_PROPERTY_TARGET, required = true)
     public Builder setTarget(String target) {
       this.target = OptionalValue.of(target);
       return this;

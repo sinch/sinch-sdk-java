@@ -362,13 +362,13 @@ public class RecipientDeliveryReportMMSImpl
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_AT)
+    @JsonProperty(value = JSON_PROPERTY_AT, required = true)
     public Builder setCreatedAt(Instant createdAt) {
       this.createdAt = OptionalValue.of(createdAt);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_BATCH_ID)
+    @JsonProperty(value = JSON_PROPERTY_BATCH_ID, required = true)
     public Builder setBatchId(String batchId) {
       this.batchId = OptionalValue.of(batchId);
       return this;
@@ -380,7 +380,7 @@ public class RecipientDeliveryReportMMSImpl
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_CODE)
+    @JsonProperty(value = JSON_PROPERTY_CODE, required = true)
     public Builder setCode(DeliveryReceiptErrorCode code) {
       this.code = OptionalValue.of(code);
       return this;
@@ -410,13 +410,13 @@ public class RecipientDeliveryReportMMSImpl
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_RECIPIENT)
+    @JsonProperty(value = JSON_PROPERTY_RECIPIENT, required = true)
     public Builder setRecipient(String recipient) {
       this.recipient = OptionalValue.of(recipient);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_STATUS)
+    @JsonProperty(value = JSON_PROPERTY_STATUS, required = true)
     public Builder setStatus(DeliveryStatus status) {
       this.status = OptionalValue.of(status);
       return this;

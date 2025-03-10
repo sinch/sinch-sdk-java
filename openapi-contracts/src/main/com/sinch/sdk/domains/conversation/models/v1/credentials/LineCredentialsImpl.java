@@ -99,13 +99,13 @@ public class LineCredentialsImpl implements LineCredentials, ChannelCredentials 
     OptionalValue<String> token = OptionalValue.empty();
     OptionalValue<String> secret = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_TOKEN)
+    @JsonProperty(value = JSON_PROPERTY_TOKEN, required = true)
     public Builder setToken(String token) {
       this.token = OptionalValue.of(token);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_SECRET)
+    @JsonProperty(value = JSON_PROPERTY_SECRET, required = true)
     public Builder setSecret(String secret) {
       this.secret = OptionalValue.of(secret);
       return this;

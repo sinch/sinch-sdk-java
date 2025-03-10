@@ -79,7 +79,7 @@ public class VerificationReportRequestFlashCallOptionsImpl
   static class Builder implements VerificationReportRequestFlashCallOptions.Builder {
     OptionalValue<String> cli = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_CLI)
+    @JsonProperty(value = JSON_PROPERTY_CLI, required = true)
     public Builder setCli(String cli) {
       this.cli = OptionalValue.of(cli);
       return this;

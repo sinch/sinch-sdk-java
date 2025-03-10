@@ -100,13 +100,13 @@ public class ChoiceResponseMessageInternalImpl implements ChoiceResponseMessageI
     OptionalValue<String> messageId = OptionalValue.empty();
     OptionalValue<String> postbackData = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_MESSAGE_ID)
+    @JsonProperty(value = JSON_PROPERTY_MESSAGE_ID, required = true)
     public Builder setMessageId(String messageId) {
       this.messageId = OptionalValue.of(messageId);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_POSTBACK_DATA)
+    @JsonProperty(value = JSON_PROPERTY_POSTBACK_DATA, required = true)
     public Builder setPostbackData(String postbackData) {
       this.postbackData = OptionalValue.of(postbackData);
       return this;

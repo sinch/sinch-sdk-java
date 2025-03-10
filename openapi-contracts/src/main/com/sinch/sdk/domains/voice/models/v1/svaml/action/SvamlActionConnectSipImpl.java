@@ -240,7 +240,7 @@ public class SvamlActionConnectSipImpl
     OptionalValue<List<CallHeader>> callHeaders = OptionalValue.empty();
     OptionalValue<MusicOnHold> MusicOnHold = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_DESTINATION)
+    @JsonProperty(value = JSON_PROPERTY_DESTINATION, required = true)
     public Builder setDestination(DestinationSip destination) {
       this.destination = OptionalValue.of(destination);
       return this;

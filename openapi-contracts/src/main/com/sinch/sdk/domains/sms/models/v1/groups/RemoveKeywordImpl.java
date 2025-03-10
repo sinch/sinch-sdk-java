@@ -99,7 +99,7 @@ public class RemoveKeywordImpl implements RemoveKeyword {
     OptionalValue<String> firstWord = OptionalValue.empty();
     OptionalValue<String> secondWord = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_FIRST_WORD)
+    @JsonProperty(value = JSON_PROPERTY_FIRST_WORD, required = true)
     public Builder setFirstWord(String firstWord) {
       this.firstWord = OptionalValue.of(firstWord);
       return this;

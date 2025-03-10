@@ -102,13 +102,13 @@ public class KakaoTalkCredentialsImpl implements KakaoTalkCredentials, ChannelCr
     OptionalValue<String> kakaotalkPlusFriendId = OptionalValue.empty();
     OptionalValue<String> kakaotalkSenderKey = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_KAKAOTALK_PLUS_FRIEND_ID)
+    @JsonProperty(value = JSON_PROPERTY_KAKAOTALK_PLUS_FRIEND_ID, required = true)
     public Builder setKakaotalkPlusFriendId(String kakaotalkPlusFriendId) {
       this.kakaotalkPlusFriendId = OptionalValue.of(kakaotalkPlusFriendId);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_KAKAOTALK_SENDER_KEY)
+    @JsonProperty(value = JSON_PROPERTY_KAKAOTALK_SENDER_KEY, required = true)
     public Builder setKakaotalkSenderKey(String kakaotalkSenderKey) {
       this.kakaotalkSenderKey = OptionalValue.of(kakaotalkSenderKey);
       return this;

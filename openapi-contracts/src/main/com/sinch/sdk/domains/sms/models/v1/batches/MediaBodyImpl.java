@@ -132,7 +132,7 @@ public class MediaBodyImpl implements MediaBody {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_URL)
+    @JsonProperty(value = JSON_PROPERTY_URL, required = true)
     public Builder setUrl(String url) {
       this.url = OptionalValue.of(url);
       return this;

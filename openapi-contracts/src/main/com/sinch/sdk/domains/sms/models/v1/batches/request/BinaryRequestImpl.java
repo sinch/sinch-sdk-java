@@ -348,7 +348,7 @@ public class BinaryRequestImpl implements BinaryRequest, BatchRequest {
     OptionalValue<Integer> fromTon = OptionalValue.empty();
     OptionalValue<Integer> fromNpi = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_TO)
+    @JsonProperty(value = JSON_PROPERTY_TO, required = true)
     public Builder setTo(List<String> to) {
       this.to = OptionalValue.of(to);
       return this;
@@ -360,13 +360,13 @@ public class BinaryRequestImpl implements BinaryRequest, BatchRequest {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_BODY)
+    @JsonProperty(value = JSON_PROPERTY_BODY, required = true)
     public Builder setBody(String body) {
       this.body = OptionalValue.of(body);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_UDH)
+    @JsonProperty(value = JSON_PROPERTY_UDH, required = true)
     public Builder setUdh(String udh) {
       this.udh = OptionalValue.of(udh);
       return this;

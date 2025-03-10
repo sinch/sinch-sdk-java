@@ -104,7 +104,7 @@ public class WhatsAppInteractiveHeaderImageImpl
     OptionalValue<TypeEnum> type = OptionalValue.of(WhatsAppInteractiveHeaderImage.TypeEnum.IMAGE);
     OptionalValue<WhatsAppInteractiveHeaderMedia> image = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_IMAGE)
+    @JsonProperty(value = JSON_PROPERTY_IMAGE, required = true)
     public Builder setImage(WhatsAppInteractiveHeaderMedia image) {
       this.image = OptionalValue.of(image);
       return this;

@@ -224,13 +224,13 @@ public class AvailableNumberRentAnyRequestImpl implements AvailableNumberRentAny
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_REGION_CODE)
+    @JsonProperty(value = JSON_PROPERTY_REGION_CODE, required = true)
     public Builder setRegionCode(String regionCode) {
       this.regionCode = OptionalValue.of(regionCode);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_TYPE)
+    @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
     public Builder setType(NumberType type) {
       this.type = OptionalValue.of(type);
       return this;

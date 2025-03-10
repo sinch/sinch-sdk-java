@@ -100,7 +100,7 @@ public class MergeContactRequestImpl implements MergeContactRequest {
     OptionalValue<String> sourceId = OptionalValue.empty();
     OptionalValue<ConversationMergeStrategy> strategy = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_SOURCE_ID)
+    @JsonProperty(value = JSON_PROPERTY_SOURCE_ID, required = true)
     public Builder setSourceId(String sourceId) {
       this.sourceId = OptionalValue.of(sourceId);
       return this;

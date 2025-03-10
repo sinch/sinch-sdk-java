@@ -265,6 +265,7 @@ public class AvailableNumberApi {
                 "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
+
     if (null != numberPatternPattern) {
       localVarQueryParams.add(
           new URLParameter(
@@ -273,6 +274,7 @@ public class AvailableNumberApi {
               URLParameter.STYLE.valueOf("form".toUpperCase()),
               true));
     }
+
     if (null != numberPatternSearchPattern) {
       localVarQueryParams.add(
           new URLParameter(
@@ -281,15 +283,18 @@ public class AvailableNumberApi {
               URLParameter.STYLE.valueOf("form".toUpperCase()),
               true));
     }
+
     if (null != regionCode) {
       localVarQueryParams.add(
           new URLParameter(
               "regionCode", regionCode, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
+
     if (null != type) {
       localVarQueryParams.add(
           new URLParameter("type", type, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
+
     if (null != capabilities) {
       localVarQueryParams.add(
           new URLParameter(
@@ -298,6 +303,7 @@ public class AvailableNumberApi {
               URLParameter.STYLE.valueOf("form".toUpperCase()),
               true));
     }
+
     if (null != size) {
       localVarQueryParams.add(
           new URLParameter("size", size, URLParameter.STYLE.valueOf("form".toUpperCase()), true));

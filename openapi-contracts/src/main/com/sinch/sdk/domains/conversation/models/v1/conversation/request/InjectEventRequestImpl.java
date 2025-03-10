@@ -214,7 +214,7 @@ public class InjectEventRequestImpl implements InjectEventRequest {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_ACCEPT_TIME)
+    @JsonProperty(value = JSON_PROPERTY_ACCEPT_TIME, required = true)
     public Builder setAcceptTime(Instant acceptTime) {
       this.acceptTime = OptionalValue.of(acceptTime);
       return this;

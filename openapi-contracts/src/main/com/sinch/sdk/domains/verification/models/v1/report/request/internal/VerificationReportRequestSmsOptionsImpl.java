@@ -102,7 +102,7 @@ public class VerificationReportRequestSmsOptionsImpl
     OptionalValue<String> code = OptionalValue.empty();
     OptionalValue<String> cli = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_CODE)
+    @JsonProperty(value = JSON_PROPERTY_CODE, required = true)
     public Builder setCode(String code) {
       this.code = OptionalValue.of(code);
       return this;

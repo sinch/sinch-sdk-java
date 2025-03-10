@@ -297,25 +297,25 @@ public class InjectMessageRequestBaseImpl implements InjectMessageRequestBase {
       return self();
     }
 
-    @JsonProperty(JSON_PROPERTY_ACCEPT_TIME)
+    @JsonProperty(value = JSON_PROPERTY_ACCEPT_TIME, required = true)
     public B setAcceptTime(Instant acceptTime) {
       this.acceptTime = OptionalValue.of(acceptTime);
       return self();
     }
 
-    @JsonProperty(JSON_PROPERTY_CHANNEL_IDENTITY)
+    @JsonProperty(value = JSON_PROPERTY_CHANNEL_IDENTITY, required = true)
     public B setChannelIdentity(ChannelIdentity channelIdentity) {
       this.channelIdentity = OptionalValue.of(channelIdentity);
       return self();
     }
 
-    @JsonProperty(JSON_PROPERTY_CONTACT_ID)
+    @JsonProperty(value = JSON_PROPERTY_CONTACT_ID, required = true)
     public B setContactId(String contactId) {
       this.contactId = OptionalValue.of(contactId);
       return self();
     }
 
-    @JsonProperty(JSON_PROPERTY_DIRECTION)
+    @JsonProperty(value = JSON_PROPERTY_DIRECTION, required = true)
     public B setDirection(ConversationDirection direction) {
       this.direction = OptionalValue.of(direction);
       return self();

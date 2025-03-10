@@ -78,7 +78,7 @@ public class SendDeliveryFeedbackRequestImpl implements SendDeliveryFeedbackRequ
   static class Builder implements SendDeliveryFeedbackRequest.Builder {
     OptionalValue<List<String>> recipients = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_RECIPIENTS)
+    @JsonProperty(value = JSON_PROPERTY_RECIPIENTS, required = true)
     public Builder setRecipients(List<String> recipients) {
       this.recipients = OptionalValue.of(recipients);
       return this;

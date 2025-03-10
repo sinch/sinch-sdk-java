@@ -154,13 +154,13 @@ public class VerificationStartResponseFlashCallContentImpl
     OptionalValue<Integer> reportTimeout = OptionalValue.empty();
     OptionalValue<Integer> denyCallAfter = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_CLI_FILTER)
+    @JsonProperty(value = JSON_PROPERTY_CLI_FILTER, required = true)
     public Builder setCliFilter(String cliFilter) {
       this.cliFilter = OptionalValue.of(cliFilter);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_INTERCEPTION_TIMEOUT)
+    @JsonProperty(value = JSON_PROPERTY_INTERCEPTION_TIMEOUT, required = true)
     public Builder setInterceptionTimeout(Integer interceptionTimeout) {
       this.interceptionTimeout = OptionalValue.of(interceptionTimeout);
       return this;

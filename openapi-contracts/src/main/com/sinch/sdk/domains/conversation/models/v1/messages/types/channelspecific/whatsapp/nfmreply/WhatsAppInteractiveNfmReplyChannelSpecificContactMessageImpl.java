@@ -111,7 +111,7 @@ public class WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl
             WhatsAppInteractiveNfmReplyChannelSpecificContactMessage.TypeEnum.NFM_REPLY);
     OptionalValue<WhatsAppInteractiveNfmReply> nfmReply = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_NFM_REPLY)
+    @JsonProperty(value = JSON_PROPERTY_NFM_REPLY, required = true)
     public Builder setNfmReply(WhatsAppInteractiveNfmReply nfmReply) {
       this.nfmReply = OptionalValue.of(nfmReply);
       return this;

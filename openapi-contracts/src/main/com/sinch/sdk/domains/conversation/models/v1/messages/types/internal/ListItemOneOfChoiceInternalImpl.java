@@ -78,7 +78,7 @@ public class ListItemOneOfChoiceInternalImpl implements ListItemOneOfChoiceInter
   static class Builder implements ListItemOneOfChoiceInternal.Builder {
     OptionalValue<ChoiceItem> choice = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_CHOICE)
+    @JsonProperty(value = JSON_PROPERTY_CHOICE, required = true)
     public Builder setChoice(ChoiceItem choice) {
       this.choice = OptionalValue.of(choice);
       return this;

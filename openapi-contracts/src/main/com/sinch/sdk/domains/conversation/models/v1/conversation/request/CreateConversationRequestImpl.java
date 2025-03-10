@@ -220,13 +220,13 @@ public class CreateConversationRequestImpl implements CreateConversationRequest 
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_APP_ID)
+    @JsonProperty(value = JSON_PROPERTY_APP_ID, required = true)
     public Builder setAppId(String appId) {
       this.appId = OptionalValue.of(appId);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_CONTACT_ID)
+    @JsonProperty(value = JSON_PROPERTY_CONTACT_ID, required = true)
     public Builder setContactId(String contactId) {
       this.contactId = OptionalValue.of(contactId);
       return this;

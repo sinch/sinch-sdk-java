@@ -209,13 +209,13 @@ public class ContactInfoMessageInternalImpl implements ContactInfoMessageInterna
     OptionalValue<List<UrlInfo>> urls = OptionalValue.empty();
     OptionalValue<LocalDate> birthday = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_NAME)
+    @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
     public Builder setName(NameInfo name) {
       this.name = OptionalValue.of(name);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_PHONE_NUMBERS)
+    @JsonProperty(value = JSON_PROPERTY_PHONE_NUMBERS, required = true)
     public Builder setPhoneNumbers(List<PhoneNumberInfo> phoneNumbers) {
       this.phoneNumbers = OptionalValue.of(phoneNumbers);
       return this;

@@ -78,7 +78,7 @@ public class WhatsAppInteractiveHeaderMediaImpl implements WhatsAppInteractiveHe
   static class Builder implements WhatsAppInteractiveHeaderMedia.Builder {
     OptionalValue<String> link = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_LINK)
+    @JsonProperty(value = JSON_PROPERTY_LINK, required = true)
     public Builder setLink(String link) {
       this.link = OptionalValue.of(link);
       return this;

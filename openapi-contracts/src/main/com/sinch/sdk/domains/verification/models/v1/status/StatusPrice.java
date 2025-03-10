@@ -18,14 +18,19 @@ import com.sinch.sdk.domains.verification.models.v1.Price;
 public interface StatusPrice {
 
   /**
-   * Get verificationPrice
+   * The maximum price charged for this verification process. This property will appear in the body
+   * of the response with a delay. It will become visible only when the verification status is other
+   * than PENDING.
    *
    * @return verificationPrice
    */
   Price getVerificationPrice();
 
   /**
-   * Get terminationPrice
+   * The maximum cost of the call made during this verification process. Present only when
+   * termination debiting is enabled (disabled by default). This property will appear in the body of
+   * the response with a delay. It will become visible only after the call is completed, when its
+   * cost is known to Sinch.
    *
    * @return terminationPrice
    */

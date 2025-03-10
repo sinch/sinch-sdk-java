@@ -156,13 +156,13 @@ public class TemplateReferenceInternalImpl implements TemplateReferenceInternal 
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_TEMPLATE_ID)
+    @JsonProperty(value = JSON_PROPERTY_TEMPLATE_ID, required = true)
     public Builder setTemplateId(String templateId) {
       this.templateId = OptionalValue.of(templateId);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_VERSION)
+    @JsonProperty(value = JSON_PROPERTY_VERSION, required = true)
     public Builder setVersion(String version) {
       this.version = OptionalValue.of(version);
       return this;

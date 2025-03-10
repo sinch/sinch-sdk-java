@@ -123,7 +123,7 @@ public class LocationMessageInternalImpl implements LocationMessageInternal {
     OptionalValue<String> label = OptionalValue.empty();
     OptionalValue<String> title = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_COORDINATES)
+    @JsonProperty(value = JSON_PROPERTY_COORDINATES, required = true)
     public Builder setCoordinates(Coordinates coordinates) {
       this.coordinates = OptionalValue.of(coordinates);
       return this;
@@ -135,7 +135,7 @@ public class LocationMessageInternalImpl implements LocationMessageInternal {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_TITLE)
+    @JsonProperty(value = JSON_PROPERTY_TITLE, required = true)
     public Builder setTitle(String title) {
       this.title = OptionalValue.of(title);
       return this;

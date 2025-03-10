@@ -167,19 +167,19 @@ public class TranscodeMessageRequestImpl implements TranscodeMessageRequest {
     OptionalValue<String> from = OptionalValue.empty();
     OptionalValue<String> to = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_APP_ID)
+    @JsonProperty(value = JSON_PROPERTY_APP_ID, required = true)
     public Builder setAppId(String appId) {
       this.appId = OptionalValue.of(appId);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_APP_MESSAGE)
+    @JsonProperty(value = JSON_PROPERTY_APP_MESSAGE, required = true)
     public Builder setAppMessage(AppMessage<?> appMessage) {
       this.appMessage = OptionalValue.of(appMessage);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_CHANNELS)
+    @JsonProperty(value = JSON_PROPERTY_CHANNELS, required = true)
     public Builder setChannels(List<ConversationChannel> channels) {
       this.channels = OptionalValue.of(channels);
       return this;

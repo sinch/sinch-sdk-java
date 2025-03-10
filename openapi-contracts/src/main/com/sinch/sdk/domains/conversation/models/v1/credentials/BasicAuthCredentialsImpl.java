@@ -100,13 +100,13 @@ public class BasicAuthCredentialsImpl implements BasicAuthCredentials {
     OptionalValue<String> password = OptionalValue.empty();
     OptionalValue<String> username = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_PASSWORD)
+    @JsonProperty(value = JSON_PROPERTY_PASSWORD, required = true)
     public Builder setPassword(String password) {
       this.password = OptionalValue.of(password);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_USERNAME)
+    @JsonProperty(value = JSON_PROPERTY_USERNAME, required = true)
     public Builder setUsername(String username) {
       this.username = OptionalValue.of(username);
       return this;
