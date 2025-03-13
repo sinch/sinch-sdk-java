@@ -143,8 +143,8 @@ public class AppMessageDtoTest extends ConversationBaseTest {
   @GivenTextResource("/domains/conversation/v1/messages/AppMessageTextDto.json")
   static String jsonAppMessageTextRequestDto;
 
-  private static Map<ConversationChannel, Object> createExplicitChannelMessage() {
-    Map<ConversationChannel, Object> map = new HashMap<>();
+  private static Map<ConversationChannel, String> createExplicitChannelMessage() {
+    Map<ConversationChannel, String> map = new HashMap<>();
     map.put(ConversationChannel.KAKAOTALK, "foo value");
     return Collections.unmodifiableMap(map);
   }
