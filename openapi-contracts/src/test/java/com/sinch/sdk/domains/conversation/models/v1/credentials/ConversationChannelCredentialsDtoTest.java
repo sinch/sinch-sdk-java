@@ -4,7 +4,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-public class ConversationChannelCredentialsDtoTest extends BaseTest {
+public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest {
 
   @GivenTextResource(
       "/domains/conversation/v1/credentials/ConversationChannelAppleBusinessChatRequestDto.json")
@@ -199,6 +199,85 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
               LineCredentials.builder()
                   .setToken("lineChannel a token value")
                   .setSecret("lineChannel a secret value")
+                  .setIsDefault(true)
+                  .build())
+          .setCredentialOrdinalNumber(1)
+          .build();
+
+  @GivenTextResource(
+      "/domains/conversation/v1/credentials/ConversationChannelLineEnterpriseThailandRequestDto.json")
+  String jsonConversationChannelLineEnterpriseThailandRequestDto;
+
+  @GivenJsonResource(
+      "/domains/conversation/v1/credentials/ConversationChannelLineEnterpriseThailandResponseDto.json")
+  ConversationChannelCredentials loadedConversationChannelLineEnterpriseThailandDto;
+
+  public static ConversationChannelCredentials
+      conversationChannelLineEnterpriseThailandResponseDto =
+          ConversationChannelCredentials.builder()
+              .setChannel(ConversationChannel.LINE)
+              .setCallbackSecret("callback secret")
+              .setChannelKnownId("channel id")
+              .setState(
+                  ChannelIntegrationState.builder()
+                      .setStatus(ChannelIntegrationStatus.PENDING)
+                      .setDescription("description value")
+                      .build())
+              .setCredentials(
+                  LineEnterpriseCredentialsThailand.builder()
+                      .setToken("line enterprise credentials thailand token value")
+                      .setSecret("line enterprise credentials thailand secret value")
+                      .setIsDefault(true)
+                      .build())
+              .setCredentialOrdinalNumber(1)
+              .build();
+  public static ConversationChannelCredentials conversationChannelLineEnterpriseThailandRequestDto =
+      ConversationChannelCredentials.builder()
+          .setChannel(ConversationChannel.LINE)
+          .setCallbackSecret("callback secret")
+          .setCredentials(
+              LineEnterpriseCredentialsThailand.builder()
+                  .setToken("line enterprise credentials thailand token value")
+                  .setSecret("line enterprise credentials thailand secret value")
+                  .setIsDefault(true)
+                  .build())
+          .setCredentialOrdinalNumber(1)
+          .build();
+
+  @GivenTextResource(
+      "/domains/conversation/v1/credentials/ConversationChannelLineEnterpriseJapanRequestDto.json")
+  String jsonConversationChannelLineEnterpriseJapanRequestDto;
+
+  @GivenJsonResource(
+      "/domains/conversation/v1/credentials/ConversationChannelLineEnterpriseJapanResponseDto.json")
+  ConversationChannelCredentials loadedConversationChannelLineEnterpriseJapanDto;
+
+  public static ConversationChannelCredentials conversationChannelLineEnterpriseJapanResponseDto =
+      ConversationChannelCredentials.builder()
+          .setChannel(ConversationChannel.LINE)
+          .setCallbackSecret("callback secret")
+          .setChannelKnownId("channel id")
+          .setState(
+              ChannelIntegrationState.builder()
+                  .setStatus(ChannelIntegrationStatus.PENDING)
+                  .setDescription("description value")
+                  .build())
+          .setCredentials(
+              LineEnterpriseCredentialsJapan.builder()
+                  .setToken("line enterprise credentials japan token value")
+                  .setSecret("line enterprise credentials japan secret value")
+                  .setIsDefault(true)
+                  .build())
+          .setCredentialOrdinalNumber(1)
+          .build();
+  public static ConversationChannelCredentials conversationChannelLineEnterpriseJapanRequestDto =
+      ConversationChannelCredentials.builder()
+          .setChannel(ConversationChannel.LINE)
+          .setCallbackSecret("callback secret")
+          .setCredentials(
+              LineEnterpriseCredentialsJapan.builder()
+                  .setToken("line enterprise credentials japan token value")
+                  .setSecret("line enterprise credentials japan secret value")
                   .setIsDefault(true)
                   .build())
           .setCredentialOrdinalNumber(1)
@@ -596,6 +675,40 @@ public class ConversationChannelCredentialsDtoTest extends BaseTest {
     Assertions.assertThat(loadedConversationChannelLineDto)
         .usingRecursiveComparison()
         .isEqualTo(conversationChannelLineResponseDto);
+  }
+
+  @Test
+  void serializeConversationChannelLineEnterpriseThailandDto()
+      throws JsonProcessingException, JSONException {
+    String serializedString =
+        objectMapper.writeValueAsString(conversationChannelLineEnterpriseThailandRequestDto);
+
+    JSONAssert.assertEquals(
+        jsonConversationChannelLineEnterpriseThailandRequestDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeConversationChannelLineEnterpriseThailandDto() {
+    Assertions.assertThat(loadedConversationChannelLineEnterpriseThailandDto)
+        .usingRecursiveComparison()
+        .isEqualTo(conversationChannelLineEnterpriseThailandResponseDto);
+  }
+
+  @Test
+  void serializeConversationChannelLineEnterpriseJapanDto()
+      throws JsonProcessingException, JSONException {
+    String serializedString =
+        objectMapper.writeValueAsString(conversationChannelLineEnterpriseJapanRequestDto);
+
+    JSONAssert.assertEquals(
+        jsonConversationChannelLineEnterpriseJapanRequestDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeConversationChannelLineEnterpriseJapanDto() {
+    Assertions.assertThat(loadedConversationChannelLineEnterpriseJapanDto)
+        .usingRecursiveComparison()
+        .isEqualTo(conversationChannelLineEnterpriseJapanResponseDto);
   }
 
   @Test

@@ -8,6 +8,7 @@ import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.conversation.api.templates.adapters.TemplatesService;
 import com.sinch.sdk.domains.conversation.api.v1.WebHooksService;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.credentials.LineEnterpriseCredentialsMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.events.app.AppEventMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.events.contactmessage.internal.ContactMessageEventMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.events.contacts.internal.ContactEventMapper;
@@ -203,6 +204,7 @@ public class ConversationService
       ContactMessageMapper.initMapper();
       ContactMessageInternalMapper.initMapper();
       ConversationMessageMapper.initMapper();
+      LineEnterpriseCredentialsMapper.initMapper();
       ListMessageInternalMapper.initMapper();
       ListSectionMapper.initMapper();
       OmniMessageOverrideMapper.initMapper();
