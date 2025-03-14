@@ -69,6 +69,12 @@ class DateUtilTest {
   }
 
   @Test
+  void failSafeTimeFromUnixTimeStamp() {
+    Instant instant = DateUtil.failSafeTimeStampToInstant("1741934627");
+    assertEquals("2025-03-14T06:43:47Z", instant.toString());
+  }
+
+  @Test
   void RFC822NullGuard() {
     Instant instant = DateUtil.RFC822StringToInstant(null);
     assertNull(instant);
