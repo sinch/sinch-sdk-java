@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.credentials;
+package com.sinch.sdk.domains.conversation.models.v1.credentials.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -17,22 +17,22 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  * channel_credentials</code> array, you must include either the <code>line_credentials</code>
  * object or the <code>line_enterprise_credentials</code> object in the entry as well.
  */
-@JsonDeserialize(builder = LineCredentialsImpl.Builder.class)
-public interface LineCredentials extends ChannelCredentials, LineCredentialsCommon {
+@JsonDeserialize(builder = LineEnterpriseCredentialsInternalImpl.Builder.class)
+public interface LineEnterpriseCredentialsInternal {
 
   /**
-   * The token for the LINE channel to which you are connecting.
+   * Get lineJapan
    *
-   * @return token
+   * @return lineJapan
    */
-  String getToken();
+  LineEnterpriseCredentialsDetailsInternal getLineJapan();
 
   /**
-   * The secret for the LINE channel to which you are connecting.
+   * Get lineThailand
    *
-   * @return secret
+   * @return lineThailand
    */
-  String getSecret();
+  LineEnterpriseCredentialsDetailsInternal getLineThailand();
 
   /**
    * When an app contains multiple LINE or LINE Enterprise credentials, one of the credentials needs
@@ -49,7 +49,7 @@ public interface LineCredentials extends ChannelCredentials, LineCredentialsComm
    * @return New Builder instance
    */
   static Builder builder() {
-    return new LineCredentialsImpl.Builder();
+    return new LineEnterpriseCredentialsInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -58,20 +58,20 @@ public interface LineCredentials extends ChannelCredentials, LineCredentialsComm
     /**
      * see getter
      *
-     * @param token see getter
+     * @param lineJapan see getter
      * @return Current builder
-     * @see #getToken
+     * @see #getLineJapan
      */
-    Builder setToken(String token);
+    Builder setLineJapan(LineEnterpriseCredentialsDetailsInternal lineJapan);
 
     /**
      * see getter
      *
-     * @param secret see getter
+     * @param lineThailand see getter
      * @return Current builder
-     * @see #getSecret
+     * @see #getLineThailand
      */
-    Builder setSecret(String secret);
+    Builder setLineThailand(LineEnterpriseCredentialsDetailsInternal lineThailand);
 
     /**
      * see getter
@@ -87,6 +87,6 @@ public interface LineCredentials extends ChannelCredentials, LineCredentialsComm
      *
      * @return The instance build with current builder values
      */
-    LineCredentials build();
+    LineEnterpriseCredentialsInternal build();
   }
 }

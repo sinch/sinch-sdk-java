@@ -8,20 +8,20 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.messages.types.internal;
+package com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.payment;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** Message containing a list of cards often rendered horizontally on supported channels. */
-@JsonDeserialize(builder = CarouselMessageFieldInternalImpl.Builder.class)
-public interface CarouselMessageFieldInternal {
+/** The payment settings. */
+@JsonDeserialize(builder = OrderDetailsPaymentSettingsImpl.Builder.class)
+public interface OrderDetailsPaymentSettings {
 
   /**
-   * Get carouselMessage
+   * Get dynamicPix
    *
-   * @return carouselMessage
+   * @return dynamicPix
    */
-  CarouselMessageInternal getCarouselMessage();
+  OrderDetailsPaymentSettingsDynamicPix getDynamicPix();
 
   /**
    * Getting builder
@@ -29,7 +29,7 @@ public interface CarouselMessageFieldInternal {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new CarouselMessageFieldInternalImpl.Builder();
+    return new OrderDetailsPaymentSettingsImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -38,17 +38,17 @@ public interface CarouselMessageFieldInternal {
     /**
      * see getter
      *
-     * @param carouselMessage see getter
+     * @param dynamicPix see getter
      * @return Current builder
-     * @see #getCarouselMessage
+     * @see #getDynamicPix
      */
-    Builder setCarouselMessage(CarouselMessageInternal carouselMessage);
+    Builder setDynamicPix(OrderDetailsPaymentSettingsDynamicPix dynamicPix);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    CarouselMessageFieldInternal build();
+    OrderDetailsPaymentSettings build();
   }
 }

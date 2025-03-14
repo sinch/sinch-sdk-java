@@ -17,8 +17,17 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  * channel_credentials</code> array, you must include either the <code>line_credentials</code>
  * object or the <code>line_enterprise_credentials</code> object in the entry as well.
  */
-@JsonDeserialize(builder = LineCredentialsImpl.Builder.class)
-public interface LineCredentials extends ChannelCredentials, LineCredentialsCommon {
+@JsonDeserialize(builder = LineEnterpriseCredentialsThailandImpl.Builder.class)
+public interface LineEnterpriseCredentialsThailand extends LineEnterpriseCredentials {
+
+  /**
+   * When an app contains multiple LINE or LINE Enterprise credentials, one of the credentials needs
+   * to be defined as the default. Setting this property to <code>true</code> marks the
+   * corresponding credentials as the default credentials.
+   *
+   * @return isDefault
+   */
+  Boolean getIsDefault();
 
   /**
    * The token for the LINE channel to which you are connecting.
@@ -35,25 +44,27 @@ public interface LineCredentials extends ChannelCredentials, LineCredentialsComm
   String getSecret();
 
   /**
-   * When an app contains multiple LINE or LINE Enterprise credentials, one of the credentials needs
-   * to be defined as the default. Setting this property to <code>true</code> marks the
-   * corresponding credentials as the default credentials.
-   *
-   * @return isDefault
-   */
-  Boolean getIsDefault();
-
-  /**
    * Getting builder
    *
    * @return New Builder instance
    */
   static Builder builder() {
-    return new LineCredentialsImpl.Builder();
+    return new LineEnterpriseCredentialsThailandImpl.Builder();
   }
 
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder
+      extends com.sinch.sdk.domains.conversation.models.v1.credentials.LineEnterpriseCredentials
+          .Builder {
+
+    /**
+     * see getter
+     *
+     * @param isDefault see getter
+     * @return Current builder
+     * @see #getIsDefault
+     */
+    Builder setIsDefault(Boolean isDefault);
 
     /**
      * see getter
@@ -74,19 +85,10 @@ public interface LineCredentials extends ChannelCredentials, LineCredentialsComm
     Builder setSecret(String secret);
 
     /**
-     * see getter
-     *
-     * @param isDefault see getter
-     * @return Current builder
-     * @see #getIsDefault
-     */
-    Builder setIsDefault(Boolean isDefault);
-
-    /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    LineCredentials build();
+    LineEnterpriseCredentialsThailand build();
   }
 }

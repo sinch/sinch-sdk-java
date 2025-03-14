@@ -10,15 +10,12 @@
 
 package com.sinch.sdk.domains.conversation.models.v1.credentials;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
 /**
  * If the <code>channel</code> property is set to <code>LINE</code> for this entry of the <code>
  * channel_credentials</code> array, you must include either the <code>line_credentials</code>
  * object or the <code>line_enterprise_credentials</code> object in the entry as well.
  */
-@JsonDeserialize(builder = LineCredentialsImpl.Builder.class)
-public interface LineCredentials extends ChannelCredentials, LineCredentialsCommon {
+public interface LineCredentialsCommon {
 
   /**
    * The token for the LINE channel to which you are connecting.
@@ -42,15 +39,6 @@ public interface LineCredentials extends ChannelCredentials, LineCredentialsComm
    * @return isDefault
    */
   Boolean getIsDefault();
-
-  /**
-   * Getting builder
-   *
-   * @return New Builder instance
-   */
-  static Builder builder() {
-    return new LineCredentialsImpl.Builder();
-  }
 
   /** Dedicated Builder */
   interface Builder {
@@ -87,6 +75,6 @@ public interface LineCredentials extends ChannelCredentials, LineCredentialsComm
      *
      * @return The instance build with current builder values
      */
-    LineCredentials build();
+    LineCredentialsCommon build();
   }
 }

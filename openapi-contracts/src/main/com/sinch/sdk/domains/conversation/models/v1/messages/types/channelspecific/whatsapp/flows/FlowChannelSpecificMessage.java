@@ -16,7 +16,7 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** A message type for sending WhatsApp Flows. */
+/** FlowChannelSpecificMessage */
 @JsonDeserialize(builder = FlowChannelSpecificMessageImpl.Builder.class)
 public interface FlowChannelSpecificMessage
     extends com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific

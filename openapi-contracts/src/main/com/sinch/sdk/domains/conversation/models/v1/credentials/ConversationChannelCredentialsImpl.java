@@ -18,6 +18,7 @@ import java.util.stream.Stream;
   ConversationChannelCredentialsImpl.JSON_PROPERTY_KAKAOTALK_CREDENTIALS,
   ConversationChannelCredentialsImpl.JSON_PROPERTY_TELEGRAM_CREDENTIALS,
   ConversationChannelCredentialsImpl.JSON_PROPERTY_LINE_CREDENTIALS,
+  ConversationChannelCredentialsImpl.JSON_PROPERTY_LINE_ENTERPRISE_CREDENTIALS,
   ConversationChannelCredentialsImpl.JSON_PROPERTY_WECHAT_CREDENTIALS,
   ConversationChannelCredentialsImpl.JSON_PROPERTY_INSTAGRAM_CREDENTIALS,
   ConversationChannelCredentialsImpl.JSON_PROPERTY_APPLEBC_CREDENTIALS,
@@ -25,7 +26,8 @@ import java.util.stream.Stream;
   ConversationChannelCredentialsImpl.JSON_PROPERTY_CALLBACK_SECRET,
   ConversationChannelCredentialsImpl.JSON_PROPERTY_CHANNEL,
   ConversationChannelCredentialsImpl.JSON_PROPERTY_STATE,
-  ConversationChannelCredentialsImpl.JSON_PROPERTY_CHANNEL_KNOWN_ID
+  ConversationChannelCredentialsImpl.JSON_PROPERTY_CHANNEL_KNOWN_ID,
+  ConversationChannelCredentialsImpl.JSON_PROPERTY_CREDENTIAL_ORDINAL_NUMBER
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
@@ -55,6 +57,11 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
   public static final String JSON_PROPERTY_LINE_CREDENTIALS = "line_credentials";
 
   private OptionalValue<LineCredentials> lineCredentials;
+
+  public static final String JSON_PROPERTY_LINE_ENTERPRISE_CREDENTIALS =
+      "line_enterprise_credentials";
+
+  private OptionalValue<LineEnterpriseCredentials> lineEnterpriseCredentials;
 
   public static final String JSON_PROPERTY_WECHAT_CREDENTIALS = "wechat_credentials";
 
@@ -88,6 +95,10 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
 
   private OptionalValue<String> channelKnownId;
 
+  public static final String JSON_PROPERTY_CREDENTIAL_ORDINAL_NUMBER = "credential_ordinal_number";
+
+  private OptionalValue<Integer> credentialOrdinalNumber;
+
   public ConversationChannelCredentialsImpl() {}
 
   protected ConversationChannelCredentialsImpl(
@@ -97,6 +108,7 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
       OptionalValue<KakaoTalkCredentials> kakaotalkCredentials,
       OptionalValue<TelegramCredentials> telegramCredentials,
       OptionalValue<LineCredentials> lineCredentials,
+      OptionalValue<LineEnterpriseCredentials> lineEnterpriseCredentials,
       OptionalValue<WeChatCredentials> wechatCredentials,
       OptionalValue<InstagramCredentials> instagramCredentials,
       OptionalValue<AppleBusinessChatCredentials> applebcCredentials,
@@ -104,13 +116,15 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
       OptionalValue<String> callbackSecret,
       OptionalValue<ConversationChannel> channel,
       OptionalValue<ChannelIntegrationState> state,
-      OptionalValue<String> channelKnownId) {
+      OptionalValue<String> channelKnownId,
+      OptionalValue<Integer> credentialOrdinalNumber) {
     this.staticBearer = staticBearer;
     this.staticToken = staticToken;
     this.mmsCredentials = mmsCredentials;
     this.kakaotalkCredentials = kakaotalkCredentials;
     this.telegramCredentials = telegramCredentials;
     this.lineCredentials = lineCredentials;
+    this.lineEnterpriseCredentials = lineEnterpriseCredentials;
     this.wechatCredentials = wechatCredentials;
     this.instagramCredentials = instagramCredentials;
     this.applebcCredentials = applebcCredentials;
@@ -119,6 +133,7 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
     this.channel = channel;
     this.state = state;
     this.channelKnownId = channelKnownId;
+    this.credentialOrdinalNumber = credentialOrdinalNumber;
   }
 
   @JsonIgnore
@@ -129,6 +144,7 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
             kakaotalkCredentials,
             kakaotalkchatCredentials,
             lineCredentials,
+            lineEnterpriseCredentials,
             mmsCredentials,
             staticBearer,
             staticToken,
@@ -204,6 +220,17 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<LineCredentials> lineCredentials() {
     return lineCredentials;
+  }
+
+  @JsonIgnore
+  public LineEnterpriseCredentials getLineEnterpriseCredentials() {
+    return lineEnterpriseCredentials.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_LINE_ENTERPRISE_CREDENTIALS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<LineEnterpriseCredentials> lineEnterpriseCredentials() {
+    return lineEnterpriseCredentials;
   }
 
   @JsonIgnore
@@ -292,6 +319,17 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
     return channelKnownId;
   }
 
+  @JsonIgnore
+  public Integer getCredentialOrdinalNumber() {
+    return credentialOrdinalNumber.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CREDENTIAL_ORDINAL_NUMBER)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<Integer> credentialOrdinalNumber() {
+    return credentialOrdinalNumber;
+  }
+
   /** Return true if this ConversationChannelCredentials object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -311,6 +349,9 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
         && Objects.equals(
             this.telegramCredentials, conversationChannelCredentials.telegramCredentials)
         && Objects.equals(this.lineCredentials, conversationChannelCredentials.lineCredentials)
+        && Objects.equals(
+            this.lineEnterpriseCredentials,
+            conversationChannelCredentials.lineEnterpriseCredentials)
         && Objects.equals(this.wechatCredentials, conversationChannelCredentials.wechatCredentials)
         && Objects.equals(
             this.instagramCredentials, conversationChannelCredentials.instagramCredentials)
@@ -321,7 +362,9 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
         && Objects.equals(this.callbackSecret, conversationChannelCredentials.callbackSecret)
         && Objects.equals(this.channel, conversationChannelCredentials.channel)
         && Objects.equals(this.state, conversationChannelCredentials.state)
-        && Objects.equals(this.channelKnownId, conversationChannelCredentials.channelKnownId);
+        && Objects.equals(this.channelKnownId, conversationChannelCredentials.channelKnownId)
+        && Objects.equals(
+            this.credentialOrdinalNumber, conversationChannelCredentials.credentialOrdinalNumber);
   }
 
   @Override
@@ -333,6 +376,7 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
         kakaotalkCredentials,
         telegramCredentials,
         lineCredentials,
+        lineEnterpriseCredentials,
         wechatCredentials,
         instagramCredentials,
         applebcCredentials,
@@ -340,7 +384,8 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
         callbackSecret,
         channel,
         state,
-        channelKnownId);
+        channelKnownId,
+        credentialOrdinalNumber);
   }
 
   @Override
@@ -357,6 +402,9 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
         .append(toIndentedString(telegramCredentials))
         .append("\n");
     sb.append("    lineCredentials: ").append(toIndentedString(lineCredentials)).append("\n");
+    sb.append("    lineEnterpriseCredentials: ")
+        .append(toIndentedString(lineEnterpriseCredentials))
+        .append("\n");
     sb.append("    wechatCredentials: ").append(toIndentedString(wechatCredentials)).append("\n");
     sb.append("    instagramCredentials: ")
         .append(toIndentedString(instagramCredentials))
@@ -369,6 +417,9 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
     sb.append("    channel: ").append(toIndentedString(channel)).append("\n");
     sb.append("    state: ").append(toIndentedString(state)).append("\n");
     sb.append("    channelKnownId: ").append(toIndentedString(channelKnownId)).append("\n");
+    sb.append("    credentialOrdinalNumber: ")
+        .append(toIndentedString(credentialOrdinalNumber))
+        .append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -391,6 +442,7 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
     OptionalValue<KakaoTalkCredentials> kakaotalkCredentials = OptionalValue.empty();
     OptionalValue<TelegramCredentials> telegramCredentials = OptionalValue.empty();
     OptionalValue<LineCredentials> lineCredentials = OptionalValue.empty();
+    OptionalValue<LineEnterpriseCredentials> lineEnterpriseCredentials = OptionalValue.empty();
     OptionalValue<WeChatCredentials> wechatCredentials = OptionalValue.empty();
     OptionalValue<InstagramCredentials> instagramCredentials = OptionalValue.empty();
     OptionalValue<AppleBusinessChatCredentials> applebcCredentials = OptionalValue.empty();
@@ -399,6 +451,7 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
     OptionalValue<ConversationChannel> channel = OptionalValue.empty();
     OptionalValue<ChannelIntegrationState> state = OptionalValue.empty();
     OptionalValue<String> channelKnownId = OptionalValue.empty();
+    OptionalValue<Integer> credentialOrdinalNumber = OptionalValue.empty();
 
     @JsonIgnore
     public Builder setCredentials(ChannelCredentials credentials) {
@@ -419,6 +472,9 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
       }
       if (credentials instanceof LineCredentials) {
         setLineCredentials((LineCredentials) credentials);
+      }
+      if (credentials instanceof LineEnterpriseCredentials) {
+        setLineEnterpriseCredentials((LineEnterpriseCredentials) credentials);
       }
       if (credentials instanceof WeChatCredentials) {
         setWechatCredentials((WeChatCredentials) credentials);
@@ -471,6 +527,13 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_LINE_ENTERPRISE_CREDENTIALS)
+    public Builder setLineEnterpriseCredentials(
+        LineEnterpriseCredentials lineEnterpriseCredentials) {
+      this.lineEnterpriseCredentials = OptionalValue.of(lineEnterpriseCredentials);
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_WECHAT_CREDENTIALS)
     public Builder setWechatCredentials(WeChatCredentials wechatCredentials) {
       this.wechatCredentials = OptionalValue.of(wechatCredentials);
@@ -519,6 +582,12 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_CREDENTIAL_ORDINAL_NUMBER)
+    public Builder setCredentialOrdinalNumber(Integer credentialOrdinalNumber) {
+      this.credentialOrdinalNumber = OptionalValue.of(credentialOrdinalNumber);
+      return this;
+    }
+
     public ConversationChannelCredentials build() {
       return new ConversationChannelCredentialsImpl(
           staticBearer,
@@ -527,6 +596,7 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
           kakaotalkCredentials,
           telegramCredentials,
           lineCredentials,
+          lineEnterpriseCredentials,
           wechatCredentials,
           instagramCredentials,
           applebcCredentials,
@@ -534,7 +604,8 @@ public class ConversationChannelCredentialsImpl implements ConversationChannelCr
           callbackSecret,
           channel,
           state,
-          channelKnownId);
+          channelKnownId,
+          credentialOrdinalNumber);
     }
   }
 }

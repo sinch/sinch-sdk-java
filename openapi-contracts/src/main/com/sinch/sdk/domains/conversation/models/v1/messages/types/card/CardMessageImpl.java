@@ -101,20 +101,6 @@ public class CardMessageImpl
   }
 
   @JsonIgnore
-  public MediaMessage getMedia() {
-    if (null == cardMessage || !cardMessage.isPresent() || null == cardMessage.get().getMedia()) {
-      return null;
-    }
-    return cardMessage.get().getMedia();
-  }
-
-  public OptionalValue<MediaMessage> media() {
-    return null != cardMessage && cardMessage.isPresent()
-        ? cardMessage.map(f -> ((CardMessageInternalImpl) f).media()).orElse(OptionalValue.empty())
-        : OptionalValue.empty();
-  }
-
-  @JsonIgnore
   public String getTitle() {
     if (null == cardMessage || !cardMessage.isPresent() || null == cardMessage.get().getTitle()) {
       return null;
@@ -125,6 +111,20 @@ public class CardMessageImpl
   public OptionalValue<String> title() {
     return null != cardMessage && cardMessage.isPresent()
         ? cardMessage.map(f -> ((CardMessageInternalImpl) f).title()).orElse(OptionalValue.empty())
+        : OptionalValue.empty();
+  }
+
+  @JsonIgnore
+  public MediaMessage getMedia() {
+    if (null == cardMessage || !cardMessage.isPresent() || null == cardMessage.get().getMedia()) {
+      return null;
+    }
+    return cardMessage.get().getMedia();
+  }
+
+  public OptionalValue<MediaMessage> media() {
+    return null != cardMessage && cardMessage.isPresent()
+        ? cardMessage.map(f -> ((CardMessageInternalImpl) f).media()).orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
 
@@ -196,14 +196,14 @@ public class CardMessageImpl
     }
 
     @JsonIgnore
-    public Builder setMedia(MediaMessage media) {
-      getDelegatedBuilder().setMedia(media);
+    public Builder setTitle(String title) {
+      getDelegatedBuilder().setTitle(title);
       return this;
     }
 
     @JsonIgnore
-    public Builder setTitle(String title) {
-      getDelegatedBuilder().setTitle(title);
+    public Builder setMedia(MediaMessage media) {
+      getDelegatedBuilder().setMedia(media);
       return this;
     }
 

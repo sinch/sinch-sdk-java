@@ -17,8 +17,8 @@ import java.util.Objects;
   CardMessageInternalImpl.JSON_PROPERTY_CHOICES,
   CardMessageInternalImpl.JSON_PROPERTY_DESCRIPTION,
   CardMessageInternalImpl.JSON_PROPERTY_HEIGHT,
-  CardMessageInternalImpl.JSON_PROPERTY_MEDIA_MESSAGE,
-  CardMessageInternalImpl.JSON_PROPERTY_TITLE
+  CardMessageInternalImpl.JSON_PROPERTY_TITLE,
+  CardMessageInternalImpl.JSON_PROPERTY_MEDIA_MESSAGE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
@@ -37,13 +37,13 @@ public class CardMessageInternalImpl implements CardMessageInternal {
 
   private OptionalValue<CardHeight> height;
 
-  public static final String JSON_PROPERTY_MEDIA_MESSAGE = "media_message";
-
-  private OptionalValue<MediaMessage> media;
-
   public static final String JSON_PROPERTY_TITLE = "title";
 
   private OptionalValue<String> title;
+
+  public static final String JSON_PROPERTY_MEDIA_MESSAGE = "media_message";
+
+  private OptionalValue<MediaMessage> media;
 
   public CardMessageInternalImpl() {}
 
@@ -51,13 +51,13 @@ public class CardMessageInternalImpl implements CardMessageInternal {
       OptionalValue<List<Choice<?>>> choices,
       OptionalValue<String> description,
       OptionalValue<CardHeight> height,
-      OptionalValue<MediaMessage> media,
-      OptionalValue<String> title) {
+      OptionalValue<String> title,
+      OptionalValue<MediaMessage> media) {
     this.choices = choices;
     this.description = description;
     this.height = height;
-    this.media = media;
     this.title = title;
+    this.media = media;
   }
 
   @JsonIgnore
@@ -94,17 +94,6 @@ public class CardMessageInternalImpl implements CardMessageInternal {
   }
 
   @JsonIgnore
-  public MediaMessage getMedia() {
-    return media.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_MEDIA_MESSAGE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<MediaMessage> media() {
-    return media;
-  }
-
-  @JsonIgnore
   public String getTitle() {
     return title.orElse(null);
   }
@@ -113,6 +102,17 @@ public class CardMessageInternalImpl implements CardMessageInternal {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> title() {
     return title;
+  }
+
+  @JsonIgnore
+  public MediaMessage getMedia() {
+    return media.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_MEDIA_MESSAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<MediaMessage> media() {
+    return media;
   }
 
   /** Return true if this CardMessage object is equal to o. */
@@ -128,13 +128,13 @@ public class CardMessageInternalImpl implements CardMessageInternal {
     return Objects.equals(this.choices, cardMessage.choices)
         && Objects.equals(this.description, cardMessage.description)
         && Objects.equals(this.height, cardMessage.height)
-        && Objects.equals(this.media, cardMessage.media)
-        && Objects.equals(this.title, cardMessage.title);
+        && Objects.equals(this.title, cardMessage.title)
+        && Objects.equals(this.media, cardMessage.media);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(choices, description, height, media, title);
+    return Objects.hash(choices, description, height, title, media);
   }
 
   @Override
@@ -144,8 +144,8 @@ public class CardMessageInternalImpl implements CardMessageInternal {
     sb.append("    choices: ").append(toIndentedString(choices)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    height: ").append(toIndentedString(height)).append("\n");
-    sb.append("    media: ").append(toIndentedString(media)).append("\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
+    sb.append("    media: ").append(toIndentedString(media)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -165,8 +165,8 @@ public class CardMessageInternalImpl implements CardMessageInternal {
     OptionalValue<List<Choice<?>>> choices = OptionalValue.empty();
     OptionalValue<String> description = OptionalValue.empty();
     OptionalValue<CardHeight> height = OptionalValue.empty();
-    OptionalValue<MediaMessage> media = OptionalValue.empty();
     OptionalValue<String> title = OptionalValue.empty();
+    OptionalValue<MediaMessage> media = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CHOICES)
     public Builder setChoices(List<Choice<?>> choices) {
@@ -186,20 +186,20 @@ public class CardMessageInternalImpl implements CardMessageInternal {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_MEDIA_MESSAGE)
-    public Builder setMedia(MediaMessage media) {
-      this.media = OptionalValue.of(media);
-      return this;
-    }
-
     @JsonProperty(JSON_PROPERTY_TITLE)
     public Builder setTitle(String title) {
       this.title = OptionalValue.of(title);
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_MEDIA_MESSAGE)
+    public Builder setMedia(MediaMessage media) {
+      this.media = OptionalValue.of(media);
+      return this;
+    }
+
     public CardMessageInternal build() {
-      return new CardMessageInternalImpl(choices, description, height, media, title);
+      return new CardMessageInternalImpl(choices, description, height, title, media);
     }
   }
 }

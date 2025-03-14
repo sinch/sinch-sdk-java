@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.conversation.models.v1.credentials;
+package com.sinch.sdk.domains.conversation.models.v1.credentials.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,14 +10,13 @@ import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  LineCredentialsImpl.JSON_PROPERTY_TOKEN,
-  LineCredentialsImpl.JSON_PROPERTY_SECRET,
-  LineCredentialsImpl.JSON_PROPERTY_IS_DEFAULT
+  LineEnterpriseCredentialsDetailsInternalImpl.JSON_PROPERTY_TOKEN,
+  LineEnterpriseCredentialsDetailsInternalImpl.JSON_PROPERTY_SECRET
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class LineCredentialsImpl
-    implements LineCredentials, ChannelCredentials, LineCredentialsCommon {
+public class LineEnterpriseCredentialsDetailsInternalImpl
+    implements LineEnterpriseCredentialsDetailsInternal {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_TOKEN = "token";
@@ -28,17 +27,12 @@ public class LineCredentialsImpl
 
   private OptionalValue<String> secret;
 
-  public static final String JSON_PROPERTY_IS_DEFAULT = "is_default";
+  public LineEnterpriseCredentialsDetailsInternalImpl() {}
 
-  private OptionalValue<Boolean> isDefault;
-
-  public LineCredentialsImpl() {}
-
-  protected LineCredentialsImpl(
-      OptionalValue<String> token, OptionalValue<String> secret, OptionalValue<Boolean> isDefault) {
+  protected LineEnterpriseCredentialsDetailsInternalImpl(
+      OptionalValue<String> token, OptionalValue<String> secret) {
     this.token = token;
     this.secret = secret;
-    this.isDefault = isDefault;
   }
 
   @JsonIgnore
@@ -63,18 +57,7 @@ public class LineCredentialsImpl
     return secret;
   }
 
-  @JsonIgnore
-  public Boolean getIsDefault() {
-    return isDefault.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_IS_DEFAULT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<Boolean> isDefault() {
-    return isDefault;
-  }
-
-  /** Return true if this LINE_Credentials object is equal to o. */
+  /** Return true if this LineEnterpriseCredentials object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -83,24 +66,23 @@ public class LineCredentialsImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    LineCredentialsImpl liNECredentials = (LineCredentialsImpl) o;
-    return Objects.equals(this.token, liNECredentials.token)
-        && Objects.equals(this.secret, liNECredentials.secret)
-        && Objects.equals(this.isDefault, liNECredentials.isDefault);
+    LineEnterpriseCredentialsDetailsInternalImpl lineEnterpriseCredentials =
+        (LineEnterpriseCredentialsDetailsInternalImpl) o;
+    return Objects.equals(this.token, lineEnterpriseCredentials.token)
+        && Objects.equals(this.secret, lineEnterpriseCredentials.secret);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(token, secret, isDefault);
+    return Objects.hash(token, secret);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class LineCredentialsImpl {\n");
+    sb.append("class LineEnterpriseCredentialsDetailsInternalImpl {\n");
     sb.append("    token: ").append(toIndentedString(token)).append("\n");
     sb.append("    secret: ").append(toIndentedString("***")).append("\n");
-    sb.append("    isDefault: ").append(toIndentedString(isDefault)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -116,10 +98,9 @@ public class LineCredentialsImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements LineCredentials.Builder {
+  static class Builder implements LineEnterpriseCredentialsDetailsInternal.Builder {
     OptionalValue<String> token = OptionalValue.empty();
     OptionalValue<String> secret = OptionalValue.empty();
-    OptionalValue<Boolean> isDefault = OptionalValue.empty();
 
     @JsonProperty(value = JSON_PROPERTY_TOKEN, required = true)
     public Builder setToken(String token) {
@@ -133,14 +114,8 @@ public class LineCredentialsImpl
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_IS_DEFAULT)
-    public Builder setIsDefault(Boolean isDefault) {
-      this.isDefault = OptionalValue.of(isDefault);
-      return this;
-    }
-
-    public LineCredentials build() {
-      return new LineCredentialsImpl(token, secret, isDefault);
+    public LineEnterpriseCredentialsDetailsInternal build() {
+      return new LineEnterpriseCredentialsDetailsInternalImpl(token, secret);
     }
   }
 }
