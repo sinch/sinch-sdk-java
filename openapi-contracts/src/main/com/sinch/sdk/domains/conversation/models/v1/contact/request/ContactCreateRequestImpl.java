@@ -211,7 +211,7 @@ public class ContactCreateRequestImpl implements ContactCreateRequest {
     OptionalValue<ContactLanguage> language = OptionalValue.empty();
     OptionalValue<String> metadata = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_CHANNEL_IDENTITIES)
+    @JsonProperty(value = JSON_PROPERTY_CHANNEL_IDENTITIES, required = true)
     public Builder setChannelIdentities(List<ChannelIdentity> channelIdentities) {
       this.channelIdentities = OptionalValue.of(channelIdentities);
       return this;
@@ -241,7 +241,7 @@ public class ContactCreateRequestImpl implements ContactCreateRequest {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_LANGUAGE)
+    @JsonProperty(value = JSON_PROPERTY_LANGUAGE, required = true)
     public Builder setLanguage(ContactLanguage language) {
       this.language = OptionalValue.of(language);
       return this;

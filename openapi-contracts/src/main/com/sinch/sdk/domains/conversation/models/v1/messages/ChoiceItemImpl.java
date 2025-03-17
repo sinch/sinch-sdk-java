@@ -146,7 +146,7 @@ public class ChoiceItemImpl
     OptionalValue<MediaMessage> media = OptionalValue.empty();
     OptionalValue<String> postbackData = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_TITLE)
+    @JsonProperty(value = JSON_PROPERTY_TITLE, required = true)
     public Builder setTitle(String title) {
       this.title = OptionalValue.of(title);
       return this;

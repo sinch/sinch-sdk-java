@@ -99,7 +99,7 @@ public class PhoneNumberInfoImpl implements PhoneNumberInfo {
     OptionalValue<String> phoneNumber = OptionalValue.empty();
     OptionalValue<String> type = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_PHONE_NUMBER)
+    @JsonProperty(value = JSON_PROPERTY_PHONE_NUMBER, required = true)
     public Builder setPhoneNumber(String phoneNumber) {
       this.phoneNumber = OptionalValue.of(phoneNumber);
       return this;

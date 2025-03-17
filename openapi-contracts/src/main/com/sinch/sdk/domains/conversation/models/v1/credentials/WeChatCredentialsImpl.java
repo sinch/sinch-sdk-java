@@ -143,25 +143,25 @@ public class WeChatCredentialsImpl implements WeChatCredentials, ChannelCredenti
     OptionalValue<String> token = OptionalValue.empty();
     OptionalValue<String> aesKey = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_APP_ID)
+    @JsonProperty(value = JSON_PROPERTY_APP_ID, required = true)
     public Builder setAppId(String appId) {
       this.appId = OptionalValue.of(appId);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_APP_SECRET)
+    @JsonProperty(value = JSON_PROPERTY_APP_SECRET, required = true)
     public Builder setAppSecret(String appSecret) {
       this.appSecret = OptionalValue.of(appSecret);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_TOKEN)
+    @JsonProperty(value = JSON_PROPERTY_TOKEN, required = true)
     public Builder setToken(String token) {
       this.token = OptionalValue.of(token);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_AES_KEY)
+    @JsonProperty(value = JSON_PROPERTY_AES_KEY, required = true)
     public Builder setAesKey(String aesKey) {
       this.aesKey = OptionalValue.of(aesKey);
       return this;

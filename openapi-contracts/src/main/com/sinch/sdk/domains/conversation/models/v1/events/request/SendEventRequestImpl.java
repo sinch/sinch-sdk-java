@@ -214,7 +214,7 @@ public class SendEventRequestImpl implements SendEventRequest {
     OptionalValue<MessageQueue> queue = OptionalValue.empty();
     OptionalValue<Recipient> recipient = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_APP_ID)
+    @JsonProperty(value = JSON_PROPERTY_APP_ID, required = true)
     public Builder setAppId(String appId) {
       this.appId = OptionalValue.of(appId);
       return this;
@@ -232,7 +232,7 @@ public class SendEventRequestImpl implements SendEventRequest {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_EVENT)
+    @JsonProperty(value = JSON_PROPERTY_EVENT, required = true)
     public Builder setEvent(AppEvent event) {
       this.event = OptionalValue.of(event);
       return this;
@@ -250,7 +250,7 @@ public class SendEventRequestImpl implements SendEventRequest {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_RECIPIENT)
+    @JsonProperty(value = JSON_PROPERTY_RECIPIENT, required = true)
     public Builder setRecipient(Recipient recipient) {
       this.recipient = OptionalValue.of(recipient);
       return this;

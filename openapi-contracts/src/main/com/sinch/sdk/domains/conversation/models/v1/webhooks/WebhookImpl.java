@@ -230,7 +230,7 @@ public class WebhookImpl implements Webhook {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_TARGET)
+    @JsonProperty(value = JSON_PROPERTY_TARGET, required = true)
     public Builder setTarget(String target) {
       this.target = OptionalValue.of(target);
       return this;

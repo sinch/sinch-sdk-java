@@ -77,7 +77,7 @@ public class MessageUpdateRequestImpl implements MessageUpdateRequest {
   static class Builder implements MessageUpdateRequest.Builder {
     OptionalValue<String> metadata = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_METADATA)
+    @JsonProperty(value = JSON_PROPERTY_METADATA, required = true)
     public Builder setMetadata(String metadata) {
       this.metadata = OptionalValue.of(metadata);
       return this;

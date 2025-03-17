@@ -310,7 +310,7 @@ public class TtsCalloutInternalImpl implements TtsCalloutInternal {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_DESTINATION)
+    @JsonProperty(value = JSON_PROPERTY_DESTINATION, required = true)
     public Builder setDestination(DestinationTextToSpeech destination) {
       this.destination = OptionalValue.of(destination);
       return this;

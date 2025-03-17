@@ -98,13 +98,13 @@ public class UrlMessageInternalImpl implements UrlMessageInternal {
     OptionalValue<String> title = OptionalValue.empty();
     OptionalValue<String> url = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_TITLE)
+    @JsonProperty(value = JSON_PROPERTY_TITLE, required = true)
     public Builder setTitle(String title) {
       this.title = OptionalValue.of(title);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_URL)
+    @JsonProperty(value = JSON_PROPERTY_URL, required = true)
     public Builder setUrl(String url) {
       this.url = OptionalValue.of(url);
       return this;

@@ -100,7 +100,7 @@ public class DestinationDidImpl implements DestinationDid, Destination {
     OptionalValue<DidDestination> type = OptionalValue.of(DidDestination.DID);
     OptionalValue<String> endpoint = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_ENDPOINT)
+    @JsonProperty(value = JSON_PROPERTY_ENDPOINT, required = true)
     public Builder setEndpoint(String endpoint) {
       this.endpoint = OptionalValue.of(endpoint);
       return this;

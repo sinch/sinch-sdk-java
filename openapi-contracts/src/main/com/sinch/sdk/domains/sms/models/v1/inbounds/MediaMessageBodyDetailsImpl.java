@@ -154,19 +154,19 @@ public class MediaMessageBodyDetailsImpl implements MediaMessageBodyDetails {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_CODE)
+    @JsonProperty(value = JSON_PROPERTY_CODE, required = true)
     public Builder setCode(Integer code) {
       this.code = OptionalValue.of(code);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_CONTENT_TYPE)
+    @JsonProperty(value = JSON_PROPERTY_CONTENT_TYPE, required = true)
     public Builder setContentType(String contentType) {
       this.contentType = OptionalValue.of(contentType);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_STATUS)
+    @JsonProperty(value = JSON_PROPERTY_STATUS, required = true)
     public Builder setStatusEnum(StatusEnum StatusEnum) {
       this.StatusEnum = OptionalValue.of(StatusEnum);
       return this;

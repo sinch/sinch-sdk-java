@@ -328,7 +328,7 @@ public class MediaRequestImpl implements MediaRequest, BatchRequest {
     OptionalValue<Boolean> feedbackEnabled = OptionalValue.empty();
     OptionalValue<Boolean> strictValidation = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_TO)
+    @JsonProperty(value = JSON_PROPERTY_TO, required = true)
     public Builder setTo(List<String> to) {
       this.to = OptionalValue.of(to);
       return this;
@@ -340,7 +340,7 @@ public class MediaRequestImpl implements MediaRequest, BatchRequest {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_BODY)
+    @JsonProperty(value = JSON_PROPERTY_BODY, required = true)
     public Builder setBody(MediaBody body) {
       this.body = OptionalValue.of(body);
       return this;

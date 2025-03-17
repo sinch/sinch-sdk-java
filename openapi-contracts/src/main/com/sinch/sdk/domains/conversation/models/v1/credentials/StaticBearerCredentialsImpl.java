@@ -100,13 +100,13 @@ public class StaticBearerCredentialsImpl implements StaticBearerCredentials, Cha
     OptionalValue<String> claimedIdentity = OptionalValue.empty();
     OptionalValue<String> token = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_CLAIMED_IDENTITY)
+    @JsonProperty(value = JSON_PROPERTY_CLAIMED_IDENTITY, required = true)
     public Builder setClaimedIdentity(String claimedIdentity) {
       this.claimedIdentity = OptionalValue.of(claimedIdentity);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_TOKEN)
+    @JsonProperty(value = JSON_PROPERTY_TOKEN, required = true)
     public Builder setToken(String token) {
       this.token = OptionalValue.of(token);
       return this;

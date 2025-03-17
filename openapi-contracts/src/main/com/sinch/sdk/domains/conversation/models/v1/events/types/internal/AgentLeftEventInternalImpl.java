@@ -78,7 +78,7 @@ public class AgentLeftEventInternalImpl implements AgentLeftEventInternal {
   static class Builder implements AgentLeftEventInternal.Builder {
     OptionalValue<Agent> agent = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_AGENT)
+    @JsonProperty(value = JSON_PROPERTY_AGENT, required = true)
     public Builder setAgent(Agent agent) {
       this.agent = OptionalValue.of(agent);
       return this;

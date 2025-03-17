@@ -160,7 +160,7 @@ public class AppleBusinessChatCredentialsImpl
     OptionalValue<String> applePayCertificateReference = OptionalValue.empty();
     OptionalValue<String> applePayCertificatePassword = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_BUSINESS_CHAT_ACCOUNT_ID)
+    @JsonProperty(value = JSON_PROPERTY_BUSINESS_CHAT_ACCOUNT_ID, required = true)
     public Builder setBusinessChatAccountId(String businessChatAccountId) {
       this.businessChatAccountId = OptionalValue.of(businessChatAccountId);
       return this;

@@ -100,13 +100,13 @@ public class ChannelRecipientIdentityImpl implements ChannelRecipientIdentity {
     OptionalValue<ConversationChannel> channel = OptionalValue.empty();
     OptionalValue<String> identity = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_CHANNEL)
+    @JsonProperty(value = JSON_PROPERTY_CHANNEL, required = true)
     public Builder setChannel(ConversationChannel channel) {
       this.channel = OptionalValue.of(channel);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_IDENTITY)
+    @JsonProperty(value = JSON_PROPERTY_IDENTITY, required = true)
     public Builder setIdentity(String identity) {
       this.identity = OptionalValue.of(identity);
       return this;

@@ -122,13 +122,13 @@ public class MMSCredentialsImpl implements MMSCredentials, ChannelCredentials {
     OptionalValue<String> apiKey = OptionalValue.empty();
     OptionalValue<BasicAuthCredentials> basicAuth = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_ACCOUNT_ID)
+    @JsonProperty(value = JSON_PROPERTY_ACCOUNT_ID, required = true)
     public Builder setAccountId(String accountId) {
       this.accountId = OptionalValue.of(accountId);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_API_KEY)
+    @JsonProperty(value = JSON_PROPERTY_API_KEY, required = true)
     public Builder setApiKey(String apiKey) {
       this.apiKey = OptionalValue.of(apiKey);
       return this;

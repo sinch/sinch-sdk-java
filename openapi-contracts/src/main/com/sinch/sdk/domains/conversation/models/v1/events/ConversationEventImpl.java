@@ -257,7 +257,7 @@ public class ConversationEventImpl implements ConversationEvent {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_CHANNEL_IDENTITY)
+    @JsonProperty(value = JSON_PROPERTY_CHANNEL_IDENTITY, required = true)
     public Builder setChannelIdentity(ChannelIdentity channelIdentity) {
       this.channelIdentity = OptionalValue.of(channelIdentity);
       return this;
@@ -269,7 +269,7 @@ public class ConversationEventImpl implements ConversationEvent {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_PROCESSING_MODE)
+    @JsonProperty(value = JSON_PROPERTY_PROCESSING_MODE, required = true)
     public Builder setProcessingMode(ProcessingMode processingMode) {
       this.processingMode = OptionalValue.of(processingMode);
       return this;
@@ -281,7 +281,7 @@ public class ConversationEventImpl implements ConversationEvent {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_ID)
+    @JsonProperty(value = JSON_PROPERTY_ID, required = true)
     public Builder setId(String id) {
       this.id = OptionalValue.of(id);
       return this;

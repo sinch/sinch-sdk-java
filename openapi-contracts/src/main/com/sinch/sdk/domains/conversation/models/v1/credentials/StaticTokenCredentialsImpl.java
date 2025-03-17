@@ -77,7 +77,7 @@ public class StaticTokenCredentialsImpl implements StaticTokenCredentials, Chann
   static class Builder implements StaticTokenCredentials.Builder {
     OptionalValue<String> token = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_TOKEN)
+    @JsonProperty(value = JSON_PROPERTY_TOKEN, required = true)
     public Builder setToken(String token) {
       this.token = OptionalValue.of(token);
       return this;

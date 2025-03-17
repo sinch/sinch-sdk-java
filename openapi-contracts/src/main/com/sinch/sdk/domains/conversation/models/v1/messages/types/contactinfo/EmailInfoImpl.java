@@ -96,7 +96,7 @@ public class EmailInfoImpl implements EmailInfo {
     OptionalValue<String> emailAddress = OptionalValue.empty();
     OptionalValue<String> type = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_EMAIL_ADDRESS)
+    @JsonProperty(value = JSON_PROPERTY_EMAIL_ADDRESS, required = true)
     public Builder setEmailAddress(String emailAddress) {
       this.emailAddress = OptionalValue.of(emailAddress);
       return this;

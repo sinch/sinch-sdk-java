@@ -37,10 +37,10 @@ import java.util.logging.Logger;
 public class WebhooksApi {
 
   private static final Logger LOGGER = Logger.getLogger(WebhooksApi.class.getName());
-  private final HttpClient httpClient;
-  private final ServerConfiguration serverConfiguration;
-  private final Map<String, AuthManager> authManagersByOasSecuritySchemes;
-  private final HttpMapper mapper;
+  private HttpClient httpClient;
+  private ServerConfiguration serverConfiguration;
+  private Map<String, AuthManager> authManagersByOasSecuritySchemes;
+  private HttpMapper mapper;
 
   public WebhooksApi(
       HttpClient httpClient,

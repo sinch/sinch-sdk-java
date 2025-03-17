@@ -418,7 +418,7 @@ public class TextRequestImpl implements TextRequest, BatchRequest {
     OptionalValue<Integer> fromTon = OptionalValue.empty();
     OptionalValue<Integer> fromNpi = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_TO)
+    @JsonProperty(value = JSON_PROPERTY_TO, required = true)
     public Builder setTo(List<String> to) {
       this.to = OptionalValue.of(to);
       return this;
@@ -436,7 +436,7 @@ public class TextRequestImpl implements TextRequest, BatchRequest {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_BODY)
+    @JsonProperty(value = JSON_PROPERTY_BODY, required = true)
     public Builder setBody(String body) {
       this.body = OptionalValue.of(body);
       return this;

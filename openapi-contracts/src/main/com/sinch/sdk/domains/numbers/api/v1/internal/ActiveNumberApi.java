@@ -270,11 +270,13 @@ public class ActiveNumberApi {
                 "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
+
     if (null != regionCode) {
       localVarQueryParams.add(
           new URLParameter(
               "regionCode", regionCode, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
+
     if (null != numberPatternPattern) {
       localVarQueryParams.add(
           new URLParameter(
@@ -283,6 +285,7 @@ public class ActiveNumberApi {
               URLParameter.STYLE.valueOf("form".toUpperCase()),
               true));
     }
+
     if (null != numberPatternSearchPattern) {
       localVarQueryParams.add(
           new URLParameter(
@@ -291,25 +294,30 @@ public class ActiveNumberApi {
               URLParameter.STYLE.valueOf("form".toUpperCase()),
               true));
     }
+
     if (null != type) {
       localVarQueryParams.add(
           new URLParameter("type", type, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
+
     if (null != capability) {
       localVarQueryParams.add(
           new URLParameter(
               "capability", capability, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
+
     if (null != pageSize) {
       localVarQueryParams.add(
           new URLParameter(
               "pageSize", pageSize, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
+
     if (null != pageToken) {
       localVarQueryParams.add(
           new URLParameter(
               "pageToken", pageToken, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
     }
+
     if (null != orderBy) {
       localVarQueryParams.add(
           new URLParameter(

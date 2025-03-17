@@ -103,7 +103,7 @@ public class KakaoTalkChatCredentialsImpl implements KakaoTalkChatCredentials, C
     OptionalValue<String> kakaotalkPlusFriendId = OptionalValue.empty();
     OptionalValue<String> apiKey = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_KAKAOTALK_PLUS_FRIEND_ID)
+    @JsonProperty(value = JSON_PROPERTY_KAKAOTALK_PLUS_FRIEND_ID, required = true)
     public Builder setKakaotalkPlusFriendId(String kakaotalkPlusFriendId) {
       this.kakaotalkPlusFriendId = OptionalValue.of(kakaotalkPlusFriendId);
       return this;

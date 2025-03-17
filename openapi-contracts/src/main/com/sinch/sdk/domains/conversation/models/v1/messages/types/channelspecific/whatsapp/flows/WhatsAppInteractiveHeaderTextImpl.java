@@ -104,7 +104,7 @@ public class WhatsAppInteractiveHeaderTextImpl
     OptionalValue<TypeEnum> type = OptionalValue.of(WhatsAppInteractiveHeaderText.TypeEnum.TEXT);
     OptionalValue<String> text = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_TEXT)
+    @JsonProperty(value = JSON_PROPERTY_TEXT, required = true)
     public Builder setText(String text) {
       this.text = OptionalValue.of(text);
       return this;
