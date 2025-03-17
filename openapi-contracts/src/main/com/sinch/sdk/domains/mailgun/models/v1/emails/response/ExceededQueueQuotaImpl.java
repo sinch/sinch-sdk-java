@@ -106,7 +106,7 @@ public class ExceededQueueQuotaImpl implements ExceededQueueQuota {
     OptionalValue<Boolean> isDisabled = OptionalValue.empty();
     OptionalValue<QueueStatusDisabledDetails> details = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_IS_DISABLED)
+    @JsonProperty(value = JSON_PROPERTY_IS_DISABLED, required = true)
     public Builder setIsDisabled(Boolean isDisabled) {
       this.isDisabled = OptionalValue.of(isDisabled);
       return this;

@@ -102,13 +102,13 @@ public class SendEmailResponseImpl implements SendEmailResponse {
     OptionalValue<String> id = OptionalValue.empty();
     OptionalValue<String> message = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_ID)
+    @JsonProperty(value = JSON_PROPERTY_ID, required = true)
     public Builder setId(String id) {
       this.id = OptionalValue.of(id);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_MESSAGE)
+    @JsonProperty(value = JSON_PROPERTY_MESSAGE, required = true)
     public Builder setMessage(String message) {
       this.message = OptionalValue.of(message);
       return this;

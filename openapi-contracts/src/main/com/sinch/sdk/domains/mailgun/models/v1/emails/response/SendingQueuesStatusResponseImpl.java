@@ -106,13 +106,13 @@ public class SendingQueuesStatusResponseImpl implements SendingQueuesStatusRespo
     OptionalValue<ExceededQueueQuota> regular = OptionalValue.empty();
     OptionalValue<ExceededQueueQuota> scheduled = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_REGULAR)
+    @JsonProperty(value = JSON_PROPERTY_REGULAR, required = true)
     public Builder setRegular(ExceededQueueQuota regular) {
       this.regular = OptionalValue.of(regular);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_SCHEDULED)
+    @JsonProperty(value = JSON_PROPERTY_SCHEDULED, required = true)
     public Builder setScheduled(ExceededQueueQuota scheduled) {
       this.scheduled = OptionalValue.of(scheduled);
       return this;
