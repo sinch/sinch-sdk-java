@@ -82,7 +82,7 @@ public class EmailNotFoundImpl implements EmailNotFound {
   static class Builder implements EmailNotFound.Builder {
     OptionalValue<String> message = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_MESSAGE)
+    @JsonProperty(value = JSON_PROPERTY_MESSAGE, required = true)
     public Builder setMessage(String message) {
       this.message = OptionalValue.of(message);
       return this;

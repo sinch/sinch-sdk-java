@@ -18,7 +18,7 @@ import java.time.Instant;
 public interface QueueStatusDisabledDetails {
 
   /**
-   * End date in RFC822 date format
+   * End date in RFC-822 date format
    *
    * @return until
    */

@@ -298,25 +298,25 @@ public class GetStoredEmailResponseImpl implements GetStoredEmailResponse {
     OptionalValue<String> strippedSignature = OptionalValue.empty();
     OptionalValue<List<List<String>>> messageHeaders = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_FROM)
+    @JsonProperty(value = JSON_PROPERTY_FROM, required = true)
     public Builder setFrom(String from) {
       this.from = OptionalValue.of(from);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_SUBJECT)
+    @JsonProperty(value = JSON_PROPERTY_SUBJECT, required = true)
     public Builder setSubject(String subject) {
       this.subject = OptionalValue.of(subject);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_SENDER)
+    @JsonProperty(value = JSON_PROPERTY_SENDER, required = true)
     public Builder setSender(String sender) {
       this.sender = OptionalValue.of(sender);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_RECIPIENTS)
+    @JsonProperty(value = JSON_PROPERTY_RECIPIENTS, required = true)
     public Builder setRecipients(String recipients) {
       this.recipients = OptionalValue.of(recipients);
       return this;
@@ -328,31 +328,31 @@ public class GetStoredEmailResponseImpl implements GetStoredEmailResponse {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_BODY_PLAIN)
+    @JsonProperty(value = JSON_PROPERTY_BODY_PLAIN, required = true)
     public Builder setBodyPlain(String bodyPlain) {
       this.bodyPlain = OptionalValue.of(bodyPlain);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_STRIPPED_HTML)
+    @JsonProperty(value = JSON_PROPERTY_STRIPPED_HTML, required = true)
     public Builder setStrippedHtml(String strippedHtml) {
       this.strippedHtml = OptionalValue.of(strippedHtml);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_STRIPPED_TEXT)
+    @JsonProperty(value = JSON_PROPERTY_STRIPPED_TEXT, required = true)
     public Builder setStrippedText(String strippedText) {
       this.strippedText = OptionalValue.of(strippedText);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_STRIPPED_SIGNATURE)
+    @JsonProperty(value = JSON_PROPERTY_STRIPPED_SIGNATURE, required = true)
     public Builder setStrippedSignature(String strippedSignature) {
       this.strippedSignature = OptionalValue.of(strippedSignature);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_MESSAGE_HEADERS)
+    @JsonProperty(value = JSON_PROPERTY_MESSAGE_HEADERS, required = true)
     public Builder setMessageHeaders(List<List<String>> messageHeaders) {
       this.messageHeaders = OptionalValue.of(messageHeaders);
       return this;

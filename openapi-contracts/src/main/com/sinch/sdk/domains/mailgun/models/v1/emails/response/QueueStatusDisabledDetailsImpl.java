@@ -107,13 +107,13 @@ public class QueueStatusDisabledDetailsImpl implements QueueStatusDisabledDetail
     OptionalValue<Instant> until = OptionalValue.empty();
     OptionalValue<String> reason = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_UNTIL)
+    @JsonProperty(value = JSON_PROPERTY_UNTIL, required = true)
     public Builder setUntil(Instant until) {
       this.until = OptionalValue.of(until);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_REASON)
+    @JsonProperty(value = JSON_PROPERTY_REASON, required = true)
     public Builder setReason(String reason) {
       this.reason = OptionalValue.of(reason);
       return this;
