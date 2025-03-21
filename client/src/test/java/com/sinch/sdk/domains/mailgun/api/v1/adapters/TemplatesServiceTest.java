@@ -90,6 +90,9 @@ class TemplatesServiceTest extends BaseTest {
   @GivenTextResource("/domains/mailgun/v1/templates/response/GetVersionResponseDto.json")
   String jsonGetVersionResponseDto;
 
+  @GivenTextResource("/domains/mailgun/v1/templates/response/DeleteVersionResponseDto.json")
+  String jsonDeleteVersionResponseDto;
+
   @Mock ServerConfiguration serverConfiguration;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
@@ -489,5 +492,36 @@ class TemplatesServiceTest extends BaseTest {
     Version response = service.getVersion(domainName, templateName, versionName);
 
     TestHelpers.recursiveEquals(response, VersionTest.expectedInactiveVersion);
+  }
+
+  @Test
+  void deleteVersion() {
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v3/"
+                + URLPathUtils.encodePathSegment(domainName)
+                + "/templates/"
+                + templateName
+                + "/versions/"
+                + URLPathUtils.encodePathSegment(versionName),
+            HttpMethod.DELETE,
+            Collections.emptyList(),
+            (Map) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(AUTH_NAME));
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonDeleteVersionResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    service.deleteVersion(domainName, templateName, versionName);
   }
 }
