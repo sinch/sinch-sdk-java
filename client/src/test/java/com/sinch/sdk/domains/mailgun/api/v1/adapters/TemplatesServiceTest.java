@@ -31,6 +31,7 @@ import com.sinch.sdk.domains.mailgun.models.v1.templates.VersionTest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.CreateTemplateRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.CreateVersionRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.GetTemplateQueryParameters;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.request.UpdateTemplateRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.UpdateVersionRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.response.CreateTemplateResponseTest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.response.GetTemplateResponseTest;
@@ -70,6 +71,9 @@ class TemplatesServiceTest extends BaseTest {
 
   @GivenTextResource("/domains/mailgun/v1/templates/response/CreateTemplateResponseDto.json")
   String jsonCreateTemplateResponseDto;
+
+  @GivenTextResource("/domains/mailgun/v1/templates/response/UpdateTemplateResponseDto.json")
+  String jsonUpdateTemplateResponseDto;
 
   @GivenTextResource("/domains/mailgun/v1/templates/response/CreateVersionResponseDto.json")
   String jsonCreateVersionResponseDto;
@@ -293,6 +297,34 @@ class TemplatesServiceTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         response, CreateTemplateResponseTest.expectedTemplate.getTemplate());
+  }
+
+  @Test
+  void update() {
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v3/" + URLPathUtils.encodePathSegment(domainName) + "/templates/" + templateName,
+            HttpMethod.PUT,
+            Collections.emptyList(),
+            ObjectMapperTest.fillMap("description", "new description value"),
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.MULTIPART_FORM_DATA),
+            Collections.singletonList(AUTH_NAME));
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonUpdateTemplateResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    UpdateTemplateRequest request =
+        UpdateTemplateRequest.builder().setDescription("new description value").build();
+    service.update(domainName, templateName, request);
   }
 
   @Test
