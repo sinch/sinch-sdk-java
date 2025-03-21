@@ -72,6 +72,12 @@ class TemplatesServiceTest extends BaseTest {
   @GivenTextResource("/domains/mailgun/v1/templates/response/CreateTemplateResponseDto.json")
   String jsonCreateTemplateResponseDto;
 
+  @GivenTextResource("/domains/mailgun/v1/templates/response/DeleteTemplateResponseDto.json")
+  String jsonDeleteTemplateResponseDto;
+
+  @GivenTextResource("/domains/mailgun/v1/response/GenericResponseDto.json")
+  String jsonDeleteAllTemplatesResponseDto;
+
   @GivenTextResource("/domains/mailgun/v1/templates/response/UpdateTemplateResponseDto.json")
   String jsonUpdateTemplateResponseDto;
 
@@ -325,6 +331,58 @@ class TemplatesServiceTest extends BaseTest {
     UpdateTemplateRequest request =
         UpdateTemplateRequest.builder().setDescription("new description value").build();
     service.update(domainName, templateName, request);
+  }
+
+  @Test
+  void delete() {
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v3/" + URLPathUtils.encodePathSegment(domainName) + "/templates/" + templateName,
+            HttpMethod.DELETE,
+            Collections.emptyList(),
+            (Map) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(AUTH_NAME));
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonDeleteTemplateResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    service.delete(domainName, templateName);
+  }
+
+  @Test
+  void deleteAll() {
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v3/" + URLPathUtils.encodePathSegment(domainName) + "/templates",
+            HttpMethod.DELETE,
+            Collections.emptyList(),
+            (Map) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(AUTH_NAME));
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonDeleteAllTemplatesResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    service.deleteAll(domainName);
   }
 
   @Test
