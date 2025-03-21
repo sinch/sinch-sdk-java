@@ -31,6 +31,7 @@ import com.sinch.sdk.domains.mailgun.models.v1.templates.VersionTest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.CreateTemplateRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.CreateVersionRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.GetTemplateQueryParameters;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.request.UpdateVersionRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.response.CreateTemplateResponseTest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.response.GetTemplateResponseTest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.response.ListTemplatesResponse;
@@ -72,6 +73,9 @@ class TemplatesServiceTest extends BaseTest {
 
   @GivenTextResource("/domains/mailgun/v1/templates/response/CreateVersionResponseDto.json")
   String jsonCreateVersionResponseDto;
+
+  @GivenTextResource("/domains/mailgun/v1/templates/response/UpdateVersionResponseDto.json")
+  String jsonUpdateVersionResponseDto;
 
   @Mock ServerConfiguration serverConfiguration;
   @Mock HttpClient httpClient;
@@ -327,5 +331,38 @@ class TemplatesServiceTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         response, ((TemplateImpl) (VersionTest.expectedCreatedVersion.getTemplate())).getVersion());
+  }
+
+  @Test
+  void updateVersion() {
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v3/"
+                + URLPathUtils.encodePathSegment(domainName)
+                + "/templates/"
+                + templateName
+                + "/versions/"
+                + URLPathUtils.encodePathSegment(versionName),
+            HttpMethod.PUT,
+            Collections.emptyList(),
+            ObjectMapperTest.fillMap("comment", "comment value"),
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.MULTIPART_FORM_DATA),
+            Collections.singletonList(AUTH_NAME));
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonUpdateVersionResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    UpdateVersionRequest request =
+        UpdateVersionRequest.builder().setComment("comment value").build();
+    service.updateVersion(domainName, templateName, versionName, request);
   }
 }
