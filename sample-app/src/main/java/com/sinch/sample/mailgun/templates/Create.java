@@ -35,7 +35,7 @@ public class Create extends BaseApplication {
             .setDescription("my description value")
             .setCreatedBy("html")
             .setTemplate("<p>{{firstname}} {{lastname}}</p>")
-            .setTag("a tag value")
+            .setTag("version created during template creation")
             .setComment("a comment value")
             .setHeaders(
                 Arrays.asList(

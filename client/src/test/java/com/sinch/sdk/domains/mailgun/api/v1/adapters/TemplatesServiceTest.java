@@ -87,6 +87,9 @@ class TemplatesServiceTest extends BaseTest {
   @GivenTextResource("/domains/mailgun/v1/templates/response/UpdateVersionResponseDto.json")
   String jsonUpdateVersionResponseDto;
 
+  @GivenTextResource("/domains/mailgun/v1/templates/response/GetVersionResponseDto.json")
+  String jsonGetVersionResponseDto;
+
   @Mock ServerConfiguration serverConfiguration;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
@@ -454,5 +457,37 @@ class TemplatesServiceTest extends BaseTest {
     UpdateVersionRequest request =
         UpdateVersionRequest.builder().setComment("comment value").build();
     service.updateVersion(domainName, templateName, versionName, request);
+  }
+
+  @Test
+  void getVersion() {
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v3/"
+                + URLPathUtils.encodePathSegment(domainName)
+                + "/templates/"
+                + URLPathUtils.encodePathSegment(templateName)
+                + "/versions/"
+                + URLPathUtils.encodePathSegment(versionName),
+            HttpMethod.GET,
+            Collections.emptyList(),
+            (Map) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(AUTH_NAME));
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonGetVersionResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    Version response = service.getVersion(domainName, templateName, versionName);
+
+    TestHelpers.recursiveEquals(response, VersionTest.expectedInactiveVersion);
   }
 }

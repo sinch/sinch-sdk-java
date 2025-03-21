@@ -37,6 +37,6 @@ public class UpdateVersion extends BaseApplication {
                 Arrays.asList(
                     Pair.of("From", "edited@adress.org"), Pair.of("subject", "my subject")))
             .build();
-    service.updateVersion(mailgunDomain, mailgunTemplateName, "a tag value", request);
+    service.updateVersion(mailgunDomain, mailgunTemplateName, mailgunTemplateVersionName, request);
   }
 }

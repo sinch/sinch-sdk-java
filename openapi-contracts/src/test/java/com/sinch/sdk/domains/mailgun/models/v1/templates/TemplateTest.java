@@ -37,7 +37,7 @@ public class TemplateTest extends BaseTest {
           .build();
 
   public static Template expectedTemplateResponseWithActive =
-      // 'active version' field is hidden, so we need direct access to 'Impl'
+      // 'version' field is hidden, so we need direct access to 'Impl'
       new TemplateImpl.Builder()
           .setName("template.test")
           .setDescription("my description value")
@@ -47,8 +47,19 @@ public class TemplateTest extends BaseTest {
           .setVersion(VersionTest.expectedVersion)
           .build();
 
+  public static Template expectedTemplateResponseWithInactive =
+      // 'version' field is hidden, so we need direct access to 'Impl'
+      new TemplateImpl.Builder()
+          .setName("template.test")
+          .setDescription("my description value")
+          .setCreatedAt(Instant.parse("2025-01-10T14:17:05Z"))
+          .setCreatedBy("creator")
+          .setId("5427eb2f-bf68-4f4e-abfb-647f9b924772")
+          .setVersion(VersionTest.expectedInactiveVersion)
+          .build();
+
   public static Template expectedTemplateResponseWithVersions =
-      // 'active version' field is hidden, so we need direct access to 'Impl'
+      // 'version' field is hidden, so we need direct access to 'Impl'
       new TemplateImpl.Builder()
           .setName("template.test")
           .setDescription("my description value")

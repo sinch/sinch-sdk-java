@@ -45,6 +45,28 @@ public class VersionTest extends BaseTest {
                   .collect(Collectors.toMap(data -> data[0], data -> data[1])))
           .build();
 
+  public static Version expectedInactiveVersion =
+      Version.builder()
+          .setTag("template.test")
+          .setTemplate(
+              "<div class=\"entry\"> <h1>{{title}}</h1> Hello {{ident.name}} !<br/> <div"
+                  + " class=\"body\"> {{body}} </div> </div>")
+          .setEngine("handlebars")
+          .setMjml("mjml content")
+          .setCreatedAt(Instant.parse("2025-01-13T07:54:58Z"))
+          .setComment("comment value")
+          .setActive(false)
+          .setId("1a0a286e-65e9-4f4a-8275-6b7edbab3e76")
+          .setHeaders(
+              Stream.of(
+                      new String[][] {
+                        {"From", "from header values"},
+                        {"Reply-To", "reply to header value"},
+                        {"Subject", "Test version"}
+                      })
+                  .collect(Collectors.toMap(data -> data[0], data -> data[1])))
+          .build();
+
   public static CreateResponse expectedCreatedVersion =
       CreateResponse.builder()
           .setMessage("new version of the template has been stored")

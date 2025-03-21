@@ -32,7 +32,7 @@ public class CreateVersion extends BaseApplication {
     CreateVersionRequest request =
         CreateVersionRequest.builder()
             .setTemplate("<p>{{firstname}} {{lastname}}</p>")
-            .setTag("a tag value")
+            .setTag(mailgunTemplateVersionName)
             .setComment("a comment value")
             .setActive(true)
             .setHeaders(
