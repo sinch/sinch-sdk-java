@@ -6,6 +6,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.response.CreateResponse;
 import java.time.Instant;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -42,6 +43,37 @@ public class VersionTest extends BaseTest {
                         {"Subject", "Test version"}
                       })
                   .collect(Collectors.toMap(data -> data[0], data -> data[1])))
+          .build();
+
+  public static CreateResponse expectedCreatedVersion =
+      CreateResponse.builder()
+          .setMessage("new version of the template has been stored")
+          .setTemplate(
+              new TemplateImpl.Builder()
+                  .setName("template created from java sdk")
+                  .setDescription("my description value")
+                  .setCreatedAt(Instant.parse("2025-03-19T15:45:50Z"))
+                  .setCreatedBy("html")
+                  .setId("73eefcac-7610-4f87-9647-aaaaaaaaaaaa")
+                  .setVersion(
+                      Version.builder()
+                          .setTag("a tag value")
+                          .setTemplate("<p>{{firstname}} {{lastname}}</p>")
+                          .setEngine("handlebars")
+                          .setMjml("")
+                          .setCreatedAt(Instant.parse("2025-03-21T10:23:10Z"))
+                          .setComment("a comment value")
+                          .setActive(true)
+                          .setId("677283db-12c2-4896-880c-bbbbbbbbbbbb")
+                          .setHeaders(
+                              Stream.of(
+                                      new String[][] {
+                                        {"From", "mygrom@adress.org"},
+                                        {"Subject", "my subject"}
+                                      })
+                                  .collect(Collectors.toMap(data -> data[0], data -> data[1])))
+                          .build())
+                  .build())
           .build();
 
   @Test

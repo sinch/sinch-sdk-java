@@ -25,7 +25,11 @@ import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.mailgun.api.v1.TemplatesService;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.Template;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.TemplateImpl;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.Version;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.VersionTest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.CreateTemplateRequest;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.request.CreateVersionRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.GetTemplateQueryParameters;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.response.CreateTemplateResponseTest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.response.GetTemplateResponseTest;
@@ -66,6 +70,9 @@ class TemplatesServiceTest extends BaseTest {
   @GivenTextResource("/domains/mailgun/v1/templates/response/CreateTemplateResponseDto.json")
   String jsonCreateTemplateResponseDto;
 
+  @GivenTextResource("/domains/mailgun/v1/templates/response/CreateVersionResponseDto.json")
+  String jsonCreateVersionResponseDto;
+
   @Mock ServerConfiguration serverConfiguration;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
@@ -74,6 +81,7 @@ class TemplatesServiceTest extends BaseTest {
 
   String domainName = "foo Domain";
   String templateName = "template.test";
+  String versionName = "version name value";
 
   @BeforeEach
   public void initMocks() {
@@ -281,5 +289,43 @@ class TemplatesServiceTest extends BaseTest {
 
     TestHelpers.recursiveEquals(
         response, CreateTemplateResponseTest.expectedTemplate.getTemplate());
+  }
+
+  @Test
+  void createVersion() {
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v3/"
+                + URLPathUtils.encodePathSegment(domainName)
+                + "/templates/"
+                + templateName
+                + "/versions",
+            HttpMethod.POST,
+            Collections.emptyList(),
+            ObjectMapperTest.fillMap("template", "foo template value", "tag", versionName),
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.MULTIPART_FORM_DATA),
+            Collections.singletonList(AUTH_NAME));
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonCreateVersionResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    CreateVersionRequest request =
+        CreateVersionRequest.builder()
+            .setTag(versionName)
+            .setTemplate("foo template value")
+            .build();
+    Version response = service.createVersion(domainName, templateName, request);
+
+    TestHelpers.recursiveEquals(
+        response, ((TemplateImpl) (VersionTest.expectedCreatedVersion.getTemplate())).getVersion());
   }
 }
