@@ -28,11 +28,13 @@ import com.sinch.sdk.domains.mailgun.models.v1.templates.Template;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.TemplateImpl;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.Version;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.VersionTest;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.request.CopyVersionQueryParameters;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.CreateTemplateRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.CreateVersionRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.GetTemplateQueryParameters;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.UpdateTemplateRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.UpdateVersionRequest;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.response.CopyVersionResponseTest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.response.CreateTemplateResponseTest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.response.GetTemplateResponseTest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.response.ListTemplatesResponse;
@@ -92,6 +94,9 @@ class TemplatesServiceTest extends BaseTest {
 
   @GivenTextResource("/domains/mailgun/v1/templates/response/DeleteVersionResponseDto.json")
   String jsonDeleteVersionResponseDto;
+
+  @GivenTextResource("/domains/mailgun/v1/templates/response/CopyVersionResponseDto.json")
+  String jsonCopyVersionResponseDto;
 
   @Mock ServerConfiguration serverConfiguration;
   @Mock HttpClient httpClient;
@@ -523,5 +528,45 @@ class TemplatesServiceTest extends BaseTest {
         .thenReturn(httpResponse);
 
     service.deleteVersion(domainName, templateName, versionName);
+  }
+
+  @Test
+  void copyVersion() {
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v3/"
+                + URLPathUtils.encodePathSegment(domainName)
+                + "/templates/"
+                + templateName
+                + "/versions/"
+                + URLPathUtils.encodePathSegment(versionName)
+                + "/copy/"
+                + URLPathUtils.encodePathSegment("new name"),
+            HttpMethod.PUT,
+            Arrays.asList(new URLParameter("comment", "a new comment", STYLE.FORM, true)),
+            (Map) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(AUTH_NAME));
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonCopyVersionResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    Version response =
+        service.copyVersion(
+            domainName,
+            templateName,
+            versionName,
+            "new name",
+            CopyVersionQueryParameters.builder().setComment("a new comment").build());
+
+    TestHelpers.recursiveEquals(response, CopyVersionResponseTest.expectedDto.getVersion());
   }
 }
