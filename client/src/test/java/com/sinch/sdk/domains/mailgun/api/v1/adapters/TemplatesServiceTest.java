@@ -38,7 +38,9 @@ import com.sinch.sdk.domains.mailgun.models.v1.templates.response.CopyVersionRes
 import com.sinch.sdk.domains.mailgun.models.v1.templates.response.CreateTemplateResponseTest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.response.GetTemplateResponseTest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.response.ListTemplatesResponse;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.response.ListVersionsResponse;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.response.internal.ListTemplatesResponseInternal;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.response.internal.ListVersionResponseInternal;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
@@ -97,6 +99,21 @@ class TemplatesServiceTest extends BaseTest {
 
   @GivenTextResource("/domains/mailgun/v1/templates/response/CopyVersionResponseDto.json")
   String jsonCopyVersionResponseDto;
+
+  @GivenTextResource("/domains/mailgun/v1/templates/response/ListVersionsResponseDtoPage0.json")
+  String jsonListVersionsResponseDtoPage0;
+
+  @GivenJsonResource("/domains/mailgun/v1/templates/response/ListVersionsResponseDtoPage0.json")
+  ListVersionResponseInternal listVersionsResponseDtoPage0;
+
+  @GivenTextResource("/domains/mailgun/v1/templates/response/ListVersionsResponseDtoPage1.json")
+  String jsonListVersionsResponseDtoPage1;
+
+  @GivenJsonResource("/domains/mailgun/v1/templates/response/ListVersionsResponseDtoPage1.json")
+  ListVersionResponseInternal listVersionsResponseDtoPage1;
+
+  @GivenTextResource("/domains/mailgun/v1/templates/response/ListVersionsResponseDtoPage2.json")
+  String jsonListVersionsResponseDtoPage2;
 
   @Mock ServerConfiguration serverConfiguration;
   @Mock HttpClient httpClient;
@@ -568,5 +585,92 @@ class TemplatesServiceTest extends BaseTest {
             CopyVersionQueryParameters.builder().setComment("a new comment").build());
 
     TestHelpers.recursiveEquals(response, CopyVersionResponseTest.expectedDto.getVersion());
+  }
+
+  @Test
+  void listVersions() throws ApiException {
+
+    HttpRequest httpRequest0 =
+        new HttpRequest(
+            "/v3/"
+                + URLPathUtils.encodePathSegment(domainName)
+                + "/templates/"
+                + URLPathUtils.encodePathSegment(templateName)
+                + "/versions",
+            HttpMethod.GET,
+            Collections.emptyList(),
+            (Map) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(AUTH_NAME));
+
+    HttpRequest httpRequest1 =
+        new HttpRequest(
+            "https://api.mailgun.net/v3/domain.mailgun.org.mailgun.org/templates/my-template/versions?page=next&p=version+2&limit=2",
+            HttpMethod.GET,
+            null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(AUTH_NAME));
+
+    HttpRequest httpRequest2 =
+        new HttpRequest(
+            "https://api.mailgun.net/v3/domain.mailgun.org.mailgun.org/templates/my-template/versions?page=next&p=version+3&limit=2",
+            HttpMethod.GET,
+            null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(AUTH_NAME));
+
+    HttpResponse httpResponse0 =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonListVersionsResponseDtoPage0.getBytes());
+    HttpResponse httpResponse1 =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonListVersionsResponseDtoPage1.getBytes());
+    HttpResponse httpResponse2 =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonListVersionsResponseDtoPage2.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest0))))
+        .thenReturn(httpResponse0);
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest1))))
+        .thenReturn(httpResponse1);
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest2))))
+        .thenReturn(httpResponse2);
+
+    ListVersionsResponse response = service.listVersions(domainName, templateName);
+
+    Iterator<Version> iterator = response.iterator();
+
+    Version item = iterator.next();
+    TestHelpers.recursiveEquals(
+        item, ((TemplateImpl) listVersionsResponseDtoPage0.getTemplate()).getVersions().get(0));
+    Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
+
+    item = iterator.next();
+    TestHelpers.recursiveEquals(
+        item, ((TemplateImpl) listVersionsResponseDtoPage0.getTemplate()).getVersions().get(1));
+    Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
+
+    item = iterator.next();
+    TestHelpers.recursiveEquals(
+        item, ((TemplateImpl) listVersionsResponseDtoPage1.getTemplate()).getVersions().get(0));
+
+    Assertions.assertThat(iterator.hasNext()).isEqualTo(false);
   }
 }
