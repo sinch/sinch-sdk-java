@@ -20,12 +20,17 @@ import java.util.stream.Stream;
 @JsonDeserialize(builder = ChannelSpecificMessageInternalImpl.Builder.class)
 public interface ChannelSpecificMessageInternal {
 
-  /** Gets or Sets messageType */
+  /** The type of the channel specific message. */
   public class MessageTypeEnum extends EnumDynamic<String, MessageTypeEnum> {
     public static final MessageTypeEnum FLOWS = new MessageTypeEnum("FLOWS");
+    public static final MessageTypeEnum ORDER_DETAILS = new MessageTypeEnum("ORDER_DETAILS");
+    public static final MessageTypeEnum ORDER_STATUS = new MessageTypeEnum("ORDER_STATUS");
 
     private static final EnumSupportDynamic<String, MessageTypeEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(MessageTypeEnum.class, MessageTypeEnum::new, Arrays.asList(FLOWS));
+        new EnumSupportDynamic<>(
+            MessageTypeEnum.class,
+            MessageTypeEnum::new,
+            Arrays.asList(FLOWS, ORDER_DETAILS, ORDER_STATUS));
 
     private MessageTypeEnum(String value) {
       super(value);
@@ -45,7 +50,7 @@ public interface ChannelSpecificMessageInternal {
   }
 
   /**
-   * Get messageType
+   * The type of the channel specific message.
    *
    * @return messageType
    */

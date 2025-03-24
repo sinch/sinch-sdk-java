@@ -42,18 +42,18 @@ public interface CardMessageInternal {
   CardHeight getHeight();
 
   /**
-   * Get media
-   *
-   * @return media
-   */
-  MediaMessage getMedia();
-
-  /**
    * The title of the card message.
    *
    * @return title
    */
   String getTitle();
+
+  /**
+   * A message containing a media component.
+   *
+   * @return media
+   */
+  MediaMessage getMedia();
 
   /**
    * Getting builder
@@ -97,20 +97,20 @@ public interface CardMessageInternal {
     /**
      * see getter
      *
-     * @param media see getter
-     * @return Current builder
-     * @see #getMedia
-     */
-    Builder setMedia(MediaMessage media);
-
-    /**
-     * see getter
-     *
      * @param title see getter
      * @return Current builder
      * @see #getTitle
      */
     Builder setTitle(String title);
+
+    /**
+     * see getter
+     *
+     * @param media see getter
+     * @return Current builder
+     * @see #getMedia
+     */
+    Builder setMedia(MediaMessage media);
 
     /**
      * Create instance

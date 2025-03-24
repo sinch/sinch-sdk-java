@@ -68,6 +68,19 @@ public interface ConversationChannelCredentials {
   String getChannelKnownId();
 
   /**
+   * The ordinal number of the credential. This field is used when the application supports multiple
+   * credential integrations per channel. Currently, this is only applicable to the <code>LINE
+   * </code> channel. For other channels, this value will always be set to <code>0</code>. In the
+   * case in which there are multiple credential integrations per channel on a single app, this
+   * field must have a unique value for each multi-credential channel entry.
+   *
+   * <p>minimum: 0 maximum: 255
+   *
+   * @return credentialOrdinalNumber
+   */
+  Integer getCredentialOrdinalNumber();
+
+  /**
    * Getting builder
    *
    * @return New Builder instance
@@ -125,6 +138,15 @@ public interface ConversationChannelCredentials {
      * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setChannelKnownId(String channelKnownId);
+
+    /**
+     * see getter
+     *
+     * @param credentialOrdinalNumber see getter
+     * @return Current builder
+     * @see #getCredentialOrdinalNumber
+     */
+    Builder setCredentialOrdinalNumber(Integer credentialOrdinalNumber);
 
     /**
      * Create instance

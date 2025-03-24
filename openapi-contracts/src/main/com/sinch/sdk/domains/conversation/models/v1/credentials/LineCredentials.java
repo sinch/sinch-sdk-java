@@ -13,11 +13,12 @@ package com.sinch.sdk.domains.conversation.models.v1.credentials;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
- * If you are including the LINE channel in the <code>channel_identifier</code> property, you must
- * include this object.
+ * If the <code>channel</code> property is set to <code>LINE</code> for this entry of the <code>
+ * channel_credentials</code> array, you must include either the <code>line_credentials</code>
+ * object or the <code>line_enterprise_credentials</code> object in the entry as well.
  */
 @JsonDeserialize(builder = LineCredentialsImpl.Builder.class)
-public interface LineCredentials extends ChannelCredentials {
+public interface LineCredentials extends ChannelCredentials, LineCredentialsCommon {
 
   /**
    * The token for the LINE channel to which you are connecting.
@@ -32,6 +33,15 @@ public interface LineCredentials extends ChannelCredentials {
    * @return secret
    */
   String getSecret();
+
+  /**
+   * When an app contains multiple LINE or LINE Enterprise credentials, one of the credentials needs
+   * to be defined as the default. Setting this property to <code>true</code> marks the
+   * corresponding credentials as the default credentials.
+   *
+   * @return isDefault
+   */
+  Boolean getIsDefault();
 
   /**
    * Getting builder
@@ -62,6 +72,15 @@ public interface LineCredentials extends ChannelCredentials {
      * @see #getSecret
      */
     Builder setSecret(String secret);
+
+    /**
+     * see getter
+     *
+     * @param isDefault see getter
+     * @return Current builder
+     * @see #getIsDefault
+     */
+    Builder setIsDefault(Boolean isDefault);
 
     /**
      * Create instance

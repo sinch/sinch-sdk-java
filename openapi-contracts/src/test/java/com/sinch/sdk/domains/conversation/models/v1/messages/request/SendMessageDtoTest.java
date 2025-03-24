@@ -108,7 +108,8 @@ public class SendMessageDtoTest extends ConversationBaseTest {
         .setTtl(2)
         .setProcessingStrategy(ProcessingStrategy.DISPATCH_ONLY)
         .setCorrelationId("correlation ID value")
-        .setConversationMetadataUpdateStrategy(MetadataUpdateStrategy.REPLACE);
+        .setConversationMetadataUpdateStrategy(MetadataUpdateStrategy.REPLACE)
+        .setMessageContentType(MessageContentType.MARKETING);
   }
 
   @Test

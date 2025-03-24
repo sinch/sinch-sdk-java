@@ -29,7 +29,8 @@ import java.util.Objects;
   SendMessageRequestImpl.JSON_PROPERTY_TTL,
   SendMessageRequestImpl.JSON_PROPERTY_PROCESSING_STRATEGY,
   SendMessageRequestImpl.JSON_PROPERTY_CORRELATION_ID,
-  SendMessageRequestImpl.JSON_PROPERTY_CONVERSATION_METADATA_UPDATE_STRATEGY
+  SendMessageRequestImpl.JSON_PROPERTY_CONVERSATION_METADATA_UPDATE_STRATEGY,
+  SendMessageRequestImpl.JSON_PROPERTY_MESSAGE_CONTENT_TYPE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
@@ -89,6 +90,10 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
 
   private OptionalValue<MetadataUpdateStrategy> conversationMetadataUpdateStrategy;
 
+  public static final String JSON_PROPERTY_MESSAGE_CONTENT_TYPE = "message_content_type";
+
+  private OptionalValue<MessageContentType> messageContentType;
+
   public SendMessageRequestImpl() {}
 
   protected SendMessageRequestImpl(
@@ -104,7 +109,8 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
       OptionalValue<Integer> ttl,
       OptionalValue<ProcessingStrategy> processingStrategy,
       OptionalValue<String> correlationId,
-      OptionalValue<MetadataUpdateStrategy> conversationMetadataUpdateStrategy) {
+      OptionalValue<MetadataUpdateStrategy> conversationMetadataUpdateStrategy,
+      OptionalValue<MessageContentType> messageContentType) {
     this.appId = appId;
     this.callbackUrl = callbackUrl;
     this.channelPriorityOrder = channelPriorityOrder;
@@ -118,6 +124,7 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
     this.processingStrategy = processingStrategy;
     this.correlationId = correlationId;
     this.conversationMetadataUpdateStrategy = conversationMetadataUpdateStrategy;
+    this.messageContentType = messageContentType;
   }
 
   @JsonIgnore
@@ -263,6 +270,17 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
     return conversationMetadataUpdateStrategy;
   }
 
+  @JsonIgnore
+  public MessageContentType getMessageContentType() {
+    return messageContentType.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_MESSAGE_CONTENT_TYPE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<MessageContentType> messageContentType() {
+    return messageContentType;
+  }
+
   /** Return true if this SendMessageRequest object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -287,7 +305,8 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
         && Objects.equals(this.correlationId, sendMessageRequest.correlationId)
         && Objects.equals(
             this.conversationMetadataUpdateStrategy,
-            sendMessageRequest.conversationMetadataUpdateStrategy);
+            sendMessageRequest.conversationMetadataUpdateStrategy)
+        && Objects.equals(this.messageContentType, sendMessageRequest.messageContentType);
   }
 
   @Override
@@ -305,7 +324,8 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
         ttl,
         processingStrategy,
         correlationId,
-        conversationMetadataUpdateStrategy);
+        conversationMetadataUpdateStrategy,
+        messageContentType);
   }
 
   @Override
@@ -331,6 +351,7 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
     sb.append("    conversationMetadataUpdateStrategy: ")
         .append(toIndentedString(conversationMetadataUpdateStrategy))
         .append("\n");
+    sb.append("    messageContentType: ").append(toIndentedString(messageContentType)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -361,6 +382,7 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
     OptionalValue<String> correlationId = OptionalValue.empty();
     OptionalValue<MetadataUpdateStrategy> conversationMetadataUpdateStrategy =
         OptionalValue.empty();
+    OptionalValue<MessageContentType> messageContentType = OptionalValue.empty();
 
     @JsonProperty(value = JSON_PROPERTY_APP_ID, required = true)
     public Builder<T> setAppId(String appId) {
@@ -442,6 +464,12 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_MESSAGE_CONTENT_TYPE)
+    public Builder<T> setMessageContentType(MessageContentType messageContentType) {
+      this.messageContentType = OptionalValue.of(messageContentType);
+      return this;
+    }
+
     public SendMessageRequest<T> build() {
       return new SendMessageRequestImpl<T>(
           appId,
@@ -456,7 +484,8 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
           ttl,
           processingStrategy,
           correlationId,
-          conversationMetadataUpdateStrategy);
+          conversationMetadataUpdateStrategy,
+          messageContentType);
     }
   }
 }

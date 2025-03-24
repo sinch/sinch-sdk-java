@@ -81,7 +81,7 @@ public class AppMessageInternalImpl implements AppMessageInternal {
 
   public static final String JSON_PROPERTY_EXPLICIT_CHANNEL_MESSAGE = "explicit_channel_message";
 
-  private OptionalValue<Map<ConversationChannel, Object>> explicitChannelMessage;
+  private OptionalValue<Map<ConversationChannel, String>> explicitChannelMessage;
 
   public static final String JSON_PROPERTY_EXPLICIT_CHANNEL_OMNI_MESSAGE =
       "explicit_channel_omni_message";
@@ -109,7 +109,7 @@ public class AppMessageInternalImpl implements AppMessageInternal {
       OptionalValue<TextMessage> textMessage,
       OptionalValue<ListMessage> listMessage,
       OptionalValue<ContactInfoMessage> contactInfoMessage,
-      OptionalValue<Map<ConversationChannel, Object>> explicitChannelMessage,
+      OptionalValue<Map<ConversationChannel, String>> explicitChannelMessage,
       OptionalValue<Map<OmniMessageOverride.ChannelSpecificTemplate, OmniMessageOverride>>
           explicitChannelOmniMessage,
       OptionalValue<Map<ConversationChannel, ChannelSpecificMessage>> channelSpecificMessage,
@@ -229,13 +229,13 @@ public class AppMessageInternalImpl implements AppMessageInternal {
   }
 
   @JsonIgnore
-  public Map<ConversationChannel, Object> getExplicitChannelMessage() {
+  public Map<ConversationChannel, String> getExplicitChannelMessage() {
     return explicitChannelMessage.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_EXPLICIT_CHANNEL_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<Map<ConversationChannel, Object>> explicitChannelMessage() {
+  public OptionalValue<Map<ConversationChannel, String>> explicitChannelMessage() {
     return explicitChannelMessage;
   }
 
@@ -365,7 +365,7 @@ public class AppMessageInternalImpl implements AppMessageInternal {
     OptionalValue<TextMessage> textMessage = OptionalValue.empty();
     OptionalValue<ListMessage> listMessage = OptionalValue.empty();
     OptionalValue<ContactInfoMessage> contactInfoMessage = OptionalValue.empty();
-    OptionalValue<Map<ConversationChannel, Object>> explicitChannelMessage = OptionalValue.empty();
+    OptionalValue<Map<ConversationChannel, String>> explicitChannelMessage = OptionalValue.empty();
     OptionalValue<Map<OmniMessageOverride.ChannelSpecificTemplate, OmniMessageOverride>>
         explicitChannelOmniMessage = OptionalValue.empty();
     OptionalValue<Map<ConversationChannel, ChannelSpecificMessage>> channelSpecificMessage =
@@ -428,7 +428,7 @@ public class AppMessageInternalImpl implements AppMessageInternal {
 
     @JsonProperty(JSON_PROPERTY_EXPLICIT_CHANNEL_MESSAGE)
     public Builder setExplicitChannelMessage(
-        Map<ConversationChannel, Object> explicitChannelMessage) {
+        Map<ConversationChannel, String> explicitChannelMessage) {
       this.explicitChannelMessage = OptionalValue.of(explicitChannelMessage);
       return this;
     }

@@ -18,8 +18,9 @@ public interface CallbackSettings {
 
   /**
    * Optional. Secret can be used to sign contents of delivery receipts for a message that was sent
-   * with the default <code>callback_url</code> overridden. You can then use the secret to verify
-   * the signature.
+   * with the default callback URL overridden (using the <a
+   * href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/Messages/#tag/Messages/operation/Messages_SendMessage!path=callback_url&amp;t=request">
+   * <code>callback_url</code> field</a>). You can then use the secret to verify the signature.
    *
    * @return secretForOverriddenCallbackUrls
    */

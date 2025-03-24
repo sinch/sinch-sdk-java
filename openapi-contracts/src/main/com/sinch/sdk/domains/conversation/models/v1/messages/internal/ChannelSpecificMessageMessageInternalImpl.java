@@ -16,6 +16,8 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.sinch.sdk.core.models.AbstractOpenApiSchema;
 import com.sinch.sdk.core.utils.databind.JSONNavigator;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows.FlowChannelSpecificMessageImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.payment.OrderDetailsImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.payment.OrderStatusImpl;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -124,6 +126,86 @@ public class ChannelSpecificMessageMessageInternalImpl extends AbstractOpenApiSc
             Level.FINER, "Input data does not match schema 'FlowChannelSpecificMessageImpl'", e);
       }
 
+      // deserialize OrderDetailsImpl
+      try {
+        boolean attemptParsing = true;
+        // ensure that we respect type coercion as set on the client ObjectMapper
+        if (OrderDetailsImpl.class.equals(Integer.class)
+            || OrderDetailsImpl.class.equals(Long.class)
+            || OrderDetailsImpl.class.equals(Float.class)
+            || OrderDetailsImpl.class.equals(Double.class)
+            || OrderDetailsImpl.class.equals(Boolean.class)
+            || OrderDetailsImpl.class.equals(String.class)) {
+          attemptParsing = typeCoercion;
+          if (!attemptParsing) {
+            attemptParsing |=
+                ((OrderDetailsImpl.class.equals(Integer.class)
+                        || OrderDetailsImpl.class.equals(Long.class))
+                    && token == JsonToken.VALUE_NUMBER_INT);
+            attemptParsing |=
+                ((OrderDetailsImpl.class.equals(Float.class)
+                        || OrderDetailsImpl.class.equals(Double.class))
+                    && token == JsonToken.VALUE_NUMBER_FLOAT);
+            attemptParsing |=
+                (OrderDetailsImpl.class.equals(Boolean.class)
+                    && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
+            attemptParsing |=
+                (OrderDetailsImpl.class.equals(String.class) && token == JsonToken.VALUE_STRING);
+          }
+        }
+        if (attemptParsing) {
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(OrderDetailsImpl.class);
+          // TODO: there is no validation against JSON schema constraints
+          // (min, max, enum, pattern...), this does not perform a strict JSON
+          // validation, which means the 'match' count may be higher than it should be.
+          match++;
+          log.log(Level.FINER, "Input data matches schema 'OrderDetailsImpl'");
+        }
+      } catch (Exception e) {
+        // deserialization failed, continue
+        log.log(Level.FINER, "Input data does not match schema 'OrderDetailsImpl'", e);
+      }
+
+      // deserialize OrderStatusImpl
+      try {
+        boolean attemptParsing = true;
+        // ensure that we respect type coercion as set on the client ObjectMapper
+        if (OrderStatusImpl.class.equals(Integer.class)
+            || OrderStatusImpl.class.equals(Long.class)
+            || OrderStatusImpl.class.equals(Float.class)
+            || OrderStatusImpl.class.equals(Double.class)
+            || OrderStatusImpl.class.equals(Boolean.class)
+            || OrderStatusImpl.class.equals(String.class)) {
+          attemptParsing = typeCoercion;
+          if (!attemptParsing) {
+            attemptParsing |=
+                ((OrderStatusImpl.class.equals(Integer.class)
+                        || OrderStatusImpl.class.equals(Long.class))
+                    && token == JsonToken.VALUE_NUMBER_INT);
+            attemptParsing |=
+                ((OrderStatusImpl.class.equals(Float.class)
+                        || OrderStatusImpl.class.equals(Double.class))
+                    && token == JsonToken.VALUE_NUMBER_FLOAT);
+            attemptParsing |=
+                (OrderStatusImpl.class.equals(Boolean.class)
+                    && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
+            attemptParsing |=
+                (OrderStatusImpl.class.equals(String.class) && token == JsonToken.VALUE_STRING);
+          }
+        }
+        if (attemptParsing) {
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(OrderStatusImpl.class);
+          // TODO: there is no validation against JSON schema constraints
+          // (min, max, enum, pattern...), this does not perform a strict JSON
+          // validation, which means the 'match' count may be higher than it should be.
+          match++;
+          log.log(Level.FINER, "Input data matches schema 'OrderStatusImpl'");
+        }
+      } catch (Exception e) {
+        // deserialization failed, continue
+        log.log(Level.FINER, "Input data does not match schema 'OrderStatusImpl'", e);
+      }
+
       if (match == 1) {
         ChannelSpecificMessageMessageInternalImpl ret =
             new ChannelSpecificMessageMessageInternalImpl();
@@ -158,8 +240,20 @@ public class ChannelSpecificMessageMessageInternalImpl extends AbstractOpenApiSc
     setActualInstance(o);
   }
 
+  public ChannelSpecificMessageMessageInternalImpl(OrderDetailsImpl o) {
+    super("oneOf", Boolean.FALSE);
+    setActualInstance(o);
+  }
+
+  public ChannelSpecificMessageMessageInternalImpl(OrderStatusImpl o) {
+    super("oneOf", Boolean.FALSE);
+    setActualInstance(o);
+  }
+
   static {
     schemas.put("FlowChannelSpecificMessageImpl", FlowChannelSpecificMessageImpl.class);
+    schemas.put("OrderDetailsImpl", OrderDetailsImpl.class);
+    schemas.put("OrderStatusImpl", OrderStatusImpl.class);
     JSONNavigator.registerDescendants(
         ChannelSpecificMessageMessageInternalImpl.class, Collections.unmodifiableMap(schemas));
   }
@@ -171,7 +265,8 @@ public class ChannelSpecificMessageMessageInternalImpl extends AbstractOpenApiSc
 
   /**
    * Set the instance that matches the oneOf child schema, check the instance parameter is valid
-   * against the oneOf child schemas: FlowChannelSpecificMessageImpl
+   * against the oneOf child schemas: FlowChannelSpecificMessageImpl, OrderDetailsImpl,
+   * OrderStatusImpl
    *
    * <p>It could be an instance of the 'oneOf' schemas. The oneOf child schemas may themselves be a
    * composed schema (allOf, anyOf, oneOf).
@@ -184,13 +279,26 @@ public class ChannelSpecificMessageMessageInternalImpl extends AbstractOpenApiSc
       return;
     }
 
-    throw new RuntimeException("Invalid instance type. Must be FlowChannelSpecificMessageImpl");
+    if (JSONNavigator.isInstanceOf(OrderDetailsImpl.class, instance, new HashSet<Class<?>>())) {
+      super.setActualInstance(instance);
+      return;
+    }
+
+    if (JSONNavigator.isInstanceOf(OrderStatusImpl.class, instance, new HashSet<Class<?>>())) {
+      super.setActualInstance(instance);
+      return;
+    }
+
+    throw new RuntimeException(
+        "Invalid instance type. Must be FlowChannelSpecificMessageImpl, OrderDetailsImpl,"
+            + " OrderStatusImpl");
   }
 
   /**
-   * Get the actual instance, which can be the following: FlowChannelSpecificMessageImpl
+   * Get the actual instance, which can be the following: FlowChannelSpecificMessageImpl,
+   * OrderDetailsImpl, OrderStatusImpl
    *
-   * @return The actual instance (FlowChannelSpecificMessageImpl)
+   * @return The actual instance (FlowChannelSpecificMessageImpl, OrderDetailsImpl, OrderStatusImpl)
    */
   @Override
   public Object getActualInstance() {
@@ -207,5 +315,27 @@ public class ChannelSpecificMessageMessageInternalImpl extends AbstractOpenApiSc
   public FlowChannelSpecificMessageImpl getFlowChannelSpecificMessageImpl()
       throws ClassCastException {
     return (FlowChannelSpecificMessageImpl) super.getActualInstance();
+  }
+
+  /**
+   * Get the actual instance of `OrderDetailsImpl`. If the actual instance is not
+   * `OrderDetailsImpl`, the ClassCastException will be thrown.
+   *
+   * @return The actual instance of `OrderDetailsImpl`
+   * @throws ClassCastException if the instance is not `OrderDetailsImpl`
+   */
+  public OrderDetailsImpl getOrderDetailsImpl() throws ClassCastException {
+    return (OrderDetailsImpl) super.getActualInstance();
+  }
+
+  /**
+   * Get the actual instance of `OrderStatusImpl`. If the actual instance is not `OrderStatusImpl`,
+   * the ClassCastException will be thrown.
+   *
+   * @return The actual instance of `OrderStatusImpl`
+   * @throws ClassCastException if the instance is not `OrderStatusImpl`
+   */
+  public OrderStatusImpl getOrderStatusImpl() throws ClassCastException {
+    return (OrderStatusImpl) super.getActualInstance();
   }
 }
