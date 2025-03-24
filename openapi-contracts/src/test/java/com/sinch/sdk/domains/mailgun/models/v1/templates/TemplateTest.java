@@ -45,7 +45,7 @@ public class TemplateTest extends BaseTest {
           .setCreatedAt(Instant.parse("2025-01-10T14:17:05Z"))
           .setCreatedBy("creator")
           .setId("5427eb2f-bf68-4f4e-abfb-647f9b924772")
-          .setVersion(VersionTest.expectedVersion)
+          .setVersion(VersionTest.expectedVersionDetailsActive)
           .build();
 
   public static Template expectedTemplateResponseWithInactive =
@@ -56,7 +56,7 @@ public class TemplateTest extends BaseTest {
           .setCreatedAt(Instant.parse("2025-01-10T14:17:05Z"))
           .setCreatedBy("creator")
           .setId("5427eb2f-bf68-4f4e-abfb-647f9b924772")
-          .setVersion(VersionTest.expectedInactiveVersion)
+          .setVersion(VersionTest.expectedVersionDetailsInactive)
           .build();
 
   public static Template expectedTemplateResponseWithVersions =

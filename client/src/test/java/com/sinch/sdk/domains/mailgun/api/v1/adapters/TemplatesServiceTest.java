@@ -27,6 +27,7 @@ import com.sinch.sdk.domains.mailgun.api.v1.TemplatesService;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.Template;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.TemplateImpl;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.Version;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.VersionDetails;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.VersionTest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.CopyVersionQueryParameters;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.CreateTemplateRequest;
@@ -445,7 +446,7 @@ class TemplatesServiceTest extends BaseTest {
             .setTag(versionName)
             .setTemplate("foo template value")
             .build();
-    Version response = service.createVersion(domainName, templateName, request);
+    VersionDetails response = service.createVersion(domainName, templateName, request);
 
     TestHelpers.recursiveEquals(
         response, ((TemplateImpl) (VersionTest.expectedCreatedVersion.getTemplate())).getVersion());
@@ -511,9 +512,9 @@ class TemplatesServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    Version response = service.getVersion(domainName, templateName, versionName);
+    VersionDetails response = service.getVersion(domainName, templateName, versionName);
 
-    TestHelpers.recursiveEquals(response, VersionTest.expectedInactiveVersion);
+    TestHelpers.recursiveEquals(response, VersionTest.expectedVersionDetailsInactive);
   }
 
   @Test
@@ -576,7 +577,7 @@ class TemplatesServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    Version response =
+    VersionDetails response =
         service.copyVersion(
             domainName,
             templateName,

@@ -20,11 +20,25 @@ public class VersionTest extends BaseTest {
   @GivenJsonResource("/domains/mailgun/v1/templates/VersionResponseDto.json")
   Version loadedVersionResponseDto;
 
+  @GivenJsonResource("/domains/mailgun/v1/templates/VersionResponseDto.json")
+  VersionDetails loadedVersionDetailsResponseDto;
+
   @GivenTextResource("/domains/mailgun/v1/templates/VersionRequestDto.json")
   String jsonVersionRequestDto;
 
   public static Version expectedVersion =
       Version.builder()
+          .setTag("template.test")
+          .setEngine("handlebars")
+          .setMjml("mjml content")
+          .setCreatedAt(Instant.parse("2025-01-13T07:54:58Z"))
+          .setComment("comment value")
+          .setActive(true)
+          .setId("1a0a286e-65e9-4f4a-8275-6b7edbab3e76")
+          .build();
+
+  public static VersionDetails expectedVersionDetailsActive =
+      VersionDetails.builder()
           .setTag("template.test")
           .setTemplate(
               "<div class=\"entry\"> <h1>{{title}}</h1> Hello {{ident.name}} !<br/> <div"
@@ -45,8 +59,8 @@ public class VersionTest extends BaseTest {
                   .collect(Collectors.toMap(data -> data[0], data -> data[1])))
           .build();
 
-  public static Version expectedInactiveVersion =
-      Version.builder()
+  public static VersionDetails expectedVersionDetailsInactive =
+      VersionDetails.builder()
           .setTag("template.test")
           .setTemplate(
               "<div class=\"entry\"> <h1>{{title}}</h1> Hello {{ident.name}} !<br/> <div"
@@ -78,7 +92,7 @@ public class VersionTest extends BaseTest {
                   .setCreatedBy("html")
                   .setId("73eefcac-7610-4f87-9647-aaaaaaaaaaaa")
                   .setVersion(
-                      Version.builder()
+                      VersionDetails.builder()
                           .setTag("a tag value")
                           .setTemplate("<p>{{firstname}} {{lastname}}</p>")
                           .setEngine("handlebars")
@@ -99,14 +113,19 @@ public class VersionTest extends BaseTest {
           .build();
 
   @Test
-  void deserialize() {
+  void deserializeVersion() {
     TestHelpers.recursiveEquals(loadedVersionResponseDto, expectedVersion);
+  }
+
+  @Test
+  void deserializeVersionDetails() {
+    TestHelpers.recursiveEquals(loadedVersionDetailsResponseDto, expectedVersionDetailsActive);
   }
 
   @Test
   void serialize() throws JsonProcessingException, JSONException {
 
-    String serializedString = objectMapper.writeValueAsString(expectedVersion);
+    String serializedString = objectMapper.writeValueAsString(expectedVersionDetailsActive);
 
     JSONAssert.assertEquals(jsonVersionRequestDto, serializedString, true);
   }

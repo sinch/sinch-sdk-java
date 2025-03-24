@@ -4,7 +4,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
-import com.sinch.sdk.domains.mailgun.models.v1.templates.Version;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.VersionDetails;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.internal.CopyVersionResponseInternal;
 import java.time.Instant;
 import java.util.stream.Collectors;
@@ -21,7 +21,7 @@ public class CopyVersionResponseTest extends BaseTest {
       CopyVersionResponseInternal.builder()
           .setMessage("version has been copied")
           .setVersion(
-              Version.builder()
+              VersionDetails.builder()
                   .setTag("version of template created  from java sdk(cloned)")
                   .setTemplate("<p>{{firstname}} {{lastname}}</p>")
                   .setEngine("handlebars")
