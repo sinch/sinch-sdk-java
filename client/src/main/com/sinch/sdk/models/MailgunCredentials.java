@@ -3,7 +3,7 @@ package com.sinch.sdk.models;
 /**
  * Credentials related to Mailgun authentication
  *
- * @since __TO_BE_DEFINED__
+ * @since 1.6
  */
 public class MailgunCredentials {
 
@@ -16,14 +16,14 @@ public class MailgunCredentials {
   }
 
   /**
-   * @since __TO_BE_DEFINED__
+   * @since 1.6
    */
   public String getApiUser() {
     return apiUser;
   }
 
   /**
-   * @since __TO_BE_DEFINED__
+   * @since 1.6
    */
   public String getApiKey() {
     return apiKey;
@@ -33,7 +33,7 @@ public class MailgunCredentials {
    * Getting Builder
    *
    * @return New Builder instance
-   * @since __TO_BE_DEFINED__
+   * @since 1.6
    */
   public static Builder builder() {
     return new Builder();
@@ -44,7 +44,7 @@ public class MailgunCredentials {
    *
    * @param credentials Source credentials to fill initial builder state
    * @return New Builder instance
-   * @since __TO_BE_DEFINED__
+   * @since 1.6
    */
   public static Builder builder(MailgunCredentials credentials) {
     return new Builder(credentials);
@@ -53,7 +53,7 @@ public class MailgunCredentials {
   /**
    * Dedicated Builder
    *
-   * @since __TO_BE_DEFINED__
+   * @since 1.6
    */
   public static class Builder {
 
@@ -65,7 +65,7 @@ public class MailgunCredentials {
      * Initialize a builder with existing credentials
      *
      * @param credentials Credentials to be used as initial builder state
-     * @since __TO_BE_DEFINED__
+     * @since 1.6
      */
     protected Builder(MailgunCredentials credentials) {
       this.apiKey = null != credentials ? credentials.getApiKey() : null;
@@ -76,7 +76,7 @@ public class MailgunCredentials {
      *
      * @param apiKey api key to be used
      * @return Current builder
-     * @since __TO_BE_DEFINED__
+     * @since 1.6
      */
     public Builder setApiKey(String apiKey) {
       this.apiKey = apiKey;
@@ -87,7 +87,7 @@ public class MailgunCredentials {
      * Create instance
      *
      * @return The instance build with current builder values
-     * @since __TO_BE_DEFINED__
+     * @since 1.6
      */
     public MailgunCredentials build() {
       return new MailgunCredentials(apiKey);

@@ -5,7 +5,7 @@ package com.sinch.sdk.domains.mailgun.api.v1;
  *
  * @see <a
  *     href="https://documentation.mailgun.com/docs/mailgun">https://documentation.mailgun.com/docs/mailgun</a>
- * @since __TO_BE_DEFINED__
+ * @since 1.6
  */
 public interface MailgunService {
 

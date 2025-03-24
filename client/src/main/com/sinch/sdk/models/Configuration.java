@@ -81,7 +81,7 @@ public class Configuration {
    * Get Mailgun service credentials
    *
    * @return Credentials
-   * @since __TO_BE_DEFINED__
+   * @since 1.6
    */
   public Optional<MailgunCredentials> getMailgunCredentials() {
     return Optional.ofNullable(mailgunCredentials);
@@ -184,7 +184,7 @@ public class Configuration {
    * Get Mailgun domain related execution context
    *
    * @return Current Voice context
-   * @since __TO_BE_DEFINED__
+   * @since 1.6
    */
   public Optional<MailgunContext> getMailgunContext() {
     return Optional.ofNullable(mailgunContext);
@@ -528,7 +528,7 @@ public class Configuration {
      *
      * @param apiKey {@link MailgunCredentials#getApiKey()}
      * @return Current builder
-     * @since __TO_BE_DEFINED__
+     * @since 1.6
      */
     public Builder setMailgunApiKey(String apiKey) {
       if (null == this.mailgunCredentials) {
@@ -543,7 +543,7 @@ public class Configuration {
      *
      * @param url Mailgun API URL
      * @return Current builder
-     * @since __TO_BE_DEFINED__
+     * @since 1.6
      */
     public Builder setMailgunUrl(String url) {
       if (null == this.mailgunContext) {
@@ -573,7 +573,7 @@ public class Configuration {
      *
      * @param context {@link #getMailgunContext()}
      * @return Current builder
-     * @since __TO_BE_DEFINED__
+     * @since 1.6
      */
     public Builder setMailgunContext(MailgunContext context) {
       this.mailgunContext = null != context ? MailgunContext.builder(context) : null;

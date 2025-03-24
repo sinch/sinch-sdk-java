@@ -3,7 +3,7 @@ package com.sinch.sdk.core.exceptions;
 /**
  * Exception related to serialization
  *
- * @since __TO_BE_DEFINED__
+ * @since 1.6
  */
 public class SerializationException extends RuntimeException {
 
@@ -15,7 +15,7 @@ public class SerializationException extends RuntimeException {
    * constructor is useful for exceptions that are little more than wrappers for other throwables
    *
    * @param throwable Cause
-   * @since __TO_BE_DEFINED__
+   * @since 1.6
    */
   public SerializationException(Throwable throwable) {
     super(null, throwable);
@@ -25,7 +25,7 @@ public class SerializationException extends RuntimeException {
    * Constructs an SerializationException with the specified detail message.
    *
    * @param message the detail message.
-   * @since __TO_BE_DEFINED__
+   * @since 1.6
    */
   public SerializationException(String message) {
     super(message, null);

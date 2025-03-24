@@ -68,13 +68,14 @@ SinchClient client = new SinchClient(configuration);
 
 Here is the list of the Sinch products and their level of support by the Java SDK:
 
-| API Category           | API Name                                                                                                                                             | Status |
-|------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|:------:|
-| Conversation           | Conversation API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/conversation/package-summary.html) |   ✅    |
-| SMS                    | SMS API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/sms/package-summary.html)                   |   ✅    |
-| Numbers & Connectivity | Numbers API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/numbers/package-summary.html)           |   ✅    |
-| Verification           | Verification API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/verification/package-summary.html) |   ✅    |
-| Voice and Video        | Voice API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/voice/package-summary.html)               |   ✅    |
+| API Category           | API Name                                                                                                                                               | Status |
+|------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|:------:|
+| Email                  | `(preview)` Mailgun API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/mailgun/package-summary.html) |   ✅    |
+| Messaging              | Conversation API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/conversation/package-summary.html)   |   ✅    |
+|                        | SMS API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/sms/package-summary.html)                     |   ✅    |
+| Numbers & Connectivity | Numbers API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/numbers/package-summary.html)             |   ✅    |
+| Verification           | Verification API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/verification/package-summary.html)   |   ✅    |
+| Voice and Video        | Voice API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/voice/package-summary.html)                 |   ✅    |
 
 
 ## Logging
