@@ -31,7 +31,7 @@ public class OrderStatusDtoTest extends ConversationBaseTest {
                   .setOrder(
                       OrderStatusPaymentDetails.builder()
                           .setStatus(StatusEnum.CANCELED)
-                          .setDescription("Order cancelled")
+                          .setDescription("Order canceled")
                           .build())
                   .build())
           .build();

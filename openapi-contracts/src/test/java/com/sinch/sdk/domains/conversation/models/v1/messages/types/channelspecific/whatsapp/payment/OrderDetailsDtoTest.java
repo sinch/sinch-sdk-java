@@ -51,7 +51,7 @@ public class OrderDetailsDtoTest extends ConversationBaseTest {
                           .setShippingDescription("shipping description")
                           .setShippingValue(5000)
                           .setSubtotalValue(6000)
-                          .setTaxDescription("tex description")
+                          .setTaxDescription("tax description")
                           .setTaxValue(7000)
                           .build())
                   .setPaymentSettings(
