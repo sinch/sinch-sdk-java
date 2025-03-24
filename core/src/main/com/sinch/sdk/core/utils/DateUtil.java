@@ -37,12 +37,13 @@ public class DateUtil {
   /**
    * Convert String to Instant
    *
-   * <p>Consume a date time in form of
+   * <p>Consume a date time in form of:
    *
    * <ul>
    *   <li>ISO8601 with TZ
    *   <li>YYYY-MM-DDThh:mm:ss.SSS without timezone
    *   <li>YYYY-MM-DDThh:mm:ss.SSSZ with timezone
+   *   <li>UTC timestamps in seconds
    * </ul>
    *
    * When timezone is not known, UTC is assumed
