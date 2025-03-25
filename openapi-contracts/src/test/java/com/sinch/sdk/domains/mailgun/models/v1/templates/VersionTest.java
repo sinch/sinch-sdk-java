@@ -6,7 +6,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
-import com.sinch.sdk.domains.mailgun.models.v1.templates.response.CreateResponse;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.response.internal.CreateResponseInternal;
 import java.time.Instant;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -81,8 +81,8 @@ public class VersionTest extends BaseTest {
                   .collect(Collectors.toMap(data -> data[0], data -> data[1])))
           .build();
 
-  public static CreateResponse expectedCreatedVersion =
-      CreateResponse.builder()
+  public static CreateResponseInternal expectedCreatedVersion =
+      CreateResponseInternal.builder()
           .setMessage("new version of the template has been stored")
           .setTemplate(
               new TemplateImpl.Builder()

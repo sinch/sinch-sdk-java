@@ -4,21 +4,24 @@ import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.response.internal.UpdateResponseInternal;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.response.internal.UpdatedTemplateInternal;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.response.internal.UpdatedVersionInternal;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
 public class DeleteVersionResponseTest extends BaseTest {
 
   @GivenJsonResource("/domains/mailgun/v1/templates/response/DeleteVersionResponseDto.json")
-  UpdateResponse loadedResponseDto;
+  UpdateResponseInternal loadedResponseDto;
 
-  public static UpdateResponse expectedResponse =
-      UpdateResponse.builder()
+  public static UpdateResponseInternal expectedResponse =
+      UpdateResponseInternal.builder()
           .setMessage("version has been deleted")
           .setTemplate(
-              UpdatedTemplate.builder()
+              UpdatedTemplateInternal.builder()
                   .setName("template created from java sdk")
-                  .setVersion(UpdatedVersion.builder().setTag("a tag value").build())
+                  .setVersion(UpdatedVersionInternal.builder().setTag("a tag value").build())
                   .build())
           .build();
 

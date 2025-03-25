@@ -5,6 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.Template;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.response.internal.CreateResponseInternal;
 import java.time.Instant;
 import org.junit.jupiter.api.Test;
 
@@ -12,10 +13,10 @@ import org.junit.jupiter.api.Test;
 public class CreateTemplateResponseTest extends BaseTest {
 
   @GivenJsonResource("/domains/mailgun/v1/templates/response/CreateTemplateResponseDto.json")
-  CreateResponse loadedTemplateDto;
+  CreateResponseInternal loadedTemplateDto;
 
-  public static CreateResponse expectedTemplate =
-      CreateResponse.builder()
+  public static CreateResponseInternal expectedTemplate =
+      CreateResponseInternal.builder()
           .setMessage("template has been stored")
           .setTemplate(
               Template.builder()

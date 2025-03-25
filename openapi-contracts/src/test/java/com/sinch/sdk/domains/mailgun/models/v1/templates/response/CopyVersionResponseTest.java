@@ -5,7 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.VersionDetails;
-import com.sinch.sdk.domains.mailgun.models.v1.templates.internal.CopyVersionResponseInternal;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.response.internal.CopyVersionResponseInternal;
 import java.time.Instant;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
