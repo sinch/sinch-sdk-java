@@ -32,7 +32,6 @@ import com.sinch.sdk.domains.mailgun.models.v1.templates.VersionTest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.CopyVersionQueryParameters;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.CreateTemplateRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.CreateVersionRequest;
-import com.sinch.sdk.domains.mailgun.models.v1.templates.request.GetTemplateQueryParameters;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.UpdateTemplateRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.UpdateVersionRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.response.CopyVersionResponseTest;
@@ -58,6 +57,9 @@ class TemplatesServiceTest extends BaseTest {
 
   @GivenTextResource("/domains/mailgun/v1/templates/response/GetTemplateResponseDto.json")
   String jsonGetTemplateResponseDto;
+
+  @GivenTextResource("/domains/mailgun/v1/templates/response/GetTemplateWithActiveResponseDto.json")
+  String jsonGetTemplateWithActiveResponseDto;
 
   @GivenTextResource("/domains/mailgun/v1/templates/response/ListTemplatesResponseDtoPage0.json")
   String jsonListTemplatesResponseDtoPage0;
@@ -180,7 +182,8 @@ class TemplatesServiceTest extends BaseTest {
             Collections.emptyList(),
             Collections.singletonList(AUTH_NAME));
     HttpResponse httpResponse =
-        new HttpResponse(200, null, Collections.emptyMap(), jsonGetTemplateResponseDto.getBytes());
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonGetTemplateWithActiveResponseDto.getBytes());
 
     when(httpClient.invokeAPI(
             eq(serverConfiguration),
@@ -188,11 +191,12 @@ class TemplatesServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    Template response =
-        service.get(
-            domainName, templateName, GetTemplateQueryParameters.builder().setActive(true).build());
+    VersionDetails response = service.getActiveVersion(domainName, templateName);
 
-    TestHelpers.recursiveEquals(response, GetTemplateResponseTest.expectedTemplate.getTemplate());
+    TestHelpers.recursiveEquals(
+        response,
+        ((TemplateImpl) GetTemplateResponseTest.expectedTemplateWithActive.getTemplate())
+            .getVersion());
   }
 
   @Test

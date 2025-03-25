@@ -2,18 +2,18 @@ package com.sinch.sample.mailgun.templates;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.mailgun.api.v1.TemplatesService;
-import com.sinch.sdk.domains.mailgun.models.v1.templates.Template;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.VersionDetails;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-public class Get extends BaseApplication {
-  private static final Logger LOGGER = Logger.getLogger(Get.class.getName());
+public class GetActiveVersion extends BaseApplication {
+  private static final Logger LOGGER = Logger.getLogger(GetActiveVersion.class.getName());
 
-  public Get() throws IOException {}
+  public GetActiveVersion() throws IOException {}
 
   public static void main(String[] args) {
     try {
-      new Get().run();
+      new GetActiveVersion().run();
     } catch (Exception e) {
       LOGGER.severe(e.getMessage());
       e.printStackTrace();
@@ -24,9 +24,9 @@ public class Get extends BaseApplication {
 
     TemplatesService service = client.mailgun().v1().templates();
 
-    LOGGER.info("Get Template information for :" + mailgunTemplateName);
+    LOGGER.info("Get for active version for Template: " + mailgunTemplateName);
 
-    Template value = service.get(mailgunDomain, mailgunTemplateName);
+    VersionDetails value = service.getActiveVersion(mailgunDomain, mailgunTemplateName);
 
     LOGGER.info("Response:" + value);
   }
