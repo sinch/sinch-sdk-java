@@ -139,6 +139,9 @@
                             **.internal;
                             com.sinch.sdk.domains.numbers.models.v1.errors;
                             com.sinch.sdk.domains.sms.models;
+                            com.sinch.sdk.domains.sms.models.requests;
+                            com.sinch.sdk.domains.sms.models.responses;
+                            com.sinch.sdk.domains.sms.models.webhooks;
                             com.sinch.sdk.domains.verification.models;
                             com.sinch.sdk.domains.verification.models.requests;
                             com.sinch.sdk.domains.verification.models.response;

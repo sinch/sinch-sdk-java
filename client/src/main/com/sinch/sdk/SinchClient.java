@@ -112,7 +112,7 @@ public class SinchClient {
    *
    * <p>Can be used to address webhooks feature not requiring credentials
    *
-   * @since __TO_BE_DEFINED__
+   * @since 1.6
    */
   public SinchClient() {
     this(null);
@@ -389,8 +389,8 @@ public class SinchClient {
    * Get Mailgun domain service
    *
    * @return Return instance onto Mailgun API service
-   * @see <a href="__TO_BE_DEFINED__">__TO_BE_DEFINED__</a>
-   * @since __TO_BE_DEFINED__
+   * @see <a href="https://documentation.mailgun.com/">https://documentation.mailgun.com/</a>
+   * @since 1.6
    */
   public MailgunService mailgun() {
     if (null == mailgun) {

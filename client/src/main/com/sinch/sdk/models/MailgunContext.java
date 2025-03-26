@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 /**
  * Execution context related to Mailgun domains
  *
- * @since __TO_BE_DEFINED__
+ * @since 1.6
  */
 public class MailgunContext {
 
@@ -26,7 +26,7 @@ public class MailgunContext {
    * Mailgun region
    *
    * @return Selected Region
-   * @since __TO_BE_DEFINED__
+   * @since 1.6
    */
   public MailgunRegion getRegion() {
     return region;
@@ -36,7 +36,7 @@ public class MailgunContext {
    * Mailgun Server Configuration
    *
    * @return Mailgun Server configuration to be used
-   * @since __TO_BE_DEFINED__
+   * @since 1.6
    */
   public ServerConfiguration getServer() {
     return new ServerConfiguration(getUrl());
@@ -46,7 +46,7 @@ public class MailgunContext {
    * Mailgun Storage Servers Configuration
    *
    * @return Mailgun Storage Server configuration to be used
-   * @since __TO_BE_DEFINED__
+   * @since 1.6
    */
   public Collection<ServerConfiguration> getStorageServers() {
     return storageUrls.stream().map(ServerConfiguration::new).collect(Collectors.toList());
@@ -56,7 +56,7 @@ public class MailgunContext {
    * Mailgun URL
    *
    * @return Mailgun Server URL
-   * @since __TO_BE_DEFINED__
+   * @since 1.6
    */
   public String getUrl() {
     return url;
@@ -66,7 +66,7 @@ public class MailgunContext {
    * Mailgun Storage URLs
    *
    * @return Mailgun Storage Server URLs
-   * @since __TO_BE_DEFINED__
+   * @since 1.6
    */
   public Collection<String> getStorageUrls() {
     return storageUrls;
@@ -76,7 +76,7 @@ public class MailgunContext {
    * Getting Builder
    *
    * @return New Builder instance
-   * @since __TO_BE_DEFINED__
+   * @since 1.6
    */
   public static Builder builder() {
     return new Builder();
@@ -87,7 +87,7 @@ public class MailgunContext {
    *
    * @param context Source context to fill initial builder state
    * @return New Builder instance
-   * @since __TO_BE_DEFINED__
+   * @since 1.6
    */
   public static Builder builder(MailgunContext context) {
     return new Builder(context);
@@ -96,7 +96,7 @@ public class MailgunContext {
   /**
    * Dedicated Builder
    *
-   * @since __TO_BE_DEFINED__
+   * @since 1.6
    */
   public static class Builder {
 
@@ -129,7 +129,7 @@ public class MailgunContext {
      *
      * @param url Mailgun API URL
      * @return Current builder
-     * @since __TO_BE_DEFINED__
+     * @since 1.6
      */
     public Builder setUrl(String url) {
       this.url = url;
@@ -141,7 +141,7 @@ public class MailgunContext {
      *
      * @param storageUrls List of storage URLs
      * @return Current builder
-     * @since __TO_BE_DEFINED__
+     * @since 1.6
      */
     public Builder setStorageUrls(Collection<String> storageUrls) {
       this.storageUrls = storageUrls;
@@ -152,7 +152,7 @@ public class MailgunContext {
      * Create instance
      *
      * @return The instance build with current builder values
-     * @since __TO_BE_DEFINED__
+     * @since 1.6
      */
     public MailgunContext build() {
 

@@ -11,6 +11,7 @@ import java.util.stream.Stream;
  * @see <a
  *     href="https://documentation.mailgun.com/docs/mailgun/user-manual/get-started/#mailgun-regions">Mailgun
  *     Regions</a>
+ * @since 1.6
  */
 public class MailgunRegion extends EnumDynamic<String, MailgunRegion> {
 
