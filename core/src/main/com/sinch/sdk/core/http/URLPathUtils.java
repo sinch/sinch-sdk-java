@@ -11,12 +11,16 @@ public class URLPathUtils {
     if (StringUtil.isEmpty(segment)) {
       return "";
     }
-    URI uri;
+    String pathSegment;
     try {
-      uri = new URI("foo", "foo", "/" + segment, null);
+      URI uri = new URI("https", "f", "/" + segment, null);
+      pathSegment = uri.toASCIIString().substring(10);
     } catch (URISyntaxException e) {
       throw new RuntimeException(e);
     }
-    return uri.getRawPath().substring(1);
+    // URI is considering '/' as a separator but here this function is to convert a
+    // single path element: then a '/' mean it is part of the string to be encoded but not the
+    // hierarchical separator
+    return pathSegment.replaceAll("/", "%2F");
   }
 }
