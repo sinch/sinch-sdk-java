@@ -23,9 +23,11 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameter.STYLE;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.mailgun.api.v1.TemplatesService;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.Template;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.TemplateImpl;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.TemplateTest;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.Version;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.VersionDetails;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.VersionTest;
@@ -78,6 +80,10 @@ class TemplatesServiceTest extends BaseTest {
 
   @GivenTextResource("/domains/mailgun/v1/templates/response/CreateTemplateResponseDto.json")
   String jsonCreateTemplateResponseDto;
+
+  @GivenTextResource(
+      "/domains/mailgun/v1/templates/response/CreateTemplateWithActiveResponseDto.json")
+  String jsonCreateTemplateWithActiveResponseDto;
 
   @GivenTextResource("/domains/mailgun/v1/templates/response/DeleteTemplateResponseDto.json")
   String jsonDeleteTemplateResponseDto;
@@ -315,7 +321,8 @@ class TemplatesServiceTest extends BaseTest {
             "/v3/" + URLPathUtils.encodePathSegment(domainName) + "/templates",
             HttpMethod.POST,
             Collections.emptyList(),
-            ObjectMapperTest.fillMap("name", "template name"),
+            ObjectMapperTest.fillMap(
+                "name", "template name", "description", "the description", "createdBy", "html"),
             Collections.emptyMap(),
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
             Collections.singletonList(HttpContentType.MULTIPART_FORM_DATA),
@@ -331,11 +338,77 @@ class TemplatesServiceTest extends BaseTest {
         .thenReturn(httpResponse);
 
     CreateTemplateRequest request =
-        CreateTemplateRequest.builder().setName("template name").build();
+        CreateTemplateRequest.builder()
+            .setName("template name")
+            .setDescription("the description")
+            .setCreatedBy("html")
+            .build();
     Template response = service.create(domainName, request);
 
     TestHelpers.recursiveEquals(
         response, CreateTemplateResponseTest.expectedTemplate.getTemplate());
+  }
+
+  @Test
+  void createWithVersion() {
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v3/" + URLPathUtils.encodePathSegment(domainName) + "/templates",
+            HttpMethod.POST,
+            Collections.emptyList(),
+            ObjectMapperTest.fillMap(
+                "name",
+                "template name",
+                "description",
+                "my description value",
+                "createdBy",
+                "html",
+                "template",
+                "<p>{{firstname}} {{lastname}}</p>",
+                "tag",
+                "version created during template creation",
+                "comment",
+                "a comment value",
+                "headers",
+                "{\"From\":\"mygrom@adress.org\",\"subject\":\"my subject\"}"),
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.MULTIPART_FORM_DATA),
+            Collections.singletonList(AUTH_NAME));
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonCreateTemplateWithActiveResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    CreateTemplateRequest templateParameters =
+        CreateTemplateRequest.builder()
+            .setName("template name")
+            .setDescription("my description value")
+            .setCreatedBy("html")
+            .build();
+    CreateVersionRequest versionParameters =
+        CreateVersionRequest.builder()
+            .setTemplate("<p>{{firstname}} {{lastname}}</p>")
+            .setTag("version created during template creation")
+            .setComment("a comment value")
+            .setHeaders(
+                Arrays.asList(
+                    Pair.of("From", "mygrom@adress.org"), Pair.of("subject", "my subject")))
+            .build();
+    Pair<Template, VersionDetails> response =
+        service.createWithActiveVersion(domainName, templateParameters, versionParameters);
+
+    TestHelpers.recursiveEquals(
+        response.getLeft(), TemplateTest.expectedTemplateResponseWithActive);
+    TestHelpers.recursiveEquals(
+        response.getRight(),
+        ((TemplateImpl) TemplateTest.expectedTemplateResponseWithActive).getVersion());
   }
 
   @Test
