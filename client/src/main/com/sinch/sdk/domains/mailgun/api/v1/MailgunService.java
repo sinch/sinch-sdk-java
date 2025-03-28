@@ -14,8 +14,18 @@ public interface MailgunService {
    *
    * @return service instance for project
    * @see <a
-   *     href="https://documentation.mailgun.com/docs/mailgun/api-reference/openapi-final/tag/Messages/">Messages
+   *     href="https://documentation.mailgun.com/docs/mailgun/api-reference/openapi-final/tag/Messages">Messages
    *     API documentation</a>
    */
   EmailsService emails();
+
+  /**
+   * Templates Service instance
+   *
+   * @return service instance for project
+   * @see <a
+   *     href="https://documentation.mailgun.com/docs/mailgun/api-reference/openapi-final/tag/Templates">Templates
+   *     API documentation</a>
+   */
+  TemplatesService templates();
 }

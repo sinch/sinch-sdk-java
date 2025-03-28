@@ -26,10 +26,12 @@ public abstract class BaseApplication {
   private static final String CONVERSATION_EVENT_ID_KEY = "CONVERSATION_EVENT_ID";
   private static final String CONVERSATION_WEBHOOK_ID_KEY = "CONVERSATION_WEBHOOK_ID";
   private static final String CONVERSATION_TEMPLATE_ID_KEY = "CONVERSATION_TEMPLATE_ID";
+
   private static final String MAILGUN_DOMAIN = "MAILGUN_DOMAIN";
   private static final String MAILGUN_FROM = "MAILGUN_FROM";
   private static final String MAILGUN_TO = "MAILGUN_TO";
-
+  private static final String MAILGUN_TEMPLATE_NAME = "MAILGUN_TEMPLATE_NAME";
+  private static final String MAILGUN_TEMPLATE_VERSION_NAME = "MAILGUN_TEMPLATE_VERSION_NAME";
   public static final String WEBHOOKS_URL_KEY = "WEBHOOKS_URL";
   public static final String WEBHOOKS_NUMBERS_PATH_KEY = "WEBHOOKS_NUMBERS_PATH";
   public static final String WEBHOOKS_VOICE_PATH_KEY = "WEBHOOKS_VOICE_PATH";
@@ -60,7 +62,8 @@ public abstract class BaseApplication {
   protected String mailgunDomain;
   protected String mailgunFrom;
   protected String mailgunTo;
-
+  protected String mailgunTemplateName;
+  protected String mailgunTemplateVersionName;
   protected Optional<String> webhooksConversationPath = Optional.empty();
   protected Optional<String> webhooksNumbersPath = Optional.empty();
   protected Optional<String> webhooksSmsPath = Optional.empty();
@@ -133,7 +136,8 @@ public abstract class BaseApplication {
     mailgunDomain = getConfigValue(MAILGUN_DOMAIN);
     mailgunFrom = getConfigValue(MAILGUN_FROM);
     mailgunTo = getConfigValue(MAILGUN_TO);
-
+    mailgunTemplateName = getConfigValue(MAILGUN_TEMPLATE_NAME);
+    mailgunTemplateVersionName = getConfigValue(MAILGUN_TEMPLATE_VERSION_NAME);
     client = new SinchClient(configuration);
   }
 

@@ -1,0 +1,16 @@
+{
+  "template": {
+    "name": "my-template",
+    "description": "my description value",
+    "createdAt": "Sat, 22 Mar 2025 16:52:29 UTC",
+    "createdBy": "html",
+    "id": "a1d695c7-4d8b-4e84-a1f9-aaaaaaaaaaaa",
+    "versions": []
+  },
+  "paging": {
+    "previous": "https://api.mailgun.net/v3/domain.mailgun.org/templates/my-template/versions?page=last&limit=2",
+    "first": "https://api.mailgun.net/v3/domain.mailgun.org.mailgun.org/templates/my-template/versions?limit=2",
+    "next": "https://api.mailgun.net/v3/domain.mailgun.org.mailgun.org/templates/my-template/versions?page=next&p=version+3&limit=2",
+    "last": "https://api.mailgun.net/v3/domain.mailgun.org.mailgun.org/templates/my-template/versions?page=last&limit=2"
+  }
+}

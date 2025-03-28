@@ -1,0 +1,9 @@
+{
+  "message": "version has been updated",
+  "template": {
+    "name": "template created from java sdk",
+    "version": {
+      "tag": "a tag value"
+    }
+  }
+}

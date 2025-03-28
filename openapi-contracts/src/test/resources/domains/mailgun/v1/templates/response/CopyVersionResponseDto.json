@@ -1,0 +1,17 @@
+{
+  "message": "version has been copied",
+  "template": {
+    "tag": "version of template created  from java sdk(cloned)",
+    "template": "<p>{{firstname}} {{lastname}}</p>",
+    "engine": "handlebars",
+    "mjml": "",
+    "createdAt": "Fri, 21 Mar 2025 15:00:44 UTC",
+    "comment": "a comment value from copy",
+    "active": false,
+    "id": "95658c55-e93a-40d5-a02f-a4fadfbbb3ca",
+    "headers": {
+      "From": "mygrom@adress.org",
+      "Subject": "my subject"
+    }
+  }
+}
