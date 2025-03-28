@@ -38,12 +38,12 @@ public class GetListTemplatesResponseTest extends BaseTest {
           .setPaging(
               PagingResponse.builder()
                   .setPrevious(
-                      "https://api.mailgun.net/v3/sandboxFOO.mailgun.org/templates?page=previous&p=created+from+rest&limit=2")
-                  .setFirst("https://api.mailgun.net/v3/sandboxFOO.mailgun.org/templates?limit=2")
+                      "https://api.mailgun.net/v3/foo%20Domain.mailgun.org/templates?page=previous&p=created+from+rest&limit=2")
+                  .setFirst("https://api.mailgun.net/v3/foo%20Domain.mailgun.org/templates?limit=2")
                   .setNext(
-                      "https://api.mailgun.net/v3/sandboxFOO.mailgun.org/templates?page=next&p=letter+tempalte+from+dashboard&limit=2")
+                      "https://api.mailgun.net/v3/foo%20Domain.mailgun.org/templates?page=next&p=letter+template+from+dashboard&limit=2")
                   .setLast(
-                      "https://api.mailgun.net/v3/sandboxFOO.mailgun.org/templates?page=last&limit=2")
+                      "https://api.mailgun.net/v3/foo%20Domain.mailgun.org/templates?page=last&limit=2")
                   .build())
           .build();
 

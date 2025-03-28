@@ -131,7 +131,8 @@ class TemplatesServiceTest extends BaseTest {
   TemplatesService service;
 
   String domainName = "foo Domain";
-  String templateName = "template.test";
+  // template name with path separator by purpose: the / should be encoded properly
+  String templateName = "template/test";
   String versionName = "version name value";
 
   @BeforeEach
@@ -249,7 +250,7 @@ class TemplatesServiceTest extends BaseTest {
 
     HttpRequest httpRequest1 =
         new HttpRequest(
-            "https://api.mailgun.net/v3/sandboxFOO.mailgun.org/templates?page=next&p=letter+tempalte+from+dashboard&limit=2",
+            "https://api.mailgun.net/v3/foo%20Domain.mailgun.org/templates?page=next&p=letter+template+from+dashboard&limit=2",
             HttpMethod.GET,
             null,
             Collections.emptyMap(),
@@ -259,7 +260,7 @@ class TemplatesServiceTest extends BaseTest {
 
     HttpRequest httpRequest2 =
         new HttpRequest(
-            "https://api.mailgun.net/v3/sandboxFOO.mailgun.org/templates?page=next&p=template.test&limit=2",
+            "https://api.mailgun.net/v3/foo%20Domain.mailgun.org/templates?page=next&p=template.test&limit=2",
             HttpMethod.GET,
             null,
             Collections.emptyMap(),
@@ -300,16 +301,20 @@ class TemplatesServiceTest extends BaseTest {
     Iterator<Template> iterator = response.iterator();
 
     Template item = iterator.next();
+    // expecting 1st elem of 1st page
     TestHelpers.recursiveEquals(item, listTemplatesResponseDtoPage0.getItems().get(0));
     Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
 
     item = iterator.next();
+    // expecting 2nd elem of 1st page
     TestHelpers.recursiveEquals(item, listTemplatesResponseDtoPage0.getItems().get(1));
     Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
 
     item = iterator.next();
+    // expecting 1st elem of 2nd page
     TestHelpers.recursiveEquals(item, listTemplatesResponseDtoPage1.getItems().get(0));
 
+    // No more items (the list was containing only 3)
     Assertions.assertThat(iterator.hasNext()).isEqualTo(false);
   }
 
@@ -416,7 +421,10 @@ class TemplatesServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/v3/" + URLPathUtils.encodePathSegment(domainName) + "/templates/" + templateName,
+            "/v3/"
+                + URLPathUtils.encodePathSegment(domainName)
+                + "/templates/"
+                + URLPathUtils.encodePathSegment(templateName),
             HttpMethod.PUT,
             Collections.emptyList(),
             ObjectMapperTest.fillMap("description", "new description value"),
@@ -444,7 +452,10 @@ class TemplatesServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/v3/" + URLPathUtils.encodePathSegment(domainName) + "/templates/" + templateName,
+            "/v3/"
+                + URLPathUtils.encodePathSegment(domainName)
+                + "/templates/"
+                + URLPathUtils.encodePathSegment(templateName),
             HttpMethod.DELETE,
             Collections.emptyList(),
             (Map) null,
@@ -499,7 +510,7 @@ class TemplatesServiceTest extends BaseTest {
             "/v3/"
                 + URLPathUtils.encodePathSegment(domainName)
                 + "/templates/"
-                + templateName
+                + URLPathUtils.encodePathSegment(templateName)
                 + "/versions",
             HttpMethod.POST,
             Collections.emptyList(),
@@ -537,7 +548,7 @@ class TemplatesServiceTest extends BaseTest {
             "/v3/"
                 + URLPathUtils.encodePathSegment(domainName)
                 + "/templates/"
-                + templateName
+                + URLPathUtils.encodePathSegment(templateName)
                 + "/versions/"
                 + URLPathUtils.encodePathSegment(versionName),
             HttpMethod.PUT,
@@ -602,7 +613,7 @@ class TemplatesServiceTest extends BaseTest {
             "/v3/"
                 + URLPathUtils.encodePathSegment(domainName)
                 + "/templates/"
-                + templateName
+                + URLPathUtils.encodePathSegment(templateName)
                 + "/versions/"
                 + URLPathUtils.encodePathSegment(versionName),
             HttpMethod.DELETE,
@@ -633,7 +644,7 @@ class TemplatesServiceTest extends BaseTest {
             "/v3/"
                 + URLPathUtils.encodePathSegment(domainName)
                 + "/templates/"
-                + templateName
+                + URLPathUtils.encodePathSegment(templateName)
                 + "/versions/"
                 + URLPathUtils.encodePathSegment(versionName)
                 + "/copy/"
@@ -736,19 +747,23 @@ class TemplatesServiceTest extends BaseTest {
     Iterator<Version> iterator = response.iterator();
 
     Version item = iterator.next();
+    // expecting 1st elem of 1st page
     TestHelpers.recursiveEquals(
         item, ((TemplateImpl) listVersionsResponseDtoPage0.getTemplate()).getVersions().get(0));
     Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
 
     item = iterator.next();
+    // expecting 2nd elem of 1st page
     TestHelpers.recursiveEquals(
         item, ((TemplateImpl) listVersionsResponseDtoPage0.getTemplate()).getVersions().get(1));
     Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
 
     item = iterator.next();
+    // expecting 1st elem of 2nd page
     TestHelpers.recursiveEquals(
         item, ((TemplateImpl) listVersionsResponseDtoPage1.getTemplate()).getVersions().get(0));
 
+    // No more items (the list was containing only 3)
     Assertions.assertThat(iterator.hasNext()).isEqualTo(false);
   }
 }

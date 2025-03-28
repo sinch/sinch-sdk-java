@@ -221,7 +221,7 @@ class HttpClientTestIT extends BaseTest {
 
     try {
       httpClient.invokeAPI(
-          new ServerConfiguration("https://this-url-have-to-be-ignored.com"),
+          new ServerConfiguration("https://this-url-has-to-be-ignored.com"),
           null,
           new HttpRequest(
               String.format("%s/foo?query", serverUrl),
