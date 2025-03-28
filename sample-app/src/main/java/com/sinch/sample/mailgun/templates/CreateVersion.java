@@ -3,7 +3,7 @@ package com.sinch.sample.mailgun.templates;
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.mailgun.api.v1.TemplatesService;
-import com.sinch.sdk.domains.mailgun.models.v1.templates.Version;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.VersionDetails;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.CreateVersionRequest;
 import java.io.IOException;
 import java.util.Arrays;
@@ -39,7 +39,7 @@ public class CreateVersion extends BaseApplication {
                 Arrays.asList(
                     Pair.of("From", "mygrom@adress.org"), Pair.of("subject", "my subject")))
             .build();
-    Version value = service.createVersion(mailgunDomain, mailgunTemplateName, request);
+    VersionDetails value = service.createVersion(mailgunDomain, mailgunTemplateName, request);
     LOGGER.info("Response:" + value);
   }
 }

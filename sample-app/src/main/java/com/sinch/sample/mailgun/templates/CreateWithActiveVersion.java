@@ -41,7 +41,7 @@ public class CreateWithActiveVersion extends BaseApplication {
     CreateVersionRequest versionParameters =
         CreateVersionRequest.builder()
             .setTemplate("<p>{{firstname}} {{lastname}}</p>")
-            .setTag("version created during template creation")
+            .setTag(mailgunTemplateVersionName)
             .setComment("a comment value")
             .setHeaders(
                 Arrays.asList(

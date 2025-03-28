@@ -2,7 +2,7 @@ package com.sinch.sample.mailgun.templates;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.mailgun.api.v1.TemplatesService;
-import com.sinch.sdk.domains.mailgun.models.v1.templates.Version;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.VersionDetails;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -26,7 +26,7 @@ public class GetVersion extends BaseApplication {
 
     LOGGER.info("Get for :" + mailgunTemplateName);
 
-    Version value =
+    VersionDetails value =
         service.getVersion(mailgunDomain, mailgunTemplateName, mailgunTemplateVersionName);
 
     LOGGER.info("Response:" + value);
