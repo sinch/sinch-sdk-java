@@ -2,7 +2,7 @@ package com.sinch.sample.mailgun.templates;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.mailgun.api.v1.TemplatesService;
-import com.sinch.sdk.domains.mailgun.models.v1.templates.Version;
+import com.sinch.sdk.domains.mailgun.models.v1.templates.VersionDetails;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.request.CopyVersionQueryParameters;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -30,7 +30,7 @@ public class CopyVersion extends BaseApplication {
     CopyVersionQueryParameters request =
         CopyVersionQueryParameters.builder().setComment("a comment value from copy").build();
 
-    Version value =
+    VersionDetails value =
         service.copyVersion(
             mailgunDomain, mailgunTemplateName, mailgunTemplateVersionName, "(cloned)", request);
 
