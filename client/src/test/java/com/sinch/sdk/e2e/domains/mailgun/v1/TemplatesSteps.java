@@ -37,17 +37,20 @@ public class TemplatesSteps {
   Template getResponse;
   VersionDetails getActiveVersionResponse;
   Boolean updatePassed;
-  ListTemplatesResponse listOnePageResponse;
-  ListTemplatesResponse listAllResponse;
-  ListTemplatesResponse listAllManuallyResponse;
+  Integer listOnePageCount;
+  Integer listAllResponseCount;
+  Integer listAllManuallyResponseCount;
+  Integer listAllManuallyResponsePageCount;
   VersionDetails createVersionResponse;
   VersionDetails getVersionResponse;
   Boolean updateVersionPassed;
   VersionDetails copyVersionResponse;
   Boolean deleteVersionPassed;
-  ListVersionsResponse listVersionsOnePageResponse;
-  ListVersionsResponse listAllVersionsResponse;
-  ListVersionsResponse listAllVersionsManuallyResponse;
+  Integer listOnePageVersionsResponseCount;
+  Integer listAllVersionsResponseCount;
+  Integer listAllVersionsManuallyResponseCount;
+  Integer listAllVersionsManuallyResponsePageCount;
+
   static final String domainName = "domainName";
   static final String templateName = "🔥 / Template on fire";
   static final String versionName = "✉️ Version name";
@@ -158,7 +161,7 @@ public class TemplatesSteps {
     ListTemplatesQueryParameters request =
         ListTemplatesQueryParameters.builder().setLimit(2).build();
 
-    listOnePageResponse = service.list(domainName, request);
+    listOnePageCount = service.list(domainName, request).getContent().size();
   }
 
   @When("^I send a request to list all the Templates$")
@@ -166,7 +169,7 @@ public class TemplatesSteps {
     ListTemplatesQueryParameters request =
         ListTemplatesQueryParameters.builder().setLimit(2).build();
 
-    listAllResponse = service.list(domainName, request);
+    listAllResponseCount = consumeAndCount(service.list(domainName, request));
   }
 
   @When("^I iterate manually over the Templates pages$")
@@ -174,7 +177,15 @@ public class TemplatesSteps {
     ListTemplatesQueryParameters request =
         ListTemplatesQueryParameters.builder().setLimit(2).build();
 
-    listAllManuallyResponse = service.list(domainName, request);
+    ListTemplatesResponse response = service.list(domainName, request);
+
+    listAllManuallyResponseCount = 0;
+    listAllManuallyResponsePageCount = 1;
+    while (response.hasNextPage()) {
+      listAllManuallyResponseCount += response.getContent().size();
+      response = response.nextPage();
+      listAllManuallyResponsePageCount++;
+    }
   }
 
   @When("^I send a request to create a version$")
@@ -225,21 +236,31 @@ public class TemplatesSteps {
   public void listVersionsOnePage() {
     ListVersionsQueryParameters request = ListVersionsQueryParameters.builder().setLimit(2).build();
 
-    listVersionsOnePageResponse = service.listVersions(domainName, simpleTemplateName, request);
+    listOnePageVersionsResponseCount =
+        service.listVersions(domainName, simpleTemplateName, request).getContent().size();
   }
 
   @When("^I send a request to list all the Versions$")
   public void listVersionsAll() {
     ListVersionsQueryParameters request = ListVersionsQueryParameters.builder().setLimit(2).build();
 
-    listAllVersionsResponse = service.listVersions(domainName, simpleTemplateName, request);
+    listAllVersionsResponseCount =
+        consumeAndCount(service.listVersions(domainName, simpleTemplateName, request));
   }
 
   @When("^I iterate manually over the Versions pages$")
   public void listVersionsAllByPage() {
     ListVersionsQueryParameters request = ListVersionsQueryParameters.builder().setLimit(2).build();
 
-    listAllVersionsManuallyResponse = service.listVersions(domainName, simpleTemplateName, request);
+    ListVersionsResponse response = service.listVersions(domainName, simpleTemplateName, request);
+
+    listAllVersionsManuallyResponseCount = 0;
+    listAllVersionsManuallyResponsePageCount = 1;
+    while (response.hasNextPage()) {
+      listAllVersionsManuallyResponseCount += response.getContent().size();
+      listAllVersionsManuallyResponsePageCount++;
+      response = response.nextPage();
+    }
   }
 
   @Then("the create template response contains information about the Template")
@@ -292,30 +313,25 @@ public class TemplatesSteps {
   @Then("the page response contains \"{int}\" Templates")
   public void onePageResult(int expected) {
 
-    Assertions.assertEquals(listOnePageResponse.getContent().size(), expected);
+    Assertions.assertEquals(listOnePageCount, expected);
   }
 
   @Then("the list all response contains \"{int}\" Templates")
   public void listAllResult(int expected) {
 
-    checkExpectedCount(listAllResponse, expected);
+    Assertions.assertEquals(listAllResponseCount, expected);
   }
 
   @Then("the list all response manually contains \"{int}\" Templates")
   public void listAllManuallyResult(int expected) {
 
-    checkExpectedCount(listAllManuallyResponse, expected);
+    Assertions.assertEquals(listAllManuallyResponseCount, expected);
   }
 
   @Then("the Templates iteration result contains the data from \"{int}\" pages")
   public void listAllByPageResult(int expected) {
 
-    int count = listAllManuallyResponse.getContent().isEmpty() ? 0 : 1;
-    while (listAllManuallyResponse.hasNextPage()) {
-      count++;
-      listAllManuallyResponse = listAllManuallyResponse.nextPage();
-    }
-    Assertions.assertEquals(count, expected);
+    Assertions.assertEquals(listAllManuallyResponsePageCount, expected);
   }
 
   @Then("the create version response contains information about the Version details")
@@ -361,38 +377,32 @@ public class TemplatesSteps {
   @Then("the page response contains \"{int}\" Versions")
   public void listVersionsOnePageResult(int expected) {
 
-    Assertions.assertEquals(listVersionsOnePageResponse.getContent().size(), expected);
+    Assertions.assertEquals(listOnePageVersionsResponseCount, expected);
   }
 
   @Then("the list all response contains \"{int}\" Versions")
   public void listVersionsAllResult(int expected) {
 
-    checkExpectedCount(listAllVersionsResponse, expected);
+    Assertions.assertEquals(listAllVersionsResponseCount, expected);
   }
 
   @Then("the list all response manually contains \"{int}\" Versions")
   public void listAllVersionsByPageResult(int expected) {
 
-    checkExpectedCount(listAllVersionsManuallyResponse, expected);
+    Assertions.assertEquals(listAllVersionsManuallyResponseCount, expected);
   }
 
   @Then("the Versions iteration result contains the data from \"{int}\" pages")
   public void listVersionsAllByPageResult(int expected) {
 
-    int count = listAllVersionsManuallyResponse.getContent().isEmpty() ? 0 : 1;
-    while (listAllVersionsManuallyResponse.hasNextPage()) {
-      count++;
-      listAllVersionsManuallyResponse = listAllVersionsManuallyResponse.nextPage();
-    }
-    Assertions.assertEquals(count, expected);
+    Assertions.assertEquals(listAllVersionsManuallyResponsePageCount, expected);
   }
 
-  void checkExpectedCount(ListResponse<?> response, int expected) {
+  int consumeAndCount(ListResponse<?> response) {
 
     AtomicInteger count = new AtomicInteger();
     response.iterator().forEachRemaining(_unused -> count.getAndIncrement());
-
-    Assertions.assertEquals(count.get(), expected);
+    return count.get();
   }
 
   private static void compareTemplateField(Template actual, Template expected) {
