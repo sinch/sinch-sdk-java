@@ -5,7 +5,10 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** Update strategy for the <code>conversation_metadata</code> field. */
+/**
+ * Update strategy for the <code>conversation_metadata</code> field. Only supported in <code>
+ * CONVERSATION</code> processing mode.
+ */
 public class MetadataUpdateStrategy extends EnumDynamic<String, MetadataUpdateStrategy> {
 
   /**

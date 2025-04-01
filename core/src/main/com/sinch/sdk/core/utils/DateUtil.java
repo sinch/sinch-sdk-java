@@ -37,12 +37,13 @@ public class DateUtil {
   /**
    * Convert String to Instant
    *
-   * <p>Consume a date time in form of
+   * <p>Consume a date time in form of:
    *
    * <ul>
    *   <li>ISO8601 with TZ
    *   <li>YYYY-MM-DDThh:mm:ss.SSS without timezone
    *   <li>YYYY-MM-DDThh:mm:ss.SSSZ with timezone
+   *   <li>UTC timestamps in seconds
    * </ul>
    *
    * When timezone is not known, UTC is assumed
@@ -75,6 +76,11 @@ public class DateUtil {
       return parsed;
     }
 
+    parsed = parseEpochSeconds(trimmed);
+    if (null != parsed) {
+      return parsed;
+    }
+
     // do not break deserialization: fallback to empty value
     LOGGER.severe(String.format("Unable to parse '%s' date string", value));
 
@@ -101,6 +107,14 @@ public class DateUtil {
     try {
       return LocalDateTime.parse(trimmed).toInstant(ZoneOffset.UTC);
     } catch (DateTimeParseException _unused) {
+      return null;
+    }
+  }
+
+  private static Instant parseEpochSeconds(String trimmed) {
+    try {
+      return Instant.ofEpochSecond(Long.parseLong(trimmed));
+    } catch (NumberFormatException _unused) {
       return null;
     }
   }

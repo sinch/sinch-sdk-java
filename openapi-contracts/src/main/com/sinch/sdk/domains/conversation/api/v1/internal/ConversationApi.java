@@ -947,7 +947,8 @@ public class ConversationApi {
   }
 
   /**
-   * Inject an event This operation injects a conversation event into a specific conversation.
+   * Inject an event This operation injects a conversation event in to a specific conversation. It
+   * only supports injecting App events in &#x60;CONVERSATION&#x60; mode.
    *
    * @param projectId The unique ID of the project. You can find this on the [Sinch
    *     Dashboard](https://dashboard.sinch.com/convapi/apps). (required)

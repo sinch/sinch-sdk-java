@@ -11,7 +11,7 @@ public class PaymentStatus extends EnumDynamic<String, PaymentStatus> {
   /** The status value was not set. Treat it as null or not present field. */
   public static final PaymentStatus UNKNOWN = new PaymentStatus("PAYMENT_STATUS_UNKNOWN");
 
-  /** The partner sent an order_details message but the user didn’t start a payment yet. */
+  /** The partner sent an order_details message but the user didn't start a payment yet. */
   public static final PaymentStatus NEW = new PaymentStatus("PAYMENT_STATUS_NEW");
 
   /** The user started the payment process and the payment object was created. */

@@ -12,10 +12,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.types.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/**
- * Message containing a list of cards often rendered horizontally on supported channels. Supported
- * types for media are only images, such as .png, .jpg, .jpeg extensions.
- */
+/** Message containing a list of cards often rendered horizontally on supported channels. */
 @JsonDeserialize(builder = CarouselMessageFieldInternalImpl.Builder.class)
 public interface CarouselMessageFieldInternal {
 

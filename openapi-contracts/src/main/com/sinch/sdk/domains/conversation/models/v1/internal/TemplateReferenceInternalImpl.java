@@ -11,15 +11,19 @@ import java.util.Map;
 import java.util.Objects;
 
 @JsonPropertyOrder({
+  TemplateReferenceInternalImpl.JSON_PROPERTY_VERSION,
   TemplateReferenceInternalImpl.JSON_PROPERTY_LANGUAGE_CODE,
   TemplateReferenceInternalImpl.JSON_PROPERTY_PARAMETERS,
-  TemplateReferenceInternalImpl.JSON_PROPERTY_TEMPLATE_ID,
-  TemplateReferenceInternalImpl.JSON_PROPERTY_VERSION
+  TemplateReferenceInternalImpl.JSON_PROPERTY_TEMPLATE_ID
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class TemplateReferenceInternalImpl implements TemplateReferenceInternal {
   private static final long serialVersionUID = 1L;
+
+  public static final String JSON_PROPERTY_VERSION = "version";
+
+  private OptionalValue<String> version;
 
   public static final String JSON_PROPERTY_LANGUAGE_CODE = "language_code";
 
@@ -33,21 +37,28 @@ public class TemplateReferenceInternalImpl implements TemplateReferenceInternal 
 
   private OptionalValue<String> templateId;
 
-  public static final String JSON_PROPERTY_VERSION = "version";
-
-  private OptionalValue<String> version;
-
   public TemplateReferenceInternalImpl() {}
 
   protected TemplateReferenceInternalImpl(
+      OptionalValue<String> version,
       OptionalValue<String> languageCode,
       OptionalValue<Map<String, String>> parameters,
-      OptionalValue<String> templateId,
-      OptionalValue<String> version) {
+      OptionalValue<String> templateId) {
+    this.version = version;
     this.languageCode = languageCode;
     this.parameters = parameters;
     this.templateId = templateId;
-    this.version = version;
+  }
+
+  @JsonIgnore
+  public String getVersion() {
+    return version.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_VERSION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> version() {
+    return version;
   }
 
   @JsonIgnore
@@ -83,17 +94,6 @@ public class TemplateReferenceInternalImpl implements TemplateReferenceInternal 
     return templateId;
   }
 
-  @JsonIgnore
-  public String getVersion() {
-    return version.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_VERSION)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<String> version() {
-    return version;
-  }
-
   /** Return true if this TemplateReference object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -104,25 +104,25 @@ public class TemplateReferenceInternalImpl implements TemplateReferenceInternal 
       return false;
     }
     TemplateReferenceInternalImpl templateReference = (TemplateReferenceInternalImpl) o;
-    return Objects.equals(this.languageCode, templateReference.languageCode)
+    return Objects.equals(this.version, templateReference.version)
+        && Objects.equals(this.languageCode, templateReference.languageCode)
         && Objects.equals(this.parameters, templateReference.parameters)
-        && Objects.equals(this.templateId, templateReference.templateId)
-        && Objects.equals(this.version, templateReference.version);
+        && Objects.equals(this.templateId, templateReference.templateId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(languageCode, parameters, templateId, version);
+    return Objects.hash(version, languageCode, parameters, templateId);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class TemplateReferenceInternalImpl {\n");
+    sb.append("    version: ").append(toIndentedString(version)).append("\n");
     sb.append("    languageCode: ").append(toIndentedString(languageCode)).append("\n");
     sb.append("    parameters: ").append(toIndentedString(parameters)).append("\n");
     sb.append("    templateId: ").append(toIndentedString(templateId)).append("\n");
-    sb.append("    version: ").append(toIndentedString(version)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -139,10 +139,16 @@ public class TemplateReferenceInternalImpl implements TemplateReferenceInternal 
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements TemplateReferenceInternal.Builder {
+    OptionalValue<String> version = OptionalValue.empty();
     OptionalValue<String> languageCode = OptionalValue.empty();
     OptionalValue<Map<String, String>> parameters = OptionalValue.empty();
     OptionalValue<String> templateId = OptionalValue.empty();
-    OptionalValue<String> version = OptionalValue.empty();
+
+    @JsonProperty(JSON_PROPERTY_VERSION)
+    public Builder setVersion(String version) {
+      this.version = OptionalValue.of(version);
+      return this;
+    }
 
     @JsonProperty(JSON_PROPERTY_LANGUAGE_CODE)
     public Builder setLanguageCode(String languageCode) {
@@ -162,14 +168,8 @@ public class TemplateReferenceInternalImpl implements TemplateReferenceInternal 
       return this;
     }
 
-    @JsonProperty(value = JSON_PROPERTY_VERSION, required = true)
-    public Builder setVersion(String version) {
-      this.version = OptionalValue.of(version);
-      return this;
-    }
-
     public TemplateReferenceInternal build() {
-      return new TemplateReferenceInternalImpl(languageCode, parameters, templateId, version);
+      return new TemplateReferenceInternalImpl(version, languageCode, parameters, templateId);
     }
   }
 }

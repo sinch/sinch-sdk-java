@@ -19,7 +19,7 @@ import java.util.List;
 public interface ListRecentConversationsResponseInternal {
 
   /**
-   * List of recent converesations
+   * List of recent conversations
    *
    * @return conversations
    */

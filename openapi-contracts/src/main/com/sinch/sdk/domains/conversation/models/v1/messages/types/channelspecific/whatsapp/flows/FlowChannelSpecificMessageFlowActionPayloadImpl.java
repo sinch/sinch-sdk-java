@@ -57,7 +57,7 @@ public class FlowChannelSpecificMessageFlowActionPayloadImpl
     return data;
   }
 
-  /** Return true if this FlowChannelSpecificMessage_flow_action_payload object is equal to o. */
+  /** Return true if this Flow_channel_specific_message_flow_action_payload object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {

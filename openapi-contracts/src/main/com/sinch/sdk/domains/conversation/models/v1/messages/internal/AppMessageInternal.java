@@ -26,7 +26,7 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.template.Temp
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
 import java.util.Map;
 
-/** Message originating from an app */
+/** A message originating from a Conversation API app */
 @JsonDeserialize(builder = AppMessageInternalImpl.Builder.class)
 public interface AppMessageInternal {
 
@@ -94,18 +94,26 @@ public interface AppMessageInternal {
   ContactInfoMessage getContactInfoMessage();
 
   /**
-   * Channel specific messages, overriding any transcoding. The key in the map must point to a valid
-   * conversation channel as defined in the enum <code>ConversationChannel</code>.
+   * Allows you to specify a channel and define a corresponding channel specific message payload
+   * that will override the standard Conversation API message types. The key in the map must point
+   * to a valid conversation channel as defined in the enum <code>ConversationChannel</code>. The
+   * message content must be provided in string format. You may use the <a
+   * href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/Transcoding/">transcoding
+   * endpoint</a> to help create your message. For more information about how to construct an
+   * explicit channel message for a particular channel, see that <a
+   * href="https://developers.sinch.com/docs/conversation/channel-support/">channel's corresponding
+   * documentation</a> (for example, using explicit channel messages with <a
+   * href="https://developers.sinch.com/docs/conversation/channel-support/whatsapp/message-support/#explicit-channel-messages">the
+   * WhatsApp channel</a>).
    *
    * @return explicitChannelMessage
    */
-  Map<ConversationChannel, Object> getExplicitChannelMessage();
+  Map<ConversationChannel, String> getExplicitChannelMessage();
 
   /**
-   * The option to override the omni-channel template configuration with a channel-specific template
-   * (for channels on which channel-specific templates can be created. For more information, see <a
-   * href="https://developers.sinch.com/docs/conversation/templates/#channel-specific-templates">Channel
-   * Specific Templates</a>).
+   * Override the message's content for specified channels. The key in the map must point to a valid
+   * conversation channel as defined in the enum <code>ConversationChannel</code>. The content
+   * defined under the specified channel will be sent on that channel.
    *
    * @return explicitChannelOmniMessage
    */
@@ -229,7 +237,7 @@ public interface AppMessageInternal {
      * @return Current builder
      * @see #getExplicitChannelMessage
      */
-    Builder setExplicitChannelMessage(Map<ConversationChannel, Object> explicitChannelMessage);
+    Builder setExplicitChannelMessage(Map<ConversationChannel, String> explicitChannelMessage);
 
     /**
      * see getter

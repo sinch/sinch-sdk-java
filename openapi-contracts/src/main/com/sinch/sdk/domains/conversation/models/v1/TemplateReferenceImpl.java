@@ -50,6 +50,24 @@ public class TemplateReferenceImpl
   }
 
   @JsonIgnore
+  public String getVersion() {
+    if (null == templateReference
+        || !templateReference.isPresent()
+        || null == templateReference.get().getVersion()) {
+      return null;
+    }
+    return templateReference.get().getVersion();
+  }
+
+  public OptionalValue<String> version() {
+    return null != templateReference && templateReference.isPresent()
+        ? templateReference
+            .map(f -> ((TemplateReferenceInternalImpl) f).version())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
+  }
+
+  @JsonIgnore
   public String getLanguageCode() {
     if (null == templateReference
         || !templateReference.isPresent()
@@ -99,24 +117,6 @@ public class TemplateReferenceImpl
     return null != templateReference && templateReference.isPresent()
         ? templateReference
             .map(f -> ((TemplateReferenceInternalImpl) f).templateId())
-            .orElse(OptionalValue.empty())
-        : OptionalValue.empty();
-  }
-
-  @JsonIgnore
-  public String getVersion() {
-    if (null == templateReference
-        || !templateReference.isPresent()
-        || null == templateReference.get().getVersion()) {
-      return null;
-    }
-    return templateReference.get().getVersion();
-  }
-
-  public OptionalValue<String> version() {
-    return null != templateReference && templateReference.isPresent()
-        ? templateReference
-            .map(f -> ((TemplateReferenceInternalImpl) f).version())
             .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
@@ -171,6 +171,12 @@ public class TemplateReferenceImpl
     }
 
     @JsonIgnore
+    public Builder setVersion(String version) {
+      getDelegatedBuilder().setVersion(version);
+      return this;
+    }
+
+    @JsonIgnore
     public Builder setLanguageCode(String languageCode) {
       getDelegatedBuilder().setLanguageCode(languageCode);
       return this;
@@ -185,12 +191,6 @@ public class TemplateReferenceImpl
     @JsonIgnore
     public Builder setTemplateId(String templateId) {
       getDelegatedBuilder().setTemplateId(templateId);
-      return this;
-    }
-
-    @JsonIgnore
-    public Builder setVersion(String version) {
-      getDelegatedBuilder().setVersion(version);
       return this;
     }
 
