@@ -1,0 +1,24 @@
+{
+  "items": [
+    {
+      "name": "created from rest",
+      "description": "",
+      "createdAt": "Wed, 29 Jan 2025 14:26:24 UTC",
+      "createdBy": "",
+      "id": "7a766667-99d1-4b0e-b80d-068f1e0e4b24"
+    },
+    {
+      "name": "letter template from dashboard",
+      "description": "",
+      "createdAt": "Fri, 10 Jan 2025 14:01:48 UTC",
+      "createdBy": "dnd",
+      "id": "a708b1dc-2cff-4710-97ce-9763d829e23c"
+    }
+  ],
+  "paging": {
+    "previous": "https://api.mailgun.net/v3/foo%20Domain.mailgun.org/templates?page=previous&p=created+from+rest&limit=2",
+    "first": "https://api.mailgun.net/v3/foo%20Domain.mailgun.org/templates?limit=2",
+    "next": "https://api.mailgun.net/v3/foo%20Domain.mailgun.org/templates?page=next&p=letter+template+from+dashboard&limit=2",
+    "last": "https://api.mailgun.net/v3/foo%20Domain.mailgun.org/templates?page=last&limit=2"
+  }
+}

@@ -139,6 +139,9 @@
                             **.internal;
                             com.sinch.sdk.domains.numbers.models.v1.errors;
                             com.sinch.sdk.domains.sms.models;
+                            com.sinch.sdk.domains.sms.models.requests;
+                            com.sinch.sdk.domains.sms.models.responses;
+                            com.sinch.sdk.domains.sms.models.webhooks;
                             com.sinch.sdk.domains.verification.models;
                             com.sinch.sdk.domains.verification.models.requests;
                             com.sinch.sdk.domains.verification.models.response;
@@ -154,6 +157,9 @@
                             <sourceFileExclude>**/*Impl.java</sourceFileExclude>
                             <sourceFileExclude>**/BuildersDelegation.java</sourceFileExclude>
                             <sourceFileExclude>**/*Mapper.java</sourceFileExclude>
+
+                            <sourceFileExclude>**/mailgun/models/v1/response/GenericResponse.java</sourceFileExclude>
+
                             <!-- Transition period -->
                             <sourceFileExclude>com/sinch/sdk/domains/sms/BatchesService.java</sourceFileExclude>
                             <sourceFileExclude>com/sinch/sdk/domains/sms/DeliveryReportsService.java</sourceFileExclude>
@@ -211,6 +217,10 @@
                             <group>
                                 <title>Conversation</title>
                                 <packages>com.sinch.sdk.domains.conversation*</packages>
+                            </group>
+                            <group>
+                                <title>Mailgun</title>
+                                <packages>com.sinch.sdk.domains.mailgun*</packages>
                             </group>
                             <group>
                                 <title>Numbers</title>
@@ -333,6 +343,7 @@
                         </goals>
                         <configuration>
                             <includes>
+                                <include>com.sinch.sdk.e2e.domains.mailgun.v1.MailgunIT</include>
                                 <include>com.sinch.sdk.e2e.domains.conversation.ConversationIT</include>
                                 <include>com.sinch.sdk.e2e.domains.sms.v0.SmsIT</include>
                                 <include>com.sinch.sdk.e2e.domains.sms.v1.SmsIT</include>
@@ -384,7 +395,7 @@
                         <includes>
                             <include>**/*.java</include>
                         </includes>
-
+                        <toggleOffOn />
                         <googleJavaFormat>
                             <version>1.22.0</version>
                             <style>GOOGLE</style>

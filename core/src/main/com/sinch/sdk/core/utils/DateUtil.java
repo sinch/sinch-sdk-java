@@ -126,7 +126,7 @@ public class DateUtil {
    *
    * @param value An RFC-822 compliant string
    * @return Extracted Instant value
-   * @since __TO_BE_DEFINED__
+   * @since 1.6
    */
   public static Instant RFC822StringToInstant(String value) {
 
