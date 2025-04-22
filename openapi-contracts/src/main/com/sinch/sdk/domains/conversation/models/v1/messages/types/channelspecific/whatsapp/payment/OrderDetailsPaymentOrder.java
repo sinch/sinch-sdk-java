@@ -26,7 +26,8 @@ public interface OrderDetailsPaymentOrder {
   String getCatalogId();
 
   /**
-   * Expiration timestamp for the order.
+   * UTC timestamp indicating when the order should expire. The timestamp must be given in seconds.
+   * The minimum threshold for the timestamp is 300 seconds.
    *
    * @return expirationTime
    */
