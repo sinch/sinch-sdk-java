@@ -49,7 +49,7 @@ public class DryRunResponseImpl implements DryRunResponse {
   }
 
   @JsonProperty(JSON_PROPERTY_NUMBER_OF_RECIPIENTS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<Integer> numberOfRecipients() {
     return numberOfRecipients;
   }
@@ -60,7 +60,7 @@ public class DryRunResponseImpl implements DryRunResponse {
   }
 
   @JsonProperty(JSON_PROPERTY_NUMBER_OF_MESSAGES)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<Integer> numberOfMessages() {
     return numberOfMessages;
   }
@@ -76,7 +76,7 @@ public class DryRunResponseImpl implements DryRunResponse {
     return perRecipient;
   }
 
-  /** Return true if this DryRunResponse object is equal to o. */
+  /** Return true if this ApiMtMessageDryRun object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -85,10 +85,10 @@ public class DryRunResponseImpl implements DryRunResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DryRunResponseImpl dryRunResponse = (DryRunResponseImpl) o;
-    return Objects.equals(this.numberOfRecipients, dryRunResponse.numberOfRecipients)
-        && Objects.equals(this.numberOfMessages, dryRunResponse.numberOfMessages)
-        && Objects.equals(this.perRecipient, dryRunResponse.perRecipient);
+    DryRunResponseImpl apiMtMessageDryRun = (DryRunResponseImpl) o;
+    return Objects.equals(this.numberOfRecipients, apiMtMessageDryRun.numberOfRecipients)
+        && Objects.equals(this.numberOfMessages, apiMtMessageDryRun.numberOfMessages)
+        && Objects.equals(this.perRecipient, apiMtMessageDryRun.perRecipient);
   }
 
   @Override
@@ -123,13 +123,13 @@ public class DryRunResponseImpl implements DryRunResponse {
     OptionalValue<Integer> numberOfMessages = OptionalValue.empty();
     OptionalValue<List<DryRunPerRecipientDetails>> perRecipient = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_NUMBER_OF_RECIPIENTS)
+    @JsonProperty(value = JSON_PROPERTY_NUMBER_OF_RECIPIENTS, required = true)
     public Builder setNumberOfRecipients(Integer numberOfRecipients) {
       this.numberOfRecipients = OptionalValue.of(numberOfRecipients);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_NUMBER_OF_MESSAGES)
+    @JsonProperty(value = JSON_PROPERTY_NUMBER_OF_MESSAGES, required = true)
     public Builder setNumberOfMessages(Integer numberOfMessages) {
       this.numberOfMessages = OptionalValue.of(numberOfMessages);
       return this;

@@ -11,24 +11,31 @@
 package com.sinch.sdk.domains.sms.models.v1.batches.response;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.utils.EnumDynamic;
+import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
-/** DryRunPerRecipientDetails */
+/**
+ * The recipient, the number of message parts to this recipient, the body of the message, and the
+ * encoding type of each message
+ */
 @JsonDeserialize(builder = DryRunPerRecipientDetailsImpl.Builder.class)
 public interface DryRunPerRecipientDetails {
 
   /**
-   * Get recipient
+   * @see #getEncodingEnum
+   * @deprecated
+   */
+  @Deprecated
+  String getEncoding();
+
+  /**
+   * Sender number. Required if Automatic Default Originator not configured.
    *
    * @return recipient
    */
   String getRecipient();
-
-  /**
-   * Get numberOfParts
-   *
-   * @return numberOfParts
-   */
-  Integer getNumberOfParts();
 
   /**
    * Get body
@@ -38,11 +45,44 @@ public interface DryRunPerRecipientDetails {
   String getBody();
 
   /**
-   * Get encoding
+   * Get numberOfParts
    *
-   * @return encoding
+   * @return numberOfParts
    */
-  String getEncoding();
+  Integer getNumberOfParts();
+
+  /** Gets or Sets encodingEnum */
+  public class EncodingEnum extends EnumDynamic<String, EncodingEnum> {
+    public static final EncodingEnum TEXT = new EncodingEnum("text");
+    public static final EncodingEnum UNICODE = new EncodingEnum("unicode");
+
+    private static final EnumSupportDynamic<String, EncodingEnum> ENUM_SUPPORT =
+        new EnumSupportDynamic<>(
+            EncodingEnum.class, EncodingEnum::new, Arrays.asList(TEXT, UNICODE));
+
+    private EncodingEnum(String value) {
+      super(value);
+    }
+
+    public static Stream<EncodingEnum> values() {
+      return ENUM_SUPPORT.values();
+    }
+
+    public static EncodingEnum from(String value) {
+      return ENUM_SUPPORT.from(value);
+    }
+
+    public static String valueOf(EncodingEnum e) {
+      return ENUM_SUPPORT.valueOf(e);
+    }
+  }
+
+  /**
+   * Get encodingEnum
+   *
+   * @return encodingEnum
+   */
+  EncodingEnum getEncodingEnum();
 
   /**
    * Getting builder
@@ -56,6 +96,9 @@ public interface DryRunPerRecipientDetails {
   /** Dedicated Builder */
   interface Builder {
 
+    @Deprecated
+    Builder setEncoding(String encoding);
+
     /**
      * see getter
      *
@@ -64,15 +107,6 @@ public interface DryRunPerRecipientDetails {
      * @see #getRecipient
      */
     Builder setRecipient(String recipient);
-
-    /**
-     * see getter
-     *
-     * @param numberOfParts see getter
-     * @return Current builder
-     * @see #getNumberOfParts
-     */
-    Builder setNumberOfParts(Integer numberOfParts);
 
     /**
      * see getter
@@ -86,11 +120,20 @@ public interface DryRunPerRecipientDetails {
     /**
      * see getter
      *
-     * @param encoding see getter
+     * @param numberOfParts see getter
      * @return Current builder
-     * @see #getEncoding
+     * @see #getNumberOfParts
      */
-    Builder setEncoding(String encoding);
+    Builder setNumberOfParts(Integer numberOfParts);
+
+    /**
+     * see getter
+     *
+     * @param encodingEnum see getter
+     * @return Current builder
+     * @see #getEncodingEnum
+     */
+    Builder setEncodingEnum(EncodingEnum encodingEnum);
 
     /**
      * Create instance

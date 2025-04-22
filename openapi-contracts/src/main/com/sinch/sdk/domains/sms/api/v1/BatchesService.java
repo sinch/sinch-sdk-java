@@ -124,7 +124,7 @@ public interface BatchesService {
    * and scheduled date, it will be considered empty. Be sure to use the correct
    * [region](/docs/sms/api-reference/#base-url) in the server URL.
    *
-   * @param sendRequest Default schema is Text if type is not specified. (optional)
+   * @param sendRequest (required)
    * @return BatchResponse
    * @throws ApiException if fails to make API call
    */

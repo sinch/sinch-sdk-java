@@ -17,8 +17,8 @@ import java.util.Set;
   GroupImpl.JSON_PROPERTY_SIZE,
   GroupImpl.JSON_PROPERTY_CREATED_AT,
   GroupImpl.JSON_PROPERTY_MODIFIED_AT,
-  GroupImpl.JSON_PROPERTY_AUTO_UPDATE,
-  GroupImpl.JSON_PROPERTY_CHILD_GROUPS
+  GroupImpl.JSON_PROPERTY_CHILD_GROUPS,
+  GroupImpl.JSON_PROPERTY_AUTO_UPDATE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
@@ -45,13 +45,13 @@ public class GroupImpl implements Group {
 
   private OptionalValue<Instant> modifiedAt;
 
-  public static final String JSON_PROPERTY_AUTO_UPDATE = "auto_update";
-
-  private OptionalValue<GroupAutoUpdate> autoUpdate;
-
   public static final String JSON_PROPERTY_CHILD_GROUPS = "child_groups";
 
   private OptionalValue<Set<String>> childGroups;
+
+  public static final String JSON_PROPERTY_AUTO_UPDATE = "auto_update";
+
+  private OptionalValue<GroupAutoUpdate> autoUpdate;
 
   public GroupImpl() {}
 
@@ -61,15 +61,15 @@ public class GroupImpl implements Group {
       OptionalValue<Integer> size,
       OptionalValue<Instant> createdAt,
       OptionalValue<Instant> modifiedAt,
-      OptionalValue<GroupAutoUpdate> autoUpdate,
-      OptionalValue<Set<String>> childGroups) {
+      OptionalValue<Set<String>> childGroups,
+      OptionalValue<GroupAutoUpdate> autoUpdate) {
     this.id = id;
     this.name = name;
     this.size = size;
     this.createdAt = createdAt;
     this.modifiedAt = modifiedAt;
-    this.autoUpdate = autoUpdate;
     this.childGroups = childGroups;
+    this.autoUpdate = autoUpdate;
   }
 
   @JsonIgnore
@@ -124,17 +124,6 @@ public class GroupImpl implements Group {
   }
 
   @JsonIgnore
-  public GroupAutoUpdate getAutoUpdate() {
-    return autoUpdate.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_AUTO_UPDATE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<GroupAutoUpdate> autoUpdate() {
-    return autoUpdate;
-  }
-
-  @JsonIgnore
   public Set<String> getChildGroups() {
     return childGroups.orElse(null);
   }
@@ -143,6 +132,17 @@ public class GroupImpl implements Group {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<Set<String>> childGroups() {
     return childGroups;
+  }
+
+  @JsonIgnore
+  public GroupAutoUpdate getAutoUpdate() {
+    return autoUpdate.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_AUTO_UPDATE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<GroupAutoUpdate> autoUpdate() {
+    return autoUpdate;
   }
 
   /** Return true if this ApiGroup object is equal to o. */
@@ -160,13 +160,13 @@ public class GroupImpl implements Group {
         && Objects.equals(this.size, apiGroup.size)
         && Objects.equals(this.createdAt, apiGroup.createdAt)
         && Objects.equals(this.modifiedAt, apiGroup.modifiedAt)
-        && Objects.equals(this.autoUpdate, apiGroup.autoUpdate)
-        && Objects.equals(this.childGroups, apiGroup.childGroups);
+        && Objects.equals(this.childGroups, apiGroup.childGroups)
+        && Objects.equals(this.autoUpdate, apiGroup.autoUpdate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, size, createdAt, modifiedAt, autoUpdate, childGroups);
+    return Objects.hash(id, name, size, createdAt, modifiedAt, childGroups, autoUpdate);
   }
 
   @Override
@@ -178,8 +178,8 @@ public class GroupImpl implements Group {
     sb.append("    size: ").append(toIndentedString(size)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    modifiedAt: ").append(toIndentedString(modifiedAt)).append("\n");
-    sb.append("    autoUpdate: ").append(toIndentedString(autoUpdate)).append("\n");
     sb.append("    childGroups: ").append(toIndentedString(childGroups)).append("\n");
+    sb.append("    autoUpdate: ").append(toIndentedString(autoUpdate)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -201,8 +201,8 @@ public class GroupImpl implements Group {
     OptionalValue<Integer> size = OptionalValue.empty();
     OptionalValue<Instant> createdAt = OptionalValue.empty();
     OptionalValue<Instant> modifiedAt = OptionalValue.empty();
-    OptionalValue<GroupAutoUpdate> autoUpdate = OptionalValue.empty();
     OptionalValue<Set<String>> childGroups = OptionalValue.empty();
+    OptionalValue<GroupAutoUpdate> autoUpdate = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_ID)
     public Builder setId(String id) {
@@ -234,20 +234,20 @@ public class GroupImpl implements Group {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_AUTO_UPDATE)
-    public Builder setAutoUpdate(GroupAutoUpdate autoUpdate) {
-      this.autoUpdate = OptionalValue.of(autoUpdate);
-      return this;
-    }
-
     @JsonProperty(JSON_PROPERTY_CHILD_GROUPS)
     public Builder setChildGroups(Set<String> childGroups) {
       this.childGroups = OptionalValue.of(childGroups);
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_AUTO_UPDATE)
+    public Builder setAutoUpdate(GroupAutoUpdate autoUpdate) {
+      this.autoUpdate = OptionalValue.of(autoUpdate);
+      return this;
+    }
+
     public Group build() {
-      return new GroupImpl(id, name, size, createdAt, modifiedAt, autoUpdate, childGroups);
+      return new GroupImpl(id, name, size, createdAt, modifiedAt, childGroups, autoUpdate);
     }
   }
 }

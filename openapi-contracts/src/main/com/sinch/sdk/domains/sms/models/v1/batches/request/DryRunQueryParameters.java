@@ -23,7 +23,7 @@ public interface DryRunQueryParameters {
   OptionalValue<Boolean> getPerRecipient();
 
   /**
-   * Get numberOfRecipients maximum: 1000
+   * Get numberOfRecipients minimum: 0 maximum: 1000
    *
    * @return numberOfRecipients
    */

@@ -249,7 +249,7 @@ public class UpdateBinaryRequestImpl implements UpdateBinaryRequest, UpdateBatch
   }
 
   @JsonProperty(JSON_PROPERTY_UDH)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<String> udh() {
     return udh;
   }
@@ -430,7 +430,7 @@ public class UpdateBinaryRequestImpl implements UpdateBinaryRequest, UpdateBatch
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_UDH)
+    @JsonProperty(value = JSON_PROPERTY_UDH, required = true)
     public Builder setUdh(String udh) {
       this.udh = OptionalValue.of(udh);
       return this;

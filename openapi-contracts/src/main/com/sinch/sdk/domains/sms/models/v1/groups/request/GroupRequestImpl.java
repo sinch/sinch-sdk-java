@@ -18,8 +18,8 @@ import java.util.Set;
   GroupRequestImpl.JSON_PROPERTY_SIZE,
   GroupRequestImpl.JSON_PROPERTY_CREATED_AT,
   GroupRequestImpl.JSON_PROPERTY_MODIFIED_AT,
-  GroupRequestImpl.JSON_PROPERTY_AUTO_UPDATE,
   GroupRequestImpl.JSON_PROPERTY_CHILD_GROUPS,
+  GroupRequestImpl.JSON_PROPERTY_AUTO_UPDATE,
   GroupRequestImpl.JSON_PROPERTY_MEMBERS
 })
 @JsonFilter("uninitializedFilter")
@@ -47,13 +47,13 @@ public class GroupRequestImpl implements GroupRequest {
 
   private OptionalValue<Instant> modifiedAt;
 
-  public static final String JSON_PROPERTY_AUTO_UPDATE = "auto_update";
-
-  private OptionalValue<GroupAutoUpdate> autoUpdate;
-
   public static final String JSON_PROPERTY_CHILD_GROUPS = "child_groups";
 
   private OptionalValue<Set<String>> childGroups;
+
+  public static final String JSON_PROPERTY_AUTO_UPDATE = "auto_update";
+
+  private OptionalValue<GroupAutoUpdate> autoUpdate;
 
   public static final String JSON_PROPERTY_MEMBERS = "members";
 
@@ -67,16 +67,16 @@ public class GroupRequestImpl implements GroupRequest {
       OptionalValue<Integer> size,
       OptionalValue<Instant> createdAt,
       OptionalValue<Instant> modifiedAt,
-      OptionalValue<GroupAutoUpdate> autoUpdate,
       OptionalValue<Set<String>> childGroups,
+      OptionalValue<GroupAutoUpdate> autoUpdate,
       OptionalValue<Set<String>> members) {
     this.id = id;
     this.name = name;
     this.size = size;
     this.createdAt = createdAt;
     this.modifiedAt = modifiedAt;
-    this.autoUpdate = autoUpdate;
     this.childGroups = childGroups;
+    this.autoUpdate = autoUpdate;
     this.members = members;
   }
 
@@ -132,17 +132,6 @@ public class GroupRequestImpl implements GroupRequest {
   }
 
   @JsonIgnore
-  public GroupAutoUpdate getAutoUpdate() {
-    return autoUpdate.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_AUTO_UPDATE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<GroupAutoUpdate> autoUpdate() {
-    return autoUpdate;
-  }
-
-  @JsonIgnore
   public Set<String> getChildGroups() {
     return childGroups.orElse(null);
   }
@@ -151,6 +140,17 @@ public class GroupRequestImpl implements GroupRequest {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<Set<String>> childGroups() {
     return childGroups;
+  }
+
+  @JsonIgnore
+  public GroupAutoUpdate getAutoUpdate() {
+    return autoUpdate.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_AUTO_UPDATE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<GroupAutoUpdate> autoUpdate() {
+    return autoUpdate;
   }
 
   @JsonIgnore
@@ -179,14 +179,14 @@ public class GroupRequestImpl implements GroupRequest {
         && Objects.equals(this.size, apiGroupRequest.size)
         && Objects.equals(this.createdAt, apiGroupRequest.createdAt)
         && Objects.equals(this.modifiedAt, apiGroupRequest.modifiedAt)
-        && Objects.equals(this.autoUpdate, apiGroupRequest.autoUpdate)
         && Objects.equals(this.childGroups, apiGroupRequest.childGroups)
+        && Objects.equals(this.autoUpdate, apiGroupRequest.autoUpdate)
         && Objects.equals(this.members, apiGroupRequest.members);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, size, createdAt, modifiedAt, autoUpdate, childGroups, members);
+    return Objects.hash(id, name, size, createdAt, modifiedAt, childGroups, autoUpdate, members);
   }
 
   @Override
@@ -198,8 +198,8 @@ public class GroupRequestImpl implements GroupRequest {
     sb.append("    size: ").append(toIndentedString(size)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    modifiedAt: ").append(toIndentedString(modifiedAt)).append("\n");
-    sb.append("    autoUpdate: ").append(toIndentedString(autoUpdate)).append("\n");
     sb.append("    childGroups: ").append(toIndentedString(childGroups)).append("\n");
+    sb.append("    autoUpdate: ").append(toIndentedString(autoUpdate)).append("\n");
     sb.append("    members: ").append(toIndentedString(members)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -222,8 +222,8 @@ public class GroupRequestImpl implements GroupRequest {
     OptionalValue<Integer> size = OptionalValue.empty();
     OptionalValue<Instant> createdAt = OptionalValue.empty();
     OptionalValue<Instant> modifiedAt = OptionalValue.empty();
-    OptionalValue<GroupAutoUpdate> autoUpdate = OptionalValue.empty();
     OptionalValue<Set<String>> childGroups = OptionalValue.empty();
+    OptionalValue<GroupAutoUpdate> autoUpdate = OptionalValue.empty();
     OptionalValue<Set<String>> members = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_ID)
@@ -256,15 +256,15 @@ public class GroupRequestImpl implements GroupRequest {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_AUTO_UPDATE)
-    public Builder setAutoUpdate(GroupAutoUpdate autoUpdate) {
-      this.autoUpdate = OptionalValue.of(autoUpdate);
-      return this;
-    }
-
     @JsonProperty(JSON_PROPERTY_CHILD_GROUPS)
     public Builder setChildGroups(Set<String> childGroups) {
       this.childGroups = OptionalValue.of(childGroups);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_AUTO_UPDATE)
+    public Builder setAutoUpdate(GroupAutoUpdate autoUpdate) {
+      this.autoUpdate = OptionalValue.of(autoUpdate);
       return this;
     }
 
@@ -276,7 +276,7 @@ public class GroupRequestImpl implements GroupRequest {
 
     public GroupRequest build() {
       return new GroupRequestImpl(
-          id, name, size, createdAt, modifiedAt, autoUpdate, childGroups, members);
+          id, name, size, createdAt, modifiedAt, childGroups, autoUpdate, members);
     }
   }
 }

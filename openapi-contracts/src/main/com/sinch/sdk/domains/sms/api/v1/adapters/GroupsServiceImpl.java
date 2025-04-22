@@ -366,6 +366,11 @@ public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Group
     if (groupId == null) {
       throw new ApiException(400, "Missing the required parameter 'groupId' when calling replace");
     }
+    // verify the required parameter 'groupRequest' is set
+    if (groupRequest == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'groupRequest' when calling replace");
+    }
 
     String localVarPath =
         "/xms/v1/{service_plan_id}/groups/{group_id}"

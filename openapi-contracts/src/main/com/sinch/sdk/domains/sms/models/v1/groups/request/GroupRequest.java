@@ -59,13 +59,6 @@ public interface GroupRequest {
   Instant getModifiedAt();
 
   /**
-   * Get autoUpdate
-   *
-   * @return autoUpdate
-   */
-  GroupAutoUpdate getAutoUpdate();
-
-  /**
    * Phone numbers <a href="https://community.sinch.com/t5/Glossary/MSISDN/ta-p/7628">MSIDNs</a> of
    * child group will be included in this group. If present then this group will be auto populated.
    * Constraints: Elements must be group IDs.
@@ -73,6 +66,13 @@ public interface GroupRequest {
    * @return childGroups
    */
   Set<String> getChildGroups();
+
+  /**
+   * Get autoUpdate
+   *
+   * @return autoUpdate
+   */
+  GroupAutoUpdate getAutoUpdate();
 
   /**
    * Initial list of phone numbers in <a
@@ -107,20 +107,20 @@ public interface GroupRequest {
     /**
      * see getter
      *
-     * @param autoUpdate see getter
-     * @return Current builder
-     * @see #getAutoUpdate
-     */
-    Builder setAutoUpdate(GroupAutoUpdate autoUpdate);
-
-    /**
-     * see getter
-     *
      * @param childGroups see getter
      * @return Current builder
      * @see #getChildGroups
      */
     Builder setChildGroups(Set<String> childGroups);
+
+    /**
+     * see getter
+     *
+     * @param autoUpdate see getter
+     * @return Current builder
+     * @see #getAutoUpdate
+     */
+    Builder setAutoUpdate(GroupAutoUpdate autoUpdate);
 
     /**
      * see getter

@@ -81,7 +81,7 @@ public interface GroupsService {
    * future is allowed and changes will be reflected when the batch is sent.
    *
    * @param groupId ID of a group that you are interested in getting. (required)
-   * @param groupRequest (optional)
+   * @param groupRequest (required)
    * @return Group
    * @throws ApiException if fails to make API call
    */

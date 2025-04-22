@@ -201,7 +201,7 @@ public class BinaryMessageImpl implements BinaryMessage, InboundMessage {
     return udh;
   }
 
-  /** Return true if this MOBinary object is equal to o. */
+  /** Return true if this binary_message object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -210,17 +210,17 @@ public class BinaryMessageImpl implements BinaryMessage, InboundMessage {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BinaryMessageImpl moBinary = (BinaryMessageImpl) o;
-    return Objects.equals(this.clientReference, moBinary.clientReference)
-        && Objects.equals(this.from, moBinary.from)
-        && Objects.equals(this.id, moBinary.id)
-        && Objects.equals(this.operatorId, moBinary.operatorId)
-        && Objects.equals(this.receivedAt, moBinary.receivedAt)
-        && Objects.equals(this.sentAt, moBinary.sentAt)
-        && Objects.equals(this.to, moBinary.to)
-        && Objects.equals(this.type, moBinary.type)
-        && Objects.equals(this.body, moBinary.body)
-        && Objects.equals(this.udh, moBinary.udh);
+    BinaryMessageImpl binaryMessage = (BinaryMessageImpl) o;
+    return Objects.equals(this.clientReference, binaryMessage.clientReference)
+        && Objects.equals(this.from, binaryMessage.from)
+        && Objects.equals(this.id, binaryMessage.id)
+        && Objects.equals(this.operatorId, binaryMessage.operatorId)
+        && Objects.equals(this.receivedAt, binaryMessage.receivedAt)
+        && Objects.equals(this.sentAt, binaryMessage.sentAt)
+        && Objects.equals(this.to, binaryMessage.to)
+        && Objects.equals(this.type, binaryMessage.type)
+        && Objects.equals(this.body, binaryMessage.body)
+        && Objects.equals(this.udh, binaryMessage.udh);
   }
 
   @Override

@@ -183,7 +183,7 @@ public class TextMessageImpl implements TextMessage, InboundMessage {
     return body;
   }
 
-  /** Return true if this MOText object is equal to o. */
+  /** Return true if this text_message object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -192,16 +192,16 @@ public class TextMessageImpl implements TextMessage, InboundMessage {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    TextMessageImpl moText = (TextMessageImpl) o;
-    return Objects.equals(this.clientReference, moText.clientReference)
-        && Objects.equals(this.from, moText.from)
-        && Objects.equals(this.id, moText.id)
-        && Objects.equals(this.operatorId, moText.operatorId)
-        && Objects.equals(this.receivedAt, moText.receivedAt)
-        && Objects.equals(this.sentAt, moText.sentAt)
-        && Objects.equals(this.to, moText.to)
-        && Objects.equals(this.type, moText.type)
-        && Objects.equals(this.body, moText.body);
+    TextMessageImpl textMessage = (TextMessageImpl) o;
+    return Objects.equals(this.clientReference, textMessage.clientReference)
+        && Objects.equals(this.from, textMessage.from)
+        && Objects.equals(this.id, textMessage.id)
+        && Objects.equals(this.operatorId, textMessage.operatorId)
+        && Objects.equals(this.receivedAt, textMessage.receivedAt)
+        && Objects.equals(this.sentAt, textMessage.sentAt)
+        && Objects.equals(this.to, textMessage.to)
+        && Objects.equals(this.type, textMessage.type)
+        && Objects.equals(this.body, textMessage.body);
   }
 
   @Override
