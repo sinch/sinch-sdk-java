@@ -23,9 +23,10 @@ public interface OrderDetailsPayment {
   /** The country/currency associated with the payment message. */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
     public static final TypeEnum BR = new TypeEnum("br");
+    public static final TypeEnum SG = new TypeEnum("sg");
 
     private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(TypeEnum.class, TypeEnum::new, Arrays.asList(BR));
+        new EnumSupportDynamic<>(TypeEnum.class, TypeEnum::new, Arrays.asList(BR, SG));
 
     private TypeEnum(String value) {
       super(value);
