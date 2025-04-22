@@ -25,10 +25,12 @@ public interface CopyVersionResponseInternal {
   String getMessage();
 
   /**
-   * Get version
+   * Deprecated: Use 'version' field
    *
    * @return version
+   * @deprecated
    */
+  @Deprecated
   VersionDetails getVersion();
 
   /**
@@ -59,6 +61,7 @@ public interface CopyVersionResponseInternal {
      * @return Current builder
      * @see #getVersion
      */
+    @Deprecated
     Builder setVersion(VersionDetails version);
 
     /**

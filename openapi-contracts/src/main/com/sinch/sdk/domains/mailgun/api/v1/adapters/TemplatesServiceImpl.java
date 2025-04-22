@@ -1140,11 +1140,6 @@ public class TemplatesServiceImpl implements com.sinch.sdk.domains.mailgun.api.v
       throw new ApiException(
           400, "Missing the required parameter 'newVersionName' when calling copyVersion");
     }
-    // verify the required parameter 'comment' is set
-    if (null == queryParameter || queryParameter.getComment() == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'comment' when calling copyVersion");
-    }
 
     String localVarPath =
         "/v3/{domain_name}/templates/{template_name}/versions/{version_name}/copy/{new_version_name}"

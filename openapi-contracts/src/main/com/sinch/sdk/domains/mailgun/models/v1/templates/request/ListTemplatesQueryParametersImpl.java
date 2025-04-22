@@ -5,18 +5,18 @@ import java.util.Objects;
 
 public class ListTemplatesQueryParametersImpl implements ListTemplatesQueryParameters {
 
-  private final OptionalValue<String> page;
+  private final OptionalValue<PageEnum> page;
   private final OptionalValue<Integer> limit;
   private final OptionalValue<String> pivot;
 
   private ListTemplatesQueryParametersImpl(
-      OptionalValue<String> page, OptionalValue<Integer> limit, OptionalValue<String> pivot) {
+      OptionalValue<PageEnum> page, OptionalValue<Integer> limit, OptionalValue<String> pivot) {
     this.page = page;
     this.limit = limit;
     this.pivot = pivot;
   }
 
-  public OptionalValue<String> getPage() {
+  public OptionalValue<PageEnum> getPage() {
     return page;
   }
 
@@ -71,7 +71,7 @@ public class ListTemplatesQueryParametersImpl implements ListTemplatesQueryParam
   }
 
   static class Builder implements ListTemplatesQueryParameters.Builder {
-    OptionalValue<String> page = OptionalValue.empty();
+    OptionalValue<PageEnum> page = OptionalValue.empty();
     OptionalValue<Integer> limit = OptionalValue.empty();
     OptionalValue<String> pivot = OptionalValue.empty();
 
@@ -87,7 +87,7 @@ public class ListTemplatesQueryParametersImpl implements ListTemplatesQueryParam
       this.pivot = parameters.getPivot();
     }
 
-    public Builder setPage(String page) {
+    public Builder setPage(PageEnum page) {
       this.page = OptionalValue.of(page);
       return this;
     }
