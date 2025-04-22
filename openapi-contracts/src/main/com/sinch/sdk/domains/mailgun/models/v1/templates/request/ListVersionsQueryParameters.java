@@ -11,16 +11,48 @@
 package com.sinch.sdk.domains.mailgun.models.v1.templates.request;
 
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.core.utils.EnumDynamic;
+import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 /** ListVersionsQueryParameters */
 public interface ListVersionsQueryParameters {
+
+  /** Gets or Sets page */
+  public class PageEnum extends EnumDynamic<String, PageEnum> {
+    public static final PageEnum FIRST = new PageEnum("first");
+    public static final PageEnum LAST = new PageEnum("last");
+    public static final PageEnum NEXT = new PageEnum("next");
+    public static final PageEnum PREVIOUS = new PageEnum("previous");
+
+    private static final EnumSupportDynamic<String, PageEnum> ENUM_SUPPORT =
+        new EnumSupportDynamic<>(
+            PageEnum.class, PageEnum::new, Arrays.asList(FIRST, LAST, NEXT, PREVIOUS));
+
+    private PageEnum(String value) {
+      super(value);
+    }
+
+    public static Stream<PageEnum> values() {
+      return ENUM_SUPPORT.values();
+    }
+
+    public static PageEnum from(String value) {
+      return ENUM_SUPPORT.from(value);
+    }
+
+    public static String valueOf(PageEnum e) {
+      return ENUM_SUPPORT.valueOf(e);
+    }
+  }
 
   /**
    * Get page
    *
    * @return page
    */
-  OptionalValue<String> getPage();
+  OptionalValue<PageEnum> getPage();
 
   /**
    * Get limit
@@ -64,7 +96,7 @@ public interface ListVersionsQueryParameters {
      * @return Current builder
      * @see #getPage
      */
-    Builder setPage(String page);
+    Builder setPage(PageEnum page);
 
     /**
      * see getter
