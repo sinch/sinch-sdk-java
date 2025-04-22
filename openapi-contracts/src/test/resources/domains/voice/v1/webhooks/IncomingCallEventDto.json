@@ -1,6 +1,7 @@
 {
   "event": "ice",
   "callid": "a call id",
+  "conferenceId": "a conference id",
   "callResourceUrl": "https://calling-euc1.api.sinch.com/calling/v1/calls/id/a call id",
   "timestamp": "2024-01-16T16:46:36Z",
   "version": 1,

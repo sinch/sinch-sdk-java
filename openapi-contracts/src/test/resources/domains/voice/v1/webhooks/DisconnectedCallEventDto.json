@@ -1,6 +1,7 @@
 {
   "event": "dice",
   "callid": "a call id",
+  "conferenceId": "a conference id",
   "timestamp": "2024-01-19T12:49:53Z",
   "reason": "MANAGERHANGUP",
   "result": "ANSWERED",

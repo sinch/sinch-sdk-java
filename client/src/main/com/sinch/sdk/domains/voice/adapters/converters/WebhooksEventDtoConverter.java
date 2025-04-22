@@ -5,7 +5,7 @@ import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.voice.models.CallReasonType;
 import com.sinch.sdk.domains.voice.models.CallResultType;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.CallHeader;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.AnsweredCallEventAnsweringMachineDetection;
+import com.sinch.sdk.domains.voice.models.v1.webhooks.AnsweringMachineDetection;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.DisconnectedCallEvent;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.NotificationEvent;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.VoiceWebhookEvent;
@@ -138,7 +138,7 @@ public class WebhooksEventDtoConverter {
         .setType(dto.getType());
   }
 
-  private static AmdAnswer convert(AnsweredCallEventAnsweringMachineDetection dto) {
+  private static AmdAnswer convert(AnsweringMachineDetection dto) {
 
     if (null == dto) {
       return null;
