@@ -53,6 +53,21 @@ public interface NotificationEvent extends VoiceWebhookEvent {
   String getType();
 
   /**
+   * Used in some types of events, it presents the destination of the generated recording or
+   * transcription files.
+   *
+   * @return destination
+   */
+  String getDestination();
+
+  /**
+   * Get amd
+   *
+   * @return amd
+   */
+  AnsweringMachineDetection getAmd();
+
+  /**
    * An optional parameter containing notification-specific information.
    *
    * @return custom
@@ -79,6 +94,24 @@ public interface NotificationEvent extends VoiceWebhookEvent {
      * @see #getType
      */
     Builder setType(String type);
+
+    /**
+     * see getter
+     *
+     * @param destination see getter
+     * @return Current builder
+     * @see #getDestination
+     */
+    Builder setDestination(String destination);
+
+    /**
+     * see getter
+     *
+     * @param amd see getter
+     * @return Current builder
+     * @see #getAmd
+     */
+    Builder setAmd(AnsweringMachineDetection amd);
 
     /**
      * see getter
