@@ -100,13 +100,13 @@ public class CallMessageInternalImpl implements CallMessageInternal {
     OptionalValue<String> phoneNumber = OptionalValue.empty();
     OptionalValue<String> title = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_PHONE_NUMBER)
+    @JsonProperty(value = JSON_PROPERTY_PHONE_NUMBER, required = true)
     public Builder setPhoneNumber(String phoneNumber) {
       this.phoneNumber = OptionalValue.of(phoneNumber);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_TITLE)
+    @JsonProperty(value = JSON_PROPERTY_TITLE, required = true)
     public Builder setTitle(String title) {
       this.title = OptionalValue.of(title);
       return this;

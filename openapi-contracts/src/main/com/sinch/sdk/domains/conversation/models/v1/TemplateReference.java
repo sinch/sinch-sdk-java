@@ -19,9 +19,25 @@ public interface TemplateReference
     extends com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride {
 
   /**
-   * The BCP-47 language code, such as <code>en-US</code> or <code>sr-Latn</code>. For more
+   * Used to specify what version of a template to use. Required when using <code>
+   * omni_channel_override</code> and <code>omni_template</code> fields. This will be used in
+   * conjunction with <code>language_code</code>. Note that, when referencing omni-channel templates
+   * using the <a href="https://dashboard.sinch.com/">Sinch Customer Dashboard</a>, the latest
+   * version of a given omni-template can be identified by populating this field with <code>latest
+   * </code>.
+   *
+   * @return version
+   */
+  String getVersion();
+
+  /**
+   * The BCP-47 language code, such as <code>en_US</code> or <code>sr_Latn</code>. For more
    * information, see http://www.unicode.org/reports/tr35/#Unicode_locale_identifier. English is the
-   * default language_code.
+   * default <code>language_code</code>. Note that, while many API calls involving templates accept
+   * either the dashed format (<code>en-US</code>) or the underscored format (<code>en_US</code>),
+   * some channel specific templates (for example, WhatsApp channel-specific templates) only accept
+   * the underscored format. Note that this field is required for WhatsApp channel-specific
+   * templates.
    *
    * @return languageCode
    */
@@ -37,19 +53,12 @@ public interface TemplateReference
   Map<String, String> getParameters();
 
   /**
-   * The ID of the template.
+   * The ID of the template. Note that, in the case of WhatsApp channel-specific templates, this
+   * field must be populated by the name of the template.
    *
    * @return templateId
    */
   String getTemplateId();
-
-  /**
-   * Used to specify what version of a template to use. This will be used in conjunction with <code>
-   * language_code</code>.
-   *
-   * @return version
-   */
-  String getVersion();
 
   /**
    * Getting builder
@@ -62,6 +71,15 @@ public interface TemplateReference
 
   /** Dedicated Builder */
   interface Builder {
+
+    /**
+     * see getter
+     *
+     * @param version see getter
+     * @return Current builder
+     * @see #getVersion
+     */
+    Builder setVersion(String version);
 
     /**
      * see getter
@@ -89,15 +107,6 @@ public interface TemplateReference
      * @see #getTemplateId
      */
     Builder setTemplateId(String templateId);
-
-    /**
-     * see getter
-     *
-     * @param version see getter
-     * @return Current builder
-     * @see #getVersion
-     */
-    Builder setVersion(String version);
 
     /**
      * Create instance

@@ -6,11 +6,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.utils.databind.Mapper;
+import com.sinch.sdk.core.utils.databind.MultiPartMapper;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.Map;
 
 public class HttpMapper {
+
+  private HttpMapper() {}
 
   public <T> T deserialize(HttpResponse response, TypeReference<T> valueType) throws ApiException {
     if (null == valueType || null == response) {
@@ -52,6 +56,7 @@ public class HttpMapper {
     if (null == body) {
       return null;
     }
+
     if (null == contentTypes || contentTypes.isEmpty() || isMimeJson(contentTypes)) {
       try {
         return Mapper.getInstance().writeValueAsString(body);
@@ -59,8 +64,25 @@ public class HttpMapper {
         throw new ApiException(e);
       }
     }
-    throw new ApiException(
-        "Deserialization for content type '" + contentTypes + "' not supported ");
+
+    throw new ApiException("Serialization for content type '" + contentTypes + "' not supported ");
+  }
+
+  public Map<String, Object> serializeFormParameters(
+      Collection<String> contentTypes, Object parameters) {
+    if (null == parameters) {
+      return null;
+    }
+
+    if (isMimeMultiPartFormData(contentTypes)) {
+      try {
+        return MultiPartMapper.getInstance().serialize(parameters);
+      } catch (Exception e) {
+        throw new ApiException(e);
+      }
+    }
+
+    throw new ApiException("Serialization for content type '" + contentTypes + "' not supported ");
   }
 
   public static HttpMapper getInstance() {

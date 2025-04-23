@@ -271,7 +271,7 @@ public class FlowChannelSpecificMessageImpl
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_FLOW_ID)
+    @JsonProperty(value = JSON_PROPERTY_FLOW_ID, required = true)
     public Builder setFlowId(String flowId) {
       this.flowId = OptionalValue.of(flowId);
       return this;
@@ -289,7 +289,7 @@ public class FlowChannelSpecificMessageImpl
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_FLOW_CTA)
+    @JsonProperty(value = JSON_PROPERTY_FLOW_CTA, required = true)
     public Builder setFlowCta(String flowCta) {
       this.flowCta = OptionalValue.of(flowCta);
       return this;

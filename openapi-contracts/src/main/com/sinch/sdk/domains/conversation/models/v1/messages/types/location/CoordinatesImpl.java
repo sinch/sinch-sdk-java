@@ -99,13 +99,13 @@ public class CoordinatesImpl implements Coordinates {
     OptionalValue<Double> latitude = OptionalValue.empty();
     OptionalValue<Double> longitude = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_LATITUDE)
+    @JsonProperty(value = JSON_PROPERTY_LATITUDE, required = true)
     public Builder setLatitude(Double latitude) {
       this.latitude = OptionalValue.of(latitude);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_LONGITUDE)
+    @JsonProperty(value = JSON_PROPERTY_LONGITUDE, required = true)
     public Builder setLongitude(Double longitude) {
       this.longitude = OptionalValue.of(longitude);
       return this;

@@ -389,7 +389,7 @@ public class FlowChannelSpecificMessageHeaderInternalImpl extends AbstractOpenAp
     mappings.put("WhatsAppInteractiveTextHeader", WhatsAppInteractiveHeaderTextImpl.class);
     mappings.put("WhatsAppInteractiveVideoHeader", WhatsAppInteractiveHeaderVideoImpl.class);
     mappings.put(
-        "FlowChannelSpecificMessage_header", FlowChannelSpecificMessageHeaderInternalImpl.class);
+        "ChannelSpecificCommonProps_header", FlowChannelSpecificMessageHeaderInternalImpl.class);
     JSONNavigator.registerDiscriminator(
         FlowChannelSpecificMessageHeaderInternalImpl.class, "type", mappings);
   }

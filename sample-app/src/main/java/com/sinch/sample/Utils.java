@@ -1,6 +1,7 @@
 package com.sinch.sample;
 
 import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.MailgunContext;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -20,6 +21,9 @@ public class Utils {
   // can super sed unified Sinch credentials if SMS service plan ID defined
   private static final String SMS_SERVICE_PLAN_ID = "SMS_SERVICE_PLAN_ID";
   private static final String SMS_SERVICE_PLAN_TOKEN = "SMS_SERVICE_PLAN_TOKEN";
+
+  private static final String MAILGUN_API_KEY = "MAILGUN_SERVICE_API_KEY";
+  private static final String MAILGUN_SERVER = "MAILGUN_SERVER";
 
   public static Logger initializeLogger(String className) {
     try (InputStream logConfigInputStream =
@@ -58,6 +62,7 @@ public class Utils {
     manageUnifiedCredentials(properties, builder);
     manageApplicationCredentials(properties, builder);
     manageSmsServicePlanCredentials(properties, builder);
+    manageMailgun(properties, builder);
 
     return builder.build();
   }
@@ -123,6 +128,27 @@ public class Utils {
 
     if (null != smsServicePlanToken) {
       builder.setSmsApiToken(smsServicePlanToken);
+    }
+  }
+
+  private static void manageMailgun(Properties properties, Configuration.Builder builder) {
+
+    String mailgunApiKey =
+        null != System.getenv(MAILGUN_API_KEY)
+            ? System.getenv(MAILGUN_API_KEY)
+            : properties.getProperty(MAILGUN_API_KEY);
+
+    if (null != mailgunApiKey) {
+      builder.setMailgunApiKey(mailgunApiKey);
+    }
+
+    String mailgunServer =
+        null != System.getenv(MAILGUN_SERVER)
+            ? System.getenv(MAILGUN_SERVER)
+            : properties.getProperty(MAILGUN_SERVER);
+
+    if (null != mailgunServer) {
+      builder.setMailgunContext(MailgunContext.builder().setUrl(mailgunServer).build());
     }
   }
 

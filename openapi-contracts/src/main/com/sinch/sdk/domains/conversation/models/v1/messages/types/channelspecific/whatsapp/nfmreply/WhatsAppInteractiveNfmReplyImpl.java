@@ -123,19 +123,19 @@ public class WhatsAppInteractiveNfmReplyImpl implements WhatsAppInteractiveNfmRe
     OptionalValue<String> responseJson = OptionalValue.empty();
     OptionalValue<String> body = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_NAME)
+    @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
     public Builder setName(NameEnum name) {
       this.name = OptionalValue.of(name);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_RESPONSE_JSON)
+    @JsonProperty(value = JSON_PROPERTY_RESPONSE_JSON, required = true)
     public Builder setResponseJson(String responseJson) {
       this.responseJson = OptionalValue.of(responseJson);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_BODY)
+    @JsonProperty(value = JSON_PROPERTY_BODY, required = true)
     public Builder setBody(String body) {
       this.body = OptionalValue.of(body);
       return this;

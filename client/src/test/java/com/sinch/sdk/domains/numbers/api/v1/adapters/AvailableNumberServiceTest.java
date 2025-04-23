@@ -48,7 +48,7 @@ class AvailableNumberServiceTest extends BaseTest {
   @BeforeEach
   public void initMocks() {
     AvailableNumberService v1 =
-        new AvailableNumberService(uriUUID, context, httpClient, authManagers);
+        new AvailableNumberService(uriUUID, context, () -> httpClient, authManagers);
     service = spy(v1);
     doReturn(api).when(service).getApi();
   }

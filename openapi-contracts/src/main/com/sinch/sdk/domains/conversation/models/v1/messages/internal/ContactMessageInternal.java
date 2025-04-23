@@ -21,7 +21,7 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.mediacard.Med
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.productresponse.ProductResponseMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
 
-/** Message originating from a contact */
+/** A message originating from a contact. */
 @JsonDeserialize(builder = ContactMessageInternalImpl.Builder.class)
 public interface ContactMessageInternal {
 

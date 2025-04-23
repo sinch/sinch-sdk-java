@@ -27,7 +27,7 @@ public class VerificationReportService
       VerificationContext context, HttpClient httpClient, Map<String, AuthManager> authManagers) {
     this.api =
         new VerificationsReportApi(
-            httpClient, context.getVerificationServer(), authManagers, new HttpMapper());
+            httpClient, context.getVerificationServer(), authManagers, HttpMapper.getInstance());
   }
 
   protected VerificationsReportApi getApi() {

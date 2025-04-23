@@ -30,6 +30,7 @@ import java.util.Objects;
   IncomingCallEventImpl.JSON_PROPERTY_RDNIS,
   IncomingCallEventImpl.JSON_PROPERTY_CALL_HEADERS,
   IncomingCallEventImpl.JSON_PROPERTY_CALLID,
+  IncomingCallEventImpl.JSON_PROPERTY_CONFERENCE_ID,
   IncomingCallEventImpl.JSON_PROPERTY_VERSION
 })
 @JsonFilter("uninitializedFilter")
@@ -102,6 +103,10 @@ public class IncomingCallEventImpl
 
   private OptionalValue<String> callid;
 
+  public static final String JSON_PROPERTY_CONFERENCE_ID = "conferenceId";
+
+  private OptionalValue<String> conferenceId;
+
   public static final String JSON_PROPERTY_VERSION = "version";
 
   private OptionalValue<Integer> version;
@@ -123,6 +128,7 @@ public class IncomingCallEventImpl
       OptionalValue<String> rdnis,
       OptionalValue<List<CallHeader>> callHeaders,
       OptionalValue<String> callid,
+      OptionalValue<String> conferenceId,
       OptionalValue<Integer> version) {
     this.timestamp = timestamp;
     this.custom = custom;
@@ -138,6 +144,7 @@ public class IncomingCallEventImpl
     this.rdnis = rdnis;
     this.callHeaders = callHeaders;
     this.callid = callid;
+    this.conferenceId = conferenceId;
     this.version = version;
   }
 
@@ -296,6 +303,17 @@ public class IncomingCallEventImpl
   }
 
   @JsonIgnore
+  public String getConferenceId() {
+    return conferenceId.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CONFERENCE_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> conferenceId() {
+    return conferenceId;
+  }
+
+  @JsonIgnore
   public Integer getVersion() {
     return version.orElse(null);
   }
@@ -330,6 +348,7 @@ public class IncomingCallEventImpl
         && Objects.equals(this.rdnis, iceRequest.rdnis)
         && Objects.equals(this.callHeaders, iceRequest.callHeaders)
         && Objects.equals(this.callid, iceRequest.callid)
+        && Objects.equals(this.conferenceId, iceRequest.conferenceId)
         && Objects.equals(this.version, iceRequest.version)
         && super.equals(o);
   }
@@ -351,6 +370,7 @@ public class IncomingCallEventImpl
         rdnis,
         callHeaders,
         callid,
+        conferenceId,
         version,
         super.hashCode());
   }
@@ -374,6 +394,7 @@ public class IncomingCallEventImpl
     sb.append("    rdnis: ").append(toIndentedString(rdnis)).append("\n");
     sb.append("    callHeaders: ").append(toIndentedString(callHeaders)).append("\n");
     sb.append("    callid: ").append(toIndentedString(callid)).append("\n");
+    sb.append("    conferenceId: ").append(toIndentedString(conferenceId)).append("\n");
     sb.append("    version: ").append(toIndentedString(version)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -405,6 +426,7 @@ public class IncomingCallEventImpl
     OptionalValue<String> rdnis = OptionalValue.empty();
     OptionalValue<List<CallHeader>> callHeaders = OptionalValue.empty();
     OptionalValue<String> callid = OptionalValue.empty();
+    OptionalValue<String> conferenceId = OptionalValue.empty();
     OptionalValue<Integer> version = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_TIMESTAMP)
@@ -485,6 +507,12 @@ public class IncomingCallEventImpl
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_CONFERENCE_ID)
+    public Builder setConferenceId(String conferenceId) {
+      this.conferenceId = OptionalValue.of(conferenceId);
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_VERSION)
     public Builder setVersion(Integer version) {
       this.version = OptionalValue.of(version);
@@ -507,6 +535,7 @@ public class IncomingCallEventImpl
           rdnis,
           callHeaders,
           callid,
+          conferenceId,
           version);
     }
   }

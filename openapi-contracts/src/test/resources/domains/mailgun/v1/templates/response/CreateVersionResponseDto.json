@@ -1,0 +1,24 @@
+{
+  "message": "new version of the template has been stored",
+  "template": {
+    "name": "template created from java sdk",
+    "description": "my description value",
+    "createdAt": "Wed, 19 Mar 2025 15:45:50 UTC",
+    "createdBy": "html",
+    "id": "73eefcac-7610-4f87-9647-aaaaaaaaaaaa",
+    "version": {
+      "tag": "a tag value",
+      "template": "<p>{{firstname}} {{lastname}}</p>",
+      "engine": "handlebars",
+      "mjml": "",
+      "createdAt": "Fri, 21 Mar 2025 10:23:10 UTC",
+      "comment": "a comment value",
+      "active": true,
+      "id": "677283db-12c2-4896-880c-bbbbbbbbbbbb",
+      "headers": {
+        "From": "mygrom@adress.org",
+        "Subject": "my subject"
+      }
+    }
+  }
+}

@@ -1,7 +1,14 @@
 {
   "event": "notify",
   "callid": "a call id",
+  "conferenceId": "a conference id",
   "custom": "my custom value",
   "version": 1,
-  "type": "recording_finished"
+  "type": "recording_finished",
+  "destination": "a destination",
+  "amd": {
+    "status": "hangup",
+    "reason": "initialsilence",
+    "duration": 32
+  }
 }

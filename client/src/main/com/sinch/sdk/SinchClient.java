@@ -2,6 +2,7 @@ package com.sinch.sdk;
 
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.conversation.ConversationService;
+import com.sinch.sdk.domains.mailgun.MailgunService;
 import com.sinch.sdk.domains.numbers.NumbersService;
 import com.sinch.sdk.domains.sms.SMSService;
 import com.sinch.sdk.domains.verification.VerificationService;
@@ -10,6 +11,8 @@ import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.ConversationRegion;
+import com.sinch.sdk.models.MailgunContext;
+import com.sinch.sdk.models.MailgunRegion;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.SMSRegion;
 import com.sinch.sdk.models.SmsContext;
@@ -19,9 +22,11 @@ import com.sinch.sdk.models.VoiceRegion;
 import com.sinch.sdk.models.adapters.DualToneMultiFrequencyMapper;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -49,6 +54,11 @@ public class SinchClient {
   private static final String CONVERSATION_TEMPLATE_SERVER_KEY =
       "template-management-conversation-server";
 
+  private static final String MAILGUN_REGION_KEY = "mailgun-region";
+  private static final String MAILGUN_DEFAULT_SERVER_KEY = "mailgun-default-server";
+  private static final String MAILGUN_REGION_SERVER_KEY = "mailgun-region-server";
+  private static final String MAILGUN_STORAGE_BY_REGION_SERVER_KEY = "mailgun-%s-storage";
+
   // sinch-sdk/{sdk_version} ({language}/{language_version}; {implementation_type};
   // {auxiliary_flag})
   private static final String SDK_USER_AGENT_HEADER = "User-Agent";
@@ -62,7 +72,7 @@ public class SinchClient {
   private VerificationService verification;
   private VoiceService voice;
   private ConversationService conversation;
-
+  private MailgunService mailgun;
   private HttpClientApache httpClient;
 
   /**
@@ -73,24 +83,39 @@ public class SinchClient {
    */
   public SinchClient(Configuration configuration) {
 
-    Configuration.Builder builder = Configuration.builder(configuration);
+    Configuration configurationGuard =
+        null != configuration ? configuration : Configuration.builder().build();
+
+    Configuration.Builder builder = Configuration.builder(configurationGuard);
     Properties props = handlePropertiesFile(DEFAULT_PROPERTIES_FILE_NAME);
 
-    if (null == configuration.getOAuthUrl() && props.containsKey(OAUTH_URL_KEY)) {
+    if (null == configurationGuard.getOAuthUrl() && props.containsKey(OAUTH_URL_KEY)) {
       builder.setOAuthUrl(props.getProperty(OAUTH_URL_KEY));
     }
 
-    handleDefaultNumbersSettings(configuration, props, builder);
-    handleDefaultSmsSettings(configuration, props, builder);
-    handleDefaultVerificationSettings(configuration, props, builder);
-    handleDefaultVoiceSettings(configuration, props, builder);
-    handleDefaultConversationSettings(configuration, props, builder);
+    handleDefaultNumbersSettings(configurationGuard, props, builder);
+    handleDefaultSmsSettings(configurationGuard, props, builder);
+    handleDefaultVerificationSettings(configurationGuard, props, builder);
+    handleDefaultVoiceSettings(configurationGuard, props, builder);
+    handleDefaultConversationSettings(configurationGuard, props, builder);
+    handleDefaultMailgunSettings(configurationGuard, props, builder);
 
     Configuration newConfiguration = builder.build();
     checkConfiguration(newConfiguration);
     this.configuration = newConfiguration;
 
     LOGGER.fine(String.format("%s (%s) started", SDK.NAME, SDK.VERSION));
+  }
+
+  /**
+   * Create a Sinch Client instance without any dedicated configuration
+   *
+   * <p>Can be used to address webhooks feature not requiring credentials
+   *
+   * @since 1.6
+   */
+  public SinchClient() {
+    this(null);
   }
 
   private void handleDefaultNumbersSettings(
@@ -228,6 +253,53 @@ public class SinchClient {
     }
   }
 
+  private void handleDefaultMailgunSettings(
+      Configuration configuration, Properties props, Configuration.Builder builder) {
+
+    MailgunRegion defaultRegion = MailgunRegion.US;
+
+    Optional<MailgunContext> previousContext = configuration.getMailgunContext();
+    MailgunContext.Builder contextBuilder = MailgunContext.builder();
+
+    MailgunRegion region = previousContext.map(MailgunContext::getRegion).orElse(null);
+    // default region to be used ?
+    if (null == region && props.containsKey(MAILGUN_REGION_KEY)) {
+      String value = props.getProperty(MAILGUN_REGION_KEY);
+      if (!StringUtil.isEmpty(value)) {
+        region = MailgunRegion.from(value);
+      }
+    }
+
+    // url is not defined: use the region to set to an existing one and use "global" as a default
+    // fallback
+    String url = previousContext.map(MailgunContext::getUrl).orElse(null);
+    if (StringUtil.isEmpty(url)) {
+      if (null == region || defaultRegion.value().equals(region.value().toLowerCase())) {
+        url = props.getProperty(MAILGUN_DEFAULT_SERVER_KEY);
+      } else {
+        url = String.format(props.getProperty(MAILGUN_REGION_SERVER_KEY), region.value());
+      }
+    }
+
+    // storage URls are not defined: set a default set related to region in use
+    Collection<String> storageUrls =
+        previousContext.map(MailgunContext::getStorageUrls).orElse(null);
+    if (null == storageUrls || storageUrls.isEmpty()) {
+      MailgunRegion storageKeyRegion = null == region ? defaultRegion : region;
+      String storageKey =
+          String.format(
+              MAILGUN_STORAGE_BY_REGION_SERVER_KEY, storageKeyRegion.value().toLowerCase());
+      String value = props.getProperty(storageKey);
+      if (!StringUtil.isEmpty(value)) {
+        storageUrls =
+            Arrays.stream(value.split(",")).map(String::trim).collect(Collectors.toList());
+        contextBuilder.setStorageUrls(storageUrls);
+      }
+    }
+
+    builder.setMailgunContext(contextBuilder.setUrl(url).setStorageUrls(storageUrls).build());
+  }
+
   /**
    * Get current configuration
    *
@@ -313,6 +385,20 @@ public class SinchClient {
     return conversation;
   }
 
+  /**
+   * Get Mailgun domain service
+   *
+   * @return Return instance onto Mailgun API service
+   * @see <a href="https://documentation.mailgun.com/">https://documentation.mailgun.com/</a>
+   * @since 1.6
+   */
+  public MailgunService mailgun() {
+    if (null == mailgun) {
+      mailgun = mailgunInit();
+    }
+    return mailgun;
+  }
+
   private void checkConfiguration(Configuration configuration) throws NullPointerException {
     Objects.requireNonNull(configuration.getOAuthUrl(), "'oauthUrl' cannot be null");
   }
@@ -321,7 +407,7 @@ public class SinchClient {
     return new com.sinch.sdk.domains.numbers.adapters.NumbersService(
         getConfiguration().getUnifiedCredentials().orElse(null),
         configuration.getNumbersContext().orElse(null),
-        getHttpClient());
+        this::getHttpClient);
   }
 
   private SMSService smsInit() {
@@ -331,28 +417,28 @@ public class SinchClient {
         .map(
             f ->
                 new com.sinch.sdk.domains.sms.adapters.SMSService(
-                    f, getConfiguration().getSmsContext().orElse(null), getHttpClient()))
+                    f, getConfiguration().getSmsContext().orElse(null), this::getHttpClient))
         .orElseGet(
             () ->
                 new com.sinch.sdk.domains.sms.adapters.SMSService(
                     getConfiguration().getUnifiedCredentials().orElse(null),
                     getConfiguration().getSmsContext().orElse(null),
                     configuration.getOAuthServer(),
-                    getHttpClient()));
+                    this::getHttpClient));
   }
 
   private VerificationService verificationInit() {
     return new com.sinch.sdk.domains.verification.adapters.VerificationService(
         getConfiguration().getApplicationCredentials().orElse(null),
         getConfiguration().getVerificationContext().orElse(null),
-        getHttpClient());
+        this::getHttpClient);
   }
 
   private VoiceService voiceInit() {
     return new com.sinch.sdk.domains.voice.adapters.VoiceService(
         getConfiguration().getApplicationCredentials().orElse(null),
         getConfiguration().getVoiceContext().orElse(null),
-        getHttpClient());
+        this::getHttpClient);
   }
 
   private ConversationService conversationInit() {
@@ -360,6 +446,13 @@ public class SinchClient {
         getConfiguration().getUnifiedCredentials().orElse(null),
         getConfiguration().getConversationContext().orElse(null),
         getConfiguration().getOAuthServer(),
+        this::getHttpClient);
+  }
+
+  private MailgunService mailgunInit() {
+    return new com.sinch.sdk.domains.mailgun.adapters.MailgunService(
+        getConfiguration().getMailgunCredentials().orElse(null),
+        getConfiguration().getMailgunContext().orElse(null),
         getHttpClient());
   }
 

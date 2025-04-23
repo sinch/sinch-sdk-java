@@ -1,6 +1,7 @@
 {
   "event": "ace",
   "callid": "a call id",
+  "conferenceId": "a conference id",
   "timestamp": "2024-01-19T12:49:53Z",
   "version": 1,
   "custom": "my custom value",

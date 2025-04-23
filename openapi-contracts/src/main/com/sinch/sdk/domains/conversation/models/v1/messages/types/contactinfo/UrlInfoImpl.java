@@ -95,7 +95,7 @@ public class UrlInfoImpl implements UrlInfo {
     OptionalValue<String> url = OptionalValue.empty();
     OptionalValue<String> type = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_URL)
+    @JsonProperty(value = JSON_PROPERTY_URL, required = true)
     public Builder setUrl(String url) {
       this.url = OptionalValue.of(url);
       return this;

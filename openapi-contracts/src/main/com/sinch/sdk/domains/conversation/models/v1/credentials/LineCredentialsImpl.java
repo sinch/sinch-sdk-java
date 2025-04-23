@@ -11,11 +11,13 @@ import java.util.Objects;
 
 @JsonPropertyOrder({
   LineCredentialsImpl.JSON_PROPERTY_TOKEN,
-  LineCredentialsImpl.JSON_PROPERTY_SECRET
+  LineCredentialsImpl.JSON_PROPERTY_SECRET,
+  LineCredentialsImpl.JSON_PROPERTY_IS_DEFAULT
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class LineCredentialsImpl implements LineCredentials, ChannelCredentials {
+public class LineCredentialsImpl
+    implements LineCredentials, ChannelCredentials, LineCredentialsCommon {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_TOKEN = "token";
@@ -26,11 +28,17 @@ public class LineCredentialsImpl implements LineCredentials, ChannelCredentials 
 
   private OptionalValue<String> secret;
 
+  public static final String JSON_PROPERTY_IS_DEFAULT = "is_default";
+
+  private OptionalValue<Boolean> isDefault;
+
   public LineCredentialsImpl() {}
 
-  protected LineCredentialsImpl(OptionalValue<String> token, OptionalValue<String> secret) {
+  protected LineCredentialsImpl(
+      OptionalValue<String> token, OptionalValue<String> secret, OptionalValue<Boolean> isDefault) {
     this.token = token;
     this.secret = secret;
+    this.isDefault = isDefault;
   }
 
   @JsonIgnore
@@ -55,6 +63,17 @@ public class LineCredentialsImpl implements LineCredentials, ChannelCredentials 
     return secret;
   }
 
+  @JsonIgnore
+  public Boolean getIsDefault() {
+    return isDefault.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_IS_DEFAULT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<Boolean> isDefault() {
+    return isDefault;
+  }
+
   /** Return true if this LINE_Credentials object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -66,12 +85,13 @@ public class LineCredentialsImpl implements LineCredentials, ChannelCredentials 
     }
     LineCredentialsImpl liNECredentials = (LineCredentialsImpl) o;
     return Objects.equals(this.token, liNECredentials.token)
-        && Objects.equals(this.secret, liNECredentials.secret);
+        && Objects.equals(this.secret, liNECredentials.secret)
+        && Objects.equals(this.isDefault, liNECredentials.isDefault);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(token, secret);
+    return Objects.hash(token, secret, isDefault);
   }
 
   @Override
@@ -80,6 +100,7 @@ public class LineCredentialsImpl implements LineCredentials, ChannelCredentials 
     sb.append("class LineCredentialsImpl {\n");
     sb.append("    token: ").append(toIndentedString(token)).append("\n");
     sb.append("    secret: ").append(toIndentedString("***")).append("\n");
+    sb.append("    isDefault: ").append(toIndentedString(isDefault)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -98,21 +119,28 @@ public class LineCredentialsImpl implements LineCredentials, ChannelCredentials 
   static class Builder implements LineCredentials.Builder {
     OptionalValue<String> token = OptionalValue.empty();
     OptionalValue<String> secret = OptionalValue.empty();
+    OptionalValue<Boolean> isDefault = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_TOKEN)
+    @JsonProperty(value = JSON_PROPERTY_TOKEN, required = true)
     public Builder setToken(String token) {
       this.token = OptionalValue.of(token);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_SECRET)
+    @JsonProperty(value = JSON_PROPERTY_SECRET, required = true)
     public Builder setSecret(String secret) {
       this.secret = OptionalValue.of(secret);
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_IS_DEFAULT)
+    public Builder setIsDefault(Boolean isDefault) {
+      this.isDefault = OptionalValue.of(isDefault);
+      return this;
+    }
+
     public LineCredentials build() {
-      return new LineCredentialsImpl(token, secret);
+      return new LineCredentialsImpl(token, secret, isDefault);
     }
   }
 }

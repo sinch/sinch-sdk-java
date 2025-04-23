@@ -201,7 +201,7 @@ public class BinaryMessageImpl implements BinaryMessage, InboundMessage {
     return udh;
   }
 
-  /** Return true if this MOBinary object is equal to o. */
+  /** Return true if this binary_message object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -210,17 +210,17 @@ public class BinaryMessageImpl implements BinaryMessage, InboundMessage {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BinaryMessageImpl moBinary = (BinaryMessageImpl) o;
-    return Objects.equals(this.clientReference, moBinary.clientReference)
-        && Objects.equals(this.from, moBinary.from)
-        && Objects.equals(this.id, moBinary.id)
-        && Objects.equals(this.operatorId, moBinary.operatorId)
-        && Objects.equals(this.receivedAt, moBinary.receivedAt)
-        && Objects.equals(this.sentAt, moBinary.sentAt)
-        && Objects.equals(this.to, moBinary.to)
-        && Objects.equals(this.type, moBinary.type)
-        && Objects.equals(this.body, moBinary.body)
-        && Objects.equals(this.udh, moBinary.udh);
+    BinaryMessageImpl binaryMessage = (BinaryMessageImpl) o;
+    return Objects.equals(this.clientReference, binaryMessage.clientReference)
+        && Objects.equals(this.from, binaryMessage.from)
+        && Objects.equals(this.id, binaryMessage.id)
+        && Objects.equals(this.operatorId, binaryMessage.operatorId)
+        && Objects.equals(this.receivedAt, binaryMessage.receivedAt)
+        && Objects.equals(this.sentAt, binaryMessage.sentAt)
+        && Objects.equals(this.to, binaryMessage.to)
+        && Objects.equals(this.type, binaryMessage.type)
+        && Objects.equals(this.body, binaryMessage.body)
+        && Objects.equals(this.udh, binaryMessage.udh);
   }
 
   @Override
@@ -276,13 +276,13 @@ public class BinaryMessageImpl implements BinaryMessage, InboundMessage {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_FROM)
+    @JsonProperty(value = JSON_PROPERTY_FROM, required = true)
     public Builder setFrom(String from) {
       this.from = OptionalValue.of(from);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_ID)
+    @JsonProperty(value = JSON_PROPERTY_ID, required = true)
     public Builder setId(String id) {
       this.id = OptionalValue.of(id);
       return this;
@@ -294,7 +294,7 @@ public class BinaryMessageImpl implements BinaryMessage, InboundMessage {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_RECEIVED_AT)
+    @JsonProperty(value = JSON_PROPERTY_RECEIVED_AT, required = true)
     public Builder setReceivedAt(Instant receivedAt) {
       this.receivedAt = OptionalValue.of(receivedAt);
       return this;
@@ -306,19 +306,19 @@ public class BinaryMessageImpl implements BinaryMessage, InboundMessage {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_TO)
+    @JsonProperty(value = JSON_PROPERTY_TO, required = true)
     public Builder setTo(String to) {
       this.to = OptionalValue.of(to);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_BODY)
+    @JsonProperty(value = JSON_PROPERTY_BODY, required = true)
     public Builder setBody(String body) {
       this.body = OptionalValue.of(body);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_UDH)
+    @JsonProperty(value = JSON_PROPERTY_UDH, required = true)
     public Builder setUdh(String udh) {
       this.udh = OptionalValue.of(udh);
       return this;

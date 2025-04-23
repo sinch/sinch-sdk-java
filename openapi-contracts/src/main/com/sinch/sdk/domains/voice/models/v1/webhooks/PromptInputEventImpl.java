@@ -17,6 +17,7 @@ import java.util.Objects;
   PromptInputEventImpl.JSON_PROPERTY_CUSTOM,
   PromptInputEventImpl.JSON_PROPERTY_APPLICATION_KEY,
   PromptInputEventImpl.JSON_PROPERTY_CALLID,
+  PromptInputEventImpl.JSON_PROPERTY_CONFERENCE_ID,
   PromptInputEventImpl.JSON_PROPERTY_VERSION
 })
 @JsonFilter("uninitializedFilter")
@@ -56,6 +57,10 @@ public class PromptInputEventImpl implements PromptInputEvent, VoiceWebhookEvent
 
   private OptionalValue<String> callid;
 
+  public static final String JSON_PROPERTY_CONFERENCE_ID = "conferenceId";
+
+  private OptionalValue<String> conferenceId;
+
   public static final String JSON_PROPERTY_VERSION = "version";
 
   private OptionalValue<Integer> version;
@@ -69,6 +74,7 @@ public class PromptInputEventImpl implements PromptInputEvent, VoiceWebhookEvent
       OptionalValue<String> custom,
       OptionalValue<String> applicationKey,
       OptionalValue<String> callid,
+      OptionalValue<String> conferenceId,
       OptionalValue<Integer> version) {
     this.event = event;
     this.timestamp = timestamp;
@@ -76,6 +82,7 @@ public class PromptInputEventImpl implements PromptInputEvent, VoiceWebhookEvent
     this.custom = custom;
     this.applicationKey = applicationKey;
     this.callid = callid;
+    this.conferenceId = conferenceId;
     this.version = version;
   }
 
@@ -146,6 +153,17 @@ public class PromptInputEventImpl implements PromptInputEvent, VoiceWebhookEvent
   }
 
   @JsonIgnore
+  public String getConferenceId() {
+    return conferenceId.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CONFERENCE_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> conferenceId() {
+    return conferenceId;
+  }
+
+  @JsonIgnore
   public Integer getVersion() {
     return version.orElse(null);
   }
@@ -172,6 +190,7 @@ public class PromptInputEventImpl implements PromptInputEvent, VoiceWebhookEvent
         && Objects.equals(this.custom, pieRequest.custom)
         && Objects.equals(this.applicationKey, pieRequest.applicationKey)
         && Objects.equals(this.callid, pieRequest.callid)
+        && Objects.equals(this.conferenceId, pieRequest.conferenceId)
         && Objects.equals(this.version, pieRequest.version)
         && super.equals(o);
   }
@@ -179,7 +198,15 @@ public class PromptInputEventImpl implements PromptInputEvent, VoiceWebhookEvent
   @Override
   public int hashCode() {
     return Objects.hash(
-        event, timestamp, menuResult, custom, applicationKey, callid, version, super.hashCode());
+        event,
+        timestamp,
+        menuResult,
+        custom,
+        applicationKey,
+        callid,
+        conferenceId,
+        version,
+        super.hashCode());
   }
 
   @Override
@@ -193,6 +220,7 @@ public class PromptInputEventImpl implements PromptInputEvent, VoiceWebhookEvent
     sb.append("    custom: ").append(toIndentedString(custom)).append("\n");
     sb.append("    applicationKey: ").append(toIndentedString(applicationKey)).append("\n");
     sb.append("    callid: ").append(toIndentedString(callid)).append("\n");
+    sb.append("    conferenceId: ").append(toIndentedString(conferenceId)).append("\n");
     sb.append("    version: ").append(toIndentedString(version)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -216,6 +244,7 @@ public class PromptInputEventImpl implements PromptInputEvent, VoiceWebhookEvent
     OptionalValue<String> custom = OptionalValue.empty();
     OptionalValue<String> applicationKey = OptionalValue.empty();
     OptionalValue<String> callid = OptionalValue.empty();
+    OptionalValue<String> conferenceId = OptionalValue.empty();
     OptionalValue<Integer> version = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_TIMESTAMP)
@@ -248,6 +277,12 @@ public class PromptInputEventImpl implements PromptInputEvent, VoiceWebhookEvent
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_CONFERENCE_ID)
+    public Builder setConferenceId(String conferenceId) {
+      this.conferenceId = OptionalValue.of(conferenceId);
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_VERSION)
     public Builder setVersion(Integer version) {
       this.version = OptionalValue.of(version);
@@ -256,7 +291,7 @@ public class PromptInputEventImpl implements PromptInputEvent, VoiceWebhookEvent
 
     public PromptInputEvent build() {
       return new PromptInputEventImpl(
-          event, timestamp, menuResult, custom, applicationKey, callid, version);
+          event, timestamp, menuResult, custom, applicationKey, callid, conferenceId, version);
     }
   }
 }

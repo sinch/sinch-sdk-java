@@ -17,6 +17,9 @@ import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.UnifiedCredentials;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.AbstractMap;
@@ -25,6 +28,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import okhttp3.HttpUrl;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -34,6 +38,13 @@ import org.junit.jupiter.api.Test;
 
 @TestWithResources
 class HttpClientTestIT extends BaseTest {
+
+  static final String regExpBoundaryMarker = "--";
+  static final String regExpBoundaryItem =
+      "^.*(\\s)*"
+          + "Content-Disposition: form-data; name=\"%s\"(\\s)*"
+          + "Content-Type: text/plain; charset=UTF-8(\\s)*"
+          + "%s(\\s)*$";
   static MockWebServer mockBackEnd;
 
   @GivenTextResource("/client/auth/BearerAuthResponse.json")
@@ -45,7 +56,8 @@ class HttpClientTestIT extends BaseTest {
   HttpClientApache httpClient = new HttpClientApache();
 
   AuthManager basicAuthManager = new BasicAuthManager(credentials);
-  OAuthManager oAuthManager = new OAuthManager(credentials, server, new HttpMapper(), httpClient);
+  OAuthManager oAuthManager =
+      new OAuthManager(credentials, server, HttpMapper.getInstance(), () -> httpClient);
 
   Map<String, AuthManager> authManagers =
       Stream.of(basicAuthManager, oAuthManager)
@@ -75,7 +87,7 @@ class HttpClientTestIT extends BaseTest {
             "foo-path",
             HttpMethod.GET,
             null,
-            null,
+            (String) null,
             null,
             null,
             null,
@@ -100,7 +112,7 @@ class HttpClientTestIT extends BaseTest {
             "foo-path",
             HttpMethod.GET,
             null,
-            null,
+            (String) null,
             null,
             null,
             null,
@@ -143,7 +155,7 @@ class HttpClientTestIT extends BaseTest {
               "foo-path",
               HttpMethod.GET,
               null,
-              null,
+              (String) null,
               null,
               null,
               null,
@@ -177,7 +189,58 @@ class HttpClientTestIT extends BaseTest {
   }
 
   @Test
-  void httpRequestBody() throws InterruptedException {
+  void httpRequestUrlFromServerConfiguration() throws InterruptedException {
+
+    mockBackEnd.enqueue(new MockResponse().setBody("@&"));
+
+    try {
+      httpClient.invokeAPI(
+          new ServerConfiguration(String.format("%s/foo/", serverUrl)),
+          null,
+          new HttpRequest(
+              "foo-path",
+              HttpMethod.POST,
+              null,
+              "foo",
+              null,
+              null,
+              Arrays.asList("application/json; charset=utf-8"),
+              null));
+    } catch (ApiException ae) {
+      // noop
+    }
+    RecordedRequest recordedRequest = mockBackEnd.takeRequest();
+    HttpUrl url = recordedRequest.getRequestUrl();
+    assertEquals(url.url().toExternalForm(), String.format("%s/foo/foo-path", serverUrl));
+  }
+
+  @Test
+  void httpRequestUrlFromHttpRequest() throws InterruptedException {
+
+    mockBackEnd.enqueue(new MockResponse().setBody("@&"));
+
+    try {
+      httpClient.invokeAPI(
+          new ServerConfiguration("https://this-url-has-to-be-ignored.com"),
+          null,
+          new HttpRequest(
+              String.format("%s/foo?query", serverUrl),
+              HttpMethod.POST,
+              null,
+              null,
+              null,
+              Arrays.asList("application/json; charset=utf-8"),
+              null));
+    } catch (ApiException ae) {
+      // noop
+    }
+    RecordedRequest recordedRequest = mockBackEnd.takeRequest();
+    HttpUrl url = recordedRequest.getRequestUrl();
+    assertEquals(url.url().toExternalForm(), String.format("%s/foo?query", serverUrl));
+  }
+
+  @Test
+  void httpRequestTextBody() throws InterruptedException {
 
     String sdkBody = "my body with Unicode characters: ✉";
 
@@ -206,6 +269,99 @@ class HttpClientTestIT extends BaseTest {
   }
 
   @Test
+  void httpRequestFormParamsText() throws InterruptedException {
+
+    mockBackEnd.enqueue(
+        new MockResponse().setBody("foo").addHeader("Content-Type", "application/json"));
+
+    Map<String, Object> formParams =
+        Collections.singletonMap("my key", "my value with unicode \uD83D\uDCE7");
+
+    try {
+      httpClient.invokeAPI(
+          new ServerConfiguration(String.format("%s/foo/", serverUrl)),
+          null,
+          new HttpRequest("foo-path", HttpMethod.POST, null, formParams, null, null, null, null));
+    } catch (ApiException ae) {
+      // noop
+    }
+    RecordedRequest recordedRequest = mockBackEnd.takeRequest();
+
+    assertTrue(recordedRequest.getHeader("Content-Type").contains("multipart/form-data"));
+
+    String payloadBody = recordedRequest.getBody().readString(StandardCharsets.UTF_8);
+    String[] split = payloadBody.split(regExpBoundaryMarker);
+    assertTrue(
+        split[1].matches(
+            String.format(regExpBoundaryItem, "my key", "my value with unicode \uD83D\uDCE7")));
+  }
+
+  @Test
+  void httpRequestFormParamsArray() throws InterruptedException {
+
+    mockBackEnd.enqueue(
+        new MockResponse().setBody("foo").addHeader("Content-Type", "application/json"));
+
+    Map<String, Object> formParams =
+        Collections.singletonMap("my key", Arrays.asList("my value 1", "my value 2"));
+
+    try {
+      httpClient.invokeAPI(
+          new ServerConfiguration(String.format("%s/foo/", serverUrl)),
+          null,
+          new HttpRequest("foo-path", HttpMethod.POST, null, formParams, null, null, null, null));
+    } catch (ApiException ae) {
+      // noop
+    }
+    RecordedRequest recordedRequest = mockBackEnd.takeRequest();
+
+    assertTrue(recordedRequest.getHeader("Content-Type").contains("multipart/form-data"));
+    String payloadBody = recordedRequest.getBody().readString(StandardCharsets.UTF_8);
+    String[] split = payloadBody.split(regExpBoundaryMarker);
+    assertTrue(split[1].matches(String.format(regExpBoundaryItem, "my key", "my value 1")));
+    assertTrue(split[2].matches(String.format(regExpBoundaryItem, "my key", "my value 2")));
+  }
+
+  @Test
+  void httpRequestFormParamsFile() throws InterruptedException {
+
+    String content = "\uD83D\uDCE7 Sample content \uD83D\uDCE7";
+    // create a temporary file to be sent
+    File tempFile;
+    try {
+      tempFile = File.createTempFile("sinch-sdk-java", ".txt");
+      tempFile.deleteOnExit();
+      try (BufferedWriter out = new BufferedWriter(new FileWriter(tempFile))) {
+        out.write(content);
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
+    mockBackEnd.enqueue(
+        new MockResponse().setBody("foo").addHeader("Content-Type", "application/json"));
+
+    Map<String, Object> formParams = Collections.singletonMap("my key", Arrays.asList(tempFile));
+
+    try {
+      httpClient.invokeAPI(
+          new ServerConfiguration(String.format("%s/foo/", serverUrl)),
+          null,
+          new HttpRequest("foo-path", HttpMethod.POST, null, formParams, null, null, null, null));
+    } catch (ApiException ae) {
+      // noop
+    }
+    RecordedRequest recordedRequest = mockBackEnd.takeRequest();
+
+    assertTrue(recordedRequest.getHeader("Content-Type").contains("multipart/form-data"));
+    String payloadBody = recordedRequest.getBody().readString(StandardCharsets.UTF_8);
+    String[] split = payloadBody.split(regExpBoundaryMarker);
+    assertTrue(split[1].contains(content));
+  }
+
+  @Test
   void httpRequestHeaders() throws InterruptedException {
     String key = "My-OAS-Header-Key";
     String value = "OAS Header Value";
@@ -220,7 +376,8 @@ class HttpClientTestIT extends BaseTest {
       httpClient.invokeAPI(
           new ServerConfiguration(String.format("%s/foo/", serverUrl)),
           null,
-          new HttpRequest("foo-path", HttpMethod.GET, null, null, httpRequest, null, null, null));
+          new HttpRequest(
+              "foo-path", HttpMethod.GET, null, (String) null, httpRequest, null, null, null));
     } catch (ApiException ae) {
       // noop
     }
@@ -244,7 +401,7 @@ class HttpClientTestIT extends BaseTest {
       httpClient.invokeAPI(
           new ServerConfiguration(String.format("%s/foo/", serverUrl)),
           null,
-          new HttpRequest("foo-path", HttpMethod.GET, null, null, null, null, null, null));
+          new HttpRequest("foo-path", HttpMethod.GET, null, (String) null, null, null, null, null));
     } catch (ApiException ae) {
       // noop
     }

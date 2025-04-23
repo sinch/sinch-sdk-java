@@ -110,7 +110,7 @@ public class DestinationPstnImpl
     OptionalValue<PstnDestination> type = OptionalValue.of(PstnDestination.NUMBER);
     OptionalValue<String> endpoint = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_ENDPOINT)
+    @JsonProperty(value = JSON_PROPERTY_ENDPOINT, required = true)
     public Builder setEndpoint(String endpoint) {
       this.endpoint = OptionalValue.of(endpoint);
       return this;

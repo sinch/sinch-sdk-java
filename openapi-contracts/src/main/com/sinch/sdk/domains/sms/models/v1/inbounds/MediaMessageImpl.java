@@ -183,7 +183,7 @@ public class MediaMessageImpl implements MediaMessage, InboundMessage {
     return body;
   }
 
-  /** Return true if this MOMedia object is equal to o. */
+  /** Return true if this media_message object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -192,16 +192,16 @@ public class MediaMessageImpl implements MediaMessage, InboundMessage {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    MediaMessageImpl moMedia = (MediaMessageImpl) o;
-    return Objects.equals(this.clientReference, moMedia.clientReference)
-        && Objects.equals(this.from, moMedia.from)
-        && Objects.equals(this.id, moMedia.id)
-        && Objects.equals(this.operatorId, moMedia.operatorId)
-        && Objects.equals(this.receivedAt, moMedia.receivedAt)
-        && Objects.equals(this.sentAt, moMedia.sentAt)
-        && Objects.equals(this.to, moMedia.to)
-        && Objects.equals(this.type, moMedia.type)
-        && Objects.equals(this.body, moMedia.body);
+    MediaMessageImpl mediaMessage = (MediaMessageImpl) o;
+    return Objects.equals(this.clientReference, mediaMessage.clientReference)
+        && Objects.equals(this.from, mediaMessage.from)
+        && Objects.equals(this.id, mediaMessage.id)
+        && Objects.equals(this.operatorId, mediaMessage.operatorId)
+        && Objects.equals(this.receivedAt, mediaMessage.receivedAt)
+        && Objects.equals(this.sentAt, mediaMessage.sentAt)
+        && Objects.equals(this.to, mediaMessage.to)
+        && Objects.equals(this.type, mediaMessage.type)
+        && Objects.equals(this.body, mediaMessage.body);
   }
 
   @Override
@@ -254,13 +254,13 @@ public class MediaMessageImpl implements MediaMessage, InboundMessage {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_FROM)
+    @JsonProperty(value = JSON_PROPERTY_FROM, required = true)
     public Builder setFrom(String from) {
       this.from = OptionalValue.of(from);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_ID)
+    @JsonProperty(value = JSON_PROPERTY_ID, required = true)
     public Builder setId(String id) {
       this.id = OptionalValue.of(id);
       return this;
@@ -272,7 +272,7 @@ public class MediaMessageImpl implements MediaMessage, InboundMessage {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_RECEIVED_AT)
+    @JsonProperty(value = JSON_PROPERTY_RECEIVED_AT, required = true)
     public Builder setReceivedAt(Instant receivedAt) {
       this.receivedAt = OptionalValue.of(receivedAt);
       return this;
@@ -284,13 +284,13 @@ public class MediaMessageImpl implements MediaMessage, InboundMessage {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_TO)
+    @JsonProperty(value = JSON_PROPERTY_TO, required = true)
     public Builder setTo(String to) {
       this.to = OptionalValue.of(to);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_BODY)
+    @JsonProperty(value = JSON_PROPERTY_BODY, required = true)
     public Builder setBody(MediaMessageBody body) {
       this.body = OptionalValue.of(body);
       return this;

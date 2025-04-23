@@ -14,11 +14,18 @@ package com.sinch.sdk.domains.voice.models.v1.webhooks;
 public interface VoiceWebhookEvent {
 
   /**
-   * The unique ID assigned to this call.
+   * Used in some types of events, it presents the unique ID assigned to this call.
    *
    * @return callid
    */
   String getCallid();
+
+  /**
+   * Used in some types of events, it presents the unique Conference ID assigned to this call.
+   *
+   * @return conferenceId
+   */
+  String getConferenceId();
 
   /**
    * The current API version.
@@ -38,6 +45,15 @@ public interface VoiceWebhookEvent {
      * @see #getCallid
      */
     B setCallid(String callid);
+
+    /**
+     * see getter
+     *
+     * @param conferenceId see getter
+     * @return Current builder
+     * @see #getConferenceId
+     */
+    B setConferenceId(String conferenceId);
 
     /**
      * see getter

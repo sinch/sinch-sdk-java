@@ -77,7 +77,7 @@ public class TelegramCredentialsImpl implements TelegramCredentials, ChannelCred
   static class Builder implements TelegramCredentials.Builder {
     OptionalValue<String> token = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_TOKEN)
+    @JsonProperty(value = JSON_PROPERTY_TOKEN, required = true)
     public Builder setToken(String token) {
       this.token = OptionalValue.of(token);
       return this;

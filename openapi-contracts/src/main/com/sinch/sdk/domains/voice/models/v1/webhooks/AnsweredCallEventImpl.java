@@ -17,6 +17,7 @@ import java.util.Objects;
   AnsweredCallEventImpl.JSON_PROPERTY_EVENT,
   AnsweredCallEventImpl.JSON_PROPERTY_AMD,
   AnsweredCallEventImpl.JSON_PROPERTY_CALLID,
+  AnsweredCallEventImpl.JSON_PROPERTY_CONFERENCE_ID,
   AnsweredCallEventImpl.JSON_PROPERTY_VERSION
 })
 @JsonFilter("uninitializedFilter")
@@ -51,11 +52,15 @@ public class AnsweredCallEventImpl
 
   public static final String JSON_PROPERTY_AMD = "amd";
 
-  private OptionalValue<AnsweredCallEventAnsweringMachineDetection> amd;
+  private OptionalValue<AnsweringMachineDetection> amd;
 
   public static final String JSON_PROPERTY_CALLID = "callid";
 
   private OptionalValue<String> callid;
+
+  public static final String JSON_PROPERTY_CONFERENCE_ID = "conferenceId";
+
+  private OptionalValue<String> conferenceId;
 
   public static final String JSON_PROPERTY_VERSION = "version";
 
@@ -68,8 +73,9 @@ public class AnsweredCallEventImpl
       OptionalValue<String> custom,
       OptionalValue<String> applicationKey,
       OptionalValue<WebhooksEventRequestType> event,
-      OptionalValue<AnsweredCallEventAnsweringMachineDetection> amd,
+      OptionalValue<AnsweringMachineDetection> amd,
       OptionalValue<String> callid,
+      OptionalValue<String> conferenceId,
       OptionalValue<Integer> version) {
     this.timestamp = timestamp;
     this.custom = custom;
@@ -77,6 +83,7 @@ public class AnsweredCallEventImpl
     this.event = event;
     this.amd = amd;
     this.callid = callid;
+    this.conferenceId = conferenceId;
     this.version = version;
   }
 
@@ -125,13 +132,13 @@ public class AnsweredCallEventImpl
   }
 
   @JsonIgnore
-  public AnsweredCallEventAnsweringMachineDetection getAmd() {
+  public AnsweringMachineDetection getAmd() {
     return amd.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_AMD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<AnsweredCallEventAnsweringMachineDetection> amd() {
+  public OptionalValue<AnsweringMachineDetection> amd() {
     return amd;
   }
 
@@ -144,6 +151,17 @@ public class AnsweredCallEventImpl
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> callid() {
     return callid;
+  }
+
+  @JsonIgnore
+  public String getConferenceId() {
+    return conferenceId.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CONFERENCE_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> conferenceId() {
+    return conferenceId;
   }
 
   @JsonIgnore
@@ -173,6 +191,7 @@ public class AnsweredCallEventImpl
         && Objects.equals(this.event, aceRequest.event)
         && Objects.equals(this.amd, aceRequest.amd)
         && Objects.equals(this.callid, aceRequest.callid)
+        && Objects.equals(this.conferenceId, aceRequest.conferenceId)
         && Objects.equals(this.version, aceRequest.version)
         && super.equals(o);
   }
@@ -180,7 +199,15 @@ public class AnsweredCallEventImpl
   @Override
   public int hashCode() {
     return Objects.hash(
-        timestamp, custom, applicationKey, event, amd, callid, version, super.hashCode());
+        timestamp,
+        custom,
+        applicationKey,
+        event,
+        amd,
+        callid,
+        conferenceId,
+        version,
+        super.hashCode());
   }
 
   @Override
@@ -194,6 +221,7 @@ public class AnsweredCallEventImpl
     sb.append("    event: ").append(toIndentedString(event)).append("\n");
     sb.append("    amd: ").append(toIndentedString(amd)).append("\n");
     sb.append("    callid: ").append(toIndentedString(callid)).append("\n");
+    sb.append("    conferenceId: ").append(toIndentedString(conferenceId)).append("\n");
     sb.append("    version: ").append(toIndentedString(version)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -215,8 +243,9 @@ public class AnsweredCallEventImpl
     OptionalValue<String> custom = OptionalValue.empty();
     OptionalValue<String> applicationKey = OptionalValue.empty();
     OptionalValue<WebhooksEventRequestType> event = OptionalValue.of(WebhooksEventRequestType.ACE);
-    OptionalValue<AnsweredCallEventAnsweringMachineDetection> amd = OptionalValue.empty();
+    OptionalValue<AnsweringMachineDetection> amd = OptionalValue.empty();
     OptionalValue<String> callid = OptionalValue.empty();
+    OptionalValue<String> conferenceId = OptionalValue.empty();
     OptionalValue<Integer> version = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_TIMESTAMP)
@@ -238,7 +267,7 @@ public class AnsweredCallEventImpl
     }
 
     @JsonProperty(JSON_PROPERTY_AMD)
-    public Builder setAmd(AnsweredCallEventAnsweringMachineDetection amd) {
+    public Builder setAmd(AnsweringMachineDetection amd) {
       this.amd = OptionalValue.of(amd);
       return this;
     }
@@ -246,6 +275,12 @@ public class AnsweredCallEventImpl
     @JsonProperty(JSON_PROPERTY_CALLID)
     public Builder setCallid(String callid) {
       this.callid = OptionalValue.of(callid);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_CONFERENCE_ID)
+    public Builder setConferenceId(String conferenceId) {
+      this.conferenceId = OptionalValue.of(conferenceId);
       return this;
     }
 
@@ -257,7 +292,7 @@ public class AnsweredCallEventImpl
 
     public AnsweredCallEvent build() {
       return new AnsweredCallEventImpl(
-          timestamp, custom, applicationKey, event, amd, callid, version);
+          timestamp, custom, applicationKey, event, amd, callid, conferenceId, version);
     }
   }
 }

@@ -32,8 +32,7 @@ public interface DryRunResponse {
   Integer getNumberOfMessages();
 
   /**
-   * The recipient, the number of message parts to this recipient, the body of the message, and the
-   * encoding type of each message
+   * Get perRecipient
    *
    * @return perRecipient
    */

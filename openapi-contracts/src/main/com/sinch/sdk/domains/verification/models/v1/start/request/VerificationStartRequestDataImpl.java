@@ -148,7 +148,7 @@ public class VerificationStartRequestDataImpl
     OptionalValue<String> reference = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_IDENTITY)
+    @JsonProperty(value = JSON_PROPERTY_IDENTITY, required = true)
     public Builder setIdentity(Identity identity) {
       this.identity = OptionalValue.of(identity);
       return this;

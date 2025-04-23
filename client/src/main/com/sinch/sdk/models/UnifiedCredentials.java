@@ -5,7 +5,7 @@ package com.sinch.sdk.models;
  *
  * @since 1.0
  */
-public class UnifiedCredentials {
+public class UnifiedCredentials implements Credentials {
 
   private final String keyId;
   private final String keySecret;

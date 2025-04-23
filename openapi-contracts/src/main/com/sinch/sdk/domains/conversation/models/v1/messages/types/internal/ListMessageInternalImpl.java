@@ -9,12 +9,14 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.list.ListAdditionalProperties;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.list.ListSection;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessage;
 import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
   ListMessageInternalImpl.JSON_PROPERTY_TITLE,
   ListMessageInternalImpl.JSON_PROPERTY_DESCRIPTION,
+  ListMessageInternalImpl.JSON_PROPERTY_MEDIA,
   ListMessageInternalImpl.JSON_PROPERTY_SECTIONS,
   ListMessageInternalImpl.JSON_PROPERTY_MESSAGE_PROPERTIES
 })
@@ -31,6 +33,10 @@ public class ListMessageInternalImpl implements ListMessageInternal {
 
   private OptionalValue<String> description;
 
+  public static final String JSON_PROPERTY_MEDIA = "media";
+
+  private OptionalValue<MediaMessage> media;
+
   public static final String JSON_PROPERTY_SECTIONS = "sections";
 
   private OptionalValue<List<ListSection<?>>> sections;
@@ -44,10 +50,12 @@ public class ListMessageInternalImpl implements ListMessageInternal {
   protected ListMessageInternalImpl(
       OptionalValue<String> title,
       OptionalValue<String> description,
+      OptionalValue<MediaMessage> media,
       OptionalValue<List<ListSection<?>>> sections,
       OptionalValue<ListAdditionalProperties> messageProperties) {
     this.title = title;
     this.description = description;
+    this.media = media;
     this.sections = sections;
     this.messageProperties = messageProperties;
   }
@@ -72,6 +80,17 @@ public class ListMessageInternalImpl implements ListMessageInternal {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> description() {
     return description;
+  }
+
+  @JsonIgnore
+  public MediaMessage getMedia() {
+    return media.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_MEDIA)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<MediaMessage> media() {
+    return media;
   }
 
   @JsonIgnore
@@ -108,13 +127,14 @@ public class ListMessageInternalImpl implements ListMessageInternal {
     ListMessageInternalImpl listMessage = (ListMessageInternalImpl) o;
     return Objects.equals(this.title, listMessage.title)
         && Objects.equals(this.description, listMessage.description)
+        && Objects.equals(this.media, listMessage.media)
         && Objects.equals(this.sections, listMessage.sections)
         && Objects.equals(this.messageProperties, listMessage.messageProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(title, description, sections, messageProperties);
+    return Objects.hash(title, description, media, sections, messageProperties);
   }
 
   @Override
@@ -123,6 +143,7 @@ public class ListMessageInternalImpl implements ListMessageInternal {
     sb.append("class ListMessageInternalImpl {\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    media: ").append(toIndentedString(media)).append("\n");
     sb.append("    sections: ").append(toIndentedString(sections)).append("\n");
     sb.append("    messageProperties: ").append(toIndentedString(messageProperties)).append("\n");
     sb.append("}");
@@ -143,10 +164,11 @@ public class ListMessageInternalImpl implements ListMessageInternal {
   static class Builder implements ListMessageInternal.Builder {
     OptionalValue<String> title = OptionalValue.empty();
     OptionalValue<String> description = OptionalValue.empty();
+    OptionalValue<MediaMessage> media = OptionalValue.empty();
     OptionalValue<List<ListSection<?>>> sections = OptionalValue.empty();
     OptionalValue<ListAdditionalProperties> messageProperties = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_TITLE)
+    @JsonProperty(value = JSON_PROPERTY_TITLE, required = true)
     public Builder setTitle(String title) {
       this.title = OptionalValue.of(title);
       return this;
@@ -158,7 +180,13 @@ public class ListMessageInternalImpl implements ListMessageInternal {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_SECTIONS)
+    @JsonProperty(JSON_PROPERTY_MEDIA)
+    public Builder setMedia(MediaMessage media) {
+      this.media = OptionalValue.of(media);
+      return this;
+    }
+
+    @JsonProperty(value = JSON_PROPERTY_SECTIONS, required = true)
     public Builder setSections(List<ListSection<?>> sections) {
       this.sections = OptionalValue.of(sections);
       return this;
@@ -171,7 +199,7 @@ public class ListMessageInternalImpl implements ListMessageInternal {
     }
 
     public ListMessageInternal build() {
-      return new ListMessageInternalImpl(title, description, sections, messageProperties);
+      return new ListMessageInternalImpl(title, description, media, sections, messageProperties);
     }
   }
 }

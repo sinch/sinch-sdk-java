@@ -409,7 +409,7 @@ public class TemplateTranslationBaseImpl implements TemplateTranslationBase {
     OptionalValue<ListMessage> listMessage = OptionalValue.empty();
     OptionalValue<ContactInfoMessage> contactInfoMessage = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_LANGUAGE_CODE)
+    @JsonProperty(value = JSON_PROPERTY_LANGUAGE_CODE, required = true)
     public B setLanguageCode(String languageCode) {
       this.languageCode = OptionalValue.of(languageCode);
       return self();

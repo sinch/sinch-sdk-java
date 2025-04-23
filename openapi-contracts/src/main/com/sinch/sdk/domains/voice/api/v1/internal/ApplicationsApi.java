@@ -61,7 +61,9 @@ public class ApplicationsApi {
    * @param number The phone number you want to query. (required)
    * @return QueryNumberResponse
    * @throws ApiException if fails to make API call
+   * @deprecated
    */
+  @Deprecated
   public QueryNumberResponse callingQueryNumber(String number) throws ApiException {
 
     LOGGER.finest("[callingQueryNumber]" + " " + "number: " + number);

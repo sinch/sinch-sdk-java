@@ -78,7 +78,7 @@ public class ListItemOneOfProductInternalImpl implements ListItemOneOfProductInt
   static class Builder implements ListItemOneOfProductInternal.Builder {
     OptionalValue<ProductItem> product = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_PRODUCT)
+    @JsonProperty(value = JSON_PROPERTY_PRODUCT, required = true)
     public Builder setProduct(ProductItem product) {
       this.product = OptionalValue.of(product);
       return this;

@@ -77,7 +77,7 @@ public class ReplyToInternalImpl implements ReplyToInternal {
   static class Builder implements ReplyToInternal.Builder {
     OptionalValue<String> messageId = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_MESSAGE_ID)
+    @JsonProperty(value = JSON_PROPERTY_MESSAGE_ID, required = true)
     public Builder setMessageId(String messageId) {
       this.messageId = OptionalValue.of(messageId);
       return this;

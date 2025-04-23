@@ -5,7 +5,7 @@
     "media": [
       {
         "url": "https://foo.url",
-        "contentType": "content/type",
+        "content_type": "content/type",
         "status": "a status",
         "code": 1234
       }

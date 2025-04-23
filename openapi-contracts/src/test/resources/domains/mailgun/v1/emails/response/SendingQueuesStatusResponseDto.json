@@ -1,0 +1,16 @@
+{
+  "scheduled": {
+    "is_disabled": true,
+    "disabled": {
+      "until": "Thu, 30 Jan 2025 16:14:04 +0100",
+      "reason": "You have too many messages in scheduled queue"
+    }
+  },
+  "regular": {
+    "is_disabled": true,
+    "disabled": {
+      "until": "Thu, 30 Jan 2025 06:14:04 +0200",
+      "reason": "You have too many messages in regular queue"
+    }
+  }
+}

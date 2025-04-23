@@ -12,8 +12,11 @@ import java.util.Objects;
 @JsonPropertyOrder({
   NotificationEventImpl.JSON_PROPERTY_EVENT,
   NotificationEventImpl.JSON_PROPERTY_TYPE,
+  NotificationEventImpl.JSON_PROPERTY_DESTINATION,
+  NotificationEventImpl.JSON_PROPERTY_AMD,
   NotificationEventImpl.JSON_PROPERTY_CUSTOM,
   NotificationEventImpl.JSON_PROPERTY_CALLID,
+  NotificationEventImpl.JSON_PROPERTY_CONFERENCE_ID,
   NotificationEventImpl.JSON_PROPERTY_VERSION
 })
 @JsonFilter("uninitializedFilter")
@@ -37,6 +40,14 @@ public class NotificationEventImpl implements NotificationEvent, VoiceWebhookEve
 
   private OptionalValue<String> type;
 
+  public static final String JSON_PROPERTY_DESTINATION = "destination";
+
+  private OptionalValue<String> destination;
+
+  public static final String JSON_PROPERTY_AMD = "amd";
+
+  private OptionalValue<AnsweringMachineDetection> amd;
+
   public static final String JSON_PROPERTY_CUSTOM = "custom";
 
   private OptionalValue<String> custom;
@@ -44,6 +55,10 @@ public class NotificationEventImpl implements NotificationEvent, VoiceWebhookEve
   public static final String JSON_PROPERTY_CALLID = "callid";
 
   private OptionalValue<String> callid;
+
+  public static final String JSON_PROPERTY_CONFERENCE_ID = "conferenceId";
+
+  private OptionalValue<String> conferenceId;
 
   public static final String JSON_PROPERTY_VERSION = "version";
 
@@ -54,13 +69,19 @@ public class NotificationEventImpl implements NotificationEvent, VoiceWebhookEve
   protected NotificationEventImpl(
       OptionalValue<WebhooksEventRequestType> event,
       OptionalValue<String> type,
+      OptionalValue<String> destination,
+      OptionalValue<AnsweringMachineDetection> amd,
       OptionalValue<String> custom,
       OptionalValue<String> callid,
+      OptionalValue<String> conferenceId,
       OptionalValue<Integer> version) {
     this.event = event;
     this.type = type;
+    this.destination = destination;
+    this.amd = amd;
     this.custom = custom;
     this.callid = callid;
+    this.conferenceId = conferenceId;
     this.version = version;
   }
 
@@ -87,6 +108,28 @@ public class NotificationEventImpl implements NotificationEvent, VoiceWebhookEve
   }
 
   @JsonIgnore
+  public String getDestination() {
+    return destination.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_DESTINATION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> destination() {
+    return destination;
+  }
+
+  @JsonIgnore
+  public AnsweringMachineDetection getAmd() {
+    return amd.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_AMD)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<AnsweringMachineDetection> amd() {
+    return amd;
+  }
+
+  @JsonIgnore
   public String getCustom() {
     return custom.orElse(null);
   }
@@ -106,6 +149,17 @@ public class NotificationEventImpl implements NotificationEvent, VoiceWebhookEve
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> callid() {
     return callid;
+  }
+
+  @JsonIgnore
+  public String getConferenceId() {
+    return conferenceId.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CONFERENCE_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> conferenceId() {
+    return conferenceId;
   }
 
   @JsonIgnore
@@ -131,15 +185,19 @@ public class NotificationEventImpl implements NotificationEvent, VoiceWebhookEve
     NotificationEventImpl notifyRequest = (NotificationEventImpl) o;
     return Objects.equals(this.event, notifyRequest.event)
         && Objects.equals(this.type, notifyRequest.type)
+        && Objects.equals(this.destination, notifyRequest.destination)
+        && Objects.equals(this.amd, notifyRequest.amd)
         && Objects.equals(this.custom, notifyRequest.custom)
         && Objects.equals(this.callid, notifyRequest.callid)
+        && Objects.equals(this.conferenceId, notifyRequest.conferenceId)
         && Objects.equals(this.version, notifyRequest.version)
         && super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(event, type, custom, callid, version, super.hashCode());
+    return Objects.hash(
+        event, type, destination, amd, custom, callid, conferenceId, version, super.hashCode());
   }
 
   @Override
@@ -149,8 +207,11 @@ public class NotificationEventImpl implements NotificationEvent, VoiceWebhookEve
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    event: ").append(toIndentedString(event)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    destination: ").append(toIndentedString(destination)).append("\n");
+    sb.append("    amd: ").append(toIndentedString(amd)).append("\n");
     sb.append("    custom: ").append(toIndentedString(custom)).append("\n");
     sb.append("    callid: ").append(toIndentedString(callid)).append("\n");
+    sb.append("    conferenceId: ").append(toIndentedString(conferenceId)).append("\n");
     sb.append("    version: ").append(toIndentedString(version)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -171,13 +232,28 @@ public class NotificationEventImpl implements NotificationEvent, VoiceWebhookEve
     OptionalValue<WebhooksEventRequestType> event =
         OptionalValue.of(WebhooksEventRequestType.NOTIFY);
     OptionalValue<String> type = OptionalValue.empty();
+    OptionalValue<String> destination = OptionalValue.empty();
+    OptionalValue<AnsweringMachineDetection> amd = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
     OptionalValue<String> callid = OptionalValue.empty();
+    OptionalValue<String> conferenceId = OptionalValue.empty();
     OptionalValue<Integer> version = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_TYPE)
     public Builder setType(String type) {
       this.type = OptionalValue.of(type);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_DESTINATION)
+    public Builder setDestination(String destination) {
+      this.destination = OptionalValue.of(destination);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_AMD)
+    public Builder setAmd(AnsweringMachineDetection amd) {
+      this.amd = OptionalValue.of(amd);
       return this;
     }
 
@@ -193,6 +269,12 @@ public class NotificationEventImpl implements NotificationEvent, VoiceWebhookEve
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_CONFERENCE_ID)
+    public Builder setConferenceId(String conferenceId) {
+      this.conferenceId = OptionalValue.of(conferenceId);
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_VERSION)
     public Builder setVersion(Integer version) {
       this.version = OptionalValue.of(version);
@@ -200,7 +282,8 @@ public class NotificationEventImpl implements NotificationEvent, VoiceWebhookEve
     }
 
     public NotificationEvent build() {
-      return new NotificationEventImpl(event, type, custom, callid, version);
+      return new NotificationEventImpl(
+          event, type, destination, amd, custom, callid, conferenceId, version);
     }
   }
 }

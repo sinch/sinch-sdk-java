@@ -149,7 +149,7 @@ public class SvamlActionConnectConferenceImpl
     OptionalValue<ConferenceDtmfOptions> conferenceDtmfOptions = OptionalValue.empty();
     OptionalValue<MusicOnHold> MusicOnHold = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_CONFERENCE_ID)
+    @JsonProperty(value = JSON_PROPERTY_CONFERENCE_ID, required = true)
     public Builder setConferenceId(String conferenceId) {
       this.conferenceId = OptionalValue.of(conferenceId);
       return this;

@@ -1,0 +1,13 @@
+{
+  "tag": "template.test",
+  "template": "<div class=\"entry\"> <h1>{{title}}</h1> Hello {{ident.name}} !<br/> <div class=\"body\"> {{body}} </div> </div>",
+  "engine": "handlebars",
+  "mjml": "mjml content",
+  "comment": "comment value",
+  "active": true,
+  "headers": {
+    "From": "from header values",
+    "Reply-To": "reply to header value",
+    "Subject": "Test version"
+  }
+}

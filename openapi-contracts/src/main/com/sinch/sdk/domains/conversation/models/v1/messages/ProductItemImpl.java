@@ -166,13 +166,13 @@ public class ProductItemImpl
     OptionalValue<Float> itemPrice = OptionalValue.empty();
     OptionalValue<String> currency = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_ID)
+    @JsonProperty(value = JSON_PROPERTY_ID, required = true)
     public Builder setId(String id) {
       this.id = OptionalValue.of(id);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_MARKETPLACE)
+    @JsonProperty(value = JSON_PROPERTY_MARKETPLACE, required = true)
     public Builder setMarketplace(String marketplace) {
       this.marketplace = OptionalValue.of(marketplace);
       return this;

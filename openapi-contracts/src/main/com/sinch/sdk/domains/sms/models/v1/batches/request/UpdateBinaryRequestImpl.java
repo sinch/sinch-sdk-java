@@ -249,7 +249,7 @@ public class UpdateBinaryRequestImpl implements UpdateBinaryRequest, UpdateBatch
   }
 
   @JsonProperty(JSON_PROPERTY_UDH)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<String> udh() {
     return udh;
   }
@@ -276,7 +276,7 @@ public class UpdateBinaryRequestImpl implements UpdateBinaryRequest, UpdateBatch
     return fromNpi;
   }
 
-  /** Return true if this ApiUpdateBinaryMtMessage object is equal to o. */
+  /** Return true if this update_binary_message object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -285,21 +285,21 @@ public class UpdateBinaryRequestImpl implements UpdateBinaryRequest, UpdateBatch
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UpdateBinaryRequestImpl apiUpdateBinaryMtMessage = (UpdateBinaryRequestImpl) o;
-    return Objects.equals(this.from, apiUpdateBinaryMtMessage.from)
-        && Objects.equals(this.type, apiUpdateBinaryMtMessage.type)
-        && Objects.equals(this.toAdd, apiUpdateBinaryMtMessage.toAdd)
-        && Objects.equals(this.toRemove, apiUpdateBinaryMtMessage.toRemove)
-        && Objects.equals(this.deliveryReport, apiUpdateBinaryMtMessage.deliveryReport)
-        && Objects.equals(this.sendAt, apiUpdateBinaryMtMessage.sendAt)
-        && Objects.equals(this.expireAt, apiUpdateBinaryMtMessage.expireAt)
-        && Objects.equals(this.callbackUrl, apiUpdateBinaryMtMessage.callbackUrl)
-        && Objects.equals(this.clientReference, apiUpdateBinaryMtMessage.clientReference)
-        && Objects.equals(this.feedbackEnabled, apiUpdateBinaryMtMessage.feedbackEnabled)
-        && Objects.equals(this.body, apiUpdateBinaryMtMessage.body)
-        && Objects.equals(this.udh, apiUpdateBinaryMtMessage.udh)
-        && Objects.equals(this.fromTon, apiUpdateBinaryMtMessage.fromTon)
-        && Objects.equals(this.fromNpi, apiUpdateBinaryMtMessage.fromNpi);
+    UpdateBinaryRequestImpl updateBinaryMessage = (UpdateBinaryRequestImpl) o;
+    return Objects.equals(this.from, updateBinaryMessage.from)
+        && Objects.equals(this.type, updateBinaryMessage.type)
+        && Objects.equals(this.toAdd, updateBinaryMessage.toAdd)
+        && Objects.equals(this.toRemove, updateBinaryMessage.toRemove)
+        && Objects.equals(this.deliveryReport, updateBinaryMessage.deliveryReport)
+        && Objects.equals(this.sendAt, updateBinaryMessage.sendAt)
+        && Objects.equals(this.expireAt, updateBinaryMessage.expireAt)
+        && Objects.equals(this.callbackUrl, updateBinaryMessage.callbackUrl)
+        && Objects.equals(this.clientReference, updateBinaryMessage.clientReference)
+        && Objects.equals(this.feedbackEnabled, updateBinaryMessage.feedbackEnabled)
+        && Objects.equals(this.body, updateBinaryMessage.body)
+        && Objects.equals(this.udh, updateBinaryMessage.udh)
+        && Objects.equals(this.fromTon, updateBinaryMessage.fromTon)
+        && Objects.equals(this.fromNpi, updateBinaryMessage.fromNpi);
   }
 
   @Override
@@ -430,7 +430,7 @@ public class UpdateBinaryRequestImpl implements UpdateBinaryRequest, UpdateBatch
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_UDH)
+    @JsonProperty(value = JSON_PROPERTY_UDH, required = true)
     public Builder setUdh(String udh) {
       this.udh = OptionalValue.of(udh);
       return this;

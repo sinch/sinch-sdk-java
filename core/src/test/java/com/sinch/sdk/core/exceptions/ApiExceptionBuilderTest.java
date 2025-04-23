@@ -30,6 +30,9 @@ class ApiExceptionBuilderTest extends BaseTest {
   @GivenTextResource("/domains/verification/v1/error-response.json")
   String verificationError;
 
+  @GivenTextResource("/domains/mailgun/v1/error-response.json")
+  String mailgunError;
+
   @Test
   void buildFromObject() throws JsonProcessingException {
     ApiException e =
@@ -80,5 +83,19 @@ class ApiExceptionBuilderTest extends BaseTest {
                 .readValue(verificationError, new TypeReference<HashMap<String, ?>>() {}));
     assertEquals("Requested resource was not found. (reference=a reference)", e.getMessage());
     assertEquals(40400, e.getCode());
+  }
+
+  @Test
+  void mailgunError() throws JsonProcessingException {
+    ApiException e =
+        ApiExceptionBuilder.build(
+            "Bad request",
+            400,
+            Mapper.getInstance()
+                .readValue(mailgunError, new TypeReference<HashMap<String, ?>>() {}));
+    assertEquals(
+        "Bad request (Send time optimization only supported for a single recipient per message)",
+        e.getMessage());
+    assertEquals(400, e.getCode());
   }
 }

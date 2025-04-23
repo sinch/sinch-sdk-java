@@ -34,6 +34,11 @@ public class ApiExceptionBuilder {
     }
 
     exception = getExceptionFromVerificationError(mappedResponse);
+    if (exception.isPresent()) {
+      return exception.get();
+    }
+
+    exception = getExceptionFromMailgunError(message, code, mappedResponse);
     return exception.orElseGet(() -> new ApiException(code, message));
   }
 
@@ -126,6 +131,30 @@ public class ApiExceptionBuilder {
     return Optional.of(
         new ApiException(
             codeValue, String.format("%s (reference=%s)", messageValue, referenceValue)));
+  }
+
+  private static Optional<ApiException> getExceptionFromMailgunError(
+      String message, int code, Map<?, ?> mappedResponse) {
+
+    // excepted Mailgun API errors have following form
+    //    "message": string,
+
+    if (null == mappedResponse) {
+      return Optional.empty();
+    }
+
+    Object objectValue = mappedResponse.get("message");
+
+    if (null == objectValue) {
+      return Optional.empty();
+    }
+
+    String messageValue = String.valueOf(objectValue);
+    if (StringUtil.isEmpty(messageValue)) {
+      return Optional.empty();
+    }
+
+    return Optional.of(new ApiException(code, String.format("%s (%s)", message, messageValue)));
   }
 
   private static String extractErrorDetails(Map<?, ?> errorContent) {

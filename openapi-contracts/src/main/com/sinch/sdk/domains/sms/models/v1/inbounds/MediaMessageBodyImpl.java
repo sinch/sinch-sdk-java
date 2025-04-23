@@ -11,47 +11,47 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  MediaMessageBodyImpl.JSON_PROPERTY_SUBJECT,
+  MediaMessageBodyImpl.JSON_PROPERTY_MEDIA,
   MediaMessageBodyImpl.JSON_PROPERTY_MESSAGE,
-  MediaMessageBodyImpl.JSON_PROPERTY_MEDIA
+  MediaMessageBodyImpl.JSON_PROPERTY_SUBJECT
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class MediaMessageBodyImpl implements MediaMessageBody {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_SUBJECT = "subject";
+  public static final String JSON_PROPERTY_MEDIA = "media";
 
-  private OptionalValue<String> subject;
+  private OptionalValue<List<MediaMessageBodyDetails>> media;
 
   public static final String JSON_PROPERTY_MESSAGE = "message";
 
   private OptionalValue<String> message;
 
-  public static final String JSON_PROPERTY_MEDIA = "media";
+  public static final String JSON_PROPERTY_SUBJECT = "subject";
 
-  private OptionalValue<List<MediaMessageBodyDetails>> media;
+  private OptionalValue<String> subject;
 
   public MediaMessageBodyImpl() {}
 
   protected MediaMessageBodyImpl(
-      OptionalValue<String> subject,
+      OptionalValue<List<MediaMessageBodyDetails>> media,
       OptionalValue<String> message,
-      OptionalValue<List<MediaMessageBodyDetails>> media) {
-    this.subject = subject;
-    this.message = message;
+      OptionalValue<String> subject) {
     this.media = media;
+    this.message = message;
+    this.subject = subject;
   }
 
   @JsonIgnore
-  public String getSubject() {
-    return subject.orElse(null);
+  public List<MediaMessageBodyDetails> getMedia() {
+    return media.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_SUBJECT)
+  @JsonProperty(JSON_PROPERTY_MEDIA)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> subject() {
-    return subject;
+  public OptionalValue<List<MediaMessageBodyDetails>> media() {
+    return media;
   }
 
   @JsonIgnore
@@ -66,17 +66,17 @@ public class MediaMessageBodyImpl implements MediaMessageBody {
   }
 
   @JsonIgnore
-  public List<MediaMessageBodyDetails> getMedia() {
-    return media.orElse(null);
+  public String getSubject() {
+    return subject.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_MEDIA)
+  @JsonProperty(JSON_PROPERTY_SUBJECT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<List<MediaMessageBodyDetails>> media() {
-    return media;
+  public OptionalValue<String> subject() {
+    return subject;
   }
 
-  /** Return true if this MOMediaBody object is equal to o. */
+  /** Return true if this MmsMoBody object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -85,24 +85,24 @@ public class MediaMessageBodyImpl implements MediaMessageBody {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    MediaMessageBodyImpl moMediaBody = (MediaMessageBodyImpl) o;
-    return Objects.equals(this.subject, moMediaBody.subject)
-        && Objects.equals(this.message, moMediaBody.message)
-        && Objects.equals(this.media, moMediaBody.media);
+    MediaMessageBodyImpl mmsMoBody = (MediaMessageBodyImpl) o;
+    return Objects.equals(this.media, mmsMoBody.media)
+        && Objects.equals(this.message, mmsMoBody.message)
+        && Objects.equals(this.subject, mmsMoBody.subject);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(subject, message, media);
+    return Objects.hash(media, message, subject);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class MediaMessageBodyImpl {\n");
-    sb.append("    subject: ").append(toIndentedString(subject)).append("\n");
-    sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("    media: ").append(toIndentedString(media)).append("\n");
+    sb.append("    message: ").append(toIndentedString(message)).append("\n");
+    sb.append("    subject: ").append(toIndentedString(subject)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -119,13 +119,13 @@ public class MediaMessageBodyImpl implements MediaMessageBody {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements MediaMessageBody.Builder {
-    OptionalValue<String> subject = OptionalValue.empty();
-    OptionalValue<String> message = OptionalValue.empty();
     OptionalValue<List<MediaMessageBodyDetails>> media = OptionalValue.empty();
+    OptionalValue<String> message = OptionalValue.empty();
+    OptionalValue<String> subject = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_SUBJECT)
-    public Builder setSubject(String subject) {
-      this.subject = OptionalValue.of(subject);
+    @JsonProperty(JSON_PROPERTY_MEDIA)
+    public Builder setMedia(List<MediaMessageBodyDetails> media) {
+      this.media = OptionalValue.of(media);
       return this;
     }
 
@@ -135,14 +135,14 @@ public class MediaMessageBodyImpl implements MediaMessageBody {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_MEDIA)
-    public Builder setMedia(List<MediaMessageBodyDetails> media) {
-      this.media = OptionalValue.of(media);
+    @JsonProperty(JSON_PROPERTY_SUBJECT)
+    public Builder setSubject(String subject) {
+      this.subject = OptionalValue.of(subject);
       return this;
     }
 
     public MediaMessageBody build() {
-      return new MediaMessageBodyImpl(subject, message, media);
+      return new MediaMessageBodyImpl(media, message, subject);
     }
   }
 }

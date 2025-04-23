@@ -26,8 +26,8 @@ import java.util.Objects;
   TextRequestImpl.JSON_PROPERTY_CLIENT_REFERENCE,
   TextRequestImpl.JSON_PROPERTY_FEEDBACK_ENABLED,
   TextRequestImpl.JSON_PROPERTY_FLASH_MESSAGE,
-  TextRequestImpl.JSON_PROPERTY_TRUNCATE_CONCAT,
   TextRequestImpl.JSON_PROPERTY_MAX_NUMBER_OF_MESSAGE_PARTS,
+  TextRequestImpl.JSON_PROPERTY_TRUNCATE_CONCAT,
   TextRequestImpl.JSON_PROPERTY_FROM_TON,
   TextRequestImpl.JSON_PROPERTY_FROM_NPI
 })
@@ -84,14 +84,14 @@ public class TextRequestImpl implements TextRequest, BatchRequest {
 
   private OptionalValue<Boolean> flashMessage;
 
-  public static final String JSON_PROPERTY_TRUNCATE_CONCAT = "truncate_concat";
-
-  private OptionalValue<Boolean> truncateConcat;
-
   public static final String JSON_PROPERTY_MAX_NUMBER_OF_MESSAGE_PARTS =
       "max_number_of_message_parts";
 
   private OptionalValue<Integer> maxNumberOfMessageParts;
+
+  public static final String JSON_PROPERTY_TRUNCATE_CONCAT = "truncate_concat";
+
+  private OptionalValue<Boolean> truncateConcat;
 
   public static final String JSON_PROPERTY_FROM_TON = "from_ton";
 
@@ -116,8 +116,8 @@ public class TextRequestImpl implements TextRequest, BatchRequest {
       OptionalValue<String> clientReference,
       OptionalValue<Boolean> feedbackEnabled,
       OptionalValue<Boolean> flashMessage,
-      OptionalValue<Boolean> truncateConcat,
       OptionalValue<Integer> maxNumberOfMessageParts,
+      OptionalValue<Boolean> truncateConcat,
       OptionalValue<Integer> fromTon,
       OptionalValue<Integer> fromNpi) {
     this.to = to;
@@ -132,8 +132,8 @@ public class TextRequestImpl implements TextRequest, BatchRequest {
     this.clientReference = clientReference;
     this.feedbackEnabled = feedbackEnabled;
     this.flashMessage = flashMessage;
-    this.truncateConcat = truncateConcat;
     this.maxNumberOfMessageParts = maxNumberOfMessageParts;
+    this.truncateConcat = truncateConcat;
     this.fromTon = fromTon;
     this.fromNpi = fromNpi;
   }
@@ -271,17 +271,6 @@ public class TextRequestImpl implements TextRequest, BatchRequest {
   }
 
   @JsonIgnore
-  public Boolean getTruncateConcat() {
-    return truncateConcat.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_TRUNCATE_CONCAT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<Boolean> truncateConcat() {
-    return truncateConcat;
-  }
-
-  @JsonIgnore
   public Integer getMaxNumberOfMessageParts() {
     return maxNumberOfMessageParts.orElse(null);
   }
@@ -290,6 +279,17 @@ public class TextRequestImpl implements TextRequest, BatchRequest {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<Integer> maxNumberOfMessageParts() {
     return maxNumberOfMessageParts;
+  }
+
+  @JsonIgnore
+  public Boolean getTruncateConcat() {
+    return truncateConcat.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_TRUNCATE_CONCAT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<Boolean> truncateConcat() {
+    return truncateConcat;
   }
 
   @JsonIgnore
@@ -314,7 +314,7 @@ public class TextRequestImpl implements TextRequest, BatchRequest {
     return fromNpi;
   }
 
-  /** Return true if this TextRequest object is equal to o. */
+  /** Return true if this Text object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -323,23 +323,23 @@ public class TextRequestImpl implements TextRequest, BatchRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    TextRequestImpl textRequest = (TextRequestImpl) o;
-    return Objects.equals(this.to, textRequest.to)
-        && Objects.equals(this.from, textRequest.from)
-        && Objects.equals(this.parameters, textRequest.parameters)
-        && Objects.equals(this.body, textRequest.body)
-        && Objects.equals(this.type, textRequest.type)
-        && Objects.equals(this.deliveryReport, textRequest.deliveryReport)
-        && Objects.equals(this.sendAt, textRequest.sendAt)
-        && Objects.equals(this.expireAt, textRequest.expireAt)
-        && Objects.equals(this.callbackUrl, textRequest.callbackUrl)
-        && Objects.equals(this.clientReference, textRequest.clientReference)
-        && Objects.equals(this.feedbackEnabled, textRequest.feedbackEnabled)
-        && Objects.equals(this.flashMessage, textRequest.flashMessage)
-        && Objects.equals(this.truncateConcat, textRequest.truncateConcat)
-        && Objects.equals(this.maxNumberOfMessageParts, textRequest.maxNumberOfMessageParts)
-        && Objects.equals(this.fromTon, textRequest.fromTon)
-        && Objects.equals(this.fromNpi, textRequest.fromNpi);
+    TextRequestImpl text = (TextRequestImpl) o;
+    return Objects.equals(this.to, text.to)
+        && Objects.equals(this.from, text.from)
+        && Objects.equals(this.parameters, text.parameters)
+        && Objects.equals(this.body, text.body)
+        && Objects.equals(this.type, text.type)
+        && Objects.equals(this.deliveryReport, text.deliveryReport)
+        && Objects.equals(this.sendAt, text.sendAt)
+        && Objects.equals(this.expireAt, text.expireAt)
+        && Objects.equals(this.callbackUrl, text.callbackUrl)
+        && Objects.equals(this.clientReference, text.clientReference)
+        && Objects.equals(this.feedbackEnabled, text.feedbackEnabled)
+        && Objects.equals(this.flashMessage, text.flashMessage)
+        && Objects.equals(this.maxNumberOfMessageParts, text.maxNumberOfMessageParts)
+        && Objects.equals(this.truncateConcat, text.truncateConcat)
+        && Objects.equals(this.fromTon, text.fromTon)
+        && Objects.equals(this.fromNpi, text.fromNpi);
   }
 
   @Override
@@ -357,8 +357,8 @@ public class TextRequestImpl implements TextRequest, BatchRequest {
         clientReference,
         feedbackEnabled,
         flashMessage,
-        truncateConcat,
         maxNumberOfMessageParts,
+        truncateConcat,
         fromTon,
         fromNpi);
   }
@@ -379,10 +379,10 @@ public class TextRequestImpl implements TextRequest, BatchRequest {
     sb.append("    clientReference: ").append(toIndentedString(clientReference)).append("\n");
     sb.append("    feedbackEnabled: ").append(toIndentedString(feedbackEnabled)).append("\n");
     sb.append("    flashMessage: ").append(toIndentedString(flashMessage)).append("\n");
-    sb.append("    truncateConcat: ").append(toIndentedString(truncateConcat)).append("\n");
     sb.append("    maxNumberOfMessageParts: ")
         .append(toIndentedString(maxNumberOfMessageParts))
         .append("\n");
+    sb.append("    truncateConcat: ").append(toIndentedString(truncateConcat)).append("\n");
     sb.append("    fromTon: ").append(toIndentedString(fromTon)).append("\n");
     sb.append("    fromNpi: ").append(toIndentedString(fromNpi)).append("\n");
     sb.append("}");
@@ -413,12 +413,12 @@ public class TextRequestImpl implements TextRequest, BatchRequest {
     OptionalValue<String> clientReference = OptionalValue.empty();
     OptionalValue<Boolean> feedbackEnabled = OptionalValue.empty();
     OptionalValue<Boolean> flashMessage = OptionalValue.empty();
-    OptionalValue<Boolean> truncateConcat = OptionalValue.empty();
     OptionalValue<Integer> maxNumberOfMessageParts = OptionalValue.empty();
+    OptionalValue<Boolean> truncateConcat = OptionalValue.empty();
     OptionalValue<Integer> fromTon = OptionalValue.empty();
     OptionalValue<Integer> fromNpi = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_TO)
+    @JsonProperty(value = JSON_PROPERTY_TO, required = true)
     public Builder setTo(List<String> to) {
       this.to = OptionalValue.of(to);
       return this;
@@ -436,7 +436,7 @@ public class TextRequestImpl implements TextRequest, BatchRequest {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_BODY)
+    @JsonProperty(value = JSON_PROPERTY_BODY, required = true)
     public Builder setBody(String body) {
       this.body = OptionalValue.of(body);
       return this;
@@ -484,15 +484,15 @@ public class TextRequestImpl implements TextRequest, BatchRequest {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_TRUNCATE_CONCAT)
-    public Builder setTruncateConcat(Boolean truncateConcat) {
-      this.truncateConcat = OptionalValue.of(truncateConcat);
-      return this;
-    }
-
     @JsonProperty(JSON_PROPERTY_MAX_NUMBER_OF_MESSAGE_PARTS)
     public Builder setMaxNumberOfMessageParts(Integer maxNumberOfMessageParts) {
       this.maxNumberOfMessageParts = OptionalValue.of(maxNumberOfMessageParts);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_TRUNCATE_CONCAT)
+    public Builder setTruncateConcat(Boolean truncateConcat) {
+      this.truncateConcat = OptionalValue.of(truncateConcat);
       return this;
     }
 
@@ -522,8 +522,8 @@ public class TextRequestImpl implements TextRequest, BatchRequest {
           clientReference,
           feedbackEnabled,
           flashMessage,
-          truncateConcat,
           maxNumberOfMessageParts,
+          truncateConcat,
           fromTon,
           fromNpi);
     }

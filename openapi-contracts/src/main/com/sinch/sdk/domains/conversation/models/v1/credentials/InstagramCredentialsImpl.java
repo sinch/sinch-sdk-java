@@ -100,7 +100,7 @@ public class InstagramCredentialsImpl implements InstagramCredentials, ChannelCr
     OptionalValue<String> token = OptionalValue.empty();
     OptionalValue<String> businessAccountId = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_TOKEN)
+    @JsonProperty(value = JSON_PROPERTY_TOKEN, required = true)
     public Builder setToken(String token) {
       this.token = OptionalValue.of(token);
       return this;

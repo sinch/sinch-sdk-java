@@ -42,7 +42,7 @@ public interface BatchesService {
    * calculates the bodies and number of parts for all messages in the batch without actually
    * sending any messages.
    *
-   * @param sendRequest (optional)
+   * @param sendRequest (required)
    * @return DryRunResponse
    * @throws ApiException if fails to make API call
    */
@@ -53,7 +53,7 @@ public interface BatchesService {
    * of parts for all messages in the batch without actually sending any messages.
    *
    * @param queryParameter (optional)
-   * @param sendRequest (optional)
+   * @param sendRequest (required)
    * @return DryRunResponse
    * @throws ApiException if fails to make API call
    */
@@ -93,7 +93,7 @@ public interface BatchesService {
    * values. It is the same as cancelling a batch and sending a new one instead.
    *
    * @param batchId The batch ID you received from sending a message. (required)
-   * @param sendRequest (optional)
+   * @param sendRequest (required)
    * @return BatchResponse
    * @throws ApiException if fails to make API call
    */
@@ -124,7 +124,7 @@ public interface BatchesService {
    * and scheduled date, it will be considered empty. Be sure to use the correct
    * [region](/docs/sms/api-reference/#base-url) in the server URL.
    *
-   * @param sendRequest Default schema is Text if type is not specified. (optional)
+   * @param sendRequest (required)
    * @return BatchResponse
    * @throws ApiException if fails to make API call
    */
@@ -135,7 +135,7 @@ public interface BatchesService {
    * the provided batch ID.
    *
    * @param batchId The batch ID you received from sending a message. (required)
-   * @param updateBatchRequest (optional)
+   * @param updateBatchRequest (required)
    * @return BatchResponse
    * @throws ApiException if fails to make API call
    */

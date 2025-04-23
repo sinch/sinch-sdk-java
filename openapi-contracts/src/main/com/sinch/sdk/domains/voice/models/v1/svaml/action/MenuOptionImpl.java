@@ -97,13 +97,13 @@ public class MenuOptionImpl implements MenuOption {
     OptionalValue<DualToneMultiFrequency> dtmf = OptionalValue.empty();
     OptionalValue<String> action = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_DTMF)
+    @JsonProperty(value = JSON_PROPERTY_DTMF, required = true)
     public Builder setDtmf(DualToneMultiFrequency dtmf) {
       this.dtmf = OptionalValue.of(dtmf);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_ACTION)
+    @JsonProperty(value = JSON_PROPERTY_ACTION, required = true)
     public Builder setAction(String action) {
       this.action = OptionalValue.of(action);
       return this;

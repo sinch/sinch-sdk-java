@@ -434,6 +434,7 @@ public class TemplatesV2Api {
                 URLPathUtils.encodePathSegment(templateId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
+
     if (null != languageCode) {
       localVarQueryParams.add(
           new URLParameter(
@@ -442,6 +443,7 @@ public class TemplatesV2Api {
               URLParameter.STYLE.valueOf("form".toUpperCase()),
               true));
     }
+
     if (null != translationVersion) {
       localVarQueryParams.add(
           new URLParameter(

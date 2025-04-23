@@ -90,6 +90,11 @@ public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Group
       throw new ApiException(
           400, "Missing the required parameter 'this.servicePlanId' when calling create");
     }
+    // verify the required parameter 'groupRequest' is set
+    if (groupRequest == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'groupRequest' when calling create");
+    }
 
     String localVarPath =
         "/xms/v1/{service_plan_id}/groups"
@@ -361,6 +366,11 @@ public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Group
     if (groupId == null) {
       throw new ApiException(400, "Missing the required parameter 'groupId' when calling replace");
     }
+    // verify the required parameter 'groupRequest' is set
+    if (groupRequest == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'groupRequest' when calling replace");
+    }
 
     String localVarPath =
         "/xms/v1/{service_plan_id}/groups/{group_id}"
@@ -492,6 +502,11 @@ public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Group
     // verify the required parameter 'groupId' is set
     if (groupId == null) {
       throw new ApiException(400, "Missing the required parameter 'groupId' when calling update");
+    }
+    // verify the required parameter 'groupUpdateRequest' is set
+    if (groupUpdateRequest == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'groupUpdateRequest' when calling update");
     }
 
     String localVarPath =

@@ -122,19 +122,19 @@ public class ClientCredentialsImpl implements ClientCredentials {
     OptionalValue<String> clientSecret = OptionalValue.empty();
     OptionalValue<String> endpoint = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_CLIENT_ID)
+    @JsonProperty(value = JSON_PROPERTY_CLIENT_ID, required = true)
     public Builder setClientId(String clientId) {
       this.clientId = OptionalValue.of(clientId);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_CLIENT_SECRET)
+    @JsonProperty(value = JSON_PROPERTY_CLIENT_SECRET, required = true)
     public Builder setClientSecret(String clientSecret) {
       this.clientSecret = OptionalValue.of(clientSecret);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_ENDPOINT)
+    @JsonProperty(value = JSON_PROPERTY_ENDPOINT, required = true)
     public Builder setEndpoint(String endpoint) {
       this.endpoint = OptionalValue.of(endpoint);
       return this;

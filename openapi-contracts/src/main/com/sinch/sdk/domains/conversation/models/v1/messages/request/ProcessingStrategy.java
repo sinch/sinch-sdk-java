@@ -17,7 +17,10 @@ public class ProcessingStrategy extends EnumDynamic<String, ProcessingStrategy> 
 
   /**
    * Forces the request to be processed in dispatch mode (without storing contacts and
-   * conversations), regardless of the app's configured processing mode.
+   * conversations), regardless of the app's configured processing mode. Please note that user
+   * replies will still be processed in the app's default processing mode and that the <code>
+   * conversation_metadata</code> and <code>correlation_id</code> fields are not supported when
+   * using this option with an app in <code>CONVERSATION</code> mode.
    */
   public static final ProcessingStrategy DISPATCH_ONLY = new ProcessingStrategy("DISPATCH_ONLY");
 

@@ -145,7 +145,7 @@ public class VerificationReportRequestSmsImpl
 
     VerificationReportRequestSmsOptions.Builder _delegatedBuilder = null;
 
-    @JsonProperty(JSON_PROPERTY_SMS)
+    @JsonProperty(value = JSON_PROPERTY_SMS, required = true)
     public Builder setSms(VerificationReportRequestSmsOptions sms) {
       this.sms = OptionalValue.of(sms);
       return this;

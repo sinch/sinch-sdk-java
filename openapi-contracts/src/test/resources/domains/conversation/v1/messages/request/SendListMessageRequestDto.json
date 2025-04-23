@@ -29,6 +29,11 @@
       "message_properties": {
         "catalog_id": "catalog ID value",
         "menu": "menu value"
+      },
+      "media": {
+        "url": "an url value",
+        "thumbnail_url": "another url",
+        "filename_override": "filename override value"
       }
     },
     "explicit_channel_message": {
@@ -121,6 +126,7 @@
   },
   "conversation_metadata": "conversation metadata",
   "conversation_metadata_update_strategy": "REPLACE",
+  "message_content_type": "CONTENT_MARKETING",
   "correlation_id": "correlation ID value",
   "message_metadata": "message metadata value",
   "processing_strategy": "DISPATCH_ONLY",

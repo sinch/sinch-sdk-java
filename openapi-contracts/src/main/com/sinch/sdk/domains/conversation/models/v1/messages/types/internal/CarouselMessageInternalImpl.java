@@ -102,7 +102,7 @@ public class CarouselMessageInternalImpl implements CarouselMessageInternal {
     OptionalValue<List<CardMessageInternal>> cards = OptionalValue.empty();
     OptionalValue<List<Choice<?>>> choices = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_CARDS)
+    @JsonProperty(value = JSON_PROPERTY_CARDS, required = true)
     public Builder setCards(List<CardMessageInternal> cards) {
       this.cards = OptionalValue.of(cards);
       return this;

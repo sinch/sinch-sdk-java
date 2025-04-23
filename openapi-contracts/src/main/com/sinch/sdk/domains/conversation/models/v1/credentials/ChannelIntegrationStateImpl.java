@@ -100,7 +100,7 @@ public class ChannelIntegrationStateImpl implements ChannelIntegrationState {
     OptionalValue<ChannelIntegrationStatus> status = OptionalValue.empty();
     OptionalValue<String> description = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_STATUS)
+    @JsonProperty(value = JSON_PROPERTY_STATUS, required = true)
     public Builder setStatus(ChannelIntegrationStatus status) {
       this.status = OptionalValue.of(status);
       return this;

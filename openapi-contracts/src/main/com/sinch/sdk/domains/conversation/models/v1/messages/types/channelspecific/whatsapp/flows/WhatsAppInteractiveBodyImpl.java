@@ -77,7 +77,7 @@ public class WhatsAppInteractiveBodyImpl implements WhatsAppInteractiveBody {
   static class Builder implements WhatsAppInteractiveBody.Builder {
     OptionalValue<String> text = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_TEXT)
+    @JsonProperty(value = JSON_PROPERTY_TEXT, required = true)
     public Builder setText(String text) {
       this.text = OptionalValue.of(text);
       return this;

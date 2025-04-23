@@ -117,7 +117,7 @@ public class BatchesServiceTest extends BaseTest {
                 + URLPathUtils.encodePathSegment(BATCH_ID),
             HttpMethod.GET,
             Collections.emptyList(),
-            null,
+            (String) null,
             Collections.emptyMap(),
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
             Collections.emptyList(),
@@ -239,7 +239,7 @@ public class BatchesServiceTest extends BaseTest {
             "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/batches",
             HttpMethod.GET,
             Collections.emptyList(),
-            null,
+            (String) null,
             Collections.emptyMap(),
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
             Collections.emptyList(),
@@ -267,10 +267,6 @@ public class BatchesServiceTest extends BaseTest {
             2,
             STYLE.FORM,
             true,
-            "from",
-            "+1234567890",
-            STYLE.FORM,
-            true,
             "start_date",
             "2023-11-03T15:21:21.113Z",
             STYLE.FORM,
@@ -279,6 +275,10 @@ public class BatchesServiceTest extends BaseTest {
             "2023-12-12T15:54:21.321Z",
             STYLE.FORM,
             true,
+            "from",
+            Arrays.asList("+1234567890"),
+            STYLE.FORM,
+            false,
             "client_reference",
             "client reference",
             STYLE.FORM,
@@ -296,7 +296,7 @@ public class BatchesServiceTest extends BaseTest {
             "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/batches",
             HttpMethod.GET,
             urlParametersPage0,
-            null,
+            (String) null,
             Collections.emptyMap(),
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
             Collections.emptyList(),
@@ -307,7 +307,7 @@ public class BatchesServiceTest extends BaseTest {
             "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/batches",
             HttpMethod.GET,
             urlParametersPage1,
-            null,
+            (String) null,
             Collections.emptyMap(),
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
             Collections.emptyList(),
@@ -318,7 +318,7 @@ public class BatchesServiceTest extends BaseTest {
             "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/batches",
             HttpMethod.GET,
             urlParametersPage2,
-            null,
+            (String) null,
             Collections.emptyMap(),
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
             Collections.emptyList(),
@@ -353,7 +353,7 @@ public class BatchesServiceTest extends BaseTest {
         ListBatchesQueryParameters.builder()
             .setPage(0)
             .setPageSize(2)
-            .setFrom("+1234567890")
+            .setFrom(Arrays.asList("+1234567890"))
             .setClientReference("client reference")
             .setStartDate(Instant.parse("2023-11-03T15:21:21.113Z"))
             .setEndDate(Instant.parse("2023-12-12T15:54:21.321Z"))
@@ -453,7 +453,7 @@ public class BatchesServiceTest extends BaseTest {
                 + URLPathUtils.encodePathSegment(BATCH_ID),
             HttpMethod.DELETE,
             Collections.emptyList(),
-            null,
+            (String) null,
             Collections.emptyMap(),
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
             Collections.emptyList(),
@@ -489,7 +489,7 @@ public class BatchesServiceTest extends BaseTest {
                     Collections.singletonList(HttpContentType.APPLICATION_JSON),
                     sendDeliveryFeedbackRequestDto),
             Collections.emptyMap(),
-            Collections.emptyList(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
             Collections.singletonList(SMS_AUTH_NAMES));
     HttpResponse httpResponse = new HttpResponse(200, null, Collections.emptyMap(), null);

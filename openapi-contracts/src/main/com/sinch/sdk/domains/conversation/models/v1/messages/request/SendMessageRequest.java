@@ -34,8 +34,12 @@ public interface SendMessageRequest<T extends AppMessageBody> {
   String getAppId();
 
   /**
-   * Overwrites the default callback url for delivery receipts for this message The REST URL should
-   * be of the form: <code>http://host[:port]/path</code>
+   * Overwrites the default callback url for delivery receipts for this message. Note that you may
+   * <a
+   * href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/App/#tag/App/operation/App_UpdateApp!path=callback_settings/secret_for_overridden_callback_urls&amp;t=request">define
+   * a <code>secret_for_overridden_callback_urls</code> at the app level</a>; this secret will be
+   * used to sign the contents of delivery receipts when the default callback URL is overridden by
+   * this property. The REST URL should be of the form: <code>http://host[:port]/path</code>
    *
    * @return callbackUrl
    */
@@ -83,17 +87,18 @@ public interface SendMessageRequest<T extends AppMessageBody> {
   String getMessageMetadata();
 
   /**
-   * Metadata that should be associated with the conversation. This metadata will be propagated on
-   * MO callbacks associated with this conversation. Up to 1024 characters long. Note that the MO
-   * callback will always use the last metadata available in the conversation. Important notes: - If
-   * you send a message with the <code>conversation_metadata</code> field populated, and then send
-   * another message without populating the <code>conversation_metadata</code> field, the original
-   * metadata will continue be propagated on the related MO callbacks. - If you send a message with
-   * the <code>conversation_metadata</code> field populated, and then send another message with a
-   * different value for <code>conversation_metadata</code> in the same conversation, the latest
-   * metadata value overwrites the existing one. So, future MO callbacks will include the new
-   * metadata. - The <code>conversation_metadata</code> only accepts json objects. Currently only
-   * returned in the <code>message_metadata</code> field of an <a
+   * Metadata that will be associated with the conversation in <code>CONVERSATION</code> mode and
+   * with the specified recipient identities in <code>DISPATCH</code> mode. This metadata will be
+   * propagated on MO callbacks associated with the respective conversation or user identity. Up to
+   * 2048 characters long. Note that the MO callback will always use the last metadata available.
+   * Important notes: - If you send a message with the <code>conversation_metadata</code> field
+   * populated, and then send another message without populating the <code>conversation_metadata
+   * </code> field, the original metadata will continue be propagated on the related MO callbacks. -
+   * If you send a message with the <code>conversation_metadata</code> field populated, and then
+   * send another message with a different value for <code>conversation_metadata</code> in the same
+   * conversation, the latest metadata value overwrites the existing one. So, future MO callbacks
+   * will include the new metadata. - The <code>conversation_metadata</code> only accepts json
+   * objects. Currently only returned in the <code>message_metadata</code> field of an <a
    * href="https://developers.sinch.com/docs/conversation/callbacks/#inbound-message">Inbound
    * Message</a> callback.
    *
@@ -138,8 +143,11 @@ public interface SendMessageRequest<T extends AppMessageBody> {
 
   /**
    * An arbitrary identifier that will be propagated to callbacks related to this message, including
-   * MO replies. Only applicable to messages sent with the <code>CONVERSATION</code> processing
-   * mode. Up to 128 characters long.
+   * MO messages from the recipient. The <code>correlation_id</code> is associated with the
+   * conversation in <code>CONVERSATION</code> mode and with the specified recipient identities in
+   * <code>DISPATCH</code> mode. The MO callbacks will always include the last <code>correlation_id
+   * </code> available, (which is similar to how the <code>conversation_metadata</code> property
+   * functions). Up to 128 characters long.
    *
    * @return correlationId
    */
@@ -151,6 +159,13 @@ public interface SendMessageRequest<T extends AppMessageBody> {
    * @return conversationMetadataUpdateStrategy
    */
   MetadataUpdateStrategy getConversationMetadataUpdateStrategy();
+
+  /**
+   * Get messageContentType
+   *
+   * @return messageContentType
+   */
+  MessageContentType getMessageContentType();
 
   /**
    * Getting builder
@@ -281,6 +296,15 @@ public interface SendMessageRequest<T extends AppMessageBody> {
      */
     Builder<T> setConversationMetadataUpdateStrategy(
         MetadataUpdateStrategy conversationMetadataUpdateStrategy);
+
+    /**
+     * see getter
+     *
+     * @param messageContentType see getter
+     * @return Current builder
+     * @see #getMessageContentType
+     */
+    Builder<T> setMessageContentType(MessageContentType messageContentType);
 
     /**
      * Create instance
