@@ -18,11 +18,11 @@ import java.util.List;
 public interface MediaMessageBody {
 
   /**
-   * The subject of the MMS media message.
+   * Collection of attachments in incoming message.
    *
-   * @return subject
+   * @return media
    */
-  String getSubject();
+  List<MediaMessageBodyDetails> getMedia();
 
   /**
    * The text message content of the MMS media message.
@@ -32,11 +32,11 @@ public interface MediaMessageBody {
   String getMessage();
 
   /**
-   * Collection of attachments in incoming message.
+   * The subject of the MMS media message.
    *
-   * @return media
+   * @return subject
    */
-  List<MediaMessageBodyDetails> getMedia();
+  String getSubject();
 
   /**
    * Getting builder
@@ -53,11 +53,11 @@ public interface MediaMessageBody {
     /**
      * see getter
      *
-     * @param subject see getter
+     * @param media see getter
      * @return Current builder
-     * @see #getSubject
+     * @see #getMedia
      */
-    Builder setSubject(String subject);
+    Builder setMedia(List<MediaMessageBodyDetails> media);
 
     /**
      * see getter
@@ -71,11 +71,11 @@ public interface MediaMessageBody {
     /**
      * see getter
      *
-     * @param media see getter
+     * @param subject see getter
      * @return Current builder
-     * @see #getMedia
+     * @see #getSubject
      */
-    Builder setMedia(List<MediaMessageBodyDetails> media);
+    Builder setSubject(String subject);
 
     /**
      * Create instance

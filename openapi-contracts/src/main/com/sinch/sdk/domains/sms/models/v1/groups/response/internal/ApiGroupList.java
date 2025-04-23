@@ -19,20 +19,6 @@ import java.util.List;
 public interface ApiGroupList {
 
   /**
-   * The requested page.
-   *
-   * @return page
-   */
-  Integer getPage();
-
-  /**
-   * The number of groups returned in this request
-   *
-   * @return pageSize
-   */
-  Integer getPageSize();
-
-  /**
    * The total number of groups.
    *
    * @return count
@@ -40,11 +26,25 @@ public interface ApiGroupList {
   Integer getCount();
 
   /**
+   * The requested page.
+   *
+   * @return page
+   */
+  Integer getPage();
+
+  /**
    * Get items
    *
    * @return items
    */
   List<Group> getItems();
+
+  /**
+   * The number of groups returned in this request
+   *
+   * @return pageSize
+   */
+  Integer getPageSize();
 
   /**
    * Getting builder
@@ -61,24 +61,6 @@ public interface ApiGroupList {
     /**
      * see getter
      *
-     * @param page see getter
-     * @return Current builder
-     * @see #getPage
-     */
-    Builder setPage(Integer page);
-
-    /**
-     * see getter
-     *
-     * @param pageSize see getter
-     * @return Current builder
-     * @see #getPageSize
-     */
-    Builder setPageSize(Integer pageSize);
-
-    /**
-     * see getter
-     *
      * @param count see getter
      * @return Current builder
      * @see #getCount
@@ -88,11 +70,29 @@ public interface ApiGroupList {
     /**
      * see getter
      *
+     * @param page see getter
+     * @return Current builder
+     * @see #getPage
+     */
+    Builder setPage(Integer page);
+
+    /**
+     * see getter
+     *
      * @param items see getter
      * @return Current builder
      * @see #getItems
      */
     Builder setItems(List<Group> items);
+
+    /**
+     * see getter
+     *
+     * @param pageSize see getter
+     * @return Current builder
+     * @see #getPageSize
+     */
+    Builder setPageSize(Integer pageSize);
 
     /**
      * Create instance

@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-/** TextRequest */
+/** Text */
 @JsonDeserialize(builder = TextRequestImpl.Builder.class)
 public interface TextRequest extends BatchRequest {
 
@@ -141,13 +141,6 @@ public interface TextRequest extends BatchRequest {
   Boolean getFlashMessage();
 
   /**
-   * If set to <code>true</code> the message will be shortened when exceeding one part.
-   *
-   * @return truncateConcat
-   */
-  Boolean getTruncateConcat();
-
-  /**
    * Message will be dispatched only if it is not split to more parts than Max Number of Message
    * Parts
    *
@@ -156,6 +149,13 @@ public interface TextRequest extends BatchRequest {
    * @return maxNumberOfMessageParts
    */
   Integer getMaxNumberOfMessageParts();
+
+  /**
+   * If set to <code>true</code> the message will be shortened when exceeding one part.
+   *
+   * @return truncateConcat
+   */
+  Boolean getTruncateConcat();
 
   /**
    * The type of number for the sender number. Use to override the automatic detection.
@@ -289,20 +289,20 @@ public interface TextRequest extends BatchRequest {
     /**
      * see getter
      *
-     * @param truncateConcat see getter
-     * @return Current builder
-     * @see #getTruncateConcat
-     */
-    Builder setTruncateConcat(Boolean truncateConcat);
-
-    /**
-     * see getter
-     *
      * @param maxNumberOfMessageParts see getter
      * @return Current builder
      * @see #getMaxNumberOfMessageParts
      */
     Builder setMaxNumberOfMessageParts(Integer maxNumberOfMessageParts);
+
+    /**
+     * see getter
+     *
+     * @param truncateConcat see getter
+     * @return Current builder
+     * @see #getTruncateConcat
+     */
+    Builder setTruncateConcat(Boolean truncateConcat);
 
     /**
      * see getter

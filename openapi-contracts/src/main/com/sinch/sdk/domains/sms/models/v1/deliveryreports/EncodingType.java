@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 /** Applied encoding for message. Present only if smart encoding is enabled. */
 public class EncodingType extends EnumDynamic<String, EncodingType> {
 
-  /** GSM enconding. */
+  /** GSM encoding. */
   public static final EncodingType GSM = new EncodingType("GSM");
 
   /** Unicode encoding. */

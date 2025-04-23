@@ -117,18 +117,6 @@ public class WebhookEventOneOfImpl extends AbstractOpenApiSchema implements Webh
           deserialized = tree.traverse(jp.getCodec()).readValueAs(BatchDeliveryReportSMSImpl.class);
           newWebhookEventOneOfImpl.setActualInstance(deserialized);
           return newWebhookEventOneOfImpl;
-        case "MOBinary":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(BinaryMessageImpl.class);
-          newWebhookEventOneOfImpl.setActualInstance(deserialized);
-          return newWebhookEventOneOfImpl;
-        case "MOMedia":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(MediaMessageImpl.class);
-          newWebhookEventOneOfImpl.setActualInstance(deserialized);
-          return newWebhookEventOneOfImpl;
-        case "MOText":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(TextMessageImpl.class);
-          newWebhookEventOneOfImpl.setActualInstance(deserialized);
-          return newWebhookEventOneOfImpl;
         case "RecipientDeliveryReportMMS":
           deserialized =
               tree.traverse(jp.getCodec()).readValueAs(RecipientDeliveryReportMMSImpl.class);
@@ -139,6 +127,18 @@ public class WebhookEventOneOfImpl extends AbstractOpenApiSchema implements Webh
               tree.traverse(jp.getCodec()).readValueAs(RecipientDeliveryReportSMSImpl.class);
           newWebhookEventOneOfImpl.setActualInstance(deserialized);
           return newWebhookEventOneOfImpl;
+        case "binary_message":
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(BinaryMessageImpl.class);
+          newWebhookEventOneOfImpl.setActualInstance(deserialized);
+          return newWebhookEventOneOfImpl;
+        case "media_message":
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(MediaMessageImpl.class);
+          newWebhookEventOneOfImpl.setActualInstance(deserialized);
+          return newWebhookEventOneOfImpl;
+        case "text_message":
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(TextMessageImpl.class);
+          newWebhookEventOneOfImpl.setActualInstance(deserialized);
+          return newWebhookEventOneOfImpl;
         default:
           log.log(
               Level.WARNING,
@@ -146,8 +146,8 @@ public class WebhookEventOneOfImpl extends AbstractOpenApiSchema implements Webh
                   "Failed to lookup discriminator value `%s` for WebhookEventOneOfImpl. Possible"
                       + " values: delivery_report_mms delivery_report_sms mo_binary mo_media"
                       + " mo_text recipient_delivery_report_mms recipient_delivery_report_sms"
-                      + " BatchDeliveryReportMMS BatchDeliveryReportSMS MOBinary MOMedia MOText"
-                      + " RecipientDeliveryReportMMS RecipientDeliveryReportSMS",
+                      + " BatchDeliveryReportMMS BatchDeliveryReportSMS RecipientDeliveryReportMMS"
+                      + " RecipientDeliveryReportSMS binary_message media_message text_message",
                   discriminatorValue));
       }
 
@@ -525,11 +525,11 @@ public class WebhookEventOneOfImpl extends AbstractOpenApiSchema implements Webh
     mappings.put("recipient_delivery_report_sms", RecipientDeliveryReportSMSImpl.class);
     mappings.put("BatchDeliveryReportMMS", BatchDeliveryReportMMSImpl.class);
     mappings.put("BatchDeliveryReportSMS", BatchDeliveryReportSMSImpl.class);
-    mappings.put("MOBinary", BinaryMessageImpl.class);
-    mappings.put("MOMedia", MediaMessageImpl.class);
-    mappings.put("MOText", TextMessageImpl.class);
     mappings.put("RecipientDeliveryReportMMS", RecipientDeliveryReportMMSImpl.class);
     mappings.put("RecipientDeliveryReportSMS", RecipientDeliveryReportSMSImpl.class);
+    mappings.put("binary_message", BinaryMessageImpl.class);
+    mappings.put("media_message", MediaMessageImpl.class);
+    mappings.put("text_message", TextMessageImpl.class);
     mappings.put("WebhookEventOneOf", WebhookEventOneOfImpl.class);
     JSONNavigator.registerDiscriminator(WebhookEventOneOfImpl.class, "type", mappings);
   }

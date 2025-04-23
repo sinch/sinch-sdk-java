@@ -7,12 +7,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.core.utils.EnumDynamic;
 import java.util.Objects;
 
 @JsonPropertyOrder({
   DryRunPerRecipientDetailsImpl.JSON_PROPERTY_RECIPIENT,
-  DryRunPerRecipientDetailsImpl.JSON_PROPERTY_NUMBER_OF_PARTS,
   DryRunPerRecipientDetailsImpl.JSON_PROPERTY_BODY,
+  DryRunPerRecipientDetailsImpl.JSON_PROPERTY_NUMBER_OF_PARTS,
   DryRunPerRecipientDetailsImpl.JSON_PROPERTY_ENCODING
 })
 @JsonFilter("uninitializedFilter")
@@ -24,29 +25,34 @@ public class DryRunPerRecipientDetailsImpl implements DryRunPerRecipientDetails 
 
   private OptionalValue<String> recipient;
 
-  public static final String JSON_PROPERTY_NUMBER_OF_PARTS = "number_of_parts";
-
-  private OptionalValue<Integer> numberOfParts;
-
   public static final String JSON_PROPERTY_BODY = "body";
 
   private OptionalValue<String> body;
 
+  public static final String JSON_PROPERTY_NUMBER_OF_PARTS = "number_of_parts";
+
+  private OptionalValue<Integer> numberOfParts;
+
   public static final String JSON_PROPERTY_ENCODING = "encoding";
 
-  private OptionalValue<String> encoding;
+  private OptionalValue<EncodingEnum> encodingEnum;
 
   public DryRunPerRecipientDetailsImpl() {}
 
   protected DryRunPerRecipientDetailsImpl(
       OptionalValue<String> recipient,
-      OptionalValue<Integer> numberOfParts,
       OptionalValue<String> body,
-      OptionalValue<String> encoding) {
+      OptionalValue<Integer> numberOfParts,
+      OptionalValue<EncodingEnum> encodingEnum) {
     this.recipient = recipient;
-    this.numberOfParts = numberOfParts;
     this.body = body;
-    this.encoding = encoding;
+    this.numberOfParts = numberOfParts;
+    this.encodingEnum = encodingEnum;
+  }
+
+  @JsonIgnore
+  public String getEncoding() {
+    return encodingEnum.map(EnumDynamic::value).orElse(null);
   }
 
   @JsonIgnore
@@ -55,20 +61,9 @@ public class DryRunPerRecipientDetailsImpl implements DryRunPerRecipientDetails 
   }
 
   @JsonProperty(JSON_PROPERTY_RECIPIENT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<String> recipient() {
     return recipient;
-  }
-
-  @JsonIgnore
-  public Integer getNumberOfParts() {
-    return numberOfParts.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_NUMBER_OF_PARTS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<Integer> numberOfParts() {
-    return numberOfParts;
   }
 
   @JsonIgnore
@@ -77,23 +72,34 @@ public class DryRunPerRecipientDetailsImpl implements DryRunPerRecipientDetails 
   }
 
   @JsonProperty(JSON_PROPERTY_BODY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<String> body() {
     return body;
   }
 
   @JsonIgnore
-  public String getEncoding() {
-    return encoding.orElse(null);
+  public Integer getNumberOfParts() {
+    return numberOfParts.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_NUMBER_OF_PARTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<Integer> numberOfParts() {
+    return numberOfParts;
+  }
+
+  @JsonIgnore
+  public EncodingEnum getEncodingEnum() {
+    return encodingEnum.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_ENCODING)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> encoding() {
-    return encoding;
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<EncodingEnum> encodingEnum() {
+    return encodingEnum;
   }
 
-  /** Return true if this DryRunResponse_per_recipient_inner object is equal to o. */
+  /** Return true if this ApiRecipientDryRun object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -102,17 +108,16 @@ public class DryRunPerRecipientDetailsImpl implements DryRunPerRecipientDetails 
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DryRunPerRecipientDetailsImpl dryRunResponsePerRecipientInner =
-        (DryRunPerRecipientDetailsImpl) o;
-    return Objects.equals(this.recipient, dryRunResponsePerRecipientInner.recipient)
-        && Objects.equals(this.numberOfParts, dryRunResponsePerRecipientInner.numberOfParts)
-        && Objects.equals(this.body, dryRunResponsePerRecipientInner.body)
-        && Objects.equals(this.encoding, dryRunResponsePerRecipientInner.encoding);
+    DryRunPerRecipientDetailsImpl apiRecipientDryRun = (DryRunPerRecipientDetailsImpl) o;
+    return Objects.equals(this.recipient, apiRecipientDryRun.recipient)
+        && Objects.equals(this.body, apiRecipientDryRun.body)
+        && Objects.equals(this.numberOfParts, apiRecipientDryRun.numberOfParts)
+        && Objects.equals(this.encodingEnum, apiRecipientDryRun.encodingEnum);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(recipient, numberOfParts, body, encoding);
+    return Objects.hash(recipient, body, numberOfParts, encodingEnum);
   }
 
   @Override
@@ -120,9 +125,9 @@ public class DryRunPerRecipientDetailsImpl implements DryRunPerRecipientDetails 
     StringBuilder sb = new StringBuilder();
     sb.append("class DryRunPerRecipientDetailsImpl {\n");
     sb.append("    recipient: ").append(toIndentedString(recipient)).append("\n");
-    sb.append("    numberOfParts: ").append(toIndentedString(numberOfParts)).append("\n");
     sb.append("    body: ").append(toIndentedString(body)).append("\n");
-    sb.append("    encoding: ").append(toIndentedString(encoding)).append("\n");
+    sb.append("    numberOfParts: ").append(toIndentedString(numberOfParts)).append("\n");
+    sb.append("    encodingEnum: ").append(toIndentedString(encodingEnum)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -140,36 +145,41 @@ public class DryRunPerRecipientDetailsImpl implements DryRunPerRecipientDetails 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements DryRunPerRecipientDetails.Builder {
     OptionalValue<String> recipient = OptionalValue.empty();
-    OptionalValue<Integer> numberOfParts = OptionalValue.empty();
     OptionalValue<String> body = OptionalValue.empty();
-    OptionalValue<String> encoding = OptionalValue.empty();
+    OptionalValue<Integer> numberOfParts = OptionalValue.empty();
+    OptionalValue<EncodingEnum> encodingEnum = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_RECIPIENT)
+    public Builder setEncoding(String encoding) {
+      this.encodingEnum = OptionalValue.of(EncodingEnum.from(encoding));
+      return this;
+    }
+
+    @JsonProperty(value = JSON_PROPERTY_RECIPIENT, required = true)
     public Builder setRecipient(String recipient) {
       this.recipient = OptionalValue.of(recipient);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_NUMBER_OF_PARTS)
-    public Builder setNumberOfParts(Integer numberOfParts) {
-      this.numberOfParts = OptionalValue.of(numberOfParts);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_BODY)
+    @JsonProperty(value = JSON_PROPERTY_BODY, required = true)
     public Builder setBody(String body) {
       this.body = OptionalValue.of(body);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_ENCODING)
-    public Builder setEncoding(String encoding) {
-      this.encoding = OptionalValue.of(encoding);
+    @JsonProperty(value = JSON_PROPERTY_NUMBER_OF_PARTS, required = true)
+    public Builder setNumberOfParts(Integer numberOfParts) {
+      this.numberOfParts = OptionalValue.of(numberOfParts);
+      return this;
+    }
+
+    @JsonProperty(value = JSON_PROPERTY_ENCODING, required = true)
+    public Builder setEncodingEnum(EncodingEnum encodingEnum) {
+      this.encodingEnum = OptionalValue.of(encodingEnum);
       return this;
     }
 
     public DryRunPerRecipientDetails build() {
-      return new DryRunPerRecipientDetailsImpl(recipient, numberOfParts, body, encoding);
+      return new DryRunPerRecipientDetailsImpl(recipient, body, numberOfParts, encodingEnum);
     }
   }
 }

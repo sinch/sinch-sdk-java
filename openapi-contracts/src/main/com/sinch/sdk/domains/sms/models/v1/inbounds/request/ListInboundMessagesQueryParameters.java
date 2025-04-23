@@ -25,7 +25,7 @@ public interface ListInboundMessagesQueryParameters {
   OptionalValue<Integer> getPage();
 
   /**
-   * Get pageSize maximum: 100
+   * Get pageSize minimum: 1 maximum: 100
    *
    * @return pageSize
    */

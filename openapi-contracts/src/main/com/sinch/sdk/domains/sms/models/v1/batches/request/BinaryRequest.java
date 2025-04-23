@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-/** BinaryRequest */
+/** Binary */
 @JsonDeserialize(builder = BinaryRequestImpl.Builder.class)
 public interface BinaryRequest extends BatchRequest {
 

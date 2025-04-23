@@ -12,65 +12,43 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  ApiGroupListImpl.JSON_PROPERTY_PAGE,
-  ApiGroupListImpl.JSON_PROPERTY_PAGE_SIZE,
   ApiGroupListImpl.JSON_PROPERTY_COUNT,
-  ApiGroupListImpl.JSON_PROPERTY_GROUPS
+  ApiGroupListImpl.JSON_PROPERTY_PAGE,
+  ApiGroupListImpl.JSON_PROPERTY_GROUPS,
+  ApiGroupListImpl.JSON_PROPERTY_PAGE_SIZE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class ApiGroupListImpl implements ApiGroupList {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_PAGE = "page";
-
-  private OptionalValue<Integer> page;
-
-  public static final String JSON_PROPERTY_PAGE_SIZE = "page_size";
-
-  private OptionalValue<Integer> pageSize;
-
   public static final String JSON_PROPERTY_COUNT = "count";
 
   private OptionalValue<Integer> count;
+
+  public static final String JSON_PROPERTY_PAGE = "page";
+
+  private OptionalValue<Integer> page;
 
   public static final String JSON_PROPERTY_GROUPS = "groups";
 
   private OptionalValue<List<Group>> items;
 
+  public static final String JSON_PROPERTY_PAGE_SIZE = "page_size";
+
+  private OptionalValue<Integer> pageSize;
+
   public ApiGroupListImpl() {}
 
   protected ApiGroupListImpl(
-      OptionalValue<Integer> page,
-      OptionalValue<Integer> pageSize,
       OptionalValue<Integer> count,
-      OptionalValue<List<Group>> items) {
-    this.page = page;
-    this.pageSize = pageSize;
+      OptionalValue<Integer> page,
+      OptionalValue<List<Group>> items,
+      OptionalValue<Integer> pageSize) {
     this.count = count;
+    this.page = page;
     this.items = items;
-  }
-
-  @JsonIgnore
-  public Integer getPage() {
-    return page.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_PAGE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<Integer> page() {
-    return page;
-  }
-
-  @JsonIgnore
-  public Integer getPageSize() {
-    return pageSize.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_PAGE_SIZE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<Integer> pageSize() {
-    return pageSize;
+    this.pageSize = pageSize;
   }
 
   @JsonIgnore
@@ -85,6 +63,17 @@ public class ApiGroupListImpl implements ApiGroupList {
   }
 
   @JsonIgnore
+  public Integer getPage() {
+    return page.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_PAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<Integer> page() {
+    return page;
+  }
+
+  @JsonIgnore
   public List<Group> getItems() {
     return items.orElse(null);
   }
@@ -93,6 +82,17 @@ public class ApiGroupListImpl implements ApiGroupList {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<List<Group>> items() {
     return items;
+  }
+
+  @JsonIgnore
+  public Integer getPageSize() {
+    return pageSize.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_PAGE_SIZE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<Integer> pageSize() {
+    return pageSize;
   }
 
   /** Return true if this ApiGroupList object is equal to o. */
@@ -105,25 +105,25 @@ public class ApiGroupListImpl implements ApiGroupList {
       return false;
     }
     ApiGroupListImpl apiGroupList = (ApiGroupListImpl) o;
-    return Objects.equals(this.page, apiGroupList.page)
-        && Objects.equals(this.pageSize, apiGroupList.pageSize)
-        && Objects.equals(this.count, apiGroupList.count)
-        && Objects.equals(this.items, apiGroupList.items);
+    return Objects.equals(this.count, apiGroupList.count)
+        && Objects.equals(this.page, apiGroupList.page)
+        && Objects.equals(this.items, apiGroupList.items)
+        && Objects.equals(this.pageSize, apiGroupList.pageSize);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(page, pageSize, count, items);
+    return Objects.hash(count, page, items, pageSize);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ApiGroupListImpl {\n");
-    sb.append("    page: ").append(toIndentedString(page)).append("\n");
-    sb.append("    pageSize: ").append(toIndentedString(pageSize)).append("\n");
     sb.append("    count: ").append(toIndentedString(count)).append("\n");
+    sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    items: ").append(toIndentedString(items)).append("\n");
+    sb.append("    pageSize: ").append(toIndentedString(pageSize)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -140,26 +140,20 @@ public class ApiGroupListImpl implements ApiGroupList {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements ApiGroupList.Builder {
-    OptionalValue<Integer> page = OptionalValue.empty();
-    OptionalValue<Integer> pageSize = OptionalValue.empty();
     OptionalValue<Integer> count = OptionalValue.empty();
+    OptionalValue<Integer> page = OptionalValue.empty();
     OptionalValue<List<Group>> items = OptionalValue.empty();
-
-    @JsonProperty(JSON_PROPERTY_PAGE)
-    public Builder setPage(Integer page) {
-      this.page = OptionalValue.of(page);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_PAGE_SIZE)
-    public Builder setPageSize(Integer pageSize) {
-      this.pageSize = OptionalValue.of(pageSize);
-      return this;
-    }
+    OptionalValue<Integer> pageSize = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_COUNT)
     public Builder setCount(Integer count) {
       this.count = OptionalValue.of(count);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_PAGE)
+    public Builder setPage(Integer page) {
+      this.page = OptionalValue.of(page);
       return this;
     }
 
@@ -169,8 +163,14 @@ public class ApiGroupListImpl implements ApiGroupList {
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_PAGE_SIZE)
+    public Builder setPageSize(Integer pageSize) {
+      this.pageSize = OptionalValue.of(pageSize);
+      return this;
+    }
+
     public ApiGroupList build() {
-      return new ApiGroupListImpl(page, pageSize, count, items);
+      return new ApiGroupListImpl(count, page, items, pageSize);
     }
   }
 }

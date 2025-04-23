@@ -87,15 +87,15 @@ public class InboundInternalImpl extends AbstractOpenApiSchema implements Inboun
           deserialized = tree.traverse(jp.getCodec()).readValueAs(TextMessageImpl.class);
           newInboundInternalImpl.setActualInstance(deserialized);
           return newInboundInternalImpl;
-        case "MOBinary":
+        case "binary_message":
           deserialized = tree.traverse(jp.getCodec()).readValueAs(BinaryMessageImpl.class);
           newInboundInternalImpl.setActualInstance(deserialized);
           return newInboundInternalImpl;
-        case "MOMedia":
+        case "media_message":
           deserialized = tree.traverse(jp.getCodec()).readValueAs(MediaMessageImpl.class);
           newInboundInternalImpl.setActualInstance(deserialized);
           return newInboundInternalImpl;
-        case "MOText":
+        case "text_message":
           deserialized = tree.traverse(jp.getCodec()).readValueAs(TextMessageImpl.class);
           newInboundInternalImpl.setActualInstance(deserialized);
           return newInboundInternalImpl;
@@ -104,7 +104,8 @@ public class InboundInternalImpl extends AbstractOpenApiSchema implements Inboun
               Level.WARNING,
               String.format(
                   "Failed to lookup discriminator value `%s` for InboundInternalImpl. Possible"
-                      + " values: mo_binary mo_media mo_text MOBinary MOMedia MOText",
+                      + " values: mo_binary mo_media mo_text binary_message media_message"
+                      + " text_message",
                   discriminatorValue));
       }
 
@@ -283,9 +284,9 @@ public class InboundInternalImpl extends AbstractOpenApiSchema implements Inboun
     mappings.put("mo_binary", BinaryMessageImpl.class);
     mappings.put("mo_media", MediaMessageImpl.class);
     mappings.put("mo_text", TextMessageImpl.class);
-    mappings.put("MOBinary", BinaryMessageImpl.class);
-    mappings.put("MOMedia", MediaMessageImpl.class);
-    mappings.put("MOText", TextMessageImpl.class);
+    mappings.put("binary_message", BinaryMessageImpl.class);
+    mappings.put("media_message", MediaMessageImpl.class);
+    mappings.put("text_message", TextMessageImpl.class);
     mappings.put("inbound", InboundInternalImpl.class);
     JSONNavigator.registerDiscriminator(InboundInternalImpl.class, "type", mappings);
   }
