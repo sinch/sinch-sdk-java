@@ -29,6 +29,7 @@ import java.util.Objects;
   DisconnectedCallEventImpl.JSON_PROPERTY_FROM,
   DisconnectedCallEventImpl.JSON_PROPERTY_CALL_HEADERS,
   DisconnectedCallEventImpl.JSON_PROPERTY_CALLID,
+  DisconnectedCallEventImpl.JSON_PROPERTY_CONFERENCE_ID,
   DisconnectedCallEventImpl.JSON_PROPERTY_VERSION
 })
 @JsonFilter("uninitializedFilter")
@@ -97,6 +98,10 @@ public class DisconnectedCallEventImpl
 
   private OptionalValue<String> callid;
 
+  public static final String JSON_PROPERTY_CONFERENCE_ID = "conferenceId";
+
+  private OptionalValue<String> conferenceId;
+
   public static final String JSON_PROPERTY_VERSION = "version";
 
   private OptionalValue<Integer> version;
@@ -117,6 +122,7 @@ public class DisconnectedCallEventImpl
       OptionalValue<String> from,
       OptionalValue<List<CallHeader>> callHeaders,
       OptionalValue<String> callid,
+      OptionalValue<String> conferenceId,
       OptionalValue<Integer> version) {
     this.timestamp = timestamp;
     this.custom = custom;
@@ -131,6 +137,7 @@ public class DisconnectedCallEventImpl
     this.from = from;
     this.callHeaders = callHeaders;
     this.callid = callid;
+    this.conferenceId = conferenceId;
     this.version = version;
   }
 
@@ -278,6 +285,17 @@ public class DisconnectedCallEventImpl
   }
 
   @JsonIgnore
+  public String getConferenceId() {
+    return conferenceId.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CONFERENCE_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> conferenceId() {
+    return conferenceId;
+  }
+
+  @JsonIgnore
   public Integer getVersion() {
     return version.orElse(null);
   }
@@ -311,6 +329,7 @@ public class DisconnectedCallEventImpl
         && Objects.equals(this.from, diceRequest.from)
         && Objects.equals(this.callHeaders, diceRequest.callHeaders)
         && Objects.equals(this.callid, diceRequest.callid)
+        && Objects.equals(this.conferenceId, diceRequest.conferenceId)
         && Objects.equals(this.version, diceRequest.version)
         && super.equals(o);
   }
@@ -331,6 +350,7 @@ public class DisconnectedCallEventImpl
         from,
         callHeaders,
         callid,
+        conferenceId,
         version,
         super.hashCode());
   }
@@ -353,6 +373,7 @@ public class DisconnectedCallEventImpl
     sb.append("    from: ").append(toIndentedString(from)).append("\n");
     sb.append("    callHeaders: ").append(toIndentedString(callHeaders)).append("\n");
     sb.append("    callid: ").append(toIndentedString(callid)).append("\n");
+    sb.append("    conferenceId: ").append(toIndentedString(conferenceId)).append("\n");
     sb.append("    version: ").append(toIndentedString(version)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -383,6 +404,7 @@ public class DisconnectedCallEventImpl
     OptionalValue<String> from = OptionalValue.empty();
     OptionalValue<List<CallHeader>> callHeaders = OptionalValue.empty();
     OptionalValue<String> callid = OptionalValue.empty();
+    OptionalValue<String> conferenceId = OptionalValue.empty();
     OptionalValue<Integer> version = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_TIMESTAMP)
@@ -457,6 +479,12 @@ public class DisconnectedCallEventImpl
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_CONFERENCE_ID)
+    public Builder setConferenceId(String conferenceId) {
+      this.conferenceId = OptionalValue.of(conferenceId);
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_VERSION)
     public Builder setVersion(Integer version) {
       this.version = OptionalValue.of(version);
@@ -478,6 +506,7 @@ public class DisconnectedCallEventImpl
           from,
           callHeaders,
           callid,
+          conferenceId,
           version);
     }
   }

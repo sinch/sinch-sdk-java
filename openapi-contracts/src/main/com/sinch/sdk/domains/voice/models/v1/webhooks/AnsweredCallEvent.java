@@ -73,7 +73,7 @@ public interface AnsweredCallEvent extends VoiceWebhookEvent, VoiceWebhookCallEv
    *
    * @return amd
    */
-  AnsweredCallEventAnsweringMachineDetection getAmd();
+  AnsweringMachineDetection getAmd();
 
   /**
    * Getting builder
@@ -121,7 +121,7 @@ public interface AnsweredCallEvent extends VoiceWebhookEvent, VoiceWebhookCallEv
      * @return Current builder
      * @see #getAmd
      */
-    Builder setAmd(AnsweredCallEventAnsweringMachineDetection amd);
+    Builder setAmd(AnsweringMachineDetection amd);
 
     /**
      * Create instance

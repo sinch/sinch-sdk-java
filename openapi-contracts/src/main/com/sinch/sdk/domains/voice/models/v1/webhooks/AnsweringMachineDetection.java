@@ -21,8 +21,8 @@ import java.util.stream.Stream;
  * Detection</a> (AMD) is enabled, this object contains information about whether the call was
  * answered by a machine.
  */
-@JsonDeserialize(builder = AnsweredCallEventAnsweringMachineDetectionImpl.Builder.class)
-public interface AnsweredCallEventAnsweringMachineDetection {
+@JsonDeserialize(builder = AnsweringMachineDetectionImpl.Builder.class)
+public interface AnsweringMachineDetection {
 
   /** The determination by the system of who answered the call. */
   public class StatusEnum extends EnumDynamic<String, StatusEnum> {
@@ -105,7 +105,7 @@ public interface AnsweredCallEventAnsweringMachineDetection {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new AnsweredCallEventAnsweringMachineDetectionImpl.Builder();
+    return new AnsweringMachineDetectionImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -143,6 +143,6 @@ public interface AnsweredCallEventAnsweringMachineDetection {
      *
      * @return The instance build with current builder values
      */
-    AnsweredCallEventAnsweringMachineDetection build();
+    AnsweringMachineDetection build();
   }
 }

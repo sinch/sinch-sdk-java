@@ -9,7 +9,6 @@ import com.sinch.sdk.domains.voice.models.v1.Price;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallResult;
 import com.sinch.sdk.domains.voice.models.v1.destination.DestinationPstn;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.CallHeader;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.AnsweredCallEventAnsweringMachineDetection.StatusEnum;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.DisconnectedCallEvent.ReasonEnum;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.MenuResult.InputMethodEnum;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.MenuResult.TypeEnum;
@@ -38,6 +37,7 @@ public class VoiceWebhookEventTest extends VoiceBaseTest {
   public static IncomingCallEvent expectedIceRequestDto =
       IncomingCallEvent.builder()
           .setCallid("a call id")
+          .setConferenceId("a conference id")
           .setVersion(1)
           .setCallResourceUrl("https://calling-euc1.api.sinch.com/calling/v1/calls/id/a call id")
           .setTimestamp(Instant.parse("2024-01-16T16:46:36Z"))
@@ -57,6 +57,7 @@ public class VoiceWebhookEventTest extends VoiceBaseTest {
   public static DisconnectedCallEvent expectedDiceRequestDto =
       DisconnectedCallEvent.builder()
           .setCallid("a call id")
+          .setConferenceId("a conference id")
           .setTimestamp(Instant.parse("2024-01-19T12:49:53Z"))
           .setVersion(1)
           .setCustom("my custom value")
@@ -70,24 +71,41 @@ public class VoiceWebhookEventTest extends VoiceBaseTest {
           .setUserRate(Price.builder().setCurrencyId("USD").setAmount(0.345F).build())
           .build();
 
-  public static AnsweredCallEvent expectedAceRequestDto =
+  public static AnsweredCallEvent expectedAceRequestDtoDeprecated =
       AnsweredCallEvent.builder()
           .setCallid("a call id")
+          .setConferenceId("a conference id")
           .setTimestamp(Instant.parse("2024-01-19T12:49:53Z"))
           .setVersion(1)
           .setCustom("my custom value")
           .setApplicationKey("my application key")
           .setAmd(
               AnsweredCallEventAnsweringMachineDetection.builder()
-                  .setStatus(StatusEnum.HUMAN)
+                  .setStatus(AnsweredCallEventAnsweringMachineDetection.StatusEnum.HUMAN)
                   .setReason(AnsweredCallEventAnsweringMachineDetection.ReasonEnum.LONGGREETING)
                   .setDuration(15)
                   .build())
           .build();
 
+  public static AnsweredCallEvent expectedAceRequestDto =
+      AnsweredCallEvent.builder()
+          .setCallid("a call id")
+          .setConferenceId("a conference id")
+          .setTimestamp(Instant.parse("2024-01-19T12:49:53Z"))
+          .setVersion(1)
+          .setCustom("my custom value")
+          .setApplicationKey("my application key")
+          .setAmd(
+              AnsweringMachineDetection.builder()
+                  .setStatus(AnsweringMachineDetection.StatusEnum.HUMAN)
+                  .setReason(AnsweringMachineDetection.ReasonEnum.LONGGREETING)
+                  .setDuration(15)
+                  .build())
+          .build();
   public static PromptInputEvent expectedPieRequestDto =
       PromptInputEvent.builder()
           .setCallid("a call id")
+          .setConferenceId("a conference id")
           .setTimestamp(Instant.parse("2024-01-23T15:04:28Z"))
           .setVersion(1)
           .setCustom("my custom value")
@@ -104,9 +122,17 @@ public class VoiceWebhookEventTest extends VoiceBaseTest {
   public static NotificationEvent expectedNotifyRequestDto =
       NotificationEvent.builder()
           .setCallid("a call id")
+          .setConferenceId("a conference id")
           .setVersion(1)
           .setCustom("my custom value")
           .setType("recording_finished")
+          .setDestination("a destination")
+          .setAmd(
+              AnsweringMachineDetection.builder()
+                  .setStatus(AnsweringMachineDetection.StatusEnum.HANGUP)
+                  .setReason(AnsweringMachineDetection.ReasonEnum.INITIALSILENCE)
+                  .setDuration(32)
+                  .build())
           .build();
 
   @Test
@@ -122,6 +148,11 @@ public class VoiceWebhookEventTest extends VoiceBaseTest {
   @Test
   void deserializeAceRequest() {
     TestHelpers.recursiveEquals(loadedAceRequestDto, expectedAceRequestDto);
+  }
+
+  @Test
+  void deserializeAceRequestDeprecated() {
+    TestHelpers.recursiveEquals(loadedAceRequestDto, expectedAceRequestDtoDeprecated);
   }
 
   @Test

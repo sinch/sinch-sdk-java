@@ -10,14 +10,13 @@ import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  AnsweredCallEventAnsweringMachineDetectionImpl.JSON_PROPERTY_STATUS,
-  AnsweredCallEventAnsweringMachineDetectionImpl.JSON_PROPERTY_REASON,
-  AnsweredCallEventAnsweringMachineDetectionImpl.JSON_PROPERTY_DURATION
+  AnsweringMachineDetectionImpl.JSON_PROPERTY_STATUS,
+  AnsweringMachineDetectionImpl.JSON_PROPERTY_REASON,
+  AnsweringMachineDetectionImpl.JSON_PROPERTY_DURATION
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class AnsweredCallEventAnsweringMachineDetectionImpl
-    implements AnsweredCallEventAnsweringMachineDetection {
+public class AnsweringMachineDetectionImpl implements AnsweringMachineDetection {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_STATUS = "status";
@@ -32,9 +31,9 @@ public class AnsweredCallEventAnsweringMachineDetectionImpl
 
   private OptionalValue<Integer> duration;
 
-  public AnsweredCallEventAnsweringMachineDetectionImpl() {}
+  public AnsweringMachineDetectionImpl() {}
 
-  protected AnsweredCallEventAnsweringMachineDetectionImpl(
+  protected AnsweringMachineDetectionImpl(
       OptionalValue<StatusEnum> status,
       OptionalValue<ReasonEnum> reason,
       OptionalValue<Integer> duration) {
@@ -76,7 +75,7 @@ public class AnsweredCallEventAnsweringMachineDetectionImpl
     return duration;
   }
 
-  /** Return true if this aceRequest_allOf_amd object is equal to o. */
+  /** Return true if this amdObject object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -85,11 +84,10 @@ public class AnsweredCallEventAnsweringMachineDetectionImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AnsweredCallEventAnsweringMachineDetectionImpl aceRequestAllOfAmd =
-        (AnsweredCallEventAnsweringMachineDetectionImpl) o;
-    return Objects.equals(this.status, aceRequestAllOfAmd.status)
-        && Objects.equals(this.reason, aceRequestAllOfAmd.reason)
-        && Objects.equals(this.duration, aceRequestAllOfAmd.duration);
+    AnsweringMachineDetectionImpl amdObject = (AnsweringMachineDetectionImpl) o;
+    return Objects.equals(this.status, amdObject.status)
+        && Objects.equals(this.reason, amdObject.reason)
+        && Objects.equals(this.duration, amdObject.duration);
   }
 
   @Override
@@ -100,7 +98,7 @@ public class AnsweredCallEventAnsweringMachineDetectionImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AnsweredCallEventAnsweringMachineDetectionImpl {\n");
+    sb.append("class AnsweringMachineDetectionImpl {\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    reason: ").append(toIndentedString(reason)).append("\n");
     sb.append("    duration: ").append(toIndentedString(duration)).append("\n");
@@ -119,7 +117,7 @@ public class AnsweredCallEventAnsweringMachineDetectionImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements AnsweredCallEventAnsweringMachineDetection.Builder {
+  static class Builder implements AnsweringMachineDetection.Builder {
     OptionalValue<StatusEnum> status = OptionalValue.empty();
     OptionalValue<ReasonEnum> reason = OptionalValue.empty();
     OptionalValue<Integer> duration = OptionalValue.empty();
@@ -142,8 +140,8 @@ public class AnsweredCallEventAnsweringMachineDetectionImpl
       return this;
     }
 
-    public AnsweredCallEventAnsweringMachineDetection build() {
-      return new AnsweredCallEventAnsweringMachineDetectionImpl(status, reason, duration);
+    public AnsweringMachineDetection build() {
+      return new AnsweringMachineDetectionImpl(status, reason, duration);
     }
   }
 }
