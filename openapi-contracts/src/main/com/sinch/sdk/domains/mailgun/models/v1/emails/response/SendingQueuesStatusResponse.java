@@ -17,14 +17,14 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface SendingQueuesStatusResponse {
 
   /**
-   * Get regular
+   * Message queue response
    *
    * @return regular
    */
   ExceededQueueQuota getRegular();
 
   /**
-   * Get scheduled
+   * Scheduled message queue response
    *
    * @return scheduled
    */
