@@ -15,6 +15,7 @@ public class BaseTest {
 
   @BeforeEach
   void init_mocks() {
+    objectMapper.clearCaches();
     MockitoAnnotations.openMocks(this);
   }
 }
