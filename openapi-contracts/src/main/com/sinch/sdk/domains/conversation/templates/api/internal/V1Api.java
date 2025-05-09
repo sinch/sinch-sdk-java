@@ -33,15 +33,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class TemplatesV1Api {
+public class V1Api {
 
-  private static final Logger LOGGER = Logger.getLogger(TemplatesV1Api.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(V1Api.class.getName());
   private HttpClient httpClient;
   private ServerConfiguration serverConfiguration;
   private Map<String, AuthManager> authManagersByOasSecuritySchemes;
   private HttpMapper mapper;
 
-  public TemplatesV1Api(
+  public V1Api(
       HttpClient httpClient,
       ServerConfiguration serverConfiguration,
       Map<String, AuthManager> authManagersByOasSecuritySchemes,

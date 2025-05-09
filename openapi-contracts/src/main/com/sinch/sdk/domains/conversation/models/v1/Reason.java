@@ -38,6 +38,14 @@ public interface Reason {
   ReasonSubCode getSubCode();
 
   /**
+   * Error code forwarded directly from the channel. Useful in case of unmapped or channel specific
+   * errors. Currently only supported on the WhatsApp channel.
+   *
+   * @return channelCode
+   */
+  String getChannelCode();
+
+  /**
    * Getting builder
    *
    * @return New Builder instance
@@ -75,6 +83,15 @@ public interface Reason {
      * @see #getSubCode
      */
     Builder setSubCode(ReasonSubCode subCode);
+
+    /**
+     * see getter
+     *
+     * @param channelCode see getter
+     * @return Current builder
+     * @see #getChannelCode
+     */
+    Builder setChannelCode(String channelCode);
 
     /**
      * Create instance

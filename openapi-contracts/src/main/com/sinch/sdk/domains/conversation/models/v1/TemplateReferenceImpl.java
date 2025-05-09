@@ -13,8 +13,8 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.conversation.models.v1.internal.TemplateReferenceInternal;
-import com.sinch.sdk.domains.conversation.models.v1.internal.TemplateReferenceInternalImpl;
+import com.sinch.sdk.domains.conversation.models.v1.internal.TemplateReferenceWithVersionInternal;
+import com.sinch.sdk.domains.conversation.models.v1.internal.TemplateReferenceWithVersionInternalImpl;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
@@ -30,22 +30,23 @@ public class TemplateReferenceImpl
 
   public static final String JSON_PROPERTY_TEMPLATE_REFERENCE = "template_reference";
 
-  private OptionalValue<TemplateReferenceInternal> templateReference;
+  private OptionalValue<TemplateReferenceWithVersionInternal> templateReference;
 
   public TemplateReferenceImpl() {}
 
-  protected TemplateReferenceImpl(OptionalValue<TemplateReferenceInternal> templateReference) {
+  protected TemplateReferenceImpl(
+      OptionalValue<TemplateReferenceWithVersionInternal> templateReference) {
     this.templateReference = templateReference;
   }
 
   @JsonIgnore
-  public TemplateReferenceInternal getTemplateReference() {
+  public TemplateReferenceWithVersionInternal getTemplateReference() {
     return templateReference.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_TEMPLATE_REFERENCE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<TemplateReferenceInternal> templateReference() {
+  public OptionalValue<TemplateReferenceWithVersionInternal> templateReference() {
     return templateReference;
   }
 
@@ -62,7 +63,7 @@ public class TemplateReferenceImpl
   public OptionalValue<String> version() {
     return null != templateReference && templateReference.isPresent()
         ? templateReference
-            .map(f -> ((TemplateReferenceInternalImpl) f).version())
+            .map(f -> ((TemplateReferenceWithVersionInternalImpl) f).version())
             .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
@@ -80,7 +81,7 @@ public class TemplateReferenceImpl
   public OptionalValue<String> languageCode() {
     return null != templateReference && templateReference.isPresent()
         ? templateReference
-            .map(f -> ((TemplateReferenceInternalImpl) f).languageCode())
+            .map(f -> ((TemplateReferenceWithVersionInternalImpl) f).languageCode())
             .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
@@ -98,7 +99,7 @@ public class TemplateReferenceImpl
   public OptionalValue<Map<String, String>> parameters() {
     return null != templateReference && templateReference.isPresent()
         ? templateReference
-            .map(f -> ((TemplateReferenceInternalImpl) f).parameters())
+            .map(f -> ((TemplateReferenceWithVersionInternalImpl) f).parameters())
             .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
@@ -116,7 +117,7 @@ public class TemplateReferenceImpl
   public OptionalValue<String> templateId() {
     return null != templateReference && templateReference.isPresent()
         ? templateReference
-            .map(f -> ((TemplateReferenceInternalImpl) f).templateId())
+            .map(f -> ((TemplateReferenceWithVersionInternalImpl) f).templateId())
             .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
@@ -160,12 +161,12 @@ public class TemplateReferenceImpl
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements TemplateReference.Builder {
-    OptionalValue<TemplateReferenceInternal> templateReference = OptionalValue.empty();
+    OptionalValue<TemplateReferenceWithVersionInternal> templateReference = OptionalValue.empty();
 
-    TemplateReferenceInternal.Builder _delegatedBuilder = null;
+    TemplateReferenceWithVersionInternal.Builder _delegatedBuilder = null;
 
     @JsonProperty(value = JSON_PROPERTY_TEMPLATE_REFERENCE, required = true)
-    public Builder setTemplateReference(TemplateReferenceInternal templateReference) {
+    public Builder setTemplateReference(TemplateReferenceWithVersionInternal templateReference) {
       this.templateReference = OptionalValue.of(templateReference);
       return this;
     }
@@ -194,9 +195,9 @@ public class TemplateReferenceImpl
       return this;
     }
 
-    private TemplateReferenceInternal.Builder getDelegatedBuilder() {
+    private TemplateReferenceWithVersionInternal.Builder getDelegatedBuilder() {
       if (null == _delegatedBuilder) {
-        this._delegatedBuilder = TemplateReferenceInternal.builder();
+        this._delegatedBuilder = TemplateReferenceWithVersionInternal.builder();
       }
       return this._delegatedBuilder;
     }
@@ -230,14 +231,15 @@ public class TemplateReferenceImpl
         throws IOException {
 
       TemplateReferenceImpl.Builder builder = new TemplateReferenceImpl.Builder();
-      TemplateReferenceInternalImpl deserialized =
-          jp.readValueAs(TemplateReferenceInternalImpl.class);
+      TemplateReferenceWithVersionInternalImpl deserialized =
+          jp.readValueAs(TemplateReferenceWithVersionInternalImpl.class);
       builder.setTemplateReference(deserialized);
       return builder.build();
     }
   }
 
-  public static Optional<TemplateReference> delegatedConverter(TemplateReferenceInternal internal) {
+  public static Optional<TemplateReference> delegatedConverter(
+      TemplateReferenceWithVersionInternal internal) {
     if (null == internal) {
       return Optional.empty();
     }

@@ -34,15 +34,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class TemplatesV2Api {
+public class V2Api {
 
-  private static final Logger LOGGER = Logger.getLogger(TemplatesV2Api.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(V2Api.class.getName());
   private HttpClient httpClient;
   private ServerConfiguration serverConfiguration;
   private Map<String, AuthManager> authManagersByOasSecuritySchemes;
   private HttpMapper mapper;
 
-  public TemplatesV2Api(
+  public V2Api(
       HttpClient httpClient,
       ServerConfiguration serverConfiguration,
       Map<String, AuthManager> authManagersByOasSecuritySchemes,
