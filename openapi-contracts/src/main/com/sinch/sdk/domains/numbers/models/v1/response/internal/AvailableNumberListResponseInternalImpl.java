@@ -40,7 +40,7 @@ public class AvailableNumberListResponseInternalImpl
     return availableNumbers;
   }
 
-  /** Return true if this AvailableNumbersResponse object is equal to o. */
+  /** Return true if this ListAvailableNumbersResponse object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -49,9 +49,9 @@ public class AvailableNumberListResponseInternalImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AvailableNumberListResponseInternalImpl availableNumbersResponse =
+    AvailableNumberListResponseInternalImpl listAvailableNumbersResponse =
         (AvailableNumberListResponseInternalImpl) o;
-    return Objects.equals(this.availableNumbers, availableNumbersResponse.availableNumbers);
+    return Objects.equals(this.availableNumbers, listAvailableNumbersResponse.availableNumbers);
   }
 
   @Override

@@ -77,7 +77,7 @@ public class ActiveNumberListResponseInternalImpl implements ActiveNumberListRes
     return totalSize;
   }
 
-  /** Return true if this ActiveNumbersResponse object is equal to o. */
+  /** Return true if this ListActiveNumbersResponse object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -86,11 +86,11 @@ public class ActiveNumberListResponseInternalImpl implements ActiveNumberListRes
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ActiveNumberListResponseInternalImpl activeNumbersResponse =
+    ActiveNumberListResponseInternalImpl listActiveNumbersResponse =
         (ActiveNumberListResponseInternalImpl) o;
-    return Objects.equals(this.activeNumbers, activeNumbersResponse.activeNumbers)
-        && Objects.equals(this.nextPageToken, activeNumbersResponse.nextPageToken)
-        && Objects.equals(this.totalSize, activeNumbersResponse.totalSize);
+    return Objects.equals(this.activeNumbers, listActiveNumbersResponse.activeNumbers)
+        && Objects.equals(this.nextPageToken, listActiveNumbersResponse.nextPageToken)
+        && Objects.equals(this.totalSize, listActiveNumbersResponse.totalSize);
   }
 
   @Override

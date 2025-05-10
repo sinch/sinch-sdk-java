@@ -56,7 +56,7 @@ public class SearchPatternImpl implements SearchPattern {
     return position;
   }
 
-  /** Return true if this SearchPattern object is equal to o. */
+  /** Return true if this NumberPattern object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -65,9 +65,9 @@ public class SearchPatternImpl implements SearchPattern {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SearchPatternImpl searchPattern = (SearchPatternImpl) o;
-    return Objects.equals(this.pattern, searchPattern.pattern)
-        && Objects.equals(this.position, searchPattern.position);
+    SearchPatternImpl numberPattern = (SearchPatternImpl) o;
+    return Objects.equals(this.pattern, numberPattern.pattern)
+        && Objects.equals(this.position, numberPattern.position);
   }
 
   @Override
