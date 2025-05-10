@@ -2,14 +2,17 @@ package com.sinch.sdk.domains.numbers.api.v1;
 
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
+import com.sinch.sdk.domains.numbers.models.v1.EmergencyAddress;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberListRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentAnyRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.EmergencyAddressRequest;
 import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
 import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.ValidateAddressResponse;
 
 /**
  * Numbers Service
@@ -139,4 +142,61 @@ public interface NumbersService {
    * @since 1.2
    */
   WebHooksService webhooks();
+
+  /**
+   * Validate the emergency address for a number. With this endpoint, you can validate the emergency
+   * address associated with this number.
+   *
+   * @param phoneNumber Output only. The phone number in <a
+   *     href="https://community.sinch.com/t5/Glossary/E-164/ta-p/7537">E.164</a> format with
+   *     leading &#x60;+&#x60;. (required)
+   * @param emergencyAddressRequest Request to validate an emergency address for a number.
+   *     (required)
+   * @return ValidateAddressResponse
+   * @throws ApiException if fails to make API call
+   * @since 1.7
+   */
+  ValidateAddressResponse validateEmergencyAddress(
+      String phoneNumber, EmergencyAddressRequest emergencyAddressRequest) throws ApiException;
+
+  /**
+   * Add a emergency address for a number With this endpoint, you can provision an emergency address
+   * associated with this number.
+   *
+   * @param phoneNumber Output only. The phone number in <a
+   *     href="https://community.sinch.com/t5/Glossary/E-164/ta-p/7537">E.164</a> format with
+   *     leading &#x60;+&#x60;. (required)
+   * @param emergencyAddressRequest Request to provision an emergency address for a number.
+   *     (required)
+   * @return EmergencyAddress
+   * @throws ApiException if fails to make API call
+   * @since 1.7
+   */
+  EmergencyAddress provisionEmergencyAddress(
+      String phoneNumber, EmergencyAddressRequest emergencyAddressRequest) throws ApiException;
+
+  /**
+   * Remove the emergency address for a number. With this endpoint, you can deprovision the
+   * emergency address associated with this number.
+   *
+   * @param phoneNumber Output only. The phone number in <a
+   *     href="https://community.sinch.com/t5/Glossary/E-164/ta-p/7537">E.164</a> format with
+   *     leading &#x60;+&#x60;. (required)
+   * @throws ApiException if fails to make API call
+   * @since 1.7
+   */
+  void deprovisionEmergencyAddress(String phoneNumber) throws ApiException;
+
+  /**
+   * Get the emergency address for a number With this endpoint, you can retrieve the emergency
+   * address associated with this number.
+   *
+   * @param phoneNumber Output only. The phone number in <a
+   *     href="https://community.sinch.com/t5/Glossary/E-164/ta-p/7537">E.164</a> format with
+   *     leading &#x60;+&#x60;. (required)
+   * @return EmergencyAddress
+   * @throws ApiException if fails to make API call
+   * @since 1.7
+   */
+  EmergencyAddress getEmergencyAddress(String phoneNumber) throws ApiException;
 }

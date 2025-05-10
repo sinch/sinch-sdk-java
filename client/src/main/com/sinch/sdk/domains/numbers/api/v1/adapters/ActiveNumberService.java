@@ -11,11 +11,14 @@ import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.api.v1.internal.ActiveNumberApi;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
+import com.sinch.sdk.domains.numbers.models.v1.EmergencyAddress;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequestImpl;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.EmergencyAddressRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern;
 import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.ValidateAddressResponse;
 import com.sinch.sdk.domains.numbers.models.v1.response.internal.ActiveNumberListResponseInternal;
 import com.sinch.sdk.domains.numbers.models.v1.response.internal.ActiveNumberListResponseInternalImpl;
 import com.sinch.sdk.models.NumbersContext;
@@ -115,6 +118,24 @@ public class ActiveNumberService {
   public ActiveNumber update(String phoneNumber, ActiveNumberUpdateRequest parameters)
       throws ApiException {
     return getApi().numberServiceUpdateActiveNumber(uriUUID, phoneNumber, parameters);
+  }
+
+  ValidateAddressResponse validateEmergencyAddress(
+      String phoneNumber, EmergencyAddressRequest emergencyAddressRequest) throws ApiException {
+    return getApi().validateEmergencyAddress(uriUUID, phoneNumber, emergencyAddressRequest);
+  }
+
+  EmergencyAddress provisionEmergencyAddress(
+      String phoneNumber, EmergencyAddressRequest emergencyAddressRequest) throws ApiException {
+    return getApi().provisionEmergencyAddress(uriUUID, phoneNumber, emergencyAddressRequest);
+  }
+
+  void deprovisionEmergencyAddress(String phoneNumber) throws ApiException {
+    getApi().deprovisionEmergencyAddress(uriUUID, phoneNumber);
+  }
+
+  EmergencyAddress getEmergencyAddress(String phoneNumber) throws ApiException {
+    return getApi().getEmergencyAddress(uriUUID, phoneNumber);
   }
 
   private ActiveNumberListResponse mapForPaging(
