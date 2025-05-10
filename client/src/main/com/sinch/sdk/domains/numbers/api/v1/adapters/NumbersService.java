@@ -30,7 +30,7 @@ import java.util.stream.Stream;
 public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.NumbersService {
 
   private static final Logger LOGGER = Logger.getLogger(NumbersService.class.getName());
-  private static final String SECURITY_SCHEME_KEYWORD_NUMBERS = "BasicAuth";
+  private static final String SECURITY_SCHEME_KEYWORD_NUMBERS = "Basic";
 
   private final UnifiedCredentials credentials;
   private final NumbersContext context;
