@@ -38,10 +38,10 @@ public interface UpdateVersionRequest {
   Boolean getActive();
 
   /**
-   * Key Value json dictionary of headers to be stored with the template. Where key is the header
-   * name and value is the header value. The header names <code>From</code>, <code>Subject</code>,
-   * and <code>Reply-To</code> are the only ones currently supported. These headers will be inserted
-   * into the mime at the time we attempt delivery.
+   * Key value JSON object of headers to be stored with the template. Where key is the header name
+   * and value is the header value. The header names <code>From</code>, <code>Subject</code>, and
+   * <code>Reply-To</code> are the only ones currently supported. These headers will be inserted
+   * into the MIME at the time we attempt delivery.
    *
    * @return headers
    */

@@ -19,35 +19,35 @@ import java.util.Map;
 public interface VersionDetails extends Version {
 
   /**
-   * Get tag
+   * Tag of the version. Must be unique to the template
    *
    * @return tag
    */
   String getTag();
 
   /**
-   * Get template
+   * Name of the template
    *
    * @return template
    */
   String getTemplate();
 
   /**
-   * Get engine
+   * Rendering engine
    *
    * @return engine
    */
   String getEngine();
 
   /**
-   * Get mjml
+   * Template source
    *
    * @return mjml
    */
   String getMjml();
 
   /**
-   * Get createdAt
+   * Creation date in RFC822 format
    *
    * @return createdAt
    * @readOnly <em>This field is returned by the server and cannot be modified</em>
@@ -55,21 +55,21 @@ public interface VersionDetails extends Version {
   Instant getCreatedAt();
 
   /**
-   * Get comment
+   * Comment related to the version
    *
    * @return comment
    */
   String getComment();
 
   /**
-   * Get active
+   * If this flag is true
    *
    * @return active
    */
   Boolean getActive();
 
   /**
-   * Get id
+   * Template ID
    *
    * @return id
    * @readOnly <em>This field is returned by the server and cannot be modified</em>
@@ -77,7 +77,8 @@ public interface VersionDetails extends Version {
   String getId();
 
   /**
-   * Get headers
+   * Key value JSON object of headers to be stored with the template. Where key is the header name
+   * and value is the header value. The header names <code>From</code>
    *
    * @return headers
    */

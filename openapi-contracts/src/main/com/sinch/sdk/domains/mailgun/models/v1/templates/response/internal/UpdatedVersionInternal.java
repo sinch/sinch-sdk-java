@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface UpdatedVersionInternal {
 
   /**
-   * Get tag
+   * Tag of the version. Must be unique to the template
    *
    * @return tag
    */

@@ -20,14 +20,14 @@ import java.util.List;
 public interface ListTemplatesResponseInternal {
 
   /**
-   * Get items
+   * List of items
    *
    * @return items
    */
   List<Template> getItems();
 
   /**
-   * Get paging
+   * Pagination details
    *
    * @return paging
    */

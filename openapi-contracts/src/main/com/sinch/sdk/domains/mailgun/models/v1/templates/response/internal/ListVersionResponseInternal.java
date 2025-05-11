@@ -26,7 +26,7 @@ public interface ListVersionResponseInternal {
   Template getTemplate();
 
   /**
-   * Get paging
+   * Pagination details
    *
    * @return paging
    */

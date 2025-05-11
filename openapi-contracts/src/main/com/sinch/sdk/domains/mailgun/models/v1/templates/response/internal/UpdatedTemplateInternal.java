@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface UpdatedTemplateInternal {
 
   /**
-   * Get name
+   * Name of the template
    *
    * @return name
    */

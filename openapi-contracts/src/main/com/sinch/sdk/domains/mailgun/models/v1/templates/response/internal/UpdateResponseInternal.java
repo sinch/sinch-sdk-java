@@ -17,14 +17,14 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface UpdateResponseInternal {
 
   /**
-   * Get message
+   * Response message
    *
    * @return message
    */
   String getMessage();
 
   /**
-   * Get template
+   * Template change details
    *
    * @return template
    */
