@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @JsonPropertyOrder({
   CopyVersionResponseInternalImpl.JSON_PROPERTY_MESSAGE,
-  CopyVersionResponseInternalImpl.JSON_PROPERTY_TEMPLATE
+  CopyVersionResponseInternalImpl.JSON_PROPERTY_VERSION
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
@@ -23,7 +23,7 @@ public class CopyVersionResponseInternalImpl implements CopyVersionResponseInter
 
   private OptionalValue<String> message;
 
-  public static final String JSON_PROPERTY_TEMPLATE = "template";
+  public static final String JSON_PROPERTY_VERSION = "version";
 
   private OptionalValue<VersionDetails> version;
 
@@ -51,7 +51,7 @@ public class CopyVersionResponseInternalImpl implements CopyVersionResponseInter
     return version.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_TEMPLATE)
+  @JsonProperty(JSON_PROPERTY_VERSION)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<VersionDetails> version() {
     return version;
@@ -110,7 +110,7 @@ public class CopyVersionResponseInternalImpl implements CopyVersionResponseInter
       return this;
     }
 
-    @JsonProperty(value = JSON_PROPERTY_TEMPLATE, required = true)
+    @JsonProperty(value = JSON_PROPERTY_VERSION, required = true)
     public Builder setVersion(VersionDetails version) {
       this.version = OptionalValue.of(version);
       return this;
