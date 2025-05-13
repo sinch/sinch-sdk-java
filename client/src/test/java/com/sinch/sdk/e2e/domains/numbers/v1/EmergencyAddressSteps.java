@@ -67,7 +67,7 @@ public class EmergencyAddressSteps {
     validateAddressResponse = service.validateEmergencyAddress(PHONE_NUMBER, request);
   }
 
-  @When("^I send a request to provisioning an emergency address$")
+  @When("^I send a request to provision an emergency address$")
   public void provisionEmergencyAddress() {
     EmergencyAddress emergencyAddress =
         EmergencyAddress.builder()
@@ -86,14 +86,14 @@ public class EmergencyAddressSteps {
     provisioningEmergencyAddressResponse = service.provisionEmergencyAddress(PHONE_NUMBER, request);
   }
 
-  @When("^I send a request to deprovisioning an emergency address$")
+  @When("^I send a request to deprovision an emergency address$")
   public void deprovisionEmergencyAddress() {
 
     service.deprovisionEmergencyAddress(PHONE_NUMBER);
     deprovisionEmergencyAddressPassed = true;
   }
 
-  @When("^I send a request to get emergency address for a number$")
+  @When("^I send a request to get the emergency address for a number$")
   public void getEmergencyAddress() {
 
     getEmergencyAddressResponse = service.getEmergencyAddress(PHONE_NUMBER);
@@ -198,13 +198,13 @@ public class EmergencyAddressSteps {
     Assertions.assertEquals(expected, provisioningEmergencyAddressResponse);
   }
 
-  @Then("^the de-provisioning passed$")
+  @Then("^the response indicates successful deprovisioning$")
   public void deprovisionEmergencyAddressResult() {
 
     Assertions.assertTrue(deprovisionEmergencyAddressPassed);
   }
 
-  @Then("^the response contains emergency address provisioned for phone number$")
+  @Then("^the response contains the provisioned emergency address for the phone number$")
   public void getEmergencyAddressResult() {
 
     EmergencyAddress expected =
