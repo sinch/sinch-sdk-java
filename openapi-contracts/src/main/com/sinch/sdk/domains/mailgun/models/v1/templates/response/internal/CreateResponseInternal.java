@@ -18,7 +18,7 @@ import com.sinch.sdk.domains.mailgun.models.v1.templates.Template;
 public interface CreateResponseInternal {
 
   /**
-   * Get message
+   * Response message
    *
    * @return message
    */

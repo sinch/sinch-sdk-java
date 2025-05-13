@@ -17,14 +17,14 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface ExceededQueueQuota {
 
   /**
-   * Get isDisabled
+   * Flag indicating no new messages are able to be submitted
    *
    * @return isDisabled
    */
   Boolean getIsDisabled();
 
   /**
-   * Get details
+   * Disabled info
    *
    * @return details
    */

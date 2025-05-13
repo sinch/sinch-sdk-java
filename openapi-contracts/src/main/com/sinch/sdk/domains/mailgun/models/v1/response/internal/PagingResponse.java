@@ -17,28 +17,28 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface PagingResponse {
 
   /**
-   * Get previous
+   * Previous page URL
    *
    * @return previous
    */
   String getPrevious();
 
   /**
-   * Get first
+   * First page URL
    *
    * @return first
    */
   String getFirst();
 
   /**
-   * Get next
+   * Next page URL
    *
    * @return next
    */
   String getNext();
 
   /**
-   * Get last
+   * Last page URL
    *
    * @return last
    */
