@@ -29,7 +29,6 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.Card
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ChoiceMessageMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ListMessageInternalMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.template.TemplateMessageMapper;
-import com.sinch.sdk.domains.conversation.templates.models.v2.TemplateTranslationMapper;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
@@ -211,7 +210,6 @@ public class ConversationService
       RecipientMapper.initMapper();
       SendMessageRequestMapper.initMapper();
       TemplateMessageMapper.initMapper();
-      TemplateTranslationMapper.initMapper();
       WhatsAppInteractiveHeaderMapper.initMapper();
     }
 

@@ -10,6 +10,7 @@ import com.sinch.sdk.domains.conversation.api.templates.adapters.v1.TemplatesSer
 import com.sinch.sdk.domains.conversation.api.templates.adapters.v2.TemplatesServiceV2;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationService;
 import com.sinch.sdk.domains.conversation.templates.models.v2.ChannelTemplateOverrideMapper;
+import com.sinch.sdk.domains.conversation.templates.models.v2.TemplateTranslationMapper;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
@@ -110,6 +111,7 @@ public class TemplatesService
       // Because of templates classes are depending of Conversation classes we need to init for a
       // proper serialize/deserialize process
       ConversationService.LocalLazyInit.init();
+      TemplateTranslationMapper.initMapper();
       ChannelTemplateOverrideMapper.initMapper();
     }
 
