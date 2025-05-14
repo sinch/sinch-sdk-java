@@ -24,6 +24,9 @@ public class ReasonDtoTest extends ConversationBaseTest {
   @GivenJsonResource("domains/conversation/v1/ReasonDto.json")
   Reason dto;
 
+  @GivenJsonResource("domains/conversation/v1/ReasonWithChannelCodeDto.json")
+  Reason dtoReasonWithChannelCodeDto;
+
   public static Reason expectedDto =
       Reason.builder()
           .setCode(ReasonCode.RECIPIENT_NOT_OPTED_IN)
@@ -31,8 +34,21 @@ public class ReasonDtoTest extends ConversationBaseTest {
           .setSubCode(ReasonSubCode.UNSPECIFIED_SUB_CODE)
           .build();
 
+  public static Reason expectedWithChannelCodeDto =
+      Reason.builder()
+          .setCode(ReasonCode.RECIPIENT_NOT_OPTED_IN)
+          .setDescription("reason description")
+          .setSubCode(ReasonSubCode.UNSPECIFIED_SUB_CODE)
+          .setChannelCode("a channel code")
+          .build();
+
   @Test
   void deserialize() {
     TestHelpers.recursiveEquals(dto, expectedDto);
+  }
+
+  @Test
+  void deserializeWithChannelCode() {
+    TestHelpers.recursiveEquals(dtoReasonWithChannelCodeDto, expectedWithChannelCodeDto);
   }
 }

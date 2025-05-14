@@ -15,7 +15,8 @@
     "reason": {
       "code": "RECIPIENT_NOT_OPTED_IN",
       "description":"reason description",
-      "sub_code": "UNSPECIFIED_SUB_CODE"
+      "sub_code": "UNSPECIFIED_SUB_CODE",
+      "channel_code": "a channel code"
     }
   }
 }
