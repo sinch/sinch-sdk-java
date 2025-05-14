@@ -18,19 +18,17 @@ import com.sinch.sdk.domains.mailgun.models.v1.templates.VersionDetails;
 public interface CopyVersionResponseInternal {
 
   /**
-   * Get message
+   * Response message
    *
    * @return message
    */
   String getMessage();
 
   /**
-   * Deprecated: Use 'version' field
+   * Get version
    *
    * @return version
-   * @deprecated
    */
-  @Deprecated
   VersionDetails getVersion();
 
   /**
@@ -61,7 +59,6 @@ public interface CopyVersionResponseInternal {
      * @return Current builder
      * @see #getVersion
      */
-    @Deprecated
     Builder setVersion(VersionDetails version);
 
     /**

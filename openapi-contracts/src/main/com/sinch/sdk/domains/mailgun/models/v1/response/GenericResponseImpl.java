@@ -36,7 +36,9 @@ public class GenericResponseImpl implements GenericResponse {
     return message;
   }
 
-  /** Return true if this GenericResponse object is equal to o. */
+  /**
+   * Return true if this github.com-mailgun-scaffold-httpapi-GenericResponse object is equal to o.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -45,8 +47,8 @@ public class GenericResponseImpl implements GenericResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    GenericResponseImpl genericResponse = (GenericResponseImpl) o;
-    return Objects.equals(this.message, genericResponse.message);
+    GenericResponseImpl githubComMailgunScaffoldHttpapiGenericResponse = (GenericResponseImpl) o;
+    return Objects.equals(this.message, githubComMailgunScaffoldHttpapiGenericResponse.message);
   }
 
   @Override

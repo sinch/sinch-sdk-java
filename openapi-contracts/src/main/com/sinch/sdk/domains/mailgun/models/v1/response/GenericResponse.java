@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface GenericResponse {
 
   /**
-   * Get message
+   * Response message
    *
    * @return message
    */
