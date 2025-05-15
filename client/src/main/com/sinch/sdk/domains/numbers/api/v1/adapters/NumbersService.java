@@ -6,14 +6,17 @@ import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
+import com.sinch.sdk.domains.numbers.models.v1.EmergencyAddress;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberListRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentAnyRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.EmergencyAddressRequest;
 import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
 import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.ValidateAddressResponse;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
@@ -27,7 +30,7 @@ import java.util.stream.Stream;
 public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.NumbersService {
 
   private static final Logger LOGGER = Logger.getLogger(NumbersService.class.getName());
-  private static final String SECURITY_SCHEME_KEYWORD_NUMBERS = "BasicAuth";
+  private static final String SECURITY_SCHEME_KEYWORD_NUMBERS = "Basic";
 
   private final UnifiedCredentials credentials;
   private final NumbersContext context;
@@ -130,6 +133,24 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
 
   public ActiveNumber release(String phoneNumber) throws ApiException {
     return active().release(phoneNumber);
+  }
+
+  public ValidateAddressResponse validateEmergencyAddress(
+      String phoneNumber, EmergencyAddressRequest emergencyAddressRequest) throws ApiException {
+    return active().validateEmergencyAddress(phoneNumber, emergencyAddressRequest);
+  }
+
+  public EmergencyAddress provisionEmergencyAddress(
+      String phoneNumber, EmergencyAddressRequest emergencyAddressRequest) throws ApiException {
+    return active().provisionEmergencyAddress(phoneNumber, emergencyAddressRequest);
+  }
+
+  public void deprovisionEmergencyAddress(String phoneNumber) throws ApiException {
+    active().deprovisionEmergencyAddress(phoneNumber);
+  }
+
+  public EmergencyAddress getEmergencyAddress(String phoneNumber) throws ApiException {
+    return active().getEmergencyAddress(phoneNumber);
   }
 
   private void instanceLazyInit() {

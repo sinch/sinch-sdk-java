@@ -74,7 +74,7 @@ public class SmsConfigurationImpl implements SmsConfiguration {
     return scheduledProvisioning;
   }
 
-  /** Return true if this SMSConfiguration object is equal to o. */
+  /** Return true if this smsConfiguration object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -83,10 +83,10 @@ public class SmsConfigurationImpl implements SmsConfiguration {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SmsConfigurationImpl smSConfiguration = (SmsConfigurationImpl) o;
-    return Objects.equals(this.servicePlanId, smSConfiguration.servicePlanId)
-        && Objects.equals(this.campaignId, smSConfiguration.campaignId)
-        && Objects.equals(this.scheduledProvisioning, smSConfiguration.scheduledProvisioning);
+    SmsConfigurationImpl smsConfiguration = (SmsConfigurationImpl) o;
+    return Objects.equals(this.servicePlanId, smsConfiguration.servicePlanId)
+        && Objects.equals(this.campaignId, smsConfiguration.campaignId)
+        && Objects.equals(this.scheduledProvisioning, smsConfiguration.scheduledProvisioning);
   }
 
   @Override

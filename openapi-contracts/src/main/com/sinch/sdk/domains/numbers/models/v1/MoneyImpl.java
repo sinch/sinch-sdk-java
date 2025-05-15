@@ -52,7 +52,7 @@ public class MoneyImpl implements Money {
     return amount;
   }
 
-  /** Return true if this Money object is equal to o. */
+  /** Return true if this money object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {

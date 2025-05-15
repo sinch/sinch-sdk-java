@@ -109,7 +109,7 @@ public class ScheduledSmsProvisioningImpl implements ScheduledSmsProvisioning {
     return errorCodes;
   }
 
-  /** Return true if this ScheduledProvisioning object is equal to o. */
+  /** Return true if this scheduledProvisioning object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {

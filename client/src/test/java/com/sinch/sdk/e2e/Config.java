@@ -5,6 +5,7 @@ import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.ConversationRegion;
 import com.sinch.sdk.models.MailgunContext;
+import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.SmsContext;
 import com.sinch.sdk.models.VoiceContext;
 import java.util.Arrays;
@@ -15,6 +16,7 @@ public class Config {
   public static final String KEY_ID = "'keyId";
   public static final String KEY_SECRET = "keySecret";
   public static final String AUTH_URL = "http://localhost:3011/oauth2/token";
+  public static final String NUMBERS_HOST_NAME = "http://localhost:3013";
   public static final String CONVERSATION_HOST_NAME = "http://localhost:3014";
   public static final String CONVERSATION_TEMPLATE_HOST_NAME = "http://localhost:3015";
   public static final ConversationRegion CONVERSATION_REGION = ConversationRegion.US;
@@ -40,6 +42,7 @@ public class Config {
             .setProjectId(Config.PROJECT_ID)
             .setKeyId(Config.KEY_ID)
             .setKeySecret(Config.KEY_SECRET)
+            .setNumbersContext(NumbersContext.builder().setNumbersUrl(NUMBERS_HOST_NAME).build())
             .setConversationContext(
                 ConversationContext.builder()
                     .setUrl(Config.CONVERSATION_HOST_NAME)

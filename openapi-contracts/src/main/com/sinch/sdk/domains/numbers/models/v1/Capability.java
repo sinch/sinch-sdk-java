@@ -5,13 +5,13 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** Capability of a phone number */
+/** The capabilities the phone number supports: SMS, Voice, or both */
 public class Capability extends EnumDynamic<String, Capability> {
 
-  /** The SMS product can use the number */
+  /** The SMS product can use the number. */
   public static final Capability SMS = new Capability("SMS");
 
-  /** The Voice product can use the number */
+  /** The Voice product can use the number. */
   public static final Capability VOICE = new Capability("VOICE");
 
   private static final EnumSupportDynamic<String, Capability> ENUM_SUPPORT =

@@ -5,7 +5,7 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** Type of phone number */
+/** The number type. */
 public class NumberType extends EnumDynamic<String, NumberType> {
 
   /** Numbers that belong to a specific range. */
@@ -14,7 +14,7 @@ public class NumberType extends EnumDynamic<String, NumberType> {
   /** Numbers that are assigned to a specific geographic region. */
   public static final NumberType LOCAL = new NumberType("LOCAL");
 
-  /** Number that are free of charge for the calling party but billed for all arriving calls. */
+  /** Numbers that are free of charge for the calling party but billed for all arriving calls. */
   public static final NumberType TOLL_FREE = new NumberType("TOLL_FREE");
 
   private static final EnumSupportDynamic<String, NumberType> ENUM_SUPPORT =

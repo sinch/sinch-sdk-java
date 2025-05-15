@@ -344,6 +344,7 @@
                         <configuration>
                             <includes>
                                 <include>com.sinch.sdk.e2e.domains.mailgun.v1.MailgunIT</include>
+                                <include>com.sinch.sdk.e2e.domains.numbers.v1.NumbersIT</include>
                                 <include>com.sinch.sdk.e2e.domains.conversation.ConversationIT</include>
                                 <include>com.sinch.sdk.e2e.domains.sms.v0.SmsIT</include>
                                 <include>com.sinch.sdk.e2e.domains.sms.v1.SmsIT</include>

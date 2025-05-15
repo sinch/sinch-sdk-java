@@ -253,7 +253,7 @@ public class ActiveNumberImpl implements ActiveNumber {
     return callbackUrl;
   }
 
-  /** Return true if this ActiveNumber object is equal to o. */
+  /** Return true if this ActiveNumberResponse object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -262,20 +262,20 @@ public class ActiveNumberImpl implements ActiveNumber {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ActiveNumberImpl activeNumber = (ActiveNumberImpl) o;
-    return Objects.equals(this.phoneNumber, activeNumber.phoneNumber)
-        && Objects.equals(this.projectId, activeNumber.projectId)
-        && Objects.equals(this.displayName, activeNumber.displayName)
-        && Objects.equals(this.regionCode, activeNumber.regionCode)
-        && Objects.equals(this.type, activeNumber.type)
-        && Objects.equals(this.capability, activeNumber.capability)
-        && Objects.equals(this.money, activeNumber.money)
-        && Objects.equals(this.paymentIntervalMonths, activeNumber.paymentIntervalMonths)
-        && Objects.equals(this.nextChargeDate, activeNumber.nextChargeDate)
-        && Objects.equals(this.expireAt, activeNumber.expireAt)
-        && Objects.equals(this.smsConfiguration, activeNumber.smsConfiguration)
-        && Objects.equals(this.voiceConfiguration, activeNumber.voiceConfiguration)
-        && Objects.equals(this.callbackUrl, activeNumber.callbackUrl);
+    ActiveNumberImpl activeNumberResponse = (ActiveNumberImpl) o;
+    return Objects.equals(this.phoneNumber, activeNumberResponse.phoneNumber)
+        && Objects.equals(this.projectId, activeNumberResponse.projectId)
+        && Objects.equals(this.displayName, activeNumberResponse.displayName)
+        && Objects.equals(this.regionCode, activeNumberResponse.regionCode)
+        && Objects.equals(this.type, activeNumberResponse.type)
+        && Objects.equals(this.capability, activeNumberResponse.capability)
+        && Objects.equals(this.money, activeNumberResponse.money)
+        && Objects.equals(this.paymentIntervalMonths, activeNumberResponse.paymentIntervalMonths)
+        && Objects.equals(this.nextChargeDate, activeNumberResponse.nextChargeDate)
+        && Objects.equals(this.expireAt, activeNumberResponse.expireAt)
+        && Objects.equals(this.smsConfiguration, activeNumberResponse.smsConfiguration)
+        && Objects.equals(this.voiceConfiguration, activeNumberResponse.voiceConfiguration)
+        && Objects.equals(this.callbackUrl, activeNumberResponse.callbackUrl);
   }
 
   @Override
