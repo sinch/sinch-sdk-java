@@ -3,7 +3,7 @@ package com.sinch.sdk.domains.conversation.api.templates.adapters.v2;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
-import com.sinch.sdk.domains.conversation.templates.api.internal.TemplatesV2Api;
+import com.sinch.sdk.domains.conversation.templates.api.internal.V2Api;
 import com.sinch.sdk.domains.conversation.templates.models.v2.TemplateTranslation;
 import com.sinch.sdk.domains.conversation.templates.models.v2.TemplateV2;
 import com.sinch.sdk.domains.conversation.templates.models.v2.internal.V2ListTranslationsResponseInternal;
@@ -18,7 +18,7 @@ public class TemplatesServiceV2
     implements com.sinch.sdk.domains.conversation.api.templates.v2.TemplatesServiceV2 {
 
   private final String uriUUID;
-  private final TemplatesV2Api api;
+  private final V2Api api;
 
   public TemplatesServiceV2(
       String uriUUID,
@@ -27,14 +27,14 @@ public class TemplatesServiceV2
       Map<String, AuthManager> authManagers) {
     this.uriUUID = uriUUID;
     this.api =
-        new TemplatesV2Api(
+        new V2Api(
             httpClient,
             context.getTemplateManagementServer(),
             authManagers,
             HttpMapper.getInstance());
   }
 
-  protected TemplatesV2Api getApi() {
+  protected V2Api getApi() {
     return this.api;
   }
 

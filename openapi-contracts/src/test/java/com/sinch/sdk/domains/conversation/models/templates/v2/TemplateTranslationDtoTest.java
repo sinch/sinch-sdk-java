@@ -26,7 +26,8 @@ public class TemplateTranslationDtoTest extends TemplatesBaseTest {
           .setVersion("1")
           .setChannelTemplateOverrides(
               Collections.singletonMap(
-                  ConversationChannel.KAKAOTALK, ChannelTemplateOverrideDtoTest.expectedDto))
+                  ConversationChannel.KAKAOTALK,
+                  ChannelTemplateOverrideDtoTest.expectedWithVersionDto))
           .setVariables(Arrays.asList(TemplateVariableDtoTest.expectedDto))
           .setCreateTime(Instant.parse("2024-07-07T02:59:59Z"))
           .setUpdateTime(Instant.parse("2024-07-07T06:07:44Z"))

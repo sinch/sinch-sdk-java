@@ -3,7 +3,7 @@ package com.sinch.sdk.domains.conversation.api.templates.adapters.v1;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
-import com.sinch.sdk.domains.conversation.templates.api.internal.TemplatesV1Api;
+import com.sinch.sdk.domains.conversation.templates.api.internal.V1Api;
 import com.sinch.sdk.domains.conversation.templates.models.v1.TemplateV1;
 import com.sinch.sdk.models.ConversationContext;
 import java.util.Collection;
@@ -13,7 +13,7 @@ public class TemplatesServiceV1
     implements com.sinch.sdk.domains.conversation.api.templates.v1.TemplatesServiceV1 {
 
   private final String uriUUID;
-  private final TemplatesV1Api api;
+  private final V1Api api;
 
   public TemplatesServiceV1(
       String uriUUID,
@@ -22,14 +22,14 @@ public class TemplatesServiceV1
       Map<String, AuthManager> authManagers) {
     this.uriUUID = uriUUID;
     this.api =
-        new TemplatesV1Api(
+        new V1Api(
             httpClient,
             context.getTemplateManagementServer(),
             authManagers,
             HttpMapper.getInstance());
   }
 
-  protected TemplatesV1Api getApi() {
+  protected V1Api getApi() {
     return this.api;
   }
 

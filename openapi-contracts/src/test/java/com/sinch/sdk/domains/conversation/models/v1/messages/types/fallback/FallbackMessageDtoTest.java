@@ -16,7 +16,7 @@ public class FallbackMessageDtoTest extends ConversationBaseTest {
   public static FallbackMessage choiceFallbackMessageDto =
       FallbackMessage.builder()
           .setRawMessage("raw message value")
-          .setReason(ReasonDtoTest.expectedDto)
+          .setReason(ReasonDtoTest.expectedWithChannelCodeDto)
           .build();
 
   @GivenTextResource("/domains/conversation/v1/messages/types/fallback/FallbackMessageDto.json")

@@ -12,12 +12,13 @@ public class ChannelTemplateOverrideMapper {
   public static void initMapper() {
 
     Mapper.getInstance()
-        .addMixIn(ChannelTemplateOverride.class, ChannelTemplateOverrideMapperMixinSerializer.class)
+        .addMixIn(ChannelTemplateOverride.class, ChannelTemplateOverrideMixinSerializer.class)
         .addMixIn(
-            ChannelTemplateOverride.Builder.class, ChannelTemplateOverrideBuilderMapperMixin.class);
+            ChannelTemplateOverride.Builder.class,
+            ChannelTemplateOverrideBuilderMixinSerializer.class);
   }
 
-  static class ChannelTemplateOverrideMapperMixinSerializer extends ChannelTemplateOverrideImpl {
+  static class ChannelTemplateOverrideMixinSerializer extends ChannelTemplateOverrideImpl {
 
     @Override
     @JsonSerialize(using = TemplateReferenceImpl.DelegatedSerializer.class)
@@ -26,7 +27,7 @@ public class ChannelTemplateOverrideMapper {
     }
   }
 
-  static class ChannelTemplateOverrideBuilderMapperMixin
+  static class ChannelTemplateOverrideBuilderMixinSerializer
       extends ChannelTemplateOverrideImpl.Builder {
 
     @Override
