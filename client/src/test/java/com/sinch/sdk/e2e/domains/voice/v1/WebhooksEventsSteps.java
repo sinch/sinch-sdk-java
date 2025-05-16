@@ -14,6 +14,7 @@ import com.sinch.sdk.domains.voice.models.v1.webhooks.IncomingCallEvent;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.MenuResult;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.MenuResult.InputMethodEnum;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.MenuResult.TypeEnum;
+import com.sinch.sdk.domains.voice.models.v1.webhooks.NotificationEvent;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.PromptInputEvent;
 import com.sinch.sdk.domains.voice.models.v1.webhooks.VoiceWebhookEvent;
 import com.sinch.sdk.e2e.Config;
@@ -38,6 +39,9 @@ public class WebhooksEventsSteps {
   WebhooksHelper.Response<VoiceWebhookEvent> diceEvent;
   WebhooksHelper.Response<VoiceWebhookEvent> aceEvent;
   WebhooksHelper.Response<VoiceWebhookEvent> iceEvent;
+  WebhooksHelper.Response<VoiceWebhookEvent> recordingFinishedEvent;
+  WebhooksHelper.Response<VoiceWebhookEvent> recordingAvailableEvent;
+  WebhooksHelper.Response<VoiceWebhookEvent> transcriptionAvailableEvent;
 
   PromptInputEvent expectedPieReturnEvent =
       PromptInputEvent.builder()
@@ -111,6 +115,29 @@ public class WebhooksEventsSteps {
           .setRdnis("")
           .build();
 
+  NotificationEvent expectedRecordingFinishedEvent =
+      NotificationEvent.builder()
+          .setCallid("33dd8e62-0ac6-4e0c-a89f-36d121f861f9")
+          .setVersion(1)
+          .setType("recording_finished")
+          .build();
+
+  NotificationEvent expectedRecordingAvailableEvent =
+      NotificationEvent.builder()
+          .setCallid("33dd8e62-0ac6-4e0c-a89f-36d121f861f9")
+          .setVersion(1)
+          .setType("recording_available")
+          .setDestination("azure://sinchsdk/voice-recordings/my-recording.mp3")
+          .build();
+
+  NotificationEvent expectedTranscriptionAvailableEvent =
+      NotificationEvent.builder()
+          .setCallid("33dd8e62-0ac6-4e0c-a89f-36d121f861f9")
+          .setVersion(1)
+          .setType("transcription_available")
+          .setDestination("azure://sinchsdk/voice-recordings/my-recording-transcript.json")
+          .build();
+
   @Given("^the Voice Webhooks handler is available$")
   public void serviceAvailable() {
     service = Config.getSinchClient().voice().v1().webhooks();
@@ -142,6 +169,27 @@ public class WebhooksEventsSteps {
     iceEvent = WebhooksHelper.callURL(new URL(WEBHOOKS_URL + "/ice"), service::parseEvent);
   }
 
+  @When("^I send a request to trigger a \"recording_finished\" event$")
+  public void sendRecordingFinishedEvent() throws IOException {
+    recordingFinishedEvent =
+        WebhooksHelper.callURL(
+            new URL(WEBHOOKS_URL + "/notify/recording_finished"), service::parseEvent);
+  }
+
+  @When("^I send a request to trigger a \"recording_available\" event$")
+  public void sendRecordingAvailableEvent() throws IOException {
+    recordingAvailableEvent =
+        WebhooksHelper.callURL(
+            new URL(WEBHOOKS_URL + "/notify/recording_available"), service::parseEvent);
+  }
+
+  @When("^I send a request to trigger a \"transcription_available\" event$")
+  public void sendTranscriptionAvailableEvent() throws IOException {
+    transcriptionAvailableEvent =
+        WebhooksHelper.callURL(
+            new URL(WEBHOOKS_URL + "/notify/transcription_available"), service::parseEvent);
+  }
+
   @Then("the header of the {string} event with a {string} type contains a valid authorization")
   public void validatePieHeader(String event, String type) {
 
@@ -169,6 +217,12 @@ public class WebhooksEventsSteps {
       receivedEvent = aceEvent;
     } else if (event.equals("ICE")) {
       receivedEvent = iceEvent;
+    } else if (event.equals("recording_finished")) {
+      receivedEvent = recordingFinishedEvent;
+    } else if (event.equals("recording_available")) {
+      receivedEvent = recordingAvailableEvent;
+    } else if (event.equals("transcription_available")) {
+      receivedEvent = transcriptionAvailableEvent;
     } else {
       Assertions.fail();
     }
@@ -179,7 +233,7 @@ public class WebhooksEventsSteps {
   }
 
   @Then("the Voice event describes a {string} event with a {string} type")
-  public void validatePieEvent(String event, String type) {
+  public void validateTypeEvent(String event, String type) {
 
     WebhooksHelper.Response<?> receivedEvent = null;
     VoiceWebhookEvent expectedEvent = null;
@@ -189,6 +243,15 @@ public class WebhooksEventsSteps {
     } else if (event.equals("PIE") && type.equals("sequence")) {
       receivedEvent = pieSequence;
       expectedEvent = expectedPieSequenceEvent;
+    } else if (event.equals("notify") && type.equals("recording_finished")) {
+      receivedEvent = recordingFinishedEvent;
+      expectedEvent = expectedRecordingFinishedEvent;
+    } else if (event.equals("notify") && type.equals("recording_available")) {
+      receivedEvent = recordingAvailableEvent;
+      expectedEvent = expectedRecordingAvailableEvent;
+    } else if (event.equals("notify") && type.equals("transcription_available")) {
+      receivedEvent = transcriptionAvailableEvent;
+      expectedEvent = expectedTranscriptionAvailableEvent;
     } else {
       Assertions.fail();
     }
