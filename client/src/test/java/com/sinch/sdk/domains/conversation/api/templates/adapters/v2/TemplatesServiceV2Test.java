@@ -15,7 +15,7 @@ import com.sinch.sdk.domains.conversation.api.templates.adapters.TemplatesBaseTe
 import com.sinch.sdk.domains.conversation.models.templates.v2.TemplateV2DtoTest;
 import com.sinch.sdk.domains.conversation.models.templates.v2.internal.V2ListTemplatesResponseInternalDtoTest;
 import com.sinch.sdk.domains.conversation.models.templates.v2.internal.V2ListTranslationsResponseInternalDtoTest;
-import com.sinch.sdk.domains.conversation.templates.api.internal.TemplatesV2Api;
+import com.sinch.sdk.domains.conversation.templates.api.internal.V2Api;
 import com.sinch.sdk.domains.conversation.templates.models.v2.TemplateTranslation;
 import com.sinch.sdk.domains.conversation.templates.models.v2.TemplateV2;
 import com.sinch.sdk.domains.conversation.templates.models.v2.request.TranslationListRequest;
@@ -34,7 +34,7 @@ import org.mockito.Mock;
 public class TemplatesServiceV2Test extends TemplatesBaseTest {
 
   @Mock ConversationContext context;
-  @Mock TemplatesV2Api api;
+  @Mock V2Api api;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
   @Captor ArgumentCaptor<String> uriPartIDCaptor;

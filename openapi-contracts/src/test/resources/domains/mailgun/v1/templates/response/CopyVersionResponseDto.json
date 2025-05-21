@@ -1,6 +1,6 @@
 {
   "message": "version has been copied",
-  "template": {
+  "version": {
     "tag": "version of template created  from java sdk(cloned)",
     "template": "<p>{{firstname}} {{lastname}}</p>",
     "engine": "handlebars",

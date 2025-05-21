@@ -14,6 +14,7 @@ import com.sinch.sdk.domains.voice.models.webhooks.IncomingCallEvent;
 import com.sinch.sdk.domains.voice.models.webhooks.MenuInputType;
 import com.sinch.sdk.domains.voice.models.webhooks.MenuResult;
 import com.sinch.sdk.domains.voice.models.webhooks.MenuResultInputMethodType;
+import com.sinch.sdk.domains.voice.models.webhooks.NotifyEvent;
 import com.sinch.sdk.domains.voice.models.webhooks.PromptInputEvent;
 import com.sinch.sdk.domains.voice.models.webhooks.WebhooksEvent;
 import com.sinch.sdk.e2e.Config;
@@ -39,6 +40,9 @@ public class WebhooksEventsSteps {
   WebhooksHelper.Response<WebhooksEvent> diceEvent;
   WebhooksHelper.Response<WebhooksEvent> aceEvent;
   WebhooksHelper.Response<WebhooksEvent> iceEvent;
+  WebhooksHelper.Response<WebhooksEvent> recordingFinishedEvent;
+  WebhooksHelper.Response<WebhooksEvent> recordingAvailableEvent;
+  WebhooksHelper.Response<WebhooksEvent> transcriptionAvailableEvent;
 
   PromptInputEvent expectedPieReturnEvent =
       PromptInputEvent.builder()
@@ -113,6 +117,27 @@ public class WebhooksEventsSteps {
           .setRdnis("")
           .build();
 
+  NotifyEvent expectedRecordingFinishedEvent =
+      NotifyEvent.builder()
+          .setCallId("33dd8e62-0ac6-4e0c-a89f-36d121f861f9")
+          .setVersion(1)
+          .setType("recording_finished")
+          .build();
+
+  NotifyEvent expectedRecordingAvailableEvent =
+      NotifyEvent.builder()
+          .setCallId("33dd8e62-0ac6-4e0c-a89f-36d121f861f9")
+          .setVersion(1)
+          .setType("recording_available")
+          .build();
+
+  NotifyEvent expectedTranscriptionAvailableEvent =
+      NotifyEvent.builder()
+          .setCallId("33dd8e62-0ac6-4e0c-a89f-36d121f861f9")
+          .setVersion(1)
+          .setType("transcription_available")
+          .build();
+
   @Given("^the Voice Webhooks handler is available$")
   public void serviceAvailable() {
     service = Config.getSinchClient().voice().webhooks();
@@ -150,6 +175,30 @@ public class WebhooksEventsSteps {
         WebhooksHelper.callURL(new URL(WEBHOOKS_URL + "/ice"), service::unserializeWebhooksEvent);
   }
 
+  @When("^I send a request to trigger a \"recording_finished\" event$")
+  public void sendRecordingFinishedEvent() throws IOException {
+    recordingFinishedEvent =
+        WebhooksHelper.callURL(
+            new URL(WEBHOOKS_URL + "/notify/recording_finished"),
+            service::unserializeWebhooksEvent);
+  }
+
+  @When("^I send a request to trigger a \"recording_available\" event$")
+  public void sendRecordingAvailableEvent() throws IOException {
+    recordingAvailableEvent =
+        WebhooksHelper.callURL(
+            new URL(WEBHOOKS_URL + "/notify/recording_available"),
+            service::unserializeWebhooksEvent);
+  }
+
+  @When("^I send a request to trigger a \"transcription_available\" event$")
+  public void sendTranscriptionAvailableEvent() throws IOException {
+    transcriptionAvailableEvent =
+        WebhooksHelper.callURL(
+            new URL(WEBHOOKS_URL + "/notify/transcription_available"),
+            service::unserializeWebhooksEvent);
+  }
+
   @Then("the header of the {string} event with a {string} type contains a valid authorization")
   public void validatePieHeader(String event, String type) {
 
@@ -177,6 +226,12 @@ public class WebhooksEventsSteps {
       receivedEvent = aceEvent;
     } else if (event.equals("ICE")) {
       receivedEvent = iceEvent;
+    } else if (event.equals("recording_finished")) {
+      receivedEvent = recordingFinishedEvent;
+    } else if (event.equals("recording_available")) {
+      receivedEvent = recordingAvailableEvent;
+    } else if (event.equals("transcription_available")) {
+      receivedEvent = transcriptionAvailableEvent;
     } else {
       Assertions.fail();
     }
@@ -187,7 +242,7 @@ public class WebhooksEventsSteps {
   }
 
   @Then("the Voice event describes a {string} event with a {string} type")
-  public void validatePieEvent(String event, String type) {
+  public void validateTypeEvent(String event, String type) {
 
     WebhooksHelper.Response<?> receivedEvent = null;
     WebhooksEvent expectedEvent = null;
@@ -197,6 +252,15 @@ public class WebhooksEventsSteps {
     } else if (event.equals("PIE") && type.equals("sequence")) {
       receivedEvent = pieSequence;
       expectedEvent = expectedPieSequenceEvent;
+    } else if (event.equals("notify") && type.equals("recording_finished")) {
+      receivedEvent = recordingFinishedEvent;
+      expectedEvent = expectedRecordingFinishedEvent;
+    } else if (event.equals("notify") && type.equals("recording_available")) {
+      receivedEvent = recordingAvailableEvent;
+      expectedEvent = expectedRecordingAvailableEvent;
+    } else if (event.equals("notify") && type.equals("transcription_available")) {
+      receivedEvent = transcriptionAvailableEvent;
+      expectedEvent = expectedTranscriptionAvailableEvent;
     } else {
       Assertions.fail();
     }

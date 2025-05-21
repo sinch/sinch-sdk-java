@@ -12,7 +12,8 @@ import java.util.Objects;
 @JsonPropertyOrder({
   ReasonImpl.JSON_PROPERTY_CODE,
   ReasonImpl.JSON_PROPERTY_DESCRIPTION,
-  ReasonImpl.JSON_PROPERTY_SUB_CODE
+  ReasonImpl.JSON_PROPERTY_SUB_CODE,
+  ReasonImpl.JSON_PROPERTY_CHANNEL_CODE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
@@ -31,15 +32,21 @@ public class ReasonImpl implements Reason {
 
   private OptionalValue<ReasonSubCode> subCode;
 
+  public static final String JSON_PROPERTY_CHANNEL_CODE = "channel_code";
+
+  private OptionalValue<String> channelCode;
+
   public ReasonImpl() {}
 
   protected ReasonImpl(
       OptionalValue<ReasonCode> code,
       OptionalValue<String> description,
-      OptionalValue<ReasonSubCode> subCode) {
+      OptionalValue<ReasonSubCode> subCode,
+      OptionalValue<String> channelCode) {
     this.code = code;
     this.description = description;
     this.subCode = subCode;
+    this.channelCode = channelCode;
   }
 
   @JsonIgnore
@@ -75,6 +82,17 @@ public class ReasonImpl implements Reason {
     return subCode;
   }
 
+  @JsonIgnore
+  public String getChannelCode() {
+    return channelCode.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CHANNEL_CODE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> channelCode() {
+    return channelCode;
+  }
+
   /** Return true if this Reason object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -87,12 +105,13 @@ public class ReasonImpl implements Reason {
     ReasonImpl reason = (ReasonImpl) o;
     return Objects.equals(this.code, reason.code)
         && Objects.equals(this.description, reason.description)
-        && Objects.equals(this.subCode, reason.subCode);
+        && Objects.equals(this.subCode, reason.subCode)
+        && Objects.equals(this.channelCode, reason.channelCode);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, description, subCode);
+    return Objects.hash(code, description, subCode, channelCode);
   }
 
   @Override
@@ -102,6 +121,7 @@ public class ReasonImpl implements Reason {
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    subCode: ").append(toIndentedString(subCode)).append("\n");
+    sb.append("    channelCode: ").append(toIndentedString(channelCode)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -121,6 +141,7 @@ public class ReasonImpl implements Reason {
     OptionalValue<ReasonCode> code = OptionalValue.empty();
     OptionalValue<String> description = OptionalValue.empty();
     OptionalValue<ReasonSubCode> subCode = OptionalValue.empty();
+    OptionalValue<String> channelCode = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CODE)
     public Builder setCode(ReasonCode code) {
@@ -140,8 +161,14 @@ public class ReasonImpl implements Reason {
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_CHANNEL_CODE)
+    public Builder setChannelCode(String channelCode) {
+      this.channelCode = OptionalValue.of(channelCode);
+      return this;
+    }
+
     public Reason build() {
-      return new ReasonImpl(code, description, subCode);
+      return new ReasonImpl(code, description, subCode, channelCode);
     }
   }
 }

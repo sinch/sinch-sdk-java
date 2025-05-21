@@ -14,7 +14,7 @@ import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.domains.conversation.api.templates.adapters.TemplatesBaseTest;
 import com.sinch.sdk.domains.conversation.models.templates.v1.TemplateV1DtoTest;
 import com.sinch.sdk.domains.conversation.models.templates.v1.internal.V1ListTemplatesResponseInternalDtoTest;
-import com.sinch.sdk.domains.conversation.templates.api.internal.TemplatesV1Api;
+import com.sinch.sdk.domains.conversation.templates.api.internal.V1Api;
 import com.sinch.sdk.domains.conversation.templates.models.v1.TemplateV1;
 import com.sinch.sdk.models.ConversationContext;
 import java.util.Collection;
@@ -31,7 +31,7 @@ import org.mockito.Mock;
 public class TemplatesServiceV1Test extends TemplatesBaseTest {
 
   @Mock ConversationContext context;
-  @Mock TemplatesV1Api api;
+  @Mock V1Api api;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
   @Captor ArgumentCaptor<String> uriPartIDCaptor;

@@ -34,7 +34,7 @@ public class OmniMessageOverrideDtoTest extends ConversationBaseTest {
       LocationMessageDtoTest.locationMessageDto;
   public static OmniMessageOverride omniMessageOverrideMedia = MediaMessageDtoTest.mediaMessageDto;
   public static OmniMessageOverride omniMessageOverrideTemplateReference =
-      TemplateReferenceDtoTest.templateReferenceDto;
+      TemplateReferenceDtoTest.templateReferenceWithVersionDto;
   public static OmniMessageOverride omniMessageOverrideText = TextMessageDtoTest.textMessageDto;
 
   @GivenTextResource("/domains/conversation/v1/messages/OmniMessageOverrideCardDto.json")
