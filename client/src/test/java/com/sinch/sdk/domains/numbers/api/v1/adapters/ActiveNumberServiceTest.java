@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.numbers.api.v1.adapters;
 
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -17,16 +18,19 @@ import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.api.v1.internal.ActiveNumberApi;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.Capability;
+import com.sinch.sdk.domains.numbers.models.v1.EmergencyAddress;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
 import com.sinch.sdk.domains.numbers.models.v1.SmsConfiguration;
 import com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration;
 import com.sinch.sdk.domains.numbers.models.v1.VoiceConfigurationRTC;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.EmergencyAddressRequestDtoTest;
 import com.sinch.sdk.domains.numbers.models.v1.request.OrderBy;
 import com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern;
 import com.sinch.sdk.domains.numbers.models.v1.request.SearchPosition;
 import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.ValidateAddressResponse;
 import com.sinch.sdk.domains.numbers.models.v1.response.internal.ActiveNumberListResponseInternal;
 import com.sinch.sdk.models.NumbersContext;
 import java.util.Arrays;
@@ -49,6 +53,12 @@ class ActiveNumberServiceTest extends NumbersBaseTest {
 
   @GivenJsonResource("/domains/numbers/v1/active/active-numbers-get.json")
   ActiveNumber activeGetResponseDto;
+
+  @GivenJsonResource("/domains/numbers/v1/response/validate-address-response.json")
+  ValidateAddressResponse validateAddressResponseDto;
+
+  @GivenJsonResource("/domains/numbers/v1/emergency-address.json")
+  EmergencyAddress emergencyAddressDto;
 
   @Mock NumbersContext context;
   @Mock HttpClient httpClient;
@@ -208,5 +218,58 @@ class ActiveNumberServiceTest extends NumbersBaseTest {
     ActiveNumber response = service.update("foo phone number", parameters);
 
     Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(activeGetResponseDto);
+  }
+
+  @Test
+  void validateEmergencyAddress() {
+
+    when(api.validateEmergencyAddress(
+            eq(uriUUID),
+            eq("foo phone number"),
+            ArgumentMatchers.eq(EmergencyAddressRequestDtoTest.emergencyAddressRequest)))
+        .thenReturn(validateAddressResponseDto);
+
+    ValidateAddressResponse response =
+        service.validateEmergencyAddress(
+            "foo phone number", EmergencyAddressRequestDtoTest.emergencyAddressRequest);
+
+    Assertions.assertThat(response)
+        .usingRecursiveComparison()
+        .isEqualTo(validateAddressResponseDto);
+  }
+
+  @Test
+  void provisionEmergencyAddress() {
+
+    when(api.provisionEmergencyAddress(
+            eq(uriUUID),
+            eq("foo phone number"),
+            ArgumentMatchers.eq(EmergencyAddressRequestDtoTest.emergencyAddressRequest)))
+        .thenReturn(emergencyAddressDto);
+
+    EmergencyAddress response =
+        service.provisionEmergencyAddress(
+            "foo phone number", EmergencyAddressRequestDtoTest.emergencyAddressRequest);
+
+    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(emergencyAddressDto);
+  }
+
+  @Test
+  void deprovisionEmergencyAddress() {
+
+    doNothing().when(api).deprovisionEmergencyAddress(eq(uriUUID), eq("foo phone number"));
+
+    service.deprovisionEmergencyAddress("foo phone number");
+  }
+
+  @Test
+  void getEmergencyAddress() {
+
+    when(api.getEmergencyAddress(eq(uriUUID), eq("foo phone number")))
+        .thenReturn(emergencyAddressDto);
+
+    EmergencyAddress response = service.getEmergencyAddress("foo phone number");
+
+    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(emergencyAddressDto);
   }
 }
