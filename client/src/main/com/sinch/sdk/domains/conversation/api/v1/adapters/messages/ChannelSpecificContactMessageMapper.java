@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.sinch.sdk.core.utils.databind.Mapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.ChannelSpecificContactMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.ChannelSpecificContactMessageContent;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ChannelSpecificContactMessageMessageMessageInternalImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.nfmreply.WhatsAppInteractiveNfmReplyChannelSpecificContactMessage;
 import java.io.IOException;
 
 public class ChannelSpecificContactMessageMapper {
@@ -33,9 +33,7 @@ public class ChannelSpecificContactMessageMapper {
     public ChannelSpecificContactMessageContent deserialize(
         JsonParser jp, DeserializationContext ctxt) throws IOException {
 
-      ChannelSpecificContactMessageMessageMessageInternalImpl deserialized =
-          jp.readValueAs(ChannelSpecificContactMessageMessageMessageInternalImpl.class);
-      return (ChannelSpecificContactMessageContent) deserialized.getActualInstance();
+      return jp.readValueAs(WhatsAppInteractiveNfmReplyChannelSpecificContactMessage.class);
     }
   }
 }
