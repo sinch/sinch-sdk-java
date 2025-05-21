@@ -21,6 +21,15 @@ import com.sinch.sdk.domains.mailgun.models.v1.emails.response.SendingQueuesStat
 public interface EmailsService {
 
   /**
+   * Get messages queue status Provides default and scheduled message queue information.
+   *
+   * @param name The name of the domain you want get sending queues from (required)
+   * @return SendingQueuesStatusResponse
+   * @throws ApiException if fails to make API call
+   */
+  SendingQueuesStatusResponse getSendingQueuesStatus(String name) throws ApiException;
+
+  /**
    * Retrieve a stored email Event(s) created from sending an email with Mailgun will contain a
    * &#x60;storage.key&#x60; to use to retrieve the email.
    *
@@ -30,15 +39,6 @@ public interface EmailsService {
    * @throws ApiException if fails to make API call
    */
   GetStoredEmailResponse getStoredEmail(String domainName, String storageKey) throws ApiException;
-
-  /**
-   * Get messages queue status Provides default and scheduled message queue information.
-   *
-   * @param name The name of the domain you want get sending queues from (required)
-   * @return SendingQueuesStatusResponse
-   * @throws ApiException if fails to make API call
-   */
-  SendingQueuesStatusResponse getSendingQueuesStatus(String name) throws ApiException;
 
   /**
    * Send an email Pass the components of the messages such as To, From, Subject, HTML and text

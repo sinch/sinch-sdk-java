@@ -20,6 +20,8 @@ public interface GetTemplateResponseInternal {
   /**
    * Get template
    *
+   * <p>Field is required
+   *
    * @return template
    */
   Template getTemplate();

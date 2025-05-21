@@ -19,12 +19,16 @@ public interface OrderStatusPayment {
   /**
    * Unique ID used to query the current payment status.
    *
+   * <p>Field is required
+   *
    * @return referenceId
    */
   String getReferenceId();
 
   /**
    * Get order
+   *
+   * <p>Field is required
    *
    * @return order
    */

@@ -52,6 +52,8 @@ public interface InjectEventRequest {
    * The processed time of the message in UTC timezone. Must be less than current_time and greater
    * than (current_time - 30 days).
    *
+   * <p>Field is required
+   *
    * @return acceptTime
    */
   Instant getAcceptTime();

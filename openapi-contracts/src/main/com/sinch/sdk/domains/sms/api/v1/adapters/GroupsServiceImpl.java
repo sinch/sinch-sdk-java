@@ -186,17 +186,17 @@ public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Group
         localVarAuthNames);
   }
 
-  public List<String> listMembers(String groupId) throws ApiException {
+  public Group get(String groupId) throws ApiException {
 
-    LOGGER.finest("[listMembers]" + " " + "groupId: " + groupId);
+    LOGGER.finest("[get]" + " " + "groupId: " + groupId);
 
-    HttpRequest httpRequest = listMembersRequestBuilder(groupId);
+    HttpRequest httpRequest = getRequestBuilder(groupId);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      return mapper.deserialize(response, new TypeReference<List<String>>() {});
+      return mapper.deserialize(response, new TypeReference<Group>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -207,20 +207,19 @@ public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Group
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest listMembersRequestBuilder(String groupId) throws ApiException {
+  private HttpRequest getRequestBuilder(String groupId) throws ApiException {
     // verify the required parameter 'this.servicePlanId' is set
     if (this.servicePlanId == null) {
       throw new ApiException(
-          400, "Missing the required parameter 'this.servicePlanId' when calling listMembers");
+          400, "Missing the required parameter 'this.servicePlanId' when calling get");
     }
     // verify the required parameter 'groupId' is set
     if (groupId == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'groupId' when calling listMembers");
+      throw new ApiException(400, "Missing the required parameter 'groupId' when calling get");
     }
 
     String localVarPath =
-        "/xms/v1/{service_plan_id}/groups/{group_id}/members"
+        "/xms/v1/{service_plan_id}/groups/{group_id}"
             .replaceAll(
                 "\\{" + "service_plan_id" + "\\}",
                 URLPathUtils.encodePathSegment(this.servicePlanId.toString()))
@@ -333,6 +332,69 @@ public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Group
         localVarAuthNames);
   }
 
+  public List<String> listMembers(String groupId) throws ApiException {
+
+    LOGGER.finest("[listMembers]" + " " + "groupId: " + groupId);
+
+    HttpRequest httpRequest = listMembersRequestBuilder(groupId);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+      return mapper.deserialize(response, new TypeReference<List<String>>() {});
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest listMembersRequestBuilder(String groupId) throws ApiException {
+    // verify the required parameter 'this.servicePlanId' is set
+    if (this.servicePlanId == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'this.servicePlanId' when calling listMembers");
+    }
+    // verify the required parameter 'groupId' is set
+    if (groupId == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'groupId' when calling listMembers");
+    }
+
+    String localVarPath =
+        "/xms/v1/{service_plan_id}/groups/{group_id}/members"
+            .replaceAll(
+                "\\{" + "service_plan_id" + "\\}",
+                URLPathUtils.encodePathSegment(this.servicePlanId.toString()))
+            .replaceAll(
+                "\\{" + "group_id" + "\\}", URLPathUtils.encodePathSegment(groupId.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.GET,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
   public Group replace(String groupId, GroupRequest groupRequest) throws ApiException {
 
     LOGGER.finest(
@@ -394,68 +456,6 @@ public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Group
     return new HttpRequest(
         localVarPath,
         HttpMethod.PUT,
-        localVarQueryParams,
-        serializedBody,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  public Group get(String groupId) throws ApiException {
-
-    LOGGER.finest("[get]" + " " + "groupId: " + groupId);
-
-    HttpRequest httpRequest = getRequestBuilder(groupId);
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      return mapper.deserialize(response, new TypeReference<Group>() {});
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest getRequestBuilder(String groupId) throws ApiException {
-    // verify the required parameter 'this.servicePlanId' is set
-    if (this.servicePlanId == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'this.servicePlanId' when calling get");
-    }
-    // verify the required parameter 'groupId' is set
-    if (groupId == null) {
-      throw new ApiException(400, "Missing the required parameter 'groupId' when calling get");
-    }
-
-    String localVarPath =
-        "/xms/v1/{service_plan_id}/groups/{group_id}"
-            .replaceAll(
-                "\\{" + "service_plan_id" + "\\}",
-                URLPathUtils.encodePathSegment(this.servicePlanId.toString()))
-            .replaceAll(
-                "\\{" + "group_id" + "\\}", URLPathUtils.encodePathSegment(groupId.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-
-    final Collection<String> localVarContentTypes = Arrays.asList();
-
-    final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
-    final String serializedBody = null;
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.GET,
         localVarQueryParams,
         serializedBody,
         localVarHeaderParams,

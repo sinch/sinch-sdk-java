@@ -16,6 +16,8 @@ public interface VerificationRequestEventResponse {
   /**
    * Get action
    *
+   * <p>Field is required
+   *
    * @return action
    */
   VerificationEventResponseAction getAction();

@@ -18,12 +18,16 @@ public interface VerificationEvent {
   /**
    * The ID of the verification request.
    *
+   * <p>Field is required
+   *
    * @return id
    */
   String getId();
 
   /**
    * Get identity
+   *
+   * <p>Field is required
    *
    * @return identity
    */

@@ -50,6 +50,8 @@ public interface WhatsAppInteractiveNfmReplyChannelSpecificContactMessage
   /**
    * Get nfmReply
    *
+   * <p>Field is required
+   *
    * @return nfmReply
    */
   WhatsAppInteractiveNfmReply getNfmReply();

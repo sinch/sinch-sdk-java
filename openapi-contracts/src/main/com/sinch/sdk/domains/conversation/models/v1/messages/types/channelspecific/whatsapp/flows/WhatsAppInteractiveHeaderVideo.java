@@ -49,6 +49,8 @@ public interface WhatsAppInteractiveHeaderVideo
   /**
    * Get video
    *
+   * <p>Field is required
+   *
    * @return video
    */
   WhatsAppInteractiveHeaderMedia getVideo();

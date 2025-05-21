@@ -19,12 +19,16 @@ public interface PagingResponse {
   /**
    * Previous page URL
    *
+   * <p>Field is required
+   *
    * @return previous
    */
   String getPrevious();
 
   /**
    * First page URL
+   *
+   * <p>Field is required
    *
    * @return first
    */
@@ -33,12 +37,16 @@ public interface PagingResponse {
   /**
    * Next page URL
    *
+   * <p>Field is required
+   *
    * @return next
    */
   String getNext();
 
   /**
    * Last page URL
+   *
+   * <p>Field is required
    *
    * @return last
    */

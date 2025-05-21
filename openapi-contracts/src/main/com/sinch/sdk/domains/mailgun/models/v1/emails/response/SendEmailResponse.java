@@ -20,12 +20,16 @@ public interface SendEmailResponse {
    * The unique identifier of the message as defined by <a
    * href="https://datatracker.ietf.org/doc/html/rfc2392">RFC-2392</a>.
    *
+   * <p>Field is required
+   *
    * @return id
    */
   String getId();
 
   /**
    * A success message
+   *
+   * <p>Field is required
    *
    * @return message
    */

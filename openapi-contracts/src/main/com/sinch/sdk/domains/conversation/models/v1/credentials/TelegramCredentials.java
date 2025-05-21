@@ -22,6 +22,8 @@ public interface TelegramCredentials extends ChannelCredentials {
   /**
    * The token for the Telegram bot to which you are connecting.
    *
+   * <p>Field is required
+   *
    * @return token
    */
   String getToken();

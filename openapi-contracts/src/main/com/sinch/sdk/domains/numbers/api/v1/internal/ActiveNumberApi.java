@@ -143,6 +143,92 @@ public class ActiveNumberApi {
   }
 
   /**
+   * Get the emergency address for a number With this endpoint, you can retrieve the emergency
+   * address associated with this number.
+   *
+   * @param projectId Found on your [Sinch Customer
+   *     Dashboard](https://dashboard.sinch.com/settings/project-management). Settings &gt;
+   *     Projects. (required)
+   * @param phoneNumber Output only. The phone number in
+   *     [E.164](https://community.sinch.com/t5/Glossary/E-164/ta-p/7537) format with leading
+   *     &#x60;+&#x60;. (required)
+   * @return EmergencyAddress
+   * @throws ApiException if fails to make API call
+   */
+  public EmergencyAddress getEmergencyAddress(String projectId, String phoneNumber)
+      throws ApiException {
+
+    LOGGER.finest(
+        "[getEmergencyAddress]"
+            + " "
+            + "projectId: "
+            + projectId
+            + ", "
+            + "phoneNumber: "
+            + phoneNumber);
+
+    HttpRequest httpRequest = getEmergencyAddressRequestBuilder(projectId, phoneNumber);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+      TypeReference<EmergencyAddress> localVarReturnType = new TypeReference<EmergencyAddress>() {};
+      return mapper.deserialize(response, localVarReturnType);
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest getEmergencyAddressRequestBuilder(String projectId, String phoneNumber)
+      throws ApiException {
+    // verify the required parameter 'projectId' is set
+    if (projectId == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'projectId' when calling getEmergencyAddress");
+    }
+    // verify the required parameter 'phoneNumber' is set
+    if (phoneNumber == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'phoneNumber' when calling getEmergencyAddress");
+    }
+
+    String localVarPath =
+        "/v1/projects/{projectId}/activeNumbers/{phoneNumber}/emergencyAddress"
+            .replaceAll(
+                "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()))
+            .replaceAll(
+                "\\{" + "phoneNumber" + "\\}",
+                URLPathUtils.encodePathSegment(phoneNumber.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("Basic", "OAuth2.0");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.GET,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  /**
    * Retrieve an active phone number Retrieve a specific active phone number.
    *
    * @param projectId Found on your [Sinch Customer
@@ -201,92 +287,6 @@ public class ActiveNumberApi {
 
     String localVarPath =
         "/v1/projects/{projectId}/activeNumbers/{phoneNumber}"
-            .replaceAll(
-                "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()))
-            .replaceAll(
-                "\\{" + "phoneNumber" + "\\}",
-                URLPathUtils.encodePathSegment(phoneNumber.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-
-    final Collection<String> localVarContentTypes = Arrays.asList();
-
-    final Collection<String> localVarAuthNames = Arrays.asList("Basic", "OAuth2.0");
-    final String serializedBody = null;
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.GET,
-        localVarQueryParams,
-        serializedBody,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  /**
-   * Get the emergency address for a number With this endpoint, you can retrieve the emergency
-   * address associated with this number.
-   *
-   * @param projectId Found on your [Sinch Customer
-   *     Dashboard](https://dashboard.sinch.com/settings/project-management). Settings &gt;
-   *     Projects. (required)
-   * @param phoneNumber Output only. The phone number in
-   *     [E.164](https://community.sinch.com/t5/Glossary/E-164/ta-p/7537) format with leading
-   *     &#x60;+&#x60;. (required)
-   * @return EmergencyAddress
-   * @throws ApiException if fails to make API call
-   */
-  public EmergencyAddress getEmergencyAddress(String projectId, String phoneNumber)
-      throws ApiException {
-
-    LOGGER.finest(
-        "[getEmergencyAddress]"
-            + " "
-            + "projectId: "
-            + projectId
-            + ", "
-            + "phoneNumber: "
-            + phoneNumber);
-
-    HttpRequest httpRequest = getEmergencyAddressRequestBuilder(projectId, phoneNumber);
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<EmergencyAddress> localVarReturnType = new TypeReference<EmergencyAddress>() {};
-      return mapper.deserialize(response, localVarReturnType);
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest getEmergencyAddressRequestBuilder(String projectId, String phoneNumber)
-      throws ApiException {
-    // verify the required parameter 'projectId' is set
-    if (projectId == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'projectId' when calling getEmergencyAddress");
-    }
-    // verify the required parameter 'phoneNumber' is set
-    if (phoneNumber == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'phoneNumber' when calling getEmergencyAddress");
-    }
-
-    String localVarPath =
-        "/v1/projects/{projectId}/activeNumbers/{phoneNumber}/emergencyAddress"
             .replaceAll(
                 "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()))
             .replaceAll(
@@ -521,101 +521,6 @@ public class ActiveNumberApi {
   }
 
   /**
-   * Add a emergency address for a number With this endpoint, you can provision an emergency address
-   * associated with this number.
-   *
-   * @param projectId Found on your [Sinch Customer
-   *     Dashboard](https://dashboard.sinch.com/settings/project-management). Settings &gt;
-   *     Projects. (required)
-   * @param phoneNumber Output only. The phone number in
-   *     [E.164](https://community.sinch.com/t5/Glossary/E-164/ta-p/7537) format with leading
-   *     &#x60;+&#x60;. (required)
-   * @param emergencyAddressRequest Request to provision an emergency address for a number.
-   *     (optional)
-   * @return EmergencyAddress
-   * @throws ApiException if fails to make API call
-   */
-  public EmergencyAddress provisionEmergencyAddress(
-      String projectId, String phoneNumber, EmergencyAddressRequest emergencyAddressRequest)
-      throws ApiException {
-
-    LOGGER.finest(
-        "[provisionEmergencyAddress]"
-            + " "
-            + "projectId: "
-            + projectId
-            + ", "
-            + "phoneNumber: "
-            + phoneNumber
-            + ", "
-            + "emergencyAddressRequest: "
-            + emergencyAddressRequest);
-
-    HttpRequest httpRequest =
-        provisionEmergencyAddressRequestBuilder(projectId, phoneNumber, emergencyAddressRequest);
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<EmergencyAddress> localVarReturnType = new TypeReference<EmergencyAddress>() {};
-      return mapper.deserialize(response, localVarReturnType);
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest provisionEmergencyAddressRequestBuilder(
-      String projectId, String phoneNumber, EmergencyAddressRequest emergencyAddressRequest)
-      throws ApiException {
-    // verify the required parameter 'projectId' is set
-    if (projectId == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'projectId' when calling provisionEmergencyAddress");
-    }
-    // verify the required parameter 'phoneNumber' is set
-    if (phoneNumber == null) {
-      throw new ApiException(
-          400,
-          "Missing the required parameter 'phoneNumber' when calling provisionEmergencyAddress");
-    }
-
-    String localVarPath =
-        "/v1/projects/{projectId}/activeNumbers/{phoneNumber}/emergencyAddress:provision"
-            .replaceAll(
-                "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()))
-            .replaceAll(
-                "\\{" + "phoneNumber" + "\\}",
-                URLPathUtils.encodePathSegment(phoneNumber.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-
-    final Collection<String> localVarContentTypes = Arrays.asList("application/json");
-
-    final Collection<String> localVarAuthNames = Arrays.asList("Basic", "OAuth2.0");
-    final String serializedBody = mapper.serialize(localVarContentTypes, emergencyAddressRequest);
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.POST,
-        localVarQueryParams,
-        serializedBody,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  /**
    * Release an active number from the project With this endpoint, you can cancel your subscription
    * for a specific phone number.
    *
@@ -803,6 +708,101 @@ public class ActiveNumberApi {
     return new HttpRequest(
         localVarPath,
         HttpMethod.PATCH,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  /**
+   * Add a emergency address for a number With this endpoint, you can provision an emergency address
+   * associated with this number.
+   *
+   * @param projectId Found on your [Sinch Customer
+   *     Dashboard](https://dashboard.sinch.com/settings/project-management). Settings &gt;
+   *     Projects. (required)
+   * @param phoneNumber Output only. The phone number in
+   *     [E.164](https://community.sinch.com/t5/Glossary/E-164/ta-p/7537) format with leading
+   *     &#x60;+&#x60;. (required)
+   * @param emergencyAddressRequest Request to provision an emergency address for a number.
+   *     (optional)
+   * @return EmergencyAddress
+   * @throws ApiException if fails to make API call
+   */
+  public EmergencyAddress provisionEmergencyAddress(
+      String projectId, String phoneNumber, EmergencyAddressRequest emergencyAddressRequest)
+      throws ApiException {
+
+    LOGGER.finest(
+        "[provisionEmergencyAddress]"
+            + " "
+            + "projectId: "
+            + projectId
+            + ", "
+            + "phoneNumber: "
+            + phoneNumber
+            + ", "
+            + "emergencyAddressRequest: "
+            + emergencyAddressRequest);
+
+    HttpRequest httpRequest =
+        provisionEmergencyAddressRequestBuilder(projectId, phoneNumber, emergencyAddressRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+      TypeReference<EmergencyAddress> localVarReturnType = new TypeReference<EmergencyAddress>() {};
+      return mapper.deserialize(response, localVarReturnType);
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest provisionEmergencyAddressRequestBuilder(
+      String projectId, String phoneNumber, EmergencyAddressRequest emergencyAddressRequest)
+      throws ApiException {
+    // verify the required parameter 'projectId' is set
+    if (projectId == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'projectId' when calling provisionEmergencyAddress");
+    }
+    // verify the required parameter 'phoneNumber' is set
+    if (phoneNumber == null) {
+      throw new ApiException(
+          400,
+          "Missing the required parameter 'phoneNumber' when calling provisionEmergencyAddress");
+    }
+
+    String localVarPath =
+        "/v1/projects/{projectId}/activeNumbers/{phoneNumber}/emergencyAddress:provision"
+            .replaceAll(
+                "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()))
+            .replaceAll(
+                "\\{" + "phoneNumber" + "\\}",
+                URLPathUtils.encodePathSegment(phoneNumber.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList("application/json");
+
+    final Collection<String> localVarAuthNames = Arrays.asList("Basic", "OAuth2.0");
+    final String serializedBody = mapper.serialize(localVarContentTypes, emergencyAddressRequest);
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.POST,
         localVarQueryParams,
         serializedBody,
         localVarHeaderParams,

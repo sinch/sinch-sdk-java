@@ -21,6 +21,8 @@ public interface VerificationStartRequestPhoneCall
   /**
    * Get identity
    *
+   * <p>Field is required
+   *
    * @return identity
    */
   Identity getIdentity();

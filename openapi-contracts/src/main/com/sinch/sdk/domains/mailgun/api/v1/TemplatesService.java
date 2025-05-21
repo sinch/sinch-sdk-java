@@ -28,110 +28,39 @@ import com.sinch.sdk.domains.mailgun.models.v1.templates.response.ListVersionsRe
 public interface TemplatesService {
 
   /**
-   * Delete all templates Delete all templates and their versions for the domain.
-   *
-   * @param domainName Domain name the template is associated with. (required)
-   * @throws ApiException if fails to make API call
-   */
-  void deleteAll(String domainName) throws ApiException;
-
-  /**
-   * Delete a template Delete the template specified in the url. NOTE: This method deletes all
-   * versions of the specified template.
-   *
-   * @param domainName Domain name the template is associated with. (required)
-   * @param templateName template name to be deleted. (required)
-   * @throws ApiException if fails to make API call
-   */
-  void delete(String domainName, String templateName) throws ApiException;
-
-  /**
-   * Delete a version Delete a specific template version.
+   * Copy a version (using default parameters) Copies an existing version into a new version with
+   * the provided name.
    *
    * @param domainName Domain name the template is associated with. (required)
    * @param templateName template name the version is stored under. (required)
-   * @param versionName Tag of the version of the template to be deleted. (required)
-   * @throws ApiException if fails to make API call
-   */
-  void deleteVersion(String domainName, String templateName, String versionName)
-      throws ApiException;
-
-  /**
-   * Get templates (using default parameters) Returns a list of templates for the domain.
-   *
-   * @param domainName Domain name to fetch the templates for. (required)
-   * @return ListTemplatesResponse
-   * @throws ApiException if fails to make API call
-   */
-  ListTemplatesResponse list(String domainName) throws ApiException;
-
-  /**
-   * Get templates Returns a list of templates for the domain.
-   *
-   * @param domainName Domain name to fetch the templates for. (required)
-   * @param queryParameter (optional)
-   * @return ListTemplatesResponse
-   * @throws ApiException if fails to make API call
-   */
-  ListTemplatesResponse list(String domainName, ListTemplatesQueryParameters queryParameter)
-      throws ApiException;
-
-  /**
-   * Get template (using default parameters) Returns metadata information about the stored template
-   * specified in the url. If the active flag is provided, the content of the active version of the
-   * template is returned.
-   *
-   * @param domainName Domain name the template is stored under. (required)
-   * @param templateName Template name to fetch. (required)
-   * @return Template
-   * @throws ApiException if fails to make API call
-   */
-  Template get(String domainName, String templateName) throws ApiException;
-
-  /**
-   * Get Template's active version
-   *
-   * @param domainName Domain name the template is stored under. (required)
-   * @param templateName Template name to fetch. (required)
+   * @param versionName Tag of the version to copy. (required)
+   * @param newVersionName The name for the new version. If the version name already exists, it will
+   *     be overridden. (required)
    * @return VersionDetails
    * @throws ApiException if fails to make API call
    */
-  VersionDetails getActiveVersion(String domainName, String templateName) throws ApiException;
-
-  /**
-   * Get all template versions (using default parameters) Returns a paginated list of template
-   * versions.
-   *
-   * @param domainName Domain name to fetch the templates for. (required)
-   * @param templateName template name to fetch the versions for. (required)
-   * @return ListVersionsResponse
-   * @throws ApiException if fails to make API call
-   */
-  ListVersionsResponse listVersions(String domainName, String templateName) throws ApiException;
-
-  /**
-   * Get all template versions Returns a paginated list of template versions.
-   *
-   * @param domainName Domain name to fetch the templates for. (required)
-   * @param templateName template name to fetch the versions for. (required)
-   * @param queryParameter (optional)
-   * @return ListVersionsResponse
-   * @throws ApiException if fails to make API call
-   */
-  ListVersionsResponse listVersions(
-      String domainName, String templateName, ListVersionsQueryParameters queryParameter)
+  VersionDetails copyVersion(
+      String domainName, String templateName, String versionName, String newVersionName)
       throws ApiException;
 
   /**
-   * Get a version Retrieve the information and content of the specified version of a template.
+   * Copy a version Copies an existing version into a new version with the provided name.
    *
-   * @param domainName Domain name the template is stored under. (required)
-   * @param templateName template name the version is for. (required)
-   * @param versionName Tag of the version of the template to fetch. (required)
+   * @param domainName Domain name the template is associated with. (required)
+   * @param templateName template name the version is stored under. (required)
+   * @param versionName Tag of the version to copy. (required)
+   * @param newVersionName The name for the new version. If the version name already exists, it will
+   *     be overridden. (required)
+   * @param queryParameter (optional)
    * @return VersionDetails
    * @throws ApiException if fails to make API call
    */
-  VersionDetails getVersion(String domainName, String templateName, String versionName)
+  VersionDetails copyVersion(
+      String domainName,
+      String templateName,
+      String versionName,
+      String newVersionName,
+      CopyVersionQueryParameters queryParameter)
       throws ApiException;
 
   /**
@@ -180,6 +109,113 @@ public interface TemplatesService {
       throws ApiException;
 
   /**
+   * Delete a template Delete the template specified in the url. NOTE: This method deletes all
+   * versions of the specified template.
+   *
+   * @param domainName Domain name the template is associated with. (required)
+   * @param templateName template name to be deleted. (required)
+   * @throws ApiException if fails to make API call
+   */
+  void delete(String domainName, String templateName) throws ApiException;
+
+  /**
+   * Delete all templates Delete all templates and their versions for the domain.
+   *
+   * @param domainName Domain name the template is associated with. (required)
+   * @throws ApiException if fails to make API call
+   */
+  void deleteAll(String domainName) throws ApiException;
+
+  /**
+   * Delete a version Delete a specific template version.
+   *
+   * @param domainName Domain name the template is associated with. (required)
+   * @param templateName template name the version is stored under. (required)
+   * @param versionName Tag of the version of the template to be deleted. (required)
+   * @throws ApiException if fails to make API call
+   */
+  void deleteVersion(String domainName, String templateName, String versionName)
+      throws ApiException;
+
+  /**
+   * Get template (using default parameters) Returns metadata information about the stored template
+   * specified in the url. If the active flag is provided, the content of the active version of the
+   * template is returned.
+   *
+   * @param domainName Domain name the template is stored under. (required)
+   * @param templateName Template name to fetch. (required)
+   * @return Template
+   * @throws ApiException if fails to make API call
+   */
+  Template get(String domainName, String templateName) throws ApiException;
+
+  /**
+   * Get Template's active version
+   *
+   * @param domainName Domain name the template is stored under. (required)
+   * @param templateName Template name to fetch. (required)
+   * @return VersionDetails
+   * @throws ApiException if fails to make API call
+   */
+  VersionDetails getActiveVersion(String domainName, String templateName) throws ApiException;
+
+  /**
+   * Get a version Retrieve the information and content of the specified version of a template.
+   *
+   * @param domainName Domain name the template is stored under. (required)
+   * @param templateName template name the version is for. (required)
+   * @param versionName Tag of the version of the template to fetch. (required)
+   * @return VersionDetails
+   * @throws ApiException if fails to make API call
+   */
+  VersionDetails getVersion(String domainName, String templateName, String versionName)
+      throws ApiException;
+
+  /**
+   * Get templates (using default parameters) Returns a list of templates for the domain.
+   *
+   * @param domainName Domain name to fetch the templates for. (required)
+   * @return ListTemplatesResponse
+   * @throws ApiException if fails to make API call
+   */
+  ListTemplatesResponse list(String domainName) throws ApiException;
+
+  /**
+   * Get templates Returns a list of templates for the domain.
+   *
+   * @param domainName Domain name to fetch the templates for. (required)
+   * @param queryParameter (optional)
+   * @return ListTemplatesResponse
+   * @throws ApiException if fails to make API call
+   */
+  ListTemplatesResponse list(String domainName, ListTemplatesQueryParameters queryParameter)
+      throws ApiException;
+
+  /**
+   * Get all template versions (using default parameters) Returns a paginated list of template
+   * versions.
+   *
+   * @param domainName Domain name to fetch the templates for. (required)
+   * @param templateName template name to fetch the versions for. (required)
+   * @return ListVersionsResponse
+   * @throws ApiException if fails to make API call
+   */
+  ListVersionsResponse listVersions(String domainName, String templateName) throws ApiException;
+
+  /**
+   * Get all template versions Returns a paginated list of template versions.
+   *
+   * @param domainName Domain name to fetch the templates for. (required)
+   * @param templateName template name to fetch the versions for. (required)
+   * @param queryParameter (optional)
+   * @return ListVersionsResponse
+   * @throws ApiException if fails to make API call
+   */
+  ListVersionsResponse listVersions(
+      String domainName, String templateName, ListVersionsQueryParameters queryParameter)
+      throws ApiException;
+
+  /**
    * Update template Update the description of a template.
    *
    * @param domainName Domain name the template is associated with. (required)
@@ -205,41 +241,5 @@ public interface TemplatesService {
       String templateName,
       String versionName,
       UpdateVersionRequest requestParameters)
-      throws ApiException;
-
-  /**
-   * Copy a version (using default parameters) Copies an existing version into a new version with
-   * the provided name.
-   *
-   * @param domainName Domain name the template is associated with. (required)
-   * @param templateName template name the version is stored under. (required)
-   * @param versionName Tag of the version to copy. (required)
-   * @param newVersionName The name for the new version. If the version name already exists, it will
-   *     be overridden. (required)
-   * @return VersionDetails
-   * @throws ApiException if fails to make API call
-   */
-  VersionDetails copyVersion(
-      String domainName, String templateName, String versionName, String newVersionName)
-      throws ApiException;
-
-  /**
-   * Copy a version Copies an existing version into a new version with the provided name.
-   *
-   * @param domainName Domain name the template is associated with. (required)
-   * @param templateName template name the version is stored under. (required)
-   * @param versionName Tag of the version to copy. (required)
-   * @param newVersionName The name for the new version. If the version name already exists, it will
-   *     be overridden. (required)
-   * @param queryParameter (optional)
-   * @return VersionDetails
-   * @throws ApiException if fails to make API call
-   */
-  VersionDetails copyVersion(
-      String domainName,
-      String templateName,
-      String versionName,
-      String newVersionName,
-      CopyVersionQueryParameters queryParameter)
       throws ApiException;
 }

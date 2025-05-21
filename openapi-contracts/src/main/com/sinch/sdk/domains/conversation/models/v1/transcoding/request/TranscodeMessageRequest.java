@@ -22,6 +22,8 @@ public interface TranscodeMessageRequest {
   /**
    * The ID of the app used to transcode the message.
    *
+   * <p>Field is required
+   *
    * @return appId
    */
   String getAppId();
@@ -29,12 +31,16 @@ public interface TranscodeMessageRequest {
   /**
    * Get appMessage
    *
+   * <p>Field is required
+   *
    * @return appMessage
    */
   AppMessage<?> getAppMessage();
 
   /**
    * The list of channels for which the message shall be transcoded to.
+   *
+   * <p>Field is required
    *
    * @return channels
    */

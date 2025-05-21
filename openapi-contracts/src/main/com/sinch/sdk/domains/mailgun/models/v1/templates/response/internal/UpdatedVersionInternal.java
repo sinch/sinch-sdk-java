@@ -19,6 +19,8 @@ public interface UpdatedVersionInternal {
   /**
    * Tag of the version. Must be unique to the template
    *
+   * <p>Field is required
+   *
    * @return tag
    */
   String getTag();

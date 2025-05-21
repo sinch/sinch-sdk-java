@@ -19,6 +19,8 @@ public interface EmailInfo {
   /**
    * Email address.
    *
+   * <p>Field is required
+   *
    * @return emailAddress
    */
   String getEmailAddress();

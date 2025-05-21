@@ -19,6 +19,8 @@ public interface UrlInfo {
   /**
    * The URL to be referenced
    *
+   * <p>Field is required
+   *
    * @return url
    */
   String getUrl();

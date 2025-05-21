@@ -20,12 +20,16 @@ public interface DryRunResponse {
   /**
    * The number of recipients in the batch
    *
+   * <p>Field is required
+   *
    * @return numberOfRecipients
    */
   Integer getNumberOfRecipients();
 
   /**
    * The total number of SMS message parts to be sent in the batch
+   *
+   * <p>Field is required
    *
    * @return numberOfMessages
    */

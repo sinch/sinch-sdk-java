@@ -56,6 +56,60 @@ public class EmailsServiceImpl implements com.sinch.sdk.domains.mailgun.api.v1.E
     this.mapper = mapper;
   }
 
+  public SendingQueuesStatusResponse getSendingQueuesStatus(String name) throws ApiException {
+
+    LOGGER.finest("[getSendingQueuesStatus]" + " " + "name: " + name);
+
+    HttpRequest httpRequest = getSendingQueuesStatusRequestBuilder(name);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+      return mapper.deserialize(response, new TypeReference<SendingQueuesStatusResponse>() {});
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest getSendingQueuesStatusRequestBuilder(String name) throws ApiException {
+    // verify the required parameter 'name' is set
+    if (name == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'name' when calling getSendingQueuesStatus");
+    }
+
+    String localVarPath =
+        "/v3/domains/{name}/sending_queues"
+            .replaceAll("\\{" + "name" + "\\}", URLPathUtils.encodePathSegment(name.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.GET,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
   public GetStoredEmailResponse getStoredEmail(String domainName, String storageKey)
       throws ApiException {
 
@@ -106,60 +160,6 @@ public class EmailsServiceImpl implements com.sinch.sdk.domains.mailgun.api.v1.E
             .replaceAll(
                 "\\{" + "storage_key" + "\\}",
                 URLPathUtils.encodePathSegment(storageKey.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-
-    final Collection<String> localVarContentTypes = Arrays.asList();
-
-    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
-    final String serializedBody = null;
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.GET,
-        localVarQueryParams,
-        serializedBody,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  public SendingQueuesStatusResponse getSendingQueuesStatus(String name) throws ApiException {
-
-    LOGGER.finest("[getSendingQueuesStatus]" + " " + "name: " + name);
-
-    HttpRequest httpRequest = getSendingQueuesStatusRequestBuilder(name);
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      return mapper.deserialize(response, new TypeReference<SendingQueuesStatusResponse>() {});
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest getSendingQueuesStatusRequestBuilder(String name) throws ApiException {
-    // verify the required parameter 'name' is set
-    if (name == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'name' when calling getSendingQueuesStatus");
-    }
-
-    String localVarPath =
-        "/v3/domains/{name}/sending_queues"
-            .replaceAll("\\{" + "name" + "\\}", URLPathUtils.encodePathSegment(name.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 

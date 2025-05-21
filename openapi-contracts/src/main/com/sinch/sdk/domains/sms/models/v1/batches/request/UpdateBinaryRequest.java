@@ -130,6 +130,8 @@ public interface UpdateBinaryRequest extends UpdateBatchRequest {
   /**
    * The UDH header of a binary message HEX encoded. Max 140 bytes together with body.
    *
+   * <p>Field is required
+   *
    * @return udh
    */
   String getUdh();

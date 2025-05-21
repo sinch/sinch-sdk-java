@@ -32,6 +32,8 @@ public interface DestinationPstn
   /**
    * If the type is <code>number</code> the value of the endpoint is a phone number.
    *
+   * <p>Field is required
+   *
    * @return endpoint
    */
   String getEndpoint();

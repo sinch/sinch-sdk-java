@@ -27,6 +27,8 @@ public interface BinaryRequest extends BatchRequest {
    * A list of phone numbers and group IDs that will receive the batch. <a
    * href="https://community.sinch.com/t5/Glossary/MSISDN/ta-p/7628">More info</a>.
    *
+   * <p>Field is required
+   *
    * @return to
    */
   List<String> getTo();
@@ -42,12 +44,16 @@ public interface BinaryRequest extends BatchRequest {
   /**
    * The message content Base64 encoded. Max 140 bytes including <code>udh</code>.
    *
+   * <p>Field is required
+   *
    * @return body
    */
   String getBody();
 
   /**
    * The UDH header of a binary message HEX encoded. Max 140 bytes including the <code>body</code>.
+   *
+   * <p>Field is required
    *
    * @return udh
    */

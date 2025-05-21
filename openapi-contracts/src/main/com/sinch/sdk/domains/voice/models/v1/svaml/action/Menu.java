@@ -20,6 +20,8 @@ public interface Menu {
   /**
    * The identifier of a menu. One menu must have the ID value of <code>main</code>.
    *
+   * <p>Field is required
+   *
    * @return id
    */
   String getId();

@@ -52,12 +52,16 @@ public interface ChannelSpecificMessageInternal {
   /**
    * The type of the channel specific message.
    *
+   * <p>Field is required
+   *
    * @return messageType
    */
   MessageTypeEnum getMessageType();
 
   /**
    * Get message
+   *
+   * <p>Field is required
    *
    * @return message
    */

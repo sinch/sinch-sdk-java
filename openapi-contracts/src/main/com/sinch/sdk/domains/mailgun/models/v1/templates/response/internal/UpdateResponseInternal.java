@@ -19,12 +19,16 @@ public interface UpdateResponseInternal {
   /**
    * Response message
    *
+   * <p>Field is required
+   *
    * @return message
    */
   String getMessage();
 
   /**
    * Template change details
+   *
+   * <p>Field is required
    *
    * @return template
    */

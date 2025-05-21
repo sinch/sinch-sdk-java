@@ -22,6 +22,8 @@ public interface InstagramCredentials extends ChannelCredentials {
   /**
    * The static token.
    *
+   * <p>Field is required
+   *
    * @return token
    */
   String getToken();

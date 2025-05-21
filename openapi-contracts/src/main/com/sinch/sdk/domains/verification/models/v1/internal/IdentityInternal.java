@@ -50,6 +50,8 @@ public interface IdentityInternal {
   /**
    * Currently only <code>number</code> type is supported.
    *
+   * <p>Field is required
+   *
    * @return type
    */
   TypeEnum getType();
@@ -58,6 +60,8 @@ public interface IdentityInternal {
    * For type <code>number</code> use an <a
    * href="https://community.sinch.com/t5/Glossary/E-164/ta-p/7537">E.164</a>-compatible phone
    * number.
+   *
+   * <p>Field is required
    *
    * @return endpoint
    */

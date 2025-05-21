@@ -23,6 +23,8 @@ public interface CreateWebhookRequestInternal {
   /**
    * The app that this webhook belongs to.
    *
+   * <p>Field is required
+   *
    * @return appId
    */
   String getAppId();
@@ -53,6 +55,8 @@ public interface CreateWebhookRequestInternal {
   /**
    * The target url where events should be sent to. Maximum URL length is 742. The
    * conversation-api.*.sinch.com subdomains are forbidden.
+   *
+   * <p>Field is required
    *
    * @return target
    */

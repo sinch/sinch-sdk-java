@@ -21,12 +21,16 @@ public interface StaticBearerCredentials extends ChannelCredentials {
   /**
    * The claimed identity for the channel.
    *
+   * <p>Field is required
+   *
    * @return claimedIdentity
    */
   String getClaimedIdentity();
 
   /**
    * The static bearer token for the channel.
+   *
+   * <p>Field is required
    *
    * @return token
    */

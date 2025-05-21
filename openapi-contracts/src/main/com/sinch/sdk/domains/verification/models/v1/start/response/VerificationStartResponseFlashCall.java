@@ -21,6 +21,8 @@ public interface VerificationStartResponseFlashCall
   /**
    * Verification identifier used to query for status.
    *
+   * <p>Field is required
+   *
    * @return id
    */
   String getId();
@@ -35,12 +37,16 @@ public interface VerificationStartResponseFlashCall
   /**
    * Filter that should be applied for incoming calls to intercept the flash call.
    *
+   * <p>Field is required
+   *
    * @return cliFilter
    */
   String getCliFilter();
 
   /**
    * Amount of seconds client should wait for the flash call.
+   *
+   * <p>Field is required
    *
    * @return interceptionTimeout
    */

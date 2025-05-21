@@ -19,12 +19,16 @@ public interface OrderDetailsPaymentOrderItems {
   /**
    * Unique ID of the retailer.
    *
+   * <p>Field is required
+   *
    * @return retailerId
    */
   String getRetailerId();
 
   /**
    * Item's name as displayed to the user.
+   *
+   * <p>Field is required
    *
    * @return name
    */
@@ -33,12 +37,16 @@ public interface OrderDetailsPaymentOrderItems {
   /**
    * Price per item.
    *
+   * <p>Field is required
+   *
    * @return amountValue
    */
   Integer getAmountValue();
 
   /**
    * Number of items in this order.
+   *
+   * <p>Field is required
    *
    * @return quantity
    */

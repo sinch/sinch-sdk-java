@@ -27,6 +27,8 @@ public interface SmsConfiguration {
    * href="https://dashboard.sinch.com/sms/api/rest">Sinch Customer Dashboard</a>. The service plan
    * ID is what ties this number to the configured SMS service.
    *
+   * <p>Field is required
+   *
    * @return servicePlanId
    */
   String getServicePlanId();

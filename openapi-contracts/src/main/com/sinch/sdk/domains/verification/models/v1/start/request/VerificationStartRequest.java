@@ -18,6 +18,8 @@ public interface VerificationStartRequest {
   /**
    * Get identity
    *
+   * <p>Field is required
+   *
    * @return identity
    */
   Identity getIdentity();

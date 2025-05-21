@@ -20,6 +20,8 @@ public interface VerificationRequestEventResponseFlashCall
   /**
    * Get action
    *
+   * <p>Field is required
+   *
    * @return action
    */
   VerificationEventResponseAction getAction();

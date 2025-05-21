@@ -22,12 +22,16 @@ public interface WeChatCredentials extends ChannelCredentials {
   /**
    * The AppID(Developer ID) for the WeChat channel to which you are connecting.
    *
+   * <p>Field is required
+   *
    * @return appId
    */
   String getAppId();
 
   /**
    * The AppSecret(Developer Password) for the WeChat channel to which you are connecting.
+   *
+   * <p>Field is required
    *
    * @return appSecret
    */
@@ -36,12 +40,16 @@ public interface WeChatCredentials extends ChannelCredentials {
   /**
    * The Token for the WeChat channel to which you are connecting.
    *
+   * <p>Field is required
+   *
    * @return token
    */
   String getToken();
 
   /**
    * The Encoding AES Key for the WeChat channel to which you are connecting.
+   *
+   * <p>Field is required
    *
    * @return aesKey
    */

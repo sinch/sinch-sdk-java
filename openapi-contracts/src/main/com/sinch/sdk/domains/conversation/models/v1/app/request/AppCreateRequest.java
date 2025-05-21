@@ -29,6 +29,8 @@ public interface AppCreateRequest {
   /**
    * An array of channel credentials. The order of the credentials defines the app channel priority.
    *
+   * <p>Field is required
+   *
    * @return channelCredentials
    */
   List<ConversationChannelCredentials> getChannelCredentials();
@@ -42,6 +44,8 @@ public interface AppCreateRequest {
 
   /**
    * The display name for the app.
+   *
+   * <p>Field is required
    *
    * @return displayName
    */

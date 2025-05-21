@@ -22,6 +22,8 @@ public interface GroupAutoUpdate {
    * Constraints: Must be valid phone number or short code which has been <strong>provisioned by
    * your account manager</strong>.
    *
+   * <p>Field is required
+   *
    * @return to
    */
   String getTo();

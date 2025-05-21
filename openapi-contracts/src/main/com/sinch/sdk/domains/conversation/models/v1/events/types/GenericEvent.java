@@ -21,6 +21,8 @@ public interface GenericEvent
   /**
    * Arbitrary data set to the event. A valid JSON object.
    *
+   * <p>Field is required
+   *
    * @return payload
    */
   Object getPayload();

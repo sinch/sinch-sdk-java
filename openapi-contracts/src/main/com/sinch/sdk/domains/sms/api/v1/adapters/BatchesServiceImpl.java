@@ -463,6 +463,66 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Batc
         localVarAuthNames);
   }
 
+  public BatchResponse send(BatchRequest sendRequest) throws ApiException {
+
+    LOGGER.finest("[send]" + " " + "sendRequest: " + sendRequest);
+
+    HttpRequest httpRequest = sendRequestBuilder(sendRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+      return mapper.deserialize(response, new TypeReference<BatchResponse>() {});
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest sendRequestBuilder(BatchRequest sendRequest) throws ApiException {
+    // verify the required parameter 'this.servicePlanId' is set
+    if (this.servicePlanId == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'this.servicePlanId' when calling send");
+    }
+    // verify the required parameter 'sendRequest' is set
+    if (sendRequest == null) {
+      throw new ApiException(400, "Missing the required parameter 'sendRequest' when calling send");
+    }
+
+    String localVarPath =
+        "/xms/v1/{service_plan_id}/batches"
+            .replaceAll(
+                "\\{" + "service_plan_id" + "\\}",
+                URLPathUtils.encodePathSegment(this.servicePlanId.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList("application/json");
+
+    final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
+    final String serializedBody = mapper.serialize(localVarContentTypes, sendRequest);
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.POST,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
   public void sendDeliveryFeedback(
       String batchId, SendDeliveryFeedbackRequest sendDeliveryFeedbackRequest) throws ApiException {
 
@@ -533,66 +593,6 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Batc
     final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
     final String serializedBody =
         mapper.serialize(localVarContentTypes, sendDeliveryFeedbackRequest);
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.POST,
-        localVarQueryParams,
-        serializedBody,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  public BatchResponse send(BatchRequest sendRequest) throws ApiException {
-
-    LOGGER.finest("[send]" + " " + "sendRequest: " + sendRequest);
-
-    HttpRequest httpRequest = sendRequestBuilder(sendRequest);
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      return mapper.deserialize(response, new TypeReference<BatchResponse>() {});
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest sendRequestBuilder(BatchRequest sendRequest) throws ApiException {
-    // verify the required parameter 'this.servicePlanId' is set
-    if (this.servicePlanId == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'this.servicePlanId' when calling send");
-    }
-    // verify the required parameter 'sendRequest' is set
-    if (sendRequest == null) {
-      throw new ApiException(400, "Missing the required parameter 'sendRequest' when calling send");
-    }
-
-    String localVarPath =
-        "/xms/v1/{service_plan_id}/batches"
-            .replaceAll(
-                "\\{" + "service_plan_id" + "\\}",
-                URLPathUtils.encodePathSegment(this.servicePlanId.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-
-    final Collection<String> localVarContentTypes = Arrays.asList("application/json");
-
-    final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
-    final String serializedBody = mapper.serialize(localVarContentTypes, sendRequest);
 
     return new HttpRequest(
         localVarPath,

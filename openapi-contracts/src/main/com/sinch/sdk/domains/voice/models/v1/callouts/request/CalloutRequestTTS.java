@@ -60,6 +60,8 @@ public interface CalloutRequestTTS
   /**
    * Get destination
    *
+   * <p>Field is required
+   *
    * @return destination
    */
   DestinationTextToSpeech getDestination();

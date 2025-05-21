@@ -20,12 +20,16 @@ public interface EmergencyAddressRequest {
   /**
    * Name for emergency address.
    *
+   * <p>Field is required
+   *
    * @return displayName
    */
   String getDisplayName();
 
   /**
    * Get address
+   *
+   * <p>Field is required
    *
    * @return address
    */

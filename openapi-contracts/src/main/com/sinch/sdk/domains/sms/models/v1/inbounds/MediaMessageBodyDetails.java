@@ -32,6 +32,8 @@ public interface MediaMessageBodyDetails {
    * The result code. Possible values: 0 (success), 1 (content upload error), 2 (cloud bucket
    * error), 3 (bucket key error).
    *
+   * <p>Field is required
+   *
    * @return code
    */
   Integer getCode();
@@ -40,6 +42,8 @@ public interface MediaMessageBodyDetails {
    * Content type of binary. <a
    * href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types">More
    * info</a>
+   *
+   * <p>Field is required
    *
    * @return contentType
    */
@@ -73,6 +77,8 @@ public interface MediaMessageBodyDetails {
 
   /**
    * Status of the uploaded media.
+   *
+   * <p>Field is required
    *
    * @return StatusEnum
    */

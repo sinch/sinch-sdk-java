@@ -34,6 +34,8 @@ public interface TtsCalloutInternal {
   /**
    * Get destination
    *
+   * <p>Field is required
+   *
    * @return destination
    */
   DestinationTextToSpeech getDestination();

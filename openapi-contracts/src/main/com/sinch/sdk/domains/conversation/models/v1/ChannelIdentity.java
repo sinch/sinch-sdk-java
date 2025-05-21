@@ -33,6 +33,8 @@ public interface ChannelIdentity {
   /**
    * Get channel
    *
+   * <p>Field is required
+   *
    * @return channel
    */
   ConversationChannel getChannel();
@@ -40,6 +42,8 @@ public interface ChannelIdentity {
   /**
    * The channel identity. This will differ from channel to channel. For example, a phone number for
    * SMS, WhatsApp, and Viber Business.
+   *
+   * <p>Field is required
    *
    * @return identity
    */

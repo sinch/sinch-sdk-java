@@ -19,6 +19,8 @@ public interface GenericResponse {
   /**
    * Response message
    *
+   * <p>Field is required
+   *
    * @return message
    */
   String getMessage();

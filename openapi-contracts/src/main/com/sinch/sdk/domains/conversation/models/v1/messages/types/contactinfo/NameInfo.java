@@ -19,6 +19,8 @@ public interface NameInfo {
   /**
    * Full name of the contact
    *
+   * <p>Field is required
+   *
    * @return fullName
    */
   String getFullName();

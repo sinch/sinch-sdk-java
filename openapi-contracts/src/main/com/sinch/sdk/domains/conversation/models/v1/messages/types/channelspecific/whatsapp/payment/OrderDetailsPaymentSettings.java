@@ -19,6 +19,8 @@ public interface OrderDetailsPaymentSettings {
   /**
    * Get dynamicPix
    *
+   * <p>Field is required
+   *
    * @return dynamicPix
    */
   OrderDetailsPaymentSettingsDynamicPix getDynamicPix();

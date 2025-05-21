@@ -46,14 +46,13 @@ public interface GroupsService {
   void delete(String groupId) throws ApiException;
 
   /**
-   * Get phone numbers for a group This operation retrieves the members of the group with the
-   * provided group ID.
+   * Retrieve a group This operation retrieves a specific group with the provided group ID.
    *
    * @param groupId ID of a group that you are interested in getting. (required)
-   * @return List&lt;String&gt;
+   * @return Group
    * @throws ApiException if fails to make API call
    */
-  List<String> listMembers(String groupId) throws ApiException;
+  Group get(String groupId) throws ApiException;
 
   /**
    * List Groups (using default parameters) With the list operation you can list all groups that you
@@ -76,6 +75,16 @@ public interface GroupsService {
   ListGroupsResponse list(ListGroupsQueryParameters queryParameter) throws ApiException;
 
   /**
+   * Get phone numbers for a group This operation retrieves the members of the group with the
+   * provided group ID.
+   *
+   * @param groupId ID of a group that you are interested in getting. (required)
+   * @return List&lt;String&gt;
+   * @throws ApiException if fails to make API call
+   */
+  List<String> listMembers(String groupId) throws ApiException;
+
+  /**
    * Replace a group The replace operation will replace all parameters, including members, of an
    * existing group with new values. Replacing a group targeted by a batch message scheduled in the
    * future is allowed and changes will be reflected when the batch is sent.
@@ -86,15 +95,6 @@ public interface GroupsService {
    * @throws ApiException if fails to make API call
    */
   Group replace(String groupId, GroupRequest groupRequest) throws ApiException;
-
-  /**
-   * Retrieve a group This operation retrieves a specific group with the provided group ID.
-   *
-   * @param groupId ID of a group that you are interested in getting. (required)
-   * @return Group
-   * @throws ApiException if fails to make API call
-   */
-  Group get(String groupId) throws ApiException;
 
   /**
    * Update a group With the update group operation, you can add and remove members in an existing

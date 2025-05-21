@@ -16,6 +16,8 @@ public interface CreateTemplateRequest {
   /**
    * Name of the template being stored. Supports utf-8 characters and name will be down cased.
    *
+   * <p>Field is required
+   *
    * @return name
    */
   String getName();

@@ -19,12 +19,16 @@ public interface CreateVersionRequest {
   /**
    * Content of the template.
    *
+   * <p>Field is required
+   *
    * @return template
    */
   String getTemplate();
 
   /**
    * Tag of the version that is being created. Must be unique to the template.
+   *
+   * <p>Field is required
    *
    * @return tag
    */

@@ -36,12 +36,16 @@ public interface BinaryMessage extends InboundMessage {
    * The phone number that sent the message. <a
    * href="https://community.sinch.com/t5/Glossary/MSISDN/ta-p/7628">More info</a>
    *
+   * <p>Field is required
+   *
    * @return from
    */
   String getFrom();
 
   /**
    * The ID of this inbound message.
+   *
+   * <p>Field is required
    *
    * @return id
    */
@@ -59,6 +63,8 @@ public interface BinaryMessage extends InboundMessage {
    * href="https://en.wikipedia.org/wiki/ISO_8601">ISO-8601</a>: <code>YYYY-MM-DDThh:mm:ss.SSSZ
    * </code>.
    *
+   * <p>Field is required
+   *
    * @return receivedAt
    */
   Instant getReceivedAt();
@@ -74,6 +80,8 @@ public interface BinaryMessage extends InboundMessage {
 
   /**
    * The Sinch phone number or short code to which the message was sent.
+   *
+   * <p>Field is required
    *
    * @return to
    */
@@ -109,12 +117,16 @@ public interface BinaryMessage extends InboundMessage {
   /**
    * The message content Base64 encoded. Max 140 bytes together with udh.
    *
+   * <p>Field is required
+   *
    * @return body
    */
   String getBody();
 
   /**
    * The UDH header of a binary message HEX encoded. Max 140 bytes together with body.
+   *
+   * <p>Field is required
    *
    * @return udh
    */

@@ -52,6 +52,8 @@ public interface ManageConferenceParticipantRequest {
   /**
    * Action to apply on conference participant.
    *
+   * <p>Field is required
+   *
    * @return command
    */
   CommandEnum getCommand();

@@ -23,6 +23,8 @@ public interface ListMessageInternal {
   /**
    * A title for the message that is displayed near the products or choices.
    *
+   * <p>Field is required
+   *
    * @return title
    */
   String getTitle();
@@ -43,6 +45,8 @@ public interface ListMessageInternal {
 
   /**
    * List of ListSection objects containing choices to be presented in the list message.
+   *
+   * <p>Field is required
    *
    * @return sections
    */

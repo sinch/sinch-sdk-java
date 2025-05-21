@@ -19,6 +19,8 @@ public interface PhoneNumberInfo {
   /**
    * Phone number with country code included.
    *
+   * <p>Field is required
+   *
    * @return phoneNumber
    */
   String getPhoneNumber();

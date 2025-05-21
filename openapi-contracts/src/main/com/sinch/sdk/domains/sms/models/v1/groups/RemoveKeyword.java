@@ -20,6 +20,8 @@ public interface RemoveKeyword {
    * Opt-out keyword like &quot;LEAVE&quot; if <em>auto_update.to</em> is dedicated long/short
    * number or unique brand keyword like &quot;Sinch&quot; if it is a shared short code.
    *
+   * <p>Field is required
+   *
    * @return firstWord
    */
   String getFirstWord();

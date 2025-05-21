@@ -26,6 +26,8 @@ public interface SendMimeEmailRequest {
    * Email address of the recipient(s). Example: <code>\&quot;Bob &lt;bob@host.com&gt;\&quot;</code>
    * . You can use commas to separate multiple recipients
    *
+   * <p>Field is required
+   *
    * @return to
    */
   List<String> getTo();
@@ -33,6 +35,8 @@ public interface SendMimeEmailRequest {
   /**
    * MIME string of the message. Make sure to use <code>multipart/form-data</code> content type to
    * send this as a file upload
+   *
+   * <p>Field is required
    *
    * @return message
    */

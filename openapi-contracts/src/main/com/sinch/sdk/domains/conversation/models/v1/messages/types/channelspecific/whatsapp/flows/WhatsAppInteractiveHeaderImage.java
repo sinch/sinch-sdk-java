@@ -49,6 +49,8 @@ public interface WhatsAppInteractiveHeaderImage
   /**
    * Get image
    *
+   * <p>Field is required
+   *
    * @return image
    */
   WhatsAppInteractiveHeaderMedia getImage();

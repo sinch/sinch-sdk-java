@@ -19,12 +19,16 @@ public interface Coordinates {
   /**
    * The latitude.
    *
+   * <p>Field is required
+   *
    * @return latitude
    */
   Double getLatitude();
 
   /**
    * The longitude.
+   *
+   * <p>Field is required
    *
    * @return longitude
    */

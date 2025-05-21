@@ -23,12 +23,16 @@ public interface ContactInfoMessage
   /**
    * Get name
    *
+   * <p>Field is required
+   *
    * @return name
    */
   NameInfo getName();
 
   /**
    * Phone numbers of the contact
+   *
+   * <p>Field is required
    *
    * @return phoneNumbers
    */

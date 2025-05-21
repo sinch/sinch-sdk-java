@@ -82,6 +82,8 @@ public interface CalloutRequestConference
   /**
    * Get destination
    *
+   * <p>Field is required
+   *
    * @return destination
    */
   DestinationConference getDestination();
@@ -89,6 +91,8 @@ public interface CalloutRequestConference
   /**
    * The conferenceId of the conference to which you want the callee to join. If the conferenceId
    * doesn't exist a conference room will be created.
+   *
+   * <p>Field is required
    *
    * @return conferenceId
    */

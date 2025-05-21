@@ -49,6 +49,8 @@ public interface WhatsAppInteractiveHeaderDocument
   /**
    * Get document
    *
+   * <p>Field is required
+   *
    * @return document
    */
   WhatsAppInteractiveHeaderMedia getDocument();
