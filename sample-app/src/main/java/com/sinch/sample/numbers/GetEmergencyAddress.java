@@ -26,8 +26,8 @@ public class GetEmergencyAddress extends BaseApplication {
 
     LOGGER.info("Get EmergencyAddress for: " + virtualPhoneNumber);
 
-    EmergencyAddress value = service.getEmergencyAddress(virtualPhoneNumber);
+    EmergencyAddress response = service.getEmergencyAddress(virtualPhoneNumber);
 
-    LOGGER.info("Response: " + value);
+    LOGGER.info("Response: " + response);
   }
 }

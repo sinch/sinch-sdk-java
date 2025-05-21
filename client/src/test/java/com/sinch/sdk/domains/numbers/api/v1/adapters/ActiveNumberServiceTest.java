@@ -55,7 +55,7 @@ class ActiveNumberServiceTest extends NumbersBaseTest {
   ActiveNumber activeGetResponseDto;
 
   @GivenJsonResource("/domains/numbers/v1/response/validate-address-response.json")
-  ValidateAddressResponse emergencyAddressResponseDto;
+  ValidateAddressResponse validateAddressResponseDto;
 
   @GivenJsonResource("/domains/numbers/v1/emergency-address.json")
   EmergencyAddress emergencyAddressDto;
@@ -227,7 +227,7 @@ class ActiveNumberServiceTest extends NumbersBaseTest {
             eq(uriUUID),
             eq("foo phone number"),
             ArgumentMatchers.eq(EmergencyAddressRequestDtoTest.emergencyAddressRequest)))
-        .thenReturn(emergencyAddressResponseDto);
+        .thenReturn(validateAddressResponseDto);
 
     ValidateAddressResponse response =
         service.validateEmergencyAddress(
@@ -235,7 +235,7 @@ class ActiveNumberServiceTest extends NumbersBaseTest {
 
     Assertions.assertThat(response)
         .usingRecursiveComparison()
-        .isEqualTo(emergencyAddressResponseDto);
+        .isEqualTo(validateAddressResponseDto);
   }
 
   @Test

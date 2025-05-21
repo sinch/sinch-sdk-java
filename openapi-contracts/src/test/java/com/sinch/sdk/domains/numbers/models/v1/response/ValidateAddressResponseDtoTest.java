@@ -21,7 +21,7 @@ public class ValidateAddressResponseDtoTest extends NumbersBaseTest {
   @GivenTextResource("/domains/numbers/v1/response/validate-address-response-no-match.json")
   String validateAddressResponseNoMatchJson;
 
-  public static ValidateAddressResponse validateAddressResponse =
+  public static ValidateAddressResponse validateAddressResponseNearMatch =
       ValidateAddressResponse.builder()
           .setPhoneNumber("+17608137700")
           .setDisplayName("Validate emergency address")
@@ -78,7 +78,7 @@ public class ValidateAddressResponseDtoTest extends NumbersBaseTest {
     ValidateAddressResponse deserializedString =
         objectMapper.readValue(validateAddressResponseJson, ValidateAddressResponse.class);
 
-    TestHelpers.recursiveEquals(validateAddressResponse, deserializedString);
+    TestHelpers.recursiveEquals(validateAddressResponseNearMatch, deserializedString);
   }
 
   @Test

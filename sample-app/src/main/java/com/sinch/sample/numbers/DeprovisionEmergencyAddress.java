@@ -5,15 +5,15 @@ import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-public class DeProvisionEmergencyAddress extends BaseApplication {
+public class DeprovisionEmergencyAddress extends BaseApplication {
   private static final Logger LOGGER =
-      Logger.getLogger(DeProvisionEmergencyAddress.class.getName());
+      Logger.getLogger(DeprovisionEmergencyAddress.class.getName());
 
-  public DeProvisionEmergencyAddress() throws IOException {}
+  public DeprovisionEmergencyAddress() throws IOException {}
 
   public static void main(String[] args) {
     try {
-      new DeProvisionEmergencyAddress().run();
+      new DeprovisionEmergencyAddress().run();
     } catch (Exception e) {
       LOGGER.severe(e.getMessage());
       e.printStackTrace();
