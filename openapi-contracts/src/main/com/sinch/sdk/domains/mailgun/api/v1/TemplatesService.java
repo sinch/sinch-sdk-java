@@ -28,8 +28,9 @@ import com.sinch.sdk.domains.mailgun.models.v1.templates.response.ListVersionsRe
 public interface TemplatesService {
 
   /**
-   * Copy a version (using default parameters) Copies an existing version into a new version with
-   * the provided name.
+   * Copy a version (using default parameters)
+   *
+   * <p>Copies an existing version into a new version with the provided name.
    *
    * @param domainName Domain name the template is associated with. (required)
    * @param templateName template name the version is stored under. (required)
@@ -44,7 +45,9 @@ public interface TemplatesService {
       throws ApiException;
 
   /**
-   * Copy a version Copies an existing version into a new version with the provided name.
+   * Copy a version
+   *
+   * <p>Copies an existing version into a new version with the provided name.
    *
    * @param domainName Domain name the template is associated with. (required)
    * @param templateName template name the version is stored under. (required)
@@ -64,9 +67,11 @@ public interface TemplatesService {
       throws ApiException;
 
   /**
-   * Create a template Store a new template, including its name, description and (optionally) the
-   * template content. If the template content is provided, a new version is automatically created
-   * and becomes the active version.
+   * Create a template
+   *
+   * <p>Store a new template, including its name, description and (optionally) the template content.
+   * If the template content is provided, a new version is automatically created and becomes the
+   * active version.
    *
    * @param domainName Domain name the template is associated with. (required)
    * @param requestParameters Request parameters
@@ -95,8 +100,10 @@ public interface TemplatesService {
       throws ApiException;
 
   /**
-   * Create a template version Adds a new template version. If the template doesn’t contain any
-   * other versions, the first version becomes active. A template can store up to 40 versions.
+   * Create a template version
+   *
+   * <p>Adds a new template version. If the template doesn’t contain any other versions, the first
+   * version becomes active. A template can store up to 40 versions.
    *
    * @param domainName Domain name the template is associated with. (required)
    * @param templateName template name to create the new version for. (required)
@@ -109,8 +116,10 @@ public interface TemplatesService {
       throws ApiException;
 
   /**
-   * Delete a template Delete the template specified in the url. NOTE: This method deletes all
-   * versions of the specified template.
+   * Delete a template
+   *
+   * <p>Delete the template specified in the url. NOTE: This method deletes all versions of the
+   * specified template.
    *
    * @param domainName Domain name the template is associated with. (required)
    * @param templateName template name to be deleted. (required)
@@ -119,7 +128,9 @@ public interface TemplatesService {
   void delete(String domainName, String templateName) throws ApiException;
 
   /**
-   * Delete all templates Delete all templates and their versions for the domain.
+   * Delete all templates
+   *
+   * <p>Delete all templates and their versions for the domain.
    *
    * @param domainName Domain name the template is associated with. (required)
    * @throws ApiException if fails to make API call
@@ -127,7 +138,9 @@ public interface TemplatesService {
   void deleteAll(String domainName) throws ApiException;
 
   /**
-   * Delete a version Delete a specific template version.
+   * Delete a version
+   *
+   * <p>Delete a specific template version.
    *
    * @param domainName Domain name the template is associated with. (required)
    * @param templateName template name the version is stored under. (required)
@@ -138,9 +151,10 @@ public interface TemplatesService {
       throws ApiException;
 
   /**
-   * Get template (using default parameters) Returns metadata information about the stored template
-   * specified in the url. If the active flag is provided, the content of the active version of the
-   * template is returned.
+   * Get template (using default parameters)
+   *
+   * <p>Returns metadata information about the stored template specified in the url. If the active
+   * flag is provided, the content of the active version of the template is returned.
    *
    * @param domainName Domain name the template is stored under. (required)
    * @param templateName Template name to fetch. (required)
@@ -160,7 +174,9 @@ public interface TemplatesService {
   VersionDetails getActiveVersion(String domainName, String templateName) throws ApiException;
 
   /**
-   * Get a version Retrieve the information and content of the specified version of a template.
+   * Get a version
+   *
+   * <p>Retrieve the information and content of the specified version of a template.
    *
    * @param domainName Domain name the template is stored under. (required)
    * @param templateName template name the version is for. (required)
@@ -172,7 +188,9 @@ public interface TemplatesService {
       throws ApiException;
 
   /**
-   * Get templates (using default parameters) Returns a list of templates for the domain.
+   * Get templates (using default parameters)
+   *
+   * <p>Returns a list of templates for the domain.
    *
    * @param domainName Domain name to fetch the templates for. (required)
    * @return ListTemplatesResponse
@@ -181,7 +199,9 @@ public interface TemplatesService {
   ListTemplatesResponse list(String domainName) throws ApiException;
 
   /**
-   * Get templates Returns a list of templates for the domain.
+   * Get templates
+   *
+   * <p>Returns a list of templates for the domain.
    *
    * @param domainName Domain name to fetch the templates for. (required)
    * @param queryParameter (optional)
@@ -192,8 +212,9 @@ public interface TemplatesService {
       throws ApiException;
 
   /**
-   * Get all template versions (using default parameters) Returns a paginated list of template
-   * versions.
+   * Get all template versions (using default parameters)
+   *
+   * <p>Returns a paginated list of template versions.
    *
    * @param domainName Domain name to fetch the templates for. (required)
    * @param templateName template name to fetch the versions for. (required)
@@ -203,7 +224,9 @@ public interface TemplatesService {
   ListVersionsResponse listVersions(String domainName, String templateName) throws ApiException;
 
   /**
-   * Get all template versions Returns a paginated list of template versions.
+   * Get all template versions
+   *
+   * <p>Returns a paginated list of template versions.
    *
    * @param domainName Domain name to fetch the templates for. (required)
    * @param templateName template name to fetch the versions for. (required)
@@ -216,7 +239,9 @@ public interface TemplatesService {
       throws ApiException;
 
   /**
-   * Update template Update the description of a template.
+   * Update template
+   *
+   * <p>Update the description of a template.
    *
    * @param domainName Domain name the template is associated with. (required)
    * @param templateName The template name. (required)
@@ -227,8 +252,10 @@ public interface TemplatesService {
       throws ApiException;
 
   /**
-   * Update a version Update information or content of the specific template version. Existing
-   * fields not included in the request will not be changed
+   * Update a version
+   *
+   * <p>Update information or content of the specific template version. Existing fields not included
+   * in the request will not be changed
    *
    * @param domainName Domain name the template is associated with. (required)
    * @param templateName template name the version is stored under. (required)
