@@ -22,6 +22,8 @@ public interface ChoiceMessageInternal {
   /**
    * The number of choices is limited to 10.
    *
+   * <p>Field is required
+   *
    * @return choices
    */
   List<Choice<?>> getChoices();

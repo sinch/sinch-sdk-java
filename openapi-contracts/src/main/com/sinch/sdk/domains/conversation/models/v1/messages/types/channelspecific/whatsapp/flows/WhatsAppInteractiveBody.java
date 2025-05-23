@@ -19,6 +19,8 @@ public interface WhatsAppInteractiveBody {
   /**
    * The content of the message (1024 characters maximum). Emojis and Markdown are supported.
    *
+   * <p>Field is required
+   *
    * @return text
    */
   String getText();

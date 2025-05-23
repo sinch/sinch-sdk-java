@@ -23,6 +23,8 @@ public interface LocationMessage
   /**
    * Get coordinates
    *
+   * <p>Field is required
+   *
    * @return coordinates
    */
   Coordinates getCoordinates();
@@ -37,6 +39,8 @@ public interface LocationMessage
   /**
    * The title is shown close to the button or link that leads to a map showing the location. The
    * title can be clickable in some cases.
+   *
+   * <p>Field is required
    *
    * @return title
    */

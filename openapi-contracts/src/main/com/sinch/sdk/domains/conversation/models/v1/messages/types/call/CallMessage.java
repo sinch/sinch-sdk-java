@@ -20,12 +20,16 @@ public interface CallMessage
   /**
    * Phone number in E.164 with leading +.
    *
+   * <p>Field is required
+   *
    * @return phoneNumber
    */
   String getPhoneNumber();
 
   /**
    * Title shown close to the phone number. The title is clickable in some cases.
+   *
+   * <p>Field is required
    *
    * @return title
    */

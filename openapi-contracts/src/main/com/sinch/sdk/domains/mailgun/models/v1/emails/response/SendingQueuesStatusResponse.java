@@ -19,12 +19,16 @@ public interface SendingQueuesStatusResponse {
   /**
    * Message queue response
    *
+   * <p>Field is required
+   *
    * @return regular
    */
   ExceededQueueQuota getRegular();
 
   /**
    * Scheduled message queue response
+   *
+   * <p>Field is required
    *
    * @return scheduled
    */

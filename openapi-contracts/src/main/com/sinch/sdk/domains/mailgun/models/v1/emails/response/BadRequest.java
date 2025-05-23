@@ -19,6 +19,8 @@ public interface BadRequest {
   /**
    * A failure message
    *
+   * <p>Field is required
+   *
    * @return message
    */
   String getMessage();

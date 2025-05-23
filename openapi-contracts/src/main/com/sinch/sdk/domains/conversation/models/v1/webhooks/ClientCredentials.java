@@ -19,12 +19,16 @@ public interface ClientCredentials {
   /**
    * The Client ID that will be used in the OAuth2 Client Credentials flow.
    *
+   * <p>Field is required
+   *
    * @return clientId
    */
   String getClientId();
 
   /**
    * The Client Secret that will be used in the OAuth2 Client Credentials flow.
+   *
+   * <p>Field is required
    *
    * @return clientSecret
    */
@@ -35,6 +39,8 @@ public interface ClientCredentials {
    * with an access token and <code>expires_in</code> value (in seconds). The <code>expires_in
    * </code> value, which must be a minimum of 30 seconds and a maximum of 3600 seconds, is how long
    * Sinch will save the access token before asking for a new one.
+   *
+   * <p>Field is required
    *
    * @return endpoint
    */

@@ -19,6 +19,8 @@ public interface ExceededQueueQuota {
   /**
    * Flag indicating no new messages are able to be submitted
    *
+   * <p>Field is required
+   *
    * @return isDisabled
    */
   Boolean getIsDisabled();

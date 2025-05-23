@@ -21,6 +21,8 @@ public interface CarouselMessageInternal {
   /**
    * A list of up to 10 cards.
    *
+   * <p>Field is required
+   *
    * @return cards
    */
   List<CardMessageInternal> getCards();

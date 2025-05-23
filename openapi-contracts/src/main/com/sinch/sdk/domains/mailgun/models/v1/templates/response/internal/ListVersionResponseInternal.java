@@ -21,12 +21,16 @@ public interface ListVersionResponseInternal {
   /**
    * Get template
    *
+   * <p>Field is required
+   *
    * @return template
    */
   Template getTemplate();
 
   /**
    * Pagination details
+   *
+   * <p>Field is required
    *
    * @return paging
    */

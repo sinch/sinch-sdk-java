@@ -29,6 +29,8 @@ public interface SendMessageRequest<T extends AppMessageBody> {
   /**
    * The ID of the app sending the message.
    *
+   * <p>Field is required
+   *
    * @return appId
    */
   String getAppId();
@@ -72,6 +74,8 @@ public interface SendMessageRequest<T extends AppMessageBody> {
   /**
    * Get message
    *
+   * <p>Field is required
+   *
    * @return message
    */
   AppMessage<T> getMessage();
@@ -114,9 +118,9 @@ public interface SendMessageRequest<T extends AppMessageBody> {
   MessageQueue getQueue();
 
   /**
-   * Identifies the recipient. If <a
-   * href="https://developers.sinch.com/docs/conversation/processing-modes/">Dispatch Mode</a> is
-   * used, you must use the <code>identified_by</code> field.
+   * Get recipient
+   *
+   * <p>Field is required
    *
    * @return recipient
    */

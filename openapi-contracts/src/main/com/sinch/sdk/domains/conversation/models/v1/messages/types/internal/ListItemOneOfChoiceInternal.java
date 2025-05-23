@@ -20,6 +20,8 @@ public interface ListItemOneOfChoiceInternal {
   /**
    * Get choice
    *
+   * <p>Field is required
+   *
    * @return choice
    */
   ChoiceItem getChoice();

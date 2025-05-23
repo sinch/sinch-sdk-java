@@ -43,12 +43,16 @@ public interface OrderDetailsPaymentOrder {
   /**
    * Value representing the subtotal amount of this order.
    *
+   * <p>Field is required
+   *
    * @return subtotalValue
    */
   Integer getSubtotalValue();
 
   /**
    * Value representing the tax amount for this order.
+   *
+   * <p>Field is required
    *
    * @return taxValue
    */
@@ -98,6 +102,8 @@ public interface OrderDetailsPaymentOrder {
 
   /**
    * The items list for this order.
+   *
+   * <p>Field is required
    *
    * @return items
    */

@@ -34,12 +34,16 @@ public interface AvailableNumberRentAnyRequest {
    * Region code to filter by. ISO 3166-1 alpha-2 country code of the phone number. Example: <code>
    * US</code>, <code>GB</code> or <code>SE</code>.
    *
+   * <p>Field is required
+   *
    * @return regionCode
    */
   String getRegionCode();
 
   /**
    * Get type
+   *
+   * <p>Field is required
    *
    * @return type
    */

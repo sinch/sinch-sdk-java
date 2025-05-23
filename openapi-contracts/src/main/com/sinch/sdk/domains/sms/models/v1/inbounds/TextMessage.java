@@ -36,12 +36,16 @@ public interface TextMessage extends InboundMessage {
    * The phone number that sent the message. <a
    * href="https://community.sinch.com/t5/Glossary/MSISDN/ta-p/7628">More info</a>
    *
+   * <p>Field is required
+   *
    * @return from
    */
   String getFrom();
 
   /**
    * The ID of this inbound message.
+   *
+   * <p>Field is required
    *
    * @return id
    */
@@ -59,6 +63,8 @@ public interface TextMessage extends InboundMessage {
    * href="https://en.wikipedia.org/wiki/ISO_8601">ISO-8601</a>: <code>YYYY-MM-DDThh:mm:ss.SSSZ
    * </code>.
    *
+   * <p>Field is required
+   *
    * @return receivedAt
    */
   Instant getReceivedAt();
@@ -74,6 +80,8 @@ public interface TextMessage extends InboundMessage {
 
   /**
    * The Sinch phone number or short code to which the message was sent.
+   *
+   * <p>Field is required
    *
    * @return to
    */
@@ -105,6 +113,8 @@ public interface TextMessage extends InboundMessage {
 
   /**
    * Get body
+   *
+   * <p>Field is required
    *
    * @return body
    */

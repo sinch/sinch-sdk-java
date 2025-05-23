@@ -44,6 +44,8 @@ public interface ConversationEvent {
   /**
    * Get channelIdentity
    *
+   * <p>Field is required
+   *
    * @return channelIdentity
    */
   ChannelIdentity getChannelIdentity();
@@ -59,6 +61,8 @@ public interface ConversationEvent {
   /**
    * Get processingMode
    *
+   * <p>Field is required
+   *
    * @return processingMode
    */
   ProcessingMode getProcessingMode();
@@ -72,6 +76,8 @@ public interface ConversationEvent {
 
   /**
    * The ID of the event.
+   *
+   * <p>Field is required
    *
    * @return id
    */

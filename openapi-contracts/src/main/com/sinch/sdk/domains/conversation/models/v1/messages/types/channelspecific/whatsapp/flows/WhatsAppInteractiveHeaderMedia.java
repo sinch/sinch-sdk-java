@@ -19,6 +19,8 @@ public interface WhatsAppInteractiveHeaderMedia {
   /**
    * URL for the media.
    *
+   * <p>Field is required
+   *
    * @return link
    */
   String getLink();

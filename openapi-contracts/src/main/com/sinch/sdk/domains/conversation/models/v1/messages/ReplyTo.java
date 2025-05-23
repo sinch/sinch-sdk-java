@@ -22,6 +22,8 @@ public interface ReplyTo {
   /**
    * Required. The Id of the message that this is a response to
    *
+   * <p>Field is required
+   *
    * @return messageId
    */
   String getMessageId();

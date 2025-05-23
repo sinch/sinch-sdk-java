@@ -49,6 +49,8 @@ public interface WhatsAppInteractiveNfmReply {
   /**
    * The nfm reply message type.
    *
+   * <p>Field is required
+   *
    * @return name
    */
   NameEnum getName();
@@ -56,12 +58,16 @@ public interface WhatsAppInteractiveNfmReply {
   /**
    * The JSON specific data.
    *
+   * <p>Field is required
+   *
    * @return responseJson
    */
   String getResponseJson();
 
   /**
    * The message body.
+   *
+   * <p>Field is required
    *
    * @return body
    */

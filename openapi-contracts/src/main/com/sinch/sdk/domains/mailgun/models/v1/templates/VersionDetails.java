@@ -21,6 +21,8 @@ public interface VersionDetails extends Version {
   /**
    * Tag of the version. Must be unique to the template
    *
+   * <p>Field is required
+   *
    * @return tag
    */
   String getTag();
@@ -35,6 +37,8 @@ public interface VersionDetails extends Version {
   /**
    * Rendering engine
    *
+   * <p>Field is required
+   *
    * @return engine
    */
   String getEngine();
@@ -42,12 +46,16 @@ public interface VersionDetails extends Version {
   /**
    * Template source
    *
+   * <p>Field is required
+   *
    * @return mjml
    */
   String getMjml();
 
   /**
    * Creation date in RFC822 format
+   *
+   * <p>Field is required
    *
    * @return createdAt
    * @readOnly <em>This field is returned by the server and cannot be modified</em>
@@ -57,6 +65,8 @@ public interface VersionDetails extends Version {
   /**
    * Comment related to the version
    *
+   * <p>Field is required
+   *
    * @return comment
    */
   String getComment();
@@ -64,12 +74,16 @@ public interface VersionDetails extends Version {
   /**
    * If this flag is true
    *
+   * <p>Field is required
+   *
    * @return active
    */
   Boolean getActive();
 
   /**
    * Template ID
+   *
+   * <p>Field is required
    *
    * @return id
    * @readOnly <em>This field is returned by the server and cannot be modified</em>

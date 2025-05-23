@@ -20,12 +20,16 @@ public interface CopyVersionResponseInternal {
   /**
    * Response message
    *
+   * <p>Field is required
+   *
    * @return message
    */
   String getMessage();
 
   /**
    * Get version
+   *
+   * <p>Field is required
    *
    * @return version
    */

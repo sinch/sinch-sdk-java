@@ -19,6 +19,8 @@ public interface UpdatedTemplateInternal {
   /**
    * Name of the template
    *
+   * <p>Field is required
+   *
    * @return name
    */
   String getName();

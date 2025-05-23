@@ -34,6 +34,8 @@ public interface CommentEventInternal {
   /**
    * Comment's text
    *
+   * <p>Field is required
+   *
    * @return text
    */
   String getText();

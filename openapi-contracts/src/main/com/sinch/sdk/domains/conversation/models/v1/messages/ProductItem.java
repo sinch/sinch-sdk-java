@@ -20,12 +20,16 @@ public interface ProductItem
   /**
    * Required parameter. The ID for the product.
    *
+   * <p>Field is required
+   *
    * @return id
    */
   String getId();
 
   /**
    * Required parameter. The marketplace to which the product belongs.
+   *
+   * <p>Field is required
    *
    * @return marketplace
    */

@@ -22,12 +22,16 @@ public interface ListTemplatesResponseInternal {
   /**
    * List of items
    *
+   * <p>Field is required
+   *
    * @return items
    */
   List<Template> getItems();
 
   /**
    * Pagination details
+   *
+   * <p>Field is required
    *
    * @return paging
    */

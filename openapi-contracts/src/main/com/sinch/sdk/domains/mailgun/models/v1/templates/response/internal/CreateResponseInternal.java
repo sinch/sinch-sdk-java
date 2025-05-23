@@ -20,12 +20,16 @@ public interface CreateResponseInternal {
   /**
    * Response message
    *
+   * <p>Field is required
+   *
    * @return message
    */
   String getMessage();
 
   /**
    * Get template
+   *
+   * <p>Field is required
    *
    * @return template
    */

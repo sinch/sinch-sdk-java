@@ -21,6 +21,8 @@ public interface VerificationStartResponseData
   /**
    * Verification identifier used to query for status.
    *
+   * <p>Field is required
+   *
    * @return id
    */
   String getId();

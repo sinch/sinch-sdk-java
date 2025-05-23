@@ -32,12 +32,16 @@ public interface LineEnterpriseCredentialsJapan extends LineEnterpriseCredential
   /**
    * The token for the LINE channel to which you are connecting.
    *
+   * <p>Field is required
+   *
    * @return token
    */
   String getToken();
 
   /**
    * The secret for the LINE channel to which you are connecting.
+   *
+   * <p>Field is required
    *
    * @return secret
    */

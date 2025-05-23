@@ -23,6 +23,8 @@ public interface SendEmailHtmlInlineRequest extends SendEmailRequest {
    * Email address of the recipient(s). Example: <code>\&quot;Bob &lt;bob@host.com&gt;\&quot;</code>
    * . You can use commas to separate multiple recipients
    *
+   * <p>Field is required
+   *
    * @return to
    */
   List<String> getTo();
@@ -30,6 +32,8 @@ public interface SendEmailHtmlInlineRequest extends SendEmailRequest {
   /**
    * Email address for the <code>From</code> header. Note: not required if sending with a template
    * that has a pre-set From header, but it will override it if provided.
+   *
+   * <p>Field is required
    *
    * @return from
    */
@@ -52,6 +56,8 @@ public interface SendEmailHtmlInlineRequest extends SendEmailRequest {
   /**
    * Message subject. Note: not required if sending with a template that has a pre-set Subject
    * header, but it will override it if provided.
+   *
+   * <p>Field is required
    *
    * @return subject
    */

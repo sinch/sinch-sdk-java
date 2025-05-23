@@ -19,12 +19,16 @@ public interface ChannelRecipientIdentity {
   /**
    * Get channel
    *
+   * <p>Field is required
+   *
    * @return channel
    */
   ConversationChannel getChannel();
 
   /**
    * The channel recipient identity.
+   *
+   * <p>Field is required
    *
    * @return identity
    */

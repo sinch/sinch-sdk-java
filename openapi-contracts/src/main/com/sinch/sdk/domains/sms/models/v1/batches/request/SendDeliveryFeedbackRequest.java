@@ -22,6 +22,8 @@ public interface SendDeliveryFeedbackRequest {
    * required, however, the value can be an empty array (<code>[]</code>) for <em>a batch</em>. If
    * the feedback was enabled for <em>a group</em>, at least one phone number is required.
    *
+   * <p>Field is required
+   *
    * @return recipients
    */
   List<String> getRecipients();

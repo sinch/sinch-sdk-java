@@ -33,6 +33,8 @@ public interface MediaBody {
   /**
    * URL to the media file
    *
+   * <p>Field is required
+   *
    * @return url
    */
   String getUrl();

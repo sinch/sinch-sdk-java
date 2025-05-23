@@ -22,6 +22,8 @@ public interface KakaoTalkChatCredentials extends ChannelCredentials {
   /**
    * Kakaotalk Plus friend ID.
    *
+   * <p>Field is required
+   *
    * @return kakaotalkPlusFriendId
    */
   String getKakaotalkPlusFriendId();

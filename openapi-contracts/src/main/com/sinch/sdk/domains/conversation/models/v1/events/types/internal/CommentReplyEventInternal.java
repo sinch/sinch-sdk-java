@@ -19,6 +19,8 @@ public interface CommentReplyEventInternal {
   /**
    * The text of the comment reply.
    *
+   * <p>Field is required
+   *
    * @return text
    */
   String getText();

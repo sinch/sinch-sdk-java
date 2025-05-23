@@ -100,6 +100,19 @@ public interface BatchesService {
   BatchResponse replace(String batchId, BatchRequest sendRequest) throws ApiException;
 
   /**
+   * Send Send a message or a batch of messages. Depending on the length of the body, one message
+   * might be split into multiple parts and charged accordingly. Any groups targeted in a scheduled
+   * batch will be evaluated at the time of sending. If a group is deleted between batch creation
+   * and scheduled date, it will be considered empty. Be sure to use the correct
+   * [region](/docs/sms/api-reference/#base-url) in the server URL.
+   *
+   * @param sendRequest (required)
+   * @return BatchResponse
+   * @throws ApiException if fails to make API call
+   */
+  BatchResponse send(BatchRequest sendRequest) throws ApiException;
+
+  /**
    * Send delivery feedback for a message Send feedback if your system can confirm successful
    * message delivery. Feedback can only be provided if &#x60;feedback_enabled&#x60; was set when
    * batch was submitted. **Batches**: It is possible to submit feedback multiple times for the same
@@ -116,19 +129,6 @@ public interface BatchesService {
    */
   void sendDeliveryFeedback(String batchId, SendDeliveryFeedbackRequest sendDeliveryFeedbackRequest)
       throws ApiException;
-
-  /**
-   * Send Send a message or a batch of messages. Depending on the length of the body, one message
-   * might be split into multiple parts and charged accordingly. Any groups targeted in a scheduled
-   * batch will be evaluated at the time of sending. If a group is deleted between batch creation
-   * and scheduled date, it will be considered empty. Be sure to use the correct
-   * [region](/docs/sms/api-reference/#base-url) in the server URL.
-   *
-   * @param sendRequest (required)
-   * @return BatchResponse
-   * @throws ApiException if fails to make API call
-   */
-  BatchResponse send(BatchRequest sendRequest) throws ApiException;
 
   /**
    * Update a Batch message This operation updates all specified parameters of a batch that matches

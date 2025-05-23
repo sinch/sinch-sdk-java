@@ -29,6 +29,8 @@ public interface MediaRequest extends BatchRequest {
    * List of Phone numbers and group IDs that will receive the batch. <a
    * href="https://community.sinch.com/t5/Glossary/MSISDN/ta-p/7628">More info</a>
    *
+   * <p>Field is required
+   *
    * @return to
    */
   List<String> getTo();
@@ -43,6 +45,8 @@ public interface MediaRequest extends BatchRequest {
 
   /**
    * Get body
+   *
+   * <p>Field is required
    *
    * @return body
    */

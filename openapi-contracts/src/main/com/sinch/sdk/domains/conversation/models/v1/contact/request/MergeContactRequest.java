@@ -19,6 +19,8 @@ public interface MergeContactRequest {
   /**
    * Required. The ID of the contact that should be removed.
    *
+   * <p>Field is required
+   *
    * @return sourceId
    */
   String getSourceId();

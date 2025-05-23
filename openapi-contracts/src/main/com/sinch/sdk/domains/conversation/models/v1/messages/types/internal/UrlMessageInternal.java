@@ -19,12 +19,16 @@ public interface UrlMessageInternal {
   /**
    * The title shown close to the URL. The title can be clickable in some cases.
    *
+   * <p>Field is required
+   *
    * @return title
    */
   String getTitle();
 
   /**
    * The url to show.
+   *
+   * <p>Field is required
    *
    * @return url
    */

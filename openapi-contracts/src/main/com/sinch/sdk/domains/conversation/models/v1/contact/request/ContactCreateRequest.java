@@ -26,6 +26,8 @@ public interface ContactCreateRequest {
   /**
    * List of channel identities. Array must contain at least one item.
    *
+   * <p>Field is required
+   *
    * @return channelIdentities
    */
   List<ChannelIdentity> getChannelIdentities();
@@ -61,6 +63,8 @@ public interface ContactCreateRequest {
 
   /**
    * Get language
+   *
+   * <p>Field is required
    *
    * @return language
    */

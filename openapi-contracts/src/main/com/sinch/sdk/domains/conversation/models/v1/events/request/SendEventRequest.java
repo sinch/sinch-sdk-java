@@ -24,6 +24,8 @@ public interface SendEventRequest {
   /**
    * The ID of the app sending the event.
    *
+   * <p>Field is required
+   *
    * @return appId
    */
   String getAppId();
@@ -48,6 +50,8 @@ public interface SendEventRequest {
   /**
    * Get event
    *
+   * <p>Field is required
+   *
    * @return event
    */
   AppEvent getEvent();
@@ -67,9 +71,9 @@ public interface SendEventRequest {
   MessageQueue getQueue();
 
   /**
-   * Identifies the recipient. If <a
-   * href="https://developers.sinch.com/docs/conversation/processing-modes/">Dispatch Mode</a> is
-   * used, you must use the <code>identified_by</code> field.
+   * Get recipient
+   *
+   * <p>Field is required
    *
    * @return recipient
    */

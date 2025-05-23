@@ -27,6 +27,8 @@ public interface ListSection<T> {
   /**
    * Get items
    *
+   * <p>Field is required
+   *
    * @return items
    */
   List<ListItem<T>> getItems();

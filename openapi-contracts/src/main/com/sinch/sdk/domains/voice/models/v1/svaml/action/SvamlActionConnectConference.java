@@ -54,6 +54,8 @@ public interface SvamlActionConnectConference
   /**
    * The unique identifier of the conference. Shouldn't exceed 64 characters.
    *
+   * <p>Field is required
+   *
    * @return conferenceId
    */
   String getConferenceId();

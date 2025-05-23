@@ -25,6 +25,8 @@ public interface TemplateTranslationBase {
    * The BCP-47 language code, such as <code>en-US</code> or <code>sr-Latn</code>. For more
    * information, see https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
    *
+   * <p>Field is required
+   *
    * @return languageCode
    */
   String getLanguageCode();

@@ -20,6 +20,8 @@ public interface ListItemOneOfProductInternal {
   /**
    * Get product
    *
+   * <p>Field is required
+   *
    * @return product
    */
   ProductItem getProduct();

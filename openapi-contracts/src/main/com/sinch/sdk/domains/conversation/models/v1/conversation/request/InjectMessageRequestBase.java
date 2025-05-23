@@ -24,12 +24,16 @@ public interface InjectMessageRequestBase {
    * The processed time of the message in UTC timezone. Must be less than current_time and greater
    * than (current_time - 30 days)
    *
+   * <p>Field is required
+   *
    * @return acceptTime
    */
   Instant getAcceptTime();
 
   /**
    * Get channelIdentity
+   *
+   * <p>Field is required
    *
    * @return channelIdentity
    */
@@ -38,12 +42,16 @@ public interface InjectMessageRequestBase {
   /**
    * The ID of the contact registered in the conversation provided.
    *
+   * <p>Field is required
+   *
    * @return contactId
    */
   String getContactId();
 
   /**
    * Get direction
+   *
+   * <p>Field is required
    *
    * @return direction
    */

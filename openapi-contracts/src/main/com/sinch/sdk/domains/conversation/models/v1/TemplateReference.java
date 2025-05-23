@@ -56,6 +56,8 @@ public interface TemplateReference
    * The ID of the template. Note that, in the case of WhatsApp channel-specific templates, this
    * field must be populated by the name of the template.
    *
+   * <p>Field is required
+   *
    * @return templateId
    */
   String getTemplateId();

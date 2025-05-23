@@ -46,6 +46,8 @@ public interface FlowChannelSpecificMessage
   /**
    * ID of the Flow.
    *
+   * <p>Field is required
+   *
    * @return flowId
    */
   String getFlowId();
@@ -93,6 +95,8 @@ public interface FlowChannelSpecificMessage
   /**
    * Text which is displayed on the Call To Action button (20 characters maximum, emoji not
    * supported).
+   *
+   * <p>Field is required
    *
    * @return flowCta
    */

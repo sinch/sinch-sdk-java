@@ -20,12 +20,16 @@ public interface QueryCapabilityRequest {
   /**
    * The ID of the app to use for capability lookup.
    *
+   * <p>Field is required
+   *
    * @return appId
    */
   String getAppId();
 
   /**
-   * Identifies the recipient.
+   * Get recipient
+   *
+   * <p>Field is required
    *
    * @return recipient
    */

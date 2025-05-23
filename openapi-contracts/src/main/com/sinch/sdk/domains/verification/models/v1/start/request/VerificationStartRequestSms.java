@@ -25,6 +25,8 @@ public interface VerificationStartRequestSms
   /**
    * Get identity
    *
+   * <p>Field is required
+   *
    * @return identity
    */
   Identity getIdentity();

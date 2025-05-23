@@ -19,12 +19,16 @@ public interface BasicAuthCredentials {
   /**
    * Basic auth password.
    *
+   * <p>Field is required
+   *
    * @return password
    */
   String getPassword();
 
   /**
    * Basic auth username.
+   *
+   * <p>Field is required
    *
    * @return username
    */

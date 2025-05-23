@@ -32,6 +32,8 @@ public interface DestinationMxp
   /**
    * For type <code>userName</code> the value is the username for a data endpoint.
    *
+   * <p>Field is required
+   *
    * @return endpoint
    */
   String getEndpoint();

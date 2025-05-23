@@ -45,6 +45,8 @@ public interface OrderStatus
   /**
    * Get payment
    *
+   * <p>Field is required
+   *
    * @return payment
    */
   OrderStatusPayment getPayment();

@@ -22,6 +22,8 @@ public interface AppleBusinessChatCredentials extends ChannelCredentials {
   /**
    * The ID that identifies a Business Chat Account (BCA).
    *
+   * <p>Field is required
+   *
    * @return businessChatAccountId
    */
   String getBusinessChatAccountId();
