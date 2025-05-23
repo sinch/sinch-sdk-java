@@ -21,9 +21,10 @@ import com.sinch.sdk.domains.sms.models.v1.deliveryreports.response.ListDelivery
 public interface DeliveryReportsService {
 
   /**
-   * Retrieve a delivery report (using default parameters) Delivery reports can be retrieved even if
-   * no callback was requested. The difference between a summary and a full report is only that the
-   * full report contains the phone numbers in
+   * Retrieve a delivery report (using default parameters)
+   *
+   * <p>Delivery reports can be retrieved even if no callback was requested. The difference between
+   * a summary and a full report is only that the full report contains the phone numbers in
    * [E.164](https://community.sinch.com/t5/Glossary/E-164/ta-p/7537) format for each status code.
    *
    * @param batchId The batch ID you received from sending a message. (required)
@@ -33,10 +34,11 @@ public interface DeliveryReportsService {
   BatchDeliveryReport get(String batchId) throws ApiException;
 
   /**
-   * Retrieve a delivery report Delivery reports can be retrieved even if no callback was requested.
-   * The difference between a summary and a full report is only that the full report contains the
-   * phone numbers in [E.164](https://community.sinch.com/t5/Glossary/E-164/ta-p/7537) format for
-   * each status code.
+   * Retrieve a delivery report
+   *
+   * <p>Delivery reports can be retrieved even if no callback was requested. The difference between
+   * a summary and a full report is only that the full report contains the phone numbers in
+   * [E.164](https://community.sinch.com/t5/Glossary/E-164/ta-p/7537) format for each status code.
    *
    * @param batchId The batch ID you received from sending a message. (required)
    * @param queryParameter (optional)
@@ -47,8 +49,9 @@ public interface DeliveryReportsService {
       throws ApiException;
 
   /**
-   * Retrieve a recipient delivery report A recipient delivery report contains the message status
-   * for a single recipient phone number.
+   * Retrieve a recipient delivery report
+   *
+   * <p>A recipient delivery report contains the message status for a single recipient phone number.
    *
    * @param batchId The batch ID you received from sending a message. (required)
    * @param recipientMsisdn Phone number for which you to want to search. (required)
@@ -58,8 +61,9 @@ public interface DeliveryReportsService {
   RecipientDeliveryReport getForNumber(String batchId, String recipientMsisdn) throws ApiException;
 
   /**
-   * Retrieve a list of delivery reports (using default parameters) Get a list of finished delivery
-   * reports. This operation supports pagination.
+   * Retrieve a list of delivery reports (using default parameters)
+   *
+   * <p>Get a list of finished delivery reports. This operation supports pagination.
    *
    * @return ListDeliveryReportsResponse
    * @throws ApiException if fails to make API call
@@ -67,8 +71,9 @@ public interface DeliveryReportsService {
   ListDeliveryReportsResponse list() throws ApiException;
 
   /**
-   * Retrieve a list of delivery reports Get a list of finished delivery reports. This operation
-   * supports pagination.
+   * Retrieve a list of delivery reports
+   *
+   * <p>Get a list of finished delivery reports. This operation supports pagination.
    *
    * @param queryParameter (optional)
    * @return ListDeliveryReportsResponse
