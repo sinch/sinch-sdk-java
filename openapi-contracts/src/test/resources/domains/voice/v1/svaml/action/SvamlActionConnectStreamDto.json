@@ -1,0 +1,14 @@
+{
+  "name": "connectStream",
+  "destination": {
+    "type": "Websocket",
+    "endpoint": "wss://yourcompany.com/websocket-server"
+  },
+  "maxDuration": 456,
+  "callHeaders": [
+    {
+      "key": "left string",
+      "value": "right string"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "type": "Websocket",
+  "endpoint": "wss://yourcompany.com/websocket-server"
+}

@@ -8,14 +8,32 @@ import java.util.stream.Stream;
 /** Gets or Sets webhooksEventRequestType */
 public class WebhooksEventRequestType extends EnumDynamic<String, WebhooksEventRequestType> {
 
+  /**
+   * An Incoming Call Event is a type of event sent to your server when a phone number assigned to
+   * your Voice application receives an incoming call.
+   */
   public static final WebhooksEventRequestType ICE = new WebhooksEventRequestType("ice");
 
+  /**
+   * An Answered Call Event is a type of event sent to your server when an outgoing call made by
+   * your Voice application is answered.
+   */
   public static final WebhooksEventRequestType ACE = new WebhooksEventRequestType("ace");
 
+  /**
+   * A Disconnected Call Event is a type of event sent to your server when a call is disconnected.
+   */
   public static final WebhooksEventRequestType DICE = new WebhooksEventRequestType("dice");
 
+  /**
+   * A Prompt Input Event is a type of event sent to your server when a prompt input is submitted.
+   */
   public static final WebhooksEventRequestType PIE = new WebhooksEventRequestType("pie");
 
+  /**
+   * A Notification Event is a type of event sent to your server when a particular action occurs,
+   * such as a recording starting or finishing.
+   */
   public static final WebhooksEventRequestType NOTIFY = new WebhooksEventRequestType("notify");
 
   private static final EnumSupportDynamic<String, WebhooksEventRequestType> ENUM_SUPPORT =

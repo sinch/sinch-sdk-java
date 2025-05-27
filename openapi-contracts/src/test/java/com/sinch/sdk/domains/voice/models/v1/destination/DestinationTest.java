@@ -22,6 +22,9 @@ class DestinationTest extends VoiceBaseTest {
 
   public static DestinationDid did = DestinationDid.builder().setEndpoint("did value").build();
 
+  public static DestinationWebSocket webSocket =
+      DestinationWebSocket.builder().setEndpoint("wss://yourcompany.com/websocket-server").build();
+
   @GivenTextResource("/domains/voice/v1/destination/DestinationMxpDto.json")
   String jsonUserName;
 
@@ -33,6 +36,9 @@ class DestinationTest extends VoiceBaseTest {
 
   @GivenTextResource("/domains/voice/v1/destination/DestinationDidDto.json")
   String jsonDid;
+
+  @GivenTextResource("/domains/voice/v1/destination/DestinationWebSocketDto.json")
+  String jsonWebSocket;
 
   @Test
   void serializeMxp() throws JsonProcessingException, JSONException {
@@ -88,5 +94,20 @@ class DestinationTest extends VoiceBaseTest {
     Destination expected = objectMapper.readValue(jsonDid, Destination.class);
 
     TestHelpers.recursiveEquals(did, expected);
+  }
+
+  @Test
+  void serializeWebSocket() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(webSocket);
+
+    JSONAssert.assertEquals(jsonWebSocket, serializedString, true);
+  }
+
+  @Test
+  void deserializeWebSocket() throws JsonProcessingException {
+    DestinationWebSocket expected =
+        objectMapper.readValue(jsonWebSocket, DestinationWebSocket.class);
+
+    TestHelpers.recursiveEquals(webSocket, expected);
   }
 }
