@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 /** Contains the result of a call. */
 public class CallResult extends EnumDynamic<String, CallResult> {
 
+  /** Not applicable */
   public static final CallResult N_A = new CallResult("N/A");
 
   /** The call was answered. */
