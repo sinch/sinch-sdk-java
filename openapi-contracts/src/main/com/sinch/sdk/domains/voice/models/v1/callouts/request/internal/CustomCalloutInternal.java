@@ -11,6 +11,7 @@
 package com.sinch.sdk.domains.voice.models.v1.callouts.request.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.voice.models.v1.AnsweringMachineDetectionQuery;
 import com.sinch.sdk.domains.voice.models.v1.destination.DestinationCustom;
 import com.sinch.sdk.domains.voice.models.v1.svaml.Control;
 import com.sinch.sdk.models.DualToneMultiFrequency;
@@ -102,6 +103,13 @@ public interface CustomCalloutInternal {
   Control getPie();
 
   /**
+   * Get amd
+   *
+   * @return amd
+   */
+  AnsweringMachineDetectionQuery getAmd();
+
+  /**
    * Getting builder
    *
    * @return New Builder instance
@@ -184,6 +192,15 @@ public interface CustomCalloutInternal {
      * @see #getPie
      */
     Builder setPie(Control pie);
+
+    /**
+     * see getter
+     *
+     * @param amd see getter
+     * @return Current builder
+     * @see #getAmd
+     */
+    Builder setAmd(AnsweringMachineDetectionQuery amd);
 
     /**
      * Create instance

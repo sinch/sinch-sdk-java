@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.voice.models.v1.AnsweringMachineDetectionQuery;
 import com.sinch.sdk.domains.voice.models.v1.destination.DestinationCustom;
 import com.sinch.sdk.domains.voice.models.v1.svaml.Control;
 import com.sinch.sdk.models.DualToneMultiFrequency;
@@ -20,7 +21,8 @@ import java.util.Objects;
   CustomCalloutInternalImpl.JSON_PROPERTY_MAX_DURATION,
   CustomCalloutInternalImpl.JSON_PROPERTY_ICE,
   CustomCalloutInternalImpl.JSON_PROPERTY_ACE,
-  CustomCalloutInternalImpl.JSON_PROPERTY_PIE
+  CustomCalloutInternalImpl.JSON_PROPERTY_PIE,
+  CustomCalloutInternalImpl.JSON_PROPERTY_AMD
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
@@ -59,6 +61,10 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
 
   private OptionalValue<Control> pie;
 
+  public static final String JSON_PROPERTY_AMD = "amd";
+
+  private OptionalValue<AnsweringMachineDetectionQuery> amd;
+
   public CustomCalloutInternalImpl() {}
 
   protected CustomCalloutInternalImpl(
@@ -69,7 +75,8 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
       OptionalValue<Integer> maxDuration,
       OptionalValue<Control> ice,
       OptionalValue<Control> ace,
-      OptionalValue<Control> pie) {
+      OptionalValue<Control> pie,
+      OptionalValue<AnsweringMachineDetectionQuery> amd) {
     this.cli = cli;
     this.destination = destination;
     this.dtmf = dtmf;
@@ -78,6 +85,7 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
     this.ice = ice;
     this.ace = ace;
     this.pie = pie;
+    this.amd = amd;
   }
 
   @JsonIgnore
@@ -168,6 +176,17 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
     return pie;
   }
 
+  @JsonIgnore
+  public AnsweringMachineDetectionQuery getAmd() {
+    return amd.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_AMD)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<AnsweringMachineDetectionQuery> amd() {
+    return amd;
+  }
+
   /** Return true if this customCallout object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -185,12 +204,13 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
         && Objects.equals(this.maxDuration, customCallout.maxDuration)
         && Objects.equals(this.ice, customCallout.ice)
         && Objects.equals(this.ace, customCallout.ace)
-        && Objects.equals(this.pie, customCallout.pie);
+        && Objects.equals(this.pie, customCallout.pie)
+        && Objects.equals(this.amd, customCallout.amd);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(cli, destination, dtmf, custom, maxDuration, ice, ace, pie);
+    return Objects.hash(cli, destination, dtmf, custom, maxDuration, ice, ace, pie, amd);
   }
 
   @Override
@@ -205,6 +225,7 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
     sb.append("    ice: ").append(toIndentedString(ice)).append("\n");
     sb.append("    ace: ").append(toIndentedString(ace)).append("\n");
     sb.append("    pie: ").append(toIndentedString(pie)).append("\n");
+    sb.append("    amd: ").append(toIndentedString(amd)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -229,6 +250,7 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
     OptionalValue<Control> ice = OptionalValue.empty();
     OptionalValue<Control> ace = OptionalValue.empty();
     OptionalValue<Control> pie = OptionalValue.empty();
+    OptionalValue<AnsweringMachineDetectionQuery> amd = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CLI)
     public Builder setCli(String cli) {
@@ -278,9 +300,15 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_AMD)
+    public Builder setAmd(AnsweringMachineDetectionQuery amd) {
+      this.amd = OptionalValue.of(amd);
+      return this;
+    }
+
     public CustomCalloutInternal build() {
       return new CustomCalloutInternalImpl(
-          cli, destination, dtmf, custom, maxDuration, ice, ace, pie);
+          cli, destination, dtmf, custom, maxDuration, ice, ace, pie, amd);
     }
   }
 }

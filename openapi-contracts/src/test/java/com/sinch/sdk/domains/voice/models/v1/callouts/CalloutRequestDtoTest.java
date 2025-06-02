@@ -4,6 +4,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.domains.voice.adapters.VoiceBaseTest;
+import com.sinch.sdk.domains.voice.models.v1.AnsweringMachineDetectionQueryTest;
 import com.sinch.sdk.domains.voice.models.v1.Domain;
 import com.sinch.sdk.domains.voice.models.v1.MusicOnHold;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
@@ -107,6 +108,7 @@ public class CalloutRequestDtoTest extends VoiceBaseTest {
                   .setAction(SvamlActionHangup.DEFAULT)
                   .build())
           .setPie(ControlUrl.from("https://your-application-server-host/application"))
+          .setAmd(AnsweringMachineDetectionQueryTest.dto)
           .build();
 
   @Test

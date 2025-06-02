@@ -11,6 +11,10 @@
     "maxDuration": 32,
     "ice": "{\"action\":{\"name\":\"connectPstn\",\"number\":\"+12233445566\",\"cli\":\"+12234325234\",\"amd\":{\"enabled\":true}}}",
     "ace": "{\"instructions\":[{\"name\":\"say\",\"text\":\"Hello, this is a call from Sinch!\"}],\"action\":{\"name\":\"hangup\"}}",
-    "pie": "https://your-application-server-host/application"
+    "pie": "https://your-application-server-host/application",
+    "amd" : {
+      "enabled": true,
+      "async": true
+    }
   }
 }
