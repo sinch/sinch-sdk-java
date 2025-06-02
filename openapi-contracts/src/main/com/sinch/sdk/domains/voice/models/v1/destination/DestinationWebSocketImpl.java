@@ -20,7 +20,7 @@ public class DestinationWebSocketImpl implements DestinationWebSocket {
 
   public static final String JSON_PROPERTY_TYPE = "type";
 
-  private OptionalValue<String> type;
+  private OptionalValue<TypeEnum> type;
 
   public static final String JSON_PROPERTY_ENDPOINT = "endpoint";
 
@@ -28,19 +28,19 @@ public class DestinationWebSocketImpl implements DestinationWebSocket {
 
   public DestinationWebSocketImpl() {}
 
-  protected DestinationWebSocketImpl(OptionalValue<String> type, OptionalValue<String> endpoint) {
+  protected DestinationWebSocketImpl(OptionalValue<TypeEnum> type, OptionalValue<String> endpoint) {
     this.type = type;
     this.endpoint = endpoint;
   }
 
   @JsonIgnore
-  public String getType() {
+  public TypeEnum getType() {
     return type.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_TYPE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<String> type() {
+  public OptionalValue<TypeEnum> type() {
     return type;
   }
 
@@ -55,7 +55,7 @@ public class DestinationWebSocketImpl implements DestinationWebSocket {
     return endpoint;
   }
 
-  /** Return true if this svaml_action_connectStream_destination object is equal to o. */
+  /** Return true if this destinationWebSocket object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -64,9 +64,9 @@ public class DestinationWebSocketImpl implements DestinationWebSocket {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DestinationWebSocketImpl svamlActionConnectStreamDestination = (DestinationWebSocketImpl) o;
-    return Objects.equals(this.type, svamlActionConnectStreamDestination.type)
-        && Objects.equals(this.endpoint, svamlActionConnectStreamDestination.endpoint);
+    DestinationWebSocketImpl destinationWebSocket = (DestinationWebSocketImpl) o;
+    return Objects.equals(this.type, destinationWebSocket.type)
+        && Objects.equals(this.endpoint, destinationWebSocket.endpoint);
   }
 
   @Override
@@ -96,7 +96,7 @@ public class DestinationWebSocketImpl implements DestinationWebSocket {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements DestinationWebSocket.Builder {
-    OptionalValue<String> type = OptionalValue.of(DestinationWebSocket.WEBSOCKET);
+    OptionalValue<TypeEnum> type = OptionalValue.of(DestinationWebSocket.TypeEnum.WEBSOCKET);
     OptionalValue<String> endpoint = OptionalValue.empty();
 
     @JsonProperty(value = JSON_PROPERTY_ENDPOINT, required = true)
