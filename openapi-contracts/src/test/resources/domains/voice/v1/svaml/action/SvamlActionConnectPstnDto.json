@@ -9,6 +9,7 @@
   "dtmf": "#w123",
   "indications": "unknown value",
   "amd": {
-    "enabled": true
+    "enabled": true,
+    "async": true
   }
 }

@@ -22,9 +22,11 @@ import com.sinch.sdk.domains.voice.models.svaml.Menu;
 import com.sinch.sdk.domains.voice.models.svaml.MenuOption;
 import com.sinch.sdk.domains.voice.models.svaml.MenuOptionAction;
 import com.sinch.sdk.domains.voice.models.svaml.MenuOptionActionType;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.ConnectPstnAnsweringMachineDetection;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectConferenceTest;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectMxpTest;
-import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectPstnTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectPstn;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectPstn.IndicationsEnum;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectSipTest;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionContinueTest;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionHangupTest;
@@ -133,8 +135,20 @@ public class SVAMLActionDtoConverterTest {
 
   @Test
   void convertActionConnectPstn() {
-    TestHelpers.recursiveEquals(
-        SVAMLActionDtoConverter.convert(actionConnectPstn), SvamlActionConnectPstnTest.dto);
+
+    SvamlActionConnectPstn dtoDeprecated =
+        SvamlActionConnectPstn.builder()
+            .setNumber("+123456789")
+            .setLocale("fr")
+            .setMaxDuration(123)
+            .setDialTimeout(456)
+            .setCli("cli value")
+            .setSuppressCallbacks(true)
+            .setDtmf(DualToneMultiFrequency.valueOf("#w123"))
+            .setIndications(IndicationsEnum.from("unknown value"))
+            .setAmd(ConnectPstnAnsweringMachineDetection.builder().setEnabled(true).build())
+            .build();
+    TestHelpers.recursiveEquals(SVAMLActionDtoConverter.convert(actionConnectPstn), dtoDeprecated);
   }
 
   @Test
