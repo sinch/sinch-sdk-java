@@ -63,10 +63,14 @@ public interface AnsweringMachineDetection {
   public class ReasonEnum extends EnumDynamic<String, ReasonEnum> {
     public static final ReasonEnum LONGGREETING = new ReasonEnum("longgreeting");
     public static final ReasonEnum INITIALSILENCE = new ReasonEnum("initialsilence");
+    public static final ReasonEnum BEEP = new ReasonEnum("beep");
+    public static final ReasonEnum N_A = new ReasonEnum("n/a");
 
     private static final EnumSupportDynamic<String, ReasonEnum> ENUM_SUPPORT =
         new EnumSupportDynamic<>(
-            ReasonEnum.class, ReasonEnum::new, Arrays.asList(LONGGREETING, INITIALSILENCE));
+            ReasonEnum.class,
+            ReasonEnum::new,
+            Arrays.asList(LONGGREETING, INITIALSILENCE, BEEP, N_A));
 
     private ReasonEnum(String value) {
       super(value);
