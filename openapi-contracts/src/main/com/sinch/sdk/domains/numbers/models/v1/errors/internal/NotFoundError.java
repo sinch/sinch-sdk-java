@@ -13,6 +13,7 @@ package com.sinch.sdk.domains.numbers.models.v1.errors.internal;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import com.sinch.sdk.domains.numbers.models.v1.errors.NotFoundErrorDetails;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -95,7 +96,7 @@ public interface NotFoundError {
    *
    * @return details
    */
-  List<Object> getDetails();
+  List<NotFoundErrorDetails> getDetails();
 
   /**
    * Getting builder
@@ -143,7 +144,7 @@ public interface NotFoundError {
      * @return Current builder
      * @see #getDetails
      */
-    Builder setDetails(List<Object> details);
+    Builder setDetails(List<NotFoundErrorDetails> details);
 
     /**
      * Create instance

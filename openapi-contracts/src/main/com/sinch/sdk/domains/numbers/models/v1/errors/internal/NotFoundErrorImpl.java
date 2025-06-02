@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.numbers.models.v1.errors.NotFoundErrorDetails;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,7 +36,7 @@ public class NotFoundErrorImpl implements NotFoundError {
 
   public static final String JSON_PROPERTY_DETAILS = "details";
 
-  private OptionalValue<List<Object>> details;
+  private OptionalValue<List<NotFoundErrorDetails>> details;
 
   public NotFoundErrorImpl() {}
 
@@ -43,7 +44,7 @@ public class NotFoundErrorImpl implements NotFoundError {
       OptionalValue<CodeEnum> code,
       OptionalValue<String> message,
       OptionalValue<StatusEnum> status,
-      OptionalValue<List<Object>> details) {
+      OptionalValue<List<NotFoundErrorDetails>> details) {
     this.code = code;
     this.message = message;
     this.status = status;
@@ -84,13 +85,13 @@ public class NotFoundErrorImpl implements NotFoundError {
   }
 
   @JsonIgnore
-  public List<Object> getDetails() {
+  public List<NotFoundErrorDetails> getDetails() {
     return details.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_DETAILS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<List<Object>> details() {
+  public OptionalValue<List<NotFoundErrorDetails>> details() {
     return details;
   }
 
@@ -142,7 +143,7 @@ public class NotFoundErrorImpl implements NotFoundError {
     OptionalValue<CodeEnum> code = OptionalValue.empty();
     OptionalValue<String> message = OptionalValue.empty();
     OptionalValue<StatusEnum> status = OptionalValue.empty();
-    OptionalValue<List<Object>> details = OptionalValue.empty();
+    OptionalValue<List<NotFoundErrorDetails>> details = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CODE)
     public Builder setCode(CodeEnum code) {
@@ -163,7 +164,7 @@ public class NotFoundErrorImpl implements NotFoundError {
     }
 
     @JsonProperty(JSON_PROPERTY_DETAILS)
-    public Builder setDetails(List<Object> details) {
+    public Builder setDetails(List<NotFoundErrorDetails> details) {
       this.details = OptionalValue.of(details);
       return this;
     }
