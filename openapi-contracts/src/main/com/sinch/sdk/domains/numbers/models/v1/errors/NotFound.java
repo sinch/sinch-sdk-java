@@ -95,7 +95,7 @@ public interface NotFound {
    *
    * @return details
    */
-  List<Object> getDetails();
+  List<NotFoundErrorDetails> getDetails();
 
   /**
    * Getting builder
@@ -143,7 +143,7 @@ public interface NotFound {
      * @return Current builder
      * @see #getDetails
      */
-    Builder setDetails(List<Object> details);
+    Builder setDetails(List<NotFoundErrorDetails> details);
 
     /**
      * Create instance

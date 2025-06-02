@@ -90,14 +90,14 @@ public class NotFoundImpl implements NotFound {
   }
 
   @JsonIgnore
-  public List<Object> getDetails() {
+  public List<NotFoundErrorDetails> getDetails() {
     if (null == error || !error.isPresent() || null == error.get().getDetails()) {
       return null;
     }
     return error.get().getDetails();
   }
 
-  public OptionalValue<List<Object>> details() {
+  public OptionalValue<List<NotFoundErrorDetails>> details() {
     return null != error && error.isPresent()
         ? error.map(f -> ((NotFoundErrorImpl) f).details()).orElse(OptionalValue.empty())
         : OptionalValue.empty();
@@ -173,7 +173,7 @@ public class NotFoundImpl implements NotFound {
     }
 
     @JsonIgnore
-    public Builder setDetails(List<Object> details) {
+    public Builder setDetails(List<NotFoundErrorDetails> details) {
       getDelegatedBuilder().setDetails(details);
       return this;
     }
