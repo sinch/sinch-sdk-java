@@ -116,7 +116,7 @@ class AvailableNumberServiceTest extends BaseTest {
   }
 
   @Test
-  void rentDefault() {
+  void rentWithoutConfiguration() {
 
     AvailableNumberRentRequest request = AvailableNumberRentRequest.builder().build();
 
