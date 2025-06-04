@@ -53,6 +53,15 @@ public interface NumbersService {
   /**
    * Activate a new phone number
    *
+   * @param phoneNumber Number to be activated
+   * @return Activated number See {@link #rent(String, AvailableNumberRentRequest)}.
+   * @since 1.7
+   */
+  ActiveNumber rent(String phoneNumber) throws ApiException;
+
+  /**
+   * Activate a new phone number
+   *
    * <p>Activate a phone number to use with SMS products, Voice products, or both.
    *
    * <p>You'll use smsConfiguration to setup your number for SMS and voiceConfiguration for Voice.

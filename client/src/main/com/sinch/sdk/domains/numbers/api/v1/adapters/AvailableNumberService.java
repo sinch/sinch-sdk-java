@@ -89,6 +89,13 @@ public class AvailableNumberService {
     return getApi().numberServiceGetAvailableNumber(uriUUID, phoneNumber);
   }
 
+  public ActiveNumber rent(String phoneNumber) throws ApiException {
+
+    return getApi()
+        .numberServiceRentNumber(
+            uriUUID, phoneNumber, AvailableNumberRentRequest.builder().build());
+  }
+
   public ActiveNumber rent(String phoneNumber, AvailableNumberRentRequest parameters)
       throws ApiException {
 

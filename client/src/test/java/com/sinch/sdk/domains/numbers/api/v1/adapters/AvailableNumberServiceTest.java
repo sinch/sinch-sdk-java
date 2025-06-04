@@ -116,6 +116,19 @@ class AvailableNumberServiceTest extends BaseTest {
   }
 
   @Test
+  void rentDefault() {
+
+    AvailableNumberRentRequest request = AvailableNumberRentRequest.builder().build();
+
+    when(api.numberServiceRentNumber(eq(uriUUID), eq("foo"), eq(request)))
+        .thenReturn(ActiveNumberDtoTest.activeNumber);
+
+    ActiveNumber response = service.rent("foo");
+
+    TestHelpers.recursiveEquals(response, ActiveNumberDtoTest.activeNumber);
+  }
+
+  @Test
   void rent() {
 
     AvailableNumberRentRequest request =
