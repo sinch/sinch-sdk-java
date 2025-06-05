@@ -109,6 +109,10 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
     return available().checkAvailability(phoneNumber);
   }
 
+  public ActiveNumber rent(String phoneNumber) throws ApiException {
+    return available().rent(phoneNumber);
+  }
+
   public ActiveNumber rent(String phoneNumber, AvailableNumberRentRequest parameters)
       throws ApiException {
     return available().rent(phoneNumber, parameters);
