@@ -25,11 +25,7 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          server-id: ossrh
-          server-username: OSSRH_USER
-          server-password: OSSRH_PWD
           gpg-private-key: ${{ secrets.GPG_KEY }}
-          gpg-passphrase: GPG_PWD
 
       - name: Cache local Maven repository
         uses: actions/cache@v3
@@ -82,8 +78,8 @@ jobs:
         env:
           RELEASE_VERSION: ${{ github.event.inputs.releaseVersion }}
           NEXT_VERSION: ${{ github.event.inputs.nextDevelopmentVersion }}
-          OSSRH_USER: ${{ secrets.OSSRH_USERNAME }}
-          OSSRH_PWD: ${{ secrets.OSSRH_PWD }}
+          SONATYPE_CENTRAL_USER: ${{ secrets.SONATYPE_CENTRAL_USER }}
+          SONATYPE_CENTRAL_PASSWORD: ${{ secrets.SONATYPE_CENTRAL_PASSWORD }}
           GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
           GPG_PWD: ${{ secrets.GPG_PWD }}
           GITHUB_USERNAME: ${{ github.actor }}
