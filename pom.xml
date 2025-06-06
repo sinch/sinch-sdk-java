@@ -45,13 +45,6 @@
         <system>GitHub</system>
     </issueManagement>
 
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -80,8 +73,8 @@
         <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
         <maven.javadoc.plugin.version>3.6.0</maven.javadoc.plugin.version>
         <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
-        <maven-gpg-plugin.version>1.5</maven-gpg-plugin.version>
-        <nexus-staging-maven-plugin>1.6.13</nexus-staging-maven-plugin>
+        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+        <central-publishing-maven-plugin.version>0.7.0</central-publishing-maven-plugin.version>
     </properties>
 
     <build>
@@ -605,17 +598,12 @@
                     </plugin>
 
                     <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>${nexus-staging-maven-plugin}</version>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>${central-publishing-maven-plugin.version}</version>
                         <extensions>true</extensions>
                         <configuration>
-                            <!-- Source: https://help.sonatype.com/repomanager2/staging-releases/configuring-your-project-for-deployment
-                               serverId: The id of the server element in settings.xml from which the user credentials for accessing the repository manager should be retrieved
-                               nexusUrl: The base URL at which the repository manager to be used for staging is available -->
-                            <serverId>ossrh</serverId>
-                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                            <publishingServerId>central</publishingServerId>
                         </configuration>
                     </plugin>
 
