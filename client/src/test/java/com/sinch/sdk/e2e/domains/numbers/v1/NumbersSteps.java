@@ -17,9 +17,11 @@ import com.sinch.sdk.domains.numbers.models.v1.VoiceConfigurationFAX;
 import com.sinch.sdk.domains.numbers.models.v1.VoiceConfigurationRTC;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumbersListQueryParameters;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberListRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentAnyRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumbersListQueryParameters;
 import com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern;
 import com.sinch.sdk.domains.numbers.models.v1.request.SearchPosition;
 import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse;
@@ -39,12 +41,18 @@ public class NumbersSteps {
   NumbersService service;
 
   AvailableNumberListResponse searchForAvailableNumbersResponse;
+  AvailableNumberListResponse searchForAvailableNumbersResponseDeprecated;
+
   AvailableNumber checkAvailabilityResponse;
   ApiException availabilityResponseException;
   ActiveNumber rentAnyResponse;
   ActiveNumber rentResponse;
   ActiveNumberListResponse activeNumberListResponse;
+  ActiveNumberListResponse activeNumberListResponseDeprecated;
+
   ActiveNumberListResponse activeNumberListAllResponse;
+  ActiveNumberListResponse activeNumberListAllResponseDeprecated;
+
   ActiveNumber updateResponse;
   ActiveNumber getResponse;
   ApiException getResponseException;
@@ -59,8 +67,16 @@ public class NumbersSteps {
   @When("^I send a request to search for available phone numbers$")
   public void searchForAvailableNumbers() {
 
-    AvailableNumberListRequest parameters =
+    AvailableNumberListRequest parametersDeprecated =
         AvailableNumberListRequest.builder().setRegionCode("US").setType(NumberType.LOCAL).build();
+    searchForAvailableNumbersResponseDeprecated =
+        service.searchForAvailableNumbers(parametersDeprecated);
+
+    AvailableNumbersListQueryParameters parameters =
+        AvailableNumbersListQueryParameters.builder()
+            .setRegionCode("US")
+            .setType(NumberType.LOCAL)
+            .build();
     searchForAvailableNumbersResponse = service.searchForAvailableNumbers(parameters);
   }
 
@@ -134,16 +150,30 @@ public class NumbersSteps {
   @When("I send a request to list the phone numbers")
   public void list() {
 
-    ActiveNumberListRequest request =
+    ActiveNumberListRequest requestDeprecated =
         ActiveNumberListRequest.builder().setRegionCode("US").setType(NumberType.LOCAL).build();
+    activeNumberListResponseDeprecated = service.list(requestDeprecated);
+
+    ActiveNumbersListQueryParameters request =
+        ActiveNumbersListQueryParameters.builder()
+            .setRegionCode("US")
+            .setType(NumberType.LOCAL)
+            .build();
     activeNumberListResponse = service.list(request);
   }
 
   @When("I send a request to list all the phone numbers")
   public void listAll() {
 
-    ActiveNumberListRequest request =
+    ActiveNumberListRequest requestDeprecated =
         ActiveNumberListRequest.builder().setRegionCode("US").setType(NumberType.LOCAL).build();
+    activeNumberListAllResponseDeprecated = service.list(requestDeprecated);
+
+    ActiveNumbersListQueryParameters request =
+        ActiveNumbersListQueryParameters.builder()
+            .setRegionCode("US")
+            .setType(NumberType.LOCAL)
+            .build();
     activeNumberListAllResponse = service.list(request);
   }
 
@@ -180,6 +210,7 @@ public class NumbersSteps {
 
   @Then("the response contains \"{int}\" available phone numbers")
   public void searchForAvailableNumbersResponse(int count) {
+    Assertions.assertEquals(count, searchForAvailableNumbersResponseDeprecated.stream().count());
     Assertions.assertEquals(count, searchForAvailableNumbersResponse.stream().count());
   }
 
@@ -196,6 +227,8 @@ public class NumbersSteps {
             .setPaymentIntervalMonths(1)
             .setSupportingDocumentationRequired(true)
             .build();
+    Assertions.assertEquals(
+        expected, searchForAvailableNumbersResponseDeprecated.stream().findFirst().orElse(null));
     Assertions.assertEquals(
         expected, searchForAvailableNumbersResponse.stream().findFirst().orElse(null));
   }
@@ -318,12 +351,14 @@ public class NumbersSteps {
   @Then("the response contains \"{int}\" phone numbers")
   public void listResult(int expected) {
 
+    Assertions.assertEquals(expected, activeNumberListResponseDeprecated.getContent().size());
     Assertions.assertEquals(expected, activeNumberListResponse.getContent().size());
   }
 
   @Then("the phone numbers list contains \"{int}\" phone numbers")
   public void listAllResult(int expected) {
 
+    Assertions.assertEquals(expected, activeNumberListAllResponseDeprecated.stream().count());
     Assertions.assertEquals(expected, activeNumberListAllResponse.stream().count());
   }
 
