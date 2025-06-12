@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.numbers.api.v1.internal;
+package com.sinch.sdk.domains.numbers.api.v1.adapters;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sinch.sdk.core.exceptions.ApiException;
@@ -33,48 +33,42 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class CallbacksApi {
+public class CallbackConfigurationServiceImpl
+    implements com.sinch.sdk.domains.numbers.api.v1.CallbackConfigurationService {
 
-  private static final Logger LOGGER = Logger.getLogger(CallbacksApi.class.getName());
-  private HttpClient httpClient;
-  private ServerConfiguration serverConfiguration;
-  private Map<String, AuthManager> authManagersByOasSecuritySchemes;
-  private HttpMapper mapper;
+  private static final Logger LOGGER =
+      Logger.getLogger(CallbackConfigurationServiceImpl.class.getName());
+  private final HttpClient httpClient;
+  private final ServerConfiguration serverConfiguration;
+  private final Map<String, AuthManager> authManagersByOasSecuritySchemes;
+  private final HttpMapper mapper;
 
-  public CallbacksApi(
+  private final String projectId;
+
+  public CallbackConfigurationServiceImpl(
       HttpClient httpClient,
       ServerConfiguration serverConfiguration,
       Map<String, AuthManager> authManagersByOasSecuritySchemes,
-      HttpMapper mapper) {
+      HttpMapper mapper,
+      String projectId) {
     this.httpClient = httpClient;
     this.serverConfiguration = serverConfiguration;
     this.authManagersByOasSecuritySchemes = authManagersByOasSecuritySchemes;
     this.mapper = mapper;
+    this.projectId = projectId;
   }
 
-  /**
-   * Get callbacks configuration Returns the callbacks configuration for the specified project
-   *
-   * @param projectId Found on your [Sinch Customer
-   *     Dashboard](https://dashboard.sinch.com/settings/project-management). Settings &gt;
-   *     Projects. (required)
-   * @return CallbackConfigurationResponse
-   * @throws ApiException if fails to make API call
-   */
-  public CallbackConfigurationResponse getCallbackConfiguration(String projectId)
-      throws ApiException {
+  public CallbackConfigurationResponse get() throws ApiException {
 
-    LOGGER.finest("[getCallbackConfiguration]" + " " + "projectId: " + projectId);
+    LOGGER.finest("[get]" + " ");
 
-    HttpRequest httpRequest = getCallbackConfigurationRequestBuilder(projectId);
+    HttpRequest httpRequest = getRequestBuilder();
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<CallbackConfigurationResponse> localVarReturnType =
-          new TypeReference<CallbackConfigurationResponse>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<CallbackConfigurationResponse>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -85,17 +79,18 @@ public class CallbacksApi {
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest getCallbackConfigurationRequestBuilder(String projectId) throws ApiException {
-    // verify the required parameter 'projectId' is set
-    if (projectId == null) {
+  private HttpRequest getRequestBuilder() throws ApiException {
+    // verify the required parameter 'this.projectId' is set
+    if (this.projectId == null) {
       throw new ApiException(
-          400, "Missing the required parameter 'projectId' when calling getCallbackConfiguration");
+          400, "Missing the required parameter 'this.projectId' when calling get");
     }
 
     String localVarPath =
         "/v1/projects/{projectId}/callbackConfiguration"
             .replaceAll(
-                "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()));
+                "\\{" + "projectId" + "\\}",
+                URLPathUtils.encodePathSegment(this.projectId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
@@ -119,40 +114,22 @@ public class CallbacksApi {
         localVarAuthNames);
   }
 
-  /**
-   * Update callback configuration Updates the callbacks configuration for the specified project
-   *
-   * @param projectId Found on your [Sinch Customer
-   *     Dashboard](https://dashboard.sinch.com/settings/project-management). Settings &gt;
-   *     Projects. (required)
-   * @param callbackConfigurationUpdateRequest The callback configuration details to be updated.
-   *     (optional)
-   * @return CallbackConfigurationResponse
-   * @throws ApiException if fails to make API call
-   */
-  public CallbackConfigurationResponse updateCallbackConfiguration(
-      String projectId, CallbackConfigurationUpdateRequest callbackConfigurationUpdateRequest)
-      throws ApiException {
+  public CallbackConfigurationResponse update(
+      CallbackConfigurationUpdateRequest callbackConfigurationUpdateRequest) throws ApiException {
 
     LOGGER.finest(
-        "[updateCallbackConfiguration]"
+        "[update]"
             + " "
-            + "projectId: "
-            + projectId
-            + ", "
             + "callbackConfigurationUpdateRequest: "
             + callbackConfigurationUpdateRequest);
 
-    HttpRequest httpRequest =
-        updateCallbackConfigurationRequestBuilder(projectId, callbackConfigurationUpdateRequest);
+    HttpRequest httpRequest = updateRequestBuilder(callbackConfigurationUpdateRequest);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<CallbackConfigurationResponse> localVarReturnType =
-          new TypeReference<CallbackConfigurationResponse>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<CallbackConfigurationResponse>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -163,20 +140,19 @@ public class CallbacksApi {
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest updateCallbackConfigurationRequestBuilder(
-      String projectId, CallbackConfigurationUpdateRequest callbackConfigurationUpdateRequest)
-      throws ApiException {
-    // verify the required parameter 'projectId' is set
-    if (projectId == null) {
+  private HttpRequest updateRequestBuilder(
+      CallbackConfigurationUpdateRequest callbackConfigurationUpdateRequest) throws ApiException {
+    // verify the required parameter 'this.projectId' is set
+    if (this.projectId == null) {
       throw new ApiException(
-          400,
-          "Missing the required parameter 'projectId' when calling updateCallbackConfiguration");
+          400, "Missing the required parameter 'this.projectId' when calling update");
     }
 
     String localVarPath =
         "/v1/projects/{projectId}/callbackConfiguration"
             .replaceAll(
-                "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()));
+                "\\{" + "projectId" + "\\}",
+                URLPathUtils.encodePathSegment(this.projectId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
