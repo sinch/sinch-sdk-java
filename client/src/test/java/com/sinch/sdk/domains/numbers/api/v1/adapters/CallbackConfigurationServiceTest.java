@@ -1,22 +1,30 @@
 package com.sinch.sdk.domains.numbers.api.v1.adapters;
 
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
+import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.numbers.api.v1.internal.CallbacksApi;
+import com.sinch.sdk.core.http.HttpContentType;
+import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.core.http.HttpMethod;
+import com.sinch.sdk.core.http.HttpRequest;
+import com.sinch.sdk.core.http.HttpRequestTest.HttpRequestMatcher;
+import com.sinch.sdk.core.http.HttpResponse;
+import com.sinch.sdk.core.http.URLPathUtils;
+import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.domains.numbers.api.v1.CallbackConfigurationService;
 import com.sinch.sdk.domains.numbers.models.v1.CallbackConfigurationDtoTest;
-import com.sinch.sdk.domains.numbers.models.v1.callbacks.request.CallbackConfigurationUpdateRequest;
 import com.sinch.sdk.domains.numbers.models.v1.callbacks.response.CallbackConfigurationResponse;
-import com.sinch.sdk.models.NumbersContext;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,33 +33,46 @@ import org.mockito.Mock;
 @TestWithResources
 class CallbackConfigurationServiceTest extends BaseTest {
 
-  @GivenJsonResource("/domains/numbers/v1/callbacks/callback-get-response.json")
-  CallbackConfigurationResponse getResponse;
+  @GivenTextResource("/domains/numbers/v1/callbacks/callback-get-response.json")
+  String jsonGetResponse;
 
-  @GivenJsonResource("/domains/numbers/v1/callbacks/callback-update-request.json")
-  CallbackConfigurationUpdateRequest updateRequest;
-
-  @Mock NumbersContext context;
   @Mock HttpClient httpClient;
+  @Mock ServerConfiguration serverConfiguration;
   @Mock Map<String, AuthManager> authManagers;
-  @Mock CallbacksApi api;
   CallbackConfigurationService service;
 
-  String uriUUID = "foo";
+  static final String uriUUID = "foo";
+
+  static final Collection<String> NUMBERS_AUTH_NAMES = Arrays.asList("Basic", "OAuth2.0");
 
   @BeforeEach
   public void initMocks() {
-    CallbackConfigurationService v1 =
-        new CallbackConfigurationService(uriUUID, context, () -> httpClient, authManagers);
-    service = spy(v1);
-    doReturn(api).when(service).getApi();
+    service =
+        new CallbackConfigurationServiceImpl(
+            httpClient, serverConfiguration, authManagers, HttpMapper.getInstance(), uriUUID);
   }
 
   @Test
   void get() throws ApiException {
 
-    when(api.getCallbackConfiguration(eq(uriUUID)))
-        .thenReturn(CallbackConfigurationDtoTest.getResponse);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v1/projects/" + URLPathUtils.encodePathSegment(uriUUID) + "/callbackConfiguration",
+            HttpMethod.GET,
+            Collections.emptyList(),
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            NUMBERS_AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonGetResponse.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     CallbackConfigurationResponse response = service.get();
 
@@ -61,9 +82,27 @@ class CallbackConfigurationServiceTest extends BaseTest {
   @Test
   void update() {
 
-    when(api.updateCallbackConfiguration(
-            eq(uriUUID), eq(CallbackConfigurationDtoTest.updateRequest)))
-        .thenReturn(CallbackConfigurationDtoTest.getResponse);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v1/projects/" + URLPathUtils.encodePathSegment(uriUUID) + "/callbackConfiguration",
+            HttpMethod.PATCH,
+            Collections.emptyList(),
+            HttpMapper.getInstance()
+                .serialize(
+                    Collections.singletonList(HttpContentType.APPLICATION_JSON),
+                    CallbackConfigurationDtoTest.updateRequest),
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            NUMBERS_AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonGetResponse.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     CallbackConfigurationResponse response =
         service.update(CallbackConfigurationDtoTest.updateRequest);
