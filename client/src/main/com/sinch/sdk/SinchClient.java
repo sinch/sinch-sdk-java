@@ -132,9 +132,8 @@ public class SinchClient {
   private void handleDefaultSmsSettings(
       Configuration configuration, Properties props, Configuration.Builder builder) {
 
-    String smsUrl = configuration.getSmsContext().map(SmsContext::getSmsUrl).orElse(null);
-
-    SMSRegion smsRegion = configuration.getSmsContext().map(SmsContext::getSmsRegion).orElse(null);
+    SmsContext.Builder contextBuilder =
+        SmsContext.builder(configuration.getSmsContext().orElse(null));
 
     // service plan ID activated: use dedicated server
     String serverKey =
@@ -142,17 +141,26 @@ public class SinchClient {
             .getSmsServicePlanCredentials()
             .map(unused -> SMS_SERVER_SERVICE_PLAN_KEY)
             .orElse(SMS_SERVER_KEY);
-    if (null == smsUrl && props.containsKey(serverKey)) {
-      smsUrl = props.getProperty(serverKey);
+    if (null == contextBuilder.getSmsUrl() && props.containsKey(serverKey)) {
+      contextBuilder.setSmsUrl(props.getProperty(serverKey));
     }
 
-    if (null == smsRegion && props.containsKey(SMS_REGION_KEY)) {
-      smsRegion = SMSRegion.from(props.getProperty(SMS_REGION_KEY));
+    SMSRegion smsRegion = contextBuilder.getSmsRegion();
+    if (null == smsRegion) {
+
+      if (!StringUtil.isEmpty(props.getProperty(SMS_REGION_KEY))) {
+        smsRegion = SMSRegion.from(props.getProperty(SMS_REGION_KEY).trim());
+      }
+      Boolean regionAsDefault = null == smsRegion;
+
+      // To be deprecated with 2.0: no more defaulting to US region
+      if (null == smsRegion) {
+        smsRegion = SMSRegion.US;
+      }
+      contextBuilder.setSmsRegion(smsRegion).setRegionAsDefault(regionAsDefault);
     }
 
-    if (null != smsUrl || null != smsRegion) {
-      builder.setSmsContext(SmsContext.builder().setSmsRegion(smsRegion).setSmsUrl(smsUrl).build());
-    }
+    builder.setSmsContext(contextBuilder.build());
   }
 
   private void handleDefaultVerificationSettings(

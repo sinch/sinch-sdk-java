@@ -51,10 +51,23 @@ class SinchClientTest {
   }
 
   @Test
-  void defaultSmsRegion() {
+  void defaultSmsRegionIsUS() {
     Configuration configuration = Configuration.builder().build();
     SinchClient client = new SinchClient(configuration);
-    assertEquals(SMSRegion.US, client.getConfiguration().getSmsContext().get().getSmsRegion());
+    assertEquals(client.getConfiguration().getSmsContext().get().getSmsRegion(), SMSRegion.US);
+  }
+
+  @Test
+  void smsRegion() {
+    Configuration configuration =
+        Configuration.builder().setSmsRegion(SMSRegion.from("eu")).build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(SMSRegion.EU, client.getConfiguration().getSmsContext().get().getSmsRegion());
+  }
+
+  @Test
+
+
   }
 
   @Test
