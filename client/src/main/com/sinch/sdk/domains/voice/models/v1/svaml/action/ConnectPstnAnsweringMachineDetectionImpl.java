@@ -2,7 +2,6 @@ package com.sinch.sdk.domains.voice.models.v1.svaml.action;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.voice.models.v1.AnsweringMachineDetectionQueryImpl;
 
 @Deprecated
 public class ConnectPstnAnsweringMachineDetectionImpl extends AnsweringMachineDetectionQueryImpl

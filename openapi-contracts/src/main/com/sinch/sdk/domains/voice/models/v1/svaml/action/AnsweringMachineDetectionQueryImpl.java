@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.voice.models.v1;
+package com.sinch.sdk.domains.voice.models.v1.svaml.action;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;

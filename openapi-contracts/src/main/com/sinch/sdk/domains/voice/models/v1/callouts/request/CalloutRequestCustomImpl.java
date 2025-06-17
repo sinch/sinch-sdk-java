@@ -13,7 +13,6 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.voice.models.v1.AnsweringMachineDetectionQuery;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.internal.CustomCalloutInternal;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.internal.CustomCalloutInternalImpl;
 import com.sinch.sdk.domains.voice.models.v1.destination.DestinationCustom;
@@ -216,24 +215,6 @@ public class CalloutRequestCustomImpl
         : OptionalValue.empty();
   }
 
-  @JsonIgnore
-  public AnsweringMachineDetectionQuery getAmd() {
-    if (null == customCallout
-        || !customCallout.isPresent()
-        || null == customCallout.get().getAmd()) {
-      return null;
-    }
-    return customCallout.get().getAmd();
-  }
-
-  public OptionalValue<AnsweringMachineDetectionQuery> amd() {
-    return null != customCallout && customCallout.isPresent()
-        ? customCallout
-            .map(f -> ((CustomCalloutInternalImpl) f).amd())
-            .orElse(OptionalValue.empty())
-        : OptionalValue.empty();
-  }
-
   /** Return true if this customCalloutRequest object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -331,12 +312,6 @@ public class CalloutRequestCustomImpl
     @JsonIgnore
     public Builder setPie(Control pie) {
       getDelegatedBuilder().setPie(pie);
-      return this;
-    }
-
-    @JsonIgnore
-    public Builder setAmd(AnsweringMachineDetectionQuery amd) {
-      getDelegatedBuilder().setAmd(amd);
       return this;
     }
 

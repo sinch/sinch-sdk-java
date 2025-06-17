@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.voice.models.v1;
+package com.sinch.sdk.domains.voice.models.v1.svaml.action;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
@@ -14,7 +14,7 @@ public class AnsweringMachineDetectionQueryTest extends BaseTest {
   public static AnsweringMachineDetectionQuery dto =
       AnsweringMachineDetectionQuery.builder().setEnabled(true).setAsync(true).build();
 
-  @GivenTextResource("/domains/voice/v1/AnsweringMachineDetectionQueryDto.json")
+  @GivenTextResource("/domains/voice/v1/svaml/action/AnsweringMachineDetectionQueryDto.json")
   String json;
 
   @Test

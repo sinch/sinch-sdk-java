@@ -4,7 +4,6 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
-import com.sinch.sdk.domains.voice.models.v1.AnsweringMachineDetectionQuery;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectPstn.IndicationsEnum;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import org.json.JSONException;

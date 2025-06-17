@@ -13,7 +13,6 @@ package com.sinch.sdk.domains.voice.models.v1.svaml.action;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
-import com.sinch.sdk.domains.voice.models.v1.AnsweringMachineDetectionQuery;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import java.util.Arrays;
 import java.util.stream.Stream;

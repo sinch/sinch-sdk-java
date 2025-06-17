@@ -4,11 +4,9 @@
 
 package com.sinch.sdk.domains.voice.models.v1.svaml.action;
 
-import com.sinch.sdk.domains.voice.models.v1.AnsweringMachineDetectionQuery;
-
 /**
- * @deprecated use {@link com.sinch.sdk.domains.voice.models.v1.AnsweringMachineDetectionQuery}
- *     instead.
+ * @deprecated use {@link
+ *     com.sinch.sdk.domains.voice.models.v1.svaml.action.AnsweringMachineDetectionQuery} instead.
  */
 @Deprecated
 public interface ConnectPstnAnsweringMachineDetection extends AnsweringMachineDetectionQuery {
@@ -25,8 +23,8 @@ public interface ConnectPstnAnsweringMachineDetection extends AnsweringMachineDe
   /**
    * Dedicated Builder
    *
-   * @deprecated use {@link com.sinch.sdk.domains.voice.models.v1.AnsweringMachineDetectionQuery}
-   *     instead.
+   * @deprecated use {@link
+   *     com.sinch.sdk.domains.voice.models.v1.svaml.action.AnsweringMachineDetectionQuery} instead.
    */
   @Deprecated
   interface Builder extends AnsweringMachineDetectionQuery.Builder {
