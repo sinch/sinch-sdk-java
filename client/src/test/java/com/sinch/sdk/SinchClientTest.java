@@ -216,10 +216,10 @@ class SinchClientTest {
   }
 
   @Test
-  void defaultMailgunRegion() {
+  void defaultMailgunRegionIsUS() {
     Configuration configuration = Configuration.builder().build();
     SinchClient client = new SinchClient(configuration);
-    assertNull(client.getConfiguration().getMailgunContext().get().getRegion());
+    assertEquals(client.getConfiguration().getMailgunContext().get().getRegion(), MailgunRegion.US);
   }
 
   @Test

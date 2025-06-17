@@ -26,7 +26,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Properties;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -257,39 +256,49 @@ public class SinchClient {
   private void handleDefaultMailgunSettings(
       Configuration configuration, Properties props, Configuration.Builder builder) {
 
-    MailgunRegion defaultRegion = MailgunRegion.US;
+    MailgunContext.Builder contextBuilder =
+        MailgunContext.builder(configuration.getMailgunContext().orElse(null));
 
-    Optional<MailgunContext> previousContext = configuration.getMailgunContext();
-    MailgunContext.Builder contextBuilder = MailgunContext.builder();
-
-    MailgunRegion region = previousContext.map(MailgunContext::getRegion).orElse(null);
-    // default region to be used ?
-    if (null == region && props.containsKey(MAILGUN_REGION_KEY)) {
-      String value = props.getProperty(MAILGUN_REGION_KEY);
-      if (!StringUtil.isEmpty(value)) {
-        region = MailgunRegion.from(value);
+    if (null == contextBuilder.getRegion()) {
+      MailgunRegion region = null;
+      if (!StringUtil.isEmpty(props.getProperty(MAILGUN_REGION_KEY))) {
+        region = MailgunRegion.from(props.getProperty(MAILGUN_REGION_KEY).trim());
       }
+      Boolean regionAsDefault = null == region;
+      // To be deprecated with 2.0: no more defaulting to US region
+      if (null == region) {
+        region = MailgunRegion.US;
+      }
+      contextBuilder.setRegion(region).setRegionAsDefault(regionAsDefault);
     }
 
     // url is not defined: use the region to set to an existing one and use "global" as a default
     // fallback
-    String url = previousContext.map(MailgunContext::getUrl).orElse(null);
-    if (StringUtil.isEmpty(url)) {
-      if (null == region || defaultRegion.value().equals(region.value().toLowerCase())) {
+    // String url = previousContext.map(MailgunContext::getUrl).orElse(null);
+    if (StringUtil.isEmpty(contextBuilder.getUrl())) {
+      String url;
+      boolean useDefaultRegion =
+          null == contextBuilder.getRegion()
+              || MailgunRegion.US.value().equalsIgnoreCase(contextBuilder.getRegion().value());
+      if (useDefaultRegion) {
         url = props.getProperty(MAILGUN_DEFAULT_SERVER_KEY);
       } else {
-        url = String.format(props.getProperty(MAILGUN_REGION_SERVER_KEY), region.value());
+        url =
+            String.format(
+                props.getProperty(MAILGUN_REGION_SERVER_KEY), contextBuilder.getRegion().value());
       }
+      contextBuilder.setUrl(url);
     }
 
     // storage URls are not defined: set a default set related to region in use
-    Collection<String> storageUrls =
-        previousContext.map(MailgunContext::getStorageUrls).orElse(null);
+    Collection<String> storageUrls = contextBuilder.getStorageUrls();
     if (null == storageUrls || storageUrls.isEmpty()) {
-      MailgunRegion storageKeyRegion = null == region ? defaultRegion : region;
+      String storageKeyRegionAsString =
+          null == contextBuilder.getRegion()
+              ? ""
+              : contextBuilder.getRegion().value().toLowerCase();
       String storageKey =
-          String.format(
-              MAILGUN_STORAGE_BY_REGION_SERVER_KEY, storageKeyRegion.value().toLowerCase());
+          String.format(MAILGUN_STORAGE_BY_REGION_SERVER_KEY, storageKeyRegionAsString);
       String value = props.getProperty(storageKey);
       if (!StringUtil.isEmpty(value)) {
         storageUrls =
@@ -298,7 +307,7 @@ public class SinchClient {
       }
     }
 
-    builder.setMailgunContext(contextBuilder.setUrl(url).setStorageUrls(storageUrls).build());
+    builder.setMailgunContext(contextBuilder.build());
   }
 
   /**
