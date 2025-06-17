@@ -225,40 +225,33 @@ public class SinchClient {
   private void handleDefaultConversationSettings(
       Configuration configuration, Properties props, Configuration.Builder builder) {
 
-    ConversationRegion region =
-        configuration.getConversationContext().map(ConversationContext::getRegion).orElse(null);
+    ConversationContext.Builder contextBuilder =
+        ConversationContext.builder(configuration.getConversationContext().orElse(null));
 
-    String url =
-        configuration.getConversationContext().map(ConversationContext::getUrl).orElse(null);
-
-    String templateManagementUrl =
-        configuration
-            .getConversationContext()
-            .map(ConversationContext::getTemplateManagementUrl)
-            .orElse(null);
-
-    if (null == region && props.containsKey(CONVERSATION_REGION_KEY)) {
-      String value = props.getProperty(CONVERSATION_REGION_KEY);
-      if (!StringUtil.isEmpty(value)) {
-        region = ConversationRegion.from(value);
+    if (null == contextBuilder.getRegion()) {
+      ConversationRegion region = null;
+      if (!StringUtil.isEmpty(props.getProperty(CONVERSATION_REGION_KEY))) {
+        region = ConversationRegion.from(props.getProperty(CONVERSATION_REGION_KEY).trim());
       }
+      Boolean regionAsDefault = null == region;
+      // To be deprecated with 2.0: no more defaulting to US region
+      if (null == region) {
+        region = ConversationRegion.US;
+      }
+      contextBuilder.setRegion(region).setRegionAsDefault(regionAsDefault);
     }
 
-    // region is not defined: use the region to set to an existing one and use "us" as a default
-    // fallback
-    region = null == region ? ConversationRegion.US : region;
-
-    builder.setConversationRegion(region);
-
-    if (StringUtil.isEmpty(url)) {
-      builder.setConversationUrl(
-          String.format(props.getProperty(CONVERSATION_SERVER_KEY), region.value()));
+    if (StringUtil.isEmpty(contextBuilder.getUrl())) {
+      contextBuilder.setUrl(
+          String.format(props.getProperty(CONVERSATION_SERVER_KEY), contextBuilder.getRegion()));
     }
 
-    if (StringUtil.isEmpty(templateManagementUrl)) {
-      builder.setConversationTemplateManagementUrl(
-          String.format(props.getProperty(CONVERSATION_TEMPLATE_SERVER_KEY), region.value()));
+    if (StringUtil.isEmpty(contextBuilder.getTemplateManagementUrl())) {
+      contextBuilder.setTemplateManagementUrl(
+          String.format(
+              props.getProperty(CONVERSATION_TEMPLATE_SERVER_KEY), contextBuilder.getRegion()));
     }
+    builder.setConversationContext(contextBuilder.build());
   }
 
   private void handleDefaultMailgunSettings(
