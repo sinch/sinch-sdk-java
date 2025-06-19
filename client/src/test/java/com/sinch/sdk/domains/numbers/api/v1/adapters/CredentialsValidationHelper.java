@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sinch.sdk.core.http.HttpClient;
+import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.function.Consumer;
@@ -27,10 +28,13 @@ class CredentialsValidationHelper {
     UnifiedCredentials credentials =
         UnifiedCredentials.builder().setKeyId(null).setKeySecret("foo").setProjectId("foo").build();
     NumbersContext context = NumbersContext.builder().setNumbersUrl("foo url").build();
+    ServerConfiguration oAuthServer = new ServerConfiguration("https://oauth.foo.url");
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
-            () -> service.accept(new NumbersService(credentials, context, httpClientSupplier)));
+            () ->
+                service.accept(
+                    new NumbersService(credentials, context, oAuthServer, httpClientSupplier)));
     assertTrue(exception.getMessage().contains("keyId"));
   }
 
@@ -39,10 +43,14 @@ class CredentialsValidationHelper {
     UnifiedCredentials credentials =
         UnifiedCredentials.builder().setKeyId("foo").setKeySecret(null).setProjectId("foo").build();
     NumbersContext context = NumbersContext.builder().setNumbersUrl("foo url").build();
+    ServerConfiguration oAuthServer = new ServerConfiguration("https://oauth.foo.url");
+
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
-            () -> service.accept(new NumbersService(credentials, context, httpClientSupplier)));
+            () ->
+                service.accept(
+                    new NumbersService(credentials, context, oAuthServer, httpClientSupplier)));
     assertTrue(exception.getMessage().contains("keySecret"));
   }
 
@@ -51,10 +59,13 @@ class CredentialsValidationHelper {
     UnifiedCredentials credentials =
         UnifiedCredentials.builder().setKeyId("foo").setKeySecret("foo").setProjectId(null).build();
     NumbersContext context = NumbersContext.builder().setNumbersUrl("foo url").build();
+    ServerConfiguration oAuthServer = new ServerConfiguration("https://oauth.foo.url");
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
-            () -> service.accept(new NumbersService(credentials, context, httpClientSupplier)));
+            () ->
+                service.accept(
+                    new NumbersService(credentials, context, oAuthServer, httpClientSupplier)));
     assertTrue(exception.getMessage().contains("projectId"));
   }
 
@@ -66,10 +77,13 @@ class CredentialsValidationHelper {
             .setKeySecret("foo")
             .setProjectId("foo")
             .build();
+    ServerConfiguration oAuthServer = new ServerConfiguration("https://oauth.foo.url");
     Exception exception =
         assertThrows(
             NullPointerException.class,
-            () -> service.accept(new NumbersService(credentials, null, httpClientSupplier)));
+            () ->
+                service.accept(
+                    new NumbersService(credentials, null, oAuthServer, httpClientSupplier)));
     assertTrue(exception.getMessage().contains("Numbers service requires context to be defined"));
   }
 
@@ -82,11 +96,14 @@ class CredentialsValidationHelper {
             .setProjectId("foo")
             .build();
     NumbersContext context = NumbersContext.builder().build();
+    ServerConfiguration oAuthServer = new ServerConfiguration("https://oauth.foo.url");
 
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
-            () -> service.accept(new NumbersService(credentials, context, httpClientSupplier)));
+            () ->
+                service.accept(
+                    new NumbersService(credentials, context, oAuthServer, httpClientSupplier)));
     assertTrue(exception.getMessage().contains("numbersUrl"));
   }
 
@@ -99,9 +116,12 @@ class CredentialsValidationHelper {
             .setProjectId("foo")
             .build();
     NumbersContext context = NumbersContext.builder().setNumbersUrl("foo url").build();
+    ServerConfiguration oAuthServer = new ServerConfiguration("https://oauth.foo.url");
 
     assertDoesNotThrow(
-        () -> service.accept(new NumbersService(credentials, context, httpClientSupplier)),
+        () ->
+            service.accept(
+                new NumbersService(credentials, context, oAuthServer, httpClientSupplier)),
         "Init passed");
   }
 }

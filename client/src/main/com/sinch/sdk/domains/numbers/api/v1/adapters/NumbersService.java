@@ -1,10 +1,11 @@
 package com.sinch.sdk.domains.numbers.api.v1.adapters;
 
-import com.sinch.sdk.auth.adapters.BasicAuthManager;
+import com.sinch.sdk.auth.adapters.OAuthManager;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.numbers.api.v1.AvailableRegionsService;
 import com.sinch.sdk.domains.numbers.api.v1.CallbackConfigurationService;
@@ -35,10 +36,11 @@ import java.util.stream.Stream;
 public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.NumbersService {
 
   private static final Logger LOGGER = Logger.getLogger(NumbersService.class.getName());
-  private static final String SECURITY_SCHEME_KEYWORD_NUMBERS = "Basic";
+  private static final String SECURITY_SCHEME_KEYWORD_NUMBERS = "OAuth2.0";
 
   private final UnifiedCredentials credentials;
   private final NumbersContext context;
+  private final ServerConfiguration oAuthServer;
   private final Supplier<HttpClient> httpClientSupplier;
 
   private volatile String uriUUID;
@@ -56,9 +58,11 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
   public NumbersService(
       UnifiedCredentials credentials,
       NumbersContext context,
+      ServerConfiguration oAuthServer,
       Supplier<HttpClient> httpClientSupplier) {
     this.credentials = credentials;
     this.context = context;
+    this.oAuthServer = oAuthServer;
     this.httpClientSupplier = httpClientSupplier;
   }
 
@@ -207,14 +211,13 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
         LOGGER.fine(
             "Activate numbers API with server='" + context.getNumbersServer().getUrl() + "'");
 
-        AuthManager basicAuthManager =
-            new BasicAuthManager(credentials.getKeyId(), credentials.getKeySecret());
+        AuthManager authManager =
+            new OAuthManager(
+                credentials, oAuthServer, HttpMapper.getInstance(), httpClientSupplier);
 
         uriUUID = credentials.getProjectId();
         authManagers =
-            Stream.of(
-                    new AbstractMap.SimpleEntry<>(
-                        SECURITY_SCHEME_KEYWORD_NUMBERS, basicAuthManager))
+            Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_NUMBERS, authManager))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
       }
     }

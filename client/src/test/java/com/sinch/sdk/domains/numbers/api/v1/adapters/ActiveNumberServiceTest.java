@@ -5,7 +5,7 @@ import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
-import com.sinch.sdk.auth.adapters.BasicAuthManager;
+import com.sinch.sdk.auth.adapters.OAuthManager;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
@@ -51,6 +51,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
@@ -76,16 +77,24 @@ class ActiveNumberServiceTest extends NumbersBaseTest {
   String jsonEmergencyAddress;
 
   @Mock HttpClient httpClient;
+  Supplier<HttpClient> httpClientSupplier = () -> httpClient;
+
   UnifiedCredentials credentials =
       UnifiedCredentials.builder()
           .setProjectId(URI_UUID)
           .setKeyId("keyid")
           .setKeySecret("keysecret")
           .build();
+  ServerConfiguration oAuthServer = new ServerConfiguration("https://oauth.foo.url");
+
   Map<String, AuthManager> authManagers =
       Stream.of(
               new Object[][] {
-                {"Basic", new BasicAuthManager(credentials)},
+                {
+                  "OAuth2.0",
+                  new OAuthManager(
+                      credentials, oAuthServer, HttpMapper.getInstance(), httpClientSupplier)
+                },
               })
           .collect(Collectors.toMap(data -> (String) data[0], data -> (AuthManager) data[1]));
 
@@ -103,7 +112,7 @@ class ActiveNumberServiceTest extends NumbersBaseTest {
   public void initMocks() {
     service =
         new com.sinch.sdk.domains.numbers.api.v1.adapters.NumbersService(
-            credentials, context, () -> httpClient);
+            credentials, context, oAuthServer, httpClientSupplier);
   }
 
   @Test
