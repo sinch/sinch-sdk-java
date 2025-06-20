@@ -7,6 +7,7 @@ import com.sinch.sdk.models.ConversationRegion;
 import com.sinch.sdk.models.MailgunContext;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.SmsContext;
+import com.sinch.sdk.models.VerificationContext;
 import com.sinch.sdk.models.VoiceContext;
 import java.util.Arrays;
 
@@ -31,6 +32,8 @@ public class Config {
   public static final String MAILGUN_STORAGE = "http://localhost:3021";
 
   public static final String SMS_HOST_NAME = "http://localhost:3017";
+
+  public static final String VERIFICATION_HOST_NAME = "http://localhost:3018";
 
   private final SinchClient client;
 
@@ -61,6 +64,8 @@ public class Config {
             .setMailgunApiKey(MAILGUN_API_KEY)
             .setMailgunUrl(MAILGUN_HOST_NAME)
             .setSmsContext(SmsContext.builder().setSmsUrl(SMS_HOST_NAME).build())
+            .setVerificationContext(
+                VerificationContext.builder().setVerificationUrl(VERIFICATION_HOST_NAME).build())
             .build();
 
     client = new SinchClient(configuration);
