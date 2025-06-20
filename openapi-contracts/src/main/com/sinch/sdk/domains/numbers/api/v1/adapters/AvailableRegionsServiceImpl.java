@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.numbers.api.v1.internal;
+package com.sinch.sdk.domains.numbers.api.v1.adapters;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sinch.sdk.core.exceptions.ApiException;
@@ -21,9 +21,13 @@ import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
+import com.sinch.sdk.core.http.URLParameterUtils;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.domains.numbers.models.v1.regions.available.request.AvailableRegionListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.regions.available.response.AvailableRegionListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.regions.available.response.internal.AvailableRegionListResponseInternal;
+import com.sinch.sdk.domains.numbers.models.v1.regions.request.AvailableRegionsListQueryParameters;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -32,60 +36,52 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class AvailableRegionsApi {
+public class AvailableRegionsServiceImpl
+    implements com.sinch.sdk.domains.numbers.api.v1.AvailableRegionsService {
 
-  private static final Logger LOGGER = Logger.getLogger(AvailableRegionsApi.class.getName());
-  private HttpClient httpClient;
-  private ServerConfiguration serverConfiguration;
-  private Map<String, AuthManager> authManagersByOasSecuritySchemes;
-  private HttpMapper mapper;
+  private static final Logger LOGGER =
+      Logger.getLogger(AvailableRegionsServiceImpl.class.getName());
+  private final HttpClient httpClient;
+  private final ServerConfiguration serverConfiguration;
+  private final Map<String, AuthManager> authManagersByOasSecuritySchemes;
+  private final HttpMapper mapper;
 
-  public AvailableRegionsApi(
+  private final String projectId;
+
+  public AvailableRegionsServiceImpl(
       HttpClient httpClient,
       ServerConfiguration serverConfiguration,
       Map<String, AuthManager> authManagersByOasSecuritySchemes,
-      HttpMapper mapper) {
+      HttpMapper mapper,
+      String projectId) {
     this.httpClient = httpClient;
     this.serverConfiguration = serverConfiguration;
     this.authManagersByOasSecuritySchemes = authManagersByOasSecuritySchemes;
     this.mapper = mapper;
+    this.projectId = projectId;
   }
 
-  /**
-   * List available regions Lists all regions for numbers provided for the project ID.
-   *
-   * @param projectId Found on your [Sinch Customer
-   *     Dashboard](https://dashboard.sinch.com/settings/project-management). Settings &gt;
-   *     Projects. (required)
-   * @param types Only return regions for which numbers are provided with the given types v1:
-   *     &#x60;MOBILE&#x60;, &#x60;LOCAL&#x60; or &#x60;TOLL_FREE&#x60;. - NUMBER_TYPE_UNSPECIFIED:
-   *     Null value - MOBILE: Numbers that belong to a specific range. - LOCAL: Numbers that are
-   *     assigned to a specific geographic region. - TOLL_FREE: Number that are free of charge for
-   *     the calling party but billed for all arriving calls. (optional
-   * @return AvailableRegionListResponseInternal
-   * @throws ApiException if fails to make API call
-   */
-  public AvailableRegionListResponseInternal numberServiceListAvailableRegions(
-      String projectId, List<String> types) throws ApiException {
+  public AvailableRegionListResponse list() throws ApiException {
 
-    LOGGER.finest(
-        "[numberServiceListAvailableRegions]"
-            + " "
-            + "projectId: "
-            + projectId
-            + ", "
-            + "types: "
-            + types);
+    return list((AvailableRegionsListQueryParameters) null);
+  }
 
-    HttpRequest httpRequest = numberServiceListAvailableRegionsRequestBuilder(projectId, types);
+  public AvailableRegionListResponse list(AvailableRegionsListQueryParameters queryParameter)
+      throws ApiException {
+
+    LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
+
+    HttpRequest httpRequest = listRequestBuilder(queryParameter);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<AvailableRegionListResponseInternal> localVarReturnType =
-          new TypeReference<AvailableRegionListResponseInternal>() {};
-      return mapper.deserialize(response, localVarReturnType);
+
+      AvailableRegionListResponseInternal deserialized =
+          mapper.deserialize(response, new TypeReference<AvailableRegionListResponseInternal>() {});
+
+      return new AvailableRegionListResponse(deserialized.getAvailableRegions());
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -96,26 +92,25 @@ public class AvailableRegionsApi {
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest numberServiceListAvailableRegionsRequestBuilder(
-      String projectId, List<String> types) throws ApiException {
-    // verify the required parameter 'projectId' is set
-    if (projectId == null) {
+  private HttpRequest listRequestBuilder(AvailableRegionsListQueryParameters queryParameter)
+      throws ApiException {
+    // verify the required parameter 'this.projectId' is set
+    if (this.projectId == null) {
       throw new ApiException(
-          400,
-          "Missing the required parameter 'projectId' when calling"
-              + " numberServiceListAvailableRegions");
+          400, "Missing the required parameter 'this.projectId' when calling list");
     }
 
     String localVarPath =
         "/v1/projects/{projectId}/availableRegions"
             .replaceAll(
-                "\\{" + "projectId" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()));
+                "\\{" + "projectId" + "\\}",
+                URLPathUtils.encodePathSegment(this.projectId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
+    if (null != queryParameter) {
 
-    if (null != types) {
-      localVarQueryParams.add(
-          new URLParameter("types", types, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
+      URLParameterUtils.addQueryParam(
+          queryParameter.getTypes(), "types", URLParameter.form, null, localVarQueryParams, true);
     }
 
     Map<String, String> localVarHeaderParams = new HashMap<>();
@@ -136,5 +131,19 @@ public class AvailableRegionsApi {
         localVarAccepts,
         localVarContentTypes,
         localVarAuthNames);
+  }
+
+  @Override
+  public AvailableRegionListResponse list(AvailableRegionListRequest parameters)
+      throws ApiException {
+
+    AvailableRegionsListQueryParameters queryParameters = null;
+    if (null != parameters) {
+      AvailableRegionsListQueryParameters.Builder builder =
+          AvailableRegionsListQueryParameters.builder();
+      parameters.getTypes().ifPresent(t -> builder.setTypes(new ArrayList<>(t)));
+      queryParameters = builder.build();
+    }
+    return list(queryParameters);
   }
 }

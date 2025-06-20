@@ -3,7 +3,7 @@ package com.sinch.sample.numbers;
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
-import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumbersListQueryParameters;
 import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -30,7 +30,7 @@ public class List extends BaseApplication {
 
     ActiveNumberListResponse response =
         service.list(
-            ActiveNumberListRequest.builder()
+            ActiveNumbersListQueryParameters.builder()
                 .setRegionCode("US")
                 .setType(NumberType.LOCAL)
                 .setPageSize(1)

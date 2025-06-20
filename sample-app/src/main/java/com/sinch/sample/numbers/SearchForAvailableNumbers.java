@@ -4,7 +4,7 @@ import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.models.v1.Capability;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
-import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumbersListQueryParameters;
 import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse;
 import java.io.IOException;
 import java.util.Collections;
@@ -33,7 +33,7 @@ public class SearchForAvailableNumbers extends BaseApplication {
     int page = 1;
     AvailableNumberListResponse response =
         service.searchForAvailableNumbers(
-            AvailableNumberListRequest.builder()
+            AvailableNumbersListQueryParameters.builder()
                 .setRegionCode("US")
                 .setType(NumberType.LOCAL)
                 .setCapabilities(Collections.singletonList(Capability.from("SMS")))
