@@ -356,6 +356,7 @@
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <skipTests>${skipUTs}</skipTests>
+                    <parallel>all</parallel>
                 </configuration>
             </plugin>
 
