@@ -82,7 +82,7 @@ class ConversationServiceTest {
             .build();
     ConversationContext context =
         ConversationContext.builder()
-            .setUrl("https://sms.foo.url")
+            .setUrl("https://foo.url")
             .setRegion(ConversationRegion.US)
             .setRegionAsDefault(true)
             .build();
@@ -116,7 +116,7 @@ class ConversationServiceTest {
             .build();
     ConversationContext context =
         ConversationContext.builder()
-            .setUrl("https://sms.foo.url")
+            .setUrl("https://foo.url")
             .setRegion(ConversationRegion.BR)
             .setRegionAsDefault(false)
             .build();
@@ -149,7 +149,7 @@ class ConversationServiceTest {
             .build();
     ConversationContext context =
         ConversationContext.builder()
-            .setTemplateManagementUrl("https://sms.foo.url")
+            .setTemplateManagementUrl("https://foo.url")
             .setRegion(ConversationRegion.US)
             .setRegionAsDefault(true)
             .build();
@@ -184,7 +184,7 @@ class ConversationServiceTest {
             .build();
     ConversationContext context =
         ConversationContext.builder()
-            .setTemplateManagementUrl("https://sms.foo.url")
+            .setTemplateManagementUrl("https://foo.url")
             .setRegion(ConversationRegion.BR)
             .setRegionAsDefault(false)
             .build();

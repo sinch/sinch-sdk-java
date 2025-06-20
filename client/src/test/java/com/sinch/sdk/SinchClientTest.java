@@ -55,7 +55,7 @@ class SinchClientTest {
   void defaultSmsRegionIsUS() {
     Configuration configuration = Configuration.builder().build();
     SinchClient client = new SinchClient(configuration);
-    assertEquals(client.getConfiguration().getSmsContext().get().getSmsRegion(), SMSRegion.US);
+    assertEquals(SMSRegion.US, client.getConfiguration().getSmsContext().get().getSmsRegion());
   }
 
   @Test
@@ -97,10 +97,10 @@ class SinchClientTest {
   @Test
   void templateConversationUrlFromRegion() {
     Configuration configuration =
-        Configuration.builder().setConversationRegion(ConversationRegion.EU).build();
+        Configuration.builder().setConversationRegion(ConversationRegion.BR).build();
     SinchClient client = new SinchClient(configuration);
     assertEquals(
-        "https://eu.template.api.sinch.com",
+        "https://br.template.api.sinch.com",
         client.getConfiguration().getConversationContext().get().getTemplateManagementUrl());
   }
 
@@ -109,8 +109,8 @@ class SinchClientTest {
     Configuration configuration = Configuration.builder().build();
     SinchClient client = new SinchClient(configuration);
     assertEquals(
-        client.getConfiguration().getConversationContext().get().getRegion(),
-        ConversationRegion.US);
+        ConversationRegion.US,
+        client.getConfiguration().getConversationContext().get().getRegion());
   }
 
   @Test
@@ -169,8 +169,8 @@ class SinchClientTest {
             .build();
     SinchClient client = new SinchClient(configuration);
     assertEquals(
-        client.getConfiguration().getVoiceContext().get().getVoiceUrl(),
-        "https://calling-euc1.api.sinch.com");
+        "https://calling-euc1.api.sinch.com",
+        client.getConfiguration().getVoiceContext().get().getVoiceUrl());
   }
 
   @Test
@@ -188,8 +188,8 @@ class SinchClientTest {
             .build();
     SinchClient client = new SinchClient(configuration);
     assertEquals(
-        client.getConfiguration().getVoiceContext().get().getVoiceRegion(), VoiceRegion.EUROPE);
-    assertEquals(client.getConfiguration().getVoiceContext().get().getVoiceUrl(), "my foo url");
+        VoiceRegion.EUROPE, client.getConfiguration().getVoiceContext().get().getVoiceRegion());
+    assertEquals("my foo url", client.getConfiguration().getVoiceContext().get().getVoiceUrl());
   }
 
   @Test
