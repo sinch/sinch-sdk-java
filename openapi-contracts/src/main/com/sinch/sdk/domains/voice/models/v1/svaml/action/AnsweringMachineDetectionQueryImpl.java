@@ -9,21 +9,29 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
-@JsonPropertyOrder({ConnectPstnAnsweringMachineDetectionImpl.JSON_PROPERTY_ENABLED})
+@JsonPropertyOrder({
+  AnsweringMachineDetectionQueryImpl.JSON_PROPERTY_ENABLED,
+  AnsweringMachineDetectionQueryImpl.JSON_PROPERTY_ASYNC
+})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class ConnectPstnAnsweringMachineDetectionImpl
-    implements ConnectPstnAnsweringMachineDetection {
+public class AnsweringMachineDetectionQueryImpl implements AnsweringMachineDetectionQuery {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ENABLED = "enabled";
 
   private OptionalValue<Boolean> enabled;
 
-  public ConnectPstnAnsweringMachineDetectionImpl() {}
+  public static final String JSON_PROPERTY_ASYNC = "async";
 
-  protected ConnectPstnAnsweringMachineDetectionImpl(OptionalValue<Boolean> enabled) {
+  private OptionalValue<Boolean> async;
+
+  public AnsweringMachineDetectionQueryImpl() {}
+
+  protected AnsweringMachineDetectionQueryImpl(
+      OptionalValue<Boolean> enabled, OptionalValue<Boolean> async) {
     this.enabled = enabled;
+    this.async = async;
   }
 
   @JsonIgnore
@@ -37,7 +45,18 @@ public class ConnectPstnAnsweringMachineDetectionImpl
     return enabled;
   }
 
-  /** Return true if this svaml_action_connectPstn_amd object is equal to o. */
+  @JsonIgnore
+  public Boolean getAsync() {
+    return async.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_ASYNC)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<Boolean> async() {
+    return async;
+  }
+
+  /** Return true if this amdRequest object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -46,21 +65,22 @@ public class ConnectPstnAnsweringMachineDetectionImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ConnectPstnAnsweringMachineDetectionImpl svamlActionConnectPstnAmd =
-        (ConnectPstnAnsweringMachineDetectionImpl) o;
-    return Objects.equals(this.enabled, svamlActionConnectPstnAmd.enabled);
+    AnsweringMachineDetectionQueryImpl amdRequest = (AnsweringMachineDetectionQueryImpl) o;
+    return Objects.equals(this.enabled, amdRequest.enabled)
+        && Objects.equals(this.async, amdRequest.async);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(enabled);
+    return Objects.hash(enabled, async);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ConnectPstnAnsweringMachineDetectionImpl {\n");
+    sb.append("class AnsweringMachineDetectionQueryImpl {\n");
     sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
+    sb.append("    async: ").append(toIndentedString(async)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -76,8 +96,9 @@ public class ConnectPstnAnsweringMachineDetectionImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements ConnectPstnAnsweringMachineDetection.Builder {
+  static class Builder implements AnsweringMachineDetectionQuery.Builder {
     OptionalValue<Boolean> enabled = OptionalValue.empty();
+    OptionalValue<Boolean> async = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_ENABLED)
     public Builder setEnabled(Boolean enabled) {
@@ -85,8 +106,14 @@ public class ConnectPstnAnsweringMachineDetectionImpl
       return this;
     }
 
-    public ConnectPstnAnsweringMachineDetection build() {
-      return new ConnectPstnAnsweringMachineDetectionImpl(enabled);
+    @JsonProperty(JSON_PROPERTY_ASYNC)
+    public Builder setAsync(Boolean async) {
+      this.async = OptionalValue.of(async);
+      return this;
+    }
+
+    public AnsweringMachineDetectionQuery build() {
+      return new AnsweringMachineDetectionQueryImpl(enabled, async);
     }
   }
 }

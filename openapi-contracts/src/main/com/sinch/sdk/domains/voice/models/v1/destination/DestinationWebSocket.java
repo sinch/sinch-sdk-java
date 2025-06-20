@@ -11,16 +11,45 @@
 package com.sinch.sdk.domains.voice.models.v1.destination;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.utils.EnumDynamic;
+import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 /** Specifies where to route the Stream call. */
 @JsonDeserialize(builder = DestinationWebSocketImpl.Builder.class)
 public interface DestinationWebSocket {
 
   /** Static builder helper */
-  String WEBSOCKET = "Websocket";
-
   static DestinationWebSocket from(String endPoint) {
     return DestinationWebSocket.builder().setEndpoint(endPoint).build();
+  }
+
+  /**
+   * This attribute defines the streaming protocol - currently only <code>Websocket</code> is
+   * supported.
+   */
+  public class TypeEnum extends EnumDynamic<String, TypeEnum> {
+    public static final TypeEnum WEBSOCKET = new TypeEnum("Websocket");
+
+    private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =
+        new EnumSupportDynamic<>(TypeEnum.class, TypeEnum::new, Arrays.asList(WEBSOCKET));
+
+    private TypeEnum(String value) {
+      super(value);
+    }
+
+    public static Stream<TypeEnum> values() {
+      return ENUM_SUPPORT.values();
+    }
+
+    public static TypeEnum from(String value) {
+      return ENUM_SUPPORT.from(value);
+    }
+
+    public static String valueOf(TypeEnum e) {
+      return ENUM_SUPPORT.valueOf(e);
+    }
   }
 
   /**

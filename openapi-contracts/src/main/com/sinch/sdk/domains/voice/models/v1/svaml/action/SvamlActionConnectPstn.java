@@ -195,7 +195,7 @@ public interface SvamlActionConnectPstn
    *
    * @return amd
    */
-  ConnectPstnAnsweringMachineDetection getAmd();
+  AnsweringMachineDetectionQuery getAmd();
 
   /**
    * Getting builder
@@ -288,7 +288,7 @@ public interface SvamlActionConnectPstn
      * @return Current builder
      * @see #getAmd
      */
-    Builder setAmd(ConnectPstnAnsweringMachineDetection amd);
+    Builder setAmd(AnsweringMachineDetectionQuery amd);
 
     /**
      * Create instance

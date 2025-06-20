@@ -67,7 +67,7 @@ public class SvamlActionConnectPstnImpl
 
   public static final String JSON_PROPERTY_AMD = "amd";
 
-  private OptionalValue<ConnectPstnAnsweringMachineDetection> amd;
+  private OptionalValue<AnsweringMachineDetectionQuery> amd;
 
   public SvamlActionConnectPstnImpl() {}
 
@@ -81,7 +81,7 @@ public class SvamlActionConnectPstnImpl
       OptionalValue<Boolean> suppressCallbacks,
       OptionalValue<DualToneMultiFrequency> dtmf,
       OptionalValue<IndicationsEnum> indications,
-      OptionalValue<ConnectPstnAnsweringMachineDetection> amd) {
+      OptionalValue<AnsweringMachineDetectionQuery> amd) {
     this.name = name;
     this.number = number;
     this.locale = locale;
@@ -194,13 +194,13 @@ public class SvamlActionConnectPstnImpl
   }
 
   @JsonIgnore
-  public ConnectPstnAnsweringMachineDetection getAmd() {
+  public AnsweringMachineDetectionQuery getAmd() {
     return amd.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_AMD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<ConnectPstnAnsweringMachineDetection> amd() {
+  public OptionalValue<AnsweringMachineDetectionQuery> amd() {
     return amd;
   }
 
@@ -280,7 +280,7 @@ public class SvamlActionConnectPstnImpl
     OptionalValue<Boolean> suppressCallbacks = OptionalValue.empty();
     OptionalValue<DualToneMultiFrequency> dtmf = OptionalValue.empty();
     OptionalValue<IndicationsEnum> indications = OptionalValue.empty();
-    OptionalValue<ConnectPstnAnsweringMachineDetection> amd = OptionalValue.empty();
+    OptionalValue<AnsweringMachineDetectionQuery> amd = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_NUMBER)
     public Builder setNumber(String number) {
@@ -331,7 +331,7 @@ public class SvamlActionConnectPstnImpl
     }
 
     @JsonProperty(JSON_PROPERTY_AMD)
-    public Builder setAmd(ConnectPstnAnsweringMachineDetection amd) {
+    public Builder setAmd(AnsweringMachineDetectionQuery amd) {
       this.amd = OptionalValue.of(amd);
       return this;
     }

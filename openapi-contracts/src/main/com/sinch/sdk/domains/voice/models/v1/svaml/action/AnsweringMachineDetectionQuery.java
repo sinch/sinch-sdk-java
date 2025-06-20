@@ -13,19 +13,28 @@ package com.sinch.sdk.domains.voice.models.v1.svaml.action;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
- * An optional property used to enable <a
+ * The <code>amd</code> object enables <a
  * href="https://developers.sinch.com/docs/voice/api-reference/amd_v2">Answering Machine
- * Detection</a> (AMD).
+ * Detection</a> (AMD) and sets whether it works synchronously or asychronously.
  */
-@JsonDeserialize(builder = ConnectPstnAnsweringMachineDetectionImpl.Builder.class)
-public interface ConnectPstnAnsweringMachineDetection {
+@JsonDeserialize(builder = AnsweringMachineDetectionQueryImpl.Builder.class)
+public interface AnsweringMachineDetectionQuery {
 
   /**
-   * Sets whether AMD is enabled.
+   * If set to <code>true</code>, then AMD is enabled for the call.
    *
    * @return enabled
    */
   Boolean getEnabled();
+
+  /**
+   * Determines if AMD is set to operate synchronously or asychronously. Refer to the <a
+   * href="https://developers.sinch.com/docs/voice/api-reference/amd_v2">AMD</a> documentation for
+   * more information about this setting.
+   *
+   * @return async
+   */
+  Boolean getAsync();
 
   /**
    * Getting builder
@@ -33,7 +42,7 @@ public interface ConnectPstnAnsweringMachineDetection {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ConnectPstnAnsweringMachineDetectionImpl.Builder();
+    return new AnsweringMachineDetectionQueryImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -49,10 +58,19 @@ public interface ConnectPstnAnsweringMachineDetection {
     Builder setEnabled(Boolean enabled);
 
     /**
+     * see getter
+     *
+     * @param async see getter
+     * @return Current builder
+     * @see #getAsync
+     */
+    Builder setAsync(Boolean async);
+
+    /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    ConnectPstnAnsweringMachineDetection build();
+    AnsweringMachineDetectionQuery build();
   }
 }
