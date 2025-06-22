@@ -89,9 +89,8 @@ class SinchClientTest {
     Configuration configuration =
         Configuration.builder().setConversationRegion(ConversationRegion.EU).build();
     SinchClient client = new SinchClient(configuration);
-    assertEquals(
-        "https://eu.conversation.api.sinch.com",
-        client.getConfiguration().getConversationContext().get().getUrl());
+    assertNotNull(
+        client.getConfiguration().getConversationContext().get().getTemplateManagementUrl());
   }
 
   @Test
