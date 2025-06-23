@@ -26,7 +26,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Properties;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -132,9 +131,8 @@ public class SinchClient {
   private void handleDefaultSmsSettings(
       Configuration configuration, Properties props, Configuration.Builder builder) {
 
-    String smsUrl = configuration.getSmsContext().map(SmsContext::getSmsUrl).orElse(null);
-
-    SMSRegion smsRegion = configuration.getSmsContext().map(SmsContext::getSmsRegion).orElse(null);
+    SmsContext.Builder contextBuilder =
+        SmsContext.builder(configuration.getSmsContext().orElse(null));
 
     // service plan ID activated: use dedicated server
     String serverKey =
@@ -142,17 +140,26 @@ public class SinchClient {
             .getSmsServicePlanCredentials()
             .map(unused -> SMS_SERVER_SERVICE_PLAN_KEY)
             .orElse(SMS_SERVER_KEY);
-    if (null == smsUrl && props.containsKey(serverKey)) {
-      smsUrl = props.getProperty(serverKey);
+    if (null == contextBuilder.getSmsUrl() && props.containsKey(serverKey)) {
+      contextBuilder.setSmsUrl(props.getProperty(serverKey));
     }
 
-    if (null == smsRegion && props.containsKey(SMS_REGION_KEY)) {
-      smsRegion = SMSRegion.from(props.getProperty(SMS_REGION_KEY));
+    SMSRegion smsRegion = contextBuilder.getSmsRegion();
+    if (null == smsRegion) {
+
+      if (!StringUtil.isEmpty(props.getProperty(SMS_REGION_KEY))) {
+        smsRegion = SMSRegion.from(props.getProperty(SMS_REGION_KEY).trim());
+      }
+      Boolean regionAsDefault = null == smsRegion;
+
+      // To be deprecated with 2.0: no more defaulting to US region
+      if (null == smsRegion) {
+        smsRegion = SMSRegion.US;
+      }
+      contextBuilder.setSmsRegion(smsRegion).setRegionAsDefault(regionAsDefault);
     }
 
-    if (null != smsUrl || null != smsRegion) {
-      builder.setSmsContext(SmsContext.builder().setSmsRegion(smsRegion).setSmsUrl(smsUrl).build());
-    }
+    builder.setSmsContext(contextBuilder.build());
   }
 
   private void handleDefaultVerificationSettings(
@@ -217,78 +224,81 @@ public class SinchClient {
   private void handleDefaultConversationSettings(
       Configuration configuration, Properties props, Configuration.Builder builder) {
 
-    ConversationRegion region =
-        configuration.getConversationContext().map(ConversationContext::getRegion).orElse(null);
+    ConversationContext.Builder contextBuilder =
+        ConversationContext.builder(configuration.getConversationContext().orElse(null));
 
-    String url =
-        configuration.getConversationContext().map(ConversationContext::getUrl).orElse(null);
-
-    String templateManagementUrl =
-        configuration
-            .getConversationContext()
-            .map(ConversationContext::getTemplateManagementUrl)
-            .orElse(null);
-
-    if (null == region && props.containsKey(CONVERSATION_REGION_KEY)) {
-      String value = props.getProperty(CONVERSATION_REGION_KEY);
-      if (!StringUtil.isEmpty(value)) {
-        region = ConversationRegion.from(value);
+    if (null == contextBuilder.getRegion()) {
+      ConversationRegion region = null;
+      if (!StringUtil.isEmpty(props.getProperty(CONVERSATION_REGION_KEY))) {
+        region = ConversationRegion.from(props.getProperty(CONVERSATION_REGION_KEY).trim());
       }
+      Boolean regionAsDefault = null == region;
+      // To be deprecated with 2.0: no more defaulting to US region
+      if (null == region) {
+        region = ConversationRegion.US;
+      }
+      contextBuilder.setRegion(region).setRegionAsDefault(regionAsDefault);
     }
 
-    // region is not defined: use the region to set to an existing one and use "us" as a default
-    // fallback
-    region = null == region ? ConversationRegion.US : region;
-
-    builder.setConversationRegion(region);
-
-    if (StringUtil.isEmpty(url)) {
-      builder.setConversationUrl(
-          String.format(props.getProperty(CONVERSATION_SERVER_KEY), region.value()));
+    if (StringUtil.isEmpty(contextBuilder.getUrl())) {
+      contextBuilder.setUrl(
+          String.format(props.getProperty(CONVERSATION_SERVER_KEY), contextBuilder.getRegion()));
     }
 
-    if (StringUtil.isEmpty(templateManagementUrl)) {
-      builder.setConversationTemplateManagementUrl(
-          String.format(props.getProperty(CONVERSATION_TEMPLATE_SERVER_KEY), region.value()));
+    if (StringUtil.isEmpty(contextBuilder.getTemplateManagementUrl())) {
+      contextBuilder.setTemplateManagementUrl(
+          String.format(
+              props.getProperty(CONVERSATION_TEMPLATE_SERVER_KEY), contextBuilder.getRegion()));
     }
+    builder.setConversationContext(contextBuilder.build());
   }
 
   private void handleDefaultMailgunSettings(
       Configuration configuration, Properties props, Configuration.Builder builder) {
 
-    MailgunRegion defaultRegion = MailgunRegion.US;
+    MailgunContext.Builder contextBuilder =
+        MailgunContext.builder(configuration.getMailgunContext().orElse(null));
 
-    Optional<MailgunContext> previousContext = configuration.getMailgunContext();
-    MailgunContext.Builder contextBuilder = MailgunContext.builder();
-
-    MailgunRegion region = previousContext.map(MailgunContext::getRegion).orElse(null);
-    // default region to be used ?
-    if (null == region && props.containsKey(MAILGUN_REGION_KEY)) {
-      String value = props.getProperty(MAILGUN_REGION_KEY);
-      if (!StringUtil.isEmpty(value)) {
-        region = MailgunRegion.from(value);
+    if (null == contextBuilder.getRegion()) {
+      MailgunRegion region = null;
+      if (!StringUtil.isEmpty(props.getProperty(MAILGUN_REGION_KEY))) {
+        region = MailgunRegion.from(props.getProperty(MAILGUN_REGION_KEY).trim());
       }
+      Boolean regionAsDefault = null == region;
+      // To be deprecated with 2.0: no more defaulting to US region
+      if (null == region) {
+        region = MailgunRegion.US;
+      }
+      contextBuilder.setRegion(region).setRegionAsDefault(regionAsDefault);
     }
 
     // url is not defined: use the region to set to an existing one and use "global" as a default
     // fallback
-    String url = previousContext.map(MailgunContext::getUrl).orElse(null);
-    if (StringUtil.isEmpty(url)) {
-      if (null == region || defaultRegion.value().equals(region.value().toLowerCase())) {
+    // String url = previousContext.map(MailgunContext::getUrl).orElse(null);
+    if (StringUtil.isEmpty(contextBuilder.getUrl())) {
+      String url;
+      boolean useDefaultRegion =
+          null == contextBuilder.getRegion()
+              || MailgunRegion.US.value().equalsIgnoreCase(contextBuilder.getRegion().value());
+      if (useDefaultRegion) {
         url = props.getProperty(MAILGUN_DEFAULT_SERVER_KEY);
       } else {
-        url = String.format(props.getProperty(MAILGUN_REGION_SERVER_KEY), region.value());
+        url =
+            String.format(
+                props.getProperty(MAILGUN_REGION_SERVER_KEY), contextBuilder.getRegion().value());
       }
+      contextBuilder.setUrl(url);
     }
 
     // storage URls are not defined: set a default set related to region in use
-    Collection<String> storageUrls =
-        previousContext.map(MailgunContext::getStorageUrls).orElse(null);
+    Collection<String> storageUrls = contextBuilder.getStorageUrls();
     if (null == storageUrls || storageUrls.isEmpty()) {
-      MailgunRegion storageKeyRegion = null == region ? defaultRegion : region;
+      String storageKeyRegionAsString =
+          null == contextBuilder.getRegion()
+              ? ""
+              : contextBuilder.getRegion().value().toLowerCase();
       String storageKey =
-          String.format(
-              MAILGUN_STORAGE_BY_REGION_SERVER_KEY, storageKeyRegion.value().toLowerCase());
+          String.format(MAILGUN_STORAGE_BY_REGION_SERVER_KEY, storageKeyRegionAsString);
       String value = props.getProperty(storageKey);
       if (!StringUtil.isEmpty(value)) {
         storageUrls =
@@ -297,7 +307,7 @@ public class SinchClient {
       }
     }
 
-    builder.setMailgunContext(contextBuilder.setUrl(url).setStorageUrls(storageUrls).build());
+    builder.setMailgunContext(contextBuilder.build());
   }
 
   /**
