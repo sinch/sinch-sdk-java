@@ -23,6 +23,7 @@ import com.sinch.sdk.core.http.URLParameter.STYLE;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.models.ServerConfigurationTest.ServerConfigurationMatcher;
+import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumberDtoTest;
@@ -35,7 +36,7 @@ import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentAnyReq
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumbersListQueryParameters;
 import com.sinch.sdk.domains.numbers.models.v1.request.SearchPosition;
-import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumbersListResponse;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.Arrays;
@@ -127,11 +128,18 @@ class AvailableNumberServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    AvailableNumberListResponse response = service.searchForAvailableNumbers(parameters);
+    AvailableNumbersListResponse response = service.searchForAvailableNumbers(parameters);
 
-    AvailableNumberListResponse expected =
-        new AvailableNumberListResponse(
-            AvailableNumberDtoTest.availableNumberList.getAvailableNumbers());
+    AvailableNumberServiceImpl lowService =
+        (AvailableNumberServiceImpl)
+            (((com.sinch.sdk.domains.numbers.api.v1.adapters.NumbersService) service)
+                .available()
+                .getService());
+    AvailableNumbersListResponse expected =
+        new AvailableNumbersListResponse(
+            lowService,
+            new Page<>(
+                null, AvailableNumberDtoTest.availableNumberList.getAvailableNumbers(), null));
 
     TestHelpers.recursiveEquals(response, expected);
   }
@@ -175,11 +183,19 @@ class AvailableNumberServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    AvailableNumberListResponse response = service.searchForAvailableNumbers(parameters);
+    AvailableNumbersListResponse response = service.searchForAvailableNumbers(parameters);
 
-    AvailableNumberListResponse expected =
-        new AvailableNumberListResponse(
-            AvailableNumberDtoTest.availableNumberList.getAvailableNumbers());
+    AvailableNumberServiceImpl lowService =
+        (AvailableNumberServiceImpl)
+            (((com.sinch.sdk.domains.numbers.api.v1.adapters.NumbersService) service)
+                .available()
+                .getService());
+
+    AvailableNumbersListResponse expected =
+        new AvailableNumbersListResponse(
+            lowService,
+            new Page<>(
+                null, AvailableNumberDtoTest.availableNumberList.getAvailableNumbers(), null));
 
     TestHelpers.recursiveEquals(response, expected);
   }

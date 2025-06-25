@@ -11,8 +11,8 @@
 package com.sinch.sdk.domains.numbers.api.v1;
 
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.domains.numbers.models.v1.regions.available.response.AvailableRegionListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.regions.request.AvailableRegionsListQueryParameters;
+import com.sinch.sdk.domains.numbers.models.v1.regions.response.AvailableRegionsListResponse;
 
 /** Available Regions Service */
 public interface AvailableRegionsService {
@@ -22,10 +22,10 @@ public interface AvailableRegionsService {
    *
    * <p>Lists all regions for numbers provided for the project ID.
    *
-   * @return AvailableRegionListResponse
+   * @return AvailableRegionsListResponse
    * @throws ApiException if fails to make API call
    */
-  AvailableRegionListResponse list() throws ApiException;
+  AvailableRegionsListResponse list() throws ApiException;
 
   /**
    * List available regions
@@ -33,9 +33,9 @@ public interface AvailableRegionsService {
    * <p>Lists all regions for numbers provided for the project ID.
    *
    * @param queryParameter (optional)
-   * @return AvailableRegionListResponse
+   * @return AvailableRegionsListResponse
    * @throws ApiException if fails to make API call
    */
-  AvailableRegionListResponse list(AvailableRegionsListQueryParameters queryParameter)
+  AvailableRegionsListResponse list(AvailableRegionsListQueryParameters queryParameter)
       throws ApiException;
 }

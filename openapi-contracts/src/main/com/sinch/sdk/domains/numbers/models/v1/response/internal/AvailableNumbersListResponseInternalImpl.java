@@ -11,20 +11,20 @@ import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
 import java.util.List;
 import java.util.Objects;
 
-@JsonPropertyOrder({AvailableNumberListResponseInternalImpl.JSON_PROPERTY_AVAILABLE_NUMBERS})
+@JsonPropertyOrder({AvailableNumbersListResponseInternalImpl.JSON_PROPERTY_AVAILABLE_NUMBERS})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class AvailableNumberListResponseInternalImpl
-    implements AvailableNumberListResponseInternal {
+public class AvailableNumbersListResponseInternalImpl
+    implements AvailableNumbersListResponseInternal {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_AVAILABLE_NUMBERS = "availableNumbers";
 
   private OptionalValue<List<AvailableNumber>> availableNumbers;
 
-  public AvailableNumberListResponseInternalImpl() {}
+  public AvailableNumbersListResponseInternalImpl() {}
 
-  protected AvailableNumberListResponseInternalImpl(
+  protected AvailableNumbersListResponseInternalImpl(
       OptionalValue<List<AvailableNumber>> availableNumbers) {
     this.availableNumbers = availableNumbers;
   }
@@ -49,8 +49,8 @@ public class AvailableNumberListResponseInternalImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AvailableNumberListResponseInternalImpl listAvailableNumbersResponse =
-        (AvailableNumberListResponseInternalImpl) o;
+    AvailableNumbersListResponseInternalImpl listAvailableNumbersResponse =
+        (AvailableNumbersListResponseInternalImpl) o;
     return Objects.equals(this.availableNumbers, listAvailableNumbersResponse.availableNumbers);
   }
 
@@ -62,7 +62,7 @@ public class AvailableNumberListResponseInternalImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AvailableNumberListResponseInternalImpl {\n");
+    sb.append("class AvailableNumbersListResponseInternalImpl {\n");
     sb.append("    availableNumbers: ").append(toIndentedString(availableNumbers)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -79,7 +79,7 @@ public class AvailableNumberListResponseInternalImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements AvailableNumberListResponseInternal.Builder {
+  static class Builder implements AvailableNumbersListResponseInternal.Builder {
     OptionalValue<List<AvailableNumber>> availableNumbers = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_AVAILABLE_NUMBERS)
@@ -88,8 +88,8 @@ public class AvailableNumberListResponseInternalImpl
       return this;
     }
 
-    public AvailableNumberListResponseInternal build() {
-      return new AvailableNumberListResponseInternalImpl(availableNumbers);
+    public AvailableNumbersListResponseInternal build() {
+      return new AvailableNumbersListResponseInternalImpl(availableNumbers);
     }
   }
 }

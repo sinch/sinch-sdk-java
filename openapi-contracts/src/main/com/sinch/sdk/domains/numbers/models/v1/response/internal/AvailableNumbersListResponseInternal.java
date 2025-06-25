@@ -15,8 +15,8 @@ import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
 import java.util.List;
 
 /** Response message to list available phone numbers. */
-@JsonDeserialize(builder = AvailableNumberListResponseInternalImpl.Builder.class)
-public interface AvailableNumberListResponseInternal {
+@JsonDeserialize(builder = AvailableNumbersListResponseInternalImpl.Builder.class)
+public interface AvailableNumbersListResponseInternal {
 
   /**
    * List of available phone numbers.
@@ -31,7 +31,7 @@ public interface AvailableNumberListResponseInternal {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new AvailableNumberListResponseInternalImpl.Builder();
+    return new AvailableNumbersListResponseInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -51,6 +51,6 @@ public interface AvailableNumberListResponseInternal {
      *
      * @return The instance build with current builder values
      */
-    AvailableNumberListResponseInternal build();
+    AvailableNumbersListResponseInternal build();
   }
 }

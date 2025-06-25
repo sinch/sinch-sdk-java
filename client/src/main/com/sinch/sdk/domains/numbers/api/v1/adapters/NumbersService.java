@@ -17,9 +17,9 @@ import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentAnyReq
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumbersListQueryParameters;
 import com.sinch.sdk.domains.numbers.models.v1.request.EmergencyAddressRequest;
-import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumbersListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
-import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumbersListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.response.ValidateAddressResponse;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.UnifiedCredentials;
@@ -87,7 +87,8 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
     return this.regions;
   }
 
-  ActiveNumberServiceFacade active() {
+  // should be protected when V0 design will be removed onto 2.0 version
+  public ActiveNumberServiceFacade active() {
     if (null == this.active) {
       instanceLazyInit();
       this.active =
@@ -118,61 +119,73 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
     return this.webhooks;
   }
 
-  public AvailableNumberListResponse searchForAvailableNumbers(
+  @Override
+  public AvailableNumbersListResponse searchForAvailableNumbers(
       AvailableNumbersListQueryParameters parameters) throws ApiException {
     return available().searchForAvailableNumbers(parameters);
   }
 
+  @Override
   public AvailableNumber checkAvailability(String phoneNumber) throws ApiException {
     return available().checkAvailability(phoneNumber);
   }
 
+  @Override
   public ActiveNumber rent(String phoneNumber) throws ApiException {
     return available().rent(phoneNumber);
   }
 
+  @Override
   public ActiveNumber rent(String phoneNumber, AvailableNumberRentRequest parameters)
       throws ApiException {
     return available().rent(phoneNumber, parameters);
   }
 
+  @Override
   public ActiveNumber rentAny(AvailableNumberRentAnyRequest parameters) throws ApiException {
     return available().rentAny(parameters);
   }
 
   @Override
-  public ActiveNumberListResponse list(ActiveNumbersListQueryParameters queryParameter)
+  public ActiveNumbersListResponse list(ActiveNumbersListQueryParameters queryParameter)
       throws ApiException {
     return active().list(queryParameter);
   }
 
+  @Override
   public ActiveNumber get(String phoneNumber) throws ApiException {
     return active().get(phoneNumber);
   }
 
+  @Override
   public ActiveNumber update(String phoneNumber, ActiveNumberUpdateRequest parameters)
       throws ApiException {
     return active().update(phoneNumber, parameters);
   }
 
+  @Override
   public ActiveNumber release(String phoneNumber) throws ApiException {
     return active().release(phoneNumber);
   }
 
+  @Override
   public ValidateAddressResponse validateEmergencyAddress(
       String phoneNumber, EmergencyAddressRequest emergencyAddressRequest) throws ApiException {
     return active().validateEmergencyAddress(phoneNumber, emergencyAddressRequest);
   }
 
+  @Override
   public EmergencyAddress provisionEmergencyAddress(
       String phoneNumber, EmergencyAddressRequest emergencyAddressRequest) throws ApiException {
     return active().provisionEmergencyAddress(phoneNumber, emergencyAddressRequest);
   }
 
+  @Override
   public void deprovisionEmergencyAddress(String phoneNumber) throws ApiException {
     active().deprovisionEmergencyAddress(phoneNumber);
   }
 
+  @Override
   public EmergencyAddress getEmergencyAddress(String phoneNumber) throws ApiException {
     return active().getEmergencyAddress(phoneNumber);
   }

@@ -2,9 +2,8 @@ package com.sinch.sdk.e2e.domains.numbers.v1;
 
 import com.sinch.sdk.domains.numbers.api.v1.AvailableRegionsService;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
-import com.sinch.sdk.domains.numbers.models.v1.regions.available.request.AvailableRegionListRequest;
-import com.sinch.sdk.domains.numbers.models.v1.regions.available.response.AvailableRegionListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.regions.request.AvailableRegionsListQueryParameters;
+import com.sinch.sdk.domains.numbers.models.v1.regions.response.AvailableRegionsListResponse;
 import com.sinch.sdk.e2e.Config;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -16,7 +15,7 @@ public class AvailableRegionsSteps {
 
   AvailableRegionsService service;
 
-  AvailableRegionListResponse listResponse;
+  AvailableRegionsListResponse listResponse;
 
   @Given("^the Numbers service \"Regions\" is available$")
   public void serviceAvailable() {
@@ -27,8 +26,6 @@ public class AvailableRegionsSteps {
   @When("^I send a request to list all the regions$")
   public void list() {
 
-    AvailableRegionListRequest parametersDeprecated = AvailableRegionListRequest.builder().build();
-
     AvailableRegionsListQueryParameters parameters =
         AvailableRegionsListQueryParameters.builder().build();
     listResponse = service.list(parameters);
@@ -36,9 +33,6 @@ public class AvailableRegionsSteps {
 
   @When("^I send a request to list the TOLL_FREE regions$")
   public void listTollFree() {
-
-    AvailableRegionListRequest parametersDeprecated =
-        AvailableRegionListRequest.builder().setTypes(Arrays.asList(NumberType.TOLL_FREE)).build();
 
     AvailableRegionsListQueryParameters parameters =
         AvailableRegionsListQueryParameters.builder()

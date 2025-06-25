@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.numbers.api.v1.adapters.NumbersBaseTest;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
-import com.sinch.sdk.domains.numbers.models.v1.response.internal.ActiveNumberListResponseInternal;
+import com.sinch.sdk.domains.numbers.models.v1.response.internal.ActiveNumbersListResponseInternal;
 import java.time.Instant;
 import java.util.Arrays;
 import org.json.JSONException;
@@ -60,15 +60,15 @@ public class ActiveNumberDtoTest extends NumbersBaseTest {
           .setCallbackUrl("foo callback")
           .build();
 
-  public static ActiveNumberListResponseInternal activeNumberList =
-      ActiveNumberListResponseInternal.builder()
+  public static ActiveNumbersListResponseInternal activeNumberList =
+      ActiveNumbersListResponseInternal.builder()
           .setActiveNumbers(Arrays.asList(activeNumber))
           .setNextPageToken("foo")
           .setTotalSize(1)
           .build();
 
-  public static ActiveNumberListResponseInternal activeNumberListLight =
-      ActiveNumberListResponseInternal.builder()
+  public static ActiveNumbersListResponseInternal activeNumberListLight =
+      ActiveNumbersListResponseInternal.builder()
           .setActiveNumbers(
               Arrays.asList(
                   ActiveNumber.builder()
@@ -106,8 +106,8 @@ public class ActiveNumberDtoTest extends NumbersBaseTest {
   @Test
   void deserializeList() throws JsonProcessingException {
 
-    ActiveNumberListResponseInternal deserializedString =
-        objectMapper.readValue(activeListResponseJson, ActiveNumberListResponseInternal.class);
+    ActiveNumbersListResponseInternal deserializedString =
+        objectMapper.readValue(activeListResponseJson, ActiveNumbersListResponseInternal.class);
 
     TestHelpers.recursiveEquals(activeNumberList, deserializedString);
   }
@@ -115,8 +115,9 @@ public class ActiveNumberDtoTest extends NumbersBaseTest {
   @Test
   void deserializeListLight() throws JsonProcessingException {
 
-    ActiveNumberListResponseInternal deserializedString =
-        objectMapper.readValue(activeListLightResponseJson, ActiveNumberListResponseInternal.class);
+    ActiveNumbersListResponseInternal deserializedString =
+        objectMapper.readValue(
+            activeListLightResponseJson, ActiveNumbersListResponseInternal.class);
 
     TestHelpers.recursiveEquals(activeNumberListLight, deserializedString);
   }
