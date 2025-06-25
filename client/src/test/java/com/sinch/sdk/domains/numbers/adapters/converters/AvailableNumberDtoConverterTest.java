@@ -3,6 +3,7 @@ package com.sinch.sdk.domains.numbers.adapters.converters;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.sinch.sdk.core.TestHelpers;
+import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.domains.numbers.models.AvailableNumber;
 import com.sinch.sdk.domains.numbers.models.Capability;
 import com.sinch.sdk.domains.numbers.models.Money;
@@ -36,7 +37,9 @@ class AvailableNumberDtoConverterTest {
 
     AvailableNumberListResponse dto =
         new AvailableNumberListResponse(
-            AvailableNumberDtoTest.availableNumberList.getAvailableNumbers());
+            null,
+            new Page<>(
+                null, AvailableNumberDtoTest.availableNumberList.getAvailableNumbers(), null));
 
     Collection<AvailableNumber> converted = AvailableNumberDtoConverter.convert(dto);
 
@@ -45,7 +48,7 @@ class AvailableNumberDtoConverterTest {
 
   @Test
   void convertEmptyAvailableNumberListResponse() {
-    AvailableNumberListResponse dto = new AvailableNumberListResponse(null);
+    AvailableNumberListResponse dto = new AvailableNumberListResponse(null, null);
     Collection<AvailableNumber> converted = AvailableNumberDtoConverter.convert(dto);
 
     assertEquals(converted.size(), 0);

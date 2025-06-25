@@ -37,6 +37,10 @@ public class AvailableNumberServiceFacade implements AvailableNumberService {
             uriUUID);
   }
 
+  protected AvailableNumberService getService() {
+    return this.availableNumberService;
+  }
+
   @Override
   public AvailableNumberListResponse searchForAvailableNumbers(
       AvailableNumbersListQueryParameters queryParameter) throws ApiException {

@@ -24,6 +24,7 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameterUtils;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentAnyRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentRequest;
@@ -31,11 +32,9 @@ import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumbersListQuery
 import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
 import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.response.internal.AvailableNumberListResponseInternal;
-import com.sinch.sdk.domains.numbers.models.v1.response.internal.AvailableNumberListResponseInternalImpl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -281,6 +280,11 @@ public class AvailableNumberServiceImpl
     LOGGER.finest("[searchForAvailableNumbers]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = searchForAvailableNumbersRequestBuilder(queryParameter);
+    return _getAvailableNumbersPageAsListResponse(httpRequest);
+  }
+
+  public AvailableNumberListResponse _getAvailableNumbersPageAsListResponse(HttpRequest httpRequest)
+      throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -291,9 +295,7 @@ public class AvailableNumberServiceImpl
           mapper.deserialize(response, new TypeReference<AvailableNumberListResponseInternal>() {});
 
       return new AvailableNumberListResponse(
-          ((AvailableNumberListResponseInternalImpl) deserialized)
-              .availableNumbers()
-              .orElse(Collections.emptyList()));
+          this, new Page<>(null, deserialized.getAvailableNumbers(), null));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

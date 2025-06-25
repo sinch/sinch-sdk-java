@@ -11,6 +11,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.domains.numbers.adapters.converters.ActiveNumberDtoConverterTest;
 import com.sinch.sdk.domains.numbers.models.*;
 import com.sinch.sdk.domains.numbers.models.requests.*;
@@ -41,15 +42,20 @@ class AvailableNumberServiceTest extends BaseTest {
   @Test
   void list() throws ApiException {
 
-    when(v1.searchForAvailableNumbers(
-            eq(
-                AvailableNumberListRequest.builder()
-                    .setRegionCode("region")
-                    .setType(com.sinch.sdk.domains.numbers.models.v1.NumberType.MOBILE)
-                    .build())))
+    AvailableNumberListRequest requestParameters =
+        AvailableNumberListRequest.builder()
+            .setRegionCode("region")
+            .setType(com.sinch.sdk.domains.numbers.models.v1.NumberType.MOBILE)
+            .build();
+
+    when(v1.searchForAvailableNumbers(eq(requestParameters)))
         .thenReturn(
             new com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse(
-                AvailableNumberDtoTest.availableNumberList.getAvailableNumbers()));
+                null,
+                new Page<>(
+                    requestParameters,
+                    AvailableNumberDtoTest.availableNumberList.getAvailableNumbers(),
+                    null)));
 
     AvailableNumberListAllRequestParameters parameters =
         AvailableNumberListAllRequestParameters.builder()
@@ -81,24 +87,28 @@ class AvailableNumberServiceTest extends BaseTest {
   @Test
   void listWithParameters() throws ApiException {
 
-    when(v1.searchForAvailableNumbers(
-            eq(
-                AvailableNumberListRequest.builder()
-                    .setRegionCode("another region")
-                    .setType(com.sinch.sdk.domains.numbers.models.v1.NumberType.TOLL_FREE)
-                    .setSearchPattern(
-                        com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern.builder()
-                            .setPattern("pattern value")
-                            .setPosition(SearchPosition.END)
-                            .build())
-                    .setCapabilities(
-                        Collections.singletonList(
-                            com.sinch.sdk.domains.numbers.models.v1.Capability.VOICE))
-                    .setSize(45)
-                    .build())))
+    AvailableNumberListRequest requestParameters =
+        AvailableNumberListRequest.builder()
+            .setRegionCode("another region")
+            .setType(com.sinch.sdk.domains.numbers.models.v1.NumberType.TOLL_FREE)
+            .setSearchPattern(
+                com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern.builder()
+                    .setPattern("pattern value")
+                    .setPosition(SearchPosition.END)
+                    .build())
+            .setCapabilities(
+                Collections.singletonList(com.sinch.sdk.domains.numbers.models.v1.Capability.VOICE))
+            .setSize(45)
+            .build();
+
+    when(v1.searchForAvailableNumbers(eq(requestParameters)))
         .thenReturn(
             new com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse(
-                AvailableNumberDtoTest.availableNumberList.getAvailableNumbers()));
+                null,
+                new Page<>(
+                    requestParameters,
+                    AvailableNumberDtoTest.availableNumberList.getAvailableNumbers(),
+                    null)));
 
     AvailableNumberListAllRequestParameters parameters =
         AvailableNumberListAllRequestParameters.builder()
