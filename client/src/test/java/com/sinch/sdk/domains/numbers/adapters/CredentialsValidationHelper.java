@@ -13,6 +13,8 @@ import java.util.function.Supplier;
 
 public class CredentialsValidationHelper {
 
+  static ServerConfiguration oAuthServer = new ServerConfiguration("https://oauth.foo.url");
+
   static void checkCredentials(
       Supplier<HttpClient> httpClientSupplier, Consumer<NumbersService> service) {
     doNotAcceptNullKey(httpClientSupplier, service);
@@ -28,7 +30,7 @@ public class CredentialsValidationHelper {
     UnifiedCredentials credentials =
         UnifiedCredentials.builder().setKeyId(null).setKeySecret("foo").setProjectId("foo").build();
     NumbersContext context = NumbersContext.builder().setNumbersUrl("foo url").build();
-    ServerConfiguration oAuthServer = new ServerConfiguration("https://oauth.foo.url");
+
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
@@ -43,7 +45,7 @@ public class CredentialsValidationHelper {
     UnifiedCredentials credentials =
         UnifiedCredentials.builder().setKeyId("foo").setKeySecret(null).setProjectId("foo").build();
     NumbersContext context = NumbersContext.builder().setNumbersUrl("foo url").build();
-    ServerConfiguration oAuthServer = new ServerConfiguration("https://oauth.foo.url");
+
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
@@ -58,7 +60,7 @@ public class CredentialsValidationHelper {
     UnifiedCredentials credentials =
         UnifiedCredentials.builder().setKeyId("foo").setKeySecret("foo").setProjectId(null).build();
     NumbersContext context = NumbersContext.builder().setNumbersUrl("foo url").build();
-    ServerConfiguration oAuthServer = new ServerConfiguration("https://oauth.foo.url");
+
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
@@ -76,7 +78,7 @@ public class CredentialsValidationHelper {
             .setKeySecret("foo")
             .setProjectId("foo")
             .build();
-    ServerConfiguration oAuthServer = new ServerConfiguration("https://oauth.foo.url");
+
     Exception exception =
         assertThrows(
             NullPointerException.class,
@@ -95,7 +97,7 @@ public class CredentialsValidationHelper {
             .setProjectId("foo")
             .build();
     NumbersContext context = NumbersContext.builder().build();
-    ServerConfiguration oAuthServer = new ServerConfiguration("https://oauth.foo.url");
+
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
@@ -114,7 +116,6 @@ public class CredentialsValidationHelper {
             .setProjectId("foo")
             .build();
     NumbersContext context = NumbersContext.builder().setNumbersUrl("foo url").build();
-    ServerConfiguration oAuthServer = new ServerConfiguration("https://oauth.foo.url");
 
     assertDoesNotThrow(
         () ->
