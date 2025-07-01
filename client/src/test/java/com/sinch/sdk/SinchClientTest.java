@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.ConversationRegion;
 import com.sinch.sdk.models.MailgunContext;
 import com.sinch.sdk.models.MailgunRegion;
 import com.sinch.sdk.models.SMSRegion;
@@ -51,10 +52,74 @@ class SinchClientTest {
   }
 
   @Test
-  void defaultSmsRegion() {
+  void defaultSmsRegionIsUS() {
     Configuration configuration = Configuration.builder().build();
     SinchClient client = new SinchClient(configuration);
     assertEquals(SMSRegion.US, client.getConfiguration().getSmsContext().get().getSmsRegion());
+  }
+
+  @Test
+  void smsRegion() {
+    Configuration configuration =
+        Configuration.builder().setSmsRegion(SMSRegion.from("eu")).build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(SMSRegion.EU, client.getConfiguration().getSmsContext().get().getSmsRegion());
+  }
+
+  @Test
+  void defaultConversationUrlAvailable() {
+    Configuration configuration =
+        Configuration.builder().setKeyId("foo").setKeySecret("foo").setProjectId("foo").build();
+    SinchClient client = new SinchClient(configuration);
+    assertNotNull(client.getConfiguration().getConversationContext().get().getUrl());
+  }
+
+  @Test
+  void conversationUrlFromRegion() {
+    Configuration configuration =
+        Configuration.builder().setConversationRegion(ConversationRegion.EU).build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(
+        "https://eu.conversation.api.sinch.com",
+        client.getConfiguration().getConversationContext().get().getUrl());
+  }
+
+  @Test
+  void defaultConversationTemplateUrlAvailable() {
+    Configuration configuration =
+        Configuration.builder().setConversationRegion(ConversationRegion.EU).build();
+    SinchClient client = new SinchClient(configuration);
+    assertNotNull(
+        client.getConfiguration().getConversationContext().get().getTemplateManagementUrl());
+  }
+
+  @Test
+  void templateConversationUrlFromRegion() {
+    Configuration configuration =
+        Configuration.builder().setConversationRegion(ConversationRegion.BR).build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(
+        "https://br.template.api.sinch.com",
+        client.getConfiguration().getConversationContext().get().getTemplateManagementUrl());
+  }
+
+  @Test
+  void defaultConversationRegionIsUS() {
+    Configuration configuration = Configuration.builder().build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(
+        ConversationRegion.US,
+        client.getConfiguration().getConversationContext().get().getRegion());
+  }
+
+  @Test
+  void conversationRegion() {
+    Configuration configuration =
+        Configuration.builder().setConversationRegion(ConversationRegion.from("br")).build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(
+        ConversationRegion.BR,
+        client.getConfiguration().getConversationContext().get().getRegion());
   }
 
   @Test
@@ -103,8 +168,8 @@ class SinchClientTest {
             .build();
     SinchClient client = new SinchClient(configuration);
     assertEquals(
-        client.getConfiguration().getVoiceContext().get().getVoiceUrl(),
-        "https://calling-euc1.api.sinch.com");
+        "https://calling-euc1.api.sinch.com",
+        client.getConfiguration().getVoiceContext().get().getVoiceUrl());
   }
 
   @Test
@@ -122,8 +187,8 @@ class SinchClientTest {
             .build();
     SinchClient client = new SinchClient(configuration);
     assertEquals(
-        client.getConfiguration().getVoiceContext().get().getVoiceRegion(), VoiceRegion.EUROPE);
-    assertEquals(client.getConfiguration().getVoiceContext().get().getVoiceUrl(), "my foo url");
+        VoiceRegion.EUROPE, client.getConfiguration().getVoiceContext().get().getVoiceRegion());
+    assertEquals("my foo url", client.getConfiguration().getVoiceContext().get().getVoiceUrl());
   }
 
   @Test
@@ -150,10 +215,10 @@ class SinchClientTest {
   }
 
   @Test
-  void defaultMailgunRegion() {
+  void defaultMailgunRegionIsUS() {
     Configuration configuration = Configuration.builder().build();
     SinchClient client = new SinchClient(configuration);
-    assertNull(client.getConfiguration().getMailgunContext().get().getRegion());
+    assertEquals(client.getConfiguration().getMailgunContext().get().getRegion(), MailgunRegion.US);
   }
 
   @Test

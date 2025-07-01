@@ -40,6 +40,16 @@ public class MailgunService implements com.sinch.sdk.domains.mailgun.api.v1.Mail
         credentials.getApiKey(), "Mailgun service requires 'apiKey' to be defined");
     StringUtil.requireNonEmpty(context.getUrl(), "'Mailgun service requires 'url' to be defined");
 
+    if (Boolean.TRUE == context.getRegionAsDefault()) {
+      LOGGER.warning(
+          String.format(
+              "Using default region for Mailgun '%s'. This default fallback will be removed in next"
+                  + " major release and will cause a runtime error. Please configure the region you"
+                  + " want to be used (see"
+                  + " https://www.javadoc.io/static/com.sinch.sdk/sinch-sdk-java/1.6.0/com/sinch/sdk/models/Configuration.Builder.html#setMailgunRegion(com.sinch.sdk.models.MailgunRegion)",
+              context.getRegion()));
+    }
+
     LOGGER.fine("Activate Mailgun API with server='" + context.getServer().getUrl() + "'");
 
     this.context = context;
