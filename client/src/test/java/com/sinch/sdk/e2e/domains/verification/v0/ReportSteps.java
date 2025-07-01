@@ -33,62 +33,72 @@ public class ReportSteps {
     ;
   }
 
-  @When("^I send a request to report an SMS verification with the verification ID$")
-  public void reportSmsById() {
+  @When(
+      "I send a request to report an SMS verification by \"ID\" with the verification ID {string}")
+  public void reportSmsById(String id) {
 
     VerificationReportSMSRequestParameters request =
         VerificationReportSMSRequestParameters.builder().setCode("OQP1").build();
 
-    reportSmsByIdResponse = service.reportSmsById(VerificationId.valueOf("id"), request);
+    reportSmsByIdResponse = service.reportSmsById(VerificationId.valueOf(id), request);
   }
 
-  @When("^I send a request to report an SMS verification with the phone number$")
-  public void reportSmsByIdentity() {
+  @When(
+      "I send a request to report an SMS verification by \"identity\" with the phone number"
+          + " {string}")
+  public void reportSmsByIdentity(String phoneNumber) {
 
     VerificationReportSMSRequestParameters request =
         VerificationReportSMSRequestParameters.builder().setCode("OQP1").build();
 
     reportSmsByIdentityResponse =
-        service.reportSmsByIdentity(NumberIdentity.valueOf("+123456789"), request);
+        service.reportSmsByIdentity(NumberIdentity.valueOf(phoneNumber), request);
   }
 
-  @When("^I send a request to report a Phone Call verification with the verification ID$")
-  public void reportCalloutById() {
+  @When(
+      "I send a request to report a Phone Call verification by \"ID\" with the verification ID"
+          + " {string}")
+  public void reportCalloutById(String id) {
 
     VerificationReportCalloutRequestParameters request =
         VerificationReportCalloutRequestParameters.builder().setCode("123456").build();
 
-    reportPhoneCallByIdResponse = service.reportCalloutById(VerificationId.valueOf("id"), request);
+    reportPhoneCallByIdResponse = service.reportCalloutById(VerificationId.valueOf(id), request);
   }
 
-  @When("^I send a request to report a Phone Call verification with the phone number$")
-  public void reportPhoneCallByIdentity() {
+  @When(
+      "I send a request to report a Phone Call verification by \"identity\" with the phone number"
+          + " {string}")
+  public void reportPhoneCallByIdentity(String phoneNumber) {
 
     VerificationReportCalloutRequestParameters request =
         VerificationReportCalloutRequestParameters.builder().setCode("123456").build();
 
     reportPhoneCallByIdentityResponse =
-        service.reportCalloutByIdentity(NumberIdentity.valueOf("+123456789"), request);
+        service.reportCalloutByIdentity(NumberIdentity.valueOf(phoneNumber), request);
   }
 
-  @When("^I send a request to report a Flash Call verification with the verification ID$")
-  public void reportFlashCallById() {
+  @When(
+      "I send a request to report a Flash Call verification by \"ID\" with the verification ID"
+          + " {string}")
+  public void reportFlashCallById(String id) {
 
     VerificationReportFlashCallRequestParameters request =
         VerificationReportFlashCallRequestParameters.builder().setCli("+18156540001").build();
 
-    reportFlashCallByIdResponse =
-        service.reportFlashCallById(VerificationId.valueOf("id"), request);
+    reportFlashCallByIdResponse = service.reportFlashCallById(VerificationId.valueOf(id), request);
   }
 
-  @When("^I send a request to report a Flash Call verification with the phone number$")
-  public void reportFlashCallByIdentity() {
+  @When(
+      "I send a request to report a Flash Call verification by \"identity\" with the phone number"
+          + " {string}")
+  public void reportFlashCallByIdentity(String phoneNumber) {
 
     VerificationReportFlashCallRequestParameters request =
         VerificationReportFlashCallRequestParameters.builder().setCli("+18156540001").build();
 
     reportFlashCallByIdentityResponse =
-        service.reportFlashCallByIdentity(NumberIdentity.valueOf("+123456789"), request);
+        service.reportFlashCallByIdentity(NumberIdentity.valueOf(phoneNumber), request);
   }
 
   @Then("the response by {string} contains the details of an SMS verification report")

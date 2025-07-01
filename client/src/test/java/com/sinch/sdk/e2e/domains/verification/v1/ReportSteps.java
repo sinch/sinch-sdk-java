@@ -32,61 +32,72 @@ public class ReportSteps {
     service = Config.getSinchClient().verification().v1().verificationReport();
   }
 
-  @When("^I send a request to report an SMS verification with the verification ID$")
-  public void reportSmsById() {
+  @When(
+      "I send a request to report an SMS verification by \"ID\" with the verification ID {string}")
+  public void reportSmsById(String id) {
 
     VerificationReportRequestSms request =
         VerificationReportRequestSms.builder().setCode("OQP1").build();
 
-    reportSmsByIdResponse = service.reportSmsById("id", request);
+    reportSmsByIdResponse = service.reportSmsById(id, request);
   }
 
-  @When("^I send a request to report an SMS verification with the phone number$")
-  public void reportSmsByIdentity() {
+  @When(
+      "I send a request to report an SMS verification by \"identity\" with the phone number"
+          + " {string}")
+  public void reportSmsByIdentity(String phoneNumber) {
 
     VerificationReportRequestSms request =
         VerificationReportRequestSms.builder().setCode("OQP1").build();
 
     reportSmsByIdentityResponse =
-        service.reportSmsByIdentity(NumberIdentity.valueOf("+123456789"), request);
+        service.reportSmsByIdentity(NumberIdentity.valueOf(phoneNumber), request);
   }
 
-  @When("^I send a request to report a Phone Call verification with the verification ID$")
-  public void reportCalloutById() {
+  @When(
+      "I send a request to report a Phone Call verification by \"ID\" with the verification ID"
+          + " {string}")
+  public void reportCalloutById(String id) {
 
     VerificationReportRequestPhoneCall request =
         VerificationReportRequestPhoneCall.builder().setCode("123456").build();
 
-    reportCalloutByIdResponse = service.reportPhoneCallById("id", request);
+    reportCalloutByIdResponse = service.reportPhoneCallById(id, request);
   }
 
-  @When("^I send a request to report a Phone Call verification with the phone number$")
-  public void reportCalloutByIdentity() {
+  @When(
+      "I send a request to report a Phone Call verification by \"identity\" with the phone number"
+          + " {string}")
+  public void reportCalloutByIdentity(String phoneNumber) {
 
     VerificationReportRequestPhoneCall request =
         VerificationReportRequestPhoneCall.builder().setCode("123456").build();
 
     reportCalloutByIdentityResponse =
-        service.reportPhoneCallByIdentity(NumberIdentity.valueOf("+123456789"), request);
+        service.reportPhoneCallByIdentity(NumberIdentity.valueOf(phoneNumber), request);
   }
 
-  @When("^I send a request to report a Flash Call verification with the verification ID$")
-  public void reportFlashCallById() {
+  @When(
+      "I send a request to report a Flash Call verification by \"ID\" with the verification ID"
+          + " {string}")
+  public void reportFlashCallById(String id) {
 
     VerificationReportRequestFlashCall request =
         VerificationReportRequestFlashCall.builder().setCli("+18156540001").build();
 
-    reportFlashCallByIdResponse = service.reportFlashCallById("id", request);
+    reportFlashCallByIdResponse = service.reportFlashCallById(id, request);
   }
 
-  @When("^I send a request to report a Flash Call verification with the phone number$")
-  public void reportFlashCallByIdentity() {
+  @When(
+      "I send a request to report a Flash Call verification by \"identity\" with the phone number"
+          + " {string}")
+  public void reportFlashCallByIdentity(String phoneNumber) {
 
     VerificationReportRequestFlashCall request =
         VerificationReportRequestFlashCall.builder().setCli("+18156540001").build();
 
     reportFlashCallByIdentityResponse =
-        service.reportFlashCallByIdentity(NumberIdentity.valueOf("+123456789"), request);
+        service.reportFlashCallByIdentity(NumberIdentity.valueOf(phoneNumber), request);
   }
 
   @Then("the response by {string} contains the details of an SMS verification report")
