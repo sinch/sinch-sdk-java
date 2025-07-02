@@ -37,6 +37,13 @@ public interface ChoiceMessage
   TextMessage getTextMessage();
 
   /**
+   * Get messageProperties
+   *
+   * @return messageProperties
+   */
+  ChoiceMessageProperties getMessageProperties();
+
+  /**
    * Getting builder
    *
    * @return New Builder instance
@@ -65,6 +72,15 @@ public interface ChoiceMessage
      * @see #getTextMessage
      */
     Builder setTextMessage(TextMessage textMessage);
+
+    /**
+     * see getter
+     *
+     * @param messageProperties see getter
+     * @return Current builder
+     * @see #getMessageProperties
+     */
+    Builder setMessageProperties(ChoiceMessageProperties messageProperties);
 
     /**
      * Create instance

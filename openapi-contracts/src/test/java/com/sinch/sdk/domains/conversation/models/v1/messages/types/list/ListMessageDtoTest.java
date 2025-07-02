@@ -3,6 +3,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.types.list;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ChoiceItem;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ChoiceItemDtoTest;
@@ -10,7 +11,6 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.ProductItem;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ProductItemDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessageDtoTest;
 import java.util.Collections;
-import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -26,6 +26,25 @@ public class ListMessageDtoTest extends ConversationBaseTest {
               ListAdditionalProperties.builder()
                   .setCatalogId("catalog ID value")
                   .setMenu("menu value")
+                  .build())
+          .setSections(
+              Collections.singletonList(
+                  ListSection.<ChoiceItem>builder()
+                      .setTitle("a list section title value")
+                      .setItems(Collections.singletonList(ChoiceItemDtoTest.choiceItemDto))
+                      .build()))
+          .setMedia(MediaMessageDtoTest.mediaMessageDto)
+          .build();
+
+  public static ListMessage listMessageChoiceWithWhatsappFooterDto =
+      ListMessage.builder()
+          .setTitle("a list message title value")
+          .setDescription("description value")
+          .setMessageProperties(
+              ListAdditionalProperties.builder()
+                  .setCatalogId("catalog ID value")
+                  .setMenu("menu value")
+                  .setWhatsappHeader("my whatsapp header")
                   .build())
           .setSections(
               Collections.singletonList(
@@ -57,6 +76,10 @@ public class ListMessageDtoTest extends ConversationBaseTest {
   @GivenTextResource("/domains/conversation/v1/messages/types/list/ListMessageChoiceDto.json")
   String jsonListMessageChoiceDto;
 
+  @GivenTextResource(
+      "/domains/conversation/v1/messages/types/list/ListMessageChoiceWithWhatsappHeaderDto.json")
+  String jsonListMessageChoiceWithWhatsappHeaderDto;
+
   @GivenTextResource("/domains/conversation/v1/messages/types/list/ListMessageProductDto.json")
   String jsonListMessageProductDto;
 
@@ -71,7 +94,23 @@ public class ListMessageDtoTest extends ConversationBaseTest {
   void deserializeMessageChoiceDto() throws JsonProcessingException {
     Object deserialized = objectMapper.readValue(jsonListMessageChoiceDto, ListMessage.class);
 
-    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(listMessageChoiceDto);
+    TestHelpers.recursiveEquals(deserialized, listMessageChoiceDto);
+  }
+
+  @Test
+  void serializeMessageChoiceWithWhatsappFooterDto() throws JsonProcessingException, JSONException {
+    String serializedString =
+        objectMapper.writeValueAsString(listMessageChoiceWithWhatsappFooterDto);
+
+    JSONAssert.assertEquals(jsonListMessageChoiceWithWhatsappHeaderDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeMessageChoiceWithWhatsappFooterDto() throws JsonProcessingException {
+    Object deserialized =
+        objectMapper.readValue(jsonListMessageChoiceWithWhatsappHeaderDto, ListMessage.class);
+
+    TestHelpers.recursiveEquals(deserialized, listMessageChoiceWithWhatsappFooterDto);
   }
 
   @Test
@@ -85,6 +124,6 @@ public class ListMessageDtoTest extends ConversationBaseTest {
   void deserializeMessageProductDto() throws JsonProcessingException {
     Object deserialized = objectMapper.readValue(jsonListMessageProductDto, ListMessage.class);
 
-    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(listMessageProductDto);
+    TestHelpers.recursiveEquals(deserialized, listMessageProductDto);
   }
 }
