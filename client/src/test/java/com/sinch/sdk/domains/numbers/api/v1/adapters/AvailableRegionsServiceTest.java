@@ -21,11 +21,11 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameter.STYLE;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.domains.numbers.api.v1.AvailableRegionService;
+import com.sinch.sdk.domains.numbers.api.v1.AvailableRegionsService;
 import com.sinch.sdk.domains.numbers.models.v1.AvailableRegionsDtoTest;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
-import com.sinch.sdk.domains.numbers.models.v1.regions.available.request.AvailableRegionListRequest;
 import com.sinch.sdk.domains.numbers.models.v1.regions.available.response.AvailableRegionListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.regions.request.AvailableRegionsListQueryParameters;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -35,12 +35,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 @TestWithResources
-class AvailableRegionServiceTest extends BaseTest {
+class AvailableRegionsServiceTest extends BaseTest {
 
   @Mock HttpClient httpClient;
   @Mock ServerConfiguration serverConfiguration;
   @Mock Map<String, AuthManager> authManagers;
-  AvailableRegionService service;
+  AvailableRegionsService service;
 
   static final String uriUUID = "foo";
   static final Collection<String> NUMBERS_AUTH_NAMES = Arrays.asList("Basic", "OAuth2.0");
@@ -53,6 +53,34 @@ class AvailableRegionServiceTest extends BaseTest {
     service =
         new AvailableRegionsServiceImpl(
             httpClient, serverConfiguration, authManagers, HttpMapper.getInstance(), uriUUID);
+  }
+
+  @Test
+  void listWithoutFilters() throws ApiException {
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v1/projects/" + URLPathUtils.encodePathSegment(uriUUID) + "/availableRegions",
+            HttpMethod.GET,
+            Collections.emptyList(),
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            NUMBERS_AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonRegionsResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    AvailableRegionListResponse response = service.list();
+
+    TestHelpers.recursiveEquals(
+        response.getContent(), AvailableRegionsDtoTest.availableRegionList.getAvailableRegions());
   }
 
   @Test
@@ -80,7 +108,7 @@ class AvailableRegionServiceTest extends BaseTest {
 
     AvailableRegionListResponse response =
         service.list(
-            AvailableRegionListRequest.builder()
+            AvailableRegionsListQueryParameters.builder()
                 .setTypes(Arrays.asList(NumberType.MOBILE))
                 .build());
 

@@ -2,10 +2,13 @@ package com.sinch.sdk.domains.numbers.models.v1.response;
 
 import com.sinch.sdk.core.models.pagination.ListResponse;
 import com.sinch.sdk.core.models.pagination.Page;
+import com.sinch.sdk.core.models.pagination.TokenPageNavigator;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
+import com.sinch.sdk.domains.numbers.api.v1.adapters.ActiveNumberServiceFacade;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumbersListQueryParameters;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
@@ -16,11 +19,22 @@ import java.util.NoSuchElementException;
  */
 public class ActiveNumberListResponse extends ListResponse<ActiveNumber> {
 
-  private final Page<ActiveNumberListRequest, ActiveNumber, String> page;
+  private final Page<ActiveNumbersListQueryParameters, ActiveNumber, String> page;
   private final NumbersService service;
 
+  @Deprecated
   public ActiveNumberListResponse(
       NumbersService service, Page<ActiveNumberListRequest, ActiveNumber, String> page) {
+    this.service = service;
+    this.page =
+        new Page<>(
+            ActiveNumberServiceFacade.convert(page.getParameters()),
+            page.getEntities(),
+            new TokenPageNavigator(page.getNextPageToken()));
+  }
+
+  public ActiveNumberListResponse(
+      Page<ActiveNumbersListQueryParameters, ActiveNumber, String> page, NumbersService service) {
     this.service = service;
     this.page = page;
   }
@@ -33,8 +47,8 @@ public class ActiveNumberListResponse extends ListResponse<ActiveNumber> {
     if (!hasNextPage()) {
       throw new NoSuchElementException("Reached the last page of the API response");
     }
-    ActiveNumberListRequest.Builder newParameters =
-        ActiveNumberListRequest.builder(page.getParameters());
+    ActiveNumbersListQueryParameters.Builder newParameters =
+        ActiveNumbersListQueryParameters.builder(page.getParameters());
     newParameters.setPageToken(page.getNextPageToken());
     return service.list(newParameters.build());
   }

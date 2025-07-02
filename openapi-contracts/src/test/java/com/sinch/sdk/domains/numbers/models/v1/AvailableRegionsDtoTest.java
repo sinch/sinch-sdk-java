@@ -7,8 +7,8 @@ import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.numbers.api.v1.adapters.NumbersBaseTest;
 import com.sinch.sdk.domains.numbers.models.v1.regions.available.response.AvailableRegion;
 import com.sinch.sdk.domains.numbers.models.v1.regions.available.response.internal.AvailableRegionListResponseInternal;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
@@ -26,7 +26,7 @@ public class AvailableRegionsDtoTest extends NumbersBaseTest {
 
   public static AvailableRegionListResponseInternal availableRegionList =
       AvailableRegionListResponseInternal.builder()
-          .setAvailableRegions(Collections.singletonList(availableRegion))
+          .setAvailableRegions(new ArrayList<>(Arrays.asList(availableRegion)))
           .build();
 
   @Test
