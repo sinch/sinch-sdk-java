@@ -61,11 +61,13 @@ public class AvailableRegionsServiceImpl
     this.projectId = projectId;
   }
 
+  @Override
   public AvailableRegionListResponse list() throws ApiException {
 
     return list((AvailableRegionsListQueryParameters) null);
   }
 
+  @Override
   public AvailableRegionListResponse list(AvailableRegionsListQueryParameters queryParameter)
       throws ApiException {
 

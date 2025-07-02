@@ -65,6 +65,7 @@ public class AvailableNumberServiceImpl
     this.projectId = projectId;
   }
 
+  @Override
   public AvailableNumber checkAvailability(String phoneNumber) throws ApiException {
 
     LOGGER.finest("[checkAvailability]" + " " + "phoneNumber: " + phoneNumber);
@@ -129,6 +130,7 @@ public class AvailableNumberServiceImpl
         localVarAuthNames);
   }
 
+  @Override
   public ActiveNumber rent(
       String phoneNumber, AvailableNumberRentRequest availableNumberRentRequest)
       throws ApiException {
@@ -209,6 +211,7 @@ public class AvailableNumberServiceImpl
         localVarAuthNames);
   }
 
+  @Override
   public ActiveNumber rentAny(AvailableNumberRentAnyRequest availableNumberRentAnyRequest)
       throws ApiException {
 
@@ -275,6 +278,7 @@ public class AvailableNumberServiceImpl
         localVarAuthNames);
   }
 
+  @Override
   public AvailableNumberListResponse searchForAvailableNumbers(
       AvailableNumbersListQueryParameters queryParameter) throws ApiException {
 

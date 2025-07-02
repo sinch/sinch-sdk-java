@@ -73,6 +73,7 @@ public class ActiveNumberServiceImpl
     this.numbersService = numbersService;
   }
 
+  @Override
   public void deprovisionEmergencyAddress(String phoneNumber) throws ApiException {
 
     LOGGER.finest("[deprovisionEmergencyAddress]" + " " + "phoneNumber: " + phoneNumber);
@@ -141,6 +142,7 @@ public class ActiveNumberServiceImpl
         localVarAuthNames);
   }
 
+  @Override
   public ActiveNumber get(String phoneNumber) throws ApiException {
 
     LOGGER.finest("[get]" + " " + "phoneNumber: " + phoneNumber);
@@ -204,6 +206,7 @@ public class ActiveNumberServiceImpl
         localVarAuthNames);
   }
 
+  @Override
   public EmergencyAddress getEmergencyAddress(String phoneNumber) throws ApiException {
 
     LOGGER.finest("[getEmergencyAddress]" + " " + "phoneNumber: " + phoneNumber);
@@ -268,6 +271,7 @@ public class ActiveNumberServiceImpl
         localVarAuthNames);
   }
 
+  @Override
   public ActiveNumberListResponse list(ActiveNumbersListQueryParameters queryParameter)
       throws ApiException {
 
@@ -414,6 +418,7 @@ public class ActiveNumberServiceImpl
         new Page<>(parameters, paginated.getLeft(), paginated.getRight()), this.numbersService);
   }
 
+  @Override
   public EmergencyAddress provisionEmergencyAddress(
       String phoneNumber, EmergencyAddressRequest emergencyAddressRequest) throws ApiException {
 
@@ -490,6 +495,7 @@ public class ActiveNumberServiceImpl
         localVarAuthNames);
   }
 
+  @Override
   public ActiveNumber release(String phoneNumber) throws ApiException {
 
     LOGGER.finest("[release]" + " " + "phoneNumber: " + phoneNumber);
@@ -554,6 +560,7 @@ public class ActiveNumberServiceImpl
         localVarAuthNames);
   }
 
+  @Override
   public ActiveNumber update(
       String phoneNumber, ActiveNumberUpdateRequest activeNumberUpdateRequest) throws ApiException {
 
@@ -627,6 +634,7 @@ public class ActiveNumberServiceImpl
         localVarAuthNames);
   }
 
+  @Override
   public ValidateAddressResponse validateEmergencyAddress(
       String phoneNumber, EmergencyAddressRequest emergencyAddressRequest) throws ApiException {
 

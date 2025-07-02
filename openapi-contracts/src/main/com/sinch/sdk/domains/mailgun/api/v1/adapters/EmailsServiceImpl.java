@@ -56,6 +56,7 @@ public class EmailsServiceImpl implements com.sinch.sdk.domains.mailgun.api.v1.E
     this.mapper = mapper;
   }
 
+  @Override
   public SendingQueuesStatusResponse getSendingQueuesStatus(String name) throws ApiException {
 
     LOGGER.finest("[getSendingQueuesStatus]" + " " + "name: " + name);
@@ -110,6 +111,7 @@ public class EmailsServiceImpl implements com.sinch.sdk.domains.mailgun.api.v1.E
         localVarAuthNames);
   }
 
+  @Override
   public GetStoredEmailResponse getStoredEmail(String domainName, String storageKey)
       throws ApiException {
 
@@ -183,6 +185,7 @@ public class EmailsServiceImpl implements com.sinch.sdk.domains.mailgun.api.v1.E
         localVarAuthNames);
   }
 
+  @Override
   public SendEmailResponse sendEmail(String domainName, SendEmailRequest requestParameters)
       throws ApiException {
 
@@ -240,6 +243,7 @@ public class EmailsServiceImpl implements com.sinch.sdk.domains.mailgun.api.v1.E
         localVarAuthNames);
   }
 
+  @Override
   public SendEmailResponse sendMimeEmail(String domainName, SendMimeEmailRequest requestParameters)
       throws ApiException {
 

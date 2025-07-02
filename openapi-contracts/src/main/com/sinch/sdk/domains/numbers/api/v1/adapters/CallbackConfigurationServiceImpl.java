@@ -58,6 +58,7 @@ public class CallbackConfigurationServiceImpl
     this.projectId = projectId;
   }
 
+  @Override
   public CallbackConfigurationResponse get() throws ApiException {
 
     LOGGER.finest("[get]" + " ");
@@ -114,6 +115,7 @@ public class CallbackConfigurationServiceImpl
         localVarAuthNames);
   }
 
+  @Override
   public CallbackConfigurationResponse update(
       CallbackConfigurationUpdateRequest callbackConfigurationUpdateRequest) throws ApiException {
 

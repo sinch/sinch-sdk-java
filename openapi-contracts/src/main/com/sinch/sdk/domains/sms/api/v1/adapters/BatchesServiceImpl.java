@@ -67,6 +67,7 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Batc
     this.servicePlanId = servicePlanId;
   }
 
+  @Override
   public BatchResponse cancel(String batchId) throws ApiException {
 
     LOGGER.finest("[cancel]" + " " + "batchId: " + batchId);
@@ -129,11 +130,13 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Batc
         localVarAuthNames);
   }
 
+  @Override
   public DryRunResponse dryRun(BatchRequest sendRequest) throws ApiException {
 
-    return dryRun(null, sendRequest);
+    return dryRun((DryRunQueryParameters) null, sendRequest);
   }
 
+  @Override
   public DryRunResponse dryRun(DryRunQueryParameters queryParameter, BatchRequest sendRequest)
       throws ApiException {
 
@@ -222,6 +225,7 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Batc
         localVarAuthNames);
   }
 
+  @Override
   public BatchResponse get(String batchId) throws ApiException {
 
     LOGGER.finest("[get]" + " " + "batchId: " + batchId);
@@ -284,11 +288,13 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Batc
         localVarAuthNames);
   }
 
+  @Override
   public ListBatchesResponse list() throws ApiException {
 
-    return list(null);
+    return list((ListBatchesQueryParameters) null);
   }
 
+  @Override
   public ListBatchesResponse list(ListBatchesQueryParameters queryParameter) throws ApiException {
 
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
@@ -395,6 +401,7 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Batc
         localVarAuthNames);
   }
 
+  @Override
   public BatchResponse replace(String batchId, BatchRequest sendRequest) throws ApiException {
 
     LOGGER.finest("[replace]" + " " + "batchId: " + batchId + ", " + "sendRequest: " + sendRequest);
@@ -463,6 +470,7 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Batc
         localVarAuthNames);
   }
 
+  @Override
   public BatchResponse send(BatchRequest sendRequest) throws ApiException {
 
     LOGGER.finest("[send]" + " " + "sendRequest: " + sendRequest);
@@ -523,6 +531,7 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Batc
         localVarAuthNames);
   }
 
+  @Override
   public void sendDeliveryFeedback(
       String batchId, SendDeliveryFeedbackRequest sendDeliveryFeedbackRequest) throws ApiException {
 
@@ -605,6 +614,7 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Batc
         localVarAuthNames);
   }
 
+  @Override
   public BatchResponse update(String batchId, UpdateBatchRequest updateBatchRequest)
       throws ApiException {
 
