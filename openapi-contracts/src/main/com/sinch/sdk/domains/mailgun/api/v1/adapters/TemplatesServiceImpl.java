@@ -76,12 +76,15 @@ public class TemplatesServiceImpl implements com.sinch.sdk.domains.mailgun.api.v
     this.mapper = mapper;
   }
 
+  @Override
   public VersionDetails copyVersion(
       String domainName, String templateName, String versionName, String newVersionName)
       throws ApiException {
-    return copyVersion(domainName, templateName, versionName, newVersionName, null);
+    return copyVersion(
+        domainName, templateName, versionName, newVersionName, (CopyVersionQueryParameters) null);
   }
 
+  @Override
   public VersionDetails copyVersion(
       String domainName,
       String templateName,
@@ -213,6 +216,7 @@ public class TemplatesServiceImpl implements com.sinch.sdk.domains.mailgun.api.v
         localVarAuthNames);
   }
 
+  @Override
   public Template create(String domainName, CreateTemplateRequest requestParameters)
       throws ApiException {
 
@@ -306,6 +310,7 @@ public class TemplatesServiceImpl implements com.sinch.sdk.domains.mailgun.api.v
     return Pair.of(response, response.getVersion());
   }
 
+  @Override
   public VersionDetails createVersion(
       String domainName, String templateName, CreateVersionRequest requestParameters)
       throws ApiException {
@@ -397,6 +402,7 @@ public class TemplatesServiceImpl implements com.sinch.sdk.domains.mailgun.api.v
         localVarAuthNames);
   }
 
+  @Override
   public void delete(String domainName, String templateName) throws ApiException {
 
     LOGGER.finest(
@@ -463,6 +469,7 @@ public class TemplatesServiceImpl implements com.sinch.sdk.domains.mailgun.api.v
         localVarAuthNames);
   }
 
+  @Override
   public void deleteAll(String domainName) throws ApiException {
 
     LOGGER.finest("[deleteAll]" + " " + "domainName: " + domainName);
@@ -519,6 +526,7 @@ public class TemplatesServiceImpl implements com.sinch.sdk.domains.mailgun.api.v
         localVarAuthNames);
   }
 
+  @Override
   public void deleteVersion(String domainName, String templateName, String versionName)
       throws ApiException {
 
@@ -603,8 +611,9 @@ public class TemplatesServiceImpl implements com.sinch.sdk.domains.mailgun.api.v
         localVarAuthNames);
   }
 
+  @Override
   public Template get(String domainName, String templateName) throws ApiException {
-    return get(domainName, templateName, null);
+    return get(domainName, templateName, (GetTemplateQueryParameters) null);
   }
 
   public Template get(
@@ -710,6 +719,7 @@ public class TemplatesServiceImpl implements com.sinch.sdk.domains.mailgun.api.v
         .getVersion();
   }
 
+  @Override
   public VersionDetails getVersion(String domainName, String templateName, String versionName)
       throws ApiException {
 
@@ -809,10 +819,12 @@ public class TemplatesServiceImpl implements com.sinch.sdk.domains.mailgun.api.v
         localVarAuthNames);
   }
 
+  @Override
   public ListTemplatesResponse list(String domainName) throws ApiException {
-    return list(domainName, null);
+    return list(domainName, (ListTemplatesQueryParameters) null);
   }
 
+  @Override
   public ListTemplatesResponse list(String domainName, ListTemplatesQueryParameters queryParameter)
       throws ApiException {
 
@@ -902,11 +914,13 @@ public class TemplatesServiceImpl implements com.sinch.sdk.domains.mailgun.api.v
         localVarAuthNames);
   }
 
+  @Override
   public ListVersionsResponse listVersions(String domainName, String templateName)
       throws ApiException {
-    return listVersions(domainName, templateName, null);
+    return listVersions(domainName, templateName, (ListVersionsQueryParameters) null);
   }
 
+  @Override
   public ListVersionsResponse listVersions(
       String domainName, String templateName, ListVersionsQueryParameters queryParameter)
       throws ApiException {
@@ -1020,6 +1034,7 @@ public class TemplatesServiceImpl implements com.sinch.sdk.domains.mailgun.api.v
         localVarAuthNames);
   }
 
+  @Override
   public void update(
       String domainName, String templateName, UpdateTemplateRequest requestParameters)
       throws ApiException {
@@ -1095,6 +1110,7 @@ public class TemplatesServiceImpl implements com.sinch.sdk.domains.mailgun.api.v
         localVarAuthNames);
   }
 
+  @Override
   public void updateVersion(
       String domainName,
       String templateName,

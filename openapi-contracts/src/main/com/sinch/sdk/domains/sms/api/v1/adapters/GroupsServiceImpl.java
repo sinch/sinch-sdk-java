@@ -63,6 +63,7 @@ public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Group
     this.servicePlanId = servicePlanId;
   }
 
+  @Override
   public Group create(GroupRequest groupRequest) throws ApiException {
 
     LOGGER.finest("[create]" + " " + "groupRequest: " + groupRequest);
@@ -124,6 +125,7 @@ public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Group
         localVarAuthNames);
   }
 
+  @Override
   public void delete(String groupId) throws ApiException {
 
     LOGGER.finest("[delete]" + " " + "groupId: " + groupId);
@@ -186,6 +188,7 @@ public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Group
         localVarAuthNames);
   }
 
+  @Override
   public Group get(String groupId) throws ApiException {
 
     LOGGER.finest("[get]" + " " + "groupId: " + groupId);
@@ -248,11 +251,13 @@ public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Group
         localVarAuthNames);
   }
 
+  @Override
   public ListGroupsResponse list() throws ApiException {
 
-    return list(null);
+    return list((ListGroupsQueryParameters) null);
   }
 
+  @Override
   public ListGroupsResponse list(ListGroupsQueryParameters queryParameter) throws ApiException {
 
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
@@ -332,6 +337,7 @@ public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Group
         localVarAuthNames);
   }
 
+  @Override
   public List<String> listMembers(String groupId) throws ApiException {
 
     LOGGER.finest("[listMembers]" + " " + "groupId: " + groupId);
@@ -395,6 +401,7 @@ public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Group
         localVarAuthNames);
   }
 
+  @Override
   public Group replace(String groupId, GroupRequest groupRequest) throws ApiException {
 
     LOGGER.finest(
@@ -464,6 +471,7 @@ public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Group
         localVarAuthNames);
   }
 
+  @Override
   public Group update(String groupId, GroupUpdateRequest groupUpdateRequest) throws ApiException {
 
     LOGGER.finest(

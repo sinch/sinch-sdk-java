@@ -62,6 +62,7 @@ public class InboundsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Inb
     this.servicePlanId = servicePlanId;
   }
 
+  @Override
   public InboundMessage get(String inboundId) throws ApiException {
 
     LOGGER.finest("[get]" + " " + "inboundId: " + inboundId);
@@ -124,11 +125,13 @@ public class InboundsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Inb
         localVarAuthNames);
   }
 
+  @Override
   public ListInboundsResponse list() throws ApiException {
 
-    return list(null);
+    return list((ListInboundMessagesQueryParameters) null);
   }
 
+  @Override
   public ListInboundsResponse list(ListInboundMessagesQueryParameters queryParameter)
       throws ApiException {
 

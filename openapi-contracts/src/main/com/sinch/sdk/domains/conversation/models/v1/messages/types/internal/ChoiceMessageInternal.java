@@ -15,7 +15,7 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.Choice
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
 import java.util.List;
 
-/** Choice Message */
+/** A message containing choices. */
 @JsonDeserialize(builder = ChoiceMessageInternalImpl.Builder.class)
 public interface ChoiceMessageInternal {
 
