@@ -88,7 +88,7 @@ public class ChoiceMessageImpl
   }
 
   @JsonIgnore
-  public ChoiceMessageProperties getMessageProperties() {
+  public ChoiceAdditionalProperties getMessageProperties() {
     if (null == choiceMessage
         || !choiceMessage.isPresent()
         || null == choiceMessage.get().getMessageProperties()) {
@@ -97,7 +97,7 @@ public class ChoiceMessageImpl
     return choiceMessage.get().getMessageProperties();
   }
 
-  public OptionalValue<ChoiceMessageProperties> messageProperties() {
+  public OptionalValue<ChoiceAdditionalProperties> messageProperties() {
     return null != choiceMessage && choiceMessage.isPresent()
         ? choiceMessage
             .map(f -> ((ChoiceMessageInternalImpl) f).messageProperties())
@@ -167,7 +167,7 @@ public class ChoiceMessageImpl
     }
 
     @JsonIgnore
-    public Builder setMessageProperties(ChoiceMessageProperties messageProperties) {
+    public Builder setMessageProperties(ChoiceAdditionalProperties messageProperties) {
       getDelegatedBuilder().setMessageProperties(messageProperties);
       return this;
     }

@@ -41,7 +41,7 @@ public interface ChoiceMessage
    *
    * @return messageProperties
    */
-  ChoiceMessageProperties getMessageProperties();
+  ChoiceAdditionalProperties getMessageProperties();
 
   /**
    * Getting builder
@@ -80,7 +80,7 @@ public interface ChoiceMessage
      * @return Current builder
      * @see #getMessageProperties
      */
-    Builder setMessageProperties(ChoiceMessageProperties messageProperties);
+    Builder setMessageProperties(ChoiceAdditionalProperties messageProperties);
 
     /**
      * Create instance

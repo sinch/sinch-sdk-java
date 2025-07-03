@@ -12,9 +12,9 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.types.choice;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** ChoiceMessageProperties */
-@JsonDeserialize(builder = ChoiceMessagePropertiesImpl.Builder.class)
-public interface ChoiceMessageProperties {
+/** ChoiceAdditionalProperties */
+@JsonDeserialize(builder = ChoiceAdditionalPropertiesImpl.Builder.class)
+public interface ChoiceAdditionalProperties {
 
   /**
    * Optional. Sets the text for the footer of a WhatsApp reply button or URL button message.
@@ -30,7 +30,7 @@ public interface ChoiceMessageProperties {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ChoiceMessagePropertiesImpl.Builder();
+    return new ChoiceAdditionalPropertiesImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -50,6 +50,6 @@ public interface ChoiceMessageProperties {
      *
      * @return The instance build with current builder values
      */
-    ChoiceMessageProperties build();
+    ChoiceAdditionalProperties build();
   }
 }

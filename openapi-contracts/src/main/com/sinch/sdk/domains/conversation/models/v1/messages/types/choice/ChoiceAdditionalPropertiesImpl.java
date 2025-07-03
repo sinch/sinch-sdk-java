@@ -9,19 +9,19 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
-@JsonPropertyOrder({ChoiceMessagePropertiesImpl.JSON_PROPERTY_WHATSAPP_FOOTER})
+@JsonPropertyOrder({ChoiceAdditionalPropertiesImpl.JSON_PROPERTY_WHATSAPP_FOOTER})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class ChoiceMessagePropertiesImpl implements ChoiceMessageProperties {
+public class ChoiceAdditionalPropertiesImpl implements ChoiceAdditionalProperties {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_WHATSAPP_FOOTER = "whatsapp_footer";
 
   private OptionalValue<String> whatsappFooter;
 
-  public ChoiceMessagePropertiesImpl() {}
+  public ChoiceAdditionalPropertiesImpl() {}
 
-  protected ChoiceMessagePropertiesImpl(OptionalValue<String> whatsappFooter) {
+  protected ChoiceAdditionalPropertiesImpl(OptionalValue<String> whatsappFooter) {
     this.whatsappFooter = whatsappFooter;
   }
 
@@ -45,8 +45,8 @@ public class ChoiceMessagePropertiesImpl implements ChoiceMessageProperties {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ChoiceMessagePropertiesImpl choiceMessagePropertiesFieldMessageProperties =
-        (ChoiceMessagePropertiesImpl) o;
+    ChoiceAdditionalPropertiesImpl choiceMessagePropertiesFieldMessageProperties =
+        (ChoiceAdditionalPropertiesImpl) o;
     return Objects.equals(
         this.whatsappFooter, choiceMessagePropertiesFieldMessageProperties.whatsappFooter);
   }
@@ -59,7 +59,7 @@ public class ChoiceMessagePropertiesImpl implements ChoiceMessageProperties {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ChoiceMessagePropertiesImpl {\n");
+    sb.append("class ChoiceAdditionalPropertiesImpl {\n");
     sb.append("    whatsappFooter: ").append(toIndentedString(whatsappFooter)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -76,7 +76,7 @@ public class ChoiceMessagePropertiesImpl implements ChoiceMessageProperties {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements ChoiceMessageProperties.Builder {
+  static class Builder implements ChoiceAdditionalProperties.Builder {
     OptionalValue<String> whatsappFooter = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_WHATSAPP_FOOTER)
@@ -85,8 +85,8 @@ public class ChoiceMessagePropertiesImpl implements ChoiceMessageProperties {
       return this;
     }
 
-    public ChoiceMessageProperties build() {
-      return new ChoiceMessagePropertiesImpl(whatsappFooter);
+    public ChoiceAdditionalProperties build() {
+      return new ChoiceAdditionalPropertiesImpl(whatsappFooter);
     }
   }
 }

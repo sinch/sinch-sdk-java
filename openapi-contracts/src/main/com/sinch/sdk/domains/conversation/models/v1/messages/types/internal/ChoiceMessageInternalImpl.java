@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.Choice;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceMessageProperties;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceAdditionalProperties;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
 import java.util.List;
 import java.util.Objects;
@@ -33,14 +33,14 @@ public class ChoiceMessageInternalImpl implements ChoiceMessageInternal {
 
   public static final String JSON_PROPERTY_MESSAGE_PROPERTIES = "message_properties";
 
-  private OptionalValue<ChoiceMessageProperties> messageProperties;
+  private OptionalValue<ChoiceAdditionalProperties> messageProperties;
 
   public ChoiceMessageInternalImpl() {}
 
   protected ChoiceMessageInternalImpl(
       OptionalValue<List<Choice<?>>> choices,
       OptionalValue<TextMessage> textMessage,
-      OptionalValue<ChoiceMessageProperties> messageProperties) {
+      OptionalValue<ChoiceAdditionalProperties> messageProperties) {
     this.choices = choices;
     this.textMessage = textMessage;
     this.messageProperties = messageProperties;
@@ -69,13 +69,13 @@ public class ChoiceMessageInternalImpl implements ChoiceMessageInternal {
   }
 
   @JsonIgnore
-  public ChoiceMessageProperties getMessageProperties() {
+  public ChoiceAdditionalProperties getMessageProperties() {
     return messageProperties.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_MESSAGE_PROPERTIES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<ChoiceMessageProperties> messageProperties() {
+  public OptionalValue<ChoiceAdditionalProperties> messageProperties() {
     return messageProperties;
   }
 
@@ -124,7 +124,7 @@ public class ChoiceMessageInternalImpl implements ChoiceMessageInternal {
   static class Builder implements ChoiceMessageInternal.Builder {
     OptionalValue<List<Choice<?>>> choices = OptionalValue.empty();
     OptionalValue<TextMessage> textMessage = OptionalValue.empty();
-    OptionalValue<ChoiceMessageProperties> messageProperties = OptionalValue.empty();
+    OptionalValue<ChoiceAdditionalProperties> messageProperties = OptionalValue.empty();
 
     @JsonProperty(value = JSON_PROPERTY_CHOICES, required = true)
     public Builder setChoices(List<Choice<?>> choices) {
@@ -139,7 +139,7 @@ public class ChoiceMessageInternalImpl implements ChoiceMessageInternal {
     }
 
     @JsonProperty(JSON_PROPERTY_MESSAGE_PROPERTIES)
-    public Builder setMessageProperties(ChoiceMessageProperties messageProperties) {
+    public Builder setMessageProperties(ChoiceAdditionalProperties messageProperties) {
       this.messageProperties = OptionalValue.of(messageProperties);
       return this;
     }

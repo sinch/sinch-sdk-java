@@ -66,7 +66,7 @@ public class ChoiceMessageDtoTest extends ConversationBaseTest {
                       .setPostbackData("postback url_message data value")
                       .build()))
           .setMessageProperties(
-              ChoiceMessageProperties.builder().setWhatsappFooter("My whatsapp footer").build())
+              ChoiceAdditionalProperties.builder().setWhatsappFooter("My whatsapp footer").build())
           .build();
 
   @GivenTextResource("/domains/conversation/v1/messages/types/choice/ChoiceMessageDto.json")
