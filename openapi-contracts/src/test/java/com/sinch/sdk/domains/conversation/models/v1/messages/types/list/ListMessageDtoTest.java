@@ -36,7 +36,7 @@ public class ListMessageDtoTest extends ConversationBaseTest {
           .setMedia(MediaMessageDtoTest.mediaMessageDto)
           .build();
 
-  public static ListMessage listMessageChoiceWithWhatsappFooterDto =
+  public static ListMessage listMessageChoiceWithWhatsappHeaderDto =
       ListMessage.builder()
           .setTitle("a list message title value")
           .setDescription("description value")
@@ -84,44 +84,45 @@ public class ListMessageDtoTest extends ConversationBaseTest {
   String jsonListMessageProductDto;
 
   @Test
-  void serializeMessageChoiceDto() throws JsonProcessingException, JSONException {
+  void serializeListMessageChoiceDto() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(listMessageChoiceDto);
 
     JSONAssert.assertEquals(jsonListMessageChoiceDto, serializedString, true);
   }
 
   @Test
-  void deserializeMessageChoiceDto() throws JsonProcessingException {
+  void deserializeListMessageChoiceDto() throws JsonProcessingException {
     Object deserialized = objectMapper.readValue(jsonListMessageChoiceDto, ListMessage.class);
 
     TestHelpers.recursiveEquals(deserialized, listMessageChoiceDto);
   }
 
   @Test
-  void serializeMessageChoiceWithWhatsappFooterDto() throws JsonProcessingException, JSONException {
+  void serializeListMessageChoiceWithWhatsappHeaderDto()
+      throws JsonProcessingException, JSONException {
     String serializedString =
-        objectMapper.writeValueAsString(listMessageChoiceWithWhatsappFooterDto);
+        objectMapper.writeValueAsString(listMessageChoiceWithWhatsappHeaderDto);
 
     JSONAssert.assertEquals(jsonListMessageChoiceWithWhatsappHeaderDto, serializedString, true);
   }
 
   @Test
-  void deserializeMessageChoiceWithWhatsappFooterDto() throws JsonProcessingException {
+  void deserializeListMessageChoiceWithWhatsappHeaderDto() throws JsonProcessingException {
     Object deserialized =
         objectMapper.readValue(jsonListMessageChoiceWithWhatsappHeaderDto, ListMessage.class);
 
-    TestHelpers.recursiveEquals(deserialized, listMessageChoiceWithWhatsappFooterDto);
+    TestHelpers.recursiveEquals(deserialized, listMessageChoiceWithWhatsappHeaderDto);
   }
 
   @Test
-  void serializeMessageProductDto() throws JsonProcessingException, JSONException {
+  void serializeListMessageProductDto() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(listMessageProductDto);
 
     JSONAssert.assertEquals(jsonListMessageProductDto, serializedString, true);
   }
 
   @Test
-  void deserializeMessageProductDto() throws JsonProcessingException {
+  void deserializeListMessageProductDto() throws JsonProcessingException {
     Object deserialized = objectMapper.readValue(jsonListMessageProductDto, ListMessage.class);
 
     TestHelpers.recursiveEquals(deserialized, listMessageProductDto);
