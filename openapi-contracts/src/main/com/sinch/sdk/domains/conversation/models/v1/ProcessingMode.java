@@ -13,15 +13,16 @@ import java.util.stream.Stream;
 public class ProcessingMode extends EnumDynamic<String, ProcessingMode> {
 
   /**
-   * The default Processing Mode. Creates contacts and conversations automatically when a message is
-   * sent or received and there's no existing contact or active conversation.
+   * Creates contacts and conversations automatically when a message is sent or received and there's
+   * no existing contact or active conversation.
    */
   public static final ProcessingMode CONVERSATION = new ProcessingMode("CONVERSATION");
 
   /**
-   * Does not associate messages with contacts and conversations. This processing mode is mostly
-   * intended for unidirectional high volume SMS use cases. The lack of contacts and conversations
-   * limits some API features as related data won't be queryable in the <a
+   * The default Processing Mode. Does not associate messages with contacts and conversations. This
+   * processing mode is mostly intended for unidirectional high volume SMS use cases. The lack of
+   * contacts and conversations limits some API features as related data won't be queryable in the
+   * <a
    * href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/Contact/">Contact</a>
    * and <a
    * href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/Conversation/">Conversation</a>

@@ -12,6 +12,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.types.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.Choice;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceAdditionalProperties;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
 import java.util.List;
 
@@ -34,6 +35,13 @@ public interface ChoiceMessageInternal {
    * @return textMessage
    */
   TextMessage getTextMessage();
+
+  /**
+   * Get messageProperties
+   *
+   * @return messageProperties
+   */
+  ChoiceAdditionalProperties getMessageProperties();
 
   /**
    * Getting builder
@@ -64,6 +72,15 @@ public interface ChoiceMessageInternal {
      * @see #getTextMessage
      */
     Builder setTextMessage(TextMessage textMessage);
+
+    /**
+     * see getter
+     *
+     * @param messageProperties see getter
+     * @return Current builder
+     * @see #getMessageProperties
+     */
+    Builder setMessageProperties(ChoiceAdditionalProperties messageProperties);
 
     /**
      * Create instance
