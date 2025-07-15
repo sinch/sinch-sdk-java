@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.mailgun.models.v1.emails.request;
 
 import com.sinch.sdk.core.databind.annotation.FormSerialize;
 import com.sinch.sdk.core.databind.annotation.Property;
+import com.sinch.sdk.core.databind.annotation.Required;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.mailgun.api.v1.adapters.MapOfPairsToJSONHelper;
@@ -114,6 +115,7 @@ public class SendEmailHtmlInTemplateRequestImpl
     return to.orElse(null);
   }
 
+  @Required
   @Property(PROPERTY_TO)
   public OptionalValue<List<String>> to() {
     return to;
@@ -123,6 +125,7 @@ public class SendEmailHtmlInTemplateRequestImpl
     return from.orElse(null);
   }
 
+  @Required
   @Property(PROPERTY_FROM)
   public OptionalValue<String> from() {
     return from;
@@ -150,6 +153,7 @@ public class SendEmailHtmlInTemplateRequestImpl
     return subject.orElse(null);
   }
 
+  @Required
   @Property(PROPERTY_SUBJECT)
   public OptionalValue<String> subject() {
     return subject;

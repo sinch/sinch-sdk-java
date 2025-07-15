@@ -3,11 +3,11 @@ package com.sinch.sdk.core.databind.multipart;
 import com.sinch.sdk.core.databind.FormSerializer;
 import com.sinch.sdk.core.databind.annotation.FormSerialize;
 import com.sinch.sdk.core.databind.annotation.Property;
+import com.sinch.sdk.core.databind.annotation.Required;
 import com.sinch.sdk.core.exceptions.SerializationException;
 import com.sinch.sdk.core.models.AdditionalProperties;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.EnumDynamic;
-import com.sinch.sdk.core.utils.Pair;
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
@@ -35,7 +35,7 @@ public class ObjectMapper {
           InstantiationException {
 
     BeanInfo beanInfo = Introspector.getBeanInfo(value.getClass(), Object.class);
-    List<Pair<String, Method>> serializableProperties = collectSerializableProperties(beanInfo);
+    List<PropertyMetadata> serializableProperties = collectSerializableProperties(beanInfo);
     Map<String, Object> output = serializeProperties(serializableProperties, value);
     if (value instanceof AdditionalProperties) {
       serializeAdditionalProperties(
@@ -45,9 +45,9 @@ public class ObjectMapper {
     return output;
   }
 
-  private List<Pair<String, Method>> collectSerializableProperties(BeanInfo beanInfo) {
+  private List<PropertyMetadata> collectSerializableProperties(BeanInfo beanInfo) {
 
-    ArrayList<Pair<String, Method>> result = new ArrayList<>();
+    List<PropertyMetadata> result = new ArrayList<>();
     final MethodDescriptor[] methodDescriptors = beanInfo.getMethodDescriptors();
 
     for (MethodDescriptor methodDescriptor : methodDescriptors) {
@@ -57,13 +57,14 @@ public class ObjectMapper {
     return result;
   }
 
-  private Optional<Pair<String, Method>> getPropertyGetter(Method method) {
+  private Optional<PropertyMetadata> getPropertyGetter(Method method) {
 
     Property property = method.getDeclaredAnnotation(Property.class);
     if (null == property) {
       return Optional.empty();
     }
-    return Optional.of(new Pair<>(property.value(), method));
+    Required required = method.getDeclaredAnnotation(Required.class);
+    return Optional.of(new PropertyMetadata(property.value(), required != null, method));
   }
 
   private MethodDescriptor getAdditionalPropertiesGetter(BeanInfo beanInfo) {
@@ -78,11 +79,11 @@ public class ObjectMapper {
   }
 
   private Map<String, Object> serializeProperties(
-      List<Pair<String, Method>> serializableProperties, Object object)
+      List<PropertyMetadata> serializableProperties, Object object)
       throws InvocationTargetException, IllegalAccessException {
     Map<String, Object> out = new LinkedHashMap<>();
-    for (Pair<String, Method> property : serializableProperties) {
-      serializeProperty(object, property.getRight(), property.getLeft(), out);
+    for (PropertyMetadata property : serializableProperties) {
+      serializeProperty(object, property, out);
     }
     return out;
   }
@@ -105,12 +106,19 @@ public class ObjectMapper {
     output.putAll(propertyValue);
   }
 
-  private void serializeProperty(
-      Object object, Method method, String fieldName, Map<String, Object> out)
+  private void serializeProperty(Object object, PropertyMetadata property, Map<String, Object> out)
       throws InvocationTargetException, IllegalAccessException {
 
+    Method method = property.getGetter();
+    String fieldName = property.getName();
+    boolean required = property.getRequired();
+
     OptionalValue<?> propertyValue = (OptionalValue<?>) method.invoke(object);
-    if (!propertyValue.isPresent() || null == propertyValue.get()) {
+    boolean isPresent = propertyValue.isPresent();
+    if (required && !isPresent) {
+      throw new IllegalArgumentException(String.format("Missing required field '%s'", fieldName));
+    }
+    if (!isPresent || null == propertyValue.get()) {
       return;
     }
 
@@ -140,6 +148,30 @@ public class ObjectMapper {
       ctor.newInstance().serialize(in, fieldName, out);
     } catch (Exception e) {
       throw new SerializationException(e);
+    }
+  }
+
+  static class PropertyMetadata {
+    final String name;
+    final Boolean required;
+    final Method getter;
+
+    public PropertyMetadata(String name, Boolean required, Method getter) {
+      this.name = name;
+      this.required = required;
+      this.getter = getter;
+    }
+
+    public String getName() {
+      return name;
+    }
+
+    public Boolean getRequired() {
+      return Boolean.TRUE.equals(required);
+    }
+
+    public Method getGetter() {
+      return getter;
     }
   }
 }

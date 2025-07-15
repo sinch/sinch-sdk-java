@@ -1,9 +1,12 @@
 package com.sinch.sdk.core.databind.multipart;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.databind.FormSerializer;
 import com.sinch.sdk.core.databind.annotation.FormSerialize;
 import com.sinch.sdk.core.databind.annotation.Property;
+import com.sinch.sdk.core.databind.annotation.Required;
 import com.sinch.sdk.core.databind.multipart.ObjectMapperTest.SerializableObject.AnEnum;
 import com.sinch.sdk.core.models.AdditionalProperties;
 import com.sinch.sdk.core.models.OptionalValue;
@@ -11,7 +14,9 @@ import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import com.sinch.sdk.core.utils.databind.RFC822FormSerializer;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequestTest;
+import java.beans.IntrospectionException;
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -137,6 +142,41 @@ public class ObjectMapperTest {
         defaultAdditionalPropertiesSerialized);
   }
 
+  @Test
+  void requireFieldMissing() {
+    SerializableObjectWithRequiredProperty object =
+        new SerializableObjectWithRequiredProperty(OptionalValue.of("foo"), OptionalValue.empty());
+
+    Exception exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> serialized = new ObjectMapper().serialize(object));
+
+    String expectedMessage = "Missing required field 'aText2'";
+    String actualMessage = exception.getMessage();
+
+    Assertions.assertEquals(expectedMessage, actualMessage);
+  }
+
+  @Test
+  void requireFieldPresent()
+      throws IntrospectionException,
+          ClassNotFoundException,
+          InvocationTargetException,
+          IllegalAccessException,
+          NoSuchMethodException,
+          InstantiationException {
+
+    Map<String, Object> expected = fillMap("aText", "foo", "aText2", "foo2");
+
+    SerializableObjectWithRequiredProperty object =
+        new SerializableObjectWithRequiredProperty(
+            OptionalValue.of("foo"), OptionalValue.of("foo2"));
+
+    Map<String, Object> serialized = new ObjectMapper().serialize(object);
+    TestHelpers.recursiveEquals(serialized, expected);
+  }
+
   static class SerializableObject implements AdditionalProperties {
     public static final String PROPERTY_TEXT = "aText";
     public static final String PROPERTY_ENUM = "anEnum";
@@ -257,6 +297,31 @@ public class ObjectMapperTest {
       public static String valueOf(AnEnum e) {
         return ENUM_SUPPORT.valueOf(e);
       }
+    }
+  }
+
+  static class SerializableObjectWithRequiredProperty {
+    public static final String PROPERTY_TEXT = "aText";
+    public static final String PROPERTY_TEXT2 = "aText2";
+
+    private final OptionalValue<String> text;
+    private final OptionalValue<String> text2;
+
+    public SerializableObjectWithRequiredProperty(
+        OptionalValue<String> text, OptionalValue<String> text2) {
+      this.text = text;
+      this.text2 = text2;
+    }
+
+    @Property(PROPERTY_TEXT)
+    public OptionalValue<String> text() {
+      return text;
+    }
+
+    @Property(PROPERTY_TEXT2)
+    @Required
+    public OptionalValue<String> text2() {
+      return text2;
     }
   }
 
