@@ -217,24 +217,29 @@ public class SendEmailRequestTest extends BaseTest {
   @Test
   void serializeSendEmailHtmlInlineRequestRawRecipientVariables() {
 
+    String from = "myself";
+    String subject = "My subject";
+    String to = "foo@dest.com";
+    String recipientVariables = "{\"cc-dest@sinch.com\":{\"variable1\":\"value1\"}}";
+
     Object serialized =
         HttpMapper.getInstance()
             .serializeFormParameters(
                 Arrays.asList("multipart/form-data"),
                 SendEmailHtmlInlineRequest.builder()
-                    .setFrom("myself")
-                    .setSubject("My subject")
-                    .setTo(Collections.singletonList("foo@dest.com"))
-                    .setRecipientVariables("{\"cc-dest@sinch.com\":{\"variable1\":\"value1\"}}")
+                    .setFrom(from)
+                    .setSubject(subject)
+                    .setTo(Collections.singletonList(to))
+                    .setRecipientVariables(recipientVariables)
                     .build());
 
     TestHelpers.recursiveEquals(
         serialized,
         ObjectMapperTest.fillMap(
-            "from", "myself",
-            "subject", "My subject",
-            "to", Collections.singletonList("foo@dest.com"),
-            "recipient-variables", "{\"cc-dest@sinch.com\":{\"variable1\":\"value1\"}}"));
+            "from", from,
+            "subject", subject,
+            "to", Collections.singletonList(to),
+            "recipient-variables", recipientVariables));
   }
 
   @Test
@@ -250,28 +255,33 @@ public class SendEmailRequestTest extends BaseTest {
   @Test
   void serializeSendEmailHtmlInTemplateRequestRawVariables() {
 
+    String from = "myself";
+    String subject = "My subject";
+    String to = "foo@dest.com";
+    String variables = "{\"key\":\"value\"}";
+
     Object serialized =
         HttpMapper.getInstance()
             .serializeFormParameters(
                 Arrays.asList("multipart/form-data"),
                 SendEmailHtmlInTemplateRequest.builder()
-                    .setFrom("myself")
-                    .setSubject("My subject")
-                    .setTo(Collections.singletonList("foo@dest.com"))
+                    .setFrom(from)
+                    .setSubject(subject)
+                    .setTo(Collections.singletonList(to))
                     .setTemplateProperties(
-                        TemplateProperties.builder().setVariables("{\"key\":\"value\"}").build())
+                        TemplateProperties.builder().setVariables(variables).build())
                     .build());
 
     TestHelpers.recursiveEquals(
         serialized,
         ObjectMapperTest.fillMap(
             "from",
-            "myself",
+            from,
             "subject",
-            "My subject",
+            subject,
             "to",
-            Collections.singletonList("foo@dest.com"),
+            Collections.singletonList(to),
             "t:variables",
-            "{\"key\":\"value\"}"));
+            variables));
   }
 }

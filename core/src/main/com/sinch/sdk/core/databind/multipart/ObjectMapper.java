@@ -47,7 +47,7 @@ public class ObjectMapper {
 
   private List<PropertyMetadata> collectSerializableProperties(BeanInfo beanInfo) {
 
-    ArrayList<PropertyMetadata> result = new ArrayList<>();
+    List<PropertyMetadata> result = new ArrayList<>();
     final MethodDescriptor[] methodDescriptors = beanInfo.getMethodDescriptors();
 
     for (MethodDescriptor methodDescriptor : methodDescriptors) {
