@@ -343,6 +343,8 @@
                                 <include>com.sinch.sdk.e2e.domains.sms.v1.SmsIT</include>
                                 <include>com.sinch.sdk.e2e.domains.voice.v0.VoiceIT</include>
                                 <include>com.sinch.sdk.e2e.domains.voice.v1.VoiceIT</include>
+                                <include>com.sinch.sdk.e2e.domains.verification.v0.VerificationIT</include>
+                                <include>com.sinch.sdk.e2e.domains.verification.v1.VerificationIT</include>
                             </includes>
                         </configuration>
 
