@@ -30,7 +30,6 @@ public class ReportSteps {
   @Given("^the Verification service \"Report\" is available$")
   public void serviceAvailable() {
     service = Config.getSinchClient().verification().verifications();
-    ;
   }
 
   @When(
