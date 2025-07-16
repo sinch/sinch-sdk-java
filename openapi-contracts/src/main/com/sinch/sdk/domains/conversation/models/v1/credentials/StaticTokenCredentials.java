@@ -19,6 +19,8 @@ public interface StaticTokenCredentials extends ChannelCredentials {
   /**
    * The static token for the channel.
    *
+   * <p>Field is required
+   *
    * @return token
    */
   String getToken();

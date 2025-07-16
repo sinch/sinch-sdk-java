@@ -48,6 +48,8 @@ public interface VerificationReportRequestSms
   /**
    * The code which was received by the user submitting the SMS verification.
    *
+   * <p>Field is required
+   *
    * @return code
    */
   String getCode();

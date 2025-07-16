@@ -1,0 +1,25 @@
+{
+  "phoneNumber": "+17608137700",
+  "displayName": "Validate emergency address",
+  "validatedAddress": {
+    "streetNumber": "3500",
+    "streetInfo": "Lenox Road NE",
+    "location": "",
+    "city": "Atlanta",
+    "state": "GA",
+    "postalCode": "30326",
+    "postalCodePlusFour": ""
+  },
+  "validationResult": "NEAR_MATCH",
+  "validationMessage": "Corrected to valid address|Corrected address abbreviations",
+  "correctedAddress": {
+    "streetNumber": "3500",
+    "streetInfo": "Lenox Rd NE",
+    "location": "a location",
+    "city": "Atlanta",
+    "state": "GA",
+    "postalCode": "30326",
+    "postalCodePlusFour": "4228"
+  },
+  "candidateAddresses": []
+}

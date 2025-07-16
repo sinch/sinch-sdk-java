@@ -22,12 +22,16 @@ public interface KakaoTalkCredentials extends ChannelCredentials {
   /**
    * KakaoTalk Business Channel ID.
    *
+   * <p>Field is required
+   *
    * @return kakaotalkPlusFriendId
    */
   String getKakaotalkPlusFriendId();
 
   /**
    * KakaoTalk Sender Key.
+   *
+   * <p>Field is required
    *
    * @return kakaotalkSenderKey
    */

@@ -65,11 +65,13 @@ public class DeliveryReportsServiceImpl
     this.servicePlanId = servicePlanId;
   }
 
+  @Override
   public BatchDeliveryReport get(String batchId) throws ApiException {
 
-    return get(batchId, null);
+    return get(batchId, (BatchDeliveryReportQueryParameters) null);
   }
 
+  @Override
   public BatchDeliveryReport get(String batchId, BatchDeliveryReportQueryParameters queryParameter)
       throws ApiException {
 
@@ -151,6 +153,7 @@ public class DeliveryReportsServiceImpl
         localVarAuthNames);
   }
 
+  @Override
   public RecipientDeliveryReport getForNumber(String batchId, String recipientMsisdn)
       throws ApiException {
 
@@ -231,11 +234,13 @@ public class DeliveryReportsServiceImpl
         localVarAuthNames);
   }
 
+  @Override
   public ListDeliveryReportsResponse list() throws ApiException {
 
-    return list(null);
+    return list((ListDeliveryReportsQueryParameters) null);
   }
 
+  @Override
   public ListDeliveryReportsResponse list(ListDeliveryReportsQueryParameters queryParameter)
       throws ApiException {
 

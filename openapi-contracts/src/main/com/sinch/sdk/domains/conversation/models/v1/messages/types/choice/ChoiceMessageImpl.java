@@ -87,6 +87,24 @@ public class ChoiceMessageImpl
         : OptionalValue.empty();
   }
 
+  @JsonIgnore
+  public ChoiceAdditionalProperties getMessageProperties() {
+    if (null == choiceMessage
+        || !choiceMessage.isPresent()
+        || null == choiceMessage.get().getMessageProperties()) {
+      return null;
+    }
+    return choiceMessage.get().getMessageProperties();
+  }
+
+  public OptionalValue<ChoiceAdditionalProperties> messageProperties() {
+    return null != choiceMessage && choiceMessage.isPresent()
+        ? choiceMessage
+            .map(f -> ((ChoiceMessageInternalImpl) f).messageProperties())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
+  }
+
   /** Return true if this ChoiceMessageField object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -145,6 +163,12 @@ public class ChoiceMessageImpl
     @JsonIgnore
     public Builder setTextMessage(TextMessage textMessage) {
       getDelegatedBuilder().setTextMessage(textMessage);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setMessageProperties(ChoiceAdditionalProperties messageProperties) {
+      getDelegatedBuilder().setMessageProperties(messageProperties);
       return this;
     }
 

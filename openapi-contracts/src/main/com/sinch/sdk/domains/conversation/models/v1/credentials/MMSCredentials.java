@@ -22,12 +22,16 @@ public interface MMSCredentials extends ChannelCredentials {
   /**
    * MMS Account ID.
    *
+   * <p>Field is required
+   *
    * @return accountId
    */
   String getAccountId();
 
   /**
    * MMS API Key.
+   *
+   * <p>Field is required
    *
    * @return apiKey
    */

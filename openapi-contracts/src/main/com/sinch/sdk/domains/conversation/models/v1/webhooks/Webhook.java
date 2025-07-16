@@ -51,6 +51,8 @@ public interface Webhook {
    * The target url where events should be sent to. Maximum URL length is 742. The
    * conversation-api.*.sinch.com subdomains are forbidden.
    *
+   * <p>Field is required
+   *
    * @return target
    */
   String getTarget();

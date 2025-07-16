@@ -18,7 +18,9 @@ import com.sinch.sdk.domains.mailgun.models.v1.templates.Template;
 public interface CreateResponseInternal {
 
   /**
-   * Get message
+   * Response message
+   *
+   * <p>Field is required
    *
    * @return message
    */
@@ -26,6 +28,8 @@ public interface CreateResponseInternal {
 
   /**
    * Get template
+   *
+   * <p>Field is required
    *
    * @return template
    */

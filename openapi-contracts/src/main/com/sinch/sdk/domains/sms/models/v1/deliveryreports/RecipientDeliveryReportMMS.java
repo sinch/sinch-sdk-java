@@ -30,12 +30,16 @@ public interface RecipientDeliveryReportMMS extends RecipientDeliveryReport {
    * href="https://en.wikipedia.org/wiki/ISO_8601">ISO-8601</a>: <code>YYYY-MM-DDThh:mm:ss.SSSZ
    * </code>.
    *
+   * <p>Field is required
+   *
    * @return createdAt
    */
   Instant getCreatedAt();
 
   /**
    * The ID of the batch this delivery report belongs to
+   *
+   * <p>Field is required
    *
    * @return batchId
    * @readOnly <em>This field is returned by the server and cannot be modified</em>
@@ -54,6 +58,8 @@ public interface RecipientDeliveryReportMMS extends RecipientDeliveryReport {
    * The detailed <a
    * href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/section/Delivery-report-error-codes">status
    * code</a>.
+   *
+   * <p>Field is required
    *
    * @return code
    */
@@ -94,12 +100,16 @@ public interface RecipientDeliveryReportMMS extends RecipientDeliveryReport {
   /**
    * Phone number that was queried.
    *
+   * <p>Field is required
+   *
    * @return recipient
    */
   String getRecipient();
 
   /**
    * Get status
+   *
+   * <p>Field is required
    *
    * @return status
    */

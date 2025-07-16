@@ -21,8 +21,21 @@ import com.sinch.sdk.domains.mailgun.models.v1.emails.response.SendingQueuesStat
 public interface EmailsService {
 
   /**
-   * Retrieve a stored email Event(s) created from sending an email with Mailgun will contain a
-   * &#x60;storage.key&#x60; to use to retrieve the email.
+   * Get messages queue status
+   *
+   * <p>Provides default and scheduled message queue information.
+   *
+   * @param name The name of the domain you want get sending queues from (required)
+   * @return SendingQueuesStatusResponse
+   * @throws ApiException if fails to make API call
+   */
+  SendingQueuesStatusResponse getSendingQueuesStatus(String name) throws ApiException;
+
+  /**
+   * Retrieve a stored email
+   *
+   * <p>Event(s) created from sending an email with Mailgun will contain a &#x60;storage.key&#x60;
+   * to use to retrieve the email.
    *
    * @param domainName Domain name that was used to send the email (required)
    * @param storageKey Storage key from the emails associated events (required)
@@ -32,19 +45,12 @@ public interface EmailsService {
   GetStoredEmailResponse getStoredEmail(String domainName, String storageKey) throws ApiException;
 
   /**
-   * Get messages queue status Provides default and scheduled message queue information.
+   * Send an email
    *
-   * @param name The name of the domain you want get sending queues from (required)
-   * @return SendingQueuesStatusResponse
-   * @throws ApiException if fails to make API call
-   */
-  SendingQueuesStatusResponse getSendingQueuesStatus(String name) throws ApiException;
-
-  /**
-   * Send an email Pass the components of the messages such as To, From, Subject, HTML and text
-   * parts, attachments, etc. Mailgun will build a MIME representation of the message and send it.
-   * Note: In order to send you must provide one of the following parameters: &#39;text&#39;,
-   * &#39;html&#39;, &#39;amp-html&#39; or &#39;template&#39;
+   * <p>Pass the components of the messages such as To, From, Subject, HTML and text parts,
+   * attachments, etc. Mailgun will build a MIME representation of the message and send it. Note: In
+   * order to send you must provide one of the following parameters: &#39;text&#39;, &#39;html&#39;,
+   * &#39;amp-html&#39; or &#39;template&#39;
    *
    * @param domainName Domain name used to send the message (required)
    * @param requestParameters Request parameters
@@ -55,8 +61,10 @@ public interface EmailsService {
       throws ApiException;
 
   /**
-   * Send an email in MIME format Build a MIME string yourself using a MIME library for your
-   * programming language and submit it to Mailgun.
+   * Send an email in MIME format
+   *
+   * <p>Build a MIME string yourself using a MIME library for your programming language and submit
+   * it to Mailgun.
    *
    * @param domainName Domain name used to send the message (required)
    * @param requestParameters Request parameters

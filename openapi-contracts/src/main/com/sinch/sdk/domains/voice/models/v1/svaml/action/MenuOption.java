@@ -28,6 +28,8 @@ public interface MenuOption {
   /**
    * A DTMF digit the user can press to trigger the configured action.
    *
+   * <p>Field is required
+   *
    * @return dtmf
    */
   DualToneMultiFrequency getDtmf();
@@ -37,6 +39,8 @@ public interface MenuOption {
    * accepted: - If you want to navigate to another menu, use <code>menu(value)</code>. - If you
    * want to perform another behavior you have coded in your application, use <code>return (value)
    * </code>, where <code>(value)</code> is the name of the method you want to execute.
+   *
+   * <p>Field is required
    *
    * @return action
    */

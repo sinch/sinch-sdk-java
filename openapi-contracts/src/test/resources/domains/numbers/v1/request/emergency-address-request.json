@@ -1,0 +1,12 @@
+{
+  "displayName": "a display",
+  "address": {
+    "streetNumber": "3500",
+    "streetInfo": "Lenox Rd NE",
+    "location": "a location",
+    "city": "Atlanta",
+    "state": "GA",
+    "postalCode": "30326",
+    "postalCodePlusFour": "4228"
+  }
+}

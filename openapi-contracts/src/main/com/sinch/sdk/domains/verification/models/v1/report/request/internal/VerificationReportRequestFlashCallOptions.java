@@ -19,6 +19,8 @@ public interface VerificationReportRequestFlashCallOptions {
   /**
    * The caller ID of the flash call.
    *
+   * <p>Field is required
+   *
    * @return cli
    */
   String getCli();

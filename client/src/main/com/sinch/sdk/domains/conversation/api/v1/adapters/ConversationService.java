@@ -29,7 +29,6 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.Card
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ChoiceMessageMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ListMessageInternalMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.template.TemplateMessageMapper;
-import com.sinch.sdk.domains.conversation.templates.models.v2.TemplateTranslationMapper;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
@@ -173,6 +172,17 @@ public class ConversationService
         StringUtil.requireNonEmpty(
             context.getUrl(), "Conversation service requires 'url' to be defined");
 
+        // To be deprecated with 2.0: no more defaulting to US region
+        if (Boolean.TRUE == context.regionAsDefault()) {
+          LOGGER.warning(
+              String.format(
+                  "Using default region for Conversation '%s'. This default fallback will be"
+                      + " removed in next major release and will cause a runtime error. Please"
+                      + " configure the region you want to be used (see"
+                      + " https://www.javadoc.io/static/com.sinch.sdk/sinch-sdk-java/1.6.0/com/sinch/sdk/models/Configuration.Builder.html#setConversationRegion(com.sinch.sdk.models.ConversationRegion))",
+                  context.getRegion()));
+        }
+
         OAuthManager authManager =
             new OAuthManager(
                 credentials, oAuthServer, HttpMapper.getInstance(), httpClientSupplier);
@@ -211,7 +221,6 @@ public class ConversationService
       RecipientMapper.initMapper();
       SendMessageRequestMapper.initMapper();
       TemplateMessageMapper.initMapper();
-      TemplateTranslationMapper.initMapper();
       WhatsAppInteractiveHeaderMapper.initMapper();
     }
 

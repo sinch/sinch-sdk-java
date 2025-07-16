@@ -34,12 +34,16 @@ public interface CreateConversationRequest {
   /**
    * The ID of the participating app.
    *
+   * <p>Field is required
+   *
    * @return appId
    */
   String getAppId();
 
   /**
    * The ID of the participating contact.
+   *
+   * <p>Field is required
    *
    * @return contactId
    */

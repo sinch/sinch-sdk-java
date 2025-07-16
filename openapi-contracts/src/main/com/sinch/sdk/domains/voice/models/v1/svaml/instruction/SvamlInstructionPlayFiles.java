@@ -53,6 +53,8 @@ public interface SvamlInstructionPlayFiles
    * The IDs of the files which will be played. These can be a URL to a file, SSML commands using
    * the <code>#ssml[]</code> element, or text using the <code>#tts[]</code> element.
    *
+   * <p>Field is required
+   *
    * @return ids
    */
   List<String> getIds();

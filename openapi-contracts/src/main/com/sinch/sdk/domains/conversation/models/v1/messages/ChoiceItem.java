@@ -21,6 +21,8 @@ public interface ChoiceItem
   /**
    * Required parameter. Title for the choice item.
    *
+   * <p>Field is required
+   *
    * @return title
    */
   String getTitle();

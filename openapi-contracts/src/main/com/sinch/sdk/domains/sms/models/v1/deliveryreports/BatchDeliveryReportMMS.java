@@ -20,6 +20,8 @@ public interface BatchDeliveryReportMMS extends BatchDeliveryReport {
   /**
    * The ID of the batch this delivery report belongs to.
    *
+   * <p>Field is required
+   *
    * @return batchId
    * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
@@ -36,6 +38,8 @@ public interface BatchDeliveryReportMMS extends BatchDeliveryReport {
   /**
    * Array with status objects. Only status codes with at least one recipient will be listed.
    *
+   * <p>Field is required
+   *
    * @return statuses
    */
   List<MessageDeliveryStatus> getStatuses();
@@ -44,6 +48,8 @@ public interface BatchDeliveryReportMMS extends BatchDeliveryReport {
    * The total number of messages in the batch.
    *
    * <p>minimum: 0
+   *
+   * <p>Field is required
    *
    * @return totalMessageCount
    */

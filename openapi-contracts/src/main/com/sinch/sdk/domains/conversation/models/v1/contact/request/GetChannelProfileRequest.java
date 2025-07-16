@@ -20,12 +20,16 @@ public interface GetChannelProfileRequest {
   /**
    * The ID of the app.
    *
+   * <p>Field is required
+   *
    * @return appId
    */
   String getAppId();
 
   /**
-   * Identifies the recipient.
+   * Get recipient
+   *
+   * <p>Field is required
    *
    * @return recipient
    */
@@ -33,6 +37,8 @@ public interface GetChannelProfileRequest {
 
   /**
    * Get channel
+   *
+   * <p>Field is required
    *
    * @return channel
    */

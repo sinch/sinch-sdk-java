@@ -19,6 +19,8 @@ public interface TextMessageInternal {
   /**
    * The text to be sent.
    *
+   * <p>Field is required
+   *
    * @return text
    */
   String getText();

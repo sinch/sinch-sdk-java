@@ -7,7 +7,10 @@ import java.util.stream.Stream;
 
 /**
  * The provisioning status. It will be either <code>WAITING</code>, <code>IN_PROGRESS</code> or
- * <code>FAILED</code>. If the provisioning fails, a reason for the failure will be provided.
+ * <code>FAILED</code>. If the provisioning fails, a reason for the failure will be provided. [See a
+ * full list of provisioning error
+ * descriptions]&lt;(https://developers.sinch.com/docs/numbers/api-reference/error-codes/provisioning-errors)
+ * and troubleshooting recommendations.
  */
 public class ProvisioningStatus extends EnumDynamic<String, ProvisioningStatus> {
 
@@ -15,13 +18,17 @@ public class ProvisioningStatus extends EnumDynamic<String, ProvisioningStatus> 
   public static final ProvisioningStatus PROVISIONING_STATUS_UNSPECIFIED =
       new ProvisioningStatus("PROVISIONING_STATUS_UNSPECIFIED");
 
-  /** Waiting to be provisioned. */
+  /** Waiting for provisioning */
   public static final ProvisioningStatus WAITING = new ProvisioningStatus("WAITING");
 
-  /** Provisioning in progress. */
+  /** Provisioning in progress */
   public static final ProvisioningStatus IN_PROGRESS = new ProvisioningStatus("IN_PROGRESS");
 
-  /** Provisioning has failed. */
+  /**
+   * Provisioning failed. See <a
+   * href="https://developers.sinch.com/docs/numbers/api-reference/error-codes/provisioning-errors">provisioning
+   * error descriptions</a>
+   */
   public static final ProvisioningStatus FAILED = new ProvisioningStatus("FAILED");
 
   private static final EnumSupportDynamic<String, ProvisioningStatus> ENUM_SUPPORT =

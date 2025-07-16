@@ -22,6 +22,8 @@ public interface MessageDeliveryStatus {
    * href="/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/section/Delivery-report-error-codes">status
    * code</a>.
    *
+   * <p>Field is required
+   *
    * @return code
    */
   DeliveryReceiptErrorCode getCode();
@@ -30,6 +32,8 @@ public interface MessageDeliveryStatus {
    * The number of messages that currently has this code.
    *
    * <p>minimum: 1
+   *
+   * <p>Field is required
    *
    * @return count
    */
@@ -45,6 +49,8 @@ public interface MessageDeliveryStatus {
 
   /**
    * Get status
+   *
+   * <p>Field is required
    *
    * @return status
    */

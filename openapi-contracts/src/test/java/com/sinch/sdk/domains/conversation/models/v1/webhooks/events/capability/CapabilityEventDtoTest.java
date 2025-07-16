@@ -37,7 +37,7 @@ public class CapabilityEventDtoTest extends ConversationBaseTest {
                           .setCapabilityStatus(CapabilityStatusEnum.CAPABILITY_PARTIAL)
                           .setRequestId("request id value")
                           .setChannelCapabilities(Arrays.asList("capability value"))
-                          .setReason(ReasonDtoTest.expectedDto)
+                          .setReason(ReasonDtoTest.expectedWithChannelCodeDto)
                           .build())
                   .build());
 

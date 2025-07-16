@@ -32,6 +32,8 @@ public interface DestinationSip
   /**
    * For type <code>sip</code> the value is the SIP address for a SIP endpoint.
    *
+   * <p>Field is required
+   *
    * @return endpoint
    */
   String getEndpoint();

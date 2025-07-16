@@ -48,12 +48,16 @@ public interface OrderDetailsPayment {
   /**
    * The country/currency associated with the payment message.
    *
+   * <p>Field is required
+   *
    * @return type
    */
   TypeEnum getType();
 
   /**
    * Unique reference ID.
+   *
+   * <p>Field is required
    *
    * @return referenceId
    */
@@ -90,6 +94,8 @@ public interface OrderDetailsPayment {
   /**
    * The type of good associated with this order.
    *
+   * <p>Field is required
+   *
    * @return typeOfGoods
    */
   TypeOfGoodsEnum getTypeOfGoods();
@@ -104,12 +110,16 @@ public interface OrderDetailsPayment {
   /**
    * Integer representing the total amount of the transaction.
    *
+   * <p>Field is required
+   *
    * @return totalAmountValue
    */
   Integer getTotalAmountValue();
 
   /**
    * Get order
+   *
+   * <p>Field is required
    *
    * @return order
    */

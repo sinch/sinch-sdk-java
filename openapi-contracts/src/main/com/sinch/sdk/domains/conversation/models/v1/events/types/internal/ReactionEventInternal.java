@@ -27,6 +27,8 @@ public interface ReactionEventInternal {
    * Indicates that an emoji reaction was placed on a message. This value is the string
    * representation of the emoji. For example: &quot;&amp;#2764&amp;#FE0F&quot;
    *
+   * <p>Field is required
+   *
    * @return emoji
    */
   String getEmoji();
@@ -34,12 +36,16 @@ public interface ReactionEventInternal {
   /**
    * Get action
    *
+   * <p>Field is required
+   *
    * @return action
    */
   ReactionAction getAction();
 
   /**
    * The ID of the MT message that this reaction is associated with.
+   *
+   * <p>Field is required
    *
    * @return messageId
    */

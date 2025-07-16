@@ -8,13 +8,15 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.Choice;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceAdditionalProperties;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
 import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
   ChoiceMessageInternalImpl.JSON_PROPERTY_CHOICES,
-  ChoiceMessageInternalImpl.JSON_PROPERTY_TEXT_MESSAGE
+  ChoiceMessageInternalImpl.JSON_PROPERTY_TEXT_MESSAGE,
+  ChoiceMessageInternalImpl.JSON_PROPERTY_MESSAGE_PROPERTIES
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
@@ -29,12 +31,19 @@ public class ChoiceMessageInternalImpl implements ChoiceMessageInternal {
 
   private OptionalValue<TextMessage> textMessage;
 
+  public static final String JSON_PROPERTY_MESSAGE_PROPERTIES = "message_properties";
+
+  private OptionalValue<ChoiceAdditionalProperties> messageProperties;
+
   public ChoiceMessageInternalImpl() {}
 
   protected ChoiceMessageInternalImpl(
-      OptionalValue<List<Choice<?>>> choices, OptionalValue<TextMessage> textMessage) {
+      OptionalValue<List<Choice<?>>> choices,
+      OptionalValue<TextMessage> textMessage,
+      OptionalValue<ChoiceAdditionalProperties> messageProperties) {
     this.choices = choices;
     this.textMessage = textMessage;
+    this.messageProperties = messageProperties;
   }
 
   @JsonIgnore
@@ -59,6 +68,17 @@ public class ChoiceMessageInternalImpl implements ChoiceMessageInternal {
     return textMessage;
   }
 
+  @JsonIgnore
+  public ChoiceAdditionalProperties getMessageProperties() {
+    return messageProperties.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_MESSAGE_PROPERTIES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<ChoiceAdditionalProperties> messageProperties() {
+    return messageProperties;
+  }
+
   /** Return true if this Choice_Message object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -70,12 +90,13 @@ public class ChoiceMessageInternalImpl implements ChoiceMessageInternal {
     }
     ChoiceMessageInternalImpl choiceMessage = (ChoiceMessageInternalImpl) o;
     return Objects.equals(this.choices, choiceMessage.choices)
-        && Objects.equals(this.textMessage, choiceMessage.textMessage);
+        && Objects.equals(this.textMessage, choiceMessage.textMessage)
+        && Objects.equals(this.messageProperties, choiceMessage.messageProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(choices, textMessage);
+    return Objects.hash(choices, textMessage, messageProperties);
   }
 
   @Override
@@ -84,6 +105,7 @@ public class ChoiceMessageInternalImpl implements ChoiceMessageInternal {
     sb.append("class ChoiceMessageInternalImpl {\n");
     sb.append("    choices: ").append(toIndentedString(choices)).append("\n");
     sb.append("    textMessage: ").append(toIndentedString(textMessage)).append("\n");
+    sb.append("    messageProperties: ").append(toIndentedString(messageProperties)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -102,6 +124,7 @@ public class ChoiceMessageInternalImpl implements ChoiceMessageInternal {
   static class Builder implements ChoiceMessageInternal.Builder {
     OptionalValue<List<Choice<?>>> choices = OptionalValue.empty();
     OptionalValue<TextMessage> textMessage = OptionalValue.empty();
+    OptionalValue<ChoiceAdditionalProperties> messageProperties = OptionalValue.empty();
 
     @JsonProperty(value = JSON_PROPERTY_CHOICES, required = true)
     public Builder setChoices(List<Choice<?>> choices) {
@@ -115,8 +138,14 @@ public class ChoiceMessageInternalImpl implements ChoiceMessageInternal {
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_MESSAGE_PROPERTIES)
+    public Builder setMessageProperties(ChoiceAdditionalProperties messageProperties) {
+      this.messageProperties = OptionalValue.of(messageProperties);
+      return this;
+    }
+
     public ChoiceMessageInternal build() {
-      return new ChoiceMessageInternalImpl(choices, textMessage);
+      return new ChoiceMessageInternalImpl(choices, textMessage, messageProperties);
     }
   }
 }

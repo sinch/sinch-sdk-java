@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.mailgun.models.v1.templates.request;
 
 import com.sinch.sdk.core.databind.annotation.FormSerialize;
 import com.sinch.sdk.core.databind.annotation.Property;
+import com.sinch.sdk.core.databind.annotation.Required;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.Pair;
 import java.util.Collection;
@@ -63,6 +64,7 @@ public class CreateTemplateWithVersionRequestImpl
     return name.orElse(null);
   }
 
+  @Required
   @Property(PROPERTY_NAME)
   public OptionalValue<String> name() {
     return name;

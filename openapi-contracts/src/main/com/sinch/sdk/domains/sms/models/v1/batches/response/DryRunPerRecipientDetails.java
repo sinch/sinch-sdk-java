@@ -33,6 +33,8 @@ public interface DryRunPerRecipientDetails {
   /**
    * Sender number. Required if Automatic Default Originator not configured.
    *
+   * <p>Field is required
+   *
    * @return recipient
    */
   String getRecipient();
@@ -40,12 +42,16 @@ public interface DryRunPerRecipientDetails {
   /**
    * Get body
    *
+   * <p>Field is required
+   *
    * @return body
    */
   String getBody();
 
   /**
    * Get numberOfParts
+   *
+   * <p>Field is required
    *
    * @return numberOfParts
    */
@@ -79,6 +85,8 @@ public interface DryRunPerRecipientDetails {
 
   /**
    * Get encodingEnum
+   *
+   * <p>Field is required
    *
    * @return encodingEnum
    */

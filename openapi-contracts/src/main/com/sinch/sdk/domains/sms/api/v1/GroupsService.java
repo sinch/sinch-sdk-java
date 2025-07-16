@@ -22,14 +22,16 @@ import java.util.List;
 public interface GroupsService {
 
   /**
-   * Create a group This endpoint allows you to create a group of recipients. A new group must be
-   * created with a group name. This is represented by the &#x60;name&#x60; field which can be up to
-   * 20 charecters. In addition, there are a number of optional fields: - &#x60;members&#x60; field
-   * enables groups to be created with an initial list of contacts - &#x60;auto_update&#x60; allows
-   * customers to auto subscribe to a new group. This contains three fields. The &#x60;to&#x60;
-   * field contains the group creator&#39;s number. (This number **must be provisioned by contacting
-   * your account manager**.) The &#x60;add&#x60; and &#x60;remove&#x60; fields are objects
-   * containing the keywords that customers need to text to join or leave a group.
+   * Create a group
+   *
+   * <p>This endpoint allows you to create a group of recipients. A new group must be created with a
+   * group name. This is represented by the &#x60;name&#x60; field which can be up to 20 charecters.
+   * In addition, there are a number of optional fields: - &#x60;members&#x60; field enables groups
+   * to be created with an initial list of contacts - &#x60;auto_update&#x60; allows customers to
+   * auto subscribe to a new group. This contains three fields. The &#x60;to&#x60; field contains
+   * the group creator&#39;s number. (This number **must be provisioned by contacting your account
+   * manager**.) The &#x60;add&#x60; and &#x60;remove&#x60; fields are objects containing the
+   * keywords that customers need to text to join or leave a group.
    *
    * @param groupRequest (required)
    * @return Group
@@ -38,7 +40,9 @@ public interface GroupsService {
   Group create(GroupRequest groupRequest) throws ApiException;
 
   /**
-   * Delete a group This operation deletes the group with the provided group ID.
+   * Delete a group
+   *
+   * <p>This operation deletes the group with the provided group ID.
    *
    * @param groupId ID of a group that you are interested in getting. (required)
    * @throws ApiException if fails to make API call
@@ -46,19 +50,21 @@ public interface GroupsService {
   void delete(String groupId) throws ApiException;
 
   /**
-   * Get phone numbers for a group This operation retrieves the members of the group with the
-   * provided group ID.
+   * Retrieve a group
+   *
+   * <p>This operation retrieves a specific group with the provided group ID.
    *
    * @param groupId ID of a group that you are interested in getting. (required)
-   * @return List&lt;String&gt;
+   * @return Group
    * @throws ApiException if fails to make API call
    */
-  List<String> listMembers(String groupId) throws ApiException;
+  Group get(String groupId) throws ApiException;
 
   /**
-   * List Groups (using default parameters) With the list operation you can list all groups that you
-   * have created. This operation supports pagination. Groups are returned in reverse chronological
-   * order.
+   * List Groups (using default parameters)
+   *
+   * <p>With the list operation you can list all groups that you have created. This operation
+   * supports pagination. Groups are returned in reverse chronological order.
    *
    * @return ListGroupsResponse
    * @throws ApiException if fails to make API call
@@ -66,8 +72,10 @@ public interface GroupsService {
   ListGroupsResponse list() throws ApiException;
 
   /**
-   * List Groups With the list operation you can list all groups that you have created. This
-   * operation supports pagination. Groups are returned in reverse chronological order.
+   * List Groups
+   *
+   * <p>With the list operation you can list all groups that you have created. This operation
+   * supports pagination. Groups are returned in reverse chronological order.
    *
    * @param queryParameter (optional)
    * @return ListGroupsResponse
@@ -76,9 +84,22 @@ public interface GroupsService {
   ListGroupsResponse list(ListGroupsQueryParameters queryParameter) throws ApiException;
 
   /**
-   * Replace a group The replace operation will replace all parameters, including members, of an
-   * existing group with new values. Replacing a group targeted by a batch message scheduled in the
-   * future is allowed and changes will be reflected when the batch is sent.
+   * Get phone numbers for a group
+   *
+   * <p>This operation retrieves the members of the group with the provided group ID.
+   *
+   * @param groupId ID of a group that you are interested in getting. (required)
+   * @return List&lt;String&gt;
+   * @throws ApiException if fails to make API call
+   */
+  List<String> listMembers(String groupId) throws ApiException;
+
+  /**
+   * Replace a group
+   *
+   * <p>The replace operation will replace all parameters, including members, of an existing group
+   * with new values. Replacing a group targeted by a batch message scheduled in the future is
+   * allowed and changes will be reflected when the batch is sent.
    *
    * @param groupId ID of a group that you are interested in getting. (required)
    * @param groupRequest (required)
@@ -88,19 +109,12 @@ public interface GroupsService {
   Group replace(String groupId, GroupRequest groupRequest) throws ApiException;
 
   /**
-   * Retrieve a group This operation retrieves a specific group with the provided group ID.
+   * Update a group
    *
-   * @param groupId ID of a group that you are interested in getting. (required)
-   * @return Group
-   * @throws ApiException if fails to make API call
-   */
-  Group get(String groupId) throws ApiException;
-
-  /**
-   * Update a group With the update group operation, you can add and remove members in an existing
-   * group as well as rename the group. This method encompasses a few ways to update a group: 1. By
-   * using &#x60;add&#x60; and &#x60;remove&#x60; arrays containing phone numbers, you control the
-   * group movements. Any list of valid numbers in E.164 format can be added. 2. By using the
+   * <p>With the update group operation, you can add and remove members in an existing group as well
+   * as rename the group. This method encompasses a few ways to update a group: 1. By using
+   * &#x60;add&#x60; and &#x60;remove&#x60; arrays containing phone numbers, you control the group
+   * movements. Any list of valid numbers in E.164 format can be added. 2. By using the
    * &#x60;auto_update&#x60; object, your customer can add or remove themselves from groups. 3. You
    * can also add or remove other groups into this group with &#x60;add_from_group&#x60; and
    * &#x60;remove_from_group&#x60;. #### Other group update info - The request will not be rejected

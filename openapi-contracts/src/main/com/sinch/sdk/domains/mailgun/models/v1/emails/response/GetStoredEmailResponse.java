@@ -20,12 +20,16 @@ public interface GetStoredEmailResponse {
   /**
    * The full 'From' email address entry of the email
    *
+   * <p>Field is required
+   *
    * @return from
    */
   String getFrom();
 
   /**
    * Subject of the email
+   *
+   * <p>Field is required
    *
    * @return subject
    */
@@ -34,12 +38,16 @@ public interface GetStoredEmailResponse {
   /**
    * Just the email address from the provided 'From'' field
    *
+   * <p>Field is required
+   *
    * @return sender
    */
   String getSender();
 
   /**
    * A list of email addresses from the 'To'' field
+   *
+   * <p>Field is required
    *
    * @return recipients
    */
@@ -55,12 +63,16 @@ public interface GetStoredEmailResponse {
   /**
    * The plain text body of the full message
    *
+   * <p>Field is required
+   *
    * @return bodyPlain
    */
   String getBodyPlain();
 
   /**
    * Only the body of the email in HTML
+   *
+   * <p>Field is required
    *
    * @return strippedHtml
    */
@@ -69,6 +81,8 @@ public interface GetStoredEmailResponse {
   /**
    * Only the body of the email in plain text
    *
+   * <p>Field is required
+   *
    * @return strippedText
    */
   String getStrippedText();
@@ -76,12 +90,16 @@ public interface GetStoredEmailResponse {
   /**
    * The signature stripped from the body
    *
+   * <p>Field is required
+   *
    * @return strippedSignature
    */
   String getStrippedSignature();
 
   /**
    * The full list of headers of the MIME upon send
+   *
+   * <p>Field is required
    *
    * @return messageHeaders
    */

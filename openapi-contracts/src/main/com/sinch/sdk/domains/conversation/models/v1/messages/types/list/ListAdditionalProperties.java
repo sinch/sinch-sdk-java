@@ -31,6 +31,14 @@ public interface ListAdditionalProperties {
   String getMenu();
 
   /**
+   * Optional. Sets the text for the header of a WhatsApp choice list message. Ignored for other
+   * channels.
+   *
+   * @return whatsappHeader
+   */
+  String getWhatsappHeader();
+
+  /**
    * Getting builder
    *
    * @return New Builder instance
@@ -59,6 +67,15 @@ public interface ListAdditionalProperties {
      * @see #getMenu
      */
     Builder setMenu(String menu);
+
+    /**
+     * see getter
+     *
+     * @param whatsappHeader see getter
+     * @return Current builder
+     * @see #getWhatsappHeader
+     */
+    Builder setWhatsappHeader(String whatsappHeader);
 
     /**
      * Create instance

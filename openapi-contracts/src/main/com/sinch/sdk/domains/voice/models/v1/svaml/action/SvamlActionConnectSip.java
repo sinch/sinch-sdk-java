@@ -55,6 +55,8 @@ public interface SvamlActionConnectSip
   /**
    * Get destination
    *
+   * <p>Field is required
+   *
    * @return destination
    */
   DestinationSip getDestination();

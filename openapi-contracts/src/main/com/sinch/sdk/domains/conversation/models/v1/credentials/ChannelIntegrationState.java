@@ -19,6 +19,8 @@ public interface ChannelIntegrationState {
   /**
    * Get status
    *
+   * <p>Field is required
+   *
    * @return status
    */
   ChannelIntegrationStatus getStatus();

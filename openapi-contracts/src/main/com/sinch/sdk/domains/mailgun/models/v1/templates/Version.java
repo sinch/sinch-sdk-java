@@ -18,28 +18,28 @@ import java.time.Instant;
 public interface Version {
 
   /**
-   * Get tag
+   * Tag of the version. Must be unique to the template
    *
    * @return tag
    */
   String getTag();
 
   /**
-   * Get engine
+   * Rendering engine
    *
    * @return engine
    */
   String getEngine();
 
   /**
-   * Get mjml
+   * Template source
    *
    * @return mjml
    */
   String getMjml();
 
   /**
-   * Get createdAt
+   * Creation date in RFC822 format
    *
    * @return createdAt
    * @readOnly <em>This field is returned by the server and cannot be modified</em>
@@ -47,21 +47,21 @@ public interface Version {
   Instant getCreatedAt();
 
   /**
-   * Get comment
+   * Comment related to the version
    *
    * @return comment
    */
   String getComment();
 
   /**
-   * Get active
+   * If this flag is true
    *
    * @return active
    */
   Boolean getActive();
 
   /**
-   * Get id
+   * Template ID
    *
    * @return id
    * @readOnly <em>This field is returned by the server and cannot be modified</em>

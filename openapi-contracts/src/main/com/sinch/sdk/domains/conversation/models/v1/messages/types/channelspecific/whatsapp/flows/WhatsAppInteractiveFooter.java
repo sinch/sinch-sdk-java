@@ -19,6 +19,8 @@ public interface WhatsAppInteractiveFooter {
   /**
    * The footer content (60 characters maximum). Emojis, Markdown and links are supported.
    *
+   * <p>Field is required
+   *
    * @return text
    */
   String getText();

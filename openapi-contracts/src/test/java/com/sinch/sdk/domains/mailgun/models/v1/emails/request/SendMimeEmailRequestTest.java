@@ -8,6 +8,7 @@ import com.sinch.sdk.core.http.HttpMapper;
 import java.io.File;
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
@@ -102,7 +103,7 @@ public class SendMimeEmailRequestTest extends BaseTest {
         HttpMapper.getInstance()
             .serializeFormParameters(Arrays.asList("multipart/form-data"), sendMimEmailRequest);
 
-    TestHelpers.recursiveEquals(expected, serialized);
+    TestHelpers.recursiveEquals(serialized, expected);
   }
 
   @Test
@@ -113,12 +114,19 @@ public class SendMimeEmailRequestTest extends BaseTest {
             .serializeFormParameters(
                 Arrays.asList("multipart/form-data"),
                 SendMimeEmailRequest.builder()
+                    .setMessage(fileAttachment1)
+                    .setTo(Collections.singletonList("foo@dest.com"))
                     .setRecipientVariables("{\"cc-dest@sinch.com\":{\"variable1\":\"value1\"}}")
                     .build());
 
     TestHelpers.recursiveEquals(
+        serialized,
         ObjectMapperTest.fillMap(
-            "recipient-variables", "{\"cc-dest@sinch.com\":{\"variable1\":\"value1\"}}"),
-        serialized);
+            "message",
+            fileAttachment1,
+            "to",
+            Collections.singletonList("foo@dest.com"),
+            "recipient-variables",
+            "{\"cc-dest@sinch.com\":{\"variable1\":\"value1\"}}"));
   }
 }

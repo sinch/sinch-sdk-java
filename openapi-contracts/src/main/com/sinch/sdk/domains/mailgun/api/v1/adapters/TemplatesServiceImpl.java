@@ -76,987 +76,15 @@ public class TemplatesServiceImpl implements com.sinch.sdk.domains.mailgun.api.v
     this.mapper = mapper;
   }
 
-  public void deleteAll(String domainName) throws ApiException {
-
-    LOGGER.finest("[deleteAll]" + " " + "domainName: " + domainName);
-
-    HttpRequest httpRequest = deleteAllRequestBuilder(domainName);
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      return;
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest deleteAllRequestBuilder(String domainName) throws ApiException {
-    // verify the required parameter 'domainName' is set
-    if (domainName == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'domainName' when calling deleteAll");
-    }
-
-    String localVarPath =
-        "/v3/{domain_name}/templates"
-            .replaceAll(
-                "\\{" + "domain_name" + "\\}",
-                URLPathUtils.encodePathSegment(domainName.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-
-    final Collection<String> localVarContentTypes = Arrays.asList();
-
-    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
-    final String serializedBody = null;
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.DELETE,
-        localVarQueryParams,
-        serializedBody,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  public void delete(String domainName, String templateName) throws ApiException {
-
-    LOGGER.finest(
-        "[delete]" + " " + "domainName: " + domainName + ", " + "templateName: " + templateName);
-
-    HttpRequest httpRequest = deleteRequestBuilder(domainName, templateName);
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      return;
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest deleteRequestBuilder(String domainName, String templateName)
-      throws ApiException {
-    // verify the required parameter 'domainName' is set
-    if (domainName == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'domainName' when calling delete");
-    }
-    // verify the required parameter 'templateName' is set
-    if (templateName == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'templateName' when calling delete");
-    }
-
-    String localVarPath =
-        "/v3/{domain_name}/templates/{template_name}"
-            .replaceAll(
-                "\\{" + "domain_name" + "\\}",
-                URLPathUtils.encodePathSegment(domainName.toString()))
-            .replaceAll(
-                "\\{" + "template_name" + "\\}",
-                URLPathUtils.encodePathSegment(templateName.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-
-    final Collection<String> localVarContentTypes = Arrays.asList();
-
-    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
-    final String serializedBody = null;
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.DELETE,
-        localVarQueryParams,
-        serializedBody,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  public void deleteVersion(String domainName, String templateName, String versionName)
-      throws ApiException {
-
-    LOGGER.finest(
-        "[deleteVersion]"
-            + " "
-            + "domainName: "
-            + domainName
-            + ", "
-            + "templateName: "
-            + templateName
-            + ", "
-            + "versionName: "
-            + versionName);
-
-    HttpRequest httpRequest = deleteVersionRequestBuilder(domainName, templateName, versionName);
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      return;
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest deleteVersionRequestBuilder(
-      String domainName, String templateName, String versionName) throws ApiException {
-    // verify the required parameter 'domainName' is set
-    if (domainName == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'domainName' when calling deleteVersion");
-    }
-    // verify the required parameter 'templateName' is set
-    if (templateName == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'templateName' when calling deleteVersion");
-    }
-    // verify the required parameter 'versionName' is set
-    if (versionName == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'versionName' when calling deleteVersion");
-    }
-
-    String localVarPath =
-        "/v3/{domain_name}/templates/{template_name}/versions/{version_name}"
-            .replaceAll(
-                "\\{" + "domain_name" + "\\}",
-                URLPathUtils.encodePathSegment(domainName.toString()))
-            .replaceAll(
-                "\\{" + "template_name" + "\\}",
-                URLPathUtils.encodePathSegment(templateName.toString()))
-            .replaceAll(
-                "\\{" + "version_name" + "\\}",
-                URLPathUtils.encodePathSegment(versionName.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-
-    final Collection<String> localVarContentTypes = Arrays.asList();
-
-    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
-    final String serializedBody = null;
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.DELETE,
-        localVarQueryParams,
-        serializedBody,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  public ListTemplatesResponse list(String domainName) throws ApiException {
-    return list(domainName, null);
-  }
-
-  public ListTemplatesResponse list(String domainName, ListTemplatesQueryParameters queryParameter)
-      throws ApiException {
-
-    LOGGER.finest(
-        "[list]" + " " + "domainName: " + domainName + ", " + "queryParameter: " + queryParameter);
-
-    HttpRequest httpRequest = listRequestBuilder(domainName, queryParameter);
-    return _getTemplatesPageAsListResponse(httpRequest);
-  }
-
-  public ListTemplatesResponse _getTemplatesPageAsListResponse(HttpRequest httpRequest)
-      throws ApiException {
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-
-      ListTemplatesResponseInternal deserialized =
-          mapper.deserialize(response, new TypeReference<ListTemplatesResponseInternal>() {});
-
-      HttpRequest nextPage =
-          new HttpRequest(
-              deserialized.getPaging().getNext(),
-              httpRequest.getMethod(),
-              null,
-              httpRequest.getHeaderParams(),
-              httpRequest.getAccept(),
-              httpRequest.getContentType(),
-              httpRequest.getAuthNames());
-
-      return new ListTemplatesResponse(
-          this, new Page<>(null, deserialized.getItems(), new MailgunPageNavigator(nextPage)));
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest listRequestBuilder(
-      String domainName, ListTemplatesQueryParameters queryParameter) throws ApiException {
-    // verify the required parameter 'domainName' is set
-    if (domainName == null) {
-      throw new ApiException(400, "Missing the required parameter 'domainName' when calling list");
-    }
-
-    String localVarPath =
-        "/v3/{domain_name}/templates"
-            .replaceAll(
-                "\\{" + "domain_name" + "\\}",
-                URLPathUtils.encodePathSegment(domainName.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-    if (null != queryParameter) {
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getPage(), "page", URLParameter.form, null, localVarQueryParams, true);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getLimit(), "limit", URLParameter.form, null, localVarQueryParams, true);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getPivot(), "p", URLParameter.form, null, localVarQueryParams, true);
-    }
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-
-    final Collection<String> localVarContentTypes = Arrays.asList();
-
-    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
-    final String serializedBody = null;
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.GET,
-        localVarQueryParams,
-        serializedBody,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  public Template get(String domainName, String templateName) throws ApiException {
-    return get(domainName, templateName, null);
-  }
-
-  public Template get(
-      String domainName, String templateName, GetTemplateQueryParameters queryParameter)
-      throws ApiException {
-
-    LOGGER.finest(
-        "[get]"
-            + " "
-            + "domainName: "
-            + domainName
-            + ", "
-            + "templateName: "
-            + templateName
-            + ", "
-            + "queryParameter: "
-            + queryParameter);
-
-    HttpRequest httpRequest = getRequestBuilder(domainName, templateName, queryParameter);
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-
-      GetTemplateResponseInternal deserialized =
-          mapper.deserialize(response, new TypeReference<GetTemplateResponseInternal>() {});
-
-      if (null == deserialized) {
-        return null;
-      }
-      TemplateImpl __getTemplate = (TemplateImpl) deserialized.getTemplate();
-      if (null == __getTemplate) {
-        return null;
-      }
-      return __getTemplate;
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest getRequestBuilder(
-      String domainName, String templateName, GetTemplateQueryParameters queryParameter)
-      throws ApiException {
-    // verify the required parameter 'domainName' is set
-    if (domainName == null) {
-      throw new ApiException(400, "Missing the required parameter 'domainName' when calling get");
-    }
-    // verify the required parameter 'templateName' is set
-    if (templateName == null) {
-      throw new ApiException(400, "Missing the required parameter 'templateName' when calling get");
-    }
-
-    String localVarPath =
-        "/v3/{domain_name}/templates/{template_name}"
-            .replaceAll(
-                "\\{" + "domain_name" + "\\}",
-                URLPathUtils.encodePathSegment(domainName.toString()))
-            .replaceAll(
-                "\\{" + "template_name" + "\\}",
-                URLPathUtils.encodePathSegment(templateName.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-    if (null != queryParameter) {
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getActive(), "active", URLParameter.form, null, localVarQueryParams, true);
-    }
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-
-    final Collection<String> localVarContentTypes = Arrays.asList();
-
-    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
-    final String serializedBody = null;
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.GET,
-        localVarQueryParams,
-        serializedBody,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  public VersionDetails getActiveVersion(String domainName, String templateName)
-      throws ApiException {
-
-    return ((TemplateImpl)
-            get(
-                domainName,
-                templateName,
-                GetTemplateQueryParameters.builder().setActive(true).build()))
-        .getVersion();
-  }
-
-  public ListVersionsResponse listVersions(String domainName, String templateName)
-      throws ApiException {
-    return listVersions(domainName, templateName, null);
-  }
-
-  public ListVersionsResponse listVersions(
-      String domainName, String templateName, ListVersionsQueryParameters queryParameter)
-      throws ApiException {
-
-    LOGGER.finest(
-        "[listVersions]"
-            + " "
-            + "domainName: "
-            + domainName
-            + ", "
-            + "templateName: "
-            + templateName
-            + ", "
-            + "queryParameter: "
-            + queryParameter);
-
-    HttpRequest httpRequest = listVersionsRequestBuilder(domainName, templateName, queryParameter);
-    return _getVersionsPageAsListResponse(httpRequest);
-  }
-
-  public ListVersionsResponse _getVersionsPageAsListResponse(HttpRequest httpRequest)
-      throws ApiException {
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-
-      ListVersionResponseInternal deserialized =
-          mapper.deserialize(response, new TypeReference<ListVersionResponseInternal>() {});
-
-      HttpRequest nextPage =
-          new HttpRequest(
-              deserialized.getPaging().getNext(),
-              httpRequest.getMethod(),
-              null,
-              httpRequest.getHeaderParams(),
-              httpRequest.getAccept(),
-              httpRequest.getContentType(),
-              httpRequest.getAuthNames());
-
-      return new ListVersionsResponse(
-          this,
-          new Page<>(
-              null,
-              ((TemplateImpl) deserialized.getTemplate()).getVersions(),
-              new MailgunPageNavigator(nextPage)));
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest listVersionsRequestBuilder(
-      String domainName, String templateName, ListVersionsQueryParameters queryParameter)
-      throws ApiException {
-    // verify the required parameter 'domainName' is set
-    if (domainName == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'domainName' when calling listVersions");
-    }
-    // verify the required parameter 'templateName' is set
-    if (templateName == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'templateName' when calling listVersions");
-    }
-
-    String localVarPath =
-        "/v3/{domain_name}/templates/{template_name}/versions"
-            .replaceAll(
-                "\\{" + "domain_name" + "\\}",
-                URLPathUtils.encodePathSegment(domainName.toString()))
-            .replaceAll(
-                "\\{" + "template_name" + "\\}",
-                URLPathUtils.encodePathSegment(templateName.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-    if (null != queryParameter) {
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getPage(), "page", URLParameter.form, null, localVarQueryParams, true);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getLimit(), "limit", URLParameter.form, null, localVarQueryParams, true);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getPivot(), "p", URLParameter.form, null, localVarQueryParams, true);
-    }
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-
-    final Collection<String> localVarContentTypes = Arrays.asList();
-
-    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
-    final String serializedBody = null;
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.GET,
-        localVarQueryParams,
-        serializedBody,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  public VersionDetails getVersion(String domainName, String templateName, String versionName)
-      throws ApiException {
-
-    LOGGER.finest(
-        "[getVersion]"
-            + " "
-            + "domainName: "
-            + domainName
-            + ", "
-            + "templateName: "
-            + templateName
-            + ", "
-            + "versionName: "
-            + versionName);
-
-    HttpRequest httpRequest = getVersionRequestBuilder(domainName, templateName, versionName);
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-
-      GetTemplateResponseInternal deserialized =
-          mapper.deserialize(response, new TypeReference<GetTemplateResponseInternal>() {});
-
-      if (null == deserialized) {
-        return null;
-      }
-      TemplateImpl __getTemplate = (TemplateImpl) deserialized.getTemplate();
-      if (null == __getTemplate) {
-        return null;
-      }
-      VersionDetailsImpl __getVersion = (VersionDetailsImpl) __getTemplate.getVersion();
-      if (null == __getVersion) {
-        return null;
-      }
-      return __getVersion;
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest getVersionRequestBuilder(
-      String domainName, String templateName, String versionName) throws ApiException {
-    // verify the required parameter 'domainName' is set
-    if (domainName == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'domainName' when calling getVersion");
-    }
-    // verify the required parameter 'templateName' is set
-    if (templateName == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'templateName' when calling getVersion");
-    }
-    // verify the required parameter 'versionName' is set
-    if (versionName == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'versionName' when calling getVersion");
-    }
-
-    String localVarPath =
-        "/v3/{domain_name}/templates/{template_name}/versions/{version_name}"
-            .replaceAll(
-                "\\{" + "domain_name" + "\\}",
-                URLPathUtils.encodePathSegment(domainName.toString()))
-            .replaceAll(
-                "\\{" + "template_name" + "\\}",
-                URLPathUtils.encodePathSegment(templateName.toString()))
-            .replaceAll(
-                "\\{" + "version_name" + "\\}",
-                URLPathUtils.encodePathSegment(versionName.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-
-    final Collection<String> localVarContentTypes = Arrays.asList();
-
-    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
-    final String serializedBody = null;
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.GET,
-        localVarQueryParams,
-        serializedBody,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  public Template create(String domainName, CreateTemplateRequest requestParameters)
-      throws ApiException {
-
-    LOGGER.finest(
-        "[create] " + "domainName: " + domainName + ", " + " request:" + requestParameters);
-    HttpRequest httpRequest = createRequestBuilder(domainName, requestParameters);
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-
-      CreateResponseInternal deserialized =
-          mapper.deserialize(response, new TypeReference<CreateResponseInternal>() {});
-
-      if (null == deserialized) {
-        return null;
-      }
-      TemplateImpl __getTemplate = (TemplateImpl) deserialized.getTemplate();
-      if (null == __getTemplate) {
-        return null;
-      }
-      return __getTemplate;
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest createRequestBuilder(
-      String domainName, CreateTemplateRequest requestParameters) throws ApiException {
-    // verify the required parameter 'domainName' is set
-    if (domainName == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'domainName' when calling create");
-    }
-
-    String localVarPath =
-        "/v3/{domain_name}/templates"
-            .replaceAll(
-                "\\{" + "domain_name" + "\\}",
-                URLPathUtils.encodePathSegment(domainName.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-    final Collection<String> localVarContentTypes = Arrays.asList("multipart/form-data");
-    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
-    final Map<String, Object> localFormParams =
-        mapper.serializeFormParameters(localVarContentTypes, requestParameters);
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.POST,
-        localVarQueryParams,
-        localFormParams,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  public Pair<Template, VersionDetails> createWithActiveVersion(
-      String domainName,
-      CreateTemplateRequest templateRequestParameters,
-      CreateVersionRequest versionRequestParameters)
-      throws ApiException {
-    CreateTemplateWithVersionRequest.Builder builder = CreateTemplateWithVersionRequest.builder();
-
-    if (null != templateRequestParameters) {
-      CreateTemplateRequestImpl impl = (CreateTemplateRequestImpl) templateRequestParameters;
-      impl.name().ifPresent(builder::setName);
-      impl.description().ifPresent(builder::setDescription);
-      impl.createdBy().ifPresent(builder::setCreatedBy);
-    }
-    if (null != versionRequestParameters) {
-      CreateVersionRequestImpl impl = (CreateVersionRequestImpl) versionRequestParameters;
-      impl.tag().ifPresent(builder::setTag);
-      impl.template().ifPresent(builder::setTemplate);
-      impl.comment().ifPresent(builder::setComment);
-      impl.headers().ifPresent(builder::setHeaders);
-    }
-    TemplateImpl response = (TemplateImpl) create(domainName, builder.build());
-
-    return Pair.of(response, response.getVersion());
-  }
-
-  public VersionDetails createVersion(
-      String domainName, String templateName, CreateVersionRequest requestParameters)
-      throws ApiException {
-
-    LOGGER.finest(
-        "[createVersion] "
-            + "domainName: "
-            + domainName
-            + ", "
-            + "templateName: "
-            + templateName
-            + ", "
-            + " request:"
-            + requestParameters);
-    HttpRequest httpRequest =
-        createVersionRequestBuilder(domainName, templateName, requestParameters);
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-
-      CreateResponseInternal deserialized =
-          mapper.deserialize(response, new TypeReference<CreateResponseInternal>() {});
-
-      if (null == deserialized) {
-        return null;
-      }
-      TemplateImpl __getTemplate = (TemplateImpl) deserialized.getTemplate();
-      if (null == __getTemplate) {
-        return null;
-      }
-      VersionDetailsImpl __getVersion = (VersionDetailsImpl) __getTemplate.getVersion();
-      if (null == __getVersion) {
-        return null;
-      }
-      return __getVersion;
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest createVersionRequestBuilder(
-      String domainName, String templateName, CreateVersionRequest requestParameters)
-      throws ApiException {
-    // verify the required parameter 'domainName' is set
-    if (domainName == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'domainName' when calling createVersion");
-    }
-    // verify the required parameter 'templateName' is set
-    if (templateName == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'templateName' when calling createVersion");
-    }
-
-    String localVarPath =
-        "/v3/{domain_name}/templates/{template_name}/versions"
-            .replaceAll(
-                "\\{" + "domain_name" + "\\}",
-                URLPathUtils.encodePathSegment(domainName.toString()))
-            .replaceAll(
-                "\\{" + "template_name" + "\\}",
-                URLPathUtils.encodePathSegment(templateName.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-    final Collection<String> localVarContentTypes = Arrays.asList("multipart/form-data");
-    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
-    final Map<String, Object> localFormParams =
-        mapper.serializeFormParameters(localVarContentTypes, requestParameters);
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.POST,
-        localVarQueryParams,
-        localFormParams,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  public void update(
-      String domainName, String templateName, UpdateTemplateRequest requestParameters)
-      throws ApiException {
-
-    LOGGER.finest(
-        "[update] "
-            + "domainName: "
-            + domainName
-            + ", "
-            + "templateName: "
-            + templateName
-            + ", "
-            + " request:"
-            + requestParameters);
-    HttpRequest httpRequest = updateRequestBuilder(domainName, templateName, requestParameters);
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      return;
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest updateRequestBuilder(
-      String domainName, String templateName, UpdateTemplateRequest requestParameters)
-      throws ApiException {
-    // verify the required parameter 'domainName' is set
-    if (domainName == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'domainName' when calling update");
-    }
-    // verify the required parameter 'templateName' is set
-    if (templateName == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'templateName' when calling update");
-    }
-
-    String localVarPath =
-        "/v3/{domain_name}/templates/{template_name}"
-            .replaceAll(
-                "\\{" + "domain_name" + "\\}",
-                URLPathUtils.encodePathSegment(domainName.toString()))
-            .replaceAll(
-                "\\{" + "template_name" + "\\}",
-                URLPathUtils.encodePathSegment(templateName.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-    final Collection<String> localVarContentTypes = Arrays.asList("multipart/form-data");
-    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
-    final Map<String, Object> localFormParams =
-        mapper.serializeFormParameters(localVarContentTypes, requestParameters);
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.PUT,
-        localVarQueryParams,
-        localFormParams,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  public void updateVersion(
-      String domainName,
-      String templateName,
-      String versionName,
-      UpdateVersionRequest requestParameters)
-      throws ApiException {
-
-    LOGGER.finest(
-        "[updateVersion] "
-            + "domainName: "
-            + domainName
-            + ", "
-            + "templateName: "
-            + templateName
-            + ", "
-            + "versionName: "
-            + versionName
-            + ", "
-            + " request:"
-            + requestParameters);
-    HttpRequest httpRequest =
-        updateVersionRequestBuilder(domainName, templateName, versionName, requestParameters);
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      return;
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest updateVersionRequestBuilder(
-      String domainName,
-      String templateName,
-      String versionName,
-      UpdateVersionRequest requestParameters)
-      throws ApiException {
-    // verify the required parameter 'domainName' is set
-    if (domainName == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'domainName' when calling updateVersion");
-    }
-    // verify the required parameter 'templateName' is set
-    if (templateName == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'templateName' when calling updateVersion");
-    }
-    // verify the required parameter 'versionName' is set
-    if (versionName == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'versionName' when calling updateVersion");
-    }
-
-    String localVarPath =
-        "/v3/{domain_name}/templates/{template_name}/versions/{version_name}"
-            .replaceAll(
-                "\\{" + "domain_name" + "\\}",
-                URLPathUtils.encodePathSegment(domainName.toString()))
-            .replaceAll(
-                "\\{" + "template_name" + "\\}",
-                URLPathUtils.encodePathSegment(templateName.toString()))
-            .replaceAll(
-                "\\{" + "version_name" + "\\}",
-                URLPathUtils.encodePathSegment(versionName.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-    final Collection<String> localVarContentTypes = Arrays.asList("multipart/form-data");
-    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
-    final Map<String, Object> localFormParams =
-        mapper.serializeFormParameters(localVarContentTypes, requestParameters);
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.PUT,
-        localVarQueryParams,
-        localFormParams,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
+  @Override
   public VersionDetails copyVersion(
       String domainName, String templateName, String versionName, String newVersionName)
       throws ApiException {
-    return copyVersion(domainName, templateName, versionName, newVersionName, null);
+    return copyVersion(
+        domainName, templateName, versionName, newVersionName, (CopyVersionQueryParameters) null);
   }
 
+  @Override
   public VersionDetails copyVersion(
       String domainName,
       String templateName,
@@ -1182,6 +210,994 @@ public class TemplatesServiceImpl implements com.sinch.sdk.domains.mailgun.api.v
         HttpMethod.PUT,
         localVarQueryParams,
         serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  @Override
+  public Template create(String domainName, CreateTemplateRequest requestParameters)
+      throws ApiException {
+
+    LOGGER.finest(
+        "[create] " + "domainName: " + domainName + ", " + " request:" + requestParameters);
+    HttpRequest httpRequest = createRequestBuilder(domainName, requestParameters);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+
+      CreateResponseInternal deserialized =
+          mapper.deserialize(response, new TypeReference<CreateResponseInternal>() {});
+
+      if (null == deserialized) {
+        return null;
+      }
+      TemplateImpl __getTemplate = (TemplateImpl) deserialized.getTemplate();
+      if (null == __getTemplate) {
+        return null;
+      }
+      return __getTemplate;
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest createRequestBuilder(
+      String domainName, CreateTemplateRequest requestParameters) throws ApiException {
+    // verify the required parameter 'domainName' is set
+    if (domainName == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'domainName' when calling create");
+    }
+
+    String localVarPath =
+        "/v3/{domain_name}/templates"
+            .replaceAll(
+                "\\{" + "domain_name" + "\\}",
+                URLPathUtils.encodePathSegment(domainName.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+    final Collection<String> localVarContentTypes = Arrays.asList("multipart/form-data");
+    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
+    final Map<String, Object> localFormParams =
+        mapper.serializeFormParameters(localVarContentTypes, requestParameters);
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.POST,
+        localVarQueryParams,
+        localFormParams,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  public Pair<Template, VersionDetails> createWithActiveVersion(
+      String domainName,
+      CreateTemplateRequest templateRequestParameters,
+      CreateVersionRequest versionRequestParameters)
+      throws ApiException {
+    CreateTemplateWithVersionRequest.Builder builder = CreateTemplateWithVersionRequest.builder();
+
+    if (null != templateRequestParameters) {
+      CreateTemplateRequestImpl impl = (CreateTemplateRequestImpl) templateRequestParameters;
+      impl.name().ifPresent(builder::setName);
+      impl.description().ifPresent(builder::setDescription);
+      impl.createdBy().ifPresent(builder::setCreatedBy);
+    }
+    if (null != versionRequestParameters) {
+      CreateVersionRequestImpl impl = (CreateVersionRequestImpl) versionRequestParameters;
+      impl.tag().ifPresent(builder::setTag);
+      impl.template().ifPresent(builder::setTemplate);
+      impl.comment().ifPresent(builder::setComment);
+      impl.headers().ifPresent(builder::setHeaders);
+    }
+    TemplateImpl response = (TemplateImpl) create(domainName, builder.build());
+
+    return Pair.of(response, response.getVersion());
+  }
+
+  @Override
+  public VersionDetails createVersion(
+      String domainName, String templateName, CreateVersionRequest requestParameters)
+      throws ApiException {
+
+    LOGGER.finest(
+        "[createVersion] "
+            + "domainName: "
+            + domainName
+            + ", "
+            + "templateName: "
+            + templateName
+            + ", "
+            + " request:"
+            + requestParameters);
+    HttpRequest httpRequest =
+        createVersionRequestBuilder(domainName, templateName, requestParameters);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+
+      CreateResponseInternal deserialized =
+          mapper.deserialize(response, new TypeReference<CreateResponseInternal>() {});
+
+      if (null == deserialized) {
+        return null;
+      }
+      TemplateImpl __getTemplate = (TemplateImpl) deserialized.getTemplate();
+      if (null == __getTemplate) {
+        return null;
+      }
+      VersionDetailsImpl __getVersion = (VersionDetailsImpl) __getTemplate.getVersion();
+      if (null == __getVersion) {
+        return null;
+      }
+      return __getVersion;
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest createVersionRequestBuilder(
+      String domainName, String templateName, CreateVersionRequest requestParameters)
+      throws ApiException {
+    // verify the required parameter 'domainName' is set
+    if (domainName == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'domainName' when calling createVersion");
+    }
+    // verify the required parameter 'templateName' is set
+    if (templateName == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'templateName' when calling createVersion");
+    }
+
+    String localVarPath =
+        "/v3/{domain_name}/templates/{template_name}/versions"
+            .replaceAll(
+                "\\{" + "domain_name" + "\\}",
+                URLPathUtils.encodePathSegment(domainName.toString()))
+            .replaceAll(
+                "\\{" + "template_name" + "\\}",
+                URLPathUtils.encodePathSegment(templateName.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+    final Collection<String> localVarContentTypes = Arrays.asList("multipart/form-data");
+    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
+    final Map<String, Object> localFormParams =
+        mapper.serializeFormParameters(localVarContentTypes, requestParameters);
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.POST,
+        localVarQueryParams,
+        localFormParams,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  @Override
+  public void delete(String domainName, String templateName) throws ApiException {
+
+    LOGGER.finest(
+        "[delete]" + " " + "domainName: " + domainName + ", " + "templateName: " + templateName);
+
+    HttpRequest httpRequest = deleteRequestBuilder(domainName, templateName);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+      return;
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest deleteRequestBuilder(String domainName, String templateName)
+      throws ApiException {
+    // verify the required parameter 'domainName' is set
+    if (domainName == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'domainName' when calling delete");
+    }
+    // verify the required parameter 'templateName' is set
+    if (templateName == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'templateName' when calling delete");
+    }
+
+    String localVarPath =
+        "/v3/{domain_name}/templates/{template_name}"
+            .replaceAll(
+                "\\{" + "domain_name" + "\\}",
+                URLPathUtils.encodePathSegment(domainName.toString()))
+            .replaceAll(
+                "\\{" + "template_name" + "\\}",
+                URLPathUtils.encodePathSegment(templateName.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.DELETE,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  @Override
+  public void deleteAll(String domainName) throws ApiException {
+
+    LOGGER.finest("[deleteAll]" + " " + "domainName: " + domainName);
+
+    HttpRequest httpRequest = deleteAllRequestBuilder(domainName);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+      return;
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest deleteAllRequestBuilder(String domainName) throws ApiException {
+    // verify the required parameter 'domainName' is set
+    if (domainName == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'domainName' when calling deleteAll");
+    }
+
+    String localVarPath =
+        "/v3/{domain_name}/templates"
+            .replaceAll(
+                "\\{" + "domain_name" + "\\}",
+                URLPathUtils.encodePathSegment(domainName.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.DELETE,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  @Override
+  public void deleteVersion(String domainName, String templateName, String versionName)
+      throws ApiException {
+
+    LOGGER.finest(
+        "[deleteVersion]"
+            + " "
+            + "domainName: "
+            + domainName
+            + ", "
+            + "templateName: "
+            + templateName
+            + ", "
+            + "versionName: "
+            + versionName);
+
+    HttpRequest httpRequest = deleteVersionRequestBuilder(domainName, templateName, versionName);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+      return;
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest deleteVersionRequestBuilder(
+      String domainName, String templateName, String versionName) throws ApiException {
+    // verify the required parameter 'domainName' is set
+    if (domainName == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'domainName' when calling deleteVersion");
+    }
+    // verify the required parameter 'templateName' is set
+    if (templateName == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'templateName' when calling deleteVersion");
+    }
+    // verify the required parameter 'versionName' is set
+    if (versionName == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'versionName' when calling deleteVersion");
+    }
+
+    String localVarPath =
+        "/v3/{domain_name}/templates/{template_name}/versions/{version_name}"
+            .replaceAll(
+                "\\{" + "domain_name" + "\\}",
+                URLPathUtils.encodePathSegment(domainName.toString()))
+            .replaceAll(
+                "\\{" + "template_name" + "\\}",
+                URLPathUtils.encodePathSegment(templateName.toString()))
+            .replaceAll(
+                "\\{" + "version_name" + "\\}",
+                URLPathUtils.encodePathSegment(versionName.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.DELETE,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  @Override
+  public Template get(String domainName, String templateName) throws ApiException {
+    return get(domainName, templateName, (GetTemplateQueryParameters) null);
+  }
+
+  public Template get(
+      String domainName, String templateName, GetTemplateQueryParameters queryParameter)
+      throws ApiException {
+
+    LOGGER.finest(
+        "[get]"
+            + " "
+            + "domainName: "
+            + domainName
+            + ", "
+            + "templateName: "
+            + templateName
+            + ", "
+            + "queryParameter: "
+            + queryParameter);
+
+    HttpRequest httpRequest = getRequestBuilder(domainName, templateName, queryParameter);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+
+      GetTemplateResponseInternal deserialized =
+          mapper.deserialize(response, new TypeReference<GetTemplateResponseInternal>() {});
+
+      if (null == deserialized) {
+        return null;
+      }
+      TemplateImpl __getTemplate = (TemplateImpl) deserialized.getTemplate();
+      if (null == __getTemplate) {
+        return null;
+      }
+      return __getTemplate;
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest getRequestBuilder(
+      String domainName, String templateName, GetTemplateQueryParameters queryParameter)
+      throws ApiException {
+    // verify the required parameter 'domainName' is set
+    if (domainName == null) {
+      throw new ApiException(400, "Missing the required parameter 'domainName' when calling get");
+    }
+    // verify the required parameter 'templateName' is set
+    if (templateName == null) {
+      throw new ApiException(400, "Missing the required parameter 'templateName' when calling get");
+    }
+
+    String localVarPath =
+        "/v3/{domain_name}/templates/{template_name}"
+            .replaceAll(
+                "\\{" + "domain_name" + "\\}",
+                URLPathUtils.encodePathSegment(domainName.toString()))
+            .replaceAll(
+                "\\{" + "template_name" + "\\}",
+                URLPathUtils.encodePathSegment(templateName.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+    if (null != queryParameter) {
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getActive(), "active", URLParameter.form, null, localVarQueryParams, true);
+    }
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.GET,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  public VersionDetails getActiveVersion(String domainName, String templateName)
+      throws ApiException {
+
+    return ((TemplateImpl)
+            get(
+                domainName,
+                templateName,
+                GetTemplateQueryParameters.builder().setActive(true).build()))
+        .getVersion();
+  }
+
+  @Override
+  public VersionDetails getVersion(String domainName, String templateName, String versionName)
+      throws ApiException {
+
+    LOGGER.finest(
+        "[getVersion]"
+            + " "
+            + "domainName: "
+            + domainName
+            + ", "
+            + "templateName: "
+            + templateName
+            + ", "
+            + "versionName: "
+            + versionName);
+
+    HttpRequest httpRequest = getVersionRequestBuilder(domainName, templateName, versionName);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+
+      GetTemplateResponseInternal deserialized =
+          mapper.deserialize(response, new TypeReference<GetTemplateResponseInternal>() {});
+
+      if (null == deserialized) {
+        return null;
+      }
+      TemplateImpl __getTemplate = (TemplateImpl) deserialized.getTemplate();
+      if (null == __getTemplate) {
+        return null;
+      }
+      VersionDetailsImpl __getVersion = (VersionDetailsImpl) __getTemplate.getVersion();
+      if (null == __getVersion) {
+        return null;
+      }
+      return __getVersion;
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest getVersionRequestBuilder(
+      String domainName, String templateName, String versionName) throws ApiException {
+    // verify the required parameter 'domainName' is set
+    if (domainName == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'domainName' when calling getVersion");
+    }
+    // verify the required parameter 'templateName' is set
+    if (templateName == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'templateName' when calling getVersion");
+    }
+    // verify the required parameter 'versionName' is set
+    if (versionName == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'versionName' when calling getVersion");
+    }
+
+    String localVarPath =
+        "/v3/{domain_name}/templates/{template_name}/versions/{version_name}"
+            .replaceAll(
+                "\\{" + "domain_name" + "\\}",
+                URLPathUtils.encodePathSegment(domainName.toString()))
+            .replaceAll(
+                "\\{" + "template_name" + "\\}",
+                URLPathUtils.encodePathSegment(templateName.toString()))
+            .replaceAll(
+                "\\{" + "version_name" + "\\}",
+                URLPathUtils.encodePathSegment(versionName.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.GET,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  @Override
+  public ListTemplatesResponse list(String domainName) throws ApiException {
+    return list(domainName, (ListTemplatesQueryParameters) null);
+  }
+
+  @Override
+  public ListTemplatesResponse list(String domainName, ListTemplatesQueryParameters queryParameter)
+      throws ApiException {
+
+    LOGGER.finest(
+        "[list]" + " " + "domainName: " + domainName + ", " + "queryParameter: " + queryParameter);
+
+    HttpRequest httpRequest = listRequestBuilder(domainName, queryParameter);
+    return _getTemplatesPageAsListResponse(httpRequest);
+  }
+
+  public ListTemplatesResponse _getTemplatesPageAsListResponse(HttpRequest httpRequest)
+      throws ApiException {
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+
+      ListTemplatesResponseInternal deserialized =
+          mapper.deserialize(response, new TypeReference<ListTemplatesResponseInternal>() {});
+
+      HttpRequest nextPage =
+          new HttpRequest(
+              deserialized.getPaging().getNext(),
+              httpRequest.getMethod(),
+              null,
+              httpRequest.getHeaderParams(),
+              httpRequest.getAccept(),
+              httpRequest.getContentType(),
+              httpRequest.getAuthNames());
+
+      return new ListTemplatesResponse(
+          this, new Page<>(null, deserialized.getItems(), new MailgunPageNavigator(nextPage)));
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest listRequestBuilder(
+      String domainName, ListTemplatesQueryParameters queryParameter) throws ApiException {
+    // verify the required parameter 'domainName' is set
+    if (domainName == null) {
+      throw new ApiException(400, "Missing the required parameter 'domainName' when calling list");
+    }
+
+    String localVarPath =
+        "/v3/{domain_name}/templates"
+            .replaceAll(
+                "\\{" + "domain_name" + "\\}",
+                URLPathUtils.encodePathSegment(domainName.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+    if (null != queryParameter) {
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getPage(), "page", URLParameter.form, null, localVarQueryParams, true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getLimit(), "limit", URLParameter.form, null, localVarQueryParams, true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getPivot(), "p", URLParameter.form, null, localVarQueryParams, true);
+    }
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.GET,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  @Override
+  public ListVersionsResponse listVersions(String domainName, String templateName)
+      throws ApiException {
+    return listVersions(domainName, templateName, (ListVersionsQueryParameters) null);
+  }
+
+  @Override
+  public ListVersionsResponse listVersions(
+      String domainName, String templateName, ListVersionsQueryParameters queryParameter)
+      throws ApiException {
+
+    LOGGER.finest(
+        "[listVersions]"
+            + " "
+            + "domainName: "
+            + domainName
+            + ", "
+            + "templateName: "
+            + templateName
+            + ", "
+            + "queryParameter: "
+            + queryParameter);
+
+    HttpRequest httpRequest = listVersionsRequestBuilder(domainName, templateName, queryParameter);
+    return _getVersionsPageAsListResponse(httpRequest);
+  }
+
+  public ListVersionsResponse _getVersionsPageAsListResponse(HttpRequest httpRequest)
+      throws ApiException {
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+
+      ListVersionResponseInternal deserialized =
+          mapper.deserialize(response, new TypeReference<ListVersionResponseInternal>() {});
+
+      HttpRequest nextPage =
+          new HttpRequest(
+              deserialized.getPaging().getNext(),
+              httpRequest.getMethod(),
+              null,
+              httpRequest.getHeaderParams(),
+              httpRequest.getAccept(),
+              httpRequest.getContentType(),
+              httpRequest.getAuthNames());
+
+      return new ListVersionsResponse(
+          this,
+          new Page<>(
+              null,
+              ((TemplateImpl) deserialized.getTemplate()).getVersions(),
+              new MailgunPageNavigator(nextPage)));
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest listVersionsRequestBuilder(
+      String domainName, String templateName, ListVersionsQueryParameters queryParameter)
+      throws ApiException {
+    // verify the required parameter 'domainName' is set
+    if (domainName == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'domainName' when calling listVersions");
+    }
+    // verify the required parameter 'templateName' is set
+    if (templateName == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'templateName' when calling listVersions");
+    }
+
+    String localVarPath =
+        "/v3/{domain_name}/templates/{template_name}/versions"
+            .replaceAll(
+                "\\{" + "domain_name" + "\\}",
+                URLPathUtils.encodePathSegment(domainName.toString()))
+            .replaceAll(
+                "\\{" + "template_name" + "\\}",
+                URLPathUtils.encodePathSegment(templateName.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+    if (null != queryParameter) {
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getPage(), "page", URLParameter.form, null, localVarQueryParams, true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getLimit(), "limit", URLParameter.form, null, localVarQueryParams, true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getPivot(), "p", URLParameter.form, null, localVarQueryParams, true);
+    }
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.GET,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  @Override
+  public void update(
+      String domainName, String templateName, UpdateTemplateRequest requestParameters)
+      throws ApiException {
+
+    LOGGER.finest(
+        "[update] "
+            + "domainName: "
+            + domainName
+            + ", "
+            + "templateName: "
+            + templateName
+            + ", "
+            + " request:"
+            + requestParameters);
+    HttpRequest httpRequest = updateRequestBuilder(domainName, templateName, requestParameters);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+      return;
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest updateRequestBuilder(
+      String domainName, String templateName, UpdateTemplateRequest requestParameters)
+      throws ApiException {
+    // verify the required parameter 'domainName' is set
+    if (domainName == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'domainName' when calling update");
+    }
+    // verify the required parameter 'templateName' is set
+    if (templateName == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'templateName' when calling update");
+    }
+
+    String localVarPath =
+        "/v3/{domain_name}/templates/{template_name}"
+            .replaceAll(
+                "\\{" + "domain_name" + "\\}",
+                URLPathUtils.encodePathSegment(domainName.toString()))
+            .replaceAll(
+                "\\{" + "template_name" + "\\}",
+                URLPathUtils.encodePathSegment(templateName.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+    final Collection<String> localVarContentTypes = Arrays.asList("multipart/form-data");
+    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
+    final Map<String, Object> localFormParams =
+        mapper.serializeFormParameters(localVarContentTypes, requestParameters);
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.PUT,
+        localVarQueryParams,
+        localFormParams,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  @Override
+  public void updateVersion(
+      String domainName,
+      String templateName,
+      String versionName,
+      UpdateVersionRequest requestParameters)
+      throws ApiException {
+
+    LOGGER.finest(
+        "[updateVersion] "
+            + "domainName: "
+            + domainName
+            + ", "
+            + "templateName: "
+            + templateName
+            + ", "
+            + "versionName: "
+            + versionName
+            + ", "
+            + " request:"
+            + requestParameters);
+    HttpRequest httpRequest =
+        updateVersionRequestBuilder(domainName, templateName, versionName, requestParameters);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+      return;
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest updateVersionRequestBuilder(
+      String domainName,
+      String templateName,
+      String versionName,
+      UpdateVersionRequest requestParameters)
+      throws ApiException {
+    // verify the required parameter 'domainName' is set
+    if (domainName == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'domainName' when calling updateVersion");
+    }
+    // verify the required parameter 'templateName' is set
+    if (templateName == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'templateName' when calling updateVersion");
+    }
+    // verify the required parameter 'versionName' is set
+    if (versionName == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'versionName' when calling updateVersion");
+    }
+
+    String localVarPath =
+        "/v3/{domain_name}/templates/{template_name}/versions/{version_name}"
+            .replaceAll(
+                "\\{" + "domain_name" + "\\}",
+                URLPathUtils.encodePathSegment(domainName.toString()))
+            .replaceAll(
+                "\\{" + "template_name" + "\\}",
+                URLPathUtils.encodePathSegment(templateName.toString()))
+            .replaceAll(
+                "\\{" + "version_name" + "\\}",
+                URLPathUtils.encodePathSegment(versionName.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+    final Collection<String> localVarContentTypes = Arrays.asList("multipart/form-data");
+    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
+    final Map<String, Object> localFormParams =
+        mapper.serializeFormParameters(localVarContentTypes, requestParameters);
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.PUT,
+        localVarQueryParams,
+        localFormParams,
         localVarHeaderParams,
         localVarAccepts,
         localVarContentTypes,

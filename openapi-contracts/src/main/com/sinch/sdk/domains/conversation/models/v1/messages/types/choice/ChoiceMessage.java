@@ -23,6 +23,8 @@ public interface ChoiceMessage
   /**
    * The number of choices is limited to 10.
    *
+   * <p>Field is required
+   *
    * @return choices
    */
   List<Choice<?>> getChoices();
@@ -33,6 +35,13 @@ public interface ChoiceMessage
    * @return textMessage
    */
   TextMessage getTextMessage();
+
+  /**
+   * Get messageProperties
+   *
+   * @return messageProperties
+   */
+  ChoiceAdditionalProperties getMessageProperties();
 
   /**
    * Getting builder
@@ -63,6 +72,15 @@ public interface ChoiceMessage
      * @see #getTextMessage
      */
     Builder setTextMessage(TextMessage textMessage);
+
+    /**
+     * see getter
+     *
+     * @param messageProperties see getter
+     * @return Current builder
+     * @see #getMessageProperties
+     */
+    Builder setMessageProperties(ChoiceAdditionalProperties messageProperties);
 
     /**
      * Create instance

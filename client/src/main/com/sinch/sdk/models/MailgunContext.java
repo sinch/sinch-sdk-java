@@ -15,11 +15,14 @@ public class MailgunContext {
   private final MailgunRegion region;
   private final String url;
   private final Collection<String> storageUrls;
+  private final Boolean regionAsDefault;
 
-  private MailgunContext(MailgunRegion region, String url, Collection<String> storageUrls) {
+  private MailgunContext(
+      MailgunRegion region, String url, Collection<String> storageUrls, Boolean regionAsDefault) {
     this.region = region;
     this.url = url;
     this.storageUrls = null == storageUrls ? Collections.emptyList() : storageUrls;
+    this.regionAsDefault = regionAsDefault;
   }
 
   /**
@@ -73,6 +76,14 @@ public class MailgunContext {
   }
 
   /**
+   * @deprecated Helper for transition period until 2.0 release
+   */
+  @Deprecated
+  public Boolean getRegionAsDefault() {
+    return regionAsDefault;
+  }
+
+  /**
    * Getting Builder
    *
    * @return New Builder instance
@@ -103,6 +114,7 @@ public class MailgunContext {
     MailgunRegion region;
     String url;
     Collection<String> storageUrls;
+    Boolean regionAsDefault;
 
     protected Builder() {}
 
@@ -110,6 +122,7 @@ public class MailgunContext {
       this.region = null != context ? context.getRegion() : null;
       this.url = null != context ? context.getUrl() : null;
       this.storageUrls = null != context ? context.getStorageUrls() : null;
+      this.regionAsDefault = null != context ? context.getRegionAsDefault() : null;
     }
 
     /**
@@ -148,6 +161,30 @@ public class MailgunContext {
       return this;
     }
 
+    public MailgunRegion getRegion() {
+      return region;
+    }
+
+    public String getUrl() {
+      return url;
+    }
+
+    public Collection<String> getStorageUrls() {
+      return storageUrls;
+    }
+
+    public Boolean getRegionAsDefault() {
+      return regionAsDefault;
+    }
+
+    /**
+     * @deprecated Helper for transition period until 2.0 release
+     */
+    public Builder setRegionAsDefault(Boolean regionAsDefault) {
+      this.regionAsDefault = regionAsDefault;
+      return this;
+    }
+
     /**
      * Create instance
      *
@@ -156,7 +193,7 @@ public class MailgunContext {
      */
     public MailgunContext build() {
 
-      return new MailgunContext(region, url, storageUrls);
+      return new MailgunContext(region, url, storageUrls, regionAsDefault);
     }
   }
 }

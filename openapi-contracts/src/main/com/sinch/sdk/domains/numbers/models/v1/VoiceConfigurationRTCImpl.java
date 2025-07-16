@@ -59,7 +59,7 @@ public class VoiceConfigurationRTCImpl
   }
 
   @JsonProperty(JSON_PROPERTY_TYPE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<VoiceApplicationType> type() {
     return type;
   }

@@ -17,6 +17,7 @@ import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectConf
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectMxpImpl;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectPstnImpl;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectSipImpl;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectStreamImpl;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionContinueImpl;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionHangupImpl;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionParkImpl;
@@ -127,6 +128,17 @@ public final class SvamlActionInternalImpl extends AbstractOpenApiSchema {
         log.log(Level.FINER, "Input data does not match 'SvamlActionInternalImpl'", e);
       }
 
+      // deserialize SvamlActionConnectStreamImpl
+      try {
+        deserialized = tree.traverse(jp.getCodec()).readValueAs(SvamlActionConnectStreamImpl.class);
+        SvamlActionInternalImpl ret = new SvamlActionInternalImpl();
+        ret.setActualInstance(deserialized);
+        return ret;
+      } catch (Exception e) {
+        // deserialization failed, continue, log to help debugging
+        log.log(Level.FINER, "Input data does not match 'SvamlActionInternalImpl'", e);
+      }
+
       // deserialize SvamlActionContinueImpl
       try {
         deserialized = tree.traverse(jp.getCodec()).readValueAs(SvamlActionContinueImpl.class);
@@ -210,6 +222,11 @@ public final class SvamlActionInternalImpl extends AbstractOpenApiSchema {
     setActualInstance(o);
   }
 
+  public SvamlActionInternalImpl(SvamlActionConnectStreamImpl o) {
+    super("anyOf", Boolean.FALSE);
+    setActualInstance(o);
+  }
+
   public SvamlActionInternalImpl(SvamlActionContinueImpl o) {
     super("anyOf", Boolean.FALSE);
     setActualInstance(o);
@@ -235,6 +252,7 @@ public final class SvamlActionInternalImpl extends AbstractOpenApiSchema {
     schemas.put("SvamlActionConnectMxpImpl", SvamlActionConnectMxpImpl.class);
     schemas.put("SvamlActionConnectPstnImpl", SvamlActionConnectPstnImpl.class);
     schemas.put("SvamlActionConnectSipImpl", SvamlActionConnectSipImpl.class);
+    schemas.put("SvamlActionConnectStreamImpl", SvamlActionConnectStreamImpl.class);
     schemas.put("SvamlActionContinueImpl", SvamlActionContinueImpl.class);
     schemas.put("SvamlActionHangupImpl", SvamlActionHangupImpl.class);
     schemas.put("SvamlActionParkImpl", SvamlActionParkImpl.class);
@@ -247,6 +265,7 @@ public final class SvamlActionInternalImpl extends AbstractOpenApiSchema {
     mappings.put("connectMxp", SvamlActionConnectMxpImpl.class);
     mappings.put("connectPstn", SvamlActionConnectPstnImpl.class);
     mappings.put("connectSip", SvamlActionConnectSipImpl.class);
+    mappings.put("connectStream", SvamlActionConnectStreamImpl.class);
     mappings.put("continue", SvamlActionContinueImpl.class);
     mappings.put("hangup", SvamlActionHangupImpl.class);
     mappings.put("park", SvamlActionParkImpl.class);
@@ -255,6 +274,7 @@ public final class SvamlActionInternalImpl extends AbstractOpenApiSchema {
     mappings.put("svaml.action.connectMxp", SvamlActionConnectMxpImpl.class);
     mappings.put("svaml.action.connectPstn", SvamlActionConnectPstnImpl.class);
     mappings.put("svaml.action.connectSip", SvamlActionConnectSipImpl.class);
+    mappings.put("svaml.action.connectStream", SvamlActionConnectStreamImpl.class);
     mappings.put("svaml.action.continue", SvamlActionContinueImpl.class);
     mappings.put("svaml.action.hangup", SvamlActionHangupImpl.class);
     mappings.put("svaml.action.park", SvamlActionParkImpl.class);
@@ -271,8 +291,8 @@ public final class SvamlActionInternalImpl extends AbstractOpenApiSchema {
   /**
    * Set the instance that matches the anyOf child schema, check the instance parameter is valid
    * against the anyOf child schemas: SvamlActionConnectConferenceImpl, SvamlActionConnectMxpImpl,
-   * SvamlActionConnectPstnImpl, SvamlActionConnectSipImpl, SvamlActionContinueImpl,
-   * SvamlActionHangupImpl, SvamlActionParkImpl, SvamlActionRunMenuImpl
+   * SvamlActionConnectPstnImpl, SvamlActionConnectSipImpl, SvamlActionConnectStreamImpl,
+   * SvamlActionContinueImpl, SvamlActionHangupImpl, SvamlActionParkImpl, SvamlActionRunMenuImpl
    *
    * <p>It could be an instance of the 'anyOf' schemas. The anyOf child schemas may themselves be a
    * composed schema (allOf, anyOf, anyOf).
@@ -304,6 +324,12 @@ public final class SvamlActionInternalImpl extends AbstractOpenApiSchema {
     }
 
     if (JSONNavigator.isInstanceOf(
+        SvamlActionConnectStreamImpl.class, instance, new HashSet<Class<?>>())) {
+      super.setActualInstance(instance);
+      return;
+    }
+
+    if (JSONNavigator.isInstanceOf(
         SvamlActionContinueImpl.class, instance, new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
@@ -329,18 +355,20 @@ public final class SvamlActionInternalImpl extends AbstractOpenApiSchema {
     throw new RuntimeException(
         "Invalid instance type. Must be SvamlActionConnectConferenceImpl,"
             + " SvamlActionConnectMxpImpl, SvamlActionConnectPstnImpl, SvamlActionConnectSipImpl,"
-            + " SvamlActionContinueImpl, SvamlActionHangupImpl, SvamlActionParkImpl,"
-            + " SvamlActionRunMenuImpl");
+            + " SvamlActionConnectStreamImpl, SvamlActionContinueImpl, SvamlActionHangupImpl,"
+            + " SvamlActionParkImpl, SvamlActionRunMenuImpl");
   }
 
   /**
    * Get the actual instance, which can be the following: SvamlActionConnectConferenceImpl,
    * SvamlActionConnectMxpImpl, SvamlActionConnectPstnImpl, SvamlActionConnectSipImpl,
-   * SvamlActionContinueImpl, SvamlActionHangupImpl, SvamlActionParkImpl, SvamlActionRunMenuImpl
+   * SvamlActionConnectStreamImpl, SvamlActionContinueImpl, SvamlActionHangupImpl,
+   * SvamlActionParkImpl, SvamlActionRunMenuImpl
    *
    * @return The actual instance (SvamlActionConnectConferenceImpl, SvamlActionConnectMxpImpl,
-   *     SvamlActionConnectPstnImpl, SvamlActionConnectSipImpl, SvamlActionContinueImpl,
-   *     SvamlActionHangupImpl, SvamlActionParkImpl, SvamlActionRunMenuImpl)
+   *     SvamlActionConnectPstnImpl, SvamlActionConnectSipImpl, SvamlActionConnectStreamImpl,
+   *     SvamlActionContinueImpl, SvamlActionHangupImpl, SvamlActionParkImpl,
+   *     SvamlActionRunMenuImpl)
    */
   @Override
   public Object getActualInstance() {
@@ -390,6 +418,17 @@ public final class SvamlActionInternalImpl extends AbstractOpenApiSchema {
    */
   public SvamlActionConnectSipImpl getSvamlActionConnectSipImpl() throws ClassCastException {
     return (SvamlActionConnectSipImpl) super.getActualInstance();
+  }
+
+  /**
+   * Get the actual instance of `SvamlActionConnectStreamImpl`. If the actual instance is not
+   * `SvamlActionConnectStreamImpl`, the ClassCastException will be thrown.
+   *
+   * @return The actual instance of `SvamlActionConnectStreamImpl`
+   * @throws ClassCastException if the instance is not `SvamlActionConnectStreamImpl`
+   */
+  public SvamlActionConnectStreamImpl getSvamlActionConnectStreamImpl() throws ClassCastException {
+    return (SvamlActionConnectStreamImpl) super.getActualInstance();
   }
 
   /**

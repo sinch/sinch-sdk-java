@@ -38,6 +38,6 @@ class NumbersServiceTest {
 
   @Test
   void checkCredentialsWebhooks() {
-    assertDoesNotThrow(() -> new NumbersService(null, null, null).webhooks(), "Init passed");
+    assertDoesNotThrow(() -> new NumbersService(null, null, null, null).webhooks(), "Init passed");
   }
 }

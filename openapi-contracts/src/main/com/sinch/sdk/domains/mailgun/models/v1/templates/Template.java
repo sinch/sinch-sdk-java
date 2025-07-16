@@ -20,6 +20,8 @@ public interface Template {
   /**
    * Name of the template
    *
+   * <p>Field is required
+   *
    * @return name
    */
   String getName();
@@ -47,7 +49,7 @@ public interface Template {
   String getCreatedBy();
 
   /**
-   * Get id
+   * Template ID
    *
    * @return id
    * @readOnly <em>This field is returned by the server and cannot be modified</em>

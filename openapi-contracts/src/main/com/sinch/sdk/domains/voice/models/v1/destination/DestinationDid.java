@@ -24,6 +24,8 @@ public interface DestinationDid extends Destination {
   /**
    * Number that the caller has called
    *
+   * <p>Field is required
+   *
    * @return endpoint
    */
   String getEndpoint();

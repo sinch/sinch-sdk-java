@@ -21,6 +21,8 @@ public interface AgentLeftEvent
   /**
    * Get agent
    *
+   * <p>Field is required
+   *
    * @return agent
    */
   Agent getAgent();

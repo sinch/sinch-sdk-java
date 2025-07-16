@@ -29,6 +29,8 @@ public interface VerificationResultEvent
   /**
    * The ID of the verification request.
    *
+   * <p>Field is required
+   *
    * @return id
    */
   String getId();
@@ -62,12 +64,16 @@ public interface VerificationResultEvent
   /**
    * The type of the event.
    *
+   * <p>Field is required
+   *
    * @return event
    */
   EventEnum getEvent();
 
   /**
    * Get identity
+   *
+   * <p>Field is required
    *
    * @return identity
    */
@@ -90,12 +96,16 @@ public interface VerificationResultEvent
   /**
    * Get method
    *
+   * <p>Field is required
+   *
    * @return method
    */
   VerificationMethod getMethod();
 
   /**
    * Get status
+   *
+   * <p>Field is required
    *
    * @return status
    */

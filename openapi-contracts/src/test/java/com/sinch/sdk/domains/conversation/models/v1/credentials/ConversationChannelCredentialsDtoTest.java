@@ -4,9 +4,9 @@ import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
-import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -612,9 +612,8 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
 
   @Test
   void deserializeConversationChannelAppleBcDto() {
-    Assertions.assertThat(loadedConversationChannelAppleBcDto)
-        .usingRecursiveComparison()
-        .isEqualTo(conversationChannelAppleBcResponseDto);
+    TestHelpers.recursiveEquals(
+        loadedConversationChannelAppleBcDto, conversationChannelAppleBcResponseDto);
   }
 
   @Test
@@ -627,9 +626,8 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
 
   @Test
   void deserializeConversationChannelInstagramDto() {
-    Assertions.assertThat(loadedConversationChannelInstagramDto)
-        .usingRecursiveComparison()
-        .isEqualTo(conversationChannelInstagramResponseDto);
+    TestHelpers.recursiveEquals(
+        loadedConversationChannelInstagramDto, conversationChannelInstagramResponseDto);
   }
 
   @Test
@@ -642,9 +640,8 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
 
   @Test
   void deserializeConversationChannelKakaoTalkDto() throws JsonProcessingException {
-    Assertions.assertThat(loadedConversationChannelKakaoTalkDto)
-        .usingRecursiveComparison()
-        .isEqualTo(conversationChannelKakaoTalkResponseDto);
+    TestHelpers.recursiveEquals(
+        loadedConversationChannelKakaoTalkDto, conversationChannelKakaoTalkResponseDto);
   }
 
   @Test
@@ -658,9 +655,8 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
 
   @Test
   void deserializeConversationChannelKakaoTalkChatDto() {
-    Assertions.assertThat(loadedConversationChannelKakaoTalkChatDto)
-        .usingRecursiveComparison()
-        .isEqualTo(conversationChannelKakaoTalkChatResponseDto);
+    TestHelpers.recursiveEquals(
+        loadedConversationChannelKakaoTalkChatDto, conversationChannelKakaoTalkChatResponseDto);
   }
 
   @Test
@@ -672,9 +668,9 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
 
   @Test
   void deserializeConversationChannelLineDto() {
-    Assertions.assertThat(loadedConversationChannelLineDto)
-        .usingRecursiveComparison()
-        .isEqualTo(conversationChannelLineResponseDto);
+
+    TestHelpers.recursiveEquals(
+        loadedConversationChannelLineDto, conversationChannelLineResponseDto);
   }
 
   @Test
@@ -688,10 +684,11 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
   }
 
   @Test
-  void deserializeConversationChannelLineEnterpriseThailandDto() {
-    Assertions.assertThat(loadedConversationChannelLineEnterpriseThailandDto)
-        .usingRecursiveComparison()
-        .isEqualTo(conversationChannelLineEnterpriseThailandResponseDto);
+  void deserializeConversationChannelLineEnterpriseThailandDto() throws JsonProcessingException {
+
+    TestHelpers.recursiveEquals(
+        loadedConversationChannelLineEnterpriseThailandDto,
+        conversationChannelLineEnterpriseThailandResponseDto);
   }
 
   @Test
@@ -705,10 +702,11 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
   }
 
   @Test
-  void deserializeConversationChannelLineEnterpriseJapanDto() {
-    Assertions.assertThat(loadedConversationChannelLineEnterpriseJapanDto)
-        .usingRecursiveComparison()
-        .isEqualTo(conversationChannelLineEnterpriseJapanResponseDto);
+  void deserializeConversationChannelLineEnterpriseJapanDto() throws JsonProcessingException {
+
+    TestHelpers.recursiveEquals(
+        loadedConversationChannelLineEnterpriseJapanDto,
+        conversationChannelLineEnterpriseJapanResponseDto);
   }
 
   @Test
@@ -721,9 +719,8 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
 
   @Test
   void deserializeConversationChannelMessengerDto() {
-    Assertions.assertThat(loadedConversationChannelMessengerDto)
-        .usingRecursiveComparison()
-        .isEqualTo(conversationChannelMessengerResponseDto);
+    TestHelpers.recursiveEquals(
+        loadedConversationChannelMessengerDto, conversationChannelMessengerResponseDto);
   }
 
   @Test
@@ -735,9 +732,7 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
 
   @Test
   void deserializeConversationChannelMMSDto() {
-    Assertions.assertThat(loadedConversationChannelMMSDto)
-        .usingRecursiveComparison()
-        .isEqualTo(conversationChannelMMSResponseDto);
+    TestHelpers.recursiveEquals(loadedConversationChannelMMSDto, conversationChannelMMSResponseDto);
   }
 
   @Test
@@ -749,9 +744,7 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
 
   @Test
   void deserializeConversationChannelRCSDto() {
-    Assertions.assertThat(loadedConversationChannelRCSDto)
-        .usingRecursiveComparison()
-        .isEqualTo(conversationChannelRCSResponseDto);
+    TestHelpers.recursiveEquals(loadedConversationChannelRCSDto, conversationChannelRCSResponseDto);
   }
 
   @Test
@@ -763,9 +756,7 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
 
   @Test
   void deserializeConversationChannelSMSDto() {
-    Assertions.assertThat(loadedConversationChannelSMSDto)
-        .usingRecursiveComparison()
-        .isEqualTo(conversationChannelSMSResponseDto);
+    TestHelpers.recursiveEquals(loadedConversationChannelSMSDto, conversationChannelSMSResponseDto);
   }
 
   @Test
@@ -778,9 +769,8 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
 
   @Test
   void deserializeConversationChannelTelegramDto() {
-    Assertions.assertThat(loadedConversationChannelTelegramDto)
-        .usingRecursiveComparison()
-        .isEqualTo(conversationChannelTelegramResponseDto);
+    TestHelpers.recursiveEquals(
+        loadedConversationChannelTelegramDto, conversationChannelTelegramResponseDto);
   }
 
   @Test
@@ -792,9 +782,8 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
 
   @Test
   void deserializeConversationChannelViberDto() {
-    Assertions.assertThat(loadedConversationChannelViberDto)
-        .usingRecursiveComparison()
-        .isEqualTo(conversationChannelViberResponseDto);
+    TestHelpers.recursiveEquals(
+        loadedConversationChannelViberDto, conversationChannelViberResponseDto);
   }
 
   @Test
@@ -806,9 +795,8 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
 
   @Test
   void deserializeConversationChannelViberBmDto() {
-    Assertions.assertThat(loadedConversationChannelViberBmDto)
-        .usingRecursiveComparison()
-        .isEqualTo(conversationChannelViberBmResponseDto);
+    TestHelpers.recursiveEquals(
+        loadedConversationChannelViberBmDto, conversationChannelViberBmResponseDto);
   }
 
   @Test
@@ -820,9 +808,8 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
 
   @Test
   void deserializeConversationChannelWeChatDto() {
-    Assertions.assertThat(loadedConversationChannelWeChatDto)
-        .usingRecursiveComparison()
-        .isEqualTo(conversationChannelWeChatResponseDto);
+    TestHelpers.recursiveEquals(
+        loadedConversationChannelWeChatDto, conversationChannelWeChatResponseDto);
   }
 
   @Test
@@ -835,8 +822,7 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
 
   @Test
   void deserializeConversationChannelWhatsAppDto() {
-    Assertions.assertThat(loadedConversationChannelWhatsAppDto)
-        .usingRecursiveComparison()
-        .isEqualTo(conversationChannelWhatsAppResponseDto);
+    TestHelpers.recursiveEquals(
+        loadedConversationChannelWhatsAppDto, conversationChannelWhatsAppResponseDto);
   }
 }

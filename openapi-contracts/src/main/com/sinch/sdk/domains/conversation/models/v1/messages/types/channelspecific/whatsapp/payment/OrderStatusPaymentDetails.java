@@ -55,6 +55,8 @@ public interface OrderStatusPaymentDetails {
   /**
    * The new payment message status.
    *
+   * <p>Field is required
+   *
    * @return status
    */
   StatusEnum getStatus();

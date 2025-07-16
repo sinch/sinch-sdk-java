@@ -27,6 +27,8 @@ public interface MediaCardMessage
   /**
    * Url to the media file.
    *
+   * <p>Field is required
+   *
    * @return url
    */
   String getUrl();

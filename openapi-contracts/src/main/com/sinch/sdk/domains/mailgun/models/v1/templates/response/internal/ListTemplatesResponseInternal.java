@@ -20,14 +20,18 @@ import java.util.List;
 public interface ListTemplatesResponseInternal {
 
   /**
-   * Get items
+   * List of items
+   *
+   * <p>Field is required
    *
    * @return items
    */
   List<Template> getItems();
 
   /**
-   * Get paging
+   * Pagination details
+   *
+   * <p>Field is required
    *
    * @return paging
    */

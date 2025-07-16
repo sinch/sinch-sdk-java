@@ -19,9 +19,21 @@ import com.sinch.sdk.domains.sms.models.v1.inbounds.response.ListInboundsRespons
 public interface InboundsService {
 
   /**
-   * List incoming messages (using default parameters) With the list operation, you can list all
-   * inbound messages that you have received. This operation supports pagination. Inbounds are
-   * returned in reverse chronological order.
+   * Retrieve inbound message
+   *
+   * <p>This operation retrieves a specific inbound message with the provided inbound ID.
+   *
+   * @param inboundId The inbound ID found when listing inbound messages. (required)
+   * @return InboundMessage
+   * @throws ApiException if fails to make API call
+   */
+  InboundMessage get(String inboundId) throws ApiException;
+
+  /**
+   * List incoming messages (using default parameters)
+   *
+   * <p>With the list operation, you can list all inbound messages that you have received. This
+   * operation supports pagination. Inbounds are returned in reverse chronological order.
    *
    * @return ListInboundsResponse
    * @throws ApiException if fails to make API call
@@ -29,23 +41,14 @@ public interface InboundsService {
   ListInboundsResponse list() throws ApiException;
 
   /**
-   * List incoming messages With the list operation, you can list all inbound messages that you have
-   * received. This operation supports pagination. Inbounds are returned in reverse chronological
-   * order.
+   * List incoming messages
+   *
+   * <p>With the list operation, you can list all inbound messages that you have received. This
+   * operation supports pagination. Inbounds are returned in reverse chronological order.
    *
    * @param queryParameter (optional)
    * @return ListInboundsResponse
    * @throws ApiException if fails to make API call
    */
   ListInboundsResponse list(ListInboundMessagesQueryParameters queryParameter) throws ApiException;
-
-  /**
-   * Retrieve inbound message This operation retrieves a specific inbound message with the provided
-   * inbound ID.
-   *
-   * @param inboundId The inbound ID found when listing inbound messages. (required)
-   * @return InboundMessage
-   * @throws ApiException if fails to make API call
-   */
-  InboundMessage get(String inboundId) throws ApiException;
 }

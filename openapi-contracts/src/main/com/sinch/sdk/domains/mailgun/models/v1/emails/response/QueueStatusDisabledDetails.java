@@ -20,12 +20,16 @@ public interface QueueStatusDisabledDetails {
   /**
    * End date in RFC-822 date format
    *
+   * <p>Field is required
+   *
    * @return until
    */
   Instant getUntil();
 
   /**
    * Cause description
+   *
+   * <p>Field is required
    *
    * @return reason
    */

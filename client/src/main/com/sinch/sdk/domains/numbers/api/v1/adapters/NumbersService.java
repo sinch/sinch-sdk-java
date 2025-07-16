@@ -1,19 +1,28 @@
 package com.sinch.sdk.domains.numbers.api.v1.adapters;
 
-import com.sinch.sdk.auth.adapters.BasicAuthManager;
+import com.sinch.sdk.auth.adapters.OAuthManager;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
+import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.StringUtil;
+import com.sinch.sdk.domains.numbers.api.v1.AvailableRegionsService;
+import com.sinch.sdk.domains.numbers.api.v1.CallbackConfigurationService;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
+import com.sinch.sdk.domains.numbers.models.v1.EmergencyAddress;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumbersListQueryParameters;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberListRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentAnyRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumbersListQueryParameters;
+import com.sinch.sdk.domains.numbers.models.v1.request.EmergencyAddressRequest;
 import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
 import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.ValidateAddressResponse;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
@@ -27,17 +36,18 @@ import java.util.stream.Stream;
 public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.NumbersService {
 
   private static final Logger LOGGER = Logger.getLogger(NumbersService.class.getName());
-  private static final String SECURITY_SCHEME_KEYWORD_NUMBERS = "BasicAuth";
+  private static final String SECURITY_SCHEME_KEYWORD_NUMBERS = "OAuth2.0";
 
   private final UnifiedCredentials credentials;
   private final NumbersContext context;
+  private final ServerConfiguration oAuthServer;
   private final Supplier<HttpClient> httpClientSupplier;
 
   private volatile String uriUUID;
   private volatile Map<String, AuthManager> authManagers;
-  private volatile AvailableNumberService available;
-  private volatile ActiveNumberService active;
-  private volatile AvailableRegionService regions;
+  private volatile AvailableNumberServiceFacade available;
+  private volatile ActiveNumberServiceFacade active;
+  private volatile AvailableRegionsService regions;
   private volatile CallbackConfigurationService callback;
   private volatile WebHooksService webhooks;
 
@@ -48,34 +58,42 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
   public NumbersService(
       UnifiedCredentials credentials,
       NumbersContext context,
+      ServerConfiguration oAuthServer,
       Supplier<HttpClient> httpClientSupplier) {
     this.credentials = credentials;
     this.context = context;
+    this.oAuthServer = oAuthServer;
     this.httpClientSupplier = httpClientSupplier;
   }
 
-  AvailableNumberService available() {
+  AvailableNumberServiceFacade available() {
     if (null == this.available) {
       instanceLazyInit();
       this.available =
-          new AvailableNumberService(uriUUID, context, httpClientSupplier, authManagers);
+          new AvailableNumberServiceFacade(uriUUID, context, httpClientSupplier, authManagers);
     }
     return this.available;
   }
 
-  public AvailableRegionService regions() {
+  public AvailableRegionsService regions() {
     if (null == this.regions) {
       instanceLazyInit();
-      this.regions = new AvailableRegionService(uriUUID, context, httpClientSupplier, authManagers);
+      this.regions =
+          new AvailableRegionsServiceImpl(
+              httpClientSupplier.get(),
+              context.getNumbersServer(),
+              authManagers,
+              HttpMapper.getInstance(),
+              uriUUID);
     }
     return this.regions;
   }
 
-  ActiveNumberService active() {
+  ActiveNumberServiceFacade active() {
     if (null == this.active) {
       instanceLazyInit();
       this.active =
-          new ActiveNumberService(uriUUID, this, context, httpClientSupplier, authManagers);
+          new ActiveNumberServiceFacade(uriUUID, this, context, httpClientSupplier, authManagers);
     }
     return this.active;
   }
@@ -84,7 +102,12 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
     if (null == this.callback) {
       instanceLazyInit();
       this.callback =
-          new CallbackConfigurationService(uriUUID, context, httpClientSupplier, authManagers);
+          new CallbackConfigurationServiceImpl(
+              httpClientSupplier.get(),
+              context.getNumbersServer(),
+              authManagers,
+              HttpMapper.getInstance(),
+              uriUUID);
     }
     return this.callback;
   }
@@ -98,12 +121,22 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
   }
 
   public AvailableNumberListResponse searchForAvailableNumbers(
+      AvailableNumbersListQueryParameters parameters) throws ApiException {
+    return available().searchForAvailableNumbers(parameters);
+  }
+
+  @Deprecated
+  public AvailableNumberListResponse searchForAvailableNumbers(
       AvailableNumberListRequest parameters) throws ApiException {
-    return available().list(parameters);
+    return available().searchForAvailableNumbers(parameters);
   }
 
   public AvailableNumber checkAvailability(String phoneNumber) throws ApiException {
     return available().checkAvailability(phoneNumber);
+  }
+
+  public ActiveNumber rent(String phoneNumber) throws ApiException {
+    return available().rent(phoneNumber);
   }
 
   public ActiveNumber rent(String phoneNumber, AvailableNumberRentRequest parameters)
@@ -115,8 +148,15 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
     return available().rentAny(parameters);
   }
 
+  @Deprecated
   public ActiveNumberListResponse list(ActiveNumberListRequest parameters) throws ApiException {
     return active().list(parameters);
+  }
+
+  @Override
+  public ActiveNumberListResponse list(ActiveNumbersListQueryParameters queryParameter)
+      throws ApiException {
+    return active().list(queryParameter);
   }
 
   public ActiveNumber get(String phoneNumber) throws ApiException {
@@ -130,6 +170,24 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
 
   public ActiveNumber release(String phoneNumber) throws ApiException {
     return active().release(phoneNumber);
+  }
+
+  public ValidateAddressResponse validateEmergencyAddress(
+      String phoneNumber, EmergencyAddressRequest emergencyAddressRequest) throws ApiException {
+    return active().validateEmergencyAddress(phoneNumber, emergencyAddressRequest);
+  }
+
+  public EmergencyAddress provisionEmergencyAddress(
+      String phoneNumber, EmergencyAddressRequest emergencyAddressRequest) throws ApiException {
+    return active().provisionEmergencyAddress(phoneNumber, emergencyAddressRequest);
+  }
+
+  public void deprovisionEmergencyAddress(String phoneNumber) throws ApiException {
+    active().deprovisionEmergencyAddress(phoneNumber);
+  }
+
+  public EmergencyAddress getEmergencyAddress(String phoneNumber) throws ApiException {
+    return active().getEmergencyAddress(phoneNumber);
   }
 
   private void instanceLazyInit() {
@@ -153,14 +211,13 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
         LOGGER.fine(
             "Activate numbers API with server='" + context.getNumbersServer().getUrl() + "'");
 
-        AuthManager basicAuthManager =
-            new BasicAuthManager(credentials.getKeyId(), credentials.getKeySecret());
+        AuthManager authManager =
+            new OAuthManager(
+                credentials, oAuthServer, HttpMapper.getInstance(), httpClientSupplier);
 
         uriUUID = credentials.getProjectId();
         authManagers =
-            Stream.of(
-                    new AbstractMap.SimpleEntry<>(
-                        SECURITY_SCHEME_KEYWORD_NUMBERS, basicAuthManager))
+            Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_NUMBERS, authManager))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
       }
     }

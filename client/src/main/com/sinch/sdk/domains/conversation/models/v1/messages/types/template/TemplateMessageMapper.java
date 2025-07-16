@@ -13,9 +13,7 @@ import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.databind.Mapper;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.TemplateReference;
-import com.sinch.sdk.domains.conversation.models.v1.TemplateReferenceImpl;
 import com.sinch.sdk.domains.conversation.models.v1.internal.TemplateReferenceInternal;
-import com.sinch.sdk.domains.conversation.models.v1.internal.TemplateReferenceInternalImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.TemplateMessageFieldInternal;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.TemplateMessageFieldInternalImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.TemplateMessageInternal;
@@ -73,37 +71,15 @@ public class TemplateMessageMapper {
   }
 
   private static TemplateMessage convert(TemplateMessageFieldInternalImpl from) {
-    TemplateMessage.Builder builder = TemplateMessage.builder();
-
-    from.templateMessage()
-        .ifPresent(
-            f -> {
-              TemplateMessageInternalImpl impl = (TemplateMessageInternalImpl) f;
-              impl.channelTemplate()
-                  .ifPresent(
-                      m -> {
-                        Map<ConversationChannel, TemplateReference> newMap = new HashMap<>();
-                        m.forEach((channel, reference) -> newMap.put(channel, convert(reference)));
-                        builder.setChannelTemplate(newMap);
-                      });
-              impl.omniTemplate().ifPresent(o -> builder.setOmniTemplate(convert(o)));
-            });
-
-    return builder.build();
+    return from.templateMessage().map(TemplateMessageMapper::convert).orElse(null);
   }
 
   private static TemplateMessage convert(TemplateMessageInternal _from) {
 
     TemplateMessage.Builder builder = TemplateMessage.builder();
     TemplateMessageInternalImpl from = (TemplateMessageInternalImpl) _from;
-    from.channelTemplate()
-        .ifPresent(
-            m -> {
-              Map<ConversationChannel, TemplateReference> newMap = new HashMap<>();
-              m.forEach((channel, reference) -> newMap.put(channel, convert(reference)));
-              builder.setChannelTemplate(newMap);
-            });
-    from.omniTemplate().ifPresent(o -> builder.setOmniTemplate(convert(o)));
+    from.channelTemplate().ifPresent(o -> builder.setChannelTemplate(convertInternalMap(o)));
+    from.omniTemplate().ifPresent(o -> builder.setOmniTemplate(TemplateReferenceMapper.convert(o)));
     return builder.build();
   }
 
@@ -111,36 +87,26 @@ public class TemplateMessageMapper {
 
     TemplateMessageImpl from = (TemplateMessageImpl) _from;
     TemplateMessageInternal.Builder internal = TemplateMessageInternal.builder();
-
-    from.channelTemplate()
-        .ifPresent(
-            m -> {
-              Map<ConversationChannel, TemplateReferenceInternal> newMap = new HashMap<>();
-              m.forEach((channel, reference) -> newMap.put(channel, convert(reference)));
-              internal.setChannelTemplate(newMap);
-            });
-    from.omniTemplate().ifPresent(o -> internal.setOmniTemplate(convert(o)));
+    from.channelTemplate().ifPresent(o -> internal.setChannelTemplate(convertPublicMap(o)));
+    from.omniTemplate()
+        .ifPresent(o -> internal.setOmniTemplate(TemplateReferenceMapper.convert(o)));
     return internal.build();
   }
 
-  private static TemplateReferenceInternal convert(TemplateReference _from) {
-    TemplateReferenceImpl from = (TemplateReferenceImpl) _from;
-    TemplateReferenceInternal.Builder builder = TemplateReferenceInternal.builder();
-    from.languageCode().ifPresent(builder::setLanguageCode);
-    from.parameters().ifPresent(builder::setParameters);
-    from.templateId().ifPresent(builder::setTemplateId);
-    from.version().ifPresent(builder::setVersion);
-    return builder.build();
+  private static Map<ConversationChannel, TemplateReferenceInternal> convertPublicMap(
+      Map<ConversationChannel, TemplateReference> from) {
+    Map<ConversationChannel, TemplateReferenceInternal> newMap = new HashMap<>();
+    from.forEach(
+        (channel, reference) -> newMap.put(channel, TemplateReferenceMapper.convert(reference)));
+    return newMap;
   }
 
-  private static TemplateReference convert(TemplateReferenceInternal _from) {
-    TemplateReferenceInternalImpl from = (TemplateReferenceInternalImpl) _from;
-    TemplateReference.Builder builder = TemplateReference.builder();
-    from.languageCode().ifPresent(builder::setLanguageCode);
-    from.parameters().ifPresent(builder::setParameters);
-    from.templateId().ifPresent(builder::setTemplateId);
-    from.version().ifPresent(builder::setVersion);
-    return builder.build();
+  private static Map<ConversationChannel, TemplateReference> convertInternalMap(
+      Map<ConversationChannel, TemplateReferenceInternal> from) {
+    Map<ConversationChannel, TemplateReference> newMap = new HashMap<>();
+    from.forEach(
+        (channel, reference) -> newMap.put(channel, TemplateReferenceMapper.convert(reference)));
+    return newMap;
   }
 
   public static class DelegatedSerializer extends JsonSerializer<OptionalValue<TemplateMessage>> {

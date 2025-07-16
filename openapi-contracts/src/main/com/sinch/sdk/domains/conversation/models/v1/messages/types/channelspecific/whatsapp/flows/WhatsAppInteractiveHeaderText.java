@@ -49,6 +49,8 @@ public interface WhatsAppInteractiveHeaderText
   /**
    * Text for the header. Formatting allows emojis, but not Markdown.
    *
+   * <p>Field is required
+   *
    * @return text
    */
   String getText();

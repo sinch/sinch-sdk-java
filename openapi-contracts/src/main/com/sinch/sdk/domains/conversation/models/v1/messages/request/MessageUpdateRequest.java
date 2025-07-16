@@ -19,6 +19,8 @@ public interface MessageUpdateRequest {
   /**
    * Get metadata
    *
+   * <p>Field is required
+   *
    * @return metadata
    */
   String getMetadata();

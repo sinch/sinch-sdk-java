@@ -17,7 +17,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface GenericResponse {
 
   /**
-   * Get message
+   * Response message
+   *
+   * <p>Field is required
    *
    * @return message
    */

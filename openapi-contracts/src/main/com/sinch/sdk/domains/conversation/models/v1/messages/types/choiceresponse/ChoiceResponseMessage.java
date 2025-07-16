@@ -20,12 +20,16 @@ public interface ChoiceResponseMessage
   /**
    * The message id containing the choice.
    *
+   * <p>Field is required
+   *
    * @return messageId
    */
   String getMessageId();
 
   /**
    * The postback_data defined in the selected choice.
+   *
+   * <p>Field is required
    *
    * @return postbackData
    */

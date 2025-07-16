@@ -23,6 +23,8 @@ public interface OrderDetailsPaymentSettingsDynamicPix {
   /**
    * The dynamic Pix code to be used by the buyer to pay.
    *
+   * <p>Field is required
+   *
    * @return code
    */
   String getCode();
@@ -30,12 +32,16 @@ public interface OrderDetailsPaymentSettingsDynamicPix {
   /**
    * Account holder name.
    *
+   * <p>Field is required
+   *
    * @return merchantName
    */
   String getMerchantName();
 
   /**
    * Pix key.
+   *
+   * <p>Field is required
    *
    * @return key
    */
@@ -72,6 +78,8 @@ public interface OrderDetailsPaymentSettingsDynamicPix {
 
   /**
    * Pix key type.
+   *
+   * <p>Field is required
    *
    * @return keyType
    */

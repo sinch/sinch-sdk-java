@@ -1,0 +1,16 @@
+{
+  "error": {
+    "code": 404,
+    "message": "message string",
+    "status": "NOT_FOUND",
+    "details": [
+      {
+        "type": "type value",
+        "resourceType": "resource type value",
+        "resourceName": "resource name value",
+        "owner": "owner value",
+        "description": "description value"
+      }
+    ]
+  }
+}
