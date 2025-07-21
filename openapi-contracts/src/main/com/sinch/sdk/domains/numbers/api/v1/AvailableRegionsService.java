@@ -15,8 +15,7 @@ import com.sinch.sdk.domains.numbers.models.v1.regions.available.response.Availa
 import com.sinch.sdk.domains.numbers.models.v1.regions.request.AvailableRegionsListQueryParameters;
 
 /** Available Regions Service */
-public interface AvailableRegionsService
-    extends com.sinch.sdk.domains.numbers.api.v1.AvailableRegionService {
+public interface AvailableRegionsService {
 
   /**
    * List available regions (using default parameters)
