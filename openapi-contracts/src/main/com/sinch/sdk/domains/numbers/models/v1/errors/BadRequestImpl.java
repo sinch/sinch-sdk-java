@@ -98,7 +98,7 @@ public class BadRequestImpl implements BadRequest {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements BadRequest.Builder {
-    OptionalValue<TypeEnum> type = OptionalValue.of(TypeEnum.BADREQUEST);
+    OptionalValue<TypeEnum> type = OptionalValue.of(TypeEnum.BAD_REQUEST);
     OptionalValue<List<FieldViolation>> fieldViolations = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_FIELD_VIOLATIONS)
