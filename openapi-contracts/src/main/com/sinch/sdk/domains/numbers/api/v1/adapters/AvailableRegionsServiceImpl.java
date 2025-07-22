@@ -24,7 +24,6 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameterUtils;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.domains.numbers.models.v1.regions.available.request.AvailableRegionListRequest;
 import com.sinch.sdk.domains.numbers.models.v1.regions.available.response.AvailableRegionListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.regions.available.response.internal.AvailableRegionListResponseInternal;
 import com.sinch.sdk.domains.numbers.models.v1.regions.request.AvailableRegionsListQueryParameters;
@@ -133,19 +132,5 @@ public class AvailableRegionsServiceImpl
         localVarAccepts,
         localVarContentTypes,
         localVarAuthNames);
-  }
-
-  @Override
-  public AvailableRegionListResponse list(AvailableRegionListRequest parameters)
-      throws ApiException {
-
-    AvailableRegionsListQueryParameters queryParameters = null;
-    if (null != parameters) {
-      AvailableRegionsListQueryParameters.Builder builder =
-          AvailableRegionsListQueryParameters.builder();
-      parameters.getTypes().ifPresent(t -> builder.setTypes(new ArrayList<>(t)));
-      queryParameters = builder.build();
-    }
-    return list(queryParameters);
   }
 }

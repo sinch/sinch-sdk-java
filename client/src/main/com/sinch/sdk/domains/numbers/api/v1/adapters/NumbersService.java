@@ -11,10 +11,8 @@ import com.sinch.sdk.domains.numbers.api.v1.AvailableRegionsService;
 import com.sinch.sdk.domains.numbers.api.v1.CallbackConfigurationService;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.EmergencyAddress;
-import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumbersListQueryParameters;
-import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberListRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentAnyRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumbersListQueryParameters;
@@ -125,12 +123,6 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
     return available().searchForAvailableNumbers(parameters);
   }
 
-  @Deprecated
-  public AvailableNumberListResponse searchForAvailableNumbers(
-      AvailableNumberListRequest parameters) throws ApiException {
-    return available().searchForAvailableNumbers(parameters);
-  }
-
   public AvailableNumber checkAvailability(String phoneNumber) throws ApiException {
     return available().checkAvailability(phoneNumber);
   }
@@ -146,11 +138,6 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
 
   public ActiveNumber rentAny(AvailableNumberRentAnyRequest parameters) throws ApiException {
     return available().rentAny(parameters);
-  }
-
-  @Deprecated
-  public ActiveNumberListResponse list(ActiveNumberListRequest parameters) throws ApiException {
-    return active().list(parameters);
   }
 
   @Override

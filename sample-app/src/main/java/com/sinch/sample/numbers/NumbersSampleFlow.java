@@ -6,16 +6,16 @@ import static com.sinch.sample.Utils.echoStep;
 import com.sinch.sample.Utils;
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.domains.numbers.api.v1.AvailableRegionService;
+import com.sinch.sdk.domains.numbers.api.v1.AvailableRegionsService;
 import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
-import com.sinch.sdk.domains.numbers.models.v1.regions.available.request.AvailableRegionListRequest;
-import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.regions.request.AvailableRegionsListQueryParameters;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
-import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberListRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumbersListQueryParameters;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentAnyRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentRequest;
+import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumbersListQueryParameters;
 import com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern;
 import com.sinch.sdk.domains.numbers.models.v1.request.SearchPosition;
 import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
@@ -86,7 +86,7 @@ public class NumbersSampleFlow {
   }
 
   String checkAndGetRegionCodeAvailability(
-      int step, AvailableRegionService service, String regionCode) {
+      int step, AvailableRegionsService service, String regionCode) {
 
     echoStep(
         step,
@@ -97,7 +97,7 @@ public class NumbersSampleFlow {
 
     // 1. Build the request data for listing the regions that support 'LOCAL' numbers
     var availableRegionsRequestData =
-        AvailableRegionListRequest.builder()
+        AvailableRegionsListQueryParameters.builder()
             .setTypes(Collections.singletonList(NumberType.LOCAL))
             .build();
 
@@ -151,14 +151,11 @@ public class NumbersSampleFlow {
     // 1. Build the request data for listing the numbers of type 'LOCAL' in the regionCode with an
     // area code pattern
     var availableNumbersRequestData =
-        AvailableNumberListRequest.builder()
+        AvailableNumbersListQueryParameters.builder()
             .setRegionCode(regionCode)
             .setType(NumberType.LOCAL)
-            .setSearchPattern(
-                SearchPattern.builder()
-                    .setPosition(SearchPosition.START)
-                    .setPattern(codePattern)
-                    .build())
+            .setSearchPattern(codePattern)
+            .setSearchPosition(SearchPosition.START)
             .build();
 
     // 2. Request for available numbers using the built-in SDK method
@@ -264,7 +261,7 @@ public class NumbersSampleFlow {
 
     // 1. Build the request data
     var listActiveNumbersRequestData =
-        ActiveNumberListRequest.builder()
+        ActiveNumbersListQueryParameters.builder()
             .setRegionCode(regionCode)
             .setType(NumberType.LOCAL)
             .setPageSize(2) // Set a low number to demonstrate the pagination later on
@@ -318,7 +315,7 @@ public class NumbersSampleFlow {
 
     // 1. Build the request data
     var listActiveNumbersRequestData =
-        ActiveNumberListRequest.builder()
+        ActiveNumbersListQueryParameters.builder()
             .setRegionCode(regionCode)
             .setType(NumberType.LOCAL)
             .setPageSize(2) // Set a low number to demonstrate the pagination later on
