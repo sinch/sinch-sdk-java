@@ -1,9 +1,9 @@
 package com.mycompany.app;
 
-import com.sinch.sdk.domains.voice.models.svaml.ActionHangUp;
-import com.sinch.sdk.domains.voice.models.svaml.InstructionSay;
-import com.sinch.sdk.domains.voice.models.svaml.SVAMLControl;
-import com.sinch.sdk.domains.voice.models.webhooks.IncomingCallEvent;
+import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionHangup;
+import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionSay;
+import com.sinch.sdk.domains.voice.models.v1.webhooks.IncomingCallEvent;
 import java.util.Collections;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Component;
@@ -13,19 +13,19 @@ public class WebhookService {
 
   private static final Logger LOGGER = Logger.getLogger(WebhookService.class.getName());
 
-  public SVAMLControl answered(IncomingCallEvent event) {
+  public SvamlControl answered(IncomingCallEvent event) {
 
     LOGGER.info(
         "Incoming call from '%s' received for '%s' :".formatted(event.getCli(), event.getTo()));
 
-    var hangupAction = ActionHangUp.builder().build();
+    var hangupAction = SvamlActionHangup.builder().build();
 
     var sayInstruction =
-        InstructionSay.builder()
+        SvamlInstructionSay.builder()
             .setText("Thank you for calling Sinch. This call will now end.")
             .build();
 
-    return SVAMLControl.builder()
+    return SvamlControl.builder()
         .setInstructions(Collections.singletonList(sayInstruction))
         .setAction(hangupAction)
         .build();

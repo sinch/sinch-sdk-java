@@ -22,7 +22,6 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameter.STYLE;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.domains.PaginationFillerHelper;
 import com.sinch.sdk.domains.sms.api.v1.GroupsService;
 import com.sinch.sdk.domains.sms.models.v1.groups.Group;
 import com.sinch.sdk.domains.sms.models.v1.groups.request.GroupRequest;
@@ -30,6 +29,7 @@ import com.sinch.sdk.domains.sms.models.v1.groups.request.GroupUpdateRequestDtoT
 import com.sinch.sdk.domains.sms.models.v1.groups.request.ListGroupsQueryParameters;
 import com.sinch.sdk.domains.sms.models.v1.groups.response.ListGroupsResponse;
 import com.sinch.sdk.domains.sms.models.v1.groups.response.internal.ApiGroupList;
+import com.sinch.sdk.domains.voice.api.v1.adapters.PaginationFillerHelper;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
