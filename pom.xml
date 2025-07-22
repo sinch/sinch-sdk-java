@@ -142,11 +142,6 @@
                             <sourceFileExclude>**/mailgun/models/v1/response/GenericResponse.java</sourceFileExclude>
 
                             <!-- Transition period -->
-                            <sourceFileExclude>com/sinch/sdk/domains/sms/BatchesService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/sms/DeliveryReportsService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/sms/GroupsService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/sms/InboundsService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/sms/WebHooksService.java</sourceFileExclude>
 
                             <sourceFileExclude>com/sinch/sdk/domains/verification/models/*.java</sourceFileExclude>
                             <sourceFileExclude>com/sinch/sdk/domains/verification/VerificationsService.java</sourceFileExclude>
@@ -327,7 +322,6 @@
                                 <include>com.sinch.sdk.e2e.domains.mailgun.v1.MailgunIT</include>
                                 <include>com.sinch.sdk.e2e.domains.numbers.v1.NumbersIT</include>
                                 <include>com.sinch.sdk.e2e.domains.conversation.ConversationIT</include>
-                                <include>com.sinch.sdk.e2e.domains.sms.v0.SmsIT</include>
                                 <include>com.sinch.sdk.e2e.domains.sms.v1.SmsIT</include>
                                 <include>com.sinch.sdk.e2e.domains.voice.v0.VoiceIT</include>
                                 <include>com.sinch.sdk.e2e.domains.voice.v1.VoiceIT</include>
