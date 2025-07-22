@@ -152,12 +152,6 @@
                             <sourceFileExclude>com/sinch/sdk/domains/verification/VerificationsService.java</sourceFileExclude>
                             <sourceFileExclude>com/sinch/sdk/domains/verification/VerificationStatusService.java</sourceFileExclude>
                             <sourceFileExclude>com/sinch/sdk/domains/verification/WebHooksService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/numbers/models/*.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/numbers/ActiveNumberService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/numbers/AvailableNumberService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/numbers/AvailableRegionService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/numbers/CallbackConfigurationService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/numbers/WebHooksService.java</sourceFileExclude>
                             <sourceFileExclude>com/sinch/sdk/domains/voice/models/*.java</sourceFileExclude>
                             <sourceFileExclude>com/sinch/sdk/domains/voice/models/requests/*.java</sourceFileExclude>
                             <sourceFileExclude>com/sinch/sdk/domains/voice/models/response/*.java</sourceFileExclude>

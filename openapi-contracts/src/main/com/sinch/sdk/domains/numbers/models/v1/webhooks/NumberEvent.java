@@ -149,7 +149,7 @@ public interface NumberEvent {
   public class FailureCodeEnum extends EnumDynamic<String, FailureCodeEnum> {
     public static final FailureCodeEnum CAMPAIGN_NOT_AVAILABLE =
         new FailureCodeEnum("CAMPAIGN_NOT_AVAILABLE");
-    public static final FailureCodeEnum EXCEEDED_10DLC_LIMIT =
+    public static final FailureCodeEnum EXCEEDED_10_DLC_LIMIT =
         new FailureCodeEnum("EXCEEDED_10DLC_LIMIT");
     public static final FailureCodeEnum NUMBER_PROVISIONING_FAILED =
         new FailureCodeEnum("NUMBER_PROVISIONING_FAILED");
@@ -181,7 +181,7 @@ public interface NumberEvent {
             FailureCodeEnum::new,
             Arrays.asList(
                 CAMPAIGN_NOT_AVAILABLE,
-                EXCEEDED_10DLC_LIMIT,
+                EXCEEDED_10_DLC_LIMIT,
                 NUMBER_PROVISIONING_FAILED,
                 PARTNER_SERVICE_UNAVAILABLE,
                 CAMPAIGN_PENDING_ACCEPTANCE,
