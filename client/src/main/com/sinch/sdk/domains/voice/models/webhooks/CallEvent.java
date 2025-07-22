@@ -1,6 +1,5 @@
 package com.sinch.sdk.domains.voice.models.webhooks;
 
-import com.sinch.sdk.domains.sms.models.DeliveryReportBatch.Builder;
 import java.time.Instant;
 
 /** Base class for webhooks call event */
