@@ -147,16 +147,6 @@
                             <sourceFileExclude>com/sinch/sdk/domains/verification/VerificationsService.java</sourceFileExclude>
                             <sourceFileExclude>com/sinch/sdk/domains/verification/VerificationStatusService.java</sourceFileExclude>
                             <sourceFileExclude>com/sinch/sdk/domains/verification/WebHooksService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/voice/models/*.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/voice/models/requests/*.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/voice/models/response/*.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/voice/models/svaml/*.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/voice/models/webhooks/*.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/voice/ApplicationsService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/voice/CalloutsService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/voice/CallsService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/voice/ConferencesService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/voice/WebHooksService.java</sourceFileExclude>
                         </sourceFileExcludes>
                         <tags>
                             <tag>
@@ -317,7 +307,6 @@
                                 <include>com.sinch.sdk.e2e.domains.numbers.v1.NumbersIT</include>
                                 <include>com.sinch.sdk.e2e.domains.conversation.ConversationIT</include>
                                 <include>com.sinch.sdk.e2e.domains.sms.v1.SmsIT</include>
-                                <include>com.sinch.sdk.e2e.domains.voice.v0.VoiceIT</include>
                                 <include>com.sinch.sdk.e2e.domains.voice.v1.VoiceIT</include>
                                 <include>com.sinch.sdk.e2e.domains.verification.v0.VerificationIT</include>
                                 <include>com.sinch.sdk.e2e.domains.verification.v1.VerificationIT</include>

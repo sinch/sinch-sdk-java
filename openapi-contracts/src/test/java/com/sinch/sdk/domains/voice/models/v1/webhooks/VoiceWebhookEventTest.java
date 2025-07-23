@@ -71,22 +71,6 @@ public class VoiceWebhookEventTest extends VoiceBaseTest {
           .setUserRate(Price.builder().setCurrencyId("USD").setAmount(0.345F).build())
           .build();
 
-  public static AnsweredCallEvent expectedAceRequestDtoDeprecated =
-      AnsweredCallEvent.builder()
-          .setCallid("a call id")
-          .setConferenceId("a conference id")
-          .setTimestamp(Instant.parse("2024-01-19T12:49:53Z"))
-          .setVersion(1)
-          .setCustom("my custom value")
-          .setApplicationKey("my application key")
-          .setAmd(
-              AnsweredCallEventAnsweringMachineDetection.builder()
-                  .setStatus(AnsweredCallEventAnsweringMachineDetection.StatusEnum.HUMAN)
-                  .setReason(AnsweredCallEventAnsweringMachineDetection.ReasonEnum.LONGGREETING)
-                  .setDuration(15)
-                  .build())
-          .build();
-
   public static AnsweredCallEvent expectedAceRequestDto =
       AnsweredCallEvent.builder()
           .setCallid("a call id")
@@ -148,11 +132,6 @@ public class VoiceWebhookEventTest extends VoiceBaseTest {
   @Test
   void deserializeAceRequest() {
     TestHelpers.recursiveEquals(loadedAceRequestDto, expectedAceRequestDto);
-  }
-
-  @Test
-  void deserializeAceRequestDeprecated() {
-    TestHelpers.recursiveEquals(loadedAceRequestDto, expectedAceRequestDtoDeprecated);
   }
 
   @Test

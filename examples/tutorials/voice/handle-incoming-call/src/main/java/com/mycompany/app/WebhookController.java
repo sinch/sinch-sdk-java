@@ -1,7 +1,7 @@
 package com.mycompany.app;
 
 import com.sinch.sdk.domains.voice.VoiceService;
-import com.sinch.sdk.domains.voice.models.webhooks.IncomingCallEvent;
+import com.sinch.sdk.domains.voice.models.v1.webhooks.IncomingCallEvent;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,8 +36,9 @@ public class WebhookController {
     // ensure valid authentication before handling request
     var validAuth =
         voiceService
+            .v1()
             .webhooks()
-            .validateAuthenticatedRequest(
+            .validateAuthenticationHeader(
                 // The HTTP verb this controller is managing
                 "POST",
                 // The URI this path is managing
@@ -53,7 +54,7 @@ public class WebhookController {
     }
 
     // decode the payload request
-    var event = voiceService.webhooks().unserializeWebhooksEvent(body);
+    var event = voiceService.v1().webhooks().parseEvent(body);
 
     if (!(event instanceof IncomingCallEvent)) {
       return "";
@@ -62,6 +63,6 @@ public class WebhookController {
     // let business layer process the request
     var response = webhookService.answered((IncomingCallEvent) event);
 
-    return voiceService.webhooks().serializeWebhooksResponse(response);
+    return voiceService.v1().webhooks().serializeResponse(response);
   }
 }

@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains;
+package com.sinch.sdk.domains.voice.api.v1.adapters;
 
 import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameter.STYLE;

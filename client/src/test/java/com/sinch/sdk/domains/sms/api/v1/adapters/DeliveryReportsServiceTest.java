@@ -22,7 +22,6 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameter.STYLE;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.domains.PaginationFillerHelper;
 import com.sinch.sdk.domains.sms.api.v1.DeliveryReportsService;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.BatchDeliveryReport;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReceiptErrorCode;
@@ -31,6 +30,7 @@ import com.sinch.sdk.domains.sms.models.v1.deliveryreports.RecipientDeliveryRepo
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.request.ListDeliveryReportsQueryParameters;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.response.ListDeliveryReportsResponse;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.response.internal.DeliveryReportList;
+import com.sinch.sdk.domains.voice.api.v1.adapters.PaginationFillerHelper;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collection;

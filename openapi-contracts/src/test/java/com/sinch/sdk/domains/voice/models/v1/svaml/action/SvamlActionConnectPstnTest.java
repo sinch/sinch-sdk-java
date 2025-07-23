@@ -23,11 +23,7 @@ public class SvamlActionConnectPstnTest extends BaseTest {
           .setSuppressCallbacks(true)
           .setDtmf(DualToneMultiFrequency.valueOf("#w123"))
           .setIndications(IndicationsEnum.from("unknown value"))
-          .setAmd(
-              ConnectPstnAnsweringMachineDetection.builder()
-                  .setEnabled(true)
-                  .setAsync(true)
-                  .build())
+          .setAmd(AnsweringMachineDetectionQuery.builder().setEnabled(true).setAsync(true).build())
           .build();
 
   public static SvamlActionConnectPstn dto =
