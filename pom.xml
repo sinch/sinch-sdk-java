@@ -140,13 +140,6 @@
                             <sourceFileExclude>**/*Mapper.java</sourceFileExclude>
 
                             <sourceFileExclude>**/mailgun/models/v1/response/GenericResponse.java</sourceFileExclude>
-
-                            <!-- Transition period -->
-
-                            <sourceFileExclude>com/sinch/sdk/domains/verification/models/*.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/verification/VerificationsService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/verification/VerificationStatusService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/verification/WebHooksService.java</sourceFileExclude>
                         </sourceFileExcludes>
                         <tags>
                             <tag>
@@ -308,7 +301,6 @@
                                 <include>com.sinch.sdk.e2e.domains.conversation.ConversationIT</include>
                                 <include>com.sinch.sdk.e2e.domains.sms.v1.SmsIT</include>
                                 <include>com.sinch.sdk.e2e.domains.voice.v1.VoiceIT</include>
-                                <include>com.sinch.sdk.e2e.domains.verification.v0.VerificationIT</include>
                                 <include>com.sinch.sdk.e2e.domains.verification.v1.VerificationIT</include>
                             </includes>
                         </configuration>
