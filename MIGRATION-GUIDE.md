@@ -6,6 +6,12 @@ This release removes legacy SDK support.
 
 This guide lists all removed classes and interfaces from V1 and how to migrate to their V2 equivalents.
 
+### [`Conversation`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/package-summary.html)
+
+#### Replacement models
+| Old class                                        | New class                                                                                                                                                                                                                           |
+|--------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
+| models.v1.messages.types.card.CardMessageMedia   | [com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessage](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/messages/types/media/MediaMessage.html) | 
 
 ### [`Numbers`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/package-summary.html)
 
