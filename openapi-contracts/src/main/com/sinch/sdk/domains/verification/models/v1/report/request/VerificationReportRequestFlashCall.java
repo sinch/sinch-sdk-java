@@ -46,7 +46,9 @@ public interface VerificationReportRequestFlashCall
   }
 
   /**
-   * The caller ID of the flash call.
+   * The caller ID of the flash call. Caller ID in flash call verification refers to the phone
+   * number from which the call was made to the user's device. The verification system uses this
+   * incoming number as One Time Password (OTP)
    *
    * <p>Field is required
    *

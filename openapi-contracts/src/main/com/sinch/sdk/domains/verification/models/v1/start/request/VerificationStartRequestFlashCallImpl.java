@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.Identity;
-import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.v1.start.internal.VerificationMethodStart;
 import com.sinch.sdk.domains.verification.models.v1.start.request.internal.VerificationStartFlashCallOptions;
 import com.sinch.sdk.domains.verification.models.v1.start.request.internal.VerificationStartFlashCallOptionsImpl;
 import java.io.IOException;
@@ -41,7 +41,7 @@ public class VerificationStartRequestFlashCallImpl
 
   public static final String JSON_PROPERTY_METHOD = "method";
 
-  private OptionalValue<VerificationMethod> method;
+  private OptionalValue<VerificationMethodStart> method;
 
   public static final String JSON_PROPERTY_REFERENCE = "reference";
 
@@ -59,7 +59,7 @@ public class VerificationStartRequestFlashCallImpl
 
   protected VerificationStartRequestFlashCallImpl(
       OptionalValue<Identity> identity,
-      OptionalValue<VerificationMethod> method,
+      OptionalValue<VerificationMethodStart> method,
       OptionalValue<String> reference,
       OptionalValue<String> custom,
       OptionalValue<VerificationStartFlashCallOptions> flashCallOptions) {
@@ -82,13 +82,13 @@ public class VerificationStartRequestFlashCallImpl
   }
 
   @JsonIgnore
-  public VerificationMethod getMethod() {
+  public VerificationMethodStart getMethod() {
     return method.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_METHOD)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<VerificationMethod> method() {
+  public OptionalValue<VerificationMethodStart> method() {
     return method;
   }
 
@@ -193,7 +193,8 @@ public class VerificationStartRequestFlashCallImpl
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements VerificationStartRequestFlashCall.Builder {
     OptionalValue<Identity> identity = OptionalValue.empty();
-    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.FLASH_CALL);
+    OptionalValue<VerificationMethodStart> method =
+        OptionalValue.of(VerificationMethodStart.FLASH_CALL);
     OptionalValue<String> reference = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
     OptionalValue<VerificationStartFlashCallOptions> flashCallOptions = OptionalValue.empty();

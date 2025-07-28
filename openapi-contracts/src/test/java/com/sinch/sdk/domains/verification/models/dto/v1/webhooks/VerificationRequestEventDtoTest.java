@@ -6,6 +6,7 @@ import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.verification.adapters.VerificationBaseTest;
 import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.v1.Price;
+import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEvent;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventImpl;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.internal.VerificationEventInternal;
@@ -23,8 +24,7 @@ public class VerificationRequestEventDtoTest extends VerificationBaseTest {
           (VerificationRequestEventImpl)
               VerificationRequestEvent.builder()
                   .setId("1234567890")
-                  .setEvent(VerificationRequestEvent.EventEnum.VERIFICATION_REQUEST_EVENT)
-                  .setMethod(VerificationRequestEvent.MethodEnum.SMS)
+                  .setMethod(VerificationMethod.SMS)
                   .setIdentity(NumberIdentity.valueOf("+11235551234"))
                   .setReference("reference string")
                   .setCustom("custom string")

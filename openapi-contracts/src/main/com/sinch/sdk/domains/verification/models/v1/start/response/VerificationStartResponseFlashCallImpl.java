@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.v1.start.internal.VerificationMethodStart;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.VerificationStartResponseFlashCallContent;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.VerificationStartResponseFlashCallContentImpl;
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class VerificationStartResponseFlashCallImpl
 
   public static final String JSON_PROPERTY_METHOD = "method";
 
-  private OptionalValue<VerificationMethod> method;
+  private OptionalValue<VerificationMethodStart> method;
 
   public static final String JSON_PROPERTY_LINKS = "_links";
 
@@ -54,7 +54,7 @@ public class VerificationStartResponseFlashCallImpl
 
   protected VerificationStartResponseFlashCallImpl(
       OptionalValue<String> id,
-      OptionalValue<VerificationMethod> method,
+      OptionalValue<VerificationMethodStart> method,
       OptionalValue<List<Link>> links,
       OptionalValue<VerificationStartResponseFlashCallContent> flashCall) {
     this.id = id;
@@ -75,13 +75,13 @@ public class VerificationStartResponseFlashCallImpl
   }
 
   @JsonIgnore
-  public VerificationMethod getMethod() {
+  public VerificationMethodStart getMethod() {
     return method.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_METHOD)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<VerificationMethod> method() {
+  public OptionalValue<VerificationMethodStart> method() {
     return method;
   }
 
@@ -220,7 +220,8 @@ public class VerificationStartResponseFlashCallImpl
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements VerificationStartResponseFlashCall.Builder {
     OptionalValue<String> id = OptionalValue.empty();
-    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.FLASH_CALL);
+    OptionalValue<VerificationMethodStart> method =
+        OptionalValue.of(VerificationMethodStart.FLASH_CALL);
     OptionalValue<List<Link>> links = OptionalValue.empty();
     OptionalValue<VerificationStartResponseFlashCallContent> flashCall = OptionalValue.empty();
 

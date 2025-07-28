@@ -54,7 +54,7 @@ public class Start extends BaseApplication {
                   .setCodeType(CodeTypeEnum.ALPHANUMERIC)
                   .setAcceptLanguage("fr-FR")
                   .build());
-    } else if (method == VerificationMethod.DATA) {
+    } else if (method.value().equals("seamless")) {
       response =
           service.startData(VerificationStartRequestData.builder().setIdentity(identity).build());
     } else if (method == VerificationMethod.FLASH_CALL) {

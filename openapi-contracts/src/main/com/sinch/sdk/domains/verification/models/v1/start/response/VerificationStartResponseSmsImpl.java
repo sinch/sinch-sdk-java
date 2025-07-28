@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.v1.start.internal.VerificationMethodStart;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.VerificationStartResponseSmsContent;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.VerificationStartResponseSmsContentImpl;
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class VerificationStartResponseSmsImpl
 
   public static final String JSON_PROPERTY_METHOD = "method";
 
-  private OptionalValue<VerificationMethod> method;
+  private OptionalValue<VerificationMethodStart> method;
 
   public static final String JSON_PROPERTY_LINKS = "_links";
 
@@ -54,7 +54,7 @@ public class VerificationStartResponseSmsImpl
 
   protected VerificationStartResponseSmsImpl(
       OptionalValue<String> id,
-      OptionalValue<VerificationMethod> method,
+      OptionalValue<VerificationMethodStart> method,
       OptionalValue<List<Link>> links,
       OptionalValue<VerificationStartResponseSmsContent> sms) {
     this.id = id;
@@ -75,13 +75,13 @@ public class VerificationStartResponseSmsImpl
   }
 
   @JsonIgnore
-  public VerificationMethod getMethod() {
+  public VerificationMethodStart getMethod() {
     return method.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_METHOD)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<VerificationMethod> method() {
+  public OptionalValue<VerificationMethodStart> method() {
     return method;
   }
 
@@ -184,7 +184,7 @@ public class VerificationStartResponseSmsImpl
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements VerificationStartResponseSms.Builder {
     OptionalValue<String> id = OptionalValue.empty();
-    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.SMS);
+    OptionalValue<VerificationMethodStart> method = OptionalValue.of(VerificationMethodStart.SMS);
     OptionalValue<List<Link>> links = OptionalValue.empty();
     OptionalValue<VerificationStartResponseSmsContent> sms = OptionalValue.empty();
 

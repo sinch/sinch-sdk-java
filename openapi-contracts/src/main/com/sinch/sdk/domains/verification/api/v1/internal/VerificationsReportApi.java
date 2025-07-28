@@ -139,8 +139,8 @@ public class VerificationsReportApi {
 
   /**
    * Report a verification using Identity Report the received verification code to verify it, using
-   * the identity of the user (in most cases, the phone number). For an SMS PIN verification or
-   * Phone Call verification, this is the OTP code. For FlashCall, this is the CLI.
+   * the identity of the user (in most cases, the phone number). For an SMS verification or Phone
+   * Call verification, this is the OTP code. For FlashCall, this is the CLI.
    *
    * @param endpoint For type &#x60;number&#x60; use a
    *     [E.164](https://community.sinch.com/t5/Glossary/E-164/ta-p/7537)-compatible phone number.

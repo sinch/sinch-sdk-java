@@ -14,15 +14,13 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import com.sinch.sdk.domains.verification.models.v1.Identity;
-import com.sinch.sdk.domains.verification.models.v1.Price;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
 
-/** VerificationRequestEvent */
-@JsonDeserialize(builder = VerificationRequestEventImpl.Builder.class)
-public interface VerificationRequestEvent
+/** VerificationSmsDeliveredEvent */
+@JsonDeserialize(builder = VerificationSmsDeliveredEventImpl.Builder.class)
+public interface VerificationSmsDeliveredEvent
     extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent {
 
   /**
@@ -36,12 +34,12 @@ public interface VerificationRequestEvent
 
   /** The type of the event. */
   public class EventEnum extends EnumDynamic<String, EventEnum> {
-    public static final EventEnum VERIFICATION_REQUEST_EVENT =
-        new EventEnum("VerificationRequestEvent");
+    public static final EventEnum VERIFICATION_SMS_DELIVERED_EVENT =
+        new EventEnum("VerificationSmsDeliveredEvent");
 
     private static final EnumSupportDynamic<String, EventEnum> ENUM_SUPPORT =
         new EnumSupportDynamic<>(
-            EventEnum.class, EventEnum::new, Arrays.asList(VERIFICATION_REQUEST_EVENT));
+            EventEnum.class, EventEnum::new, Arrays.asList(VERIFICATION_SMS_DELIVERED_EVENT));
 
     private EventEnum(String value) {
       super(value);
@@ -98,26 +96,40 @@ public interface VerificationRequestEvent
    */
   String getCustom();
 
-  /**
-   * Get price
-   *
-   * @return price
-   */
-  Price getPrice();
+  /** The result of the SMS delivery. Possible values can be extended in the future. */
+  public class SmsResultEnum extends EnumDynamic<String, SmsResultEnum> {
+    public static final SmsResultEnum SUCCESSFUL = new SmsResultEnum("Successful");
+    public static final SmsResultEnum FAILED = new SmsResultEnum("Failed");
+
+    private static final EnumSupportDynamic<String, SmsResultEnum> ENUM_SUPPORT =
+        new EnumSupportDynamic<>(
+            SmsResultEnum.class, SmsResultEnum::new, Arrays.asList(SUCCESSFUL, FAILED));
+
+    private SmsResultEnum(String value) {
+      super(value);
+    }
+
+    public static Stream<SmsResultEnum> values() {
+      return ENUM_SUPPORT.values();
+    }
+
+    public static SmsResultEnum from(String value) {
+      return ENUM_SUPPORT.from(value);
+    }
+
+    public static String valueOf(SmsResultEnum e) {
+      return ENUM_SUPPORT.valueOf(e);
+    }
+  }
 
   /**
-   * Allows you to set or override if provided in the API request, the SMS verification content
-   * language. Only used with the SMS verification method. The content language specified in the API
-   * request or in the callback can be overridden by carrier provider specific templates, due to
-   * compliance and legal requirements, such as <a
-   * href="https://community.sinch.com/t5/SMS/Sinch-US-Short-Code-Onboarding-Overview/ta-p/7085">US
-   * shortcode requirements (pdf)</a>.
+   * The result of the SMS delivery. Possible values can be extended in the future.
    *
-   * @return acceptLanguage
-   * @deprecated
+   * <p>Field is required
+   *
+   * @return smsResult
    */
-  @Deprecated
-  List<String> getAcceptLanguage();
+  SmsResultEnum getSmsResult();
 
   /**
    * Getting builder
@@ -125,7 +137,7 @@ public interface VerificationRequestEvent
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationRequestEventImpl.Builder();
+    return new VerificationSmsDeliveredEventImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -180,27 +192,17 @@ public interface VerificationRequestEvent
     /**
      * see getter
      *
-     * @param price see getter
+     * @param smsResult see getter
      * @return Current builder
-     * @see #getPrice
+     * @see #getSmsResult
      */
-    Builder setPrice(Price price);
-
-    /**
-     * see getter
-     *
-     * @param acceptLanguage see getter
-     * @return Current builder
-     * @see #getAcceptLanguage
-     */
-    @Deprecated
-    Builder setAcceptLanguage(List<String> acceptLanguage);
+    Builder setSmsResult(SmsResultEnum smsResult);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    VerificationRequestEvent build();
+    VerificationSmsDeliveredEvent build();
   }
 }

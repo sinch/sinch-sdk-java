@@ -368,6 +368,9 @@ Use the new versioned API under `voice().v1()` to get access to [VoiceService](h
 | models/webhooks/VerificationResponseSMS           | [com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponseSms](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/models/v1/webhooks/VerificationRequestEventResponseSms.html)             |
 | models/webhooks/VerificationResultEvent           | [com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationResultEvent](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/models/v1/webhooks/VerificationResultEvent.html)                                     |
 
+- `event` field removed from `VerificationRequestEvent`, `VerificationResultEvent` events.
+- `method` values based onto common `VerificationMethod` class.
+- `VerificationMethod.DATA` enum no longer defined. No need to be replaced because not public definition is required.
 
 #### Replacement APIs
 

@@ -28,9 +28,9 @@ public interface VerificationRequestEventResponsePhoneCall
   VerificationEventResponseAction getAction();
 
   /**
-   * The Phone Call PIN that should be entered by the user. Sinch servers automatically generate PIN
-   * codes for Phone Call verification. If you want to set your own code, you can specify it in the
-   * response to the Verification Request Event.
+   * The Phone Call OTP code that should be entered by the user. Sinch servers automatically
+   * generate OTP codes for Phone Call verification. If you want to set your own code, you can
+   * specify it in the response to the Verification Request Event.
    *
    * @return code
    */
