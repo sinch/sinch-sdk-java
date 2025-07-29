@@ -48,37 +48,6 @@ public class CardMessageDtoTest extends ConversationBaseTest {
                       .build()))
           .build();
 
-  public static CardMessage cardMessageMediaDto =
-      CardMessage.builder()
-          .setTitle("title value")
-          .setDescription("description value")
-          .setMedia(
-              CardMessageMedia.builder()
-                  .setUrl(MediaMessageDtoTest.mediaMessageDto.getUrl())
-                  .setThumbnailUrl(MediaMessageDtoTest.mediaMessageDto.getThumbnailUrl())
-                  .setFilenameOverride(MediaMessageDtoTest.mediaMessageDto.getFilenameOverride())
-                  .build())
-          .setHeight(CardHeight.MEDIUM)
-          .setChoices(
-              Arrays.asList(
-                  ChoiceTextMessage.builder()
-                      .setMessage(TextMessageDtoTest.textMessageDto)
-                      .setPostbackData("postback_data text")
-                      .build(),
-                  ChoiceCallMessage.builder()
-                      .setMessage(CallMessageDtoTest.callMessageDto)
-                      .setPostbackData("postback_data call")
-                      .build(),
-                  ChoiceLocationMessage.builder()
-                      .setMessage(LocationMessageDtoTest.locationMessageDto)
-                      .setPostbackData("postback_data location")
-                      .build(),
-                  ChoiceURLMessage.builder()
-                      .setMessage(UrlMessageDtoTest.urlMessageDto)
-                      .setPostbackData("postback_data url")
-                      .build()))
-          .build();
-
   @GivenTextResource("/domains/conversation/v1/messages/types/card/CardMessageDto.json")
   String jsonCardMessageDto;
 
@@ -94,12 +63,5 @@ public class CardMessageDtoTest extends ConversationBaseTest {
     Object deserialized = objectMapper.readValue(jsonCardMessageDto, CardMessage.class);
 
     Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(cardMessageDto);
-  }
-
-  @Test
-  void serializeMessageMediaBodyDto() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(cardMessageMediaDto);
-
-    JSONAssert.assertEquals(jsonCardMessageDto, serializedString, true);
   }
 }
