@@ -84,13 +84,14 @@ This guide lists all removed classes and interfaces from V1 and how to migrate t
 
 Use the new versioned API under `numbers().v1()` to get access to [NumbersService](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/api/v1/NumbersService.html): [`sinchClient.numbers().v1()`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0./com/sinch/sdk/domains/numbers/NumbersService.html#v1())
 
-| Old interface | New Equivalent in `numbers().v1()`                                                                                                                      |
-|---------------|---------------------------------------------------------------------------------------------------------------------------------------------------------| 
-| active()      | [Direct access from v1()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/api/v1/NumbersService.html)       |
-| available()   | [Direct access from v1()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/api/v1/NumbersService.html)       |
-| regions()     | [v1().regions()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/api/v1/AvailableRegionsService.html)       |
-| callback()    | [v1().callback()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/api/v1/CallbackConfigurationService.html) |
-| webhook()     | [v1().webhooks()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/api/v1/WebHooksService.html)              |
+| Old interface    | New Equivalent in `numbers().v1()`                                                                                                                                    |
+|------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
+| active()         | [Direct access from v1()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/api/v1/NumbersService.html)                     |
+| available()      | [Direct access from v1()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/api/v1/NumbersService.html)                     |
+| regions()        | [v1().regions()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/api/v1/AvailableRegionsService.html)                     |
+| callback()       | [v1().callback()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/api/v1/CallbackConfigurationService.html)               |
+| webhook()        | [v1().webhooks()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/api/v1/WebHooksService.html)                            |
+| v1().callback()  | [v1().callbackConfiguration()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/api/v1/CallbackConfigurationService.html)  |
 
 ### [`SMS`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/package-summary.html)
 
