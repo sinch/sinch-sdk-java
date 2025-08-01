@@ -11,7 +11,7 @@
 package com.sinch.sdk.domains.sms.models.v1.deliveryreports.request;
 
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReceiptErrorCode;
+import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReceiptStatusCode;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryStatus;
 import java.time.Instant;
 import java.util.List;
@@ -59,7 +59,7 @@ public interface ListDeliveryReportsQueryParameters {
    *
    * @return code
    */
-  OptionalValue<List<DeliveryReceiptErrorCode>> getCode();
+  OptionalValue<List<DeliveryReceiptStatusCode>> getCode();
 
   /**
    * Get clientReference
@@ -141,7 +141,7 @@ public interface ListDeliveryReportsQueryParameters {
      * @return Current builder
      * @see #getCode
      */
-    Builder setCode(List<DeliveryReceiptErrorCode> code);
+    Builder setCode(List<DeliveryReceiptStatusCode> code);
 
     /**
      * see getter

@@ -4,7 +4,7 @@ import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.sms.api.v1.DeliveryReportsService;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.BatchDeliveryReport;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.BatchDeliveryReportSMS;
-import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReceiptErrorCode;
+import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReceiptStatusCode;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryStatus;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.MessageDeliveryStatus;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.RecipientDeliveryReport;
@@ -48,7 +48,8 @@ public class DeliveryReportsSteps {
             .setType(QueryReportType.SUMMARY)
             .setStatus(Arrays.asList(DeliveryStatus.DELIVERED, DeliveryStatus.FAILED))
             .setCode(
-                Arrays.asList(DeliveryReceiptErrorCode.from(15), DeliveryReceiptErrorCode.from(0)))
+                Arrays.asList(
+                    DeliveryReceiptStatusCode.from(15), DeliveryReceiptStatusCode.from(0)))
             .build();
 
     summaryReport = service.get("foo", request);
@@ -101,12 +102,12 @@ public class DeliveryReportsSteps {
             .setStatuses(
                 Arrays.asList(
                     MessageDeliveryStatus.builder()
-                        .setCode(DeliveryReceiptErrorCode.from(15))
+                        .setCode(DeliveryReceiptStatusCode.from(15))
                         .setCount(1)
                         .setStatus(DeliveryStatus.FAILED)
                         .build(),
                     MessageDeliveryStatus.builder()
-                        .setCode(DeliveryReceiptErrorCode.from(0))
+                        .setCode(DeliveryReceiptStatusCode.from(0))
                         .setCount(1)
                         .setStatus(DeliveryStatus.DELIVERED)
                         .build()))
@@ -124,13 +125,13 @@ public class DeliveryReportsSteps {
             .setStatuses(
                 Arrays.asList(
                     MessageDeliveryStatus.builder()
-                        .setCode(DeliveryReceiptErrorCode.from(0))
+                        .setCode(DeliveryReceiptStatusCode.from(0))
                         .setCount(1)
                         .setStatus(DeliveryStatus.DELIVERED)
                         .setRecipients(new HashSet<>(Collections.singletonList("12017777777")))
                         .build(),
                     MessageDeliveryStatus.builder()
-                        .setCode(DeliveryReceiptErrorCode.from(15))
+                        .setCode(DeliveryReceiptStatusCode.from(15))
                         .setCount(1)
                         .setStatus(DeliveryStatus.FAILED)
                         .setRecipients(new HashSet<>(Collections.singletonList("12018888888")))
@@ -147,7 +148,7 @@ public class DeliveryReportsSteps {
             .setCreatedAt(Instant.parse("2024-06-06T13:06:27.833Z"))
             .setBatchId("01W4FFL35P4NC4K35SMSBATCH1")
             .setClientReference("reference_e2e")
-            .setCode(DeliveryReceiptErrorCode.from(0))
+            .setCode(DeliveryReceiptStatusCode.from(0))
             .setOperatorStatusAt(Instant.parse("2024-06-06T13:06:00Z"))
             .setRecipient("12017777777")
             .setStatus(DeliveryStatus.DELIVERED)

@@ -26,7 +26,7 @@ public interface MessageDeliveryStatus {
    *
    * @return code
    */
-  DeliveryReceiptErrorCode getCode();
+  DeliveryReceiptStatusCode getCode();
 
   /**
    * The number of messages that currently has this code.
@@ -75,7 +75,7 @@ public interface MessageDeliveryStatus {
      * @return Current builder
      * @see #getCode
      */
-    Builder setCode(DeliveryReceiptErrorCode code);
+    Builder setCode(DeliveryReceiptStatusCode code);
 
     /**
      * see getter

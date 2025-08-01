@@ -78,7 +78,7 @@ public class RecipientDeliveryReportSMSImpl
 
   public static final String JSON_PROPERTY_CODE = "code";
 
-  private OptionalValue<DeliveryReceiptErrorCode> code;
+  private OptionalValue<DeliveryReceiptStatusCode> code;
 
   public static final String JSON_PROPERTY_ENCODING = "encoding";
 
@@ -115,7 +115,7 @@ public class RecipientDeliveryReportSMSImpl
       OptionalValue<Instant> createdAt,
       OptionalValue<String> batchId,
       OptionalValue<String> clientReference,
-      OptionalValue<DeliveryReceiptErrorCode> code,
+      OptionalValue<DeliveryReceiptStatusCode> code,
       OptionalValue<EncodingType> encoding,
       OptionalValue<Integer> numberOfMessageParts,
       OptionalValue<String> operator,
@@ -181,13 +181,13 @@ public class RecipientDeliveryReportSMSImpl
   }
 
   @JsonIgnore
-  public DeliveryReceiptErrorCode getCode() {
+  public DeliveryReceiptStatusCode getCode() {
     return code.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CODE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<DeliveryReceiptErrorCode> code() {
+  public OptionalValue<DeliveryReceiptStatusCode> code() {
     return code;
   }
 
@@ -347,7 +347,7 @@ public class RecipientDeliveryReportSMSImpl
     OptionalValue<Instant> createdAt = OptionalValue.empty();
     OptionalValue<String> batchId = OptionalValue.empty();
     OptionalValue<String> clientReference = OptionalValue.empty();
-    OptionalValue<DeliveryReceiptErrorCode> code = OptionalValue.empty();
+    OptionalValue<DeliveryReceiptStatusCode> code = OptionalValue.empty();
     OptionalValue<EncodingType> encoding = OptionalValue.empty();
     OptionalValue<Integer> numberOfMessageParts = OptionalValue.empty();
     OptionalValue<String> operator = OptionalValue.empty();
@@ -381,7 +381,7 @@ public class RecipientDeliveryReportSMSImpl
     }
 
     @JsonProperty(value = JSON_PROPERTY_CODE, required = true)
-    public Builder setCode(DeliveryReceiptErrorCode code) {
+    public Builder setCode(DeliveryReceiptStatusCode code) {
       this.code = OptionalValue.of(code);
       return this;
     }

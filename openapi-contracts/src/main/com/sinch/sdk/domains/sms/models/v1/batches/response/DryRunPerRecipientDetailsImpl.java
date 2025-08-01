@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.core.utils.EnumDynamic;
 import java.util.Objects;
 
 @JsonPropertyOrder({
@@ -35,7 +34,7 @@ public class DryRunPerRecipientDetailsImpl implements DryRunPerRecipientDetails 
 
   public static final String JSON_PROPERTY_ENCODING = "encoding";
 
-  private OptionalValue<EncodingEnum> encodingEnum;
+  private OptionalValue<EncodingEnum> encoding;
 
   public DryRunPerRecipientDetailsImpl() {}
 
@@ -43,16 +42,11 @@ public class DryRunPerRecipientDetailsImpl implements DryRunPerRecipientDetails 
       OptionalValue<String> recipient,
       OptionalValue<String> body,
       OptionalValue<Integer> numberOfParts,
-      OptionalValue<EncodingEnum> encodingEnum) {
+      OptionalValue<EncodingEnum> encoding) {
     this.recipient = recipient;
     this.body = body;
     this.numberOfParts = numberOfParts;
-    this.encodingEnum = encodingEnum;
-  }
-
-  @JsonIgnore
-  public String getEncoding() {
-    return encodingEnum.map(EnumDynamic::value).orElse(null);
+    this.encoding = encoding;
   }
 
   @JsonIgnore
@@ -89,14 +83,14 @@ public class DryRunPerRecipientDetailsImpl implements DryRunPerRecipientDetails 
   }
 
   @JsonIgnore
-  public EncodingEnum getEncodingEnum() {
-    return encodingEnum.orElse(null);
+  public EncodingEnum getEncoding() {
+    return encoding.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_ENCODING)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<EncodingEnum> encodingEnum() {
-    return encodingEnum;
+  public OptionalValue<EncodingEnum> encoding() {
+    return encoding;
   }
 
   /** Return true if this ApiRecipientDryRun object is equal to o. */
@@ -112,12 +106,12 @@ public class DryRunPerRecipientDetailsImpl implements DryRunPerRecipientDetails 
     return Objects.equals(this.recipient, apiRecipientDryRun.recipient)
         && Objects.equals(this.body, apiRecipientDryRun.body)
         && Objects.equals(this.numberOfParts, apiRecipientDryRun.numberOfParts)
-        && Objects.equals(this.encodingEnum, apiRecipientDryRun.encodingEnum);
+        && Objects.equals(this.encoding, apiRecipientDryRun.encoding);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(recipient, body, numberOfParts, encodingEnum);
+    return Objects.hash(recipient, body, numberOfParts, encoding);
   }
 
   @Override
@@ -127,7 +121,7 @@ public class DryRunPerRecipientDetailsImpl implements DryRunPerRecipientDetails 
     sb.append("    recipient: ").append(toIndentedString(recipient)).append("\n");
     sb.append("    body: ").append(toIndentedString(body)).append("\n");
     sb.append("    numberOfParts: ").append(toIndentedString(numberOfParts)).append("\n");
-    sb.append("    encodingEnum: ").append(toIndentedString(encodingEnum)).append("\n");
+    sb.append("    encoding: ").append(toIndentedString(encoding)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -147,12 +141,7 @@ public class DryRunPerRecipientDetailsImpl implements DryRunPerRecipientDetails 
     OptionalValue<String> recipient = OptionalValue.empty();
     OptionalValue<String> body = OptionalValue.empty();
     OptionalValue<Integer> numberOfParts = OptionalValue.empty();
-    OptionalValue<EncodingEnum> encodingEnum = OptionalValue.empty();
-
-    public Builder setEncoding(String encoding) {
-      this.encodingEnum = OptionalValue.of(EncodingEnum.from(encoding));
-      return this;
-    }
+    OptionalValue<EncodingEnum> encoding = OptionalValue.empty();
 
     @JsonProperty(value = JSON_PROPERTY_RECIPIENT, required = true)
     public Builder setRecipient(String recipient) {
@@ -173,13 +162,13 @@ public class DryRunPerRecipientDetailsImpl implements DryRunPerRecipientDetails 
     }
 
     @JsonProperty(value = JSON_PROPERTY_ENCODING, required = true)
-    public Builder setEncodingEnum(EncodingEnum encodingEnum) {
-      this.encodingEnum = OptionalValue.of(encodingEnum);
+    public Builder setEncoding(EncodingEnum encoding) {
+      this.encoding = OptionalValue.of(encoding);
       return this;
     }
 
     public DryRunPerRecipientDetails build() {
-      return new DryRunPerRecipientDetailsImpl(recipient, body, numberOfParts, encodingEnum);
+      return new DryRunPerRecipientDetailsImpl(recipient, body, numberOfParts, encoding);
     }
   }
 }
