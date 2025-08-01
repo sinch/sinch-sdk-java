@@ -10,6 +10,7 @@ import com.sinch.sdk.domains.sms.models.v1.batches.request.TextRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.UpdateTextRequest;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.BatchResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.DryRunPerRecipientDetails;
+import com.sinch.sdk.domains.sms.models.v1.batches.response.DryRunPerRecipientDetails.EncodingEnum;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.DryRunResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.ListBatchesResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.TextResponse;
@@ -268,19 +269,19 @@ public class BatchesSteps {
                         .setRecipient("12017777777")
                         .setNumberOfParts(1)
                         .setBody("Hello John!")
-                        .setEncoding("text")
+                        .setEncoding(EncodingEnum.TEXT)
                         .build(),
                     DryRunPerRecipientDetails.builder()
                         .setRecipient("12019999999")
                         .setNumberOfParts(1)
                         .setBody("Hello there!")
-                        .setEncoding("text")
+                        .setEncoding(EncodingEnum.TEXT)
                         .build(),
                     DryRunPerRecipientDetails.builder()
                         .setRecipient("12018888888")
                         .setNumberOfParts(1)
                         .setBody("Hello there!")
-                        .setEncoding("text")
+                        .setEncoding(EncodingEnum.TEXT)
                         .build()))
             .build();
 

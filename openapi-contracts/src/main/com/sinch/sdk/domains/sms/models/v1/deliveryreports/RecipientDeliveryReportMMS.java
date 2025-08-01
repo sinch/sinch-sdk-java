@@ -63,7 +63,7 @@ public interface RecipientDeliveryReportMMS extends RecipientDeliveryReport {
    *
    * @return code
    */
-  DeliveryReceiptErrorCode getCode();
+  DeliveryReceiptStatusCode getCode();
 
   /**
    * Get encoding
@@ -171,7 +171,7 @@ public interface RecipientDeliveryReportMMS extends RecipientDeliveryReport {
      * @return Current builder
      * @see #getCode
      */
-    Builder setCode(DeliveryReceiptErrorCode code);
+    Builder setCode(DeliveryReceiptStatusCode code);
 
     /**
      * see getter

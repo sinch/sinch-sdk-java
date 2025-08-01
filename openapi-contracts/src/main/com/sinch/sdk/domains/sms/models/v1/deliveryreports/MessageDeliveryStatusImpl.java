@@ -23,7 +23,7 @@ public class MessageDeliveryStatusImpl implements MessageDeliveryStatus {
 
   public static final String JSON_PROPERTY_CODE = "code";
 
-  private OptionalValue<DeliveryReceiptErrorCode> code;
+  private OptionalValue<DeliveryReceiptStatusCode> code;
 
   public static final String JSON_PROPERTY_COUNT = "count";
 
@@ -40,7 +40,7 @@ public class MessageDeliveryStatusImpl implements MessageDeliveryStatus {
   public MessageDeliveryStatusImpl() {}
 
   protected MessageDeliveryStatusImpl(
-      OptionalValue<DeliveryReceiptErrorCode> code,
+      OptionalValue<DeliveryReceiptStatusCode> code,
       OptionalValue<Integer> count,
       OptionalValue<Set<String>> recipients,
       OptionalValue<DeliveryStatus> status) {
@@ -51,13 +51,13 @@ public class MessageDeliveryStatusImpl implements MessageDeliveryStatus {
   }
 
   @JsonIgnore
-  public DeliveryReceiptErrorCode getCode() {
+  public DeliveryReceiptStatusCode getCode() {
     return code.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CODE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<DeliveryReceiptErrorCode> code() {
+  public OptionalValue<DeliveryReceiptStatusCode> code() {
     return code;
   }
 
@@ -139,13 +139,13 @@ public class MessageDeliveryStatusImpl implements MessageDeliveryStatus {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements MessageDeliveryStatus.Builder {
-    OptionalValue<DeliveryReceiptErrorCode> code = OptionalValue.empty();
+    OptionalValue<DeliveryReceiptStatusCode> code = OptionalValue.empty();
     OptionalValue<Integer> count = OptionalValue.empty();
     OptionalValue<Set<String>> recipients = OptionalValue.empty();
     OptionalValue<DeliveryStatus> status = OptionalValue.empty();
 
     @JsonProperty(value = JSON_PROPERTY_CODE, required = true)
-    public Builder setCode(DeliveryReceiptErrorCode code) {
+    public Builder setCode(DeliveryReceiptStatusCode code) {
       this.code = OptionalValue.of(code);
       return this;
     }

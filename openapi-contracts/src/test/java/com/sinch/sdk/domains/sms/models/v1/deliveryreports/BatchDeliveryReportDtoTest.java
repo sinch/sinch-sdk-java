@@ -22,7 +22,7 @@ public class BatchDeliveryReportDtoTest extends BaseTest {
           .setStatuses(
               Collections.singletonList(
                   MessageDeliveryStatus.builder()
-                      .setCode(DeliveryReceiptErrorCode.from(0))
+                      .setCode(DeliveryReceiptStatusCode.from(0))
                       .setCount(1)
                       .setRecipients(Collections.singleton("44231235674"))
                       .setStatus(DeliveryStatus.DELIVERED)
@@ -37,7 +37,7 @@ public class BatchDeliveryReportDtoTest extends BaseTest {
           .setStatuses(
               Collections.singletonList(
                   MessageDeliveryStatus.builder()
-                      .setCode(DeliveryReceiptErrorCode.from(0))
+                      .setCode(DeliveryReceiptStatusCode.from(0))
                       .setCount(1)
                       .setRecipients(Collections.singleton("44231235674"))
                       .setStatus(DeliveryStatus.DELIVERED)

@@ -24,13 +24,6 @@ import java.util.stream.Stream;
 public interface DryRunPerRecipientDetails {
 
   /**
-   * @see #getEncodingEnum
-   * @deprecated
-   */
-  @Deprecated
-  String getEncoding();
-
-  /**
    * Sender number. Required if Automatic Default Originator not configured.
    *
    * <p>Field is required
@@ -57,7 +50,7 @@ public interface DryRunPerRecipientDetails {
    */
   Integer getNumberOfParts();
 
-  /** Gets or Sets encodingEnum */
+  /** Gets or Sets encoding */
   public class EncodingEnum extends EnumDynamic<String, EncodingEnum> {
     public static final EncodingEnum TEXT = new EncodingEnum("text");
     public static final EncodingEnum UNICODE = new EncodingEnum("unicode");
@@ -84,13 +77,13 @@ public interface DryRunPerRecipientDetails {
   }
 
   /**
-   * Get encodingEnum
+   * Get encoding
    *
    * <p>Field is required
    *
-   * @return encodingEnum
+   * @return encoding
    */
-  EncodingEnum getEncodingEnum();
+  EncodingEnum getEncoding();
 
   /**
    * Getting builder
@@ -103,9 +96,6 @@ public interface DryRunPerRecipientDetails {
 
   /** Dedicated Builder */
   interface Builder {
-
-    @Deprecated
-    Builder setEncoding(String encoding);
 
     /**
      * see getter
@@ -137,11 +127,11 @@ public interface DryRunPerRecipientDetails {
     /**
      * see getter
      *
-     * @param encodingEnum see getter
+     * @param encoding see getter
      * @return Current builder
-     * @see #getEncodingEnum
+     * @see #getEncoding
      */
-    Builder setEncodingEnum(EncodingEnum encodingEnum);
+    Builder setEncoding(EncodingEnum encoding);
 
     /**
      * Create instance
