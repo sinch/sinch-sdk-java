@@ -20,7 +20,7 @@ public class WebhooksSteps {
   @Given("^the Numbers service \"Callback Configuration\" is available$")
   public void serviceAvailable() {
 
-    service = Config.getSinchClient().numbers().v1().callback();
+    service = Config.getSinchClient().numbers().v1().callbackConfiguration();
   }
 
   @When("^I send a request to retrieve the callback configuration$")

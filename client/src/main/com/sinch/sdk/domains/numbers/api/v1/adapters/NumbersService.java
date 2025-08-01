@@ -46,7 +46,7 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
   private volatile AvailableNumberServiceFacade available;
   private volatile ActiveNumberServiceFacade active;
   private volatile AvailableRegionsService regions;
-  private volatile CallbackConfigurationService callback;
+  private volatile CallbackConfigurationService callbackConfiguration;
   private volatile WebHooksService webhooks;
 
   static {
@@ -96,10 +96,10 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
     return this.active;
   }
 
-  public CallbackConfigurationService callback() {
-    if (null == this.callback) {
+  public CallbackConfigurationService callbackConfiguration() {
+    if (null == this.callbackConfiguration) {
       instanceLazyInit();
-      this.callback =
+      this.callbackConfiguration =
           new CallbackConfigurationServiceImpl(
               httpClientSupplier.get(),
               context.getNumbersServer(),
@@ -107,7 +107,7 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
               HttpMapper.getInstance(),
               uriUUID);
     }
-    return this.callback;
+    return this.callbackConfiguration;
   }
 
   public WebHooksService webhooks() {

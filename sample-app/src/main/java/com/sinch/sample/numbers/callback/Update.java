@@ -23,7 +23,7 @@ public class Update extends BaseApplication {
 
   public void run() {
 
-    CallbackConfigurationService service = client.numbers().v1().callback();
+    CallbackConfigurationService service = client.numbers().v1().callbackConfiguration();
 
     LOGGER.info("Update");
 

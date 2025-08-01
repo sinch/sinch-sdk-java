@@ -27,7 +27,8 @@ class NumbersServiceTest {
 
   @Test
   void checkCredentialsCallback() {
-    CredentialsValidationHelper.checkCredentials(() -> httpClient, NumbersService::callback);
+    CredentialsValidationHelper.checkCredentials(
+        () -> httpClient, NumbersService::callbackConfiguration);
   }
 
   @Test
