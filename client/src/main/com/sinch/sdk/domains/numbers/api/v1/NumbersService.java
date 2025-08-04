@@ -34,9 +34,9 @@ public interface NumbersService extends ActiveNumberService, AvailableNumberServ
    * Callbacks Configuration Service instance
    *
    * @return service instance for project
-   * @since 1.2
+   * @since 2.0
    */
-  CallbackConfigurationService callback();
+  CallbackConfigurationService callbackConfiguration();
 
   /**
    * Webhooks helpers instance
