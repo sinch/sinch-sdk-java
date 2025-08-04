@@ -75,6 +75,10 @@ public class OverridePropertiesImpl implements OverrideProperties {
 
   private OptionalValue<Boolean> testMode;
 
+  public static final String PROPERTY_ARCHIVE_TO = "o:archive-to";
+
+  private OptionalValue<String> archiveTo;
+
   public OverridePropertiesImpl() {}
 
   protected OverridePropertiesImpl(
@@ -93,7 +97,8 @@ public class OverridePropertiesImpl implements OverrideProperties {
       OptionalValue<String> sendingIpPool,
       OptionalValue<Boolean> requireTls,
       OptionalValue<Boolean> skipVerification,
-      OptionalValue<Boolean> testMode) {
+      OptionalValue<Boolean> testMode,
+      OptionalValue<String> archiveTo) {
     this.tag = tag;
     this.deliveryTimeOptimizePeriod = deliveryTimeOptimizePeriod;
     this.enableDkimSignature = enableDkimSignature;
@@ -110,6 +115,7 @@ public class OverridePropertiesImpl implements OverrideProperties {
     this.requireTls = requireTls;
     this.skipVerification = skipVerification;
     this.testMode = testMode;
+    this.archiveTo = archiveTo;
   }
 
   public List<String> getTag() {
@@ -264,6 +270,15 @@ public class OverridePropertiesImpl implements OverrideProperties {
     return testMode;
   }
 
+  public String getArchiveTo() {
+    return archiveTo.orElse(null);
+  }
+
+  @Property(PROPERTY_ARCHIVE_TO)
+  public OptionalValue<String> archiveTo() {
+    return archiveTo;
+  }
+
   /** Return true if this overrideProperties object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -291,7 +306,8 @@ public class OverridePropertiesImpl implements OverrideProperties {
         && Objects.equals(this.sendingIpPool, overrideProperties.sendingIpPool)
         && Objects.equals(this.requireTls, overrideProperties.requireTls)
         && Objects.equals(this.skipVerification, overrideProperties.skipVerification)
-        && Objects.equals(this.testMode, overrideProperties.testMode);
+        && Objects.equals(this.testMode, overrideProperties.testMode)
+        && Objects.equals(this.archiveTo, overrideProperties.archiveTo);
   }
 
   @Override
@@ -312,7 +328,8 @@ public class OverridePropertiesImpl implements OverrideProperties {
         sendingIpPool,
         requireTls,
         skipVerification,
-        testMode);
+        testMode,
+        archiveTo);
   }
 
   @Override
@@ -343,6 +360,7 @@ public class OverridePropertiesImpl implements OverrideProperties {
     sb.append("    requireTls: ").append(toIndentedString(requireTls)).append("\n");
     sb.append("    skipVerification: ").append(toIndentedString(skipVerification)).append("\n");
     sb.append("    testMode: ").append(toIndentedString(testMode)).append("\n");
+    sb.append("    archiveTo: ").append(toIndentedString(archiveTo)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -374,6 +392,7 @@ public class OverridePropertiesImpl implements OverrideProperties {
     OptionalValue<Boolean> requireTls = OptionalValue.empty();
     OptionalValue<Boolean> skipVerification = OptionalValue.empty();
     OptionalValue<Boolean> testMode = OptionalValue.empty();
+    OptionalValue<String> archiveTo = OptionalValue.empty();
 
     @Property(value = PROPERTY_TAG)
     public Builder setTag(List<String> tag) {
@@ -471,6 +490,12 @@ public class OverridePropertiesImpl implements OverrideProperties {
       return this;
     }
 
+    @Property(value = PROPERTY_ARCHIVE_TO)
+    public Builder setArchiveTo(String archiveTo) {
+      this.archiveTo = OptionalValue.of(archiveTo);
+      return this;
+    }
+
     public OverrideProperties build() {
       return new OverridePropertiesImpl(
           tag,
@@ -488,7 +513,8 @@ public class OverridePropertiesImpl implements OverrideProperties {
           sendingIpPool,
           requireTls,
           skipVerification,
-          testMode);
+          testMode,
+          archiveTo);
     }
   }
 }

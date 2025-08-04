@@ -65,6 +65,7 @@ public class SendEmailRequestTest extends BaseTest {
             "o:dkim","true",
             "o:secondary-dkim","example.com/s1",
             "o:secondary-dkim-public","public.example.com/s1",
+            "o:archive-to","http://an-archive-to-dest.com",
             "o:deliverytime", "Sat, 22 Jan 2000 11:23:45 GMT",
             "o:deliverytime-optimize-period", "29h",
             "o:time-zone-localize","02:04PM",
@@ -105,6 +106,7 @@ public class SendEmailRequestTest extends BaseTest {
               "o:dkim","true",
               "o:secondary-dkim","example.com/s1",
               "o:secondary-dkim-public","public.example.com/s1",
+              "o:archive-to","http://an-archive-to-dest.com",
               "o:deliverytime", "Sat, 22 Jan 2000 11:23:45 GMT",
               "o:deliverytime-optimize-period", "29h",
               "o:time-zone-localize","02:04PM",
@@ -157,6 +159,7 @@ public class SendEmailRequestTest extends BaseTest {
                   .setSendingIp("192.168.0.10")
                   .setSendingIpPool("sending pool ID")
                   .setTrackingPixelLocationTop(TrueFalseHtmlonlyEnum.HTMLONLY)
+                  .setArchiveTo("http://an-archive-to-dest.com")
                   .build())
           .setCustomVariables(CUSTOM_VARIABLES)
           .setCustomHeaders(CUSTOM_HEADERS)
@@ -193,6 +196,7 @@ public class SendEmailRequestTest extends BaseTest {
                   .setSendingIp("192.168.0.10")
                   .setSendingIpPool("sending pool ID")
                   .setTrackingPixelLocationTop(TrueFalseHtmlonlyEnum.HTMLONLY)
+                  .setArchiveTo("http://an-archive-to-dest.com")
                   .build())
           .setTemplateProperties(
               TemplateProperties.builder()
