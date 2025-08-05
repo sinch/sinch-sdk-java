@@ -24,7 +24,7 @@ import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.sms.api.v1.DeliveryReportsService;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.BatchDeliveryReport;
-import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReceiptErrorCode;
+import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReceiptStatusCode;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryStatus;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.RecipientDeliveryReport;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.request.ListDeliveryReportsQueryParameters;
@@ -214,7 +214,8 @@ class DeliveryReportsServiceTest extends BaseTest {
             false,
             "code",
             Arrays.asList(
-                DeliveryReceiptErrorCode.DISPATCHED, DeliveryReceiptErrorCode.UNPROVISIONED_REGION),
+                DeliveryReceiptStatusCode.DISPATCHED,
+                DeliveryReceiptStatusCode.UNPROVISIONED_REGION),
             STYLE.FORM,
             false,
             "client_reference",
@@ -293,8 +294,8 @@ class DeliveryReportsServiceTest extends BaseTest {
             .setStatus(Arrays.asList(DeliveryStatus.QUEUED, DeliveryStatus.DISPATCHED))
             .setCode(
                 Arrays.asList(
-                    DeliveryReceiptErrorCode.DISPATCHED,
-                    DeliveryReceiptErrorCode.UNPROVISIONED_REGION))
+                    DeliveryReceiptStatusCode.DISPATCHED,
+                    DeliveryReceiptStatusCode.UNPROVISIONED_REGION))
             .setClientReference("client reference")
             .build();
 

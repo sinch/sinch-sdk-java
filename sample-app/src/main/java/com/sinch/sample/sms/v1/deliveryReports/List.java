@@ -2,7 +2,7 @@ package com.sinch.sample.sms.v1.deliveryReports;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.sms.api.v1.DeliveryReportsService;
-import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReceiptErrorCode;
+import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReceiptStatusCode;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryStatus;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.request.ListDeliveryReportsQueryParameters;
 import java.io.IOException;
@@ -37,7 +37,7 @@ public class List extends BaseApplication {
                 .setStatus(Arrays.asList(DeliveryStatus.CANCELLED, DeliveryStatus.FAILED))
                 .setCode(
                     Arrays.asList(
-                        DeliveryReceiptErrorCode.from(0), DeliveryReceiptErrorCode.DISPATCHED))
+                        DeliveryReceiptStatusCode.from(0), DeliveryReceiptStatusCode.DISPATCHED))
                 .build())
         .iterator()
         .forEachRemaining(f -> LOGGER.info(f.toString()));

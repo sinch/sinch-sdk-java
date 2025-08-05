@@ -3,7 +3,7 @@ package com.sinch.sdk.e2e.domains.sms.v1;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.sms.api.v1.WebHooksService;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.BatchDeliveryReportSMS;
-import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReceiptErrorCode;
+import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReceiptStatusCode;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryStatus;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.MessageDeliveryStatus;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.RecipientDeliveryReportSMS;
@@ -98,7 +98,7 @@ public class WebhooksSteps {
             .setStatuses(
                 Arrays.asList(
                     MessageDeliveryStatus.builder()
-                        .setCode(DeliveryReceiptErrorCode.from(0))
+                        .setCode(DeliveryReceiptStatusCode.from(0))
                         .setCount(2)
                         .setRecipients(new HashSet<>(Arrays.asList("12017777777", "33612345678")))
                         .setStatus(DeliveryStatus.DELIVERED)
@@ -118,7 +118,7 @@ public class WebhooksSteps {
             .setCreatedAt(Instant.parse("2024-06-06T08:17:19.210Z"))
             .setBatchId("01W4FFL35P4NC4K35SMSBATCH9")
             .setClientReference("client-ref")
-            .setCode(DeliveryReceiptErrorCode.from(0))
+            .setCode(DeliveryReceiptStatusCode.from(0))
             .setOperatorStatusAt(Instant.parse("2024-06-06T08:17:00Z"))
             .setRecipient("12017777777")
             .setStatus(DeliveryStatus.DELIVERED)
@@ -135,7 +135,7 @@ public class WebhooksSteps {
             .setCreatedAt(Instant.parse("2024-06-06T08:17:15.603Z"))
             .setBatchId("01W4FFL35P4NC4K35SMSBATCH9")
             .setClientReference("client-ref")
-            .setCode(DeliveryReceiptErrorCode.UNPROVISIONED_REGION)
+            .setCode(DeliveryReceiptStatusCode.UNPROVISIONED_REGION)
             .setRecipient("12010000000")
             .setStatus(DeliveryStatus.ABORTED)
             .build();
