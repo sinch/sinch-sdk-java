@@ -173,6 +173,15 @@ public interface OverrideProperties {
   Boolean getTestMode();
 
   /**
+   * If a message is successfully delivered, then a copy of the message is submitted in an HTTP POST
+   * request to the URL provided in this parameter. The Content-Type of the POST requests is
+   * application/mime and the request body is exactly what the recipient SMTP server received.
+   *
+   * @return archiveTo
+   */
+  String getArchiveTo();
+
+  /**
    * Getting builder
    *
    * @return New Builder instance
@@ -327,6 +336,15 @@ public interface OverrideProperties {
      * @see #getTestMode
      */
     Builder setTestMode(Boolean testMode);
+
+    /**
+     * see getter
+     *
+     * @param archiveTo see getter
+     * @return Current builder
+     * @see #getArchiveTo
+     */
+    Builder setArchiveTo(String archiveTo);
 
     /**
      * Create instance
