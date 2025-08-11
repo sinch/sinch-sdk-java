@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.Identity;
-import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.v1.start.internal.VerificationMethodStart;
 import java.util.Objects;
 
 @JsonPropertyOrder({
@@ -30,7 +30,7 @@ public class VerificationStartRequestDataImpl
 
   public static final String JSON_PROPERTY_METHOD = "method";
 
-  private OptionalValue<VerificationMethod> method;
+  private OptionalValue<VerificationMethodStart> method;
 
   public static final String JSON_PROPERTY_REFERENCE = "reference";
 
@@ -44,7 +44,7 @@ public class VerificationStartRequestDataImpl
 
   protected VerificationStartRequestDataImpl(
       OptionalValue<Identity> identity,
-      OptionalValue<VerificationMethod> method,
+      OptionalValue<VerificationMethodStart> method,
       OptionalValue<String> reference,
       OptionalValue<String> custom) {
     this.identity = identity;
@@ -65,13 +65,13 @@ public class VerificationStartRequestDataImpl
   }
 
   @JsonIgnore
-  public VerificationMethod getMethod() {
+  public VerificationMethodStart getMethod() {
     return method.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_METHOD)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<VerificationMethod> method() {
+  public OptionalValue<VerificationMethodStart> method() {
     return method;
   }
 
@@ -144,7 +144,7 @@ public class VerificationStartRequestDataImpl
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements VerificationStartRequestData.Builder {
     OptionalValue<Identity> identity = OptionalValue.empty();
-    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.DATA);
+    OptionalValue<VerificationMethodStart> method = OptionalValue.of(VerificationMethodStart.DATA);
     OptionalValue<String> reference = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
 

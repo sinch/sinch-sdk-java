@@ -18,9 +18,9 @@ import java.util.List;
 public interface VerificationRequestEventResponseSmsContent {
 
   /**
-   * The SMS PIN that should be used. By default, the Sinch dashboard will automatically generate
-   * PIN codes for SMS verification. If you want to set your own PIN, you can specify it in the
-   * response to the Verification Request Event.
+   * The SMS OTP code that should be used. By default, the Sinch dashboard will automatically
+   * generate OTP codes for SMS verification. If you want to set your own OTP, you can specify it in
+   * the response to the Verification Request Event.
    *
    * @return code
    */

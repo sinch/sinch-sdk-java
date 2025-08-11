@@ -18,6 +18,7 @@ import com.sinch.sdk.core.models.AbstractOpenApiSchema;
 import com.sinch.sdk.core.utils.databind.JSONNavigator;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventImpl;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationResultEventImpl;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationSmsDeliveredEventImpl;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -87,12 +88,18 @@ public class VerificationEventInternalImpl extends AbstractOpenApiSchema
               tree.traverse(jp.getCodec()).readValueAs(VerificationResultEventImpl.class);
           newVerificationEventInternalImpl.setActualInstance(deserialized);
           return newVerificationEventInternalImpl;
+        case "VerificationSmsDeliveredEvent":
+          deserialized =
+              tree.traverse(jp.getCodec()).readValueAs(VerificationSmsDeliveredEventImpl.class);
+          newVerificationEventInternalImpl.setActualInstance(deserialized);
+          return newVerificationEventInternalImpl;
         default:
           log.log(
               Level.WARNING,
               String.format(
                   "Failed to lookup discriminator value `%s` for VerificationEventInternalImpl."
-                      + " Possible values: VerificationRequestEvent VerificationResultEvent",
+                      + " Possible values: VerificationRequestEvent VerificationResultEvent"
+                      + " VerificationSmsDeliveredEvent",
                   discriminatorValue));
       }
 
@@ -183,6 +190,49 @@ public class VerificationEventInternalImpl extends AbstractOpenApiSchema
         log.log(Level.FINER, "Input data does not match schema 'VerificationResultEventImpl'", e);
       }
 
+      // deserialize VerificationSmsDeliveredEventImpl
+      try {
+        boolean attemptParsing = true;
+        // ensure that we respect type coercion as set on the client ObjectMapper
+        if (VerificationSmsDeliveredEventImpl.class.equals(Integer.class)
+            || VerificationSmsDeliveredEventImpl.class.equals(Long.class)
+            || VerificationSmsDeliveredEventImpl.class.equals(Float.class)
+            || VerificationSmsDeliveredEventImpl.class.equals(Double.class)
+            || VerificationSmsDeliveredEventImpl.class.equals(Boolean.class)
+            || VerificationSmsDeliveredEventImpl.class.equals(String.class)) {
+          attemptParsing = typeCoercion;
+          if (!attemptParsing) {
+            attemptParsing |=
+                ((VerificationSmsDeliveredEventImpl.class.equals(Integer.class)
+                        || VerificationSmsDeliveredEventImpl.class.equals(Long.class))
+                    && token == JsonToken.VALUE_NUMBER_INT);
+            attemptParsing |=
+                ((VerificationSmsDeliveredEventImpl.class.equals(Float.class)
+                        || VerificationSmsDeliveredEventImpl.class.equals(Double.class))
+                    && token == JsonToken.VALUE_NUMBER_FLOAT);
+            attemptParsing |=
+                (VerificationSmsDeliveredEventImpl.class.equals(Boolean.class)
+                    && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
+            attemptParsing |=
+                (VerificationSmsDeliveredEventImpl.class.equals(String.class)
+                    && token == JsonToken.VALUE_STRING);
+          }
+        }
+        if (attemptParsing) {
+          deserialized =
+              tree.traverse(jp.getCodec()).readValueAs(VerificationSmsDeliveredEventImpl.class);
+          // TODO: there is no validation against JSON schema constraints
+          // (min, max, enum, pattern...), this does not perform a strict JSON
+          // validation, which means the 'match' count may be higher than it should be.
+          match++;
+          log.log(Level.FINER, "Input data matches schema 'VerificationSmsDeliveredEventImpl'");
+        }
+      } catch (Exception e) {
+        // deserialization failed, continue
+        log.log(
+            Level.FINER, "Input data does not match schema 'VerificationSmsDeliveredEventImpl'", e);
+      }
+
       if (match == 1) {
         VerificationEventInternalImpl ret = new VerificationEventInternalImpl();
         ret.setActualInstance(deserialized);
@@ -221,15 +271,22 @@ public class VerificationEventInternalImpl extends AbstractOpenApiSchema
     setActualInstance(o);
   }
 
+  public VerificationEventInternalImpl(VerificationSmsDeliveredEventImpl o) {
+    super("oneOf", Boolean.FALSE);
+    setActualInstance(o);
+  }
+
   static {
     schemas.put("VerificationRequestEventImpl", VerificationRequestEventImpl.class);
     schemas.put("VerificationResultEventImpl", VerificationResultEventImpl.class);
+    schemas.put("VerificationSmsDeliveredEventImpl", VerificationSmsDeliveredEventImpl.class);
     JSONNavigator.registerDescendants(
         VerificationEventInternalImpl.class, Collections.unmodifiableMap(schemas));
     // Initialize and register the discriminator mappings.
     Map<String, Class<?>> mappings = new HashMap<String, Class<?>>();
     mappings.put("VerificationRequestEvent", VerificationRequestEventImpl.class);
     mappings.put("VerificationResultEvent", VerificationResultEventImpl.class);
+    mappings.put("VerificationSmsDeliveredEvent", VerificationSmsDeliveredEventImpl.class);
     mappings.put("VerificationEvent", VerificationEventInternalImpl.class);
     JSONNavigator.registerDiscriminator(VerificationEventInternalImpl.class, "event", mappings);
   }
@@ -241,7 +298,8 @@ public class VerificationEventInternalImpl extends AbstractOpenApiSchema
 
   /**
    * Set the instance that matches the oneOf child schema, check the instance parameter is valid
-   * against the oneOf child schemas: VerificationRequestEventImpl, VerificationResultEventImpl
+   * against the oneOf child schemas: VerificationRequestEventImpl, VerificationResultEventImpl,
+   * VerificationSmsDeliveredEventImpl
    *
    * <p>It could be an instance of the 'oneOf' schemas. The oneOf child schemas may themselves be a
    * composed schema (allOf, anyOf, oneOf).
@@ -260,15 +318,23 @@ public class VerificationEventInternalImpl extends AbstractOpenApiSchema
       return;
     }
 
+    if (JSONNavigator.isInstanceOf(
+        VerificationSmsDeliveredEventImpl.class, instance, new HashSet<Class<?>>())) {
+      super.setActualInstance(instance);
+      return;
+    }
+
     throw new RuntimeException(
-        "Invalid instance type. Must be VerificationRequestEventImpl, VerificationResultEventImpl");
+        "Invalid instance type. Must be VerificationRequestEventImpl, VerificationResultEventImpl,"
+            + " VerificationSmsDeliveredEventImpl");
   }
 
   /**
    * Get the actual instance, which can be the following: VerificationRequestEventImpl,
-   * VerificationResultEventImpl
+   * VerificationResultEventImpl, VerificationSmsDeliveredEventImpl
    *
-   * @return The actual instance (VerificationRequestEventImpl, VerificationResultEventImpl)
+   * @return The actual instance (VerificationRequestEventImpl, VerificationResultEventImpl,
+   *     VerificationSmsDeliveredEventImpl)
    */
   @Override
   public Object getActualInstance() {
@@ -295,5 +361,17 @@ public class VerificationEventInternalImpl extends AbstractOpenApiSchema
    */
   public VerificationResultEventImpl getVerificationResultEventImpl() throws ClassCastException {
     return (VerificationResultEventImpl) super.getActualInstance();
+  }
+
+  /**
+   * Get the actual instance of `VerificationSmsDeliveredEventImpl`. If the actual instance is not
+   * `VerificationSmsDeliveredEventImpl`, the ClassCastException will be thrown.
+   *
+   * @return The actual instance of `VerificationSmsDeliveredEventImpl`
+   * @throws ClassCastException if the instance is not `VerificationSmsDeliveredEventImpl`
+   */
+  public VerificationSmsDeliveredEventImpl getVerificationSmsDeliveredEventImpl()
+      throws ClassCastException {
+    return (VerificationSmsDeliveredEventImpl) super.getActualInstance();
   }
 }

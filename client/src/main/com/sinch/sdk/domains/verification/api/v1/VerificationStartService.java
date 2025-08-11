@@ -24,8 +24,7 @@ import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationS
 public interface VerificationStartService {
 
   /**
-   * Start verification by {@link
-   * com.sinch.sdk.domains.verification.models.v1.VerificationMethod#SMS}
+   * Start verification by SMS
    *
    * @param parameters Parameters to be used to start verification
    * @return Verification response
@@ -34,8 +33,7 @@ public interface VerificationStartService {
   VerificationStartResponseSms startSms(VerificationStartRequestSms parameters);
 
   /**
-   * Start verification by {@link
-   * com.sinch.sdk.domains.verification.models.v1.VerificationMethod#FLASH_CALL}
+   * Start verification by FLASH_CALL
    *
    * @param parameters Parameters to be used to start verification
    * @return Verification response
@@ -44,8 +42,7 @@ public interface VerificationStartService {
   VerificationStartResponseFlashCall startFlashCall(VerificationStartRequestFlashCall parameters);
 
   /**
-   * Start verification by {@link
-   * com.sinch.sdk.domains.verification.models.v1.VerificationMethod#PHONE_CALL}
+   * Start verification by PHONE_CALL
    *
    * @param parameters Parameters to be used to start verification
    * @return Verification response
@@ -54,8 +51,7 @@ public interface VerificationStartService {
   VerificationStartResponsePhoneCall startPhoneCall(VerificationStartRequestPhoneCall parameters);
 
   /**
-   * Start verification by {@link
-   * com.sinch.sdk.domains.verification.models.v1.VerificationMethod#DATA}
+   * Start verification by DATA
    *
    * @param parameters Parameters to be used to start verification
    * @return Verification response

@@ -17,10 +17,10 @@ import java.util.Objects;
 @JsonPropertyOrder({
   VerificationResultEventImpl.JSON_PROPERTY_ID,
   VerificationResultEventImpl.JSON_PROPERTY_EVENT,
+  VerificationResultEventImpl.JSON_PROPERTY_METHOD,
   VerificationResultEventImpl.JSON_PROPERTY_IDENTITY,
   VerificationResultEventImpl.JSON_PROPERTY_REFERENCE,
   VerificationResultEventImpl.JSON_PROPERTY_CUSTOM,
-  VerificationResultEventImpl.JSON_PROPERTY_METHOD,
   VerificationResultEventImpl.JSON_PROPERTY_STATUS,
   VerificationResultEventImpl.JSON_PROPERTY_REASON,
   VerificationResultEventImpl.JSON_PROPERTY_SOURCE
@@ -40,6 +40,10 @@ public class VerificationResultEventImpl
 
   private OptionalValue<EventEnum> event;
 
+  public static final String JSON_PROPERTY_METHOD = "method";
+
+  private OptionalValue<VerificationMethod> method;
+
   public static final String JSON_PROPERTY_IDENTITY = "identity";
 
   private OptionalValue<Identity> identity;
@@ -51,10 +55,6 @@ public class VerificationResultEventImpl
   public static final String JSON_PROPERTY_CUSTOM = "custom";
 
   private OptionalValue<String> custom;
-
-  public static final String JSON_PROPERTY_METHOD = "method";
-
-  private OptionalValue<VerificationMethod> method;
 
   public static final String JSON_PROPERTY_STATUS = "status";
 
@@ -73,19 +73,19 @@ public class VerificationResultEventImpl
   protected VerificationResultEventImpl(
       OptionalValue<String> id,
       OptionalValue<EventEnum> event,
+      OptionalValue<VerificationMethod> method,
       OptionalValue<Identity> identity,
       OptionalValue<String> reference,
       OptionalValue<String> custom,
-      OptionalValue<VerificationMethod> method,
       OptionalValue<VerificationStatus> status,
       OptionalValue<VerificationStatusReason> reason,
       OptionalValue<StatusSource> source) {
     this.id = id;
     this.event = event;
+    this.method = method;
     this.identity = identity;
     this.reference = reference;
     this.custom = custom;
-    this.method = method;
     this.status = status;
     this.reason = reason;
     this.source = source;
@@ -111,6 +111,17 @@ public class VerificationResultEventImpl
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<EventEnum> event() {
     return event;
+  }
+
+  @JsonIgnore
+  public VerificationMethod getMethod() {
+    return method.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_METHOD)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<VerificationMethod> method() {
+    return method;
   }
 
   @JsonIgnore
@@ -144,17 +155,6 @@ public class VerificationResultEventImpl
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> custom() {
     return custom;
-  }
-
-  @JsonIgnore
-  public VerificationMethod getMethod() {
-    return method.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_METHOD)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<VerificationMethod> method() {
-    return method;
   }
 
   @JsonIgnore
@@ -202,10 +202,10 @@ public class VerificationResultEventImpl
     VerificationResultEventImpl verificationResultEvent = (VerificationResultEventImpl) o;
     return Objects.equals(this.id, verificationResultEvent.id)
         && Objects.equals(this.event, verificationResultEvent.event)
+        && Objects.equals(this.method, verificationResultEvent.method)
         && Objects.equals(this.identity, verificationResultEvent.identity)
         && Objects.equals(this.reference, verificationResultEvent.reference)
         && Objects.equals(this.custom, verificationResultEvent.custom)
-        && Objects.equals(this.method, verificationResultEvent.method)
         && Objects.equals(this.status, verificationResultEvent.status)
         && Objects.equals(this.reason, verificationResultEvent.reason)
         && Objects.equals(this.source, verificationResultEvent.source);
@@ -213,7 +213,7 @@ public class VerificationResultEventImpl
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, event, identity, reference, custom, method, status, reason, source);
+    return Objects.hash(id, event, method, identity, reference, custom, status, reason, source);
   }
 
   @Override
@@ -222,10 +222,10 @@ public class VerificationResultEventImpl
     sb.append("class VerificationResultEventImpl {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    event: ").append(toIndentedString(event)).append("\n");
+    sb.append("    method: ").append(toIndentedString(method)).append("\n");
     sb.append("    identity: ").append(toIndentedString(identity)).append("\n");
     sb.append("    reference: ").append(toIndentedString(reference)).append("\n");
     sb.append("    custom: ").append(toIndentedString(custom)).append("\n");
-    sb.append("    method: ").append(toIndentedString(method)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    reason: ").append(toIndentedString(reason)).append("\n");
     sb.append("    source: ").append(toIndentedString(source)).append("\n");
@@ -246,11 +246,11 @@ public class VerificationResultEventImpl
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements VerificationResultEvent.Builder {
     OptionalValue<String> id = OptionalValue.empty();
-    OptionalValue<EventEnum> event = OptionalValue.empty();
+    OptionalValue<EventEnum> event = OptionalValue.of(EventEnum.VERIFICATION_RESULT_EVENT);
+    OptionalValue<VerificationMethod> method = OptionalValue.empty();
     OptionalValue<Identity> identity = OptionalValue.empty();
     OptionalValue<String> reference = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
-    OptionalValue<VerificationMethod> method = OptionalValue.empty();
     OptionalValue<VerificationStatus> status = OptionalValue.empty();
     OptionalValue<VerificationStatusReason> reason = OptionalValue.empty();
     OptionalValue<StatusSource> source = OptionalValue.empty();
@@ -261,9 +261,9 @@ public class VerificationResultEventImpl
       return this;
     }
 
-    @JsonProperty(value = JSON_PROPERTY_EVENT, required = true)
-    public Builder setEvent(EventEnum event) {
-      this.event = OptionalValue.of(event);
+    @JsonProperty(value = JSON_PROPERTY_METHOD, required = true)
+    public Builder setMethod(VerificationMethod method) {
+      this.method = OptionalValue.of(method);
       return this;
     }
 
@@ -282,12 +282,6 @@ public class VerificationResultEventImpl
     @JsonProperty(JSON_PROPERTY_CUSTOM)
     public Builder setCustom(String custom) {
       this.custom = OptionalValue.of(custom);
-      return this;
-    }
-
-    @JsonProperty(value = JSON_PROPERTY_METHOD, required = true)
-    public Builder setMethod(VerificationMethod method) {
-      this.method = OptionalValue.of(method);
       return this;
     }
 
@@ -311,7 +305,7 @@ public class VerificationResultEventImpl
 
     public VerificationResultEvent build() {
       return new VerificationResultEventImpl(
-          id, event, identity, reference, custom, method, status, reason, source);
+          id, event, method, identity, reference, custom, status, reason, source);
     }
   }
 }

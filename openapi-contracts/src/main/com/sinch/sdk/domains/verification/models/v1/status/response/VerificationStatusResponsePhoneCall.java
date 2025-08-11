@@ -50,7 +50,12 @@ public interface VerificationStatusResponsePhoneCall
   VerificationStatusReason getReason();
 
   /**
-   * The reference ID that was optionally passed together with the verification request.
+   * Used to pass your own reference in the request for tracking purposes. Must be a unique value
+   * for each started verification request. The value must be encodable in the URL path segment.
+   * This value is passed to all events and returned from the status and report endpoints. The
+   * reference can be used to check the <a
+   * href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-status/#tag/Verification-status/operation/VerificationStatusByReference">status
+   * of verifications</a>, like with ID or identity.
    *
    * @return reference
    */
