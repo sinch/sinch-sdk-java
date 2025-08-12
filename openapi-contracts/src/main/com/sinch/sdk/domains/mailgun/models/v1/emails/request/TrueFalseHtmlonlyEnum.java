@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 /**
  * Toggles click tracking on a per-message basis, see <a
  * href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/#tracking-clicks">Tracking
- * Clicks</a>. Has higher priority than domain-level setting.
+ * Clicks</a>. This overrides the domain-level click tracking setting.
  */
 public class TrueFalseHtmlonlyEnum extends EnumDynamic<String, TrueFalseHtmlonlyEnum> {
 

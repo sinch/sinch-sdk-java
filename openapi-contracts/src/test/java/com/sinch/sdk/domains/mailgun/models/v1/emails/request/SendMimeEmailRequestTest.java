@@ -51,6 +51,7 @@ public class SendMimeEmailRequestTest extends BaseTest {
             "o:tracking-opens","false",
             "o:require-tls","true",
             "o:skip-verification","false",
+            "o:suppress-headers","header-1, header-2",
             "o:sending-ip","192.168.0.10",
             "o:sending-ip-pool","sending pool ID",
             "o:tracking-pixel-location-top","htmlonly",
@@ -88,6 +89,7 @@ public class SendMimeEmailRequestTest extends BaseTest {
                   .setSendingIpPool("sending pool ID")
                   .setTrackingPixelLocationTop(TrueFalseHtmlonlyEnum.HTMLONLY)
                   .setArchiveTo("http://an-archive-to-dest.com")
+                  .setSuppressHeaders("header-1, header-2")
                   .build())
           .setTemplateProperties(
               TemplateProperties.builder()
