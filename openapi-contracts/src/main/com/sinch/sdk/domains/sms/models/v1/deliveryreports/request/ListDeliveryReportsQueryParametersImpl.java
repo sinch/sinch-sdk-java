@@ -1,7 +1,7 @@
 package com.sinch.sdk.domains.sms.models.v1.deliveryreports.request;
 
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReceiptErrorCode;
+import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReceiptStatusCode;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryStatus;
 import java.time.Instant;
 import java.util.List;
@@ -14,7 +14,7 @@ public class ListDeliveryReportsQueryParametersImpl implements ListDeliveryRepor
   private final OptionalValue<Instant> startDate;
   private final OptionalValue<Instant> endDate;
   private final OptionalValue<List<DeliveryStatus>> status;
-  private final OptionalValue<List<DeliveryReceiptErrorCode>> code;
+  private final OptionalValue<List<DeliveryReceiptStatusCode>> code;
   private final OptionalValue<String> clientReference;
 
   private ListDeliveryReportsQueryParametersImpl(
@@ -23,7 +23,7 @@ public class ListDeliveryReportsQueryParametersImpl implements ListDeliveryRepor
       OptionalValue<Instant> startDate,
       OptionalValue<Instant> endDate,
       OptionalValue<List<DeliveryStatus>> status,
-      OptionalValue<List<DeliveryReceiptErrorCode>> code,
+      OptionalValue<List<DeliveryReceiptStatusCode>> code,
       OptionalValue<String> clientReference) {
     this.page = page;
     this.pageSize = pageSize;
@@ -54,7 +54,7 @@ public class ListDeliveryReportsQueryParametersImpl implements ListDeliveryRepor
     return status;
   }
 
-  public OptionalValue<List<DeliveryReceiptErrorCode>> getCode() {
+  public OptionalValue<List<DeliveryReceiptStatusCode>> getCode() {
     return code;
   }
 
@@ -118,7 +118,7 @@ public class ListDeliveryReportsQueryParametersImpl implements ListDeliveryRepor
     OptionalValue<Instant> startDate = OptionalValue.empty();
     OptionalValue<Instant> endDate = OptionalValue.empty();
     OptionalValue<List<DeliveryStatus>> status = OptionalValue.empty();
-    OptionalValue<List<DeliveryReceiptErrorCode>> code = OptionalValue.empty();
+    OptionalValue<List<DeliveryReceiptStatusCode>> code = OptionalValue.empty();
     OptionalValue<String> clientReference = OptionalValue.empty();
 
     protected Builder() {}
@@ -163,7 +163,7 @@ public class ListDeliveryReportsQueryParametersImpl implements ListDeliveryRepor
       return this;
     }
 
-    public Builder setCode(List<DeliveryReceiptErrorCode> code) {
+    public Builder setCode(List<DeliveryReceiptStatusCode> code) {
       this.code = OptionalValue.of(code);
       return this;
     }
