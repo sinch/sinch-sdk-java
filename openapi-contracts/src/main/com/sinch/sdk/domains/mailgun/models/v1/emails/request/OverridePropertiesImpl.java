@@ -79,6 +79,10 @@ public class OverridePropertiesImpl implements OverrideProperties {
 
   private OptionalValue<String> archiveTo;
 
+  public static final String PROPERTY_SUPPRESS_HEADERS = "o:suppress-headers";
+
+  private OptionalValue<String> suppressHeaders;
+
   public OverridePropertiesImpl() {}
 
   protected OverridePropertiesImpl(
@@ -98,7 +102,8 @@ public class OverridePropertiesImpl implements OverrideProperties {
       OptionalValue<Boolean> requireTls,
       OptionalValue<Boolean> skipVerification,
       OptionalValue<Boolean> testMode,
-      OptionalValue<String> archiveTo) {
+      OptionalValue<String> archiveTo,
+      OptionalValue<String> suppressHeaders) {
     this.tag = tag;
     this.deliveryTimeOptimizePeriod = deliveryTimeOptimizePeriod;
     this.enableDkimSignature = enableDkimSignature;
@@ -116,6 +121,7 @@ public class OverridePropertiesImpl implements OverrideProperties {
     this.skipVerification = skipVerification;
     this.testMode = testMode;
     this.archiveTo = archiveTo;
+    this.suppressHeaders = suppressHeaders;
   }
 
   public List<String> getTag() {
@@ -279,6 +285,15 @@ public class OverridePropertiesImpl implements OverrideProperties {
     return archiveTo;
   }
 
+  public String getSuppressHeaders() {
+    return suppressHeaders.orElse(null);
+  }
+
+  @Property(PROPERTY_SUPPRESS_HEADERS)
+  public OptionalValue<String> suppressHeaders() {
+    return suppressHeaders;
+  }
+
   /** Return true if this overrideProperties object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -307,7 +322,8 @@ public class OverridePropertiesImpl implements OverrideProperties {
         && Objects.equals(this.requireTls, overrideProperties.requireTls)
         && Objects.equals(this.skipVerification, overrideProperties.skipVerification)
         && Objects.equals(this.testMode, overrideProperties.testMode)
-        && Objects.equals(this.archiveTo, overrideProperties.archiveTo);
+        && Objects.equals(this.archiveTo, overrideProperties.archiveTo)
+        && Objects.equals(this.suppressHeaders, overrideProperties.suppressHeaders);
   }
 
   @Override
@@ -329,7 +345,8 @@ public class OverridePropertiesImpl implements OverrideProperties {
         requireTls,
         skipVerification,
         testMode,
-        archiveTo);
+        archiveTo,
+        suppressHeaders);
   }
 
   @Override
@@ -361,6 +378,7 @@ public class OverridePropertiesImpl implements OverrideProperties {
     sb.append("    skipVerification: ").append(toIndentedString(skipVerification)).append("\n");
     sb.append("    testMode: ").append(toIndentedString(testMode)).append("\n");
     sb.append("    archiveTo: ").append(toIndentedString(archiveTo)).append("\n");
+    sb.append("    suppressHeaders: ").append(toIndentedString(suppressHeaders)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -393,6 +411,7 @@ public class OverridePropertiesImpl implements OverrideProperties {
     OptionalValue<Boolean> skipVerification = OptionalValue.empty();
     OptionalValue<Boolean> testMode = OptionalValue.empty();
     OptionalValue<String> archiveTo = OptionalValue.empty();
+    OptionalValue<String> suppressHeaders = OptionalValue.empty();
 
     @Property(value = PROPERTY_TAG)
     public Builder setTag(List<String> tag) {
@@ -496,6 +515,12 @@ public class OverridePropertiesImpl implements OverrideProperties {
       return this;
     }
 
+    @Property(value = PROPERTY_SUPPRESS_HEADERS)
+    public Builder setSuppressHeaders(String suppressHeaders) {
+      this.suppressHeaders = OptionalValue.of(suppressHeaders);
+      return this;
+    }
+
     public OverrideProperties build() {
       return new OverridePropertiesImpl(
           tag,
@@ -514,7 +539,8 @@ public class OverridePropertiesImpl implements OverrideProperties {
           requireTls,
           skipVerification,
           testMode,
-          archiveTo);
+          archiveTo,
+          suppressHeaders);
     }
   }
 }
