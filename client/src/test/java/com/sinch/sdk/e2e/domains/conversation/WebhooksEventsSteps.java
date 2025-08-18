@@ -1,7 +1,7 @@
 package com.sinch.sdk.e2e.domains.conversation;
 
 import com.sinch.sdk.core.TestHelpers;
-import com.sinch.sdk.domains.conversation.api.v1.WebHooksService;
+import com.sinch.sdk.domains.conversation.api.v1.WebhooksService;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
@@ -111,7 +111,7 @@ public class WebhooksEventsSteps {
                   WEBHOOKS_PATH + "message-inbound/smart-conversation-redaction"))
           .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-  WebHooksService service;
+  WebhooksService service;
 
   Map<WebhookTrigger, WebhooksHelper.Response<ConversationWebhookEvent>> receivedEvents =
       new ConcurrentHashMap<>();

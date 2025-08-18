@@ -8,7 +8,7 @@
 package conversation.templates.v2;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.conversation.api.templates.v2.TemplatesServiceV2;
+import com.sinch.sdk.domains.conversation.templates.api.v2.TemplatesV2Service;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationRegion;
 import java.util.logging.Logger;
@@ -38,7 +38,7 @@ public class Delete {
 
     SinchClient client = new SinchClient(configuration);
 
-    TemplatesServiceV2 templatesServiceV2 = client.conversation().templates().v2();
+    TemplatesV2Service templatesServiceV2 = client.conversation().templates().v2();
 
     LOGGER.info(String.format("Deleting template with ID '%s'", conversationTemplateId));
 

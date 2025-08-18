@@ -9,7 +9,7 @@ package conversation.events;
 
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.conversation.api.v1.EventsService;
-import com.sinch.sdk.domains.conversation.models.v1.events.request.EventsListRequest;
+import com.sinch.sdk.domains.conversation.models.v1.events.request.EventsListQueryParameters;
 import com.sinch.sdk.domains.conversation.models.v1.events.response.EventsListResponse;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationRegion;
@@ -44,8 +44,8 @@ public class List {
 
     LOGGER.info(String.format("List events for conversation with ID '%s'", conversationId));
 
-    EventsListRequest request =
-        EventsListRequest.builder().setConversationId(conversationId).build();
+    EventsListQueryParameters request =
+        EventsListQueryParameters.builder().setConversationId(conversationId).build();
 
     EventsListResponse response = eventsService.list(request);
 

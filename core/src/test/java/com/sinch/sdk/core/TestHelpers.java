@@ -1,5 +1,7 @@
 package com.sinch.sdk.core;
 
+import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 
@@ -15,5 +17,11 @@ public class TestHelpers {
         .usingRecursiveComparison(recursiveComparisonConfiguration)
         .ignoringFields(excludedFields)
         .isEqualTo(expected);
+  }
+
+  public static void checkIteratorItems(Iterator<?> iterator, int expectedCount) {
+    AtomicInteger count = new AtomicInteger();
+    iterator.forEachRemaining(i -> count.incrementAndGet());
+    Assertions.assertThat(count.get()).isEqualTo(expectedCount);
   }
 }

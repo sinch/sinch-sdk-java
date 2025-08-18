@@ -1,11 +1,12 @@
 package com.sinch.sdk.e2e.domains.conversation;
 
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.conversation.api.v1.MessagesService;
 import com.sinch.sdk.domains.conversation.models.v1.ContactId;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessageUpdateRequest;
-import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesListRequest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesListQueryParameters;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.MessagesListResponse;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
@@ -15,6 +16,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import java.time.Instant;
+import java.util.Iterator;
 import org.junit.jupiter.api.Assertions;
 
 public class MessagesSteps {
@@ -54,21 +56,24 @@ public class MessagesSteps {
   @When("^I send a request to list the existing messages$")
   public void listPage() {
 
-    MessagesListRequest request = MessagesListRequest.builder().setPageSize(2).build();
+    MessagesListQueryParameters request =
+        MessagesListQueryParameters.builder().setPageSize(2).build();
     listPageResponse = service.list(request);
   }
 
   @When("^I send a request to list all the messages$")
   public void listAll() {
 
-    MessagesListRequest request = MessagesListRequest.builder().setPageSize(2).build();
+    MessagesListQueryParameters request =
+        MessagesListQueryParameters.builder().setPageSize(2).build();
     listAllResponse = service.list(request);
   }
 
   @When("^I iterate manually over the messages pages$")
   public void listPageIterate() {
 
-    MessagesListRequest request = MessagesListRequest.builder().setPageSize(2).build();
+    MessagesListQueryParameters request =
+        MessagesListQueryParameters.builder().setPageSize(2).build();
     listPageIterateResponse = service.list(request);
   }
 
@@ -111,9 +116,15 @@ public class MessagesSteps {
   public void listAllResult(int size) {
 
     // FIXME: to be thread-safe compliant we need to check which variables are set
-    if (null != listAllResponse) Assertions.assertEquals(listAllResponse.stream().count(), size);
-    if (null != listPageIterateResponse)
-      Assertions.assertEquals(listPageIterateResponse.stream().count(), size);
+    Iterator<?> iterator = null;
+    if (null != listAllResponse) {
+      iterator = listAllResponse.iterator();
+    }
+
+    if (null != listPageIterateResponse) {
+      iterator = listPageIterateResponse.iterator();
+    }
+    TestHelpers.checkIteratorItems(iterator, size);
   }
 
   @Then("the result contains the data from \"{int}\" pages")

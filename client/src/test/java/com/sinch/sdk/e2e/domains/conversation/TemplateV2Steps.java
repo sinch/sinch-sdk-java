@@ -1,15 +1,17 @@
 package com.sinch.sdk.e2e.domains.conversation;
 
 import com.sinch.sdk.core.TestHelpers;
-import com.sinch.sdk.domains.conversation.api.templates.v2.TemplatesServiceV2;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ChoiceItem;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.list.ListAdditionalProperties;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.list.ListMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.list.ListSection;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
+import com.sinch.sdk.domains.conversation.templates.api.v2.TemplatesV2Service;
 import com.sinch.sdk.domains.conversation.templates.models.TemplateVariable;
 import com.sinch.sdk.domains.conversation.templates.models.v2.TemplateTranslation;
 import com.sinch.sdk.domains.conversation.templates.models.v2.TemplateV2;
+import com.sinch.sdk.domains.conversation.templates.models.v2.response.TemplatesV2ListResponse;
+import com.sinch.sdk.domains.conversation.templates.models.v2.response.TranslationsV2ListResponse;
 import com.sinch.sdk.e2e.Config;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -17,7 +19,6 @@ import io.cucumber.java.en.When;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -27,10 +28,10 @@ public class TemplateV2Steps {
 
   static final String TEMPLATE_V2_ID = "01HVN010MG3B9N6X323JAFN59P";
 
-  TemplatesServiceV2 service;
+  TemplatesV2Service service;
   TemplateV2 createResponse;
-  Collection<TemplateV2> listResponse;
-  Collection<TemplateTranslation> listTranslationsResponse;
+  TemplatesV2ListResponse listResponse;
+  TranslationsV2ListResponse listTranslationsResponse;
   TemplateV2 getResponse;
   TemplateV2 updateResponse;
   boolean deletePassed;
@@ -123,7 +124,7 @@ public class TemplateV2Steps {
   @When("^I send a request to list the translations for a template with the V2 API$")
   public void listTranslations() {
 
-    listTranslationsResponse = service.listTranslations(TEMPLATE_V2_ID, null);
+    listTranslationsResponse = service.listTranslations(TEMPLATE_V2_ID);
   }
 
   @When("^I send a request to retrieve a conversation template with the V2 API$")
@@ -200,7 +201,8 @@ public class TemplateV2Steps {
   @Then("the response contains the list of conversation templates with the V2 structure")
   public void listResult() {
 
-    Assertions.assertEquals(listResponse.size(), 2);
+    TestHelpers.checkIteratorItems(listResponse.iterator(), 2);
+
     TestHelpers.recursiveEquals(
         expectedGetResult,
         listResponse.stream()
@@ -219,29 +221,29 @@ public class TemplateV2Steps {
       "for each templateV2 in the templateV2 list response, it defines a translation with version"
           + " {string} on top of each current translation version")
   public void listResultLatest(String versionValue) {
-
-    listResponse.forEach(
-        template -> {
-          AtomicInteger searchedValueCount = new AtomicInteger();
-          AtomicInteger otherVersionCount = new AtomicInteger();
-          template
-              .getTranslations()
-              .forEach(
-                  translation -> {
-                    if (translation.getVersion().equals(versionValue)) {
-                      searchedValueCount.getAndIncrement();
-                    } else {
-                      otherVersionCount.getAndIncrement();
-                    }
-                  });
-          Assertions.assertEquals(searchedValueCount.get(), otherVersionCount.get());
-        });
+    listResponse
+        .iterator()
+        .forEachRemaining(
+            template -> {
+              AtomicInteger searchedValueCount = new AtomicInteger();
+              AtomicInteger otherVersionCount = new AtomicInteger();
+              template
+                  .getTranslations()
+                  .forEach(
+                      translation -> {
+                        if (translation.getVersion().equals(versionValue)) {
+                          searchedValueCount.getAndIncrement();
+                        } else {
+                          otherVersionCount.getAndIncrement();
+                        }
+                      });
+              Assertions.assertEquals(searchedValueCount.get(), otherVersionCount.get());
+            });
   }
 
   @Then("the response contains the list of translations for a template with the V2 structure")
   public void listTranslationsResult() {
-
-    Assertions.assertEquals(listTranslationsResponse.size(), 2);
+    TestHelpers.checkIteratorItems(listTranslationsResponse.iterator(), 2);
     Assertions.assertEquals(
         listTranslationsResponse.stream().filter(f -> f.getVersion().equals("latest")).count(), 0);
   }

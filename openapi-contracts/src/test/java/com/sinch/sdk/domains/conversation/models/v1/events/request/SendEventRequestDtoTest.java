@@ -34,7 +34,7 @@ public class SendEventRequestDtoTest extends ConversationBaseTest {
           .build();
 
   @GivenTextResource("/domains/conversation/v1/events/request/SendEventRequestDto.json")
-  static String jsonSendEventDto;
+  String jsonSendEventDto;
 
   @Test
   void serializeDto() throws JsonProcessingException, JSONException {

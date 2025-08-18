@@ -1,93 +1,126 @@
 package com.sinch.sdk.domains.conversation.api.v1.adapters;
 
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
+import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.conversation.api.v1.internal.ConversationApi;
+import com.sinch.sdk.core.http.HttpContentType;
+import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.core.http.HttpMethod;
+import com.sinch.sdk.core.http.HttpRequest;
+import com.sinch.sdk.core.http.HttpRequestTest.HttpRequestMatcher;
+import com.sinch.sdk.core.http.HttpResponse;
+import com.sinch.sdk.core.http.URLParameter;
+import com.sinch.sdk.core.http.URLParameter.STYLE;
+import com.sinch.sdk.core.http.URLPathUtils;
+import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.domains.conversation.api.v1.ConversationsService;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.Conversation;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.internal.ListConversationsResponseInternal;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.internal.ListRecentConversationsResponseInternal;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.request.ConversationsListRecentRequest;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.request.ConversationsListRecentRequest.OrderEnum;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.request.ConversationsListRequest;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.request.InjectEventRequest;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.request.InjectMessageRequestBase;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationRecentMessage;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationsListRecentResponse;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationsListResponse;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.Conversation;
 import com.sinch.sdk.domains.conversation.models.v1.conversations.ConversationDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.request.ConversationsListQueryParameters;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.request.ConversationsUpdateQueryParameters;
 import com.sinch.sdk.domains.conversation.models.v1.conversations.request.CreateConversationRequestTest;
 import com.sinch.sdk.domains.conversation.models.v1.conversations.request.InjectEventDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.conversations.request.InjectMessageDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.request.RecentConversationsListQueryParameters;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.request.RecentConversationsListQueryParameters.OrderEnum;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.response.ConversationRecentMessage;
 import com.sinch.sdk.domains.conversation.models.v1.conversations.response.ConversationRecentMessageDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.response.ConversationsListResponse;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.response.RecentConversationsListResponse;
 import com.sinch.sdk.domains.conversation.models.v1.request.MetadataUpdateStrategy;
-import com.sinch.sdk.models.ConversationContext;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
 
 @TestWithResources
 public class ConversationsServiceTest extends ConversationBaseTest {
-
-  @Mock ConversationContext context;
-  @Mock ConversationApi api;
   @Mock HttpClient httpClient;
+  @Mock ServerConfiguration serverConfiguration;
   @Mock Map<String, AuthManager> authManagers;
-  @Captor ArgumentCaptor<String> projectIdCaptor;
-  @Captor ArgumentCaptor<String> conversationIdCaptor;
-  @Captor ArgumentCaptor<InjectMessageRequestBase> injectMessageCaptor;
-  @Captor ArgumentCaptor<InjectEventRequest> injectEventCaptor;
+
+  static final String uriUUID = "foo";
+  static final Collection<String> AUTH_NAMES = Arrays.asList("Basic", "oAuth2");
 
   ConversationsService service;
-  String uriPartID = "foovalue";
+
+  @GivenTextResource(
+      "/domains/conversation/v1/conversations/request/CreateConversationRequestDto.json")
+  String jsonCreateConversationRequestDto;
+
+  @GivenTextResource("domains/conversation/v1/conversations/ConversationRequestDto.json")
+  String jsonConversationRequest;
+
+  @GivenTextResource("domains/conversation/v1/conversations/ConversationResponseDto.json")
+  String jsonConversationResponse;
+
+  @GivenTextResource(
+      "/domains/conversation/v1/conversations/response/ConversationsListResponse-page-0.json")
+  String conversationsListPage0;
+
+  @GivenTextResource(
+      "/domains/conversation/v1/conversations/response/ConversationsListResponse-page-1.json")
+  String conversationsListPage1;
+
+  @GivenTextResource(
+      "/domains/conversation/v1/conversations/response/ConversationsListResponse-page-2.json")
+  String conversationsListPage2;
+
+  @GivenTextResource(
+      "/domains/conversation/v1/conversations/response/ConversationsListRecentResponse-page-0.json")
+  String conversationsRecentListPage0;
+
+  @GivenTextResource(
+      "/domains/conversation/v1/conversations/response/ConversationsListRecentResponse-page-1.json")
+  String conversationsRecentListPage1;
+
+  @GivenTextResource(
+      "/domains/conversation/v1/conversations/request/InjectContactMessageRequestDto.json")
+  static String jsonInjectContactMessageRequestDto;
+
+  @GivenTextResource("/domains/conversation/v1/conversations/request/InjectEventRequestDto.json")
+  static String jsonInjectEventRequestDto;
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new ConversationsService(uriPartID, context, httpClient, authManagers));
-    doReturn(api).when(service).getApi();
+    service =
+        new ConversationsServiceImpl(
+            httpClient, serverConfiguration, authManagers, HttpMapper.getInstance(), uriUUID);
   }
-
-  @GivenJsonResource(
-      "/domains/conversation/v1/conversations/response/ConversationsListResponse-page-0.json")
-  ListConversationsResponseInternal conversationsListPage0;
-
-  @GivenJsonResource(
-      "/domains/conversation/v1/conversations/response/ConversationsListResponse-page-1.json")
-  ListConversationsResponseInternal conversationsListPage1;
-
-  @GivenJsonResource(
-      "/domains/conversation/v1/conversations/response/ConversationsListResponse-page-2.json")
-  ListConversationsResponseInternal conversationsListPage2;
-
-  @GivenJsonResource(
-      "/domains/conversation/v1/conversations/response/ConversationsListRecentResponse-page-0.json")
-  ListRecentConversationsResponseInternal conversationsRecentListPage0;
-
-  @GivenJsonResource(
-      "/domains/conversation/v1/conversations/response/ConversationsListRecentResponse-page-1.json")
-  ListRecentConversationsResponseInternal conversationsRecentListPage1;
 
   @Test
   void create() throws ApiException {
 
-    when(api.conversationCreateConversation(
-            eq(uriPartID), eq(CreateConversationRequestTest.createConversationRequestDto)))
-        .thenReturn(ConversationDtoTest.conversationResponse);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            String.format("/v1/projects/%s/conversations", URLPathUtils.encodePathSegment(uriUUID)),
+            HttpMethod.POST,
+            Collections.emptyList(),
+            jsonCreateConversationRequestDto,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonConversationResponse.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     Conversation response =
         service.create(CreateConversationRequestTest.createConversationRequestDto);
@@ -98,9 +131,27 @@ public class ConversationsServiceTest extends ConversationBaseTest {
   @Test
   void get() throws ApiException {
 
-    when(api.conversationGetConversation(
-            eq(uriPartID), eq(ConversationDtoTest.conversationRequest.getId())))
-        .thenReturn(ConversationDtoTest.conversationResponse);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            String.format(
+                "/v1/projects/%s/conversations/%s",
+                URLPathUtils.encodePathSegment(uriUUID),
+                URLPathUtils.encodePathSegment(ConversationDtoTest.conversationRequest.getId())),
+            HttpMethod.GET,
+            Collections.emptyList(),
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonConversationResponse.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     Conversation response = service.get(ConversationDtoTest.conversationRequest.getId());
 
@@ -110,52 +161,94 @@ public class ConversationsServiceTest extends ConversationBaseTest {
   @Test
   void list() throws ApiException {
 
-    when(api.conversationListConversations(
-            eq(uriPartID),
-            eq("conversation app Id"),
-            eq("contact id"),
-            eq(null),
-            eq(1),
-            eq(null),
-            eq(ConversationChannel.MESSENGER)))
-        .thenReturn(conversationsListPage0);
+    HttpRequest httpRequest1 =
+        new HttpRequest(
+            String.format("/v1/projects/%s/conversations", URLPathUtils.encodePathSegment(uriUUID)),
+            HttpMethod.GET,
+            Arrays.asList(
+                new URLParameter("app_id", "conversation app Id", STYLE.FORM, true),
+                new URLParameter("contact_id", "contact id", STYLE.FORM, true),
+                new URLParameter("page_size", 1, STYLE.FORM, true),
+                new URLParameter(
+                    "active_channel", ConversationChannel.MESSENGER, STYLE.FORM, true)),
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpRequest httpRequest2 =
+        new HttpRequest(
+            String.format("/v1/projects/%s/conversations", URLPathUtils.encodePathSegment(uriUUID)),
+            HttpMethod.GET,
+            Arrays.asList(
+                new URLParameter("app_id", "conversation app Id", STYLE.FORM, true),
+                new URLParameter("contact_id", "contact id", STYLE.FORM, true),
+                new URLParameter("page_size", 1, STYLE.FORM, true),
+                new URLParameter(
+                    "page_token",
+                    "ChowMUo1NUVOVERUSFlGQVlKMFE1WFpaSktSVhIaMDFITkIzMzY0UFdCQkcyR1paV1ZWVDNERDI=",
+                    STYLE.FORM,
+                    true),
+                new URLParameter(
+                    "active_channel", ConversationChannel.MESSENGER, STYLE.FORM, true)),
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpRequest httpRequest3 =
+        new HttpRequest(
+            String.format("/v1/projects/%s/conversations", URLPathUtils.encodePathSegment(uriUUID)),
+            HttpMethod.GET,
+            Arrays.asList(
+                new URLParameter("app_id", "conversation app Id", STYLE.FORM, true),
+                new URLParameter("contact_id", "contact id", STYLE.FORM, true),
+                new URLParameter("page_size", 1, STYLE.FORM, true),
+                new URLParameter(
+                    "page_token",
+                    "ChowMUo1NUVBSk1FNDZQMlI4SFIxRjVZRjYxWhIaMDFITkIzMzY0UFdCQkcyR1paV1ZWVDNERDI=",
+                    STYLE.FORM,
+                    true),
+                new URLParameter(
+                    "active_channel", ConversationChannel.MESSENGER, STYLE.FORM, true)),
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpResponse httpResponse1 =
+        new HttpResponse(200, null, Collections.emptyMap(), conversationsListPage0.getBytes());
+    HttpResponse httpResponse2 =
+        new HttpResponse(200, null, Collections.emptyMap(), conversationsListPage1.getBytes());
+    HttpResponse httpResponse3 =
+        new HttpResponse(200, null, Collections.emptyMap(), conversationsListPage2.getBytes());
 
-    when(api.conversationListConversations(
-            eq(uriPartID),
-            eq("conversation app Id"),
-            eq("contact id"),
-            eq(null),
-            eq(1),
-            eq("ChowMUo1NUVOVERUSFlGQVlKMFE1WFpaSktSVhIaMDFITkIzMzY0UFdCQkcyR1paV1ZWVDNERDI="),
-            eq(ConversationChannel.MESSENGER)))
-        .thenReturn(conversationsListPage1);
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest1))))
+        .thenReturn(httpResponse1);
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest2))))
+        .thenReturn(httpResponse2);
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest3))))
+        .thenReturn(httpResponse3);
 
-    when(api.conversationListConversations(
-            eq(uriPartID),
-            eq("conversation app Id"),
-            eq("contact id"),
-            eq(null),
-            eq(1),
-            eq("ChowMUo1NUVBSk1FNDZQMlI4SFIxRjVZRjYxWhIaMDFITkIzMzY0UFdCQkcyR1paV1ZWVDNERDI="),
-            eq(ConversationChannel.MESSENGER)))
-        .thenReturn(conversationsListPage2);
-    ConversationsListRequest request =
-        ConversationsListRequest.builder()
+    ConversationsListQueryParameters request =
+        ConversationsListQueryParameters.builder()
             .setAppId("conversation app Id")
             .setContactId("contact id")
             .setPageSize(1)
             .setActiveChannel(ConversationChannel.MESSENGER)
             .build();
 
-    ConversationsListResponse response0 = service.list(request);
-    Collection<Conversation> content = response0.getContent();
-    Assertions.assertThat(content.size()).isEqualTo(1);
-    TestHelpers.recursiveEquals(
-        content.stream().findFirst().orElse(null), ConversationDtoTest.conversationResponse);
-    Assertions.assertThat(response0.hasNextPage()).isEqualTo(true);
-
-    ConversationsListResponse response1 = response0.nextPage();
-    content = response1.getContent();
+    ConversationsListResponse response1 = service.list(request);
+    Collection<Conversation> content = response1.getContent();
     Assertions.assertThat(content.size()).isEqualTo(1);
     TestHelpers.recursiveEquals(
         content.stream().findFirst().orElse(null), ConversationDtoTest.conversationResponse);
@@ -163,30 +256,78 @@ public class ConversationsServiceTest extends ConversationBaseTest {
 
     ConversationsListResponse response2 = response1.nextPage();
     content = response2.getContent();
+    Assertions.assertThat(content.size()).isEqualTo(1);
+    TestHelpers.recursiveEquals(
+        content.stream().findFirst().orElse(null), ConversationDtoTest.conversationResponse);
+    Assertions.assertThat(response2.hasNextPage()).isEqualTo(true);
+
+    ConversationsListResponse response3 = response2.nextPage();
+    content = response3.getContent();
     Assertions.assertThat(content.size()).isEqualTo(0);
-    Assertions.assertThat(response2.hasNextPage()).isEqualTo(false);
+    Assertions.assertThat(response3.hasNextPage()).isEqualTo(false);
   }
 
   @Test
   void listRecent() throws ApiException {
 
-    when(api.conversationListRecentConversations(
-            eq(uriPartID), eq("conversation app Id"), eq(true), eq(1), eq(null), eq("ASC")))
-        .thenReturn(conversationsRecentListPage0);
+    HttpRequest httpRequest1 =
+        new HttpRequest(
+            String.format(
+                "/v1/projects/%s/conversations:recent", URLPathUtils.encodePathSegment(uriUUID)),
+            HttpMethod.GET,
+            Arrays.asList(
+                new URLParameter("app_id", "conversation app Id", STYLE.FORM, true),
+                new URLParameter("only_active", true, STYLE.FORM, true),
+                new URLParameter("page_size", 1, STYLE.FORM, true),
+                new URLParameter("order", OrderEnum.ASC, STYLE.FORM, true)),
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpRequest httpRequest2 =
+        new HttpRequest(
+            String.format(
+                "/v1/projects/%s/conversations:recent", URLPathUtils.encodePathSegment(uriUUID)),
+            HttpMethod.GET,
+            Arrays.asList(
+                new URLParameter("app_id", "conversation app Id", STYLE.FORM, true),
+                new URLParameter("only_active", true, STYLE.FORM, true),
+                new URLParameter("page_size", 1, STYLE.FORM, true),
+                new URLParameter("page_token", "1", STYLE.FORM, true),
+                new URLParameter("order", OrderEnum.ASC, STYLE.FORM, true)),
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpResponse httpResponse1 =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), conversationsRecentListPage0.getBytes());
+    HttpResponse httpResponse2 =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), conversationsRecentListPage1.getBytes());
 
-    when(api.conversationListRecentConversations(
-            eq(uriPartID), eq("conversation app Id"), eq(true), eq(1), eq("1"), eq("ASC")))
-        .thenReturn(conversationsRecentListPage1);
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest1))))
+        .thenReturn(httpResponse1);
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest2))))
+        .thenReturn(httpResponse2);
 
-    ConversationsListRecentRequest request =
-        ConversationsListRecentRequest.builder()
+    RecentConversationsListQueryParameters request =
+        RecentConversationsListQueryParameters.builder()
             .setAppId("conversation app Id")
             .setOnlyActive(true)
             .setPageSize(1)
             .setOrder(OrderEnum.ASC)
             .build();
 
-    ConversationsListRecentResponse response0 = service.listRecent(request);
+    RecentConversationsListResponse response0 = service.listRecent(request);
     Collection<ConversationRecentMessage> content = response0.getContent();
     Assertions.assertThat(content.size()).isEqualTo(1);
     TestHelpers.recursiveEquals(
@@ -194,7 +335,7 @@ public class ConversationsServiceTest extends ConversationBaseTest {
         ConversationRecentMessageDtoTest.conversationRecentMessage);
     Assertions.assertThat(response0.hasNextPage()).isEqualTo(true);
 
-    ConversationsListRecentResponse response1 = response0.nextPage();
+    RecentConversationsListResponse response1 = response0.nextPage();
     content = response1.getContent();
     Assertions.assertThat(content.size()).isEqualTo(1);
     TestHelpers.recursiveEquals(
@@ -204,46 +345,97 @@ public class ConversationsServiceTest extends ConversationBaseTest {
   }
 
   @Test
-  void stopActive() throws ApiException {
+  void delete() throws ApiException {
 
-    service.stopActive(ConversationDtoTest.conversationRequest.getId());
+    HttpRequest httpRequest =
+        new HttpRequest(
+            String.format(
+                "/v1/projects/%s/conversations/%s",
+                URLPathUtils.encodePathSegment(uriUUID),
+                URLPathUtils.encodePathSegment(ConversationDtoTest.conversationRequest.getId())),
+            HttpMethod.DELETE,
+            Collections.emptyList(),
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpResponse httpResponse = new HttpResponse(200, null, Collections.emptyMap(), null);
 
-    verify(api)
-        .conversationStopActiveConversation(
-            projectIdCaptor.capture(), conversationIdCaptor.capture());
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
-    Assertions.assertThat(projectIdCaptor.getValue()).isEqualTo(uriPartID);
-    Assertions.assertThat(conversationIdCaptor.getValue())
-        .isEqualTo(ConversationDtoTest.conversationResponse.getId());
+    service.delete(ConversationDtoTest.conversationRequest.getId());
   }
 
   @Test
-  void delete() throws ApiException {
+  void stopActive() throws ApiException {
 
-    service.delete(ConversationDtoTest.conversationRequest.getId());
+    HttpRequest httpRequest =
+        new HttpRequest(
+            String.format(
+                "/v1/projects/%s/conversations/%s:stop",
+                URLPathUtils.encodePathSegment(uriUUID),
+                URLPathUtils.encodePathSegment(ConversationDtoTest.conversationRequest.getId())),
+            HttpMethod.POST,
+            Collections.emptyList(),
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpResponse httpResponse = new HttpResponse(200, null, Collections.emptyMap(), null);
 
-    verify(api)
-        .conversationDeleteConversation(projectIdCaptor.capture(), conversationIdCaptor.capture());
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
-    Assertions.assertThat(projectIdCaptor.getValue()).isEqualTo(uriPartID);
-    Assertions.assertThat(conversationIdCaptor.getValue())
-        .isEqualTo(ConversationDtoTest.conversationResponse.getId());
+    service.stopActive(ConversationDtoTest.conversationRequest.getId());
   }
 
   @Test
   void update() throws ApiException {
-    when(api.conversationUpdateConversation(
-            eq(uriPartID),
-            eq(ConversationDtoTest.conversationRequest.getId()),
-            eq(ConversationDtoTest.conversationRequest),
-            eq(null),
-            eq(MetadataUpdateStrategy.MERGE_PATCH)))
-        .thenReturn(ConversationDtoTest.conversationResponse);
 
+    HttpRequest httpRequest =
+        new HttpRequest(
+            String.format(
+                "/v1/projects/%s/conversations/%s",
+                URLPathUtils.encodePathSegment(uriUUID),
+                URLPathUtils.encodePathSegment(ConversationDtoTest.conversationRequest.getId())),
+            HttpMethod.PATCH,
+            Arrays.asList(
+                new URLParameter(
+                    "metadata_update_strategy",
+                    MetadataUpdateStrategy.MERGE_PATCH,
+                    STYLE.FORM,
+                    true)),
+            jsonConversationRequest,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonConversationResponse.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    ConversationsUpdateQueryParameters queryParameters =
+        ConversationsUpdateQueryParameters.builder()
+            .setMetadataUpdateStrategy(MetadataUpdateStrategy.MERGE_PATCH)
+            .build();
     Conversation response =
         service.update(
             ConversationDtoTest.conversationRequest.getId(),
-            MetadataUpdateStrategy.MERGE_PATCH,
+            queryParameters,
             ConversationDtoTest.conversationRequest);
 
     TestHelpers.recursiveEquals(response, ConversationDtoTest.conversationResponse);
@@ -252,36 +444,59 @@ public class ConversationsServiceTest extends ConversationBaseTest {
   @Test
   void injectMessage() throws ApiException {
 
+    HttpRequest httpRequest =
+        new HttpRequest(
+            String.format(
+                "/v1/projects/%s/conversations/%s:inject-message",
+                URLPathUtils.encodePathSegment(uriUUID),
+                URLPathUtils.encodePathSegment(
+                    InjectMessageDtoTest.injectContactMessage.getConversationId())),
+            HttpMethod.POST,
+            Collections.emptyList(),
+            jsonInjectContactMessageRequestDto,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpResponse httpResponse = new HttpResponse(200, null, Collections.emptyMap(), null);
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
     service.injectMessage(
         InjectMessageDtoTest.injectContactMessage.getConversationId(),
         InjectMessageDtoTest.injectContactMessage);
-
-    verify(api)
-        .conversationInjectMessage(
-            projectIdCaptor.capture(),
-            conversationIdCaptor.capture(),
-            injectMessageCaptor.capture());
-
-    Assertions.assertThat(projectIdCaptor.getValue()).isEqualTo(uriPartID);
-    Assertions.assertThat(conversationIdCaptor.getValue())
-        .isEqualTo(InjectMessageDtoTest.injectContactMessage.getConversationId());
-    TestHelpers.recursiveEquals(
-        injectMessageCaptor.getValue(), InjectMessageDtoTest.injectContactMessage);
   }
 
   @Test
   void injectEvent() throws ApiException {
 
+    HttpRequest httpRequest =
+        new HttpRequest(
+            String.format(
+                "/v1/projects/%s/conversations/%s:inject-event",
+                URLPathUtils.encodePathSegment(uriUUID),
+                URLPathUtils.encodePathSegment(InjectEventDtoTest.injectEvent.getConversationId())),
+            HttpMethod.POST,
+            Collections.emptyList(),
+            jsonInjectEventRequestDto,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+
+    HttpResponse httpResponse = new HttpResponse(200, null, Collections.emptyMap(), null);
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
     service.injectEvent(
         InjectEventDtoTest.injectEvent.getConversationId(), InjectEventDtoTest.injectEvent);
-
-    verify(api)
-        .eventsInjectEvent(
-            projectIdCaptor.capture(), conversationIdCaptor.capture(), injectEventCaptor.capture());
-
-    Assertions.assertThat(projectIdCaptor.getValue()).isEqualTo(uriPartID);
-    Assertions.assertThat(conversationIdCaptor.getValue())
-        .isEqualTo(InjectEventDtoTest.injectEvent.getConversationId());
-    TestHelpers.recursiveEquals(injectEventCaptor.getValue(), InjectEventDtoTest.injectEvent);
   }
 }
