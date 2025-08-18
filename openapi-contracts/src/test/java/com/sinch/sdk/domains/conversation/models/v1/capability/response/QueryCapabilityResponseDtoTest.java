@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 public class QueryCapabilityResponseDtoTest extends ConversationBaseTest {
 
   @GivenTextResource("domains/conversation/v1/capability/response/QueryCapabilityResponseDto.json")
-  String jsonTranscodeMessageResponseDto;
+  String jsonQueryCapabilityResponseDto;
 
   public static QueryCapabilityResponse expectedQueryCapabilityResponseDto =
       QueryCapabilityResponse.builder()
@@ -31,7 +31,7 @@ public class QueryCapabilityResponseDtoTest extends ConversationBaseTest {
   @Test
   void deserializeDto() throws JsonProcessingException {
     Object deserialized =
-        objectMapper.readValue(jsonTranscodeMessageResponseDto, QueryCapabilityResponse.class);
+        objectMapper.readValue(jsonQueryCapabilityResponseDto, QueryCapabilityResponse.class);
 
     TestHelpers.recursiveEquals(deserialized, expectedQueryCapabilityResponseDto);
   }

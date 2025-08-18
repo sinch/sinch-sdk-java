@@ -9,8 +9,16 @@ This guide lists all removed classes and interfaces from V1 and how to migrate t
 ### [`Conversation`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/package-summary.html)
 
 - Removed support of `SINCH_CHAT` channel.
-- [channelspecific.whatsapp.payment.OrderDetailsPayment](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/conversation/models/v1/messages/types/channelspecific/whatsapp/payment/OrderDetailsPayment.html) is now processing `OderDetailsSettings` interface for payment settings to support `boleto` and `payment_link` payment methods.  
-- Conversation Template V1 is deprecated. Use Conversation Template V2 instead.
+- [channelspecific.whatsapp.payment.OrderDetailsPayment](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/conversation/models/v1/messages/types/channelspecific/whatsapp/payment/OrderDetailsPayment.html) is now processing `OderDetailsSettings` interface for payment settings to support `boleto` and `payment_link` payment methods.
+- APIs returning a list are supporting common naming: `<operation>QueyParameters` models for filtering, sorting, and pagination onto requests and `<opreation>ListResponse` models for responses.
+- New APIs supporting auto-pagination for list responses:
+  - apps.list()
+  - webhooks.list().
+  - templates.list().
+  - templates.listTranslations().
+- Templates:
+  - Conversation `Template V1` is removed. Use Conversation`Template V2` instead.
+  - Conversation Templates models moved from `com.sinch.sdk.domains.conversation.models.templates` package to `com.sinch.sdk.domains.conversation.templates.models`.
 
 #### Replacement models
 | Old const                      | New const                                                                                                                                                                                           |
@@ -19,10 +27,50 @@ This guide lists all removed classes and interfaces from V1 and how to migrate t
 | ComposingEvent.EMPTY           | [ComposingEvent.COMPOSING_EVENT](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/events/types/ComposingEvent.html)                       |
 | ConversationDeletedEvent.EMPTY | [ConversationDeletedEvent.CONVERSATION_DELETED_EVENT](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/events/types/ComposingEvent.html)  |
 
-| Old class                                        | New class                                                                                                                                                                                                                           |
-|--------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
-| models.v1.messages.types.card.CardMessageMedia   | [com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessage](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/messages/types/media/MediaMessage.html) | 
+| Old class                                             | New class                                                                                                                                                                                                                                    |
+|-------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
+| messages.types.card.CardMessageMedia                  | [messages.types.media.MediaMessage](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/messages/types/media/MediaMessage.html)                                                       |
+| contact.request.IdentityConflictsListRequest          | [contacts.request.ContactListIdentityConflictsQueryParameters](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/contacts/request/ContactListIdentityConflictsQueryParameters.html) |
+| contact.request.ContactListRequest                    | [contacts.request.ContactsListQueryParameters](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/contacts/request/ContactsListQueryParameters.html)                                 |
+| contact.response.ContactsListResponse                 | [contacts.response.ContactsListResponse](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/contacts/response/ContactsListResponse.html)                                             |
+| conversation.request.ConversationsListRequest         | [conversations.request.ConversationsListQueryParameters](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/conversations/request/ConversationsListQueryParameters.html)             |
+| conversation.request.ConversationsListRecentRequest   | [conversations.request.ConversationsListQueryParameters](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/conversations/request/RecentConversationsListQueryParameters.html)       |
+| conversation.response.ConversationsListRecentResponse | [conversations.response.RecentConversationsListResponse](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/conversations/response/RecentConversationsListResponse.html)             |
+| events.request.EventsListRequest                      | [events.request.EventsListQueryParameters](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/events/request/EventsListQueryParameters.html)                                         |
+| messages.request.MessagesListRequest                  | [messages.request.MessagesListQueryParameters](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/messages/request/MessagesListQueryParameters.html)                                 |
 
+#### Replacement Services
+| Old package                          | New package                                                                                                                                                                    |
+|--------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
+| conversation.api.v1.AppService       | [conversation.api.v1.AppsService](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/api/v1/AppsService.html)                    |
+| conversation.api.v1.ContactService   | [conversation.api.v1.ContactsService](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/api/v1/ContactsService.html)            |
+| conversation.api.v1.Conversation     | [conversation.api.v1.ConversationsService](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/api/v1/ConversationsService.html)  |
+| conversation.api.v1.EventService     | [conversation.api.v1.EventsService](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/api/v1/EventsService.html)                |
+| conversation.api.v1.WebHooksService  | [conversation.api.v1.WebhooksService](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/api/v1/WebhookssService.html)           |
+
+#### Replacement packages
+| Old package                                      | New package                                                                                                                                                                                                   |
+|--------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
+| conversation.models.v1.app                       | [conversation.models.v1.apps](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/apps/package-summary.html)                                           |
+| conversation.models.v1.contact                   | [conversation.models.v1.contacts](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/contacts/package-summary.html)                                   |
+| conversation.models.v1.conversation              | [conversation.api.v1.conversations](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/conversations/package-summary.html)                            |
+| conversation.models.v1.event                     | [conversation.api.v1.events](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/events/package-summary.html)                                          |
+| conversation.api.templates.v2.TemplatesServiceV2 | [conversation.templates.api.v2.TemplatesV2Service](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/templates/api/v2/TemplatesV2Service/package-summary.html) |
+
+#### Replacement APIs
+
+| Old interface                                        | New Equivalent                                                                                                                                                                                   |
+|------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
+| ContactsService.getChannelProfileByChannelIdentity() | Returned class is changed from `String` to [GetChannelProfileResponse](openapi-contracts/src/main/com/sinch/sdk/domains/conversation/models/v1/contacts/response/GetChannelProfileResponse.java) |
+| ContactsService.getChannelProfileByContactId()       | Returned class is changed from `String` to [GetChannelProfileResponse](openapi-contracts/src/main/com/sinch/sdk/domains/conversation/models/v1/contacts/response/GetChannelProfileResponse.java) |
+| AppsService.list(...)                                | Returned class is changed from `Collection<String>` to `AppsListResponse`                                                                                                                        |
+| MessagesService.get(...)                             | Is accepting now a `MessagesGetQueryParameeters` object for request parameters instead of individual parameters.                                                                                 |
+| MessagesService.delete(...)                          | Is accepting now a `MessagesDeleteQueryParameeters` object for request parameters instead of individual parameters.                                                                              |
+| MessagesService.update(...)                          | Is accepting now a `MessagesUpdateQueryParameeters` object for request parameters instead of individual parameters.                                                                              |
+| WebhooksService.create(...)                          | Request parameter type is changed from `Webhook` to [CreateWebhookRequest](openapi-contracts/src/main/com/sinch/sdk/domains/conversation/models/v1/webhooks/request/CreateWebhookRequest.java)   |
+| WebhooksService.list(...)                            | Returned class is changed from `Collection<Webhook>` to `WebhooksListResponse`                                                                                                                   |
+| TemplatesServiceV2.list(...)                         | Returned class is changed from `Collection<TemplateV2>` to `TemplatesV2ListResponse`                                                                                                             |
+| TemplatesServiceV2.listTranslations(...)             | Returned class is changed from `Collection<TemplateTranslation>` to `TranslationV2ListResponse`                                                                                                  |
 ### [`Numbers`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/package-summary.html)
 
 #### Replacement models
@@ -72,10 +120,10 @@ This guide lists all removed classes and interfaces from V1 and how to migrate t
 | models.requests.RentVoiceConfigurationRequestParameters | [com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/models/v1/VoiceConfiguration.html)                                                   |
 
 ##### Regions
-| Old class                                               | New class                                                                                                                                                                                                                                                             |
-|---------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
-| models.requests.AvailableRegionListAllRequestParameters | [com.sinch.sdk.domains.numbers.models.v1.regions.request.AvailableRegionsListQueryParameters](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/models/v1/regions/request/AvailableRegionsListQueryParameters.html)         |
-| models.responses.AvailableRegionListResponse            | [com.sinch.sdk.domains.numbers.models.v1.regions.response.AvailableRegionsListResponse](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/models/v1/regions/response/AvailableRegionsListResponse.html) |
+| Old class                                               | New class                                                                                                                                                                                                                                                     |
+|---------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
+| models.requests.AvailableRegionListAllRequestParameters | [com.sinch.sdk.domains.numbers.models.v1.regions.request.AvailableRegionsListQueryParameters](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/models/v1/regions/request/AvailableRegionsListQueryParameters.html) |
+| models.responses.AvailableRegionListResponse            | [com.sinch.sdk.domains.numbers.models.v1.regions.response.AvailableRegionsListResponse](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/models/v1/regions/response/AvailableRegionsListResponse.html)             |
 
 ##### Callbacks configuration
 | Old class                                          | New class                                                                                                                                                                                                                                                        |
@@ -195,11 +243,11 @@ Use the new versioned API under `sms().v1()` to get access to [SMSService](https
 
 #### Replacement models
 
-| Old const                             | New const                                                                                                                                                                                                       |
-|---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
-| SvamlActionContinue.DEFAULT           | [SvamlActionContinue.SVAML_ACTION_CONTINUE](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/svaml/action/SvamlActionContinue.html)                          |
-| SvamlActionHangup.DEFAULT             | [SvamlActionHangup.SVAML_ACTION_HANGUP](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/svaml/action/SvamlActionHangup.html)                                |
-| SvamlInstructionAnswer.DEFAULT        | [SvamlInstructionAnswer.SVAML_INSTRUCTION_ANSWER](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/svaml/action/SvamlInstructionAnswer.html)                 |
+| Old const                             | New const                                                                                                                                                                                                             |
+|---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
+| SvamlActionContinue.DEFAULT           | [SvamlActionContinue.SVAML_ACTION_CONTINUE](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/svaml/action/SvamlActionContinue.html)                                |
+| SvamlActionHangup.DEFAULT             | [SvamlActionHangup.SVAML_ACTION_HANGUP](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/svaml/action/SvamlActionHangup.html)                                      |
+| SvamlInstructionAnswer.DEFAULT        | [SvamlInstructionAnswer.SVAML_INSTRUCTION_ANSWER](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/svaml/action/SvamlInstructionAnswer.html)                       |
 | SvamlInstructionStopRecording.DEFAULT | [SvamlInstructionStopRecording.SVAML_INSTRUCTION_STOP_RECORDING](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/svaml/action/SvamlInstructionStopRecording.html) |
 
 

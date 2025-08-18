@@ -1,5 +1,5 @@
 /**
- * <code>Whatsapp Flow channel specific message</code> message models
+ * <code>Whatsapp Flow channel specific message</code> models
  *
  * @since 1.3
  */

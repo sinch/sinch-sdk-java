@@ -9,8 +9,8 @@ package conversation.conversations;
 
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.conversation.api.v1.ConversationsService;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.request.ConversationsListRecentRequest;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationsListRecentResponse;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.request.RecentConversationsListQueryParameters;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.response.RecentConversationsListResponse;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationRegion;
 import java.util.logging.Logger;
@@ -46,13 +46,13 @@ public class ListRecent {
         String.format(
             "List recent conversations for application with ID '%s'", conversationApplicationId));
 
-    ConversationsListRecentRequest request =
-        ConversationsListRecentRequest.builder()
+    RecentConversationsListQueryParameters request =
+        RecentConversationsListQueryParameters.builder()
             .setOnlyActive(false)
             .setAppId(conversationApplicationId)
             .build();
 
-    ConversationsListRecentResponse response = conversationsService.listRecent(request);
+    RecentConversationsListResponse response = conversationsService.listRecent(request);
 
     LOGGER.info("Response:");
 

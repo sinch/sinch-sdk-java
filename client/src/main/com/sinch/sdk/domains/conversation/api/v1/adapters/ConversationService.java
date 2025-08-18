@@ -1,13 +1,21 @@
 package com.sinch.sdk.domains.conversation.api.v1.adapters;
 
+import com.sinch.sdk.auth.HmacAuthenticationValidation;
 import com.sinch.sdk.auth.adapters.OAuthManager;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.StringUtil;
-import com.sinch.sdk.domains.conversation.api.templates.adapters.TemplatesService;
-import com.sinch.sdk.domains.conversation.api.v1.WebHooksService;
+import com.sinch.sdk.domains.conversation.api.v1.AppsService;
+import com.sinch.sdk.domains.conversation.api.v1.CapabilityService;
+import com.sinch.sdk.domains.conversation.api.v1.ContactsService;
+import com.sinch.sdk.domains.conversation.api.v1.ConversationsService;
+import com.sinch.sdk.domains.conversation.api.v1.EventsService;
+import com.sinch.sdk.domains.conversation.api.v1.MessagesService;
+import com.sinch.sdk.domains.conversation.api.v1.ProjectSettingsService;
+import com.sinch.sdk.domains.conversation.api.v1.TranscodingService;
+import com.sinch.sdk.domains.conversation.api.v1.WebhooksService;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.credentials.LineEnterpriseCredentialsMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.events.app.AppEventMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.events.contactmessage.internal.ContactMessageEventMapper;
@@ -33,9 +41,11 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.Card
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ChoiceMessageMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ListMessageInternalMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.template.TemplateMessageMapper;
+import com.sinch.sdk.domains.conversation.templates.api.adapters.TemplatesService;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -56,15 +66,15 @@ public class ConversationService
   private final Supplier<HttpClient> httpClientSupplier;
 
   private volatile Map<String, AuthManager> authManagers;
-  private volatile AppService app;
-  private volatile ContactService contact;
+  private volatile AppsService apps;
+  private volatile ContactsService contacts;
   private volatile MessagesService messages;
   private volatile ConversationsService conversations;
   private volatile EventsService events;
   private volatile TranscodingService transcoding;
   private volatile CapabilityService capability;
   private volatile ProjectSettingsService projectSettings;
-  private volatile WebHooksService webhooks;
+  private volatile WebhooksService webhooks;
   private volatile TemplatesService templates;
 
   static {
@@ -84,61 +94,100 @@ public class ConversationService
     this.oAuthServer = oAuthServer;
   }
 
-  public AppService app() {
-    if (null == this.app) {
-      instanceLazyInit();
-      this.app = new AppService(uriUUID, context, httpClientSupplier.get(), authManagers);
+  public AppsService apps() {
+    if (null == this.apps) {
+      instanceLazyInit(true);
+      this.apps =
+          new AppsServiceImpl(
+              httpClientSupplier.get(),
+              context.getServer(),
+              authManagers,
+              HttpMapper.getInstance(),
+              uriUUID);
     }
-    return this.app;
+    return this.apps;
   }
 
-  public ContactService contact() {
-    if (null == this.contact) {
-      instanceLazyInit();
-      this.contact = new ContactService(uriUUID, context, httpClientSupplier.get(), authManagers);
+  public ContactsService contacts() {
+    if (null == this.contacts) {
+      instanceLazyInit(true);
+      this.contacts =
+          new ContactsServiceImpl(
+              httpClientSupplier.get(),
+              context.getServer(),
+              authManagers,
+              HttpMapper.getInstance(),
+              uriUUID);
     }
-    return this.contact;
+    return this.contacts;
   }
 
   public MessagesService messages() {
     if (null == this.messages) {
-      instanceLazyInit();
-      this.messages = new MessagesService(uriUUID, context, httpClientSupplier.get(), authManagers);
+      instanceLazyInit(true);
+      this.messages =
+          new MessagesServiceImpl(
+              httpClientSupplier.get(),
+              context.getServer(),
+              authManagers,
+              HttpMapper.getInstance(),
+              uriUUID);
     }
     return this.messages;
   }
 
   public ConversationsService conversations() {
     if (null == this.conversations) {
-      instanceLazyInit();
+      instanceLazyInit(true);
       this.conversations =
-          new ConversationsService(uriUUID, context, httpClientSupplier.get(), authManagers);
+          new ConversationsServiceImpl(
+              httpClientSupplier.get(),
+              context.getServer(),
+              authManagers,
+              HttpMapper.getInstance(),
+              uriUUID);
     }
     return this.conversations;
   }
 
   public EventsService events() {
     if (null == this.events) {
-      instanceLazyInit();
-      this.events = new EventsService(uriUUID, context, httpClientSupplier.get(), authManagers);
+      instanceLazyInit(true);
+      this.events =
+          new EventsServiceImpl(
+              httpClientSupplier.get(),
+              context.getServer(),
+              authManagers,
+              HttpMapper.getInstance(),
+              uriUUID);
     }
     return this.events;
   }
 
   public TranscodingService transcoding() {
     if (null == this.transcoding) {
-      instanceLazyInit();
+      instanceLazyInit(true);
       this.transcoding =
-          new TranscodingService(uriUUID, context, httpClientSupplier.get(), authManagers);
+          new TranscodingServiceImpl(
+              httpClientSupplier.get(),
+              context.getServer(),
+              authManagers,
+              HttpMapper.getInstance(),
+              uriUUID);
     }
     return this.transcoding;
   }
 
   public CapabilityService capability() {
     if (null == this.capability) {
-      instanceLazyInit();
+      instanceLazyInit(true);
       this.capability =
-          new CapabilityService(uriUUID, context, httpClientSupplier.get(), authManagers);
+          new CapabilityServiceImpl(
+              httpClientSupplier.get(),
+              context.getServer(),
+              authManagers,
+              HttpMapper.getInstance(),
+              uriUUID);
     }
     return this.capability;
   }
@@ -150,30 +199,45 @@ public class ConversationService
     return this.templates;
   }
 
-  public WebHooksService webhooks() {
+  public WebhooksService webhooks() {
     if (null == this.webhooks) {
+      instanceLazyInit(false);
       this.webhooks =
-          new WebHooksAdaptorService(
-              uriUUID, context, this::instanceLazyInit, httpClientSupplier, () -> authManagers);
+          new WebhooksServiceImpl(
+              httpClientSupplier.get(),
+              context.getServer(),
+              authManagers,
+              HttpMapper.getInstance(),
+              uriUUID,
+              new HmacAuthenticationValidation());
     }
     return this.webhooks;
   }
 
   public ProjectSettingsService projectSettings() {
     if (null == this.projectSettings) {
-      instanceLazyInit();
+      instanceLazyInit(true);
       this.projectSettings =
-          new ProjectSettingsService(uriUUID, context, httpClientSupplier.get(), authManagers);
+          new ProjectSettingsServiceImpl(
+              httpClientSupplier.get(),
+              context.getServer(),
+              authManagers,
+              HttpMapper.getInstance(),
+              uriUUID);
     }
     return this.projectSettings;
   }
 
-  private void instanceLazyInit() {
+  private void instanceLazyInit(boolean validateRequired) {
     if (null != this.authManagers) {
       return;
     }
     synchronized (this) {
       if (null == this.authManagers) {
+        if (!validateRequired) {
+          this.authManagers = Collections.emptyMap();
+          return;
+        }
         Objects.requireNonNull(
             credentials, "Conversation service requires credentials to be defined");
         Objects.requireNonNull(context, "Conversation service requires context to be defined");

@@ -8,7 +8,7 @@
 package conversation.webhooks;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.conversation.api.v1.WebHooksService;
+import com.sinch.sdk.domains.conversation.api.v1.WebhooksService;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.Webhook;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.WebhookTargetType;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.WebhookTrigger;
@@ -42,7 +42,7 @@ public class Update {
 
     SinchClient client = new SinchClient(configuration);
 
-    WebHooksService webHooksService = client.conversation().v1().webhooks();
+    WebhooksService webHooksService = client.conversation().v1().webhooks();
 
     Webhook webhookRequest =
         Webhook.builder()
