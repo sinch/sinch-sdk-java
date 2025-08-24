@@ -460,16 +460,17 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
           .setCredentialOrdinalNumber(0)
           .build();
 
-  @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelViberRequestDto.json")
-  String jsonConversationChannelViberRequestDto;
+  @GivenTextResource(
+      "/domains/conversation/v1/credentials/ConversationChannelSinchChatRequestDto.json")
+  String jsonConversationChannelSinchChatRequestDto;
 
   @GivenJsonResource(
-      "/domains/conversation/v1/credentials/ConversationChannelViberResponseDto.json")
-  ConversationChannelCredentials loadedConversationChannelViberDto;
+      "/domains/conversation/v1/credentials/ConversationChannelSinchChatResponseDto.json")
+  ConversationChannelCredentials loadedConversationChannelSinchChatDto;
 
-  public static ConversationChannelCredentials conversationChannelViberResponseDto =
+  public static ConversationChannelCredentials conversationChannelSinchChatResponseDto =
       ConversationChannelCredentials.builder()
-          .setChannel(ConversationChannel.VIBER)
+          .setChannel(ConversationChannel.SINCH_CHAT)
           .setCallbackSecret("callback secret")
           .setChannelKnownId("channel id")
           .setState(
@@ -477,14 +478,12 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
                   .setStatus(ChannelIntegrationStatus.PENDING)
                   .setDescription("description value")
                   .build())
-          .setCredentials(StaticTokenCredentials.builder().setToken("viberChannel token").build())
           .setCredentialOrdinalNumber(0)
           .build();
-  public static ConversationChannelCredentials conversationChannelViberRequestDto =
+  public static ConversationChannelCredentials conversationChannelSinchChatRequestDto =
       ConversationChannelCredentials.builder()
-          .setChannel(ConversationChannel.VIBER)
+          .setChannel(ConversationChannel.SINCH_CHAT)
           .setCallbackSecret("callback secret")
-          .setCredentials(StaticTokenCredentials.builder().setToken("viberChannel token").build())
           .setCredentialOrdinalNumber(0)
           .build();
 
@@ -774,16 +773,17 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
   }
 
   @Test
-  void serializeConversationChannelViberDto() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(conversationChannelViberRequestDto);
+  void serializeConversationChannelSinchChatDto() throws JsonProcessingException, JSONException {
+    String serializedString =
+        objectMapper.writeValueAsString(conversationChannelSinchChatRequestDto);
 
-    JSONAssert.assertEquals(jsonConversationChannelViberRequestDto, serializedString, true);
+    JSONAssert.assertEquals(jsonConversationChannelSinchChatRequestDto, serializedString, true);
   }
 
   @Test
-  void deserializeConversationChannelViberDto() {
+  void deserializeConversationChannelSinchChatDto() {
     TestHelpers.recursiveEquals(
-        loadedConversationChannelViberDto, conversationChannelViberResponseDto);
+        loadedConversationChannelSinchChatDto, conversationChannelSinchChatResponseDto);
   }
 
   @Test

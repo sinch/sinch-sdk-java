@@ -122,11 +122,6 @@ public class Create extends BaseApplication {
                 TelegramCredentials.builder().setToken("telegramChannel token").build())
             .build();
 
-    var viberChannel =
-        ConversationChannelCredentialsBuilderFactory.viber(
-                StaticTokenCredentials.builder().setToken("viberChannel token").build())
-            .build();
-
     var viberBMChannel =
         ConversationChannelCredentialsBuilderFactory.viberBm(
                 StaticBearerCredentials.builder()
@@ -164,7 +159,6 @@ public class Create extends BaseApplication {
             rcsChannel,
             smsChannel,
             telegramChannel,
-            viberChannel,
             viberBMChannel,
             wechatChannel,
             whatsAppChannel);

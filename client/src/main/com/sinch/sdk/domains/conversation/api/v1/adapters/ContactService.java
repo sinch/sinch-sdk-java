@@ -31,10 +31,7 @@ public class ContactService implements com.sinch.sdk.domains.conversation.api.v1
   private final ContactApi api;
   private final Collection<ConversationChannel> supportedChannelForGetProfile =
       Arrays.asList(
-          ConversationChannel.INSTAGRAM,
-          ConversationChannel.MESSENGER,
-          ConversationChannel.VIBER,
-          ConversationChannel.LINE);
+          ConversationChannel.INSTAGRAM, ConversationChannel.MESSENGER, ConversationChannel.LINE);
 
   public ContactService(
       String uriUUID,
