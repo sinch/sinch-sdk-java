@@ -107,7 +107,7 @@ public interface SendEmailHtmlInTemplateRequest extends SendEmailRequest {
    * '{&quot;alice@example.com&quot;: {&quot;name&quot;:&quot;Alice&quot;, &quot;id&quot;:1},
    * &quot;bob@example.com&quot;: {&quot;name&quot;:&quot;Bob&quot;, &quot;id&quot;:2}}'. Maximum
    * 1,000 recipients per batch. See <a
-   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages#batch-sending">Batch
+   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/batch-sending">Batch
    * Sending</a> for more information
    *
    * @return recipientVariables
