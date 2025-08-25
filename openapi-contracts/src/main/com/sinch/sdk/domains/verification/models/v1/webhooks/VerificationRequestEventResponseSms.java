@@ -11,6 +11,7 @@
 package com.sinch.sdk.domains.verification.models.v1.webhooks;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
 import java.util.List;
 
 /** SMS Request Event Response */
@@ -37,11 +38,34 @@ public interface VerificationRequestEventResponseSms
   String getCode();
 
   /**
+   * Get codeType
+   *
+   * @return codeType
+   */
+  SmsCodeType getCodeType();
+
+  /**
+   * The expiration time for a verification process is represented in the format <code>HH:MM:SS
+   * </code>.
+   *
+   * @return expiry
+   */
+  String getExpiry();
+
+  /**
    * The SMS verification content language. Set in the verification request.
    *
    * @return acceptLanguage
    */
   List<String> getAcceptLanguage();
+
+  /**
+   * Return the additional "sms" with the specified name.
+   *
+   * @param key the name of the property
+   * @return the additional property with the specified name
+   */
+  Object getExtraOption(String key);
 
   /**
    * Getting builder
@@ -78,11 +102,37 @@ public interface VerificationRequestEventResponseSms
     /**
      * see getter
      *
+     * @param codeType see getter
+     * @return Current builder
+     * @see #getCodeType
+     */
+    Builder setCodeType(SmsCodeType codeType);
+
+    /**
+     * see getter
+     *
+     * @param expiry see getter
+     * @return Current builder
+     * @see #getExpiry
+     */
+    Builder setExpiry(String expiry);
+
+    /**
+     * see getter
+     *
      * @param acceptLanguage see getter
      * @return Current builder
      * @see #getAcceptLanguage
      */
     Builder setAcceptLanguage(List<String> acceptLanguage);
+
+    /**
+     * see getter
+     *
+     * @return Current builder
+     * @see #getExtraOption
+     */
+    Builder putExtraOption(String key, Object value);
 
     /**
      * Create instance

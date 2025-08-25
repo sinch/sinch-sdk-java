@@ -1,6 +1,6 @@
 package com.sinch.sdk.domains.verification.api.v1.adapters;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
@@ -12,6 +12,7 @@ import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
+import com.sinch.sdk.core.models.ModelArgMatcher;
 import com.sinch.sdk.domains.verification.adapters.VerificationBaseTest;
 import com.sinch.sdk.domains.verification.api.v1.internal.VerificationsStartApi;
 import com.sinch.sdk.domains.verification.models.dto.v1.start.request.VerificationStartRequestTest;
@@ -65,7 +66,8 @@ public class VerificationStartServiceTest extends VerificationBaseTest {
   @Test
   void startSms() throws ApiException {
 
-    when(api.startVerification(any(VerificationStartRequestInternal.class), eq(null)))
+    when(api.startVerification(
+            argThat(new ModelArgMatcher<>(startVerificationSmsRequestDto)), eq(null)))
         .thenReturn(VerificationStartResponseTest.expectedStartVerificationSmsDto);
 
     VerificationStartResponseSms response =
@@ -93,12 +95,14 @@ public class VerificationStartServiceTest extends VerificationBaseTest {
             .setCodeType(startVerificationSmsRequestDtoImpl.getCodeType())
             .setTemplate(startVerificationSmsRequestDtoImpl.getTemplate())
             .setAcceptLanguage("es-ES")
+            .putExtraOption("my key", startVerificationSmsRequestDtoImpl.getExtraOption("my key"))
             .build();
     VerificationStartRequestInternalImpl internalWithAcceptLanguage =
         new VerificationStartRequestInternalImpl();
     internalWithAcceptLanguage.setActualInstance(withAcceptLanguage);
 
-    when(api.startVerification(any(VerificationStartRequestInternal.class), eq("es-ES")))
+    when(api.startVerification(
+            argThat(new ModelArgMatcher<>(internalWithAcceptLanguage)), eq("es-ES")))
         .thenReturn(VerificationStartResponseTest.expectedStartVerificationSmsDto);
 
     VerificationStartResponseSms response =
@@ -115,7 +119,8 @@ public class VerificationStartServiceTest extends VerificationBaseTest {
   @Test
   void startFlashCall() throws ApiException {
 
-    when(api.startVerification(eq(startVerificationFlashCallRequestDto), eq(null)))
+    when(api.startVerification(
+            argThat(new ModelArgMatcher<>(startVerificationFlashCallRequestDto)), eq(null)))
         .thenReturn(VerificationStartResponseTest.expectedStartVerificationFlashCallDto);
 
     VerificationStartResponseFlashCall response =
@@ -132,7 +137,8 @@ public class VerificationStartServiceTest extends VerificationBaseTest {
   @Test
   void startPhoneCall() throws ApiException {
 
-    when(api.startVerification(eq(startVerificationPhoneCallRequestDto), eq(null)))
+    when(api.startVerification(
+            argThat(new ModelArgMatcher<>(startVerificationPhoneCallRequestDto)), eq(null)))
         .thenReturn(VerificationStartResponseTest.expectedStartVerificationPhoneCallDto);
 
     VerificationStartResponsePhoneCall response =

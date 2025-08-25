@@ -3,13 +3,13 @@ package com.sinch.sample.verification.start;
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.verification.api.v1.VerificationStartService;
 import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
+import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestData;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestPhoneCall;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms;
-import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms.CodeTypeEnum;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponse;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -51,7 +51,7 @@ public class Start extends BaseApplication {
           service.startSms(
               VerificationStartRequestSms.builder()
                   .setIdentity(identity)
-                  .setCodeType(CodeTypeEnum.ALPHANUMERIC)
+                  .setCodeType(SmsCodeType.ALPHANUMERIC)
                   .setAcceptLanguage("fr-FR")
                   .build());
     } else if (method.value().equals("seamless")) {

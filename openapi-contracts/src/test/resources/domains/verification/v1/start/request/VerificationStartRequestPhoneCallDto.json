@@ -9,6 +9,7 @@
   "calloutOptions": {
     "speech": {
       "locale": "fr-FR"
-    }
+    },
+    "my key": "my value"
   }
 }

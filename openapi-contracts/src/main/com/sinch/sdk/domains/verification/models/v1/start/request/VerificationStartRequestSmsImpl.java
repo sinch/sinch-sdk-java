@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.Identity;
+import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
 import com.sinch.sdk.domains.verification.models.v1.start.internal.VerificationMethodStart;
 import com.sinch.sdk.domains.verification.models.v1.start.request.internal.VerificationStartSmsOptions;
 import com.sinch.sdk.domains.verification.models.v1.start.request.internal.VerificationStartSmsOptionsImpl;
@@ -126,6 +127,22 @@ public class VerificationStartRequestSmsImpl
   }
 
   @JsonIgnore
+  public SmsCodeType getCodeType() {
+    if (null == smsOptions || !smsOptions.isPresent() || null == smsOptions.get().getCodeType()) {
+      return null;
+    }
+    return smsOptions.get().getCodeType();
+  }
+
+  public OptionalValue<SmsCodeType> codeType() {
+    return null != smsOptions && smsOptions.isPresent()
+        ? smsOptions
+            .map(f -> ((VerificationStartSmsOptionsImpl) f).codeType())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
+  }
+
+  @JsonIgnore
   public String getExpiry() {
     if (null == smsOptions || !smsOptions.isPresent() || null == smsOptions.get().getExpiry()) {
       return null;
@@ -138,20 +155,6 @@ public class VerificationStartRequestSmsImpl
         ? smsOptions
             .map(f -> ((VerificationStartSmsOptionsImpl) f).expiry())
             .orElse(OptionalValue.empty())
-        : OptionalValue.empty();
-  }
-
-  @JsonIgnore
-  public CodeTypeEnum getCodeType() {
-    if (null == smsOptions || !smsOptions.isPresent() || null == smsOptions.get().getCodeType()) {
-      return null;
-    }
-    return CodeTypeEnum.from(smsOptions.get().getCodeType().value());
-  }
-
-  public OptionalValue<CodeTypeEnum> codeType() {
-    return null != smsOptions && smsOptions.isPresent()
-        ? smsOptions.map(f -> CodeTypeEnum.from(smsOptions.get().getCodeType().value()))
         : OptionalValue.empty();
   }
 
@@ -275,18 +278,14 @@ public class VerificationStartRequestSmsImpl
     }
 
     @JsonIgnore
-    public Builder setExpiry(String expiry) {
-      getDelegatedBuilder().setExpiry(expiry);
+    public Builder setCodeType(SmsCodeType codeType) {
+      getDelegatedBuilder().setCodeType(codeType);
       return this;
     }
 
     @JsonIgnore
-    public Builder setCodeType(CodeTypeEnum codeType) {
-      getDelegatedBuilder()
-          .setCodeType(
-              null != codeType
-                  ? VerificationStartSmsOptionsImpl.CodeTypeEnum.from(codeType.value())
-                  : null);
+    public Builder setExpiry(String expiry) {
+      getDelegatedBuilder().setExpiry(expiry);
       return this;
     }
 

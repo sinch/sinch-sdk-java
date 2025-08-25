@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
 import com.sinch.sdk.domains.verification.models.v1.start.internal.VerificationMethodStart;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.VerificationStartResponseSmsContent;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.VerificationStartResponseSmsContentImpl;
@@ -137,6 +138,26 @@ public class VerificationStartResponseSmsImpl
         : OptionalValue.empty();
   }
 
+  @JsonIgnore
+  public SmsCodeType getCodeType() {
+    if (null == sms || !sms.isPresent() || null == sms.get().getCodeType()) {
+      return null;
+    }
+    return sms.get().getCodeType();
+  }
+
+  public OptionalValue<SmsCodeType> codeType() {
+    return null != sms && sms.isPresent()
+        ? sms.map(f -> ((VerificationStartResponseSmsContentImpl) f).codeType())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
+  }
+
+  @JsonIgnore
+  public Object getExtraOption(String key) {
+    return null != sms && sms.isPresent() ? sms.get().get(key) : null;
+  }
+
   /** Return true if this VerificationStartResponseSms object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -217,6 +238,17 @@ public class VerificationStartResponseSmsImpl
     @JsonIgnore
     public Builder setInterceptionTimeout(Integer interceptionTimeout) {
       getDelegatedBuilder().setInterceptionTimeout(interceptionTimeout);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setCodeType(SmsCodeType codeType) {
+      getDelegatedBuilder().setCodeType(codeType);
+      return this;
+    }
+
+    public Builder putExtraOption(String key, Object value) {
+      getDelegatedBuilder().put(key, value);
       return this;
     }
 

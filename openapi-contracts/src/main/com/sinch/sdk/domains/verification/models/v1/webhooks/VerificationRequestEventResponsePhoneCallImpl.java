@@ -102,6 +102,11 @@ public class VerificationRequestEventResponsePhoneCallImpl
         : OptionalValue.empty();
   }
 
+  @JsonIgnore
+  public Object getExtraOption(String key) {
+    return null != callout && callout.isPresent() ? callout.get().get(key) : null;
+  }
+
   /** Return true if this VerificationRequestEventResponsePhoneCall object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -170,6 +175,11 @@ public class VerificationRequestEventResponsePhoneCallImpl
     @JsonIgnore
     public Builder setSpeech(PhoneCallSpeech speech) {
       getDelegatedBuilder().setSpeech(speech);
+      return this;
+    }
+
+    public Builder putExtraOption(String key, Object value) {
+      getDelegatedBuilder().put(key, value);
       return this;
     }
 

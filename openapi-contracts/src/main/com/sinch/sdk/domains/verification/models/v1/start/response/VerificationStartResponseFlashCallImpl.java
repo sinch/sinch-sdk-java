@@ -173,6 +173,11 @@ public class VerificationStartResponseFlashCallImpl
         : OptionalValue.empty();
   }
 
+  @JsonIgnore
+  public Object getExtraOption(String key) {
+    return null != flashCall && flashCall.isPresent() ? flashCall.get().get(key) : null;
+  }
+
   /** Return true if this VerificationStartResponseFlashCall object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -266,6 +271,11 @@ public class VerificationStartResponseFlashCallImpl
     @JsonIgnore
     public Builder setDenyCallAfter(Integer denyCallAfter) {
       getDelegatedBuilder().setDenyCallAfter(denyCallAfter);
+      return this;
+    }
+
+    public Builder putExtraOption(String key, Object value) {
+      getDelegatedBuilder().put(key, value);
       return this;
     }
 

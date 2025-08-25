@@ -4,6 +4,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.domains.verification.adapters.VerificationBaseTest;
+import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEventResponseAction;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponseFlashCall;
@@ -22,18 +23,24 @@ public class VerificationResponseEventDtoTest extends VerificationBaseTest {
           .setAction(VerificationEventResponseAction.ALLOW)
           .setCode("4567")
           .setSpeech(PhoneCallSpeech.builder().setLocale("the locale").build())
+          .putExtraOption("my key", "my value")
           .build();
   public static VerificationRequestEventResponseFlashCall expectedFlashCallRequestEventResponseDto =
       VerificationRequestEventResponseFlashCall.builder()
           .setAction(VerificationEventResponseAction.ALLOW)
           .setCli("cli code")
           .setDialTimeout(123)
+          .setInterceptionTimeout(456)
+          .putExtraOption("my key", "my value")
           .build();
   public static VerificationRequestEventResponseSms expectedSmsRequestEventResponseDto =
       VerificationRequestEventResponseSms.builder()
           .setAction(VerificationEventResponseAction.ALLOW)
           .setCode("5666")
+          .setCodeType(SmsCodeType.NUMERIC)
+          .setExpiry("01:02:03")
           .setAcceptLanguage(Collections.singletonList("a language"))
+          .putExtraOption("my key", "my value")
           .build();
 
   @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseSms.json")

@@ -5,6 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.verification.models.dto.v1.start.LinkTest;
+import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseData;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseDataImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseFlashCall;
@@ -46,6 +47,7 @@ public class VerificationStartResponseTest extends BaseTest {
                   .setInterceptionTimeout(45)
                   .setReportTimeout(75)
                   .setDenyCallAfter(0)
+                  .putExtraOption("my key", "my value")
                   .build());
 
   @GivenJsonResource(
@@ -72,6 +74,8 @@ public class VerificationStartResponseTest extends BaseTest {
                   .setLinks(LinkTest.expectedLinks)
                   .setTemplate("Your verification code is {{CODE}}. Verified by Sinch")
                   .setInterceptionTimeout(298)
+                  .setCodeType(SmsCodeType.NUMERIC)
+                  .putExtraOption("my key", "my value")
                   .build());
 
   @Test

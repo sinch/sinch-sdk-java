@@ -5,6 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.verification.adapters.VerificationBaseTest;
+import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
 import com.sinch.sdk.domains.verification.models.v1.start.request.internal.VerificationStartSmsOptions;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
@@ -16,14 +17,14 @@ public class VerificationStartSmsOptionsTest extends VerificationBaseTest {
   public static VerificationStartSmsOptions startVerificationSmsOptionDto =
       VerificationStartSmsOptions.builder()
           .setExpiry("01:02:03")
-          .setCodeType(VerificationStartSmsOptions.CodeTypeEnum.ALPHANUMERIC)
+          .setCodeType(SmsCodeType.ALPHANUMERIC)
           .setTemplate("My template requires to use '{{CODE}}' placeholder")
           .build();
 
   public static VerificationStartSmsOptions startVerificationSmsOptionWithAdditionalPropertiesDto =
       VerificationStartSmsOptions.builder()
           .setExpiry("01:02:03")
-          .setCodeType(VerificationStartSmsOptions.CodeTypeEnum.ALPHANUMERIC)
+          .setCodeType(SmsCodeType.ALPHANUMERIC)
           .setTemplate("My template requires to use '{{CODE}}' placeholder")
           .put("a key", "a value")
           .put("secondKey", "second value")
@@ -32,7 +33,7 @@ public class VerificationStartSmsOptionsTest extends VerificationBaseTest {
   public static VerificationStartSmsOptions startVerificationSmsOptionDtoWithAcceptLanguage =
       VerificationStartSmsOptions.builder()
           .setExpiry("01:02:03")
-          .setCodeType(VerificationStartSmsOptions.CodeTypeEnum.ALPHANUMERIC)
+          .setCodeType(SmsCodeType.ALPHANUMERIC)
           .setTemplate("My template requires to use '{{CODE}}' placeholder")
           .setAcceptLanguage("es-ES")
           .build();

@@ -1,5 +1,7 @@
 package com.sinch.sdk.domains.verification.models.v1.start.response.internal;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -7,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonPropertyOrder({
@@ -37,17 +41,25 @@ public class VerificationStartResponseFlashCallContentImpl
 
   private OptionalValue<Integer> denyCallAfter;
 
+  /**
+   * A container for additional, undeclared properties. This is a holder for any undeclared
+   * properties as specified with the 'additionalProperties' keyword in the OAS document.
+   */
+  private OptionalValue<Map<String, Object>> additionalProperties;
+
   public VerificationStartResponseFlashCallContentImpl() {}
 
   protected VerificationStartResponseFlashCallContentImpl(
       OptionalValue<String> cliFilter,
       OptionalValue<Integer> interceptionTimeout,
       OptionalValue<Integer> reportTimeout,
-      OptionalValue<Integer> denyCallAfter) {
+      OptionalValue<Integer> denyCallAfter,
+      OptionalValue<Map<String, Object>> additionalProperties) {
     this.cliFilter = cliFilter;
     this.interceptionTimeout = interceptionTimeout;
     this.reportTimeout = reportTimeout;
     this.denyCallAfter = denyCallAfter;
+    this.additionalProperties = additionalProperties;
   }
 
   @JsonIgnore
@@ -94,6 +106,23 @@ public class VerificationStartResponseFlashCallContentImpl
     return denyCallAfter;
   }
 
+  @JsonIgnore
+  public Object get(String key) {
+
+    if (null == this.additionalProperties || !additionalProperties.isPresent()) {
+      return null;
+    }
+    return this.additionalProperties.get().get(key);
+  }
+
+  @JsonAnyGetter
+  public Map<String, Object> additionalProperties() {
+    if (null == this.additionalProperties || !additionalProperties.isPresent()) {
+      return null;
+    }
+    return additionalProperties.get();
+  }
+
   /**
    * Return true if this VerificationStartResponseFlashCall_allOf_flashCall object is equal to o.
    */
@@ -115,24 +144,38 @@ public class VerificationStartResponseFlashCallContentImpl
         && Objects.equals(
             this.reportTimeout, verificationStartResponseFlashCallAllOfFlashCall.reportTimeout)
         && Objects.equals(
-            this.denyCallAfter, verificationStartResponseFlashCallAllOfFlashCall.denyCallAfter);
+            this.denyCallAfter, verificationStartResponseFlashCallAllOfFlashCall.denyCallAfter)
+        && Objects.equals(
+            this.additionalProperties,
+            verificationStartResponseFlashCallAllOfFlashCall.additionalProperties)
+        && super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(cliFilter, interceptionTimeout, reportTimeout, denyCallAfter);
+    return Objects.hash(
+        cliFilter,
+        interceptionTimeout,
+        reportTimeout,
+        denyCallAfter,
+        super.hashCode(),
+        additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class VerificationStartResponseFlashCallContentImpl {\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    cliFilter: ").append(toIndentedString(cliFilter)).append("\n");
     sb.append("    interceptionTimeout: ")
         .append(toIndentedString(interceptionTimeout))
         .append("\n");
     sb.append("    reportTimeout: ").append(toIndentedString(reportTimeout)).append("\n");
     sb.append("    denyCallAfter: ").append(toIndentedString(denyCallAfter)).append("\n");
+    sb.append("    additionalProperties: ")
+        .append(toIndentedString(additionalProperties))
+        .append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -153,6 +196,7 @@ public class VerificationStartResponseFlashCallContentImpl
     OptionalValue<Integer> interceptionTimeout = OptionalValue.empty();
     OptionalValue<Integer> reportTimeout = OptionalValue.empty();
     OptionalValue<Integer> denyCallAfter = OptionalValue.empty();
+    OptionalValue<Map<String, Object>> additionalProperties = OptionalValue.empty();
 
     @JsonProperty(value = JSON_PROPERTY_CLI_FILTER, required = true)
     public Builder setCliFilter(String cliFilter) {
@@ -178,9 +222,18 @@ public class VerificationStartResponseFlashCallContentImpl
       return this;
     }
 
+    @JsonAnySetter
+    public Builder put(String key, Object value) {
+      if (!this.additionalProperties.isPresent()) {
+        this.additionalProperties = OptionalValue.of(new HashMap<String, Object>());
+      }
+      this.additionalProperties.get().put(key, value);
+      return this;
+    }
+
     public VerificationStartResponseFlashCallContent build() {
       return new VerificationStartResponseFlashCallContentImpl(
-          cliFilter, interceptionTimeout, reportTimeout, denyCallAfter);
+          cliFilter, interceptionTimeout, reportTimeout, denyCallAfter, additionalProperties);
     }
   }
 }
