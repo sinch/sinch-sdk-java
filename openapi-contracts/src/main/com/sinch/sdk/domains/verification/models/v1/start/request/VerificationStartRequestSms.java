@@ -11,11 +11,8 @@
 package com.sinch.sdk.domains.verification.models.v1.start.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.core.utils.EnumDynamic;
-import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import com.sinch.sdk.domains.verification.models.v1.Identity;
-import java.util.Arrays;
-import java.util.stream.Stream;
+import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
 
 /** VerificationStartRequestSms */
 @JsonDeserialize(builder = VerificationStartRequestSmsImpl.Builder.class)
@@ -52,46 +49,19 @@ public interface VerificationStartRequestSms
   String getCustom();
 
   /**
+   * Get codeType
+   *
+   * @return codeType
+   */
+  SmsCodeType getCodeType();
+
+  /**
    * The expiration time for a verification process is represented in the format <code>HH:MM:SS
    * </code>.
    *
    * @return expiry
    */
   String getExpiry();
-
-  /** Accepted values for the type of code to be generated are Numeric, Alpha, and Alphanumeric. */
-  public class CodeTypeEnum extends EnumDynamic<String, CodeTypeEnum> {
-    public static final CodeTypeEnum NUMERIC = new CodeTypeEnum("Numeric");
-    public static final CodeTypeEnum ALPHA = new CodeTypeEnum("Alpha");
-    public static final CodeTypeEnum ALPHANUMERIC = new CodeTypeEnum("Alphanumeric");
-
-    private static final EnumSupportDynamic<String, CodeTypeEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(
-            CodeTypeEnum.class, CodeTypeEnum::new, Arrays.asList(NUMERIC, ALPHA, ALPHANUMERIC));
-
-    private CodeTypeEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<CodeTypeEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static CodeTypeEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(CodeTypeEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
-
-  /**
-   * Accepted values for the type of code to be generated are Numeric, Alpha, and Alphanumeric.
-   *
-   * @return codeType
-   */
-  CodeTypeEnum getCodeType();
 
   /**
    * The SMS template must include a placeholder <code>{{CODE}}</code> where the verification code
@@ -162,20 +132,20 @@ public interface VerificationStartRequestSms
     /**
      * see getter
      *
+     * @param codeType see getter
+     * @return Current builder
+     * @see #getCodeType
+     */
+    Builder setCodeType(SmsCodeType codeType);
+
+    /**
+     * see getter
+     *
      * @param expiry see getter
      * @return Current builder
      * @see #getExpiry
      */
     Builder setExpiry(String expiry);
-
-    /**
-     * see getter
-     *
-     * @param codeType see getter
-     * @return Current builder
-     * @see #getCodeType
-     */
-    Builder setCodeType(CodeTypeEnum codeType);
 
     /**
      * see getter

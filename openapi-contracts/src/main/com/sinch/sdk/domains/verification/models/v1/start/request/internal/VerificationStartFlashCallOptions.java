@@ -11,22 +11,37 @@
 package com.sinch.sdk.domains.verification.models.v1.start.request.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.models.AdditionalProperties;
 
 /**
- * An optional object for Flash Call Verification, considered only when the verification request
- * originates from your backend (not an SDK client) via an <a
+ * An optional configuration for Flash Call Verification, should be used only when the verification
+ * request originates from your backend (not an end user device) and request is signed via an <a
  * href="https://developers.sinch.com/docs/voice/api-reference/authentication/signed-request">Application
  * signed request</a>.
  */
 @JsonDeserialize(builder = VerificationStartFlashCallOptionsImpl.Builder.class)
-public interface VerificationStartFlashCallOptions {
+public interface VerificationStartFlashCallOptions extends AdditionalProperties {
 
   /**
-   * The dial timeout in seconds.
+   * The amount of time that a phone will ring.
+   *
+   * <p>minimum: 5 maximum: 120
    *
    * @return dialTimeout
    */
   Integer getDialTimeout();
+
+  /**
+   * The maximum time that a phone call verification will be active and can be completed. If the
+   * phone number hasn't been verified successfully during this time, then the verification request
+   * will fail. By default, the Sinch dashboard will automatically optimize dial time out during a
+   * phone call.
+   *
+   * <p>minimum: 5 maximum: 120
+   *
+   * @return interceptionTimeout
+   */
+  Integer getInterceptionTimeout();
 
   /**
    * Getting builder
@@ -38,7 +53,7 @@ public interface VerificationStartFlashCallOptions {
   }
 
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder extends AdditionalProperties.Builder {
 
     /**
      * see getter
@@ -48,6 +63,23 @@ public interface VerificationStartFlashCallOptions {
      * @see #getDialTimeout
      */
     Builder setDialTimeout(Integer dialTimeout);
+
+    /**
+     * see getter
+     *
+     * @param interceptionTimeout see getter
+     * @return Current builder
+     * @see #getInterceptionTimeout
+     */
+    Builder setInterceptionTimeout(Integer interceptionTimeout);
+
+    /**
+     * see getter
+     *
+     * @return Current builder
+     * @see #get
+     */
+    Builder put(String key, Object value);
 
     /**
      * Create instance

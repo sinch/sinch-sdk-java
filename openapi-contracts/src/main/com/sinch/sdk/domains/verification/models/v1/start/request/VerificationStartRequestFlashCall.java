@@ -48,11 +48,33 @@ public interface VerificationStartRequestFlashCall
   String getCustom();
 
   /**
-   * The dial timeout in seconds.
+   * The amount of time that a phone will ring.
+   *
+   * <p>minimum: 5 maximum: 120
    *
    * @return dialTimeout
    */
   Integer getDialTimeout();
+
+  /**
+   * The maximum time that a phone call verification will be active and can be completed. If the
+   * phone number hasn't been verified successfully during this time, then the verification request
+   * will fail. By default, the Sinch dashboard will automatically optimize dial time out during a
+   * phone call.
+   *
+   * <p>minimum: 5 maximum: 120
+   *
+   * @return interceptionTimeout
+   */
+  Integer getInterceptionTimeout();
+
+  /**
+   * Return the additional "flashCallOptions" with the specified name.
+   *
+   * @param key the name of the property
+   * @return the additional property with the specified name
+   */
+  Object getExtraOption(String key);
 
   /**
    * Getting builder
@@ -103,6 +125,23 @@ public interface VerificationStartRequestFlashCall
      * @see #getDialTimeout
      */
     Builder setDialTimeout(Integer dialTimeout);
+
+    /**
+     * see getter
+     *
+     * @param interceptionTimeout see getter
+     * @return Current builder
+     * @see #getInterceptionTimeout
+     */
+    Builder setInterceptionTimeout(Integer interceptionTimeout);
+
+    /**
+     * see getter
+     *
+     * @return Current builder
+     * @see #getExtraOption
+     */
+    Builder putExtraOption(String key, Object value);
 
     /**
      * Create instance

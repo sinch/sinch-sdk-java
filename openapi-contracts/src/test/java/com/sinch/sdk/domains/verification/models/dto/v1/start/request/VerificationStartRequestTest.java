@@ -5,6 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.domains.verification.adapters.VerificationBaseTest;
 import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
+import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestData;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestDataImpl;
@@ -30,6 +31,7 @@ public class VerificationStartRequestTest extends VerificationBaseTest {
                   .setReference("a reference")
                   .setIdentity(NumberIdentity.valueOf("+endpoint"))
                   .setSpeech(PhoneCallSpeech.builder().setLocale("fr-FR").build())
+                  .putExtraOption("my key", "my value")
                   .build());
 
   public static VerificationStartRequestInternalImpl startVerificationFlashCallDto =
@@ -40,6 +42,8 @@ public class VerificationStartRequestTest extends VerificationBaseTest {
                   .setReference("a reference")
                   .setIdentity(NumberIdentity.valueOf("+endpoint"))
                   .setDialTimeout(17)
+                  .setInterceptionTimeout(23)
+                  .putExtraOption("my key", "my value")
                   .build());
   public static VerificationStartRequestInternalImpl startVerificationDataDto =
       new VerificationStartRequestInternalImpl(
@@ -57,7 +61,7 @@ public class VerificationStartRequestTest extends VerificationBaseTest {
                   .setReference("a reference")
                   .setIdentity(NumberIdentity.valueOf("+endpoint"))
                   .setExpiry("01:02:03")
-                  .setCodeType(VerificationStartRequestSms.CodeTypeEnum.ALPHANUMERIC)
+                  .setCodeType(SmsCodeType.ALPHANUMERIC)
                   .setTemplate("My template require to use '{{CODE}}' code")
                   .putExtraOption("my key", "my value")
                   .build());
@@ -70,7 +74,7 @@ public class VerificationStartRequestTest extends VerificationBaseTest {
                   .setReference("a reference")
                   .setIdentity(NumberIdentity.valueOf("+endpoint"))
                   .setExpiry("01:02:03")
-                  .setCodeType(VerificationStartRequestSms.CodeTypeEnum.ALPHANUMERIC)
+                  .setCodeType(SmsCodeType.ALPHANUMERIC)
                   .setTemplate("My template require to use '{{CODE}}' code")
                   .setAcceptLanguage("es-ES")
                   .putExtraOption("my key", "my value")

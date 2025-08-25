@@ -143,6 +143,13 @@ public class VerificationStartRequestPhoneCallImpl
         : OptionalValue.empty();
   }
 
+  @JsonIgnore
+  public Object getExtraOption(String key) {
+    return null != calloutOptions && calloutOptions.isPresent()
+        ? calloutOptions.get().get(key)
+        : null;
+  }
+
   /** Return true if this VerificationStartRequestPhoneCall object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -227,6 +234,11 @@ public class VerificationStartRequestPhoneCallImpl
     @JsonIgnore
     public Builder setSpeech(PhoneCallSpeech speech) {
       getDelegatedBuilder().setSpeech(speech);
+      return this;
+    }
+
+    public Builder putExtraOption(String key, Object value) {
+      getDelegatedBuilder().put(key, value);
       return this;
     }
 

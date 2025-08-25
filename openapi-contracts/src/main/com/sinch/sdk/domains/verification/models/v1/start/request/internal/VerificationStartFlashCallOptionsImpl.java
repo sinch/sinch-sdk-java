@@ -1,5 +1,7 @@
 package com.sinch.sdk.domains.verification.models.v1.start.request.internal;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -7,9 +9,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
-@JsonPropertyOrder({VerificationStartFlashCallOptionsImpl.JSON_PROPERTY_DIAL_TIMEOUT})
+@JsonPropertyOrder({
+  VerificationStartFlashCallOptionsImpl.JSON_PROPERTY_DIAL_TIMEOUT,
+  VerificationStartFlashCallOptionsImpl.JSON_PROPERTY_INTERCEPTION_TIMEOUT
+})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class VerificationStartFlashCallOptionsImpl implements VerificationStartFlashCallOptions {
@@ -19,10 +26,25 @@ public class VerificationStartFlashCallOptionsImpl implements VerificationStartF
 
   private OptionalValue<Integer> dialTimeout;
 
+  public static final String JSON_PROPERTY_INTERCEPTION_TIMEOUT = "interceptionTimeout";
+
+  private OptionalValue<Integer> interceptionTimeout;
+
+  /**
+   * A container for additional, undeclared properties. This is a holder for any undeclared
+   * properties as specified with the 'additionalProperties' keyword in the OAS document.
+   */
+  private OptionalValue<Map<String, Object>> additionalProperties;
+
   public VerificationStartFlashCallOptionsImpl() {}
 
-  protected VerificationStartFlashCallOptionsImpl(OptionalValue<Integer> dialTimeout) {
+  protected VerificationStartFlashCallOptionsImpl(
+      OptionalValue<Integer> dialTimeout,
+      OptionalValue<Integer> interceptionTimeout,
+      OptionalValue<Map<String, Object>> additionalProperties) {
     this.dialTimeout = dialTimeout;
+    this.interceptionTimeout = interceptionTimeout;
+    this.additionalProperties = additionalProperties;
   }
 
   @JsonIgnore
@@ -34,6 +56,34 @@ public class VerificationStartFlashCallOptionsImpl implements VerificationStartF
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<Integer> dialTimeout() {
     return dialTimeout;
+  }
+
+  @JsonIgnore
+  public Integer getInterceptionTimeout() {
+    return interceptionTimeout.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_INTERCEPTION_TIMEOUT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<Integer> interceptionTimeout() {
+    return interceptionTimeout;
+  }
+
+  @JsonIgnore
+  public Object get(String key) {
+
+    if (null == this.additionalProperties || !additionalProperties.isPresent()) {
+      return null;
+    }
+    return this.additionalProperties.get().get(key);
+  }
+
+  @JsonAnyGetter
+  public Map<String, Object> additionalProperties() {
+    if (null == this.additionalProperties || !additionalProperties.isPresent()) {
+      return null;
+    }
+    return additionalProperties.get();
   }
 
   /**
@@ -51,19 +101,33 @@ public class VerificationStartFlashCallOptionsImpl implements VerificationStartF
     VerificationStartFlashCallOptionsImpl verificationStartRequestFlashCallAllOfFlashCallOptions =
         (VerificationStartFlashCallOptionsImpl) o;
     return Objects.equals(
-        this.dialTimeout, verificationStartRequestFlashCallAllOfFlashCallOptions.dialTimeout);
+            this.dialTimeout, verificationStartRequestFlashCallAllOfFlashCallOptions.dialTimeout)
+        && Objects.equals(
+            this.interceptionTimeout,
+            verificationStartRequestFlashCallAllOfFlashCallOptions.interceptionTimeout)
+        && Objects.equals(
+            this.additionalProperties,
+            verificationStartRequestFlashCallAllOfFlashCallOptions.additionalProperties)
+        && super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(dialTimeout);
+    return Objects.hash(dialTimeout, interceptionTimeout, super.hashCode(), additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class VerificationStartFlashCallOptionsImpl {\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    dialTimeout: ").append(toIndentedString(dialTimeout)).append("\n");
+    sb.append("    interceptionTimeout: ")
+        .append(toIndentedString(interceptionTimeout))
+        .append("\n");
+    sb.append("    additionalProperties: ")
+        .append(toIndentedString(additionalProperties))
+        .append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -81,6 +145,8 @@ public class VerificationStartFlashCallOptionsImpl implements VerificationStartF
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements VerificationStartFlashCallOptions.Builder {
     OptionalValue<Integer> dialTimeout = OptionalValue.empty();
+    OptionalValue<Integer> interceptionTimeout = OptionalValue.empty();
+    OptionalValue<Map<String, Object>> additionalProperties = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_DIAL_TIMEOUT)
     public Builder setDialTimeout(Integer dialTimeout) {
@@ -88,8 +154,24 @@ public class VerificationStartFlashCallOptionsImpl implements VerificationStartF
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_INTERCEPTION_TIMEOUT)
+    public Builder setInterceptionTimeout(Integer interceptionTimeout) {
+      this.interceptionTimeout = OptionalValue.of(interceptionTimeout);
+      return this;
+    }
+
+    @JsonAnySetter
+    public Builder put(String key, Object value) {
+      if (!this.additionalProperties.isPresent()) {
+        this.additionalProperties = OptionalValue.of(new HashMap<String, Object>());
+      }
+      this.additionalProperties.get().put(key, value);
+      return this;
+    }
+
     public VerificationStartFlashCallOptions build() {
-      return new VerificationStartFlashCallOptionsImpl(dialTimeout);
+      return new VerificationStartFlashCallOptionsImpl(
+          dialTimeout, interceptionTimeout, additionalProperties);
     }
   }
 }

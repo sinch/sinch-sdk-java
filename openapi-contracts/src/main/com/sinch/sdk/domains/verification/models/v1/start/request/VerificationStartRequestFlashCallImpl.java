@@ -143,6 +143,31 @@ public class VerificationStartRequestFlashCallImpl
         : OptionalValue.empty();
   }
 
+  @JsonIgnore
+  public Integer getInterceptionTimeout() {
+    if (null == flashCallOptions
+        || !flashCallOptions.isPresent()
+        || null == flashCallOptions.get().getInterceptionTimeout()) {
+      return null;
+    }
+    return flashCallOptions.get().getInterceptionTimeout();
+  }
+
+  public OptionalValue<Integer> interceptionTimeout() {
+    return null != flashCallOptions && flashCallOptions.isPresent()
+        ? flashCallOptions
+            .map(f -> ((VerificationStartFlashCallOptionsImpl) f).interceptionTimeout())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
+  }
+
+  @JsonIgnore
+  public Object getExtraOption(String key) {
+    return null != flashCallOptions && flashCallOptions.isPresent()
+        ? flashCallOptions.get().get(key)
+        : null;
+  }
+
   /** Return true if this VerificationStartRequestFlashCall object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -228,6 +253,17 @@ public class VerificationStartRequestFlashCallImpl
     @JsonIgnore
     public Builder setDialTimeout(Integer dialTimeout) {
       getDelegatedBuilder().setDialTimeout(dialTimeout);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setInterceptionTimeout(Integer interceptionTimeout) {
+      getDelegatedBuilder().setInterceptionTimeout(interceptionTimeout);
+      return this;
+    }
+
+    public Builder putExtraOption(String key, Object value) {
+      getDelegatedBuilder().put(key, value);
       return this;
     }
 

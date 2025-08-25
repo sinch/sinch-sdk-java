@@ -11,11 +11,13 @@
 package com.sinch.sdk.domains.verification.models.v1.webhooks.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.models.AdditionalProperties;
+import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
 import java.util.List;
 
 /** VerificationRequestEventResponseSmsContent */
 @JsonDeserialize(builder = VerificationRequestEventResponseSmsContentImpl.Builder.class)
-public interface VerificationRequestEventResponseSmsContent {
+public interface VerificationRequestEventResponseSmsContent extends AdditionalProperties {
 
   /**
    * The SMS OTP code that should be used. By default, the Sinch dashboard will automatically
@@ -25,6 +27,21 @@ public interface VerificationRequestEventResponseSmsContent {
    * @return code
    */
   String getCode();
+
+  /**
+   * Get codeType
+   *
+   * @return codeType
+   */
+  SmsCodeType getCodeType();
+
+  /**
+   * The expiration time for a verification process is represented in the format <code>HH:MM:SS
+   * </code>.
+   *
+   * @return expiry
+   */
+  String getExpiry();
 
   /**
    * The SMS verification content language. Set in the verification request.
@@ -43,7 +60,7 @@ public interface VerificationRequestEventResponseSmsContent {
   }
 
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder extends AdditionalProperties.Builder {
 
     /**
      * see getter
@@ -57,11 +74,37 @@ public interface VerificationRequestEventResponseSmsContent {
     /**
      * see getter
      *
+     * @param codeType see getter
+     * @return Current builder
+     * @see #getCodeType
+     */
+    Builder setCodeType(SmsCodeType codeType);
+
+    /**
+     * see getter
+     *
+     * @param expiry see getter
+     * @return Current builder
+     * @see #getExpiry
+     */
+    Builder setExpiry(String expiry);
+
+    /**
+     * see getter
+     *
      * @param acceptLanguage see getter
      * @return Current builder
      * @see #getAcceptLanguage
      */
     Builder setAcceptLanguage(List<String> acceptLanguage);
+
+    /**
+     * see getter
+     *
+     * @return Current builder
+     * @see #get
+     */
+    Builder put(String key, Object value);
 
     /**
      * Create instance

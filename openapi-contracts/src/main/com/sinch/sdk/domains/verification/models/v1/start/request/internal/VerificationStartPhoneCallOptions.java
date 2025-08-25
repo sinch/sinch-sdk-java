@@ -11,14 +11,16 @@
 package com.sinch.sdk.domains.verification.models.v1.start.request.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.models.AdditionalProperties;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 
 /**
- * An optional object for Phone Call Verification, with default values assumed for all contained
- * values if not provided.
+ * An optional configuration for Phone Call Verification, should be used only when the verification
+ * request originates from your backend (not an end user device) and request is signed via an <a
+ * href="/docs/voice/api-reference/authentication/signed-request">Application signed request</a>.
  */
 @JsonDeserialize(builder = VerificationStartPhoneCallOptionsImpl.Builder.class)
-public interface VerificationStartPhoneCallOptions {
+public interface VerificationStartPhoneCallOptions extends AdditionalProperties {
 
   /**
    * Get speech
@@ -37,7 +39,7 @@ public interface VerificationStartPhoneCallOptions {
   }
 
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder extends AdditionalProperties.Builder {
 
     /**
      * see getter
@@ -47,6 +49,14 @@ public interface VerificationStartPhoneCallOptions {
      * @see #getSpeech
      */
     Builder setSpeech(PhoneCallSpeech speech);
+
+    /**
+     * see getter
+     *
+     * @return Current builder
+     * @see #get
+     */
+    Builder put(String key, Object value);
 
     /**
      * Create instance

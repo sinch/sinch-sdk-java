@@ -11,10 +11,11 @@
 package com.sinch.sdk.domains.verification.models.v1.webhooks.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.models.AdditionalProperties;
 
 /** VerificationRequestEventResponseFlashCallContent */
 @JsonDeserialize(builder = VerificationRequestEventResponseFlashCallContentImpl.Builder.class)
-public interface VerificationRequestEventResponseFlashCallContent {
+public interface VerificationRequestEventResponseFlashCallContent extends AdditionalProperties {
 
   /**
    * The phone number that will be displayed to the user when the flash call is received on the
@@ -27,15 +28,25 @@ public interface VerificationRequestEventResponseFlashCallContent {
   String getCli();
 
   /**
-   * The maximum time that a phone call verification will be active and can be completed. If the
-   * phone number hasn't been verified successfully during this time, then the verification request
-   * will fail. By default, the Sinch dashboard will automatically optimize dial time out during a
-   * phone call. If you want to set your own dial time out for the phone call, you can specify it in
-   * the response to the Verification Request Event.
+   * The amount of time that a phone will ring.
+   *
+   * <p>minimum: 5 maximum: 120
    *
    * @return dialTimeout
    */
   Integer getDialTimeout();
+
+  /**
+   * The maximum time that a phone call verification will be active and can be completed. If the
+   * phone number hasn't been verified successfully during this time, then the verification request
+   * will fail. By default, the Sinch dashboard will automatically optimize dial time out during a
+   * phone call.
+   *
+   * <p>minimum: 5 maximum: 120
+   *
+   * @return interceptionTimeout
+   */
+  Integer getInterceptionTimeout();
 
   /**
    * Getting builder
@@ -47,7 +58,7 @@ public interface VerificationRequestEventResponseFlashCallContent {
   }
 
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder extends AdditionalProperties.Builder {
 
     /**
      * see getter
@@ -66,6 +77,23 @@ public interface VerificationRequestEventResponseFlashCallContent {
      * @see #getDialTimeout
      */
     Builder setDialTimeout(Integer dialTimeout);
+
+    /**
+     * see getter
+     *
+     * @param interceptionTimeout see getter
+     * @return Current builder
+     * @see #getInterceptionTimeout
+     */
+    Builder setInterceptionTimeout(Integer interceptionTimeout);
+
+    /**
+     * see getter
+     *
+     * @return Current builder
+     * @see #get
+     */
+    Builder put(String key, Object value);
 
     /**
      * Create instance

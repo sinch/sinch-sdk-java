@@ -11,12 +11,13 @@
 package com.sinch.sdk.domains.verification.models.v1.start.response.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.models.AdditionalProperties;
 
 /**
  * The response contains the <code>cliFilter</code> and <code>interceptionTimeout</code> properties.
  */
 @JsonDeserialize(builder = VerificationStartResponseFlashCallContentImpl.Builder.class)
-public interface VerificationStartResponseFlashCallContent {
+public interface VerificationStartResponseFlashCallContent extends AdditionalProperties {
 
   /**
    * Filter that should be applied for incoming calls to intercept the flash call.
@@ -44,8 +45,8 @@ public interface VerificationStartResponseFlashCallContent {
   Integer getReportTimeout();
 
   /**
-   * Used by the SDKs, this setting makes the handset deny the flash call after the set time in
-   * seconds.
+   * Used by the mobile SDKs, this setting makes the handset deny the flash call after the set time
+   * in seconds.
    *
    * @return denyCallAfter
    */
@@ -61,7 +62,7 @@ public interface VerificationStartResponseFlashCallContent {
   }
 
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder extends AdditionalProperties.Builder {
 
     /**
      * see getter
@@ -98,6 +99,14 @@ public interface VerificationStartResponseFlashCallContent {
      * @see #getDenyCallAfter
      */
     Builder setDenyCallAfter(Integer denyCallAfter);
+
+    /**
+     * see getter
+     *
+     * @return Current builder
+     * @see #get
+     */
+    Builder put(String key, Object value);
 
     /**
      * Create instance

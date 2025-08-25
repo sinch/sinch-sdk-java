@@ -11,10 +11,12 @@
 package com.sinch.sdk.domains.verification.models.v1.start.response.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.models.AdditionalProperties;
+import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
 
 /** The response contains the <code>template</code> of the SMS to be expected and intercepted. */
 @JsonDeserialize(builder = VerificationStartResponseSmsContentImpl.Builder.class)
-public interface VerificationStartResponseSmsContent {
+public interface VerificationStartResponseSmsContent extends AdditionalProperties {
 
   /**
    * The expected template for the SMS response.
@@ -31,6 +33,13 @@ public interface VerificationStartResponseSmsContent {
   Integer getInterceptionTimeout();
 
   /**
+   * Get codeType
+   *
+   * @return codeType
+   */
+  SmsCodeType getCodeType();
+
+  /**
    * Getting builder
    *
    * @return New Builder instance
@@ -40,7 +49,7 @@ public interface VerificationStartResponseSmsContent {
   }
 
   /** Dedicated Builder */
-  interface Builder {
+  interface Builder extends AdditionalProperties.Builder {
 
     /**
      * see getter
@@ -59,6 +68,23 @@ public interface VerificationStartResponseSmsContent {
      * @see #getInterceptionTimeout
      */
     Builder setInterceptionTimeout(Integer interceptionTimeout);
+
+    /**
+     * see getter
+     *
+     * @param codeType see getter
+     * @return Current builder
+     * @see #getCodeType
+     */
+    Builder setCodeType(SmsCodeType codeType);
+
+    /**
+     * see getter
+     *
+     * @return Current builder
+     * @see #get
+     */
+    Builder put(String key, Object value);
 
     /**
      * Create instance

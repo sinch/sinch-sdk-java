@@ -4,12 +4,12 @@ import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.verification.api.v1.VerificationStartService;
 import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
+import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestData;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestPhoneCall;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms;
-import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms.CodeTypeEnum;
 import com.sinch.sdk.domains.verification.models.v1.start.response.Link;
 import com.sinch.sdk.domains.verification.models.v1.start.response.Link.RelEnum;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponse;
@@ -43,7 +43,7 @@ public class StartSteps {
     VerificationStartRequestSms request =
         VerificationStartRequestSms.builder()
             .setIdentity(NumberIdentity.valueOf("+46123456789"))
-            .setCodeType(CodeTypeEnum.ALPHANUMERIC)
+            .setCodeType(SmsCodeType.ALPHANUMERIC)
             .setAcceptLanguage("sv-SE")
             .build();
 
@@ -150,6 +150,7 @@ public class StartSteps {
             .setInterceptionTimeout(45)
             .setReportTimeout(75)
             .setDenyCallAfter(0)
+            .putExtraOption("callId", "1ce0ffee-c0de-5eed-d22d-f00dfeed1337")
             .setLinks(
                 Arrays.asList(
                     Link.builder()
