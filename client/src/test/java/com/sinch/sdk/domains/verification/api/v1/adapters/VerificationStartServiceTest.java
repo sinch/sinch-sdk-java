@@ -26,6 +26,7 @@ import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationS
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponsePhoneCall;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseSms;
+import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseWhatsApp;
 import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,6 +49,10 @@ public class VerificationStartServiceTest extends VerificationBaseTest {
 
   @GivenJsonResource("/domains/verification/v1/start/request/VerificationStartRequestSmsDto.json")
   public VerificationStartRequestInternal startVerificationSmsRequestDto;
+
+  @GivenJsonResource(
+      "/domains/verification/v1/start/request/VerificationStartRequestWhatsAppDto.json")
+  public VerificationStartRequestInternal startVerificationWhatsAppRequestDto;
 
   @Mock VerificationsStartApi api;
   @Mock VerificationContext context;
@@ -167,5 +172,22 @@ public class VerificationStartServiceTest extends VerificationBaseTest {
         response,
         VerificationStartResponseTest.expectedStartVerificationDataDto
             .getVerificationStartResponseDataImpl());
+  }
+
+  @Test
+  void startWhatsApp() throws ApiException {
+
+    when(api.startVerification(
+            argThat(new ModelArgMatcher<>(startVerificationWhatsAppRequestDto)), eq(null)))
+        .thenReturn(VerificationStartResponseTest.expectedStartVerificationWhatsAppDto);
+
+    VerificationStartResponseWhatsApp response =
+        service.startWhatsApp(
+            VerificationStartRequestTest.startVerificationWhatsAppDto
+                .getVerificationStartRequestWhatsAppImpl());
+
+    TestHelpers.recursiveEquals(
+        response,
+        VerificationStartResponseTest.expectedStartVerificationWhatsAppDto.getActualInstance());
   }
 }

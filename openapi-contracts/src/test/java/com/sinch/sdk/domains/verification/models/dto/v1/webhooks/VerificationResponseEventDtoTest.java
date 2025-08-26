@@ -5,11 +5,13 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.domains.verification.adapters.VerificationBaseTest;
 import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
+import com.sinch.sdk.domains.verification.models.v1.WhatsAppCodeType;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEventResponseAction;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponsePhoneCall;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponseSms;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponseWhatsApp;
 import java.util.Collections;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
@@ -43,6 +45,14 @@ public class VerificationResponseEventDtoTest extends VerificationBaseTest {
           .putExtraOption("my key", "my value")
           .build();
 
+  public static VerificationRequestEventResponseWhatsApp expectedWhatsAppRequestEventResponseDto =
+      VerificationRequestEventResponseWhatsApp.builder()
+          .setAction(VerificationEventResponseAction.ALLOW)
+          .setCodeType(WhatsAppCodeType.NUMERIC)
+          .setAcceptLanguage(Collections.singletonList("a language"))
+          .putExtraOption("my key", "my value")
+          .build();
+
   @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseSms.json")
   String jsonResponseSms;
 
@@ -62,6 +72,13 @@ public class VerificationResponseEventDtoTest extends VerificationBaseTest {
   @GivenTextResource(
       "/domains/verification/v1/webhooks/VerificationResponsePhoneCallEmptyCallout.json")
   String jsonResponsePhoneCallEmptyCallout;
+
+  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseWhatsApp.json")
+  String jsonResponseWhatsApp;
+
+  @GivenTextResource(
+      "/domains/verification/v1/webhooks/VerificationResponseWhatsAppEmptyWhatsApp.json")
+  String jsonResponseWhatsAppEmptyWhatsApp;
 
   @Test
   void serializeSmsResponse() throws JsonProcessingException, JSONException {
@@ -126,5 +143,27 @@ public class VerificationResponseEventDtoTest extends VerificationBaseTest {
     String serializedString = objectMapper.writeValueAsString(value);
 
     JSONAssert.assertEquals(jsonResponsePhoneCallEmptyCallout, serializedString, true);
+  }
+
+  @Test
+  void serializeWhatsAppResponse() throws JsonProcessingException, JSONException {
+
+    String serializedString =
+        objectMapper.writeValueAsString(expectedWhatsAppRequestEventResponseDto);
+
+    JSONAssert.assertEquals(jsonResponseWhatsApp, serializedString, true);
+  }
+
+  @Test
+  void serializeSmsResponseEmptyWhatsApp() throws JsonProcessingException, JSONException {
+
+    VerificationRequestEventResponseWhatsApp value =
+        VerificationRequestEventResponseWhatsApp.builder()
+            .setAction(VerificationEventResponseAction.ALLOW)
+            .build();
+
+    String serializedString = objectMapper.writeValueAsString(value);
+
+    JSONAssert.assertEquals(jsonResponseWhatsAppEmptyWhatsApp, serializedString, true);
   }
 }

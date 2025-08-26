@@ -10,6 +10,8 @@ import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationR
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestPhoneCallImpl;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestSms;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestSmsImpl;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestWhatsApp;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestWhatsAppImpl;
 import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestInternalImpl;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
@@ -30,7 +32,12 @@ public class VerificationReportRequestDtoTest extends BaseTest {
   public static VerificationReportRequestInternalImpl verificationReportSmsDto =
       new VerificationReportRequestInternalImpl(
           (VerificationReportRequestSmsImpl)
-              VerificationReportRequestSms.builder().setCode("foo code").setCli("foo cli").build());
+              VerificationReportRequestSms.builder().setCode("foo code").build());
+
+  public static VerificationReportRequestInternalImpl verificationReportWhatsAppDto =
+      new VerificationReportRequestInternalImpl(
+          (VerificationReportRequestWhatsAppImpl)
+              VerificationReportRequestWhatsApp.builder().setCode("foo code").build());
 
   @GivenTextResource("/domains/verification/v1/report/VerificationReportRequestPhoneCallDto.json")
   String jsonVerificationReportPhoneCall;
@@ -40,6 +47,9 @@ public class VerificationReportRequestDtoTest extends BaseTest {
 
   @GivenTextResource("/domains/verification/v1/report/VerificationReportRequestSmsDto.json")
   String jsonVerificationReportSms;
+
+  @GivenTextResource("/domains/verification/v1/report/VerificationReportRequestWhatsAppDto.json")
+  String jsonVerificationReportWhatsApp;
 
   @Test
   void serializePhoneCall() throws JsonProcessingException, JSONException {
@@ -60,5 +70,12 @@ public class VerificationReportRequestDtoTest extends BaseTest {
     String serializedString = objectMapper.writeValueAsString(verificationReportSmsDto);
 
     JSONAssert.assertEquals(jsonVerificationReportSms, serializedString, true);
+  }
+
+  @Test
+  void serializeWhatsApp() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(verificationReportWhatsAppDto);
+
+    JSONAssert.assertEquals(jsonVerificationReportWhatsApp, serializedString, true);
   }
 }

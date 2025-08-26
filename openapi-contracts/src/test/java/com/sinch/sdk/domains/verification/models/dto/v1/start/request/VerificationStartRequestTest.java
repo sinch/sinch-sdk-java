@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.domains.verification.adapters.VerificationBaseTest;
 import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
+import com.sinch.sdk.domains.verification.models.v1.WhatsAppCodeType;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestData;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestDataImpl;
@@ -15,6 +16,8 @@ import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationSt
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestPhoneCallImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSmsImpl;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestWhatsApp;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestWhatsAppImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.internal.VerificationStartRequestInternalImpl;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
@@ -80,6 +83,17 @@ public class VerificationStartRequestTest extends VerificationBaseTest {
                   .putExtraOption("my key", "my value")
                   .build());
 
+  public static VerificationStartRequestInternalImpl startVerificationWhatsAppDto =
+      new VerificationStartRequestInternalImpl(
+          (VerificationStartRequestWhatsAppImpl)
+              VerificationStartRequestWhatsApp.builder()
+                  .setCustom("a custom")
+                  .setReference("a reference")
+                  .setIdentity(NumberIdentity.valueOf("+33123456789"))
+                  .setCodeType(WhatsAppCodeType.ALPHANUMERIC)
+                  .putExtraOption("my key", "my value")
+                  .build());
+
   @GivenTextResource(
       "/domains/verification/v1/start/request/VerificationStartRequestPhoneCallDto.json")
   String jsonStartVerificationPhoneCall;
@@ -93,6 +107,10 @@ public class VerificationStartRequestTest extends VerificationBaseTest {
 
   @GivenTextResource("/domains/verification/v1/start/request/VerificationStartRequestSmsDto.json")
   String jsonStartVerificationSms;
+
+  @GivenTextResource(
+      "/domains/verification/v1/start/request/VerificationStartRequestWhatsAppDto.json")
+  String jsonStartVerificationWhatsApp;
 
   @Test
   void serializeStartPhoneCall() throws JsonProcessingException, JSONException {
@@ -109,24 +127,31 @@ public class VerificationStartRequestTest extends VerificationBaseTest {
   }
 
   @Test
-  void serializeStartDataCall() throws JsonProcessingException, JSONException {
+  void serializeStartData() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(startVerificationDataDto);
 
     JSONAssert.assertEquals(jsonStartVerificationData, serializedString, true);
   }
 
   @Test
-  void serializeStartSmsCall() throws JsonProcessingException, JSONException {
+  void serializeStartSms() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(startVerificationSmsDto);
 
     JSONAssert.assertEquals(jsonStartVerificationSms, serializedString, true);
   }
 
   @Test
-  void serializeStartSmsCallWithAcceptLanguage() throws JsonProcessingException, JSONException {
+  void serializeStartSmsWithAcceptLanguage() throws JsonProcessingException, JSONException {
     String serializedString =
         objectMapper.writeValueAsString(startVerificationSmsDtoWithAcceptLanguage);
     // acceptLanguage do not have to be serialized
     JSONAssert.assertEquals(jsonStartVerificationSms, serializedString, true);
+  }
+
+  @Test
+  void serializeStartWhatsApp() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(startVerificationWhatsAppDto);
+
+    JSONAssert.assertEquals(jsonStartVerificationWhatsApp, serializedString, true);
   }
 }

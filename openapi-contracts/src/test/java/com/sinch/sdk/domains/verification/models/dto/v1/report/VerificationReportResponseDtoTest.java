@@ -12,6 +12,8 @@ import com.sinch.sdk.domains.verification.models.v1.report.response.Verification
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponsePhoneCallImpl;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseSms;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseSmsImpl;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseWhatsApp;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseWhatsAppImpl;
 import com.sinch.sdk.domains.verification.models.v1.report.response.internal.VerificationReportResponseInternal;
 import com.sinch.sdk.domains.verification.models.v1.report.response.internal.VerificationReportResponseInternalImpl;
 import org.junit.jupiter.api.Test;
@@ -57,6 +59,18 @@ public class VerificationReportResponseDtoTest extends BaseTest {
                   .setReason(VerificationStatusReason.EXPIRED)
                   .build());
 
+  @GivenJsonResource("/domains/verification/v1/report/VerificationReportResponseWhatsAppDto.json")
+  VerificationReportResponseInternal expectedVerificationReportWhatsApp;
+
+  public static VerificationReportResponseInternalImpl verificationReportWhatsAppDto =
+      new VerificationReportResponseInternalImpl(
+          (VerificationReportResponseWhatsAppImpl)
+              VerificationReportResponseWhatsApp.builder()
+                  .setId("the id")
+                  .setStatus(VerificationStatus.FAIL)
+                  .setReason(VerificationStatusReason.EXPIRED)
+                  .build());
+
   @Test
   void deserializePhoneCall() {
     TestHelpers.recursiveEquals(
@@ -70,7 +84,12 @@ public class VerificationReportResponseDtoTest extends BaseTest {
   }
 
   @Test
-  void serializeSms() {
+  void deserializeSms() {
     TestHelpers.recursiveEquals(verificationReportSmsDto, expectedVerificationReportSms);
+  }
+
+  @Test
+  void deserializeWhatsApp() {
+    TestHelpers.recursiveEquals(verificationReportWhatsAppDto, expectedVerificationReportWhatsApp);
   }
 }
