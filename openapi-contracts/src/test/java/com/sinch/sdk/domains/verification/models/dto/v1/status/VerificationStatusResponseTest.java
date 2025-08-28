@@ -52,7 +52,7 @@ public class VerificationStatusResponseTest extends VerificationBaseTest {
                           .setBillableDuration(34)
                           .build())
                   .setIdentity(NumberIdentity.valueOf("endpoint value"))
-                  .setCountryId("es-ES")
+                  .setCountryId("ES")
                   .setVerificationTimestamp(
                       DateUtil.failSafeTimeStampToInstant("2024-05-22T09:38:59.5590437"))
                   .setCallResult(StatusCallResult.ANSWERED)
@@ -81,7 +81,7 @@ public class VerificationStatusResponseTest extends VerificationBaseTest {
                           .build())
                   .setSource(StatusSource.MANUAL)
                   .setIdentity(NumberIdentity.valueOf("endpoint value"))
-                  .setCountryId("es-ES")
+                  .setCountryId("ES")
                   .setVerificationTimestamp(
                       DateUtil.failSafeTimeStampToInstant("2024-05-22T09:38:59.5590437"))
                   .setCallComplete(false)
@@ -105,7 +105,7 @@ public class VerificationStatusResponseTest extends VerificationBaseTest {
                                   .build())
                           .build())
                   .setIdentity(NumberIdentity.valueOf("endpoint value"))
-                  .setCountryId("es-ES")
+                  .setCountryId("ES")
                   .setVerificationTimestamp(
                       DateUtil.failSafeTimeStampToInstant("2024-05-22T09:38:59.5590437"))
                   .build());
@@ -128,7 +128,7 @@ public class VerificationStatusResponseTest extends VerificationBaseTest {
                                   .build())
                           .build())
                   .setIdentity(NumberIdentity.valueOf("+33123456789"))
-                  .setCountryId("es-ES")
+                  .setCountryId("ES")
                   .setVerificationTimestamp(
                       DateUtil.failSafeTimeStampToInstant("2024-05-22T09:38:59.5590437"))
                   .build());
