@@ -9,20 +9,20 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
-@JsonPropertyOrder({VerificationReportRequestSmsOptionsImpl.JSON_PROPERTY_CODE})
+@JsonPropertyOrder({VerificationReportRequestWhatsAppOptionsImpl.JSON_PROPERTY_CODE})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class VerificationReportRequestSmsOptionsImpl
-    implements VerificationReportRequestSmsOptions {
+public class VerificationReportRequestWhatsAppOptionsImpl
+    implements VerificationReportRequestWhatsAppOptions {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CODE = "code";
 
   private OptionalValue<String> code;
 
-  public VerificationReportRequestSmsOptionsImpl() {}
+  public VerificationReportRequestWhatsAppOptionsImpl() {}
 
-  protected VerificationReportRequestSmsOptionsImpl(OptionalValue<String> code) {
+  protected VerificationReportRequestWhatsAppOptionsImpl(OptionalValue<String> code) {
     this.code = code;
   }
 
@@ -37,7 +37,7 @@ public class VerificationReportRequestSmsOptionsImpl
     return code;
   }
 
-  /** Return true if this VerificationReportRequestSms_sms object is equal to o. */
+  /** Return true if this VerificationReportRequestWhatsApp_whatsapp object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -46,9 +46,9 @@ public class VerificationReportRequestSmsOptionsImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerificationReportRequestSmsOptionsImpl verificationReportRequestSmsSms =
-        (VerificationReportRequestSmsOptionsImpl) o;
-    return Objects.equals(this.code, verificationReportRequestSmsSms.code);
+    VerificationReportRequestWhatsAppOptionsImpl verificationReportRequestWhatsAppWhatsapp =
+        (VerificationReportRequestWhatsAppOptionsImpl) o;
+    return Objects.equals(this.code, verificationReportRequestWhatsAppWhatsapp.code);
   }
 
   @Override
@@ -59,7 +59,7 @@ public class VerificationReportRequestSmsOptionsImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VerificationReportRequestSmsOptionsImpl {\n");
+    sb.append("class VerificationReportRequestWhatsAppOptionsImpl {\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -76,7 +76,7 @@ public class VerificationReportRequestSmsOptionsImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements VerificationReportRequestSmsOptions.Builder {
+  static class Builder implements VerificationReportRequestWhatsAppOptions.Builder {
     OptionalValue<String> code = OptionalValue.empty();
 
     @JsonProperty(value = JSON_PROPERTY_CODE, required = true)
@@ -85,8 +85,8 @@ public class VerificationReportRequestSmsOptionsImpl
       return this;
     }
 
-    public VerificationReportRequestSmsOptions build() {
-      return new VerificationReportRequestSmsOptionsImpl(code);
+    public VerificationReportRequestWhatsAppOptions build() {
+      return new VerificationReportRequestWhatsAppOptionsImpl(code);
     }
   }
 }

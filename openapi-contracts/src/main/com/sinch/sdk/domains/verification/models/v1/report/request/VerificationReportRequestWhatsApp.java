@@ -16,17 +16,17 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** SMS Verification Report Request */
-@JsonDeserialize(builder = VerificationReportRequestSmsImpl.Builder.class)
-public interface VerificationReportRequestSms
+/** WhatsApp Verification Report Request */
+@JsonDeserialize(builder = VerificationReportRequestWhatsAppImpl.Builder.class)
+public interface VerificationReportRequestWhatsApp
     extends com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequest {
 
   /** The type of verification. */
   public class MethodEnum extends EnumDynamic<String, MethodEnum> {
-    public static final MethodEnum SMS = new MethodEnum("sms");
+    public static final MethodEnum WHATSAPP = new MethodEnum("whatsapp");
 
     private static final EnumSupportDynamic<String, MethodEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(MethodEnum.class, MethodEnum::new, Arrays.asList(SMS));
+        new EnumSupportDynamic<>(MethodEnum.class, MethodEnum::new, Arrays.asList(WHATSAPP));
 
     private MethodEnum(String value) {
       super(value);
@@ -46,7 +46,7 @@ public interface VerificationReportRequestSms
   }
 
   /**
-   * The code which was received by the user submitting the SMS verification.
+   * The code which was received by the user submitting the WhatsApp verification.
    *
    * <p>Field is required
    *
@@ -60,7 +60,7 @@ public interface VerificationReportRequestSms
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationReportRequestSmsImpl.Builder();
+    return new VerificationReportRequestWhatsAppImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -80,6 +80,6 @@ public interface VerificationReportRequestSms
      *
      * @return The instance build with current builder values
      */
-    VerificationReportRequestSms build();
+    VerificationReportRequestWhatsApp build();
   }
 }

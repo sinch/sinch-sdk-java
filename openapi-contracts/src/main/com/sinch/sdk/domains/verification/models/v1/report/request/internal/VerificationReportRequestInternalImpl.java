@@ -19,6 +19,7 @@ import com.sinch.sdk.core.utils.databind.JSONNavigator;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestFlashCallImpl;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestPhoneCallImpl;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestSmsImpl;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestWhatsAppImpl;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -103,6 +104,11 @@ public class VerificationReportRequestInternalImpl extends AbstractOpenApiSchema
               tree.traverse(jp.getCodec()).readValueAs(VerificationReportRequestSmsImpl.class);
           newVerificationReportRequestInternalImpl.setActualInstance(deserialized);
           return newVerificationReportRequestInternalImpl;
+        case "whatsapp":
+          deserialized =
+              tree.traverse(jp.getCodec()).readValueAs(VerificationReportRequestWhatsAppImpl.class);
+          newVerificationReportRequestInternalImpl.setActualInstance(deserialized);
+          return newVerificationReportRequestInternalImpl;
         case "VerificationReportRequestFlashCall":
           deserialized =
               tree.traverse(jp.getCodec())
@@ -120,14 +126,20 @@ public class VerificationReportRequestInternalImpl extends AbstractOpenApiSchema
               tree.traverse(jp.getCodec()).readValueAs(VerificationReportRequestSmsImpl.class);
           newVerificationReportRequestInternalImpl.setActualInstance(deserialized);
           return newVerificationReportRequestInternalImpl;
+        case "VerificationReportRequestWhatsApp":
+          deserialized =
+              tree.traverse(jp.getCodec()).readValueAs(VerificationReportRequestWhatsAppImpl.class);
+          newVerificationReportRequestInternalImpl.setActualInstance(deserialized);
+          return newVerificationReportRequestInternalImpl;
         default:
           log.log(
               Level.WARNING,
               String.format(
                   "Failed to lookup discriminator value `%s` for"
                       + " VerificationReportRequestInternalImpl. Possible values: callout flashcall"
-                      + " sms VerificationReportRequestFlashCall VerificationReportRequestPhoneCall"
-                      + " VerificationReportRequestSms",
+                      + " sms whatsapp VerificationReportRequestFlashCall"
+                      + " VerificationReportRequestPhoneCall VerificationReportRequestSms"
+                      + " VerificationReportRequestWhatsApp",
                   discriminatorValue));
       }
 
@@ -271,6 +283,51 @@ public class VerificationReportRequestInternalImpl extends AbstractOpenApiSchema
             Level.FINER, "Input data does not match schema 'VerificationReportRequestSmsImpl'", e);
       }
 
+      // deserialize VerificationReportRequestWhatsAppImpl
+      try {
+        boolean attemptParsing = true;
+        // ensure that we respect type coercion as set on the client ObjectMapper
+        if (VerificationReportRequestWhatsAppImpl.class.equals(Integer.class)
+            || VerificationReportRequestWhatsAppImpl.class.equals(Long.class)
+            || VerificationReportRequestWhatsAppImpl.class.equals(Float.class)
+            || VerificationReportRequestWhatsAppImpl.class.equals(Double.class)
+            || VerificationReportRequestWhatsAppImpl.class.equals(Boolean.class)
+            || VerificationReportRequestWhatsAppImpl.class.equals(String.class)) {
+          attemptParsing = typeCoercion;
+          if (!attemptParsing) {
+            attemptParsing |=
+                ((VerificationReportRequestWhatsAppImpl.class.equals(Integer.class)
+                        || VerificationReportRequestWhatsAppImpl.class.equals(Long.class))
+                    && token == JsonToken.VALUE_NUMBER_INT);
+            attemptParsing |=
+                ((VerificationReportRequestWhatsAppImpl.class.equals(Float.class)
+                        || VerificationReportRequestWhatsAppImpl.class.equals(Double.class))
+                    && token == JsonToken.VALUE_NUMBER_FLOAT);
+            attemptParsing |=
+                (VerificationReportRequestWhatsAppImpl.class.equals(Boolean.class)
+                    && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
+            attemptParsing |=
+                (VerificationReportRequestWhatsAppImpl.class.equals(String.class)
+                    && token == JsonToken.VALUE_STRING);
+          }
+        }
+        if (attemptParsing) {
+          deserialized =
+              tree.traverse(jp.getCodec()).readValueAs(VerificationReportRequestWhatsAppImpl.class);
+          // TODO: there is no validation against JSON schema constraints
+          // (min, max, enum, pattern...), this does not perform a strict JSON
+          // validation, which means the 'match' count may be higher than it should be.
+          match++;
+          log.log(Level.FINER, "Input data matches schema 'VerificationReportRequestWhatsAppImpl'");
+        }
+      } catch (Exception e) {
+        // deserialization failed, continue
+        log.log(
+            Level.FINER,
+            "Input data does not match schema 'VerificationReportRequestWhatsAppImpl'",
+            e);
+      }
+
       if (match == 1) {
         VerificationReportRequestInternalImpl ret = new VerificationReportRequestInternalImpl();
         ret.setActualInstance(deserialized);
@@ -314,12 +371,19 @@ public class VerificationReportRequestInternalImpl extends AbstractOpenApiSchema
     setActualInstance(o);
   }
 
+  public VerificationReportRequestInternalImpl(VerificationReportRequestWhatsAppImpl o) {
+    super("oneOf", Boolean.FALSE);
+    setActualInstance(o);
+  }
+
   static {
     schemas.put(
         "VerificationReportRequestFlashCallImpl", VerificationReportRequestFlashCallImpl.class);
     schemas.put(
         "VerificationReportRequestPhoneCallImpl", VerificationReportRequestPhoneCallImpl.class);
     schemas.put("VerificationReportRequestSmsImpl", VerificationReportRequestSmsImpl.class);
+    schemas.put(
+        "VerificationReportRequestWhatsAppImpl", VerificationReportRequestWhatsAppImpl.class);
     JSONNavigator.registerDescendants(
         VerificationReportRequestInternalImpl.class, Collections.unmodifiableMap(schemas));
     // Initialize and register the discriminator mappings.
@@ -327,11 +391,13 @@ public class VerificationReportRequestInternalImpl extends AbstractOpenApiSchema
     mappings.put("callout", VerificationReportRequestPhoneCallImpl.class);
     mappings.put("flashcall", VerificationReportRequestFlashCallImpl.class);
     mappings.put("sms", VerificationReportRequestSmsImpl.class);
+    mappings.put("whatsapp", VerificationReportRequestWhatsAppImpl.class);
     mappings.put(
         "VerificationReportRequestFlashCall", VerificationReportRequestFlashCallImpl.class);
     mappings.put(
         "VerificationReportRequestPhoneCall", VerificationReportRequestPhoneCallImpl.class);
     mappings.put("VerificationReportRequestSms", VerificationReportRequestSmsImpl.class);
+    mappings.put("VerificationReportRequestWhatsApp", VerificationReportRequestWhatsAppImpl.class);
     mappings.put("VerificationReportRequest", VerificationReportRequestInternalImpl.class);
     JSONNavigator.registerDiscriminator(
         VerificationReportRequestInternalImpl.class, "method", mappings);
@@ -345,7 +411,8 @@ public class VerificationReportRequestInternalImpl extends AbstractOpenApiSchema
   /**
    * Set the instance that matches the oneOf child schema, check the instance parameter is valid
    * against the oneOf child schemas: VerificationReportRequestFlashCallImpl,
-   * VerificationReportRequestPhoneCallImpl, VerificationReportRequestSmsImpl
+   * VerificationReportRequestPhoneCallImpl, VerificationReportRequestSmsImpl,
+   * VerificationReportRequestWhatsAppImpl
    *
    * <p>It could be an instance of the 'oneOf' schemas. The oneOf child schemas may themselves be a
    * composed schema (allOf, anyOf, oneOf).
@@ -370,17 +437,26 @@ public class VerificationReportRequestInternalImpl extends AbstractOpenApiSchema
       return;
     }
 
+    if (JSONNavigator.isInstanceOf(
+        VerificationReportRequestWhatsAppImpl.class, instance, new HashSet<Class<?>>())) {
+      super.setActualInstance(instance);
+      return;
+    }
+
     throw new RuntimeException(
         "Invalid instance type. Must be VerificationReportRequestFlashCallImpl,"
-            + " VerificationReportRequestPhoneCallImpl, VerificationReportRequestSmsImpl");
+            + " VerificationReportRequestPhoneCallImpl, VerificationReportRequestSmsImpl,"
+            + " VerificationReportRequestWhatsAppImpl");
   }
 
   /**
    * Get the actual instance, which can be the following: VerificationReportRequestFlashCallImpl,
-   * VerificationReportRequestPhoneCallImpl, VerificationReportRequestSmsImpl
+   * VerificationReportRequestPhoneCallImpl, VerificationReportRequestSmsImpl,
+   * VerificationReportRequestWhatsAppImpl
    *
    * @return The actual instance (VerificationReportRequestFlashCallImpl,
-   *     VerificationReportRequestPhoneCallImpl, VerificationReportRequestSmsImpl)
+   *     VerificationReportRequestPhoneCallImpl, VerificationReportRequestSmsImpl,
+   *     VerificationReportRequestWhatsAppImpl)
    */
   @Override
   public Object getActualInstance() {
@@ -421,5 +497,17 @@ public class VerificationReportRequestInternalImpl extends AbstractOpenApiSchema
   public VerificationReportRequestSmsImpl getVerificationReportRequestSmsImpl()
       throws ClassCastException {
     return (VerificationReportRequestSmsImpl) super.getActualInstance();
+  }
+
+  /**
+   * Get the actual instance of `VerificationReportRequestWhatsAppImpl`. If the actual instance is
+   * not `VerificationReportRequestWhatsAppImpl`, the ClassCastException will be thrown.
+   *
+   * @return The actual instance of `VerificationReportRequestWhatsAppImpl`
+   * @throws ClassCastException if the instance is not `VerificationReportRequestWhatsAppImpl`
+   */
+  public VerificationReportRequestWhatsAppImpl getVerificationReportRequestWhatsAppImpl()
+      throws ClassCastException {
+    return (VerificationReportRequestWhatsAppImpl) super.getActualInstance();
   }
 }

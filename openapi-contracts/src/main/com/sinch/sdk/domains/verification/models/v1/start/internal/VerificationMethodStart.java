@@ -29,11 +29,14 @@ public class VerificationMethodStart extends EnumDynamic<String, VerificationMet
    */
   public static final VerificationMethodStart DATA = new VerificationMethodStart("seamless");
 
+  /** Verification by WhatsApp message with an OTP code. */
+  public static final VerificationMethodStart WHATSAPP = new VerificationMethodStart("whatsapp");
+
   private static final EnumSupportDynamic<String, VerificationMethodStart> ENUM_SUPPORT =
       new EnumSupportDynamic<>(
           VerificationMethodStart.class,
           VerificationMethodStart::new,
-          Arrays.asList(SMS, FLASH_CALL, PHONE_CALL, DATA));
+          Arrays.asList(SMS, FLASH_CALL, PHONE_CALL, DATA, WHATSAPP));
 
   private VerificationMethodStart(String value) {
     super(value);
