@@ -89,26 +89,12 @@ public class CalloutRequestInternalImpl extends AbstractOpenApiSchema
           deserialized = tree.traverse(jp.getCodec()).readValueAs(CalloutRequestTTSImpl.class);
           newCalloutRequestInternalImpl.setActualInstance(deserialized);
           return newCalloutRequestInternalImpl;
-        case "conferenceCalloutRequest":
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(CalloutRequestConferenceImpl.class);
-          newCalloutRequestInternalImpl.setActualInstance(deserialized);
-          return newCalloutRequestInternalImpl;
-        case "customCalloutRequest":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(CalloutRequestCustomImpl.class);
-          newCalloutRequestInternalImpl.setActualInstance(deserialized);
-          return newCalloutRequestInternalImpl;
-        case "ttsCalloutRequest":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(CalloutRequestTTSImpl.class);
-          newCalloutRequestInternalImpl.setActualInstance(deserialized);
-          return newCalloutRequestInternalImpl;
         default:
           log.log(
               Level.WARNING,
               String.format(
                   "Failed to lookup discriminator value `%s` for CalloutRequestInternalImpl."
-                      + " Possible values: conferenceCallout customCallout ttsCallout"
-                      + " conferenceCalloutRequest customCalloutRequest ttsCalloutRequest",
+                      + " Possible values: conferenceCallout customCallout ttsCallout",
                   discriminatorValue));
       }
 
@@ -292,9 +278,6 @@ public class CalloutRequestInternalImpl extends AbstractOpenApiSchema
     mappings.put("conferenceCallout", CalloutRequestConferenceImpl.class);
     mappings.put("customCallout", CalloutRequestCustomImpl.class);
     mappings.put("ttsCallout", CalloutRequestTTSImpl.class);
-    mappings.put("conferenceCalloutRequest", CalloutRequestConferenceImpl.class);
-    mappings.put("customCalloutRequest", CalloutRequestCustomImpl.class);
-    mappings.put("ttsCalloutRequest", CalloutRequestTTSImpl.class);
     mappings.put("CalloutRequest", CalloutRequestInternalImpl.class);
     JSONNavigator.registerDiscriminator(CalloutRequestInternalImpl.class, "method", mappings);
   }

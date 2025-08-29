@@ -107,20 +107,18 @@ public class VerificationStartFlashCallOptionsImpl implements VerificationStartF
             verificationStartRequestFlashCallAllOfFlashCallOptions.interceptionTimeout)
         && Objects.equals(
             this.additionalProperties,
-            verificationStartRequestFlashCallAllOfFlashCallOptions.additionalProperties)
-        && super.equals(o);
+            verificationStartRequestFlashCallAllOfFlashCallOptions.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(dialTimeout, interceptionTimeout, super.hashCode(), additionalProperties);
+    return Objects.hash(dialTimeout, interceptionTimeout, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class VerificationStartFlashCallOptionsImpl {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    dialTimeout: ").append(toIndentedString(dialTimeout)).append("\n");
     sb.append("    interceptionTimeout: ")
         .append(toIndentedString(interceptionTimeout))

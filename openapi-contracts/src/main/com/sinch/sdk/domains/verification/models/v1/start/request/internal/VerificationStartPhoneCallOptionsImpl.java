@@ -84,20 +84,18 @@ public class VerificationStartPhoneCallOptionsImpl implements VerificationStartP
     return Objects.equals(this.speech, verificationStartRequestPhoneCallAllOfCalloutOptions.speech)
         && Objects.equals(
             this.additionalProperties,
-            verificationStartRequestPhoneCallAllOfCalloutOptions.additionalProperties)
-        && super.equals(o);
+            verificationStartRequestPhoneCallAllOfCalloutOptions.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(speech, super.hashCode(), additionalProperties);
+    return Objects.hash(speech, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class VerificationStartPhoneCallOptionsImpl {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    speech: ").append(toIndentedString(speech)).append("\n");
     sb.append("    additionalProperties: ")
         .append(toIndentedString(additionalProperties))

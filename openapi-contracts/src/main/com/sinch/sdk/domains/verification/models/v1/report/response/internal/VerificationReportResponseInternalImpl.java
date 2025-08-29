@@ -111,38 +111,13 @@ public class VerificationReportResponseInternalImpl extends AbstractOpenApiSchem
                   .readValueAs(VerificationReportResponseWhatsAppImpl.class);
           newVerificationReportResponseInternalImpl.setActualInstance(deserialized);
           return newVerificationReportResponseInternalImpl;
-        case "VerificationReportResponseFlashCall":
-          deserialized =
-              tree.traverse(jp.getCodec())
-                  .readValueAs(VerificationReportResponseFlashCallImpl.class);
-          newVerificationReportResponseInternalImpl.setActualInstance(deserialized);
-          return newVerificationReportResponseInternalImpl;
-        case "VerificationReportResponsePhoneCall":
-          deserialized =
-              tree.traverse(jp.getCodec())
-                  .readValueAs(VerificationReportResponsePhoneCallImpl.class);
-          newVerificationReportResponseInternalImpl.setActualInstance(deserialized);
-          return newVerificationReportResponseInternalImpl;
-        case "VerificationReportResponseSms":
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(VerificationReportResponseSmsImpl.class);
-          newVerificationReportResponseInternalImpl.setActualInstance(deserialized);
-          return newVerificationReportResponseInternalImpl;
-        case "VerificationReportResponseWhatsApp":
-          deserialized =
-              tree.traverse(jp.getCodec())
-                  .readValueAs(VerificationReportResponseWhatsAppImpl.class);
-          newVerificationReportResponseInternalImpl.setActualInstance(deserialized);
-          return newVerificationReportResponseInternalImpl;
         default:
           log.log(
               Level.WARNING,
               String.format(
                   "Failed to lookup discriminator value `%s` for"
                       + " VerificationReportResponseInternalImpl. Possible values: callout"
-                      + " flashcall sms whatsapp VerificationReportResponseFlashCall"
-                      + " VerificationReportResponsePhoneCall VerificationReportResponseSms"
-                      + " VerificationReportResponseWhatsApp",
+                      + " flashcall sms whatsapp",
                   discriminatorValue));
       }
 
@@ -397,13 +372,6 @@ public class VerificationReportResponseInternalImpl extends AbstractOpenApiSchem
     mappings.put("flashcall", VerificationReportResponseFlashCallImpl.class);
     mappings.put("sms", VerificationReportResponseSmsImpl.class);
     mappings.put("whatsapp", VerificationReportResponseWhatsAppImpl.class);
-    mappings.put(
-        "VerificationReportResponseFlashCall", VerificationReportResponseFlashCallImpl.class);
-    mappings.put(
-        "VerificationReportResponsePhoneCall", VerificationReportResponsePhoneCallImpl.class);
-    mappings.put("VerificationReportResponseSms", VerificationReportResponseSmsImpl.class);
-    mappings.put(
-        "VerificationReportResponseWhatsApp", VerificationReportResponseWhatsAppImpl.class);
     mappings.put("VerificationReportResponse", VerificationReportResponseInternalImpl.class);
     JSONNavigator.registerDiscriminator(
         VerificationReportResponseInternalImpl.class, "method", mappings);

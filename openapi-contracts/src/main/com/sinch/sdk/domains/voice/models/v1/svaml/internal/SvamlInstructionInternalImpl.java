@@ -237,13 +237,6 @@ public final class SvamlInstructionInternalImpl extends AbstractOpenApiSchema {
     mappings.put("setCookie", SvamlInstructionSetCookieImpl.class);
     mappings.put("startRecording", SvamlInstructionStartRecordingImpl.class);
     mappings.put("stopRecording", SvamlInstructionStopRecordingImpl.class);
-    mappings.put("svaml.instruction.answer", SvamlInstructionAnswerImpl.class);
-    mappings.put("svaml.instruction.playFiles", SvamlInstructionPlayFilesImpl.class);
-    mappings.put("svaml.instruction.say", SvamlInstructionSayImpl.class);
-    mappings.put("svaml.instruction.sendDtmf", SvamlInstructionSendDtmfImpl.class);
-    mappings.put("svaml.instruction.setCookie", SvamlInstructionSetCookieImpl.class);
-    mappings.put("svaml.instruction.startRecording", SvamlInstructionStartRecordingImpl.class);
-    mappings.put("svaml.instruction.stopRecording", SvamlInstructionStopRecordingImpl.class);
     mappings.put("svaml.instruction", SvamlInstructionInternalImpl.class);
     JSONNavigator.registerDiscriminator(SvamlInstructionInternalImpl.class, "name", mappings);
   }

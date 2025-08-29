@@ -100,29 +100,12 @@ public class DestinationInternalImpl extends AbstractOpenApiSchema implements De
           deserialized = tree.traverse(jp.getCodec()).readValueAs(DestinationMxpImpl.class);
           newDestinationInternalImpl.setActualInstance(deserialized);
           return newDestinationInternalImpl;
-        case "destinationDid":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(DestinationDidImpl.class);
-          newDestinationInternalImpl.setActualInstance(deserialized);
-          return newDestinationInternalImpl;
-        case "destinationMxp":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(DestinationMxpImpl.class);
-          newDestinationInternalImpl.setActualInstance(deserialized);
-          return newDestinationInternalImpl;
-        case "destinationPstn":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(DestinationPstnImpl.class);
-          newDestinationInternalImpl.setActualInstance(deserialized);
-          return newDestinationInternalImpl;
-        case "destinationSip":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(DestinationSipImpl.class);
-          newDestinationInternalImpl.setActualInstance(deserialized);
-          return newDestinationInternalImpl;
         default:
           log.log(
               Level.WARNING,
               String.format(
                   "Failed to lookup discriminator value `%s` for DestinationInternalImpl. Possible"
-                      + " values: Number Username did number sip username destinationDid"
-                      + " destinationMxp destinationPstn destinationSip",
+                      + " values: Number Username did number sip username",
                   discriminatorValue));
       }
 
@@ -351,10 +334,6 @@ public class DestinationInternalImpl extends AbstractOpenApiSchema implements De
     mappings.put("number", DestinationPstnImpl.class);
     mappings.put("sip", DestinationSipImpl.class);
     mappings.put("username", DestinationMxpImpl.class);
-    mappings.put("destinationDid", DestinationDidImpl.class);
-    mappings.put("destinationMxp", DestinationMxpImpl.class);
-    mappings.put("destinationPstn", DestinationPstnImpl.class);
-    mappings.put("destinationSip", DestinationSipImpl.class);
     mappings.put("destination", DestinationInternalImpl.class);
     JSONNavigator.registerDiscriminator(DestinationInternalImpl.class, "type", mappings);
   }

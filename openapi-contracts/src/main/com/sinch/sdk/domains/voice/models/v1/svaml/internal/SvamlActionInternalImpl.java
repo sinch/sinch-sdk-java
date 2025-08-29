@@ -270,15 +270,6 @@ public final class SvamlActionInternalImpl extends AbstractOpenApiSchema {
     mappings.put("hangup", SvamlActionHangupImpl.class);
     mappings.put("park", SvamlActionParkImpl.class);
     mappings.put("runMenu", SvamlActionRunMenuImpl.class);
-    mappings.put("svaml.action.connectConf", SvamlActionConnectConferenceImpl.class);
-    mappings.put("svaml.action.connectMxp", SvamlActionConnectMxpImpl.class);
-    mappings.put("svaml.action.connectPstn", SvamlActionConnectPstnImpl.class);
-    mappings.put("svaml.action.connectSip", SvamlActionConnectSipImpl.class);
-    mappings.put("svaml.action.connectStream", SvamlActionConnectStreamImpl.class);
-    mappings.put("svaml.action.continue", SvamlActionContinueImpl.class);
-    mappings.put("svaml.action.hangup", SvamlActionHangupImpl.class);
-    mappings.put("svaml.action.park", SvamlActionParkImpl.class);
-    mappings.put("svaml.action.runMenu", SvamlActionRunMenuImpl.class);
     mappings.put("svaml.action", SvamlActionInternalImpl.class);
     JSONNavigator.registerDiscriminator(SvamlActionInternalImpl.class, "name", mappings);
   }

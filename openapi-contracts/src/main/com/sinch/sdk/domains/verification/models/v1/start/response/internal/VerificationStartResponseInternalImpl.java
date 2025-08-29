@@ -115,42 +115,13 @@ public class VerificationStartResponseInternalImpl extends AbstractOpenApiSchema
               tree.traverse(jp.getCodec()).readValueAs(VerificationStartResponseWhatsAppImpl.class);
           newVerificationStartResponseInternalImpl.setActualInstance(deserialized);
           return newVerificationStartResponseInternalImpl;
-        case "VerificationStartResponseData":
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(VerificationStartResponseDataImpl.class);
-          newVerificationStartResponseInternalImpl.setActualInstance(deserialized);
-          return newVerificationStartResponseInternalImpl;
-        case "VerificationStartResponseFlashCall":
-          deserialized =
-              tree.traverse(jp.getCodec())
-                  .readValueAs(VerificationStartResponseFlashCallImpl.class);
-          newVerificationStartResponseInternalImpl.setActualInstance(deserialized);
-          return newVerificationStartResponseInternalImpl;
-        case "VerificationStartResponsePhoneCall":
-          deserialized =
-              tree.traverse(jp.getCodec())
-                  .readValueAs(VerificationStartResponsePhoneCallImpl.class);
-          newVerificationStartResponseInternalImpl.setActualInstance(deserialized);
-          return newVerificationStartResponseInternalImpl;
-        case "VerificationStartResponseSms":
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(VerificationStartResponseSmsImpl.class);
-          newVerificationStartResponseInternalImpl.setActualInstance(deserialized);
-          return newVerificationStartResponseInternalImpl;
-        case "VerificationStartResponseWhatsApp":
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(VerificationStartResponseWhatsAppImpl.class);
-          newVerificationStartResponseInternalImpl.setActualInstance(deserialized);
-          return newVerificationStartResponseInternalImpl;
         default:
           log.log(
               Level.WARNING,
               String.format(
                   "Failed to lookup discriminator value `%s` for"
                       + " VerificationStartResponseInternalImpl. Possible values: callout flashcall"
-                      + " seamless sms whatsapp VerificationStartResponseData"
-                      + " VerificationStartResponseFlashCall VerificationStartResponsePhoneCall"
-                      + " VerificationStartResponseSms VerificationStartResponseWhatsApp",
+                      + " seamless sms whatsapp",
                   discriminatorValue));
       }
 
@@ -453,13 +424,6 @@ public class VerificationStartResponseInternalImpl extends AbstractOpenApiSchema
     mappings.put("seamless", VerificationStartResponseDataImpl.class);
     mappings.put("sms", VerificationStartResponseSmsImpl.class);
     mappings.put("whatsapp", VerificationStartResponseWhatsAppImpl.class);
-    mappings.put("VerificationStartResponseData", VerificationStartResponseDataImpl.class);
-    mappings.put(
-        "VerificationStartResponseFlashCall", VerificationStartResponseFlashCallImpl.class);
-    mappings.put(
-        "VerificationStartResponsePhoneCall", VerificationStartResponsePhoneCallImpl.class);
-    mappings.put("VerificationStartResponseSms", VerificationStartResponseSmsImpl.class);
-    mappings.put("VerificationStartResponseWhatsApp", VerificationStartResponseWhatsAppImpl.class);
     mappings.put("VerificationStartResponse", VerificationStartResponseInternalImpl.class);
     JSONNavigator.registerDiscriminator(
         VerificationStartResponseInternalImpl.class, "method", mappings);

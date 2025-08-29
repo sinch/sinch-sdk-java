@@ -111,38 +111,13 @@ public class VerificationStatusResponseInternalImpl extends AbstractOpenApiSchem
                   .readValueAs(VerificationStatusResponseWhatsAppImpl.class);
           newVerificationStatusResponseInternalImpl.setActualInstance(deserialized);
           return newVerificationStatusResponseInternalImpl;
-        case "VerificationStatusResponseFlashCall":
-          deserialized =
-              tree.traverse(jp.getCodec())
-                  .readValueAs(VerificationStatusResponseFlashCallImpl.class);
-          newVerificationStatusResponseInternalImpl.setActualInstance(deserialized);
-          return newVerificationStatusResponseInternalImpl;
-        case "VerificationStatusResponsePhoneCall":
-          deserialized =
-              tree.traverse(jp.getCodec())
-                  .readValueAs(VerificationStatusResponsePhoneCallImpl.class);
-          newVerificationStatusResponseInternalImpl.setActualInstance(deserialized);
-          return newVerificationStatusResponseInternalImpl;
-        case "VerificationStatusResponseSms":
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(VerificationStatusResponseSmsImpl.class);
-          newVerificationStatusResponseInternalImpl.setActualInstance(deserialized);
-          return newVerificationStatusResponseInternalImpl;
-        case "VerificationStatusResponseWhatsApp":
-          deserialized =
-              tree.traverse(jp.getCodec())
-                  .readValueAs(VerificationStatusResponseWhatsAppImpl.class);
-          newVerificationStatusResponseInternalImpl.setActualInstance(deserialized);
-          return newVerificationStatusResponseInternalImpl;
         default:
           log.log(
               Level.WARNING,
               String.format(
                   "Failed to lookup discriminator value `%s` for"
                       + " VerificationStatusResponseInternalImpl. Possible values: callout"
-                      + " flashcall sms whatsapp VerificationStatusResponseFlashCall"
-                      + " VerificationStatusResponsePhoneCall VerificationStatusResponseSms"
-                      + " VerificationStatusResponseWhatsApp",
+                      + " flashcall sms whatsapp",
                   discriminatorValue));
       }
 
@@ -397,13 +372,6 @@ public class VerificationStatusResponseInternalImpl extends AbstractOpenApiSchem
     mappings.put("flashcall", VerificationStatusResponseFlashCallImpl.class);
     mappings.put("sms", VerificationStatusResponseSmsImpl.class);
     mappings.put("whatsapp", VerificationStatusResponseWhatsAppImpl.class);
-    mappings.put(
-        "VerificationStatusResponseFlashCall", VerificationStatusResponseFlashCallImpl.class);
-    mappings.put(
-        "VerificationStatusResponsePhoneCall", VerificationStatusResponsePhoneCallImpl.class);
-    mappings.put("VerificationStatusResponseSms", VerificationStatusResponseSmsImpl.class);
-    mappings.put(
-        "VerificationStatusResponseWhatsApp", VerificationStatusResponseWhatsAppImpl.class);
     mappings.put("VerificationStatusResponse", VerificationStatusResponseInternalImpl.class);
     JSONNavigator.registerDiscriminator(
         VerificationStatusResponseInternalImpl.class, "method", mappings);

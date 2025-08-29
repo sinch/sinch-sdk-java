@@ -85,20 +85,18 @@ public class VerificationStartWhatsAppOptionsImpl implements VerificationStartWh
             this.codeType, verificationStartRequestWhatsAppAllOfWhatsappOptions.codeType)
         && Objects.equals(
             this.additionalProperties,
-            verificationStartRequestWhatsAppAllOfWhatsappOptions.additionalProperties)
-        && super.equals(o);
+            verificationStartRequestWhatsAppAllOfWhatsappOptions.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(codeType, super.hashCode(), additionalProperties);
+    return Objects.hash(codeType, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class VerificationStartWhatsAppOptionsImpl {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    codeType: ").append(toIndentedString(codeType)).append("\n");
     sb.append("    additionalProperties: ")
         .append(toIndentedString(additionalProperties))
