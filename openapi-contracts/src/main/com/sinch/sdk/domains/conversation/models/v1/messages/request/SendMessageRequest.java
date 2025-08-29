@@ -102,7 +102,11 @@ public interface SendMessageRequest<T extends AppMessageBody> {
    * send another message with a different value for <code>conversation_metadata</code> in the same
    * conversation, the latest metadata value overwrites the existing one. So, future MO callbacks
    * will include the new metadata. - The <code>conversation_metadata</code> only accepts json
-   * objects. Currently only returned in the <code>message_metadata</code> field of an <a
+   * objects. - If you send a message in <code>DISPATCH</code> mode while the <a
+   * href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/App/#tag/App/operation/App_CreateApp!path=dispatch_retention_policy/ttl_days&amp;t=request">retention
+   * period</a> of the app is set to 0 (note that this value is set to 0 by default), the <code>
+   * conversation_metadata</code> field will not be retained. Currently only returned in the <code>
+   * message_metadata</code> field of an <a
    * href="https://developers.sinch.com/docs/conversation/callbacks/#inbound-message">Inbound
    * Message</a> callback.
    *
@@ -151,7 +155,11 @@ public interface SendMessageRequest<T extends AppMessageBody> {
    * conversation in <code>CONVERSATION</code> mode and with the specified recipient identities in
    * <code>DISPATCH</code> mode. The MO callbacks will always include the last <code>correlation_id
    * </code> available, (which is similar to how the <code>conversation_metadata</code> property
-   * functions). Up to 128 characters long.
+   * functions). Up to 128 characters long. Important note: If you send a message in <code>DISPATCH
+   * </code> mode while the <a
+   * href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/App/#tag/App/operation/App_CreateApp!path=dispatch_retention_policy/ttl_days&amp;t=request">retention
+   * period</a> of the app is set to 0 (note that this value is set to 0 by default), the <code>
+   * correlation_id</code> field will not be retained.
    *
    * @return correlationId
    */

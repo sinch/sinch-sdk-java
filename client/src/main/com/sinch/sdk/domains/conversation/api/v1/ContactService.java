@@ -118,8 +118,7 @@ public interface ContactService {
    * Get user profile from a specific channel by contact ID.
    *
    * <p>Only supported on {@link ConversationChannel#MESSENGER MESSENGER}, {@link
-   * ConversationChannel#INSTAGRAM INSTAGRAM}, {@link ConversationChannel#VIBER VIBER} and {@link
-   * ConversationChannel#LINE LINE} channels.
+   * ConversationChannel#INSTAGRAM INSTAGRAM} and {@link ConversationChannel#LINE LINE} channels.
    *
    * <p>Note that, in order to retrieve a WhatsApp display name, you can use the Get a Contact or
    * List Contacts operations, which will populate the display_name field of each returned contact
@@ -136,8 +135,7 @@ public interface ContactService {
    * Get user profile from a specific channel by channel identity.
    *
    * <p>Only supported on {@link ConversationChannel#MESSENGER MESSENGER}, {@link
-   * ConversationChannel#INSTAGRAM INSTAGRAM}, {@link ConversationChannel#VIBER VIBER} and {@link
-   * ConversationChannel#LINE LINE} channels.
+   * ConversationChannel#INSTAGRAM INSTAGRAM} and {@link ConversationChannel#LINE LINE} channels.
    *
    * <p>Note that, in order to retrieve a WhatsApp display name, you can use the Get a Contact or
    * List Contacts operations, which will populate the display_name field of each returned contact

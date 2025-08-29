@@ -109,16 +109,6 @@ class ConversationChannelCredentialsBuilderFactoryTest {
   }
 
   @Test
-  void viber() {
-    StaticTokenCredentials credentials = StaticTokenCredentials.builder().build();
-    ConversationChannelCredentials conversationChannelCredentials =
-        ConversationChannelCredentialsBuilderFactory.viber(credentials).build();
-
-    assertEquals(conversationChannelCredentials.getChannel(), ConversationChannel.VIBER);
-    TestHelpers.recursiveEquals(conversationChannelCredentials.getCredentials(), credentials);
-  }
-
-  @Test
   void viberBm() {
     StaticBearerCredentials credentials = StaticBearerCredentials.builder().build();
     ConversationChannelCredentials conversationChannelCredentials =

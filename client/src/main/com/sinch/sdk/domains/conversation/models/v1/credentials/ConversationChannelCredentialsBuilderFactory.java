@@ -151,20 +151,6 @@ public class ConversationChannelCredentialsBuilderFactory {
   }
 
   /**
-   * Create dedicated conversation credential builder for<code>{@link ConversationChannel#VIBER}
-   * </code> channel
-   *
-   * @param credentials Credentials parameters to be used to init builder
-   * @return Conversation channel credentials builder filled with input parameters
-   * @since 1.3
-   */
-  public static ConversationChannelCredentials.Builder viber(StaticTokenCredentials credentials) {
-    return ConversationChannelCredentials.builder()
-        .setChannel(ConversationChannel.VIBER)
-        .setCredentials(credentials);
-  }
-
-  /**
    * Create dedicated conversation credential builder for<code>{@link ConversationChannel#VIBERBM}
    * </code> channel
    *

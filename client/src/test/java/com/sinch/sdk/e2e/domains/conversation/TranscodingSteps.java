@@ -49,7 +49,7 @@ public class TranscodingSteps {
             ConversationChannel.RCS,
             ConversationChannel.SMS,
             ConversationChannel.TELEGRAM,
-            ConversationChannel.VIBER,
+            ConversationChannel.from("VIBER"),
             ConversationChannel.WECHAT,
             ConversationChannel.WHATSAPP);
 
@@ -79,7 +79,7 @@ public class TranscodingSteps {
     Assertions.assertTrue(transcodedMap.containsKey(ConversationChannel.RCS));
     Assertions.assertTrue(transcodedMap.containsKey(ConversationChannel.SMS));
     Assertions.assertTrue(transcodedMap.containsKey(ConversationChannel.TELEGRAM));
-    Assertions.assertTrue(transcodedMap.containsKey(ConversationChannel.VIBER));
+    Assertions.assertTrue(transcodedMap.containsKey(ConversationChannel.from("VIBER")));
     Assertions.assertTrue(transcodedMap.containsKey(ConversationChannel.WECHAT));
     Assertions.assertTrue(transcodedMap.containsKey(ConversationChannel.WHATSAPP));
 

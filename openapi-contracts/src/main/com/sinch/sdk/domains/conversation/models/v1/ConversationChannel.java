@@ -20,9 +20,6 @@ public class ConversationChannel extends EnumDynamic<String, ConversationChannel
   /** The Facebook Messenger channel. */
   public static final ConversationChannel MESSENGER = new ConversationChannel("MESSENGER");
 
-  /** The Viber Bot channel. */
-  public static final ConversationChannel VIBER = new ConversationChannel("VIBER");
-
   /** The Viber Business Messages channel. */
   public static final ConversationChannel VIBERBM = new ConversationChannel("VIBERBM");
 
@@ -44,6 +41,9 @@ public class ConversationChannel extends EnumDynamic<String, ConversationChannel
   /** The LINE channel. */
   public static final ConversationChannel LINE = new ConversationChannel("LINE");
 
+  /** The Sinch Chat channel. */
+  public static final ConversationChannel SINCH_CHAT = new ConversationChannel("SINCH_CHAT");
+
   /** The WeChat channel. */
   public static final ConversationChannel WECHAT = new ConversationChannel("WECHAT");
 
@@ -59,7 +59,6 @@ public class ConversationChannel extends EnumDynamic<String, ConversationChannel
               RCS,
               SMS,
               MESSENGER,
-              VIBER,
               VIBERBM,
               MMS,
               INSTAGRAM,
@@ -67,6 +66,7 @@ public class ConversationChannel extends EnumDynamic<String, ConversationChannel
               KAKAOTALK,
               KAKAOTALKCHAT,
               LINE,
+              SINCH_CHAT,
               WECHAT,
               APPLEBC));
 
