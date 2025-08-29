@@ -4,9 +4,11 @@ import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestPhoneCall;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestSms;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestWhatsApp;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponsePhoneCall;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseSms;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseWhatsApp;
 
 /**
  * Verification Report Service
@@ -65,6 +67,22 @@ public interface VerificationReportService {
       NumberIdentity identity, VerificationReportRequestPhoneCall parameters);
 
   /**
+   * Report a verification using {@link
+   * com.sinch.sdk.domains.verification.models.v1.VerificationMethod#WHATSAPP} &amp; Identity
+   *
+   * <p>Report the received verification code to verify it, using the identity of the user
+   *
+   * @param identity Currently <b>Only</b> {@link
+   *     com.sinch.sdk.domains.verification.models.v1.NumberIdentity NumberIdentity} is supported
+   * @param parameters Parameters to be used to get report
+   * @return Verification report response
+   * @apiNote This is a <b>BETA</b> feature and can be changed before GA
+   * @since 2.0
+   */
+  VerificationReportResponseWhatsApp reportWhatsAppByIdentity(
+      NumberIdentity identity, VerificationReportRequestWhatsApp parameters);
+
+  /**
    * Report the received verification code to verify it, using the Verification ID of the {@link
    * com.sinch.sdk.domains.verification.models.v1.VerificationMethod#SMS} Verification request
    *
@@ -100,4 +118,17 @@ public interface VerificationReportService {
    */
   VerificationReportResponsePhoneCall reportPhoneCallById(
       String id, VerificationReportRequestPhoneCall parameters);
+
+  /**
+   * Report the received verification code to verify it, using the Verification ID of the {@link
+   * com.sinch.sdk.domains.verification.models.v1.VerificationMethod#WHATSAPP} Verification request
+   *
+   * @param id ID returned from start verification
+   * @param parameters Parameters to be used to get report
+   * @return Verification report response
+   * @apiNote This is a <b>BETA</b> feature and can be changed before GA
+   * @since 2.0
+   */
+  VerificationReportResponseWhatsApp reportWhatsAppById(
+      String id, VerificationReportRequestWhatsApp parameters);
 }

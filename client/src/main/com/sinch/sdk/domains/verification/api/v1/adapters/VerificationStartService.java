@@ -9,12 +9,14 @@ import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationSt
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestPhoneCall;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestWhatsApp;
 import com.sinch.sdk.domains.verification.models.v1.start.request.internal.VerificationStartRequestInternalImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponse;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseData;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponsePhoneCall;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseSms;
+import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseWhatsApp;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.VerificationStartResponseInternalImpl;
 import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
@@ -36,23 +38,33 @@ public class VerificationStartService
     return this.api;
   }
 
+  @Override
   public VerificationStartResponseSms startSms(VerificationStartRequestSms parameters) {
     String acceptLanguage = parameters.getAcceptLanguage();
     return (VerificationStartResponseSms) start(parameters, acceptLanguage).orElse(null);
   }
 
+  @Override
   public VerificationStartResponseFlashCall startFlashCall(
       VerificationStartRequestFlashCall parameters) {
     return (VerificationStartResponseFlashCall) start(parameters).orElse(null);
   }
 
+  @Override
   public VerificationStartResponsePhoneCall startPhoneCall(
       VerificationStartRequestPhoneCall parameters) {
     return (VerificationStartResponsePhoneCall) start(parameters).orElse(null);
   }
 
+  @Override
   public VerificationStartResponseData startData(VerificationStartRequestData parameters) {
     return (VerificationStartResponseData) start(parameters).orElse(null);
+  }
+
+  @Override
+  public VerificationStartResponseWhatsApp startWhatsApp(
+      VerificationStartRequestWhatsApp parameters) {
+    return (VerificationStartResponseWhatsApp) start(parameters).orElse(null);
   }
 
   private Optional<VerificationStartResponse> start(VerificationStartRequest parameters) {

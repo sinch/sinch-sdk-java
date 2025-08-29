@@ -6,6 +6,7 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.verification.models.dto.v1.start.LinkTest;
 import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
+import com.sinch.sdk.domains.verification.models.v1.WhatsAppCodeType;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseData;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseDataImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseFlashCall;
@@ -14,6 +15,8 @@ import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationS
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponsePhoneCallImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseSms;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseSmsImpl;
+import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseWhatsApp;
+import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseWhatsAppImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.VerificationStartResponseInternal;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.VerificationStartResponseInternalImpl;
 import org.junit.jupiter.api.Test;
@@ -78,6 +81,20 @@ public class VerificationStartResponseTest extends BaseTest {
                   .putExtraOption("my key", "my value")
                   .build());
 
+  @GivenJsonResource(
+      "/domains/verification/v1/start/response/VerificationStartResponseWhatsAppDto.json")
+  VerificationStartResponseInternal loadedStartVerificationWhatsAppDto;
+
+  public static VerificationStartResponseInternalImpl expectedStartVerificationWhatsAppDto =
+      new VerificationStartResponseInternalImpl(
+          (VerificationStartResponseWhatsAppImpl)
+              VerificationStartResponseWhatsApp.builder()
+                  .setId("the id")
+                  .setLinks(LinkTest.expectedLinks)
+                  .setCodeType(WhatsAppCodeType.NUMERIC)
+                  .putExtraOption("my key", "my value")
+                  .build());
+
   @Test
   void deserializeStartPhoneCall() {
     TestHelpers.recursiveEquals(
@@ -98,5 +115,11 @@ public class VerificationStartResponseTest extends BaseTest {
   @Test
   void deserializeStartSms() {
     TestHelpers.recursiveEquals(loadedStartVerificationSmsDto, expectedStartVerificationSmsDto);
+  }
+
+  @Test
+  void deserializeStartWhatsApp() {
+    TestHelpers.recursiveEquals(
+        loadedStartVerificationWhatsAppDto, expectedStartVerificationWhatsAppDto);
   }
 }

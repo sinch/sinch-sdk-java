@@ -43,6 +43,9 @@ public class WebhooksServiceTest extends VerificationBaseTest {
   @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseSms.json")
   String jsonResponseSms;
 
+  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseWhatsApp.json")
+  String jsonResponseWhatsApp;
+
   WebHooksService webHooksService;
 
   @Test
@@ -140,6 +143,16 @@ public class WebhooksServiceTest extends VerificationBaseTest {
         webHooksService.serializeResponse(
             VerificationResponseEventDtoTest.expectedSmsRequestEventResponseDto),
         jsonResponseSms,
+        true);
+  }
+
+  @Test
+  void checkSerializeResponseWhatsApp() throws JSONException {
+
+    JSONAssert.assertEquals(
+        webHooksService.serializeResponse(
+            VerificationResponseEventDtoTest.expectedWhatsAppRequestEventResponseDto),
+        jsonResponseWhatsApp,
         true);
   }
 

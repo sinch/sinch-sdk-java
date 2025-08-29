@@ -23,11 +23,14 @@ public class VerificationMethod extends EnumDynamic<String, VerificationMethod> 
    */
   public static final VerificationMethod PHONE_CALL = new VerificationMethod("callout");
 
+  /** Verification by WhatsApp message with an OTP code. */
+  public static final VerificationMethod WHATSAPP = new VerificationMethod("whatsapp");
+
   private static final EnumSupportDynamic<String, VerificationMethod> ENUM_SUPPORT =
       new EnumSupportDynamic<>(
           VerificationMethod.class,
           VerificationMethod::new,
-          Arrays.asList(SMS, FLASH_CALL, PHONE_CALL));
+          Arrays.asList(SMS, FLASH_CALL, PHONE_CALL, WHATSAPP));
 
   private VerificationMethod(String value) {
     super(value);

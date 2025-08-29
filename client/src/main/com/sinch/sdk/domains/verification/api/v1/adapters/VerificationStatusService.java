@@ -27,6 +27,7 @@ public class VerificationStatusService
     return this.api;
   }
 
+  @Override
   public VerificationStatusResponse getByIdentity(
       NumberIdentity identity, VerificationMethod method) {
 
@@ -39,6 +40,7 @@ public class VerificationStatusService
     return (VerificationStatusResponse) response.getActualInstance();
   }
 
+  @Override
   public VerificationStatusResponse getById(String id) {
 
     VerificationStatusResponseInternalImpl response =
@@ -49,6 +51,7 @@ public class VerificationStatusService
     return (VerificationStatusResponse) response.getActualInstance();
   }
 
+  @Override
   public VerificationStatusResponse getByReference(String reference) {
 
     VerificationStatusResponseInternalImpl response =

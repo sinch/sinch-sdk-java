@@ -19,6 +19,8 @@ import com.sinch.sdk.domains.verification.models.v1.status.response.Verification
 import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponseSms;
 import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponseSmsImpl;
 import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponseSmsPrice;
+import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponseWhatsApp;
+import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponseWhatsAppImpl;
 import com.sinch.sdk.domains.verification.models.v1.status.response.internal.VerificationStatusResponseInternal;
 import com.sinch.sdk.domains.verification.models.v1.status.response.internal.VerificationStatusResponseInternalImpl;
 import org.junit.jupiter.api.Test;
@@ -50,7 +52,7 @@ public class VerificationStatusResponseTest extends VerificationBaseTest {
                           .setBillableDuration(34)
                           .build())
                   .setIdentity(NumberIdentity.valueOf("endpoint value"))
-                  .setCountryId("es-ES")
+                  .setCountryId("ES")
                   .setVerificationTimestamp(
                       DateUtil.failSafeTimeStampToInstant("2024-05-22T09:38:59.5590437"))
                   .setCallResult(StatusCallResult.ANSWERED)
@@ -79,7 +81,7 @@ public class VerificationStatusResponseTest extends VerificationBaseTest {
                           .build())
                   .setSource(StatusSource.MANUAL)
                   .setIdentity(NumberIdentity.valueOf("endpoint value"))
-                  .setCountryId("es-ES")
+                  .setCountryId("ES")
                   .setVerificationTimestamp(
                       DateUtil.failSafeTimeStampToInstant("2024-05-22T09:38:59.5590437"))
                   .setCallComplete(false)
@@ -103,7 +105,30 @@ public class VerificationStatusResponseTest extends VerificationBaseTest {
                                   .build())
                           .build())
                   .setIdentity(NumberIdentity.valueOf("endpoint value"))
-                  .setCountryId("es-ES")
+                  .setCountryId("ES")
+                  .setVerificationTimestamp(
+                      DateUtil.failSafeTimeStampToInstant("2024-05-22T09:38:59.5590437"))
+                  .build());
+
+  public static VerificationStatusResponseInternalImpl expectedVerificationWhatsAppDto =
+      new VerificationStatusResponseInternalImpl(
+          (VerificationStatusResponseWhatsAppImpl)
+              VerificationStatusResponseWhatsApp.builder()
+                  .setId("the id")
+                  .setReference("my reference")
+                  .setStatus(VerificationStatus.FAIL)
+                  .setReason(VerificationStatusReason.FRAUD)
+                  .setSource(StatusSource.INTERCEPTED)
+                  .setPrice(
+                      VerificationStatusResponseSmsPrice.builder()
+                          .setVerificationPrice(
+                              Price.builder()
+                                  .setCurrencyId("verificationPrice currency id")
+                                  .setAmount(3.141516F)
+                                  .build())
+                          .build())
+                  .setIdentity(NumberIdentity.valueOf("+33123456789"))
+                  .setCountryId("ES")
                   .setVerificationTimestamp(
                       DateUtil.failSafeTimeStampToInstant("2024-05-22T09:38:59.5590437"))
                   .build());
@@ -116,6 +141,9 @@ public class VerificationStatusResponseTest extends VerificationBaseTest {
 
   @GivenJsonResource("/domains/verification/v1/status/VerificationStatusResponseSmsDto.json")
   VerificationStatusResponseInternal loadedVerificationSmsDto;
+
+  @GivenJsonResource("/domains/verification/v1/status/VerificationStatusResponseWhatsAppDto.json")
+  VerificationStatusResponseInternal loadedVerificationWhatsAppDto;
 
   @Test
   void deserializePhoneCall() {
@@ -130,5 +158,10 @@ public class VerificationStatusResponseTest extends VerificationBaseTest {
   @Test
   void deserializeSms() {
     TestHelpers.recursiveEquals(loadedVerificationSmsDto, expectedVerificationSmsDto);
+  }
+
+  @Test
+  void deserializeWhatsApp() {
+    TestHelpers.recursiveEquals(loadedVerificationWhatsAppDto, expectedVerificationWhatsAppDto);
   }
 }

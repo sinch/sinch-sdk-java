@@ -19,6 +19,7 @@ import com.sinch.sdk.core.utils.databind.JSONNavigator;
 import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponseFlashCallImpl;
 import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponsePhoneCallImpl;
 import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponseSmsImpl;
+import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponseWhatsAppImpl;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -104,6 +105,12 @@ public class VerificationStatusResponseInternalImpl extends AbstractOpenApiSchem
               tree.traverse(jp.getCodec()).readValueAs(VerificationStatusResponseSmsImpl.class);
           newVerificationStatusResponseInternalImpl.setActualInstance(deserialized);
           return newVerificationStatusResponseInternalImpl;
+        case "whatsapp":
+          deserialized =
+              tree.traverse(jp.getCodec())
+                  .readValueAs(VerificationStatusResponseWhatsAppImpl.class);
+          newVerificationStatusResponseInternalImpl.setActualInstance(deserialized);
+          return newVerificationStatusResponseInternalImpl;
         case "VerificationStatusResponseFlashCall":
           deserialized =
               tree.traverse(jp.getCodec())
@@ -121,14 +128,21 @@ public class VerificationStatusResponseInternalImpl extends AbstractOpenApiSchem
               tree.traverse(jp.getCodec()).readValueAs(VerificationStatusResponseSmsImpl.class);
           newVerificationStatusResponseInternalImpl.setActualInstance(deserialized);
           return newVerificationStatusResponseInternalImpl;
+        case "VerificationStatusResponseWhatsApp":
+          deserialized =
+              tree.traverse(jp.getCodec())
+                  .readValueAs(VerificationStatusResponseWhatsAppImpl.class);
+          newVerificationStatusResponseInternalImpl.setActualInstance(deserialized);
+          return newVerificationStatusResponseInternalImpl;
         default:
           log.log(
               Level.WARNING,
               String.format(
                   "Failed to lookup discriminator value `%s` for"
                       + " VerificationStatusResponseInternalImpl. Possible values: callout"
-                      + " flashcall sms VerificationStatusResponseFlashCall"
-                      + " VerificationStatusResponsePhoneCall VerificationStatusResponseSms",
+                      + " flashcall sms whatsapp VerificationStatusResponseFlashCall"
+                      + " VerificationStatusResponsePhoneCall VerificationStatusResponseSms"
+                      + " VerificationStatusResponseWhatsApp",
                   discriminatorValue));
       }
 
@@ -272,6 +286,53 @@ public class VerificationStatusResponseInternalImpl extends AbstractOpenApiSchem
             Level.FINER, "Input data does not match schema 'VerificationStatusResponseSmsImpl'", e);
       }
 
+      // deserialize VerificationStatusResponseWhatsAppImpl
+      try {
+        boolean attemptParsing = true;
+        // ensure that we respect type coercion as set on the client ObjectMapper
+        if (VerificationStatusResponseWhatsAppImpl.class.equals(Integer.class)
+            || VerificationStatusResponseWhatsAppImpl.class.equals(Long.class)
+            || VerificationStatusResponseWhatsAppImpl.class.equals(Float.class)
+            || VerificationStatusResponseWhatsAppImpl.class.equals(Double.class)
+            || VerificationStatusResponseWhatsAppImpl.class.equals(Boolean.class)
+            || VerificationStatusResponseWhatsAppImpl.class.equals(String.class)) {
+          attemptParsing = typeCoercion;
+          if (!attemptParsing) {
+            attemptParsing |=
+                ((VerificationStatusResponseWhatsAppImpl.class.equals(Integer.class)
+                        || VerificationStatusResponseWhatsAppImpl.class.equals(Long.class))
+                    && token == JsonToken.VALUE_NUMBER_INT);
+            attemptParsing |=
+                ((VerificationStatusResponseWhatsAppImpl.class.equals(Float.class)
+                        || VerificationStatusResponseWhatsAppImpl.class.equals(Double.class))
+                    && token == JsonToken.VALUE_NUMBER_FLOAT);
+            attemptParsing |=
+                (VerificationStatusResponseWhatsAppImpl.class.equals(Boolean.class)
+                    && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
+            attemptParsing |=
+                (VerificationStatusResponseWhatsAppImpl.class.equals(String.class)
+                    && token == JsonToken.VALUE_STRING);
+          }
+        }
+        if (attemptParsing) {
+          deserialized =
+              tree.traverse(jp.getCodec())
+                  .readValueAs(VerificationStatusResponseWhatsAppImpl.class);
+          // TODO: there is no validation against JSON schema constraints
+          // (min, max, enum, pattern...), this does not perform a strict JSON
+          // validation, which means the 'match' count may be higher than it should be.
+          match++;
+          log.log(
+              Level.FINER, "Input data matches schema 'VerificationStatusResponseWhatsAppImpl'");
+        }
+      } catch (Exception e) {
+        // deserialization failed, continue
+        log.log(
+            Level.FINER,
+            "Input data does not match schema 'VerificationStatusResponseWhatsAppImpl'",
+            e);
+      }
+
       if (match == 1) {
         VerificationStatusResponseInternalImpl ret = new VerificationStatusResponseInternalImpl();
         ret.setActualInstance(deserialized);
@@ -315,12 +376,19 @@ public class VerificationStatusResponseInternalImpl extends AbstractOpenApiSchem
     setActualInstance(o);
   }
 
+  public VerificationStatusResponseInternalImpl(VerificationStatusResponseWhatsAppImpl o) {
+    super("oneOf", Boolean.FALSE);
+    setActualInstance(o);
+  }
+
   static {
     schemas.put(
         "VerificationStatusResponseFlashCallImpl", VerificationStatusResponseFlashCallImpl.class);
     schemas.put(
         "VerificationStatusResponsePhoneCallImpl", VerificationStatusResponsePhoneCallImpl.class);
     schemas.put("VerificationStatusResponseSmsImpl", VerificationStatusResponseSmsImpl.class);
+    schemas.put(
+        "VerificationStatusResponseWhatsAppImpl", VerificationStatusResponseWhatsAppImpl.class);
     JSONNavigator.registerDescendants(
         VerificationStatusResponseInternalImpl.class, Collections.unmodifiableMap(schemas));
     // Initialize and register the discriminator mappings.
@@ -328,11 +396,14 @@ public class VerificationStatusResponseInternalImpl extends AbstractOpenApiSchem
     mappings.put("callout", VerificationStatusResponsePhoneCallImpl.class);
     mappings.put("flashcall", VerificationStatusResponseFlashCallImpl.class);
     mappings.put("sms", VerificationStatusResponseSmsImpl.class);
+    mappings.put("whatsapp", VerificationStatusResponseWhatsAppImpl.class);
     mappings.put(
         "VerificationStatusResponseFlashCall", VerificationStatusResponseFlashCallImpl.class);
     mappings.put(
         "VerificationStatusResponsePhoneCall", VerificationStatusResponsePhoneCallImpl.class);
     mappings.put("VerificationStatusResponseSms", VerificationStatusResponseSmsImpl.class);
+    mappings.put(
+        "VerificationStatusResponseWhatsApp", VerificationStatusResponseWhatsAppImpl.class);
     mappings.put("VerificationStatusResponse", VerificationStatusResponseInternalImpl.class);
     JSONNavigator.registerDiscriminator(
         VerificationStatusResponseInternalImpl.class, "method", mappings);
@@ -346,7 +417,8 @@ public class VerificationStatusResponseInternalImpl extends AbstractOpenApiSchem
   /**
    * Set the instance that matches the oneOf child schema, check the instance parameter is valid
    * against the oneOf child schemas: VerificationStatusResponseFlashCallImpl,
-   * VerificationStatusResponsePhoneCallImpl, VerificationStatusResponseSmsImpl
+   * VerificationStatusResponsePhoneCallImpl, VerificationStatusResponseSmsImpl,
+   * VerificationStatusResponseWhatsAppImpl
    *
    * <p>It could be an instance of the 'oneOf' schemas. The oneOf child schemas may themselves be a
    * composed schema (allOf, anyOf, oneOf).
@@ -371,17 +443,26 @@ public class VerificationStatusResponseInternalImpl extends AbstractOpenApiSchem
       return;
     }
 
+    if (JSONNavigator.isInstanceOf(
+        VerificationStatusResponseWhatsAppImpl.class, instance, new HashSet<Class<?>>())) {
+      super.setActualInstance(instance);
+      return;
+    }
+
     throw new RuntimeException(
         "Invalid instance type. Must be VerificationStatusResponseFlashCallImpl,"
-            + " VerificationStatusResponsePhoneCallImpl, VerificationStatusResponseSmsImpl");
+            + " VerificationStatusResponsePhoneCallImpl, VerificationStatusResponseSmsImpl,"
+            + " VerificationStatusResponseWhatsAppImpl");
   }
 
   /**
    * Get the actual instance, which can be the following: VerificationStatusResponseFlashCallImpl,
-   * VerificationStatusResponsePhoneCallImpl, VerificationStatusResponseSmsImpl
+   * VerificationStatusResponsePhoneCallImpl, VerificationStatusResponseSmsImpl,
+   * VerificationStatusResponseWhatsAppImpl
    *
    * @return The actual instance (VerificationStatusResponseFlashCallImpl,
-   *     VerificationStatusResponsePhoneCallImpl, VerificationStatusResponseSmsImpl)
+   *     VerificationStatusResponsePhoneCallImpl, VerificationStatusResponseSmsImpl,
+   *     VerificationStatusResponseWhatsAppImpl)
    */
   @Override
   public Object getActualInstance() {
@@ -422,5 +503,17 @@ public class VerificationStatusResponseInternalImpl extends AbstractOpenApiSchem
   public VerificationStatusResponseSmsImpl getVerificationStatusResponseSmsImpl()
       throws ClassCastException {
     return (VerificationStatusResponseSmsImpl) super.getActualInstance();
+  }
+
+  /**
+   * Get the actual instance of `VerificationStatusResponseWhatsAppImpl`. If the actual instance is
+   * not `VerificationStatusResponseWhatsAppImpl`, the ClassCastException will be thrown.
+   *
+   * @return The actual instance of `VerificationStatusResponseWhatsAppImpl`
+   * @throws ClassCastException if the instance is not `VerificationStatusResponseWhatsAppImpl`
+   */
+  public VerificationStatusResponseWhatsAppImpl getVerificationStatusResponseWhatsAppImpl()
+      throws ClassCastException {
+    return (VerificationStatusResponseWhatsAppImpl) super.getActualInstance();
   }
 }

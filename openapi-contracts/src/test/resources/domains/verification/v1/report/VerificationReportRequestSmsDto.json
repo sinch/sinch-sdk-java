@@ -1,8 +1,6 @@
 {
   "method": "sms",
   "sms": {
-    "code": "foo code",
-    "cli": "foo cli"
-
+    "code": "foo code"
   }
 }

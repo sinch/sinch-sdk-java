@@ -83,21 +83,6 @@ public class VerificationReportRequestSmsImpl
         : OptionalValue.empty();
   }
 
-  @JsonIgnore
-  public String getCli() {
-    if (null == sms || !sms.isPresent() || null == sms.get().getCli()) {
-      return null;
-    }
-    return sms.get().getCli();
-  }
-
-  public OptionalValue<String> cli() {
-    return null != sms && sms.isPresent()
-        ? sms.map(f -> ((VerificationReportRequestSmsOptionsImpl) f).cli())
-            .orElse(OptionalValue.empty())
-        : OptionalValue.empty();
-  }
-
   /** Return true if this VerificationReportRequestSms object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -154,12 +139,6 @@ public class VerificationReportRequestSmsImpl
     @JsonIgnore
     public Builder setCode(String code) {
       getDelegatedBuilder().setCode(code);
-      return this;
-    }
-
-    @JsonIgnore
-    public Builder setCli(String cli) {
-      getDelegatedBuilder().setCli(cli);
       return this;
     }
 

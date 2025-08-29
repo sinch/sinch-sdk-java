@@ -20,6 +20,7 @@ import com.sinch.sdk.domains.verification.models.v1.report.request.internal.Veri
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponsePhoneCall;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseSms;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseWhatsApp;
 import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,6 +38,9 @@ public class VerificationReportServiceTest extends VerificationBaseTest {
 
   @GivenJsonResource("/domains/verification/v1/report/VerificationReportRequestSmsDto.json")
   public VerificationReportRequestInternal verificationReportSmsRequestDto;
+
+  @GivenJsonResource("/domains/verification/v1/report/VerificationReportRequestWhatsAppDto.json")
+  public VerificationReportRequestInternal verificationReportWhatsAppRequestDto;
 
   @Mock VerificationsReportApi api;
   @Mock VerificationContext context;
@@ -110,6 +114,25 @@ public class VerificationReportServiceTest extends VerificationBaseTest {
   }
 
   @Test
+  void reportWhatsAppByIdentity() throws ApiException {
+
+    when(api.reportVerificationByIdentity(
+            eq("endpoint string"), eq(verificationReportWhatsAppRequestDto)))
+        .thenReturn(VerificationReportResponseDtoTest.verificationReportWhatsAppDto);
+
+    VerificationReportResponseWhatsApp response =
+        service.reportWhatsAppByIdentity(
+            NumberIdentity.builder().setEndpoint("endpoint string").build(),
+            VerificationReportRequestDtoTest.verificationReportWhatsAppDto
+                .getVerificationReportRequestWhatsAppImpl());
+
+    TestHelpers.recursiveEquals(
+        response,
+        VerificationReportResponseDtoTest.verificationReportWhatsAppDto
+            .getVerificationReportResponseWhatsAppImpl());
+  }
+
+  @Test
   void reportSmsById() throws ApiException {
 
     when(api.reportVerificationById(eq("the id"), eq(verificationReportSmsRequestDto)))
@@ -161,5 +184,23 @@ public class VerificationReportServiceTest extends VerificationBaseTest {
         response,
         VerificationReportResponseDtoTest.verificationReportPhoneCallDto
             .getVerificationReportResponsePhoneCallImpl());
+  }
+
+  @Test
+  void reportWhatsAppById() throws ApiException {
+
+    when(api.reportVerificationById(eq("the id"), eq(verificationReportWhatsAppRequestDto)))
+        .thenReturn(VerificationReportResponseDtoTest.verificationReportWhatsAppDto);
+
+    VerificationReportResponseWhatsApp response =
+        service.reportWhatsAppById(
+            "the id",
+            VerificationReportRequestDtoTest.verificationReportWhatsAppDto
+                .getVerificationReportRequestWhatsAppImpl());
+
+    TestHelpers.recursiveEquals(
+        response,
+        VerificationReportResponseDtoTest.verificationReportWhatsAppDto
+            .getVerificationReportResponseWhatsAppImpl());
   }
 }

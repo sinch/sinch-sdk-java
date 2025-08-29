@@ -12,12 +12,12 @@ package com.sinch.sdk.domains.verification.models.v1.report.request.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** A configuration object containing settings specific to SMS verifications. */
-@JsonDeserialize(builder = VerificationReportRequestSmsOptionsImpl.Builder.class)
-public interface VerificationReportRequestSmsOptions {
+/** A configuration object containing settings specific to WhatsApp verifications. */
+@JsonDeserialize(builder = VerificationReportRequestWhatsAppOptionsImpl.Builder.class)
+public interface VerificationReportRequestWhatsAppOptions {
 
   /**
-   * The code which was received by the user submitting the SMS verification.
+   * The code which was received by the user submitting the WhatsApp verification.
    *
    * <p>Field is required
    *
@@ -31,7 +31,7 @@ public interface VerificationReportRequestSmsOptions {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationReportRequestSmsOptionsImpl.Builder();
+    return new VerificationReportRequestWhatsAppOptionsImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -51,6 +51,6 @@ public interface VerificationReportRequestSmsOptions {
      *
      * @return The instance build with current builder values
      */
-    VerificationReportRequestSmsOptions build();
+    VerificationReportRequestWhatsAppOptions build();
   }
 }

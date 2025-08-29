@@ -4,10 +4,12 @@ import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationSt
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestPhoneCall;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestWhatsApp;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseData;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponsePhoneCall;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseSms;
+import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseWhatsApp;
 
 /**
  * Verification Start Service
@@ -58,4 +60,14 @@ public interface VerificationStartService {
    * @since 1.1
    */
   VerificationStartResponseData startData(VerificationStartRequestData parameters);
+
+  /**
+   * Start verification by WhatsApp
+   *
+   * @apiNote This is a <b>BETA</b> feature and can be changed before GA
+   * @param parameters Parameters to be used to start verification
+   * @return Verification response
+   * @since 2.0
+   */
+  VerificationStartResponseWhatsApp startWhatsApp(VerificationStartRequestWhatsApp parameters);
 }
