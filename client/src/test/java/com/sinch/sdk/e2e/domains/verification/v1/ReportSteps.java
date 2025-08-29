@@ -8,10 +8,12 @@ import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestPhoneCall;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestSms;
+import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestWhatsApp;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponse;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponsePhoneCall;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseSms;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseWhatsApp;
 import com.sinch.sdk.e2e.Config;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -26,6 +28,8 @@ public class ReportSteps {
   VerificationReportResponse reportCalloutByIdentityResponse;
   VerificationReportResponse reportFlashCallByIdResponse;
   VerificationReportResponse reportFlashCallByIdentityResponse;
+  VerificationReportResponse reportWhatsAppByIdResponse;
+  VerificationReportResponse reportWhatsAppByIdentityResponse;
 
   @Given("^the Verification service \"Report\" is available$")
   public void serviceAvailable() {
@@ -100,6 +104,29 @@ public class ReportSteps {
         service.reportFlashCallByIdentity(NumberIdentity.valueOf(phoneNumber), request);
   }
 
+  @When(
+      "I send a request to report a WhatsApp verification by \"ID\" with the verification ID"
+          + " {string}")
+  public void reportWhatsAppById(String id) {
+
+    VerificationReportRequestWhatsApp request =
+        VerificationReportRequestWhatsApp.builder().setCode("1234").build();
+
+    reportWhatsAppByIdResponse = service.reportWhatsAppById(id, request);
+  }
+
+  @When(
+      "I send a request to report a WhatsApp verification by \"identity\" with the phone number"
+          + " {string}")
+  public void reportWhatsAppByIdentity(String phoneNumber) {
+
+    VerificationReportRequestWhatsApp request =
+        VerificationReportRequestWhatsApp.builder().setCode("5678").build();
+
+    reportWhatsAppByIdentityResponse =
+        service.reportWhatsAppByIdentity(NumberIdentity.valueOf(phoneNumber), request);
+  }
+
   @Then("the response by {string} contains the details of an SMS verification report")
   public void reportSmsResult(String by) {
     VerificationReportResponse expected = null;
@@ -156,6 +183,22 @@ public class ReportSteps {
             .setStatus(VerificationStatus.FAIL)
             .setCallComplete(true)
             .setReason(VerificationStatusReason.EXPIRED)
+            .build());
+  }
+
+  @Then("the response by {string} contains the details of a WhatsApp verification report")
+  public void reportWhatsAppResult(String by) {
+    VerificationReportResponse expected = null;
+    if (by.equals("ID")) {
+      expected = reportWhatsAppByIdResponse;
+    } else if (by.equals("identity")) {
+      expected = reportWhatsAppByIdentityResponse;
+    }
+    TestHelpers.recursiveEquals(
+        expected,
+        VerificationReportResponseWhatsApp.builder()
+            .setId("1ce0ffee-c0de-5eed-d33d-f00dfeed1337")
+            .setStatus(VerificationStatus.SUCCESSFUL)
             .build());
   }
 }

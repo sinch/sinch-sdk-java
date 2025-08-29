@@ -5,17 +5,20 @@ import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.verification.api.v1.VerificationStartService;
 import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
+import com.sinch.sdk.domains.verification.models.v1.WhatsAppCodeType;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestData;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestPhoneCall;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestWhatsApp;
 import com.sinch.sdk.domains.verification.models.v1.start.response.Link;
 import com.sinch.sdk.domains.verification.models.v1.start.response.Link.RelEnum;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponse;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponsePhoneCall;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseSms;
+import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseWhatsApp;
 import com.sinch.sdk.e2e.Config;
 import com.sinch.sdk.models.E164PhoneNumber;
 import io.cucumber.java.en.Given;
@@ -30,6 +33,8 @@ public class StartSteps {
   VerificationStartResponse startVerificationBySmsResponse;
   VerificationStartResponse startVerificationByPhoneCallResponse;
   VerificationStartResponse startVerificationByFlashCallResponse;
+  VerificationStartResponse startVerificationByWhatsAppResponse;
+
   ApiException startSeamlessException;
 
   @Given("^the Verification service \"Start\" is available$")
@@ -87,6 +92,19 @@ public class StartSteps {
     } catch (ApiException e) {
       startSeamlessException = e;
     }
+  }
+
+  @When("I send a request to start a verification with WhatsApp")
+  public void startWhatsApp() {
+
+    VerificationStartRequestWhatsApp request =
+        VerificationStartRequestWhatsApp.builder()
+            .setIdentity(NumberIdentity.valueOf("+33123456789"))
+            .setCodeType(WhatsAppCodeType.NUMERIC)
+            .putExtraOption("fooKey", "foo value")
+            .build();
+
+    startVerificationByWhatsAppResponse = service.startWhatsApp(request);
   }
 
   @Then("the response contains the details of a verification started with a SMS")
@@ -178,5 +196,30 @@ public class StartSteps {
             .equals(
                 "Seamless verification not available for given destination."
                     + " (reference=c01dc0de-c4db-44f1-5ca1-da9159d21c191)"));
+  }
+
+  @Then("the response contains the details of a verification started with WhatsApp")
+  public void startWhatsAppResult() {
+
+    TestHelpers.recursiveEquals(
+        startVerificationByWhatsAppResponse,
+        VerificationStartResponseWhatsApp.builder()
+            .setId("1ce0ffee-c0de-5eed-d33d-f00dfeed1337")
+            .setCodeType(null)
+            .setLinks(
+                Arrays.asList(
+                    Link.builder()
+                        .setRel(RelEnum.STATUS)
+                        .setHref(
+                            "http://localhost:3018/verification/v1/verifications/id/1ce0ffee-c0de-5eed-d33d-f00dfeed1337")
+                        .setMethod("GET")
+                        .build(),
+                    Link.builder()
+                        .setRel(RelEnum.REPORT)
+                        .setHref(
+                            "http://localhost:3018/verification/v1/verifications/id/1ce0ffee-c0de-5eed-d33d-f00dfeed1337")
+                        .setMethod("PUT")
+                        .build()))
+            .build());
   }
 }
