@@ -59,8 +59,10 @@ public class MessagesApi {
   }
 
   /**
-   * Delete a message Delete a specific message by its ID. Note: Removing all messages of a
-   * conversation will not automatically delete the conversation.
+   * Delete a message Delete a specific message by its ID. Note that this operation deletes the
+   * message from Conversation API storage; this operation does not affect messages already
+   * delivered to recipients&#39; handsets. Also note that removing all messages of a conversation
+   * will not automatically delete the conversation.
    *
    * @param projectId The unique ID of the project. You can find this on the [Sinch
    *     Dashboard](https://dashboard.sinch.com/convapi/apps). (required)
