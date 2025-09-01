@@ -22,7 +22,7 @@ public interface OverrideProperties {
 
   /**
    * Tag string. See <a
-   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/#tagging">Tagging</a>
+   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/track-tagging">Tagging</a>
    * for more information
    *
    * @return tag
@@ -34,7 +34,7 @@ public interface OverrideProperties {
    * of hours in <code>[0-9]+h</code> format, with the minimum being <code>24h</code> and the
    * maximum being <code>72h</code>. This value defines the time window in which Mailgun will run
    * the optimization algorithm based on prior engagement data of a given recipient. See <a
-   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages#sending-a-message-with-sto">Sending
+   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/send-sto">Sending
    * a Message with STO</a> for details. <em>Please note that STO is only available on certain
    * plans. See www.mailgun.com/pricing for more info</em>
    *
@@ -73,7 +73,7 @@ public interface OverrideProperties {
 
   /**
    * Specifies the scheduled delivery time in <a
-   * href="https://documentation.mailgun.com/docs/mailgun/api-reference#date-format">RFC-2822
+   * href="https://documentation.mailgun.com/docs/mailgun/api-reference/api-overview#date-format">RFC-2822
    * format</a>. Depending on your plan, you can schedule messages up to 3 or 7 days in advance. If
    * your domain has a custom message_ttl (time-to-live) setting, this value determines the maximum
    * scheduling duration. Example: 'Fri, 14 Oct 2011 12:00:00 +0000'
@@ -86,7 +86,7 @@ public interface OverrideProperties {
    * Toggles Timezone Optimization (TZO) on a per message basis. String should be set to preferred
    * delivery time in <code>HH:mm</code> or <code>hh:mmaa</code> format, where <code>HH:mm</code> is
    * used for 24 hour format without AM/PM and hh:mmaa is used for 12 hour format with AM/PM. See <a
-   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages#sending-a-message-with-tzo">Sending
+   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/send-tzo">Sending
    * a Message with TZO</a> for details. <em>Please note that TZO is only available on certain
    * plans. See www.mailgun.com/pricing for more info</em>
    *
@@ -96,7 +96,7 @@ public interface OverrideProperties {
 
   /**
    * Toggles click tracking on a per-message basis, see <a
-   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/#tracking-clicks">Tracking
+   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/tracking-clicks">Tracking
    * Clicks</a>. This overrides the domain-level click tracking setting.
    *
    * @return trackingClicks
@@ -112,7 +112,7 @@ public interface OverrideProperties {
 
   /**
    * Toggles opens tracking on a per-message basis, see <a
-   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/#tracking-opens">Tracking
+   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/tracking-opens">Tracking
    * Opens</a>. Has higher priority than domain-level setting.
    *
    * @return trackingOpens
@@ -163,7 +163,7 @@ public interface OverrideProperties {
   /**
    * Enables sending in test mode. Messages are processed normally but not actually delivered to
    * recipients. Useful for testing without sending real emails. See <a
-   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/test-mode#sending-in-test-mode">Sending
+   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/test-mode">Sending
    * in Test Mode</a>
    *
    * @return testMode
