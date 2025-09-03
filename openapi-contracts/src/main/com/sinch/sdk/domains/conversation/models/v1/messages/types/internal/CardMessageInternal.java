@@ -12,6 +12,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.types.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardHeight;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.MessageProperties;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.Choice;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessage;
 import java.util.List;
@@ -54,6 +55,13 @@ public interface CardMessageInternal {
    * @return media
    */
   MediaMessage getMedia();
+
+  /**
+   * Get messageProperties
+   *
+   * @return messageProperties
+   */
+  MessageProperties getMessageProperties();
 
   /**
    * Getting builder
@@ -111,6 +119,15 @@ public interface CardMessageInternal {
      * @see #getMedia
      */
     Builder setMedia(MediaMessage media);
+
+    /**
+     * see getter
+     *
+     * @param messageProperties see getter
+     * @return Current builder
+     * @see #getMessageProperties
+     */
+    Builder setMessageProperties(MessageProperties messageProperties);
 
     /**
      * Create instance

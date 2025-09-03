@@ -109,45 +109,13 @@ public class WebhookEventOneOfImpl extends AbstractOpenApiSchema implements Webh
               tree.traverse(jp.getCodec()).readValueAs(RecipientDeliveryReportSMSImpl.class);
           newWebhookEventOneOfImpl.setActualInstance(deserialized);
           return newWebhookEventOneOfImpl;
-        case "BatchDeliveryReportMMS":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(BatchDeliveryReportMMSImpl.class);
-          newWebhookEventOneOfImpl.setActualInstance(deserialized);
-          return newWebhookEventOneOfImpl;
-        case "BatchDeliveryReportSMS":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(BatchDeliveryReportSMSImpl.class);
-          newWebhookEventOneOfImpl.setActualInstance(deserialized);
-          return newWebhookEventOneOfImpl;
-        case "RecipientDeliveryReportMMS":
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(RecipientDeliveryReportMMSImpl.class);
-          newWebhookEventOneOfImpl.setActualInstance(deserialized);
-          return newWebhookEventOneOfImpl;
-        case "RecipientDeliveryReportSMS":
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(RecipientDeliveryReportSMSImpl.class);
-          newWebhookEventOneOfImpl.setActualInstance(deserialized);
-          return newWebhookEventOneOfImpl;
-        case "binary_message":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(BinaryMessageImpl.class);
-          newWebhookEventOneOfImpl.setActualInstance(deserialized);
-          return newWebhookEventOneOfImpl;
-        case "media_message":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(MediaMessageImpl.class);
-          newWebhookEventOneOfImpl.setActualInstance(deserialized);
-          return newWebhookEventOneOfImpl;
-        case "text_message":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(TextMessageImpl.class);
-          newWebhookEventOneOfImpl.setActualInstance(deserialized);
-          return newWebhookEventOneOfImpl;
         default:
           log.log(
               Level.WARNING,
               String.format(
                   "Failed to lookup discriminator value `%s` for WebhookEventOneOfImpl. Possible"
                       + " values: delivery_report_mms delivery_report_sms mo_binary mo_media"
-                      + " mo_text recipient_delivery_report_mms recipient_delivery_report_sms"
-                      + " BatchDeliveryReportMMS BatchDeliveryReportSMS RecipientDeliveryReportMMS"
-                      + " RecipientDeliveryReportSMS binary_message media_message text_message",
+                      + " mo_text recipient_delivery_report_mms recipient_delivery_report_sms",
                   discriminatorValue));
       }
 
@@ -523,13 +491,6 @@ public class WebhookEventOneOfImpl extends AbstractOpenApiSchema implements Webh
     mappings.put("mo_text", TextMessageImpl.class);
     mappings.put("recipient_delivery_report_mms", RecipientDeliveryReportMMSImpl.class);
     mappings.put("recipient_delivery_report_sms", RecipientDeliveryReportSMSImpl.class);
-    mappings.put("BatchDeliveryReportMMS", BatchDeliveryReportMMSImpl.class);
-    mappings.put("BatchDeliveryReportSMS", BatchDeliveryReportSMSImpl.class);
-    mappings.put("RecipientDeliveryReportMMS", RecipientDeliveryReportMMSImpl.class);
-    mappings.put("RecipientDeliveryReportSMS", RecipientDeliveryReportSMSImpl.class);
-    mappings.put("binary_message", BinaryMessageImpl.class);
-    mappings.put("media_message", MediaMessageImpl.class);
-    mappings.put("text_message", TextMessageImpl.class);
     mappings.put("WebhookEventOneOf", WebhookEventOneOfImpl.class);
     JSONNavigator.registerDiscriminator(WebhookEventOneOfImpl.class, "type", mappings);
   }

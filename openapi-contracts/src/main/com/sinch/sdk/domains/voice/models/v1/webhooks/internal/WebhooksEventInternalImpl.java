@@ -98,33 +98,12 @@ public class WebhooksEventInternalImpl extends AbstractOpenApiSchema
           deserialized = tree.traverse(jp.getCodec()).readValueAs(PromptInputEventImpl.class);
           newWebhooksEventInternalImpl.setActualInstance(deserialized);
           return newWebhooksEventInternalImpl;
-        case "aceRequest":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(AnsweredCallEventImpl.class);
-          newWebhooksEventInternalImpl.setActualInstance(deserialized);
-          return newWebhooksEventInternalImpl;
-        case "diceRequest":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(DisconnectedCallEventImpl.class);
-          newWebhooksEventInternalImpl.setActualInstance(deserialized);
-          return newWebhooksEventInternalImpl;
-        case "iceRequest":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(IncomingCallEventImpl.class);
-          newWebhooksEventInternalImpl.setActualInstance(deserialized);
-          return newWebhooksEventInternalImpl;
-        case "notifyRequest":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(NotificationEventImpl.class);
-          newWebhooksEventInternalImpl.setActualInstance(deserialized);
-          return newWebhooksEventInternalImpl;
-        case "pieRequest":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(PromptInputEventImpl.class);
-          newWebhooksEventInternalImpl.setActualInstance(deserialized);
-          return newWebhooksEventInternalImpl;
         default:
           log.log(
               Level.WARNING,
               String.format(
                   "Failed to lookup discriminator value `%s` for WebhooksEventInternalImpl."
-                      + " Possible values: ace dice ice notify pie aceRequest diceRequest"
-                      + " iceRequest notifyRequest pieRequest",
+                      + " Possible values: ace dice ice notify pie",
                   discriminatorValue));
       }
 
@@ -403,11 +382,6 @@ public class WebhooksEventInternalImpl extends AbstractOpenApiSchema
     mappings.put("ice", IncomingCallEventImpl.class);
     mappings.put("notify", NotificationEventImpl.class);
     mappings.put("pie", PromptInputEventImpl.class);
-    mappings.put("aceRequest", AnsweredCallEventImpl.class);
-    mappings.put("diceRequest", DisconnectedCallEventImpl.class);
-    mappings.put("iceRequest", IncomingCallEventImpl.class);
-    mappings.put("notifyRequest", NotificationEventImpl.class);
-    mappings.put("pieRequest", PromptInputEventImpl.class);
     mappings.put("webhooksEvent", WebhooksEventInternalImpl.class);
     JSONNavigator.registerDiscriminator(WebhooksEventInternalImpl.class, "event", mappings);
   }

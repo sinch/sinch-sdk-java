@@ -88,25 +88,12 @@ public class BatchResponseInternalImpl extends AbstractOpenApiSchema
           deserialized = tree.traverse(jp.getCodec()).readValueAs(TextResponseImpl.class);
           newBatchResponseInternalImpl.setActualInstance(deserialized);
           return newBatchResponseInternalImpl;
-        case "BinaryResponse":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(BinaryResponseImpl.class);
-          newBatchResponseInternalImpl.setActualInstance(deserialized);
-          return newBatchResponseInternalImpl;
-        case "MediaResponse":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(MediaResponseImpl.class);
-          newBatchResponseInternalImpl.setActualInstance(deserialized);
-          return newBatchResponseInternalImpl;
-        case "TextResponse":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(TextResponseImpl.class);
-          newBatchResponseInternalImpl.setActualInstance(deserialized);
-          return newBatchResponseInternalImpl;
         default:
           log.log(
               Level.WARNING,
               String.format(
                   "Failed to lookup discriminator value `%s` for BatchResponseInternalImpl."
-                      + " Possible values: mt_binary mt_media mt_text BinaryResponse MediaResponse"
-                      + " TextResponse",
+                      + " Possible values: mt_binary mt_media mt_text",
                   discriminatorValue));
       }
 
@@ -286,9 +273,6 @@ public class BatchResponseInternalImpl extends AbstractOpenApiSchema
     mappings.put("mt_binary", BinaryResponseImpl.class);
     mappings.put("mt_media", MediaResponseImpl.class);
     mappings.put("mt_text", TextResponseImpl.class);
-    mappings.put("BinaryResponse", BinaryResponseImpl.class);
-    mappings.put("MediaResponse", MediaResponseImpl.class);
-    mappings.put("TextResponse", TextResponseImpl.class);
     mappings.put("Batch", BatchResponseInternalImpl.class);
     JSONNavigator.registerDiscriminator(BatchResponseInternalImpl.class, "type", mappings);
   }

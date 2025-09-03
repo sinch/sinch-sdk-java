@@ -45,7 +45,7 @@ public interface SendMimeEmailRequest {
 
   /**
    * Name of a template stored via template API to use to render the email body. See <a
-   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages#templates">Templates</a>
+   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/send-templates">Templates</a>
    * for more information
    *
    * @return template

@@ -143,21 +143,18 @@ public class VerificationRequestEventResponseSmsContentImpl
             this.acceptLanguage, verificationRequestEventResponseSmsAllOfSms.acceptLanguage)
         && Objects.equals(
             this.additionalProperties,
-            verificationRequestEventResponseSmsAllOfSms.additionalProperties)
-        && super.equals(o);
+            verificationRequestEventResponseSmsAllOfSms.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(
-        code, codeType, expiry, acceptLanguage, super.hashCode(), additionalProperties);
+    return Objects.hash(code, codeType, expiry, acceptLanguage, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class VerificationRequestEventResponseSmsContentImpl {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    codeType: ").append(toIndentedString(codeType)).append("\n");
     sb.append("    expiry: ").append(toIndentedString(expiry)).append("\n");

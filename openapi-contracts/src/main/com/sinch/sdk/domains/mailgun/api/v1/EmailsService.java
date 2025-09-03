@@ -47,10 +47,11 @@ public interface EmailsService {
   /**
    * Send an email
    *
-   * <p>Pass the components of the messages such as To, From, Subject, HTML and text parts,
-   * attachments, etc. Mailgun will build a MIME representation of the message and send it. Note: In
-   * order to send you must provide one of the following parameters: &#39;text&#39;, &#39;html&#39;,
-   * &#39;amp-html&#39; or &#39;template&#39;
+   * <p>Pass the components of the messages such as To, From, Subject, HTML, text parts,
+   * attachments, etc. Mailgun will build a MIME representation of the message and send it. In order
+   * to send you must provide one of the following parameters: &#39;text&#39;, &#39;html&#39;,
+   * &#39;amp-html&#39; or &#39;template&#39;. Important: Send options (parameters starting with o:,
+   * h:, v:, or t:) are limited to 16KB total
    *
    * @param domainName Domain name used to send the message (required)
    * @param requestParameters Request parameters
@@ -63,8 +64,8 @@ public interface EmailsService {
   /**
    * Send an email in MIME format
    *
-   * <p>Build a MIME string yourself using a MIME library for your programming language and submit
-   * it to Mailgun.
+   * <p>Build a MIME string yourself using a MIME library and submit it to Mailgun. Important: Send
+   * options (parameters starting with o:, h:, v:, or t:) are limited to 16KB total
    *
    * @param domainName Domain name used to send the message (required)
    * @param requestParameters Request parameters

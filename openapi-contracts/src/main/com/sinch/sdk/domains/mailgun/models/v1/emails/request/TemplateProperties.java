@@ -39,7 +39,7 @@ public interface TemplateProperties {
 
   /**
    * A valid JSON-encoded dictionary used as the input for template variable expansion. See <a
-   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/#templates">Templates</a>
+   * href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/send-templates">Templates</a>
    * for more information
    *
    * @return variables

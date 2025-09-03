@@ -147,26 +147,19 @@ public class VerificationStartResponseFlashCallContentImpl
             this.denyCallAfter, verificationStartResponseFlashCallAllOfFlashCall.denyCallAfter)
         && Objects.equals(
             this.additionalProperties,
-            verificationStartResponseFlashCallAllOfFlashCall.additionalProperties)
-        && super.equals(o);
+            verificationStartResponseFlashCallAllOfFlashCall.additionalProperties);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(
-        cliFilter,
-        interceptionTimeout,
-        reportTimeout,
-        denyCallAfter,
-        super.hashCode(),
-        additionalProperties);
+        cliFilter, interceptionTimeout, reportTimeout, denyCallAfter, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class VerificationStartResponseFlashCallContentImpl {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    cliFilter: ").append(toIndentedString(cliFilter)).append("\n");
     sb.append("    interceptionTimeout: ")
         .append(toIndentedString(interceptionTimeout))

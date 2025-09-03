@@ -136,21 +136,18 @@ public class VerificationStartSmsOptionsImpl implements VerificationStartSmsOpti
             this.acceptLanguage, verificationStartRequestSmsAllOfSmsOptions.acceptLanguage)
         && Objects.equals(
             this.additionalProperties,
-            verificationStartRequestSmsAllOfSmsOptions.additionalProperties)
-        && super.equals(o);
+            verificationStartRequestSmsAllOfSmsOptions.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(
-        codeType, expiry, template, acceptLanguage, super.hashCode(), additionalProperties);
+    return Objects.hash(codeType, expiry, template, acceptLanguage, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class VerificationStartSmsOptionsImpl {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    codeType: ").append(toIndentedString(codeType)).append("\n");
     sb.append("    expiry: ").append(toIndentedString(expiry)).append("\n");
     sb.append("    template: ").append(toIndentedString(template)).append("\n");

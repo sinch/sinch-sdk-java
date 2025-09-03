@@ -12,10 +12,7 @@ package com.sinch.sdk.domains.conversation.models.v1.app;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/**
- * This object is required for apps that subscribe to Smart Conversations features. Note that this
- * functionality is available for open beta testing.
- */
+/** This object is required for apps that subscribe to Smart Conversations features. */
 @JsonDeserialize(builder = SmartConversationImpl.Builder.class)
 public interface SmartConversation {
 

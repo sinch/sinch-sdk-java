@@ -128,21 +128,18 @@ public class VerificationRequestEventResponseFlashCallContentImpl
             verificationRequestEventResponseFlashCallAllOfFlashCall.interceptionTimeout)
         && Objects.equals(
             this.additionalProperties,
-            verificationRequestEventResponseFlashCallAllOfFlashCall.additionalProperties)
-        && super.equals(o);
+            verificationRequestEventResponseFlashCallAllOfFlashCall.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(
-        cli, dialTimeout, interceptionTimeout, super.hashCode(), additionalProperties);
+    return Objects.hash(cli, dialTimeout, interceptionTimeout, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class VerificationRequestEventResponseFlashCallContentImpl {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    cli: ").append(toIndentedString(cli)).append("\n");
     sb.append("    dialTimeout: ").append(toIndentedString(dialTimeout)).append("\n");
     sb.append("    interceptionTimeout: ")

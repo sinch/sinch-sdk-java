@@ -89,24 +89,13 @@ public class RecipientDeliveryReportOneOfImpl extends AbstractOpenApiSchema
               tree.traverse(jp.getCodec()).readValueAs(RecipientDeliveryReportSMSImpl.class);
           newRecipientDeliveryReportOneOfImpl.setActualInstance(deserialized);
           return newRecipientDeliveryReportOneOfImpl;
-        case "RecipientDeliveryReportMMS":
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(RecipientDeliveryReportMMSImpl.class);
-          newRecipientDeliveryReportOneOfImpl.setActualInstance(deserialized);
-          return newRecipientDeliveryReportOneOfImpl;
-        case "RecipientDeliveryReportSMS":
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(RecipientDeliveryReportSMSImpl.class);
-          newRecipientDeliveryReportOneOfImpl.setActualInstance(deserialized);
-          return newRecipientDeliveryReportOneOfImpl;
         default:
           log.log(
               Level.WARNING,
               String.format(
                   "Failed to lookup discriminator value `%s` for RecipientDeliveryReportOneOfImpl."
                       + " Possible values: recipient_delivery_report_mms"
-                      + " recipient_delivery_report_sms RecipientDeliveryReportMMS"
-                      + " RecipientDeliveryReportSMS",
+                      + " recipient_delivery_report_sms",
                   discriminatorValue));
       }
 
@@ -246,8 +235,6 @@ public class RecipientDeliveryReportOneOfImpl extends AbstractOpenApiSchema
     Map<String, Class<?>> mappings = new HashMap<String, Class<?>>();
     mappings.put("recipient_delivery_report_mms", RecipientDeliveryReportMMSImpl.class);
     mappings.put("recipient_delivery_report_sms", RecipientDeliveryReportSMSImpl.class);
-    mappings.put("RecipientDeliveryReportMMS", RecipientDeliveryReportMMSImpl.class);
-    mappings.put("RecipientDeliveryReportSMS", RecipientDeliveryReportSMSImpl.class);
     mappings.put("RecipientDeliveryReportOneOf", RecipientDeliveryReportOneOfImpl.class);
     JSONNavigator.registerDiscriminator(RecipientDeliveryReportOneOfImpl.class, "type", mappings);
   }

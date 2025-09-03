@@ -107,20 +107,18 @@ public class VerificationRequestEventResponsePhoneCallContentImpl
         && Objects.equals(this.speech, verificationRequestEventResponsePhoneCallAllOfCallout.speech)
         && Objects.equals(
             this.additionalProperties,
-            verificationRequestEventResponsePhoneCallAllOfCallout.additionalProperties)
-        && super.equals(o);
+            verificationRequestEventResponsePhoneCallAllOfCallout.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, speech, super.hashCode(), additionalProperties);
+    return Objects.hash(code, speech, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class VerificationRequestEventResponsePhoneCallContentImpl {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    speech: ").append(toIndentedString(speech)).append("\n");
     sb.append("    additionalProperties: ")

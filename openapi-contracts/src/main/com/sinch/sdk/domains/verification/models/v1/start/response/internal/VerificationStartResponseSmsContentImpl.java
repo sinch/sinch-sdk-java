@@ -122,21 +122,18 @@ public class VerificationStartResponseSmsContentImpl
             this.interceptionTimeout, verificationStartResponseSmsAllOfSms.interceptionTimeout)
         && Objects.equals(this.codeType, verificationStartResponseSmsAllOfSms.codeType)
         && Objects.equals(
-            this.additionalProperties, verificationStartResponseSmsAllOfSms.additionalProperties)
-        && super.equals(o);
+            this.additionalProperties, verificationStartResponseSmsAllOfSms.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(
-        template, interceptionTimeout, codeType, super.hashCode(), additionalProperties);
+    return Objects.hash(template, interceptionTimeout, codeType, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class VerificationStartResponseSmsContentImpl {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    template: ").append(toIndentedString(template)).append("\n");
     sb.append("    interceptionTimeout: ")
         .append(toIndentedString(interceptionTimeout))
