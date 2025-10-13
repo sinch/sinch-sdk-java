@@ -9,7 +9,6 @@ import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.models.ServerConfiguration;
-
 import java.lang.reflect.Field;
 import java.util.*;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -36,17 +35,15 @@ class HttpClientApacheTest {
   @Test
   void testInvokeApiHandles401WithEmptyHeaders() throws Exception {
     // GIVEN: a simulated 401 response with empty headers
-    HttpResponse unauthorizedResponse = new HttpResponse(
-        401,
-        "Unauthorized",
-        Collections.emptyMap(), // Empty headers
-        null
-    );
+    HttpResponse unauthorizedResponse =
+        new HttpResponse(
+            401,
+            "Unauthorized",
+            Collections.emptyMap(), // Empty headers
+            null);
 
     // Spy on processRequest() to return the mocked 401 response
-    doReturn(unauthorizedResponse)
-        .when(client)
-        .processRequest(any(), any());
+    doReturn(unauthorizedResponse).when(client).processRequest(any(), any());
 
     // Mock ServerConfiguration and HttpRequest
     ServerConfiguration serverConfig = mock(ServerConfiguration.class);

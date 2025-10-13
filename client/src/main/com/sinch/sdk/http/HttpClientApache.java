@@ -200,7 +200,8 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
     Map<String, List<String>> responseHeaders = response.getHeaders();
     Collection<String> header = responseHeaders.get(BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD);
 
-    boolean headerPresent = header != null && header.stream().anyMatch(e -> e.contains(BEARER_EXPIRED_KEYWORD));
+    boolean headerPresent =
+        header != null && header.stream().anyMatch(e -> e.contains(BEARER_EXPIRED_KEYWORD));
     if (headerPresent) {
       bearerAuthManager.resetToken();
     }
