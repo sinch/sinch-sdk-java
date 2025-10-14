@@ -39,6 +39,7 @@ jobs:
           repository: sinch/sinch-sdk-mockserver
           token: ${{ secrets.MOCKSERVER_REPO_PAT_CI }}
           fetch-depth: 0
+          ref: d4c80559c92409ea2c712268890655a81e767c26
           path: sinch-sdk-mockserver
 
       - name: Install Docker Compose
@@ -54,6 +55,6 @@ jobs:
       - name: Link to feature files
         run: |
           ln -s ${{ github.workspace }}/sinch-sdk-mockserver/features client/src/test/resources
-          
+
       - name: Run e2e tests
         run: mvn -B -DskipUTs -Dspotless.check.skip=true verify --file pom.xml
