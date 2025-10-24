@@ -20,6 +20,7 @@ public class SvamlActionConnectStreamTest extends BaseTest {
           .setCallHeaders(
               Collections.singletonList(
                   CallHeader.builder().setKey("left string").setValue("right string").build()))
+          .setStreamingOptions(ConnectStreamStreamingOptionsTest.streamingOptions)
           .build();
 
   @GivenTextResource("/domains/voice/v1/svaml/action/SvamlActionConnectStreamDto.json")
