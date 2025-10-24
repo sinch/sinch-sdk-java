@@ -50,6 +50,13 @@ public class BatchesSteps {
     service = Config.getSinchClient().sms().v1().batches();
   }
 
+  @Given(
+      "the SMS service \"Batches\" is available and is configured for servicePlanId authentication")
+  public void servicePlanIdSAvailable() {
+
+    service = Config.getSinchClientServicePlanId().sms().v1().batches();
+  }
+
   @When("^I send a request to send a text message$")
   public void send() {
     TextRequest request =

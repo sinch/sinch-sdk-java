@@ -6,6 +6,7 @@ import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.ConversationRegion;
 import com.sinch.sdk.models.MailgunContext;
 import com.sinch.sdk.models.NumbersContext;
+import com.sinch.sdk.models.SMSRegion;
 import com.sinch.sdk.models.SmsContext;
 import com.sinch.sdk.models.VerificationContext;
 import com.sinch.sdk.models.VoiceContext;
@@ -36,6 +37,7 @@ public class Config {
   public static final String VERIFICATION_HOST_NAME = "http://localhost:3018";
 
   private final SinchClient client;
+  private final SinchClient clientServicePlanId;
 
   private Config() {
 
@@ -63,12 +65,23 @@ public class Config {
                 MailgunContext.builder().setStorageUrls(Arrays.asList(MAILGUN_STORAGE)).build())
             .setMailgunApiKey(MAILGUN_API_KEY)
             .setMailgunUrl(MAILGUN_HOST_NAME)
-            .setSmsContext(SmsContext.builder().setSmsUrl(SMS_HOST_NAME).build())
+            .setSmsContext(
+                SmsContext.builder().setSmsUrl(SMS_HOST_NAME).setSmsRegion(SMSRegion.EU).build())
             .setVerificationContext(
                 VerificationContext.builder().setVerificationUrl(VERIFICATION_HOST_NAME).build())
             .build();
 
     client = new SinchClient(configuration);
+
+    Configuration configurationServicePlanId =
+        Configuration.builder()
+            .setSmsServicePlanId("CappyPremiumPlan")
+            .setSmsApiToken("HappyCappyToken")
+            .setSmsContext(
+                SmsContext.builder().setSmsUrl(SMS_HOST_NAME).setSmsRegion(SMSRegion.EU).build())
+            .build();
+
+    clientServicePlanId = new SinchClient(configurationServicePlanId);
   }
 
   private static class LazyHolder {
@@ -77,5 +90,9 @@ public class Config {
 
   public static SinchClient getSinchClient() {
     return LazyHolder.INSTANCE.client;
+  }
+
+  public static SinchClient getSinchClientServicePlanId() {
+    return LazyHolder.INSTANCE.clientServicePlanId;
   }
 }
