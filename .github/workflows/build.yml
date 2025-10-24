@@ -39,7 +39,6 @@ jobs:
           repository: sinch/sinch-sdk-mockserver
           token: ${{ secrets.MOCKSERVER_REPO_PAT_CI }}
           fetch-depth: 0
-          ref: 57b6c306152628b2d834241ec495e868ac696148
           path: sinch-sdk-mockserver
 
       - name: Install Docker Compose
