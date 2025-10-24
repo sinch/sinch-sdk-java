@@ -14,6 +14,7 @@ import java.util.Objects;
 @JsonPropertyOrder({
   SvamlActionConnectStreamImpl.JSON_PROPERTY_NAME,
   SvamlActionConnectStreamImpl.JSON_PROPERTY_DESTINATION,
+  SvamlActionConnectStreamImpl.JSON_PROPERTY_STREAMING_OPTIONS,
   SvamlActionConnectStreamImpl.JSON_PROPERTY_MAX_DURATION,
   SvamlActionConnectStreamImpl.JSON_PROPERTY_CALL_HEADERS
 })
@@ -32,6 +33,10 @@ public class SvamlActionConnectStreamImpl
 
   private OptionalValue<DestinationWebSocket> destination;
 
+  public static final String JSON_PROPERTY_STREAMING_OPTIONS = "streamingOptions";
+
+  private OptionalValue<ConnectStreamStreamingOptions> streamingOptions;
+
   public static final String JSON_PROPERTY_MAX_DURATION = "maxDuration";
 
   private OptionalValue<Integer> maxDuration;
@@ -45,10 +50,12 @@ public class SvamlActionConnectStreamImpl
   protected SvamlActionConnectStreamImpl(
       OptionalValue<NameEnum> name,
       OptionalValue<DestinationWebSocket> destination,
+      OptionalValue<ConnectStreamStreamingOptions> streamingOptions,
       OptionalValue<Integer> maxDuration,
       OptionalValue<List<CallHeader>> callHeaders) {
     this.name = name;
     this.destination = destination;
+    this.streamingOptions = streamingOptions;
     this.maxDuration = maxDuration;
     this.callHeaders = callHeaders;
   }
@@ -73,6 +80,17 @@ public class SvamlActionConnectStreamImpl
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<DestinationWebSocket> destination() {
     return destination;
+  }
+
+  @JsonIgnore
+  public ConnectStreamStreamingOptions getStreamingOptions() {
+    return streamingOptions.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_STREAMING_OPTIONS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<ConnectStreamStreamingOptions> streamingOptions() {
+    return streamingOptions;
   }
 
   @JsonIgnore
@@ -109,13 +127,14 @@ public class SvamlActionConnectStreamImpl
     SvamlActionConnectStreamImpl svamlActionConnectStream = (SvamlActionConnectStreamImpl) o;
     return Objects.equals(this.name, svamlActionConnectStream.name)
         && Objects.equals(this.destination, svamlActionConnectStream.destination)
+        && Objects.equals(this.streamingOptions, svamlActionConnectStream.streamingOptions)
         && Objects.equals(this.maxDuration, svamlActionConnectStream.maxDuration)
         && Objects.equals(this.callHeaders, svamlActionConnectStream.callHeaders);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, destination, maxDuration, callHeaders);
+    return Objects.hash(name, destination, streamingOptions, maxDuration, callHeaders);
   }
 
   @Override
@@ -124,6 +143,7 @@ public class SvamlActionConnectStreamImpl
     sb.append("class SvamlActionConnectStreamImpl {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    destination: ").append(toIndentedString(destination)).append("\n");
+    sb.append("    streamingOptions: ").append(toIndentedString(streamingOptions)).append("\n");
     sb.append("    maxDuration: ").append(toIndentedString(maxDuration)).append("\n");
     sb.append("    callHeaders: ").append(toIndentedString(callHeaders)).append("\n");
     sb.append("}");
@@ -144,12 +164,19 @@ public class SvamlActionConnectStreamImpl
   static class Builder implements SvamlActionConnectStream.Builder {
     OptionalValue<NameEnum> name = OptionalValue.of(NameEnum.CONNECT_STREAM);
     OptionalValue<DestinationWebSocket> destination = OptionalValue.empty();
+    OptionalValue<ConnectStreamStreamingOptions> streamingOptions = OptionalValue.empty();
     OptionalValue<Integer> maxDuration = OptionalValue.empty();
     OptionalValue<List<CallHeader>> callHeaders = OptionalValue.empty();
 
     @JsonProperty(value = JSON_PROPERTY_DESTINATION, required = true)
     public Builder setDestination(DestinationWebSocket destination) {
       this.destination = OptionalValue.of(destination);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_STREAMING_OPTIONS)
+    public Builder setStreamingOptions(ConnectStreamStreamingOptions streamingOptions) {
+      this.streamingOptions = OptionalValue.of(streamingOptions);
       return this;
     }
 
@@ -166,7 +193,8 @@ public class SvamlActionConnectStreamImpl
     }
 
     public SvamlActionConnectStream build() {
-      return new SvamlActionConnectStreamImpl(name, destination, maxDuration, callHeaders);
+      return new SvamlActionConnectStreamImpl(
+          name, destination, streamingOptions, maxDuration, callHeaders);
     }
   }
 }

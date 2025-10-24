@@ -61,6 +61,13 @@ public interface SvamlActionConnectStream
   DestinationWebSocket getDestination();
 
   /**
+   * Get streamingOptions
+   *
+   * @return streamingOptions
+   */
+  ConnectStreamStreamingOptions getStreamingOptions();
+
+  /**
    * The max duration of the call in seconds (max 14400 seconds). If the call is still connected at
    * that time, it will be automatically disconnected.
    *
@@ -96,6 +103,15 @@ public interface SvamlActionConnectStream
      * @see #getDestination
      */
     Builder setDestination(DestinationWebSocket destination);
+
+    /**
+     * see getter
+     *
+     * @param streamingOptions see getter
+     * @return Current builder
+     * @see #getStreamingOptions
+     */
+    Builder setStreamingOptions(ConnectStreamStreamingOptions streamingOptions);
 
     /**
      * see getter
