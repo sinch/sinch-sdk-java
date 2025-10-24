@@ -41,6 +41,14 @@ public class DeliveryReportsSteps {
     service = Config.getSinchClient().sms().v1().deliveryReports();
   }
 
+  @Given(
+      "the SMS service \"Delivery Reports\" is available and is configured for servicePlanId"
+          + " authentication")
+  public void servicePlanIdSAvailable() {
+
+    service = Config.getSinchClientServicePlanId().sms().v1().deliveryReports();
+  }
+
   @When("^I send a request to retrieve a summary SMS delivery report$")
   public void getSummary() {
     BatchDeliveryReportQueryParameters request =

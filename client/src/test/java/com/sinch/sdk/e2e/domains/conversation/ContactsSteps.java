@@ -129,6 +129,24 @@ public class ContactsSteps {
                 .build());
   }
 
+  @When("^I send a request to list the existing identity conflicts$")
+  public void listIdentityConflicts() {
+
+    // TODO: implement when the API is available
+  }
+
+  @When("^I send a request to list all the identity conflicts$")
+  public void listAllIdentityConflicts() {
+
+    // TODO: implement when the API is available
+  }
+
+  @When("^I iterate manually over the identity conflicts pages$")
+  public void listAllIdentityConflictsPageIterate() {
+
+    // TODO: implement when the API is available
+  }
+
   @Then("the contact is created")
   public void createResult() {
     Assertions.assertEquals(createResponse.getId(), CONTACT_ID);
@@ -224,6 +242,24 @@ public class ContactsSteps {
   @Then("the response contains the profile of the contact on the requested channel")
   public void channelProfileByContactIdResult() {
     Assertions.assertEquals(channelProfileByContactIdResponse, "Marty McFly FB");
+  }
+
+  @Then("the response contains \"{int}\" identity conflicts")
+  public void listIdentityConflictsResults(int count) {
+
+    // TODO: implement when the API is available
+  }
+
+  @Then("the identity conflicts list contains \"{int}\" identity conflicts")
+  public void listAllIdentityConflictsResults(int count) {
+
+    // TODO: implement when the API is available
+  }
+
+  @Then("the identity conflicts iteration result contains the data from \"{int}\" pages")
+  public void listAllIdentityConflictsPageIterateResults(int count) {
+
+    // TODO: implement when the API is available
   }
 
   void checkExpectedContactResponseCommonFields(Contact contactResponse) {

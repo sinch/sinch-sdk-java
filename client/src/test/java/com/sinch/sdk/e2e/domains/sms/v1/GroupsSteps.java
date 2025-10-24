@@ -40,6 +40,13 @@ public class GroupsSteps {
     service = Config.getSinchClient().sms().v1().groups();
   }
 
+  @Given(
+      "the SMS service \"Groups\" is available and is configured for servicePlanId authentication")
+  public void servicePlanIdSAvailable() {
+
+    service = Config.getSinchClientServicePlanId().sms().v1().groups();
+  }
+
   @When("^I send a request to create an SMS group$")
   public void create() {
     GroupRequest request =
