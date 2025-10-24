@@ -54,6 +54,6 @@ jobs:
       - name: Link to feature files
         run: |
           ln -s ${{ github.workspace }}/sinch-sdk-mockserver/features client/src/test/resources
-          
+
       - name: Run e2e tests
         run: mvn -B -DskipUTs -Dspotless.check.skip=true verify --file pom.xml
