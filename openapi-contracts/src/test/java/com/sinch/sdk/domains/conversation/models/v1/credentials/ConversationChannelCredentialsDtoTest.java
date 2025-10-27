@@ -461,33 +461,6 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
           .build();
 
   @GivenTextResource(
-      "/domains/conversation/v1/credentials/ConversationChannelSinchChatRequestDto.json")
-  String jsonConversationChannelSinchChatRequestDto;
-
-  @GivenJsonResource(
-      "/domains/conversation/v1/credentials/ConversationChannelSinchChatResponseDto.json")
-  ConversationChannelCredentials loadedConversationChannelSinchChatDto;
-
-  public static ConversationChannelCredentials conversationChannelSinchChatResponseDto =
-      ConversationChannelCredentials.builder()
-          .setChannel(ConversationChannel.SINCH_CHAT)
-          .setCallbackSecret("callback secret")
-          .setChannelKnownId("channel id")
-          .setState(
-              ChannelIntegrationState.builder()
-                  .setStatus(ChannelIntegrationStatus.PENDING)
-                  .setDescription("description value")
-                  .build())
-          .setCredentialOrdinalNumber(0)
-          .build();
-  public static ConversationChannelCredentials conversationChannelSinchChatRequestDto =
-      ConversationChannelCredentials.builder()
-          .setChannel(ConversationChannel.SINCH_CHAT)
-          .setCallbackSecret("callback secret")
-          .setCredentialOrdinalNumber(0)
-          .build();
-
-  @GivenTextResource(
       "/domains/conversation/v1/credentials/ConversationChannelViberBmRequestDto.json")
   String jsonConversationChannelViberBmRequestDto;
 
@@ -770,20 +743,6 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
   void deserializeConversationChannelTelegramDto() {
     TestHelpers.recursiveEquals(
         loadedConversationChannelTelegramDto, conversationChannelTelegramResponseDto);
-  }
-
-  @Test
-  void serializeConversationChannelSinchChatDto() throws JsonProcessingException, JSONException {
-    String serializedString =
-        objectMapper.writeValueAsString(conversationChannelSinchChatRequestDto);
-
-    JSONAssert.assertEquals(jsonConversationChannelSinchChatRequestDto, serializedString, true);
-  }
-
-  @Test
-  void deserializeConversationChannelSinchChatDto() {
-    TestHelpers.recursiveEquals(
-        loadedConversationChannelSinchChatDto, conversationChannelSinchChatResponseDto);
   }
 
   @Test

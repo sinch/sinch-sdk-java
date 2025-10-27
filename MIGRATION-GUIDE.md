@@ -8,6 +8,8 @@ This guide lists all removed classes and interfaces from V1 and how to migrate t
 
 ### [`Conversation`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/package-summary.html)
 
+- Removed support of `SINCH_CHAT` channel.
+
 #### Replacement models
 | Old class                                        | New class                                                                                                                                                                                                                           |
 |--------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
