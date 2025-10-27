@@ -5,100 +5,116 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.payment.internal.WhatsAppPaymentSettingsPixDynamicPix;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.payment.internal.WhatsAppPaymentSettingsPixDynamicPixImpl;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
-@JsonPropertyOrder({
-  OrderDetailsPaymentSettingsDynamicPixImpl.JSON_PROPERTY_CODE,
-  OrderDetailsPaymentSettingsDynamicPixImpl.JSON_PROPERTY_MERCHANT_NAME,
-  OrderDetailsPaymentSettingsDynamicPixImpl.JSON_PROPERTY_KEY,
-  OrderDetailsPaymentSettingsDynamicPixImpl.JSON_PROPERTY_KEY_TYPE
-})
+@JsonPropertyOrder({OrderDetailsPaymentSettingsDynamicPixImpl.JSON_PROPERTY_DYNAMIC_PIX})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class OrderDetailsPaymentSettingsDynamicPixImpl
-    implements OrderDetailsPaymentSettingsDynamicPix {
+    implements OrderDetailsPaymentSettingsDynamicPix,
+        com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.payment
+            .OrderDetailsSettings {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_CODE = "code";
+  public static final String JSON_PROPERTY_DYNAMIC_PIX = "dynamic_pix";
 
-  private OptionalValue<String> code;
-
-  public static final String JSON_PROPERTY_MERCHANT_NAME = "merchant_name";
-
-  private OptionalValue<String> merchantName;
-
-  public static final String JSON_PROPERTY_KEY = "key";
-
-  private OptionalValue<String> key;
-
-  public static final String JSON_PROPERTY_KEY_TYPE = "key_type";
-
-  private OptionalValue<KeyTypeEnum> keyType;
+  private OptionalValue<WhatsAppPaymentSettingsPixDynamicPix> dynamicPix;
 
   public OrderDetailsPaymentSettingsDynamicPixImpl() {}
 
   protected OrderDetailsPaymentSettingsDynamicPixImpl(
-      OptionalValue<String> code,
-      OptionalValue<String> merchantName,
-      OptionalValue<String> key,
-      OptionalValue<KeyTypeEnum> keyType) {
-    this.code = code;
-    this.merchantName = merchantName;
-    this.key = key;
-    this.keyType = keyType;
+      OptionalValue<WhatsAppPaymentSettingsPixDynamicPix> dynamicPix) {
+    this.dynamicPix = dynamicPix;
+  }
+
+  @JsonIgnore
+  public WhatsAppPaymentSettingsPixDynamicPix getDynamicPix() {
+    return dynamicPix.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_DYNAMIC_PIX)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<WhatsAppPaymentSettingsPixDynamicPix> dynamicPix() {
+    return dynamicPix;
   }
 
   @JsonIgnore
   public String getCode() {
-    return code.orElse(null);
+    if (null == dynamicPix || !dynamicPix.isPresent() || null == dynamicPix.get().getCode()) {
+      return null;
+    }
+    return dynamicPix.get().getCode();
   }
 
-  @JsonProperty(JSON_PROPERTY_CODE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<String> code() {
-    return code;
+    return null != dynamicPix && dynamicPix.isPresent()
+        ? dynamicPix
+            .map(f -> ((WhatsAppPaymentSettingsPixDynamicPixImpl) f).code())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public String getMerchantName() {
-    return merchantName.orElse(null);
+    if (null == dynamicPix
+        || !dynamicPix.isPresent()
+        || null == dynamicPix.get().getMerchantName()) {
+      return null;
+    }
+    return dynamicPix.get().getMerchantName();
   }
 
-  @JsonProperty(JSON_PROPERTY_MERCHANT_NAME)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<String> merchantName() {
-    return merchantName;
+    return null != dynamicPix && dynamicPix.isPresent()
+        ? dynamicPix
+            .map(f -> ((WhatsAppPaymentSettingsPixDynamicPixImpl) f).merchantName())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public String getKey() {
-    return key.orElse(null);
+    if (null == dynamicPix || !dynamicPix.isPresent() || null == dynamicPix.get().getKey()) {
+      return null;
+    }
+    return dynamicPix.get().getKey();
   }
 
-  @JsonProperty(JSON_PROPERTY_KEY)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<String> key() {
-    return key;
+    return null != dynamicPix && dynamicPix.isPresent()
+        ? dynamicPix
+            .map(f -> ((WhatsAppPaymentSettingsPixDynamicPixImpl) f).key())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
   }
 
   @JsonIgnore
   public KeyTypeEnum getKeyType() {
-    return keyType.orElse(null);
+    if (null == dynamicPix || !dynamicPix.isPresent() || null == dynamicPix.get().getKeyType()) {
+      return null;
+    }
+    return KeyTypeEnum.from(dynamicPix.get().getKeyType().value());
   }
 
-  @JsonProperty(JSON_PROPERTY_KEY_TYPE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<KeyTypeEnum> keyType() {
-    return keyType;
+    return null != dynamicPix && dynamicPix.isPresent()
+        ? dynamicPix.map(f -> KeyTypeEnum.from(dynamicPix.get().getKeyType().value()))
+        : OptionalValue.empty();
   }
 
-  /**
-   * Return true if this
-   * Payment_Order_Details_channel_specific_message__payment_payment_settings_dynamic_pix object is
-   * equal to o.
-   */
+  /** Return true if this WhatsAppPaymentSettingsPix object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -107,35 +123,21 @@ public class OrderDetailsPaymentSettingsDynamicPixImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    OrderDetailsPaymentSettingsDynamicPixImpl
-        paymentOrderDetailsChannelSpecificMessagePaymentPaymentSettingsDynamicPix =
-            (OrderDetailsPaymentSettingsDynamicPixImpl) o;
-    return Objects.equals(
-            this.code,
-            paymentOrderDetailsChannelSpecificMessagePaymentPaymentSettingsDynamicPix.code)
-        && Objects.equals(
-            this.merchantName,
-            paymentOrderDetailsChannelSpecificMessagePaymentPaymentSettingsDynamicPix.merchantName)
-        && Objects.equals(
-            this.key, paymentOrderDetailsChannelSpecificMessagePaymentPaymentSettingsDynamicPix.key)
-        && Objects.equals(
-            this.keyType,
-            paymentOrderDetailsChannelSpecificMessagePaymentPaymentSettingsDynamicPix.keyType);
+    OrderDetailsPaymentSettingsDynamicPixImpl whatsAppPaymentSettingsPix =
+        (OrderDetailsPaymentSettingsDynamicPixImpl) o;
+    return Objects.equals(this.dynamicPix, whatsAppPaymentSettingsPix.dynamicPix);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, merchantName, key, keyType);
+    return Objects.hash(dynamicPix);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class OrderDetailsPaymentSettingsDynamicPixImpl {\n");
-    sb.append("    code: ").append(toIndentedString(code)).append("\n");
-    sb.append("    merchantName: ").append(toIndentedString(merchantName)).append("\n");
-    sb.append("    key: ").append(toIndentedString(key)).append("\n");
-    sb.append("    keyType: ").append(toIndentedString(keyType)).append("\n");
+    sb.append("    dynamicPix: ").append(toIndentedString(dynamicPix)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -152,37 +154,98 @@ public class OrderDetailsPaymentSettingsDynamicPixImpl
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements OrderDetailsPaymentSettingsDynamicPix.Builder {
-    OptionalValue<String> code = OptionalValue.empty();
-    OptionalValue<String> merchantName = OptionalValue.empty();
-    OptionalValue<String> key = OptionalValue.empty();
-    OptionalValue<KeyTypeEnum> keyType = OptionalValue.empty();
+    OptionalValue<WhatsAppPaymentSettingsPixDynamicPix> dynamicPix = OptionalValue.empty();
 
-    @JsonProperty(value = JSON_PROPERTY_CODE, required = true)
+    WhatsAppPaymentSettingsPixDynamicPix.Builder _delegatedBuilder = null;
+
+    @JsonProperty(value = JSON_PROPERTY_DYNAMIC_PIX, required = true)
+    public Builder setDynamicPix(WhatsAppPaymentSettingsPixDynamicPix dynamicPix) {
+      this.dynamicPix = OptionalValue.of(dynamicPix);
+      return this;
+    }
+
+    @JsonIgnore
     public Builder setCode(String code) {
-      this.code = OptionalValue.of(code);
+      getDelegatedBuilder().setCode(code);
       return this;
     }
 
-    @JsonProperty(value = JSON_PROPERTY_MERCHANT_NAME, required = true)
+    @JsonIgnore
     public Builder setMerchantName(String merchantName) {
-      this.merchantName = OptionalValue.of(merchantName);
+      getDelegatedBuilder().setMerchantName(merchantName);
       return this;
     }
 
-    @JsonProperty(value = JSON_PROPERTY_KEY, required = true)
+    @JsonIgnore
     public Builder setKey(String key) {
-      this.key = OptionalValue.of(key);
+      getDelegatedBuilder().setKey(key);
       return this;
     }
 
-    @JsonProperty(value = JSON_PROPERTY_KEY_TYPE, required = true)
+    @JsonIgnore
     public Builder setKeyType(KeyTypeEnum keyType) {
-      this.keyType = OptionalValue.of(keyType);
+      getDelegatedBuilder()
+          .setKeyType(
+              null != keyType
+                  ? WhatsAppPaymentSettingsPixDynamicPixImpl.KeyTypeEnum.from(keyType.value())
+                  : null);
       return this;
+    }
+
+    private WhatsAppPaymentSettingsPixDynamicPix.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = WhatsAppPaymentSettingsPixDynamicPix.builder();
+      }
+      return this._delegatedBuilder;
     }
 
     public OrderDetailsPaymentSettingsDynamicPix build() {
-      return new OrderDetailsPaymentSettingsDynamicPixImpl(code, merchantName, key, keyType);
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.dynamicPix = OptionalValue.of(this._delegatedBuilder.build());
+      }
+      return new OrderDetailsPaymentSettingsDynamicPixImpl(dynamicPix);
     }
+  }
+
+  public static class DelegatedSerializer
+      extends JsonSerializer<OptionalValue<OrderDetailsPaymentSettingsDynamicPix>> {
+    @Override
+    public void serialize(
+        OptionalValue<OrderDetailsPaymentSettingsDynamicPix> value,
+        JsonGenerator jgen,
+        SerializerProvider provider)
+        throws IOException {
+
+      if (!value.isPresent()) {
+        return;
+      }
+      OrderDetailsPaymentSettingsDynamicPixImpl impl =
+          (OrderDetailsPaymentSettingsDynamicPixImpl) value.get();
+      jgen.writeObject(null != impl ? impl.getDynamicPix() : null);
+    }
+  }
+
+  public static class DelegatedDeSerializer
+      extends JsonDeserializer<OrderDetailsPaymentSettingsDynamicPix> {
+    @Override
+    public OrderDetailsPaymentSettingsDynamicPix deserialize(
+        JsonParser jp, DeserializationContext ctxt) throws IOException {
+
+      OrderDetailsPaymentSettingsDynamicPixImpl.Builder builder =
+          new OrderDetailsPaymentSettingsDynamicPixImpl.Builder();
+      WhatsAppPaymentSettingsPixDynamicPixImpl deserialized =
+          jp.readValueAs(WhatsAppPaymentSettingsPixDynamicPixImpl.class);
+      builder.setDynamicPix(deserialized);
+      return builder.build();
+    }
+  }
+
+  public static Optional<OrderDetailsPaymentSettingsDynamicPix> delegatedConverter(
+      WhatsAppPaymentSettingsPixDynamicPix internal) {
+    if (null == internal) {
+      return Optional.empty();
+    }
+    return Optional.of(new Builder().setDynamicPix(internal).build());
   }
 }

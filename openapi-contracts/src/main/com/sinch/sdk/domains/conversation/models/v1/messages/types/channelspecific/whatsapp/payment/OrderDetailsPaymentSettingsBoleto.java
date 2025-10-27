@@ -12,18 +12,21 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspeci
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** The payment settings. */
-@JsonDeserialize(builder = OrderDetailsPaymentSettingsImpl.Builder.class)
-public interface OrderDetailsPaymentSettings {
+/** OrderDetailsPaymentSettingsBoleto */
+@JsonDeserialize(builder = OrderDetailsPaymentSettingsBoletoImpl.Builder.class)
+public interface OrderDetailsPaymentSettingsBoleto
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp
+        .payment.OrderDetailsSettings {
 
   /**
-   * Get dynamicPix
+   * The Boleto digitable line which will be copied to the clipboard when the user taps the Boleto
+   * button.
    *
    * <p>Field is required
    *
-   * @return dynamicPix
+   * @return digitableLine
    */
-  OrderDetailsPaymentSettingsDynamicPix getDynamicPix();
+  String getDigitableLine();
 
   /**
    * Getting builder
@@ -31,7 +34,7 @@ public interface OrderDetailsPaymentSettings {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new OrderDetailsPaymentSettingsImpl.Builder();
+    return new OrderDetailsPaymentSettingsBoletoImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -40,17 +43,17 @@ public interface OrderDetailsPaymentSettings {
     /**
      * see getter
      *
-     * @param dynamicPix see getter
+     * @param digitableLine see getter
      * @return Current builder
-     * @see #getDynamicPix
+     * @see #getDigitableLine
      */
-    Builder setDynamicPix(OrderDetailsPaymentSettingsDynamicPix dynamicPix);
+    Builder setDigitableLine(String digitableLine);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    OrderDetailsPaymentSettings build();
+    OrderDetailsPaymentSettingsBoleto build();
   }
 }

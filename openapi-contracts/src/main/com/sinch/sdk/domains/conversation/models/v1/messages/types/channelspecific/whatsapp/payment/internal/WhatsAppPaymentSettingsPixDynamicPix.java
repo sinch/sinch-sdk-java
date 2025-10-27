@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.payment;
+package com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.payment.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
@@ -16,11 +16,9 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** OrderDetailsPaymentSettingsDynamicPix */
-@JsonDeserialize(builder = OrderDetailsPaymentSettingsDynamicPixImpl.Builder.class)
-public interface OrderDetailsPaymentSettingsDynamicPix
-    extends com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp
-        .payment.OrderDetailsSettings {
+/** The dynamic Pix payment settings. */
+@JsonDeserialize(builder = WhatsAppPaymentSettingsPixDynamicPixImpl.Builder.class)
+public interface WhatsAppPaymentSettingsPixDynamicPix {
 
   /**
    * The dynamic Pix code to be used by the buyer to pay.
@@ -93,7 +91,7 @@ public interface OrderDetailsPaymentSettingsDynamicPix
    * @return New Builder instance
    */
   static Builder builder() {
-    return new OrderDetailsPaymentSettingsDynamicPixImpl.Builder();
+    return new WhatsAppPaymentSettingsPixDynamicPixImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -140,6 +138,6 @@ public interface OrderDetailsPaymentSettingsDynamicPix
      *
      * @return The instance build with current builder values
      */
-    OrderDetailsPaymentSettingsDynamicPix build();
+    WhatsAppPaymentSettingsPixDynamicPix build();
   }
 }

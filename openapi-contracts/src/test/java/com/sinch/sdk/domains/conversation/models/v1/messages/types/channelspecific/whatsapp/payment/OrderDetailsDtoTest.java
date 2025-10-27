@@ -10,7 +10,6 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecif
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows.WhatsAppInteractiveHeaderDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.payment.OrderDetailsPayment.TypeEnum;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.payment.OrderDetailsPayment.TypeOfGoodsEnum;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.payment.OrderDetailsPaymentSettingsDynamicPix.KeyTypeEnum;
 import java.time.Instant;
 import java.util.Arrays;
 import org.json.JSONException;
@@ -54,16 +53,7 @@ public class OrderDetailsDtoTest extends ConversationBaseTest {
                           .setTaxDescription("tax description")
                           .setTaxValue(7000)
                           .build())
-                  .setPaymentSettings(
-                      OrderDetailsPaymentSettings.builder()
-                          .setDynamicPix(
-                              OrderDetailsPaymentSettingsDynamicPix.builder()
-                                  .setCode("code value")
-                                  .setKey("key value")
-                                  .setKeyType(KeyTypeEnum.CNPJ)
-                                  .setMerchantName("merchant name")
-                                  .build())
-                          .build())
+                  .setPaymentSettings(OrderDetailsSettingsDtoTest.dynamicPix)
                   .setReferenceId("a reference ID")
                   .setTotalAmountValue(1200)
                   .setType(TypeEnum.BR)

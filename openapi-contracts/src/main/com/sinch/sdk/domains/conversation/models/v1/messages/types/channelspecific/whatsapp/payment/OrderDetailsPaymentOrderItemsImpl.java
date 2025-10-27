@@ -112,8 +112,9 @@ public class OrderDetailsPaymentOrderItemsImpl implements OrderDetailsPaymentOrd
   }
 
   /**
-   * Return true if this Payment_Order_Details_channel_specific_message__payment_order_items object
-   * is equal to o.
+   * Return true if this
+   * WhatsApp_Payment_Order_Details_channel_specific_message__payment_order_items object is equal to
+   * o.
    */
   @Override
   public boolean equals(Object o) {
@@ -123,20 +124,23 @@ public class OrderDetailsPaymentOrderItemsImpl implements OrderDetailsPaymentOrd
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    OrderDetailsPaymentOrderItemsImpl paymentOrderDetailsChannelSpecificMessagePaymentOrderItems =
-        (OrderDetailsPaymentOrderItemsImpl) o;
+    OrderDetailsPaymentOrderItemsImpl
+        whatsAppPaymentOrderDetailsChannelSpecificMessagePaymentOrderItems =
+            (OrderDetailsPaymentOrderItemsImpl) o;
     return Objects.equals(
-            this.retailerId, paymentOrderDetailsChannelSpecificMessagePaymentOrderItems.retailerId)
+            this.retailerId,
+            whatsAppPaymentOrderDetailsChannelSpecificMessagePaymentOrderItems.retailerId)
         && Objects.equals(
-            this.name, paymentOrderDetailsChannelSpecificMessagePaymentOrderItems.name)
+            this.name, whatsAppPaymentOrderDetailsChannelSpecificMessagePaymentOrderItems.name)
         && Objects.equals(
             this.amountValue,
-            paymentOrderDetailsChannelSpecificMessagePaymentOrderItems.amountValue)
+            whatsAppPaymentOrderDetailsChannelSpecificMessagePaymentOrderItems.amountValue)
         && Objects.equals(
-            this.quantity, paymentOrderDetailsChannelSpecificMessagePaymentOrderItems.quantity)
+            this.quantity,
+            whatsAppPaymentOrderDetailsChannelSpecificMessagePaymentOrderItems.quantity)
         && Objects.equals(
             this.saleAmountValue,
-            paymentOrderDetailsChannelSpecificMessagePaymentOrderItems.saleAmountValue);
+            whatsAppPaymentOrderDetailsChannelSpecificMessagePaymentOrderItems.saleAmountValue);
   }
 
   @Override

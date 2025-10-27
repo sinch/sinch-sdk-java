@@ -57,8 +57,8 @@ public class OrderStatusPaymentImpl implements OrderStatusPayment {
   }
 
   /**
-   * Return true if this Payment_Order_Status_channel_specific_message__payment object is equal to
-   * o.
+   * Return true if this WhatsApp_Payment_Order_Status_channel_specific_message__payment object is
+   * equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -68,11 +68,12 @@ public class OrderStatusPaymentImpl implements OrderStatusPayment {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    OrderStatusPaymentImpl paymentOrderStatusChannelSpecificMessagePayment =
+    OrderStatusPaymentImpl whatsAppPaymentOrderStatusChannelSpecificMessagePayment =
         (OrderStatusPaymentImpl) o;
     return Objects.equals(
-            this.referenceId, paymentOrderStatusChannelSpecificMessagePayment.referenceId)
-        && Objects.equals(this.order, paymentOrderStatusChannelSpecificMessagePayment.order);
+            this.referenceId, whatsAppPaymentOrderStatusChannelSpecificMessagePayment.referenceId)
+        && Objects.equals(
+            this.order, whatsAppPaymentOrderStatusChannelSpecificMessagePayment.order);
   }
 
   @Override
