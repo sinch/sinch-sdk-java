@@ -155,6 +155,15 @@ public class VerificationReportResponseWhatsAppImpl
       return this;
     }
 
+    @JsonProperty(value = JSON_PROPERTY_METHOD, required = true)
+    Builder setMethod(VerificationMethod method) {
+      if (!Objects.equals(method, VerificationMethod.WHATSAPP)) {
+        throw new IllegalArgumentException(
+            String.format("'method' must be '%s' (is '%s')", VerificationMethod.WHATSAPP, method));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_STATUS)
     public Builder setStatus(VerificationStatus status) {
       this.status = OptionalValue.of(status);

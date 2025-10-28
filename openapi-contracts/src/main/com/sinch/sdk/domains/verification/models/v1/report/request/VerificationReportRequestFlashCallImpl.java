@@ -132,6 +132,15 @@ public class VerificationReportRequestFlashCallImpl
 
     VerificationReportRequestFlashCallOptions.Builder _delegatedBuilder = null;
 
+    @JsonProperty(value = JSON_PROPERTY_METHOD, required = true)
+    Builder setMethod(MethodEnum method) {
+      if (!Objects.equals(method, MethodEnum.FLASH_CALL)) {
+        throw new IllegalArgumentException(
+            String.format("'method' must be '%s' (is '%s')", MethodEnum.FLASH_CALL, method));
+      }
+      return this;
+    }
+
     @JsonProperty(value = JSON_PROPERTY_FLASH_CALL, required = true)
     public Builder setFlashCall(VerificationReportRequestFlashCallOptions flashCall) {
       this.flashCall = OptionalValue.of(flashCall);

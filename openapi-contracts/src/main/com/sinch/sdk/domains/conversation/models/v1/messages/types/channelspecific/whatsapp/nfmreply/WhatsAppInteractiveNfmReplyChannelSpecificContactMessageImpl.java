@@ -111,6 +111,18 @@ public class WhatsAppInteractiveNfmReplyChannelSpecificContactMessageImpl
             WhatsAppInteractiveNfmReplyChannelSpecificContactMessage.TypeEnum.NFM_REPLY);
     OptionalValue<WhatsAppInteractiveNfmReply> nfmReply = OptionalValue.empty();
 
+    @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
+    Builder setType(TypeEnum type) {
+      if (!Objects.equals(
+          type, WhatsAppInteractiveNfmReplyChannelSpecificContactMessage.TypeEnum.NFM_REPLY)) {
+        throw new IllegalArgumentException(
+            String.format(
+                "'type' must be '%s' (is '%s')",
+                WhatsAppInteractiveNfmReplyChannelSpecificContactMessage.TypeEnum.NFM_REPLY, type));
+      }
+      return this;
+    }
+
     @JsonProperty(value = JSON_PROPERTY_NFM_REPLY, required = true)
     public Builder setNfmReply(WhatsAppInteractiveNfmReply nfmReply) {
       this.nfmReply = OptionalValue.of(nfmReply);

@@ -132,6 +132,15 @@ public class VerificationReportRequestWhatsAppImpl
 
     VerificationReportRequestWhatsAppOptions.Builder _delegatedBuilder = null;
 
+    @JsonProperty(value = JSON_PROPERTY_METHOD, required = true)
+    Builder setMethod(MethodEnum method) {
+      if (!Objects.equals(method, MethodEnum.WHATSAPP)) {
+        throw new IllegalArgumentException(
+            String.format("'method' must be '%s' (is '%s')", MethodEnum.WHATSAPP, method));
+      }
+      return this;
+    }
+
     @JsonProperty(value = JSON_PROPERTY_WHATSAPP, required = true)
     public Builder setWhatsapp(VerificationReportRequestWhatsAppOptions whatsapp) {
       this.whatsapp = OptionalValue.of(whatsapp);

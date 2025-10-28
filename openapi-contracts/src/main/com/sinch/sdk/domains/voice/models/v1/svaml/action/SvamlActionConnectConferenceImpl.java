@@ -149,6 +149,15 @@ public class SvamlActionConnectConferenceImpl
     OptionalValue<ConferenceDtmfOptions> conferenceDtmfOptions = OptionalValue.empty();
     OptionalValue<MusicOnHold> MusicOnHold = OptionalValue.empty();
 
+    @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
+    Builder setName(NameEnum name) {
+      if (!Objects.equals(name, NameEnum.CONNECT_CONF)) {
+        throw new IllegalArgumentException(
+            String.format("'name' must be '%s' (is '%s')", NameEnum.CONNECT_CONF, name));
+      }
+      return this;
+    }
+
     @JsonProperty(value = JSON_PROPERTY_CONFERENCE_ID, required = true)
     public Builder setConferenceId(String conferenceId) {
       this.conferenceId = OptionalValue.of(conferenceId);

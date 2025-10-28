@@ -189,6 +189,16 @@ public class VerificationStartResponseWhatsAppImpl
       return this;
     }
 
+    @JsonProperty(value = JSON_PROPERTY_METHOD, required = true)
+    Builder setMethod(VerificationMethodStart method) {
+      if (!Objects.equals(method, VerificationMethodStart.WHATSAPP)) {
+        throw new IllegalArgumentException(
+            String.format(
+                "'method' must be '%s' (is '%s')", VerificationMethodStart.WHATSAPP, method));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_LINKS)
     public Builder setLinks(List<Link> links) {
       this.links = OptionalValue.of(links);

@@ -78,6 +78,15 @@ public class SvamlActionContinueImpl
   static class Builder implements SvamlActionContinue.Builder {
     OptionalValue<NameEnum> name = OptionalValue.of(NameEnum.CONTINUE);
 
+    @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
+    Builder setName(NameEnum name) {
+      if (!Objects.equals(name, NameEnum.CONTINUE)) {
+        throw new IllegalArgumentException(
+            String.format("'name' must be '%s' (is '%s')", NameEnum.CONTINUE, name));
+      }
+      return this;
+    }
+
     public SvamlActionContinue build() {
       return new SvamlActionContinueImpl(name);
     }

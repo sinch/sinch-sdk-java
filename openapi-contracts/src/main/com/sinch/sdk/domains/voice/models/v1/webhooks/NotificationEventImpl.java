@@ -239,6 +239,16 @@ public class NotificationEventImpl implements NotificationEvent, VoiceWebhookEve
     OptionalValue<String> conferenceId = OptionalValue.empty();
     OptionalValue<Integer> version = OptionalValue.empty();
 
+    @JsonProperty(JSON_PROPERTY_EVENT)
+    Builder setEvent(WebhooksEventRequestType event) {
+      if (!Objects.equals(event, WebhooksEventRequestType.NOTIFY)) {
+        throw new IllegalArgumentException(
+            String.format(
+                "'event' must be '%s' (is '%s')", WebhooksEventRequestType.NOTIFY, event));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_TYPE)
     public Builder setType(String type) {
       this.type = OptionalValue.of(type);

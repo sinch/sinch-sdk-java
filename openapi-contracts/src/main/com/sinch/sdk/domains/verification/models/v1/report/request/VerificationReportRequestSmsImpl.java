@@ -130,6 +130,15 @@ public class VerificationReportRequestSmsImpl
 
     VerificationReportRequestSmsOptions.Builder _delegatedBuilder = null;
 
+    @JsonProperty(value = JSON_PROPERTY_METHOD, required = true)
+    Builder setMethod(MethodEnum method) {
+      if (!Objects.equals(method, MethodEnum.SMS)) {
+        throw new IllegalArgumentException(
+            String.format("'method' must be '%s' (is '%s')", MethodEnum.SMS, method));
+      }
+      return this;
+    }
+
     @JsonProperty(value = JSON_PROPERTY_SMS, required = true)
     public Builder setSms(VerificationReportRequestSmsOptions sms) {
       this.sms = OptionalValue.of(sms);

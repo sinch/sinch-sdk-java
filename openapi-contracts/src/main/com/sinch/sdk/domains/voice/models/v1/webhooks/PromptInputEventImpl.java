@@ -247,6 +247,15 @@ public class PromptInputEventImpl implements PromptInputEvent, VoiceWebhookEvent
     OptionalValue<String> conferenceId = OptionalValue.empty();
     OptionalValue<Integer> version = OptionalValue.empty();
 
+    @JsonProperty(value = JSON_PROPERTY_EVENT, required = true)
+    Builder setEvent(WebhooksEventRequestType event) {
+      if (!Objects.equals(event, WebhooksEventRequestType.PIE)) {
+        throw new IllegalArgumentException(
+            String.format("'event' must be '%s' (is '%s')", WebhooksEventRequestType.PIE, event));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_TIMESTAMP)
     public Builder setTimestamp(Instant timestamp) {
       this.timestamp = OptionalValue.of(timestamp);

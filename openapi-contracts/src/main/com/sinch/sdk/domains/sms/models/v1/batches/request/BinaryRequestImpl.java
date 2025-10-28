@@ -372,6 +372,15 @@ public class BinaryRequestImpl implements BinaryRequest, BatchRequest {
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_TYPE)
+    Builder setType(TypeEnum type) {
+      if (!Objects.equals(type, TypeEnum.MT_BINARY)) {
+        throw new IllegalArgumentException(
+            String.format("'type' must be '%s' (is '%s')", TypeEnum.MT_BINARY, type));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_DELIVERY_REPORT)
     public Builder setDeliveryReport(DeliveryReportType deliveryReport) {
       this.deliveryReport = OptionalValue.of(deliveryReport);

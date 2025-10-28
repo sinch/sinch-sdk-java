@@ -109,6 +109,15 @@ public class DestinationSipImpl
     OptionalValue<SipDestination> type = OptionalValue.of(SipDestination.SIP);
     OptionalValue<String> endpoint = OptionalValue.empty();
 
+    @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
+    Builder setType(SipDestination type) {
+      if (!Objects.equals(type, SipDestination.SIP)) {
+        throw new IllegalArgumentException(
+            String.format("'type' must be '%s' (is '%s')", SipDestination.SIP, type));
+      }
+      return this;
+    }
+
     @JsonProperty(value = JSON_PROPERTY_ENDPOINT, required = true)
     public Builder setEndpoint(String endpoint) {
       this.endpoint = OptionalValue.of(endpoint);

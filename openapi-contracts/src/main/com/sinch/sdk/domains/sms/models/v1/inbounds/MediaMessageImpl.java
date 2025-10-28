@@ -290,6 +290,15 @@ public class MediaMessageImpl implements MediaMessage, InboundMessage {
       return this;
     }
 
+    @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
+    Builder setType(TypeEnum type) {
+      if (!Objects.equals(type, TypeEnum.MO_MEDIA)) {
+        throw new IllegalArgumentException(
+            String.format("'type' must be '%s' (is '%s')", TypeEnum.MO_MEDIA, type));
+      }
+      return this;
+    }
+
     @JsonProperty(value = JSON_PROPERTY_BODY, required = true)
     public Builder setBody(MediaMessageBody body) {
       this.body = OptionalValue.of(body);

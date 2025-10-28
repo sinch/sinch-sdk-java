@@ -100,6 +100,15 @@ public class DestinationDidImpl implements DestinationDid, Destination {
     OptionalValue<DidDestination> type = OptionalValue.of(DidDestination.DID);
     OptionalValue<String> endpoint = OptionalValue.empty();
 
+    @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
+    Builder setType(DidDestination type) {
+      if (!Objects.equals(type, DidDestination.DID)) {
+        throw new IllegalArgumentException(
+            String.format("'type' must be '%s' (is '%s')", DidDestination.DID, type));
+      }
+      return this;
+    }
+
     @JsonProperty(value = JSON_PROPERTY_ENDPOINT, required = true)
     public Builder setEndpoint(String endpoint) {
       this.endpoint = OptionalValue.of(endpoint);

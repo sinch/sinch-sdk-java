@@ -217,6 +217,17 @@ public class VerificationSmsDeliveredEventImpl
       return this;
     }
 
+    @JsonProperty(value = JSON_PROPERTY_EVENT, required = true)
+    Builder setEvent(EventEnum event) {
+      if (!Objects.equals(event, EventEnum.VERIFICATION_SMS_DELIVERED_EVENT)) {
+        throw new IllegalArgumentException(
+            String.format(
+                "'event' must be '%s' (is '%s')",
+                EventEnum.VERIFICATION_SMS_DELIVERED_EVENT, event));
+      }
+      return this;
+    }
+
     @JsonProperty(value = JSON_PROPERTY_METHOD, required = true)
     public Builder setMethod(VerificationMethod method) {
       this.method = OptionalValue.of(method);

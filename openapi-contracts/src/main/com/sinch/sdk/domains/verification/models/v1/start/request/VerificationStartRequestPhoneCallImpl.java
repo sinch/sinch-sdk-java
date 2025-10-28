@@ -213,6 +213,16 @@ public class VerificationStartRequestPhoneCallImpl
       return this;
     }
 
+    @JsonProperty(value = JSON_PROPERTY_METHOD, required = true)
+    Builder setMethod(VerificationMethodStart method) {
+      if (!Objects.equals(method, VerificationMethodStart.PHONE_CALL)) {
+        throw new IllegalArgumentException(
+            String.format(
+                "'method' must be '%s' (is '%s')", VerificationMethodStart.PHONE_CALL, method));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_REFERENCE)
     public Builder setReference(String reference) {
       this.reference = OptionalValue.of(reference);

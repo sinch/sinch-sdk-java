@@ -356,6 +356,15 @@ public class UpdateMediaRequestImpl implements UpdateMediaRequest, UpdateBatchRe
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_TYPE)
+    Builder setType(TypeEnum type) {
+      if (!Objects.equals(type, TypeEnum.MT_MEDIA)) {
+        throw new IllegalArgumentException(
+            String.format("'type' must be '%s' (is '%s')", TypeEnum.MT_MEDIA, type));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_TO_ADD)
     public Builder setToAdd(List<String> toAdd) {
       this.toAdd = OptionalValue.of(toAdd);

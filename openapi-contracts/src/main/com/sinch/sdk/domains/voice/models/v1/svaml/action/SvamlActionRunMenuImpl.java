@@ -187,6 +187,15 @@ public class SvamlActionRunMenuImpl
     OptionalValue<Boolean> enableVoice = OptionalValue.empty();
     OptionalValue<List<Menu>> menus = OptionalValue.empty();
 
+    @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
+    Builder setName(NameEnum name) {
+      if (!Objects.equals(name, NameEnum.RUN_MENU)) {
+        throw new IllegalArgumentException(
+            String.format("'name' must be '%s' (is '%s')", NameEnum.RUN_MENU, name));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_BARGE)
     public Builder setBarge(Boolean barge) {
       this.barge = OptionalValue.of(barge);

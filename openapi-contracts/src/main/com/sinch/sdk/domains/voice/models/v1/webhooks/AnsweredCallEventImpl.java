@@ -266,6 +266,15 @@ public class AnsweredCallEventImpl
       return this;
     }
 
+    @JsonProperty(value = JSON_PROPERTY_EVENT, required = true)
+    Builder setEvent(WebhooksEventRequestType event) {
+      if (!Objects.equals(event, WebhooksEventRequestType.ACE)) {
+        throw new IllegalArgumentException(
+            String.format("'event' must be '%s' (is '%s')", WebhooksEventRequestType.ACE, event));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_AMD)
     public Builder setAmd(AnsweringMachineDetection amd) {
       this.amd = OptionalValue.of(amd);

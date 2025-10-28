@@ -104,6 +104,17 @@ public class WhatsAppInteractiveHeaderImageImpl
     OptionalValue<TypeEnum> type = OptionalValue.of(WhatsAppInteractiveHeaderImage.TypeEnum.IMAGE);
     OptionalValue<WhatsAppInteractiveHeaderMedia> image = OptionalValue.empty();
 
+    @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
+    Builder setType(TypeEnum type) {
+      if (!Objects.equals(type, WhatsAppInteractiveHeaderImage.TypeEnum.IMAGE)) {
+        throw new IllegalArgumentException(
+            String.format(
+                "'type' must be '%s' (is '%s')",
+                WhatsAppInteractiveHeaderImage.TypeEnum.IMAGE, type));
+      }
+      return this;
+    }
+
     @JsonProperty(value = JSON_PROPERTY_IMAGE, required = true)
     public Builder setImage(WhatsAppInteractiveHeaderMedia image) {
       this.image = OptionalValue.of(image);
