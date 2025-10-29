@@ -13,6 +13,9 @@
   "client_credentials": {
     "client_id": "a client id",
     "client_secret": "a client secret",
-    "endpoint": "https://fake.url"
+    "endpoint": "https://fake.url",
+    "scope": "a scope",
+    "response_type": "a response type",
+    "token_request_type": "BASIC"
   }
 }

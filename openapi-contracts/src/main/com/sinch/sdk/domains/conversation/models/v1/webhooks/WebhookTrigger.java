@@ -69,16 +69,14 @@ public class WebhookTrigger extends EnumDynamic<String, WebhookTrigger> {
   public static final WebhookTrigger CHANNEL_EVENT = new WebhookTrigger("CHANNEL_EVENT");
 
   /**
-   * Subscribe to Smart conversation analysis (Please note that <a
-   * href="https://developers.sinch.com/docs/smart-conversations">this functionality</a> is
-   * currently available for open beta testing.)
+   * Subscribe to <a href="https://developers.sinch.com/docs/smart-conversations">Smart conversation
+   * analysis</a>.
    */
   public static final WebhookTrigger SMART_CONVERSATION = new WebhookTrigger("SMART_CONVERSATION");
 
   /**
-   * Subscribe to analysis for messages from end-users (Please note that <a
-   * href="https://developers.sinch.com/docs/smart-conversations">this functionality</a> is
-   * currently available for open beta testing.)
+   * Subscribe to <a href="https://developers.sinch.com/docs/smart-conversations">analysis</a> for
+   * messages from end-users.
    */
   public static final WebhookTrigger MESSAGE_INBOUND_SMART_CONVERSATION_REDACTION =
       new WebhookTrigger("MESSAGE_INBOUND_SMART_CONVERSATION_REDACTION");

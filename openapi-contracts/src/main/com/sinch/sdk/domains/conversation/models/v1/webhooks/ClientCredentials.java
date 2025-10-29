@@ -11,6 +11,10 @@
 package com.sinch.sdk.domains.conversation.models.v1.webhooks;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.utils.EnumDynamic;
+import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 /** Optional. Used for OAuth2 authentication. */
 @JsonDeserialize(builder = ClientCredentialsImpl.Builder.class)
@@ -45,6 +49,61 @@ public interface ClientCredentials {
    * @return endpoint
    */
   String getEndpoint();
+
+  /**
+   * Optional. Space-separated string per RFC 6749. Used to limit the access granted by the token.
+   * Max length: 1024 characters. If blank or omitted, this is not included in the token request.
+   *
+   * @return scope
+   */
+  String getScope();
+
+  /**
+   * Optional. When granting <code>client_credentials</code>, this is generally omitted. If you do
+   * provide a value, it will be forwarded to your OAuth provider as-is. Max length: 64 characters.
+   *
+   * @return responseType
+   */
+  String getResponseType();
+
+  /**
+   * Optional. Controls how <code>client_id</code> and <code>client_secret</code> are sent to the
+   * token endpoint. Either <code>BASIC</code> or <code>FORM</code>. If not set or unrecognized,
+   * <code>BASIC</code> is used by default.
+   */
+  public class TokenRequestTypeEnum extends EnumDynamic<String, TokenRequestTypeEnum> {
+    public static final TokenRequestTypeEnum BASIC = new TokenRequestTypeEnum("BASIC");
+    public static final TokenRequestTypeEnum FORM = new TokenRequestTypeEnum("FORM");
+
+    private static final EnumSupportDynamic<String, TokenRequestTypeEnum> ENUM_SUPPORT =
+        new EnumSupportDynamic<>(
+            TokenRequestTypeEnum.class, TokenRequestTypeEnum::new, Arrays.asList(BASIC, FORM));
+
+    private TokenRequestTypeEnum(String value) {
+      super(value);
+    }
+
+    public static Stream<TokenRequestTypeEnum> values() {
+      return ENUM_SUPPORT.values();
+    }
+
+    public static TokenRequestTypeEnum from(String value) {
+      return ENUM_SUPPORT.from(value);
+    }
+
+    public static String valueOf(TokenRequestTypeEnum e) {
+      return ENUM_SUPPORT.valueOf(e);
+    }
+  }
+
+  /**
+   * Optional. Controls how <code>client_id</code> and <code>client_secret</code> are sent to the
+   * token endpoint. Either <code>BASIC</code> or <code>FORM</code>. If not set or unrecognized,
+   * <code>BASIC</code> is used by default.
+   *
+   * @return tokenRequestType
+   */
+  TokenRequestTypeEnum getTokenRequestType();
 
   /**
    * Getting builder
@@ -84,6 +143,33 @@ public interface ClientCredentials {
      * @see #getEndpoint
      */
     Builder setEndpoint(String endpoint);
+
+    /**
+     * see getter
+     *
+     * @param scope see getter
+     * @return Current builder
+     * @see #getScope
+     */
+    Builder setScope(String scope);
+
+    /**
+     * see getter
+     *
+     * @param responseType see getter
+     * @return Current builder
+     * @see #getResponseType
+     */
+    Builder setResponseType(String responseType);
+
+    /**
+     * see getter
+     *
+     * @param tokenRequestType see getter
+     * @return Current builder
+     * @see #getTokenRequestType
+     */
+    Builder setTokenRequestType(TokenRequestTypeEnum tokenRequestType);
 
     /**
      * Create instance
