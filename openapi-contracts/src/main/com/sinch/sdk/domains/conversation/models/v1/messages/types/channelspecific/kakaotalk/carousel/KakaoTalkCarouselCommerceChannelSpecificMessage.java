@@ -14,7 +14,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /** KakaoTalkCarouselCommerceChannelSpecificMessage */
 @JsonDeserialize(builder = KakaoTalkCarouselCommerceChannelSpecificMessageImpl.Builder.class)
-public interface KakaoTalkCarouselCommerceChannelSpecificMessage {
+public interface KakaoTalkCarouselCommerceChannelSpecificMessage
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific
+        .ChannelSpecificMessage {
 
   /**
    * Set to <code>true</code> if a push alarm should be sent to a device.
