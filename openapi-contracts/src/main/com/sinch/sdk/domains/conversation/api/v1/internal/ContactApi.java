@@ -30,6 +30,7 @@ import com.sinch.sdk.domains.conversation.models.v1.contact.request.GetChannelPr
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.MergeContactRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.response.GetChannelProfileResponse;
 import com.sinch.sdk.domains.conversation.models.v1.contact.response.ListContactsResponse;
+import com.sinch.sdk.domains.conversation.models.v1.contact.response.ListIdentityConflictsResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -732,6 +733,99 @@ public class ContactApi {
     return new HttpRequest(
         localVarPath,
         HttpMethod.PATCH,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  /**
+   * Lists Contact Identity Conflicts Lists contact identity conflicts across supported SIM-based
+   * channels (SMS, MMS, RCS). Use this to identify contact records sharing the same identity (e.g.,
+   * phone number), which must be resolved before enabling the Unified Contact ID feature.
+   *
+   * @param projectId The unique ID of the project. You can find this on the [Sinch
+   *     Dashboard](https://dashboard.sinch.com/convapi/apps). (required)
+   * @param pageSize Maximum number of conflicts to return (max 20). (optional)
+   * @param pageToken Pagination token for retrieving next page. (optional)
+   * @return ListIdentityConflictsResponse
+   * @throws ApiException if fails to make API call
+   */
+  public ListIdentityConflictsResponse listIdentityConflicts(
+      String projectId, Integer pageSize, String pageToken) throws ApiException {
+
+    LOGGER.finest(
+        "[listIdentityConflicts]"
+            + " "
+            + "projectId: "
+            + projectId
+            + ", "
+            + "pageSize: "
+            + pageSize
+            + ", "
+            + "pageToken: "
+            + pageToken);
+
+    HttpRequest httpRequest = listIdentityConflictsRequestBuilder(projectId, pageSize, pageToken);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+      TypeReference<ListIdentityConflictsResponse> localVarReturnType =
+          new TypeReference<ListIdentityConflictsResponse>() {};
+      return mapper.deserialize(response, localVarReturnType);
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest listIdentityConflictsRequestBuilder(
+      String projectId, Integer pageSize, String pageToken) throws ApiException {
+    // verify the required parameter 'projectId' is set
+    if (projectId == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'projectId' when calling listIdentityConflicts");
+    }
+
+    String localVarPath =
+        "/v1/projects/{project_id}/contacts:identityConflicts"
+            .replaceAll(
+                "\\{" + "project_id" + "\\}", URLPathUtils.encodePathSegment(projectId.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    if (null != pageSize) {
+      localVarQueryParams.add(
+          new URLParameter(
+              "page_size", pageSize, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
+    }
+
+    if (null != pageToken) {
+      localVarQueryParams.add(
+          new URLParameter(
+              "page_token", pageToken, URLParameter.STYLE.valueOf("form".toUpperCase()), true));
+    }
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("Basic", "oAuth2");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.GET,
         localVarQueryParams,
         serializedBody,
         localVarHeaderParams,

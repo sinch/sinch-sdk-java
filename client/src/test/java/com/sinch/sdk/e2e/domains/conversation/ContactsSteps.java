@@ -9,7 +9,9 @@ import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactCreat
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactGetChannelProfileByContactIdRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactListRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.GetChannelProfileConversationChannel;
+import com.sinch.sdk.domains.conversation.models.v1.contact.request.IdentityConflictsListRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.response.ContactListResponse;
+import com.sinch.sdk.domains.conversation.models.v1.contact.response.IdentityConflictsListResponse;
 import com.sinch.sdk.e2e.Config;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -31,6 +33,9 @@ public class ContactsSteps {
   Contact mergeResponse;
   boolean deletePassed;
   String channelProfileByContactIdResponse;
+  IdentityConflictsListResponse listIdentityConflictsResponse;
+  IdentityConflictsListResponse listAllIdentityConflictsResponse;
+  IdentityConflictsListResponse listPageIterateIdentityConflictsResponse;
 
   @Given("^the Conversation service \"Contacts\" is available$")
   public void serviceAvailable() {
@@ -130,21 +135,27 @@ public class ContactsSteps {
   }
 
   @When("^I send a request to list the existing identity conflicts$")
-  public void listIdentityConflicts() {
+  public void listIdentityConflictsPage() {
 
-    // TODO: implement when the API is available
+    IdentityConflictsListRequest request =
+        IdentityConflictsListRequest.builder().setPageSize(2).build();
+    listIdentityConflictsResponse = service.listIdentityConflicts(request);
   }
 
   @When("^I send a request to list all the identity conflicts$")
-  public void listAllIdentityConflicts() {
+  public void listIdentityConflictsAll() {
 
-    // TODO: implement when the API is available
+    IdentityConflictsListRequest request =
+        IdentityConflictsListRequest.builder().setPageSize(2).build();
+    listAllIdentityConflictsResponse = service.listIdentityConflicts(request);
   }
 
   @When("^I iterate manually over the identity conflicts pages$")
-  public void listAllIdentityConflictsPageIterate() {
+  public void listIdentityConflictsPageIterate() {
 
-    // TODO: implement when the API is available
+    IdentityConflictsListRequest request =
+        IdentityConflictsListRequest.builder().setPageSize(2).build();
+    listPageIterateIdentityConflictsResponse = service.listIdentityConflicts(request);
   }
 
   @Then("the contact is created")
@@ -247,19 +258,35 @@ public class ContactsSteps {
   @Then("the response contains \"{int}\" identity conflicts")
   public void listIdentityConflictsResults(int count) {
 
-    // TODO: implement when the API is available
+    Assertions.assertEquals(listIdentityConflictsResponse.getContent().size(), count);
   }
 
   @Then("the identity conflicts list contains \"{int}\" identity conflicts")
-  public void listAllIdentityConflictsResults(int count) {
+  public void listIdentityConflictsAllResults(int count) {
 
-    // TODO: implement when the API is available
+    // FIXME: to be thread-safe compliant we need to check which variables are set
+    if (null != listAllIdentityConflictsResponse)
+      Assertions.assertEquals(listAllIdentityConflictsResponse.stream().count(), count);
+    if (null != listPageIterateIdentityConflictsResponse)
+      Assertions.assertEquals(listPageIterateIdentityConflictsResponse.stream().count(), count);
   }
 
   @Then("the identity conflicts iteration result contains the data from \"{int}\" pages")
   public void listAllIdentityConflictsPageIterateResults(int count) {
+    int pageCount = 0;
 
-    // TODO: implement when the API is available
+    IdentityConflictsListResponse listPageIterateResponseThreadSafety =
+        listPageIterateIdentityConflictsResponse;
+    do {
+      pageCount++;
+      if (!listPageIterateResponseThreadSafety.hasNextPage()) {
+        break;
+      }
+      listPageIterateResponseThreadSafety = listPageIterateResponseThreadSafety.nextPage();
+
+    } while (true);
+
+    Assertions.assertEquals(pageCount, count);
   }
 
   void checkExpectedContactResponseCommonFields(Contact contactResponse) {

@@ -4,6 +4,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentities;
@@ -14,10 +15,11 @@ import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactCreat
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.GetChannelProfileConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.GetChannelProfileRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.response.GetChannelProfileResponse;
+import com.sinch.sdk.domains.conversation.models.v1.contact.response.IdentityConflicts;
 import com.sinch.sdk.domains.conversation.models.v1.contact.response.ListContactsResponse;
+import com.sinch.sdk.domains.conversation.models.v1.contact.response.ListIdentityConflictsResponse;
 import java.util.Arrays;
 import java.util.Collections;
-import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -129,6 +131,25 @@ public class ContactDtoTest extends ConversationBaseTest {
   public static GetChannelProfileResponse expectedChannelProfileResponseDto =
       GetChannelProfileResponse.builder().setProfileName("a profile name").build();
 
+  public static IdentityConflicts expectedIdentityConflictsDto0 =
+      IdentityConflicts.builder()
+          .setIdentity("12015555555")
+          .setChannels(Arrays.asList(ConversationChannel.RCS, ConversationChannel.SMS))
+          .setContactIds(
+              Arrays.asList("01W4FFL35P4NC4K35CONTACT001", "01W4FFL35P4NC4K35CONTACT002"))
+          .build();
+
+  public static ListIdentityConflictsResponse expectedListIdentityConflictsResponseDtoPage0 =
+      ListIdentityConflictsResponse.builder()
+          .setConflicts(Collections.singletonList(expectedIdentityConflictsDto0))
+          .setNextPageToken("the next page token value")
+          .build();
+  public static ListIdentityConflictsResponse expectedListIdentityConflictsResponseDtoPage1 =
+      ListIdentityConflictsResponse.builder()
+          .setConflicts(Collections.emptyList())
+          .setNextPageToken("")
+          .build();
+
   @GivenJsonResource("/domains/conversation/v1/contact/ContactListResponseDtoPage0.json")
   ListContactsResponse loadedContactListResponseDtoPage0;
 
@@ -152,25 +173,30 @@ public class ContactDtoTest extends ConversationBaseTest {
   @GivenJsonResource("/domains/conversation/v1/contact/ContactGetChannelResponseDto.json")
   GetChannelProfileResponse loadedContactGetChannelResponseDto;
 
+  @GivenJsonResource("/domains/conversation/v1/contact/IdentityConflictsDto.json")
+  IdentityConflicts loadedIdentityConflictsDto0;
+
+  @GivenJsonResource("/domains/conversation/v1/contact/ListIdentityConflictsResponseDtoPage0.json")
+  ListIdentityConflictsResponse loadedListIdentityConflictsResponseDtoPage0;
+
+  @GivenJsonResource("/domains/conversation/v1/contact/ListIdentityConflictsResponseDtoPage1.json")
+  ListIdentityConflictsResponse loadedListIdentityConflictsResponseDtoPage1;
+
   @Test
   void deserializeContactListResponseDtoPage0() {
-    Assertions.assertThat(loadedContactListResponseDtoPage0)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedContactListResponseDtoPage0);
+    TestHelpers.recursiveEquals(
+        loadedContactListResponseDtoPage0, expectedContactListResponseDtoPage0);
   }
 
   @Test
   void deserializeContactListResponseDtoPage1() {
-    Assertions.assertThat(loadedContactListResponseDtoPage1)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedContactListResponseDtoPage1);
+    TestHelpers.recursiveEquals(
+        loadedContactListResponseDtoPage1, expectedContactListResponseDtoPage1);
   }
 
   @Test
   void deserializeContactCreateResponseDto() {
-    Assertions.assertThat(loadedContactCreateResponseDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedCreatedContactResponseDto);
+    TestHelpers.recursiveEquals(loadedContactCreateResponseDto, expectedCreatedContactResponseDto);
   }
 
   @Test
@@ -202,8 +228,24 @@ public class ContactDtoTest extends ConversationBaseTest {
 
   @Test
   void deserializeChannelProfileResponseDto() {
-    Assertions.assertThat(loadedContactGetChannelResponseDto)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedChannelProfileResponseDto);
+    TestHelpers.recursiveEquals(
+        loadedContactGetChannelResponseDto, expectedChannelProfileResponseDto);
+  }
+
+  @Test
+  void deserializeIdentityConflicts() {
+    TestHelpers.recursiveEquals(loadedIdentityConflictsDto0, expectedIdentityConflictsDto0);
+  }
+
+  @Test
+  void deserializeListIdentityConflictsResponseDtoPage0() {
+    TestHelpers.recursiveEquals(
+        loadedListIdentityConflictsResponseDtoPage0, expectedListIdentityConflictsResponseDtoPage0);
+  }
+
+  @Test
+  void deserializeListIdentityConflictsResponseDtoPage1() {
+    TestHelpers.recursiveEquals(
+        loadedListIdentityConflictsResponseDtoPage1, expectedListIdentityConflictsResponseDtoPage1);
   }
 }

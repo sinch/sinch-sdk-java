@@ -15,9 +15,13 @@ import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactGetCh
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactGetChannelProfileByContactIdRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactListRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.GetChannelProfileRequest;
+import com.sinch.sdk.domains.conversation.models.v1.contact.request.IdentityConflictsListRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.MergeContactRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.response.ContactListResponse;
+import com.sinch.sdk.domains.conversation.models.v1.contact.response.IdentityConflicts;
+import com.sinch.sdk.domains.conversation.models.v1.contact.response.IdentityConflictsListResponse;
 import com.sinch.sdk.domains.conversation.models.v1.contact.response.ListContactsResponse;
+import com.sinch.sdk.domains.conversation.models.v1.contact.response.ListIdentityConflictsResponse;
 import com.sinch.sdk.models.ConversationContext;
 import java.util.Arrays;
 import java.util.Collection;
@@ -117,5 +121,27 @@ public class ContactService implements com.sinch.sdk.domains.conversation.api.v1
               "Invalid channel value '%s'. Channel has to be in list '%s'",
               client.getChannel(), supportedChannelForGetProfile));
     }
+  }
+
+  public IdentityConflictsListResponse listIdentityConflicts(IdentityConflictsListRequest client) {
+
+    // guard against null value to start with a default request parameters set
+    if (null == client) {
+      client = IdentityConflictsListRequest.builder(null).build();
+    }
+
+    Integer pageSize = client.getPageSize().orElse(null);
+    String pageToken = client.getPageToken().orElse(null);
+
+    ListIdentityConflictsResponse response =
+        getApi().listIdentityConflicts(uriUUID, pageSize, pageToken);
+
+    String nextPageToken = response.getNextPageToken();
+    List<IdentityConflicts> list = response.getConflicts();
+    Collection<IdentityConflicts> pageContent = null != list ? list : Collections.emptyList();
+    Pair<Collection<IdentityConflicts>, TokenPageNavigator> content =
+        new Pair<>(pageContent, TokenPageNavigator.valueOf(nextPageToken));
+    return new IdentityConflictsListResponse(
+        this, new Page<>(client, content.getLeft(), content.getRight()));
   }
 }
