@@ -104,6 +104,17 @@ public class WhatsAppInteractiveHeaderTextImpl
     OptionalValue<TypeEnum> type = OptionalValue.of(WhatsAppInteractiveHeaderText.TypeEnum.TEXT);
     OptionalValue<String> text = OptionalValue.empty();
 
+    @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
+    Builder setType(TypeEnum type) {
+      if (!Objects.equals(type, WhatsAppInteractiveHeaderText.TypeEnum.TEXT)) {
+        throw new IllegalArgumentException(
+            String.format(
+                "'type' must be '%s' (is '%s')",
+                WhatsAppInteractiveHeaderText.TypeEnum.TEXT, type));
+      }
+      return this;
+    }
+
     @JsonProperty(value = JSON_PROPERTY_TEXT, required = true)
     public Builder setText(String text) {
       this.text = OptionalValue.of(text);

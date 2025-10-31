@@ -28,8 +28,14 @@ class DestinationTest extends VoiceBaseTest {
   @GivenTextResource("/domains/voice/v1/destination/DestinationMxpDto.json")
   String jsonUserName;
 
+  @GivenTextResource("/domains/voice/v1/destination/DestinationMxpAliasDto.json")
+  String jsonUserNameAlias;
+
   @GivenTextResource("/domains/voice/v1/destination/DestinationPstnDto.json")
   String jsonNumber;
+
+  @GivenTextResource("/domains/voice/v1/destination/DestinationPstnAliasDto.json")
+  String jsonNumberAlias;
 
   @GivenTextResource("/domains/voice/v1/destination/DestinationSipDto.json")
   String jsonSip;
@@ -55,6 +61,13 @@ class DestinationTest extends VoiceBaseTest {
   }
 
   @Test
+  void deserializeMxpAlias() throws JsonProcessingException {
+    Destination expected = objectMapper.readValue(jsonUserNameAlias, Destination.class);
+
+    TestHelpers.recursiveEquals(userName, expected);
+  }
+
+  @Test
   void serializePstn() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(number);
 
@@ -64,6 +77,13 @@ class DestinationTest extends VoiceBaseTest {
   @Test
   void deserializePstn() throws JsonProcessingException {
     Destination expected = objectMapper.readValue(jsonNumber, Destination.class);
+
+    TestHelpers.recursiveEquals(number, expected);
+  }
+
+  @Test
+  void deserializePstnAlias() throws JsonProcessingException {
+    Destination expected = objectMapper.readValue(jsonNumberAlias, Destination.class);
 
     TestHelpers.recursiveEquals(number, expected);
   }

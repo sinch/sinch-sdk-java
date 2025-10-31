@@ -232,6 +232,16 @@ public class VerificationStartRequestFlashCallImpl
       return this;
     }
 
+    @JsonProperty(value = JSON_PROPERTY_METHOD, required = true)
+    Builder setMethod(VerificationMethodStart method) {
+      if (!Objects.equals(method, VerificationMethodStart.FLASH_CALL)) {
+        throw new IllegalArgumentException(
+            String.format(
+                "'method' must be '%s' (is '%s')", VerificationMethodStart.FLASH_CALL, method));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_REFERENCE)
     public Builder setReference(String reference) {
       this.reference = OptionalValue.of(reference);

@@ -123,6 +123,15 @@ public class SvamlInstructionPlayFilesImpl
     OptionalValue<List<String>> ids = OptionalValue.empty();
     OptionalValue<String> locale = OptionalValue.empty();
 
+    @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
+    Builder setName(NameEnum name) {
+      if (!Objects.equals(name, NameEnum.PLAY_FILES)) {
+        throw new IllegalArgumentException(
+            String.format("'name' must be '%s' (is '%s')", NameEnum.PLAY_FILES, name));
+      }
+      return this;
+    }
+
     @JsonProperty(value = JSON_PROPERTY_IDS, required = true)
     public Builder setIds(List<String> ids) {
       this.ids = OptionalValue.of(ids);

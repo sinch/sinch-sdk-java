@@ -425,6 +425,15 @@ public class DisconnectedCallEventImpl
       return this;
     }
 
+    @JsonProperty(value = JSON_PROPERTY_EVENT, required = true)
+    Builder setEvent(WebhooksEventRequestType event) {
+      if (!Objects.equals(event, WebhooksEventRequestType.DICE)) {
+        throw new IllegalArgumentException(
+            String.format("'event' must be '%s' (is '%s')", WebhooksEventRequestType.DICE, event));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_REASON)
     public Builder setReason(ReasonEnum reason) {
       this.reason = OptionalValue.of(reason);

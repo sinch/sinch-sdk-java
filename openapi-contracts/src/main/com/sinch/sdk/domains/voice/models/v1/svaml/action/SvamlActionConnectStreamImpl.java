@@ -168,6 +168,15 @@ public class SvamlActionConnectStreamImpl
     OptionalValue<Integer> maxDuration = OptionalValue.empty();
     OptionalValue<List<CallHeader>> callHeaders = OptionalValue.empty();
 
+    @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
+    Builder setName(NameEnum name) {
+      if (!Objects.equals(name, NameEnum.CONNECT_STREAM)) {
+        throw new IllegalArgumentException(
+            String.format("'name' must be '%s' (is '%s')", NameEnum.CONNECT_STREAM, name));
+      }
+      return this;
+    }
+
     @JsonProperty(value = JSON_PROPERTY_DESTINATION, required = true)
     public Builder setDestination(DestinationWebSocket destination) {
       this.destination = OptionalValue.of(destination);

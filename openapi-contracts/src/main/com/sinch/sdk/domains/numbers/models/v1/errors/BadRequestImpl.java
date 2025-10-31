@@ -101,6 +101,15 @@ public class BadRequestImpl implements BadRequest {
     OptionalValue<TypeEnum> type = OptionalValue.of(TypeEnum.BAD_REQUEST);
     OptionalValue<List<FieldViolation>> fieldViolations = OptionalValue.empty();
 
+    @JsonProperty(JSON_PROPERTY_TYPE)
+    Builder setType(TypeEnum type) {
+      if (!Objects.equals(type, TypeEnum.BAD_REQUEST)) {
+        throw new IllegalArgumentException(
+            String.format("'type' must be '%s' (is '%s')", TypeEnum.BAD_REQUEST, type));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_FIELD_VIOLATIONS)
     public Builder setFieldViolations(List<FieldViolation> fieldViolations) {
       this.fieldViolations = OptionalValue.of(fieldViolations);

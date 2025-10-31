@@ -126,6 +126,15 @@ public class SvamlActionConnectMxpImpl
     OptionalValue<DestinationMxp> destination = OptionalValue.empty();
     OptionalValue<List<CallHeader>> callheaders = OptionalValue.empty();
 
+    @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
+    Builder setName(NameEnum name) {
+      if (!Objects.equals(name, NameEnum.CONNECT_MXP)) {
+        throw new IllegalArgumentException(
+            String.format("'name' must be '%s' (is '%s')", NameEnum.CONNECT_MXP, name));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_DESTINATION)
     public Builder setDestination(DestinationMxp destination) {
       this.destination = OptionalValue.of(destination);

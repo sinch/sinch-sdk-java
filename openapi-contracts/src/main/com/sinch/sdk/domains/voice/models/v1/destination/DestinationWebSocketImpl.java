@@ -99,6 +99,16 @@ public class DestinationWebSocketImpl implements DestinationWebSocket {
     OptionalValue<TypeEnum> type = OptionalValue.of(DestinationWebSocket.TypeEnum.WEBSOCKET);
     OptionalValue<String> endpoint = OptionalValue.empty();
 
+    @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
+    Builder setType(TypeEnum type) {
+      if (!Objects.equals(type, DestinationWebSocket.TypeEnum.WEBSOCKET)) {
+        throw new IllegalArgumentException(
+            String.format(
+                "'type' must be '%s' (is '%s')", DestinationWebSocket.TypeEnum.WEBSOCKET, type));
+      }
+      return this;
+    }
+
     @JsonProperty(value = JSON_PROPERTY_ENDPOINT, required = true)
     public Builder setEndpoint(String endpoint) {
       this.endpoint = OptionalValue.of(endpoint);

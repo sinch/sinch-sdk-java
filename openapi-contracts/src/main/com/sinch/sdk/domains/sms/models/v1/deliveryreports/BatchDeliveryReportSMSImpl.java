@@ -215,6 +215,15 @@ public class BatchDeliveryReportSMSImpl implements BatchDeliveryReportSMS, Batch
       return this;
     }
 
+    @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
+    Builder setType(TypeEnum type) {
+      if (!Objects.equals(type, TypeEnum.DELIVERY_REPORT_SMS)) {
+        throw new IllegalArgumentException(
+            String.format("'type' must be '%s' (is '%s')", TypeEnum.DELIVERY_REPORT_SMS, type));
+      }
+      return this;
+    }
+
     public BatchDeliveryReportSMS build() {
       return new BatchDeliveryReportSMSImpl(
           batchId, clientReference, statuses, totalMessageCount, type);

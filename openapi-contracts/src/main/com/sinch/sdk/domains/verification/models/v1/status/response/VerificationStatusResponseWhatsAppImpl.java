@@ -332,6 +332,15 @@ public class VerificationStatusResponseWhatsAppImpl
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_METHOD)
+    Builder setMethod(MethodEnum method) {
+      if (!Objects.equals(method, MethodEnum.WHATSAPP)) {
+        throw new IllegalArgumentException(
+            String.format("'method' must be '%s' (is '%s')", MethodEnum.WHATSAPP, method));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_PRICE)
     public Builder setPrice(VerificationStatusResponseSmsPrice price) {
       this.price = OptionalValue.of(price);

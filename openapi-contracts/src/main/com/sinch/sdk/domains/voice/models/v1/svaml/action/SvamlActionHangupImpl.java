@@ -78,6 +78,15 @@ public class SvamlActionHangupImpl
   static class Builder implements SvamlActionHangup.Builder {
     OptionalValue<NameEnum> name = OptionalValue.of(NameEnum.HANGUP);
 
+    @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
+    Builder setName(NameEnum name) {
+      if (!Objects.equals(name, NameEnum.HANGUP)) {
+        throw new IllegalArgumentException(
+            String.format("'name' must be '%s' (is '%s')", NameEnum.HANGUP, name));
+      }
+      return this;
+    }
+
     public SvamlActionHangup build() {
       return new SvamlActionHangupImpl(name);
     }

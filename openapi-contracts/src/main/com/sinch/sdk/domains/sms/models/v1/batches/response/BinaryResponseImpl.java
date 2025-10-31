@@ -468,6 +468,15 @@ public class BinaryResponseImpl implements BinaryResponse, BatchResponse {
       return this;
     }
 
+    @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
+    Builder setType(TypeEnum type) {
+      if (!Objects.equals(type, TypeEnum.MT_BINARY)) {
+        throw new IllegalArgumentException(
+            String.format("'type' must be '%s' (is '%s')", TypeEnum.MT_BINARY, type));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_CREATED_AT)
     public Builder setCreatedAt(Instant createdAt) {
       this.createdAt = OptionalValue.of(createdAt);

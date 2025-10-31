@@ -102,6 +102,15 @@ public class SvamlInstructionSendDtmfImpl
     OptionalValue<NameEnum> name = OptionalValue.of(NameEnum.SEND_DTMF);
     OptionalValue<String> value = OptionalValue.empty();
 
+    @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
+    Builder setName(NameEnum name) {
+      if (!Objects.equals(name, NameEnum.SEND_DTMF)) {
+        throw new IllegalArgumentException(
+            String.format("'name' must be '%s' (is '%s')", NameEnum.SEND_DTMF, name));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_VALUE)
     public Builder setValue(String value) {
       this.value = OptionalValue.of(value);

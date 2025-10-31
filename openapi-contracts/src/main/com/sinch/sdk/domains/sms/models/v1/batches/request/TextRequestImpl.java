@@ -442,6 +442,15 @@ public class TextRequestImpl implements TextRequest, BatchRequest {
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_TYPE)
+    Builder setType(TypeEnum type) {
+      if (!Objects.equals(type, TypeEnum.MT_TEXT)) {
+        throw new IllegalArgumentException(
+            String.format("'type' must be '%s' (is '%s')", TypeEnum.MT_TEXT, type));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_DELIVERY_REPORT)
     public Builder setDeliveryReport(DeliveryReportType deliveryReport) {
       this.deliveryReport = OptionalValue.of(deliveryReport);

@@ -422,6 +422,16 @@ public class RecipientDeliveryReportMMSImpl
       return this;
     }
 
+    @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
+    Builder setType(TypeEnum type) {
+      if (!Objects.equals(type, TypeEnum.RECIPIENT_DELIVERY_REPORT_MMS)) {
+        throw new IllegalArgumentException(
+            String.format(
+                "'type' must be '%s' (is '%s')", TypeEnum.RECIPIENT_DELIVERY_REPORT_MMS, type));
+      }
+      return this;
+    }
+
     public RecipientDeliveryReportMMS build() {
       return new RecipientDeliveryReportMMSImpl(
           appliedOriginator,

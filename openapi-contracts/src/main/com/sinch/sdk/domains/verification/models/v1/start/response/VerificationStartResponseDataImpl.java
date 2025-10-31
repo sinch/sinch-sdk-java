@@ -182,6 +182,15 @@ public class VerificationStartResponseDataImpl
       return this;
     }
 
+    @JsonProperty(value = JSON_PROPERTY_METHOD, required = true)
+    Builder setMethod(VerificationMethodStart method) {
+      if (!Objects.equals(method, VerificationMethodStart.DATA)) {
+        throw new IllegalArgumentException(
+            String.format("'method' must be '%s' (is '%s')", VerificationMethodStart.DATA, method));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_LINKS)
     public Builder setLinks(List<Link> links) {
       this.links = OptionalValue.of(links);

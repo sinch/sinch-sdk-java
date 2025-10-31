@@ -240,6 +240,15 @@ public class SvamlActionConnectSipImpl
     OptionalValue<List<CallHeader>> callHeaders = OptionalValue.empty();
     OptionalValue<MusicOnHold> MusicOnHold = OptionalValue.empty();
 
+    @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
+    Builder setName(NameEnum name) {
+      if (!Objects.equals(name, NameEnum.CONNECT_SIP)) {
+        throw new IllegalArgumentException(
+            String.format("'name' must be '%s' (is '%s')", NameEnum.CONNECT_SIP, name));
+      }
+      return this;
+    }
+
     @JsonProperty(value = JSON_PROPERTY_DESTINATION, required = true)
     public Builder setDestination(DestinationSip destination) {
       this.destination = OptionalValue.of(destination);

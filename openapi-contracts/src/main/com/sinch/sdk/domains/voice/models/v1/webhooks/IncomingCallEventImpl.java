@@ -447,6 +447,15 @@ public class IncomingCallEventImpl
       return this;
     }
 
+    @JsonProperty(value = JSON_PROPERTY_EVENT, required = true)
+    Builder setEvent(WebhooksEventRequestType event) {
+      if (!Objects.equals(event, WebhooksEventRequestType.ICE)) {
+        throw new IllegalArgumentException(
+            String.format("'event' must be '%s' (is '%s')", WebhooksEventRequestType.ICE, event));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_CALL_RESOURCE_URL)
     public Builder setCallResourceUrl(String callResourceUrl) {
       this.callResourceUrl = OptionalValue.of(callResourceUrl);
