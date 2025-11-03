@@ -63,6 +63,7 @@ public class ConversationService
   private volatile EventsService events;
   private volatile TranscodingService transcoding;
   private volatile CapabilityService capability;
+  private volatile ProjectSettingsService projectSettings;
   private volatile WebHooksService webhooks;
   private volatile TemplatesService templates;
 
@@ -156,6 +157,15 @@ public class ConversationService
               uriUUID, context, this::instanceLazyInit, httpClientSupplier, () -> authManagers);
     }
     return this.webhooks;
+  }
+
+  public ProjectSettingsService projectSettings() {
+    if (null == this.projectSettings) {
+      instanceLazyInit();
+      this.projectSettings =
+          new ProjectSettingsService(uriUUID, context, httpClientSupplier.get(), authManagers);
+    }
+    return this.projectSettings;
   }
 
   private void instanceLazyInit() {

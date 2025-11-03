@@ -66,6 +66,14 @@ public interface ConversationService {
   CapabilityService capability();
 
   /**
+   * ProjectSettings Service instance
+   *
+   * @return service instance for project
+   * @since 2.0
+   */
+  ProjectSettingsService projectSettings();
+
+  /**
    * WebHooksService Service instance
    *
    * @return service instance for project
