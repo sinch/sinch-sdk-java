@@ -4,6 +4,7 @@ import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.mailgun.api.v1.EmailsService;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.OverrideProperties;
+import com.sinch.sdk.domains.mailgun.models.v1.emails.request.ResendRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailHtmlInTemplateRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailHtmlInlineRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest;
@@ -23,15 +24,15 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class SendEmail extends BaseApplication {
+public class ReSend extends BaseApplication {
 
-  private static final Logger LOGGER = Logger.getLogger(SendEmail.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ReSend.class.getName());
 
-  public SendEmail() throws IOException {}
+  public ReSend() throws IOException {}
 
   public static void main(String[] args) {
     try {
-      new SendEmail().run();
+      new ReSend().run();
     } catch (Exception e) {
       LOGGER.severe(e.getMessage());
       e.printStackTrace();
@@ -42,11 +43,13 @@ public class SendEmail extends BaseApplication {
 
     EmailsService service = client.mailgun().v1().emails();
 
-    LOGGER.info("Send email with Mailgun to: " + mailgunTo);
+    LOGGER.info("ReSend email with Mailgun to: " + mailgunTo);
 
-    SendEmailRequest parameters = createTextEmail();
+    String storageKey = "storage key value";
 
-    SendEmailResponse response = service.sendEmail(mailgunDomain, parameters);
+    ResendRequest parameters = ResendRequest.builder().setTo(Arrays.asList(mailgunTo)).build();
+
+    SendEmailResponse response = service.resend(mailgunDomain, storageKey, parameters);
 
     LOGGER.info("Response: " + response);
   }
@@ -131,6 +134,6 @@ public class SendEmail extends BaseApplication {
                     .build())
             .build();
 
-    return inline;
+    return inTemplate;
   }
 }

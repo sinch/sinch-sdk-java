@@ -28,6 +28,30 @@ import com.sinch.sdk.domains.mailgun.models.v1.templates.response.ListVersionsRe
 public interface TemplatesService {
 
   /**
+   * Get templates (using default parameters)
+   *
+   * <p>Returns a list of templates for the domain.
+   *
+   * @param domainName Domain name to fetch the templates for. (required)
+   * @return ListTemplatesResponse
+   * @throws ApiException if fails to make API call
+   */
+  ListTemplatesResponse list(String domainName) throws ApiException;
+
+  /**
+   * Get templates
+   *
+   * <p>Returns a list of templates for the domain.
+   *
+   * @param domainName Domain name to fetch the templates for. (required)
+   * @param queryParameter (optional)
+   * @return ListTemplatesResponse
+   * @throws ApiException if fails to make API call
+   */
+  ListTemplatesResponse list(String domainName, ListTemplatesQueryParameters queryParameter)
+      throws ApiException;
+
+  /**
    * Copy a version (using default parameters)
    *
    * <p>Copies an existing version into a new version with the provided name.
@@ -185,30 +209,6 @@ public interface TemplatesService {
    * @throws ApiException if fails to make API call
    */
   VersionDetails getVersion(String domainName, String templateName, String versionName)
-      throws ApiException;
-
-  /**
-   * Get templates (using default parameters)
-   *
-   * <p>Returns a list of templates for the domain.
-   *
-   * @param domainName Domain name to fetch the templates for. (required)
-   * @return ListTemplatesResponse
-   * @throws ApiException if fails to make API call
-   */
-  ListTemplatesResponse list(String domainName) throws ApiException;
-
-  /**
-   * Get templates
-   *
-   * <p>Returns a list of templates for the domain.
-   *
-   * @param domainName Domain name to fetch the templates for. (required)
-   * @param queryParameter (optional)
-   * @return ListTemplatesResponse
-   * @throws ApiException if fails to make API call
-   */
-  ListTemplatesResponse list(String domainName, ListTemplatesQueryParameters queryParameter)
       throws ApiException;
 
   /**
