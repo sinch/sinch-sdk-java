@@ -24,8 +24,8 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameterUtils;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.core.models.pagination.HttpRequestPageNavigator;
 import com.sinch.sdk.core.models.pagination.Page;
+import com.sinch.sdk.core.models.pagination.PageNavigator;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.EmergencyAddress;
@@ -108,9 +108,7 @@ public class ActiveNumberServiceImpl
       return new ActiveNumbersListResponse(
           this,
           new Page<>(
-              nextParameters,
-              deserialized.getActiveNumbers(),
-              new HttpRequestPageNavigator(nextPage)));
+              nextParameters, deserialized.getActiveNumbers(), new PageNavigator<>(nextPage)));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

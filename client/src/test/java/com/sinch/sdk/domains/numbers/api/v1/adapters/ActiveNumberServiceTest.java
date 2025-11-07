@@ -22,8 +22,8 @@ import com.sinch.sdk.core.http.URLParameter.STYLE;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.models.ServerConfigurationTest.ServerConfigurationMatcher;
-import com.sinch.sdk.core.models.pagination.HttpRequestPageNavigator;
 import com.sinch.sdk.core.models.pagination.Page;
+import com.sinch.sdk.core.models.pagination.PageNavigator;
 import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumberDtoTest;
@@ -153,7 +153,7 @@ class ActiveNumberServiceTest extends NumbersBaseTest {
                     .setPageToken("")
                     .build(),
                 ActiveNumberDtoTest.activeNumberListLight.getActiveNumbers(),
-                new HttpRequestPageNavigator(null)));
+                new PageNavigator<>(null)));
 
     ActiveNumbersListResponse response =
         service.list(
@@ -218,7 +218,7 @@ class ActiveNumberServiceTest extends NumbersBaseTest {
                     .setOrderBy(OrderBy.PHONE_NUMBER)
                     .build(),
                 ActiveNumberDtoTest.activeNumberList.getActiveNumbers(),
-                new HttpRequestPageNavigator(
+                new PageNavigator<>(
                     new HttpRequest(
                         "/v1/projects/"
                             + URLPathUtils.encodePathSegment(URI_UUID)
