@@ -147,11 +147,7 @@ class ActiveNumberServiceTest extends NumbersBaseTest {
         new ActiveNumbersListResponse(
             lowService,
             new Page<>(
-                ActiveNumbersListQueryParameters.builder()
-                    .setRegionCode("region")
-                    .setType(NumberType.MOBILE)
-                    .setPageToken("")
-                    .build(),
+                null,
                 ActiveNumberDtoTest.activeNumberListLight.getActiveNumbers(),
                 new PageNavigator<>(null)));
 
@@ -207,16 +203,7 @@ class ActiveNumberServiceTest extends NumbersBaseTest {
         new ActiveNumbersListResponse(
             lowService,
             new Page<>(
-                ActiveNumbersListQueryParameters.builder()
-                    .setRegionCode("another region")
-                    .setType(NumberType.TOLL_FREE)
-                    .setSearchPattern("pattern value")
-                    .setSearchPosition(SearchPosition.END)
-                    .setCapabilities(Arrays.asList(Capability.VOICE))
-                    .setPageSize(5)
-                    .setPageToken("foo")
-                    .setOrderBy(OrderBy.PHONE_NUMBER)
-                    .build(),
+                null,
                 ActiveNumberDtoTest.activeNumberList.getActiveNumbers(),
                 new PageNavigator<>(
                     new HttpRequest(

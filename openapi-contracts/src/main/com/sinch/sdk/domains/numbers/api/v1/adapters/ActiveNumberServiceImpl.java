@@ -106,9 +106,7 @@ public class ActiveNumberServiceImpl
       }
 
       return new ActiveNumbersListResponse(
-          this,
-          new Page<>(
-              nextParameters, deserialized.getActiveNumbers(), new PageNavigator<>(nextPage)));
+          this, new Page<>(null, deserialized.getActiveNumbers(), new PageNavigator<>(nextPage)));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
