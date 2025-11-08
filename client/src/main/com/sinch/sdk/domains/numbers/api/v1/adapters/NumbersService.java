@@ -87,8 +87,7 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
     return this.regions;
   }
 
-  // should be protected when V0 design will be removed onto 2.0 version
-  public ActiveNumberServiceFacade active() {
+  ActiveNumberServiceFacade active() {
     if (null == this.active) {
       instanceLazyInit();
       this.active =
