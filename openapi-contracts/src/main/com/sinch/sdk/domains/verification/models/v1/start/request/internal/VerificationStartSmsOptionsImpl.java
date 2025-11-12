@@ -16,8 +16,7 @@ import java.util.Objects;
 
 @JsonPropertyOrder({
   VerificationStartSmsOptionsImpl.JSON_PROPERTY_CODE_TYPE,
-  VerificationStartSmsOptionsImpl.JSON_PROPERTY_EXPIRY,
-  VerificationStartSmsOptionsImpl.JSON_PROPERTY_TEMPLATE
+  VerificationStartSmsOptionsImpl.JSON_PROPERTY_EXPIRY
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
@@ -32,10 +31,6 @@ public class VerificationStartSmsOptionsImpl implements VerificationStartSmsOpti
 
   private OptionalValue<String> expiry;
 
-  public static final String JSON_PROPERTY_TEMPLATE = "template";
-
-  private OptionalValue<String> template;
-
   private OptionalValue<String> acceptLanguage;
 
   /**
@@ -49,12 +44,10 @@ public class VerificationStartSmsOptionsImpl implements VerificationStartSmsOpti
   protected VerificationStartSmsOptionsImpl(
       OptionalValue<SmsCodeType> codeType,
       OptionalValue<String> expiry,
-      OptionalValue<String> template,
       OptionalValue<String> acceptLanguage,
       OptionalValue<Map<String, Object>> additionalProperties) {
     this.codeType = codeType;
     this.expiry = expiry;
-    this.template = template;
     this.acceptLanguage = acceptLanguage;
     this.additionalProperties = additionalProperties;
   }
@@ -79,17 +72,6 @@ public class VerificationStartSmsOptionsImpl implements VerificationStartSmsOpti
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> expiry() {
     return expiry;
-  }
-
-  @JsonIgnore
-  public String getTemplate() {
-    return template.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_TEMPLATE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> template() {
-    return template;
   }
 
   @JsonIgnore
@@ -131,7 +113,6 @@ public class VerificationStartSmsOptionsImpl implements VerificationStartSmsOpti
         (VerificationStartSmsOptionsImpl) o;
     return Objects.equals(this.codeType, verificationStartRequestSmsAllOfSmsOptions.codeType)
         && Objects.equals(this.expiry, verificationStartRequestSmsAllOfSmsOptions.expiry)
-        && Objects.equals(this.template, verificationStartRequestSmsAllOfSmsOptions.template)
         && Objects.equals(
             this.acceptLanguage, verificationStartRequestSmsAllOfSmsOptions.acceptLanguage)
         && Objects.equals(
@@ -141,7 +122,7 @@ public class VerificationStartSmsOptionsImpl implements VerificationStartSmsOpti
 
   @Override
   public int hashCode() {
-    return Objects.hash(codeType, expiry, template, acceptLanguage, additionalProperties);
+    return Objects.hash(codeType, expiry, acceptLanguage, additionalProperties);
   }
 
   @Override
@@ -150,7 +131,6 @@ public class VerificationStartSmsOptionsImpl implements VerificationStartSmsOpti
     sb.append("class VerificationStartSmsOptionsImpl {\n");
     sb.append("    codeType: ").append(toIndentedString(codeType)).append("\n");
     sb.append("    expiry: ").append(toIndentedString(expiry)).append("\n");
-    sb.append("    template: ").append(toIndentedString(template)).append("\n");
     sb.append("    acceptLanguage: ").append(toIndentedString(acceptLanguage)).append("\n");
     sb.append("    additionalProperties: ")
         .append(toIndentedString(additionalProperties))
@@ -173,7 +153,6 @@ public class VerificationStartSmsOptionsImpl implements VerificationStartSmsOpti
   static class Builder implements VerificationStartSmsOptions.Builder {
     OptionalValue<SmsCodeType> codeType = OptionalValue.empty();
     OptionalValue<String> expiry = OptionalValue.empty();
-    OptionalValue<String> template = OptionalValue.empty();
     OptionalValue<String> acceptLanguage = OptionalValue.empty();
     OptionalValue<Map<String, Object>> additionalProperties = OptionalValue.empty();
 
@@ -186,12 +165,6 @@ public class VerificationStartSmsOptionsImpl implements VerificationStartSmsOpti
     @JsonProperty(JSON_PROPERTY_EXPIRY)
     public Builder setExpiry(String expiry) {
       this.expiry = OptionalValue.of(expiry);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_TEMPLATE)
-    public Builder setTemplate(String template) {
-      this.template = OptionalValue.of(template);
       return this;
     }
 
@@ -212,7 +185,7 @@ public class VerificationStartSmsOptionsImpl implements VerificationStartSmsOpti
 
     public VerificationStartSmsOptions build() {
       return new VerificationStartSmsOptionsImpl(
-          codeType, expiry, template, acceptLanguage, additionalProperties);
+          codeType, expiry, acceptLanguage, additionalProperties);
     }
   }
 }

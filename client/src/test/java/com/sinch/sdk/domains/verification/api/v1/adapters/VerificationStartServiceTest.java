@@ -98,7 +98,6 @@ public class VerificationStartServiceTest extends VerificationBaseTest {
             .setCustom(startVerificationSmsRequestDtoImpl.getCustom())
             .setExpiry(startVerificationSmsRequestDtoImpl.getExpiry())
             .setCodeType(startVerificationSmsRequestDtoImpl.getCodeType())
-            .setTemplate(startVerificationSmsRequestDtoImpl.getTemplate())
             .setAcceptLanguage("es-ES")
             .putExtraOption("my key", startVerificationSmsRequestDtoImpl.getExtraOption("my key"))
             .build();

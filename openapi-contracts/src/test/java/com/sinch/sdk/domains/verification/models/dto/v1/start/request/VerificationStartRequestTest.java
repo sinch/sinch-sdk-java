@@ -65,7 +65,6 @@ public class VerificationStartRequestTest extends VerificationBaseTest {
                   .setIdentity(NumberIdentity.valueOf("+endpoint"))
                   .setExpiry("01:02:03")
                   .setCodeType(SmsCodeType.ALPHANUMERIC)
-                  .setTemplate("My template require to use '{{CODE}}' code")
                   .putExtraOption("my key", "my value")
                   .build());
 
@@ -78,7 +77,6 @@ public class VerificationStartRequestTest extends VerificationBaseTest {
                   .setIdentity(NumberIdentity.valueOf("+endpoint"))
                   .setExpiry("01:02:03")
                   .setCodeType(SmsCodeType.ALPHANUMERIC)
-                  .setTemplate("My template require to use '{{CODE}}' code")
                   .setAcceptLanguage("es-ES")
                   .putExtraOption("my key", "my value")
                   .build());
