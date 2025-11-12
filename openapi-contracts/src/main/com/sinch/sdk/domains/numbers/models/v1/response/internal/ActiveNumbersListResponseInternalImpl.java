@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  ActiveNumberListResponseInternalImpl.JSON_PROPERTY_ACTIVE_NUMBERS,
-  ActiveNumberListResponseInternalImpl.JSON_PROPERTY_NEXT_PAGE_TOKEN,
-  ActiveNumberListResponseInternalImpl.JSON_PROPERTY_TOTAL_SIZE
+  ActiveNumbersListResponseInternalImpl.JSON_PROPERTY_ACTIVE_NUMBERS,
+  ActiveNumbersListResponseInternalImpl.JSON_PROPERTY_NEXT_PAGE_TOKEN,
+  ActiveNumbersListResponseInternalImpl.JSON_PROPERTY_TOTAL_SIZE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class ActiveNumberListResponseInternalImpl implements ActiveNumberListResponseInternal {
+public class ActiveNumbersListResponseInternalImpl implements ActiveNumbersListResponseInternal {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ACTIVE_NUMBERS = "activeNumbers";
@@ -33,9 +33,9 @@ public class ActiveNumberListResponseInternalImpl implements ActiveNumberListRes
 
   private OptionalValue<Integer> totalSize;
 
-  public ActiveNumberListResponseInternalImpl() {}
+  public ActiveNumbersListResponseInternalImpl() {}
 
-  protected ActiveNumberListResponseInternalImpl(
+  protected ActiveNumbersListResponseInternalImpl(
       OptionalValue<List<ActiveNumber>> activeNumbers,
       OptionalValue<String> nextPageToken,
       OptionalValue<Integer> totalSize) {
@@ -86,8 +86,8 @@ public class ActiveNumberListResponseInternalImpl implements ActiveNumberListRes
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ActiveNumberListResponseInternalImpl listActiveNumbersResponse =
-        (ActiveNumberListResponseInternalImpl) o;
+    ActiveNumbersListResponseInternalImpl listActiveNumbersResponse =
+        (ActiveNumbersListResponseInternalImpl) o;
     return Objects.equals(this.activeNumbers, listActiveNumbersResponse.activeNumbers)
         && Objects.equals(this.nextPageToken, listActiveNumbersResponse.nextPageToken)
         && Objects.equals(this.totalSize, listActiveNumbersResponse.totalSize);
@@ -101,7 +101,7 @@ public class ActiveNumberListResponseInternalImpl implements ActiveNumberListRes
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ActiveNumberListResponseInternalImpl {\n");
+    sb.append("class ActiveNumbersListResponseInternalImpl {\n");
     sb.append("    activeNumbers: ").append(toIndentedString(activeNumbers)).append("\n");
     sb.append("    nextPageToken: ").append(toIndentedString(nextPageToken)).append("\n");
     sb.append("    totalSize: ").append(toIndentedString(totalSize)).append("\n");
@@ -120,7 +120,7 @@ public class ActiveNumberListResponseInternalImpl implements ActiveNumberListRes
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements ActiveNumberListResponseInternal.Builder {
+  static class Builder implements ActiveNumbersListResponseInternal.Builder {
     OptionalValue<List<ActiveNumber>> activeNumbers = OptionalValue.empty();
     OptionalValue<String> nextPageToken = OptionalValue.empty();
     OptionalValue<Integer> totalSize = OptionalValue.empty();
@@ -143,8 +143,8 @@ public class ActiveNumberListResponseInternalImpl implements ActiveNumberListRes
       return this;
     }
 
-    public ActiveNumberListResponseInternal build() {
-      return new ActiveNumberListResponseInternalImpl(activeNumbers, nextPageToken, totalSize);
+    public ActiveNumbersListResponseInternal build() {
+      return new ActiveNumbersListResponseInternalImpl(activeNumbers, nextPageToken, totalSize);
     }
   }
 }

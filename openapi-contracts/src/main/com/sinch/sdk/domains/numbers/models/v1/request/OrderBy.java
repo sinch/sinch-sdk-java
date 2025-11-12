@@ -5,16 +5,13 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/**
- * Supported fields for ordering
- *
- * @since 1.2
- */
-public final class OrderBy extends EnumDynamic<String, OrderBy> {
-  /** Ordering by phoneNumber */
+/** The ordering the request is supporting */
+public class OrderBy extends EnumDynamic<String, OrderBy> {
+
+  /** Ordered by phone number */
   public static final OrderBy PHONE_NUMBER = new OrderBy("phoneNumber");
 
-  /** Ordering by displayName */
+  /** Ordered by display name */
   public static final OrderBy DISPLAY_NAME = new OrderBy("displayName");
 
   private static final EnumSupportDynamic<String, OrderBy> ENUM_SUPPORT =

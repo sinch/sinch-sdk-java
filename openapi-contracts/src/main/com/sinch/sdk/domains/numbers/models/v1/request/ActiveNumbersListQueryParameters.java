@@ -11,13 +11,9 @@
 package com.sinch.sdk.domains.numbers.models.v1.request;
 
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.core.utils.EnumDynamic;
-import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import com.sinch.sdk.domains.numbers.models.v1.Capability;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 /** ActiveNumbersListQueryParameters */
 public interface ActiveNumbersListQueryParameters {
@@ -71,38 +67,12 @@ public interface ActiveNumbersListQueryParameters {
    */
   OptionalValue<String> getPageToken();
 
-  /** The ordering the request is supporting */
-  public class OrderByEnum extends EnumDynamic<String, OrderByEnum> {
-    public static final OrderByEnum PHONE_NUMBER = new OrderByEnum("phoneNumber");
-    public static final OrderByEnum DISPLAY_NAME = new OrderByEnum("displayName");
-
-    private static final EnumSupportDynamic<String, OrderByEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(
-            OrderByEnum.class, OrderByEnum::new, Arrays.asList(PHONE_NUMBER, DISPLAY_NAME));
-
-    private OrderByEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<OrderByEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static OrderByEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(OrderByEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
-
   /**
-   * The ordering the request is supporting
+   * Get orderBy
    *
    * @return orderBy
    */
-  OptionalValue<OrderByEnum> getOrderBy();
+  OptionalValue<OrderBy> getOrderBy();
 
   /**
    * Getting builder
@@ -195,7 +165,7 @@ public interface ActiveNumbersListQueryParameters {
      * @return Current builder
      * @see #getOrderBy
      */
-    Builder setOrderBy(OrderByEnum orderBy);
+    Builder setOrderBy(OrderBy orderBy);
 
     /**
      * Create instance

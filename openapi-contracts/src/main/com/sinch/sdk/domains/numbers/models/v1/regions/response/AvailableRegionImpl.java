@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.numbers.models.v1.regions.available.response;
+package com.sinch.sdk.domains.numbers.models.v1.regions.response;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;

@@ -22,9 +22,9 @@ import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentReques
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumbersListQueryParameters;
 import com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern;
 import com.sinch.sdk.domains.numbers.models.v1.request.SearchPosition;
-import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumbersListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
-import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumbersListResponse;
 import com.sinch.sdk.e2e.Config;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -38,15 +38,15 @@ public class NumbersSteps {
 
   NumbersService service;
 
-  AvailableNumberListResponse searchForAvailableNumbersResponse;
+  AvailableNumbersListResponse searchForAvailableNumbersResponse;
 
   AvailableNumber checkAvailabilityResponse;
   ApiException availabilityResponseException;
   ActiveNumber rentAnyResponse;
   ActiveNumber rentResponse;
-  ActiveNumberListResponse activeNumberListResponse;
+  ActiveNumbersListResponse activeNumberListResponse;
 
-  ActiveNumberListResponse activeNumberListAllResponse;
+  ActiveNumbersListResponse activeNumberListAllResponse;
 
   ActiveNumber updateResponse;
   ActiveNumber getResponse;

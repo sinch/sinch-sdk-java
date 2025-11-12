@@ -8,17 +8,12 @@ import com.sinch.sdk.domains.numbers.api.v1.ActiveNumberService;
 import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.EmergencyAddress;
-import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest;
-import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequestImpl;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumbersListQueryParameters;
-import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumbersListQueryParameters.OrderByEnum;
 import com.sinch.sdk.domains.numbers.models.v1.request.EmergencyAddressRequest;
-import com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern;
-import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumbersListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.response.ValidateAddressResponse;
 import com.sinch.sdk.models.NumbersContext;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -42,9 +37,8 @@ public class ActiveNumberServiceFacade implements ActiveNumberService {
             numbersService);
   }
 
-  @Deprecated
-  public ActiveNumberListResponse list(ActiveNumberListRequest _parameters) throws ApiException {
-    return list(convert(_parameters));
+  protected ActiveNumberService getService() {
+    return this.activeNumberService;
   }
 
   @Override
@@ -86,37 +80,8 @@ public class ActiveNumberServiceFacade implements ActiveNumberService {
   }
 
   @Override
-  public ActiveNumberListResponse list(ActiveNumbersListQueryParameters queryParameter)
+  public ActiveNumbersListResponse list(ActiveNumbersListQueryParameters queryParameter)
       throws ApiException {
     return activeNumberService.list(queryParameter);
-  }
-
-  @Deprecated
-  public static ActiveNumbersListQueryParameters convert(ActiveNumberListRequest _parameters)
-      throws ApiException {
-
-    if (null == _parameters) {
-      return null;
-    }
-
-    ActiveNumberListRequestImpl parameters = (ActiveNumberListRequestImpl) _parameters;
-
-    ActiveNumbersListQueryParameters.Builder builder = ActiveNumbersListQueryParameters.builder();
-
-    parameters.regionCode().ifPresent(builder::setRegionCode);
-    parameters.type().ifPresent(builder::setType);
-    parameters.capabilities().ifPresent(p -> builder.setCapabilities(new ArrayList<>(p)));
-    parameters.pageSize().ifPresent(builder::setPageSize);
-
-    parameters.orderBy().ifPresent(p -> builder.setOrderBy(OrderByEnum.from(p.value())));
-
-    parameters.pageToken().ifPresent(builder::setPageToken);
-
-    if (parameters.searchPattern().isPresent()) {
-      SearchPattern search = parameters.getSearchPattern();
-      builder.setSearchPattern(search.getPattern());
-      builder.setSearchPosition(search.getPosition());
-    }
-    return builder.build();
   }
 }

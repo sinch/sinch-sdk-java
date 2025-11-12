@@ -16,11 +16,23 @@ import com.sinch.sdk.domains.numbers.models.v1.EmergencyAddress;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumbersListQueryParameters;
 import com.sinch.sdk.domains.numbers.models.v1.request.EmergencyAddressRequest;
-import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumbersListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.response.ValidateAddressResponse;
 
 /** Active Number Service */
 public interface ActiveNumberService {
+
+  /**
+   * Lists active numbers for a project
+   *
+   * <p>Lists all active numbers for a project.
+   *
+   * @param queryParameter (optional)
+   * @return ActiveNumbersListResponse
+   * @throws ApiException if fails to make API call
+   */
+  ActiveNumbersListResponse list(ActiveNumbersListQueryParameters queryParameter)
+      throws ApiException;
 
   /**
    * Remove the emergency address for a number.
@@ -59,18 +71,6 @@ public interface ActiveNumberService {
    * @throws ApiException if fails to make API call
    */
   EmergencyAddress getEmergencyAddress(String phoneNumber) throws ApiException;
-
-  /**
-   * Lists active numbers for a project
-   *
-   * <p>Lists all active numbers for a project.
-   *
-   * @param queryParameter (optional)
-   * @return ActiveNumberListResponse
-   * @throws ApiException if fails to make API call
-   */
-  ActiveNumberListResponse list(ActiveNumbersListQueryParameters queryParameter)
-      throws ApiException;
 
   /**
    * Add a emergency address for a number

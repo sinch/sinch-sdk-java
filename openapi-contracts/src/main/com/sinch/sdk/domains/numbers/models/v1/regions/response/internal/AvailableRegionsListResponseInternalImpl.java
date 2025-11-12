@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.numbers.models.v1.regions.available.response.internal;
+package com.sinch.sdk.domains.numbers.models.v1.regions.response.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,24 +7,24 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.numbers.models.v1.regions.available.response.AvailableRegion;
+import com.sinch.sdk.domains.numbers.models.v1.regions.response.AvailableRegion;
 import java.util.List;
 import java.util.Objects;
 
-@JsonPropertyOrder({AvailableRegionListResponseInternalImpl.JSON_PROPERTY_AVAILABLE_REGIONS})
+@JsonPropertyOrder({AvailableRegionsListResponseInternalImpl.JSON_PROPERTY_AVAILABLE_REGIONS})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class AvailableRegionListResponseInternalImpl
-    implements AvailableRegionListResponseInternal {
+public class AvailableRegionsListResponseInternalImpl
+    implements AvailableRegionsListResponseInternal {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_AVAILABLE_REGIONS = "availableRegions";
 
   private OptionalValue<List<AvailableRegion>> availableRegions;
 
-  public AvailableRegionListResponseInternalImpl() {}
+  public AvailableRegionsListResponseInternalImpl() {}
 
-  protected AvailableRegionListResponseInternalImpl(
+  protected AvailableRegionsListResponseInternalImpl(
       OptionalValue<List<AvailableRegion>> availableRegions) {
     this.availableRegions = availableRegions;
   }
@@ -49,8 +49,8 @@ public class AvailableRegionListResponseInternalImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AvailableRegionListResponseInternalImpl listAvailableRegionsResponse =
-        (AvailableRegionListResponseInternalImpl) o;
+    AvailableRegionsListResponseInternalImpl listAvailableRegionsResponse =
+        (AvailableRegionsListResponseInternalImpl) o;
     return Objects.equals(this.availableRegions, listAvailableRegionsResponse.availableRegions);
   }
 
@@ -62,7 +62,7 @@ public class AvailableRegionListResponseInternalImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AvailableRegionListResponseInternalImpl {\n");
+    sb.append("class AvailableRegionsListResponseInternalImpl {\n");
     sb.append("    availableRegions: ").append(toIndentedString(availableRegions)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -79,7 +79,7 @@ public class AvailableRegionListResponseInternalImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements AvailableRegionListResponseInternal.Builder {
+  static class Builder implements AvailableRegionsListResponseInternal.Builder {
     OptionalValue<List<AvailableRegion>> availableRegions = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_AVAILABLE_REGIONS)
@@ -88,8 +88,8 @@ public class AvailableRegionListResponseInternalImpl
       return this;
     }
 
-    public AvailableRegionListResponseInternal build() {
-      return new AvailableRegionListResponseInternalImpl(availableRegions);
+    public AvailableRegionsListResponseInternal build() {
+      return new AvailableRegionsListResponseInternalImpl(availableRegions);
     }
   }
 }

@@ -25,21 +25,19 @@ import com.sinch.sdk.core.http.URLParameterUtils;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.models.pagination.Page;
-import com.sinch.sdk.core.models.pagination.TokenPageNavigator;
-import com.sinch.sdk.core.utils.Pair;
+import com.sinch.sdk.core.models.pagination.PageNavigator;
+import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.EmergencyAddress;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumbersListQueryParameters;
 import com.sinch.sdk.domains.numbers.models.v1.request.EmergencyAddressRequest;
-import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumbersListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.response.ValidateAddressResponse;
-import com.sinch.sdk.domains.numbers.models.v1.response.internal.ActiveNumberListResponseInternal;
-import com.sinch.sdk.domains.numbers.models.v1.response.internal.ActiveNumberListResponseInternalImpl;
+import com.sinch.sdk.domains.numbers.models.v1.response.internal.ActiveNumbersListResponseInternal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +69,157 @@ public class ActiveNumberServiceImpl
     this.mapper = mapper;
     this.projectId = projectId;
     this.numbersService = numbersService;
+  }
+
+  @Override
+  public ActiveNumbersListResponse list(ActiveNumbersListQueryParameters queryParameter)
+      throws ApiException {
+
+    LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
+
+    HttpRequest httpRequest = listRequestBuilder(queryParameter);
+    return _getActiveNumbersPageAsListResponse(queryParameter, httpRequest);
+  }
+
+  public ActiveNumbersListResponse _getActiveNumbersPageAsListResponse(
+      ActiveNumbersListQueryParameters queryParameter, HttpRequest httpRequest)
+      throws ApiException {
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+
+      ActiveNumbersListResponseInternal deserialized =
+          mapper.deserialize(response, new TypeReference<ActiveNumbersListResponseInternal>() {});
+
+      String nextToken = deserialized.getNextPageToken();
+
+      ActiveNumbersListQueryParameters nextParameters =
+          ActiveNumbersListQueryParameters.builder(queryParameter)
+              .setPageToken(deserialized.getNextPageToken())
+              .build();
+
+      HttpRequest nextPage = null;
+      if (!StringUtil.isEmpty(nextToken)) {
+        nextPage = listRequestBuilder(nextParameters);
+      }
+
+      return new ActiveNumbersListResponse(
+          this, new Page<>(null, deserialized.getActiveNumbers(), new PageNavigator<>(nextPage)));
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest listRequestBuilder(ActiveNumbersListQueryParameters queryParameter)
+      throws ApiException {
+    // verify the required parameter 'this.projectId' is set
+    if (this.projectId == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'this.projectId' when calling list");
+    }
+    // verify the required parameter 'regionCode' is set
+    if (null == queryParameter || queryParameter.getRegionCode() == null) {
+      throw new ApiException(400, "Missing the required parameter 'regionCode' when calling list");
+    }
+    // verify the required parameter 'type' is set
+    if (null == queryParameter || queryParameter.getType() == null) {
+      throw new ApiException(400, "Missing the required parameter 'type' when calling list");
+    }
+
+    String localVarPath =
+        "/v1/projects/{projectId}/activeNumbers"
+            .replaceAll(
+                "\\{" + "projectId" + "\\}",
+                URLPathUtils.encodePathSegment(this.projectId.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+    if (null != queryParameter) {
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getRegionCode(),
+          "regionCode",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getSearchPattern(),
+          "numberPattern.pattern",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getSearchPosition(),
+          "numberPattern.searchPattern",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getType(), "type", URLParameter.form, null, localVarQueryParams, true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getCapabilities(),
+          "capability",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getPageSize(),
+          "pageSize",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getPageToken(),
+          "pageToken",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getOrderBy(),
+          "orderBy",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
+    }
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("Basic", "OAuth2.0");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.GET,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
   }
 
   @Override
@@ -269,153 +418,6 @@ public class ActiveNumberServiceImpl
         localVarAccepts,
         localVarContentTypes,
         localVarAuthNames);
-  }
-
-  @Override
-  public ActiveNumberListResponse list(ActiveNumbersListQueryParameters queryParameter)
-      throws ApiException {
-
-    LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
-
-    HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-
-      ActiveNumberListResponseInternal deserialized =
-          mapper.deserialize(response, new TypeReference<ActiveNumberListResponseInternal>() {});
-
-      return mapForPaging(queryParameter, deserialized);
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest listRequestBuilder(ActiveNumbersListQueryParameters queryParameter)
-      throws ApiException {
-    // verify the required parameter 'this.projectId' is set
-    if (this.projectId == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'this.projectId' when calling list");
-    }
-    // verify the required parameter 'regionCode' is set
-    if (null == queryParameter || queryParameter.getRegionCode() == null) {
-      throw new ApiException(400, "Missing the required parameter 'regionCode' when calling list");
-    }
-    // verify the required parameter 'type' is set
-    if (null == queryParameter || queryParameter.getType() == null) {
-      throw new ApiException(400, "Missing the required parameter 'type' when calling list");
-    }
-
-    String localVarPath =
-        "/v1/projects/{projectId}/activeNumbers"
-            .replaceAll(
-                "\\{" + "projectId" + "\\}",
-                URLPathUtils.encodePathSegment(this.projectId.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-    if (null != queryParameter) {
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getRegionCode(),
-          "regionCode",
-          URLParameter.form,
-          null,
-          localVarQueryParams,
-          true);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getSearchPattern(),
-          "numberPattern.pattern",
-          URLParameter.form,
-          null,
-          localVarQueryParams,
-          true);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getSearchPosition(),
-          "numberPattern.searchPattern",
-          URLParameter.form,
-          null,
-          localVarQueryParams,
-          true);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getType(), "type", URLParameter.form, null, localVarQueryParams, true);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getCapabilities(),
-          "capability",
-          URLParameter.form,
-          null,
-          localVarQueryParams,
-          true);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getPageSize(),
-          "pageSize",
-          URLParameter.form,
-          null,
-          localVarQueryParams,
-          true);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getPageToken(),
-          "pageToken",
-          URLParameter.form,
-          null,
-          localVarQueryParams,
-          true);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getOrderBy(),
-          "orderBy",
-          URLParameter.form,
-          null,
-          localVarQueryParams,
-          true);
-    }
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-
-    final Collection<String> localVarContentTypes = Arrays.asList();
-
-    final Collection<String> localVarAuthNames = Arrays.asList("Basic", "OAuth2.0");
-    final String serializedBody = null;
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.GET,
-        localVarQueryParams,
-        serializedBody,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  private ActiveNumberListResponse mapForPaging(
-      ActiveNumbersListQueryParameters parameters, ActiveNumberListResponseInternal _dto) {
-
-    ActiveNumberListResponseInternalImpl dto = (ActiveNumberListResponseInternalImpl) _dto;
-
-    String nextPageToken = dto.nextPageToken().orElse(null);
-    List<ActiveNumber> list = dto.activeNumbers().orElse(Collections.emptyList());
-
-    Pair<Collection<ActiveNumber>, TokenPageNavigator> paginated =
-        new Pair<>(list, new TokenPageNavigator(nextPageToken));
-
-    return new ActiveNumberListResponse(
-        new Page<>(parameters, paginated.getLeft(), paginated.getRight()), this.numbersService);
   }
 
   @Override

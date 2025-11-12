@@ -5,7 +5,7 @@ import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.models.v1.Capability;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumbersListQueryParameters;
-import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumbersListResponse;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.logging.Logger;
@@ -31,7 +31,7 @@ public class SearchForAvailableNumbers extends BaseApplication {
     LOGGER.info("SearchForAvailableNumbers");
 
     int page = 1;
-    AvailableNumberListResponse response =
+    AvailableNumbersListResponse response =
         service.searchForAvailableNumbers(
             AvailableNumbersListQueryParameters.builder()
                 .setRegionCode("US")

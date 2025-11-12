@@ -2,7 +2,7 @@ package com.sinch.sample.numbers.regions;
 
 import com.sinch.sample.BaseApplication;
 import com.sinch.sdk.domains.numbers.api.v1.AvailableRegionsService;
-import com.sinch.sdk.domains.numbers.models.v1.regions.available.response.AvailableRegionListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.regions.response.AvailableRegionsListResponse;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -27,7 +27,7 @@ public class List extends BaseApplication {
     LOGGER.info("List");
     int page = 1;
 
-    AvailableRegionListResponse response = service.list();
+    AvailableRegionsListResponse response = service.list();
 
     LOGGER.info(String.format("Response (page %d): %s", page, response));
 

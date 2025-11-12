@@ -15,8 +15,8 @@ import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import java.util.List;
 
 /** Response message to list your active phone numbers. */
-@JsonDeserialize(builder = ActiveNumberListResponseInternalImpl.Builder.class)
-public interface ActiveNumberListResponseInternal {
+@JsonDeserialize(builder = ActiveNumbersListResponseInternalImpl.Builder.class)
+public interface ActiveNumbersListResponseInternal {
 
   /**
    * List of numbers associated to the client project specified in <code>ListActiveNumbers</code>.
@@ -45,7 +45,7 @@ public interface ActiveNumberListResponseInternal {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ActiveNumberListResponseInternalImpl.Builder();
+    return new ActiveNumbersListResponseInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -83,6 +83,6 @@ public interface ActiveNumberListResponseInternal {
      *
      * @return The instance build with current builder values
      */
-    ActiveNumberListResponseInternal build();
+    ActiveNumbersListResponseInternal build();
   }
 }

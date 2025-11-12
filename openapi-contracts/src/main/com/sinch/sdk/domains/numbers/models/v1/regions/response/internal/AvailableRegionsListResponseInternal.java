@@ -8,15 +8,15 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.numbers.models.v1.regions.available.response.internal;
+package com.sinch.sdk.domains.numbers.models.v1.regions.response.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.numbers.models.v1.regions.available.response.AvailableRegion;
+import com.sinch.sdk.domains.numbers.models.v1.regions.response.AvailableRegion;
 import java.util.List;
 
 /** Response message to list regions for which numbers are provided. */
-@JsonDeserialize(builder = AvailableRegionListResponseInternalImpl.Builder.class)
-public interface AvailableRegionListResponseInternal {
+@JsonDeserialize(builder = AvailableRegionsListResponseInternalImpl.Builder.class)
+public interface AvailableRegionsListResponseInternal {
 
   /**
    * Get availableRegions
@@ -31,7 +31,7 @@ public interface AvailableRegionListResponseInternal {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new AvailableRegionListResponseInternalImpl.Builder();
+    return new AvailableRegionsListResponseInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -51,6 +51,6 @@ public interface AvailableRegionListResponseInternal {
      *
      * @return The instance build with current builder values
      */
-    AvailableRegionListResponseInternal build();
+    AvailableRegionsListResponseInternal build();
   }
 }
