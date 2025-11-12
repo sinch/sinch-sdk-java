@@ -53,7 +53,7 @@ public class EmailsSteps {
             .setSubject("E2E test text email")
             .build();
 
-    sendEmailResponse = service.sendEmail(domainName, request);
+    sendEmailResponse = service.send(domainName, request);
   }
 
   @When("^I send a request to send a MIME email$")
@@ -73,7 +73,7 @@ public class EmailsSteps {
             .setMessage(tempFile)
             .build();
 
-    sendMimeEmailResponse = service.sendMimeEmail(domainName, request);
+    sendMimeEmailResponse = service.sendInMimeFormat(domainName, request);
   }
 
   @When("^I send a request to resend a text email$")

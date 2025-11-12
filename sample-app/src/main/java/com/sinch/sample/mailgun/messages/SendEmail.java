@@ -46,7 +46,7 @@ public class SendEmail extends BaseApplication {
 
     SendEmailRequest parameters = createTextEmail();
 
-    SendEmailResponse response = service.sendEmail(mailgunDomain, parameters);
+    SendEmailResponse response = service.send(mailgunDomain, parameters);
 
     LOGGER.info("Response: " + response);
   }

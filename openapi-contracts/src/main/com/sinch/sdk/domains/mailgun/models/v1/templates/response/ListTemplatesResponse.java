@@ -16,6 +16,7 @@ import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.domains.mailgun.api.v1.adapters.TemplatesServiceImpl;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.Template;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.NoSuchElementException;
 
 /** Auto paginated response for list of Template */
@@ -50,7 +51,7 @@ public class ListTemplatesResponse extends ListResponse<Template> {
 
   @Override
   public Collection<Template> getContent() {
-    return page.getEntities();
+    return page == null ? Collections.emptyList() : page.getEntities();
   }
 
   @Override

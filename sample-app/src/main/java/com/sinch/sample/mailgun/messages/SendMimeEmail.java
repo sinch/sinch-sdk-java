@@ -36,7 +36,7 @@ public class SendMimeEmail extends BaseApplication {
 
     SendMimeEmailRequest parameters = createMime();
 
-    SendEmailResponse response = service.sendMimeEmail(mailgunDomain, parameters);
+    SendEmailResponse response = service.sendInMimeFormat(mailgunDomain, parameters);
 
     LOGGER.info("Response: " + response);
   }

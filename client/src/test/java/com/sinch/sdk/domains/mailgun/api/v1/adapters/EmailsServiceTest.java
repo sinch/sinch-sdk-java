@@ -88,7 +88,7 @@ class EmailsServiceTest extends BaseTest {
         .thenReturn(httpResponse);
 
     SendEmailResponse response =
-        service.sendEmail(domainName, SendEmailRequestTest.sendEmailHtmlInlineRequest);
+        service.send(domainName, SendEmailRequestTest.sendEmailHtmlInlineRequest);
 
     TestHelpers.recursiveEquals(response, SendEmailResponseTest.expectedSendEmailResponse);
   }
@@ -115,7 +115,7 @@ class EmailsServiceTest extends BaseTest {
         .thenReturn(httpResponse);
 
     SendEmailResponse response =
-        service.sendMimeEmail(domainName, SendMimeEmailRequestTest.sendMimEmailRequest);
+        service.sendInMimeFormat(domainName, SendMimeEmailRequestTest.sendMimEmailRequest);
 
     TestHelpers.recursiveEquals(response, SendEmailResponseTest.expectedSendEmailResponse);
   }

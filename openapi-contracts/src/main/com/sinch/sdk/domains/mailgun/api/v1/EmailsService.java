@@ -75,8 +75,7 @@ public interface EmailsService {
    * @return SendEmailResponse
    * @throws ApiException if fails to make API call
    */
-  SendEmailResponse sendEmail(String domainName, SendEmailRequest requestParameters)
-      throws ApiException;
+  SendEmailResponse send(String domainName, SendEmailRequest requestParameters) throws ApiException;
 
   /**
    * Send an email in MIME format
@@ -89,7 +88,7 @@ public interface EmailsService {
    * @return SendEmailResponse
    * @throws ApiException if fails to make API call
    */
-  SendEmailResponse sendMimeEmail(String domainName, SendMimeEmailRequest requestParameters)
+  SendEmailResponse sendInMimeFormat(String domainName, SendMimeEmailRequest requestParameters)
       throws ApiException;
 
   /**
