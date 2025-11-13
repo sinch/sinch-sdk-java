@@ -20,6 +20,14 @@ class ArrayToCommaSeparatedFormSerializerTest {
   }
 
   @Test
+  void serializeEmptyCommas() {
+    Map<String, Object> map = new HashMap<>();
+    serializer.serialize(Arrays.asList("value1", ", ,, "), "key", map);
+
+    Assertions.assertEquals("value1,, ,, ", map.get("key"));
+  }
+
+  @Test
   void serializeEmptyList() {
     Map<String, Object> map = new HashMap<>();
     serializer.serialize(Collections.emptyList(), "key", map);
