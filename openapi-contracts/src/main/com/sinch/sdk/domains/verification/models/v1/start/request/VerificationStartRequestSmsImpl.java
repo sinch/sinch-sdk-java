@@ -159,22 +159,6 @@ public class VerificationStartRequestSmsImpl
   }
 
   @JsonIgnore
-  public String getTemplate() {
-    if (null == smsOptions || !smsOptions.isPresent() || null == smsOptions.get().getTemplate()) {
-      return null;
-    }
-    return smsOptions.get().getTemplate();
-  }
-
-  public OptionalValue<String> template() {
-    return null != smsOptions && smsOptions.isPresent()
-        ? smsOptions
-            .map(f -> ((VerificationStartSmsOptionsImpl) f).template())
-            .orElse(OptionalValue.empty())
-        : OptionalValue.empty();
-  }
-
-  @JsonIgnore
   public String getAcceptLanguage() {
     if (null == smsOptions
         || !smsOptions.isPresent()
@@ -295,12 +279,6 @@ public class VerificationStartRequestSmsImpl
     @JsonIgnore
     public Builder setExpiry(String expiry) {
       getDelegatedBuilder().setExpiry(expiry);
-      return this;
-    }
-
-    @JsonIgnore
-    public Builder setTemplate(String template) {
-      getDelegatedBuilder().setTemplate(template);
       return this;
     }
 

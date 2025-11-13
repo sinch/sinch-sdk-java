@@ -18,14 +18,12 @@ public class VerificationStartSmsOptionsTest extends VerificationBaseTest {
       VerificationStartSmsOptions.builder()
           .setExpiry("01:02:03")
           .setCodeType(SmsCodeType.ALPHANUMERIC)
-          .setTemplate("My template requires to use '{{CODE}}' placeholder")
           .build();
 
   public static VerificationStartSmsOptions startVerificationSmsOptionWithAdditionalPropertiesDto =
       VerificationStartSmsOptions.builder()
           .setExpiry("01:02:03")
           .setCodeType(SmsCodeType.ALPHANUMERIC)
-          .setTemplate("My template requires to use '{{CODE}}' placeholder")
           .put("a key", "a value")
           .put("secondKey", "second value")
           .build();
@@ -34,7 +32,6 @@ public class VerificationStartSmsOptionsTest extends VerificationBaseTest {
       VerificationStartSmsOptions.builder()
           .setExpiry("01:02:03")
           .setCodeType(SmsCodeType.ALPHANUMERIC)
-          .setTemplate("My template requires to use '{{CODE}}' placeholder")
           .setAcceptLanguage("es-ES")
           .build();
 

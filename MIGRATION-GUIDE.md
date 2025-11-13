@@ -374,6 +374,7 @@ Use the new versioned API under `voice().v1()` to get access to [VoiceService](h
 - `event` field removed from `VerificationRequestEvent`, `VerificationResultEvent` events.
 - `method` values based onto common `VerificationMethod` class.
 - `VerificationMethod.DATA` enum no longer defined. No need to be replaced because not public definition is required.
+- `template` field removed from `VerificationStartRequestSms`.
 
 #### Replacement APIs
 

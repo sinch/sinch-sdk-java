@@ -38,14 +38,6 @@ public interface VerificationStartSmsOptions extends AdditionalProperties {
   String getExpiry();
 
   /**
-   * The SMS template must include a placeholder <code>{{CODE}}</code> where the verification code
-   * will be inserted, and it can otherwise be customized as desired.
-   *
-   * @return template
-   */
-  String getTemplate();
-
-  /**
    * In SMS Verification, value of <a
    * href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language">Accept-Language</a>
    * header is used to determine the language of an SMS message.
@@ -83,15 +75,6 @@ public interface VerificationStartSmsOptions extends AdditionalProperties {
      * @see #getExpiry
      */
     Builder setExpiry(String expiry);
-
-    /**
-     * see getter
-     *
-     * @param template see getter
-     * @return Current builder
-     * @see #getTemplate
-     */
-    Builder setTemplate(String template);
 
     /**
      * see getter
