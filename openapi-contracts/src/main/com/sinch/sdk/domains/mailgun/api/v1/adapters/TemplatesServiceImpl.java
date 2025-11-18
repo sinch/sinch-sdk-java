@@ -77,6 +77,101 @@ public class TemplatesServiceImpl implements com.sinch.sdk.domains.mailgun.api.v
   }
 
   @Override
+  public ListTemplatesResponse list(String domainName) throws ApiException {
+    return list(domainName, (ListTemplatesQueryParameters) null);
+  }
+
+  @Override
+  public ListTemplatesResponse list(String domainName, ListTemplatesQueryParameters queryParameter)
+      throws ApiException {
+
+    LOGGER.finest(
+        "[list]" + " " + "domainName: " + domainName + ", " + "queryParameter: " + queryParameter);
+
+    HttpRequest httpRequest = listRequestBuilder(domainName, queryParameter);
+    return _getTemplatesPageAsListResponse(httpRequest);
+  }
+
+  public ListTemplatesResponse _getTemplatesPageAsListResponse(HttpRequest httpRequest)
+      throws ApiException {
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+
+      ListTemplatesResponseInternal deserialized =
+          mapper.deserialize(response, new TypeReference<ListTemplatesResponseInternal>() {});
+
+      HttpRequest nextPage =
+          new HttpRequest(
+              deserialized.getPaging().getNext(),
+              httpRequest.getMethod(),
+              null,
+              httpRequest.getHeaderParams(),
+              httpRequest.getAccept(),
+              httpRequest.getContentType(),
+              httpRequest.getAuthNames());
+
+      return new ListTemplatesResponse(
+          this, new Page<>(null, deserialized.getItems(), new MailgunPageNavigator(nextPage)));
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest listRequestBuilder(
+      String domainName, ListTemplatesQueryParameters queryParameter) throws ApiException {
+    // verify the required parameter 'domainName' is set
+    if (domainName == null) {
+      throw new ApiException(400, "Missing the required parameter 'domainName' when calling list");
+    }
+
+    String localVarPath =
+        "/v3/{domain_name}/templates"
+            .replaceAll(
+                "\\{" + "domain_name" + "\\}",
+                URLPathUtils.encodePathSegment(domainName.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+    if (null != queryParameter) {
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getPage(), "page", URLParameter.form, null, localVarQueryParams, true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getLimit(), "limit", URLParameter.form, null, localVarQueryParams, true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getPivot(), "p", URLParameter.form, null, localVarQueryParams, true);
+    }
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.GET,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  @Override
   public VersionDetails copyVersion(
       String domainName, String templateName, String versionName, String newVersionName)
       throws ApiException {
@@ -798,101 +893,6 @@ public class TemplatesServiceImpl implements com.sinch.sdk.domains.mailgun.api.v
                 URLPathUtils.encodePathSegment(versionName.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-
-    final Collection<String> localVarContentTypes = Arrays.asList();
-
-    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
-    final String serializedBody = null;
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.GET,
-        localVarQueryParams,
-        serializedBody,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  @Override
-  public ListTemplatesResponse list(String domainName) throws ApiException {
-    return list(domainName, (ListTemplatesQueryParameters) null);
-  }
-
-  @Override
-  public ListTemplatesResponse list(String domainName, ListTemplatesQueryParameters queryParameter)
-      throws ApiException {
-
-    LOGGER.finest(
-        "[list]" + " " + "domainName: " + domainName + ", " + "queryParameter: " + queryParameter);
-
-    HttpRequest httpRequest = listRequestBuilder(domainName, queryParameter);
-    return _getTemplatesPageAsListResponse(httpRequest);
-  }
-
-  public ListTemplatesResponse _getTemplatesPageAsListResponse(HttpRequest httpRequest)
-      throws ApiException {
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-
-      ListTemplatesResponseInternal deserialized =
-          mapper.deserialize(response, new TypeReference<ListTemplatesResponseInternal>() {});
-
-      HttpRequest nextPage =
-          new HttpRequest(
-              deserialized.getPaging().getNext(),
-              httpRequest.getMethod(),
-              null,
-              httpRequest.getHeaderParams(),
-              httpRequest.getAccept(),
-              httpRequest.getContentType(),
-              httpRequest.getAuthNames());
-
-      return new ListTemplatesResponse(
-          this, new Page<>(null, deserialized.getItems(), new MailgunPageNavigator(nextPage)));
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest listRequestBuilder(
-      String domainName, ListTemplatesQueryParameters queryParameter) throws ApiException {
-    // verify the required parameter 'domainName' is set
-    if (domainName == null) {
-      throw new ApiException(400, "Missing the required parameter 'domainName' when calling list");
-    }
-
-    String localVarPath =
-        "/v3/{domain_name}/templates"
-            .replaceAll(
-                "\\{" + "domain_name" + "\\}",
-                URLPathUtils.encodePathSegment(domainName.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-    if (null != queryParameter) {
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getPage(), "page", URLParameter.form, null, localVarQueryParams, true);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getLimit(), "limit", URLParameter.form, null, localVarQueryParams, true);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getPivot(), "p", URLParameter.form, null, localVarQueryParams, true);
-    }
 
     Map<String, String> localVarHeaderParams = new HashMap<>();
 

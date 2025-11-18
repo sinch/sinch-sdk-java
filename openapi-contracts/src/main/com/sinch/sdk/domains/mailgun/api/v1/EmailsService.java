@@ -11,6 +11,7 @@
 package com.sinch.sdk.domains.mailgun.api.v1;
 
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.domains.mailgun.models.v1.emails.request.ResendRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendMimeEmailRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.response.GetStoredEmailResponse;
@@ -38,11 +39,27 @@ public interface EmailsService {
    * to use to retrieve the email.
    *
    * @param domainName Domain name that was used to send the email (required)
-   * @param storageKey Storage key from the emails associated events (required)
+   * @param storageKey Storage key from the email&#39;s associated events (Example:
+   *     Accepted/Delivered events &#x60;storage.key&#x60; field). Note: Storage keys are available
+   *     for the duration of your domain&#39;s message retention policy. (required)
    * @return GetStoredEmailResponse
    * @throws ApiException if fails to make API call
    */
   GetStoredEmailResponse getStoredEmail(String domainName, String storageKey) throws ApiException;
+
+  /**
+   * Resend an email
+   *
+   * @param domainName Domain name used to send the message (required)
+   * @param storageKey Storage key from the email&#39;s associated events (Example:
+   *     Accepted/Delivered events &#x60;storage.key&#x60; field). Note: Storage keys are available
+   *     for the duration of your domain&#39;s message retention policy. (required)
+   * @param requestParameters Request parameters
+   * @return SendEmailResponse
+   * @throws ApiException if fails to make API call
+   */
+  SendEmailResponse resend(String domainName, String storageKey, ResendRequest requestParameters)
+      throws ApiException;
 
   /**
    * Send an email
@@ -58,8 +75,7 @@ public interface EmailsService {
    * @return SendEmailResponse
    * @throws ApiException if fails to make API call
    */
-  SendEmailResponse sendEmail(String domainName, SendEmailRequest requestParameters)
-      throws ApiException;
+  SendEmailResponse send(String domainName, SendEmailRequest requestParameters) throws ApiException;
 
   /**
    * Send an email in MIME format
@@ -72,7 +88,7 @@ public interface EmailsService {
    * @return SendEmailResponse
    * @throws ApiException if fails to make API call
    */
-  SendEmailResponse sendMimeEmail(String domainName, SendMimeEmailRequest requestParameters)
+  SendEmailResponse sendInMimeFormat(String domainName, SendMimeEmailRequest requestParameters)
       throws ApiException;
 
   /**

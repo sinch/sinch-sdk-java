@@ -20,6 +20,7 @@ import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.models.ServerConfigurationTest.ServerConfigurationMatcher;
 import com.sinch.sdk.domains.mailgun.api.v1.EmailsService;
+import com.sinch.sdk.domains.mailgun.models.v1.emails.request.ResendRequestTest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequestTest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendMimeEmailRequestTest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.response.GetStoredEmailResponse;
@@ -87,7 +88,7 @@ class EmailsServiceTest extends BaseTest {
         .thenReturn(httpResponse);
 
     SendEmailResponse response =
-        service.sendEmail(domainName, SendEmailRequestTest.sendEmailHtmlInlineRequest);
+        service.send(domainName, SendEmailRequestTest.sendEmailHtmlInlineRequest);
 
     TestHelpers.recursiveEquals(response, SendEmailResponseTest.expectedSendEmailResponse);
   }
@@ -114,7 +115,37 @@ class EmailsServiceTest extends BaseTest {
         .thenReturn(httpResponse);
 
     SendEmailResponse response =
-        service.sendMimeEmail(domainName, SendMimeEmailRequestTest.sendMimEmailRequest);
+        service.sendInMimeFormat(domainName, SendMimeEmailRequestTest.sendMimEmailRequest);
+
+    TestHelpers.recursiveEquals(response, SendEmailResponseTest.expectedSendEmailResponse);
+  }
+
+  @Test
+  void resend() {
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v3/domains/"
+                + URLPathUtils.encodePathSegment(domainName)
+                + "/messages/foo%20StorageKey",
+            HttpMethod.POST,
+            Collections.emptyList(),
+            ResendRequestTest.expectedResendRequest,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.MULTIPART_FORM_DATA),
+            Collections.singletonList(AUTH_NAME));
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonSendEmailResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    SendEmailResponse response =
+        service.resend(domainName, storageKey, ResendRequestTest.resentRequest);
 
     TestHelpers.recursiveEquals(response, SendEmailResponseTest.expectedSendEmailResponse);
   }

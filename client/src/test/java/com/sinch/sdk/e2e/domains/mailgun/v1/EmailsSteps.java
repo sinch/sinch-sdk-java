@@ -2,6 +2,7 @@ package com.sinch.sdk.e2e.domains.mailgun.v1;
 
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.mailgun.api.v1.EmailsService;
+import com.sinch.sdk.domains.mailgun.models.v1.emails.request.ResendRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailHtmlInlineRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendMimeEmailRequest;
@@ -27,6 +28,7 @@ public class EmailsSteps {
   EmailsService service;
 
   SendEmailResponse sendEmailResponse;
+  SendEmailResponse resendResponse;
   SendEmailResponse sendMimeEmailResponse;
   GetStoredEmailResponse getStoredEmailResponse;
   SendingQueuesStatusResponse sendingQueuesStatusResponse;
@@ -51,7 +53,7 @@ public class EmailsSteps {
             .setSubject("E2E test text email")
             .build();
 
-    sendEmailResponse = service.sendEmail(domainName, request);
+    sendEmailResponse = service.send(domainName, request);
   }
 
   @When("^I send a request to send a MIME email$")
@@ -71,7 +73,16 @@ public class EmailsSteps {
             .setMessage(tempFile)
             .build();
 
-    sendMimeEmailResponse = service.sendMimeEmail(domainName, request);
+    sendMimeEmailResponse = service.sendInMimeFormat(domainName, request);
+  }
+
+  @When("^I send a request to resend a text email$")
+  public void resend() {
+
+    ResendRequest request =
+        ResendRequest.builder().setTo(Collections.singletonList("destination@e2e.tst")).build();
+
+    resendResponse = service.resend(domainName, storageKey, request);
   }
 
   @When("^I send a request to retrieve a stored email$")
@@ -115,6 +126,18 @@ public class EmailsSteps {
             .build();
 
     TestHelpers.recursiveEquals(expected, sendMimeEmailResponse);
+  }
+
+  @Then("the \"resend\" response contains information about the text email")
+  public void resendResult() {
+
+    SendEmailResponse expected =
+        SendEmailResponse.builder()
+            .setId("<20240606154318.027ac0b5fc80da62@sandbox123.mailgun.org>")
+            .setMessage("Queued. Thank you.")
+            .build();
+
+    TestHelpers.recursiveEquals(expected, resendResponse);
   }
 
   @Then("the getEmail response contains the email details")

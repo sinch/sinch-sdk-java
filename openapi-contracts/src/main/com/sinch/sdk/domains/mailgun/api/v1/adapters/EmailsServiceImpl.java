@@ -23,6 +23,7 @@ import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.domains.mailgun.models.v1.emails.request.ResendRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendMimeEmailRequest;
 import com.sinch.sdk.domains.mailgun.models.v1.emails.response.GetStoredEmailResponse;
@@ -186,12 +187,20 @@ public class EmailsServiceImpl implements com.sinch.sdk.domains.mailgun.api.v1.E
   }
 
   @Override
-  public SendEmailResponse sendEmail(String domainName, SendEmailRequest requestParameters)
-      throws ApiException {
+  public SendEmailResponse resend(
+      String domainName, String storageKey, ResendRequest requestParameters) throws ApiException {
 
     LOGGER.finest(
-        "[sendEmail] " + "domainName: " + domainName + ", " + " request:" + requestParameters);
-    HttpRequest httpRequest = sendEmailRequestBuilder(domainName, requestParameters);
+        "[resend] "
+            + "domainName: "
+            + domainName
+            + ", "
+            + "storageKey: "
+            + storageKey
+            + ", "
+            + " request:"
+            + requestParameters);
+    HttpRequest httpRequest = resendRequestBuilder(domainName, storageKey, requestParameters);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -208,12 +217,76 @@ public class EmailsServiceImpl implements com.sinch.sdk.domains.mailgun.api.v1.E
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest sendEmailRequestBuilder(String domainName, SendEmailRequest requestParameters)
-      throws ApiException {
+  private HttpRequest resendRequestBuilder(
+      String domainName, String storageKey, ResendRequest requestParameters) throws ApiException {
     // verify the required parameter 'domainName' is set
     if (domainName == null) {
       throw new ApiException(
-          400, "Missing the required parameter 'domainName' when calling sendEmail");
+          400, "Missing the required parameter 'domainName' when calling resend");
+    }
+    // verify the required parameter 'storageKey' is set
+    if (storageKey == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'storageKey' when calling resend");
+    }
+
+    String localVarPath =
+        "/v3/domains/{domain_name}/messages/{storage_key}"
+            .replaceAll(
+                "\\{" + "domain_name" + "\\}",
+                URLPathUtils.encodePathSegment(domainName.toString()))
+            .replaceAll(
+                "\\{" + "storage_key" + "\\}",
+                URLPathUtils.encodePathSegment(storageKey.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+    final Collection<String> localVarContentTypes = Arrays.asList("multipart/form-data");
+    final Collection<String> localVarAuthNames = Arrays.asList("basicAuth");
+    final Map<String, Object> localFormParams =
+        mapper.serializeFormParameters(localVarContentTypes, requestParameters);
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.POST,
+        localVarQueryParams,
+        localFormParams,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  @Override
+  public SendEmailResponse send(String domainName, SendEmailRequest requestParameters)
+      throws ApiException {
+
+    LOGGER.finest("[send] " + "domainName: " + domainName + ", " + " request:" + requestParameters);
+    HttpRequest httpRequest = sendRequestBuilder(domainName, requestParameters);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+      return mapper.deserialize(response, new TypeReference<SendEmailResponse>() {});
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest sendRequestBuilder(String domainName, SendEmailRequest requestParameters)
+      throws ApiException {
+    // verify the required parameter 'domainName' is set
+    if (domainName == null) {
+      throw new ApiException(400, "Missing the required parameter 'domainName' when calling send");
     }
 
     String localVarPath =
@@ -244,12 +317,17 @@ public class EmailsServiceImpl implements com.sinch.sdk.domains.mailgun.api.v1.E
   }
 
   @Override
-  public SendEmailResponse sendMimeEmail(String domainName, SendMimeEmailRequest requestParameters)
-      throws ApiException {
+  public SendEmailResponse sendInMimeFormat(
+      String domainName, SendMimeEmailRequest requestParameters) throws ApiException {
 
     LOGGER.finest(
-        "[sendMimeEmail] " + "domainName: " + domainName + ", " + " request:" + requestParameters);
-    HttpRequest httpRequest = sendMimeEmailRequestBuilder(domainName, requestParameters);
+        "[sendInMimeFormat] "
+            + "domainName: "
+            + domainName
+            + ", "
+            + " request:"
+            + requestParameters);
+    HttpRequest httpRequest = sendInMimeFormatRequestBuilder(domainName, requestParameters);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -266,12 +344,12 @@ public class EmailsServiceImpl implements com.sinch.sdk.domains.mailgun.api.v1.E
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest sendMimeEmailRequestBuilder(
+  private HttpRequest sendInMimeFormatRequestBuilder(
       String domainName, SendMimeEmailRequest requestParameters) throws ApiException {
     // verify the required parameter 'domainName' is set
     if (domainName == null) {
       throw new ApiException(
-          400, "Missing the required parameter 'domainName' when calling sendMimeEmail");
+          400, "Missing the required parameter 'domainName' when calling sendInMimeFormat");
     }
 
     String localVarPath =
