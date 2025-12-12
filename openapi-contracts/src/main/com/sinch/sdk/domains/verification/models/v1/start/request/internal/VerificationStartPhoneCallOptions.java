@@ -17,7 +17,8 @@ import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeec
 /**
  * An optional configuration for Phone Call Verification, should be used only when the verification
  * request originates from your backend (not an end user device) and request is signed via an <a
- * href="/docs/voice/api-reference/authentication/signed-request">Application signed request</a>.
+ * href="https://developers.sinch.com/docs/voice/api-reference/authentication/signed-request">Application
+ * signed request</a>.
  */
 @JsonDeserialize(builder = VerificationStartPhoneCallOptionsImpl.Builder.class)
 public interface VerificationStartPhoneCallOptions extends AdditionalProperties {
