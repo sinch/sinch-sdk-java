@@ -97,7 +97,7 @@ public interface AppMessageInternal {
    * Allows you to specify a channel and define a corresponding channel specific message payload
    * that will override the standard Conversation API message types. The key in the map must point
    * to a valid conversation channel as defined in the enum <code>ConversationChannel</code>. The
-   * message content must be provided in string format. You may use the <a
+   * message content must be provided in a string format. You may use the <a
    * href="https://developers.sinch.com/docs/conversation/api-reference/conversation/tag/Transcoding/">transcoding
    * endpoint</a> to help create your message. For more information about how to construct an
    * explicit channel message for a particular channel, see that <a
