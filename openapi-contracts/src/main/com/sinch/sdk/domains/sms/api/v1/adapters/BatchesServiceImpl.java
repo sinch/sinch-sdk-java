@@ -68,6 +68,119 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Batc
   }
 
   @Override
+  public ListBatchesResponse list() throws ApiException {
+
+    return list((ListBatchesQueryParameters) null);
+  }
+
+  @Override
+  public ListBatchesResponse list(ListBatchesQueryParameters queryParameter) throws ApiException {
+
+    LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
+
+    HttpRequest httpRequest = listRequestBuilder(queryParameter);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+
+      ApiBatchList deserialized =
+          mapper.deserialize(response, new TypeReference<ApiBatchList>() {});
+
+      return new ListBatchesResponse(
+          this,
+          new Page<>(
+              queryParameter,
+              deserialized.getItems(),
+              new SMSCursorPageNavigator(deserialized.getPage(), deserialized.getPageSize())));
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest listRequestBuilder(ListBatchesQueryParameters queryParameter)
+      throws ApiException {
+    // verify the required parameter 'this.servicePlanId' is set
+    if (this.servicePlanId == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'this.servicePlanId' when calling list");
+    }
+
+    String localVarPath =
+        "/xms/v1/{service_plan_id}/batches"
+            .replaceAll(
+                "\\{" + "service_plan_id" + "\\}",
+                URLPathUtils.encodePathSegment(this.servicePlanId.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+    if (null != queryParameter) {
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getPage(), "page", URLParameter.form, null, localVarQueryParams, true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getPageSize(),
+          "page_size",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getStartDate(),
+          "start_date",
+          URLParameter.form,
+          InstantToIso8601Serializer.getInstance(),
+          localVarQueryParams,
+          true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getEndDate(),
+          "end_date",
+          URLParameter.form,
+          InstantToIso8601Serializer.getInstance(),
+          localVarQueryParams,
+          true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getFrom(), "from", URLParameter.form, null, localVarQueryParams, false);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getClientReference(),
+          "client_reference",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
+    }
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.GET,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  @Override
   public BatchResponse cancel(String batchId) throws ApiException {
 
     LOGGER.finest("[cancel]" + " " + "batchId: " + batchId);
@@ -267,119 +380,6 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Batc
                 "\\{" + "batch_id" + "\\}", URLPathUtils.encodePathSegment(batchId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-
-    final Collection<String> localVarContentTypes = Arrays.asList();
-
-    final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
-    final String serializedBody = null;
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.GET,
-        localVarQueryParams,
-        serializedBody,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  @Override
-  public ListBatchesResponse list() throws ApiException {
-
-    return list((ListBatchesQueryParameters) null);
-  }
-
-  @Override
-  public ListBatchesResponse list(ListBatchesQueryParameters queryParameter) throws ApiException {
-
-    LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
-
-    HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-
-      ApiBatchList deserialized =
-          mapper.deserialize(response, new TypeReference<ApiBatchList>() {});
-
-      return new ListBatchesResponse(
-          this,
-          new Page<>(
-              queryParameter,
-              deserialized.getItems(),
-              new SMSCursorPageNavigator(deserialized.getPage(), deserialized.getPageSize())));
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest listRequestBuilder(ListBatchesQueryParameters queryParameter)
-      throws ApiException {
-    // verify the required parameter 'this.servicePlanId' is set
-    if (this.servicePlanId == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'this.servicePlanId' when calling list");
-    }
-
-    String localVarPath =
-        "/xms/v1/{service_plan_id}/batches"
-            .replaceAll(
-                "\\{" + "service_plan_id" + "\\}",
-                URLPathUtils.encodePathSegment(this.servicePlanId.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-    if (null != queryParameter) {
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getPage(), "page", URLParameter.form, null, localVarQueryParams, true);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getPageSize(),
-          "page_size",
-          URLParameter.form,
-          null,
-          localVarQueryParams,
-          true);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getStartDate(),
-          "start_date",
-          URLParameter.form,
-          InstantToIso8601Serializer.getInstance(),
-          localVarQueryParams,
-          true);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getEndDate(),
-          "end_date",
-          URLParameter.form,
-          InstantToIso8601Serializer.getInstance(),
-          localVarQueryParams,
-          true);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getFrom(), "from", URLParameter.form, null, localVarQueryParams, false);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getClientReference(),
-          "client_reference",
-          URLParameter.form,
-          null,
-          localVarQueryParams,
-          true);
-    }
 
     Map<String, String> localVarHeaderParams = new HashMap<>();
 
