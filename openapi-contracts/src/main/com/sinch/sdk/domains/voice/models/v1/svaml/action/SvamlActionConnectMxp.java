@@ -20,8 +20,7 @@ import java.util.stream.Stream;
 
 /**
  * Determines how an application-to-application call is connected. Available to use in a response to
- * an <a
- * href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/#tag/Callbacks/operation/ice">Incoming
+ * an <a href="https://developers.sinch.com/docs/voice/api-reference/voice/callbacks/ice">Incoming
  * Call Event</a> callback.
  */
 @JsonDeserialize(builder = SvamlActionConnectMxpImpl.Builder.class)

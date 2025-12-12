@@ -20,14 +20,14 @@ import java.util.stream.Stream;
 /**
  * Plays an interactive voice response (IVR) menu to the callee. This menu can play pre-recorded
  * files or text-to-speech messages, collect DTMF tones, and trigger the <a
- * href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/#tag/Callbacks/operation/pie">Prompt
- * Input Event</a> (PIE) callback towards your backend, notifying you of the actions the callee
- * took. Available to use in a response to an <a
- * href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/#tag/Callbacks/operation/ice">Incoming
- * Call Event</a> callback or an <a
- * href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/#tag/Callbacks/operation/ace">Answered
- * Call Event</a> callback. Also be used in combination with the <a
- * href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Conferences/#tag/Conferences">Conferences</a>
+ * href="https://developers.sinch.com/docs/voice/api-reference/voice/callbacks/pie">Prompt Input
+ * Event</a> (PIE) callback towards your backend, notifying you of the actions the callee took.
+ * Available to use in a response to an <a
+ * href="https://developers.sinch.com/docs/voice/api-reference/voice/callbacks/ice">Incoming Call
+ * Event</a> callback or an <a
+ * href="https://developers.sinch.com/docs/voice/api-reference/voice/callbacks/ace">Answered Call
+ * Event</a> callback. Also be used in combination with the <a
+ * href="https://developers.sinch.com/docs/voice/api-reference/voice/conferences">Conferences</a>
  * endpoint of the Calling API.
  */
 @JsonDeserialize(builder = SvamlActionRunMenuImpl.Builder.class)

@@ -18,10 +18,10 @@ import java.util.stream.Stream;
 
 /**
  * Hangs up a call. Available to use in a response to an <a
- * href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/#tag/Callbacks/operation/ice">Incoming
- * Call Event</a> callback or an <a
- * href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/#tag/Callbacks/operation/ace">Answered
- * Call Event</a> callback.
+ * href="https://developers.sinch.com/docs/voice/api-reference/voice/callbacks/ice">Incoming Call
+ * Event</a> callback or an <a
+ * href="https://developers.sinch.com/docs/voice/api-reference/voice/callbacks/ace">Answered Call
+ * Event</a> callback.
  */
 @JsonDeserialize(builder = SvamlActionHangupImpl.Builder.class)
 public interface SvamlActionHangup

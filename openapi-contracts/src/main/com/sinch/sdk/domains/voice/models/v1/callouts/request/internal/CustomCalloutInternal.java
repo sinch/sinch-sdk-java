@@ -79,8 +79,10 @@ public interface CustomCalloutInternal {
   Control getIce();
 
   /**
-   * You can use inline <a href="../../../svaml/">SVAML</a> to replace a callback URL when using
-   * custom callouts. Ensure that the JSON object is escaped correctly. Example: <code>
+   * You can use inline <a
+   * href="https://developers.sinch.com/docs/voice/api-reference/svaml">SVAML</a> to replace a
+   * callback URL when using custom callouts. Ensure that the JSON object is escaped correctly.
+   * Example: <code>
    * \&quot;{\\\&quot;action\\\&quot;: {\\\&quot;name\\\&quot;: \\\&quot;RunMenu\\\&quot;,\\\&quot;locale\\\&quot;: \\\&quot;en-US\\\&quot;,\\\&quot;menus\\\&quot;: [{\\\&quot;id\\\&quot;: \\\&quot;main\\\&quot;,\\\&quot;mainPrompt\\\&quot;: \\\&quot;#tts[ Welcome to the main menu. Press 1 for a callback or 2 for a cancel&lt;/speak&gt;]\\\&quot;,\\\&quot;timeoutMills\\\&quot;: 5000,\\\&quot;options\\\&quot;: [ {\\\&quot;dtmf\\\&quot;: \\\&quot;1\\\&quot;,\\\&quot;action\\\&quot;: \\\&quot;return(callback)\\\&quot;}, {\\\&quot;dtmf\\\&quot;: \\\&quot;2\\\&quot;,\\\&quot;action\\\&quot;: \\\&quot;return(cancel)\\\&quot;}]}]}}\&quot;
    * </code>
    *
