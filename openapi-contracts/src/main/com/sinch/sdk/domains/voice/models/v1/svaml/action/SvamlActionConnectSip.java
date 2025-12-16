@@ -21,8 +21,8 @@ import java.util.stream.Stream;
 
 /**
  * Determines how to route a call to a SIP server. Available to use in a response to an <a
- * href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/#tag/Callbacks/operation/ice">Incoming
- * Call Event</a> callback.
+ * href="https://developers.sinch.com/docs/voice/api-reference/voice/callbacks/ice">Incoming Call
+ * Event</a> callback.
  */
 @JsonDeserialize(builder = SvamlActionConnectSipImpl.Builder.class)
 public interface SvamlActionConnectSip
@@ -114,9 +114,8 @@ public interface SvamlActionConnectSip
 
   /**
    * If enabled, suppresses <a
-   * href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/#tag/Callbacks/operation/ace">ACE</a>
-   * and <a
-   * href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/#tag/Callbacks/operation/dice">DICE</a>
+   * href="https://developers.sinch.com/docs/voice/api-reference/voice/callbacks/ace">ACE</a> and <a
+   * href="https://developers.sinch.com/docs/voice/api-reference/voice/callbacks/dice">DICE</a>
    * callbacks for the call.
    *
    * @return suppressCallbacks
