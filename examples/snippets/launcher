@@ -1,0 +1,20 @@
+#!/bin/sh
+
+SNIPPET=$1
+
+echo "Running \"${SNIPPET}\" snippet"
+
+# change
+# directory separator by package separator
+# supress '.java' suffix if any
+CLSS=$(echo "${SNIPPET}" | sed 's/\//./g;s/\.java$//g')
+
+./mvnw \
+  -q \
+  clean \
+  package \
+  exec:java \
+  -Djava.util.logging.config.file=src/main/resources/logging.properties \
+  -Dexec.mainClass="$CLSS" \
+   || exit 1
+
