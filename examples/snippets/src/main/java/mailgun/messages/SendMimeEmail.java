@@ -48,7 +48,7 @@ public class SendMimeEmail {
 
     SendMimeEmailRequest request = createMime(recipient, from);
 
-    SendEmailResponse response = emailsService.sendMimeEmail(mailgunDomain, request);
+    SendEmailResponse response = emailsService.sendInMimeFormat(mailgunDomain, request);
 
     LOGGER.info("Response: " + response);
   }

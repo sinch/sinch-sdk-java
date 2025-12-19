@@ -11,7 +11,7 @@ import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumbersListQueryParameters;
-import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumbersListResponse;
 import com.sinch.sdk.models.Configuration;
 import java.util.logging.Logger;
 import utils.Settings;
@@ -39,7 +39,7 @@ public class List {
 
     LOGGER.info("Listing active numbers");
 
-    ActiveNumberListResponse response =
+    ActiveNumbersListResponse response =
         numbersService.list(
             ActiveNumbersListQueryParameters.builder()
                 .setRegionCode("US")

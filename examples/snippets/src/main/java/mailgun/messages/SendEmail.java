@@ -45,7 +45,7 @@ public class SendEmail {
 
     SendEmailRequest request = createTextEmail(recipient, from);
 
-    SendEmailResponse response = emailsService.sendEmail(mailgunDomain, request);
+    SendEmailResponse response = emailsService.send(mailgunDomain, request);
 
     LOGGER.info("Response: " + response);
   }

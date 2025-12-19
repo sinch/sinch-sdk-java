@@ -36,7 +36,8 @@ public class Update {
 
     SinchClient client = new SinchClient(configuration);
 
-    CallbackConfigurationService callbackConfigurationService = client.numbers().v1().callback();
+    CallbackConfigurationService callbackConfigurationService =
+        client.numbers().v1().callbackConfiguration();
 
     LOGGER.info("Update callback HMAC secret");
 
