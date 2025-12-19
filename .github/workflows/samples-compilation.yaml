@@ -17,7 +17,7 @@ jobs:
           cache: maven
       - name: Building
         run: |
-          mvn clean install -DskipTests=true -Dspotless.apply.skip=true
+          mvn clean install -DskipTests=true -Dspotless.apply.skip=true -DskipUTs -DskipITs
           cd sample-app
           mvn -B clean package
           cd ../examples
