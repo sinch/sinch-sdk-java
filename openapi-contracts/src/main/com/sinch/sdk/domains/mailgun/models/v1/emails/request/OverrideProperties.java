@@ -83,6 +83,17 @@ public interface OverrideProperties {
   Instant getDeliveryTime();
 
   /**
+   * Specifies the maximum time window for delivering the message. Accepts values in format <code>
+   * [0-9]+h[0-9]+m</code> (e.g., <code>1h30m</code>, <code>30m</code>, <code>24h</code>), with a
+   * minimum of <code>5m</code> and maximum of <code>24h</code>. For scheduled messages, the
+   * delivery window starts from the scheduled time. The standard retry schedule applies within this
+   * window, so shorter timeframes may result in fewer delivery attempts.
+   *
+   * @return deliverWithin
+   */
+  String getDeliverWithin();
+
+  /**
    * Toggles Timezone Optimization (TZO) on a per message basis. String should be set to preferred
    * delivery time in <code>HH:mm</code> or <code>hh:mmaa</code> format, where <code>HH:mm</code> is
    * used for 24 hour format without AM/PM and hh:mmaa is used for 12 hour format with AM/PM. See <a
@@ -254,6 +265,15 @@ public interface OverrideProperties {
      * @see #getDeliveryTime
      */
     Builder setDeliveryTime(Instant deliveryTime);
+
+    /**
+     * see getter
+     *
+     * @param deliverWithin see getter
+     * @return Current builder
+     * @see #getDeliverWithin
+     */
+    Builder setDeliverWithin(String deliverWithin);
 
     /**
      * see getter

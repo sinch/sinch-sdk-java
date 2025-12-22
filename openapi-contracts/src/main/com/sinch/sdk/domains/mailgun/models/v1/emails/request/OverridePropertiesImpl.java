@@ -35,6 +35,10 @@ public class OverridePropertiesImpl implements OverrideProperties {
 
   private OptionalValue<Instant> deliveryTime;
 
+  public static final String PROPERTY_DELIVER_WITHIN = "o:deliver-within";
+
+  private OptionalValue<String> deliverWithin;
+
   public static final String PROPERTY_TIME_ZONE_LOCALIZE = "o:time-zone-localize";
 
   private OptionalValue<String> timeZoneLocalize;
@@ -92,6 +96,7 @@ public class OverridePropertiesImpl implements OverrideProperties {
       OptionalValue<String> secondaryDkim,
       OptionalValue<String> secondaryDkimPublic,
       OptionalValue<Instant> deliveryTime,
+      OptionalValue<String> deliverWithin,
       OptionalValue<String> timeZoneLocalize,
       OptionalValue<TrueFalseHtmlonlyEnum> trackingClicks,
       OptionalValue<TrueFalseHtmlonlyEnum> tracking,
@@ -110,6 +115,7 @@ public class OverridePropertiesImpl implements OverrideProperties {
     this.secondaryDkim = secondaryDkim;
     this.secondaryDkimPublic = secondaryDkimPublic;
     this.deliveryTime = deliveryTime;
+    this.deliverWithin = deliverWithin;
     this.timeZoneLocalize = timeZoneLocalize;
     this.trackingClicks = trackingClicks;
     this.tracking = tracking;
@@ -180,6 +186,15 @@ public class OverridePropertiesImpl implements OverrideProperties {
   @FormSerialize(using = com.sinch.sdk.core.utils.databind.RFC822FormSerializer.class)
   public OptionalValue<Instant> deliveryTime() {
     return deliveryTime;
+  }
+
+  public String getDeliverWithin() {
+    return deliverWithin.orElse(null);
+  }
+
+  @Property(PROPERTY_DELIVER_WITHIN)
+  public OptionalValue<String> deliverWithin() {
+    return deliverWithin;
   }
 
   public String getTimeZoneLocalize() {
@@ -311,6 +326,7 @@ public class OverridePropertiesImpl implements OverrideProperties {
         && Objects.equals(this.secondaryDkim, overrideProperties.secondaryDkim)
         && Objects.equals(this.secondaryDkimPublic, overrideProperties.secondaryDkimPublic)
         && Objects.equals(this.deliveryTime, overrideProperties.deliveryTime)
+        && Objects.equals(this.deliverWithin, overrideProperties.deliverWithin)
         && Objects.equals(this.timeZoneLocalize, overrideProperties.timeZoneLocalize)
         && Objects.equals(this.trackingClicks, overrideProperties.trackingClicks)
         && Objects.equals(this.tracking, overrideProperties.tracking)
@@ -335,6 +351,7 @@ public class OverridePropertiesImpl implements OverrideProperties {
         secondaryDkim,
         secondaryDkimPublic,
         deliveryTime,
+        deliverWithin,
         timeZoneLocalize,
         trackingClicks,
         tracking,
@@ -365,6 +382,7 @@ public class OverridePropertiesImpl implements OverrideProperties {
         .append(toIndentedString(secondaryDkimPublic))
         .append("\n");
     sb.append("    deliveryTime: ").append(toIndentedString(deliveryTime)).append("\n");
+    sb.append("    deliverWithin: ").append(toIndentedString(deliverWithin)).append("\n");
     sb.append("    timeZoneLocalize: ").append(toIndentedString(timeZoneLocalize)).append("\n");
     sb.append("    trackingClicks: ").append(toIndentedString(trackingClicks)).append("\n");
     sb.append("    tracking: ").append(toIndentedString(tracking)).append("\n");
@@ -400,6 +418,7 @@ public class OverridePropertiesImpl implements OverrideProperties {
     OptionalValue<String> secondaryDkim = OptionalValue.empty();
     OptionalValue<String> secondaryDkimPublic = OptionalValue.empty();
     OptionalValue<Instant> deliveryTime = OptionalValue.empty();
+    OptionalValue<String> deliverWithin = OptionalValue.empty();
     OptionalValue<String> timeZoneLocalize = OptionalValue.empty();
     OptionalValue<TrueFalseHtmlonlyEnum> trackingClicks = OptionalValue.empty();
     OptionalValue<TrueFalseHtmlonlyEnum> tracking = OptionalValue.empty();
@@ -446,6 +465,12 @@ public class OverridePropertiesImpl implements OverrideProperties {
     @Property(value = PROPERTY_DELIVERY_TIME)
     public Builder setDeliveryTime(Instant deliveryTime) {
       this.deliveryTime = OptionalValue.of(deliveryTime);
+      return this;
+    }
+
+    @Property(value = PROPERTY_DELIVER_WITHIN)
+    public Builder setDeliverWithin(String deliverWithin) {
+      this.deliverWithin = OptionalValue.of(deliverWithin);
       return this;
     }
 
@@ -529,6 +554,7 @@ public class OverridePropertiesImpl implements OverrideProperties {
           secondaryDkim,
           secondaryDkimPublic,
           deliveryTime,
+          deliverWithin,
           timeZoneLocalize,
           trackingClicks,
           tracking,
