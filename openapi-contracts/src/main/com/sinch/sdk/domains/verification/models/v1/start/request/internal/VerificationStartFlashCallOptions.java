@@ -16,7 +16,7 @@ import com.sinch.sdk.core.models.AdditionalProperties;
 /**
  * An optional configuration for Flash Call Verification, should be used only when the verification
  * request originates from your backend (not an end user device) and request is signed via an <a
- * href="https://developers.sinch.com/docs/voice/api-reference/authentication/signed-request">Application
+ * href="https://developers.sinch.com/docs/voice/api-reference/authentication/application-signed-request">Application
  * signed request</a>.
  */
 @JsonDeserialize(builder = VerificationStartFlashCallOptionsImpl.Builder.class)

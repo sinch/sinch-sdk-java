@@ -114,7 +114,7 @@ To enhance the onboarding experience, the following resources are available:
 - Sinch Online Developers Documentation: https://developers.sinch.com 
 - Java SDK Online Javadoc: https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest
 - Java SDK Quickstart Repository: A repository with tutorials and templates to help you quickly start a new project: https://github.com/sinch/sinch-sdk-java-quickstart
-- Java SDK Snippets Repository: A collection of basic code snippets for reference: https://github.com/sinch/sinch-sdk-java-snippets
+- Java SDK Snippets: A collection of basic code snippets for reference: [snippets](examples/snippets/README.md)
 
 ## Third-party dependencies
 The SDK relies on the following third-party dependencies:
