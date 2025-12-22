@@ -111,7 +111,7 @@ public interface UpdateTextRequest extends UpdateBatchRequest {
 
   /**
    * If set to <code>true</code>, then <a
-   * href="/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/deliveryFeedback">feedback</a>
+   * href="https://developers.sinch.com/docs/sms/api-reference/sms/batches/deliveryfeedback">feedback</a>
    * is expected after successful delivery.
    *
    * @return feedbackEnabled
@@ -120,8 +120,8 @@ public interface UpdateTextRequest extends UpdateBatchRequest {
 
   /**
    * Contains the parameters that will be used for customizing the message for each recipient. <a
-   * href="/docs/sms/resources/message-info/message-parameterization">Click here to learn more about
-   * parameterization</a>.
+   * href="https://developers.sinch.com/docs/sms/resources/message-info/message-parameterization">Click
+   * here to learn more about parameterization</a>.
    *
    * @return parameters
    */

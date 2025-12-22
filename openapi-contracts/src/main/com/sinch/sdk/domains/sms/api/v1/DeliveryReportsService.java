@@ -21,6 +21,28 @@ import com.sinch.sdk.domains.sms.models.v1.deliveryreports.response.ListDelivery
 public interface DeliveryReportsService {
 
   /**
+   * Retrieve a list of delivery reports (using default parameters)
+   *
+   * <p>Get a list of finished delivery reports. This operation supports pagination.
+   *
+   * @return ListDeliveryReportsResponse
+   * @throws ApiException if fails to make API call
+   */
+  ListDeliveryReportsResponse list() throws ApiException;
+
+  /**
+   * Retrieve a list of delivery reports
+   *
+   * <p>Get a list of finished delivery reports. This operation supports pagination.
+   *
+   * @param queryParameter (optional)
+   * @return ListDeliveryReportsResponse
+   * @throws ApiException if fails to make API call
+   */
+  ListDeliveryReportsResponse list(ListDeliveryReportsQueryParameters queryParameter)
+      throws ApiException;
+
+  /**
    * Retrieve a delivery report (using default parameters)
    *
    * <p>Delivery reports can be retrieved even if no callback was requested. The difference between
@@ -59,26 +81,4 @@ public interface DeliveryReportsService {
    * @throws ApiException if fails to make API call
    */
   RecipientDeliveryReport getForNumber(String batchId, String recipientMsisdn) throws ApiException;
-
-  /**
-   * Retrieve a list of delivery reports (using default parameters)
-   *
-   * <p>Get a list of finished delivery reports. This operation supports pagination.
-   *
-   * @return ListDeliveryReportsResponse
-   * @throws ApiException if fails to make API call
-   */
-  ListDeliveryReportsResponse list() throws ApiException;
-
-  /**
-   * Retrieve a list of delivery reports
-   *
-   * <p>Get a list of finished delivery reports. This operation supports pagination.
-   *
-   * @param queryParameter (optional)
-   * @return ListDeliveryReportsResponse
-   * @throws ApiException if fails to make API call
-   */
-  ListDeliveryReportsResponse list(ListDeliveryReportsQueryParameters queryParameter)
-      throws ApiException;
 }

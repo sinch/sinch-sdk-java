@@ -16,6 +16,7 @@ import com.sinch.sdk.domains.sms.api.v1.DeliveryReportsService;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.RecipientDeliveryReport;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.request.ListDeliveryReportsQueryParameters;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.NoSuchElementException;
 
 /** Auto paginated response for list of RecipientDeliveryReport */
@@ -60,7 +61,7 @@ public class ListDeliveryReportsResponse extends ListResponse<RecipientDeliveryR
 
   @Override
   public Collection<RecipientDeliveryReport> getContent() {
-    return page.getEntities();
+    return page == null ? Collections.emptyList() : page.getEntities();
   }
 
   @Override

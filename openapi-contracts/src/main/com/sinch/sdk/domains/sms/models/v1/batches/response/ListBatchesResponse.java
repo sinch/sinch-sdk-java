@@ -15,6 +15,7 @@ import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.domains.sms.api.v1.BatchesService;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesQueryParameters;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.NoSuchElementException;
 
 /** Auto paginated response for list of BatchResponse */
@@ -58,7 +59,7 @@ public class ListBatchesResponse extends ListResponse<BatchResponse> {
 
   @Override
   public Collection<BatchResponse> getContent() {
-    return page.getEntities();
+    return page == null ? Collections.emptyList() : page.getEntities();
   }
 
   @Override

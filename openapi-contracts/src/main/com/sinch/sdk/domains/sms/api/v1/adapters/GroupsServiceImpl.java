@@ -64,6 +64,92 @@ public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Group
   }
 
   @Override
+  public ListGroupsResponse list() throws ApiException {
+
+    return list((ListGroupsQueryParameters) null);
+  }
+
+  @Override
+  public ListGroupsResponse list(ListGroupsQueryParameters queryParameter) throws ApiException {
+
+    LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
+
+    HttpRequest httpRequest = listRequestBuilder(queryParameter);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+
+      ApiGroupList deserialized =
+          mapper.deserialize(response, new TypeReference<ApiGroupList>() {});
+
+      return new ListGroupsResponse(
+          this,
+          new Page<>(
+              queryParameter,
+              deserialized.getItems(),
+              new SMSCursorPageNavigator(deserialized.getPage(), deserialized.getPageSize())));
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest listRequestBuilder(ListGroupsQueryParameters queryParameter)
+      throws ApiException {
+    // verify the required parameter 'this.servicePlanId' is set
+    if (this.servicePlanId == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'this.servicePlanId' when calling list");
+    }
+
+    String localVarPath =
+        "/xms/v1/{service_plan_id}/groups"
+            .replaceAll(
+                "\\{" + "service_plan_id" + "\\}",
+                URLPathUtils.encodePathSegment(this.servicePlanId.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+    if (null != queryParameter) {
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getPage(), "page", URLParameter.form, null, localVarQueryParams, true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getPageSize(),
+          "page_size",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
+    }
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.GET,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  @Override
   public Group create(GroupRequest groupRequest) throws ApiException {
 
     LOGGER.finest("[create]" + " " + "groupRequest: " + groupRequest);
@@ -230,92 +316,6 @@ public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Group
                 "\\{" + "group_id" + "\\}", URLPathUtils.encodePathSegment(groupId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-
-    final Collection<String> localVarContentTypes = Arrays.asList();
-
-    final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
-    final String serializedBody = null;
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.GET,
-        localVarQueryParams,
-        serializedBody,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  @Override
-  public ListGroupsResponse list() throws ApiException {
-
-    return list((ListGroupsQueryParameters) null);
-  }
-
-  @Override
-  public ListGroupsResponse list(ListGroupsQueryParameters queryParameter) throws ApiException {
-
-    LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
-
-    HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-
-      ApiGroupList deserialized =
-          mapper.deserialize(response, new TypeReference<ApiGroupList>() {});
-
-      return new ListGroupsResponse(
-          this,
-          new Page<>(
-              queryParameter,
-              deserialized.getItems(),
-              new SMSCursorPageNavigator(deserialized.getPage(), deserialized.getPageSize())));
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest listRequestBuilder(ListGroupsQueryParameters queryParameter)
-      throws ApiException {
-    // verify the required parameter 'this.servicePlanId' is set
-    if (this.servicePlanId == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'this.servicePlanId' when calling list");
-    }
-
-    String localVarPath =
-        "/xms/v1/{service_plan_id}/groups"
-            .replaceAll(
-                "\\{" + "service_plan_id" + "\\}",
-                URLPathUtils.encodePathSegment(this.servicePlanId.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-    if (null != queryParameter) {
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getPage(), "page", URLParameter.form, null, localVarQueryParams, true);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getPageSize(),
-          "page_size",
-          URLParameter.form,
-          null,
-          localVarQueryParams,
-          true);
-    }
 
     Map<String, String> localVarHeaderParams = new HashMap<>();
 

@@ -16,6 +16,7 @@ import com.sinch.sdk.domains.sms.api.v1.InboundsService;
 import com.sinch.sdk.domains.sms.models.v1.inbounds.InboundMessage;
 import com.sinch.sdk.domains.sms.models.v1.inbounds.request.ListInboundMessagesQueryParameters;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.NoSuchElementException;
 
 /** Auto paginated response for list of InboundMessage */
@@ -60,7 +61,7 @@ public class ListInboundsResponse extends ListResponse<InboundMessage> {
 
   @Override
   public Collection<InboundMessage> getContent() {
-    return page.getEntities();
+    return page == null ? Collections.emptyList() : page.getEntities();
   }
 
   @Override
