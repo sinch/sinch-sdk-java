@@ -8,8 +8,9 @@ import java.util.stream.Stream;
 /**
  * The delivery report status code provides a more detailed view of what happened with a message.
  * The REST API error codes are a combination of <a
- * href="/docs/sms/smpp/error-codes/#status-reports-error-codes">SMPP error codes</a>, <a
- * href="/docs/mms/7-service/mms-status-codes/">MMS error codes</a> and custom codes.
+ * href="https://developers.sinch.com/docs/sms/smpp/error-codes/#status-reports-error-codes">SMPP
+ * error codes</a>, <a href="https://developers.sinch.com/docs/mms/7-service/mms-status-codes/">MMS
+ * error codes</a> and custom codes.
  */
 public class DeliveryReceiptStatusCode extends EnumDynamic<Integer, DeliveryReceiptStatusCode> {
 
@@ -38,7 +39,8 @@ public class DeliveryReceiptStatusCode extends EnumDynamic<Integer, DeliveryRece
 
   /**
    * Unmatched Parameter. One or more parameters in the message body has no mapping for this
-   * recipient. See <a href="../../../../resources/message-info/message-parameterization/">Message
+   * recipient. See <a
+   * href="https://developers.sinch.com/docs/sms/resources/message-info/message-parameterization">Message
    * Parameterization</a>
    */
   public static final DeliveryReceiptStatusCode UNMATCHED_PARAMETER =

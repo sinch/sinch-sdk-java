@@ -56,7 +56,7 @@ public interface RecipientDeliveryReportSMS extends RecipientDeliveryReport {
 
   /**
    * The detailed <a
-   * href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/section/Delivery-report-error-codes">status
+   * href="https://developers.sinch.com/docs/sms/api-reference/sms/delivery-reports/delivery-report-error-codes">status
    * code</a>.
    *
    * <p>Field is required

@@ -20,8 +20,8 @@ import java.util.stream.Stream;
 
 /**
  * Connects an incoming call to a conference. Available to use in a response to an <a
- * href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/#tag/Callbacks/operation/ice">Incoming
- * Call Event</a> callback.
+ * href="https://developers.sinch.com/docs/voice/api-reference/voice/callbacks/ice">Incoming Call
+ * Event</a> callback.
  */
 @JsonDeserialize(builder = SvamlActionConnectConferenceImpl.Builder.class)
 public interface SvamlActionConnectConference
