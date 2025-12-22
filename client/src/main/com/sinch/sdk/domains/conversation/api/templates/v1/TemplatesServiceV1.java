@@ -16,6 +16,7 @@ import java.util.Collection;
  *     href="https://developers.sinch.com/docs/conversation/api-reference/template/tag/Templates-V1">online
  *     documentation</a>
  * @since 1.3
+ * @deprecated Use {@link com.sinch.sdk.domains.conversation.api.templates.v2.TemplatesServiceV2}
  */
 public interface TemplatesServiceV1 {
 

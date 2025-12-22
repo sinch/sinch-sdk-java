@@ -10,6 +10,7 @@ This guide lists all removed classes and interfaces from V1 and how to migrate t
 
 - Removed support of `SINCH_CHAT` channel.
 - [channelspecific.whatsapp.payment.OrderDetailsPayment](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/conversation/models/v1/messages/types/channelspecific/whatsapp/payment/OrderDetailsPayment.html) is now processing `OderDetailsSettings` interface for payment settings to support `boleto` and `payment_link` payment methods.  
+- Conversation Template V1 is deprecated. Use Conversation Template V2 instead.
 
 #### Replacement models
 | Old class                                        | New class                                                                                                                                                                                                                           |

@@ -59,7 +59,9 @@ public class V1Api {
    * @param templateV1 Required. The template to create. (required)
    * @return TemplateV1
    * @throws ApiException if fails to make API call
+   * @deprecated
    */
+  @Deprecated
   public TemplateV1 templatesCreateTemplate(String projectId, TemplateV1 templateV1)
       throws ApiException {
 
@@ -137,7 +139,9 @@ public class V1Api {
    * @param templateId Required. The ID of the template to fetch. (required)
    * @return Object
    * @throws ApiException if fails to make API call
+   * @deprecated
    */
+  @Deprecated
   public Object templatesDeleteTemplate(String projectId, String templateId) throws ApiException {
 
     LOGGER.finest(
@@ -217,7 +221,9 @@ public class V1Api {
    * @param templateId Required. The ID of the template to fetch. (required)
    * @return TemplateV1
    * @throws ApiException if fails to make API call
+   * @deprecated
    */
+  @Deprecated
   public TemplateV1 templatesGetTemplate(String projectId, String templateId) throws ApiException {
 
     LOGGER.finest(
@@ -296,7 +302,9 @@ public class V1Api {
    * @param projectId Required. The project ID. (required)
    * @return V1ListTemplatesResponseInternal
    * @throws ApiException if fails to make API call
+   * @deprecated
    */
+  @Deprecated
   public V1ListTemplatesResponseInternal templatesListTemplates(String projectId)
       throws ApiException {
 
@@ -365,7 +373,9 @@ public class V1Api {
    * @param updateMask The set of field mask paths. (optional
    * @return TemplateV1
    * @throws ApiException if fails to make API call
+   * @deprecated
    */
+  @Deprecated
   public TemplateV1 templatesUpdateTemplate(
       String projectId, String templateId, TemplateV1 templateV1, List<String> updateMask)
       throws ApiException {
