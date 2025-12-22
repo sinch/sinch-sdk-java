@@ -18,21 +18,6 @@ import java.util.List;
 public interface MachineLearningSentimentResult {
 
   /**
-   * The message text that was analyzed.
-   *
-   * @return message
-   */
-  String getMessage();
-
-  /**
-   * An array of JSON objects made up of sentiment and score pairs, where the score represents the
-   * likelihood that the message communicates the corresponding sentiment.
-   *
-   * @return results
-   */
-  List<SentimentResult> getResults();
-
-  /**
    * Get sentiment
    *
    * @return sentiment
@@ -50,6 +35,21 @@ public interface MachineLearningSentimentResult {
   Float getScore();
 
   /**
+   * The message text that was analyzed.
+   *
+   * @return message
+   */
+  String getMessage();
+
+  /**
+   * An array of JSON objects made up of sentiment and score pairs, where the score represents the
+   * likelihood that the message communicates the corresponding sentiment.
+   *
+   * @return results
+   */
+  List<SentimentResult> getResults();
+
+  /**
    * Getting builder
    *
    * @return New Builder instance
@@ -60,24 +60,6 @@ public interface MachineLearningSentimentResult {
 
   /** Dedicated Builder */
   interface Builder {
-
-    /**
-     * see getter
-     *
-     * @param message see getter
-     * @return Current builder
-     * @see #getMessage
-     */
-    Builder setMessage(String message);
-
-    /**
-     * see getter
-     *
-     * @param results see getter
-     * @return Current builder
-     * @see #getResults
-     */
-    Builder setResults(List<SentimentResult> results);
 
     /**
      * see getter
@@ -96,6 +78,24 @@ public interface MachineLearningSentimentResult {
      * @see #getScore
      */
     Builder setScore(Float score);
+
+    /**
+     * see getter
+     *
+     * @param message see getter
+     * @return Current builder
+     * @see #getMessage
+     */
+    Builder setMessage(String message);
+
+    /**
+     * see getter
+     *
+     * @param results see getter
+     * @return Current builder
+     * @see #getResults
+     */
+    Builder setResults(List<SentimentResult> results);
 
     /**
      * Create instance

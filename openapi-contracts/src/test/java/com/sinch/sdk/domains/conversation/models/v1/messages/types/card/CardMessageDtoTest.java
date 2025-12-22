@@ -5,13 +5,18 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.calendar.CalendarMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.calendar.CalendarMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.call.CallMessageDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.Choice;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceCallMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceLocationMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceTextMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.ChoiceURLMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.location.LocationMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessageDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.sharelocation.ShareLocationMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.sharelocation.ShareLocationMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.url.UrlMessageDtoTest;
 import java.util.Arrays;
@@ -45,6 +50,14 @@ public class CardMessageDtoTest extends ConversationBaseTest {
                   ChoiceURLMessage.builder()
                       .setMessage(UrlMessageDtoTest.urlMessageDto)
                       .setPostbackData("postback_data url")
+                      .build(),
+                  Choice.<CalendarMessage>builder()
+                      .setMessage(CalendarMessageDtoTest.calendarMessageDto)
+                      .setPostbackData("postback calendar_message data value")
+                      .build(),
+                  Choice.<ShareLocationMessage>builder()
+                      .setMessage(ShareLocationMessageDtoTest.shareLocationMessageDto)
+                      .setPostbackData("postback share_location_message data value")
                       .build()))
           .build();
 
@@ -71,6 +84,14 @@ public class CardMessageDtoTest extends ConversationBaseTest {
                   ChoiceURLMessage.builder()
                       .setMessage(UrlMessageDtoTest.urlMessageDto)
                       .setPostbackData("postback_data url")
+                      .build(),
+                  Choice.<CalendarMessage>builder()
+                      .setMessage(CalendarMessageDtoTest.calendarMessageDto)
+                      .setPostbackData("postback calendar_message data value")
+                      .build(),
+                  Choice.<ShareLocationMessage>builder()
+                      .setMessage(ShareLocationMessageDtoTest.shareLocationMessageDto)
+                      .setPostbackData("postback share_location_message data value")
                       .build()))
           .setMessageProperties(MessagePropertiesDtoTest.messagePropertiesDto)
           .build();

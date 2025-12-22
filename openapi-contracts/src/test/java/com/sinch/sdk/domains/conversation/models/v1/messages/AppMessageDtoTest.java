@@ -3,6 +3,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.AgentDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
@@ -175,7 +176,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
   void deserializeCardMessageRequestDto() throws JsonProcessingException {
     Object deserialized = objectMapper.readValue(jsonAppMessageCardRequestDto, AppMessage.class);
 
-    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appCardMessageDto);
+    TestHelpers.recursiveEquals(deserialized, appCardMessageDto);
   }
 
   @Test
@@ -204,7 +205,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
   void deserializeChoiceMessageRequestDto() throws JsonProcessingException {
     Object deserialized = objectMapper.readValue(jsonAppMessageChoiceRequestDto, AppMessage.class);
 
-    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appChoiceMessageDto);
+    TestHelpers.recursiveEquals(deserialized, appChoiceMessageDto);
   }
 
   @Test
@@ -219,9 +220,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
     Object deserialized =
         objectMapper.readValue(jsonAppMessageContactInfoRequestDto, AppMessage.class);
 
-    Assertions.assertThat(deserialized)
-        .usingRecursiveComparison()
-        .isEqualTo(appContactInfoMessageDto);
+    TestHelpers.recursiveEquals(deserialized, appContactInfoMessageDto);
   }
 
   @Test
@@ -236,7 +235,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
     Object deserialized =
         objectMapper.readValue(jsonAppMessageListMessageRequestDto, AppMessage.class);
 
-    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appListMessageDto);
+    TestHelpers.recursiveEquals(deserialized, appListMessageDto);
   }
 
   @Test
@@ -247,11 +246,11 @@ public class AppMessageDtoTest extends ConversationBaseTest {
   }
 
   @Test
-  void deserializeLocationMessageRequestDto() throws JsonProcessingException, JSONException {
+  void deserializeLocationMessageRequestDto() throws JsonProcessingException {
     Object deserialized =
         objectMapper.readValue(jsonAppMessageLocationMessageRequestDto, AppMessage.class);
 
-    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appLocationMessageDto);
+    TestHelpers.recursiveEquals(deserialized, appLocationMessageDto);
   }
 
   @Test
@@ -265,7 +264,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
   void deserializeMediaMessageRequestDto() throws JsonProcessingException {
     Object deserialized = objectMapper.readValue(jsonAppMessageMediaRequestDto, AppMessage.class);
 
-    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appMediaMessageDto);
+    TestHelpers.recursiveEquals(deserialized, appMediaMessageDto);
   }
 
   @Test
@@ -280,7 +279,7 @@ public class AppMessageDtoTest extends ConversationBaseTest {
     Object deserialized =
         objectMapper.readValue(jsonAppMessageTemplateRequestDto, AppMessage.class);
 
-    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appTemplateMessageDto);
+    TestHelpers.recursiveEquals(deserialized, appTemplateMessageDto);
   }
 
   @Test
@@ -294,6 +293,6 @@ public class AppMessageDtoTest extends ConversationBaseTest {
   void deserializeTextMessageRequestDto() throws JsonProcessingException {
     Object deserialized = objectMapper.readValue(jsonAppMessageTextRequestDto, AppMessage.class);
 
-    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(appTextMessageDto);
+    TestHelpers.recursiveEquals(deserialized, appTextMessageDto);
   }
 }

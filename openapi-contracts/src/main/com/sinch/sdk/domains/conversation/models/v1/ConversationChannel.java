@@ -41,9 +41,6 @@ public class ConversationChannel extends EnumDynamic<String, ConversationChannel
   /** The LINE channel. */
   public static final ConversationChannel LINE = new ConversationChannel("LINE");
 
-  /** The Sinch Chat channel. */
-  public static final ConversationChannel SINCH_CHAT = new ConversationChannel("SINCH_CHAT");
-
   /** The WeChat channel. */
   public static final ConversationChannel WECHAT = new ConversationChannel("WECHAT");
 
@@ -66,7 +63,6 @@ public class ConversationChannel extends EnumDynamic<String, ConversationChannel
               KAKAOTALK,
               KAKAOTALKCHAT,
               LINE,
-              SINCH_CHAT,
               WECHAT,
               APPLEBC));
 

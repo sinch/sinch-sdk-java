@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
@@ -20,6 +21,8 @@ import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactGetCh
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactGetChannelProfileByContactIdRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.MergeContactRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.response.ContactListResponse;
+import com.sinch.sdk.domains.conversation.models.v1.contact.response.IdentityConflicts;
+import com.sinch.sdk.domains.conversation.models.v1.contact.response.IdentityConflictsListResponse;
 import com.sinch.sdk.models.ConversationContext;
 import java.util.Iterator;
 import java.util.Map;
@@ -60,9 +63,7 @@ class ContactServiceTest extends BaseTest {
     Iterator<Contact> iterator = response.iterator();
     Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
     Contact item = iterator.next();
-    Assertions.assertThat(item)
-        .usingRecursiveComparison()
-        .isEqualTo(ContactDtoTest.expectedContactResponseDto);
+    TestHelpers.recursiveEquals(item, ContactDtoTest.expectedContactResponseDto);
 
     Assertions.assertThat(iterator.hasNext()).isEqualTo(false);
   }
@@ -75,9 +76,7 @@ class ContactServiceTest extends BaseTest {
 
     Contact response = service.create(ContactDtoTest.createContactRequestDto);
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(ContactDtoTest.expectedCreatedContactResponseDto);
+    TestHelpers.recursiveEquals(response, ContactDtoTest.expectedCreatedContactResponseDto);
   }
 
   @Test
@@ -89,9 +88,7 @@ class ContactServiceTest extends BaseTest {
 
     Contact response = service.get(ContactDtoTest.expectedContactResponseDto.getId());
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(ContactDtoTest.expectedContactResponseDto);
+    TestHelpers.recursiveEquals(response, ContactDtoTest.expectedContactResponseDto);
   }
 
   @Test
@@ -109,9 +106,7 @@ class ContactServiceTest extends BaseTest {
             ContactDtoTest.expectedContactResponseDto.getId(),
             ContactDtoTest.expectedContactResponseDto);
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(ContactDtoTest.expectedContactResponseDto);
+    TestHelpers.recursiveEquals(response, ContactDtoTest.expectedContactResponseDto);
   }
 
   @Test
@@ -125,9 +120,7 @@ class ContactServiceTest extends BaseTest {
 
     Contact response = service.mergeContact("foo 1", "foo 2");
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(ContactDtoTest.expectedContactResponseDto);
+    TestHelpers.recursiveEquals(response, ContactDtoTest.expectedContactResponseDto);
   }
 
   @Test
@@ -169,5 +162,24 @@ class ContactServiceTest extends BaseTest {
 
     Assertions.assertThat(response)
         .isEqualTo(ContactDtoTest.expectedChannelProfileResponseDto.getProfileName());
+  }
+
+  @Test
+  void listIdentityConflicts() throws ApiException {
+
+    when(api.listIdentityConflicts(eq(uriPartID), eq(null), eq(null)))
+        .thenReturn(ContactDtoTest.expectedListIdentityConflictsResponseDtoPage0);
+
+    when(api.listIdentityConflicts(eq(uriPartID), eq(null), eq("the next page token value")))
+        .thenReturn(ContactDtoTest.expectedListIdentityConflictsResponseDtoPage1);
+
+    IdentityConflictsListResponse response = service.listIdentityConflicts(null);
+
+    Iterator<IdentityConflicts> iterator = response.iterator();
+    Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
+    IdentityConflicts item = iterator.next();
+    TestHelpers.recursiveEquals(item, ContactDtoTest.expectedIdentityConflictsDto0);
+
+    Assertions.assertThat(iterator.hasNext()).isEqualTo(false);
   }
 }

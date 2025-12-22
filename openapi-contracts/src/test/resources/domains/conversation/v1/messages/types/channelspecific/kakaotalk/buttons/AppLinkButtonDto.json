@@ -1,0 +1,6 @@
+{
+  "type": "AL",
+  "name": "Open app link button",
+  "scheme_ios": "tel://+1234567890",
+  "scheme_android": "tel://+198765432"
+}

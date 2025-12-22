@@ -8,22 +8,21 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.payment;
+package com.sinch.sdk.domains.conversation.models.v1.projectsettings.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.conversation.models.v1.projectsettings.ContactSettings;
 
-/** The payment settings. */
-@JsonDeserialize(builder = OrderDetailsPaymentSettingsImpl.Builder.class)
-public interface OrderDetailsPaymentSettings {
+/** Request body for creating or updating project settings. */
+@JsonDeserialize(builder = ProjectSettingsRequestImpl.Builder.class)
+public interface ProjectSettingsRequest {
 
   /**
-   * Get dynamicPix
+   * Get contactSettings
    *
-   * <p>Field is required
-   *
-   * @return dynamicPix
+   * @return contactSettings
    */
-  OrderDetailsPaymentSettingsDynamicPix getDynamicPix();
+  ContactSettings getContactSettings();
 
   /**
    * Getting builder
@@ -31,7 +30,7 @@ public interface OrderDetailsPaymentSettings {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new OrderDetailsPaymentSettingsImpl.Builder();
+    return new ProjectSettingsRequestImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -40,17 +39,17 @@ public interface OrderDetailsPaymentSettings {
     /**
      * see getter
      *
-     * @param dynamicPix see getter
+     * @param contactSettings see getter
      * @return Current builder
-     * @see #getDynamicPix
+     * @see #getContactSettings
      */
-    Builder setDynamicPix(OrderDetailsPaymentSettingsDynamicPix dynamicPix);
+    Builder setContactSettings(ContactSettings contactSettings);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    OrderDetailsPaymentSettings build();
+    ProjectSettingsRequest build();
   }
 }

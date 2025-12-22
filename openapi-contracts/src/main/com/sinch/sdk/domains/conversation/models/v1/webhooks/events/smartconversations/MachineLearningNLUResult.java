@@ -18,21 +18,6 @@ import java.util.List;
 public interface MachineLearningNLUResult {
 
   /**
-   * The message text that was analyzed.
-   *
-   * @return message
-   */
-  String getMessage();
-
-  /**
-   * An array of JSON objects made up of intent and score pairs, where the score represents the
-   * likelihood that the message has the corresponding intent.
-   *
-   * @return results
-   */
-  List<IntentResult> getResults();
-
-  /**
    * The most probable intent of the analyzed text. For example, chitchat.greeting, chitchat.bye,
    * chitchat.compliment, chitchat.how_are_you, or general.yes_or_agreed.
    *
@@ -51,6 +36,21 @@ public interface MachineLearningNLUResult {
   Float getScore();
 
   /**
+   * The message text that was analyzed.
+   *
+   * @return message
+   */
+  String getMessage();
+
+  /**
+   * An array of JSON objects made up of intent and score pairs, where the score represents the
+   * likelihood that the message has the corresponding intent.
+   *
+   * @return results
+   */
+  List<IntentResult> getResults();
+
+  /**
    * Getting builder
    *
    * @return New Builder instance
@@ -61,24 +61,6 @@ public interface MachineLearningNLUResult {
 
   /** Dedicated Builder */
   interface Builder {
-
-    /**
-     * see getter
-     *
-     * @param message see getter
-     * @return Current builder
-     * @see #getMessage
-     */
-    Builder setMessage(String message);
-
-    /**
-     * see getter
-     *
-     * @param results see getter
-     * @return Current builder
-     * @see #getResults
-     */
-    Builder setResults(List<IntentResult> results);
 
     /**
      * see getter
@@ -97,6 +79,24 @@ public interface MachineLearningNLUResult {
      * @see #getScore
      */
     Builder setScore(Float score);
+
+    /**
+     * see getter
+     *
+     * @param message see getter
+     * @return Current builder
+     * @see #getMessage
+     */
+    Builder setMessage(String message);
+
+    /**
+     * see getter
+     *
+     * @param results see getter
+     * @return Current builder
+     * @see #getResults
+     */
+    Builder setResults(List<IntentResult> results);
 
     /**
      * Create instance

@@ -16,9 +16,11 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** The dynamic Pix payment settings. */
+/** OrderDetailsPaymentSettingsDynamicPix */
 @JsonDeserialize(builder = OrderDetailsPaymentSettingsDynamicPixImpl.Builder.class)
-public interface OrderDetailsPaymentSettingsDynamicPix {
+public interface OrderDetailsPaymentSettingsDynamicPix
+    extends com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp
+        .payment.OrderDetailsSettings {
 
   /**
    * The dynamic Pix code to be used by the buyer to pay.

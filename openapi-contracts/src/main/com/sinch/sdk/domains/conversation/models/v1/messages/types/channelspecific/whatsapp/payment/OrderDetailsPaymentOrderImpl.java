@@ -245,8 +245,8 @@ public class OrderDetailsPaymentOrderImpl implements OrderDetailsPaymentOrder {
   }
 
   /**
-   * Return true if this Payment_Order_Details_channel_specific_message__payment_order object is
-   * equal to o.
+   * Return true if this WhatsApp_Payment_Order_Details_channel_specific_message__payment_order
+   * object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -256,37 +256,41 @@ public class OrderDetailsPaymentOrderImpl implements OrderDetailsPaymentOrder {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    OrderDetailsPaymentOrderImpl paymentOrderDetailsChannelSpecificMessagePaymentOrder =
+    OrderDetailsPaymentOrderImpl whatsAppPaymentOrderDetailsChannelSpecificMessagePaymentOrder =
         (OrderDetailsPaymentOrderImpl) o;
     return Objects.equals(
-            this.catalogId, paymentOrderDetailsChannelSpecificMessagePaymentOrder.catalogId)
+            this.catalogId, whatsAppPaymentOrderDetailsChannelSpecificMessagePaymentOrder.catalogId)
         && Objects.equals(
             this.expirationTime,
-            paymentOrderDetailsChannelSpecificMessagePaymentOrder.expirationTime)
+            whatsAppPaymentOrderDetailsChannelSpecificMessagePaymentOrder.expirationTime)
         && Objects.equals(
             this.expirationDescription,
-            paymentOrderDetailsChannelSpecificMessagePaymentOrder.expirationDescription)
+            whatsAppPaymentOrderDetailsChannelSpecificMessagePaymentOrder.expirationDescription)
         && Objects.equals(
-            this.subtotalValue, paymentOrderDetailsChannelSpecificMessagePaymentOrder.subtotalValue)
+            this.subtotalValue,
+            whatsAppPaymentOrderDetailsChannelSpecificMessagePaymentOrder.subtotalValue)
         && Objects.equals(
-            this.taxValue, paymentOrderDetailsChannelSpecificMessagePaymentOrder.taxValue)
+            this.taxValue, whatsAppPaymentOrderDetailsChannelSpecificMessagePaymentOrder.taxValue)
         && Objects.equals(
             this.taxDescription,
-            paymentOrderDetailsChannelSpecificMessagePaymentOrder.taxDescription)
+            whatsAppPaymentOrderDetailsChannelSpecificMessagePaymentOrder.taxDescription)
         && Objects.equals(
-            this.shippingValue, paymentOrderDetailsChannelSpecificMessagePaymentOrder.shippingValue)
+            this.shippingValue,
+            whatsAppPaymentOrderDetailsChannelSpecificMessagePaymentOrder.shippingValue)
         && Objects.equals(
             this.shippingDescription,
-            paymentOrderDetailsChannelSpecificMessagePaymentOrder.shippingDescription)
+            whatsAppPaymentOrderDetailsChannelSpecificMessagePaymentOrder.shippingDescription)
         && Objects.equals(
-            this.discountValue, paymentOrderDetailsChannelSpecificMessagePaymentOrder.discountValue)
+            this.discountValue,
+            whatsAppPaymentOrderDetailsChannelSpecificMessagePaymentOrder.discountValue)
         && Objects.equals(
             this.discountDescription,
-            paymentOrderDetailsChannelSpecificMessagePaymentOrder.discountDescription)
+            whatsAppPaymentOrderDetailsChannelSpecificMessagePaymentOrder.discountDescription)
         && Objects.equals(
             this.discountProgramName,
-            paymentOrderDetailsChannelSpecificMessagePaymentOrder.discountProgramName)
-        && Objects.equals(this.items, paymentOrderDetailsChannelSpecificMessagePaymentOrder.items);
+            whatsAppPaymentOrderDetailsChannelSpecificMessagePaymentOrder.discountProgramName)
+        && Objects.equals(
+            this.items, whatsAppPaymentOrderDetailsChannelSpecificMessagePaymentOrder.items);
   }
 
   @Override

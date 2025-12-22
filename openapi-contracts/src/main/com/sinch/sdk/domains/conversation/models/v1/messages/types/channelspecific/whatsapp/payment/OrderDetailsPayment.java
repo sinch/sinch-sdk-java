@@ -105,7 +105,7 @@ public interface OrderDetailsPayment {
    *
    * @return paymentSettings
    */
-  OrderDetailsPaymentSettings getPaymentSettings();
+  OrderDetailsSettings getPaymentSettings();
 
   /**
    * Integer representing the total amount of the transaction.
@@ -171,7 +171,7 @@ public interface OrderDetailsPayment {
      * @return Current builder
      * @see #getPaymentSettings
      */
-    Builder setPaymentSettings(OrderDetailsPaymentSettings paymentSettings);
+    Builder setPaymentSettings(OrderDetailsSettings paymentSettings);
 
     /**
      * see getter

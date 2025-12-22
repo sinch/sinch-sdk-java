@@ -36,7 +36,7 @@ public class OrderDetailsPaymentImpl implements OrderDetailsPayment {
 
   public static final String JSON_PROPERTY_PAYMENT_SETTINGS = "payment_settings";
 
-  private OptionalValue<OrderDetailsPaymentSettings> paymentSettings;
+  private OptionalValue<OrderDetailsSettings> paymentSettings;
 
   public static final String JSON_PROPERTY_TOTAL_AMOUNT_VALUE = "total_amount_value";
 
@@ -52,7 +52,7 @@ public class OrderDetailsPaymentImpl implements OrderDetailsPayment {
       OptionalValue<TypeEnum> type,
       OptionalValue<String> referenceId,
       OptionalValue<TypeOfGoodsEnum> typeOfGoods,
-      OptionalValue<OrderDetailsPaymentSettings> paymentSettings,
+      OptionalValue<OrderDetailsSettings> paymentSettings,
       OptionalValue<Integer> totalAmountValue,
       OptionalValue<OrderDetailsPaymentOrder> order) {
     this.type = type;
@@ -97,13 +97,13 @@ public class OrderDetailsPaymentImpl implements OrderDetailsPayment {
   }
 
   @JsonIgnore
-  public OrderDetailsPaymentSettings getPaymentSettings() {
+  public OrderDetailsSettings getPaymentSettings() {
     return paymentSettings.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_PAYMENT_SETTINGS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<OrderDetailsPaymentSettings> paymentSettings() {
+  public OptionalValue<OrderDetailsSettings> paymentSettings() {
     return paymentSettings;
   }
 
@@ -130,8 +130,8 @@ public class OrderDetailsPaymentImpl implements OrderDetailsPayment {
   }
 
   /**
-   * Return true if this Payment_Order_Details_channel_specific_message__payment object is equal to
-   * o.
+   * Return true if this WhatsApp_Payment_Order_Details_channel_specific_message__payment object is
+   * equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -141,19 +141,21 @@ public class OrderDetailsPaymentImpl implements OrderDetailsPayment {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    OrderDetailsPaymentImpl paymentOrderDetailsChannelSpecificMessagePayment =
+    OrderDetailsPaymentImpl whatsAppPaymentOrderDetailsChannelSpecificMessagePayment =
         (OrderDetailsPaymentImpl) o;
-    return Objects.equals(this.type, paymentOrderDetailsChannelSpecificMessagePayment.type)
+    return Objects.equals(this.type, whatsAppPaymentOrderDetailsChannelSpecificMessagePayment.type)
         && Objects.equals(
-            this.referenceId, paymentOrderDetailsChannelSpecificMessagePayment.referenceId)
+            this.referenceId, whatsAppPaymentOrderDetailsChannelSpecificMessagePayment.referenceId)
         && Objects.equals(
-            this.typeOfGoods, paymentOrderDetailsChannelSpecificMessagePayment.typeOfGoods)
+            this.typeOfGoods, whatsAppPaymentOrderDetailsChannelSpecificMessagePayment.typeOfGoods)
         && Objects.equals(
-            this.paymentSettings, paymentOrderDetailsChannelSpecificMessagePayment.paymentSettings)
+            this.paymentSettings,
+            whatsAppPaymentOrderDetailsChannelSpecificMessagePayment.paymentSettings)
         && Objects.equals(
             this.totalAmountValue,
-            paymentOrderDetailsChannelSpecificMessagePayment.totalAmountValue)
-        && Objects.equals(this.order, paymentOrderDetailsChannelSpecificMessagePayment.order);
+            whatsAppPaymentOrderDetailsChannelSpecificMessagePayment.totalAmountValue)
+        && Objects.equals(
+            this.order, whatsAppPaymentOrderDetailsChannelSpecificMessagePayment.order);
   }
 
   @Override
@@ -190,7 +192,7 @@ public class OrderDetailsPaymentImpl implements OrderDetailsPayment {
     OptionalValue<TypeEnum> type = OptionalValue.empty();
     OptionalValue<String> referenceId = OptionalValue.empty();
     OptionalValue<TypeOfGoodsEnum> typeOfGoods = OptionalValue.empty();
-    OptionalValue<OrderDetailsPaymentSettings> paymentSettings = OptionalValue.empty();
+    OptionalValue<OrderDetailsSettings> paymentSettings = OptionalValue.empty();
     OptionalValue<Integer> totalAmountValue = OptionalValue.empty();
     OptionalValue<OrderDetailsPaymentOrder> order = OptionalValue.empty();
 
@@ -213,7 +215,7 @@ public class OrderDetailsPaymentImpl implements OrderDetailsPayment {
     }
 
     @JsonProperty(JSON_PROPERTY_PAYMENT_SETTINGS)
-    public Builder setPaymentSettings(OrderDetailsPaymentSettings paymentSettings) {
+    public Builder setPaymentSettings(OrderDetailsSettings paymentSettings) {
       this.paymentSettings = OptionalValue.of(paymentSettings);
       return this;
     }

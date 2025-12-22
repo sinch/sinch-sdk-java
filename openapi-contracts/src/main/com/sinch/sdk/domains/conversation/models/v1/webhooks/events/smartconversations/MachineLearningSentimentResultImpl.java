@@ -11,23 +11,15 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  MachineLearningSentimentResultImpl.JSON_PROPERTY_MESSAGE,
-  MachineLearningSentimentResultImpl.JSON_PROPERTY_RESULTS,
   MachineLearningSentimentResultImpl.JSON_PROPERTY_SENTIMENT,
-  MachineLearningSentimentResultImpl.JSON_PROPERTY_SCORE
+  MachineLearningSentimentResultImpl.JSON_PROPERTY_SCORE,
+  MachineLearningSentimentResultImpl.JSON_PROPERTY_MESSAGE,
+  MachineLearningSentimentResultImpl.JSON_PROPERTY_RESULTS
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class MachineLearningSentimentResultImpl implements MachineLearningSentimentResult {
   private static final long serialVersionUID = 1L;
-
-  public static final String JSON_PROPERTY_MESSAGE = "message";
-
-  private OptionalValue<String> message;
-
-  public static final String JSON_PROPERTY_RESULTS = "results";
-
-  private OptionalValue<List<SentimentResult>> results;
 
   public static final String JSON_PROPERTY_SENTIMENT = "sentiment";
 
@@ -37,39 +29,25 @@ public class MachineLearningSentimentResultImpl implements MachineLearningSentim
 
   private OptionalValue<Float> score;
 
+  public static final String JSON_PROPERTY_MESSAGE = "message";
+
+  private OptionalValue<String> message;
+
+  public static final String JSON_PROPERTY_RESULTS = "results";
+
+  private OptionalValue<List<SentimentResult>> results;
+
   public MachineLearningSentimentResultImpl() {}
 
   protected MachineLearningSentimentResultImpl(
-      OptionalValue<String> message,
-      OptionalValue<List<SentimentResult>> results,
       OptionalValue<Sentiment> sentiment,
-      OptionalValue<Float> score) {
-    this.message = message;
-    this.results = results;
+      OptionalValue<Float> score,
+      OptionalValue<String> message,
+      OptionalValue<List<SentimentResult>> results) {
     this.sentiment = sentiment;
     this.score = score;
-  }
-
-  @JsonIgnore
-  public String getMessage() {
-    return message.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_MESSAGE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> message() {
-    return message;
-  }
-
-  @JsonIgnore
-  public List<SentimentResult> getResults() {
-    return results.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_RESULTS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<List<SentimentResult>> results() {
-    return results;
+    this.message = message;
+    this.results = results;
   }
 
   @JsonIgnore
@@ -94,6 +72,28 @@ public class MachineLearningSentimentResultImpl implements MachineLearningSentim
     return score;
   }
 
+  @JsonIgnore
+  public String getMessage() {
+    return message.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_MESSAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> message() {
+    return message;
+  }
+
+  @JsonIgnore
+  public List<SentimentResult> getResults() {
+    return results.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_RESULTS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<List<SentimentResult>> results() {
+    return results;
+  }
+
   /** Return true if this MachineLearningSentimentResult object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -105,25 +105,25 @@ public class MachineLearningSentimentResultImpl implements MachineLearningSentim
     }
     MachineLearningSentimentResultImpl machineLearningSentimentResult =
         (MachineLearningSentimentResultImpl) o;
-    return Objects.equals(this.message, machineLearningSentimentResult.message)
-        && Objects.equals(this.results, machineLearningSentimentResult.results)
-        && Objects.equals(this.sentiment, machineLearningSentimentResult.sentiment)
-        && Objects.equals(this.score, machineLearningSentimentResult.score);
+    return Objects.equals(this.sentiment, machineLearningSentimentResult.sentiment)
+        && Objects.equals(this.score, machineLearningSentimentResult.score)
+        && Objects.equals(this.message, machineLearningSentimentResult.message)
+        && Objects.equals(this.results, machineLearningSentimentResult.results);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(message, results, sentiment, score);
+    return Objects.hash(sentiment, score, message, results);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class MachineLearningSentimentResultImpl {\n");
-    sb.append("    message: ").append(toIndentedString(message)).append("\n");
-    sb.append("    results: ").append(toIndentedString(results)).append("\n");
     sb.append("    sentiment: ").append(toIndentedString(sentiment)).append("\n");
     sb.append("    score: ").append(toIndentedString(score)).append("\n");
+    sb.append("    message: ").append(toIndentedString(message)).append("\n");
+    sb.append("    results: ").append(toIndentedString(results)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -140,22 +140,10 @@ public class MachineLearningSentimentResultImpl implements MachineLearningSentim
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements MachineLearningSentimentResult.Builder {
-    OptionalValue<String> message = OptionalValue.empty();
-    OptionalValue<List<SentimentResult>> results = OptionalValue.empty();
     OptionalValue<Sentiment> sentiment = OptionalValue.empty();
     OptionalValue<Float> score = OptionalValue.empty();
-
-    @JsonProperty(JSON_PROPERTY_MESSAGE)
-    public Builder setMessage(String message) {
-      this.message = OptionalValue.of(message);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_RESULTS)
-    public Builder setResults(List<SentimentResult> results) {
-      this.results = OptionalValue.of(results);
-      return this;
-    }
+    OptionalValue<String> message = OptionalValue.empty();
+    OptionalValue<List<SentimentResult>> results = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_SENTIMENT)
     public Builder setSentiment(Sentiment sentiment) {
@@ -169,8 +157,20 @@ public class MachineLearningSentimentResultImpl implements MachineLearningSentim
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_MESSAGE)
+    public Builder setMessage(String message) {
+      this.message = OptionalValue.of(message);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_RESULTS)
+    public Builder setResults(List<SentimentResult> results) {
+      this.results = OptionalValue.of(results);
+      return this;
+    }
+
     public MachineLearningSentimentResult build() {
-      return new MachineLearningSentimentResultImpl(message, results, sentiment, score);
+      return new MachineLearningSentimentResultImpl(sentiment, score, message, results);
     }
   }
 }

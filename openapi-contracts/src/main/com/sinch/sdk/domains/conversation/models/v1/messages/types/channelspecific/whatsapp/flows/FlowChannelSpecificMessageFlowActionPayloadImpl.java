@@ -57,7 +57,10 @@ public class FlowChannelSpecificMessageFlowActionPayloadImpl
     return data;
   }
 
-  /** Return true if this Flow_channel_specific_message_flow_action_payload object is equal to o. */
+  /**
+   * Return true if this WhatsApp_Flow_channel_specific_message_flow_action_payload object is equal
+   * to o.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -66,10 +69,11 @@ public class FlowChannelSpecificMessageFlowActionPayloadImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    FlowChannelSpecificMessageFlowActionPayloadImpl flowChannelSpecificMessageFlowActionPayload =
-        (FlowChannelSpecificMessageFlowActionPayloadImpl) o;
-    return Objects.equals(this.screen, flowChannelSpecificMessageFlowActionPayload.screen)
-        && Objects.equals(this.data, flowChannelSpecificMessageFlowActionPayload.data);
+    FlowChannelSpecificMessageFlowActionPayloadImpl
+        whatsAppFlowChannelSpecificMessageFlowActionPayload =
+            (FlowChannelSpecificMessageFlowActionPayloadImpl) o;
+    return Objects.equals(this.screen, whatsAppFlowChannelSpecificMessageFlowActionPayload.screen)
+        && Objects.equals(this.data, whatsAppFlowChannelSpecificMessageFlowActionPayload.data);
   }
 
   @Override

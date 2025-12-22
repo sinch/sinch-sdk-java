@@ -8,28 +8,37 @@ import java.util.stream.Stream;
 /** Gets or Sets typeChannel */
 public class TemplateChannel extends EnumDynamic<String, TemplateChannel> {
 
+  /** Unspecified channel. */
   public static final TemplateChannel UNSPECIFIED = new TemplateChannel("UNSPECIFIED");
 
+  /** Conversation channel. */
   public static final TemplateChannel CONVERSATION = new TemplateChannel("CONVERSATION");
 
+  /** The Facebook Messenger channel. */
   public static final TemplateChannel MESSENGER = new TemplateChannel("MESSENGER");
 
+  /** The WhatsApp channel. */
   public static final TemplateChannel WHATSAPP = new TemplateChannel("WHATSAPP");
 
+  /** The RCS channel. */
   public static final TemplateChannel RCS = new TemplateChannel("RCS");
 
+  /** The SMS channel. */
   public static final TemplateChannel SMS = new TemplateChannel("SMS");
 
-  public static final TemplateChannel VIBER = new TemplateChannel("VIBER");
-
+  /** The Viber Business Messages channel. */
   public static final TemplateChannel VIBERBM = new TemplateChannel("VIBERBM");
 
+  /** The Telegram channel. */
   public static final TemplateChannel TELEGRAM = new TemplateChannel("TELEGRAM");
 
+  /** The Instagram channel. */
   public static final TemplateChannel INSTAGRAM = new TemplateChannel("INSTAGRAM");
 
+  /** The KakaoTalk channel. */
   public static final TemplateChannel KAKAOTALK = new TemplateChannel("KAKAOTALK");
 
+  /** The Apple Messages for Business channel. */
   public static final TemplateChannel APPLEBC = new TemplateChannel("APPLEBC");
 
   private static final EnumSupportDynamic<String, TemplateChannel> ENUM_SUPPORT =
@@ -43,7 +52,6 @@ public class TemplateChannel extends EnumDynamic<String, TemplateChannel> {
               WHATSAPP,
               RCS,
               SMS,
-              VIBER,
               VIBERBM,
               TELEGRAM,
               INSTAGRAM,

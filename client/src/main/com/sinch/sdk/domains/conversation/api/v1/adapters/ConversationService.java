@@ -20,6 +20,10 @@ import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ListSectionMa
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.OmniMessageOverrideMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.SendMessageRequestMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.WhatsAppInteractiveHeaderMapper;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.type.channelspecific.kakaotalk.buttons.KakaoTalkButtonMapper;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.type.channelspecific.kakaotalk.commerce.KakaoTalkCommerceMapper;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.type.channelspecific.kakaotalk.coupons.KakaoTalkCouponMapper;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.type.channelspecific.whatsapp.payment.OrderDetailsSettingsMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ChoiceItemMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.AppMessageInternalMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ChannelSpecificMessageInternalMapper;
@@ -59,6 +63,7 @@ public class ConversationService
   private volatile EventsService events;
   private volatile TranscodingService transcoding;
   private volatile CapabilityService capability;
+  private volatile ProjectSettingsService projectSettings;
   private volatile WebHooksService webhooks;
   private volatile TemplatesService templates;
 
@@ -154,6 +159,15 @@ public class ConversationService
     return this.webhooks;
   }
 
+  public ProjectSettingsService projectSettings() {
+    if (null == this.projectSettings) {
+      instanceLazyInit();
+      this.projectSettings =
+          new ProjectSettingsService(uriUUID, context, httpClientSupplier.get(), authManagers);
+    }
+    return this.projectSettings;
+  }
+
   private void instanceLazyInit() {
     if (null != this.authManagers) {
       return;
@@ -214,10 +228,14 @@ public class ConversationService
       ContactMessageMapper.initMapper();
       ContactMessageInternalMapper.initMapper();
       ConversationMessageMapper.initMapper();
+      KakaoTalkButtonMapper.initMapper();
+      KakaoTalkCommerceMapper.initMapper();
+      KakaoTalkCouponMapper.initMapper();
       LineEnterpriseCredentialsMapper.initMapper();
       ListMessageInternalMapper.initMapper();
       ListSectionMapper.initMapper();
       OmniMessageOverrideMapper.initMapper();
+      OrderDetailsSettingsMapper.initMapper();
       RecipientMapper.initMapper();
       SendMessageRequestMapper.initMapper();
       TemplateMessageMapper.initMapper();

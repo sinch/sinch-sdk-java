@@ -6,7 +6,9 @@ import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactCreat
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactGetChannelProfileByChannelIdentityRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactGetChannelProfileByContactIdRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactListRequest;
+import com.sinch.sdk.domains.conversation.models.v1.contact.request.IdentityConflictsListRequest;
 import com.sinch.sdk.domains.conversation.models.v1.contact.response.ContactListResponse;
+import com.sinch.sdk.domains.conversation.models.v1.contact.response.IdentityConflictsListResponse;
 
 /**
  * Contact related service
@@ -149,4 +151,15 @@ public interface ContactService {
    */
   String getChannelProfileByChannelIdentity(
       ContactGetChannelProfileByChannelIdentityRequest parameters);
+
+  /**
+   * Lists Contact Identity Conflicts Lists contact identity conflicts across supported SIM-based
+   * channels (SMS, MMS, RCS). Use this to identify contact records sharing the same identity (e.g.,
+   * phone number), which must be resolved before enabling the Unified Contact ID feature.
+   *
+   * @param parameters Filtering parameters
+   * @return ListIdentityConflictsResponse
+   * @since 2.0
+   */
+  IdentityConflictsListResponse listIdentityConflicts(IdentityConflictsListRequest parameters);
 }
