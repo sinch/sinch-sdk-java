@@ -18,6 +18,7 @@ public interface TemplatesService {
    *
    * @return Templates V1 service
    * @since 1.3
+   * @deprecated Use {@link #v2()} instead.
    */
   TemplatesServiceV1 v1();
 

@@ -4,5 +4,6 @@
  * @see <a href="https://developers.sinch.com/docs/conversation/templates/#version-1">Conversation
  *     Templates V1</a>
  * @since 1.3
+ * @deprecated Use {@link com.sinch.sdk.domains.conversation.api.templates.v2} instead.
  */
 package com.sinch.sdk.domains.conversation.api.templates.v1;
