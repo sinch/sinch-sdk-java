@@ -1,3 +1,3 @@
 #!/bin/sh
 
-(cd tutorials/voice/handle-incoming-call && mvn clean package)
+(cd snippets && ./compile.sh)  || exit 1
