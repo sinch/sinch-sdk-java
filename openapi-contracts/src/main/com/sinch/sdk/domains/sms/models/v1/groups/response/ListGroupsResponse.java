@@ -16,6 +16,7 @@ import com.sinch.sdk.domains.sms.api.v1.GroupsService;
 import com.sinch.sdk.domains.sms.models.v1.groups.Group;
 import com.sinch.sdk.domains.sms.models.v1.groups.request.ListGroupsQueryParameters;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.NoSuchElementException;
 
 /** Auto paginated response for list of Group */
@@ -59,7 +60,7 @@ public class ListGroupsResponse extends ListResponse<Group> {
 
   @Override
   public Collection<Group> getContent() {
-    return page.getEntities();
+    return page == null ? Collections.emptyList() : page.getEntities();
   }
 
   @Override

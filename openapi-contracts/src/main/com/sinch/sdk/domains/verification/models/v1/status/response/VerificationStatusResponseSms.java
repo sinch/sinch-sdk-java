@@ -53,7 +53,7 @@ public interface VerificationStatusResponseSms
    * for each started verification request. The value must be encodable in the URL path segment.
    * This value is passed to all events and returned from the status and report endpoints. The
    * reference can be used to check the <a
-   * href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-status/#tag/Verification-status/operation/VerificationStatusByReference">status
+   * href="https://developers.sinch.com/docs/verification/api-reference/verification/verification-status/verificationstatusbyreference">status
    * of verifications</a>, like with ID or identity.
    *
    * @return reference

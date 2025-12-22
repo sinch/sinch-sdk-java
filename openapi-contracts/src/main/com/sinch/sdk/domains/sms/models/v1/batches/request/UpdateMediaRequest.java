@@ -112,7 +112,7 @@ public interface UpdateMediaRequest extends UpdateBatchRequest {
 
   /**
    * If set to <code>true</code>, then <a
-   * href="/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/deliveryFeedback">feedback</a>
+   * href="https://developers.sinch.com/docs/sms/api-reference/sms/batches/deliveryfeedback">feedback</a>
    * is expected after successful delivery.
    *
    * @return feedbackEnabled
@@ -128,8 +128,8 @@ public interface UpdateMediaRequest extends UpdateBatchRequest {
 
   /**
    * Contains the parameters that will be used for customizing the message for each recipient. <a
-   * href="/docs/sms/resources/message-info/message-parameterization">Click here to learn more about
-   * parameterization</a>.
+   * href="https://developers.sinch.com/docs/sms/resources/message-info/message-parameterization">Click
+   * here to learn more about parameterization</a>.
    *
    * @return parameters
    */
@@ -137,9 +137,9 @@ public interface UpdateMediaRequest extends UpdateBatchRequest {
 
   /**
    * Whether or not you want the media included in your message to be checked against <a
-   * href="/docs/mms/bestpractices/">Sinch MMS channel best practices</a>. If set to true, your
-   * message will be rejected if it doesn't conform to the listed recommendations, otherwise no
-   * validation will be performed.
+   * href="https://developers.sinch.com/docs/mms/bestpractices/">Sinch MMS channel best
+   * practices</a>. If set to true, your message will be rejected if it doesn't conform to the
+   * listed recommendations, otherwise no validation will be performed.
    *
    * @return strictValidation
    */
