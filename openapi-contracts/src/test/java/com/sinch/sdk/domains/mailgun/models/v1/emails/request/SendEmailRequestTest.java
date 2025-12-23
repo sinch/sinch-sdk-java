@@ -67,6 +67,7 @@ public class SendEmailRequestTest extends BaseTest {
             "o:secondary-dkim-public","public.example.com/s1",
             "o:archive-to","http://an-archive-to-dest.com",
             "o:deliverytime", "Sat, 22 Jan 2000 11:23:45 GMT",
+            "o:deliver-within", "30m",
             "o:deliverytime-optimize-period", "29h",
             "o:time-zone-localize","02:04PM",
             "o:testmode", "false",
@@ -109,6 +110,7 @@ public class SendEmailRequestTest extends BaseTest {
               "o:secondary-dkim-public","public.example.com/s1",
               "o:archive-to","http://an-archive-to-dest.com",
               "o:deliverytime", "Sat, 22 Jan 2000 11:23:45 GMT",
+              "o:deliver-within", "30m",
               "o:deliverytime-optimize-period", "29h",
               "o:time-zone-localize","02:04PM",
               "o:testmode", "false",
@@ -147,6 +149,7 @@ public class SendEmailRequestTest extends BaseTest {
               OverrideProperties.builder()
                   .setTag(Arrays.asList("tag1", "tag2"))
                   .setDeliveryTime(Instant.parse("2000-01-22T11:23:45Z"))
+                  .setDeliverWithin("30m")
                   .setTestMode(false)
                   .setEnableDkimSignature(true)
                   .setSecondaryDkim("example.com/s1")
@@ -185,6 +188,7 @@ public class SendEmailRequestTest extends BaseTest {
               OverrideProperties.builder()
                   .setTag(Arrays.asList("tag1", "tag2"))
                   .setDeliveryTime(Instant.parse("2000-01-22T11:23:45Z"))
+                  .setDeliverWithin("30m")
                   .setTestMode(false)
                   .setEnableDkimSignature(true)
                   .setSecondaryDkim("example.com/s1")
