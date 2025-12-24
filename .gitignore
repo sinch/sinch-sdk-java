@@ -18,4 +18,4 @@ buildNumber.properties
 .idea
 *.iml
 
-sample-app/src/main/resources/config.properties
+examples/snippets/src/main/resources/config.properties

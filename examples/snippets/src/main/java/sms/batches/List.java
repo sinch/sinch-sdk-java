@@ -1,9 +1,9 @@
 /**
  * Sinch Java Snippet
  *
- * <p>This snippet is available at https://github.com/sinch/sinch-sdk-java-snippets
+ * <p>This snippet is available at https://github.com/sinch/sinch-sdk-java
  *
- * <p>See https://github.com/sinch/sinch-sdk-java-snippets/blob/main/README.md for details
+ * <p>See https://github.com/sinch/sinch-sdk-java/blob/main/examples/snippets/README.md for details
  */
 package sms.batches;
 
