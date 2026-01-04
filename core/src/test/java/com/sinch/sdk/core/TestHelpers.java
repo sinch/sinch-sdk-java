@@ -8,11 +8,12 @@ public class TestHelpers {
   private static final RecursiveComparisonConfiguration recursiveComparisonConfiguration =
       RecursiveComparisonConfiguration.builder().withStrictTypeChecking(true).build();
 
-  public static void recursiveEquals(Object actual, Object expected) {
+  public static void recursiveEquals(Object actual, Object expected, String... excludedFields) {
 
     Assertions.assertThat(actual.getClass()).isEqualTo(expected.getClass());
     Assertions.assertThat(actual)
         .usingRecursiveComparison(recursiveComparisonConfiguration)
+        .ignoringFields(excludedFields)
         .isEqualTo(expected);
   }
 }
