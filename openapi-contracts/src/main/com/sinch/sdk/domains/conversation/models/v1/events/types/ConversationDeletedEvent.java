@@ -11,6 +11,7 @@
 package com.sinch.sdk.domains.conversation.models.v1.events.types;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Collections;
 
 /** Conversation Deleted Event Type */
@@ -19,10 +20,8 @@ public interface ConversationDeletedEvent
     extends com.sinch.sdk.domains.conversation.models.v1.events.ContactEvent {
 
   /** Default EMPTY message to be used to send a ConversationDeletedEvent */
-  ConversationDeletedEvent EMPTY =
-      new ConversationDeletedEventImpl.Builder()
-          .setConversationDeletedEvent(Collections.EMPTY_MAP)
-          .build();
+  ConversationDeletedEvent CONVERSATION_DELETED_EVENT =
+      new ConversationDeletedEventImpl(OptionalValue.of(Collections.emptyMap()));
 
   /**
    * Getting builder

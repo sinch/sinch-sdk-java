@@ -11,7 +11,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class SvamlActionHangupTest extends BaseTest {
 
-  public static SvamlActionHangup dto = SvamlActionHangup.DEFAULT;
+  public static SvamlActionHangup dto = SvamlActionHangup.SVAML_ACTION_HANGUP;
 
   @GivenTextResource("/domains/voice/v1/svaml/action/SvamlActionHangupDto.json")
   String json;

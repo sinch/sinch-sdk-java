@@ -150,7 +150,7 @@ public class ConversationsSteps {
   public void injectEvent() {
     InjectEventRequest request =
         InjectEventRequest.builder()
-            .setAppEvent(ComposingEvent.EMPTY)
+            .setAppEvent(ComposingEvent.COMPOSING_EVENT)
             .setAcceptTime(Instant.now())
             .build();
     injectEventResponse = service.injectEvent(CONVERSATION_ID, request);

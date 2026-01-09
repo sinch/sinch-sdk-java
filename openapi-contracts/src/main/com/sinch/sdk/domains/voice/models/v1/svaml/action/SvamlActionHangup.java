@@ -28,7 +28,7 @@ public interface SvamlActionHangup
     extends com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlAction {
 
   /** ready to use action to send a `hangup` */
-  SvamlActionHangup DEFAULT = SvamlActionHangup.builder().build();
+  SvamlActionHangup SVAML_ACTION_HANGUP = SvamlActionHangup.builder().build();
 
   /** The name property. Must have the value <code>hangup</code>. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {

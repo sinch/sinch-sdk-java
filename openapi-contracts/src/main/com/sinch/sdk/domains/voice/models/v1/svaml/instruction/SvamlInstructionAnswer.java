@@ -22,7 +22,7 @@ public interface SvamlInstructionAnswer
     extends com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstruction {
 
   /** ready to use instruction to send a `answer` */
-  SvamlInstructionAnswer DEFAULT = SvamlInstructionAnswer.builder().build();
+  SvamlInstructionAnswer SVAML_INSTRUCTION_ANSWER = SvamlInstructionAnswer.builder().build();
 
   /** The <code>name</code> property. Must have the value <code>answer</code>. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {

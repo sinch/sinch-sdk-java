@@ -20,7 +20,7 @@ public class SendEventRequestDtoTest extends ConversationBaseTest {
   public static SendEventRequest sendEventDto =
       SendEventRequest.builder()
           .setAppId("an app id")
-          .setEvent(ComposingEndEvent.EMPTY)
+          .setEvent(ComposingEndEvent.COMPOSING_END_EVENT)
           .setRecipient(
               ChannelRecipientIdentities.of(
                   ChannelRecipientIdentity.builder()

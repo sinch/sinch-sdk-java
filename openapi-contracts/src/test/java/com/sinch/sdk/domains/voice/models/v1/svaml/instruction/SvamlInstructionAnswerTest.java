@@ -11,7 +11,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class SvamlInstructionAnswerTest extends BaseTest {
 
-  public static SvamlInstructionAnswer dto = SvamlInstructionAnswer.DEFAULT;
+  public static SvamlInstructionAnswer dto = SvamlInstructionAnswer.SVAML_INSTRUCTION_ANSWER;
 
   @GivenTextResource("/domains/voice/v1/svaml/instruction/SvamlInstructionAnswerDto.json")
   String json;
