@@ -29,7 +29,6 @@ public interface AvailableNumber {
    * format with leading <code>+</code>. Example <code>+12025550134</code>.
    *
    * @return phoneNumber
-   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   String getPhoneNumber();
 
@@ -37,7 +36,6 @@ public interface AvailableNumber {
    * ISO 3166-1 alpha-2 country code of the phone number. Example: US, UK or SE.
    *
    * @return regionCode
-   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   String getRegionCode();
 
@@ -103,7 +101,6 @@ public interface AvailableNumber {
      * @param phoneNumber see getter
      * @return Current builder
      * @see #getPhoneNumber
-     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setPhoneNumber(String phoneNumber);
 
@@ -113,7 +110,6 @@ public interface AvailableNumber {
      * @param regionCode see getter
      * @return Current builder
      * @see #getRegionCode
-     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setRegionCode(String regionCode);
 

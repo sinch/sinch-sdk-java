@@ -9,6 +9,7 @@ import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.numbers.api.v1.AvailableRegionsService;
 import com.sinch.sdk.domains.numbers.api.v1.CallbackConfigurationService;
+import com.sinch.sdk.domains.numbers.api.v1.NumberOrderService;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.EmergencyAddress;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
@@ -48,6 +49,7 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
   private volatile AvailableRegionsService regions;
   private volatile CallbackConfigurationService callbackConfiguration;
   private volatile WebHooksService webhooks;
+  private volatile NumberOrderService orders;
 
   static {
     LocalLazyInit.init();
@@ -116,6 +118,21 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
       this.webhooks = new WebHooksService(new NumbersWebhooksAuthenticationValidation());
     }
     return this.webhooks;
+  }
+
+  public NumberOrderService orders() {
+
+    if (null == this.orders) {
+      instanceLazyInit();
+      this.orders =
+          new NumberOrderServiceImpl(
+              httpClientSupplier.get(),
+              context.getNumbersServer(),
+              authManagers,
+              HttpMapper.getInstance(),
+              uriUUID);
+    }
+    return this.orders;
   }
 
   @Override

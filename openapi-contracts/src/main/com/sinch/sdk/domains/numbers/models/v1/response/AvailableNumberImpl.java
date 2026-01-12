@@ -87,7 +87,8 @@ public class AvailableNumberImpl implements AvailableNumber {
     return phoneNumber.orElse(null);
   }
 
-  @JsonIgnore
+  @JsonProperty(JSON_PROPERTY_PHONE_NUMBER)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> phoneNumber() {
     return phoneNumber;
   }
@@ -97,7 +98,8 @@ public class AvailableNumberImpl implements AvailableNumber {
     return regionCode.orElse(null);
   }
 
-  @JsonIgnore
+  @JsonProperty(JSON_PROPERTY_REGION_CODE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> regionCode() {
     return regionCode;
   }

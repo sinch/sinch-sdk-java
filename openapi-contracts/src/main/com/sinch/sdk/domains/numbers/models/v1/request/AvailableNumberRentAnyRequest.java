@@ -31,8 +31,7 @@ public interface AvailableNumberRentAnyRequest {
   SearchPattern getNumberPattern();
 
   /**
-   * Region code to filter by. ISO 3166-1 alpha-2 country code of the phone number. Example: <code>
-   * US</code>, <code>GB</code> or <code>SE</code>.
+   * ISO 3166-1 alpha-2 country code of the phone number. Example: US, UK or SE.
    *
    * <p>Field is required
    *

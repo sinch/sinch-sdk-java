@@ -19,10 +19,9 @@ import java.util.List;
 public interface AvailableRegion {
 
   /**
-   * ISO 3166-1 alpha-2 region code. Examples: US, UK or SE.
+   * ISO 3166-1 alpha-2 country code of the phone number. Example: US, UK or SE.
    *
    * @return regionCode
-   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   String getRegionCode();
 
@@ -61,7 +60,6 @@ public interface AvailableRegion {
      * @param regionCode see getter
      * @return Current builder
      * @see #getRegionCode
-     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setRegionCode(String regionCode);
 

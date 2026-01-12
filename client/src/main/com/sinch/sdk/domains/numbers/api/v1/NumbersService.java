@@ -45,4 +45,6 @@ public interface NumbersService extends ActiveNumberService, AvailableNumberServ
    * @since 1.2
    */
   WebHooksService webhooks();
+
+  NumberOrderService orders();
 }
