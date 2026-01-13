@@ -76,12 +76,16 @@ public interface DisconnectedCallEvent extends VoiceWebhookEvent, VoiceWebhookCa
   /** The reason the call was disconnected. */
   public class ReasonEnum extends EnumDynamic<String, ReasonEnum> {
     public static final ReasonEnum N_A = new ReasonEnum("N/A");
+    public static final ReasonEnum ESTABLISHED = new ReasonEnum("ESTABLISHED");
+    public static final ReasonEnum OTHERPEERANSWERED = new ReasonEnum("OTHERPEERANSWERED");
     public static final ReasonEnum TIMEOUT = new ReasonEnum("TIMEOUT");
     public static final ReasonEnum CALLERHANGUP = new ReasonEnum("CALLERHANGUP");
     public static final ReasonEnum CALLEEHANGUP = new ReasonEnum("CALLEEHANGUP");
     public static final ReasonEnum BLOCKED = new ReasonEnum("BLOCKED");
     public static final ReasonEnum MANAGERHANGUP = new ReasonEnum("MANAGERHANGUP");
     public static final ReasonEnum NOCREDITPARTNER = new ReasonEnum("NOCREDITPARTNER");
+    public static final ReasonEnum CLIENTNETWORK = new ReasonEnum("CLIENTNETWORK");
+    public static final ReasonEnum CONGESTION = new ReasonEnum("CONGESTION");
     public static final ReasonEnum GENERALERROR = new ReasonEnum("GENERALERROR");
     public static final ReasonEnum CANCEL = new ReasonEnum("CANCEL");
     public static final ReasonEnum USERNOTFOUND = new ReasonEnum("USERNOTFOUND");
@@ -93,12 +97,16 @@ public interface DisconnectedCallEvent extends VoiceWebhookEvent, VoiceWebhookCa
             ReasonEnum::new,
             Arrays.asList(
                 N_A,
+                ESTABLISHED,
+                OTHERPEERANSWERED,
                 TIMEOUT,
                 CALLERHANGUP,
                 CALLEEHANGUP,
                 BLOCKED,
                 MANAGERHANGUP,
                 NOCREDITPARTNER,
+                CLIENTNETWORK,
+                CONGESTION,
                 GENERALERROR,
                 CANCEL,
                 USERNOTFOUND,
