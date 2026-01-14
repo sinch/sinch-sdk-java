@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.Agent;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride;
+import com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride.ChannelSpecificTemplate;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.carousel.CarouselMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.ChannelSpecificMessage;
@@ -117,8 +118,7 @@ public interface AppMessageInternal {
    *
    * @return explicitChannelOmniMessage
    */
-  Map<OmniMessageOverride.ChannelSpecificTemplate, OmniMessageOverride>
-      getExplicitChannelOmniMessage();
+  Map<ChannelSpecificTemplate, OmniMessageOverride> getExplicitChannelOmniMessage();
 
   /**
    * Channel specific messages, overriding any transcoding. The structure of this property is more
@@ -247,8 +247,7 @@ public interface AppMessageInternal {
      * @see #getExplicitChannelOmniMessage
      */
     Builder setExplicitChannelOmniMessage(
-        Map<OmniMessageOverride.ChannelSpecificTemplate, OmniMessageOverride>
-            explicitChannelOmniMessage);
+        Map<ChannelSpecificTemplate, OmniMessageOverride> explicitChannelOmniMessage);
 
     /**
      * see getter

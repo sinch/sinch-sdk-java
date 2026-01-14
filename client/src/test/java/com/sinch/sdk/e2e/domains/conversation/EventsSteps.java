@@ -38,7 +38,7 @@ public class EventsSteps {
         SendEventRequest.builder()
             .setAppId(AppsSteps.APP_ID)
             .setRecipient(ContactId.builder().setContactId(ContactsSteps.CONTACT_ID).build())
-            .setEvent(ComposingEvent.EMPTY)
+            .setEvent(ComposingEvent.COMPOSING_EVENT)
             .build();
 
     sendResponse = service.send(request);

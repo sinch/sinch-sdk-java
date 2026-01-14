@@ -13,6 +13,12 @@ This guide lists all removed classes and interfaces from V1 and how to migrate t
 - Conversation Template V1 is deprecated. Use Conversation Template V2 instead.
 
 #### Replacement models
+| Old const                      | New const                                                                                                                                                                                           |
+|--------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
+| ComposingEndEvent.EMPTY        | [ComposingEndEvent.COMPOSING_END_EVENT](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/events/types/ComposingEndEvent.html)             |
+| ComposingEvent.EMPTY           | [ComposingEvent.COMPOSING_EVENT](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/events/types/ComposingEvent.html)                       |
+| ConversationDeletedEvent.EMPTY | [ConversationDeletedEvent.CONVERSATION_DELETED_EVENT](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/events/types/ComposingEvent.html)  |
+
 | Old class                                        | New class                                                                                                                                                                                                                           |
 |--------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
 | models.v1.messages.types.card.CardMessageMedia   | [com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessage](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/messages/types/media/MediaMessage.html) | 
@@ -188,6 +194,14 @@ Use the new versioned API under `sms().v1()` to get access to [SMSService](https
 ### [`Voice`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/package-summary.html)
 
 #### Replacement models
+
+| Old const                             | New const                                                                                                                                                                                                       |
+|---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
+| SvamlActionContinue.DEFAULT           | [SvamlActionContinue.SVAML_ACTION_CONTINUE](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/svaml/action/SvamlActionContinue.html)                          |
+| SvamlActionHangup.DEFAULT             | [SvamlActionHangup.SVAML_ACTION_HANGUP](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/svaml/action/SvamlActionHangup.html)                                |
+| SvamlInstructionAnswer.DEFAULT        | [SvamlInstructionAnswer.SVAML_INSTRUCTION_ANSWER](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/svaml/action/SvamlInstructionAnswer.html)                 |
+| SvamlInstructionStopRecording.DEFAULT | [SvamlInstructionStopRecording.SVAML_INSTRUCTION_STOP_RECORDING](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/svaml/action/SvamlInstructionStopRecording.html) |
+
 
 ##### Destination
 | Old class                    | New class                                                                                                                                                                                                                                                                                                                                                                                                            |

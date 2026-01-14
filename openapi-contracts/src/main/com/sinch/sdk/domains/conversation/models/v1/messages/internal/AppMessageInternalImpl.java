@@ -10,6 +10,7 @@ import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.Agent;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride;
+import com.sinch.sdk.domains.conversation.models.v1.messages.OmniMessageOverride.ChannelSpecificTemplate;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.carousel.CarouselMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.ChannelSpecificMessage;
@@ -86,7 +87,7 @@ public class AppMessageInternalImpl implements AppMessageInternal {
   public static final String JSON_PROPERTY_EXPLICIT_CHANNEL_OMNI_MESSAGE =
       "explicit_channel_omni_message";
 
-  private OptionalValue<Map<OmniMessageOverride.ChannelSpecificTemplate, OmniMessageOverride>>
+  private OptionalValue<Map<ChannelSpecificTemplate, OmniMessageOverride>>
       explicitChannelOmniMessage;
 
   public static final String JSON_PROPERTY_CHANNEL_SPECIFIC_MESSAGE = "channel_specific_message";
@@ -110,8 +111,7 @@ public class AppMessageInternalImpl implements AppMessageInternal {
       OptionalValue<ListMessage> listMessage,
       OptionalValue<ContactInfoMessage> contactInfoMessage,
       OptionalValue<Map<ConversationChannel, String>> explicitChannelMessage,
-      OptionalValue<Map<OmniMessageOverride.ChannelSpecificTemplate, OmniMessageOverride>>
-          explicitChannelOmniMessage,
+      OptionalValue<Map<ChannelSpecificTemplate, OmniMessageOverride>> explicitChannelOmniMessage,
       OptionalValue<Map<ConversationChannel, ChannelSpecificMessage>> channelSpecificMessage,
       OptionalValue<Agent> agent) {
     this.cardMessage = cardMessage;
@@ -240,14 +240,13 @@ public class AppMessageInternalImpl implements AppMessageInternal {
   }
 
   @JsonIgnore
-  public Map<OmniMessageOverride.ChannelSpecificTemplate, OmniMessageOverride>
-      getExplicitChannelOmniMessage() {
+  public Map<ChannelSpecificTemplate, OmniMessageOverride> getExplicitChannelOmniMessage() {
     return explicitChannelOmniMessage.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_EXPLICIT_CHANNEL_OMNI_MESSAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<Map<OmniMessageOverride.ChannelSpecificTemplate, OmniMessageOverride>>
+  public OptionalValue<Map<ChannelSpecificTemplate, OmniMessageOverride>>
       explicitChannelOmniMessage() {
     return explicitChannelOmniMessage;
   }
@@ -366,8 +365,8 @@ public class AppMessageInternalImpl implements AppMessageInternal {
     OptionalValue<ListMessage> listMessage = OptionalValue.empty();
     OptionalValue<ContactInfoMessage> contactInfoMessage = OptionalValue.empty();
     OptionalValue<Map<ConversationChannel, String>> explicitChannelMessage = OptionalValue.empty();
-    OptionalValue<Map<OmniMessageOverride.ChannelSpecificTemplate, OmniMessageOverride>>
-        explicitChannelOmniMessage = OptionalValue.empty();
+    OptionalValue<Map<ChannelSpecificTemplate, OmniMessageOverride>> explicitChannelOmniMessage =
+        OptionalValue.empty();
     OptionalValue<Map<ConversationChannel, ChannelSpecificMessage>> channelSpecificMessage =
         OptionalValue.empty();
     OptionalValue<Agent> agent = OptionalValue.empty();
@@ -435,8 +434,7 @@ public class AppMessageInternalImpl implements AppMessageInternal {
 
     @JsonProperty(JSON_PROPERTY_EXPLICIT_CHANNEL_OMNI_MESSAGE)
     public Builder setExplicitChannelOmniMessage(
-        Map<OmniMessageOverride.ChannelSpecificTemplate, OmniMessageOverride>
-            explicitChannelOmniMessage) {
+        Map<ChannelSpecificTemplate, OmniMessageOverride> explicitChannelOmniMessage) {
       this.explicitChannelOmniMessage = OptionalValue.of(explicitChannelOmniMessage);
       return this;
     }

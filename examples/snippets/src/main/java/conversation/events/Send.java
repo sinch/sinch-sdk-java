@@ -51,7 +51,7 @@ public class Send {
 
     EventsService eventsService = client.conversation().v1().events();
 
-    AppEvent event = ComposingEndEvent.EMPTY;
+    AppEvent event = ComposingEndEvent.COMPOSING_END_EVENT;
 
     SendEventRequest request =
         SendEventRequest.builder()

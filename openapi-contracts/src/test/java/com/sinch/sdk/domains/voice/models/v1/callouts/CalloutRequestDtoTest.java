@@ -101,7 +101,7 @@ public class CalloutRequestDtoTest extends VoiceBaseTest {
                           SvamlInstructionSay.builder()
                               .setText("Hello, this is a call from Sinch!")
                               .build()))
-                  .setAction(SvamlActionHangup.DEFAULT)
+                  .setAction(SvamlActionHangup.SVAML_ACTION_HANGUP)
                   .build())
           .setPie(ControlUrl.from("https://your-application-server-host/application"))
           .build();

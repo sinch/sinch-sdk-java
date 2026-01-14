@@ -47,7 +47,7 @@ public class ManageWithCallLeg {
 
     LOGGER.info(String.format("Manage call with ID '%s'", callId));
 
-    SvamlAction action = SvamlActionHangup.DEFAULT;
+    SvamlAction action = SvamlActionHangup.SVAML_ACTION_HANGUP;
 
     Collection<SvamlInstruction> instructions =
         Collections.singletonList(

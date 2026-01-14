@@ -45,14 +45,14 @@ public interface GroupUpdateRequest {
   String getName();
 
   /**
-   * One time copy of all members from the group referenced by the group ID into this group.
+   * Copy the members from the another group into this group. Constraints: Must be valid group ID
    *
    * @return addFromGroup
    */
   String getAddFromGroup();
 
   /**
-   * Remove all members from this group that are currently in the group referenced by the group ID.
+   * Remove the members in a specified group from this group. Constraints: Must be valid group ID
    *
    * @return removeFromGroup
    */

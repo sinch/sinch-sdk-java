@@ -26,7 +26,7 @@ public interface SvamlActionContinue
     extends com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlAction {
 
   /** ready to use action to send a `continue` */
-  SvamlActionContinue DEFAULT = SvamlActionContinue.builder().build();
+  SvamlActionContinue SVAML_ACTION_CONTINUE = SvamlActionContinue.builder().build();
 
   /** The name property. Must have the value <code>continue</code>. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {

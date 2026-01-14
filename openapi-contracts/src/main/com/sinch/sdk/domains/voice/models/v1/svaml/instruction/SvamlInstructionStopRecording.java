@@ -22,7 +22,8 @@ public interface SvamlInstructionStopRecording
     extends com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstruction {
 
   /** ready to use instruction to send a `stop recording` */
-  SvamlInstructionStopRecording DEFAULT = SvamlInstructionStopRecording.builder().build();
+  SvamlInstructionStopRecording SVAML_INSTRUCTION_STOP_RECORDING =
+      SvamlInstructionStopRecording.builder().build();
 
   /** The <code>name</code> property. Must have the value <code>stopRecording</code>. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {

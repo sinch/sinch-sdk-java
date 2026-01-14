@@ -19,7 +19,7 @@ public class ComposingEndEventDtoTest extends ConversationBaseTest {
   @GivenTextResource("domains/conversation/v1/events/types/ComposingEndEventDto.json")
   String json;
 
-  public static ComposingEndEvent expectedDto = ComposingEndEvent.EMPTY;
+  public static ComposingEndEvent expectedDto = ComposingEndEvent.COMPOSING_END_EVENT;
 
   @Test
   void serialize() throws JsonProcessingException, JSONException {
