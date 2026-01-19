@@ -8,14 +8,15 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.webhooks.events.conversation;
+package com.sinch.sdk.domains.conversation.models.v1.conversations.response;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.conversations.Conversation;
+import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
 
-/** Object containing the details of the started / stopped / deleted conversation */
-@JsonDeserialize(builder = ConversationNotificationImpl.Builder.class)
-public interface ConversationNotification {
+/** ConversationRecentMessage */
+@JsonDeserialize(builder = ConversationRecentMessageImpl.Builder.class)
+public interface ConversationRecentMessage {
 
   /**
    * Get conversation
@@ -25,12 +26,19 @@ public interface ConversationNotification {
   Conversation getConversation();
 
   /**
+   * Get lastMessage
+   *
+   * @return lastMessage
+   */
+  ConversationMessage getLastMessage();
+
+  /**
    * Getting builder
    *
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ConversationNotificationImpl.Builder();
+    return new ConversationRecentMessageImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -46,10 +54,19 @@ public interface ConversationNotification {
     Builder setConversation(Conversation conversation);
 
     /**
+     * see getter
+     *
+     * @param lastMessage see getter
+     * @return Current builder
+     * @see #getLastMessage
+     */
+    Builder setLastMessage(ConversationMessage lastMessage);
+
+    /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    ConversationNotification build();
+    ConversationRecentMessage build();
   }
 }

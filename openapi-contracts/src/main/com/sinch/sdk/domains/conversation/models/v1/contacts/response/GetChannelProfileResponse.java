@@ -8,21 +8,20 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.webhooks.events.contact;
+package com.sinch.sdk.domains.conversation.models.v1.contacts.response;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.conversation.models.v1.contacts.Contact;
 
-/** ContactNotification */
-@JsonDeserialize(builder = ContactNotificationImpl.Builder.class)
-public interface ContactNotification {
+/** GetChannelProfileResponse */
+@JsonDeserialize(builder = GetChannelProfileResponseImpl.Builder.class)
+public interface GetChannelProfileResponse {
 
   /**
-   * Get contact
+   * The profile name.
    *
-   * @return contact
+   * @return profileName
    */
-  Contact getContact();
+  String getProfileName();
 
   /**
    * Getting builder
@@ -30,7 +29,7 @@ public interface ContactNotification {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ContactNotificationImpl.Builder();
+    return new GetChannelProfileResponseImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -39,17 +38,17 @@ public interface ContactNotification {
     /**
      * see getter
      *
-     * @param contact see getter
+     * @param profileName see getter
      * @return Current builder
-     * @see #getContact
+     * @see #getProfileName
      */
-    Builder setContact(Contact contact);
+    Builder setProfileName(String profileName);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    ContactNotification build();
+    GetChannelProfileResponse build();
   }
 }

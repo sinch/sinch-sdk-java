@@ -8,21 +8,20 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.webhooks.events.contact;
+package com.sinch.sdk.domains.conversation.models.v1.apps;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.conversation.models.v1.contacts.Contact;
 
-/** ContactNotification */
-@JsonDeserialize(builder = ContactNotificationImpl.Builder.class)
-public interface ContactNotification {
+/** This object is required for apps that subscribe to Smart Conversations features. */
+@JsonDeserialize(builder = SmartConversationImpl.Builder.class)
+public interface SmartConversation {
 
   /**
-   * Get contact
+   * Set to true to allow messages processed by this app to be analyzed by Smart Conversations.
    *
-   * @return contact
+   * @return enabled
    */
-  Contact getContact();
+  Boolean getEnabled();
 
   /**
    * Getting builder
@@ -30,7 +29,7 @@ public interface ContactNotification {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ContactNotificationImpl.Builder();
+    return new SmartConversationImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -39,17 +38,17 @@ public interface ContactNotification {
     /**
      * see getter
      *
-     * @param contact see getter
+     * @param enabled see getter
      * @return Current builder
-     * @see #getContact
+     * @see #getEnabled
      */
-    Builder setContact(Contact contact);
+    Builder setEnabled(Boolean enabled);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    ContactNotification build();
+    SmartConversation build();
   }
 }

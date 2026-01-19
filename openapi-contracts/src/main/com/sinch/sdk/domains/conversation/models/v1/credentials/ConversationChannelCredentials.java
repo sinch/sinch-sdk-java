@@ -16,9 +16,9 @@ import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 /**
  * Enables access to the underlying messaging channel.
  *
- * <p>Use the <b>{@link
- * com.sinch.sdk.domains.conversation.models.v1.credentials.ConversationChannelCredentialsBuilderFactory}</b>
- * factory builder helper to create credentials related to channel
+ * <p>Use the<b>{@link
+ * com.sinch.sdk.domains.conversation.models.v1.credentials.ConversationChannelCredentialsBuilderFactory}</b>factory
+ * builder helper to create credentials related to channel
  *
  * @see
  *     com.sinch.sdk.domains.conversation.models.v1.credentials.ConversationChannelCredentialsBuilderFactory

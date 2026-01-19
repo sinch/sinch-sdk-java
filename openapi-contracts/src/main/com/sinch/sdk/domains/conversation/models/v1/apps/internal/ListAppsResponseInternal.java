@@ -8,21 +8,22 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.conversation.models.v1.webhooks.events.contact;
+package com.sinch.sdk.domains.conversation.models.v1.apps.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.conversation.models.v1.contacts.Contact;
+import com.sinch.sdk.domains.conversation.models.v1.apps.response.AppResponse;
+import java.util.List;
 
-/** ContactNotification */
-@JsonDeserialize(builder = ContactNotificationImpl.Builder.class)
-public interface ContactNotification {
+/** ListAppsResponseInternal */
+@JsonDeserialize(builder = ListAppsResponseInternalImpl.Builder.class)
+public interface ListAppsResponseInternal {
 
   /**
-   * Get contact
+   * List of apps belonging to a specific project ID.
    *
-   * @return contact
+   * @return apps
    */
-  Contact getContact();
+  List<AppResponse> getApps();
 
   /**
    * Getting builder
@@ -30,7 +31,7 @@ public interface ContactNotification {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new ContactNotificationImpl.Builder();
+    return new ListAppsResponseInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -39,17 +40,17 @@ public interface ContactNotification {
     /**
      * see getter
      *
-     * @param contact see getter
+     * @param apps see getter
      * @return Current builder
-     * @see #getContact
+     * @see #getApps
      */
-    Builder setContact(Contact contact);
+    Builder setApps(List<AppResponse> apps);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    ContactNotification build();
+    ListAppsResponseInternal build();
   }
 }
