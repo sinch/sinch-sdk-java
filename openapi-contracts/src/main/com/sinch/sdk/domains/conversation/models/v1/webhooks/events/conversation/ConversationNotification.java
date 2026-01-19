@@ -11,7 +11,7 @@
 package com.sinch.sdk.domains.conversation.models.v1.webhooks.events.conversation;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.Conversation;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.Conversation;
 
 /** Object containing the details of the started / stopped / deleted conversation */
 @JsonDeserialize(builder = ConversationNotificationImpl.Builder.class)
