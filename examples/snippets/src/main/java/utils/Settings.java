@@ -1,20 +1,32 @@
 package utils;
 
 import com.sinch.sdk.core.utils.StringUtil;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Optional;
 import java.util.Properties;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 public class Settings {
+
+  private static final Logger LOGGER = Logger.getLogger(Settings.class.getName());
+
+  private static final String CONFIG_FILE = "config.properties";
+  private static final String LOGGING_CONFIG_FILE = "logging.properties";
 
   private static final Properties properties;
 
   static {
+    initializeLogger();
     properties = new Properties();
     try {
       // load a properties file from class path, inside static method
-      properties.load(Settings.class.getClassLoader().getResourceAsStream("config.properties"));
+      properties.load(Settings.class.getClassLoader().getResourceAsStream(CONFIG_FILE));
     } catch (Exception ioe) {
-      // ignore exception: properties file is just an helper
+      LOGGER.config(
+          String.format(
+              "Error reading '%s' configuration file: %s", CONFIG_FILE, ioe.getMessage()));
     }
   }
 
@@ -69,5 +81,18 @@ public class Settings {
 
   public static Optional<String> getPhoneNumber() {
     return get("SINCH_PHONE_NUMBER");
+  }
+
+  public static void initializeLogger() {
+    try (InputStream logConfigInputStream =
+        Settings.class.getClassLoader().getResourceAsStream(LOGGING_CONFIG_FILE)) {
+      if (logConfigInputStream != null) {
+        LogManager.getLogManager().readConfiguration(logConfigInputStream);
+      }
+    } catch (IOException ioe) {
+      LOGGER.config(
+          String.format(
+              "Error reading '%s' configuration file: %s", LOGGING_CONFIG_FILE, ioe.getMessage()));
+    }
   }
 }
