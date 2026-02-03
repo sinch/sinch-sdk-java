@@ -20,11 +20,18 @@ public class Settings {
   static {
     initializeLogger();
     properties = new Properties();
-    try {
-      // load a properties file from class path, inside static method
-      properties.load(Settings.class.getClassLoader().getResourceAsStream(CONFIG_FILE));
+    try (
+    // load a properties file from class path, inside static method
+    InputStream configInputStream =
+        Settings.class.getClassLoader().getResourceAsStream(CONFIG_FILE)) {
+
+      if (configInputStream != null) {
+        properties.load(configInputStream);
+      } else {
+        LOGGER.severe(String.format("Error reading '%s' configuration file", CONFIG_FILE));
+      }
     } catch (Exception ioe) {
-      LOGGER.config(
+      LOGGER.severe(
           String.format(
               "Error reading '%s' configuration file: %s", CONFIG_FILE, ioe.getMessage()));
     }
@@ -83,14 +90,16 @@ public class Settings {
     return get("SINCH_PHONE_NUMBER");
   }
 
-  public static void initializeLogger() {
+  private static void initializeLogger() {
     try (InputStream logConfigInputStream =
         Settings.class.getClassLoader().getResourceAsStream(LOGGING_CONFIG_FILE)) {
       if (logConfigInputStream != null) {
         LogManager.getLogManager().readConfiguration(logConfigInputStream);
+      } else {
+        LOGGER.warning(String.format("Error reading '%s' configuration file", LOGGING_CONFIG_FILE));
       }
     } catch (IOException ioe) {
-      LOGGER.config(
+      LOGGER.warning(
           String.format(
               "Error reading '%s' configuration file: %s", LOGGING_CONFIG_FILE, ioe.getMessage()));
     }
