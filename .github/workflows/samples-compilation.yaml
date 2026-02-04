@@ -1,4 +1,4 @@
-name: Snippets Compilation
+name: Examples Compilation
 
 on: [push]
 
