@@ -4,7 +4,7 @@ import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.verification.api.v1.WebHooksService;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEvent;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationResultEvent;
-// import com.sinch.sdk.domains.verification.models.v1.webhooks.Veri;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationSmsDeliveredEvent;
 import java.util.Map;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,6 @@ public class Controller {
   public ResponseEntity<String> VerificationEvent(
       @RequestHeader Map<String, String> headers, @RequestBody String body) {
 
-    LOGGER.info("event: " + body);
     WebHooksService webhooks = sinchClient.verification().v1().webhooks();
 
     // ensure valid authentication to handle request
@@ -70,22 +69,26 @@ public class Controller {
     // let business layer process the request
     var response =
         switch (event) {
-          case VerificationRequestEvent e -> webhooksBusinessLogic.verificationEvent(e);
+          case VerificationRequestEvent requestEvent ->
+              webhooksBusinessLogic.verificationEvent(requestEvent);
           case VerificationResultEvent resultEvent -> {
             webhooksBusinessLogic.verificationEvent(resultEvent);
             yield null;
           }
-            /* case VerificationSmsDeliveredEvent smsEvent -> {
-                webhooksBusinessLogic.verificationSmsDeliveredEvent(smsEvent);
-                yield null;
-            }*/
+          case VerificationSmsDeliveredEvent smsEvent -> {
+            webhooksBusinessLogic.verificationSmsDeliveredEvent(smsEvent);
+            yield null;
+          }
           default -> throw new IllegalStateException("Unexpected value: " + event);
         };
 
-    var serializedResponse = webhooks.serializeResponse(response);
+    ResponseEntity<String> responseEntity = ResponseEntity.ok().body(null);
 
-    LOGGER.finest("JSON response: " + serializedResponse);
-
-    return ResponseEntity.ok().body(serializedResponse);
+    if (null != response) {
+      var serializedResponse = webhooks.serializeResponse(response);
+      LOGGER.finest("JSON response: " + serializedResponse);
+      responseEntity = ResponseEntity.ok(serializedResponse);
+    }
+    return responseEntity;
   }
 }

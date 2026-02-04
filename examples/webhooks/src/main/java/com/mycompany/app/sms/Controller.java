@@ -36,7 +36,7 @@ public class Controller {
       value = "/SmsEvent",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Void> smsDeliveryEvent(
+  public ResponseEntity<Void> smsEvent(
       @RequestHeader Map<String, String> headers, @RequestBody String body) {
 
     WebHooksService webhooks = sinchClient.sms().v1().webhooks();

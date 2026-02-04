@@ -26,7 +26,7 @@ public class Controller {
    * number property (HmacSecret).
    *
    * @see <a
-   *     href="https://developers.sinch.com/java-sdk/apidocs/com/sinch/sdk/domains/numbers/api/v1/CallbackConfigurationService.html#update(com.sinch.sdk.domains.numbers.models.v1.callbacks.request.CallbackConfigurationUpdateRequest)">update
+   *     href="hhttps://www.javadoc.io/static/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/numbers/api/v1/CallbackConfigurationService.html#update(com.sinch.sdk.domains.numbers.models.v1.callbacks.request.CallbackConfigurationUpdateRequest)">update
    *     function Javadoc</a>
    */
   @Value("${numbers.webhooks.secret: }")

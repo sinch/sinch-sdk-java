@@ -88,13 +88,13 @@ public class Controller {
           default -> throw new IllegalStateException("Unexpected value: " + event);
         };
 
-    String serializedResponse = "";
+    ResponseEntity<String> responseEntity = ResponseEntity.ok().body(null);
+
     if (null != response) {
-      serializedResponse = webhooks.serializeResponse(response);
+      var serializedResponse = webhooks.serializeResponse(response);
+      LOGGER.finest("JSON response: " + serializedResponse);
+      responseEntity = ResponseEntity.ok(serializedResponse);
     }
-
-    LOGGER.finest("JSON response: " + serializedResponse);
-
-    return ResponseEntity.ok().body(serializedResponse);
+    return responseEntity;
   }
 }

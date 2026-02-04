@@ -5,6 +5,7 @@ import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequest
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponse;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponseSms;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationResultEvent;
+import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationSmsDeliveredEvent;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Component;
 
@@ -28,8 +29,8 @@ public class ServerBusinessLogic {
     LOGGER.info("Handle event: " + event);
   }
 
-  /* public void verificationSmsDeliveredEvent(VerificationSmsDeliveredEvent event) {
+  public void verificationSmsDeliveredEvent(VerificationSmsDeliveredEvent event) {
 
     LOGGER.info("Handle event: " + event);
-  }*/
+  }
 }
