@@ -7,6 +7,7 @@ logging:
 server:
   port: 8090
 
+# only required if you need to call any Sinch services when processing webhooks
 credentials:
   # Java SDK domains supporting unified credentials
   # - Numbers
