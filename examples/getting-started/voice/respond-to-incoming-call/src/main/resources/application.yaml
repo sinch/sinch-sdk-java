@@ -1,0 +1,13 @@
+# springboot related config file
+
+logging:
+  level:
+    com: INFO
+
+server:
+  port: 8090
+
+credentials:
+  # Required credentials for using the Voice API
+  application-api-key:
+  application-api-secret:
