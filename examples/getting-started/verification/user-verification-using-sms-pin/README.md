@@ -1,4 +1,4 @@
-# Sinch Getting started 
+# Sinch Getting Started: User Verification Using SMS PIN (Java)
 
 Code is related to [Verify a user using SMS PIN with the Java SDK](https://developers.sinch.com/docs/verification/getting-started/java-sdk/sms-verification/).
 

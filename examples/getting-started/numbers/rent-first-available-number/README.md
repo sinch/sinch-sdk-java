@@ -1,4 +1,4 @@
-# Sinch Getting started 
+# Sinch Getting Started: Rent First Available Number (Java)
 
 Code is related to [Rent the first available number using the Java SDK](https://developers.sinch.com/docs/numbers/getting-started).
 
