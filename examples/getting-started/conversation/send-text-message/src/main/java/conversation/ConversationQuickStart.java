@@ -9,7 +9,7 @@ public class ConversationQuickStart {
   public ConversationQuickStart(ConversationService conversationService) {
     this.conversationService = conversationService;
 
-    // replace by your code and business logic
+    // Insert your application logic or business process here
     Snippet.execute(this.conversationService);
   }
 }

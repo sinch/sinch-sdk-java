@@ -9,7 +9,7 @@ public class SmsQuickStart {
   public SmsQuickStart(SMSService smsService) {
     this.smsService = smsService;
 
-    // replace by your code and business logic
+    // Insert your application logic or business process here
     Snippet.execute(this.smsService);
   }
 }

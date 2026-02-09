@@ -9,7 +9,7 @@ public class NumbersQuickStart {
   public NumbersQuickStart(NumbersService numbersService) {
     this.numbersService = numbersService;
 
-    // replace by your code and business logic
+    // Insert your application logic or business process here
     Snippet.execute(this.numbersService);
   }
 }

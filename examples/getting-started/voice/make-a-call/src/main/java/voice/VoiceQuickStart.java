@@ -9,7 +9,7 @@ public class VoiceQuickStart {
   public VoiceQuickStart(VoiceService voiceService) {
     this.voiceService = voiceService;
 
-    // replace by your code and business logic
+    // Insert your application logic or business process here
     Snippet.execute(this.voiceService);
   }
 }
