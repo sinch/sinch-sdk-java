@@ -8,3 +8,4 @@ export SDK_VERSION="${SDK_VERSION}"
 (cd webhooks && ./compile.sh)  || exit 1
 (cd client &&  mvn -Puse-version clean package)  || exit 1
 (cd getting-started && ./compile.sh)  || exit 1
+(cd tutorials && ./compile.sh)  || exit 1
