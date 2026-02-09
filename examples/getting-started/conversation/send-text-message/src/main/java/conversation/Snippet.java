@@ -2,10 +2,10 @@ package conversation;
 
 import com.sinch.sdk.domains.conversation.api.v1.ConversationService;
 import com.sinch.sdk.domains.conversation.api.v1.MessagesService;
+import com.sinch.sdk.domains.conversation.models.v1.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentities;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
-import com.sinch.sdk.domains.conversation.models.v1.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;

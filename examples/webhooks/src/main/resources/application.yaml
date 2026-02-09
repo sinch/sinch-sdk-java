@@ -23,17 +23,19 @@ credentials:
   application-api-key:
   application-api-secret:
 
-# Secret value set for Numbers webhooks calls validation
 numbers:
   webhooks:
+    # Secret value set for Numbers webhooks calls validation
+    # Used when "ensureValidAuthentication" within [Controller.java](../java/com/mycompany/app/numbers/Controller.java) is set to true
     secret:
 
-# Secret value set for Conversation webhooks calls validation
 conversation:
   # Sets the region for Conversation
   # See https://github.com/sinch/sinch-sdk-java/blob/main/client/src/main/com/sinch/sdk/models/ConversationRegion.java for list of supported values
   region:
   webhooks:
+    # Secret value set for Conversation webhooks calls validation
+    # Used when "ensureValidAuthentication" within [Controller.java](../java/com/mycompany/app/conversation/Controller.java) is set to true
     secret:
 
 sms:
@@ -42,4 +44,6 @@ sms:
   # See https://github.com/sinch/sinch-sdk-java/blob/main/client/src/main/com/sinch/sdk/models/SMSRegion.java for full list of supported values but with servicePlanID
   region:
   webhooks:
+    # Secret value set for Sms webhooks calls validation
+    # Used when "ensureValidAuthentication" within [Controller.java](../java/com/mycompany/app/sms/Controller.java) is set to true
     secret:

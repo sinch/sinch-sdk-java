@@ -43,11 +43,8 @@ public class Controller {
     // ensure valid authentication to handle request
     // See
     // https://developers.sinch.com/docs/sms/api-reference/sms/tag/Webhooks/#tag/Webhooks/section/Callbacks
-    // Contact your account manager to configure your callback sending headers validation or comment
-    // following line
-    // set this value to true to validate request from Sinch servers
-    // see https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Numbers-Callbacks for
-    // more information
+    // Contact your account manager to configure your callback sending headers validation
+    // set "ensureValidAuthentication" value to true to validate requests from Sinch servers
     boolean ensureValidAuthentication = false;
     if (ensureValidAuthentication) {
       var validAuth =

@@ -39,10 +39,11 @@ public class Controller {
     WebHooksService webhooks = sinchClient.voice().v1().webhooks();
 
     // ensure valid authentication to handle request
-    // set this value to true to validate request from Sinch servers
     // see
     // https://developers.sinch.com/docs/voice/api-reference/authentication/callback-signed-request
-    // for     more information
+    // for more information
+    // Contact your account manager to configure your callback sending headers validation
+    // set "ensureValidAuthentication" value to true to validate requests from Sinch servers
     boolean ensureValidAuthentication = false;
     if (ensureValidAuthentication) {
       // ensure valid authentication to handle request

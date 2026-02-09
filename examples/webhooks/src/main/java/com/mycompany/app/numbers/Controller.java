@@ -47,9 +47,9 @@ public class Controller {
 
     WebHooksService webhooks = sinchClient.numbers().v1().webhooks();
 
-    // set this value to true to validate request from Sinch servers
     // see https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Numbers-Callbacks for
     // more information
+    // set this value to true to validate request from Sinch servers
     boolean ensureValidAuthentication = false;
     if (ensureValidAuthentication) {
       // ensure valid authentication to handle request
