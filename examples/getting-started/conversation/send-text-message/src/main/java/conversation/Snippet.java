@@ -2,12 +2,13 @@ package conversation;
 
 import com.sinch.sdk.domains.conversation.api.v1.ConversationService;
 import com.sinch.sdk.domains.conversation.api.v1.MessagesService;
-import com.sinch.sdk.domains.conversation.models.v1.*;
-import com.sinch.sdk.domains.conversation.models.v1.messages.*;
-import com.sinch.sdk.domains.conversation.models.v1.messages.request.*;
+import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentities;
+import com.sinch.sdk.domains.conversation.models.v1.ChannelRecipientIdentity;
+import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
+import com.sinch.sdk.domains.conversation.models.v1.AppMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
-import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.*;
-import java.util.*;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
 import java.util.Collections;
 import java.util.logging.Logger;
 
