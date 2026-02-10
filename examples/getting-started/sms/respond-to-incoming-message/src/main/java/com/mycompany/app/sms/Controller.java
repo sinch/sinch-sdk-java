@@ -1,8 +1,9 @@
-package com.mycompany.app.numbers;
+package com.mycompany.app.sms;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.numbers.api.v1.WebHooksService;
-import com.sinch.sdk.domains.numbers.models.v1.webhooks.NumberEvent;
+import com.sinch.sdk.domains.sms.api.v1.WebHooksService;
+import com.sinch.sdk.domains.sms.models.v1.inbounds.TextMessage;
+import com.sinch.sdk.domains.sms.models.v1.webhooks.SmsEvent;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,21 +16,13 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-@RestController("Numbers")
+@RestController("SMS")
 public class Controller {
 
   private final SinchClient sinchClient;
   private final ServerBusinessLogic webhooksBusinessLogic;
 
-  /**
-   * The secret value used for webhook calls validation have to equals to the one configured at
-   * number property (HmacSecret).
-   *
-   * @see <a
-   *     href="https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/numbers/api/v1/CallbackConfigurationService.html#update(com.sinch.sdk.domains.numbers.models.v1.callbacks.request.CallbackConfigurationUpdateRequest)">update
-   *     function Javadoc</a>
-   */
-  @Value("${numbers.webhooks.secret: }")
+  @Value("${sms.webhooks.secret: }")
   private String webhooksSecret;
 
   @Autowired
@@ -39,20 +32,21 @@ public class Controller {
   }
 
   @PostMapping(
-      value = "/NumbersEvent",
+      value = "/SmsEvent",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Void> NumbersEvent(
+  public ResponseEntity<Void> smsDeliveryEvent(
       @RequestHeader Map<String, String> headers, @RequestBody String body) {
 
-    WebHooksService webhooks = sinchClient.numbers().v1().webhooks();
+    WebHooksService webhooks = sinchClient.sms().v1().webhooks();
 
-    // see https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Numbers-Callbacks for
-    // more information
-    // set this value to true to validate request from Sinch servers
+    // ensure valid authentication to handle request
+    // See
+    // https://developers.sinch.com/docs/sms/api-reference/sms/tag/Webhooks/#tag/Webhooks/section/Callbacks
+    // Contact your account manager to configure your callback sending headers validation
+    // set "ensureValidAuthentication" value to true to validate requests from Sinch servers
     boolean ensureValidAuthentication = false;
     if (ensureValidAuthentication) {
-      // ensure valid authentication to handle request
       var validAuth =
           webhooks.validateAuthenticationHeader(
               webhooksSecret,
@@ -68,10 +62,13 @@ public class Controller {
     }
 
     // decode the request payload
-    NumberEvent event = webhooks.parseEvent(body);
+    SmsEvent event = webhooks.parseEvent(body);
 
     // let business layer process the request
-    webhooksBusinessLogic.numbersEvent(event);
+    switch (event) {
+      case TextMessage e -> webhooksBusinessLogic.processInboundEvent(e);
+      default -> throw new IllegalStateException("Unexpected value: " + event);
+    }
 
     return ResponseEntity.ok().build();
   }
