@@ -10,8 +10,17 @@
   <packaging>jar</packaging>
   <name>Sinch Java SDK Client Snippets</name>
 
+  <profiles>
+    <profile>
+      <id>use-version</id>
+      <properties>
+        <sinch.sdk.java.version>${env.SDK_VERSION}</sinch.sdk.java.version>
+      </properties>
+    </profile>
+  </profiles>
+
   <properties>
-    <sinch.sdk.java.version>[1.0.0,)</sinch.sdk.java.version>
+    <sinch.sdk.java.version>[2.0.0,)</sinch.sdk.java.version>
     <maven.compiler.source>8</maven.compiler.source>
     <maven.compiler.target>8</maven.compiler.target>
     <maven.compiler.version>3.13.0</maven.compiler.version>

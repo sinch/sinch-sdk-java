@@ -15,8 +15,17 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>Sinch Java SDK Webhooks Application</name>
 
+  <profiles>
+    <profile>
+      <id>use-version</id>
+      <properties>
+        <sinch.sdk.java.version>${env.SDK_VERSION}</sinch.sdk.java.version>
+      </properties>
+    </profile>
+  </profiles>
+
   <properties>
-    <sinch.sdk.java.version>[1.0.0,)</sinch.sdk.java.version>
+    <sinch.sdk.java.version>[2.0.0,)</sinch.sdk.java.version>
     <java.version>21</java.version>
   </properties>
 
