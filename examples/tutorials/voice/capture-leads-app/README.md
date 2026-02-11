@@ -1,4 +1,4 @@
-# Sinch Tutorial: Qualify Leads (Java)
+# Sinch Java SDK Voice Tutorial: Qualify Leads
 
 This directory contains samples related to Java SDK tutorials: [qualify leads](https://developers.sinch.com/docs/voice/tutorials/qualify-leads/java)
 
