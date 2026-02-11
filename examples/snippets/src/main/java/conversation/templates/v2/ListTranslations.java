@@ -8,11 +8,10 @@
 package conversation.templates.v2;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.conversation.api.templates.v2.TemplatesServiceV2;
-import com.sinch.sdk.domains.conversation.templates.models.v2.TemplateTranslation;
+import com.sinch.sdk.domains.conversation.templates.api.v2.TemplatesV2Service;
+import com.sinch.sdk.domains.conversation.templates.models.v2.response.TranslationsV2ListResponse;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationRegion;
-import java.util.Collection;
 import java.util.logging.Logger;
 import utils.Settings;
 
@@ -40,12 +39,12 @@ public class ListTranslations {
 
     SinchClient client = new SinchClient(configuration);
 
-    TemplatesServiceV2 templatesServiceV2 = client.conversation().templates().v2();
+    TemplatesV2Service templatesServiceV2 = client.conversation().templates().v2();
 
     LOGGER.info(
         String.format("List translations for template with ID '%s'", conversationTemplateId));
 
-    Collection<TemplateTranslation> response =
+    TranslationsV2ListResponse response =
         templatesServiceV2.listTranslations(conversationTemplateId, null);
 
     LOGGER.info("Response: ");

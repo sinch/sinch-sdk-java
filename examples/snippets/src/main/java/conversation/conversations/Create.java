@@ -9,8 +9,8 @@ package conversation.conversations;
 
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.conversation.api.v1.ConversationsService;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.Conversation;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.request.CreateConversationRequest;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.Conversation;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.request.CreateConversationRequest;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationRegion;
 import java.util.logging.Logger;

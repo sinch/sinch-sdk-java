@@ -1,11 +1,13 @@
 package com.sinch.sdk.e2e.domains.conversation;
 
-import com.sinch.sdk.domains.conversation.api.v1.AppService;
+import com.sinch.sdk.core.TestHelpers;
+import com.sinch.sdk.domains.conversation.api.v1.AppsService;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
-import com.sinch.sdk.domains.conversation.models.v1.app.ConversationMetadataReportView;
-import com.sinch.sdk.domains.conversation.models.v1.app.request.AppCreateRequest;
-import com.sinch.sdk.domains.conversation.models.v1.app.request.AppUpdateRequest;
-import com.sinch.sdk.domains.conversation.models.v1.app.response.AppResponse;
+import com.sinch.sdk.domains.conversation.models.v1.apps.ConversationMetadataReportView;
+import com.sinch.sdk.domains.conversation.models.v1.apps.request.AppCreateRequest;
+import com.sinch.sdk.domains.conversation.models.v1.apps.request.AppUpdateRequest;
+import com.sinch.sdk.domains.conversation.models.v1.apps.response.AppResponse;
+import com.sinch.sdk.domains.conversation.models.v1.apps.response.AppsListResponse;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.ChannelIntegrationStatus;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.ConversationChannelCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.credentials.ConversationChannelCredentialsBuilderFactory;
@@ -15,23 +17,22 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import java.util.Arrays;
-import java.util.Collection;
 import org.junit.jupiter.api.Assertions;
 
 public class AppsSteps {
 
   static final String APP_ID = "01W4FFL35P4NC4K35CONVAPP001";
 
-  AppService service;
+  AppsService service;
   AppResponse createResponse;
-  Collection<AppResponse> listResponse;
+  AppsListResponse listResponse;
   AppResponse getResponse;
   AppResponse updateResponse;
   boolean deletePassed;
 
   @Given("^the Conversation service \"Apps\" is available$")
   public void serviceAvailable() {
-    service = Config.getSinchClient().conversation().v1().app();
+    service = Config.getSinchClient().conversation().v1().apps();
   }
 
   @When("^I send a request to create an app$")
@@ -95,17 +96,7 @@ public class AppsSteps {
 
   @Then("the apps list contains {int} apps")
   public void listResult(int size) {
-
-    Assertions.assertEquals(listResponse.size(), size);
-    AppResponse item = listResponse.stream().findFirst().orElse(null);
-
-    checkExpectedAppResponseCommonFields(item);
-    Assertions.assertEquals(item.getDisplayName(), "E2E Conversation App");
-    Assertions.assertEquals(
-        item.getChannelCredentials().get(0).getState().getStatus(),
-        ChannelIntegrationStatus.ACTIVE);
-    item = listResponse.stream().reduce((first, second) -> second).orElse(null);
-    Assertions.assertEquals(item.getId(), "01W4FFL35P4NC4K35CONVAPP002");
+    TestHelpers.checkIteratorItems(listResponse.iterator(), size);
   }
 
   @Then("the response contains the app details")

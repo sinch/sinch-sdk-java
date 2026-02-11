@@ -1,54 +1,84 @@
 package com.sinch.sdk.domains.conversation.api.v1.adapters;
 
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.conversation.api.v1.internal.ProjectSettingsApi;
+import com.sinch.sdk.core.http.HttpContentType;
+import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.core.http.HttpMethod;
+import com.sinch.sdk.core.http.HttpRequest;
+import com.sinch.sdk.core.http.HttpRequestTest.HttpRequestMatcher;
+import com.sinch.sdk.core.http.HttpResponse;
+import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.domains.conversation.api.v1.ProjectSettingsService;
 import com.sinch.sdk.domains.conversation.models.v1.projectsettings.request.ProjectSettingsRequestDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.projectsettings.response.ProjectSettingsResponse;
 import com.sinch.sdk.domains.conversation.models.v1.projectsettings.response.ProjectSettingsResponseDtoTest;
-import com.sinch.sdk.models.ConversationContext;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
 
 @TestWithResources
 class ProjectSettingsServiceTest extends BaseTest {
 
-  @Mock ConversationContext context;
-  @Mock ProjectSettingsApi api;
+  @Mock ServerConfiguration serverConfiguration;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
 
-  @Captor ArgumentCaptor<String> projectIdCaptor;
-
   ProjectSettingsService service;
-  String uriPartID = "foovalue";
+  String uriUUID = "foovalue";
+
+  static final Collection<String> AUTH_NAMES = Arrays.asList("Basic", "oAuth2");
+
+  @GivenTextResource(
+      "domains/conversation/v1/projectsettings/request/ProjectSettingsRequestDto.json")
+  String jsonProjectSettingsRequestDto;
+
+  @GivenTextResource(
+      "domains/conversation/v1/projectsettings/response/ProjectSettingsResponseDto.json")
+  String jsonProjectSettingsResponseDto;
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new ProjectSettingsService(uriPartID, context, httpClient, authManagers));
-    doReturn(api).when(service).getApi();
+    service =
+        new ProjectSettingsServiceImpl(
+            httpClient, serverConfiguration, authManagers, HttpMapper.getInstance(), uriUUID);
   }
 
   @Test
   void create() throws ApiException {
 
-    when(api.create(eq(uriPartID), eq(ProjectSettingsRequestDtoTest.expectedDto)))
-        .thenReturn(ProjectSettingsResponseDtoTest.expectedDto);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            String.format("/v1/projects/%s/settings", uriUUID),
+            HttpMethod.POST,
+            Collections.emptyList(),
+            jsonProjectSettingsRequestDto,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonProjectSettingsResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     ProjectSettingsResponse response = service.create(ProjectSettingsRequestDtoTest.expectedDto);
 
@@ -58,7 +88,25 @@ class ProjectSettingsServiceTest extends BaseTest {
   @Test
   void get() throws ApiException {
 
-    when(api.get(eq(uriPartID))).thenReturn(ProjectSettingsResponseDtoTest.expectedDto);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            String.format("/v1/projects/%s/settings", uriUUID),
+            HttpMethod.GET,
+            Collections.emptyList(),
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonProjectSettingsResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     ProjectSettingsResponse response = service.get();
 
@@ -68,8 +116,25 @@ class ProjectSettingsServiceTest extends BaseTest {
   @Test
   void update() throws ApiException {
 
-    when(api.update(eq(uriPartID), eq(ProjectSettingsRequestDtoTest.expectedDto)))
-        .thenReturn(ProjectSettingsResponseDtoTest.expectedDto);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            String.format("/v1/projects/%s/settings", uriUUID),
+            HttpMethod.PATCH,
+            Collections.emptyList(),
+            jsonProjectSettingsRequestDto,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonProjectSettingsResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     ProjectSettingsResponse response = service.update(ProjectSettingsRequestDtoTest.expectedDto);
 
@@ -79,10 +144,24 @@ class ProjectSettingsServiceTest extends BaseTest {
   @Test
   void delete() throws ApiException {
 
+    HttpRequest httpRequest =
+        new HttpRequest(
+            String.format("/v1/projects/%s/settings", uriUUID),
+            HttpMethod.DELETE,
+            Collections.emptyList(),
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpResponse httpResponse = new HttpResponse(204, null, Collections.emptyMap(), null);
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
     service.delete();
-
-    verify(api).delete(projectIdCaptor.capture());
-
-    Assertions.assertThat(projectIdCaptor.getValue()).isEqualTo(uriPartID);
   }
 }

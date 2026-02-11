@@ -11,7 +11,7 @@
 package com.sinch.sdk.domains.conversation.models.v1.webhooks.events.contact;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.conversation.models.v1.contact.Contact;
+import com.sinch.sdk.domains.conversation.models.v1.contacts.Contact;
 
 /** ContactNotification */
 @JsonDeserialize(builder = ContactNotificationImpl.Builder.class)

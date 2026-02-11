@@ -1,7 +1,7 @@
 package com.mycompany.app.conversation;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.conversation.api.v1.WebHooksService;
+import com.sinch.sdk.domains.conversation.api.v1.WebhooksService;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.ConversationWebhookEvent;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.capability.CapabilityEvent;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.channel.ChannelEvent;
@@ -58,7 +58,7 @@ public class Controller {
   public ResponseEntity<Void> ConversationEvent(
       @RequestHeader Map<String, String> headers, @RequestBody String body) {
 
-    WebHooksService webhooks = sinchClient.conversation().v1().webhooks();
+    WebhooksService webhooks = sinchClient.conversation().v1().webhooks();
 
     // set this value to true to validate request from Sinch servers
     // see https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Numbers-Callbacks for

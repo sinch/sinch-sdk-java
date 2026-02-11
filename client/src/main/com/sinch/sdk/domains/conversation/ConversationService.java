@@ -1,6 +1,6 @@
 package com.sinch.sdk.domains.conversation;
 
-import com.sinch.sdk.domains.conversation.api.templates.TemplatesService;
+import com.sinch.sdk.domains.conversation.templates.api.TemplatesService;
 
 /**
  * Conversation Service

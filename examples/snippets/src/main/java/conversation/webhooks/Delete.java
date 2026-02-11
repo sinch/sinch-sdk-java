@@ -8,7 +8,7 @@
 package conversation.webhooks;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.conversation.api.v1.WebHooksService;
+import com.sinch.sdk.domains.conversation.api.v1.WebhooksService;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationRegion;
 import java.util.logging.Logger;
@@ -38,7 +38,7 @@ public class Delete {
 
     SinchClient client = new SinchClient(configuration);
 
-    WebHooksService webHooksService = client.conversation().v1().webhooks();
+    WebhooksService webHooksService = client.conversation().v1().webhooks();
 
     LOGGER.info("Deleting webhook: " + conversationWebhookId);
 
