@@ -1,0 +1,26 @@
+# springboot related config file
+
+logging:
+  level:
+    com: INFO
+
+server:
+  port: 8090
+
+credentials:
+  # Required credentials for using the SMS API
+  # US/EU are the only supported regions with unified credentials
+  project-id:
+  key-id:
+  key-secret:
+
+sms:
+  # Sets the region for SMS
+  # valid values are "us" and "eu"
+  # See https://github.com/sinch/sinch-sdk-java/blob/main/client/src/main/com/sinch/sdk/models/SMSRegion.java for full list of supported values but with servicePlanID
+  #region:
+  webhooks:
+    # Used when "ensureValidAuthentication" within [Controller.java](../java/com/mycompany/app/sms/Controller.java) is set to true
+    secret:
+
+  

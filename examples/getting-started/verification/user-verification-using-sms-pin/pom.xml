@@ -4,11 +4,11 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.sinch.sdk.archetypes</groupId>
-  <artifactId>sinch-java-sdk-client-snippets</artifactId>
+  <groupId>my.company.com</groupId>
+  <artifactId>sinch-java-sdk-client-application</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <name>Sinch Java SDK Client Snippets</name>
+  <name>Sinch Java SDK Client Application</name>
 
   <profiles>
     <profile>
@@ -28,69 +28,49 @@
   </properties>
 
   <build>
-
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.13.0</version>
-        <configuration>
-          <compileSourceRoots>src</compileSourceRoots>
-        </configuration>
-      </plugin>
-
-      <!-- code format -->
-      <plugin>
-        <groupId>com.diffplug.spotless</groupId>
-        <artifactId>spotless-maven-plugin</artifactId>
-        <version>2.40.0</version>
-
-        <configuration>
-
-          <java>
-            <includes>
-              <include>**/*.java</include>
-            </includes>
-
-            <googleJavaFormat>
-              <version>1.22.0</version>
-              <reflowLongStrings>true</reflowLongStrings>
-            </googleJavaFormat>
-            <endWithNewline/>
-            <removeUnusedImports/>
-            <indent>
-              <spaces>true</spaces>
-              <spacesPerTab>2</spacesPerTab>
-            </indent>
-            <trimTrailingWhitespace/>
-          </java>
-
-        </configuration>
-
-        <executions>
-          <execution>
-            <phase>verify</phase>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
         <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>3.5.0</version>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>3.6.0</version>
         <executions>
           <execution>
+            <id>add-sources</id>
+            <phase>generate-sources</phase>
             <goals>
-              <goal>exec</goal>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>src/main/java</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>
+                Application
+              </mainClass>
+            </manifest>
+          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
             </goals>
           </execution>
         </executions>
-        <configuration>
-
-        </configuration>
       </plugin>
 
     </plugins>
@@ -103,11 +83,14 @@
       <version>${sinch.sdk.java.version}</version>
     </dependency>
 
+    <!-- We don't care about logs from 3rd party dependencies for sample app:
+         then we remove the warning about missing SLF4J logger -->
     <dependency>
       <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-jdk14</artifactId>
+      <artifactId>slf4j-nop</artifactId>
       <version>2.0.9</version>
     </dependency>
+
   </dependencies>
 
 </project>

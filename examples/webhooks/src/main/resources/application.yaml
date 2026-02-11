@@ -1,0 +1,49 @@
+# springboot related config file
+
+logging:
+  level:
+    com: INFO
+
+server:
+  port: 8090
+
+# only required if you need to call any Sinch services when processing webhooks
+credentials:
+  # Java SDK domains supporting unified credentials
+  # - Numbers
+  # - SMS: US/EU are the only supported regions with unified credentials
+  # - Conversation
+  project-id:
+  key-id:
+  key-secret:
+
+  # Application related credentials, used by:
+  # - Verification
+  # - Voice
+  application-api-key:
+  application-api-secret:
+
+numbers:
+  webhooks:
+    # Secret value set for Numbers webhooks calls validation
+    # Used when "ensureValidAuthentication" within [Controller.java](../java/com/mycompany/app/numbers/Controller.java) is set to true
+    secret:
+
+conversation:
+  # Sets the region for Conversation
+  # See https://github.com/sinch/sinch-sdk-java/blob/main/client/src/main/com/sinch/sdk/models/ConversationRegion.java for list of supported values
+  region:
+  webhooks:
+    # Secret value set for Conversation webhooks calls validation
+    # Used when "ensureValidAuthentication" within [Controller.java](../java/com/mycompany/app/conversation/Controller.java) is set to true
+    secret:
+
+sms:
+  # Sets the region for SMS
+  # valid values are "us" and "eu"
+  # See https://github.com/sinch/sinch-sdk-java/blob/main/client/src/main/com/sinch/sdk/models/SMSRegion.java for full list of supported values but with servicePlanID
+  region:
+  webhooks:
+    # Secret value set for Sms webhooks calls validation
+    # Used when "ensureValidAuthentication" within [Controller.java](../java/com/mycompany/app/sms/Controller.java) is set to true
+    secret:
