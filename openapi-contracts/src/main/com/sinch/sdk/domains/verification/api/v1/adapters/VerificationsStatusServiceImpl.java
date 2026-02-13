@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.verification.api.v1.internal;
+package com.sinch.sdk.domains.verification.api.v1.adapters;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sinch.sdk.core.exceptions.ApiException;
@@ -23,7 +23,9 @@ import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.domains.verification.models.v1.status.response.internal.VerificationStatusResponseInternal;
+import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
+import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -32,15 +34,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class VerificationStatusApi {
+public class VerificationsStatusServiceImpl
+    implements com.sinch.sdk.domains.verification.api.v1.VerificationsStatusService {
 
-  private static final Logger LOGGER = Logger.getLogger(VerificationStatusApi.class.getName());
-  private HttpClient httpClient;
-  private ServerConfiguration serverConfiguration;
-  private Map<String, AuthManager> authManagersByOasSecuritySchemes;
-  private HttpMapper mapper;
+  private static final Logger LOGGER =
+      Logger.getLogger(VerificationsStatusServiceImpl.class.getName());
+  private final HttpClient httpClient;
+  private final ServerConfiguration serverConfiguration;
+  private final Map<String, AuthManager> authManagersByOasSecuritySchemes;
+  private final HttpMapper mapper;
 
-  public VerificationStatusApi(
+  public VerificationsStatusServiceImpl(
       HttpClient httpClient,
       ServerConfiguration serverConfiguration,
       Map<String, AuthManager> authManagersByOasSecuritySchemes,
@@ -51,27 +55,18 @@ public class VerificationStatusApi {
     this.mapper = mapper;
   }
 
-  /**
-   * Get verification by ID Queries the verification result by sending the verification ID. With
-   * this query you can get the result of a verification.
-   *
-   * @param id The ID of the verification. (required)
-   * @return VerificationStatusResponseInternal
-   * @throws ApiException if fails to make API call
-   */
-  public VerificationStatusResponseInternal verificationStatusById(String id) throws ApiException {
+  @Override
+  public VerificationStatusResponse getById(String id) throws ApiException {
 
-    LOGGER.finest("[verificationStatusById]" + " " + "id: " + id);
+    LOGGER.finest("[getById]" + " " + "id: " + id);
 
-    HttpRequest httpRequest = verificationStatusByIdRequestBuilder(id);
+    HttpRequest httpRequest = getByIdRequestBuilder(id);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<VerificationStatusResponseInternal> localVarReturnType =
-          new TypeReference<VerificationStatusResponseInternal>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<VerificationStatusResponse>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -82,11 +77,10 @@ public class VerificationStatusApi {
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest verificationStatusByIdRequestBuilder(String id) throws ApiException {
+  private HttpRequest getByIdRequestBuilder(String id) throws ApiException {
     // verify the required parameter 'id' is set
     if (id == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'id' when calling verificationStatusById");
+      throw new ApiException(400, "Missing the required parameter 'id' when calling getById");
     }
 
     String localVarPath =
@@ -115,39 +109,25 @@ public class VerificationStatusApi {
         localVarAuthNames);
   }
 
-  /**
-   * Get verification by Identity Queries the verification result by sending the verification
-   * Identity (usually a phone number) and its method. With this query you can get the result of a
-   * verification.
-   *
-   * @param endpoint For type &#x60;number&#x60; use a
-   *     [E.164](https://community.sinch.com/t5/Glossary/E-164/ta-p/7537)-compatible phone number.
-   *     (required)
-   * @param method The method of the verification. (required)
-   * @return VerificationStatusResponseInternal
-   * @throws ApiException if fails to make API call
-   */
-  public VerificationStatusResponseInternal verificationStatusByIdentity(
-      String endpoint, String method) throws ApiException {
+  @Override
+  public VerificationStatusResponse getByIdentity(
+      NumberIdentity identity, VerificationMethod method) {
 
-    LOGGER.finest(
-        "[verificationStatusByIdentity]"
-            + " "
-            + "endpoint: "
-            + endpoint
-            + ", "
-            + "method: "
-            + method);
+    return getByIdentity(identity.getEndpoint(), method.value());
+  }
 
-    HttpRequest httpRequest = verificationStatusByIdentityRequestBuilder(endpoint, method);
+  private VerificationStatusResponse getByIdentity(String endpoint, String method)
+      throws ApiException {
+
+    LOGGER.finest("[getByIdentity]" + " " + "endpoint: " + endpoint + ", " + "method: " + method);
+
+    HttpRequest httpRequest = getByIdentityRequestBuilder(endpoint, method);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<VerificationStatusResponseInternal> localVarReturnType =
-          new TypeReference<VerificationStatusResponseInternal>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<VerificationStatusResponse>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -158,18 +138,17 @@ public class VerificationStatusApi {
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest verificationStatusByIdentityRequestBuilder(String endpoint, String method)
+  private HttpRequest getByIdentityRequestBuilder(String endpoint, String method)
       throws ApiException {
     // verify the required parameter 'endpoint' is set
     if (endpoint == null) {
       throw new ApiException(
-          400,
-          "Missing the required parameter 'endpoint' when calling verificationStatusByIdentity");
+          400, "Missing the required parameter 'endpoint' when calling getByIdentity");
     }
     // verify the required parameter 'method' is set
     if (method == null) {
       throw new ApiException(
-          400, "Missing the required parameter 'method' when calling verificationStatusByIdentity");
+          400, "Missing the required parameter 'method' when calling getByIdentity");
     }
 
     String localVarPath =
@@ -201,28 +180,18 @@ public class VerificationStatusApi {
         localVarAuthNames);
   }
 
-  /**
-   * Get verification by Reference Queries the verification result by sending the verification
-   * Reference. With this query you can get the result of a verification.
-   *
-   * @param reference The custom reference of the verification. (required)
-   * @return VerificationStatusResponseInternal
-   * @throws ApiException if fails to make API call
-   */
-  public VerificationStatusResponseInternal verificationStatusByReference(String reference)
-      throws ApiException {
+  @Override
+  public VerificationStatusResponse getByReference(String reference) throws ApiException {
 
-    LOGGER.finest("[verificationStatusByReference]" + " " + "reference: " + reference);
+    LOGGER.finest("[getByReference]" + " " + "reference: " + reference);
 
-    HttpRequest httpRequest = verificationStatusByReferenceRequestBuilder(reference);
+    HttpRequest httpRequest = getByReferenceRequestBuilder(reference);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<VerificationStatusResponseInternal> localVarReturnType =
-          new TypeReference<VerificationStatusResponseInternal>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<VerificationStatusResponse>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -233,13 +202,11 @@ public class VerificationStatusApi {
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest verificationStatusByReferenceRequestBuilder(String reference)
-      throws ApiException {
+  private HttpRequest getByReferenceRequestBuilder(String reference) throws ApiException {
     // verify the required parameter 'reference' is set
     if (reference == null) {
       throw new ApiException(
-          400,
-          "Missing the required parameter 'reference' when calling verificationStatusByReference");
+          400, "Missing the required parameter 'reference' when calling getByReference");
     }
 
     String localVarPath =
