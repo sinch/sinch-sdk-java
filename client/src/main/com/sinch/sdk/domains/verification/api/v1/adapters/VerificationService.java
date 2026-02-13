@@ -4,8 +4,15 @@ import com.sinch.sdk.auth.adapters.ApplicationAuthManager;
 import com.sinch.sdk.auth.adapters.BasicAuthManager;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
+import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.verification.adapters.IdentityMapper;
+import com.sinch.sdk.domains.verification.api.v1.VerificationsReportService;
+import com.sinch.sdk.domains.verification.api.v1.VerificationsStartService;
+import com.sinch.sdk.domains.verification.api.v1.VerificationsStatusService;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseMapper;
+import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseMapper;
+import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponseMapper;
 import com.sinch.sdk.models.ApplicationCredentials;
 import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
@@ -28,10 +35,10 @@ public class VerificationService
 
   private final VerificationContext context;
   private final Supplier<HttpClient> httpClientSupplier;
-  private volatile VerificationStartService startService;
-  private volatile VerificationReportService reportService;
-  private volatile VerificationStatusService statusService;
-  private volatile WebHooksService webhooks;
+  private volatile VerificationsStartService startService;
+  private volatile VerificationsReportService reportService;
+  private volatile VerificationsStatusService statusService;
+  private volatile WebhooksService webhooks;
 
   private volatile Map<String, AuthManager> clientAuthManagers;
   private volatile Map<String, AuthManager> webhooksAuthManagers;
@@ -77,37 +84,49 @@ public class VerificationService
         APPLICATION_SECURITY_SCHEME_KEYWORD_VERIFICATION, applicationAuthManager);
   }
 
-  public VerificationStartService verificationStart() {
+  public VerificationsStartService verificationStart() {
     if (null == this.startService) {
       instanceLazyInit();
       this.startService =
-          new VerificationStartService(context, httpClientSupplier.get(), clientAuthManagers);
+          new VerificationsStartServiceImpl(
+              httpClientSupplier.get(),
+              context.getVerificationServer(),
+              clientAuthManagers,
+              HttpMapper.getInstance());
     }
     return this.startService;
   }
 
-  public VerificationReportService verificationReport() {
+  public VerificationsReportService verificationReport() {
     if (null == this.reportService) {
       instanceLazyInit();
       this.reportService =
-          new VerificationReportService(context, httpClientSupplier.get(), clientAuthManagers);
+          new VerificationsReportServiceImpl(
+              httpClientSupplier.get(),
+              context.getVerificationServer(),
+              clientAuthManagers,
+              HttpMapper.getInstance());
     }
     return this.reportService;
   }
 
-  public VerificationStatusService verificationStatus() {
+  public VerificationsStatusService verificationStatus() {
     if (null == this.statusService) {
       instanceLazyInit();
       this.statusService =
-          new VerificationStatusService(context, httpClientSupplier.get(), clientAuthManagers);
+          new VerificationsStatusServiceImpl(
+              httpClientSupplier.get(),
+              context.getVerificationServer(),
+              clientAuthManagers,
+              HttpMapper.getInstance());
     }
     return this.statusService;
   }
 
-  public WebHooksService webhooks() {
+  public WebhooksService webhooks() {
     if (null == this.webhooks) {
       instanceLazyInit();
-      this.webhooks = new WebHooksService(webhooksAuthManagers);
+      this.webhooks = new WebhooksService(webhooksAuthManagers);
     }
     return this.webhooks;
   }
@@ -147,6 +166,9 @@ public class VerificationService
 
     private LocalLazyInit() {
       IdentityMapper.initMapper();
+      VerificationStartResponseMapper.initMapper();
+      VerificationStatusResponseMapper.initMapper();
+      VerificationReportResponseMapper.initMapper();
     }
 
     public static LocalLazyInit init() {

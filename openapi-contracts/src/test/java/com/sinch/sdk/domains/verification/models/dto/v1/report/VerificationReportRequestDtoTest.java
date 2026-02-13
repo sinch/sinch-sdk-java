@@ -5,14 +5,9 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestFlashCall;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestFlashCallImpl;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestPhoneCall;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestPhoneCallImpl;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestSms;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestSmsImpl;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestWhatsApp;
-import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestWhatsAppImpl;
-import com.sinch.sdk.domains.verification.models.v1.report.request.internal.VerificationReportRequestInternalImpl;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -20,24 +15,17 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class VerificationReportRequestDtoTest extends BaseTest {
 
-  public static VerificationReportRequestInternalImpl verificationReportPhoneCallDto =
-      new VerificationReportRequestInternalImpl(
-          (VerificationReportRequestPhoneCallImpl)
-              VerificationReportRequestPhoneCall.builder().setCode("foo code").build());
+  public static VerificationReportRequestPhoneCall verificationReportPhoneCallDto =
+      VerificationReportRequestPhoneCall.builder().setCode("foo code").build();
 
-  public static VerificationReportRequestInternalImpl verificationReportFlashCallDto =
-      new VerificationReportRequestInternalImpl(
-          (VerificationReportRequestFlashCallImpl)
-              VerificationReportRequestFlashCall.builder().setCli("foo cli").build());
-  public static VerificationReportRequestInternalImpl verificationReportSmsDto =
-      new VerificationReportRequestInternalImpl(
-          (VerificationReportRequestSmsImpl)
-              VerificationReportRequestSms.builder().setCode("foo code").build());
+  public static VerificationReportRequestFlashCall verificationReportFlashCallDto =
+      VerificationReportRequestFlashCall.builder().setCli("foo cli").build();
 
-  public static VerificationReportRequestInternalImpl verificationReportWhatsAppDto =
-      new VerificationReportRequestInternalImpl(
-          (VerificationReportRequestWhatsAppImpl)
-              VerificationReportRequestWhatsApp.builder().setCode("foo code").build());
+  public static VerificationReportRequestSms verificationReportSmsDto =
+      VerificationReportRequestSms.builder().setCode("foo code").build();
+
+  public static VerificationReportRequestWhatsApp verificationReportWhatsAppDto =
+      VerificationReportRequestWhatsApp.builder().setCode("foo code").build();
 
   @GivenTextResource("/domains/verification/v1/report/VerificationReportRequestPhoneCallDto.json")
   String jsonVerificationReportPhoneCall;

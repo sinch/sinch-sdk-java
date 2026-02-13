@@ -9,13 +9,9 @@ import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
 import com.sinch.sdk.domains.verification.models.v1.WhatsAppCodeType;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestData;
-import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestDataImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestFlashCall;
-import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestFlashCallImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestPhoneCall;
-import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestPhoneCallImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms;
-import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSmsImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestWhatsApp;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestWhatsAppImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.internal.VerificationStartRequestInternalImpl;
@@ -26,60 +22,50 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class VerificationStartRequestTest extends VerificationBaseTest {
 
-  public static VerificationStartRequestInternalImpl startVerificationPhoneCallDto =
-      new VerificationStartRequestInternalImpl(
-          (VerificationStartRequestPhoneCallImpl)
-              VerificationStartRequestPhoneCall.builder()
-                  .setCustom("a custom")
-                  .setReference("a reference")
-                  .setIdentity(NumberIdentity.valueOf("+endpoint"))
-                  .setSpeech(PhoneCallSpeech.builder().setLocale("fr-FR").build())
-                  .putExtraOption("my key", "my value")
-                  .build());
+  public static VerificationStartRequestPhoneCall startVerificationPhoneCallDto =
+      VerificationStartRequestPhoneCall.builder()
+          .setCustom("a custom")
+          .setReference("a reference")
+          .setIdentity(NumberIdentity.valueOf("+endpoint"))
+          .setSpeech(PhoneCallSpeech.builder().setLocale("fr-FR").build())
+          .putExtraOption("my key", "my value")
+          .build();
 
-  public static VerificationStartRequestInternalImpl startVerificationFlashCallDto =
-      new VerificationStartRequestInternalImpl(
-          (VerificationStartRequestFlashCallImpl)
-              VerificationStartRequestFlashCall.builder()
-                  .setCustom("a custom")
-                  .setReference("a reference")
-                  .setIdentity(NumberIdentity.valueOf("+endpoint"))
-                  .setDialTimeout(17)
-                  .setInterceptionTimeout(23)
-                  .putExtraOption("my key", "my value")
-                  .build());
-  public static VerificationStartRequestInternalImpl startVerificationDataDto =
-      new VerificationStartRequestInternalImpl(
-          (VerificationStartRequestDataImpl)
-              VerificationStartRequestData.builder()
-                  .setCustom("a custom")
-                  .setReference("a reference")
-                  .setIdentity(NumberIdentity.valueOf("+endpoint"))
-                  .build());
-  public static VerificationStartRequestInternalImpl startVerificationSmsDto =
-      new VerificationStartRequestInternalImpl(
-          (VerificationStartRequestSmsImpl)
-              VerificationStartRequestSms.builder()
-                  .setCustom("a custom")
-                  .setReference("a reference")
-                  .setIdentity(NumberIdentity.valueOf("+endpoint"))
-                  .setExpiry("01:02:03")
-                  .setCodeType(SmsCodeType.ALPHANUMERIC)
-                  .putExtraOption("my key", "my value")
-                  .build());
+  public static VerificationStartRequestFlashCall startVerificationFlashCallDto =
+      VerificationStartRequestFlashCall.builder()
+          .setCustom("a custom")
+          .setReference("a reference")
+          .setIdentity(NumberIdentity.valueOf("+endpoint"))
+          .setDialTimeout(17)
+          .setInterceptionTimeout(23)
+          .putExtraOption("my key", "my value")
+          .build();
+  public static VerificationStartRequestData startVerificationDataDto =
+      VerificationStartRequestData.builder()
+          .setCustom("a custom")
+          .setReference("a reference")
+          .setIdentity(NumberIdentity.valueOf("+endpoint"))
+          .build();
+  public static VerificationStartRequestSms startVerificationSmsDto =
+      VerificationStartRequestSms.builder()
+          .setCustom("a custom")
+          .setReference("a reference")
+          .setIdentity(NumberIdentity.valueOf("+endpoint"))
+          .setExpiry("01:02:03")
+          .setCodeType(SmsCodeType.ALPHANUMERIC)
+          .putExtraOption("my key", "my value")
+          .build();
 
-  public static VerificationStartRequestInternalImpl startVerificationSmsDtoWithAcceptLanguage =
-      new VerificationStartRequestInternalImpl(
-          (VerificationStartRequestSmsImpl)
-              VerificationStartRequestSms.builder()
-                  .setCustom("a custom")
-                  .setReference("a reference")
-                  .setIdentity(NumberIdentity.valueOf("+endpoint"))
-                  .setExpiry("01:02:03")
-                  .setCodeType(SmsCodeType.ALPHANUMERIC)
-                  .setAcceptLanguage("es-ES")
-                  .putExtraOption("my key", "my value")
-                  .build());
+  public static VerificationStartRequestSms startVerificationSmsDtoWithAcceptLanguage =
+      VerificationStartRequestSms.builder()
+          .setCustom("a custom")
+          .setReference("a reference")
+          .setIdentity(NumberIdentity.valueOf("+endpoint"))
+          .setExpiry("01:02:03")
+          .setCodeType(SmsCodeType.ALPHANUMERIC)
+          .setAcceptLanguage("es-ES")
+          .putExtraOption("my key", "my value")
+          .build();
 
   public static VerificationStartRequestInternalImpl startVerificationWhatsAppDto =
       new VerificationStartRequestInternalImpl(

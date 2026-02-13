@@ -2,32 +2,33 @@ package com.sinch.sdk.domains.verification.api.v1.adapters;
 
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
+import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.core.models.ModelArgMatcher;
+import com.sinch.sdk.core.http.HttpContentType;
+import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.core.http.HttpMethod;
+import com.sinch.sdk.core.http.HttpRequest;
+import com.sinch.sdk.core.http.HttpRequestTest.HttpRequestMatcher;
+import com.sinch.sdk.core.http.HttpResponse;
+import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.verification.adapters.VerificationBaseTest;
-import com.sinch.sdk.domains.verification.api.v1.internal.VerificationsStartApi;
+import com.sinch.sdk.domains.verification.api.v1.VerificationsStartService;
 import com.sinch.sdk.domains.verification.models.dto.v1.start.request.VerificationStartRequestTest;
 import com.sinch.sdk.domains.verification.models.dto.v1.start.response.VerificationStartResponseTest;
-import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequest;
-import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms;
-import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSmsImpl;
-import com.sinch.sdk.domains.verification.models.v1.start.request.internal.VerificationStartRequestInternal;
-import com.sinch.sdk.domains.verification.models.v1.start.request.internal.VerificationStartRequestInternalImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseData;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseFlashCall;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponsePhoneCall;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseSms;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseWhatsApp;
-import com.sinch.sdk.models.VerificationContext;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,149 +37,232 @@ import org.mockito.Mock;
 @TestWithResources
 public class VerificationStartServiceTest extends VerificationBaseTest {
 
-  @GivenJsonResource(
+  @GivenTextResource(
       "/domains/verification/v1/start/request/VerificationStartRequestPhoneCallDto.json")
-  public VerificationStartRequestInternal startVerificationPhoneCallRequestDto;
+  String startVerificationPhoneCallRequestDto;
 
-  @GivenJsonResource(
+  @GivenTextResource(
+      "/domains/verification/v1/start/response/VerificationStartResponsePhoneCallDto.json")
+  String startVerificationStartResponsePhoneCallDto;
+
+  @GivenTextResource(
       "/domains/verification/v1/start/request/VerificationStartRequestFlashCallDto.json")
-  public VerificationStartRequestInternal startVerificationFlashCallRequestDto;
+  String startVerificationFlashCallRequestDto;
 
-  @GivenJsonResource("/domains/verification/v1/start/request/VerificationStartRequestDataDto.json")
-  public VerificationStartRequestInternal startVerificationDataRequestDto;
+  @GivenTextResource(
+      "/domains/verification/v1/start/response/VerificationStartResponseFlashCallDto.json")
+  String startVerificationFlashCallResponseDto;
 
-  @GivenJsonResource("/domains/verification/v1/start/request/VerificationStartRequestSmsDto.json")
-  public VerificationStartRequestInternal startVerificationSmsRequestDto;
+  @GivenTextResource("/domains/verification/v1/start/request/VerificationStartRequestDataDto.json")
+  String startVerificationDataRequestDto;
 
-  @GivenJsonResource(
+  @GivenTextResource(
+      "/domains/verification/v1/start/response/VerificationStartResponseDataDto.json")
+  String startVerificationDataResponseDto;
+
+  @GivenTextResource("/domains/verification/v1/start/request/VerificationStartRequestSmsDto.json")
+  String startVerificationSmsRequestDto;
+
+  @GivenTextResource("/domains/verification/v1/start/response/VerificationStartResponseSmsDto.json")
+  String startVerificationSmsResponseDto;
+
+  @GivenTextResource(
       "/domains/verification/v1/start/request/VerificationStartRequestWhatsAppDto.json")
-  public VerificationStartRequestInternal startVerificationWhatsAppRequestDto;
+  public String startVerificationWhatsAppRequestDto;
 
-  @Mock VerificationsStartApi api;
-  @Mock VerificationContext context;
+  @GivenTextResource(
+      "/domains/verification/v1/start/response/VerificationStartResponseWhatsAppDto.json")
+  public String startVerificationWhatsAppResponseDto;
+
+  static final Collection<String> AUTH_NAMES = Arrays.asList("Basic", "Application");
+
+  @Mock ServerConfiguration serverConfiguration;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
-
-  VerificationStartService service;
+  VerificationsStartService service;
 
   @BeforeEach
   public void initMocks() {
-    VerificationStartService v1 = new VerificationStartService(context, httpClient, authManagers);
-    service = spy(v1);
-    doReturn(api).when(service).getApi();
+    service =
+        new VerificationsStartServiceImpl(
+            httpClient, serverConfiguration, authManagers, HttpMapper.getInstance());
   }
 
   @Test
   void startSms() throws ApiException {
 
-    when(api.startVerification(
-            argThat(new ModelArgMatcher<>(startVerificationSmsRequestDto)), eq(null)))
-        .thenReturn(VerificationStartResponseTest.expectedStartVerificationSmsDto);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/verification/v1/verifications",
+            HttpMethod.POST,
+            Collections.emptyList(),
+            startVerificationSmsRequestDto,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), startVerificationSmsResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     VerificationStartResponseSms response =
-        service.startSms(
-            VerificationStartRequestTest.startVerificationSmsDto
-                .getVerificationStartRequestSmsImpl());
+        service.startSms(VerificationStartRequestTest.startVerificationSmsDto);
 
     TestHelpers.recursiveEquals(
-        response,
-        VerificationStartResponseTest.expectedStartVerificationSmsDto.getActualInstance());
+        response, VerificationStartResponseTest.expectedStartVerificationSmsDto);
   }
 
   @Test
   void startSmsWithAcceptLanguage() throws ApiException {
 
-    VerificationStartRequestSmsImpl startVerificationSmsRequestDtoImpl =
-        ((VerificationStartRequestInternalImpl) startVerificationSmsRequestDto)
-            .getVerificationStartRequestSmsImpl();
-    VerificationStartRequest withAcceptLanguage =
-        VerificationStartRequestSms.builder()
-            .setIdentity(startVerificationSmsRequestDtoImpl.getIdentity())
-            .setReference(startVerificationSmsRequestDtoImpl.getReference())
-            .setCustom(startVerificationSmsRequestDtoImpl.getCustom())
-            .setExpiry(startVerificationSmsRequestDtoImpl.getExpiry())
-            .setCodeType(startVerificationSmsRequestDtoImpl.getCodeType())
-            .setAcceptLanguage("es-ES")
-            .putExtraOption("my key", startVerificationSmsRequestDtoImpl.getExtraOption("my key"))
-            .build();
-    VerificationStartRequestInternalImpl internalWithAcceptLanguage =
-        new VerificationStartRequestInternalImpl();
-    internalWithAcceptLanguage.setActualInstance(withAcceptLanguage);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/verification/v1/verifications",
+            HttpMethod.POST,
+            Collections.emptyList(),
+            startVerificationSmsRequestDto,
+            Collections.singletonMap("Accept-Language", "es-ES"),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), startVerificationSmsResponseDto.getBytes());
 
-    when(api.startVerification(
-            argThat(new ModelArgMatcher<>(internalWithAcceptLanguage)), eq("es-ES")))
-        .thenReturn(VerificationStartResponseTest.expectedStartVerificationSmsDto);
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     VerificationStartResponseSms response =
-        service.startSms(
-            VerificationStartRequestTest.startVerificationSmsDtoWithAcceptLanguage
-                .getVerificationStartRequestSmsImpl());
+        service.startSms(VerificationStartRequestTest.startVerificationSmsDtoWithAcceptLanguage);
 
     TestHelpers.recursiveEquals(
-        response,
-        VerificationStartResponseTest.expectedStartVerificationSmsDto
-            .getVerificationStartResponseSmsImpl());
+        response, VerificationStartResponseTest.expectedStartVerificationSmsDto);
   }
 
   @Test
   void startFlashCall() throws ApiException {
 
-    when(api.startVerification(
-            argThat(new ModelArgMatcher<>(startVerificationFlashCallRequestDto)), eq(null)))
-        .thenReturn(VerificationStartResponseTest.expectedStartVerificationFlashCallDto);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/verification/v1/verifications",
+            HttpMethod.POST,
+            Collections.emptyList(),
+            startVerificationFlashCallRequestDto,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), startVerificationFlashCallResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     VerificationStartResponseFlashCall response =
-        service.startFlashCall(
-            VerificationStartRequestTest.startVerificationFlashCallDto
-                .getVerificationStartRequestFlashCallImpl());
+        service.startFlashCall(VerificationStartRequestTest.startVerificationFlashCallDto);
 
     TestHelpers.recursiveEquals(
-        response,
-        VerificationStartResponseTest.expectedStartVerificationFlashCallDto
-            .getVerificationStartResponseFlashCallImpl());
+        response, VerificationStartResponseTest.expectedStartVerificationFlashCallDto);
   }
 
   @Test
   void startPhoneCall() throws ApiException {
 
-    when(api.startVerification(
-            argThat(new ModelArgMatcher<>(startVerificationPhoneCallRequestDto)), eq(null)))
-        .thenReturn(VerificationStartResponseTest.expectedStartVerificationPhoneCallDto);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/verification/v1/verifications",
+            HttpMethod.POST,
+            Collections.emptyList(),
+            startVerificationPhoneCallRequestDto,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200,
+            null,
+            Collections.emptyMap(),
+            startVerificationStartResponsePhoneCallDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     VerificationStartResponsePhoneCall response =
-        service.startPhoneCall(
-            VerificationStartRequestTest.startVerificationPhoneCallDto
-                .getVerificationStartRequestPhoneCallImpl());
+        service.startPhoneCall(VerificationStartRequestTest.startVerificationPhoneCallDto);
 
     TestHelpers.recursiveEquals(
-        response,
-        VerificationStartResponseTest.expectedStartVerificationPhoneCallDto
-            .getVerificationStartResponsePhoneCallImpl());
+        response, VerificationStartResponseTest.expectedStartVerificationPhoneCallDto);
   }
 
   @Test
   void startData() throws ApiException {
 
-    when(api.startVerification(eq(startVerificationDataRequestDto), eq(null)))
-        .thenReturn(VerificationStartResponseTest.expectedStartVerificationDataDto);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/verification/v1/verifications",
+            HttpMethod.POST,
+            Collections.emptyList(),
+            startVerificationDataRequestDto,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), startVerificationDataResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     VerificationStartResponseData response =
-        service.startData(
-            VerificationStartRequestTest.startVerificationDataDto
-                .getVerificationStartRequestDataImpl());
+        service.startData(VerificationStartRequestTest.startVerificationDataDto);
 
     TestHelpers.recursiveEquals(
-        response,
-        VerificationStartResponseTest.expectedStartVerificationDataDto
-            .getVerificationStartResponseDataImpl());
+        response, VerificationStartResponseTest.expectedStartVerificationDataDto);
   }
 
   @Test
   void startWhatsApp() throws ApiException {
 
-    when(api.startVerification(
-            argThat(new ModelArgMatcher<>(startVerificationWhatsAppRequestDto)), eq(null)))
-        .thenReturn(VerificationStartResponseTest.expectedStartVerificationWhatsAppDto);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/verification/v1/verifications",
+            HttpMethod.POST,
+            Collections.emptyList(),
+            startVerificationWhatsAppRequestDto,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), startVerificationWhatsAppResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     VerificationStartResponseWhatsApp response =
         service.startWhatsApp(
@@ -186,7 +270,6 @@ public class VerificationStartServiceTest extends VerificationBaseTest {
                 .getVerificationStartRequestWhatsAppImpl());
 
     TestHelpers.recursiveEquals(
-        response,
-        VerificationStartResponseTest.expectedStartVerificationWhatsAppDto.getActualInstance());
+        response, VerificationStartResponseTest.expectedStartVerificationWhatsAppDto);
   }
 }
