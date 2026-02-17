@@ -84,7 +84,7 @@ public interface ConversationService {
   WebhooksService webhooks();
 
   /**
-   * WebHooksService Service instance
+   * Templates Service instance
    *
    * @return service instance for project
    * @since 2.0

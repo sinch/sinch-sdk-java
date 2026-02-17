@@ -124,7 +124,7 @@ public class ProjectSettingsServiceImpl
   @Override
   public void delete() throws ApiException {
 
-    LOGGER.finest("[delete]" + " ");
+    LOGGER.finest("[delete]");
 
     HttpRequest httpRequest = deleteRequestBuilder();
     HttpResponse response =
@@ -181,7 +181,7 @@ public class ProjectSettingsServiceImpl
   @Override
   public ProjectSettingsResponse get() throws ApiException {
 
-    LOGGER.finest("[get]" + " ");
+    LOGGER.finest("[get]");
 
     HttpRequest httpRequest = getRequestBuilder();
     HttpResponse response =

@@ -66,7 +66,7 @@ public class TemplatesV2ServiceImpl
   @Override
   public TemplatesV2ListResponse list() throws ApiException {
 
-    LOGGER.finest("[list]" + " ");
+    LOGGER.finest("[list]");
 
     HttpRequest httpRequest = listRequestBuilder();
     HttpResponse response =

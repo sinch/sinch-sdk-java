@@ -63,7 +63,7 @@ public class AppsServiceImpl implements com.sinch.sdk.domains.conversation.api.v
   @Override
   public AppsListResponse list() throws ApiException {
 
-    LOGGER.finest("[list]" + " ");
+    LOGGER.finest("[list]");
 
     HttpRequest httpRequest = listRequestBuilder();
     HttpResponse response =
