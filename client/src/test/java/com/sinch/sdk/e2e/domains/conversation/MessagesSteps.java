@@ -98,6 +98,24 @@ public class MessagesSteps {
     deletePassed = true;
   }
 
+  @When("^I send a request to list the last messages sent to specified channel identities$")
+  public void listLastMessagesByChannelIdentity() {
+
+    // TODO: DEVEXP-1278
+  }
+
+  @When("^I send a request to list all the last messages sent to specified channel identities$")
+  public void listAllLastMessagesByChannelIdentity() {
+
+    // TODO: DEVEXP-1278
+  }
+
+  @When("^I iterate manually over the last messages sent to specified channel identities pages$")
+  public void listLastMessagesByChannelIdentityPageIterator() {
+
+    // TODO: DEVEXP-1278
+  }
+
   @Then("the response contains the id of the message")
   public void sendResult() {
 
@@ -162,5 +180,25 @@ public class MessagesSteps {
   public void deleteResult() {
 
     Assertions.assertTrue(deletePassed);
+  }
+
+  @Then("the response contains \"{int}\" last messages sent to specified channel identities")
+  public void listLastMessagesByChannelIdentity(int size) {
+
+    // TODO: DEVEXP-1278
+  }
+
+  @Then("the response list contains \"{int}\" last messages sent to specified channel identities")
+  public void listAllLastMessagesByChannelIdentity(int size) {
+
+    // TODO: DEVEXP-1278
+  }
+
+  @Then(
+      "the result contains the data from \"{int}\" pages of last messages sent to specified channel"
+          + " identities")
+  public void listAllLastMessagesByChannelIdentityPageIterator(int size) {
+
+    // TODO: DEVEXP-1278
   }
 }
