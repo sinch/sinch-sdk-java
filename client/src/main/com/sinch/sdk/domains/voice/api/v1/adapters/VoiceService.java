@@ -4,8 +4,14 @@ import com.sinch.sdk.auth.adapters.ApplicationAuthManager;
 import com.sinch.sdk.auth.adapters.BasicAuthManager;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
+import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.utils.StringUtil;
-import com.sinch.sdk.domains.voice.api.v1.adapters.CallsService.LocalLazyInit;
+import com.sinch.sdk.domains.voice.api.v1.ApplicationsService;
+import com.sinch.sdk.domains.voice.api.v1.CalloutsService;
+import com.sinch.sdk.domains.voice.api.v1.CallsService;
+import com.sinch.sdk.domains.voice.api.v1.ConferencesService;
+import com.sinch.sdk.domains.voice.api.v1.adapters.mapper.CallInformationMapper;
+import com.sinch.sdk.domains.voice.api.v1.adapters.mapper.CalloutRequestCustomMapper;
 import com.sinch.sdk.domains.voice.api.v1.adapters.mapper.DestinationMapper;
 import com.sinch.sdk.models.ApplicationCredentials;
 import com.sinch.sdk.models.VoiceContext;
@@ -71,7 +77,12 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v1.VoiceSer
   public CalloutsService callouts() {
     if (null == this.callouts) {
       instanceLazyInit();
-      this.callouts = new CalloutsService(context, httpClientSupplier.get(), clientAuthManagers);
+      this.callouts =
+          new CalloutsServiceImpl(
+              httpClientSupplier.get(),
+              context.getVoiceServer(),
+              clientAuthManagers,
+              HttpMapper.getInstance());
     }
     return this.callouts;
   }
@@ -80,8 +91,11 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v1.VoiceSer
     if (null == this.conferences) {
       instanceLazyInit();
       this.conferences =
-          new ConferencesService(
-              context, httpClientSupplier.get(), clientAuthManagers, this.callouts());
+          new ConferencesServiceImpl(
+              httpClientSupplier.get(),
+              context.getVoiceServer(),
+              clientAuthManagers,
+              HttpMapper.getInstance());
     }
     return this.conferences;
   }
@@ -89,7 +103,12 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v1.VoiceSer
   public CallsService calls() {
     if (null == this.calls) {
       instanceLazyInit();
-      this.calls = new CallsService(context, httpClientSupplier.get(), clientAuthManagers);
+      this.calls =
+          new CallsServiceImpl(
+              httpClientSupplier.get(),
+              context.getVoiceServer(),
+              clientAuthManagers,
+              HttpMapper.getInstance());
     }
     return this.calls;
   }
@@ -98,8 +117,11 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v1.VoiceSer
     if (null == this.applications) {
       instanceLazyInit();
       this.applications =
-          new com.sinch.sdk.domains.voice.api.v1.adapters.ApplicationsService(
-              context, httpClientSupplier.get(), clientAuthManagers);
+          new ApplicationsServiceImpl(
+              httpClientSupplier.get(),
+              context.getVoiceApplicationManagementServer(),
+              clientAuthManagers,
+              HttpMapper.getInstance());
     }
     return this.applications;
   }
@@ -142,7 +164,10 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v1.VoiceSer
   public static final class LocalLazyInit {
 
     private LocalLazyInit() {
+
       DestinationMapper.initMapper();
+      CallInformationMapper.initMapper();
+      CalloutRequestCustomMapper.initMapper();
     }
 
     public static LocalLazyInit init() {

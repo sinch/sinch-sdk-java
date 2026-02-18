@@ -241,6 +241,8 @@ Use the new versioned API under `sms().v1()` to get access to [SMSService](https
 
 ### [`Voice`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/package-summary.html)
 
+- `Applications.listNumbers()` is returning a `[OwnedNumbersListResponse](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/application/response/OwnedNumbersListResponse.html)` instead of a list of `OwnedNumbersResponse`. The new response still contains the list of assigned numbers but support the pagination of the results by <code>iterator</code>. 
+
 #### Replacement models
 
 | Old const                             | New const                                                                                                                                                                                                             |
