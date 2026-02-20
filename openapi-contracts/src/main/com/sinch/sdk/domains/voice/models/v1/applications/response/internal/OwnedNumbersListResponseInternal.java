@@ -8,14 +8,15 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.voice.models.v1.applications.response;
+package com.sinch.sdk.domains.voice.models.v1.applications.response.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.voice.models.v1.applications.response.OwnedNumberInformation;
 import java.util.List;
 
-/** OwnedNumbersResponse */
-@JsonDeserialize(builder = OwnedNumbersResponseImpl.Builder.class)
-public interface OwnedNumbersResponse {
+/** OwnedNumbersListResponseInternal */
+@JsonDeserialize(builder = OwnedNumbersListResponseInternalImpl.Builder.class)
+public interface OwnedNumbersListResponseInternal {
 
   /**
    * The object type. Will always be list of numbers, associated application keys and capabilities
@@ -30,7 +31,7 @@ public interface OwnedNumbersResponse {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new OwnedNumbersResponseImpl.Builder();
+    return new OwnedNumbersListResponseInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -50,6 +51,6 @@ public interface OwnedNumbersResponse {
      *
      * @return The instance build with current builder values
      */
-    OwnedNumbersResponse build();
+    OwnedNumbersListResponseInternal build();
   }
 }

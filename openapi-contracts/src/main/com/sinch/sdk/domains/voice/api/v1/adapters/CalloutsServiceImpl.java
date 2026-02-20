@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.voice.api.v1.internal;
+package com.sinch.sdk.domains.voice.api.v1.adapters;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sinch.sdk.core.exceptions.ApiException;
@@ -22,7 +22,12 @@ import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequest;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestConference;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestCustom;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.CalloutRequestTTS;
 import com.sinch.sdk.domains.voice.models.v1.callouts.request.internal.CalloutRequestInternal;
+import com.sinch.sdk.domains.voice.models.v1.callouts.request.internal.CalloutRequestInternalImpl;
 import com.sinch.sdk.domains.voice.models.v1.callouts.response.CalloutResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,15 +37,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class CalloutsApi {
+public class CalloutsServiceImpl implements com.sinch.sdk.domains.voice.api.v1.CalloutsService {
 
-  private static final Logger LOGGER = Logger.getLogger(CalloutsApi.class.getName());
-  private HttpClient httpClient;
-  private ServerConfiguration serverConfiguration;
-  private Map<String, AuthManager> authManagersByOasSecuritySchemes;
-  private HttpMapper mapper;
+  private static final Logger LOGGER = Logger.getLogger(CalloutsServiceImpl.class.getName());
+  private final HttpClient httpClient;
+  private final ServerConfiguration serverConfiguration;
+  private final Map<String, AuthManager> authManagersByOasSecuritySchemes;
+  private final HttpMapper mapper;
 
-  public CalloutsApi(
+  public CalloutsServiceImpl(
       HttpClient httpClient,
       ServerConfiguration serverConfiguration,
       Map<String, AuthManager> authManagersByOasSecuritySchemes,
@@ -51,16 +56,7 @@ public class CalloutsApi {
     this.mapper = mapper;
   }
 
-  /**
-   * Callout Request Makes a call out to a phone number. The types of callouts currently supported
-   * are conference callouts, text-to-speech callouts, and custom callouts. The custom callout is
-   * the most flexible, but text-to-speech and conference callouts are more convenient.
-   *
-   * @param calloutRequestInternal (optional)
-   * @return CalloutResponse
-   * @throws ApiException if fails to make API call
-   */
-  public CalloutResponse callouts(CalloutRequestInternal calloutRequestInternal)
+  private CalloutResponse callouts(CalloutRequestInternal calloutRequestInternal)
       throws ApiException {
 
     LOGGER.finest("[callouts]" + " " + "calloutRequestInternal: " + calloutRequestInternal);
@@ -71,8 +67,7 @@ public class CalloutsApi {
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<CalloutResponse> localVarReturnType = new TypeReference<CalloutResponse>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<CalloutResponse>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -108,5 +103,31 @@ public class CalloutsApi {
         localVarAccepts,
         localVarContentTypes,
         localVarAuthNames);
+  }
+
+  public String textToSpeech(CalloutRequestTTS parameters) {
+
+    return call(parameters);
+  }
+
+  public String conference(CalloutRequestConference parameters) {
+
+    return call(parameters);
+  }
+
+  public String custom(CalloutRequestCustom parameters) {
+
+    return call(parameters);
+  }
+
+  public String call(CalloutRequest parameters) {
+
+    CalloutRequestInternalImpl request = new CalloutRequestInternalImpl();
+    request.setActualInstance(parameters);
+    CalloutResponse response = callouts(request);
+    if (null == response) {
+      return null;
+    }
+    return response.getCallId();
   }
 }

@@ -241,6 +241,20 @@ Use the new versioned API under `sms().v1()` to get access to [SMSService](https
 
 ### [`Voice`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/package-summary.html)
 
+- `Applications.listNumbers()` is returning a `[OwnedNumbersListResponse](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/application/response/OwnedNumbersListResponse.html)` instead of a list of `OwnedNumbersResponse`. The new response still contains the list of assigned numbers but support the pagination of the results by <code>iterator</code>. 
+
+#### Replacement APIs
+
+Use the new versioned API under `voice().v1()` to get access to [VoiceService](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/api/v1/VoiceService.html): [`sinchClient.voice().v1()`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0./com/sinch/sdk/domains/voice/VoiceService.html#v1())
+
+| Old interface  | New Equivalent in `voice().v1()`                                                                                                                 |
+|----------------|--------------------------------------------------------------------------------------------------------------------------------------------------| 
+| applications() | [v1().applications()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/api/v1/ApplicationsService.html) |
+| callouts()     | [v1().callouts()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/api/v1/CalloutsService.html)         |
+| calls()        | [v1().calls()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/api/v1/CallsService.html)               |
+| conferences()  | [v1().conferences()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/api/v1/ConferencesService.html)   |
+| webhooks()     | [v1().webhooks()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/api/v1/WebHooksService.html)         |
+
 #### Replacement models
 
 | Old const                             | New const                                                                                                                                                                                                             |
@@ -261,17 +275,17 @@ Use the new versioned API under `sms().v1()` to get access to [SMSService](https
 | models/DestinationUser       | [com.sinch.sdk.domains.voice.models.v1.destination.DestinationMxp](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/destination/DestinationMxp.html)                                                                                                                                                                                                              |
 
 ##### Applications
-| Old class                                                  | New class                                                                                                                                                                                                                                   |
-|------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
-| models/ApplicationAssignedNumber                           | [com.sinch.sdk.domains.voice.models.v1.applications.response](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/response/OwnedNumberInformation.html)                        |
-| models/response/AssignedNumbers                            | [com.sinch.sdk.domains.voice.models.v1.applications.response.OwnedNumbersResponse](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/response/OwnedNumbersResponse.html)     |
-| models/CallbackUrls                                        | [com.sinch.sdk.domains.voice.models.v1.applications.Callbacks](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/Callbacks.html)                                             |
-| models/ApplicationURL                                      | [com.sinch.sdk.domains.voice.models.v1.applications.CallbacksUrl](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/CallbacksUrl.html)                                       |
-| models/NumberInformation                                   | [com.sinch.sdk.domains.voice.models.v1.applications.response.QueryNumberInformation](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/response/QueryNumberInformation.html) |
-| models/response/QueryNumber                                | [com.sinch.sdk.domains.voice.models.v1.applications.response.QueryNumberResponse](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/response/QueryNumberResponse.html)       |
-| models/requests/ApplicationsAssignNumbersRequestParameters | [com.sinch.sdk.domains.voice.models.v1.applications.request.UpdateNumbersRequest](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/request/UpdateNumbersRequest.html)       |
-| models/NumberType                                          | N/A                                                                                                                                                                                                                                         |
-| models/CapabilityType                                      | [com.sinch.sdk.domains.voice.models.v1.applications.Capability](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/Capability.html)                                           |
+| Old class                                                  | New class                                                                                                                                                                                                                                       |
+|------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
+| models/ApplicationAssignedNumber                           | [com.sinch.sdk.domains.voice.models.v1.applications.response](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/response/OwnedNumberInformation.html)                            |
+| models/response/AssignedNumbers                            | [com.sinch.sdk.domains.voice.models.v1.applications.response.OwnedNumbersListResponse](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/response/OwnedNumbersListResponse.html) |
+| models/CallbackUrls                                        | [com.sinch.sdk.domains.voice.models.v1.applications.Callbacks](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/Callbacks.html)                                                 |
+| models/ApplicationURL                                      | [com.sinch.sdk.domains.voice.models.v1.applications.CallbacksUrl](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/CallbacksUrl.html)                                           |
+| models/NumberInformation                                   | [com.sinch.sdk.domains.voice.models.v1.applications.response.QueryNumberInformation](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/response/QueryNumberInformation.html)     |
+| models/response/QueryNumber                                | [com.sinch.sdk.domains.voice.models.v1.applications.response.QueryNumberResponse](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/response/QueryNumberResponse.html)           |
+| models/requests/ApplicationsAssignNumbersRequestParameters | [com.sinch.sdk.domains.voice.models.v1.applications.request.UpdateNumbersRequest](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/request/UpdateNumbersRequest.html)           |
+| models/NumberType                                          | N/A                                                                                                                                                                                                                                             |
+| models/CapabilityType                                      | [com.sinch.sdk.domains.voice.models.v1.applications.Capability](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/Capability.html)                                               |
 
 ##### Callouts
 | Old class                                          | New class                                                                                                                                                                                                                             |
@@ -352,20 +366,6 @@ Use the new versioned API under `sms().v1()` to get access to [SMSService](https
 | models/webhooks/NotifyEvent                                   | [com.sinch.sdk.domains.voice.models.v1.webhooks.NotificationEvent](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/webhooks/NotificationEvent.html)                                       |
 | models/webhooks/PromptInputEvent                              | [com.sinch.sdk.domains.voice.models.v1.webhooks.PromptInputEvent](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/webhooks/PromptInputEvent.html)                                         |
 | models/webhooks/WebhooksEvent                                 | [com.sinch.sdk.domains.voice.models.v1.webhooks.VoiceWebhookEvent](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/webhooks/VoiceWebhookEvent.html)                                       |
-
-
-#### Replacement APIs
-
-Use the new versioned API under `voice().v1()` to get access to [VoiceService](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/api/v1/VoiceService.html): [`sinchClient.voice().v1()`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0./com/sinch/sdk/domains/voice/VoiceService.html#v1())
-
-| Old interface  | New Equivalent in `voice().v1()`                                                                                                                 |
-|----------------|--------------------------------------------------------------------------------------------------------------------------------------------------| 
-| applications() | [v1().applications()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/api/v1/ApplicationsService.html) |
-| callouts()     | [v1().callouts()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/api/v1/CalloutsService.html)         |
-| calls()        | [v1().calls()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/api/v1/CallsService.html)               |
-| conferences()  | [v1().conferences()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/api/v1/ConferencesService.html)   |
-| webhooks()     | [v1().webhooks()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/api/v1/WebHooksService.html)         |
-
 
 ### [`Verification`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/package-summary.html)
 

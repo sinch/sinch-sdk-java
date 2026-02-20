@@ -1,56 +1,84 @@
 package com.sinch.sdk.domains.voice.api.v1.adapters;
 
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.voice.api.v1.internal.CallsApi;
+import com.sinch.sdk.core.http.HttpContentType;
+import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.core.http.HttpMethod;
+import com.sinch.sdk.core.http.HttpRequest;
+import com.sinch.sdk.core.http.HttpRequestTest.HttpRequestMatcher;
+import com.sinch.sdk.core.http.HttpResponse;
+import com.sinch.sdk.core.http.URLPathUtils;
+import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.domains.voice.api.v1.CallsService;
 import com.sinch.sdk.domains.voice.models.v1.calls.CallInformationTest;
 import com.sinch.sdk.domains.voice.models.v1.calls.request.CallLeg;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformation;
-import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
 import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControlTest;
-import com.sinch.sdk.models.VoiceContext;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
 
 @TestWithResources
 public class CallsServiceTest extends BaseTest {
 
-  @Mock CallsApi api;
-  @Mock VoiceContext context;
+  @GivenTextResource("/domains/voice/v1/calls/GetCallInformationResponseDto.json")
+  String getCallInformationResponseDto;
+
+  @GivenTextResource("/domains/voice/v1/svaml/SvamlControlDto.json")
+  String svamlControlDto;
+
+  static final Collection<String> AUTH_NAMES = Arrays.asList("Basic", "Signed");
+
+  @Mock ServerConfiguration serverConfiguration;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
-
-  @Captor ArgumentCaptor<String> callIdCaptor;
-  @Captor ArgumentCaptor<String> callLegCaptor;
-  @Captor ArgumentCaptor<SvamlControl> updateParametersCaptor;
   CallsService service;
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new CallsService(context, httpClient, authManagers));
-    doReturn(api).when(service).getApi();
+    service =
+        new CallsServiceImpl(
+            httpClient, serverConfiguration, authManagers, HttpMapper.getInstance());
   }
 
   @Test
   void get() throws ApiException {
-    when(api.callingGetCallResult(
-            eq(CallInformationTest.expectedCallsGetInformationResponseDto.getCallId())))
-        .thenReturn(CallInformationTest.expectedCallsGetInformationResponseDto);
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/calling/v1/calls/id/"
+                + URLPathUtils.encodePathSegment(
+                    CallInformationTest.expectedCallsGetInformationResponseDto.getCallId()),
+            HttpMethod.GET,
+            Collections.emptyList(),
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), getCallInformationResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     CallInformation response =
         service.get(CallInformationTest.expectedCallsGetInformationResponseDto.getCallId());
@@ -61,33 +89,49 @@ public class CallsServiceTest extends BaseTest {
 
   @Test
   void update() throws ApiException {
-    service.update("call id", SvamlControlTest.expectedSvamlControl);
 
-    verify(api).callingUpdateCall(callIdCaptor.capture(), updateParametersCaptor.capture());
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/calling/v1/calls/id/" + URLPathUtils.encodePathSegment("call/id"),
+            HttpMethod.PATCH,
+            Collections.emptyList(),
+            svamlControlDto,
+            Collections.emptyMap(),
+            Collections.emptyList(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpResponse httpResponse = new HttpResponse(204, null, Collections.emptyMap(), null);
 
-    String callId = callIdCaptor.getValue();
-    Assertions.assertThat(callId).isEqualTo("call id");
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
-    SvamlControl body = updateParametersCaptor.getValue();
-    TestHelpers.recursiveEquals(body, SvamlControlTest.expectedSvamlControl);
+    service.update("call/id", SvamlControlTest.expectedSvamlControl);
   }
 
   @Test
   void manageWithCallLeg() throws ApiException {
 
-    service.manageWithCallLeg("call id", CallLeg.BOTH, SvamlControlTest.expectedSvamlControl);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/calling/v1/calls/id/" + URLPathUtils.encodePathSegment("call/id") + "/leg/both",
+            HttpMethod.PATCH,
+            Collections.emptyList(),
+            svamlControlDto,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpResponse httpResponse = new HttpResponse(200, null, Collections.emptyMap(), null);
 
-    verify(api)
-        .callingManageCallWithCallLeg(
-            callIdCaptor.capture(), callLegCaptor.capture(), updateParametersCaptor.capture());
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
-    String callId = callIdCaptor.getValue();
-    Assertions.assertThat(callId).isEqualTo("call id");
-
-    String legType = callLegCaptor.getValue();
-    Assertions.assertThat(legType).isEqualTo("both");
-
-    SvamlControl body = updateParametersCaptor.getValue();
-    TestHelpers.recursiveEquals(body, SvamlControlTest.expectedSvamlControl);
+    service.manageWithCallLeg("call/id", CallLeg.BOTH, SvamlControlTest.expectedSvamlControl);
   }
 }
