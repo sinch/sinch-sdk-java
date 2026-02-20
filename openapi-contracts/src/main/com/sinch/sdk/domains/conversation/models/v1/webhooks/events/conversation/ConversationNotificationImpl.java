@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.Conversation;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.Conversation;
 import java.util.Objects;
 
 @JsonPropertyOrder({ConversationNotificationImpl.JSON_PROPERTY_CONVERSATION})

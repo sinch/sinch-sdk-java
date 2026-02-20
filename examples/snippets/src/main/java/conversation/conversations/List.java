@@ -9,8 +9,8 @@ package conversation.conversations;
 
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.conversation.api.v1.ConversationsService;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.request.ConversationsListRequest;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationsListResponse;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.request.ConversationsListQueryParameters;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.response.ConversationsListResponse;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationRegion;
 import java.util.logging.Logger;
@@ -46,8 +46,8 @@ public class List {
         String.format(
             "List conversations for application with ID '%s'", conversationApplicationId));
 
-    ConversationsListRequest request =
-        ConversationsListRequest.builder().setAppId(conversationApplicationId).build();
+    ConversationsListQueryParameters request =
+        ConversationsListQueryParameters.builder().setAppId(conversationApplicationId).build();
 
     ConversationsListResponse response = conversationsService.list(request);
 

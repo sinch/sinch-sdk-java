@@ -9,7 +9,8 @@ package conversation.conversations;
 
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.conversation.api.v1.ConversationsService;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.Conversation;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.Conversation;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.request.ConversationsUpdateQueryParameters;
 import com.sinch.sdk.domains.conversation.models.v1.request.MetadataUpdateStrategy;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationRegion;
@@ -42,12 +43,16 @@ public class Update {
 
     ConversationsService conversationsService = client.conversation().v1().conversations();
 
-    Conversation request = Conversation.builder().setActive(true).build();
+    ConversationsUpdateQueryParameters request =
+        ConversationsUpdateQueryParameters.builder()
+            .setMetadataUpdateStrategy(MetadataUpdateStrategy.REPLACE)
+            .build();
+
+    Conversation conversation = Conversation.builder().setActive(true).build();
 
     LOGGER.info(String.format("Update conversation with ID '%s'", conversationId));
 
-    Conversation result =
-        conversationsService.update(conversationId, MetadataUpdateStrategy.REPLACE, request);
+    Conversation result = conversationsService.update(conversationId, request, conversation);
 
     LOGGER.info("Response: " + result);
   }

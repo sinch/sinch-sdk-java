@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ContactInfoMessageInternal;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ContactInfoMessageInternalImpl;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;

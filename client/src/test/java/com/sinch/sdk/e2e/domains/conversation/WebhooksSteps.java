@@ -1,19 +1,18 @@
 package com.sinch.sdk.e2e.domains.conversation;
 
 import com.sinch.sdk.core.TestHelpers;
-import com.sinch.sdk.domains.conversation.api.v1.WebHooksService;
-import com.sinch.sdk.domains.conversation.models.v1.contact.Contact;
-import com.sinch.sdk.domains.conversation.models.v1.contact.ContactLanguage;
+import com.sinch.sdk.domains.conversation.api.v1.WebhooksService;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.ClientCredentials;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.Webhook;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.WebhookTargetType;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.WebhookTrigger;
+import com.sinch.sdk.domains.conversation.models.v1.webhooks.request.CreateWebhookRequest;
+import com.sinch.sdk.domains.conversation.models.v1.webhooks.response.WebhooksListResponse;
 import com.sinch.sdk.e2e.Config;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import org.junit.jupiter.api.Assertions;
 
@@ -21,9 +20,10 @@ public class WebhooksSteps {
 
   static final String WEBHOOK_ID = "01W4FFL35P4NC4K35WEBHOOK004";
 
-  WebHooksService service;
+  WebhooksService service;
   Webhook createResponse;
-  Collection<Webhook> listResponse;
+
+  WebhooksListResponse listResponse;
   Webhook getResponse;
   Webhook updateResponse;
   boolean deletePassed;
@@ -36,8 +36,8 @@ public class WebhooksSteps {
   @When("^I send a request to create a conversation webhook$")
   public void create() {
 
-    Webhook request =
-        Webhook.builder()
+    CreateWebhookRequest request =
+        CreateWebhookRequest.builder()
             .setAppId(AppsSteps.APP_ID)
             .setTarget("https://my-callback-server.com/capability")
             .setTriggers(Collections.singletonList(WebhookTrigger.CAPABILITY))
@@ -96,7 +96,8 @@ public class WebhooksSteps {
   @Then("the response contains the list of conversation webhooks")
   public void listResult() {
 
-    Assertions.assertEquals(listResponse.size(), 4);
+    TestHelpers.checkIteratorItems(listResponse.iterator(), 4);
+
     Webhook entry =
         listResponse.stream()
             .filter(f -> f.getId().equals("01W4FFL35P4NC4K35WEBHOOK002"))
@@ -147,9 +148,5 @@ public class WebhooksSteps {
   public void deleteResult() {
 
     Assertions.assertTrue(deletePassed);
-  }
-
-  void checkExpectedContactResponseCommonFields(Contact contactResponse) {
-    Assertions.assertEquals(contactResponse.getLanguage(), ContactLanguage.EN_US);
   }
 }

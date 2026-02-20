@@ -3,27 +3,23 @@ Sinch Java SDK Code Snippets Repository for Conversation APIs
 
 See main [README.md](../../../../README.md) for how to execute snippets
 
-- Messages
-  - [conversation/messages/Send](./messages/Send.java)
-  - [conversation/messages/Update](./messages/Update.java)
-  - [conversation/messages/Get](./messages/Get.java)
-  - [conversation/messages/Delete](./messages/Delete.java)
-  - [conversation/messages/List](./messages/List.java)
-- Application
-  - [conversation/application/List](./application/List.java)
-  - [conversation/application/Create](./application/Create.java)
-  - [conversation/application/Get](./application/Get.java)
-  - [conversation/application/Delete](./application/Delete.java)
-  - [conversation/application/Update](./application/Update.java)
-- Contact
-  - [conversation/contact/List](./contact/List.java)
-  - [conversation/contact/Create](./contact/Create.java)
-  - [conversation/contact/Get](./contact/Get.java)
-  - [conversation/contact/Delete](./contact/Delete.java)
-  - [conversation/contact/Update](./contact/Update.java)
-  - [conversation/contact/Merge](./contact/Merge.java)
-  - [conversation/contact/GetChannelProfile](./contact/GetChannelProfile.java)  
-- Conversation
+- Applications
+  - [conversation/applications/List](./applications/List.java)
+  - [conversation/applications/Create](./applications/Create.java)
+  - [conversation/applications/Get](./applications/Get.java)
+  - [conversation/applications/Delete](./applications/Delete.java)
+  - [conversation/applications/Update](./applications/Update.java)
+- Capability
+  - [conversation/capability/Capability](./capability/Capability.java) 
+- Contacts
+  - [conversation/contacts/List](./contacts/List.java)
+  - [conversation/contacts/Create](./contacts/Create.java)
+  - [conversation/contacts/Get](./contacts/Get.java)
+  - [conversation/contacts/Delete](./contacts/Delete.java)
+  - [conversation/contacts/Update](./contacts/Update.java)
+  - [conversation/contacts/Merge](./contacts/Merge.java)
+  - [conversation/contacts/GetChannelProfile](./contacts/GetChannelProfile.java)
+- Conversations
   - [conversation/conversations/List](./conversations/List.java)
   - [conversation/conversations/Create](./conversations/Create.java)
   - [conversation/conversations/Get](./conversations/Get.java)
@@ -38,10 +34,19 @@ See main [README.md](../../../../README.md) for how to execute snippets
   - [conversation/events/Get](./events/Get.java)
   - [conversation/events/Delete](./events/Delete.java)
   - [conversation/events/List](./events/List.java)
+- Project Settings
+  - [conversation/projectsettings/Create](./projectsettings/Create.java)
+  - [conversation/projectsettings/Delete](./projectsettings/Delete.java)
+  - [conversation/projectsettings/Get](./projectsettings/Get.java)
+  - [conversation/projectsettings/Update](./projectsettings/Update.java) 
+- Messages
+  - [conversation/messages/Send](./messages/Send.java)
+  - [conversation/messages/Update](./messages/Update.java)
+  - [conversation/messages/Get](./messages/Get.java)
+  - [conversation/messages/Delete](./messages/Delete.java)
+  - [conversation/messages/List](./messages/List.java)
 - Transcoding
   - [conversation/transcoding/Transcode](./transcoding/Transcode.java)
-- Capability
-  - [conversation/capability/Capability](./capability/Capability.java)
 - Webhooks
   - [conversation/webhooks/List](./webhooks/List.java)
   - [conversation/webhooks/Create](./webhooks/Create.java)
@@ -50,12 +55,6 @@ See main [README.md](../../../../README.md) for how to execute snippets
   - [conversation/webhooks/Delete](./webhooks/Delete.java)
 
 - Templates
-  - V1
-    - [conversation/templates/v1/List](./templates/v1/List.java)
-    - [conversation/templates/v1/Create](./templates/v1/Create.java)
-    - [conversation/templates/v1/Update](./templates/v1/Update.java)
-    - [conversation/templates/v1/Get](./templates/v1/Get.java)
-    - [conversation/templates/v1/Delete](./templates/v1/Delete.java)
   - V2
     - [conversation/templates/v2/List](./templates/v2/List.java)
     - [conversation/templates/v2/Create](./templates/v2/Create.java)

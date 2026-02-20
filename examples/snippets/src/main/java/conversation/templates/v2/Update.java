@@ -8,8 +8,8 @@
 package conversation.templates.v2;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.conversation.api.templates.v2.TemplatesServiceV2;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
+import com.sinch.sdk.domains.conversation.templates.api.v2.TemplatesV2Service;
 import com.sinch.sdk.domains.conversation.templates.models.v2.TemplateTranslation;
 import com.sinch.sdk.domains.conversation.templates.models.v2.TemplateV2;
 import com.sinch.sdk.models.Configuration;
@@ -42,7 +42,7 @@ public class Update {
 
     SinchClient client = new SinchClient(configuration);
 
-    TemplatesServiceV2 templatesServiceV2 = client.conversation().templates().v2();
+    TemplatesV2Service templatesServiceV2 = client.conversation().templates().v2();
 
     TemplateV2 request =
         TemplateV2.builder()

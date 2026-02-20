@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.sinch.sdk.LogRecorder;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.domains.conversation.api.templates.adapters.TemplatesService;
+import com.sinch.sdk.domains.conversation.templates.api.adapters.TemplatesService;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.ConversationRegion;
 import com.sinch.sdk.models.UnifiedCredentials;
@@ -26,7 +26,7 @@ class ConversationServiceTest {
 
   @Test
   void checkCredentialsApp() {
-    CredentialsValidationHelper.checkCredentials(() -> httpClient, ConversationService::app);
+    CredentialsValidationHelper.checkCredentials(() -> httpClient, ConversationService::apps);
   }
 
   @Test
@@ -36,7 +36,7 @@ class ConversationServiceTest {
 
   @Test
   void checkCredentialsContact() {
-    CredentialsValidationHelper.checkCredentials(() -> httpClient, ConversationService::contact);
+    CredentialsValidationHelper.checkCredentials(() -> httpClient, ConversationService::contacts);
   }
 
   @Test
@@ -53,6 +53,12 @@ class ConversationServiceTest {
   @Test
   void checkCredentialsMessages() {
     CredentialsValidationHelper.checkCredentials(() -> httpClient, ConversationService::messages);
+  }
+
+  @Test
+  void checkCredentialsProjectSettings() {
+    CredentialsValidationHelper.checkCredentials(
+        () -> httpClient, ConversationService::projectSettings);
   }
 
   @Test
@@ -88,7 +94,7 @@ class ConversationServiceTest {
             .build();
     ServerConfiguration server = new ServerConfiguration("https://oauth.foo.url");
 
-    new ConversationService(credentials, context, server, () -> httpClient).app();
+    new ConversationService(credentials, context, server, () -> httpClient).apps();
 
     Optional<LogRecord> record =
         logRecorder.records.stream()
@@ -122,7 +128,7 @@ class ConversationServiceTest {
             .build();
     ServerConfiguration server = new ServerConfiguration("https://oauth.foo.url");
 
-    new ConversationService(credentials, context, server, () -> httpClient).app();
+    new ConversationService(credentials, context, server, () -> httpClient).apps();
 
     Optional<LogRecord> record =
         logRecorder.records.stream()

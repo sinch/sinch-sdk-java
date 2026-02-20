@@ -5,7 +5,6 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationRecentMessage;
 import com.sinch.sdk.domains.conversation.models.v1.conversations.ConversationDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessageDtoTest;
 import org.junit.jupiter.api.Test;

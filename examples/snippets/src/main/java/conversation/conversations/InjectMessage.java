@@ -12,7 +12,7 @@ import com.sinch.sdk.domains.conversation.api.v1.ConversationsService;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationDirection;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.request.InjectMessageRequest;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.request.InjectMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
 import com.sinch.sdk.models.Configuration;

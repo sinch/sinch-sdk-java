@@ -1,117 +1,212 @@
 package com.sinch.sdk.domains.conversation.api.v1.adapters;
 
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
+import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.conversation.api.v1.internal.EventsApi;
+import com.sinch.sdk.core.http.HttpContentType;
+import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.core.http.HttpMethod;
+import com.sinch.sdk.core.http.HttpRequest;
+import com.sinch.sdk.core.http.HttpRequestTest.HttpRequestMatcher;
+import com.sinch.sdk.core.http.HttpResponse;
+import com.sinch.sdk.core.http.URLParameter;
+import com.sinch.sdk.core.http.URLParameter.STYLE;
+import com.sinch.sdk.core.http.URLPathUtils;
+import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.domains.conversation.api.v1.EventsService;
 import com.sinch.sdk.domains.conversation.models.v1.events.ConversationEvent;
 import com.sinch.sdk.domains.conversation.models.v1.events.ConversationEventDtoTest;
-import com.sinch.sdk.domains.conversation.models.v1.events.internal.ListEventsResponseInternal;
-import com.sinch.sdk.domains.conversation.models.v1.events.request.EventsListRequest;
+import com.sinch.sdk.domains.conversation.models.v1.events.request.EventsListQueryParameters;
 import com.sinch.sdk.domains.conversation.models.v1.events.request.SendEventRequestDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.events.response.EventsListResponse;
 import com.sinch.sdk.domains.conversation.models.v1.events.response.SendEventResponse;
-import com.sinch.sdk.models.ConversationContext;
-import java.time.Instant;
+import com.sinch.sdk.domains.conversation.models.v1.events.response.SendEventResponseDtoTest;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
 
 @TestWithResources
 public class EventsServiceTest extends ConversationBaseTest {
 
-  @Mock ConversationContext context;
-  @Mock EventsApi api;
   @Mock HttpClient httpClient;
+  @Mock ServerConfiguration serverConfiguration;
   @Mock Map<String, AuthManager> authManagers;
-  @Captor ArgumentCaptor<String> projectIdCaptor;
-  @Captor ArgumentCaptor<String> eventIdCaptor;
+
+  static final String uriUUID = "foo";
+  static final Collection<String> AUTH_NAMES = Arrays.asList("Basic", "oAuth2");
 
   EventsService service;
-  String uriPartID = "foovalue";
+
+  @GivenTextResource("domains/conversation/v1/events/ConversationEventGenericEventDto.json")
+  String jsonConversationEvent;
+
+  @GivenTextResource("/domains/conversation/v1/events/response/EventsListResponse-page-0.json")
+  String eventsListPage0;
+
+  @GivenTextResource("/domains/conversation/v1/events/response/EventsListResponse-page-1.json")
+  String eventsListPage1;
+
+  @GivenTextResource("/domains/conversation/v1/events/request/SendEventRequestDto.json")
+  String jsonSendEventRequestDto;
+
+  @GivenTextResource("domains/conversation/v1/events/response/SendEventResponseDto.json")
+  String jsonSendEventResponseDto;
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new EventsService(uriPartID, context, httpClient, authManagers));
-    doReturn(api).when(service).getApi();
+    service =
+        new EventsServiceImpl(
+            httpClient, serverConfiguration, authManagers, HttpMapper.getInstance(), uriUUID);
   }
-
-  SendEventResponse expectedResponse =
-      SendEventResponse.builder().setEventId("event id").setAcceptedTime(Instant.now()).build();
-
-  @GivenJsonResource("/domains/conversation/v1/events/response/EventsListResponse-page-0.json")
-  ListEventsResponseInternal eventsListPage0;
-
-  @GivenJsonResource("/domains/conversation/v1/events/response/EventsListResponse-page-1.json")
-  ListEventsResponseInternal eventsListPage1;
 
   @Test
   void get() throws ApiException {
 
-    when(api.eventsGetEvent(
-            eq(uriPartID), eq(ConversationEventDtoTest.expectedConversationEventDto.getId())))
-        .thenReturn(ConversationEventDtoTest.expectedConversationEventDto);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            String.format(
+                "/v1/projects/%s/events/%s",
+                URLPathUtils.encodePathSegment(uriUUID),
+                URLPathUtils.encodePathSegment(
+                    ConversationEventDtoTest.expectedConversationEventDto.getId())),
+            HttpMethod.GET,
+            Collections.emptyList(),
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonConversationEvent.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     ConversationEvent response =
         service.get(ConversationEventDtoTest.expectedConversationEventDto.getId());
 
-    Assertions.assertThat(response)
-        .usingRecursiveComparison()
-        .isEqualTo(ConversationEventDtoTest.expectedConversationEventDto);
+    TestHelpers.recursiveEquals(response, ConversationEventDtoTest.expectedConversationEventDto);
   }
 
   @Test
   void send() throws ApiException {
 
-    when(api.eventsSendEvent(eq(uriPartID), eq(SendEventRequestDtoTest.sendEventDto)))
-        .thenReturn(expectedResponse);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            String.format("/v1/projects/%s/events:send", URLPathUtils.encodePathSegment(uriUUID)),
+            HttpMethod.POST,
+            Collections.emptyList(),
+            jsonSendEventRequestDto,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonSendEventResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     SendEventResponse response = service.send(SendEventRequestDtoTest.sendEventDto);
 
-    Assertions.assertThat(response).usingRecursiveComparison().isEqualTo(expectedResponse);
+    Assertions.assertThat(response)
+        .usingRecursiveComparison()
+        .isEqualTo(SendEventResponseDtoTest.expectedResponse);
   }
 
   @Test
   void delete() throws ApiException {
 
-    service.delete(ConversationEventDtoTest.expectedConversationEventDto.getId());
+    HttpRequest httpRequest =
+        new HttpRequest(
+            String.format(
+                "/v1/projects/%s/events/%s",
+                URLPathUtils.encodePathSegment(uriUUID),
+                URLPathUtils.encodePathSegment(
+                    SendEventResponseDtoTest.expectedResponse.getEventId())),
+            HttpMethod.DELETE,
+            Collections.emptyList(),
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpResponse httpResponse = new HttpResponse(200, null, Collections.emptyMap(), null);
 
-    verify(api).eventsDeleteEvents(projectIdCaptor.capture(), eventIdCaptor.capture());
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
-    Assertions.assertThat(projectIdCaptor.getValue()).isEqualTo(uriPartID);
-    Assertions.assertThat(eventIdCaptor.getValue())
-        .isEqualTo(ConversationEventDtoTest.expectedConversationEventDto.getId());
+    service.delete(SendEventResponseDtoTest.expectedResponse.getEventId());
   }
 
   @Test
-  void list() throws ApiException, JsonProcessingException {
+  void list() throws ApiException {
 
-    when(api.eventsListEvents(eq(uriPartID), eq("conversation id"), eq(null), eq(null), eq(null)))
-        .thenReturn(eventsListPage0);
+    HttpRequest httpRequest1 =
+        new HttpRequest(
+            String.format("/v1/projects/%s/events", URLPathUtils.encodePathSegment(uriUUID)),
+            HttpMethod.GET,
+            Arrays.asList(new URLParameter("conversation_id", "conversation id", STYLE.FORM, true)),
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpRequest httpRequest2 =
+        new HttpRequest(
+            String.format("/v1/projects/%s/events", URLPathUtils.encodePathSegment(uriUUID)),
+            HttpMethod.GET,
+            Arrays.asList(
+                new URLParameter("conversation_id", "conversation id", STYLE.FORM, true),
+                new URLParameter(
+                    "page_token",
+                    "ChowMUhRN1c0WjFSMTI2N0RCQlI4UzQ3TlZQOEoGCP70264G",
+                    STYLE.FORM,
+                    true)),
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpResponse httpResponse1 =
+        new HttpResponse(200, null, Collections.emptyMap(), eventsListPage0.getBytes());
+    HttpResponse httpResponse2 =
+        new HttpResponse(200, null, Collections.emptyMap(), eventsListPage1.getBytes());
 
-    when(api.eventsListEvents(
-            eq(uriPartID),
-            eq("conversation id"),
-            eq(null),
-            eq(null),
-            eq(eventsListPage0.getNextPageToken())))
-        .thenReturn(eventsListPage1);
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest1))))
+        .thenReturn(httpResponse1);
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest2))))
+        .thenReturn(httpResponse2);
 
-    EventsListRequest request =
-        EventsListRequest.builder().setConversationId("conversation id").build();
+    EventsListQueryParameters request =
+        EventsListQueryParameters.builder().setConversationId("conversation id").build();
 
     EventsListResponse response0 = service.list(request);
 

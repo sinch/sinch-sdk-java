@@ -2,7 +2,7 @@ package com.sinch.sdk.domains.conversation.adapters;
 
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.domains.conversation.api.templates.adapters.TemplatesService;
+import com.sinch.sdk.domains.conversation.templates.api.adapters.TemplatesService;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.function.Supplier;
@@ -34,6 +34,7 @@ public class ConversationService implements com.sinch.sdk.domains.conversation.C
           new com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationService(
               credentials, context, oAuthServer, httpClientSupplier);
     }
+
     return this.conversationV1;
   }
 

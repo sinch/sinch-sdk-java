@@ -8,9 +8,10 @@
 package conversation.webhooks;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.conversation.api.v1.WebHooksService;
+import com.sinch.sdk.domains.conversation.api.v1.WebhooksService;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.Webhook;
 import com.sinch.sdk.domains.conversation.models.v1.webhooks.WebhookTrigger;
+import com.sinch.sdk.domains.conversation.models.v1.webhooks.request.CreateWebhookRequest;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationRegion;
 import java.util.Arrays;
@@ -41,10 +42,10 @@ public class Create {
 
     SinchClient client = new SinchClient(configuration);
 
-    WebHooksService webHooksService = client.conversation().v1().webhooks();
+    WebhooksService webHooksService = client.conversation().v1().webhooks();
 
-    Webhook webhookRequest =
-        Webhook.builder()
+    CreateWebhookRequest webhookRequest =
+        CreateWebhookRequest.builder()
             .setAppId(conversationApplicationId)
             .setTarget("https://foo.com")
             .setTriggers(Arrays.asList(WebhookTrigger.CAPABILITY))
