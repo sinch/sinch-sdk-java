@@ -8,7 +8,7 @@
 package verification.report;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.verification.api.v1.VerificationReportService;
+import com.sinch.sdk.domains.verification.api.v1.VerificationsReportService;
 import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.v1.report.request.VerificationReportRequestSms;
 import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponse;
@@ -38,7 +38,7 @@ public class ReportByIdentity {
 
     SinchClient client = new SinchClient(configuration);
 
-    VerificationReportService verificationReportService =
+    VerificationsReportService verificationsReportService =
         client.verification().v1().verificationReport();
 
     LOGGER.info(String.format("Report SMS verification code for phone number '%s'", phoneNumber));
@@ -47,7 +47,8 @@ public class ReportByIdentity {
         VerificationReportRequestSms.builder().setCode(receivedVerificationCode).build();
 
     VerificationReportResponse response =
-        verificationReportService.reportSmsByIdentity(NumberIdentity.valueOf(phoneNumber), request);
+        verificationsReportService.reportSmsByIdentity(
+            NumberIdentity.valueOf(phoneNumber), request);
 
     LOGGER.info("Response: " + response);
   }

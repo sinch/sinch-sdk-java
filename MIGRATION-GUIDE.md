@@ -369,6 +369,21 @@ Use the new versioned API under `voice().v1()` to get access to [VoiceService](h
 
 ### [`Verification`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/package-summary.html)
 
+#### Replacement APIs
+
+Use the new versioned API under `verification().v1()` to get access to [VerificationService](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/api/v1/VerificationService.html): [`sinchClient.verification().v1()`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/VerificationService.html#v1())
+
+| Old interface                         | New Equivalent in `verification().v1()`                                                                                                                               |
+|---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
+| verifications() `start` related APIs  | [v1().verificationStart()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/api/v1/VerificationStartService.html)     |
+| verifications() `report` related APIs | [v1().verificationReport()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/api/v1/VerificationReportService.html)   |
+| verificationStatus()                  | [v1().verificationStatus()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/api/v1/VerificationStatusService.html)   |
+| webhooks()                            | [v1().webhooks()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/api/v1/WebHooksService.html)                       |
+| VerificationStartService              | [VerificationsStartService](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/api/v1/VerificationsStartService.html)   |
+| VerificationReportService             | [VerificationsReportService](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/api/v1/VerificationsReportService.html) |
+| VerificationStatusService             | [VerificationsStatusService](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/api/v1/VerificationsStatusService.html) |
+| WebHooksService                       | [WebhooksService](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/api/v1/WebhookService.html)                        |
+
 #### Replacement models
 ##### Common Report
 
@@ -442,13 +457,3 @@ Use the new versioned API under `voice().v1()` to get access to [VoiceService](h
 - `VerificationMethod.DATA` enum no longer defined. No need to be replaced because not public definition is required.
 - `template` field removed from `VerificationStartRequestSms`.
 
-#### Replacement APIs
-
-Use the new versioned API under `verification().v1()` to get access to [VerificationService](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/api/v1/VerificationService.html): [`sinchClient.verification().v1()`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/VerificationService.html#v1())
-
-| Old interface                         | New Equivalent in `verification().v1()`                                                                                                                             |
-|---------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
-| verifications() `start` related APIs  | [v1().verificationStart()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/api/v1/VerificationStartService.html)   |
-| verifications() `report` related APIs | [v1().verificationReport()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/api/v1/VerificationReportService.html) |
-| verificationStatus()                  | [v1().verificationStatus()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/api/v1/VerificationStatusService.html) |
-| webhooks()                            | [v1().webhooks()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/api/v1/WebHooksService.html)                     |

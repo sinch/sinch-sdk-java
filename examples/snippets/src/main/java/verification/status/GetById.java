@@ -8,7 +8,7 @@
 package verification.status;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.verification.api.v1.VerificationStatusService;
+import com.sinch.sdk.domains.verification.api.v1.VerificationsStatusService;
 import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponse;
 import com.sinch.sdk.models.Configuration;
 import java.util.logging.Logger;
@@ -34,12 +34,12 @@ public class GetById {
 
     SinchClient client = new SinchClient(configuration);
 
-    VerificationStatusService verificationStatusService =
+    VerificationsStatusService verificationsStatusService =
         client.verification().v1().verificationStatus();
 
     LOGGER.info(String.format("Verification status for verification ID '%s'", verificationId));
 
-    VerificationStatusResponse response = verificationStatusService.getById(verificationId);
+    VerificationStatusResponse response = verificationsStatusService.getById(verificationId);
 
     LOGGER.info("Response: " + response);
   }

@@ -16,7 +16,7 @@ import java.util.Map;
  *
  * @since 1.1
  */
-public interface WebHooksService {
+public interface WebhooksService {
 
   /**
    * The Sinch Platform can initiate callback requests to a URL you define (Callback URL) on request

@@ -5,7 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.verification.adapters.VerificationBaseTest;
-import com.sinch.sdk.domains.verification.api.v1.WebHooksService;
+import com.sinch.sdk.domains.verification.api.v1.WebhooksService;
 import com.sinch.sdk.domains.verification.models.dto.v1.webhooks.VerificationRequestEventDtoTest;
 import com.sinch.sdk.domains.verification.models.dto.v1.webhooks.VerificationResponseEventDtoTest;
 import com.sinch.sdk.domains.verification.models.dto.v1.webhooks.VerificationResultEventDtoTest;
@@ -46,7 +46,7 @@ public class WebhooksServiceTest extends VerificationBaseTest {
   @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseWhatsApp.json")
   String jsonResponseWhatsApp;
 
-  WebHooksService webHooksService;
+  WebhooksService webHooksService;
 
   @Test
   void checkApplicationAuthentication() throws ApiException {

@@ -1,7 +1,7 @@
 package com.sinch.sdk.e2e.domains.verification.v1;
 
 import com.sinch.sdk.core.TestHelpers;
-import com.sinch.sdk.domains.verification.api.v1.WebHooksService;
+import com.sinch.sdk.domains.verification.api.v1.WebhooksService;
 import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.v1.Price;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
@@ -29,7 +29,7 @@ public class WebhooksEventsSteps {
 
   static final String WEBHOOKS_PATH = Config.VERIFICATION_HOST_NAME + "/webhooks/verification/";
 
-  WebHooksService service;
+  WebhooksService service;
 
   static VerificationEvent expectedVerificationRequestEvent =
       VerificationRequestEvent.builder()

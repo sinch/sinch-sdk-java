@@ -1,7 +1,7 @@
 package com.sinch.sdk.e2e.domains.verification.v1;
 
 import com.sinch.sdk.core.TestHelpers;
-import com.sinch.sdk.domains.verification.api.v1.VerificationReportService;
+import com.sinch.sdk.domains.verification.api.v1.VerificationsReportService;
 import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
@@ -21,7 +21,7 @@ import io.cucumber.java.en.When;
 
 public class ReportSteps {
 
-  VerificationReportService service;
+  VerificationsReportService service;
   VerificationReportResponse reportSmsByIdResponse;
   VerificationReportResponse reportSmsByIdentityResponse;
   VerificationReportResponse reportCalloutByIdResponse;

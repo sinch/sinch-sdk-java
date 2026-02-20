@@ -1,7 +1,7 @@
 package com.mycompany.app.verification;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.verification.api.v1.WebHooksService;
+import com.sinch.sdk.domains.verification.api.v1.WebhooksService;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEvent;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationResultEvent;
 import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationSmsDeliveredEvent;
@@ -37,7 +37,7 @@ public class Controller {
   public ResponseEntity<String> VerificationEvent(
       @RequestHeader Map<String, String> headers, @RequestBody String body) {
 
-    WebHooksService webhooks = sinchClient.verification().v1().webhooks();
+    WebhooksService webhooks = sinchClient.verification().v1().webhooks();
 
     // ensure valid authentication to handle request
     // set this value to true to validate request from Sinch servers

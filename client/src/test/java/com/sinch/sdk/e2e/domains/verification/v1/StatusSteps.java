@@ -1,7 +1,7 @@
 package com.sinch.sdk.e2e.domains.verification.v1;
 
 import com.sinch.sdk.core.TestHelpers;
-import com.sinch.sdk.domains.verification.api.v1.VerificationStatusService;
+import com.sinch.sdk.domains.verification.api.v1.VerificationsStatusService;
 import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.v1.Price;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
@@ -21,7 +21,7 @@ import java.time.Instant;
 
 public class StatusSteps {
 
-  VerificationStatusService service;
+  VerificationsStatusService service;
   VerificationStatusResponse statusByIdResponse;
   VerificationStatusResponse statusByIdentityResponse;
   VerificationStatusResponse statusByReferenceResponse;
