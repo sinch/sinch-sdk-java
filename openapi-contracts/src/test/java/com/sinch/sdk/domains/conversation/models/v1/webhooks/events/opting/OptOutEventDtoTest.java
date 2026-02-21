@@ -36,7 +36,7 @@ public class OptOutEventDtoTest extends ConversationBaseTest {
                   .setRequestId("request id")
                   .setContactId("contact id")
                   .setChannel(ConversationChannel.WHATSAPP)
-                  .setStatus(StatusEnum.FAILED)
+                  .setStatus(StatusEnum.OPT_OUT_FAILED)
                   .setErrorDetails(
                       OptOutEventNotificationErrorDetails.builder()
                           .setDescription("Error description value")

@@ -36,7 +36,7 @@ public class OptInEventDtoTest extends ConversationBaseTest {
                   .setRequestId("request id")
                   .setContactId("contact id")
                   .setChannel(ConversationChannel.WHATSAPP)
-                  .setStatus(StatusEnum.FAILED)
+                  .setStatus(StatusEnum.OPT_IN_FAILED)
                   .setErrorDetails(
                       OptInEventNotificationErrorDetails.builder()
                           .setDescription("Error description value")
