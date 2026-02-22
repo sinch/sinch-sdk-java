@@ -9,28 +9,39 @@ import java.util.stream.Stream;
 public class PaymentStatus extends EnumDynamic<String, PaymentStatus> {
 
   /** The status value was not set. Treat it as null or not present field. */
-  public static final PaymentStatus UNKNOWN = new PaymentStatus("PAYMENT_STATUS_UNKNOWN");
+  public static final PaymentStatus PAYMENT_STATUS_UNKNOWN =
+      new PaymentStatus("PAYMENT_STATUS_UNKNOWN");
 
   /** The partner sent an order_details message but the user didn't start a payment yet. */
-  public static final PaymentStatus NEW = new PaymentStatus("PAYMENT_STATUS_NEW");
+  public static final PaymentStatus PAYMENT_STATUS_NEW = new PaymentStatus("PAYMENT_STATUS_NEW");
 
   /** The user started the payment process and the payment object was created. */
-  public static final PaymentStatus PENDING = new PaymentStatus("PAYMENT_STATUS_PENDING");
+  public static final PaymentStatus PAYMENT_STATUS_PENDING =
+      new PaymentStatus("PAYMENT_STATUS_PENDING");
 
   /** The payment was captured. */
-  public static final PaymentStatus CAPTURED = new PaymentStatus("PAYMENT_STATUS_CAPTURED");
+  public static final PaymentStatus PAYMENT_STATUS_CAPTURED =
+      new PaymentStatus("PAYMENT_STATUS_CAPTURED");
 
   /** The payment was canceled by the user and no retry is possible. */
-  public static final PaymentStatus CANCELED = new PaymentStatus("PAYMENT_STATUS_CANCELED");
+  public static final PaymentStatus PAYMENT_STATUS_CANCELED =
+      new PaymentStatus("PAYMENT_STATUS_CANCELED");
 
   /** The payment attempt failed but the user can retry. */
-  public static final PaymentStatus FAILED = new PaymentStatus("PAYMENT_STATUS_FAILED");
+  public static final PaymentStatus PAYMENT_STATUS_FAILED =
+      new PaymentStatus("PAYMENT_STATUS_FAILED");
 
   private static final EnumSupportDynamic<String, PaymentStatus> ENUM_SUPPORT =
       new EnumSupportDynamic<>(
           PaymentStatus.class,
           PaymentStatus::new,
-          Arrays.asList(UNKNOWN, NEW, PENDING, CAPTURED, CANCELED, FAILED));
+          Arrays.asList(
+              PAYMENT_STATUS_UNKNOWN,
+              PAYMENT_STATUS_NEW,
+              PAYMENT_STATUS_PENDING,
+              PAYMENT_STATUS_CAPTURED,
+              PAYMENT_STATUS_CANCELED,
+              PAYMENT_STATUS_FAILED));
 
   private PaymentStatus(String value) {
     super(value);

@@ -13,6 +13,7 @@ package com.sinch.sdk.domains.conversation.api.v1;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.request.LastMessagesByChannelIdentityListQueryParameters;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessageUpdateRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesDeleteQueryParameters;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesGetQueryParameters;
@@ -41,10 +42,12 @@ public interface MessagesService {
    * Modes](https://developers.sinch.com/docs/conversation/processing-modes/). Setting the
    * &#x60;messages_source&#x60; parameter to &#x60;CONVERSATION_SOURCE&#x60; allows for querying
    * messages in &#x60;CONVERSATION&#x60; mode, and setting it to &#x60;DISPATCH_SOURCE&#x60; will
-   * allow for queries of messages in &#x60;DISPATCH&#x60; mode. Combining multiple parameters is
-   * supported for more detailed filtering of messages, but some of them are not supported depending
-   * on the value specified for &#x60;messages_source&#x60;. The description for each field will
-   * inform if that field may not be supported. The messages are ordered by their
+   * allow for queries of messages in &#x60;DISPATCH&#x60; mode. Note that
+   * &#x60;conversation_id&#x60; and &#x60;contact_id&#x60; are only supported as query parameters
+   * if &#x60;messages_source&#x60; is set to &#x60;CONVERSATION_SOURCE&#x60;. Combining multiple
+   * parameters is supported for more detailed filtering of messages, but some of them are not
+   * supported depending on the value specified for &#x60;messages_source&#x60;. The description for
+   * each field will inform if that field may not be supported. The messages are ordered by their
    * &#x60;accept_time&#x60; property in descending order, where &#x60;accept_time&#x60; is a
    * timestamp of when the message was enqueued by the Conversation API. This means messages
    * received most recently will be listed first.
@@ -61,10 +64,12 @@ public interface MessagesService {
    * Modes](https://developers.sinch.com/docs/conversation/processing-modes/). Setting the
    * &#x60;messages_source&#x60; parameter to &#x60;CONVERSATION_SOURCE&#x60; allows for querying
    * messages in &#x60;CONVERSATION&#x60; mode, and setting it to &#x60;DISPATCH_SOURCE&#x60; will
-   * allow for queries of messages in &#x60;DISPATCH&#x60; mode. Combining multiple parameters is
-   * supported for more detailed filtering of messages, but some of them are not supported depending
-   * on the value specified for &#x60;messages_source&#x60;. The description for each field will
-   * inform if that field may not be supported. The messages are ordered by their
+   * allow for queries of messages in &#x60;DISPATCH&#x60; mode. Note that
+   * &#x60;conversation_id&#x60; and &#x60;contact_id&#x60; are only supported as query parameters
+   * if &#x60;messages_source&#x60; is set to &#x60;CONVERSATION_SOURCE&#x60;. Combining multiple
+   * parameters is supported for more detailed filtering of messages, but some of them are not
+   * supported depending on the value specified for &#x60;messages_source&#x60;. The description for
+   * each field will inform if that field may not be supported. The messages are ordered by their
    * &#x60;accept_time&#x60; property in descending order, where &#x60;accept_time&#x60; is a
    * timestamp of when the message was enqueued by the Conversation API. This means messages
    * received most recently will be listed first.
@@ -125,6 +130,35 @@ public interface MessagesService {
    */
   ConversationMessage get(String messageId, MessagesGetQueryParameters queryParameter)
       throws ApiException;
+
+  /**
+   * List messages by channel identity (using default parameters)
+   *
+   * <p>Retrieves the last message sent to specified channel identities. In CONVERSATION_SOURCE
+   * mode, you can query either by channel_identities or by contact_ids. Note: Use either
+   * contact_ids OR channel_identities per request, not both. DISPATCH_SOURCE mode does not support
+   * contact_ids.
+   *
+   * @return MessagesListResponse
+   * @throws ApiException if fails to make API call
+   */
+  MessagesListResponse listLastMessagesByChannelIdentity() throws ApiException;
+
+  /**
+   * List messages by channel identity
+   *
+   * <p>Retrieves the last message sent to specified channel identities. In CONVERSATION_SOURCE
+   * mode, you can query either by channel_identities or by contact_ids. Note: Use either
+   * contact_ids OR channel_identities per request, not both. DISPATCH_SOURCE mode does not support
+   * contact_ids.
+   *
+   * @param queryParameter Request body for listing messages by channel identity. NOTE: You can use
+   *     either contact_ids OR channel_identities, but not both in the same request. (required)
+   * @return MessagesListResponse
+   * @throws ApiException if fails to make API call
+   */
+  MessagesListResponse listLastMessagesByChannelIdentity(
+      LastMessagesByChannelIdentityListQueryParameters queryParameter) throws ApiException;
 
   /**
    * Send a message

@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.request;
 
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
+import com.sinch.sdk.domains.conversation.models.v1.ConversationDirection;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -19,6 +20,7 @@ public class MessagesListQueryParametersImpl implements MessagesListQueryParamet
   private final OptionalValue<MessagesSource> messagesSource;
   private final OptionalValue<Boolean> onlyRecipientOriginated;
   private final OptionalValue<ConversationChannel> channel;
+  private final OptionalValue<ConversationDirection> direction;
 
   private MessagesListQueryParametersImpl(
       OptionalValue<String> conversationId,
@@ -32,7 +34,8 @@ public class MessagesListQueryParametersImpl implements MessagesListQueryParamet
       OptionalValue<ConversationMessagesView> view,
       OptionalValue<MessagesSource> messagesSource,
       OptionalValue<Boolean> onlyRecipientOriginated,
-      OptionalValue<ConversationChannel> channel) {
+      OptionalValue<ConversationChannel> channel,
+      OptionalValue<ConversationDirection> direction) {
     this.conversationId = conversationId;
     this.contactId = contactId;
     this.appId = appId;
@@ -45,6 +48,7 @@ public class MessagesListQueryParametersImpl implements MessagesListQueryParamet
     this.messagesSource = messagesSource;
     this.onlyRecipientOriginated = onlyRecipientOriginated;
     this.channel = channel;
+    this.direction = direction;
   }
 
   public OptionalValue<String> getConversationId() {
@@ -95,6 +99,10 @@ public class MessagesListQueryParametersImpl implements MessagesListQueryParamet
     return channel;
   }
 
+  public OptionalValue<ConversationDirection> getDirection() {
+    return direction;
+  }
+
   /** Return true if this MessagesListMessagesQueryParameters object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -119,7 +127,8 @@ public class MessagesListQueryParametersImpl implements MessagesListQueryParamet
         && Objects.equals(
             this.onlyRecipientOriginated,
             messagesListMessagesQueryParameters.onlyRecipientOriginated)
-        && Objects.equals(this.channel, messagesListMessagesQueryParameters.channel);
+        && Objects.equals(this.channel, messagesListMessagesQueryParameters.channel)
+        && Objects.equals(this.direction, messagesListMessagesQueryParameters.direction);
   }
 
   @Override
@@ -136,7 +145,8 @@ public class MessagesListQueryParametersImpl implements MessagesListQueryParamet
         view,
         messagesSource,
         onlyRecipientOriginated,
-        channel);
+        channel,
+        direction);
   }
 
   @Override
@@ -157,6 +167,7 @@ public class MessagesListQueryParametersImpl implements MessagesListQueryParamet
         .append(toIndentedString(onlyRecipientOriginated))
         .append("\n");
     sb.append("    channel: ").append(toIndentedString(channel)).append("\n");
+    sb.append("    direction: ").append(toIndentedString(direction)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -184,6 +195,7 @@ public class MessagesListQueryParametersImpl implements MessagesListQueryParamet
     OptionalValue<MessagesSource> messagesSource = OptionalValue.empty();
     OptionalValue<Boolean> onlyRecipientOriginated = OptionalValue.empty();
     OptionalValue<ConversationChannel> channel = OptionalValue.empty();
+    OptionalValue<ConversationDirection> direction = OptionalValue.empty();
 
     protected Builder() {}
 
@@ -204,6 +216,7 @@ public class MessagesListQueryParametersImpl implements MessagesListQueryParamet
       this.messagesSource = parameters.getMessagesSource();
       this.onlyRecipientOriginated = parameters.getOnlyRecipientOriginated();
       this.channel = parameters.getChannel();
+      this.direction = parameters.getDirection();
     }
 
     public Builder setConversationId(String conversationId) {
@@ -266,6 +279,11 @@ public class MessagesListQueryParametersImpl implements MessagesListQueryParamet
       return this;
     }
 
+    public Builder setDirection(ConversationDirection direction) {
+      this.direction = OptionalValue.of(direction);
+      return this;
+    }
+
     public MessagesListQueryParameters build() {
       return new MessagesListQueryParametersImpl(
           conversationId,
@@ -279,7 +297,8 @@ public class MessagesListQueryParametersImpl implements MessagesListQueryParamet
           view,
           messagesSource,
           onlyRecipientOriginated,
-          channel);
+          channel,
+          direction);
     }
   }
 }

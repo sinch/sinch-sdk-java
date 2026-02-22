@@ -5,12 +5,11 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** Gets or Sets ConversationDirection */
+/**
+ * The direction of the message flow, indicating whether the message was sent to or from the
+ * Conversation API app.
+ */
 public class ConversationDirection extends EnumDynamic<String, ConversationDirection> {
-
-  /** The direction is undefined. */
-  public static final ConversationDirection UNDEFINED_DIRECTION =
-      new ConversationDirection("UNDEFINED_DIRECTION");
 
   /** Sent to the Conversation API app. */
   public static final ConversationDirection TO_APP = new ConversationDirection("TO_APP");
@@ -22,7 +21,7 @@ public class ConversationDirection extends EnumDynamic<String, ConversationDirec
       new EnumSupportDynamic<>(
           ConversationDirection.class,
           ConversationDirection::new,
-          Arrays.asList(UNDEFINED_DIRECTION, TO_APP, TO_CONTACT));
+          Arrays.asList(TO_APP, TO_CONTACT));
 
   private ConversationDirection(String value) {
     super(value);

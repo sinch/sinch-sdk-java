@@ -30,6 +30,7 @@ import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessageBody;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.MessagesListResponseInternal;
+import com.sinch.sdk.domains.conversation.models.v1.messages.request.LastMessagesByChannelIdentityListQueryParameters;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessageUpdateRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesDeleteQueryParameters;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesGetQueryParameters;
@@ -228,6 +229,14 @@ public class MessagesServiceImpl
           null,
           localVarQueryParams,
           true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getDirection(),
+          "direction",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
     }
 
     Map<String, String> localVarHeaderParams = new HashMap<>();
@@ -406,6 +415,108 @@ public class MessagesServiceImpl
     return new HttpRequest(
         localVarPath,
         HttpMethod.GET,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  @Override
+  public MessagesListResponse listLastMessagesByChannelIdentity() throws ApiException {
+
+    return listLastMessagesByChannelIdentity(
+        (LastMessagesByChannelIdentityListQueryParameters) null);
+  }
+
+  @Override
+  public MessagesListResponse listLastMessagesByChannelIdentity(
+      LastMessagesByChannelIdentityListQueryParameters queryParameter) throws ApiException {
+
+    LOGGER.finest(
+        "[listLastMessagesByChannelIdentity]" + " " + "queryParameter: " + queryParameter);
+
+    HttpRequest httpRequest = listLastMessagesByChannelIdentityRequestBuilder(queryParameter);
+    return _listLastMessagesByChannelIdentityPageAsListResponse(queryParameter, httpRequest);
+  }
+
+  private MessagesListResponse _listLastMessagesByChannelIdentityPageAsListResponse(
+      LastMessagesByChannelIdentityListQueryParameters queryParameter, HttpRequest httpRequest)
+      throws ApiException {
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+
+      MessagesListResponseInternal deserialized =
+          mapper.deserialize(response, new TypeReference<MessagesListResponseInternal>() {});
+
+      String nextToken = deserialized.getNextPageToken();
+
+      LastMessagesByChannelIdentityListQueryParameters nextParameters =
+          LastMessagesByChannelIdentityListQueryParameters.builder(queryParameter)
+              .setPageToken(nextToken)
+              .build();
+
+      final HttpRequest nextHttpRequest =
+          !StringUtil.isEmpty(nextToken)
+              ? listLastMessagesByChannelIdentityRequestBuilder(nextParameters)
+              : null;
+
+      return new MessagesListResponse(
+          () ->
+              _listLastMessagesByChannelIdentityPageAsListResponse(nextParameters, nextHttpRequest),
+          new Page<>(deserialized.getMessages(), new PageNavigator<>(nextHttpRequest)));
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest listLastMessagesByChannelIdentityRequestBuilder(
+      LastMessagesByChannelIdentityListQueryParameters queryParameter) throws ApiException {
+    // verify the required parameter 'this.projectId' is set
+    if (this.projectId == null) {
+      throw new ApiException(
+          400,
+          "Missing the required parameter 'this.projectId' when calling"
+              + " listLastMessagesByChannelIdentity");
+    }
+    // verify the required parameter 'queryParameter' is set
+    if (queryParameter == null) {
+      throw new ApiException(
+          400,
+          "Missing the required parameter 'queryParameter' when calling"
+              + " listLastMessagesByChannelIdentity");
+    }
+
+    String localVarPath =
+        "/v1/projects/{project_id}/messages:fetch-last-message"
+            .replaceAll(
+                "\\{" + "project_id" + "\\}",
+                URLPathUtils.encodePathSegment(this.projectId.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+    if (null != queryParameter) {}
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList("application/json");
+
+    final Collection<String> localVarAuthNames = Arrays.asList("Basic", "oAuth2");
+    final String serializedBody = mapper.serialize(localVarContentTypes, queryParameter);
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.POST,
         localVarQueryParams,
         serializedBody,
         localVarHeaderParams,

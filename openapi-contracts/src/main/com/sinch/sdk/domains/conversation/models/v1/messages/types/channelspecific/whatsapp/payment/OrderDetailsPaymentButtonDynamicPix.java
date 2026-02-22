@@ -16,15 +16,35 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/**
- * OrderDetailsPaymentSettingsDynamicPix
- *
- * <p>* @deprecated
- */
-@JsonDeserialize(builder = OrderDetailsPaymentSettingsDynamicPixImpl.Builder.class)
-public interface OrderDetailsPaymentSettingsDynamicPix
+/** The dynamic Pix payment settings button. */
+@JsonDeserialize(builder = OrderDetailsPaymentButtonDynamicPixImpl.Builder.class)
+public interface OrderDetailsPaymentButtonDynamicPix
     extends com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp
-        .payment.OrderDetailsSettings {
+        .payment.WhatsAppPaymentButton {
+
+  /** Gets or Sets type */
+  public class TypeEnum extends EnumDynamic<String, TypeEnum> {
+    public static final TypeEnum PIX_DYNAMIC_CODE = new TypeEnum("pix_dynamic_code");
+
+    private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =
+        new EnumSupportDynamic<>(TypeEnum.class, TypeEnum::new, Arrays.asList(PIX_DYNAMIC_CODE));
+
+    private TypeEnum(String value) {
+      super(value);
+    }
+
+    public static Stream<TypeEnum> values() {
+      return ENUM_SUPPORT.values();
+    }
+
+    public static TypeEnum from(String value) {
+      return ENUM_SUPPORT.from(value);
+    }
+
+    public static String valueOf(TypeEnum e) {
+      return ENUM_SUPPORT.valueOf(e);
+    }
+  }
 
   /**
    * The dynamic Pix code to be used by the buyer to pay.
@@ -97,7 +117,7 @@ public interface OrderDetailsPaymentSettingsDynamicPix
    * @return New Builder instance
    */
   static Builder builder() {
-    return new OrderDetailsPaymentSettingsDynamicPixImpl.Builder();
+    return new OrderDetailsPaymentButtonDynamicPixImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -144,6 +164,6 @@ public interface OrderDetailsPaymentSettingsDynamicPix
      *
      * @return The instance build with current builder values
      */
-    OrderDetailsPaymentSettingsDynamicPix build();
+    OrderDetailsPaymentButtonDynamicPix build();
   }
 }
