@@ -45,6 +45,8 @@ See main [README.md](../../../../README.md) for how to execute snippets
   - [conversation/messages/Get](./messages/Get.java)
   - [conversation/messages/Delete](./messages/Delete.java)
   - [conversation/messages/List](./messages/List.java)
+  - [conversation/messages/ListLastMessagesByChannelIdentity](./messages/ListLastMessagesByChannelIdentity.java)
+
 - Transcoding
   - [conversation/transcoding/Transcode](./transcoding/Transcode.java)
 - Webhooks
