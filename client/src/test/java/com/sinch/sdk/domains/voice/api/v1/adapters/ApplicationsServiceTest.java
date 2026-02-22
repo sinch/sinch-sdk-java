@@ -99,7 +99,7 @@ public class ApplicationsServiceTest extends VoiceBaseTest {
 
     OwnedNumbersListResponse expectedListResponse =
         new OwnedNumbersListResponse(
-            new Page<>(null, OwnedNumbersResponseTest.expected.getNumbers(), null));
+            new Page<>(OwnedNumbersResponseTest.expected.getNumbers(), null));
     Iterator<OwnedNumberInformation> expectedIterator = expectedListResponse.iterator();
 
     while (iterator.hasNext()) {

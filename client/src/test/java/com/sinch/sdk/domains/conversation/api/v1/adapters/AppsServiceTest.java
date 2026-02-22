@@ -91,8 +91,7 @@ public class AppsServiceTest extends BaseTest {
     Iterator<AppResponse> iterator = response.iterator();
 
     AppsListResponse expectedAppsListResponse =
-        new AppsListResponse(
-            new Page<>(null, AppDtoTest.expectedListAppsResponseDto.getApps(), null));
+        new AppsListResponse(new Page<>(AppDtoTest.expectedListAppsResponseDto.getApps(), null));
     Iterator<AppResponse> expectedIterator = expectedAppsListResponse.iterator();
 
     while (iterator.hasNext()) {

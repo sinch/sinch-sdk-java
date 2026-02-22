@@ -137,26 +137,20 @@ class ActiveNumberServiceTest extends NumbersBaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    ActiveNumberServiceImpl lowService =
-        (ActiveNumberServiceImpl)
-            (((com.sinch.sdk.domains.numbers.api.v1.adapters.NumbersService) service)
-                .active()
-                .getService());
+    ActiveNumbersListQueryParameters queryParameters =
+        ActiveNumbersListQueryParameters.builder()
+            .setRegionCode("region")
+            .setType(NumberType.MOBILE)
+            .build();
 
     ActiveNumbersListResponse expected =
         new ActiveNumbersListResponse(
-            lowService,
+            () -> service.list(queryParameters),
             new Page<>(
-                null,
                 ActiveNumberDtoTest.activeNumberListLight.getActiveNumbers(),
                 new PageNavigator<>(null)));
 
-    ActiveNumbersListResponse response =
-        service.list(
-            ActiveNumbersListQueryParameters.builder()
-                .setRegionCode("region")
-                .setType(NumberType.MOBILE)
-                .build());
+    ActiveNumbersListResponse response = service.list(queryParameters);
 
     TestHelpers.recursiveEquals(response, expected);
   }
@@ -193,17 +187,22 @@ class ActiveNumberServiceTest extends NumbersBaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    ActiveNumberServiceImpl lowService =
-        (ActiveNumberServiceImpl)
-            (((com.sinch.sdk.domains.numbers.api.v1.adapters.NumbersService) service)
-                .active()
-                .getService());
+    ActiveNumbersListQueryParameters parameters =
+        ActiveNumbersListQueryParameters.builder()
+            .setRegionCode("another region")
+            .setType(NumberType.TOLL_FREE)
+            .setSearchPattern("pattern value")
+            .setSearchPosition(SearchPosition.END)
+            .setCapabilities(Arrays.asList(Capability.VOICE))
+            .setPageSize(5)
+            .setPageToken("foo-req")
+            .setOrderBy(OrderBy.PHONE_NUMBER)
+            .build();
 
     ActiveNumbersListResponse expected =
         new ActiveNumbersListResponse(
-            lowService,
+            () -> service.list(parameters),
             new Page<>(
-                null,
                 ActiveNumberDtoTest.activeNumberList.getActiveNumbers(),
                 new PageNavigator<>(
                     new HttpRequest(
@@ -232,18 +231,7 @@ class ActiveNumberServiceTest extends NumbersBaseTest {
                         Collections.emptyList(),
                         NUMBERS_AUTH_NAMES))));
 
-    ActiveNumbersListResponse response =
-        service.list(
-            ActiveNumbersListQueryParameters.builder()
-                .setRegionCode("another region")
-                .setType(NumberType.TOLL_FREE)
-                .setSearchPattern("pattern value")
-                .setSearchPosition(SearchPosition.END)
-                .setCapabilities(Arrays.asList(Capability.VOICE))
-                .setPageSize(5)
-                .setPageToken("foo-req")
-                .setOrderBy(OrderBy.PHONE_NUMBER)
-                .build());
+    ActiveNumbersListResponse response = service.list(parameters);
 
     TestHelpers.recursiveEquals(response, expected);
   }

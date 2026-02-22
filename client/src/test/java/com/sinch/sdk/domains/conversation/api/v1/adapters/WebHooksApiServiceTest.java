@@ -98,7 +98,7 @@ public class WebHooksApiServiceTest extends ConversationBaseTest {
 
     WebhooksListResponse expectedListResponse =
         new WebhooksListResponse(
-            new Page<>(null, ListWebhookResponseDtoTest.expectedResponseDto.getWebhooks(), null));
+            new Page<>(ListWebhookResponseDtoTest.expectedResponseDto.getWebhooks(), null));
     Iterator<Webhook> expectedIterator = expectedListResponse.iterator();
 
     while (iterator.hasNext()) {
