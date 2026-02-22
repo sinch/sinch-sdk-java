@@ -10,45 +10,28 @@
 
 package com.sinch.sdk.domains.numbers.models.v1.regions.response;
 
-import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.models.pagination.ListResponse;
 import com.sinch.sdk.core.models.pagination.Page;
-import com.sinch.sdk.domains.numbers.api.v1.adapters.AvailableRegionsServiceImpl;
-import com.sinch.sdk.domains.numbers.models.v1.regions.request.AvailableRegionsListQueryParameters;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.NoSuchElementException;
 
 /** Auto paginated response for list of AvailableRegion */
 public class AvailableRegionsListResponse extends ListResponse<AvailableRegion> {
 
-  private final Page<AvailableRegionsListQueryParameters, AvailableRegion, HttpRequest> page;
-  private final AvailableRegionsServiceImpl service;
+  private final Page<AvailableRegion, Object> page;
 
-  public AvailableRegionsListResponse(
-      AvailableRegionsServiceImpl service,
-      Page<AvailableRegionsListQueryParameters, AvailableRegion, HttpRequest> page) {
-    this.service = service;
+  public AvailableRegionsListResponse(Page<AvailableRegion, Object> page) {
     this.page = page;
   }
 
   @Override
   public boolean hasNextPage() {
-    if (null == page.getNextPageToken() || null == getContent() || getContent().isEmpty()) {
-      return false;
-    }
-    return true;
+    return false;
   }
 
   @Override
   public AvailableRegionsListResponse nextPage() {
-
-    if (!hasNextPage()) {
-      throw new NoSuchElementException("Reached the last page of the API response");
-    }
-
-    return service._getAvailableRegionsPageAsListResponse(
-        page.getParameters(), page.getNextPageToken());
+    return null;
   }
 
   @Override

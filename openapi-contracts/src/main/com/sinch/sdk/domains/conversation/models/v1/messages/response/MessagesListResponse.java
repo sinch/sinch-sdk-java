@@ -13,23 +13,21 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.response;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.models.pagination.ListResponse;
 import com.sinch.sdk.core.models.pagination.Page;
-import com.sinch.sdk.domains.conversation.api.v1.adapters.MessagesServiceImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
-import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesListQueryParameters;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.NoSuchElementException;
+import java.util.function.Supplier;
 
 /** Auto paginated response for list of ConversationMessage */
 public class MessagesListResponse extends ListResponse<ConversationMessage> {
 
-  private final Page<MessagesListQueryParameters, ConversationMessage, HttpRequest> page;
-  private final MessagesServiceImpl service;
+  private final Page<ConversationMessage, HttpRequest> page;
+  final Supplier<MessagesListResponse> supplier;
 
   public MessagesListResponse(
-      MessagesServiceImpl service,
-      Page<MessagesListQueryParameters, ConversationMessage, HttpRequest> page) {
-    this.service = service;
+      Supplier<MessagesListResponse> supplier, Page<ConversationMessage, HttpRequest> page) {
+    this.supplier = supplier;
     this.page = page;
   }
 
@@ -43,13 +41,10 @@ public class MessagesListResponse extends ListResponse<ConversationMessage> {
 
   @Override
   public MessagesListResponse nextPage() {
-
     if (!hasNextPage()) {
       throw new NoSuchElementException("Reached the last page of the API response");
     }
-
-    return service._getMessagesListPageAsListResponse(
-        page.getParameters(), page.getNextPageToken());
+    return supplier.get();
   }
 
   @Override

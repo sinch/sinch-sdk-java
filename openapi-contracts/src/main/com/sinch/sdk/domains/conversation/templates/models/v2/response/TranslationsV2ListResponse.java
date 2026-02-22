@@ -19,9 +19,9 @@ import java.util.Collections;
 /** Auto paginated response for list of TemplateTranslation */
 public class TranslationsV2ListResponse extends ListResponse<TemplateTranslation> {
 
-  private final Page<Object, TemplateTranslation, Object> page;
+  private final Page<TemplateTranslation, Object> page;
 
-  public TranslationsV2ListResponse(Page<Object, TemplateTranslation, Object> page) {
+  public TranslationsV2ListResponse(Page<TemplateTranslation, Object> page) {
     this.page = page;
   }
 
@@ -32,7 +32,6 @@ public class TranslationsV2ListResponse extends ListResponse<TemplateTranslation
 
   @Override
   public TranslationsV2ListResponse nextPage() {
-
     return null;
   }
 

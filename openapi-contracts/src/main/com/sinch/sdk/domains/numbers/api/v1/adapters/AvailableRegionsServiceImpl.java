@@ -74,10 +74,10 @@ public class AvailableRegionsServiceImpl
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _getAvailableRegionsPageAsListResponse(queryParameter, httpRequest);
+    return _listPageAsListResponse(queryParameter, httpRequest);
   }
 
-  public AvailableRegionsListResponse _getAvailableRegionsPageAsListResponse(
+  private AvailableRegionsListResponse _listPageAsListResponse(
       AvailableRegionsListQueryParameters queryParameter, HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
@@ -90,8 +90,7 @@ public class AvailableRegionsServiceImpl
           mapper.deserialize(
               response, new TypeReference<AvailableRegionsListResponseInternal>() {});
 
-      return new AvailableRegionsListResponse(
-          this, new Page<>(null, deserialized.getAvailableRegions(), null));
+      return new AvailableRegionsListResponse(new Page<>(deserialized.getAvailableRegions(), null));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

@@ -91,10 +91,10 @@ public class MessagesServiceImpl
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _getMessagesListPageAsListResponse(queryParameter, httpRequest);
+    return _listPageAsListResponse(queryParameter, httpRequest);
   }
 
-  public MessagesListResponse _getMessagesListPageAsListResponse(
+  private MessagesListResponse _listPageAsListResponse(
       MessagesListQueryParameters queryParameter, HttpRequest httpRequest) throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
@@ -108,18 +108,14 @@ public class MessagesServiceImpl
       String nextToken = deserialized.getNextPageToken();
 
       MessagesListQueryParameters nextParameters =
-          MessagesListQueryParameters.builder(queryParameter)
-              .setPageToken(deserialized.getNextPageToken())
-              .build();
+          MessagesListQueryParameters.builder(queryParameter).setPageToken(nextToken).build();
 
-      HttpRequest nextPage = null;
-      if (!StringUtil.isEmpty(nextToken)) {
-        nextPage = listRequestBuilder(nextParameters);
-      }
+      final HttpRequest nextHttpRequest =
+          !StringUtil.isEmpty(nextToken) ? listRequestBuilder(nextParameters) : null;
 
       return new MessagesListResponse(
-          this,
-          new Page<>(nextParameters, deserialized.getMessages(), new PageNavigator<>(nextPage)));
+          () -> _listPageAsListResponse(nextParameters, nextHttpRequest),
+          new Page<>(deserialized.getMessages(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

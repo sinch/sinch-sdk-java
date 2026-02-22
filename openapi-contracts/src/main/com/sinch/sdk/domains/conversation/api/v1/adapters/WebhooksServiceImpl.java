@@ -76,6 +76,11 @@ public class WebhooksServiceImpl
     LOGGER.finest("[list]" + " " + "appId: " + appId);
 
     HttpRequest httpRequest = listRequestBuilder(appId);
+    return _listPageAsListResponse(httpRequest);
+  }
+
+  private WebhooksListResponse _listPageAsListResponse(HttpRequest httpRequest)
+      throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -85,7 +90,7 @@ public class WebhooksServiceImpl
       WebhooksListResponseInternal deserialized =
           mapper.deserialize(response, new TypeReference<WebhooksListResponseInternal>() {});
 
-      return new WebhooksListResponse(new Page<>(null, deserialized.getWebhooks(), null));
+      return new WebhooksListResponse(new Page<>(deserialized.getWebhooks(), null));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

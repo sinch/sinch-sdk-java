@@ -84,10 +84,10 @@ public class ConversationsServiceImpl
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _getConversationsListPageAsListResponse(queryParameter, httpRequest);
+    return _listPageAsListResponse(queryParameter, httpRequest);
   }
 
-  public ConversationsListResponse _getConversationsListPageAsListResponse(
+  private ConversationsListResponse _listPageAsListResponse(
       ConversationsListQueryParameters queryParameter, HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
@@ -102,19 +102,14 @@ public class ConversationsServiceImpl
       String nextToken = deserialized.getNextPageToken();
 
       ConversationsListQueryParameters nextParameters =
-          ConversationsListQueryParameters.builder(queryParameter)
-              .setPageToken(deserialized.getNextPageToken())
-              .build();
+          ConversationsListQueryParameters.builder(queryParameter).setPageToken(nextToken).build();
 
-      HttpRequest nextPage = null;
-      if (!StringUtil.isEmpty(nextToken)) {
-        nextPage = listRequestBuilder(nextParameters);
-      }
+      final HttpRequest nextHttpRequest =
+          !StringUtil.isEmpty(nextToken) ? listRequestBuilder(nextParameters) : null;
 
       return new ConversationsListResponse(
-          this,
-          new Page<>(
-              nextParameters, deserialized.getConversations(), new PageNavigator<>(nextPage)));
+          () -> _listPageAsListResponse(nextParameters, nextHttpRequest),
+          new Page<>(deserialized.getConversations(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -568,10 +563,10 @@ public class ConversationsServiceImpl
     LOGGER.finest("[listRecent]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRecentRequestBuilder(queryParameter);
-    return _getRecentConversationsListPageAsListResponse(queryParameter, httpRequest);
+    return _listRecentPageAsListResponse(queryParameter, httpRequest);
   }
 
-  public RecentConversationsListResponse _getRecentConversationsListPageAsListResponse(
+  private RecentConversationsListResponse _listRecentPageAsListResponse(
       RecentConversationsListQueryParameters queryParameter, HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
@@ -588,18 +583,15 @@ public class ConversationsServiceImpl
 
       RecentConversationsListQueryParameters nextParameters =
           RecentConversationsListQueryParameters.builder(queryParameter)
-              .setPageToken(deserialized.getNextPageToken())
+              .setPageToken(nextToken)
               .build();
 
-      HttpRequest nextPage = null;
-      if (!StringUtil.isEmpty(nextToken)) {
-        nextPage = listRecentRequestBuilder(nextParameters);
-      }
+      final HttpRequest nextHttpRequest =
+          !StringUtil.isEmpty(nextToken) ? listRecentRequestBuilder(nextParameters) : null;
 
       return new RecentConversationsListResponse(
-          this,
-          new Page<>(
-              nextParameters, deserialized.getConversations(), new PageNavigator<>(nextPage)));
+          () -> _listRecentPageAsListResponse(nextParameters, nextHttpRequest),
+          new Page<>(deserialized.getConversations(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

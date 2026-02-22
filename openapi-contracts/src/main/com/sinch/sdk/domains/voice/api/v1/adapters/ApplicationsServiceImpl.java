@@ -169,6 +169,11 @@ public class ApplicationsServiceImpl
     LOGGER.finest("[listNumbers]");
 
     HttpRequest httpRequest = listNumbersRequestBuilder();
+    return _listNumbersPageAsListResponse(httpRequest);
+  }
+
+  private OwnedNumbersListResponse _listNumbersPageAsListResponse(HttpRequest httpRequest)
+      throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -178,7 +183,7 @@ public class ApplicationsServiceImpl
       OwnedNumbersListResponseInternal deserialized =
           mapper.deserialize(response, new TypeReference<OwnedNumbersListResponseInternal>() {});
 
-      return new OwnedNumbersListResponse(new Page<>(null, deserialized.getNumbers(), null));
+      return new OwnedNumbersListResponse(new Page<>(deserialized.getNumbers(), null));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

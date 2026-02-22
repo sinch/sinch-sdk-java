@@ -284,10 +284,10 @@ public class AvailableNumberServiceImpl
     LOGGER.finest("[searchForAvailableNumbers]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = searchForAvailableNumbersRequestBuilder(queryParameter);
-    return _getAvailableNumbersPageAsListResponse(queryParameter, httpRequest);
+    return _searchForAvailableNumbersPageAsListResponse(queryParameter, httpRequest);
   }
 
-  public AvailableNumbersListResponse _getAvailableNumbersPageAsListResponse(
+  private AvailableNumbersListResponse _searchForAvailableNumbersPageAsListResponse(
       AvailableNumbersListQueryParameters queryParameter, HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
@@ -300,8 +300,7 @@ public class AvailableNumberServiceImpl
           mapper.deserialize(
               response, new TypeReference<AvailableNumbersListResponseInternal>() {});
 
-      return new AvailableNumbersListResponse(
-          this, new Page<>(null, deserialized.getAvailableNumbers(), null));
+      return new AvailableNumbersListResponse(new Page<>(deserialized.getAvailableNumbers(), null));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

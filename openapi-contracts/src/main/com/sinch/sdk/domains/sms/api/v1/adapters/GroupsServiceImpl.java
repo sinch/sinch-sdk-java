@@ -75,6 +75,11 @@ public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Group
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
+    return _listPageAsListResponse(queryParameter, httpRequest);
+  }
+
+  private ListGroupsResponse _listPageAsListResponse(
+      ListGroupsQueryParameters queryParameter, HttpRequest httpRequest) throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -84,12 +89,21 @@ public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Group
       ApiGroupList deserialized =
           mapper.deserialize(response, new TypeReference<ApiGroupList>() {});
 
-      return new ListGroupsResponse(
-          this,
+      Page<Group, Integer> page =
           new Page<>(
-              queryParameter,
               deserialized.getItems(),
-              new SMSCursorPageNavigator(deserialized.getPage(), deserialized.getPageSize())));
+              new SMSCursorPageNavigator(deserialized.getPage(), deserialized.getPageSize()));
+
+      Integer nextPage = page.getNextPageToken();
+
+      ListGroupsQueryParameters nextParameters =
+          ListGroupsQueryParameters.builder(queryParameter).setPage(nextPage).build();
+
+      final HttpRequest nextHttpRequest =
+          nextPage != null ? listRequestBuilder(nextParameters) : null;
+
+      return new ListGroupsResponse(
+          () -> _listPageAsListResponse(queryParameter, nextHttpRequest), page);
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

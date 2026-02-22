@@ -78,6 +78,12 @@ public class DeliveryReportsServiceImpl
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
+    return _listPageAsListResponse(queryParameter, httpRequest);
+  }
+
+  private ListDeliveryReportsResponse _listPageAsListResponse(
+      ListDeliveryReportsQueryParameters queryParameter, HttpRequest httpRequest)
+      throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -87,12 +93,21 @@ public class DeliveryReportsServiceImpl
       DeliveryReportList deserialized =
           mapper.deserialize(response, new TypeReference<DeliveryReportList>() {});
 
-      return new ListDeliveryReportsResponse(
-          this,
+      Page<RecipientDeliveryReport, Integer> page =
           new Page<>(
-              queryParameter,
               deserialized.getItems(),
-              new SMSCursorPageNavigator(deserialized.getPage(), deserialized.getPageSize())));
+              new SMSCursorPageNavigator(deserialized.getPage(), deserialized.getPageSize()));
+
+      Integer nextPage = page.getNextPageToken();
+
+      ListDeliveryReportsQueryParameters nextParameters =
+          ListDeliveryReportsQueryParameters.builder(queryParameter).setPage(nextPage).build();
+
+      final HttpRequest nextHttpRequest =
+          nextPage != null ? listRequestBuilder(nextParameters) : null;
+
+      return new ListDeliveryReportsResponse(
+          () -> _listPageAsListResponse(queryParameter, nextHttpRequest), page);
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

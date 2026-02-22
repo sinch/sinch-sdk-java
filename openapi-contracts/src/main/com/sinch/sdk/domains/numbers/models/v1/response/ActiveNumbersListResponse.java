@@ -13,23 +13,21 @@ package com.sinch.sdk.domains.numbers.models.v1.response;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.models.pagination.ListResponse;
 import com.sinch.sdk.core.models.pagination.Page;
-import com.sinch.sdk.domains.numbers.api.v1.adapters.ActiveNumberServiceImpl;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
-import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumbersListQueryParameters;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.NoSuchElementException;
+import java.util.function.Supplier;
 
 /** Auto paginated response for list of ActiveNumber */
 public class ActiveNumbersListResponse extends ListResponse<ActiveNumber> {
 
-  private final Page<ActiveNumbersListQueryParameters, ActiveNumber, HttpRequest> page;
-  private final ActiveNumberServiceImpl service;
+  private final Page<ActiveNumber, HttpRequest> page;
+  final Supplier<ActiveNumbersListResponse> supplier;
 
   public ActiveNumbersListResponse(
-      ActiveNumberServiceImpl service,
-      Page<ActiveNumbersListQueryParameters, ActiveNumber, HttpRequest> page) {
-    this.service = service;
+      Supplier<ActiveNumbersListResponse> supplier, Page<ActiveNumber, HttpRequest> page) {
+    this.supplier = supplier;
     this.page = page;
   }
 
@@ -43,13 +41,10 @@ public class ActiveNumbersListResponse extends ListResponse<ActiveNumber> {
 
   @Override
   public ActiveNumbersListResponse nextPage() {
-
     if (!hasNextPage()) {
       throw new NoSuchElementException("Reached the last page of the API response");
     }
-
-    return service._getActiveNumbersPageAsListResponse(
-        page.getParameters(), page.getNextPageToken());
+    return supplier.get();
   }
 
   @Override

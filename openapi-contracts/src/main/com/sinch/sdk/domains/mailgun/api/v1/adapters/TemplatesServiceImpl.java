@@ -89,10 +89,10 @@ public class TemplatesServiceImpl implements com.sinch.sdk.domains.mailgun.api.v
         "[list]" + " " + "domainName: " + domainName + ", " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(domainName, queryParameter);
-    return _getTemplatesPageAsListResponse(httpRequest);
+    return _listPageAsListResponse(httpRequest);
   }
 
-  public ListTemplatesResponse _getTemplatesPageAsListResponse(HttpRequest httpRequest)
+  private ListTemplatesResponse _listPageAsListResponse(HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
@@ -114,7 +114,8 @@ public class TemplatesServiceImpl implements com.sinch.sdk.domains.mailgun.api.v
               httpRequest.getAuthNames());
 
       return new ListTemplatesResponse(
-          this, new Page<>(null, deserialized.getItems(), new MailgunPageNavigator(nextPage)));
+          () -> _listPageAsListResponse(nextPage),
+          new Page<>(deserialized.getItems(), new MailgunPageNavigator(nextPage)));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -938,10 +939,10 @@ public class TemplatesServiceImpl implements com.sinch.sdk.domains.mailgun.api.v
             + queryParameter);
 
     HttpRequest httpRequest = listVersionsRequestBuilder(domainName, templateName, queryParameter);
-    return _getVersionsPageAsListResponse(httpRequest);
+    return _listVersionsPageAsListResponse(httpRequest);
   }
 
-  public ListVersionsResponse _getVersionsPageAsListResponse(HttpRequest httpRequest)
+  private ListVersionsResponse _listVersionsPageAsListResponse(HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
@@ -963,9 +964,8 @@ public class TemplatesServiceImpl implements com.sinch.sdk.domains.mailgun.api.v
               httpRequest.getAuthNames());
 
       return new ListVersionsResponse(
-          this,
+          () -> _listVersionsPageAsListResponse(nextPage),
           new Page<>(
-              null,
               ((TemplateImpl) deserialized.getTemplate()).getVersions(),
               new MailgunPageNavigator(nextPage)));
     }

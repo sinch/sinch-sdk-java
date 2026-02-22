@@ -76,10 +76,10 @@ public class EventsServiceImpl implements com.sinch.sdk.domains.conversation.api
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _getEventsListPageAsListResponse(queryParameter, httpRequest);
+    return _listPageAsListResponse(queryParameter, httpRequest);
   }
 
-  public EventsListResponse _getEventsListPageAsListResponse(
+  private EventsListResponse _listPageAsListResponse(
       EventsListQueryParameters queryParameter, HttpRequest httpRequest) throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
@@ -93,18 +93,14 @@ public class EventsServiceImpl implements com.sinch.sdk.domains.conversation.api
       String nextToken = deserialized.getNextPageToken();
 
       EventsListQueryParameters nextParameters =
-          EventsListQueryParameters.builder(queryParameter)
-              .setPageToken(deserialized.getNextPageToken())
-              .build();
+          EventsListQueryParameters.builder(queryParameter).setPageToken(nextToken).build();
 
-      HttpRequest nextPage = null;
-      if (!StringUtil.isEmpty(nextToken)) {
-        nextPage = listRequestBuilder(nextParameters);
-      }
+      final HttpRequest nextHttpRequest =
+          !StringUtil.isEmpty(nextToken) ? listRequestBuilder(nextParameters) : null;
 
       return new EventsListResponse(
-          this,
-          new Page<>(nextParameters, deserialized.getEvents(), new PageNavigator<>(nextPage)));
+          () -> _listPageAsListResponse(nextParameters, nextHttpRequest),
+          new Page<>(deserialized.getEvents(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
