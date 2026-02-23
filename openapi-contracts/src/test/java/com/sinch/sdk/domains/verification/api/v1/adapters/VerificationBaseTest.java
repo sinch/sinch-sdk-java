@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.verification.adapters;
+package com.sinch.sdk.domains.verification.api.v1.adapters;
 
 import com.sinch.sdk.BaseTest;
 
@@ -6,6 +6,6 @@ public class VerificationBaseTest extends BaseTest {
 
   static {
     // faking a service init to trigger dedicated serializers initialization
-    new com.sinch.sdk.domains.verification.api.v1.adapters.VerificationBaseTest();
+    VerificationService.LocalLazyInit.init();
   }
 }

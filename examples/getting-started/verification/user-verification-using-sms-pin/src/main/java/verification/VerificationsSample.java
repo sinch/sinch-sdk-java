@@ -45,7 +45,7 @@ public class VerificationsSample {
    * @return Verification ID
    */
   private String startSmsVerification(
-      VerificationStartService service, E164PhoneNumber phoneNumber) {
+      VerificationsStartService service, E164PhoneNumber phoneNumber) {
 
     echo("Sending verification request onto '%s'", phoneNumber.stringValue());
 
@@ -62,11 +62,11 @@ public class VerificationsSample {
   /**
    * Will use Sinch product to retrieve verification report by ID
    *
-   * @param service Verification service
+   * @param service Verification Report service
    * @param code Code received by SMS
    * @param id Verification ID related to the verification
    */
-  private void reportSmsVerification(VerificationReportService service, Integer code, String id) {
+  private void reportSmsVerification(VerificationsReportService service, Integer code, String id) {
 
     VerificationReportRequestSms parameters =
         VerificationReportRequestSms.builder().setCode(String.valueOf(code)).build();

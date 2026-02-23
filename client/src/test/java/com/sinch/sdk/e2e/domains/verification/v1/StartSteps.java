@@ -2,7 +2,7 @@ package com.sinch.sdk.e2e.domains.verification.v1;
 
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.domains.verification.api.v1.VerificationStartService;
+import com.sinch.sdk.domains.verification.api.v1.VerificationsStartService;
 import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
 import com.sinch.sdk.domains.verification.models.v1.WhatsAppCodeType;
@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Assertions;
 
 public class StartSteps {
 
-  VerificationStartService service;
+  VerificationsStartService service;
   VerificationStartResponse startVerificationBySmsResponse;
   VerificationStartResponse startVerificationByPhoneCallResponse;
   VerificationStartResponse startVerificationByFlashCallResponse;

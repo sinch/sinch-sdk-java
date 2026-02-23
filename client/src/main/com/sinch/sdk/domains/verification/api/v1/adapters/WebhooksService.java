@@ -12,13 +12,13 @@ import com.sinch.sdk.domains.verification.models.v1.webhooks.internal.Verificati
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class WebHooksService implements com.sinch.sdk.domains.verification.api.v1.WebHooksService {
+public class WebhooksService implements com.sinch.sdk.domains.verification.api.v1.WebhooksService {
 
-  private static final Logger LOGGER = Logger.getLogger(WebHooksService.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(WebhooksService.class.getName());
 
   private final Map<String, AuthManager> authManagers;
 
-  public WebHooksService(Map<String, AuthManager> authManagers) {
+  public WebhooksService(Map<String, AuthManager> authManagers) {
     this.authManagers = authManagers;
   }
 

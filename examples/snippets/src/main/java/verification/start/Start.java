@@ -8,7 +8,7 @@
 package verification.start;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.verification.api.v1.VerificationStartService;
+import com.sinch.sdk.domains.verification.api.v1.VerificationsStartService;
 import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms;
 import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponse;
@@ -36,7 +36,7 @@ public class Start {
 
     SinchClient client = new SinchClient(configuration);
 
-    VerificationStartService verificationStartService =
+    VerificationsStartService verificationsStartService =
         client.verification().v1().verificationStart();
 
     LOGGER.info(String.format("Start a verification by SMS onto phone number '%s'", phoneNumber));
@@ -46,7 +46,7 @@ public class Start {
             .setIdentity(NumberIdentity.valueOf(phoneNumber))
             .build();
 
-    VerificationStartResponse response = verificationStartService.startSms(request);
+    VerificationStartResponse response = verificationsStartService.startSms(request);
 
     LOGGER.info("Response: " + response);
   }
