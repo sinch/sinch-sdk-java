@@ -16,7 +16,7 @@ public class VerificationReportResponseMapper {
     Mapper.getInstance().registerModule(module);
   }
 
-  static class Deserializer extends StdDeserializer<VerificationReportResponse> {
+  private static class Deserializer extends StdDeserializer<VerificationReportResponse> {
 
     public Deserializer() {
       this(null);

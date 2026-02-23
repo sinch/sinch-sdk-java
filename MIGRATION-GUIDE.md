@@ -382,7 +382,7 @@ Use the new versioned API under `verification().v1()` to get access to [Verifica
 | VerificationStartService              | [VerificationsStartService](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/api/v1/VerificationsStartService.html)   |
 | VerificationReportService             | [VerificationsReportService](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/api/v1/VerificationsReportService.html) |
 | VerificationStatusService             | [VerificationsStatusService](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/api/v1/VerificationsStatusService.html) |
-| WebHooksService                       | [WebhooksService](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/api/v1/WebhookService.html)                        |
+| WebHooksService                       | [WebhooksService](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/api/v1/WebhooksService.html)                       |
 
 #### Replacement models
 ##### Common Report
