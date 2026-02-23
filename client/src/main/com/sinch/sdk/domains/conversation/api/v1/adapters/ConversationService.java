@@ -45,7 +45,6 @@ import com.sinch.sdk.domains.conversation.templates.api.adapters.TemplatesServic
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
-import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -234,33 +233,33 @@ public class ConversationService
     }
     synchronized (this) {
       if (null == this.authManagers) {
-        if (!validateRequired) {
-          this.authManagers = Collections.emptyMap();
-          return;
-        }
-        Objects.requireNonNull(
-            credentials, "Conversation service requires credentials to be defined");
-        Objects.requireNonNull(context, "Conversation service requires context to be defined");
-        StringUtil.requireNonEmpty(
-            credentials.getKeyId(), "Conversation service requires 'keyId' to be defined");
-        StringUtil.requireNonEmpty(
-            credentials.getKeySecret(), "Conversation service requires 'keySecret' to be defined");
-        StringUtil.requireNonEmpty(
-            credentials.getProjectId(), "Conversation service requires 'projectId' to be defined");
-        StringUtil.requireNonEmpty(
-            context.getUrl(), "Conversation service requires 'url' to be defined");
+        if (validateRequired) {
 
-        // To be deprecated with 2.0: no more defaulting to US region
-        if (Boolean.TRUE == context.regionAsDefault()) {
-          LOGGER.warning(
-              String.format(
-                  "Using default region for Conversation '%s'. This default fallback will be"
-                      + " removed in next major release and will cause a runtime error. Please"
-                      + " configure the region you want to be used (see"
-                      + " https://www.javadoc.io/static/com.sinch.sdk/sinch-sdk-java/1.6.0/com/sinch/sdk/models/Configuration.Builder.html#setConversationRegion(com.sinch.sdk.models.ConversationRegion))",
-                  context.getRegion()));
-        }
+          Objects.requireNonNull(
+              credentials, "Conversation service requires credentials to be defined");
+          Objects.requireNonNull(context, "Conversation service requires context to be defined");
+          StringUtil.requireNonEmpty(
+              credentials.getKeyId(), "Conversation service requires 'keyId' to be defined");
+          StringUtil.requireNonEmpty(
+              credentials.getKeySecret(),
+              "Conversation service requires 'keySecret' to be defined");
+          StringUtil.requireNonEmpty(
+              credentials.getProjectId(),
+              "Conversation service requires 'projectId' to be defined");
+          StringUtil.requireNonEmpty(
+              context.getUrl(), "Conversation service requires 'url' to be defined");
 
+          // To be deprecated with 2.0: no more defaulting to US region
+          if (Boolean.TRUE == context.regionAsDefault()) {
+            LOGGER.warning(
+                String.format(
+                    "Using default region for Conversation '%s'. This default fallback will be"
+                        + " removed in next major release and will cause a runtime error. Please"
+                        + " configure the region you want to be used (see"
+                        + " https://www.javadoc.io/static/com.sinch.sdk/sinch-sdk-java/1.6.0/com/sinch/sdk/models/Configuration.Builder.html#setConversationRegion(com.sinch.sdk.models.ConversationRegion))",
+                    context.getRegion()));
+          }
+        }
         OAuthManager authManager =
             new OAuthManager(
                 credentials, oAuthServer, HttpMapper.getInstance(), httpClientSupplier);
