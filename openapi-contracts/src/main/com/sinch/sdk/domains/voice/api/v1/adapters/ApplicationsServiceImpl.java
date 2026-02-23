@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.voice.api.v1.internal;
+package com.sinch.sdk.domains.voice.api.v1.adapters;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sinch.sdk.core.exceptions.ApiException;
@@ -23,11 +23,12 @@ import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.domains.voice.models.v1.applications.Callbacks;
 import com.sinch.sdk.domains.voice.models.v1.applications.request.UnAssignNumberRequest;
 import com.sinch.sdk.domains.voice.models.v1.applications.request.UpdateNumbersRequest;
-import com.sinch.sdk.domains.voice.models.v1.applications.response.OwnedNumbersResponse;
-import com.sinch.sdk.domains.voice.models.v1.applications.response.QueryNumberResponse;
+import com.sinch.sdk.domains.voice.models.v1.applications.response.OwnedNumbersListResponse;
+import com.sinch.sdk.domains.voice.models.v1.applications.response.internal.OwnedNumbersListResponseInternal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -36,15 +37,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class ApplicationsApi {
+public class ApplicationsServiceImpl
+    implements com.sinch.sdk.domains.voice.api.v1.ApplicationsService {
 
-  private static final Logger LOGGER = Logger.getLogger(ApplicationsApi.class.getName());
-  private HttpClient httpClient;
-  private ServerConfiguration serverConfiguration;
-  private Map<String, AuthManager> authManagersByOasSecuritySchemes;
-  private HttpMapper mapper;
+  private static final Logger LOGGER = Logger.getLogger(ApplicationsServiceImpl.class.getName());
+  private final HttpClient httpClient;
+  private final ServerConfiguration serverConfiguration;
+  private final Map<String, AuthManager> authManagersByOasSecuritySchemes;
+  private final HttpMapper mapper;
 
-  public ApplicationsApi(
+  public ApplicationsServiceImpl(
       HttpClient httpClient,
       ServerConfiguration serverConfiguration,
       Map<String, AuthManager> authManagersByOasSecuritySchemes,
@@ -55,28 +57,18 @@ public class ApplicationsApi {
     this.mapper = mapper;
   }
 
-  /**
-   * Query number Returns information about the requested number.
-   *
-   * @param number The phone number you want to query. (required)
-   * @return QueryNumberResponse
-   * @throws ApiException if fails to make API call
-   * @deprecated
-   */
-  @Deprecated
-  public QueryNumberResponse callingQueryNumber(String number) throws ApiException {
+  @Override
+  public void assignNumbers(UpdateNumbersRequest updateNumbersRequest) throws ApiException {
 
-    LOGGER.finest("[callingQueryNumber]" + " " + "number: " + number);
+    LOGGER.finest("[assignNumbers]" + " " + "updateNumbersRequest: " + updateNumbersRequest);
 
-    HttpRequest httpRequest = callingQueryNumberRequestBuilder(number);
+    HttpRequest httpRequest = assignNumbersRequestBuilder(updateNumbersRequest);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<QueryNumberResponse> localVarReturnType =
-          new TypeReference<QueryNumberResponse>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return;
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -87,32 +79,25 @@ public class ApplicationsApi {
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest callingQueryNumberRequestBuilder(String number) throws ApiException {
-    // verify the required parameter 'number' is set
-    if (number == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'number' when calling callingQueryNumber");
-    }
+  private HttpRequest assignNumbersRequestBuilder(UpdateNumbersRequest updateNumbersRequest)
+      throws ApiException {
 
-    String localVarPath =
-        "/v1/calling/query/number/{number}"
-            .replaceAll(
-                "\\{" + "number" + "\\}", URLPathUtils.encodePathSegment(number.toString()));
+    String localVarPath = "/v1/configuration/numbers";
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 
     Map<String, String> localVarHeaderParams = new HashMap<>();
 
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+    final Collection<String> localVarAccepts = Arrays.asList();
 
-    final Collection<String> localVarContentTypes = Arrays.asList();
+    final Collection<String> localVarContentTypes = Arrays.asList("application/json");
 
     final Collection<String> localVarAuthNames = Arrays.asList("Basic", "Signed");
-    final String serializedBody = null;
+    final String serializedBody = mapper.serialize(localVarContentTypes, updateNumbersRequest);
 
     return new HttpRequest(
         localVarPath,
-        HttpMethod.GET,
+        HttpMethod.POST,
         localVarQueryParams,
         serializedBody,
         localVarHeaderParams,
@@ -121,25 +106,18 @@ public class ApplicationsApi {
         localVarAuthNames);
   }
 
-  /**
-   * Get Callback URLs Returns any callback URLs configured for the specified application.
-   *
-   * @param applicationkey The unique identifying key of the application. (required)
-   * @return Callbacks
-   * @throws ApiException if fails to make API call
-   */
-  public Callbacks configurationGetCallbackURLs(String applicationkey) throws ApiException {
+  @Override
+  public Callbacks getCallbackUrls(String applicationkey) throws ApiException {
 
-    LOGGER.finest("[configurationGetCallbackURLs]" + " " + "applicationkey: " + applicationkey);
+    LOGGER.finest("[getCallbackUrls]" + " " + "applicationkey: " + applicationkey);
 
-    HttpRequest httpRequest = configurationGetCallbackURLsRequestBuilder(applicationkey);
+    HttpRequest httpRequest = getCallbackUrlsRequestBuilder(applicationkey);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<Callbacks> localVarReturnType = new TypeReference<Callbacks>() {};
-      return mapper.deserialize(response, localVarReturnType);
+      return mapper.deserialize(response, new TypeReference<Callbacks>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -150,14 +128,11 @@ public class ApplicationsApi {
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest configurationGetCallbackURLsRequestBuilder(String applicationkey)
-      throws ApiException {
+  private HttpRequest getCallbackUrlsRequestBuilder(String applicationkey) throws ApiException {
     // verify the required parameter 'applicationkey' is set
     if (applicationkey == null) {
       throw new ApiException(
-          400,
-          "Missing the required parameter 'applicationkey' when calling"
-              + " configurationGetCallbackURLs");
+          400, "Missing the required parameter 'applicationkey' when calling getCallbackUrls");
     }
 
     String localVarPath =
@@ -188,27 +163,22 @@ public class ApplicationsApi {
         localVarAuthNames);
   }
 
-  /**
-   * Get Numbers Get information about your numbers. It returns a list of numbers that you own, as
-   * well as their capability (voice or SMS). For the ones that are assigned to an app, it returns
-   * the application key of the app.
-   *
-   * @return OwnedNumbersResponse
-   * @throws ApiException if fails to make API call
-   */
-  public OwnedNumbersResponse configurationGetNumbers() throws ApiException {
+  @Override
+  public OwnedNumbersListResponse listNumbers() throws ApiException {
 
-    LOGGER.finest("[configurationGetNumbers]");
+    LOGGER.finest("[listNumbers]");
 
-    HttpRequest httpRequest = configurationGetNumbersRequestBuilder();
+    HttpRequest httpRequest = listNumbersRequestBuilder();
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      TypeReference<OwnedNumbersResponse> localVarReturnType =
-          new TypeReference<OwnedNumbersResponse>() {};
-      return mapper.deserialize(response, localVarReturnType);
+
+      OwnedNumbersListResponseInternal deserialized =
+          mapper.deserialize(response, new TypeReference<OwnedNumbersListResponseInternal>() {});
+
+      return new OwnedNumbersListResponse(new Page<>(null, deserialized.getNumbers(), null));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -219,7 +189,7 @@ public class ApplicationsApi {
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest configurationGetNumbersRequestBuilder() throws ApiException {
+  private HttpRequest listNumbersRequestBuilder() throws ApiException {
 
     String localVarPath = "/v1/configuration/numbers";
 
@@ -245,19 +215,12 @@ public class ApplicationsApi {
         localVarAuthNames);
   }
 
-  /**
-   * Un-assign number Un-assign a number from an application.
-   *
-   * @param unAssignNumberRequest (optional)
-   * @throws ApiException if fails to make API call
-   */
-  public void configurationUnassignNumber(UnAssignNumberRequest unAssignNumberRequest)
-      throws ApiException {
+  @Override
+  public void unassignNumber(UnAssignNumberRequest unAssignNumberRequest) throws ApiException {
 
-    LOGGER.finest(
-        "[configurationUnassignNumber]" + " " + "unAssignNumberRequest: " + unAssignNumberRequest);
+    LOGGER.finest("[unassignNumber]" + " " + "unAssignNumberRequest: " + unAssignNumberRequest);
 
-    HttpRequest httpRequest = configurationUnassignNumberRequestBuilder(unAssignNumberRequest);
+    HttpRequest httpRequest = unassignNumberRequestBuilder(unAssignNumberRequest);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -274,8 +237,8 @@ public class ApplicationsApi {
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest configurationUnassignNumberRequestBuilder(
-      UnAssignNumberRequest unAssignNumberRequest) throws ApiException {
+  private HttpRequest unassignNumberRequestBuilder(UnAssignNumberRequest unAssignNumberRequest)
+      throws ApiException {
 
     String localVarPath = "/v1/configuration/numbers";
 
@@ -301,18 +264,11 @@ public class ApplicationsApi {
         localVarAuthNames);
   }
 
-  /**
-   * Update Callbacks Update the configured callback URLs for the specified application.
-   *
-   * @param applicationkey The unique identifying key of the application. (required)
-   * @param callbacks (optional)
-   * @throws ApiException if fails to make API call
-   */
-  public void configurationUpdateCallbackURLs(String applicationkey, Callbacks callbacks)
-      throws ApiException {
+  @Override
+  public void updateCallbackUrls(String applicationkey, Callbacks callbacks) throws ApiException {
 
     LOGGER.finest(
-        "[configurationUpdateCallbackURLs]"
+        "[updateCallbackUrls]"
             + " "
             + "applicationkey: "
             + applicationkey
@@ -320,8 +276,7 @@ public class ApplicationsApi {
             + "callbacks: "
             + callbacks);
 
-    HttpRequest httpRequest =
-        configurationUpdateCallbackURLsRequestBuilder(applicationkey, callbacks);
+    HttpRequest httpRequest = updateCallbackUrlsRequestBuilder(applicationkey, callbacks);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -338,14 +293,12 @@ public class ApplicationsApi {
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest configurationUpdateCallbackURLsRequestBuilder(
-      String applicationkey, Callbacks callbacks) throws ApiException {
+  private HttpRequest updateCallbackUrlsRequestBuilder(String applicationkey, Callbacks callbacks)
+      throws ApiException {
     // verify the required parameter 'applicationkey' is set
     if (applicationkey == null) {
       throw new ApiException(
-          400,
-          "Missing the required parameter 'applicationkey' when calling"
-              + " configurationUpdateCallbackURLs");
+          400, "Missing the required parameter 'applicationkey' when calling updateCallbackUrls");
     }
 
     String localVarPath =
@@ -364,62 +317,6 @@ public class ApplicationsApi {
 
     final Collection<String> localVarAuthNames = Arrays.asList("Basic", "Signed");
     final String serializedBody = mapper.serialize(localVarContentTypes, callbacks);
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.POST,
-        localVarQueryParams,
-        serializedBody,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  /**
-   * Update Numbers Assign a number or a list of numbers to an application.
-   *
-   * @param updateNumbersRequest (optional)
-   * @throws ApiException if fails to make API call
-   */
-  public void configurationUpdateNumbers(UpdateNumbersRequest updateNumbersRequest)
-      throws ApiException {
-
-    LOGGER.finest(
-        "[configurationUpdateNumbers]" + " " + "updateNumbersRequest: " + updateNumbersRequest);
-
-    HttpRequest httpRequest = configurationUpdateNumbersRequestBuilder(updateNumbersRequest);
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      return;
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest configurationUpdateNumbersRequestBuilder(
-      UpdateNumbersRequest updateNumbersRequest) throws ApiException {
-
-    String localVarPath = "/v1/configuration/numbers";
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList();
-
-    final Collection<String> localVarContentTypes = Arrays.asList("application/json");
-
-    final Collection<String> localVarAuthNames = Arrays.asList("Basic", "Signed");
-    final String serializedBody = mapper.serialize(localVarContentTypes, updateNumbersRequest);
 
     return new HttpRequest(
         localVarPath,

@@ -1,56 +1,89 @@
 package com.sinch.sdk.domains.voice.api.v1.adapters;
 
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.voice.api.v1.internal.ConferencesApi;
+import com.sinch.sdk.core.http.HttpContentType;
+import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.core.http.HttpMethod;
+import com.sinch.sdk.core.http.HttpRequest;
+import com.sinch.sdk.core.http.HttpRequestTest.HttpRequestMatcher;
+import com.sinch.sdk.core.http.HttpResponse;
+import com.sinch.sdk.core.http.URLPathUtils;
+import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.domains.voice.api.v1.ConferencesService;
 import com.sinch.sdk.domains.voice.models.v1.callouts.CalloutRequestDtoTest;
 import com.sinch.sdk.domains.voice.models.v1.callouts.CalloutResponseDtoTest;
 import com.sinch.sdk.domains.voice.models.v1.conferences.request.ConferencesRequestDtoTest;
-import com.sinch.sdk.domains.voice.models.v1.conferences.request.ManageConferenceParticipantRequest;
 import com.sinch.sdk.domains.voice.models.v1.conferences.response.ConferencesResponseDtoTest;
 import com.sinch.sdk.domains.voice.models.v1.conferences.response.GetConferenceInfoResponse;
-import com.sinch.sdk.models.VoiceContext;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
 
 @TestWithResources
 public class ConferencesServiceTest extends BaseTest {
 
-  @Mock ConferencesApi api;
-  @Mock VoiceContext context;
+  @GivenTextResource("/domains/voice/v1/callouts/CalloutResponseDto.json")
+  String calloutResponseDto;
+
+  @GivenTextResource("/domains/voice/v1/callouts/CalloutRequestConferenceDto.json")
+  String calloutRequestConferenceDto;
+
+  @GivenTextResource("/domains/voice/v1/conferences/response/ConferenceGetResponseDto.json")
+  String conferenceGetResponseDto;
+
+  @GivenTextResource(
+      "/domains/voice/v1/conferences/request/ConferenceManageParticipantRequestDto.json")
+  String conferenceManageParticipantRequestDto;
+
+  static final Collection<String> AUTH_NAMES = Arrays.asList("Basic", "Signed");
+
+  @Mock ServerConfiguration serverConfiguration;
   @Mock HttpClient httpClient;
   @Mock Map<String, AuthManager> authManagers;
-  @Mock CalloutsService calloutsService;
-  @Captor ArgumentCaptor<String> conferenceIdCaptor;
-  @Captor ArgumentCaptor<String> callIdCaptor;
-  @Captor ArgumentCaptor<ManageConferenceParticipantRequest> participantCaptor;
-  static ConferencesService service;
+  ConferencesService service;
 
   @BeforeEach
   public void initMocks() {
-    service = spy(new ConferencesService(context, httpClient, authManagers, calloutsService));
+    service =
+        new ConferencesServiceImpl(
+            httpClient, serverConfiguration, authManagers, HttpMapper.getInstance());
   }
 
   @Test
   void call() throws ApiException {
 
-    when(calloutsService.conference(eq(CalloutRequestDtoTest.conferenceRequestCalloutDto)))
-        .thenReturn(CalloutResponseDtoTest.expectedCalloutResponseDto.getCallId());
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/calling/v1/callouts",
+            HttpMethod.POST,
+            Collections.emptyList(),
+            calloutRequestConferenceDto,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), calloutResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     String response = service.call(CalloutRequestDtoTest.conferenceRequestCalloutDto);
 
@@ -60,11 +93,27 @@ public class ConferencesServiceTest extends BaseTest {
 
   @Test
   void get() throws ApiException {
-    doReturn(api).when(service).getApi();
 
-    when(api.callingGetConferenceInfo(
-            eq(CalloutRequestDtoTest.conferenceRequestCalloutDto.getConferenceId())))
-        .thenReturn(ConferencesResponseDtoTest.expectedGetConferenceInfoResponseDto);
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/calling/v1/conferences/id/"
+                + URLPathUtils.encodePathSegment(
+                    CalloutRequestDtoTest.conferenceRequestCalloutDto.getConferenceId()),
+            HttpMethod.GET,
+            Collections.emptyList(),
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), conferenceGetResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     GetConferenceInfoResponse response =
         service.get(CalloutRequestDtoTest.conferenceRequestCalloutDto.getConferenceId());
@@ -75,56 +124,88 @@ public class ConferencesServiceTest extends BaseTest {
 
   @Test
   void kickParticipant() throws ApiException {
-    doReturn(api).when(service).getApi();
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/calling/v1/conferences/id/"
+                + URLPathUtils.encodePathSegment(
+                    CalloutRequestDtoTest.conferenceRequestCalloutDto.getConferenceId())
+                + "/"
+                + URLPathUtils.encodePathSegment(
+                    CalloutResponseDtoTest.expectedCalloutResponseDto.getCallId()),
+            HttpMethod.DELETE,
+            Collections.emptyList(),
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpResponse httpResponse = new HttpResponse(200, null, Collections.emptyMap(), null);
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
     service.kickParticipant(
         CalloutRequestDtoTest.conferenceRequestCalloutDto.getConferenceId(),
         CalloutResponseDtoTest.expectedCalloutResponseDto.getCallId());
-    verify(api)
-        .callingKickConferenceParticipant(callIdCaptor.capture(), conferenceIdCaptor.capture());
-
-    String parameter = callIdCaptor.getValue();
-    Assertions.assertThat(parameter)
-        .isEqualTo(CalloutResponseDtoTest.expectedCalloutResponseDto.getCallId());
-    parameter = conferenceIdCaptor.getValue();
-    Assertions.assertThat(parameter)
-        .isEqualTo(CalloutRequestDtoTest.conferenceRequestCalloutDto.getConferenceId());
   }
 
   @Test
   void kickAll() throws ApiException {
-    doReturn(api).when(service).getApi();
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/calling/v1/conferences/id/"
+                + URLPathUtils.encodePathSegment(
+                    CalloutRequestDtoTest.conferenceRequestCalloutDto.getConferenceId()),
+            HttpMethod.DELETE,
+            Collections.emptyList(),
+            (String) null,
+            Collections.emptyMap(),
+            Collections.emptyList(),
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpResponse httpResponse = new HttpResponse(204, null, Collections.emptyMap(), null);
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     service.kickAll(CalloutRequestDtoTest.conferenceRequestCalloutDto.getConferenceId());
-    verify(api).callingKickConferenceAll(conferenceIdCaptor.capture());
-
-    String parameter = conferenceIdCaptor.getValue();
-    Assertions.assertThat(parameter)
-        .isEqualTo(CalloutRequestDtoTest.conferenceRequestCalloutDto.getConferenceId());
   }
 
   @Test
   void manageParticipant() throws ApiException {
 
-    doReturn(api).when(service).getApi();
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/calling/v1/conferences/id/"
+                + URLPathUtils.encodePathSegment(
+                    CalloutRequestDtoTest.conferenceRequestCalloutDto.getConferenceId())
+                + "/"
+                + URLPathUtils.encodePathSegment(
+                    CalloutResponseDtoTest.expectedCalloutResponseDto.getCallId()),
+            HttpMethod.PATCH,
+            Collections.emptyList(),
+            conferenceManageParticipantRequestDto,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpResponse httpResponse = new HttpResponse(200, null, Collections.emptyMap(), null);
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
 
     service.manageParticipant(
         CalloutRequestDtoTest.conferenceRequestCalloutDto.getConferenceId(),
         CalloutResponseDtoTest.expectedCalloutResponseDto.getCallId(),
         ConferencesRequestDtoTest.manageConferenceParticipantRequestDto);
-
-    verify(api)
-        .callingManageConferenceParticipant(
-            callIdCaptor.capture(), conferenceIdCaptor.capture(), participantCaptor.capture());
-
-    String parameter = callIdCaptor.getValue();
-    Assertions.assertThat(parameter)
-        .isEqualTo(CalloutResponseDtoTest.expectedCalloutResponseDto.getCallId());
-    parameter = conferenceIdCaptor.getValue();
-    Assertions.assertThat(parameter)
-        .isEqualTo(CalloutRequestDtoTest.conferenceRequestCalloutDto.getConferenceId());
-
-    ManageConferenceParticipantRequest participant = participantCaptor.getValue();
-    Assertions.assertThat(participant)
-        .isEqualTo(ConferencesRequestDtoTest.manageConferenceParticipantRequestDto);
   }
 }

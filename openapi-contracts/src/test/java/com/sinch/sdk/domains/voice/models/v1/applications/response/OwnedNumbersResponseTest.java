@@ -5,14 +5,15 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.voice.models.v1.applications.Capability;
+import com.sinch.sdk.domains.voice.models.v1.applications.response.internal.OwnedNumbersListResponseInternal;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
 public class OwnedNumbersResponseTest extends BaseTest {
 
-  public static OwnedNumbersResponse expected =
-      OwnedNumbersResponse.builder()
+  public static OwnedNumbersListResponseInternal expected =
+      OwnedNumbersListResponseInternal.builder()
           .setNumbers(
               Arrays.asList(
                   OwnedNumberInformation.builder()
@@ -27,7 +28,7 @@ public class OwnedNumbersResponseTest extends BaseTest {
           .build();
 
   @GivenJsonResource("/domains/voice/v1/applications/response/OwnedNumbersResponseDto.json")
-  OwnedNumbersResponse loaded;
+  OwnedNumbersListResponseInternal loaded;
 
   @Test
   void deserializeResponse() {

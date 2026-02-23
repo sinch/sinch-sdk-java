@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.voice.models.v1.applications.response;
+package com.sinch.sdk.domains.voice.models.v1.applications.response.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,22 +7,24 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.voice.models.v1.applications.response.OwnedNumberInformation;
 import java.util.List;
 import java.util.Objects;
 
-@JsonPropertyOrder({OwnedNumbersResponseImpl.JSON_PROPERTY_NUMBERS})
+@JsonPropertyOrder({OwnedNumbersListResponseInternalImpl.JSON_PROPERTY_NUMBERS})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class OwnedNumbersResponseImpl implements OwnedNumbersResponse {
+public class OwnedNumbersListResponseInternalImpl implements OwnedNumbersListResponseInternal {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_NUMBERS = "numbers";
 
   private OptionalValue<List<OwnedNumberInformation>> numbers;
 
-  public OwnedNumbersResponseImpl() {}
+  public OwnedNumbersListResponseInternalImpl() {}
 
-  protected OwnedNumbersResponseImpl(OptionalValue<List<OwnedNumberInformation>> numbers) {
+  protected OwnedNumbersListResponseInternalImpl(
+      OptionalValue<List<OwnedNumberInformation>> numbers) {
     this.numbers = numbers;
   }
 
@@ -46,7 +48,8 @@ public class OwnedNumbersResponseImpl implements OwnedNumbersResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    OwnedNumbersResponseImpl getNumbersResponseObj = (OwnedNumbersResponseImpl) o;
+    OwnedNumbersListResponseInternalImpl getNumbersResponseObj =
+        (OwnedNumbersListResponseInternalImpl) o;
     return Objects.equals(this.numbers, getNumbersResponseObj.numbers);
   }
 
@@ -58,7 +61,7 @@ public class OwnedNumbersResponseImpl implements OwnedNumbersResponse {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class OwnedNumbersResponseImpl {\n");
+    sb.append("class OwnedNumbersListResponseInternalImpl {\n");
     sb.append("    numbers: ").append(toIndentedString(numbers)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -75,7 +78,7 @@ public class OwnedNumbersResponseImpl implements OwnedNumbersResponse {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements OwnedNumbersResponse.Builder {
+  static class Builder implements OwnedNumbersListResponseInternal.Builder {
     OptionalValue<List<OwnedNumberInformation>> numbers = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_NUMBERS)
@@ -84,8 +87,8 @@ public class OwnedNumbersResponseImpl implements OwnedNumbersResponse {
       return this;
     }
 
-    public OwnedNumbersResponse build() {
-      return new OwnedNumbersResponseImpl(numbers);
+    public OwnedNumbersListResponseInternal build() {
+      return new OwnedNumbersListResponseInternalImpl(numbers);
     }
   }
 }
