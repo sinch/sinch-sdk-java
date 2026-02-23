@@ -62,7 +62,7 @@ public class VerificationsSample {
   /**
    * Will use Sinch product to retrieve verification report by ID
    *
-   * @param service Verification service
+   * @param service Verification Report service
    * @param code Code received by SMS
    * @param id Verification ID related to the verification
    */

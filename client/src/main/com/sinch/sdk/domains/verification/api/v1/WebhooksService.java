@@ -11,7 +11,7 @@ import java.util.Map;
  * <p>Callback events are used to authorize and manage your verification requests and return
  * verification results.
  *
- * <p>see <a
+ * <p>See <a
  * href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/#tag/Verification-callbacks/paths/VerificationRequestEvent/post</a>
  *
  * @since 1.1
