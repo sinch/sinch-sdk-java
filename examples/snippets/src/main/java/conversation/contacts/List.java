@@ -9,7 +9,6 @@ package conversation.contacts;
 
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.conversation.api.v1.ContactsService;
-import com.sinch.sdk.domains.conversation.models.v1.contacts.request.ContactsListQueryParameters;
 import com.sinch.sdk.domains.conversation.models.v1.contacts.response.ContactsListResponse;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationRegion;
@@ -41,10 +40,7 @@ public class List {
 
     LOGGER.info("List contacts");
 
-    ContactsListQueryParameters request =
-        ContactsListQueryParameters.builder().setPageSize(20).build();
-
-    ContactsListResponse response = contactService.list(request);
+    ContactsListResponse response = contactService.list();
 
     LOGGER.info("Response: ");
 
