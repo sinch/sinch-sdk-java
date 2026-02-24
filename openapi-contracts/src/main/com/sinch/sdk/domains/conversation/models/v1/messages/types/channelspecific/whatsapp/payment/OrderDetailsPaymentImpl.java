@@ -14,7 +14,6 @@ import java.util.Objects;
   OrderDetailsPaymentImpl.JSON_PROPERTY_TYPE,
   OrderDetailsPaymentImpl.JSON_PROPERTY_REFERENCE_ID,
   OrderDetailsPaymentImpl.JSON_PROPERTY_TYPE_OF_GOODS,
-  OrderDetailsPaymentImpl.JSON_PROPERTY_PAYMENT_SETTINGS,
   OrderDetailsPaymentImpl.JSON_PROPERTY_PAYMENT_BUTTONS,
   OrderDetailsPaymentImpl.JSON_PROPERTY_TOTAL_AMOUNT_VALUE,
   OrderDetailsPaymentImpl.JSON_PROPERTY_ORDER
@@ -36,10 +35,6 @@ public class OrderDetailsPaymentImpl implements OrderDetailsPayment {
 
   private OptionalValue<TypeOfGoodsEnum> typeOfGoods;
 
-  public static final String JSON_PROPERTY_PAYMENT_SETTINGS = "payment_settings";
-
-  private OptionalValue<OrderDetailsSettings> paymentSettings;
-
   public static final String JSON_PROPERTY_PAYMENT_BUTTONS = "payment_buttons";
 
   private OptionalValue<List<WhatsAppPaymentButton>> paymentButtons;
@@ -58,14 +53,12 @@ public class OrderDetailsPaymentImpl implements OrderDetailsPayment {
       OptionalValue<TypeEnum> type,
       OptionalValue<String> referenceId,
       OptionalValue<TypeOfGoodsEnum> typeOfGoods,
-      OptionalValue<OrderDetailsSettings> paymentSettings,
       OptionalValue<List<WhatsAppPaymentButton>> paymentButtons,
       OptionalValue<Integer> totalAmountValue,
       OptionalValue<OrderDetailsPaymentOrder> order) {
     this.type = type;
     this.referenceId = referenceId;
     this.typeOfGoods = typeOfGoods;
-    this.paymentSettings = paymentSettings;
     this.paymentButtons = paymentButtons;
     this.totalAmountValue = totalAmountValue;
     this.order = order;
@@ -102,17 +95,6 @@ public class OrderDetailsPaymentImpl implements OrderDetailsPayment {
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<TypeOfGoodsEnum> typeOfGoods() {
     return typeOfGoods;
-  }
-
-  @JsonIgnore
-  public OrderDetailsSettings getPaymentSettings() {
-    return paymentSettings.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_PAYMENT_SETTINGS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<OrderDetailsSettings> paymentSettings() {
-    return paymentSettings;
   }
 
   @JsonIgnore
@@ -168,9 +150,6 @@ public class OrderDetailsPaymentImpl implements OrderDetailsPayment {
         && Objects.equals(
             this.typeOfGoods, whatsAppPaymentOrderDetailsChannelSpecificMessagePayment.typeOfGoods)
         && Objects.equals(
-            this.paymentSettings,
-            whatsAppPaymentOrderDetailsChannelSpecificMessagePayment.paymentSettings)
-        && Objects.equals(
             this.paymentButtons,
             whatsAppPaymentOrderDetailsChannelSpecificMessagePayment.paymentButtons)
         && Objects.equals(
@@ -182,8 +161,7 @@ public class OrderDetailsPaymentImpl implements OrderDetailsPayment {
 
   @Override
   public int hashCode() {
-    return Objects.hash(
-        type, referenceId, typeOfGoods, paymentSettings, paymentButtons, totalAmountValue, order);
+    return Objects.hash(type, referenceId, typeOfGoods, paymentButtons, totalAmountValue, order);
   }
 
   @Override
@@ -193,7 +171,6 @@ public class OrderDetailsPaymentImpl implements OrderDetailsPayment {
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    referenceId: ").append(toIndentedString(referenceId)).append("\n");
     sb.append("    typeOfGoods: ").append(toIndentedString(typeOfGoods)).append("\n");
-    sb.append("    paymentSettings: ").append(toIndentedString(paymentSettings)).append("\n");
     sb.append("    paymentButtons: ").append(toIndentedString(paymentButtons)).append("\n");
     sb.append("    totalAmountValue: ").append(toIndentedString(totalAmountValue)).append("\n");
     sb.append("    order: ").append(toIndentedString(order)).append("\n");
@@ -216,7 +193,6 @@ public class OrderDetailsPaymentImpl implements OrderDetailsPayment {
     OptionalValue<TypeEnum> type = OptionalValue.empty();
     OptionalValue<String> referenceId = OptionalValue.empty();
     OptionalValue<TypeOfGoodsEnum> typeOfGoods = OptionalValue.empty();
-    OptionalValue<OrderDetailsSettings> paymentSettings = OptionalValue.empty();
     OptionalValue<List<WhatsAppPaymentButton>> paymentButtons = OptionalValue.empty();
     OptionalValue<Integer> totalAmountValue = OptionalValue.empty();
     OptionalValue<OrderDetailsPaymentOrder> order = OptionalValue.empty();
@@ -236,12 +212,6 @@ public class OrderDetailsPaymentImpl implements OrderDetailsPayment {
     @JsonProperty(value = JSON_PROPERTY_TYPE_OF_GOODS, required = true)
     public Builder setTypeOfGoods(TypeOfGoodsEnum typeOfGoods) {
       this.typeOfGoods = OptionalValue.of(typeOfGoods);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_PAYMENT_SETTINGS)
-    public Builder setPaymentSettings(OrderDetailsSettings paymentSettings) {
-      this.paymentSettings = OptionalValue.of(paymentSettings);
       return this;
     }
 
@@ -265,7 +235,7 @@ public class OrderDetailsPaymentImpl implements OrderDetailsPayment {
 
     public OrderDetailsPayment build() {
       return new OrderDetailsPaymentImpl(
-          type, referenceId, typeOfGoods, paymentSettings, paymentButtons, totalAmountValue, order);
+          type, referenceId, typeOfGoods, paymentButtons, totalAmountValue, order);
     }
   }
 }

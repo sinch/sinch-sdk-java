@@ -102,15 +102,6 @@ public interface OrderDetailsPayment {
   TypeOfGoodsEnum getTypeOfGoods();
 
   /**
-   * Get paymentSettings
-   *
-   * @return paymentSettings
-   * @deprecated
-   */
-  @Deprecated
-  OrderDetailsSettings getPaymentSettings();
-
-  /**
    * Array of payment buttons (1 to 2 items).
    *
    * @return paymentButtons
@@ -173,16 +164,6 @@ public interface OrderDetailsPayment {
      * @see #getTypeOfGoods
      */
     Builder setTypeOfGoods(TypeOfGoodsEnum typeOfGoods);
-
-    /**
-     * see getter
-     *
-     * @param paymentSettings see getter
-     * @return Current builder
-     * @see #getPaymentSettings
-     */
-    @Deprecated
-    Builder setPaymentSettings(OrderDetailsSettings paymentSettings);
 
     /**
      * see getter
