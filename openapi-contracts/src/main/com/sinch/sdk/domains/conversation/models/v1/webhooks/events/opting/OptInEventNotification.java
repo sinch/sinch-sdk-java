@@ -53,15 +53,16 @@ public interface OptInEventNotification {
 
   /** Status of the opt-in registration. */
   public class StatusEnum extends EnumDynamic<String, StatusEnum> {
-    public static final StatusEnum SUCCEEDED = new StatusEnum("OPT_IN_SUCCEEDED");
-    public static final StatusEnum FAILED = new StatusEnum("OPT_IN_FAILED");
-    public static final StatusEnum STATUS_UNSPECIFIED = new StatusEnum("OPT_IN_STATUS_UNSPECIFIED");
+    public static final StatusEnum OPT_IN_SUCCEEDED = new StatusEnum("OPT_IN_SUCCEEDED");
+    public static final StatusEnum OPT_IN_FAILED = new StatusEnum("OPT_IN_FAILED");
+    public static final StatusEnum OPT_IN_STATUS_UNSPECIFIED =
+        new StatusEnum("OPT_IN_STATUS_UNSPECIFIED");
 
     private static final EnumSupportDynamic<String, StatusEnum> ENUM_SUPPORT =
         new EnumSupportDynamic<>(
             StatusEnum.class,
             StatusEnum::new,
-            Arrays.asList(SUCCEEDED, FAILED, STATUS_UNSPECIFIED));
+            Arrays.asList(OPT_IN_SUCCEEDED, OPT_IN_FAILED, OPT_IN_STATUS_UNSPECIFIED));
 
     private StatusEnum(String value) {
       super(value);

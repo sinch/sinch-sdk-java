@@ -11,16 +11,40 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.payment;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.utils.EnumDynamic;
+import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
-/**
- * OrderDetailsPaymentSettingsBoleto
- *
- * <p>* @deprecated
- */
-@JsonDeserialize(builder = OrderDetailsPaymentSettingsBoletoImpl.Builder.class)
-public interface OrderDetailsPaymentSettingsBoleto
+/** The Boleto payment settings. */
+@JsonDeserialize(builder = OrderDetailsPaymentButtonBoletoImpl.Builder.class)
+public interface OrderDetailsPaymentButtonBoleto
     extends com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp
-        .payment.OrderDetailsSettings {
+        .payment.WhatsAppPaymentButton {
+
+  /** Gets or Sets type */
+  public class TypeEnum extends EnumDynamic<String, TypeEnum> {
+    public static final TypeEnum BOLETO = new TypeEnum("boleto");
+
+    private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =
+        new EnumSupportDynamic<>(TypeEnum.class, TypeEnum::new, Arrays.asList(BOLETO));
+
+    private TypeEnum(String value) {
+      super(value);
+    }
+
+    public static Stream<TypeEnum> values() {
+      return ENUM_SUPPORT.values();
+    }
+
+    public static TypeEnum from(String value) {
+      return ENUM_SUPPORT.from(value);
+    }
+
+    public static String valueOf(TypeEnum e) {
+      return ENUM_SUPPORT.valueOf(e);
+    }
+  }
 
   /**
    * The Boleto digitable line which will be copied to the clipboard when the user taps the Boleto
@@ -38,7 +62,7 @@ public interface OrderDetailsPaymentSettingsBoleto
    * @return New Builder instance
    */
   static Builder builder() {
-    return new OrderDetailsPaymentSettingsBoletoImpl.Builder();
+    return new OrderDetailsPaymentButtonBoletoImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -58,6 +82,6 @@ public interface OrderDetailsPaymentSettingsBoleto
      *
      * @return The instance build with current builder values
      */
-    OrderDetailsPaymentSettingsBoleto build();
+    OrderDetailsPaymentButtonBoleto build();
   }
 }

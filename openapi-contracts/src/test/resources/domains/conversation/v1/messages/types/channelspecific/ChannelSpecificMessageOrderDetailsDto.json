@@ -25,6 +25,15 @@
           "key_type": "CNPJ"
         }
       },
+      "payment_buttons": [
+        {
+          "type": "pix_dynamic_code",
+          "code": "code value",
+          "merchant_name": "merchant name",
+          "key": "key value",
+          "key_type": "CNPJ"
+        }
+      ],
       "total_amount_value": 1200,
       "order": {
         "catalog_id": "catalog id",

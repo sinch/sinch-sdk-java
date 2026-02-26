@@ -109,7 +109,7 @@ public class SendMessageDtoTest extends ConversationBaseTest {
         .setProcessingStrategy(ProcessingStrategy.DISPATCH_ONLY)
         .setCorrelationId("correlation ID value")
         .setConversationMetadataUpdateStrategy(MetadataUpdateStrategy.REPLACE)
-        .setMessageContentType(MessageContentType.MARKETING);
+        .setMessageContentType(MessageContentType.CONTENT_MARKETING);
   }
 
   @Test

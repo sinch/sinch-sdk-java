@@ -40,6 +40,7 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.carousel.Caro
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.CardMessageMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ChoiceMessageMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ListMessageInternalMapper;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.WhatsAppPaymentButtonMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.template.TemplateMessageMapper;
 import com.sinch.sdk.domains.conversation.templates.api.adapters.TemplatesService;
 import com.sinch.sdk.models.ConversationContext;
@@ -304,6 +305,7 @@ public class ConversationService
       SendMessageRequestMapper.initMapper();
       TemplateMessageMapper.initMapper();
       WhatsAppInteractiveHeaderMapper.initMapper();
+      WhatsAppPaymentButtonMapper.initMapper();
     }
 
     public static LocalLazyInit init() {

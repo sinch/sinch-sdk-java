@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 /** The payment order details content. */
@@ -104,8 +105,17 @@ public interface OrderDetailsPayment {
    * Get paymentSettings
    *
    * @return paymentSettings
+   * @deprecated
    */
+  @Deprecated
   OrderDetailsSettings getPaymentSettings();
+
+  /**
+   * Array of payment buttons (1 to 2 items).
+   *
+   * @return paymentButtons
+   */
+  List<WhatsAppPaymentButton> getPaymentButtons();
 
   /**
    * Integer representing the total amount of the transaction.
@@ -171,7 +181,17 @@ public interface OrderDetailsPayment {
      * @return Current builder
      * @see #getPaymentSettings
      */
+    @Deprecated
     Builder setPaymentSettings(OrderDetailsSettings paymentSettings);
+
+    /**
+     * see getter
+     *
+     * @param paymentButtons see getter
+     * @return Current builder
+     * @see #getPaymentButtons
+     */
+    Builder setPaymentButtons(List<WhatsAppPaymentButton> paymentButtons);
 
     /**
      * see getter

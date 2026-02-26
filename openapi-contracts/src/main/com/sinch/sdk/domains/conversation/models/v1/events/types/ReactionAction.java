@@ -9,17 +9,22 @@ import java.util.stream.Stream;
 public class ReactionAction extends EnumDynamic<String, ReactionAction> {
 
   /** Unrecognized type of action */
-  public static final ReactionAction UNKNOWN = new ReactionAction("REACTION_ACTION_UNKNOWN");
+  public static final ReactionAction REACTION_ACTION_UNKNOWN =
+      new ReactionAction("REACTION_ACTION_UNKNOWN");
 
   /** User placed some emoji reaction */
-  public static final ReactionAction REACT = new ReactionAction("REACTION_ACTION_REACT");
+  public static final ReactionAction REACTION_ACTION_REACT =
+      new ReactionAction("REACTION_ACTION_REACT");
 
   /** User removed previously placed emoji reaction */
-  public static final ReactionAction UNREACT = new ReactionAction("REACTION_ACTION_UNREACT");
+  public static final ReactionAction REACTION_ACTION_UNREACT =
+      new ReactionAction("REACTION_ACTION_UNREACT");
 
   private static final EnumSupportDynamic<String, ReactionAction> ENUM_SUPPORT =
       new EnumSupportDynamic<>(
-          ReactionAction.class, ReactionAction::new, Arrays.asList(UNKNOWN, REACT, UNREACT));
+          ReactionAction.class,
+          ReactionAction::new,
+          Arrays.asList(REACTION_ACTION_UNKNOWN, REACTION_ACTION_REACT, REACTION_ACTION_UNREACT));
 
   private ReactionAction(String value) {
     super(value);

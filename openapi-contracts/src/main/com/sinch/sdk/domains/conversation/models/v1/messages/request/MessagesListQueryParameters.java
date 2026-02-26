@@ -12,6 +12,7 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.request;
 
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
+import com.sinch.sdk.domains.conversation.models.v1.ConversationDirection;
 import java.time.Instant;
 
 /** MessagesListQueryParameters */
@@ -100,6 +101,13 @@ public interface MessagesListQueryParameters {
    * @return channel
    */
   OptionalValue<ConversationChannel> getChannel();
+
+  /**
+   * Get direction
+   *
+   * @return direction
+   */
+  OptionalValue<ConversationDirection> getDirection();
 
   /**
    * Getting builder
@@ -229,6 +237,15 @@ public interface MessagesListQueryParameters {
      * @see #getChannel
      */
     Builder setChannel(ConversationChannel channel);
+
+    /**
+     * see getter
+     *
+     * @param direction see getter
+     * @return Current builder
+     * @see #getDirection
+     */
+    Builder setDirection(ConversationDirection direction);
 
     /**
      * Create instance

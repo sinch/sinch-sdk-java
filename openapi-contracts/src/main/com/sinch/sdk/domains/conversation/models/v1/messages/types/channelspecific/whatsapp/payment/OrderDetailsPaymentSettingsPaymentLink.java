@@ -12,7 +12,11 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspeci
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-/** OrderDetailsPaymentSettingsPaymentLink */
+/**
+ * OrderDetailsPaymentSettingsPaymentLink
+ *
+ * <p>* @deprecated
+ */
 @JsonDeserialize(builder = OrderDetailsPaymentSettingsPaymentLinkImpl.Builder.class)
 public interface OrderDetailsPaymentSettingsPaymentLink
     extends com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp

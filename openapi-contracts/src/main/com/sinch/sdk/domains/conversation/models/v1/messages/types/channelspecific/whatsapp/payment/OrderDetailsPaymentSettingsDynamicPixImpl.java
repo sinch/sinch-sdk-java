@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 
+@Deprecated
 @JsonPropertyOrder({OrderDetailsPaymentSettingsDynamicPixImpl.JSON_PROPERTY_DYNAMIC_PIX})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)

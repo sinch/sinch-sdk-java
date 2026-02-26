@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 
+@Deprecated
 @JsonPropertyOrder({OrderDetailsPaymentSettingsPaymentLinkImpl.JSON_PROPERTY_PAYMENT_LINK})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
