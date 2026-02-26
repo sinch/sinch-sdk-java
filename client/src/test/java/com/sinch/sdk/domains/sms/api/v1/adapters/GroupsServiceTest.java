@@ -2,6 +2,9 @@ package com.sinch.sdk.domains.sms.api.v1.adapters;
 
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
@@ -212,6 +215,87 @@ class GroupsServiceTest extends BaseTest {
         PaginationFillerHelper.parametersFiller("page", 0, STYLE.FORM, true, commonParameters);
     Collection<URLParameter> urlParameters1 =
         PaginationFillerHelper.parametersFiller("page", 1, STYLE.FORM, true, commonParameters);
+
+    HttpRequest httpRequest0 =
+        new HttpRequest(
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/groups",
+            HttpMethod.GET,
+            urlParameters0,
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpRequest httpRequest1 =
+        new HttpRequest(
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/groups",
+            HttpMethod.GET,
+            urlParameters1,
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpResponse httpResponse0 =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonListGroupsResponseDtoPage0.getBytes());
+    HttpResponse httpResponse1 =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonListGroupsResponseDtoPage1.getBytes());
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest0))))
+        .thenReturn(httpResponse0);
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest1))))
+        .thenReturn(httpResponse1);
+
+    ListGroupsQueryParameters initialRequest =
+        ListGroupsQueryParameters.builder().setPage(0).setPageSize(2).build();
+
+    ListGroupsResponse response = service.list(initialRequest);
+
+    Iterator<Group> iterator = response.iterator();
+
+    Group item = iterator.next();
+    TestHelpers.recursiveEquals(item, listGroupsResponseDtoPage0.getItems().get(0));
+    Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
+
+    item = iterator.next();
+    TestHelpers.recursiveEquals(item, listGroupsResponseDtoPage0.getItems().get(1));
+    Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
+
+    item = iterator.next();
+    TestHelpers.recursiveEquals(item, listGroupsResponseDtoPage1.getItems().get(0));
+
+    Assertions.assertThat(iterator.hasNext()).isEqualTo(false);
+
+    // Verify that each API call was made exactly once
+    verify(httpClient, times(1))
+        .invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest0)));
+    verify(httpClient, times(1))
+        .invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest1)));
+    verifyNoMoreInteractions(httpClient);
+  }
+
+  @Test
+  void listWithoutSMSNavigatorAutoStopNavigationDetection() throws ApiException {
+
+    List<Object> commonParameters = Arrays.asList("page_size", 1, STYLE.FORM, true);
+
+    Collection<URLParameter> urlParameters0 =
+        PaginationFillerHelper.parametersFiller("page", 0, STYLE.FORM, true, commonParameters);
+    Collection<URLParameter> urlParameters1 =
+        PaginationFillerHelper.parametersFiller("page", 1, STYLE.FORM, true, commonParameters);
     Collection<URLParameter> urlParameters2 =
         PaginationFillerHelper.parametersFiller("page", 2, STYLE.FORM, true, commonParameters);
 
@@ -271,7 +355,7 @@ class GroupsServiceTest extends BaseTest {
         .thenReturn(httpResponse2);
 
     ListGroupsQueryParameters initialRequest =
-        ListGroupsQueryParameters.builder().setPage(0).setPageSize(2).build();
+        ListGroupsQueryParameters.builder().setPage(0).setPageSize(1).build();
 
     ListGroupsResponse response = service.list(initialRequest);
 
@@ -289,6 +373,24 @@ class GroupsServiceTest extends BaseTest {
     TestHelpers.recursiveEquals(item, listGroupsResponseDtoPage1.getItems().get(0));
 
     Assertions.assertThat(iterator.hasNext()).isEqualTo(false);
+
+    // Verify that each API call was made exactly once
+    verify(httpClient, times(1))
+        .invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest0)));
+    verify(httpClient, times(1))
+        .invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest1)));
+    verify(httpClient, times(1))
+        .invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest2)));
+    verifyNoMoreInteractions(httpClient);
   }
 
   @Test

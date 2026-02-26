@@ -2,6 +2,9 @@ package com.sinch.sdk.domains.sms.api.v1.adapters;
 
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
@@ -227,6 +230,126 @@ class DeliveryReportsServiceTest extends BaseTest {
         PaginationFillerHelper.parametersFiller("page", 0, STYLE.FORM, true, commonParameters);
     Collection<URLParameter> urlParameters1 =
         PaginationFillerHelper.parametersFiller("page", 1, STYLE.FORM, true, commonParameters);
+
+    HttpRequest httpRequest0 =
+        new HttpRequest(
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/delivery_reports",
+            HttpMethod.GET,
+            urlParameters0,
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+    HttpRequest httpRequest1 =
+        new HttpRequest(
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/delivery_reports",
+            HttpMethod.GET,
+            urlParameters1,
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+
+    HttpResponse httpResponse0 =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonListDeliveryReportResponseDtoPage0.getBytes());
+    HttpResponse httpResponse1 =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonListDeliveryReportResponseDtoPage1.getBytes());
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest0))))
+        .thenReturn(httpResponse0);
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest1))))
+        .thenReturn(httpResponse1);
+
+    ListDeliveryReportsQueryParameters initialRequest =
+        ListDeliveryReportsQueryParameters.builder()
+            .setPage(0)
+            .setPageSize(2)
+            .setStartDate(Instant.parse("2023-11-03T15:21:21.113Z"))
+            .setEndDate(Instant.parse("2023-12-12T15:54:21.321Z"))
+            .setStatus(Arrays.asList(DeliveryStatus.QUEUED, DeliveryStatus.DISPATCHED))
+            .setCode(
+                Arrays.asList(
+                    DeliveryReceiptStatusCode.DISPATCHED,
+                    DeliveryReceiptStatusCode.UNPROVISIONED_REGION))
+            .setClientReference("client reference")
+            .build();
+
+    ListDeliveryReportsResponse response = service.list(initialRequest);
+
+    Iterator<RecipientDeliveryReport> iterator = response.iterator();
+
+    RecipientDeliveryReport item = iterator.next();
+    TestHelpers.recursiveEquals(item, listDeliveryReportResponseDtoPage0.getItems().get(0));
+    Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
+
+    item = iterator.next();
+    TestHelpers.recursiveEquals(item, listDeliveryReportResponseDtoPage0.getItems().get(1));
+    Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
+
+    item = iterator.next();
+    TestHelpers.recursiveEquals(item, listDeliveryReportResponseDtoPage1.getItems().get(0));
+
+    Assertions.assertThat(iterator.hasNext()).isEqualTo(false);
+
+    // Verify that each API call was made exactly once
+    verify(httpClient, times(1))
+        .invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest0)));
+    verify(httpClient, times(1))
+        .invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest1)));
+    verifyNoMoreInteractions(httpClient);
+  }
+
+  @Test
+  void listWithoutSMSNavigatorAutoStopNavigationDetection() throws ApiException {
+
+    List<Object> commonParameters =
+        Arrays.asList(
+            "page_size",
+            1,
+            STYLE.FORM,
+            true,
+            "start_date",
+            "2023-11-03T15:21:21.113Z",
+            STYLE.FORM,
+            true,
+            "end_date",
+            "2023-12-12T15:54:21.321Z",
+            STYLE.FORM,
+            true,
+            "status",
+            Arrays.asList(DeliveryStatus.QUEUED, DeliveryStatus.DISPATCHED),
+            STYLE.FORM,
+            false,
+            "code",
+            Arrays.asList(
+                DeliveryReceiptStatusCode.DISPATCHED,
+                DeliveryReceiptStatusCode.UNPROVISIONED_REGION),
+            STYLE.FORM,
+            false,
+            "client_reference",
+            "client reference",
+            STYLE.FORM,
+            true);
+
+    Collection<URLParameter> urlParameters0 =
+        PaginationFillerHelper.parametersFiller("page", 0, STYLE.FORM, true, commonParameters);
+    Collection<URLParameter> urlParameters1 =
+        PaginationFillerHelper.parametersFiller("page", 1, STYLE.FORM, true, commonParameters);
     Collection<URLParameter> urlParameters2 =
         PaginationFillerHelper.parametersFiller("page", 2, STYLE.FORM, true, commonParameters);
 
@@ -288,7 +411,7 @@ class DeliveryReportsServiceTest extends BaseTest {
     ListDeliveryReportsQueryParameters initialRequest =
         ListDeliveryReportsQueryParameters.builder()
             .setPage(0)
-            .setPageSize(2)
+            .setPageSize(1)
             .setStartDate(Instant.parse("2023-11-03T15:21:21.113Z"))
             .setEndDate(Instant.parse("2023-12-12T15:54:21.321Z"))
             .setStatus(Arrays.asList(DeliveryStatus.QUEUED, DeliveryStatus.DISPATCHED))
@@ -315,5 +438,23 @@ class DeliveryReportsServiceTest extends BaseTest {
     TestHelpers.recursiveEquals(item, listDeliveryReportResponseDtoPage1.getItems().get(0));
 
     Assertions.assertThat(iterator.hasNext()).isEqualTo(false);
+
+    // Verify that each API call was made exactly once
+    verify(httpClient, times(1))
+        .invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest0)));
+    verify(httpClient, times(1))
+        .invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest1)));
+    verify(httpClient, times(1))
+        .invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest2)));
+    verifyNoMoreInteractions(httpClient);
   }
 }

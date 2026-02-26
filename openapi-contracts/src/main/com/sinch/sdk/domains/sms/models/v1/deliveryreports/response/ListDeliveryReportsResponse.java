@@ -23,7 +23,6 @@ public class ListDeliveryReportsResponse extends ListResponse<RecipientDeliveryR
 
   private final Page<RecipientDeliveryReport, Integer> page;
   private final Supplier<ListDeliveryReportsResponse> supplier;
-  private ListDeliveryReportsResponse nextPage;
 
   public ListDeliveryReportsResponse(
       Supplier<ListDeliveryReportsResponse> supplier, Page<RecipientDeliveryReport, Integer> page) {
@@ -36,10 +35,7 @@ public class ListDeliveryReportsResponse extends ListResponse<RecipientDeliveryR
     if (null == page.getNextPageToken() || null == getContent() || getContent().isEmpty()) {
       return false;
     }
-    if (null == nextPage) {
-      nextPage = supplier.get();
-    }
-    return (null != nextPage.getContent() && !nextPage.getContent().isEmpty());
+    return true;
   }
 
   @Override
@@ -47,7 +43,6 @@ public class ListDeliveryReportsResponse extends ListResponse<RecipientDeliveryR
     if (!hasNextPage()) {
       throw new NoSuchElementException("Reached the last page of the API response");
     }
-    nextPage = null;
     return supplier.get();
   }
 

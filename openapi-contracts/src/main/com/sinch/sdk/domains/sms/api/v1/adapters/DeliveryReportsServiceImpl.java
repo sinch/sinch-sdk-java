@@ -93,10 +93,19 @@ public class DeliveryReportsServiceImpl
       DeliveryReportList deserialized =
           mapper.deserialize(response, new TypeReference<DeliveryReportList>() {});
 
+      // if page size was set we can compute end of list now if returned items count
+      // is less than page size, otherwise we will have to perform an additional request to be sure
+      // if we reached the end of the list or not, this is handled by SMSCursorPageNavigator
+      boolean stopPagination =
+          null != queryParameter
+              && queryParameter.getPageSize().isPresent()
+              && deserialized.getItems().size() < queryParameter.getPageSize().get();
+
       Page<RecipientDeliveryReport, Integer> page =
           new Page<>(
               deserialized.getItems(),
-              new SMSCursorPageNavigator(deserialized.getPage(), deserialized.getPageSize()));
+              new SMSCursorPageNavigator(
+                  deserialized.getPage(), stopPagination ? null : deserialized.getPageSize()));
 
       Integer nextPage = page.getNextPageToken();
 
@@ -107,7 +116,7 @@ public class DeliveryReportsServiceImpl
           nextPage != null ? listRequestBuilder(nextParameters) : null;
 
       return new ListDeliveryReportsResponse(
-          () -> _listPageAsListResponse(queryParameter, nextHttpRequest), page);
+          () -> _listPageAsListResponse(nextParameters, nextHttpRequest), page);
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
