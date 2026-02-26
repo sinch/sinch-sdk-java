@@ -18,9 +18,9 @@ import java.util.Collections;
 /** Auto paginated response for list of AppResponse */
 public class AppsListResponse extends ListResponse<AppResponse> {
 
-  private final Page<AppResponse, Object> page;
+  private final Page<AppResponse, Void> page;
 
-  public AppsListResponse(Page<AppResponse, Object> page) {
+  public AppsListResponse(Page<AppResponse, Void> page) {
     this.page = page;
   }
 

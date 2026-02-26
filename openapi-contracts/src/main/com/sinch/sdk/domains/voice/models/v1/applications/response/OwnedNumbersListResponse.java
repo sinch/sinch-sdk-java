@@ -18,9 +18,9 @@ import java.util.Collections;
 /** Auto paginated response for list of OwnedNumberInformation */
 public class OwnedNumbersListResponse extends ListResponse<OwnedNumberInformation> {
 
-  private final Page<OwnedNumberInformation, Object> page;
+  private final Page<OwnedNumberInformation, Void> page;
 
-  public OwnedNumbersListResponse(Page<OwnedNumberInformation, Object> page) {
+  public OwnedNumbersListResponse(Page<OwnedNumberInformation, Void> page) {
     this.page = page;
   }
 

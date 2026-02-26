@@ -19,9 +19,9 @@ import java.util.Collections;
 /** Auto paginated response for list of Webhook */
 public class WebhooksListResponse extends ListResponse<Webhook> {
 
-  private final Page<Webhook, Object> page;
+  private final Page<Webhook, Void> page;
 
-  public WebhooksListResponse(Page<Webhook, Object> page) {
+  public WebhooksListResponse(Page<Webhook, Void> page) {
     this.page = page;
   }
 
