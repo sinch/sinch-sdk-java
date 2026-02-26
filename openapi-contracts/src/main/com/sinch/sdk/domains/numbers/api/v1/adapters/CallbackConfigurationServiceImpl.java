@@ -61,7 +61,7 @@ public class CallbackConfigurationServiceImpl
   @Override
   public CallbackConfigurationResponse get() throws ApiException {
 
-    LOGGER.finest("[get]" + " ");
+    LOGGER.finest("[get]");
 
     HttpRequest httpRequest = getRequestBuilder();
     HttpResponse response =

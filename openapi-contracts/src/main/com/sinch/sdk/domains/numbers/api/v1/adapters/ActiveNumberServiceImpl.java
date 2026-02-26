@@ -78,10 +78,10 @@ public class ActiveNumberServiceImpl
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _getActiveNumbersPageAsListResponse(queryParameter, httpRequest);
+    return _listPageAsListResponse(queryParameter, httpRequest);
   }
 
-  public ActiveNumbersListResponse _getActiveNumbersPageAsListResponse(
+  private ActiveNumbersListResponse _listPageAsListResponse(
       ActiveNumbersListQueryParameters queryParameter, HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
@@ -96,17 +96,14 @@ public class ActiveNumberServiceImpl
       String nextToken = deserialized.getNextPageToken();
 
       ActiveNumbersListQueryParameters nextParameters =
-          ActiveNumbersListQueryParameters.builder(queryParameter)
-              .setPageToken(deserialized.getNextPageToken())
-              .build();
+          ActiveNumbersListQueryParameters.builder(queryParameter).setPageToken(nextToken).build();
 
-      HttpRequest nextPage = null;
-      if (!StringUtil.isEmpty(nextToken)) {
-        nextPage = listRequestBuilder(nextParameters);
-      }
+      final HttpRequest nextHttpRequest =
+          !StringUtil.isEmpty(nextToken) ? listRequestBuilder(nextParameters) : null;
 
       return new ActiveNumbersListResponse(
-          this, new Page<>(null, deserialized.getActiveNumbers(), new PageNavigator<>(nextPage)));
+          () -> _listPageAsListResponse(nextParameters, nextHttpRequest),
+          new Page<>(deserialized.getActiveNumbers(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

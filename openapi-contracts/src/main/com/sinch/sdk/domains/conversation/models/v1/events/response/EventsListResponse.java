@@ -13,23 +13,21 @@ package com.sinch.sdk.domains.conversation.models.v1.events.response;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.models.pagination.ListResponse;
 import com.sinch.sdk.core.models.pagination.Page;
-import com.sinch.sdk.domains.conversation.api.v1.adapters.EventsServiceImpl;
 import com.sinch.sdk.domains.conversation.models.v1.events.ConversationEvent;
-import com.sinch.sdk.domains.conversation.models.v1.events.request.EventsListQueryParameters;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.NoSuchElementException;
+import java.util.function.Supplier;
 
 /** Auto paginated response for list of ConversationEvent */
 public class EventsListResponse extends ListResponse<ConversationEvent> {
 
-  private final Page<EventsListQueryParameters, ConversationEvent, HttpRequest> page;
-  private final EventsServiceImpl service;
+  private final Page<ConversationEvent, HttpRequest> page;
+  final Supplier<EventsListResponse> supplier;
 
   public EventsListResponse(
-      EventsServiceImpl service,
-      Page<EventsListQueryParameters, ConversationEvent, HttpRequest> page) {
-    this.service = service;
+      Supplier<EventsListResponse> supplier, Page<ConversationEvent, HttpRequest> page) {
+    this.supplier = supplier;
     this.page = page;
   }
 
@@ -43,12 +41,10 @@ public class EventsListResponse extends ListResponse<ConversationEvent> {
 
   @Override
   public EventsListResponse nextPage() {
-
     if (!hasNextPage()) {
       throw new NoSuchElementException("Reached the last page of the API response");
     }
-
-    return service._getEventsListPageAsListResponse(page.getParameters(), page.getNextPageToken());
+    return supplier.get();
   }
 
   @Override

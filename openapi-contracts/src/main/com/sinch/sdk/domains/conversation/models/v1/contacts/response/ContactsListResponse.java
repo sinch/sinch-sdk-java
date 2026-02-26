@@ -13,22 +13,21 @@ package com.sinch.sdk.domains.conversation.models.v1.contacts.response;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.models.pagination.ListResponse;
 import com.sinch.sdk.core.models.pagination.Page;
-import com.sinch.sdk.domains.conversation.api.v1.adapters.ContactsServiceImpl;
 import com.sinch.sdk.domains.conversation.models.v1.contacts.Contact;
-import com.sinch.sdk.domains.conversation.models.v1.contacts.request.ContactsListQueryParameters;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.NoSuchElementException;
+import java.util.function.Supplier;
 
 /** Auto paginated response for list of Contact */
 public class ContactsListResponse extends ListResponse<Contact> {
 
-  private final Page<ContactsListQueryParameters, Contact, HttpRequest> page;
-  private final ContactsServiceImpl service;
+  private final Page<Contact, HttpRequest> page;
+  final Supplier<ContactsListResponse> supplier;
 
   public ContactsListResponse(
-      ContactsServiceImpl service, Page<ContactsListQueryParameters, Contact, HttpRequest> page) {
-    this.service = service;
+      Supplier<ContactsListResponse> supplier, Page<Contact, HttpRequest> page) {
+    this.supplier = supplier;
     this.page = page;
   }
 
@@ -42,13 +41,10 @@ public class ContactsListResponse extends ListResponse<Contact> {
 
   @Override
   public ContactsListResponse nextPage() {
-
     if (!hasNextPage()) {
       throw new NoSuchElementException("Reached the last page of the API response");
     }
-
-    return service._getContactsListPageAsListResponse(
-        page.getParameters(), page.getNextPageToken());
+    return supplier.get();
   }
 
   @Override

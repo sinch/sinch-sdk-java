@@ -13,21 +13,21 @@ package com.sinch.sdk.domains.mailgun.models.v1.templates.response;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.models.pagination.ListResponse;
 import com.sinch.sdk.core.models.pagination.Page;
-import com.sinch.sdk.domains.mailgun.api.v1.adapters.TemplatesServiceImpl;
 import com.sinch.sdk.domains.mailgun.models.v1.templates.Version;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.NoSuchElementException;
+import java.util.function.Supplier;
 
 /** Auto paginated response for list of Version */
 public class ListVersionsResponse extends ListResponse<Version> {
 
-  private final Page<Object, Version, HttpRequest> page;
-  private final TemplatesServiceImpl service;
+  private final Page<Version, HttpRequest> page;
+  final Supplier<ListVersionsResponse> supplier;
 
   public ListVersionsResponse(
-      TemplatesServiceImpl service, Page<Object, Version, HttpRequest> page) {
-    this.service = service;
+      Supplier<ListVersionsResponse> supplier, Page<Version, HttpRequest> page) {
+    this.supplier = supplier;
     this.page = page;
   }
 
@@ -41,12 +41,10 @@ public class ListVersionsResponse extends ListResponse<Version> {
 
   @Override
   public ListVersionsResponse nextPage() {
-
     if (!hasNextPage()) {
       throw new NoSuchElementException("Reached the last page of the API response");
     }
-
-    return service._getVersionsPageAsListResponse(page.getNextPageToken());
+    return supplier.get();
   }
 
   @Override

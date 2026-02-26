@@ -75,6 +75,12 @@ public class InboundsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Inb
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
+    return _listPageAsListResponse(queryParameter, httpRequest);
+  }
+
+  private ListInboundsResponse _listPageAsListResponse(
+      ListInboundMessagesQueryParameters queryParameter, HttpRequest httpRequest)
+      throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -84,12 +90,21 @@ public class InboundsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Inb
       ApiInboundList deserialized =
           mapper.deserialize(response, new TypeReference<ApiInboundList>() {});
 
-      return new ListInboundsResponse(
-          this,
+      Page<InboundMessage, Integer> page =
           new Page<>(
-              queryParameter,
               deserialized.getItems(),
-              new SMSCursorPageNavigator(deserialized.getPage(), deserialized.getPageSize())));
+              new SMSCursorPageNavigator(deserialized.getPage(), deserialized.getPageSize()));
+
+      Integer nextPage = page.getNextPageToken();
+
+      ListInboundMessagesQueryParameters nextParameters =
+          ListInboundMessagesQueryParameters.builder(queryParameter).setPage(nextPage).build();
+
+      final HttpRequest nextHttpRequest =
+          nextPage != null ? listRequestBuilder(nextParameters) : null;
+
+      return new ListInboundsResponse(
+          () -> _listPageAsListResponse(queryParameter, nextHttpRequest), page);
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

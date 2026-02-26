@@ -18,9 +18,9 @@ import java.util.Collections;
 /** Auto paginated response for list of AppResponse */
 public class AppsListResponse extends ListResponse<AppResponse> {
 
-  private final Page<Object, AppResponse, Object> page;
+  private final Page<AppResponse, Object> page;
 
-  public AppsListResponse(Page<Object, AppResponse, Object> page) {
+  public AppsListResponse(Page<AppResponse, Object> page) {
     this.page = page;
   }
 
@@ -31,7 +31,6 @@ public class AppsListResponse extends ListResponse<AppResponse> {
 
   @Override
   public AppsListResponse nextPage() {
-
     return null;
   }
 

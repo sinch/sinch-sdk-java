@@ -66,6 +66,10 @@ public class AppsServiceImpl implements com.sinch.sdk.domains.conversation.api.v
     LOGGER.finest("[list]");
 
     HttpRequest httpRequest = listRequestBuilder();
+    return _listPageAsListResponse(httpRequest);
+  }
+
+  private AppsListResponse _listPageAsListResponse(HttpRequest httpRequest) throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -75,7 +79,7 @@ public class AppsServiceImpl implements com.sinch.sdk.domains.conversation.api.v
       AppsListResponseInternal deserialized =
           mapper.deserialize(response, new TypeReference<AppsListResponseInternal>() {});
 
-      return new AppsListResponse(new Page<>(null, deserialized.getApps(), null));
+      return new AppsListResponse(new Page<>(deserialized.getApps(), null));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

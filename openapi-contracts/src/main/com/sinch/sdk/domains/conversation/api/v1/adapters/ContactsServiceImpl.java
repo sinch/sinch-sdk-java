@@ -84,10 +84,10 @@ public class ContactsServiceImpl
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _getContactsListPageAsListResponse(queryParameter, httpRequest);
+    return _listPageAsListResponse(queryParameter, httpRequest);
   }
 
-  public ContactsListResponse _getContactsListPageAsListResponse(
+  private ContactsListResponse _listPageAsListResponse(
       ContactsListQueryParameters queryParameter, HttpRequest httpRequest) throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
@@ -101,18 +101,14 @@ public class ContactsServiceImpl
       String nextToken = deserialized.getNextPageToken();
 
       ContactsListQueryParameters nextParameters =
-          ContactsListQueryParameters.builder(queryParameter)
-              .setPageToken(deserialized.getNextPageToken())
-              .build();
+          ContactsListQueryParameters.builder(queryParameter).setPageToken(nextToken).build();
 
-      HttpRequest nextPage = null;
-      if (!StringUtil.isEmpty(nextToken)) {
-        nextPage = listRequestBuilder(nextParameters);
-      }
+      final HttpRequest nextHttpRequest =
+          !StringUtil.isEmpty(nextToken) ? listRequestBuilder(nextParameters) : null;
 
       return new ContactsListResponse(
-          this,
-          new Page<>(nextParameters, deserialized.getContacts(), new PageNavigator<>(nextPage)));
+          () -> _listPageAsListResponse(nextParameters, nextHttpRequest),
+          new Page<>(deserialized.getContacts(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -484,10 +480,10 @@ public class ContactsServiceImpl
     LOGGER.finest("[listIdentityConflicts]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listIdentityConflictsRequestBuilder(queryParameter);
-    return _getIdentityConflictsListPageAsListResponse(queryParameter, httpRequest);
+    return _listIdentityConflictsPageAsListResponse(queryParameter, httpRequest);
   }
 
-  public IdentityConflictsListResponse _getIdentityConflictsListPageAsListResponse(
+  private IdentityConflictsListResponse _listIdentityConflictsPageAsListResponse(
       IdentityConflictsListQueryParameters queryParameter, HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
@@ -504,17 +500,17 @@ public class ContactsServiceImpl
 
       IdentityConflictsListQueryParameters nextParameters =
           IdentityConflictsListQueryParameters.builder(queryParameter)
-              .setPageToken(deserialized.getNextPageToken())
+              .setPageToken(nextToken)
               .build();
 
-      HttpRequest nextPage = null;
-      if (!StringUtil.isEmpty(nextToken)) {
-        nextPage = listIdentityConflictsRequestBuilder(nextParameters);
-      }
+      final HttpRequest nextHttpRequest =
+          !StringUtil.isEmpty(nextToken)
+              ? listIdentityConflictsRequestBuilder(nextParameters)
+              : null;
 
       return new IdentityConflictsListResponse(
-          this,
-          new Page<>(nextParameters, deserialized.getConflicts(), new PageNavigator<>(nextPage)));
+          () -> _listIdentityConflictsPageAsListResponse(nextParameters, nextHttpRequest),
+          new Page<>(deserialized.getConflicts(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

@@ -159,7 +159,7 @@ public class TemplatesV2ServiceTest extends TemplatesBaseTest {
 
     TemplatesV2ListResponse expectedListResponse =
         new TemplatesV2ListResponse(
-            new Page<>(null, TemplatesV2ListResponseDtoTest.expectedDto.getTemplates(), null));
+            new Page<>(TemplatesV2ListResponseDtoTest.expectedDto.getTemplates(), null));
     Iterator<TemplateV2> expectedIterator = expectedListResponse.iterator();
 
     while (iterator.hasNext()) {
@@ -202,8 +202,7 @@ public class TemplatesV2ServiceTest extends TemplatesBaseTest {
 
     TranslationsV2ListResponse expectedListResponse =
         new TranslationsV2ListResponse(
-            new Page<>(
-                null, TranslationsV2ListResponseDtoTest.expectedDto.getTranslations(), null));
+            new Page<>(TranslationsV2ListResponseDtoTest.expectedDto.getTranslations(), null));
     Iterator<TemplateTranslation> expectedIterator = expectedListResponse.iterator();
 
     while (iterator.hasNext()) {
@@ -253,8 +252,7 @@ public class TemplatesV2ServiceTest extends TemplatesBaseTest {
 
     TranslationsV2ListResponse expectedListResponse =
         new TranslationsV2ListResponse(
-            new Page<>(
-                null, TranslationsV2ListResponseDtoTest.expectedDto.getTranslations(), null));
+            new Page<>(TranslationsV2ListResponseDtoTest.expectedDto.getTranslations(), null));
     Iterator<TemplateTranslation> expectedIterator = expectedListResponse.iterator();
 
     while (iterator.hasNext()) {

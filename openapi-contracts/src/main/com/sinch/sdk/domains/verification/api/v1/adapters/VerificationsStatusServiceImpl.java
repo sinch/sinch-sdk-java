@@ -113,15 +113,15 @@ public class VerificationsStatusServiceImpl
   public VerificationStatusResponse getByIdentity(
       NumberIdentity identity, VerificationMethod method) {
 
-    return getByIdentity(identity.getEndpoint(), method.value());
+    return getByIdentity(method.value(), identity.getEndpoint());
   }
 
-  private VerificationStatusResponse getByIdentity(String endpoint, String method)
+  private VerificationStatusResponse getByIdentity(String method, String endpoint)
       throws ApiException {
 
-    LOGGER.finest("[getByIdentity]" + " " + "endpoint: " + endpoint + ", " + "method: " + method);
+    LOGGER.finest("[getByIdentity]" + " " + "method: " + method + ", " + "endpoint: " + endpoint);
 
-    HttpRequest httpRequest = getByIdentityRequestBuilder(endpoint, method);
+    HttpRequest httpRequest = getByIdentityRequestBuilder(method, endpoint);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -138,25 +138,24 @@ public class VerificationsStatusServiceImpl
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest getByIdentityRequestBuilder(String endpoint, String method)
+  private HttpRequest getByIdentityRequestBuilder(String method, String endpoint)
       throws ApiException {
-    // verify the required parameter 'endpoint' is set
-    if (endpoint == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'endpoint' when calling getByIdentity");
-    }
     // verify the required parameter 'method' is set
     if (method == null) {
       throw new ApiException(
           400, "Missing the required parameter 'method' when calling getByIdentity");
     }
+    // verify the required parameter 'endpoint' is set
+    if (endpoint == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'endpoint' when calling getByIdentity");
+    }
 
     String localVarPath =
         "/verification/v1/verifications/{method}/number/{endpoint}"
+            .replaceAll("\\{" + "method" + "\\}", URLPathUtils.encodePathSegment(method.toString()))
             .replaceAll(
-                "\\{" + "endpoint" + "\\}", URLPathUtils.encodePathSegment(endpoint.toString()))
-            .replaceAll(
-                "\\{" + "method" + "\\}", URLPathUtils.encodePathSegment(method.toString()));
+                "\\{" + "endpoint" + "\\}", URLPathUtils.encodePathSegment(endpoint.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
 

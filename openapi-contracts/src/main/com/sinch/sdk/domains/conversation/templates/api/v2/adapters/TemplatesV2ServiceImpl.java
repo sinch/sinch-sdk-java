@@ -69,6 +69,11 @@ public class TemplatesV2ServiceImpl
     LOGGER.finest("[list]");
 
     HttpRequest httpRequest = listRequestBuilder();
+    return _listPageAsListResponse(httpRequest);
+  }
+
+  private TemplatesV2ListResponse _listPageAsListResponse(HttpRequest httpRequest)
+      throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -78,7 +83,7 @@ public class TemplatesV2ServiceImpl
       ListTemplatesResponseInternal deserialized =
           mapper.deserialize(response, new TypeReference<ListTemplatesResponseInternal>() {});
 
-      return new TemplatesV2ListResponse(new Page<>(null, deserialized.getTemplates(), null));
+      return new TemplatesV2ListResponse(new Page<>(deserialized.getTemplates(), null));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -335,6 +340,11 @@ public class TemplatesV2ServiceImpl
             + queryParameter);
 
     HttpRequest httpRequest = listTranslationsRequestBuilder(templateId, queryParameter);
+    return _listTranslationsPageAsListResponse(queryParameter, httpRequest);
+  }
+
+  private TranslationsV2ListResponse _listTranslationsPageAsListResponse(
+      ListTranslationsQueryParameters queryParameter, HttpRequest httpRequest) throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -344,7 +354,7 @@ public class TemplatesV2ServiceImpl
       ListTranslationsResponseInternal deserialized =
           mapper.deserialize(response, new TypeReference<ListTranslationsResponseInternal>() {});
 
-      return new TranslationsV2ListResponse(new Page<>(null, deserialized.getTranslations(), null));
+      return new TranslationsV2ListResponse(new Page<>(deserialized.getTranslations(), null));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

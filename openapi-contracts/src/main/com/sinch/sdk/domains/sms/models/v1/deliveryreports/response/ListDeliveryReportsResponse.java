@@ -12,24 +12,22 @@ package com.sinch.sdk.domains.sms.models.v1.deliveryreports.response;
 
 import com.sinch.sdk.core.models.pagination.ListResponse;
 import com.sinch.sdk.core.models.pagination.Page;
-import com.sinch.sdk.domains.sms.api.v1.DeliveryReportsService;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.RecipientDeliveryReport;
-import com.sinch.sdk.domains.sms.models.v1.deliveryreports.request.ListDeliveryReportsQueryParameters;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.NoSuchElementException;
+import java.util.function.Supplier;
 
 /** Auto paginated response for list of RecipientDeliveryReport */
 public class ListDeliveryReportsResponse extends ListResponse<RecipientDeliveryReport> {
 
-  private final Page<ListDeliveryReportsQueryParameters, RecipientDeliveryReport, Integer> page;
-  private final DeliveryReportsService service;
+  private final Page<RecipientDeliveryReport, Integer> page;
+  final Supplier<ListDeliveryReportsResponse> supplier;
   private ListDeliveryReportsResponse nextPage;
 
   public ListDeliveryReportsResponse(
-      DeliveryReportsService service,
-      Page<ListDeliveryReportsQueryParameters, RecipientDeliveryReport, Integer> page) {
-    this.service = service;
+      Supplier<ListDeliveryReportsResponse> supplier, Page<RecipientDeliveryReport, Integer> page) {
+    this.supplier = supplier;
     this.page = page;
   }
 
@@ -39,24 +37,18 @@ public class ListDeliveryReportsResponse extends ListResponse<RecipientDeliveryR
       return false;
     }
     if (null == nextPage) {
-      ListDeliveryReportsQueryParameters.Builder newParameters =
-          ListDeliveryReportsQueryParameters.builder(page.getParameters());
-      newParameters.setPage(page.getNextPageToken());
-      nextPage = service.list(newParameters.build());
+      nextPage = supplier.get();
     }
     return (null != nextPage.getContent() && !nextPage.getContent().isEmpty());
   }
 
   @Override
   public ListDeliveryReportsResponse nextPage() {
-
     if (!hasNextPage()) {
       throw new NoSuchElementException("Reached the last page of the API response");
     }
-
-    ListDeliveryReportsResponse response = nextPage;
     nextPage = null;
-    return response;
+    return supplier.get();
   }
 
   @Override

@@ -19,9 +19,9 @@ import java.util.Collections;
 /** Auto paginated response for list of Webhook */
 public class WebhooksListResponse extends ListResponse<Webhook> {
 
-  private final Page<Object, Webhook, Object> page;
+  private final Page<Webhook, Object> page;
 
-  public WebhooksListResponse(Page<Object, Webhook, Object> page) {
+  public WebhooksListResponse(Page<Webhook, Object> page) {
     this.page = page;
   }
 
@@ -32,7 +32,6 @@ public class WebhooksListResponse extends ListResponse<Webhook> {
 
   @Override
   public WebhooksListResponse nextPage() {
-
     return null;
   }
 
