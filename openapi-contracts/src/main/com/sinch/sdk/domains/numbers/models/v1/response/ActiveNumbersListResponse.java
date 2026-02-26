@@ -23,7 +23,7 @@ import java.util.function.Supplier;
 public class ActiveNumbersListResponse extends ListResponse<ActiveNumber> {
 
   private final Page<ActiveNumber, HttpRequest> page;
-  final Supplier<ActiveNumbersListResponse> supplier;
+  private final Supplier<ActiveNumbersListResponse> supplier;
 
   public ActiveNumbersListResponse(
       Supplier<ActiveNumbersListResponse> supplier, Page<ActiveNumber, HttpRequest> page) {

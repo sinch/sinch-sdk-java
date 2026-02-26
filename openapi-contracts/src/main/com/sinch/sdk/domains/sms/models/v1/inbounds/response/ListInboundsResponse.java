@@ -22,7 +22,7 @@ import java.util.function.Supplier;
 public class ListInboundsResponse extends ListResponse<InboundMessage> {
 
   private final Page<InboundMessage, Integer> page;
-  final Supplier<ListInboundsResponse> supplier;
+  private final Supplier<ListInboundsResponse> supplier;
   private ListInboundsResponse nextPage;
 
   public ListInboundsResponse(

@@ -23,7 +23,7 @@ import java.util.function.Supplier;
 public class MessagesListResponse extends ListResponse<ConversationMessage> {
 
   private final Page<ConversationMessage, HttpRequest> page;
-  final Supplier<MessagesListResponse> supplier;
+  private final Supplier<MessagesListResponse> supplier;
 
   public MessagesListResponse(
       Supplier<MessagesListResponse> supplier, Page<ConversationMessage, HttpRequest> page) {

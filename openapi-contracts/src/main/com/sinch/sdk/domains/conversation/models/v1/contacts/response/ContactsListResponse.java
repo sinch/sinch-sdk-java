@@ -23,7 +23,7 @@ import java.util.function.Supplier;
 public class ContactsListResponse extends ListResponse<Contact> {
 
   private final Page<Contact, HttpRequest> page;
-  final Supplier<ContactsListResponse> supplier;
+  private final Supplier<ContactsListResponse> supplier;
 
   public ContactsListResponse(
       Supplier<ContactsListResponse> supplier, Page<Contact, HttpRequest> page) {

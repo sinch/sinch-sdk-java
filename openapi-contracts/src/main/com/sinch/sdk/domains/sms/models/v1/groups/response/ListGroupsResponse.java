@@ -22,7 +22,7 @@ import java.util.function.Supplier;
 public class ListGroupsResponse extends ListResponse<Group> {
 
   private final Page<Group, Integer> page;
-  final Supplier<ListGroupsResponse> supplier;
+  private final Supplier<ListGroupsResponse> supplier;
   private ListGroupsResponse nextPage;
 
   public ListGroupsResponse(Supplier<ListGroupsResponse> supplier, Page<Group, Integer> page) {

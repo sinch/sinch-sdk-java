@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 public class ListBatchesResponse extends ListResponse<BatchResponse> {
 
   private final Page<BatchResponse, Integer> page;
-  final Supplier<ListBatchesResponse> supplier;
+  private final Supplier<ListBatchesResponse> supplier;
   private ListBatchesResponse nextPage;
 
   public ListBatchesResponse(

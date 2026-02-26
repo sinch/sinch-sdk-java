@@ -22,7 +22,7 @@ import java.util.function.Supplier;
 public class IdentityConflictsListResponse extends ListResponse<IdentityConflicts> {
 
   private final Page<IdentityConflicts, HttpRequest> page;
-  final Supplier<IdentityConflictsListResponse> supplier;
+  private final Supplier<IdentityConflictsListResponse> supplier;
 
   public IdentityConflictsListResponse(
       Supplier<IdentityConflictsListResponse> supplier, Page<IdentityConflicts, HttpRequest> page) {
