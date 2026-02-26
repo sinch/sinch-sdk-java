@@ -53,7 +53,6 @@ public class OrderDetailsDtoTest extends ConversationBaseTest {
                           .setTaxDescription("tax description")
                           .setTaxValue(7000)
                           .build())
-                  .setPaymentSettings(OrderDetailsSettingsDtoTest.dynamicPix)
                   .setPaymentButtons(Arrays.asList(OrderDetailsPaymentButtonsDtoTest.dynamicPix))
                   .setReferenceId("a reference ID")
                   .setTotalAmountValue(1200)

@@ -31,7 +31,6 @@ import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.WhatsAppInter
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.type.channelspecific.kakaotalk.buttons.KakaoTalkButtonMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.type.channelspecific.kakaotalk.commerce.KakaoTalkCommerceMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.type.channelspecific.kakaotalk.coupons.KakaoTalkCouponMapper;
-import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.type.channelspecific.whatsapp.payment.OrderDetailsSettingsMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ChoiceItemMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.AppMessageInternalMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ChannelSpecificMessageInternalMapper;
@@ -300,7 +299,6 @@ public class ConversationService
       ListMessageInternalMapper.initMapper();
       ListSectionMapper.initMapper();
       OmniMessageOverrideMapper.initMapper();
-      OrderDetailsSettingsMapper.initMapper();
       RecipientMapper.initMapper();
       SendMessageRequestMapper.initMapper();
       TemplateMessageMapper.initMapper();
