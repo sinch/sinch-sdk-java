@@ -23,7 +23,7 @@ import java.util.function.Supplier;
 public class ListTemplatesResponse extends ListResponse<Template> {
 
   private final Page<Template, HttpRequest> page;
-  final Supplier<ListTemplatesResponse> supplier;
+  private final Supplier<ListTemplatesResponse> supplier;
 
   public ListTemplatesResponse(
       Supplier<ListTemplatesResponse> supplier, Page<Template, HttpRequest> page) {

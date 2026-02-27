@@ -23,6 +23,7 @@ import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.conversation.api.v1.MessagesService;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessageDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.request.LastMessagesByChannelIdentityListQueryParameters;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesDeleteQueryParameters;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesGetQueryParameters;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesSource;
@@ -35,6 +36,7 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessag
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -683,6 +685,67 @@ public class MessagesServiceTest extends ConversationBaseTest {
         .thenReturn(httpResponse2);
 
     MessagesListResponse response0 = service.list();
+
+    Assertions.assertThat(response0.getContent().size()).isEqualTo(1);
+    Assertions.assertThat(response0.hasNextPage()).isEqualTo(true);
+
+    MessagesListResponse response1 = response0.nextPage();
+    Assertions.assertThat(response1.getContent().size()).isEqualTo(1);
+    Assertions.assertThat(response1.hasNextPage()).isEqualTo(false);
+  }
+
+  @Test
+  void listLastMessagesByChannelIdentity() throws ApiException {
+
+    HttpRequest httpRequest1 =
+        new HttpRequest(
+            String.format(
+                "/v1/projects/%s/messages:fetch-last-message",
+                URLPathUtils.encodePathSegment(uriUUID)),
+            HttpMethod.POST,
+            Collections.emptyList(),
+            "{\"channel_identities\":[\"CHANNEL_IDENTITY1\", \"CHANNEL_IDENTITY2\"]}",
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpRequest httpRequest2 =
+        new HttpRequest(
+            String.format(
+                "/v1/projects/%s/messages:fetch-last-message",
+                URLPathUtils.encodePathSegment(uriUUID)),
+            HttpMethod.POST,
+            Collections.emptyList(),
+            "{\"channel_identities\":[\"CHANNEL_IDENTITY1\", \"CHANNEL_IDENTITY2\"],"
+                + " \"page_token\":\"ChowMUhRN1c0WjFSMTI2N0RCQlI4UzQ3TlZQOEoGCP70264G\"}",
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpResponse httpResponse1 =
+        new HttpResponse(200, null, Collections.emptyMap(), messageListPage0.getBytes());
+    HttpResponse httpResponse2 =
+        new HttpResponse(200, null, Collections.emptyMap(), messageListPage1.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest1))))
+        .thenReturn(httpResponse1);
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest2))))
+        .thenReturn(httpResponse2);
+
+    List<String> channelIdentities = Arrays.asList("CHANNEL_IDENTITY1", "CHANNEL_IDENTITY2");
+
+    LastMessagesByChannelIdentityListQueryParameters request =
+        LastMessagesByChannelIdentityListQueryParameters.builder()
+            .setChannelIdentities(channelIdentities)
+            .build();
+
+    MessagesListResponse response0 = service.listLastMessagesByChannelIdentity(request);
 
     Assertions.assertThat(response0.getContent().size()).isEqualTo(1);
     Assertions.assertThat(response0.hasNextPage()).isEqualTo(true);

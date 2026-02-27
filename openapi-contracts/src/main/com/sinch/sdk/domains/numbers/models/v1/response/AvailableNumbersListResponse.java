@@ -18,9 +18,9 @@ import java.util.Collections;
 /** Auto paginated response for list of AvailableNumber */
 public class AvailableNumbersListResponse extends ListResponse<AvailableNumber> {
 
-  private final Page<AvailableNumber, Object> page;
+  private final Page<AvailableNumber, Void> page;
 
-  public AvailableNumbersListResponse(Page<AvailableNumber, Object> page) {
+  public AvailableNumbersListResponse(Page<AvailableNumber, Void> page) {
     this.page = page;
   }
 

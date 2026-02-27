@@ -22,8 +22,7 @@ import java.util.function.Supplier;
 public class ListGroupsResponse extends ListResponse<Group> {
 
   private final Page<Group, Integer> page;
-  final Supplier<ListGroupsResponse> supplier;
-  private ListGroupsResponse nextPage;
+  private final Supplier<ListGroupsResponse> supplier;
 
   public ListGroupsResponse(Supplier<ListGroupsResponse> supplier, Page<Group, Integer> page) {
     this.supplier = supplier;
@@ -35,10 +34,7 @@ public class ListGroupsResponse extends ListResponse<Group> {
     if (null == page.getNextPageToken() || null == getContent() || getContent().isEmpty()) {
       return false;
     }
-    if (null == nextPage) {
-      nextPage = supplier.get();
-    }
-    return (null != nextPage.getContent() && !nextPage.getContent().isEmpty());
+    return true;
   }
 
   @Override
@@ -46,7 +42,6 @@ public class ListGroupsResponse extends ListResponse<Group> {
     if (!hasNextPage()) {
       throw new NoSuchElementException("Reached the last page of the API response");
     }
-    nextPage = null;
     return supplier.get();
   }
 

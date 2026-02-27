@@ -23,7 +23,7 @@ import java.util.function.Supplier;
 public class ListVersionsResponse extends ListResponse<Version> {
 
   private final Page<Version, HttpRequest> page;
-  final Supplier<ListVersionsResponse> supplier;
+  private final Supplier<ListVersionsResponse> supplier;
 
   public ListVersionsResponse(
       Supplier<ListVersionsResponse> supplier, Page<Version, HttpRequest> page) {

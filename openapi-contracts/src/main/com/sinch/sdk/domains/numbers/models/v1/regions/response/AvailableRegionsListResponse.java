@@ -18,9 +18,9 @@ import java.util.Collections;
 /** Auto paginated response for list of AvailableRegion */
 public class AvailableRegionsListResponse extends ListResponse<AvailableRegion> {
 
-  private final Page<AvailableRegion, Object> page;
+  private final Page<AvailableRegion, Void> page;
 
-  public AvailableRegionsListResponse(Page<AvailableRegion, Object> page) {
+  public AvailableRegionsListResponse(Page<AvailableRegion, Void> page) {
     this.page = page;
   }
 

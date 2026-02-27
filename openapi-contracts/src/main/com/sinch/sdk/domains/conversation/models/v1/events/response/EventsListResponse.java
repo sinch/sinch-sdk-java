@@ -23,7 +23,7 @@ import java.util.function.Supplier;
 public class EventsListResponse extends ListResponse<ConversationEvent> {
 
   private final Page<ConversationEvent, HttpRequest> page;
-  final Supplier<EventsListResponse> supplier;
+  private final Supplier<EventsListResponse> supplier;
 
   public EventsListResponse(
       Supplier<EventsListResponse> supplier, Page<ConversationEvent, HttpRequest> page) {
