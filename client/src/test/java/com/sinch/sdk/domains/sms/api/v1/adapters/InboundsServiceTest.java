@@ -203,9 +203,7 @@ public class InboundsServiceTest extends BaseTest {
     HttpResponse httpResponse1 =
         new HttpResponse(
             200, null, Collections.emptyMap(), jsonInboundsListResponseDto1.getBytes());
-    HttpResponse httpResponse2 =
-        new HttpResponse(
-            200, null, Collections.emptyMap(), jsonInboundsListResponseDto2.getBytes());
+    
     when(httpClient.invokeAPI(
             eq(serverConfiguration),
             eq(authManagers),
