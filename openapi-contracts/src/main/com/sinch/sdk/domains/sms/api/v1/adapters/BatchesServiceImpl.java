@@ -79,10 +79,10 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Batc
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _listPageAsListResponse(queryParameter, httpRequest);
+    return _fetchListPage(queryParameter, httpRequest);
   }
 
-  private ListBatchesResponse _listPageAsListResponse(
+  private ListBatchesResponse _fetchListPage(
       ListBatchesQueryParameters queryParameter, HttpRequest httpRequest) throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
@@ -115,8 +115,7 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Batc
       final HttpRequest nextHttpRequest =
           nextPage != null ? listRequestBuilder(nextParameters) : null;
 
-      return new ListBatchesResponse(
-          () -> _listPageAsListResponse(nextParameters, nextHttpRequest), page);
+      return new ListBatchesResponse(() -> _fetchListPage(nextParameters, nextHttpRequest), page);
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

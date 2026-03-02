@@ -84,10 +84,10 @@ public class ContactsServiceImpl
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _listPageAsListResponse(queryParameter, httpRequest);
+    return _fetchListPage(queryParameter, httpRequest);
   }
 
-  private ContactsListResponse _listPageAsListResponse(
+  private ContactsListResponse _fetchListPage(
       ContactsListQueryParameters queryParameter, HttpRequest httpRequest) throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
@@ -107,7 +107,7 @@ public class ContactsServiceImpl
           !StringUtil.isEmpty(nextToken) ? listRequestBuilder(nextParameters) : null;
 
       return new ContactsListResponse(
-          () -> _listPageAsListResponse(nextParameters, nextHttpRequest),
+          () -> _fetchListPage(nextParameters, nextHttpRequest),
           new Page<>(deserialized.getContacts(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:
@@ -480,10 +480,10 @@ public class ContactsServiceImpl
     LOGGER.finest("[listIdentityConflicts]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listIdentityConflictsRequestBuilder(queryParameter);
-    return _listIdentityConflictsPageAsListResponse(queryParameter, httpRequest);
+    return _fetchListIdentityConflictsPage(queryParameter, httpRequest);
   }
 
-  private IdentityConflictsListResponse _listIdentityConflictsPageAsListResponse(
+  private IdentityConflictsListResponse _fetchListIdentityConflictsPage(
       IdentityConflictsListQueryParameters queryParameter, HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
@@ -509,7 +509,7 @@ public class ContactsServiceImpl
               : null;
 
       return new IdentityConflictsListResponse(
-          () -> _listIdentityConflictsPageAsListResponse(nextParameters, nextHttpRequest),
+          () -> _fetchListIdentityConflictsPage(nextParameters, nextHttpRequest),
           new Page<>(deserialized.getConflicts(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:

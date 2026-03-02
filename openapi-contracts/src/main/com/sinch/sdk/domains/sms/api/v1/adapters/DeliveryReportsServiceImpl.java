@@ -78,10 +78,10 @@ public class DeliveryReportsServiceImpl
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _listPageAsListResponse(queryParameter, httpRequest);
+    return _fetchListPage(queryParameter, httpRequest);
   }
 
-  private ListDeliveryReportsResponse _listPageAsListResponse(
+  private ListDeliveryReportsResponse _fetchListPage(
       ListDeliveryReportsQueryParameters queryParameter, HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
@@ -116,7 +116,7 @@ public class DeliveryReportsServiceImpl
           nextPage != null ? listRequestBuilder(nextParameters) : null;
 
       return new ListDeliveryReportsResponse(
-          () -> _listPageAsListResponse(nextParameters, nextHttpRequest), page);
+          () -> _fetchListPage(nextParameters, nextHttpRequest), page);
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

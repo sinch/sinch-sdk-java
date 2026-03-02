@@ -66,10 +66,10 @@ public class AppsServiceImpl implements com.sinch.sdk.domains.conversation.api.v
     LOGGER.finest("[list]");
 
     HttpRequest httpRequest = listRequestBuilder();
-    return _listPageAsListResponse(httpRequest);
+    return _fetchListPage(httpRequest);
   }
 
-  private AppsListResponse _listPageAsListResponse(HttpRequest httpRequest) throws ApiException {
+  private AppsListResponse _fetchListPage(HttpRequest httpRequest) throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);

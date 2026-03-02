@@ -92,10 +92,10 @@ public class MessagesServiceImpl
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _listPageAsListResponse(queryParameter, httpRequest);
+    return _fetchListPage(queryParameter, httpRequest);
   }
 
-  private MessagesListResponse _listPageAsListResponse(
+  private MessagesListResponse _fetchListPage(
       MessagesListQueryParameters queryParameter, HttpRequest httpRequest) throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
@@ -115,7 +115,7 @@ public class MessagesServiceImpl
           !StringUtil.isEmpty(nextToken) ? listRequestBuilder(nextParameters) : null;
 
       return new MessagesListResponse(
-          () -> _listPageAsListResponse(nextParameters, nextHttpRequest),
+          () -> _fetchListPage(nextParameters, nextHttpRequest),
           new Page<>(deserialized.getMessages(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:
@@ -438,10 +438,10 @@ public class MessagesServiceImpl
         "[listLastMessagesByChannelIdentity]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listLastMessagesByChannelIdentityRequestBuilder(queryParameter);
-    return _listLastMessagesByChannelIdentityPageAsListResponse(queryParameter, httpRequest);
+    return _fetchListLastMessagesByChannelIdentityPage(queryParameter, httpRequest);
   }
 
-  private MessagesListResponse _listLastMessagesByChannelIdentityPageAsListResponse(
+  private MessagesListResponse _fetchListLastMessagesByChannelIdentityPage(
       LastMessagesByChannelIdentityListQueryParameters queryParameter, HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
@@ -466,8 +466,7 @@ public class MessagesServiceImpl
               : null;
 
       return new MessagesListResponse(
-          () ->
-              _listLastMessagesByChannelIdentityPageAsListResponse(nextParameters, nextHttpRequest),
+          () -> _fetchListLastMessagesByChannelIdentityPage(nextParameters, nextHttpRequest),
           new Page<>(deserialized.getMessages(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:

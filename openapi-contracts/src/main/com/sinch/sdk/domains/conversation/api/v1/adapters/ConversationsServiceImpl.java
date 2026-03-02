@@ -84,10 +84,10 @@ public class ConversationsServiceImpl
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _listPageAsListResponse(queryParameter, httpRequest);
+    return _fetchListPage(queryParameter, httpRequest);
   }
 
-  private ConversationsListResponse _listPageAsListResponse(
+  private ConversationsListResponse _fetchListPage(
       ConversationsListQueryParameters queryParameter, HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
@@ -108,7 +108,7 @@ public class ConversationsServiceImpl
           !StringUtil.isEmpty(nextToken) ? listRequestBuilder(nextParameters) : null;
 
       return new ConversationsListResponse(
-          () -> _listPageAsListResponse(nextParameters, nextHttpRequest),
+          () -> _fetchListPage(nextParameters, nextHttpRequest),
           new Page<>(deserialized.getConversations(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:
@@ -563,10 +563,10 @@ public class ConversationsServiceImpl
     LOGGER.finest("[listRecent]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRecentRequestBuilder(queryParameter);
-    return _listRecentPageAsListResponse(queryParameter, httpRequest);
+    return _fetchListRecentPage(queryParameter, httpRequest);
   }
 
-  private RecentConversationsListResponse _listRecentPageAsListResponse(
+  private RecentConversationsListResponse _fetchListRecentPage(
       RecentConversationsListQueryParameters queryParameter, HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
@@ -590,7 +590,7 @@ public class ConversationsServiceImpl
           !StringUtil.isEmpty(nextToken) ? listRecentRequestBuilder(nextParameters) : null;
 
       return new RecentConversationsListResponse(
-          () -> _listRecentPageAsListResponse(nextParameters, nextHttpRequest),
+          () -> _fetchListRecentPage(nextParameters, nextHttpRequest),
           new Page<>(deserialized.getConversations(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:

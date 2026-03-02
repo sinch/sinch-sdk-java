@@ -75,10 +75,10 @@ public class InboundsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Inb
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _listPageAsListResponse(queryParameter, httpRequest);
+    return _fetchListPage(queryParameter, httpRequest);
   }
 
-  private ListInboundsResponse _listPageAsListResponse(
+  private ListInboundsResponse _fetchListPage(
       ListInboundMessagesQueryParameters queryParameter, HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
@@ -112,8 +112,7 @@ public class InboundsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Inb
       final HttpRequest nextHttpRequest =
           nextPage != null ? listRequestBuilder(nextParameters) : null;
 
-      return new ListInboundsResponse(
-          () -> _listPageAsListResponse(nextParameters, nextHttpRequest), page);
+      return new ListInboundsResponse(() -> _fetchListPage(nextParameters, nextHttpRequest), page);
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

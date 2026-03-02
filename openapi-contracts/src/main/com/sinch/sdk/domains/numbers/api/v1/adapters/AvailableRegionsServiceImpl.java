@@ -74,10 +74,10 @@ public class AvailableRegionsServiceImpl
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _listPageAsListResponse(queryParameter, httpRequest);
+    return _fetchListPage(queryParameter, httpRequest);
   }
 
-  private AvailableRegionsListResponse _listPageAsListResponse(
+  private AvailableRegionsListResponse _fetchListPage(
       AvailableRegionsListQueryParameters queryParameter, HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =

@@ -284,10 +284,10 @@ public class AvailableNumberServiceImpl
     LOGGER.finest("[searchForAvailableNumbers]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = searchForAvailableNumbersRequestBuilder(queryParameter);
-    return _searchForAvailableNumbersPageAsListResponse(queryParameter, httpRequest);
+    return _fetchSearchForAvailableNumbersPage(queryParameter, httpRequest);
   }
 
-  private AvailableNumbersListResponse _searchForAvailableNumbersPageAsListResponse(
+  private AvailableNumbersListResponse _fetchSearchForAvailableNumbersPage(
       AvailableNumbersListQueryParameters queryParameter, HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
