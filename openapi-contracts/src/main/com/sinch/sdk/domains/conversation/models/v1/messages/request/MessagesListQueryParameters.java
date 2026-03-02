@@ -86,7 +86,7 @@ public interface MessagesListQueryParameters {
    *
    * @return messagesSource
    */
-  OptionalValue<MessagesSource> getMessagesSource();
+  OptionalValue<MessageSource> getMessagesSource();
 
   /**
    * Get onlyRecipientOriginated
@@ -218,7 +218,7 @@ public interface MessagesListQueryParameters {
      * @return Current builder
      * @see #getMessagesSource
      */
-    Builder setMessagesSource(MessagesSource messagesSource);
+    Builder setMessagesSource(MessageSource messagesSource);
 
     /**
      * see getter

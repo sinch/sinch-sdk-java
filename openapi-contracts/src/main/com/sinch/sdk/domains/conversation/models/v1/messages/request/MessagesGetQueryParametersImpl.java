@@ -5,13 +5,13 @@ import java.util.Objects;
 
 public class MessagesGetQueryParametersImpl implements MessagesGetQueryParameters {
 
-  private final OptionalValue<MessagesSource> messagesSource;
+  private final OptionalValue<MessageSource> messagesSource;
 
-  private MessagesGetQueryParametersImpl(OptionalValue<MessagesSource> messagesSource) {
+  private MessagesGetQueryParametersImpl(OptionalValue<MessageSource> messagesSource) {
     this.messagesSource = messagesSource;
   }
 
-  public OptionalValue<MessagesSource> getMessagesSource() {
+  public OptionalValue<MessageSource> getMessagesSource() {
     return messagesSource;
   }
 
@@ -54,7 +54,7 @@ public class MessagesGetQueryParametersImpl implements MessagesGetQueryParameter
   }
 
   static class Builder implements MessagesGetQueryParameters.Builder {
-    OptionalValue<MessagesSource> messagesSource = OptionalValue.empty();
+    OptionalValue<MessageSource> messagesSource = OptionalValue.empty();
 
     protected Builder() {}
 
@@ -66,7 +66,7 @@ public class MessagesGetQueryParametersImpl implements MessagesGetQueryParameter
       this.messagesSource = parameters.getMessagesSource();
     }
 
-    public Builder setMessagesSource(MessagesSource messagesSource) {
+    public Builder setMessagesSource(MessageSource messagesSource) {
       this.messagesSource = OptionalValue.of(messagesSource);
       return this;
     }

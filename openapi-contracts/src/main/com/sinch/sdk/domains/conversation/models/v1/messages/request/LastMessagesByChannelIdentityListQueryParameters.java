@@ -11,14 +11,10 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.core.utils.EnumDynamic;
-import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationDirection;
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * Request body for listing messages by channel identity. NOTE: You can use either contact_ids OR
@@ -51,45 +47,11 @@ public interface LastMessagesByChannelIdentityListQueryParameters {
   String getAppId();
 
   /**
-   * Optional. Specifies the message source for which the request will be processed. Default is
-   * <code>DISPATCH_SOURCE</code>.
-   */
-  public class MessagesSourceEnum extends EnumDynamic<String, MessagesSourceEnum> {
-    public static final MessagesSourceEnum CONVERSATION_SOURCE =
-        new MessagesSourceEnum("CONVERSATION_SOURCE");
-    public static final MessagesSourceEnum DISPATCH_SOURCE =
-        new MessagesSourceEnum("DISPATCH_SOURCE");
-
-    private static final EnumSupportDynamic<String, MessagesSourceEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(
-            MessagesSourceEnum.class,
-            MessagesSourceEnum::new,
-            Arrays.asList(CONVERSATION_SOURCE, DISPATCH_SOURCE));
-
-    private MessagesSourceEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<MessagesSourceEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static MessagesSourceEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(MessagesSourceEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
-
-  /**
-   * Optional. Specifies the message source for which the request will be processed. Default is
-   * <code>DISPATCH_SOURCE</code>.
+   * Get messagesSource
    *
    * @return messagesSource
    */
-  MessagesSourceEnum getMessagesSource();
+  MessageSource getMessagesSource();
 
   /**
    * Optional. Maximum number of messages to fetch. Defaults to 10 and the maximum is 1000.
@@ -199,7 +161,7 @@ public interface LastMessagesByChannelIdentityListQueryParameters {
      * @return Current builder
      * @see #getMessagesSource
      */
-    Builder setMessagesSource(MessagesSourceEnum messagesSource);
+    Builder setMessagesSource(MessageSource messagesSource);
 
     /**
      * see getter

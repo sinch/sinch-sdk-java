@@ -24,9 +24,9 @@ import com.sinch.sdk.domains.conversation.api.v1.MessagesService;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.LastMessagesByChannelIdentityListQueryParameters;
+import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessageSource;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesDeleteQueryParameters;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesGetQueryParameters;
-import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesSource;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesUpdateQueryParameters;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.UpdateMessageDtoTest;
@@ -154,7 +154,7 @@ public class MessagesServiceTest extends ConversationBaseTest {
             HttpMethod.GET,
             Arrays.asList(
                 new URLParameter(
-                    "messages_source", MessagesSource.CONVERSATION_SOURCE, STYLE.FORM, true)),
+                    "messages_source", MessageSource.CONVERSATION_SOURCE, STYLE.FORM, true)),
             (String) null,
             Collections.emptyMap(),
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
@@ -175,7 +175,7 @@ public class MessagesServiceTest extends ConversationBaseTest {
 
     MessagesGetQueryParameters queryParameters =
         MessagesGetQueryParameters.builder()
-            .setMessagesSource(MessagesSource.CONVERSATION_SOURCE)
+            .setMessagesSource(MessageSource.CONVERSATION_SOURCE)
             .build();
     ConversationMessage response =
         service.get(
@@ -526,7 +526,7 @@ public class MessagesServiceTest extends ConversationBaseTest {
             HttpMethod.DELETE,
             Arrays.asList(
                 new URLParameter(
-                    "messages_source", MessagesSource.DISPATCH_SOURCE, STYLE.FORM, true)),
+                    "messages_source", MessageSource.DISPATCH_SOURCE, STYLE.FORM, true)),
             (String) null,
             Collections.emptyMap(),
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
@@ -547,7 +547,7 @@ public class MessagesServiceTest extends ConversationBaseTest {
 
     MessagesDeleteQueryParameters queryParameters =
         MessagesDeleteQueryParameters.builder()
-            .setMessagesSource(MessagesSource.DISPATCH_SOURCE)
+            .setMessagesSource(MessageSource.DISPATCH_SOURCE)
             .build();
 
     service.delete(
@@ -606,7 +606,7 @@ public class MessagesServiceTest extends ConversationBaseTest {
             HttpMethod.PATCH,
             Arrays.asList(
                 new URLParameter(
-                    "messages_source", MessagesSource.DISPATCH_SOURCE, STYLE.FORM, true)),
+                    "messages_source", MessageSource.DISPATCH_SOURCE, STYLE.FORM, true)),
             jsonMessageUpdateRequestDto,
             Collections.emptyMap(),
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
@@ -627,7 +627,7 @@ public class MessagesServiceTest extends ConversationBaseTest {
 
     MessagesUpdateQueryParameters queryParameters =
         MessagesUpdateQueryParameters.builder()
-            .setMessagesSource(MessagesSource.DISPATCH_SOURCE)
+            .setMessagesSource(MessageSource.DISPATCH_SOURCE)
             .build();
 
     ConversationMessage response =
