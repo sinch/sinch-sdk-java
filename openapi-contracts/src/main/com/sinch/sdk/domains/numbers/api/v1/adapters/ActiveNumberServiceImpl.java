@@ -78,10 +78,10 @@ public class ActiveNumberServiceImpl
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _listPageAsListResponse(queryParameter, httpRequest);
+    return _fetchListPage(queryParameter, httpRequest);
   }
 
-  private ActiveNumbersListResponse _listPageAsListResponse(
+  private ActiveNumbersListResponse _fetchListPage(
       ActiveNumbersListQueryParameters queryParameter, HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
@@ -102,7 +102,7 @@ public class ActiveNumberServiceImpl
           !StringUtil.isEmpty(nextToken) ? listRequestBuilder(nextParameters) : null;
 
       return new ActiveNumbersListResponse(
-          () -> _listPageAsListResponse(nextParameters, nextHttpRequest),
+          () -> _fetchListPage(nextParameters, nextHttpRequest),
           new Page<>(deserialized.getActiveNumbers(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:

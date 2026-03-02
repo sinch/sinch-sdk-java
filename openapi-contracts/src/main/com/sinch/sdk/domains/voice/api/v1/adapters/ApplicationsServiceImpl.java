@@ -169,10 +169,10 @@ public class ApplicationsServiceImpl
     LOGGER.finest("[listNumbers]");
 
     HttpRequest httpRequest = listNumbersRequestBuilder();
-    return _listNumbersPageAsListResponse(httpRequest);
+    return _fetchListNumbersPage(httpRequest);
   }
 
-  private OwnedNumbersListResponse _listNumbersPageAsListResponse(HttpRequest httpRequest)
+  private OwnedNumbersListResponse _fetchListNumbersPage(HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(

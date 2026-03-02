@@ -76,10 +76,10 @@ public class EventsServiceImpl implements com.sinch.sdk.domains.conversation.api
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _listPageAsListResponse(queryParameter, httpRequest);
+    return _fetchListPage(queryParameter, httpRequest);
   }
 
-  private EventsListResponse _listPageAsListResponse(
+  private EventsListResponse _fetchListPage(
       EventsListQueryParameters queryParameter, HttpRequest httpRequest) throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
@@ -99,7 +99,7 @@ public class EventsServiceImpl implements com.sinch.sdk.domains.conversation.api
           !StringUtil.isEmpty(nextToken) ? listRequestBuilder(nextParameters) : null;
 
       return new EventsListResponse(
-          () -> _listPageAsListResponse(nextParameters, nextHttpRequest),
+          () -> _fetchListPage(nextParameters, nextHttpRequest),
           new Page<>(deserialized.getEvents(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:

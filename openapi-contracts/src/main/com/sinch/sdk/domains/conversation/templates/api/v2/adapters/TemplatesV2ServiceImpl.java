@@ -69,11 +69,10 @@ public class TemplatesV2ServiceImpl
     LOGGER.finest("[list]");
 
     HttpRequest httpRequest = listRequestBuilder();
-    return _listPageAsListResponse(httpRequest);
+    return _fetchListPage(httpRequest);
   }
 
-  private TemplatesV2ListResponse _listPageAsListResponse(HttpRequest httpRequest)
-      throws ApiException {
+  private TemplatesV2ListResponse _fetchListPage(HttpRequest httpRequest) throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -340,10 +339,10 @@ public class TemplatesV2ServiceImpl
             + queryParameter);
 
     HttpRequest httpRequest = listTranslationsRequestBuilder(templateId, queryParameter);
-    return _listTranslationsPageAsListResponse(queryParameter, httpRequest);
+    return _fetchListTranslationsPage(queryParameter, httpRequest);
   }
 
-  private TranslationsV2ListResponse _listTranslationsPageAsListResponse(
+  private TranslationsV2ListResponse _fetchListTranslationsPage(
       ListTranslationsQueryParameters queryParameter, HttpRequest httpRequest) throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
