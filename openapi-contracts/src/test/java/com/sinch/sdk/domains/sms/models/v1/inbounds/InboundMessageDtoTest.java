@@ -4,6 +4,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
+import com.sinch.sdk.domains.sms.models.v1.inbounds.MediaMessageBodyDetails.StatusEnum;
 import java.time.Instant;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
@@ -63,7 +64,7 @@ public class InboundMessageDtoTest extends BaseTest {
                           MediaMessageBodyDetails.builder()
                               .setCode(1234)
                               .setContentType("content/type")
-                              .setStatus("a status")
+                              .setStatus(StatusEnum.from("a status"))
                               .setUrl("https://foo.url")
                               .build()))
                   .build())

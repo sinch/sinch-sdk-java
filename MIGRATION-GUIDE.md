@@ -163,6 +163,9 @@ Use the new versioned API under `numbers().v1()` to get access to [NumbersServic
 
 ### [`SMS`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/package-summary.html)
 
+#### Deprecated fields
+- Deprecated `MediaMessageBody.status` field of type `String` is replaced by  `MediaMessageBody.status` of [StatusEnum](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/models/v1/inbounds/MediaMessageBodyDetails.StatusEnum.html) type
+
 #### Replacement models
 
 ##### Batches

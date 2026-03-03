@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.core.utils.EnumDynamic;
 import java.util.Objects;
 
 @JsonPropertyOrder({
@@ -31,7 +30,7 @@ public class MediaMessageBodyDetailsImpl implements MediaMessageBodyDetails {
 
   public static final String JSON_PROPERTY_STATUS = "status";
 
-  private OptionalValue<StatusEnum> StatusEnum;
+  private OptionalValue<StatusEnum> status;
 
   public static final String JSON_PROPERTY_URL = "url";
 
@@ -42,17 +41,12 @@ public class MediaMessageBodyDetailsImpl implements MediaMessageBodyDetails {
   protected MediaMessageBodyDetailsImpl(
       OptionalValue<Integer> code,
       OptionalValue<String> contentType,
-      OptionalValue<StatusEnum> StatusEnum,
+      OptionalValue<StatusEnum> status,
       OptionalValue<String> url) {
     this.code = code;
     this.contentType = contentType;
-    this.StatusEnum = StatusEnum;
+    this.status = status;
     this.url = url;
-  }
-
-  @JsonIgnore
-  public String getStatus() {
-    return statusEnum().map(EnumDynamic::value).orElse(null);
   }
 
   @JsonIgnore
@@ -78,14 +72,14 @@ public class MediaMessageBodyDetailsImpl implements MediaMessageBodyDetails {
   }
 
   @JsonIgnore
-  public StatusEnum getStatusEnum() {
-    return StatusEnum.orElse(null);
+  public StatusEnum getStatus() {
+    return status.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_STATUS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<StatusEnum> statusEnum() {
-    return StatusEnum;
+  public OptionalValue<StatusEnum> status() {
+    return status;
   }
 
   @JsonIgnore
@@ -111,13 +105,13 @@ public class MediaMessageBodyDetailsImpl implements MediaMessageBodyDetails {
     MediaMessageBodyDetailsImpl mmsMedia = (MediaMessageBodyDetailsImpl) o;
     return Objects.equals(this.code, mmsMedia.code)
         && Objects.equals(this.contentType, mmsMedia.contentType)
-        && Objects.equals(this.StatusEnum, mmsMedia.StatusEnum)
+        && Objects.equals(this.status, mmsMedia.status)
         && Objects.equals(this.url, mmsMedia.url);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, contentType, StatusEnum, url);
+    return Objects.hash(code, contentType, status, url);
   }
 
   @Override
@@ -126,7 +120,7 @@ public class MediaMessageBodyDetailsImpl implements MediaMessageBodyDetails {
     sb.append("class MediaMessageBodyDetailsImpl {\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    contentType: ").append(toIndentedString(contentType)).append("\n");
-    sb.append("    StatusEnum: ").append(toIndentedString(StatusEnum)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    url: ").append(toIndentedString(url)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -146,13 +140,8 @@ public class MediaMessageBodyDetailsImpl implements MediaMessageBodyDetails {
   static class Builder implements MediaMessageBodyDetails.Builder {
     OptionalValue<Integer> code = OptionalValue.empty();
     OptionalValue<String> contentType = OptionalValue.empty();
-    OptionalValue<StatusEnum> StatusEnum = OptionalValue.empty();
+    OptionalValue<StatusEnum> status = OptionalValue.empty();
     OptionalValue<String> url = OptionalValue.empty();
-
-    public Builder setStatus(String status) {
-      setStatusEnum(MediaMessageBodyDetails.StatusEnum.from(status));
-      return this;
-    }
 
     @JsonProperty(value = JSON_PROPERTY_CODE, required = true)
     public Builder setCode(Integer code) {
@@ -167,8 +156,8 @@ public class MediaMessageBodyDetailsImpl implements MediaMessageBodyDetails {
     }
 
     @JsonProperty(value = JSON_PROPERTY_STATUS, required = true)
-    public Builder setStatusEnum(StatusEnum StatusEnum) {
-      this.StatusEnum = OptionalValue.of(StatusEnum);
+    public Builder setStatus(StatusEnum status) {
+      this.status = OptionalValue.of(status);
       return this;
     }
 
@@ -179,7 +168,7 @@ public class MediaMessageBodyDetailsImpl implements MediaMessageBodyDetails {
     }
 
     public MediaMessageBodyDetails build() {
-      return new MediaMessageBodyDetailsImpl(code, contentType, StatusEnum, url);
+      return new MediaMessageBodyDetailsImpl(code, contentType, status, url);
     }
   }
 }
