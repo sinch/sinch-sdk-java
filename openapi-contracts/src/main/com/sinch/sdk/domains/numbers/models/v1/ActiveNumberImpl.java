@@ -152,7 +152,8 @@ public class ActiveNumberImpl implements ActiveNumber {
     return regionCode.orElse(null);
   }
 
-  @JsonIgnore
+  @JsonProperty(JSON_PROPERTY_REGION_CODE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> regionCode() {
     return regionCode;
   }

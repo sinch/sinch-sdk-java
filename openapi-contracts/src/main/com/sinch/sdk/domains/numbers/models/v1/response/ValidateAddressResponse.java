@@ -19,7 +19,8 @@ import java.util.List;
 public interface ValidateAddressResponse {
 
   /**
-   * The phone number in E.164 format with leading <code>+</code>.
+   * The phone number in <a href="https://community.sinch.com/t5/Glossary/E-164/ta-p/7537">E.164</a>
+   * format with leading <code>+</code>. Example <code>+12025550134</code>.
    *
    * @return phoneNumber
    */
