@@ -1,6 +1,7 @@
 #!/bin/sh
 
 DIRECTORIES="
+conversation/respond-to-incoming-message
 conversation/send-text-message
 numbers/rent-and-configure
 numbers/rent-first-available-number
