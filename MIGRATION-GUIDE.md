@@ -10,6 +10,7 @@ This guide lists all removed classes and interfaces from V1 and how to migrate t
 
 - Removed support of `SINCH_CHAT` channel.
 - [channelspecific.whatsapp.payment.OrderDetailsPayment](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/conversation/models/v1/messages/types/channelspecific/whatsapp/payment/OrderDetailsPayment.html) removed support of deprecated `payment_settings` in favor of new `payment_buttons` for payment methods.
+- The `metadata` field has been **removed** from the [Conversation](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/conversation/models/v1/conversations/Conversation.html) and [CreateConversationRequest](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/conversation/models/v1/conversations/request/CreateConversationRequest.html) classes. This field is no longer supported in the API and has been replaced with `metadataJson`.
 - APIs returning a list are supporting common naming: `<operation>QueyParameters` models for filtering, sorting, and pagination onto requests and `<opreation>ListResponse` models for responses.
 - New APIs supporting auto-pagination for list responses:
   - apps.list()

@@ -50,18 +50,6 @@ public interface CreateConversationRequest {
   String getContactId();
 
   /**
-   * Arbitrary data set by the Conversation API clients. Up to 1024 characters long. NOTE: This
-   * field has been deprecated due to changes in the system architecture or functionality. It is no
-   * longer actively maintained and may be removed in future versions. Please avoid relying on this
-   * field in new code.
-   *
-   * @return metadata
-   * @deprecated
-   */
-  @Deprecated
-  String getMetadata();
-
-  /**
    * Arbitrary data set by the Conversation API clients and/or provided in the <code>
    * conversation_metadata</code> field of a SendMessageRequest. A valid JSON object.
    *
@@ -123,16 +111,6 @@ public interface CreateConversationRequest {
      * @see #getContactId
      */
     Builder setContactId(String contactId);
-
-    /**
-     * see getter
-     *
-     * @param metadata see getter
-     * @return Current builder
-     * @see #getMetadata
-     */
-    @Deprecated
-    Builder setMetadata(String metadata);
 
     /**
      * see getter

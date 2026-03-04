@@ -29,7 +29,6 @@ public class ConversationDtoTest extends ConversationBaseTest {
           .setContactId("contact ID")
           .setId("a conversation id")
           .setLastReceived(Instant.parse("2020-11-17T15:00:00Z"))
-          .setMetadata("metadata value")
           .setMetadataJson(Collections.singletonMap("metadata_json_key", "metadata json value"))
           .setCorrelationId("correlation id value")
           .build();
@@ -42,7 +41,6 @@ public class ConversationDtoTest extends ConversationBaseTest {
           .setContactId("contact ID")
           .setId("a conversation id")
           .setLastReceived(Instant.parse("2020-11-17T15:00:00Z"))
-          .setMetadata("metadata value")
           .setMetadataJson(Collections.singletonMap("metadata_json_key", "metadata json value"))
           .setCorrelationId("correlation id value")
           .build();
