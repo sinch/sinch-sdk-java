@@ -46,7 +46,8 @@ public class LineNotificationMessageTemplateChannelSpecificMessageDtoTest
               .build();
 
   @Test
-  void deserializeKakaoTalkCommerceChannelSpecificMessage() throws JsonProcessingException {
+  void deserializeLineNotificationMessageTemplateChannelSpecificMessagee()
+      throws JsonProcessingException {
     Object deserialized =
         objectMapper.readValue(
             jsonLineNotificationMessageTemplateChannelSpecificMessageDto,
@@ -57,7 +58,7 @@ public class LineNotificationMessageTemplateChannelSpecificMessageDtoTest
   }
 
   @Test
-  void serializeKakaoTalkCommerceChannelSpecificMessage()
+  void serializeLineNotificationMessageTemplateChannelSpecificMessage()
       throws JsonProcessingException, JSONException {
     String serializedString =
         objectMapper.writeValueAsString(lineNotificationMessageTemplateChannelSpecificMessageDto);
