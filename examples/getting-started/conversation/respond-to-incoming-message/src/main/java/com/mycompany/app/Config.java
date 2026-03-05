@@ -1,7 +1,6 @@
 package com.mycompany.app;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.conversation.api.v1.MessagesService;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationRegion;
@@ -11,40 +10,30 @@ import org.springframework.context.annotation.Bean;
 @org.springframework.context.annotation.Configuration
 public class Config {
 
-  @Value("${credentials.project-id: }")
+  @Value("${credentials.project-id}")
   private String projectId;
 
-  @Value("${credentials.key-id: }")
+  @Value("${credentials.key-id}")
   private String keyId;
 
-  @Value("${credentials.key-secret: }")
+  @Value("${credentials.key-secret}")
   private String keySecret;
 
-  @Value("${conversation.region: }")
+  @Value("${conversation.region}")
   private String conversationRegion;
 
   @Bean
   public SinchClient sinchClient() {
 
-    Configuration.Builder builder = Configuration.builder();
+    Configuration configuration =
+        Configuration.builder()
+            .setProjectId(projectId)
+            .setKeyId(keyId)
+            .setKeySecret(keySecret)
+            .setConversationRegion(ConversationRegion.from(conversationRegion))
+            .build();
 
-    if (!StringUtil.isEmpty(projectId)) {
-      builder.setProjectId(projectId);
-    }
-
-    if (!StringUtil.isEmpty(keyId)) {
-      builder.setKeyId(keyId);
-    }
-
-    if (!StringUtil.isEmpty(keySecret)) {
-      builder.setKeySecret(keySecret);
-    }
-
-    if (!StringUtil.isEmpty(conversationRegion)) {
-      builder.setConversationRegion(ConversationRegion.from(conversationRegion));
-    }
-
-    return new SinchClient(builder.build());
+    return new SinchClient(configuration);
   }
 
   @Bean

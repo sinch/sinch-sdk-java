@@ -19,5 +19,4 @@ conversation:
   region:
   webhooks:
     # Secret value set for Conversation webhooks calls validation
-    # Used when "ensureValidAuthentication" within [Controller.java](../java/com/mycompany/app/conversation/Controller.java) is set to true
     secret:
