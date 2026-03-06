@@ -20,7 +20,6 @@ public class CreateConversationRequestTest extends ConversationBaseTest {
           .setActiveChannel(ConversationChannel.WHATSAPP)
           .setAppId("conversation app Id")
           .setContactId("contact ID")
-          .setMetadata("metadata value")
           .setMetadataJson(Collections.singletonMap("metadata_json_key", "metadata json value"))
           .setCorrelationId("correlation id value")
           .build();

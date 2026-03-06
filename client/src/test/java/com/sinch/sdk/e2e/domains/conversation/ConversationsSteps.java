@@ -64,7 +64,6 @@ public class ConversationsSteps {
             .setContactId(ContactsSteps.CONTACT_ID)
             .setActive(true)
             .setActiveChannel(ConversationChannel.MESSENGER)
-            .setMetadata("e2e tests")
             .setMetadataJson(
                 Stream.of(
                         new AbstractMap.SimpleEntry<>("prop1", "value1"),
@@ -136,7 +135,6 @@ public class ConversationsSteps {
         Conversation.builder()
             .setAppId("01W4FFL35P4NC4K35CONVAPP002")
             .setActive(false)
-            .setMetadata("Transferred conversation")
             .setCorrelationId("my-correlator")
             .build();
     updateResponse =
@@ -287,7 +285,6 @@ public class ConversationsSteps {
     Assertions.assertEquals(updateResponse.getId(), CONVERSATION_ID);
     Assertions.assertEquals(updateResponse.getAppId(), "01W4FFL35P4NC4K35CONVAPP002");
     Assertions.assertEquals(updateResponse.getContactId(), ContactsSteps.CONTACT_ID);
-    Assertions.assertEquals(updateResponse.getMetadata(), "Transferred conversation");
     Assertions.assertEquals(updateResponse.getCorrelationId(), "my-correlator");
   }
 
@@ -325,7 +322,6 @@ public class ConversationsSteps {
         contactResponse.getLastReceived(), Instant.parse("2024-06-06T14:42:42Z"));
     Assertions.assertEquals(contactResponse.getActiveChannel(), ConversationChannel.MESSENGER);
     Assertions.assertEquals(contactResponse.getActive(), true);
-    Assertions.assertEquals(contactResponse.getMetadata(), "e2e tests");
     Assertions.assertEquals(
         contactResponse.getMetadataJson(),
         Stream.of(

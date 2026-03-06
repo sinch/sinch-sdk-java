@@ -16,7 +16,6 @@ import java.util.Objects;
   ConversationImpl.JSON_PROPERTY_ACTIVE_CHANNEL,
   ConversationImpl.JSON_PROPERTY_APP_ID,
   ConversationImpl.JSON_PROPERTY_CONTACT_ID,
-  ConversationImpl.JSON_PROPERTY_METADATA,
   ConversationImpl.JSON_PROPERTY_METADATA_JSON,
   ConversationImpl.JSON_PROPERTY_CORRELATION_ID,
   ConversationImpl.JSON_PROPERTY_ID,
@@ -43,10 +42,6 @@ public class ConversationImpl implements Conversation {
 
   private OptionalValue<String> contactId;
 
-  public static final String JSON_PROPERTY_METADATA = "metadata";
-
-  private OptionalValue<String> metadata;
-
   public static final String JSON_PROPERTY_METADATA_JSON = "metadata_json";
 
   private OptionalValue<Object> metadataJson;
@@ -70,7 +65,6 @@ public class ConversationImpl implements Conversation {
       OptionalValue<ConversationChannel> activeChannel,
       OptionalValue<String> appId,
       OptionalValue<String> contactId,
-      OptionalValue<String> metadata,
       OptionalValue<Object> metadataJson,
       OptionalValue<String> correlationId,
       OptionalValue<String> id,
@@ -79,7 +73,6 @@ public class ConversationImpl implements Conversation {
     this.activeChannel = activeChannel;
     this.appId = appId;
     this.contactId = contactId;
-    this.metadata = metadata;
     this.metadataJson = metadataJson;
     this.correlationId = correlationId;
     this.id = id;
@@ -128,17 +121,6 @@ public class ConversationImpl implements Conversation {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> contactId() {
     return contactId;
-  }
-
-  @JsonIgnore
-  public String getMetadata() {
-    return metadata.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_METADATA)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> metadata() {
-    return metadata;
   }
 
   @JsonIgnore
@@ -198,7 +180,6 @@ public class ConversationImpl implements Conversation {
         && Objects.equals(this.activeChannel, conversation.activeChannel)
         && Objects.equals(this.appId, conversation.appId)
         && Objects.equals(this.contactId, conversation.contactId)
-        && Objects.equals(this.metadata, conversation.metadata)
         && Objects.equals(this.metadataJson, conversation.metadataJson)
         && Objects.equals(this.correlationId, conversation.correlationId)
         && Objects.equals(this.id, conversation.id)
@@ -208,15 +189,7 @@ public class ConversationImpl implements Conversation {
   @Override
   public int hashCode() {
     return Objects.hash(
-        active,
-        activeChannel,
-        appId,
-        contactId,
-        metadata,
-        metadataJson,
-        correlationId,
-        id,
-        lastReceived);
+        active, activeChannel, appId, contactId, metadataJson, correlationId, id, lastReceived);
   }
 
   @Override
@@ -227,7 +200,6 @@ public class ConversationImpl implements Conversation {
     sb.append("    activeChannel: ").append(toIndentedString(activeChannel)).append("\n");
     sb.append("    appId: ").append(toIndentedString(appId)).append("\n");
     sb.append("    contactId: ").append(toIndentedString(contactId)).append("\n");
-    sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
     sb.append("    metadataJson: ").append(toIndentedString(metadataJson)).append("\n");
     sb.append("    correlationId: ").append(toIndentedString(correlationId)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
@@ -252,7 +224,6 @@ public class ConversationImpl implements Conversation {
     OptionalValue<ConversationChannel> activeChannel = OptionalValue.empty();
     OptionalValue<String> appId = OptionalValue.empty();
     OptionalValue<String> contactId = OptionalValue.empty();
-    OptionalValue<String> metadata = OptionalValue.empty();
     OptionalValue<Object> metadataJson = OptionalValue.empty();
     OptionalValue<String> correlationId = OptionalValue.empty();
     OptionalValue<String> id = OptionalValue.empty();
@@ -282,12 +253,6 @@ public class ConversationImpl implements Conversation {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_METADATA)
-    public Builder setMetadata(String metadata) {
-      this.metadata = OptionalValue.of(metadata);
-      return this;
-    }
-
     @JsonProperty(JSON_PROPERTY_METADATA_JSON)
     public Builder setMetadataJson(Object metadataJson) {
       this.metadataJson = OptionalValue.of(metadataJson);
@@ -314,15 +279,7 @@ public class ConversationImpl implements Conversation {
 
     public Conversation build() {
       return new ConversationImpl(
-          active,
-          activeChannel,
-          appId,
-          contactId,
-          metadata,
-          metadataJson,
-          correlationId,
-          id,
-          lastReceived);
+          active, activeChannel, appId, contactId, metadataJson, correlationId, id, lastReceived);
     }
   }
 }
