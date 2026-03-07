@@ -9,13 +9,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 
-class NumbersWebhooksAuthenticationValidationTest {
+class SinchEventsAuthenticationValidationTest {
 
-  NumbersWebhooksAuthenticationValidation webhooksService =
-      new NumbersWebhooksAuthenticationValidation();
+  SinchEventsAuthenticationValidation sinchEventsAuthenticationValidation =
+      new SinchEventsAuthenticationValidation();
 
   static final String loweredKey =
-      NumbersWebhooksAuthenticationValidation.SIGNATURE_HEADER.toLowerCase();
+      SinchEventsAuthenticationValidation.SIGNATURE_HEADER.toLowerCase();
   Map<String, String> headers =
       Stream.of(
               new AbstractMap.SimpleEntry<>(loweredKey, "e289b8fac44491417aeceee28d2715840b5f1aca"))
@@ -29,7 +29,7 @@ class NumbersWebhooksAuthenticationValidationTest {
   void checkValidateAuthenticatedRequest() {
 
     boolean authenticationResult =
-        webhooksService.validateAuthenticationHeader(secret, headers, body);
+        sinchEventsAuthenticationValidation.validateAuthenticationHeader(secret, headers, body);
 
     assertTrue(authenticationResult);
   }
@@ -38,7 +38,8 @@ class NumbersWebhooksAuthenticationValidationTest {
   void checkValidateAuthenticatedRequestInvalidSecret() {
 
     boolean authenticationResult =
-        webhooksService.validateAuthenticationHeader("not expected secret", headers, body);
+        sinchEventsAuthenticationValidation.validateAuthenticationHeader(
+            "not expected secret", headers, body);
 
     assertFalse(authenticationResult);
   }
@@ -47,7 +48,8 @@ class NumbersWebhooksAuthenticationValidationTest {
   void checkValidateAuthenticatedRequestInvalidBody() {
 
     boolean authenticationResult =
-        webhooksService.validateAuthenticationHeader(secret, headers, "not expected body");
+        sinchEventsAuthenticationValidation.validateAuthenticationHeader(
+            secret, headers, "not expected body");
 
     assertFalse(authenticationResult);
   }
@@ -61,7 +63,7 @@ class NumbersWebhooksAuthenticationValidationTest {
             .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 
     boolean authenticationResult =
-        webhooksService.validateAuthenticationHeader(secret, headerSet, body);
+        sinchEventsAuthenticationValidation.validateAuthenticationHeader(secret, headerSet, body);
 
     assertFalse(authenticationResult);
   }
@@ -70,7 +72,7 @@ class NumbersWebhooksAuthenticationValidationTest {
   void checkValidateAuthenticatedNoSecret() {
 
     boolean authenticationResult =
-        webhooksService.validateAuthenticationHeader(null, headers, body);
+        sinchEventsAuthenticationValidation.validateAuthenticationHeader(null, headers, body);
 
     assertFalse(authenticationResult);
   }
@@ -78,7 +80,8 @@ class NumbersWebhooksAuthenticationValidationTest {
   @Test
   void checkValidateAuthenticatedEmptySecret() {
 
-    boolean authenticationResult = webhooksService.validateAuthenticationHeader("", headers, body);
+    boolean authenticationResult =
+        sinchEventsAuthenticationValidation.validateAuthenticationHeader("", headers, body);
 
     assertFalse(authenticationResult);
   }

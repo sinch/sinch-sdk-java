@@ -1,11 +1,11 @@
 package com.sinch.sdk.domains.numbers.api.v1;
 
 import com.sinch.sdk.core.exceptions.ApiMappingException;
-import com.sinch.sdk.domains.numbers.models.v1.webhooks.NumberEvent;
+import com.sinch.sdk.domains.numbers.models.v1.sinchevents.NumberSinchEvent;
 import java.util.Map;
 
 /**
- * Webhooks service
+ * Sinch Events service
  *
  * <p>Callback events are used to get notified about Numbers usage according to your configured
  * callback URL
@@ -16,7 +16,7 @@ import java.util.Map;
  *
  * @since 1.2
  */
-public interface WebHooksService {
+public interface SinchEventsService {
 
   /**
    * The Sinch Platform can initiate callback requests to a URL you define (Callback URL) on request
@@ -47,5 +47,5 @@ public interface WebHooksService {
    * @return The decoded event notification instance class
    * @since 1.2
    */
-  NumberEvent parseEvent(String jsonPayload) throws ApiMappingException;
+  NumberSinchEvent parseEvent(String jsonPayload) throws ApiMappingException;
 }

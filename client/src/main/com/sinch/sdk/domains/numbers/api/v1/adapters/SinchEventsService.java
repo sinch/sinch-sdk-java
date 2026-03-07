@@ -3,13 +3,13 @@ package com.sinch.sdk.domains.numbers.api.v1.adapters;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.exceptions.ApiMappingException;
 import com.sinch.sdk.core.utils.databind.Mapper;
-import com.sinch.sdk.domains.numbers.models.v1.webhooks.NumberEvent;
+import com.sinch.sdk.domains.numbers.models.v1.sinchevents.NumberSinchEvent;
 import java.util.Map;
 
-public class WebHooksService implements com.sinch.sdk.domains.numbers.api.v1.WebHooksService {
-  private final NumbersWebhooksAuthenticationValidation authenticationChecker;
+public class SinchEventsService implements com.sinch.sdk.domains.numbers.api.v1.SinchEventsService {
+  private final SinchEventsAuthenticationValidation authenticationChecker;
 
-  public WebHooksService(NumbersWebhooksAuthenticationValidation authenticationChecker) {
+  public SinchEventsService(SinchEventsAuthenticationValidation authenticationChecker) {
     this.authenticationChecker = authenticationChecker;
   }
 
@@ -20,10 +20,10 @@ public class WebHooksService implements com.sinch.sdk.domains.numbers.api.v1.Web
   }
 
   @Override
-  public NumberEvent parseEvent(String jsonPayload) throws ApiMappingException {
+  public NumberSinchEvent parseEvent(String jsonPayload) throws ApiMappingException {
 
     try {
-      return Mapper.getInstance().readValue(jsonPayload, NumberEvent.class);
+      return Mapper.getInstance().readValue(jsonPayload, NumberSinchEvent.class);
     } catch (JsonProcessingException e) {
       throw new ApiMappingException(jsonPayload, e);
     }

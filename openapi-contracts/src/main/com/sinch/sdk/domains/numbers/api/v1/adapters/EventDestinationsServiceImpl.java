@@ -33,11 +33,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class CallbackConfigurationServiceImpl
-    implements com.sinch.sdk.domains.numbers.api.v1.CallbackConfigurationService {
+public class EventDestinationsServiceImpl
+    implements com.sinch.sdk.domains.numbers.api.v1.EventDestinationsService {
 
   private static final Logger LOGGER =
-      Logger.getLogger(CallbackConfigurationServiceImpl.class.getName());
+      Logger.getLogger(EventDestinationsServiceImpl.class.getName());
   private final HttpClient httpClient;
   private final ServerConfiguration serverConfiguration;
   private final Map<String, AuthManager> authManagersByOasSecuritySchemes;
@@ -45,7 +45,7 @@ public class CallbackConfigurationServiceImpl
 
   private final String projectId;
 
-  public CallbackConfigurationServiceImpl(
+  public EventDestinationsServiceImpl(
       HttpClient httpClient,
       ServerConfiguration serverConfiguration,
       Map<String, AuthManager> authManagersByOasSecuritySchemes,

@@ -11,7 +11,7 @@ import java.util.Objects;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-public class NumbersWebhooksAuthenticationValidation {
+public class SinchEventsAuthenticationValidation {
 
   public static final String SIGNATURE_HEADER = "X-Sinch-Signature";
   static final String HMAC_SHA1_ALGORITHM = "HmacSHA1";
@@ -39,7 +39,7 @@ public class NumbersWebhooksAuthenticationValidation {
       Mac mac = Mac.getInstance(HMAC_SHA1_ALGORITHM);
       mac.init(secretKeySpec);
       byte[] hmacSha256 = mac.doFinal(stringToSign.getBytes(StandardCharsets.UTF_8));
-      return NumbersWebhooksAuthenticationValidation.bytesToHex(hmacSha256);
+      return SinchEventsAuthenticationValidation.bytesToHex(hmacSha256);
     } catch (NoSuchAlgorithmException | InvalidKeyException e) {
       throw new ApiAuthException(e);
     }

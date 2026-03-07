@@ -5,11 +5,11 @@
  *
  * <p>See https://github.com/sinch/sinch-sdk-java/blob/main/examples/snippets/README.md for details
  */
-package numbers.callback;
+package numbers.eventdestinations;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.numbers.api.v1.CallbackConfigurationService;
-import com.sinch.sdk.domains.numbers.models.v1.callbacks.response.CallbackConfigurationResponse;
+import com.sinch.sdk.domains.numbers.api.v1.EventDestinationsService;
+import com.sinch.sdk.domains.numbers.models.v1.eventdestinations.response.EventDestinationResponse;
 import com.sinch.sdk.models.Configuration;
 import java.util.logging.Logger;
 import utils.Settings;
@@ -33,12 +33,11 @@ public class Get {
 
     SinchClient client = new SinchClient(configuration);
 
-    CallbackConfigurationService callbackConfigurationService =
-        client.numbers().v1().callbackConfiguration();
+    EventDestinationsService eventDestinationsService = client.numbers().v1().eventDestinations();
 
     LOGGER.info("Get");
 
-    CallbackConfigurationResponse value = callbackConfigurationService.get();
+    EventDestinationResponse value = eventDestinationsService.get();
 
     LOGGER.info("Response :" + value);
   }

@@ -1,8 +1,8 @@
 package com.mycompany.app.numbers;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.numbers.api.v1.WebHooksService;
-import com.sinch.sdk.domains.numbers.models.v1.webhooks.NumberEvent;
+import com.sinch.sdk.domains.numbers.api.v1.SinchEventsService;
+import com.sinch.sdk.domains.numbers.models.v1.sinchevents.NumberSinchEvent;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class Controller {
 
   private final SinchClient sinchClient;
-  private final ServerBusinessLogic webhooksBusinessLogic;
+  private final ServerBusinessLogic sinchEventsBusinessLogic;
 
   /**
    * The secret value used for webhook calls validation have to equals to the one configured at
@@ -33,9 +33,9 @@ public class Controller {
   private String webhooksSecret;
 
   @Autowired
-  public Controller(SinchClient sinchClient, ServerBusinessLogic webhooksBusinessLogic) {
+  public Controller(SinchClient sinchClient, ServerBusinessLogic sinchEventsBusinessLogic) {
     this.sinchClient = sinchClient;
-    this.webhooksBusinessLogic = webhooksBusinessLogic;
+    this.sinchEventsBusinessLogic = sinchEventsBusinessLogic;
   }
 
   @PostMapping(
@@ -45,7 +45,7 @@ public class Controller {
   public ResponseEntity<Void> NumbersEvent(
       @RequestHeader Map<String, String> headers, @RequestBody String body) {
 
-    WebHooksService webhooks = sinchClient.numbers().v1().webhooks();
+    SinchEventsService sinchEventsService = sinchClient.numbers().v1().sinchEvents();
 
     // see https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Numbers-Callbacks for
     // more information
@@ -54,7 +54,7 @@ public class Controller {
     if (ensureValidAuthentication) {
       // ensure valid authentication to handle request
       var validAuth =
-          webhooks.validateAuthenticationHeader(
+          sinchEventsService.validateAuthenticationHeader(
               webhooksSecret,
               // request headers
               headers,
@@ -68,10 +68,10 @@ public class Controller {
     }
 
     // decode the request payload
-    NumberEvent event = webhooks.parseEvent(body);
+    NumberSinchEvent event = sinchEventsService.parseEvent(body);
 
     // let business layer process the request
-    webhooksBusinessLogic.numbersEvent(event);
+    sinchEventsBusinessLogic.numbersEvent(event);
 
     return ResponseEntity.ok().build();
   }

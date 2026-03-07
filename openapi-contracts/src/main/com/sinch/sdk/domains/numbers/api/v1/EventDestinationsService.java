@@ -14,8 +14,8 @@ import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.numbers.models.v1.callbacks.request.CallbackConfigurationUpdateRequest;
 import com.sinch.sdk.domains.numbers.models.v1.callbacks.response.CallbackConfigurationResponse;
 
-/** callback_configuration Service */
-public interface CallbackConfigurationService {
+/** Event Destinations Service */
+public interface EventDestinationsService {
 
   /**
    * Get callbacks configuration

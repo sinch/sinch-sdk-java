@@ -1,26 +1,26 @@
 package com.sinch.sdk.e2e.domains.numbers.v1;
 
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.domains.numbers.api.v1.CallbackConfigurationService;
-import com.sinch.sdk.domains.numbers.models.v1.callbacks.request.CallbackConfigurationUpdateRequest;
-import com.sinch.sdk.domains.numbers.models.v1.callbacks.response.CallbackConfigurationResponse;
+import com.sinch.sdk.domains.numbers.api.v1.EventDestinationsService;
+import com.sinch.sdk.domains.numbers.models.v1.eventdestinations.request.EventDestinationUpdateRequest;
+import com.sinch.sdk.domains.numbers.models.v1.eventdestinations.response.EventDestinationResponse;
 import com.sinch.sdk.e2e.Config;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
 
-public class WebhooksSteps {
+public class EventDestinationsSteps {
 
-  CallbackConfigurationService service;
-  CallbackConfigurationResponse getResponse;
-  CallbackConfigurationResponse updateResponse;
+  EventDestinationsService service;
+  EventDestinationResponse getResponse;
+  EventDestinationResponse updateResponse;
   ApiException updateResponseException;
 
   @Given("^the Numbers service \"Callback Configuration\" is available$")
   public void serviceAvailable() {
 
-    service = Config.getSinchClient().numbers().v1().callbackConfiguration();
+    service = Config.getSinchClient().numbers().v1().eventDestinations();
   }
 
   @When("^I send a request to retrieve the callback configuration$")
@@ -32,8 +32,8 @@ public class WebhooksSteps {
   @When("I send a request to update the callback configuration with the secret {string}")
   public void update(String secret) {
 
-    CallbackConfigurationUpdateRequest request =
-        CallbackConfigurationUpdateRequest.builder().setHmacSecret(secret).build();
+    EventDestinationUpdateRequest request =
+        EventDestinationUpdateRequest.builder().setHmacSecret(secret).build();
     try {
       updateResponse = service.update(request);
     } catch (ApiException e) {
@@ -44,8 +44,8 @@ public class WebhooksSteps {
   @Then("the response contains the project's callback configuration")
   public void getResult() {
 
-    CallbackConfigurationResponse expected =
-        CallbackConfigurationResponse.builder()
+    EventDestinationResponse expected =
+        EventDestinationResponse.builder()
             .setProjectId("12c0ffee-dada-beef-cafe-baadc0de5678")
             .setHmacSecret("0default-pass-word-*max-36characters")
             .build();
@@ -55,8 +55,8 @@ public class WebhooksSteps {
   @Then("the response contains the updated project's callback configuration")
   public void updateResult() {
 
-    CallbackConfigurationResponse expected =
-        CallbackConfigurationResponse.builder()
+    EventDestinationResponse expected =
+        EventDestinationResponse.builder()
             .setProjectId("12c0ffee-dada-beef-cafe-baadc0de5678")
             .setHmacSecret("strongPa$$PhraseWith36CharactersMax")
             .build();

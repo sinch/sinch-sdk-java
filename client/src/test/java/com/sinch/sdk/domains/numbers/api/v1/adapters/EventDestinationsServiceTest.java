@@ -19,9 +19,9 @@ import com.sinch.sdk.core.http.HttpRequestTest.HttpRequestMatcher;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.domains.numbers.api.v1.CallbackConfigurationService;
-import com.sinch.sdk.domains.numbers.models.v1.CallbackConfigurationDtoTest;
-import com.sinch.sdk.domains.numbers.models.v1.callbacks.response.CallbackConfigurationResponse;
+import com.sinch.sdk.domains.numbers.api.v1.EventDestinationsService;
+import com.sinch.sdk.domains.numbers.models.v1.EventDestinationsDtoTest;
+import com.sinch.sdk.domains.numbers.models.v1.eventdestinations.response.EventDestinationResponse;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -31,15 +31,15 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 @TestWithResources
-class CallbackConfigurationServiceTest extends BaseTest {
+class EventDestinationsServiceTest extends BaseTest {
 
-  @GivenTextResource("/domains/numbers/v1/callbacks/callback-get-response.json")
+  @GivenTextResource("/domains/numbers/v1/eventdestinations/event-destination-response.json")
   String jsonGetResponse;
 
   @Mock HttpClient httpClient;
   @Mock ServerConfiguration serverConfiguration;
   @Mock Map<String, AuthManager> authManagers;
-  CallbackConfigurationService service;
+  EventDestinationsService service;
 
   static final String uriUUID = "foo";
 
@@ -48,7 +48,7 @@ class CallbackConfigurationServiceTest extends BaseTest {
   @BeforeEach
   public void initMocks() {
     service =
-        new CallbackConfigurationServiceImpl(
+        new EventDestinationsServiceImpl(
             httpClient, serverConfiguration, authManagers, HttpMapper.getInstance(), uriUUID);
   }
 
@@ -74,9 +74,9 @@ class CallbackConfigurationServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    CallbackConfigurationResponse response = service.get();
+    EventDestinationResponse response = service.get();
 
-    TestHelpers.recursiveEquals(response, CallbackConfigurationDtoTest.getResponse);
+    TestHelpers.recursiveEquals(response, EventDestinationsDtoTest.getResponse);
   }
 
   @Test
@@ -90,7 +90,7 @@ class CallbackConfigurationServiceTest extends BaseTest {
             HttpMapper.getInstance()
                 .serialize(
                     Collections.singletonList(HttpContentType.APPLICATION_JSON),
-                    CallbackConfigurationDtoTest.updateRequest),
+                    EventDestinationsDtoTest.updateRequest),
             Collections.emptyMap(),
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
@@ -104,9 +104,8 @@ class CallbackConfigurationServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    CallbackConfigurationResponse response =
-        service.update(CallbackConfigurationDtoTest.updateRequest);
+    EventDestinationResponse response = service.update(EventDestinationsDtoTest.updateRequest);
 
-    TestHelpers.recursiveEquals(response, CallbackConfigurationDtoTest.getResponse);
+    TestHelpers.recursiveEquals(response, EventDestinationsDtoTest.getResponse);
   }
 }
