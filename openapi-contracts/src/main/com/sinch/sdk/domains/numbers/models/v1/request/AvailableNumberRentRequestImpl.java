@@ -31,17 +31,17 @@ public class AvailableNumberRentRequestImpl implements AvailableNumberRentReques
 
   public static final String JSON_PROPERTY_CALLBACK_URL = "callbackUrl";
 
-  private OptionalValue<String> callbackUrl;
+  private OptionalValue<String> eventDestinationTarget;
 
   public AvailableNumberRentRequestImpl() {}
 
   protected AvailableNumberRentRequestImpl(
       OptionalValue<SmsConfiguration> smsConfiguration,
       OptionalValue<VoiceConfiguration> voiceConfiguration,
-      OptionalValue<String> callbackUrl) {
+      OptionalValue<String> eventDestinationTarget) {
     this.smsConfiguration = smsConfiguration;
     this.voiceConfiguration = voiceConfiguration;
-    this.callbackUrl = callbackUrl;
+    this.eventDestinationTarget = eventDestinationTarget;
   }
 
   @JsonIgnore
@@ -67,14 +67,14 @@ public class AvailableNumberRentRequestImpl implements AvailableNumberRentReques
   }
 
   @JsonIgnore
-  public String getCallbackUrl() {
-    return callbackUrl.orElse(null);
+  public String getEventDestinationTarget() {
+    return eventDestinationTarget.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> callbackUrl() {
-    return callbackUrl;
+  public OptionalValue<String> eventDestinationTarget() {
+    return eventDestinationTarget;
   }
 
   /** Return true if this RentNumberRequest object is equal to o. */
@@ -89,12 +89,12 @@ public class AvailableNumberRentRequestImpl implements AvailableNumberRentReques
     AvailableNumberRentRequestImpl rentNumberRequest = (AvailableNumberRentRequestImpl) o;
     return Objects.equals(this.smsConfiguration, rentNumberRequest.smsConfiguration)
         && Objects.equals(this.voiceConfiguration, rentNumberRequest.voiceConfiguration)
-        && Objects.equals(this.callbackUrl, rentNumberRequest.callbackUrl);
+        && Objects.equals(this.eventDestinationTarget, rentNumberRequest.eventDestinationTarget);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(smsConfiguration, voiceConfiguration, callbackUrl);
+    return Objects.hash(smsConfiguration, voiceConfiguration, eventDestinationTarget);
   }
 
   @Override
@@ -103,7 +103,9 @@ public class AvailableNumberRentRequestImpl implements AvailableNumberRentReques
     sb.append("class AvailableNumberRentRequestImpl {\n");
     sb.append("    smsConfiguration: ").append(toIndentedString(smsConfiguration)).append("\n");
     sb.append("    voiceConfiguration: ").append(toIndentedString(voiceConfiguration)).append("\n");
-    sb.append("    callbackUrl: ").append(toIndentedString(callbackUrl)).append("\n");
+    sb.append("    eventDestinationTarget: ")
+        .append(toIndentedString(eventDestinationTarget))
+        .append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -122,7 +124,7 @@ public class AvailableNumberRentRequestImpl implements AvailableNumberRentReques
   static class Builder implements AvailableNumberRentRequest.Builder {
     OptionalValue<SmsConfiguration> smsConfiguration = OptionalValue.empty();
     OptionalValue<VoiceConfiguration> voiceConfiguration = OptionalValue.empty();
-    OptionalValue<String> callbackUrl = OptionalValue.empty();
+    OptionalValue<String> eventDestinationTarget = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_SMS_CONFIGURATION)
     public Builder setSmsConfiguration(SmsConfiguration smsConfiguration) {
@@ -137,13 +139,14 @@ public class AvailableNumberRentRequestImpl implements AvailableNumberRentReques
     }
 
     @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
-    public Builder setCallbackUrl(String callbackUrl) {
-      this.callbackUrl = OptionalValue.of(callbackUrl);
+    public Builder setEventDestinationTarget(String eventDestinationTarget) {
+      this.eventDestinationTarget = OptionalValue.of(eventDestinationTarget);
       return this;
     }
 
     public AvailableNumberRentRequest build() {
-      return new AvailableNumberRentRequestImpl(smsConfiguration, voiceConfiguration, callbackUrl);
+      return new AvailableNumberRentRequestImpl(
+          smsConfiguration, voiceConfiguration, eventDestinationTarget);
     }
   }
 }

@@ -23,8 +23,8 @@ import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.domains.numbers.models.v1.callbacks.request.CallbackConfigurationUpdateRequest;
-import com.sinch.sdk.domains.numbers.models.v1.callbacks.response.CallbackConfigurationResponse;
+import com.sinch.sdk.domains.numbers.models.v1.eventdestinations.request.EventDestinationUpdateRequest;
+import com.sinch.sdk.domains.numbers.models.v1.eventdestinations.response.EventDestinationResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -59,7 +59,7 @@ public class EventDestinationsServiceImpl
   }
 
   @Override
-  public CallbackConfigurationResponse get() throws ApiException {
+  public EventDestinationResponse get() throws ApiException {
 
     LOGGER.finest("[get]");
 
@@ -69,7 +69,7 @@ public class EventDestinationsServiceImpl
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      return mapper.deserialize(response, new TypeReference<CallbackConfigurationResponse>() {});
+      return mapper.deserialize(response, new TypeReference<EventDestinationResponse>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -116,22 +116,19 @@ public class EventDestinationsServiceImpl
   }
 
   @Override
-  public CallbackConfigurationResponse update(
-      CallbackConfigurationUpdateRequest callbackConfigurationUpdateRequest) throws ApiException {
+  public EventDestinationResponse update(
+      EventDestinationUpdateRequest eventDestinationUpdateRequest) throws ApiException {
 
     LOGGER.finest(
-        "[update]"
-            + " "
-            + "callbackConfigurationUpdateRequest: "
-            + callbackConfigurationUpdateRequest);
+        "[update]" + " " + "eventDestinationUpdateRequest: " + eventDestinationUpdateRequest);
 
-    HttpRequest httpRequest = updateRequestBuilder(callbackConfigurationUpdateRequest);
+    HttpRequest httpRequest = updateRequestBuilder(eventDestinationUpdateRequest);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      return mapper.deserialize(response, new TypeReference<CallbackConfigurationResponse>() {});
+      return mapper.deserialize(response, new TypeReference<EventDestinationResponse>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -143,7 +140,7 @@ public class EventDestinationsServiceImpl
   }
 
   private HttpRequest updateRequestBuilder(
-      CallbackConfigurationUpdateRequest callbackConfigurationUpdateRequest) throws ApiException {
+      EventDestinationUpdateRequest eventDestinationUpdateRequest) throws ApiException {
     // verify the required parameter 'this.projectId' is set
     if (this.projectId == null) {
       throw new ApiException(
@@ -166,7 +163,7 @@ public class EventDestinationsServiceImpl
 
     final Collection<String> localVarAuthNames = Arrays.asList("Basic", "OAuth2.0");
     final String serializedBody =
-        mapper.serialize(localVarContentTypes, callbackConfigurationUpdateRequest);
+        mapper.serialize(localVarContentTypes, eventDestinationUpdateRequest);
 
     return new HttpRequest(
         localVarPath,

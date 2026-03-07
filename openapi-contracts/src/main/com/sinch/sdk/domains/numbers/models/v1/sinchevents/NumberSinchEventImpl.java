@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.numbers.models.v1.webhooks;
+package com.sinch.sdk.domains.numbers.models.v1.sinchevents;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,18 +11,18 @@ import java.time.Instant;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  NumberEventImpl.JSON_PROPERTY_EVENT_ID,
-  NumberEventImpl.JSON_PROPERTY_TIMESTAMP,
-  NumberEventImpl.JSON_PROPERTY_PROJECT_ID,
-  NumberEventImpl.JSON_PROPERTY_RESOURCE_ID,
-  NumberEventImpl.JSON_PROPERTY_RESOURCE_TYPE,
-  NumberEventImpl.JSON_PROPERTY_EVENT_TYPE,
-  NumberEventImpl.JSON_PROPERTY_STATUS,
-  NumberEventImpl.JSON_PROPERTY_FAILURE_CODE
+  NumberSinchEventImpl.JSON_PROPERTY_EVENT_ID,
+  NumberSinchEventImpl.JSON_PROPERTY_TIMESTAMP,
+  NumberSinchEventImpl.JSON_PROPERTY_PROJECT_ID,
+  NumberSinchEventImpl.JSON_PROPERTY_RESOURCE_ID,
+  NumberSinchEventImpl.JSON_PROPERTY_RESOURCE_TYPE,
+  NumberSinchEventImpl.JSON_PROPERTY_EVENT_TYPE,
+  NumberSinchEventImpl.JSON_PROPERTY_STATUS,
+  NumberSinchEventImpl.JSON_PROPERTY_FAILURE_CODE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class NumberEventImpl implements NumberEvent {
+public class NumberSinchEventImpl implements NumberSinchEvent {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_EVENT_ID = "eventId";
@@ -57,9 +57,9 @@ public class NumberEventImpl implements NumberEvent {
 
   private OptionalValue<FailureCodeEnum> failureCode;
 
-  public NumberEventImpl() {}
+  public NumberSinchEventImpl() {}
 
-  protected NumberEventImpl(
+  protected NumberSinchEventImpl(
       OptionalValue<String> eventId,
       OptionalValue<Instant> timestamp,
       OptionalValue<String> projectId,
@@ -175,7 +175,7 @@ public class NumberEventImpl implements NumberEvent {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    NumberEventImpl callbackPayload = (NumberEventImpl) o;
+    NumberSinchEventImpl callbackPayload = (NumberSinchEventImpl) o;
     return Objects.equals(this.eventId, callbackPayload.eventId)
         && Objects.equals(this.timestamp, callbackPayload.timestamp)
         && Objects.equals(this.projectId, callbackPayload.projectId)
@@ -195,7 +195,7 @@ public class NumberEventImpl implements NumberEvent {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class NumberEventImpl {\n");
+    sb.append("class NumberSinchEventImpl {\n");
     sb.append("    eventId: ").append(toIndentedString(eventId)).append("\n");
     sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
     sb.append("    projectId: ").append(toIndentedString(projectId)).append("\n");
@@ -219,7 +219,7 @@ public class NumberEventImpl implements NumberEvent {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements NumberEvent.Builder {
+  static class Builder implements NumberSinchEvent.Builder {
     OptionalValue<String> eventId = OptionalValue.empty();
     OptionalValue<Instant> timestamp = OptionalValue.empty();
     OptionalValue<String> projectId = OptionalValue.empty();
@@ -277,8 +277,8 @@ public class NumberEventImpl implements NumberEvent {
       return this;
     }
 
-    public NumberEvent build() {
-      return new NumberEventImpl(
+    public NumberSinchEvent build() {
+      return new NumberSinchEventImpl(
           eventId, timestamp, projectId, resourceId, resourceType, eventType, status, failureCode);
     }
   }

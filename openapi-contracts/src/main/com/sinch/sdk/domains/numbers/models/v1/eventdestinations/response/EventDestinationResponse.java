@@ -8,13 +8,13 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.numbers.models.v1.callbacks.response;
+package com.sinch.sdk.domains.numbers.models.v1.eventdestinations.response;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /** Response message containing the callbacks configuration for a specific project. */
-@JsonDeserialize(builder = CallbackConfigurationResponseImpl.Builder.class)
-public interface CallbackConfigurationResponse {
+@JsonDeserialize(builder = EventDestinationResponseImpl.Builder.class)
+public interface EventDestinationResponse {
 
   /**
    * ID of the project the configuration belongs to.
@@ -37,7 +37,7 @@ public interface CallbackConfigurationResponse {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new CallbackConfigurationResponseImpl.Builder();
+    return new EventDestinationResponseImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -66,6 +66,6 @@ public interface CallbackConfigurationResponse {
      *
      * @return The instance build with current builder values
      */
-    CallbackConfigurationResponse build();
+    EventDestinationResponse build();
   }
 }

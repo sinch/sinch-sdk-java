@@ -11,8 +11,8 @@
 package com.sinch.sdk.domains.numbers.api.v1;
 
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.domains.numbers.models.v1.callbacks.request.CallbackConfigurationUpdateRequest;
-import com.sinch.sdk.domains.numbers.models.v1.callbacks.response.CallbackConfigurationResponse;
+import com.sinch.sdk.domains.numbers.models.v1.eventdestinations.request.EventDestinationUpdateRequest;
+import com.sinch.sdk.domains.numbers.models.v1.eventdestinations.response.EventDestinationResponse;
 
 /** Event Destinations Service */
 public interface EventDestinationsService {
@@ -22,21 +22,21 @@ public interface EventDestinationsService {
    *
    * <p>Returns the callbacks configuration for the specified project
    *
-   * @return CallbackConfigurationResponse
+   * @return EventDestinationResponse
    * @throws ApiException if fails to make API call
    */
-  CallbackConfigurationResponse get() throws ApiException;
+  EventDestinationResponse get() throws ApiException;
 
   /**
    * Update callback configuration
    *
    * <p>Updates the callbacks configuration for the specified project
    *
-   * @param callbackConfigurationUpdateRequest The callback configuration details to be updated.
+   * @param eventDestinationUpdateRequest The callback configuration details to be updated.
    *     (optional)
-   * @return CallbackConfigurationResponse
+   * @return EventDestinationResponse
    * @throws ApiException if fails to make API call
    */
-  CallbackConfigurationResponse update(
-      CallbackConfigurationUpdateRequest callbackConfigurationUpdateRequest) throws ApiException;
+  EventDestinationResponse update(EventDestinationUpdateRequest eventDestinationUpdateRequest)
+      throws ApiException;
 }

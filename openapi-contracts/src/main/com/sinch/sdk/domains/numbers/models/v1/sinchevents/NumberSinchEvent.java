@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.numbers.models.v1.webhooks;
+package com.sinch.sdk.domains.numbers.models.v1.sinchevents;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
@@ -17,9 +17,9 @@ import java.time.Instant;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** NumberEvent */
-@JsonDeserialize(builder = NumberEventImpl.Builder.class)
-public interface NumberEvent {
+/** NumberSinchEvent */
+@JsonDeserialize(builder = NumberSinchEventImpl.Builder.class)
+public interface NumberSinchEvent {
 
   /**
    * The ID of the event.
@@ -228,7 +228,7 @@ public interface NumberEvent {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new NumberEventImpl.Builder();
+    return new NumberSinchEventImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -311,6 +311,6 @@ public interface NumberEvent {
      *
      * @return The instance build with current builder values
      */
-    NumberEvent build();
+    NumberSinchEvent build();
   }
 }

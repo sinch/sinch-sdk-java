@@ -36,7 +36,7 @@ public class ActiveNumberUpdateRequestImpl implements ActiveNumberUpdateRequest 
 
   public static final String JSON_PROPERTY_CALLBACK_URL = "callbackUrl";
 
-  private OptionalValue<String> callbackUrl;
+  private OptionalValue<String> eventDestinationTarget;
 
   public ActiveNumberUpdateRequestImpl() {}
 
@@ -44,11 +44,11 @@ public class ActiveNumberUpdateRequestImpl implements ActiveNumberUpdateRequest 
       OptionalValue<String> displayName,
       OptionalValue<SmsConfiguration> smsConfiguration,
       OptionalValue<VoiceConfiguration> voiceConfiguration,
-      OptionalValue<String> callbackUrl) {
+      OptionalValue<String> eventDestinationTarget) {
     this.displayName = displayName;
     this.smsConfiguration = smsConfiguration;
     this.voiceConfiguration = voiceConfiguration;
-    this.callbackUrl = callbackUrl;
+    this.eventDestinationTarget = eventDestinationTarget;
   }
 
   @JsonIgnore
@@ -85,14 +85,14 @@ public class ActiveNumberUpdateRequestImpl implements ActiveNumberUpdateRequest 
   }
 
   @JsonIgnore
-  public String getCallbackUrl() {
-    return callbackUrl.orElse(null);
+  public String getEventDestinationTarget() {
+    return eventDestinationTarget.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> callbackUrl() {
-    return callbackUrl;
+  public OptionalValue<String> eventDestinationTarget() {
+    return eventDestinationTarget;
   }
 
   /** Return true if this ActiveNumberRequest object is equal to o. */
@@ -108,12 +108,12 @@ public class ActiveNumberUpdateRequestImpl implements ActiveNumberUpdateRequest 
     return Objects.equals(this.displayName, activeNumberRequest.displayName)
         && Objects.equals(this.smsConfiguration, activeNumberRequest.smsConfiguration)
         && Objects.equals(this.voiceConfiguration, activeNumberRequest.voiceConfiguration)
-        && Objects.equals(this.callbackUrl, activeNumberRequest.callbackUrl);
+        && Objects.equals(this.eventDestinationTarget, activeNumberRequest.eventDestinationTarget);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(displayName, smsConfiguration, voiceConfiguration, callbackUrl);
+    return Objects.hash(displayName, smsConfiguration, voiceConfiguration, eventDestinationTarget);
   }
 
   @Override
@@ -123,7 +123,9 @@ public class ActiveNumberUpdateRequestImpl implements ActiveNumberUpdateRequest 
     sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
     sb.append("    smsConfiguration: ").append(toIndentedString(smsConfiguration)).append("\n");
     sb.append("    voiceConfiguration: ").append(toIndentedString(voiceConfiguration)).append("\n");
-    sb.append("    callbackUrl: ").append(toIndentedString(callbackUrl)).append("\n");
+    sb.append("    eventDestinationTarget: ")
+        .append(toIndentedString(eventDestinationTarget))
+        .append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -143,7 +145,7 @@ public class ActiveNumberUpdateRequestImpl implements ActiveNumberUpdateRequest 
     OptionalValue<String> displayName = OptionalValue.empty();
     OptionalValue<SmsConfiguration> smsConfiguration = OptionalValue.empty();
     OptionalValue<VoiceConfiguration> voiceConfiguration = OptionalValue.empty();
-    OptionalValue<String> callbackUrl = OptionalValue.empty();
+    OptionalValue<String> eventDestinationTarget = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_DISPLAY_NAME)
     public Builder setDisplayName(String displayName) {
@@ -164,14 +166,14 @@ public class ActiveNumberUpdateRequestImpl implements ActiveNumberUpdateRequest 
     }
 
     @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
-    public Builder setCallbackUrl(String callbackUrl) {
-      this.callbackUrl = OptionalValue.of(callbackUrl);
+    public Builder setEventDestinationTarget(String eventDestinationTarget) {
+      this.eventDestinationTarget = OptionalValue.of(eventDestinationTarget);
       return this;
     }
 
     public ActiveNumberUpdateRequest build() {
       return new ActiveNumberUpdateRequestImpl(
-          displayName, smsConfiguration, voiceConfiguration, callbackUrl);
+          displayName, smsConfiguration, voiceConfiguration, eventDestinationTarget);
     }
   }
 }

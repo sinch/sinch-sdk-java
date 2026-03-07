@@ -8,13 +8,13 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.numbers.models.v1.callbacks.request;
+package com.sinch.sdk.domains.numbers.models.v1.eventdestinations.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /** The request to update the callbacks configuration for the current project. */
-@JsonDeserialize(builder = CallbackConfigurationUpdateRequestImpl.Builder.class)
-public interface CallbackConfigurationUpdateRequest {
+@JsonDeserialize(builder = EventDestinationUpdateRequestImpl.Builder.class)
+public interface EventDestinationUpdateRequest {
 
   /**
    * The HMAC secret to be updated for the specified project
@@ -29,7 +29,7 @@ public interface CallbackConfigurationUpdateRequest {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new CallbackConfigurationUpdateRequestImpl.Builder();
+    return new EventDestinationUpdateRequestImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -49,6 +49,6 @@ public interface CallbackConfigurationUpdateRequest {
      *
      * @return The instance build with current builder values
      */
-    CallbackConfigurationUpdateRequest build();
+    EventDestinationUpdateRequest build();
   }
 }
