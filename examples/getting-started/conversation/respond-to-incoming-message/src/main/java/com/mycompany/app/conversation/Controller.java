@@ -1,9 +1,9 @@
 package com.mycompany.app.conversation;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.conversation.api.v1.WebhooksService;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.ConversationWebhookEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.message.MessageInboundEvent;
+import com.sinch.sdk.domains.conversation.api.v1.SinchEventsService;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.ConversationSinchEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.message.MessageInboundEvent;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -32,10 +32,10 @@ public class Controller {
   public ResponseEntity<Void> conversationEvent(
       @RequestHeader Map<String, String> headers, @RequestBody String body) {
 
-    WebhooksService webhooks = sinchClient.conversation().v1().webhooks();
+    SinchEventsService webhooks = sinchClient.conversation().v1().sinchEvents();
 
     // decode the request payload
-    ConversationWebhookEvent event = webhooks.parseEvent(body);
+    ConversationSinchEvent event = webhooks.parseEvent(body);
 
     // let business layer process the request
     if (event instanceof MessageInboundEvent e) {

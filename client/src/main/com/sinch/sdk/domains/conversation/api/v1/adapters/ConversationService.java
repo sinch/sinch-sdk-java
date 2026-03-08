@@ -11,11 +11,11 @@ import com.sinch.sdk.domains.conversation.api.v1.AppsService;
 import com.sinch.sdk.domains.conversation.api.v1.CapabilityService;
 import com.sinch.sdk.domains.conversation.api.v1.ContactsService;
 import com.sinch.sdk.domains.conversation.api.v1.ConversationsService;
+import com.sinch.sdk.domains.conversation.api.v1.EventDestinationsService;
 import com.sinch.sdk.domains.conversation.api.v1.EventsService;
 import com.sinch.sdk.domains.conversation.api.v1.MessagesService;
 import com.sinch.sdk.domains.conversation.api.v1.ProjectSettingsService;
 import com.sinch.sdk.domains.conversation.api.v1.TranscodingService;
-import com.sinch.sdk.domains.conversation.api.v1.WebhooksService;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.credentials.LineEnterpriseCredentialsMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.events.app.AppEventMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.events.contactmessage.internal.ContactMessageEventMapper;
@@ -45,7 +45,6 @@ import com.sinch.sdk.domains.conversation.templates.api.adapters.TemplatesServic
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
-import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -74,7 +73,8 @@ public class ConversationService
   private volatile TranscodingService transcoding;
   private volatile CapabilityService capability;
   private volatile ProjectSettingsService projectSettings;
-  private volatile WebhooksService webhooks;
+  private volatile EventDestinationsService eventDestinations;
+  private volatile SinchEventsService sinchEvents;
   private volatile TemplatesService templates;
 
   static {
@@ -96,7 +96,7 @@ public class ConversationService
 
   public AppsService apps() {
     if (null == this.apps) {
-      instanceLazyInit(true);
+      instanceLazyInit();
       this.apps =
           new AppsServiceImpl(
               httpClientSupplier.get(),
@@ -110,7 +110,7 @@ public class ConversationService
 
   public ContactsService contacts() {
     if (null == this.contacts) {
-      instanceLazyInit(true);
+      instanceLazyInit();
       this.contacts =
           new ContactsServiceImpl(
               httpClientSupplier.get(),
@@ -124,7 +124,7 @@ public class ConversationService
 
   public MessagesService messages() {
     if (null == this.messages) {
-      instanceLazyInit(true);
+      instanceLazyInit();
       this.messages =
           new MessagesServiceImpl(
               httpClientSupplier.get(),
@@ -138,7 +138,7 @@ public class ConversationService
 
   public ConversationsService conversations() {
     if (null == this.conversations) {
-      instanceLazyInit(true);
+      instanceLazyInit();
       this.conversations =
           new ConversationsServiceImpl(
               httpClientSupplier.get(),
@@ -152,7 +152,7 @@ public class ConversationService
 
   public EventsService events() {
     if (null == this.events) {
-      instanceLazyInit(true);
+      instanceLazyInit();
       this.events =
           new EventsServiceImpl(
               httpClientSupplier.get(),
@@ -166,7 +166,7 @@ public class ConversationService
 
   public TranscodingService transcoding() {
     if (null == this.transcoding) {
-      instanceLazyInit(true);
+      instanceLazyInit();
       this.transcoding =
           new TranscodingServiceImpl(
               httpClientSupplier.get(),
@@ -180,7 +180,7 @@ public class ConversationService
 
   public CapabilityService capability() {
     if (null == this.capability) {
-      instanceLazyInit(true);
+      instanceLazyInit();
       this.capability =
           new CapabilityServiceImpl(
               httpClientSupplier.get(),
@@ -199,24 +199,30 @@ public class ConversationService
     return this.templates;
   }
 
-  public WebhooksService webhooks() {
-    if (null == this.webhooks) {
-      instanceLazyInit(false);
-      this.webhooks =
-          new WebhooksServiceImpl(
+  public EventDestinationsService eventDestinations() {
+    if (null == this.eventDestinations) {
+      instanceLazyInit();
+      this.eventDestinations =
+          new EventDestinationsServiceImpl(
               httpClientSupplier.get(),
               context.getServer(),
               authManagers,
               HttpMapper.getInstance(),
-              uriUUID,
-              new HmacAuthenticationValidation());
+              uriUUID);
     }
-    return this.webhooks;
+    return this.eventDestinations;
+  }
+
+  public SinchEventsService sinchEvents() {
+    if (null == this.sinchEvents) {
+      this.sinchEvents = new SinchEventsService(new HmacAuthenticationValidation());
+    }
+    return this.sinchEvents;
   }
 
   public ProjectSettingsService projectSettings() {
     if (null == this.projectSettings) {
-      instanceLazyInit(true);
+      instanceLazyInit();
       this.projectSettings =
           new ProjectSettingsServiceImpl(
               httpClientSupplier.get(),
@@ -228,16 +234,12 @@ public class ConversationService
     return this.projectSettings;
   }
 
-  private void instanceLazyInit(boolean validateRequired) {
+  private void instanceLazyInit() {
     if (null != this.authManagers) {
       return;
     }
     synchronized (this) {
       if (null == this.authManagers) {
-        if (!validateRequired) {
-          this.authManagers = Collections.emptyMap();
-          return;
-        }
         Objects.requireNonNull(
             credentials, "Conversation service requires credentials to be defined");
         Objects.requireNonNull(context, "Conversation service requires context to be defined");
