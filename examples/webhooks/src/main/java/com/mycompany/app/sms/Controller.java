@@ -1,10 +1,10 @@
 package com.mycompany.app.sms;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.sms.api.v1.WebHooksService;
+import com.sinch.sdk.domains.sms.api.v1.SinchEventsService;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReport;
 import com.sinch.sdk.domains.sms.models.v1.inbounds.InboundMessage;
-import com.sinch.sdk.domains.sms.models.v1.webhooks.SmsEvent;
+import com.sinch.sdk.domains.sms.models.v1.sinchevents.SmsSinchEvent;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,13 +33,13 @@ public class Controller {
   }
 
   @PostMapping(
-      value = "/SmsEvent",
+      value = "/SmsSinchEvent",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Void> smsEvent(
       @RequestHeader Map<String, String> headers, @RequestBody String body) {
 
-    WebHooksService webhooks = sinchClient.sms().v1().webhooks();
+    SinchEventsService webhooks = sinchClient.sms().v1().sinchEvents();
 
     // ensure valid authentication to handle request
     // See
@@ -66,7 +66,7 @@ public class Controller {
     }
 
     // decode the request payload
-    SmsEvent event = webhooks.parseEvent(body);
+    SmsSinchEvent event = webhooks.parseEvent(body);
 
     // let business layer process the request
     switch (event) {

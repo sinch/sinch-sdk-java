@@ -1,11 +1,11 @@
 package com.sinch.sdk.domains.sms.api.v1;
 
 import com.sinch.sdk.core.exceptions.ApiMappingException;
-import com.sinch.sdk.domains.sms.models.v1.webhooks.SmsEvent;
+import com.sinch.sdk.domains.sms.models.v1.sinchevents.SmsSinchEvent;
 import java.util.Map;
 
 /**
- * SMS WebHooks service
+ * SMS Sinch Events service
  *
  * <p><b>Callbacks</b>
  *
@@ -36,11 +36,11 @@ import java.util.Map;
  *
  * @see <a
  *     href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Webhooks/">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Webhooks/</a>
- * @since 1.5
+ * @since 2.0
  */
-public interface WebHooksService {
+public interface SinchEventsService {
 
-  SmsEvent parseEvent(String jsonPayload) throws ApiMappingException;
+  SmsSinchEvent parseEvent(String jsonPayload) throws ApiMappingException;
 
   boolean validateAuthenticationHeader(
       String secret, Map<String, String> headers, String jsonPayload);

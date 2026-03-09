@@ -42,10 +42,10 @@ public interface SMSService {
   GroupsService groups();
 
   /**
-   * WebHooksService Service instance
+   * Sinch Events Service instance
    *
    * @return service instance for project
-   * @since 1.5
+   * @since 2.0
    */
-  WebHooksService webhooks();
+  SinchEventsService sinchEvents();
 }

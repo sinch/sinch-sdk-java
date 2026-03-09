@@ -1,7 +1,7 @@
 /**
- * SMS API webhooks related models
+ * SMS API Sinch Events related models
  *
- * <h2>Incoming SMS WebHook</h2>
+ * <h2>Incoming SMS Event</h2>
  *
  * <p>An inbound message is a message sent to one of your short codes or long numbers from a mobile
  * phone. To receive inbound message callbacks, a URL needs to be added to your REST API.
@@ -11,26 +11,26 @@
  * <p>See <a
  * href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Webhooks/#tag/Webhooks/operation/incomingSMS">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Webhooks/#tag/Webhooks/operation/incomingSMS</a>
  *
- * <h2>Delivery Report WebHook</h2>
+ * <h2>Delivery Report Event</h2>
  *
  * <p>A delivery report contains the status and status code for each recipient of a batch. To get a
  * delivery report callback for a message or batch of messages, set the <code>delivery_report
  * </code> field accordingly when creating a batch.
  *
- * <p>The following is provided so you can better understand our webhooks/callbacks. Configuration
- * of both webhooks and the type of delivery report requested happens when sending a batch.
+ * <p>The following is provided so you can better understand our Sinch Events. Configuration of both
+ * sinch events and the type of delivery report requested happens when sending a batch.
  *
  * <p><b>Callback URL</b>
  *
  * <p>The callback URL can either be provided for each batch or provisioned globally for your
  * account in your <a href="https://dashboard.sinch.com/sms/api/rest">Sinch Customer Dashboard</a>.
- * Learn how to configure a webhook/callback <a
+ * Learn how to configure a Sinch Event <a
  * href="https://community.sinch.com/t5/SMS/How-do-I-assign-a-callback-URL-to-an-SMS-service-plan/ta-p/8414">here</a>
  *
  * <p><b>Type</b>
  *
- * <p>The <code>type</code> is the type of delivery report webhook. The response will vary depending
- * on the webhook delivery report you selected when the batch was sent, so choose the appropriate
+ * <p>The <code>type</code> is the type of delivery report event. The response will vary depending
+ * on the event delivery report you selected when the batch was sent, so choose the appropriate
  * selection under "One of".
  *
  * <ul>
@@ -52,6 +52,6 @@
  * See <a
  * href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Webhooks/#tag/Webhooks/operation/deliveryReport">https://developers.sinch.com/docs/sms/api-reference/sms/tag/Webhooks/#tag/Webhooks/operation/deliveryReport</a>
  *
- * @since 1.5
+ * @since 2.0
  */
-package com.sinch.sdk.domains.sms.models.v1.webhooks;
+package com.sinch.sdk.domains.sms.models.v1.sinchevents;

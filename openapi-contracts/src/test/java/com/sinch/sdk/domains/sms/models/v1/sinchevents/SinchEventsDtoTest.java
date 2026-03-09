@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.sms.models.v1.webhooks;
+package com.sinch.sdk.domains.sms.models.v1.sinchevents;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
@@ -10,28 +10,28 @@ import com.sinch.sdk.domains.sms.models.v1.inbounds.InboundMessageDtoTest;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
-public class WebhookEventDtoTest extends BaseTest {
+public class SinchEventsDtoTest extends BaseTest {
 
   @GivenJsonResource("/domains/sms/v1/inbounds/InboundBinaryDto.json")
-  SmsEvent loadedInboundBinaryEvent;
+  SmsSinchEvent loadedInboundBinaryEvent;
 
   @GivenJsonResource("/domains/sms/v1/inbounds/InboundTextDto.json")
-  SmsEvent loadedInboundTextEvent;
+  SmsSinchEvent loadedInboundTextEvent;
 
   @GivenJsonResource("/domains/sms/v1/inbounds/InboundMediaDto.json")
-  SmsEvent loadedInboundMediaEvent;
+  SmsSinchEvent loadedInboundMediaEvent;
 
   @GivenJsonResource("/domains/sms/v1/deliveryreports/BatchDeliveryReportSMSDto.json")
-  SmsEvent loadedBatchDeliveryReportSMSEvent;
+  SmsSinchEvent loadedBatchDeliveryReportSMSEvent;
 
   @GivenJsonResource("/domains/sms/v1/deliveryreports/BatchDeliveryReportMMSDto.json")
-  SmsEvent loadedBatchDeliveryReportMMSEvent;
+  SmsSinchEvent loadedBatchDeliveryReportMMSEvent;
 
   @GivenJsonResource("/domains/sms/v1/deliveryreports/RecipientDeliveryReportSMSDto.json")
-  SmsEvent loadedRecipientDeliveryReportSMSEvent;
+  SmsSinchEvent loadedRecipientDeliveryReportSMSEvent;
 
   @GivenJsonResource("/domains/sms/v1/deliveryreports/RecipientDeliveryReportMMSDto.json")
-  SmsEvent loadedRecipientDeliveryReportMMSEvent;
+  SmsSinchEvent loadedRecipientDeliveryReportMMSEvent;
 
   @Test
   void deserializeBinaryMessage() {

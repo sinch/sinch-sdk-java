@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.sms.models.v1.deliveryreports;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.sms.api.v1.SinchEventsService;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.internal.RecipientDeliveryReportOneOfImpl;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.request.ListDeliveryReportsQueryParameters;
 
@@ -10,7 +11,7 @@ import com.sinch.sdk.domains.sms.models.v1.deliveryreports.request.ListDeliveryR
  * @see com.sinch.sdk.domains.sms.api.v1.DeliveryReportsService#getForNumber(String, String)
  * @see
  *     com.sinch.sdk.domains.sms.api.v1.DeliveryReportsService#list(ListDeliveryReportsQueryParameters)
- * @see com.sinch.sdk.domains.sms.api.v1.WebHooksService#parseEvent(String)
+ * @see SinchEventsService#parseEvent(String)
  * @since 1.5
  */
 @JsonDeserialize(using = RecipientDeliveryReportOneOfImpl.Deserializer.class)
