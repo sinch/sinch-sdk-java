@@ -6,7 +6,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationDirection;
-import com.sinch.sdk.domains.conversation.models.v1.messages.request.LastMessagesByChannelIdentityListQueryParameters.MessagesSourceEnum;
 import java.time.Instant;
 import java.util.Arrays;
 import org.json.JSONException;
@@ -20,7 +19,7 @@ public class LastMessagesByChannelIdentityListQueryParametersDtoTest extends Con
       listLastMessagesByChannelIdentityRequest =
           LastMessagesByChannelIdentityListQueryParameters.builder()
               .setAppId("an application ID")
-              .setMessagesSource(MessagesSourceEnum.CONVERSATION_SOURCE)
+              .setMessagesSource(MessageSource.CONVERSATION_SOURCE)
               .setChannelIdentities(Arrays.asList("447700900000", "447700900001", "447700900002"))
               .setDirection(ConversationDirection.TO_CONTACT)
               .setView(ConversationMessagesView.WITHOUT_METADATA)

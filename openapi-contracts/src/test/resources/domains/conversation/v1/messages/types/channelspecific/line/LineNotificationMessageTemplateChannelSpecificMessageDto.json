@@ -1,0 +1,21 @@
+{
+  "template_key": "order_item_completion_ja",
+  "body": {
+    "emphasized_item": {
+      "item_key": "name_013_ja",
+      "content": "013 ja content value"
+    },
+    "items": [
+      {
+        "item_key": "name_014_ja",
+        "content": "014 ja content value"
+      }
+    ],
+    "buttons": [
+      {
+        "button_key": "check_delivery_status_ja",
+        "url": "https://example.com"
+      }
+    ]
+  }
+}

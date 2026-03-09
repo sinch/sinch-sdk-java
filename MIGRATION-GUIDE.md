@@ -46,6 +46,7 @@ This guide lists all removed classes and interfaces from V1 and how to migrate t
 | conversation.response.ConversationsListRecentResponse | [conversations.response.RecentConversationsListResponse](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/conversations/response/RecentConversationsListResponse.html)             |
 | events.request.EventsListRequest                      | [events.request.EventsListQueryParameters](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/events/request/EventsListQueryParameters.html)                                         |
 | messages.request.MessagesListRequest                  | [messages.request.MessagesListQueryParameters](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/messages/request/MessagesListQueryParameters.html)                                 |
+| api.v1.MessagesService.MessageSource                  | [messages.request.MessageSource](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/messages/request/MessageSource.html)                                                             |
 
 #### Replacement Services
 | Old package                          | New package                                                                                                                                                                    |
@@ -79,6 +80,7 @@ This guide lists all removed classes and interfaces from V1 and how to migrate t
 | WebhooksService.list(...)                            | Returned class is changed from `Collection<Webhook>` to `WebhooksListResponse`                                                                                                                   |
 | TemplatesServiceV2.list(...)                         | Returned class is changed from `Collection<TemplateV2>` to `TemplatesV2ListResponse`                                                                                                             |
 | TemplatesServiceV2.listTranslations(...)             | Returned class is changed from `Collection<TemplateTranslation>` to `TranslationV2ListResponse`                                                                                                  |
+
 ### [`Numbers`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/package-summary.html)
 
 #### Replacement models

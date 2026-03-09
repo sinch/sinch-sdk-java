@@ -6,7 +6,7 @@ import com.sinch.sdk.domains.conversation.models.v1.ContactId;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.LastMessagesByChannelIdentityListQueryParameters;
-import com.sinch.sdk.domains.conversation.models.v1.messages.request.LastMessagesByChannelIdentityListQueryParameters.MessagesSourceEnum;
+import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessageSource;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessageUpdateRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesListQueryParameters;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
@@ -111,7 +111,7 @@ public class MessagesSteps {
     LastMessagesByChannelIdentityListQueryParameters request =
         LastMessagesByChannelIdentityListQueryParameters.builder()
             .setChannelIdentities(Arrays.asList("12015555555", "12017777777", "7504610123456789"))
-            .setMessagesSource(MessagesSourceEnum.CONVERSATION_SOURCE)
+            .setMessagesSource(MessageSource.CONVERSATION_SOURCE)
             .setPageSize(2)
             .build();
     listLastMessagesByChannelIdentityResponse = service.listLastMessagesByChannelIdentity(request);
@@ -123,7 +123,7 @@ public class MessagesSteps {
     LastMessagesByChannelIdentityListQueryParameters request =
         LastMessagesByChannelIdentityListQueryParameters.builder()
             .setChannelIdentities(Arrays.asList("12015555555", "12017777777", "7504610123456789"))
-            .setMessagesSource(MessagesSourceEnum.CONVERSATION_SOURCE)
+            .setMessagesSource(MessageSource.CONVERSATION_SOURCE)
             .setPageSize(2)
             .build();
     listAllLastMessagesByChannelIdentityResponse =
@@ -136,7 +136,7 @@ public class MessagesSteps {
     LastMessagesByChannelIdentityListQueryParameters request =
         LastMessagesByChannelIdentityListQueryParameters.builder()
             .setChannelIdentities(Arrays.asList("12015555555", "12017777777", "7504610123456789"))
-            .setMessagesSource(MessagesSourceEnum.CONVERSATION_SOURCE)
+            .setMessagesSource(MessageSource.CONVERSATION_SOURCE)
             .setPageSize(2)
             .build();
     listPageIteratorLastMessagesByChannelIdentityResponse =

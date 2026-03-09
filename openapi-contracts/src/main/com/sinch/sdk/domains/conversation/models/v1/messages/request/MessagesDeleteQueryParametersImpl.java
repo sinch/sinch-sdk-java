@@ -5,13 +5,13 @@ import java.util.Objects;
 
 public class MessagesDeleteQueryParametersImpl implements MessagesDeleteQueryParameters {
 
-  private final OptionalValue<MessagesSource> messagesSource;
+  private final OptionalValue<MessageSource> messagesSource;
 
-  private MessagesDeleteQueryParametersImpl(OptionalValue<MessagesSource> messagesSource) {
+  private MessagesDeleteQueryParametersImpl(OptionalValue<MessageSource> messagesSource) {
     this.messagesSource = messagesSource;
   }
 
-  public OptionalValue<MessagesSource> getMessagesSource() {
+  public OptionalValue<MessageSource> getMessagesSource() {
     return messagesSource;
   }
 
@@ -54,7 +54,7 @@ public class MessagesDeleteQueryParametersImpl implements MessagesDeleteQueryPar
   }
 
   static class Builder implements MessagesDeleteQueryParameters.Builder {
-    OptionalValue<MessagesSource> messagesSource = OptionalValue.empty();
+    OptionalValue<MessageSource> messagesSource = OptionalValue.empty();
 
     protected Builder() {}
 
@@ -67,7 +67,7 @@ public class MessagesDeleteQueryParametersImpl implements MessagesDeleteQueryPar
       this.messagesSource = parameters.getMessagesSource();
     }
 
-    public Builder setMessagesSource(MessagesSource messagesSource) {
+    public Builder setMessagesSource(MessageSource messagesSource) {
       this.messagesSource = OptionalValue.of(messagesSource);
       return this;
     }

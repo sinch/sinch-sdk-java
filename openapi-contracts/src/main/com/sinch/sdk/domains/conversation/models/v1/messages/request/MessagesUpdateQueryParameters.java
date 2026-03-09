@@ -20,7 +20,7 @@ public interface MessagesUpdateQueryParameters {
    *
    * @return messagesSource
    */
-  OptionalValue<MessagesSource> getMessagesSource();
+  OptionalValue<MessageSource> getMessagesSource();
 
   /**
    * Getting builder
@@ -50,7 +50,7 @@ public interface MessagesUpdateQueryParameters {
      * @return Current builder
      * @see #getMessagesSource
      */
-    Builder setMessagesSource(MessagesSource messagesSource);
+    Builder setMessagesSource(MessageSource messagesSource);
 
     /**
      * Create instance

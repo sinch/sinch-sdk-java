@@ -28,12 +28,20 @@ public interface ChannelSpecificMessageInternal {
     public static final MessageTypeEnum COMMERCE = new MessageTypeEnum("COMMERCE");
     public static final MessageTypeEnum CAROUSEL_COMMERCE =
         new MessageTypeEnum("CAROUSEL_COMMERCE");
+    public static final MessageTypeEnum NOTIFICATION_MESSAGE_TEMPLATE =
+        new MessageTypeEnum("NOTIFICATION_MESSAGE_TEMPLATE");
 
     private static final EnumSupportDynamic<String, MessageTypeEnum> ENUM_SUPPORT =
         new EnumSupportDynamic<>(
             MessageTypeEnum.class,
             MessageTypeEnum::new,
-            Arrays.asList(FLOWS, ORDER_DETAILS, ORDER_STATUS, COMMERCE, CAROUSEL_COMMERCE));
+            Arrays.asList(
+                FLOWS,
+                ORDER_DETAILS,
+                ORDER_STATUS,
+                COMMERCE,
+                CAROUSEL_COMMERCE,
+                NOTIFICATION_MESSAGE_TEMPLATE));
 
     private MessageTypeEnum(String value) {
       super(value);

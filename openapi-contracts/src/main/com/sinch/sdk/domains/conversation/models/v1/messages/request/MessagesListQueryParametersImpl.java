@@ -17,7 +17,7 @@ public class MessagesListQueryParametersImpl implements MessagesListQueryParamet
   private final OptionalValue<Integer> pageSize;
   private final OptionalValue<String> pageToken;
   private final OptionalValue<ConversationMessagesView> view;
-  private final OptionalValue<MessagesSource> messagesSource;
+  private final OptionalValue<MessageSource> messagesSource;
   private final OptionalValue<Boolean> onlyRecipientOriginated;
   private final OptionalValue<ConversationChannel> channel;
   private final OptionalValue<ConversationDirection> direction;
@@ -32,7 +32,7 @@ public class MessagesListQueryParametersImpl implements MessagesListQueryParamet
       OptionalValue<Integer> pageSize,
       OptionalValue<String> pageToken,
       OptionalValue<ConversationMessagesView> view,
-      OptionalValue<MessagesSource> messagesSource,
+      OptionalValue<MessageSource> messagesSource,
       OptionalValue<Boolean> onlyRecipientOriginated,
       OptionalValue<ConversationChannel> channel,
       OptionalValue<ConversationDirection> direction) {
@@ -87,7 +87,7 @@ public class MessagesListQueryParametersImpl implements MessagesListQueryParamet
     return view;
   }
 
-  public OptionalValue<MessagesSource> getMessagesSource() {
+  public OptionalValue<MessageSource> getMessagesSource() {
     return messagesSource;
   }
 
@@ -192,7 +192,7 @@ public class MessagesListQueryParametersImpl implements MessagesListQueryParamet
     OptionalValue<Integer> pageSize = OptionalValue.empty();
     OptionalValue<String> pageToken = OptionalValue.empty();
     OptionalValue<ConversationMessagesView> view = OptionalValue.empty();
-    OptionalValue<MessagesSource> messagesSource = OptionalValue.empty();
+    OptionalValue<MessageSource> messagesSource = OptionalValue.empty();
     OptionalValue<Boolean> onlyRecipientOriginated = OptionalValue.empty();
     OptionalValue<ConversationChannel> channel = OptionalValue.empty();
     OptionalValue<ConversationDirection> direction = OptionalValue.empty();
@@ -264,7 +264,7 @@ public class MessagesListQueryParametersImpl implements MessagesListQueryParamet
       return this;
     }
 
-    public Builder setMessagesSource(MessagesSource messagesSource) {
+    public Builder setMessagesSource(MessageSource messagesSource) {
       this.messagesSource = OptionalValue.of(messagesSource);
       return this;
     }

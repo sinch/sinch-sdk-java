@@ -46,7 +46,7 @@ public class LastMessagesByChannelIdentityListQueryParametersImpl
 
   public static final String JSON_PROPERTY_MESSAGES_SOURCE = "messages_source";
 
-  private OptionalValue<MessagesSourceEnum> messagesSource;
+  private OptionalValue<MessageSource> messagesSource;
 
   public static final String JSON_PROPERTY_PAGE_SIZE = "page_size";
 
@@ -82,7 +82,7 @@ public class LastMessagesByChannelIdentityListQueryParametersImpl
       OptionalValue<List<String>> channelIdentities,
       OptionalValue<List<String>> contactIds,
       OptionalValue<String> appId,
-      OptionalValue<MessagesSourceEnum> messagesSource,
+      OptionalValue<MessageSource> messagesSource,
       OptionalValue<Integer> pageSize,
       OptionalValue<String> pageToken,
       OptionalValue<ConversationMessagesView> view,
@@ -137,13 +137,13 @@ public class LastMessagesByChannelIdentityListQueryParametersImpl
   }
 
   @JsonIgnore
-  public MessagesSourceEnum getMessagesSource() {
+  public MessageSource getMessagesSource() {
     return messagesSource.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_MESSAGES_SOURCE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<MessagesSourceEnum> messagesSource() {
+  public OptionalValue<MessageSource> messagesSource() {
     return messagesSource;
   }
 
@@ -299,7 +299,7 @@ public class LastMessagesByChannelIdentityListQueryParametersImpl
     OptionalValue<List<String>> channelIdentities = OptionalValue.empty();
     OptionalValue<List<String>> contactIds = OptionalValue.empty();
     OptionalValue<String> appId = OptionalValue.empty();
-    OptionalValue<MessagesSourceEnum> messagesSource = OptionalValue.empty();
+    OptionalValue<MessageSource> messagesSource = OptionalValue.empty();
     OptionalValue<Integer> pageSize = OptionalValue.empty();
     OptionalValue<String> pageToken = OptionalValue.empty();
     OptionalValue<ConversationMessagesView> view = OptionalValue.empty();
@@ -348,7 +348,7 @@ public class LastMessagesByChannelIdentityListQueryParametersImpl
     }
 
     @JsonProperty(JSON_PROPERTY_MESSAGES_SOURCE)
-    public Builder setMessagesSource(MessagesSourceEnum messagesSource) {
+    public Builder setMessagesSource(MessageSource messagesSource) {
       this.messagesSource = OptionalValue.of(messagesSource);
       return this;
     }
