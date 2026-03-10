@@ -21,14 +21,6 @@ import java.util.stream.Stream;
 public interface MediaMessageBodyDetails {
 
   /**
-   * @return Current status
-   * @see #getStatusEnum()
-   * @deprecated use {@link #getStatusEnum()} instead.
-   */
-  @Deprecated
-  String getStatus();
-
-  /**
    * The result code. Possible values: 0 (success), 1 (content upload error), 2 (cloud bucket
    * error), 3 (bucket key error).
    *
@@ -80,9 +72,9 @@ public interface MediaMessageBodyDetails {
    *
    * <p>Field is required
    *
-   * @return StatusEnum
+   * @return status
    */
-  StatusEnum getStatusEnum();
+  StatusEnum getStatus();
 
   /**
    * URL to be used to download attachment.
@@ -102,15 +94,6 @@ public interface MediaMessageBodyDetails {
 
   /** Dedicated Builder */
   interface Builder {
-
-    /**
-     * @param status see {@link #setStatusEnum(StatusEnum)}
-     * @return Current builder
-     * @see #setStatusEnum(StatusEnum)
-     * @deprecated use {@link #setStatusEnum(StatusEnum)} instead.
-     */
-    @Deprecated
-    Builder setStatus(String status);
 
     /**
      * see getter
@@ -133,11 +116,11 @@ public interface MediaMessageBodyDetails {
     /**
      * see getter
      *
-     * @param StatusEnum see getter
+     * @param status see getter
      * @return Current builder
-     * @see #getStatusEnum
+     * @see #getStatus
      */
-    Builder setStatusEnum(StatusEnum StatusEnum);
+    Builder setStatus(StatusEnum status);
 
     /**
      * see getter
