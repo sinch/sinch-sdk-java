@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.sms.models.v1.webhooks.internal;
+package com.sinch.sdk.domains.sms.models.v1.sinchevents.internal;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
@@ -31,89 +31,89 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@JsonDeserialize(using = WebhookEventOneOfImpl.WebhookEventOneOfImplDeserializer.class)
-@JsonSerialize(using = WebhookEventOneOfImpl.WebhookEventOneOfImplSerializer.class)
-public class WebhookEventOneOfImpl extends AbstractOpenApiSchema implements WebhookEventOneOf {
-  private static final Logger log = Logger.getLogger(WebhookEventOneOfImpl.class.getName());
+@JsonDeserialize(using = SmsSinchEventOneOfImpl.SmsSinchEventOneOfImplDeserializer.class)
+@JsonSerialize(using = SmsSinchEventOneOfImpl.SmsSinchEventOneOfImplSerializer.class)
+public class SmsSinchEventOneOfImpl extends AbstractOpenApiSchema implements SmsSinchEventOneOf {
+  private static final Logger log = Logger.getLogger(SmsSinchEventOneOfImpl.class.getName());
 
-  public static final class WebhookEventOneOfImplSerializer
-      extends StdSerializer<WebhookEventOneOfImpl> {
+  public static final class SmsSinchEventOneOfImplSerializer
+      extends StdSerializer<SmsSinchEventOneOfImpl> {
     private static final long serialVersionUID = 1L;
 
-    public WebhookEventOneOfImplSerializer(Class<WebhookEventOneOfImpl> t) {
+    public SmsSinchEventOneOfImplSerializer(Class<SmsSinchEventOneOfImpl> t) {
       super(t);
     }
 
-    public WebhookEventOneOfImplSerializer() {
+    public SmsSinchEventOneOfImplSerializer() {
       this(null);
     }
 
     @Override
     public void serialize(
-        WebhookEventOneOfImpl value, JsonGenerator jgen, SerializerProvider provider)
+        SmsSinchEventOneOfImpl value, JsonGenerator jgen, SerializerProvider provider)
         throws IOException, JsonProcessingException {
       jgen.writeObject(value.getActualInstance());
     }
   }
 
-  public static final class WebhookEventOneOfImplDeserializer
-      extends StdDeserializer<WebhookEventOneOfImpl> {
+  public static final class SmsSinchEventOneOfImplDeserializer
+      extends StdDeserializer<SmsSinchEventOneOfImpl> {
 
     private static final long serialVersionUID = 1L;
 
-    public WebhookEventOneOfImplDeserializer() {
-      this(WebhookEventOneOfImpl.class);
+    public SmsSinchEventOneOfImplDeserializer() {
+      this(SmsSinchEventOneOfImpl.class);
     }
 
-    public WebhookEventOneOfImplDeserializer(Class<?> vc) {
+    public SmsSinchEventOneOfImplDeserializer(Class<?> vc) {
       super(vc);
     }
 
     @Override
-    public WebhookEventOneOfImpl deserialize(JsonParser jp, DeserializationContext ctxt)
+    public SmsSinchEventOneOfImpl deserialize(JsonParser jp, DeserializationContext ctxt)
         throws IOException, JsonProcessingException {
       JsonNode tree = jp.readValueAsTree();
       Object deserialized = null;
-      WebhookEventOneOfImpl newWebhookEventOneOfImpl = new WebhookEventOneOfImpl();
+      SmsSinchEventOneOfImpl newSmsSinchEventOneOfImpl = new SmsSinchEventOneOfImpl();
       Map<String, Object> result2 =
           tree.traverse(jp.getCodec()).readValueAs(new TypeReference<Map<String, Object>>() {});
       String discriminatorValue = (String) result2.get("type");
       switch (discriminatorValue) {
         case "delivery_report_mms":
           deserialized = tree.traverse(jp.getCodec()).readValueAs(BatchDeliveryReportMMSImpl.class);
-          newWebhookEventOneOfImpl.setActualInstance(deserialized);
-          return newWebhookEventOneOfImpl;
+          newSmsSinchEventOneOfImpl.setActualInstance(deserialized);
+          return newSmsSinchEventOneOfImpl;
         case "delivery_report_sms":
           deserialized = tree.traverse(jp.getCodec()).readValueAs(BatchDeliveryReportSMSImpl.class);
-          newWebhookEventOneOfImpl.setActualInstance(deserialized);
-          return newWebhookEventOneOfImpl;
+          newSmsSinchEventOneOfImpl.setActualInstance(deserialized);
+          return newSmsSinchEventOneOfImpl;
         case "mo_binary":
           deserialized = tree.traverse(jp.getCodec()).readValueAs(BinaryMessageImpl.class);
-          newWebhookEventOneOfImpl.setActualInstance(deserialized);
-          return newWebhookEventOneOfImpl;
+          newSmsSinchEventOneOfImpl.setActualInstance(deserialized);
+          return newSmsSinchEventOneOfImpl;
         case "mo_media":
           deserialized = tree.traverse(jp.getCodec()).readValueAs(MediaMessageImpl.class);
-          newWebhookEventOneOfImpl.setActualInstance(deserialized);
-          return newWebhookEventOneOfImpl;
+          newSmsSinchEventOneOfImpl.setActualInstance(deserialized);
+          return newSmsSinchEventOneOfImpl;
         case "mo_text":
           deserialized = tree.traverse(jp.getCodec()).readValueAs(TextMessageImpl.class);
-          newWebhookEventOneOfImpl.setActualInstance(deserialized);
-          return newWebhookEventOneOfImpl;
+          newSmsSinchEventOneOfImpl.setActualInstance(deserialized);
+          return newSmsSinchEventOneOfImpl;
         case "recipient_delivery_report_mms":
           deserialized =
               tree.traverse(jp.getCodec()).readValueAs(RecipientDeliveryReportMMSImpl.class);
-          newWebhookEventOneOfImpl.setActualInstance(deserialized);
-          return newWebhookEventOneOfImpl;
+          newSmsSinchEventOneOfImpl.setActualInstance(deserialized);
+          return newSmsSinchEventOneOfImpl;
         case "recipient_delivery_report_sms":
           deserialized =
               tree.traverse(jp.getCodec()).readValueAs(RecipientDeliveryReportSMSImpl.class);
-          newWebhookEventOneOfImpl.setActualInstance(deserialized);
-          return newWebhookEventOneOfImpl;
+          newSmsSinchEventOneOfImpl.setActualInstance(deserialized);
+          return newSmsSinchEventOneOfImpl;
         default:
           log.log(
               Level.WARNING,
               String.format(
-                  "Failed to lookup discriminator value `%s` for WebhookEventOneOfImpl. Possible"
+                  "Failed to lookup discriminator value `%s` for SmsSinchEventOneOfImpl. Possible"
                       + " values: delivery_report_mms delivery_report_sms mo_binary mo_media"
                       + " mo_text recipient_delivery_report_mms recipient_delivery_report_sms",
                   discriminatorValue));
@@ -411,63 +411,63 @@ public class WebhookEventOneOfImpl extends AbstractOpenApiSchema implements Webh
       }
 
       if (match == 1) {
-        WebhookEventOneOfImpl ret = new WebhookEventOneOfImpl();
+        SmsSinchEventOneOfImpl ret = new SmsSinchEventOneOfImpl();
         ret.setActualInstance(deserialized);
         return ret;
       }
       throw new IOException(
           String.format(
-              "Failed deserialization for WebhookEventOneOfImpl: %d classes match result, expected"
+              "Failed deserialization for SmsSinchEventOneOfImpl: %d classes match result, expected"
                   + " 1",
               match));
     }
 
     /** Handle deserialization of the 'null' value. */
     @Override
-    public WebhookEventOneOfImpl getNullValue(DeserializationContext ctxt)
+    public SmsSinchEventOneOfImpl getNullValue(DeserializationContext ctxt)
         throws JsonMappingException {
-      throw new JsonMappingException(ctxt.getParser(), "WebhookEventOneOfImpl cannot be null");
+      throw new JsonMappingException(ctxt.getParser(), "SmsSinchEventOneOfImpl cannot be null");
     }
   }
 
   // store a list of schema names defined in oneOf
   public static final Map<String, Class<?>> schemas = new HashMap<>();
 
-  public WebhookEventOneOfImpl() {
+  public SmsSinchEventOneOfImpl() {
     super("oneOf", Boolean.FALSE);
   }
 
-  public WebhookEventOneOfImpl(BatchDeliveryReportMMSImpl o) {
-    super("oneOf", Boolean.FALSE);
-    setActualInstance(o);
-  }
-
-  public WebhookEventOneOfImpl(BatchDeliveryReportSMSImpl o) {
+  public SmsSinchEventOneOfImpl(BatchDeliveryReportMMSImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public WebhookEventOneOfImpl(BinaryMessageImpl o) {
+  public SmsSinchEventOneOfImpl(BatchDeliveryReportSMSImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public WebhookEventOneOfImpl(MediaMessageImpl o) {
+  public SmsSinchEventOneOfImpl(BinaryMessageImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public WebhookEventOneOfImpl(RecipientDeliveryReportMMSImpl o) {
+  public SmsSinchEventOneOfImpl(MediaMessageImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public WebhookEventOneOfImpl(RecipientDeliveryReportSMSImpl o) {
+  public SmsSinchEventOneOfImpl(RecipientDeliveryReportMMSImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public WebhookEventOneOfImpl(TextMessageImpl o) {
+  public SmsSinchEventOneOfImpl(RecipientDeliveryReportSMSImpl o) {
+    super("oneOf", Boolean.FALSE);
+    setActualInstance(o);
+  }
+
+  public SmsSinchEventOneOfImpl(TextMessageImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
@@ -481,7 +481,7 @@ public class WebhookEventOneOfImpl extends AbstractOpenApiSchema implements Webh
     schemas.put("RecipientDeliveryReportSMSImpl", RecipientDeliveryReportSMSImpl.class);
     schemas.put("TextMessageImpl", TextMessageImpl.class);
     JSONNavigator.registerDescendants(
-        WebhookEventOneOfImpl.class, Collections.unmodifiableMap(schemas));
+        SmsSinchEventOneOfImpl.class, Collections.unmodifiableMap(schemas));
     // Initialize and register the discriminator mappings.
     Map<String, Class<?>> mappings = new HashMap<String, Class<?>>();
     mappings.put("delivery_report_mms", BatchDeliveryReportMMSImpl.class);
@@ -491,13 +491,13 @@ public class WebhookEventOneOfImpl extends AbstractOpenApiSchema implements Webh
     mappings.put("mo_text", TextMessageImpl.class);
     mappings.put("recipient_delivery_report_mms", RecipientDeliveryReportMMSImpl.class);
     mappings.put("recipient_delivery_report_sms", RecipientDeliveryReportSMSImpl.class);
-    mappings.put("WebhookEventOneOf", WebhookEventOneOfImpl.class);
-    JSONNavigator.registerDiscriminator(WebhookEventOneOfImpl.class, "type", mappings);
+    mappings.put("WebhookEventOneOf", SmsSinchEventOneOfImpl.class);
+    JSONNavigator.registerDiscriminator(SmsSinchEventOneOfImpl.class, "type", mappings);
   }
 
   @Override
   public Map<String, Class<?>> getSchemas() {
-    return WebhookEventOneOfImpl.schemas;
+    return SmsSinchEventOneOfImpl.schemas;
   }
 
   /**
@@ -650,30 +650,31 @@ public class WebhookEventOneOfImpl extends AbstractOpenApiSchema implements Webh
   }
 
   public static class Deserializer
-      extends StdDeserializer<com.sinch.sdk.domains.sms.models.v1.webhooks.SmsEvent> {
+      extends StdDeserializer<com.sinch.sdk.domains.sms.models.v1.sinchevents.SmsSinchEvent> {
 
     public Deserializer() {
       this(null);
     }
 
-    public Deserializer(Class<com.sinch.sdk.domains.sms.models.v1.webhooks.SmsEvent> vc) {
+    public Deserializer(Class<com.sinch.sdk.domains.sms.models.v1.sinchevents.SmsSinchEvent> vc) {
       super(vc);
     }
 
     @Override
-    public com.sinch.sdk.domains.sms.models.v1.webhooks.SmsEvent deserialize(
+    public com.sinch.sdk.domains.sms.models.v1.sinchevents.SmsSinchEvent deserialize(
         JsonParser jp, DeserializationContext ctxt) throws IOException {
 
-      Object deserialized = jp.readValueAs(WebhookEventOneOfImpl.class).getActualInstance();
+      Object deserialized = jp.readValueAs(SmsSinchEventOneOfImpl.class).getActualInstance();
       if (null == deserialized) {
         return null;
       }
-      if (!(deserialized instanceof com.sinch.sdk.domains.sms.models.v1.webhooks.SmsEvent)) {
+      if (!(deserialized
+          instanceof com.sinch.sdk.domains.sms.models.v1.sinchevents.SmsSinchEvent)) {
         log.log(Level.SEVERE, "Input data does not match schema ", deserialized);
         return null;
       }
 
-      return (com.sinch.sdk.domains.sms.models.v1.webhooks.SmsEvent) deserialized;
+      return (com.sinch.sdk.domains.sms.models.v1.sinchevents.SmsSinchEvent) deserialized;
     }
   }
 }

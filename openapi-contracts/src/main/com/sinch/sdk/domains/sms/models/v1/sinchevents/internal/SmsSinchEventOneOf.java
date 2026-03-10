@@ -8,9 +8,9 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.sms.models.v1.webhooks.internal;
+package com.sinch.sdk.domains.sms.models.v1.sinchevents.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-@JsonDeserialize(using = WebhookEventOneOfImpl.WebhookEventOneOfImplDeserializer.class)
-public interface WebhookEventOneOf {}
+@JsonDeserialize(using = SmsSinchEventOneOfImpl.SmsSinchEventOneOfImplDeserializer.class)
+public interface SmsSinchEventOneOf {}
