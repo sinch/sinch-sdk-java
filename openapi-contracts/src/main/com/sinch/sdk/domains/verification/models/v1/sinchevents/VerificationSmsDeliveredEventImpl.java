@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.verification.models.v1.webhooks;
+package com.sinch.sdk.domains.verification.models.v1.sinchevents;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -9,27 +9,22 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.Identity;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
-import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
-import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
-import com.sinch.sdk.domains.verification.models.v1.status.StatusSource;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  VerificationResultEventImpl.JSON_PROPERTY_ID,
-  VerificationResultEventImpl.JSON_PROPERTY_EVENT,
-  VerificationResultEventImpl.JSON_PROPERTY_METHOD,
-  VerificationResultEventImpl.JSON_PROPERTY_IDENTITY,
-  VerificationResultEventImpl.JSON_PROPERTY_REFERENCE,
-  VerificationResultEventImpl.JSON_PROPERTY_CUSTOM,
-  VerificationResultEventImpl.JSON_PROPERTY_STATUS,
-  VerificationResultEventImpl.JSON_PROPERTY_REASON,
-  VerificationResultEventImpl.JSON_PROPERTY_SOURCE
+  VerificationSmsDeliveredEventImpl.JSON_PROPERTY_ID,
+  VerificationSmsDeliveredEventImpl.JSON_PROPERTY_EVENT,
+  VerificationSmsDeliveredEventImpl.JSON_PROPERTY_METHOD,
+  VerificationSmsDeliveredEventImpl.JSON_PROPERTY_IDENTITY,
+  VerificationSmsDeliveredEventImpl.JSON_PROPERTY_REFERENCE,
+  VerificationSmsDeliveredEventImpl.JSON_PROPERTY_CUSTOM,
+  VerificationSmsDeliveredEventImpl.JSON_PROPERTY_SMS_RESULT
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class VerificationResultEventImpl
-    implements VerificationResultEvent,
-        com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent {
+public class VerificationSmsDeliveredEventImpl
+    implements VerificationSmsDeliveredEvent,
+        com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSinchEvent {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ID = "id";
@@ -56,39 +51,27 @@ public class VerificationResultEventImpl
 
   private OptionalValue<String> custom;
 
-  public static final String JSON_PROPERTY_STATUS = "status";
+  public static final String JSON_PROPERTY_SMS_RESULT = "smsResult";
 
-  private OptionalValue<VerificationStatus> status;
+  private OptionalValue<SmsResultEnum> smsResult;
 
-  public static final String JSON_PROPERTY_REASON = "reason";
+  public VerificationSmsDeliveredEventImpl() {}
 
-  private OptionalValue<VerificationStatusReason> reason;
-
-  public static final String JSON_PROPERTY_SOURCE = "source";
-
-  private OptionalValue<StatusSource> source;
-
-  public VerificationResultEventImpl() {}
-
-  protected VerificationResultEventImpl(
+  protected VerificationSmsDeliveredEventImpl(
       OptionalValue<String> id,
       OptionalValue<EventEnum> event,
       OptionalValue<VerificationMethod> method,
       OptionalValue<Identity> identity,
       OptionalValue<String> reference,
       OptionalValue<String> custom,
-      OptionalValue<VerificationStatus> status,
-      OptionalValue<VerificationStatusReason> reason,
-      OptionalValue<StatusSource> source) {
+      OptionalValue<SmsResultEnum> smsResult) {
     this.id = id;
     this.event = event;
     this.method = method;
     this.identity = identity;
     this.reference = reference;
     this.custom = custom;
-    this.status = status;
-    this.reason = reason;
-    this.source = source;
+    this.smsResult = smsResult;
   }
 
   @JsonIgnore
@@ -158,39 +141,17 @@ public class VerificationResultEventImpl
   }
 
   @JsonIgnore
-  public VerificationStatus getStatus() {
-    return status.orElse(null);
+  public SmsResultEnum getSmsResult() {
+    return smsResult.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_STATUS)
+  @JsonProperty(JSON_PROPERTY_SMS_RESULT)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<VerificationStatus> status() {
-    return status;
+  public OptionalValue<SmsResultEnum> smsResult() {
+    return smsResult;
   }
 
-  @JsonIgnore
-  public VerificationStatusReason getReason() {
-    return reason.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_REASON)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<VerificationStatusReason> reason() {
-    return reason;
-  }
-
-  @JsonIgnore
-  public StatusSource getSource() {
-    return source.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_SOURCE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<StatusSource> source() {
-    return source;
-  }
-
-  /** Return true if this VerificationResultEvent object is equal to o. */
+  /** Return true if this VerificationSmsDeliveredEvent object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -199,36 +160,33 @@ public class VerificationResultEventImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerificationResultEventImpl verificationResultEvent = (VerificationResultEventImpl) o;
-    return Objects.equals(this.id, verificationResultEvent.id)
-        && Objects.equals(this.event, verificationResultEvent.event)
-        && Objects.equals(this.method, verificationResultEvent.method)
-        && Objects.equals(this.identity, verificationResultEvent.identity)
-        && Objects.equals(this.reference, verificationResultEvent.reference)
-        && Objects.equals(this.custom, verificationResultEvent.custom)
-        && Objects.equals(this.status, verificationResultEvent.status)
-        && Objects.equals(this.reason, verificationResultEvent.reason)
-        && Objects.equals(this.source, verificationResultEvent.source);
+    VerificationSmsDeliveredEventImpl verificationSmsDeliveredEvent =
+        (VerificationSmsDeliveredEventImpl) o;
+    return Objects.equals(this.id, verificationSmsDeliveredEvent.id)
+        && Objects.equals(this.event, verificationSmsDeliveredEvent.event)
+        && Objects.equals(this.method, verificationSmsDeliveredEvent.method)
+        && Objects.equals(this.identity, verificationSmsDeliveredEvent.identity)
+        && Objects.equals(this.reference, verificationSmsDeliveredEvent.reference)
+        && Objects.equals(this.custom, verificationSmsDeliveredEvent.custom)
+        && Objects.equals(this.smsResult, verificationSmsDeliveredEvent.smsResult);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, event, method, identity, reference, custom, status, reason, source);
+    return Objects.hash(id, event, method, identity, reference, custom, smsResult);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VerificationResultEventImpl {\n");
+    sb.append("class VerificationSmsDeliveredEventImpl {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    event: ").append(toIndentedString(event)).append("\n");
     sb.append("    method: ").append(toIndentedString(method)).append("\n");
     sb.append("    identity: ").append(toIndentedString(identity)).append("\n");
     sb.append("    reference: ").append(toIndentedString(reference)).append("\n");
     sb.append("    custom: ").append(toIndentedString(custom)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
-    sb.append("    reason: ").append(toIndentedString(reason)).append("\n");
-    sb.append("    source: ").append(toIndentedString(source)).append("\n");
+    sb.append("    smsResult: ").append(toIndentedString(smsResult)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -244,16 +202,14 @@ public class VerificationResultEventImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements VerificationResultEvent.Builder {
+  static class Builder implements VerificationSmsDeliveredEvent.Builder {
     OptionalValue<String> id = OptionalValue.empty();
-    OptionalValue<EventEnum> event = OptionalValue.of(EventEnum.VERIFICATION_RESULT_EVENT);
+    OptionalValue<EventEnum> event = OptionalValue.of(EventEnum.VERIFICATION_SMS_DELIVERED_EVENT);
     OptionalValue<VerificationMethod> method = OptionalValue.empty();
     OptionalValue<Identity> identity = OptionalValue.empty();
     OptionalValue<String> reference = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
-    OptionalValue<VerificationStatus> status = OptionalValue.empty();
-    OptionalValue<VerificationStatusReason> reason = OptionalValue.empty();
-    OptionalValue<StatusSource> source = OptionalValue.empty();
+    OptionalValue<SmsResultEnum> smsResult = OptionalValue.empty();
 
     @JsonProperty(value = JSON_PROPERTY_ID, required = true)
     public Builder setId(String id) {
@@ -263,10 +219,11 @@ public class VerificationResultEventImpl
 
     @JsonProperty(value = JSON_PROPERTY_EVENT, required = true)
     Builder setEvent(EventEnum event) {
-      if (!Objects.equals(event, EventEnum.VERIFICATION_RESULT_EVENT)) {
+      if (!Objects.equals(event, EventEnum.VERIFICATION_SMS_DELIVERED_EVENT)) {
         throw new IllegalArgumentException(
             String.format(
-                "'event' must be '%s' (is '%s')", EventEnum.VERIFICATION_RESULT_EVENT, event));
+                "'event' must be '%s' (is '%s')",
+                EventEnum.VERIFICATION_SMS_DELIVERED_EVENT, event));
       }
       return this;
     }
@@ -295,27 +252,15 @@ public class VerificationResultEventImpl
       return this;
     }
 
-    @JsonProperty(value = JSON_PROPERTY_STATUS, required = true)
-    public Builder setStatus(VerificationStatus status) {
-      this.status = OptionalValue.of(status);
+    @JsonProperty(value = JSON_PROPERTY_SMS_RESULT, required = true)
+    public Builder setSmsResult(SmsResultEnum smsResult) {
+      this.smsResult = OptionalValue.of(smsResult);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_REASON)
-    public Builder setReason(VerificationStatusReason reason) {
-      this.reason = OptionalValue.of(reason);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_SOURCE)
-    public Builder setSource(StatusSource source) {
-      this.source = OptionalValue.of(source);
-      return this;
-    }
-
-    public VerificationResultEvent build() {
-      return new VerificationResultEventImpl(
-          id, event, method, identity, reference, custom, status, reason, source);
+    public VerificationSmsDeliveredEvent build() {
+      return new VerificationSmsDeliveredEventImpl(
+          id, event, method, identity, reference, custom, smsResult);
     }
   }
 }

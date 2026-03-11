@@ -8,25 +8,16 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.verification.models.v1.webhooks;
+package com.sinch.sdk.domains.verification.models.v1.sinchevents.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.models.AdditionalProperties;
 import com.sinch.sdk.domains.verification.models.v1.WhatsAppCodeType;
 import java.util.List;
 
-/** WhatsApp Request Event Response */
-@JsonDeserialize(builder = VerificationRequestEventResponseWhatsAppImpl.Builder.class)
-public interface VerificationRequestEventResponseWhatsApp
-    extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponse {
-
-  /**
-   * Get action
-   *
-   * <p>Field is required
-   *
-   * @return action
-   */
-  VerificationEventResponseAction getAction();
+/** VerificationRequestEventResponseWhatsAppContent */
+@JsonDeserialize(builder = VerificationRequestEventResponseWhatsAppContentImpl.Builder.class)
+public interface VerificationRequestEventResponseWhatsAppContent extends AdditionalProperties {
 
   /**
    * Get codeType
@@ -43,35 +34,16 @@ public interface VerificationRequestEventResponseWhatsApp
   List<String> getAcceptLanguage();
 
   /**
-   * Return the additional "whatsapp" with the specified name.
-   *
-   * @param key the name of the property
-   * @return the additional property with the specified name
-   */
-  Object getExtraOption(String key);
-
-  /**
    * Getting builder
    *
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationRequestEventResponseWhatsAppImpl.Builder();
+    return new VerificationRequestEventResponseWhatsAppContentImpl.Builder();
   }
 
   /** Dedicated Builder */
-  interface Builder
-      extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponse
-          .Builder {
-
-    /**
-     * see getter
-     *
-     * @param action see getter
-     * @return Current builder
-     * @see #getAction
-     */
-    Builder setAction(VerificationEventResponseAction action);
+  interface Builder extends AdditionalProperties.Builder {
 
     /**
      * see getter
@@ -95,15 +67,15 @@ public interface VerificationRequestEventResponseWhatsApp
      * see getter
      *
      * @return Current builder
-     * @see #getExtraOption
+     * @see #get
      */
-    Builder putExtraOption(String key, Object value);
+    Builder put(String key, Object value);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    VerificationRequestEventResponseWhatsApp build();
+    VerificationRequestEventResponseWhatsAppContent build();
   }
 }

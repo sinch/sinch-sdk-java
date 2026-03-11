@@ -8,23 +8,20 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.verification.models.v1.webhooks;
+package com.sinch.sdk.domains.verification.models.v1.sinchevents;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import com.sinch.sdk.domains.verification.models.v1.Identity;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
-import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
-import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
-import com.sinch.sdk.domains.verification.models.v1.status.StatusSource;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** VerificationResultEvent */
-@JsonDeserialize(builder = VerificationResultEventImpl.Builder.class)
-public interface VerificationResultEvent
-    extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent {
+/** VerificationSmsDeliveredEvent */
+@JsonDeserialize(builder = VerificationSmsDeliveredEventImpl.Builder.class)
+public interface VerificationSmsDeliveredEvent
+    extends com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSinchEvent {
 
   /**
    * The ID of the verification request.
@@ -37,12 +34,12 @@ public interface VerificationResultEvent
 
   /** The type of the event. */
   public class EventEnum extends EnumDynamic<String, EventEnum> {
-    public static final EventEnum VERIFICATION_RESULT_EVENT =
-        new EventEnum("VerificationResultEvent");
+    public static final EventEnum VERIFICATION_SMS_DELIVERED_EVENT =
+        new EventEnum("VerificationSmsDeliveredEvent");
 
     private static final EnumSupportDynamic<String, EventEnum> ENUM_SUPPORT =
         new EnumSupportDynamic<>(
-            EventEnum.class, EventEnum::new, Arrays.asList(VERIFICATION_RESULT_EVENT));
+            EventEnum.class, EventEnum::new, Arrays.asList(VERIFICATION_SMS_DELIVERED_EVENT));
 
     private EventEnum(String value) {
       super(value);
@@ -99,28 +96,40 @@ public interface VerificationResultEvent
    */
   String getCustom();
 
+  /** The result of the SMS delivery. Possible values can be extended in the future. */
+  public class SmsResultEnum extends EnumDynamic<String, SmsResultEnum> {
+    public static final SmsResultEnum SUCCESSFUL = new SmsResultEnum("Successful");
+    public static final SmsResultEnum FAILED = new SmsResultEnum("Failed");
+
+    private static final EnumSupportDynamic<String, SmsResultEnum> ENUM_SUPPORT =
+        new EnumSupportDynamic<>(
+            SmsResultEnum.class, SmsResultEnum::new, Arrays.asList(SUCCESSFUL, FAILED));
+
+    private SmsResultEnum(String value) {
+      super(value);
+    }
+
+    public static Stream<SmsResultEnum> values() {
+      return ENUM_SUPPORT.values();
+    }
+
+    public static SmsResultEnum from(String value) {
+      return ENUM_SUPPORT.from(value);
+    }
+
+    public static String valueOf(SmsResultEnum e) {
+      return ENUM_SUPPORT.valueOf(e);
+    }
+  }
+
   /**
-   * Get status
+   * The result of the SMS delivery. Possible values can be extended in the future.
    *
    * <p>Field is required
    *
-   * @return status
+   * @return smsResult
    */
-  VerificationStatus getStatus();
-
-  /**
-   * Get reason
-   *
-   * @return reason
-   */
-  VerificationStatusReason getReason();
-
-  /**
-   * Get source
-   *
-   * @return source
-   */
-  StatusSource getSource();
+  SmsResultEnum getSmsResult();
 
   /**
    * Getting builder
@@ -128,12 +137,13 @@ public interface VerificationResultEvent
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationResultEventImpl.Builder();
+    return new VerificationSmsDeliveredEventImpl.Builder();
   }
 
   /** Dedicated Builder */
   interface Builder
-      extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent.Builder {
+      extends com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSinchEvent
+          .Builder {
 
     /**
      * see getter
@@ -183,35 +193,17 @@ public interface VerificationResultEvent
     /**
      * see getter
      *
-     * @param status see getter
+     * @param smsResult see getter
      * @return Current builder
-     * @see #getStatus
+     * @see #getSmsResult
      */
-    Builder setStatus(VerificationStatus status);
-
-    /**
-     * see getter
-     *
-     * @param reason see getter
-     * @return Current builder
-     * @see #getReason
-     */
-    Builder setReason(VerificationStatusReason reason);
-
-    /**
-     * see getter
-     *
-     * @param source see getter
-     * @return Current builder
-     * @see #getSource
-     */
-    Builder setSource(StatusSource source);
+    Builder setSmsResult(SmsResultEnum smsResult);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    VerificationResultEvent build();
+    VerificationSmsDeliveredEvent build();
   }
 }

@@ -8,13 +8,13 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.verification.models.v1.webhooks;
+package com.sinch.sdk.domains.verification.models.v1.sinchevents;
 
 import com.sinch.sdk.domains.verification.models.v1.Identity;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 
-/** VerificationEvent */
-public interface VerificationEvent {
+/** VerificationSinchEvent */
+public interface VerificationSinchEvent {
 
   /**
    * The ID of the verification request.
@@ -116,6 +116,6 @@ public interface VerificationEvent {
      *
      * @return The instance build with current builder values
      */
-    VerificationEvent build();
+    VerificationSinchEvent build();
   }
 }

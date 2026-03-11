@@ -8,15 +8,25 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.verification.models.v1.webhooks.internal;
+package com.sinch.sdk.domains.verification.models.v1.sinchevents;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.core.models.AdditionalProperties;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 
-/** VerificationRequestEventResponsePhoneCallContent */
-@JsonDeserialize(builder = VerificationRequestEventResponsePhoneCallContentImpl.Builder.class)
-public interface VerificationRequestEventResponsePhoneCallContent extends AdditionalProperties {
+/** Phone Call Request Event Response */
+@JsonDeserialize(builder = VerificationRequestEventResponsePhoneCallImpl.Builder.class)
+public interface VerificationRequestEventResponsePhoneCall
+    extends com.sinch.sdk.domains.verification.models.v1.sinchevents
+        .VerificationRequestEventResponse {
+
+  /**
+   * Get action
+   *
+   * <p>Field is required
+   *
+   * @return action
+   */
+  VerificationEventResponseAction getAction();
 
   /**
    * The Phone Call OTP code that should be entered by the user. Sinch servers automatically
@@ -35,16 +45,35 @@ public interface VerificationRequestEventResponsePhoneCallContent extends Additi
   PhoneCallSpeech getSpeech();
 
   /**
+   * Return the additional "callout" with the specified name.
+   *
+   * @param key the name of the property
+   * @return the additional property with the specified name
+   */
+  Object getExtraOption(String key);
+
+  /**
    * Getting builder
    *
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationRequestEventResponsePhoneCallContentImpl.Builder();
+    return new VerificationRequestEventResponsePhoneCallImpl.Builder();
   }
 
   /** Dedicated Builder */
-  interface Builder extends AdditionalProperties.Builder {
+  interface Builder
+      extends com.sinch.sdk.domains.verification.models.v1.sinchevents
+          .VerificationRequestEventResponse.Builder {
+
+    /**
+     * see getter
+     *
+     * @param action see getter
+     * @return Current builder
+     * @see #getAction
+     */
+    Builder setAction(VerificationEventResponseAction action);
 
     /**
      * see getter
@@ -68,15 +97,15 @@ public interface VerificationRequestEventResponsePhoneCallContent extends Additi
      * see getter
      *
      * @return Current builder
-     * @see #get
+     * @see #getExtraOption
      */
-    Builder put(String key, Object value);
+    Builder putExtraOption(String key, Object value);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    VerificationRequestEventResponsePhoneCallContent build();
+    VerificationRequestEventResponsePhoneCall build();
   }
 }

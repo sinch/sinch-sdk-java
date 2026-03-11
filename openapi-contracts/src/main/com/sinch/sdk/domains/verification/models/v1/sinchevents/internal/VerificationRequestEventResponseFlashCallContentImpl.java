@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.verification.models.v1.webhooks.internal;
+package com.sinch.sdk.domains.verification.models.v1.sinchevents.internal;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;

@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.verification.models.v1.webhooks;
+package com.sinch.sdk.domains.verification.models.v1.sinchevents;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -14,8 +14,8 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.internal.VerificationRequestEventResponseSmsContent;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.internal.VerificationRequestEventResponseSmsContentImpl;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.internal.VerificationRequestEventResponseSmsContent;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.internal.VerificationRequestEventResponseSmsContentImpl;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -29,7 +29,7 @@ import java.util.Optional;
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class VerificationRequestEventResponseSmsImpl
     implements VerificationRequestEventResponseSms,
-        com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponse {
+        com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEventResponse {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ACTION = "action";

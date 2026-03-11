@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.verification.models.v1.webhooks;
+package com.sinch.sdk.domains.verification.models.v1.sinchevents;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -8,23 +8,26 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.Identity;
+import com.sinch.sdk.domains.verification.models.v1.Price;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
+import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  VerificationSmsDeliveredEventImpl.JSON_PROPERTY_ID,
-  VerificationSmsDeliveredEventImpl.JSON_PROPERTY_EVENT,
-  VerificationSmsDeliveredEventImpl.JSON_PROPERTY_METHOD,
-  VerificationSmsDeliveredEventImpl.JSON_PROPERTY_IDENTITY,
-  VerificationSmsDeliveredEventImpl.JSON_PROPERTY_REFERENCE,
-  VerificationSmsDeliveredEventImpl.JSON_PROPERTY_CUSTOM,
-  VerificationSmsDeliveredEventImpl.JSON_PROPERTY_SMS_RESULT
+  VerificationRequestEventImpl.JSON_PROPERTY_ID,
+  VerificationRequestEventImpl.JSON_PROPERTY_EVENT,
+  VerificationRequestEventImpl.JSON_PROPERTY_METHOD,
+  VerificationRequestEventImpl.JSON_PROPERTY_IDENTITY,
+  VerificationRequestEventImpl.JSON_PROPERTY_REFERENCE,
+  VerificationRequestEventImpl.JSON_PROPERTY_CUSTOM,
+  VerificationRequestEventImpl.JSON_PROPERTY_PRICE,
+  VerificationRequestEventImpl.JSON_PROPERTY_ACCEPT_LANGUAGE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class VerificationSmsDeliveredEventImpl
-    implements VerificationSmsDeliveredEvent,
-        com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent {
+public class VerificationRequestEventImpl
+    implements VerificationRequestEvent,
+        com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSinchEvent {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ID = "id";
@@ -51,27 +54,33 @@ public class VerificationSmsDeliveredEventImpl
 
   private OptionalValue<String> custom;
 
-  public static final String JSON_PROPERTY_SMS_RESULT = "smsResult";
+  public static final String JSON_PROPERTY_PRICE = "price";
 
-  private OptionalValue<SmsResultEnum> smsResult;
+  private OptionalValue<Price> price;
 
-  public VerificationSmsDeliveredEventImpl() {}
+  public static final String JSON_PROPERTY_ACCEPT_LANGUAGE = "acceptLanguage";
 
-  protected VerificationSmsDeliveredEventImpl(
+  private OptionalValue<List<String>> acceptLanguage;
+
+  public VerificationRequestEventImpl() {}
+
+  protected VerificationRequestEventImpl(
       OptionalValue<String> id,
       OptionalValue<EventEnum> event,
       OptionalValue<VerificationMethod> method,
       OptionalValue<Identity> identity,
       OptionalValue<String> reference,
       OptionalValue<String> custom,
-      OptionalValue<SmsResultEnum> smsResult) {
+      OptionalValue<Price> price,
+      OptionalValue<List<String>> acceptLanguage) {
     this.id = id;
     this.event = event;
     this.method = method;
     this.identity = identity;
     this.reference = reference;
     this.custom = custom;
-    this.smsResult = smsResult;
+    this.price = price;
+    this.acceptLanguage = acceptLanguage;
   }
 
   @JsonIgnore
@@ -141,17 +150,28 @@ public class VerificationSmsDeliveredEventImpl
   }
 
   @JsonIgnore
-  public SmsResultEnum getSmsResult() {
-    return smsResult.orElse(null);
+  public Price getPrice() {
+    return price.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_SMS_RESULT)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<SmsResultEnum> smsResult() {
-    return smsResult;
+  @JsonProperty(JSON_PROPERTY_PRICE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<Price> price() {
+    return price;
   }
 
-  /** Return true if this VerificationSmsDeliveredEvent object is equal to o. */
+  @JsonIgnore
+  public List<String> getAcceptLanguage() {
+    return acceptLanguage.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_ACCEPT_LANGUAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<List<String>> acceptLanguage() {
+    return acceptLanguage;
+  }
+
+  /** Return true if this VerificationRequestEvent object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -160,33 +180,34 @@ public class VerificationSmsDeliveredEventImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerificationSmsDeliveredEventImpl verificationSmsDeliveredEvent =
-        (VerificationSmsDeliveredEventImpl) o;
-    return Objects.equals(this.id, verificationSmsDeliveredEvent.id)
-        && Objects.equals(this.event, verificationSmsDeliveredEvent.event)
-        && Objects.equals(this.method, verificationSmsDeliveredEvent.method)
-        && Objects.equals(this.identity, verificationSmsDeliveredEvent.identity)
-        && Objects.equals(this.reference, verificationSmsDeliveredEvent.reference)
-        && Objects.equals(this.custom, verificationSmsDeliveredEvent.custom)
-        && Objects.equals(this.smsResult, verificationSmsDeliveredEvent.smsResult);
+    VerificationRequestEventImpl verificationRequestEvent = (VerificationRequestEventImpl) o;
+    return Objects.equals(this.id, verificationRequestEvent.id)
+        && Objects.equals(this.event, verificationRequestEvent.event)
+        && Objects.equals(this.method, verificationRequestEvent.method)
+        && Objects.equals(this.identity, verificationRequestEvent.identity)
+        && Objects.equals(this.reference, verificationRequestEvent.reference)
+        && Objects.equals(this.custom, verificationRequestEvent.custom)
+        && Objects.equals(this.price, verificationRequestEvent.price)
+        && Objects.equals(this.acceptLanguage, verificationRequestEvent.acceptLanguage);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, event, method, identity, reference, custom, smsResult);
+    return Objects.hash(id, event, method, identity, reference, custom, price, acceptLanguage);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VerificationSmsDeliveredEventImpl {\n");
+    sb.append("class VerificationRequestEventImpl {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    event: ").append(toIndentedString(event)).append("\n");
     sb.append("    method: ").append(toIndentedString(method)).append("\n");
     sb.append("    identity: ").append(toIndentedString(identity)).append("\n");
     sb.append("    reference: ").append(toIndentedString(reference)).append("\n");
     sb.append("    custom: ").append(toIndentedString(custom)).append("\n");
-    sb.append("    smsResult: ").append(toIndentedString(smsResult)).append("\n");
+    sb.append("    price: ").append(toIndentedString(price)).append("\n");
+    sb.append("    acceptLanguage: ").append(toIndentedString(acceptLanguage)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -202,14 +223,15 @@ public class VerificationSmsDeliveredEventImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements VerificationSmsDeliveredEvent.Builder {
+  static class Builder implements VerificationRequestEvent.Builder {
     OptionalValue<String> id = OptionalValue.empty();
-    OptionalValue<EventEnum> event = OptionalValue.of(EventEnum.VERIFICATION_SMS_DELIVERED_EVENT);
+    OptionalValue<EventEnum> event = OptionalValue.of(EventEnum.VERIFICATION_REQUEST_EVENT);
     OptionalValue<VerificationMethod> method = OptionalValue.empty();
     OptionalValue<Identity> identity = OptionalValue.empty();
     OptionalValue<String> reference = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
-    OptionalValue<SmsResultEnum> smsResult = OptionalValue.empty();
+    OptionalValue<Price> price = OptionalValue.empty();
+    OptionalValue<List<String>> acceptLanguage = OptionalValue.empty();
 
     @JsonProperty(value = JSON_PROPERTY_ID, required = true)
     public Builder setId(String id) {
@@ -219,11 +241,10 @@ public class VerificationSmsDeliveredEventImpl
 
     @JsonProperty(value = JSON_PROPERTY_EVENT, required = true)
     Builder setEvent(EventEnum event) {
-      if (!Objects.equals(event, EventEnum.VERIFICATION_SMS_DELIVERED_EVENT)) {
+      if (!Objects.equals(event, EventEnum.VERIFICATION_REQUEST_EVENT)) {
         throw new IllegalArgumentException(
             String.format(
-                "'event' must be '%s' (is '%s')",
-                EventEnum.VERIFICATION_SMS_DELIVERED_EVENT, event));
+                "'event' must be '%s' (is '%s')", EventEnum.VERIFICATION_REQUEST_EVENT, event));
       }
       return this;
     }
@@ -252,15 +273,21 @@ public class VerificationSmsDeliveredEventImpl
       return this;
     }
 
-    @JsonProperty(value = JSON_PROPERTY_SMS_RESULT, required = true)
-    public Builder setSmsResult(SmsResultEnum smsResult) {
-      this.smsResult = OptionalValue.of(smsResult);
+    @JsonProperty(JSON_PROPERTY_PRICE)
+    public Builder setPrice(Price price) {
+      this.price = OptionalValue.of(price);
       return this;
     }
 
-    public VerificationSmsDeliveredEvent build() {
-      return new VerificationSmsDeliveredEventImpl(
-          id, event, method, identity, reference, custom, smsResult);
+    @JsonProperty(JSON_PROPERTY_ACCEPT_LANGUAGE)
+    public Builder setAcceptLanguage(List<String> acceptLanguage) {
+      this.acceptLanguage = OptionalValue.of(acceptLanguage);
+      return this;
+    }
+
+    public VerificationRequestEvent build() {
+      return new VerificationRequestEventImpl(
+          id, event, method, identity, reference, custom, price, acceptLanguage);
     }
   }
 }

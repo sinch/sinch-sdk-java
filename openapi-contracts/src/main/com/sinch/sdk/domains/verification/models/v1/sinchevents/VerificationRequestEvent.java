@@ -8,20 +8,22 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.verification.models.v1.webhooks;
+package com.sinch.sdk.domains.verification.models.v1.sinchevents;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import com.sinch.sdk.domains.verification.models.v1.Identity;
+import com.sinch.sdk.domains.verification.models.v1.Price;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
-/** VerificationSmsDeliveredEvent */
-@JsonDeserialize(builder = VerificationSmsDeliveredEventImpl.Builder.class)
-public interface VerificationSmsDeliveredEvent
-    extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent {
+/** VerificationRequestEvent */
+@JsonDeserialize(builder = VerificationRequestEventImpl.Builder.class)
+public interface VerificationRequestEvent
+    extends com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSinchEvent {
 
   /**
    * The ID of the verification request.
@@ -34,12 +36,12 @@ public interface VerificationSmsDeliveredEvent
 
   /** The type of the event. */
   public class EventEnum extends EnumDynamic<String, EventEnum> {
-    public static final EventEnum VERIFICATION_SMS_DELIVERED_EVENT =
-        new EventEnum("VerificationSmsDeliveredEvent");
+    public static final EventEnum VERIFICATION_REQUEST_EVENT =
+        new EventEnum("VerificationRequestEvent");
 
     private static final EnumSupportDynamic<String, EventEnum> ENUM_SUPPORT =
         new EnumSupportDynamic<>(
-            EventEnum.class, EventEnum::new, Arrays.asList(VERIFICATION_SMS_DELIVERED_EVENT));
+            EventEnum.class, EventEnum::new, Arrays.asList(VERIFICATION_REQUEST_EVENT));
 
     private EventEnum(String value) {
       super(value);
@@ -96,40 +98,26 @@ public interface VerificationSmsDeliveredEvent
    */
   String getCustom();
 
-  /** The result of the SMS delivery. Possible values can be extended in the future. */
-  public class SmsResultEnum extends EnumDynamic<String, SmsResultEnum> {
-    public static final SmsResultEnum SUCCESSFUL = new SmsResultEnum("Successful");
-    public static final SmsResultEnum FAILED = new SmsResultEnum("Failed");
-
-    private static final EnumSupportDynamic<String, SmsResultEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(
-            SmsResultEnum.class, SmsResultEnum::new, Arrays.asList(SUCCESSFUL, FAILED));
-
-    private SmsResultEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<SmsResultEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static SmsResultEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(SmsResultEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
+  /**
+   * Get price
+   *
+   * @return price
+   */
+  Price getPrice();
 
   /**
-   * The result of the SMS delivery. Possible values can be extended in the future.
+   * Allows you to set or override if provided in the API request, the SMS verification content
+   * language. Only used with the SMS verification method. The content language specified in the API
+   * request or in the callback can be overridden by carrier provider specific templates, due to
+   * compliance and legal requirements, such as <a
+   * href="https://community.sinch.com/t5/SMS/Sinch-US-Short-Code-Onboarding-Overview/ta-p/7085">US
+   * shortcode requirements (pdf)</a>.
    *
-   * <p>Field is required
-   *
-   * @return smsResult
+   * @return acceptLanguage
+   * @deprecated
    */
-  SmsResultEnum getSmsResult();
+  @Deprecated
+  List<String> getAcceptLanguage();
 
   /**
    * Getting builder
@@ -137,12 +125,13 @@ public interface VerificationSmsDeliveredEvent
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationSmsDeliveredEventImpl.Builder();
+    return new VerificationRequestEventImpl.Builder();
   }
 
   /** Dedicated Builder */
   interface Builder
-      extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent.Builder {
+      extends com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSinchEvent
+          .Builder {
 
     /**
      * see getter
@@ -192,17 +181,27 @@ public interface VerificationSmsDeliveredEvent
     /**
      * see getter
      *
-     * @param smsResult see getter
+     * @param price see getter
      * @return Current builder
-     * @see #getSmsResult
+     * @see #getPrice
      */
-    Builder setSmsResult(SmsResultEnum smsResult);
+    Builder setPrice(Price price);
+
+    /**
+     * see getter
+     *
+     * @param acceptLanguage see getter
+     * @return Current builder
+     * @see #getAcceptLanguage
+     */
+    @Deprecated
+    Builder setAcceptLanguage(List<String> acceptLanguage);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    VerificationSmsDeliveredEvent build();
+    VerificationRequestEvent build();
   }
 }

@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.verification.models.v1.webhooks.internal;
+package com.sinch.sdk.domains.verification.models.v1.sinchevents.internal;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
@@ -16,9 +16,9 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.sinch.sdk.core.models.AbstractOpenApiSchema;
 import com.sinch.sdk.core.utils.databind.JSONNavigator;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventImpl;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationResultEventImpl;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationSmsDeliveredEventImpl;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEventImpl;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationResultEventImpl;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSmsDeliveredEventImpl;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;

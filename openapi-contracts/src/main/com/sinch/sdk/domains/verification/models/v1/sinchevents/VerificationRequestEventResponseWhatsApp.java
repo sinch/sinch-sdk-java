@@ -8,16 +8,17 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.verification.models.v1.webhooks;
+package com.sinch.sdk.domains.verification.models.v1.sinchevents;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
+import com.sinch.sdk.domains.verification.models.v1.WhatsAppCodeType;
 import java.util.List;
 
-/** SMS Request Event Response */
-@JsonDeserialize(builder = VerificationRequestEventResponseSmsImpl.Builder.class)
-public interface VerificationRequestEventResponseSms
-    extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponse {
+/** WhatsApp Request Event Response */
+@JsonDeserialize(builder = VerificationRequestEventResponseWhatsAppImpl.Builder.class)
+public interface VerificationRequestEventResponseWhatsApp
+    extends com.sinch.sdk.domains.verification.models.v1.sinchevents
+        .VerificationRequestEventResponse {
 
   /**
    * Get action
@@ -29,38 +30,21 @@ public interface VerificationRequestEventResponseSms
   VerificationEventResponseAction getAction();
 
   /**
-   * The SMS OTP code that should be used. By default, the Sinch dashboard will automatically
-   * generate OTP codes for SMS verification. If you want to set your own OTP, you can specify it in
-   * the response to the Verification Request Event.
-   *
-   * @return code
-   */
-  String getCode();
-
-  /**
    * Get codeType
    *
    * @return codeType
    */
-  SmsCodeType getCodeType();
+  WhatsAppCodeType getCodeType();
 
   /**
-   * The expiration time for a verification process is represented in the format <code>HH:MM:SS
-   * </code>.
-   *
-   * @return expiry
-   */
-  String getExpiry();
-
-  /**
-   * The SMS verification content language. Set in the verification request.
+   * The WhatsApp verification content language. Set in the verification request.
    *
    * @return acceptLanguage
    */
   List<String> getAcceptLanguage();
 
   /**
-   * Return the additional "sms" with the specified name.
+   * Return the additional "whatsapp" with the specified name.
    *
    * @param key the name of the property
    * @return the additional property with the specified name
@@ -73,13 +57,13 @@ public interface VerificationRequestEventResponseSms
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationRequestEventResponseSmsImpl.Builder();
+    return new VerificationRequestEventResponseWhatsAppImpl.Builder();
   }
 
   /** Dedicated Builder */
   interface Builder
-      extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponse
-          .Builder {
+      extends com.sinch.sdk.domains.verification.models.v1.sinchevents
+          .VerificationRequestEventResponse.Builder {
 
     /**
      * see getter
@@ -93,29 +77,11 @@ public interface VerificationRequestEventResponseSms
     /**
      * see getter
      *
-     * @param code see getter
-     * @return Current builder
-     * @see #getCode
-     */
-    Builder setCode(String code);
-
-    /**
-     * see getter
-     *
      * @param codeType see getter
      * @return Current builder
      * @see #getCodeType
      */
-    Builder setCodeType(SmsCodeType codeType);
-
-    /**
-     * see getter
-     *
-     * @param expiry see getter
-     * @return Current builder
-     * @see #getExpiry
-     */
-    Builder setExpiry(String expiry);
+    Builder setCodeType(WhatsAppCodeType codeType);
 
     /**
      * see getter
@@ -139,6 +105,6 @@ public interface VerificationRequestEventResponseSms
      *
      * @return The instance build with current builder values
      */
-    VerificationRequestEventResponseSms build();
+    VerificationRequestEventResponseWhatsApp build();
   }
 }

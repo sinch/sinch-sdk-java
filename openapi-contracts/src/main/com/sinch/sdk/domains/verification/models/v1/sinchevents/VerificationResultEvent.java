@@ -8,22 +8,23 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.verification.models.v1.webhooks;
+package com.sinch.sdk.domains.verification.models.v1.sinchevents;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import com.sinch.sdk.domains.verification.models.v1.Identity;
-import com.sinch.sdk.domains.verification.models.v1.Price;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
+import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
+import com.sinch.sdk.domains.verification.models.v1.status.StatusSource;
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
 
-/** VerificationRequestEvent */
-@JsonDeserialize(builder = VerificationRequestEventImpl.Builder.class)
-public interface VerificationRequestEvent
-    extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent {
+/** VerificationResultEvent */
+@JsonDeserialize(builder = VerificationResultEventImpl.Builder.class)
+public interface VerificationResultEvent
+    extends com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSinchEvent {
 
   /**
    * The ID of the verification request.
@@ -36,12 +37,12 @@ public interface VerificationRequestEvent
 
   /** The type of the event. */
   public class EventEnum extends EnumDynamic<String, EventEnum> {
-    public static final EventEnum VERIFICATION_REQUEST_EVENT =
-        new EventEnum("VerificationRequestEvent");
+    public static final EventEnum VERIFICATION_RESULT_EVENT =
+        new EventEnum("VerificationResultEvent");
 
     private static final EnumSupportDynamic<String, EventEnum> ENUM_SUPPORT =
         new EnumSupportDynamic<>(
-            EventEnum.class, EventEnum::new, Arrays.asList(VERIFICATION_REQUEST_EVENT));
+            EventEnum.class, EventEnum::new, Arrays.asList(VERIFICATION_RESULT_EVENT));
 
     private EventEnum(String value) {
       super(value);
@@ -99,25 +100,27 @@ public interface VerificationRequestEvent
   String getCustom();
 
   /**
-   * Get price
+   * Get status
    *
-   * @return price
+   * <p>Field is required
+   *
+   * @return status
    */
-  Price getPrice();
+  VerificationStatus getStatus();
 
   /**
-   * Allows you to set or override if provided in the API request, the SMS verification content
-   * language. Only used with the SMS verification method. The content language specified in the API
-   * request or in the callback can be overridden by carrier provider specific templates, due to
-   * compliance and legal requirements, such as <a
-   * href="https://community.sinch.com/t5/SMS/Sinch-US-Short-Code-Onboarding-Overview/ta-p/7085">US
-   * shortcode requirements (pdf)</a>.
+   * Get reason
    *
-   * @return acceptLanguage
-   * @deprecated
+   * @return reason
    */
-  @Deprecated
-  List<String> getAcceptLanguage();
+  VerificationStatusReason getReason();
+
+  /**
+   * Get source
+   *
+   * @return source
+   */
+  StatusSource getSource();
 
   /**
    * Getting builder
@@ -125,12 +128,13 @@ public interface VerificationRequestEvent
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationRequestEventImpl.Builder();
+    return new VerificationResultEventImpl.Builder();
   }
 
   /** Dedicated Builder */
   interface Builder
-      extends com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent.Builder {
+      extends com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSinchEvent
+          .Builder {
 
     /**
      * see getter
@@ -180,27 +184,35 @@ public interface VerificationRequestEvent
     /**
      * see getter
      *
-     * @param price see getter
+     * @param status see getter
      * @return Current builder
-     * @see #getPrice
+     * @see #getStatus
      */
-    Builder setPrice(Price price);
+    Builder setStatus(VerificationStatus status);
 
     /**
      * see getter
      *
-     * @param acceptLanguage see getter
+     * @param reason see getter
      * @return Current builder
-     * @see #getAcceptLanguage
+     * @see #getReason
      */
-    @Deprecated
-    Builder setAcceptLanguage(List<String> acceptLanguage);
+    Builder setReason(VerificationStatusReason reason);
+
+    /**
+     * see getter
+     *
+     * @param source see getter
+     * @return Current builder
+     * @see #getSource
+     */
+    Builder setSource(StatusSource source);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    VerificationRequestEvent build();
+    VerificationResultEvent build();
   }
 }

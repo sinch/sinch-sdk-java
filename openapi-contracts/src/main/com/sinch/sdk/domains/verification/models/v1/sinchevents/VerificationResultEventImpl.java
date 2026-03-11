@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.verification.models.v1.webhooks;
+package com.sinch.sdk.domains.verification.models.v1.sinchevents;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -8,26 +8,28 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.Identity;
-import com.sinch.sdk.domains.verification.models.v1.Price;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
-import java.util.List;
+import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
+import com.sinch.sdk.domains.verification.models.v1.VerificationStatusReason;
+import com.sinch.sdk.domains.verification.models.v1.status.StatusSource;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  VerificationRequestEventImpl.JSON_PROPERTY_ID,
-  VerificationRequestEventImpl.JSON_PROPERTY_EVENT,
-  VerificationRequestEventImpl.JSON_PROPERTY_METHOD,
-  VerificationRequestEventImpl.JSON_PROPERTY_IDENTITY,
-  VerificationRequestEventImpl.JSON_PROPERTY_REFERENCE,
-  VerificationRequestEventImpl.JSON_PROPERTY_CUSTOM,
-  VerificationRequestEventImpl.JSON_PROPERTY_PRICE,
-  VerificationRequestEventImpl.JSON_PROPERTY_ACCEPT_LANGUAGE
+  VerificationResultEventImpl.JSON_PROPERTY_ID,
+  VerificationResultEventImpl.JSON_PROPERTY_EVENT,
+  VerificationResultEventImpl.JSON_PROPERTY_METHOD,
+  VerificationResultEventImpl.JSON_PROPERTY_IDENTITY,
+  VerificationResultEventImpl.JSON_PROPERTY_REFERENCE,
+  VerificationResultEventImpl.JSON_PROPERTY_CUSTOM,
+  VerificationResultEventImpl.JSON_PROPERTY_STATUS,
+  VerificationResultEventImpl.JSON_PROPERTY_REASON,
+  VerificationResultEventImpl.JSON_PROPERTY_SOURCE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class VerificationRequestEventImpl
-    implements VerificationRequestEvent,
-        com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent {
+public class VerificationResultEventImpl
+    implements VerificationResultEvent,
+        com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSinchEvent {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ID = "id";
@@ -54,33 +56,39 @@ public class VerificationRequestEventImpl
 
   private OptionalValue<String> custom;
 
-  public static final String JSON_PROPERTY_PRICE = "price";
+  public static final String JSON_PROPERTY_STATUS = "status";
 
-  private OptionalValue<Price> price;
+  private OptionalValue<VerificationStatus> status;
 
-  public static final String JSON_PROPERTY_ACCEPT_LANGUAGE = "acceptLanguage";
+  public static final String JSON_PROPERTY_REASON = "reason";
 
-  private OptionalValue<List<String>> acceptLanguage;
+  private OptionalValue<VerificationStatusReason> reason;
 
-  public VerificationRequestEventImpl() {}
+  public static final String JSON_PROPERTY_SOURCE = "source";
 
-  protected VerificationRequestEventImpl(
+  private OptionalValue<StatusSource> source;
+
+  public VerificationResultEventImpl() {}
+
+  protected VerificationResultEventImpl(
       OptionalValue<String> id,
       OptionalValue<EventEnum> event,
       OptionalValue<VerificationMethod> method,
       OptionalValue<Identity> identity,
       OptionalValue<String> reference,
       OptionalValue<String> custom,
-      OptionalValue<Price> price,
-      OptionalValue<List<String>> acceptLanguage) {
+      OptionalValue<VerificationStatus> status,
+      OptionalValue<VerificationStatusReason> reason,
+      OptionalValue<StatusSource> source) {
     this.id = id;
     this.event = event;
     this.method = method;
     this.identity = identity;
     this.reference = reference;
     this.custom = custom;
-    this.price = price;
-    this.acceptLanguage = acceptLanguage;
+    this.status = status;
+    this.reason = reason;
+    this.source = source;
   }
 
   @JsonIgnore
@@ -150,28 +158,39 @@ public class VerificationRequestEventImpl
   }
 
   @JsonIgnore
-  public Price getPrice() {
-    return price.orElse(null);
+  public VerificationStatus getStatus() {
+    return status.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_PRICE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<Price> price() {
-    return price;
+  @JsonProperty(JSON_PROPERTY_STATUS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<VerificationStatus> status() {
+    return status;
   }
 
   @JsonIgnore
-  public List<String> getAcceptLanguage() {
-    return acceptLanguage.orElse(null);
+  public VerificationStatusReason getReason() {
+    return reason.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_ACCEPT_LANGUAGE)
+  @JsonProperty(JSON_PROPERTY_REASON)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<List<String>> acceptLanguage() {
-    return acceptLanguage;
+  public OptionalValue<VerificationStatusReason> reason() {
+    return reason;
   }
 
-  /** Return true if this VerificationRequestEvent object is equal to o. */
+  @JsonIgnore
+  public StatusSource getSource() {
+    return source.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_SOURCE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<StatusSource> source() {
+    return source;
+  }
+
+  /** Return true if this VerificationResultEvent object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -180,34 +199,36 @@ public class VerificationRequestEventImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerificationRequestEventImpl verificationRequestEvent = (VerificationRequestEventImpl) o;
-    return Objects.equals(this.id, verificationRequestEvent.id)
-        && Objects.equals(this.event, verificationRequestEvent.event)
-        && Objects.equals(this.method, verificationRequestEvent.method)
-        && Objects.equals(this.identity, verificationRequestEvent.identity)
-        && Objects.equals(this.reference, verificationRequestEvent.reference)
-        && Objects.equals(this.custom, verificationRequestEvent.custom)
-        && Objects.equals(this.price, verificationRequestEvent.price)
-        && Objects.equals(this.acceptLanguage, verificationRequestEvent.acceptLanguage);
+    VerificationResultEventImpl verificationResultEvent = (VerificationResultEventImpl) o;
+    return Objects.equals(this.id, verificationResultEvent.id)
+        && Objects.equals(this.event, verificationResultEvent.event)
+        && Objects.equals(this.method, verificationResultEvent.method)
+        && Objects.equals(this.identity, verificationResultEvent.identity)
+        && Objects.equals(this.reference, verificationResultEvent.reference)
+        && Objects.equals(this.custom, verificationResultEvent.custom)
+        && Objects.equals(this.status, verificationResultEvent.status)
+        && Objects.equals(this.reason, verificationResultEvent.reason)
+        && Objects.equals(this.source, verificationResultEvent.source);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, event, method, identity, reference, custom, price, acceptLanguage);
+    return Objects.hash(id, event, method, identity, reference, custom, status, reason, source);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VerificationRequestEventImpl {\n");
+    sb.append("class VerificationResultEventImpl {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    event: ").append(toIndentedString(event)).append("\n");
     sb.append("    method: ").append(toIndentedString(method)).append("\n");
     sb.append("    identity: ").append(toIndentedString(identity)).append("\n");
     sb.append("    reference: ").append(toIndentedString(reference)).append("\n");
     sb.append("    custom: ").append(toIndentedString(custom)).append("\n");
-    sb.append("    price: ").append(toIndentedString(price)).append("\n");
-    sb.append("    acceptLanguage: ").append(toIndentedString(acceptLanguage)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    reason: ").append(toIndentedString(reason)).append("\n");
+    sb.append("    source: ").append(toIndentedString(source)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -223,15 +244,16 @@ public class VerificationRequestEventImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements VerificationRequestEvent.Builder {
+  static class Builder implements VerificationResultEvent.Builder {
     OptionalValue<String> id = OptionalValue.empty();
-    OptionalValue<EventEnum> event = OptionalValue.of(EventEnum.VERIFICATION_REQUEST_EVENT);
+    OptionalValue<EventEnum> event = OptionalValue.of(EventEnum.VERIFICATION_RESULT_EVENT);
     OptionalValue<VerificationMethod> method = OptionalValue.empty();
     OptionalValue<Identity> identity = OptionalValue.empty();
     OptionalValue<String> reference = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
-    OptionalValue<Price> price = OptionalValue.empty();
-    OptionalValue<List<String>> acceptLanguage = OptionalValue.empty();
+    OptionalValue<VerificationStatus> status = OptionalValue.empty();
+    OptionalValue<VerificationStatusReason> reason = OptionalValue.empty();
+    OptionalValue<StatusSource> source = OptionalValue.empty();
 
     @JsonProperty(value = JSON_PROPERTY_ID, required = true)
     public Builder setId(String id) {
@@ -241,10 +263,10 @@ public class VerificationRequestEventImpl
 
     @JsonProperty(value = JSON_PROPERTY_EVENT, required = true)
     Builder setEvent(EventEnum event) {
-      if (!Objects.equals(event, EventEnum.VERIFICATION_REQUEST_EVENT)) {
+      if (!Objects.equals(event, EventEnum.VERIFICATION_RESULT_EVENT)) {
         throw new IllegalArgumentException(
             String.format(
-                "'event' must be '%s' (is '%s')", EventEnum.VERIFICATION_REQUEST_EVENT, event));
+                "'event' must be '%s' (is '%s')", EventEnum.VERIFICATION_RESULT_EVENT, event));
       }
       return this;
     }
@@ -273,21 +295,27 @@ public class VerificationRequestEventImpl
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_PRICE)
-    public Builder setPrice(Price price) {
-      this.price = OptionalValue.of(price);
+    @JsonProperty(value = JSON_PROPERTY_STATUS, required = true)
+    public Builder setStatus(VerificationStatus status) {
+      this.status = OptionalValue.of(status);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_ACCEPT_LANGUAGE)
-    public Builder setAcceptLanguage(List<String> acceptLanguage) {
-      this.acceptLanguage = OptionalValue.of(acceptLanguage);
+    @JsonProperty(JSON_PROPERTY_REASON)
+    public Builder setReason(VerificationStatusReason reason) {
+      this.reason = OptionalValue.of(reason);
       return this;
     }
 
-    public VerificationRequestEvent build() {
-      return new VerificationRequestEventImpl(
-          id, event, method, identity, reference, custom, price, acceptLanguage);
+    @JsonProperty(JSON_PROPERTY_SOURCE)
+    public Builder setSource(StatusSource source) {
+      this.source = OptionalValue.of(source);
+      return this;
+    }
+
+    public VerificationResultEvent build() {
+      return new VerificationResultEventImpl(
+          id, event, method, identity, reference, custom, status, reason, source);
     }
   }
 }
