@@ -5,10 +5,10 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.verification.adapters.VerificationBaseTest;
-import com.sinch.sdk.domains.verification.api.v1.WebhooksService;
-import com.sinch.sdk.domains.verification.models.dto.v1.webhooks.VerificationRequestEventDtoTest;
-import com.sinch.sdk.domains.verification.models.dto.v1.webhooks.VerificationResponseEventDtoTest;
-import com.sinch.sdk.domains.verification.models.dto.v1.webhooks.VerificationResultEventDtoTest;
+import com.sinch.sdk.domains.verification.api.v1.SinchEventsService;
+import com.sinch.sdk.domains.verification.models.dto.v1.sinchevents.VerificationRequestEventDtoTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.sinchevents.VerificationResponseEventDtoTest;
+import com.sinch.sdk.domains.verification.models.dto.v1.sinchevents.VerificationResultEventDtoTest;
 import com.sinch.sdk.models.ApplicationCredentials;
 import com.sinch.sdk.models.VerificationContext;
 import java.io.IOException;
@@ -23,30 +23,30 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-public class WebhooksServiceTest extends VerificationBaseTest {
+public class SinchEventsServiceTest extends VerificationBaseTest {
 
   String request =
       "{\"id\":\"018c25e1-7163-5677-b8fb-467d7b1cffa5\",\"event\":\"VerificationResultEvent\",\"method\":\"sms\",\"identity\":{\"verified\":false,\"type\":\"number\",\"endpoint\":\"+33628254417\"},\"status\":\"FAIL\",\"reason\":\"Expired\"}";
 
-  @GivenTextResource("/domains/verification/v1/webhooks/VerificationRequestEventDto.json")
+  @GivenTextResource("/domains/verification/v1/sinchevents/VerificationRequestEventDto.json")
   static String jsonVerificationRequestEventDto;
 
-  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResultEventDto.json")
+  @GivenTextResource("/domains/verification/v1/sinchevents/VerificationResultEventDto.json")
   static String jsonVerificationResultEventDto;
 
-  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponsePhoneCall.json")
+  @GivenTextResource("/domains/verification/v1/sinchevents/VerificationResponsePhoneCall.json")
   String jsonResponsePhoneCall;
 
-  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseFlashCall.json")
+  @GivenTextResource("/domains/verification/v1/sinchevents/VerificationResponseFlashCall.json")
   String jsonResponseFlashCall;
 
-  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseSms.json")
+  @GivenTextResource("/domains/verification/v1/sinchevents/VerificationResponseSms.json")
   String jsonResponseSms;
 
-  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseWhatsApp.json")
+  @GivenTextResource("/domains/verification/v1/sinchevents/VerificationResponseWhatsApp.json")
   String jsonResponseWhatsApp;
 
-  WebhooksService webHooksService;
+  SinchEventsService sinchEventsService;
 
   @Test
   void checkApplicationAuthentication() throws ApiException {
@@ -61,7 +61,7 @@ public class WebhooksServiceTest extends VerificationBaseTest {
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     boolean authenticationResult =
-        webHooksService.validateAuthenticationHeader(
+        sinchEventsService.validateAuthenticationHeader(
             "POST", "/VerificationRequestEvent", headers, request);
 
     Assertions.assertThat(authenticationResult).isEqualTo(true);
@@ -78,7 +78,7 @@ public class WebhooksServiceTest extends VerificationBaseTest {
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     boolean authenticationResult =
-        webHooksService.validateAuthenticationHeader(
+        sinchEventsService.validateAuthenticationHeader(
             "POST", "/VerificationRequestEvent", headers, request);
 
     Assertions.assertThat(authenticationResult).isEqualTo(false);
@@ -94,7 +94,7 @@ public class WebhooksServiceTest extends VerificationBaseTest {
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     boolean authenticationResult =
-        webHooksService.validateAuthenticationHeader(
+        sinchEventsService.validateAuthenticationHeader(
             "POST", "/VerificationRequestEvent", headers, request);
 
     Assertions.assertThat(authenticationResult).isEqualTo(false);
@@ -104,7 +104,7 @@ public class WebhooksServiceTest extends VerificationBaseTest {
   void checkParseEventVerificationRequestEventDto() throws ApiException {
 
     TestHelpers.recursiveEquals(
-        webHooksService.parseEvent(jsonVerificationRequestEventDto),
+        sinchEventsService.parseEvent(jsonVerificationRequestEventDto),
         VerificationRequestEventDtoTest.expectedRequestEventDto.getVerificationRequestEventImpl());
   }
 
@@ -112,7 +112,7 @@ public class WebhooksServiceTest extends VerificationBaseTest {
   void checkParseEventVerificationResultEventDto() throws ApiException {
 
     TestHelpers.recursiveEquals(
-        webHooksService.parseEvent(jsonVerificationResultEventDto),
+        sinchEventsService.parseEvent(jsonVerificationResultEventDto),
         VerificationResultEventDtoTest.expectedResultEvent.getVerificationResultEventImpl());
   }
 
@@ -120,7 +120,7 @@ public class WebhooksServiceTest extends VerificationBaseTest {
   void checkSerializeResponsePhoneCall() throws JSONException {
 
     JSONAssert.assertEquals(
-        webHooksService.serializeResponse(
+        sinchEventsService.serializeResponse(
             VerificationResponseEventDtoTest.expectedPhoneCallRequestEventResponseDto),
         jsonResponsePhoneCall,
         true);
@@ -130,7 +130,7 @@ public class WebhooksServiceTest extends VerificationBaseTest {
   void checkSerializeResponseFlashCall() throws JSONException {
 
     JSONAssert.assertEquals(
-        webHooksService.serializeResponse(
+        sinchEventsService.serializeResponse(
             VerificationResponseEventDtoTest.expectedFlashCallRequestEventResponseDto),
         jsonResponseFlashCall,
         true);
@@ -140,7 +140,7 @@ public class WebhooksServiceTest extends VerificationBaseTest {
   void checkSerializeResponseSms() throws JSONException {
 
     JSONAssert.assertEquals(
-        webHooksService.serializeResponse(
+        sinchEventsService.serializeResponse(
             VerificationResponseEventDtoTest.expectedSmsRequestEventResponseDto),
         jsonResponseSms,
         true);
@@ -150,7 +150,7 @@ public class WebhooksServiceTest extends VerificationBaseTest {
   void checkSerializeResponseWhatsApp() throws JSONException {
 
     JSONAssert.assertEquals(
-        webHooksService.serializeResponse(
+        sinchEventsService.serializeResponse(
             VerificationResponseEventDtoTest.expectedWhatsAppRequestEventResponseDto),
         jsonResponseWhatsApp,
         true);
@@ -165,6 +165,6 @@ public class WebhooksServiceTest extends VerificationBaseTest {
             .setApplicationSecret("9876543210")
             .build();
     VerificationContext context = VerificationContext.builder().setVerificationUrl("foo").build();
-    webHooksService = new VerificationService(credentials, context, null).webhooks();
+    sinchEventsService = new VerificationService(credentials, context, null).sinchEvents();
   }
 }

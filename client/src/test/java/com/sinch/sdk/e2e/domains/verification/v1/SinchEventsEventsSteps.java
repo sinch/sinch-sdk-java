@@ -1,16 +1,16 @@
 package com.sinch.sdk.e2e.domains.verification.v1;
 
 import com.sinch.sdk.core.TestHelpers;
-import com.sinch.sdk.domains.verification.api.v1.WebhooksService;
+import com.sinch.sdk.domains.verification.api.v1.SinchEventsService;
 import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.v1.Price;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEvent;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationResultEvent;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationSmsDeliveredEvent;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationSmsDeliveredEvent.SmsResultEnum;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEvent;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationResultEvent;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSinchEvent;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSmsDeliveredEvent;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSmsDeliveredEvent.SmsResultEnum;
 import com.sinch.sdk.e2e.Config;
 import com.sinch.sdk.e2e.domains.WebhooksHelper;
 import io.cucumber.java.en.Given;
@@ -25,13 +25,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
 
-public class WebhooksEventsSteps {
+public class SinchEventsEventsSteps {
 
   static final String WEBHOOKS_PATH = Config.VERIFICATION_HOST_NAME + "/webhooks/verification/";
 
-  WebhooksService service;
+  SinchEventsService service;
 
-  static VerificationEvent expectedVerificationRequestEvent =
+  static VerificationSinchEvent expectedVerificationRequestEvent =
       VerificationRequestEvent.builder()
           .setId("1ce0ffee-c0de-5eed-d00d-f00dfeed1337")
           .setMethod(VerificationMethod.SMS)
@@ -39,7 +39,7 @@ public class WebhooksEventsSteps {
           .setPrice(Price.builder().setCurrencyId("EUR").setAmount(0.0453F).build())
           .build();
 
-  static VerificationEvent expectedVerificationResultEvent =
+  static VerificationSinchEvent expectedVerificationResultEvent =
       VerificationResultEvent.builder()
           .setId("1ce0ffee-c0de-5eed-d00d-f00dfeed1337")
           .setMethod(VerificationMethod.SMS)
@@ -47,7 +47,7 @@ public class WebhooksEventsSteps {
           .setStatus(VerificationStatus.SUCCESSFUL)
           .build();
 
-  static VerificationEvent expectedVerificationSMSDeliveredEvent =
+  static VerificationSinchEvent expectedVerificationSMSDeliveredEvent =
       VerificationSmsDeliveredEvent.builder()
           .setSmsResult(SmsResultEnum.SUCCESSFUL)
           .setId("0198511c-d1d1-8bf3-109b-85455d310123")
@@ -65,7 +65,7 @@ public class WebhooksEventsSteps {
                   WEBHOOKS_PATH + "verification-sms-delivery-event"))
           .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-  static Map<String, VerificationEvent> triggerToExpectedEvents =
+  static Map<String, VerificationSinchEvent> triggerToExpectedEvents =
       Stream.of(
               new SimpleEntry<>("Verification Request", expectedVerificationRequestEvent),
               new SimpleEntry<>("Verification Result", expectedVerificationResultEvent),
@@ -73,19 +73,19 @@ public class WebhooksEventsSteps {
                   "Verification SMS Delivered Event", expectedVerificationSMSDeliveredEvent))
           .collect(Collectors.toMap(SimpleEntry::getKey, SimpleEntry::getValue));
 
-  Map<String, WebhooksHelper.Response<VerificationEvent>> receivedEvents =
+  Map<String, WebhooksHelper.Response<VerificationSinchEvent>> receivedEvents =
       new ConcurrentHashMap<>();
 
   @Given("^the Verification Webhooks handler is available$")
   public void serviceAvailable() {
 
-    service = Config.getSinchClient().verification().v1().webhooks();
+    service = Config.getSinchClient().verification().v1().sinchEvents();
   }
 
   @When("I send a request to trigger a {string} event")
   public void triggerEvent(String trigger) throws IOException {
 
-    WebhooksHelper.Response<VerificationEvent> response =
+    WebhooksHelper.Response<VerificationSinchEvent> response =
         WebhooksHelper.callURL(new URL(triggerToURL.get(trigger)), service::parseEvent);
     receivedEvents.put(trigger, response);
   }
@@ -93,7 +93,7 @@ public class WebhooksEventsSteps {
   @Then("the header of the Verification event {string} contains a valid authorization")
   public void validateEventSignature(String trigger) {
 
-    WebhooksHelper.Response<VerificationEvent> receivedEvent = receivedEvents.get(trigger);
+    WebhooksHelper.Response<VerificationSinchEvent> receivedEvent = receivedEvents.get(trigger);
 
     boolean validated =
         service.validateAuthenticationHeader(
@@ -104,8 +104,8 @@ public class WebhooksEventsSteps {
   @Then("the Verification event describes a {string} event type")
   public void validateResult(String trigger) {
 
-    VerificationEvent expected = triggerToExpectedEvents.get(trigger);
-    VerificationEvent receivedEvent = receivedEvents.get(trigger).event;
+    VerificationSinchEvent expected = triggerToExpectedEvents.get(trigger);
+    VerificationSinchEvent receivedEvent = receivedEvents.get(trigger).event;
 
     TestHelpers.recursiveEquals(receivedEvent, expected);
   }

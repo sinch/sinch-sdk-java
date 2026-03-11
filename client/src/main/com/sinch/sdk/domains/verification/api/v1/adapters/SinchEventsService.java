@@ -6,19 +6,20 @@ import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.utils.MapUtils;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.core.utils.databind.Mapper;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponse;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.internal.VerificationEventInternalImpl;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEventResponse;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSinchEvent;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.internal.VerificationEventInternalImpl;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class WebhooksService implements com.sinch.sdk.domains.verification.api.v1.WebhooksService {
+public class SinchEventsService
+    implements com.sinch.sdk.domains.verification.api.v1.SinchEventsService {
 
-  private static final Logger LOGGER = Logger.getLogger(WebhooksService.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(SinchEventsService.class.getName());
 
   private final Map<String, AuthManager> authManagers;
 
-  public WebhooksService(Map<String, AuthManager> authManagers) {
+  public SinchEventsService(Map<String, AuthManager> authManagers) {
     this.authManagers = authManagers;
   }
 
@@ -48,11 +49,11 @@ public class WebhooksService implements com.sinch.sdk.domains.verification.api.v
   }
 
   @Override
-  public VerificationEvent parseEvent(String jsonPayload) throws ApiMappingException {
+  public VerificationSinchEvent parseEvent(String jsonPayload) throws ApiMappingException {
     try {
       VerificationEventInternalImpl dto =
           Mapper.getInstance().readValue(jsonPayload, VerificationEventInternalImpl.class);
-      return (VerificationEvent) dto.getActualInstance();
+      return (VerificationSinchEvent) dto.getActualInstance();
     } catch (JsonProcessingException e) {
       throw new ApiMappingException(jsonPayload, e);
     }

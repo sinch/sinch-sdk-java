@@ -1,10 +1,10 @@
 package com.mycompany.app.verification;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.verification.api.v1.WebhooksService;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEvent;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationResultEvent;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationSmsDeliveredEvent;
+import com.sinch.sdk.domains.verification.api.v1.SinchEventsService;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEvent;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationResultEvent;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSmsDeliveredEvent;
 import java.util.Map;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class Controller {
   public ResponseEntity<String> VerificationEvent(
       @RequestHeader Map<String, String> headers, @RequestBody String body) {
 
-    WebhooksService webhooks = sinchClient.verification().v1().webhooks();
+    SinchEventsService webhooks = sinchClient.verification().v1().sinchEvents();
 
     // ensure valid authentication to handle request
     // set this value to true to validate request from Sinch servers

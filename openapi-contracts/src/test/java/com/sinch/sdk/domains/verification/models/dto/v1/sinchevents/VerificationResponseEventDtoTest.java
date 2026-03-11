@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.verification.models.dto.v1.webhooks;
+package com.sinch.sdk.domains.verification.models.dto.v1.sinchevents;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
@@ -6,12 +6,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.domains.verification.adapters.VerificationBaseTest;
 import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
 import com.sinch.sdk.domains.verification.models.v1.WhatsAppCodeType;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationEventResponseAction;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEventResponseFlashCall;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEventResponsePhoneCall;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEventResponseSms;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEventResponseWhatsApp;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEventResponseAction;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponseFlashCall;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponsePhoneCall;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponseSms;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponseWhatsApp;
 import java.util.Collections;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
@@ -53,31 +53,31 @@ public class VerificationResponseEventDtoTest extends VerificationBaseTest {
           .putExtraOption("my key", "my value")
           .build();
 
-  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseSms.json")
+  @GivenTextResource("/domains/verification/v1/sinchevents/VerificationResponseSms.json")
   String jsonResponseSms;
 
-  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseSmsEmptySms.json")
+  @GivenTextResource("/domains/verification/v1/sinchevents/VerificationResponseSmsEmptySms.json")
   String jsonResponseSmsEmptySms;
 
-  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseFlashCall.json")
+  @GivenTextResource("/domains/verification/v1/sinchevents/VerificationResponseFlashCall.json")
   String jsonResponseFlashCall;
 
   @GivenTextResource(
-      "/domains/verification/v1/webhooks/VerificationResponseFlashCallEmptyFlashCall.json")
+      "/domains/verification/v1/sinchevents/VerificationResponseFlashCallEmptyFlashCall.json")
   String jsonResponseFlashCallEmptyFlashCall;
 
-  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponsePhoneCall.json")
+  @GivenTextResource("/domains/verification/v1/sinchevents/VerificationResponsePhoneCall.json")
   String jsonResponsePhoneCall;
 
   @GivenTextResource(
-      "/domains/verification/v1/webhooks/VerificationResponsePhoneCallEmptyCallout.json")
+      "/domains/verification/v1/sinchevents/VerificationResponsePhoneCallEmptyCallout.json")
   String jsonResponsePhoneCallEmptyCallout;
 
-  @GivenTextResource("/domains/verification/v1/webhooks/VerificationResponseWhatsApp.json")
+  @GivenTextResource("/domains/verification/v1/sinchevents/VerificationResponseWhatsApp.json")
   String jsonResponseWhatsApp;
 
   @GivenTextResource(
-      "/domains/verification/v1/webhooks/VerificationResponseWhatsAppEmptyWhatsApp.json")
+      "/domains/verification/v1/sinchevents/VerificationResponseWhatsAppEmptyWhatsApp.json")
   String jsonResponseWhatsAppEmptyWhatsApp;
 
   @Test

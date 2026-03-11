@@ -1,11 +1,11 @@
 package com.mycompany.app.verification;
 
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEventResponseAction;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEvent;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponse;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponseSms;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationResultEvent;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationSmsDeliveredEvent;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationEventResponseAction;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEvent;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEventResponse;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEventResponseSms;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationResultEvent;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSmsDeliveredEvent;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Component;
 

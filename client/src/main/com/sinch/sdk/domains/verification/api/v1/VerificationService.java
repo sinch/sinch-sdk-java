@@ -40,12 +40,12 @@ public interface VerificationService {
   VerificationsStatusService verificationStatus();
 
   /**
-   * Webhooks helpers instance
+   * Sinch Events helpers instance
    *
    * @return service instance for project
    * @see <a
    *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks">Documentation</a>
-   * @since 1.1
+   * @since 2.0
    */
-  WebhooksService webhooks();
+  SinchEventsService sinchEvents();
 }

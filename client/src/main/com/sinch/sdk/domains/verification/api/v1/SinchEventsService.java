@@ -1,12 +1,12 @@
 package com.sinch.sdk.domains.verification.api.v1;
 
 import com.sinch.sdk.core.exceptions.ApiMappingException;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationEvent;
-import com.sinch.sdk.domains.verification.models.v1.webhooks.VerificationRequestEventResponse;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEventResponse;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSinchEvent;
 import java.util.Map;
 
 /**
- * Webhooks service
+ * Sinch Events service
  *
  * <p>Callback events are used to authorize and manage your verification requests and return
  * verification results.
@@ -16,7 +16,7 @@ import java.util.Map;
  *
  * @since 1.1
  */
-public interface WebhooksService {
+public interface SinchEventsService {
 
   /**
    * The Sinch Platform can initiate callback requests to a URL you define (Callback URL) on request
@@ -48,7 +48,7 @@ public interface WebhooksService {
    *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/</a>
    * @since 1.1
    */
-  VerificationEvent parseEvent(String jsonPayload) throws ApiMappingException;
+  VerificationSinchEvent parseEvent(String jsonPayload) throws ApiMappingException;
 
   /**
    * This function can be called to serialize a verification response to be sent as JSON
