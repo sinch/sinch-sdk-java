@@ -45,7 +45,7 @@ public interface VoiceService {
    * Webhooks helpers instance
    *
    * @return instance service related to webhooks helpers
-   * @since 1.4
+   * @since 2.0
    */
-  WebHooksService webhooks();
+  SinchEventsService sinchEvents();
 }

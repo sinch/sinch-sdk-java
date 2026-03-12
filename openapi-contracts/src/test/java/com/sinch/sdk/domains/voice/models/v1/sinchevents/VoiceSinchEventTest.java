@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.voice.models.v1.webhooks;
+package com.sinch.sdk.domains.voice.models.v1.sinchevents;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
@@ -8,30 +8,30 @@ import com.sinch.sdk.domains.voice.models.v1.Domain;
 import com.sinch.sdk.domains.voice.models.v1.Price;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallResult;
 import com.sinch.sdk.domains.voice.models.v1.destination.DestinationPstn;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.DisconnectedCallEvent.ReasonEnum;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.MenuResult.InputMethodEnum;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.MenuResult.TypeEnum;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.CallHeader;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.DisconnectedCallEvent.ReasonEnum;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.MenuResult.InputMethodEnum;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.MenuResult.TypeEnum;
 import java.time.Instant;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
-public class VoiceWebhookEventTest extends VoiceBaseTest {
+public class VoiceSinchEventTest extends VoiceBaseTest {
 
-  @GivenJsonResource("/domains/voice/v1/webhooks/IncomingCallEventDto.json")
+  @GivenJsonResource("/domains/voice/v1/sinchevents/IncomingCallEventDto.json")
   IncomingCallEvent loadedIceRequestDto;
 
-  @GivenJsonResource("/domains/voice/v1/webhooks/DisconnectedCallEventDto.json")
+  @GivenJsonResource("/domains/voice/v1/sinchevents/DisconnectedCallEventDto.json")
   DisconnectedCallEvent loadedDiceRequestDto;
 
-  @GivenJsonResource("/domains/voice/v1/webhooks/AnsweredCallEventDto.json")
+  @GivenJsonResource("/domains/voice/v1/sinchevents/AnsweredCallEventDto.json")
   AnsweredCallEvent loadedAceRequestDto;
 
-  @GivenJsonResource("/domains/voice/v1/webhooks/PromptInputEventDto.json")
+  @GivenJsonResource("/domains/voice/v1/sinchevents/PromptInputEventDto.json")
   PromptInputEvent loadedPieRequestDto;
 
-  @GivenJsonResource("/domains/voice/v1/webhooks/NotificationEventDto.json")
+  @GivenJsonResource("/domains/voice/v1/sinchevents/NotificationEventDto.json")
   NotificationEvent loadedNotifyRequestDto;
 
   public static IncomingCallEvent expectedIceRequestDto =

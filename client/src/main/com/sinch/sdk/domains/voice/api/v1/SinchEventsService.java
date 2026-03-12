@@ -1,18 +1,18 @@
 package com.sinch.sdk.domains.voice.api.v1;
 
 import com.sinch.sdk.core.exceptions.ApiMappingException;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.VoiceSinchEvent;
 import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.VoiceWebhookEvent;
 import java.util.Map;
 
 /**
- * Webhooks service
+ * Sinch Events service
  *
  * @see <a
  *     href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks">https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/</a>
- * @since 1.4
+ * @since 2.0
  */
-public interface WebHooksService {
+public interface SinchEventsService {
 
   /**
    * The Sinch Platform can initiate callback requests to a URL you define (Callback URL) on request
@@ -29,7 +29,7 @@ public interface WebHooksService {
    * @return Is authentication is validated (true) or not (false)
    *     <p>see <a
    *     href="https://developers.sinch.com/docs/voice/api-reference/authentication/callback-signed-request">https://developers.sinch.com/docs/voice/api-reference/authentication/callback-signed-request/</a>
-   * @since 1.4
+   * @since 2.0
    */
   boolean validateAuthenticationHeader(
       String method, String path, Map<String, String> headers, String jsonPayload);
@@ -42,9 +42,9 @@ public interface WebHooksService {
    * @return The Voice event instance class
    *     <p>see <a
    *     href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/">https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/</a>
-   * @since 1.4
+   * @since 2.0
    */
-  VoiceWebhookEvent parseEvent(String jsonPayload) throws ApiMappingException;
+  VoiceSinchEvent parseEvent(String jsonPayload) throws ApiMappingException;
 
   /**
    * This function can be called to serialize a Voice response to be sent as JSON
@@ -53,7 +53,7 @@ public interface WebHooksService {
    * @return The JSON string to be sent
    *     <p>see <a
    *     href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/">https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/</a>
-   * @since 1.4
+   * @since 2.0
    */
   String serializeResponse(SvamlControl response) throws ApiMappingException;
 }

@@ -1,22 +1,22 @@
 package com.sinch.sdk.e2e.domains.voice.v1;
 
 import com.sinch.sdk.core.TestHelpers;
-import com.sinch.sdk.domains.voice.api.v1.WebHooksService;
+import com.sinch.sdk.domains.voice.api.v1.SinchEventsService;
 import com.sinch.sdk.domains.voice.models.v1.Domain;
 import com.sinch.sdk.domains.voice.models.v1.Price;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallResult;
 import com.sinch.sdk.domains.voice.models.v1.destination.DestinationDid;
 import com.sinch.sdk.domains.voice.models.v1.destination.DestinationPstn;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.AnsweredCallEvent;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.DisconnectedCallEvent;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.DisconnectedCallEvent.ReasonEnum;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.IncomingCallEvent;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.MenuResult;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.MenuResult.InputMethodEnum;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.MenuResult.TypeEnum;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.NotificationEvent;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.PromptInputEvent;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.VoiceWebhookEvent;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.AnsweredCallEvent;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.DisconnectedCallEvent;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.DisconnectedCallEvent.ReasonEnum;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.IncomingCallEvent;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.MenuResult;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.MenuResult.InputMethodEnum;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.MenuResult.TypeEnum;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.NotificationEvent;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.PromptInputEvent;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.VoiceSinchEvent;
 import com.sinch.sdk.e2e.Config;
 import com.sinch.sdk.e2e.domains.WebhooksHelper;
 import io.cucumber.java.en.Given;
@@ -27,21 +27,21 @@ import java.net.URL;
 import java.time.Instant;
 import org.junit.jupiter.api.Assertions;
 
-public class WebhooksEventsSteps {
+public class SinchEventsSteps {
 
   static final String WEBHOOKS_PATH_PREFIX = "/webhooks/voice";
   static final String WEBHOOKS_URL = Config.VOICE_HOST_NAME + WEBHOOKS_PATH_PREFIX;
 
-  WebHooksService service;
+  SinchEventsService service;
 
-  WebhooksHelper.Response<VoiceWebhookEvent> pieReturn;
-  WebhooksHelper.Response<VoiceWebhookEvent> pieSequence;
-  WebhooksHelper.Response<VoiceWebhookEvent> diceEvent;
-  WebhooksHelper.Response<VoiceWebhookEvent> aceEvent;
-  WebhooksHelper.Response<VoiceWebhookEvent> iceEvent;
-  WebhooksHelper.Response<VoiceWebhookEvent> recordingFinishedEvent;
-  WebhooksHelper.Response<VoiceWebhookEvent> recordingAvailableEvent;
-  WebhooksHelper.Response<VoiceWebhookEvent> transcriptionAvailableEvent;
+  WebhooksHelper.Response<VoiceSinchEvent> pieReturn;
+  WebhooksHelper.Response<VoiceSinchEvent> pieSequence;
+  WebhooksHelper.Response<VoiceSinchEvent> diceEvent;
+  WebhooksHelper.Response<VoiceSinchEvent> aceEvent;
+  WebhooksHelper.Response<VoiceSinchEvent> iceEvent;
+  WebhooksHelper.Response<VoiceSinchEvent> recordingFinishedEvent;
+  WebhooksHelper.Response<VoiceSinchEvent> recordingAvailableEvent;
+  WebhooksHelper.Response<VoiceSinchEvent> transcriptionAvailableEvent;
 
   PromptInputEvent expectedPieReturnEvent =
       PromptInputEvent.builder()
@@ -140,7 +140,7 @@ public class WebhooksEventsSteps {
 
   @Given("^the Voice Webhooks handler is available$")
   public void serviceAvailable() {
-    service = Config.getSinchClient().voice().v1().webhooks();
+    service = Config.getSinchClient().voice().v1().sinchEvents();
   }
 
   @When("^I send a request to trigger a \"PIE\" event with a \"return\" type$")
@@ -236,7 +236,7 @@ public class WebhooksEventsSteps {
   public void validateTypeEvent(String event, String type) {
 
     WebhooksHelper.Response<?> receivedEvent = null;
-    VoiceWebhookEvent expectedEvent = null;
+    VoiceSinchEvent expectedEvent = null;
     if (event.equals("PIE") && type.equals("return")) {
       receivedEvent = pieReturn;
       expectedEvent = expectedPieReturnEvent;
@@ -263,7 +263,7 @@ public class WebhooksEventsSteps {
   public void validateEvent(String event) {
 
     WebhooksHelper.Response<?> receivedEvent = null;
-    VoiceWebhookEvent expectedEvent = null;
+    VoiceSinchEvent expectedEvent = null;
     if (event.equals("DICE")) {
       receivedEvent = diceEvent;
       expectedEvent = expectedDiceEvent;

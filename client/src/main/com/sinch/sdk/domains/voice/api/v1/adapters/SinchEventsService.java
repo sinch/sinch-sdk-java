@@ -6,18 +6,18 @@ import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.utils.MapUtils;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.core.utils.databind.Mapper;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.VoiceSinchEvent;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.internal.SinchEventInternalImpl;
 import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.VoiceWebhookEvent;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.internal.WebhooksEventInternalImpl;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class WebHooksService implements com.sinch.sdk.domains.voice.api.v1.WebHooksService {
-  private static final Logger LOGGER = Logger.getLogger(WebHooksService.class.getName());
+public class SinchEventsService implements com.sinch.sdk.domains.voice.api.v1.SinchEventsService {
+  private static final Logger LOGGER = Logger.getLogger(SinchEventsService.class.getName());
 
   private final Map<String, AuthManager> authManagers;
 
-  public WebHooksService(Map<String, AuthManager> authManagers) {
+  public SinchEventsService(Map<String, AuthManager> authManagers) {
     this.authManagers = authManagers;
   }
 
@@ -47,11 +47,11 @@ public class WebHooksService implements com.sinch.sdk.domains.voice.api.v1.WebHo
   }
 
   @Override
-  public VoiceWebhookEvent parseEvent(String jsonPayload) throws ApiMappingException {
+  public VoiceSinchEvent parseEvent(String jsonPayload) throws ApiMappingException {
     try {
-      WebhooksEventInternalImpl o =
-          Mapper.getInstance().readValue(jsonPayload, WebhooksEventInternalImpl.class);
-      return (VoiceWebhookEvent) o.getActualInstance();
+      SinchEventInternalImpl o =
+          Mapper.getInstance().readValue(jsonPayload, SinchEventInternalImpl.class);
+      return (VoiceSinchEvent) o.getActualInstance();
     } catch (JsonProcessingException e) {
       throw new ApiMappingException(jsonPayload, e);
     }

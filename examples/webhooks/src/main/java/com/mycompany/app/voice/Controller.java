@@ -1,12 +1,12 @@
 package com.mycompany.app.voice;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.voice.api.v1.WebHooksService;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.AnsweredCallEvent;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.DisconnectedCallEvent;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.IncomingCallEvent;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.NotificationEvent;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.PromptInputEvent;
+import com.sinch.sdk.domains.voice.api.v1.SinchEventsService;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.AnsweredCallEvent;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.DisconnectedCallEvent;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.IncomingCallEvent;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.NotificationEvent;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.PromptInputEvent;
 import java.util.Map;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class Controller {
   public ResponseEntity<String> VoiceEvent(
       @RequestHeader Map<String, String> headers, @RequestBody String body) {
 
-    WebHooksService webhooks = sinchClient.voice().v1().webhooks();
+    SinchEventsService webhooks = sinchClient.voice().v1().sinchEvents();
 
     // ensure valid authentication to handle request
     // set this value to true to validate request from Sinch servers

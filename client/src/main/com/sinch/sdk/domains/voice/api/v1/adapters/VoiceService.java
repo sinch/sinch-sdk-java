@@ -37,7 +37,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v1.VoiceSer
   private volatile ConferencesService conferences;
   private volatile CallsService calls;
   private volatile ApplicationsService applications;
-  private volatile WebHooksService webhooks;
+  private volatile SinchEventsService sinchEvents;
 
   private volatile Map<String, AuthManager> clientAuthManagers;
   private volatile Map<String, AuthManager> webhooksAuthManagers;
@@ -126,12 +126,12 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v1.VoiceSer
     return this.applications;
   }
 
-  public WebHooksService webhooks() {
-    if (null == this.webhooks) {
+  public SinchEventsService sinchEvents() {
+    if (null == this.sinchEvents) {
       instanceLazyInit();
-      this.webhooks = new WebHooksService(webhooksAuthManagers);
+      this.sinchEvents = new SinchEventsService(webhooksAuthManagers);
     }
-    return this.webhooks;
+    return this.sinchEvents;
   }
 
   private void instanceLazyInit() {
