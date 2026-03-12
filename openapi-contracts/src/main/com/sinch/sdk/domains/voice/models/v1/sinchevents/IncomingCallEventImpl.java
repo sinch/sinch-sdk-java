@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.voice.models.v1.webhooks;
+package com.sinch.sdk.domains.voice.models.v1.sinchevents;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -44,7 +44,7 @@ import java.util.Objects;
  */
 
 public class IncomingCallEventImpl
-    implements IncomingCallEvent, VoiceWebhookEvent, VoiceWebhookCallEvent {
+    implements IncomingCallEvent, VoiceSinchEvent, VoiceCallSinchEvent {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_TIMESTAMP = "timestamp";
@@ -61,7 +61,7 @@ public class IncomingCallEventImpl
 
   public static final String JSON_PROPERTY_EVENT = "event";
 
-  private OptionalValue<WebhooksEventRequestType> event;
+  private OptionalValue<SinchEventType> event;
 
   public static final String JSON_PROPERTY_CALL_RESOURCE_URL = "callResourceUrl";
 
@@ -117,7 +117,7 @@ public class IncomingCallEventImpl
       OptionalValue<Instant> timestamp,
       OptionalValue<String> custom,
       OptionalValue<String> applicationKey,
-      OptionalValue<WebhooksEventRequestType> event,
+      OptionalValue<SinchEventType> event,
       OptionalValue<String> callResourceUrl,
       OptionalValue<Price> userRate,
       OptionalValue<String> cli,
@@ -182,13 +182,13 @@ public class IncomingCallEventImpl
   }
 
   @JsonIgnore
-  public WebhooksEventRequestType getEvent() {
+  public SinchEventType getEvent() {
     return event.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_EVENT)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<WebhooksEventRequestType> event() {
+  public OptionalValue<SinchEventType> event() {
     return event;
   }
 
@@ -415,7 +415,7 @@ public class IncomingCallEventImpl
     OptionalValue<Instant> timestamp = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
     OptionalValue<String> applicationKey = OptionalValue.empty();
-    OptionalValue<WebhooksEventRequestType> event = OptionalValue.of(WebhooksEventRequestType.ICE);
+    OptionalValue<SinchEventType> event = OptionalValue.of(SinchEventType.ICE);
     OptionalValue<String> callResourceUrl = OptionalValue.empty();
     OptionalValue<Price> userRate = OptionalValue.empty();
     OptionalValue<String> cli = OptionalValue.empty();
@@ -448,10 +448,10 @@ public class IncomingCallEventImpl
     }
 
     @JsonProperty(value = JSON_PROPERTY_EVENT, required = true)
-    Builder setEvent(WebhooksEventRequestType event) {
-      if (!Objects.equals(event, WebhooksEventRequestType.ICE)) {
+    Builder setEvent(SinchEventType event) {
+      if (!Objects.equals(event, SinchEventType.ICE)) {
         throw new IllegalArgumentException(
-            String.format("'event' must be '%s' (is '%s')", WebhooksEventRequestType.ICE, event));
+            String.format("'event' must be '%s' (is '%s')", SinchEventType.ICE, event));
       }
       return this;
     }

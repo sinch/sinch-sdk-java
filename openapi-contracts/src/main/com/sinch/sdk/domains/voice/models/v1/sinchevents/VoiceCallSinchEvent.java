@@ -8,12 +8,12 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.voice.models.v1.webhooks;
+package com.sinch.sdk.domains.voice.models.v1.sinchevents;
 
 import java.time.Instant;
 
-/** VoiceWebhookCallEvent */
-public interface VoiceWebhookCallEvent {
+/** VoiceCallSinchEvent */
+public interface VoiceCallSinchEvent {
 
   /**
    * The timestamp in UTC format.
@@ -72,6 +72,6 @@ public interface VoiceWebhookCallEvent {
      *
      * @return The instance build with current builder values
      */
-    VoiceWebhookCallEvent build();
+    VoiceCallSinchEvent build();
   }
 }

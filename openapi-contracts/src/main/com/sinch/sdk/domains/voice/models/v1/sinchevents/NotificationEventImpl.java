@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.voice.models.v1.webhooks;
+package com.sinch.sdk.domains.voice.models.v1.sinchevents;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,18 +7,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import java.time.Instant;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  AnsweredCallEventImpl.JSON_PROPERTY_TIMESTAMP,
-  AnsweredCallEventImpl.JSON_PROPERTY_CUSTOM,
-  AnsweredCallEventImpl.JSON_PROPERTY_APPLICATION_KEY,
-  AnsweredCallEventImpl.JSON_PROPERTY_EVENT,
-  AnsweredCallEventImpl.JSON_PROPERTY_AMD,
-  AnsweredCallEventImpl.JSON_PROPERTY_CALLID,
-  AnsweredCallEventImpl.JSON_PROPERTY_CONFERENCE_ID,
-  AnsweredCallEventImpl.JSON_PROPERTY_VERSION
+  NotificationEventImpl.JSON_PROPERTY_EVENT,
+  NotificationEventImpl.JSON_PROPERTY_TYPE,
+  NotificationEventImpl.JSON_PROPERTY_DESTINATION,
+  NotificationEventImpl.JSON_PROPERTY_AMD,
+  NotificationEventImpl.JSON_PROPERTY_CUSTOM,
+  NotificationEventImpl.JSON_PROPERTY_CALLID,
+  NotificationEventImpl.JSON_PROPERTY_CONFERENCE_ID,
+  NotificationEventImpl.JSON_PROPERTY_VERSION
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
@@ -30,29 +29,28 @@ import java.util.Objects;
 /*@JsonTypeInfo(use = JsonTypeInfo.Id.NONE, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "event", visible = true)
  */
 
-public class AnsweredCallEventImpl
-    implements AnsweredCallEvent, VoiceWebhookEvent, VoiceWebhookCallEvent {
+public class NotificationEventImpl implements NotificationEvent, VoiceSinchEvent {
   private static final long serialVersionUID = 1L;
-
-  public static final String JSON_PROPERTY_TIMESTAMP = "timestamp";
-
-  private OptionalValue<Instant> timestamp;
-
-  public static final String JSON_PROPERTY_CUSTOM = "custom";
-
-  private OptionalValue<String> custom;
-
-  public static final String JSON_PROPERTY_APPLICATION_KEY = "applicationKey";
-
-  private OptionalValue<String> applicationKey;
 
   public static final String JSON_PROPERTY_EVENT = "event";
 
-  private OptionalValue<WebhooksEventRequestType> event;
+  private OptionalValue<SinchEventType> event;
+
+  public static final String JSON_PROPERTY_TYPE = "type";
+
+  private OptionalValue<String> type;
+
+  public static final String JSON_PROPERTY_DESTINATION = "destination";
+
+  private OptionalValue<String> destination;
 
   public static final String JSON_PROPERTY_AMD = "amd";
 
   private OptionalValue<AnsweringMachineDetection> amd;
+
+  public static final String JSON_PROPERTY_CUSTOM = "custom";
+
+  private OptionalValue<String> custom;
 
   public static final String JSON_PROPERTY_CALLID = "callid";
 
@@ -66,69 +64,58 @@ public class AnsweredCallEventImpl
 
   private OptionalValue<Integer> version;
 
-  public AnsweredCallEventImpl() {}
+  public NotificationEventImpl() {}
 
-  protected AnsweredCallEventImpl(
-      OptionalValue<Instant> timestamp,
-      OptionalValue<String> custom,
-      OptionalValue<String> applicationKey,
-      OptionalValue<WebhooksEventRequestType> event,
+  protected NotificationEventImpl(
+      OptionalValue<SinchEventType> event,
+      OptionalValue<String> type,
+      OptionalValue<String> destination,
       OptionalValue<AnsweringMachineDetection> amd,
+      OptionalValue<String> custom,
       OptionalValue<String> callid,
       OptionalValue<String> conferenceId,
       OptionalValue<Integer> version) {
-    this.timestamp = timestamp;
-    this.custom = custom;
-    this.applicationKey = applicationKey;
     this.event = event;
+    this.type = type;
+    this.destination = destination;
     this.amd = amd;
+    this.custom = custom;
     this.callid = callid;
     this.conferenceId = conferenceId;
     this.version = version;
   }
 
   @JsonIgnore
-  public Instant getTimestamp() {
-    return timestamp.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_TIMESTAMP)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<Instant> timestamp() {
-    return timestamp;
-  }
-
-  @JsonIgnore
-  public String getCustom() {
-    return custom.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_CUSTOM)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> custom() {
-    return custom;
-  }
-
-  @JsonIgnore
-  public String getApplicationKey() {
-    return applicationKey.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_APPLICATION_KEY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> applicationKey() {
-    return applicationKey;
-  }
-
-  @JsonIgnore
-  public WebhooksEventRequestType getEvent() {
+  public SinchEventType getEvent() {
     return event.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_EVENT)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<WebhooksEventRequestType> event() {
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<SinchEventType> event() {
     return event;
+  }
+
+  @JsonIgnore
+  public String getType() {
+    return type.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_TYPE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> type() {
+    return type;
+  }
+
+  @JsonIgnore
+  public String getDestination() {
+    return destination.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_DESTINATION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> destination() {
+    return destination;
   }
 
   @JsonIgnore
@@ -140,6 +127,17 @@ public class AnsweredCallEventImpl
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<AnsweringMachineDetection> amd() {
     return amd;
+  }
+
+  @JsonIgnore
+  public String getCustom() {
+    return custom.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CUSTOM)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> custom() {
+    return custom;
   }
 
   @JsonIgnore
@@ -175,7 +173,7 @@ public class AnsweredCallEventImpl
     return version;
   }
 
-  /** Return true if this aceRequest object is equal to o. */
+  /** Return true if this notifyRequest object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -184,42 +182,34 @@ public class AnsweredCallEventImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AnsweredCallEventImpl aceRequest = (AnsweredCallEventImpl) o;
-    return Objects.equals(this.timestamp, aceRequest.timestamp)
-        && Objects.equals(this.custom, aceRequest.custom)
-        && Objects.equals(this.applicationKey, aceRequest.applicationKey)
-        && Objects.equals(this.event, aceRequest.event)
-        && Objects.equals(this.amd, aceRequest.amd)
-        && Objects.equals(this.callid, aceRequest.callid)
-        && Objects.equals(this.conferenceId, aceRequest.conferenceId)
-        && Objects.equals(this.version, aceRequest.version)
+    NotificationEventImpl notifyRequest = (NotificationEventImpl) o;
+    return Objects.equals(this.event, notifyRequest.event)
+        && Objects.equals(this.type, notifyRequest.type)
+        && Objects.equals(this.destination, notifyRequest.destination)
+        && Objects.equals(this.amd, notifyRequest.amd)
+        && Objects.equals(this.custom, notifyRequest.custom)
+        && Objects.equals(this.callid, notifyRequest.callid)
+        && Objects.equals(this.conferenceId, notifyRequest.conferenceId)
+        && Objects.equals(this.version, notifyRequest.version)
         && super.equals(o);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(
-        timestamp,
-        custom,
-        applicationKey,
-        event,
-        amd,
-        callid,
-        conferenceId,
-        version,
-        super.hashCode());
+        event, type, destination, amd, custom, callid, conferenceId, version, super.hashCode());
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AnsweredCallEventImpl {\n");
+    sb.append("class NotificationEventImpl {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
-    sb.append("    custom: ").append(toIndentedString(custom)).append("\n");
-    sb.append("    applicationKey: ").append(toIndentedString(applicationKey)).append("\n");
     sb.append("    event: ").append(toIndentedString(event)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    destination: ").append(toIndentedString(destination)).append("\n");
     sb.append("    amd: ").append(toIndentedString(amd)).append("\n");
+    sb.append("    custom: ").append(toIndentedString(custom)).append("\n");
     sb.append("    callid: ").append(toIndentedString(callid)).append("\n");
     sb.append("    conferenceId: ").append(toIndentedString(conferenceId)).append("\n");
     sb.append("    version: ").append(toIndentedString(version)).append("\n");
@@ -238,46 +228,46 @@ public class AnsweredCallEventImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements AnsweredCallEvent.Builder {
-    OptionalValue<Instant> timestamp = OptionalValue.empty();
-    OptionalValue<String> custom = OptionalValue.empty();
-    OptionalValue<String> applicationKey = OptionalValue.empty();
-    OptionalValue<WebhooksEventRequestType> event = OptionalValue.of(WebhooksEventRequestType.ACE);
+  static class Builder implements NotificationEvent.Builder {
+    OptionalValue<SinchEventType> event = OptionalValue.of(SinchEventType.NOTIFY);
+    OptionalValue<String> type = OptionalValue.empty();
+    OptionalValue<String> destination = OptionalValue.empty();
     OptionalValue<AnsweringMachineDetection> amd = OptionalValue.empty();
+    OptionalValue<String> custom = OptionalValue.empty();
     OptionalValue<String> callid = OptionalValue.empty();
     OptionalValue<String> conferenceId = OptionalValue.empty();
     OptionalValue<Integer> version = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_TIMESTAMP)
-    public Builder setTimestamp(Instant timestamp) {
-      this.timestamp = OptionalValue.of(timestamp);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_CUSTOM)
-    public Builder setCustom(String custom) {
-      this.custom = OptionalValue.of(custom);
-      return this;
-    }
-
-    @JsonProperty(JSON_PROPERTY_APPLICATION_KEY)
-    public Builder setApplicationKey(String applicationKey) {
-      this.applicationKey = OptionalValue.of(applicationKey);
-      return this;
-    }
-
-    @JsonProperty(value = JSON_PROPERTY_EVENT, required = true)
-    Builder setEvent(WebhooksEventRequestType event) {
-      if (!Objects.equals(event, WebhooksEventRequestType.ACE)) {
+    @JsonProperty(JSON_PROPERTY_EVENT)
+    Builder setEvent(SinchEventType event) {
+      if (!Objects.equals(event, SinchEventType.NOTIFY)) {
         throw new IllegalArgumentException(
-            String.format("'event' must be '%s' (is '%s')", WebhooksEventRequestType.ACE, event));
+            String.format("'event' must be '%s' (is '%s')", SinchEventType.NOTIFY, event));
       }
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_TYPE)
+    public Builder setType(String type) {
+      this.type = OptionalValue.of(type);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_DESTINATION)
+    public Builder setDestination(String destination) {
+      this.destination = OptionalValue.of(destination);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_AMD)
     public Builder setAmd(AnsweringMachineDetection amd) {
       this.amd = OptionalValue.of(amd);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_CUSTOM)
+    public Builder setCustom(String custom) {
+      this.custom = OptionalValue.of(custom);
       return this;
     }
 
@@ -299,9 +289,9 @@ public class AnsweredCallEventImpl
       return this;
     }
 
-    public AnsweredCallEvent build() {
-      return new AnsweredCallEventImpl(
-          timestamp, custom, applicationKey, event, amd, callid, conferenceId, version);
+    public NotificationEvent build() {
+      return new NotificationEventImpl(
+          event, type, destination, amd, custom, callid, conferenceId, version);
     }
   }
 }

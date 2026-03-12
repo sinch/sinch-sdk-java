@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.voice.models.v1.webhooks;
+package com.sinch.sdk.domains.voice.models.v1.sinchevents;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.voice.models.v1.Domain;
@@ -20,7 +20,7 @@ import java.util.List;
 
 /** The request body of an Incoming Call Event. */
 @JsonDeserialize(builder = IncomingCallEventImpl.Builder.class)
-public interface IncomingCallEvent extends VoiceWebhookEvent, VoiceWebhookCallEvent {
+public interface IncomingCallEvent extends VoiceSinchEvent, VoiceCallSinchEvent {
 
   /**
    * The timestamp in UTC format.
@@ -122,7 +122,7 @@ public interface IncomingCallEvent extends VoiceWebhookEvent, VoiceWebhookCallEv
   }
 
   /** Dedicated Builder */
-  interface Builder extends VoiceWebhookEvent.Builder<Builder>, VoiceWebhookCallEvent.Builder {
+  interface Builder extends VoiceSinchEvent.Builder<Builder>, VoiceCallSinchEvent.Builder {
 
     /**
      * see getter

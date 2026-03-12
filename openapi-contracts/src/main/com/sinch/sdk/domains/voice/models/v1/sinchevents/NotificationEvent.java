@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.voice.models.v1.webhooks;
+package com.sinch.sdk.domains.voice.models.v1.sinchevents;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
@@ -18,29 +18,28 @@ import java.util.stream.Stream;
 
 /** The request body of a Notify Event. */
 @JsonDeserialize(builder = NotificationEventImpl.Builder.class)
-public interface NotificationEvent extends VoiceWebhookEvent {
+public interface NotificationEvent extends VoiceSinchEvent {
 
   /** Must have the value <code>notify</code>. */
-  public class WebhooksEventRequestType extends EnumDynamic<String, WebhooksEventRequestType> {
-    public static final WebhooksEventRequestType NOTIFY = new WebhooksEventRequestType("notify");
+  public class SinchEventType extends EnumDynamic<String, SinchEventType> {
+    public static final SinchEventType NOTIFY = new SinchEventType("notify");
 
-    private static final EnumSupportDynamic<String, WebhooksEventRequestType> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(
-            WebhooksEventRequestType.class, WebhooksEventRequestType::new, Arrays.asList(NOTIFY));
+    private static final EnumSupportDynamic<String, SinchEventType> ENUM_SUPPORT =
+        new EnumSupportDynamic<>(SinchEventType.class, SinchEventType::new, Arrays.asList(NOTIFY));
 
-    private WebhooksEventRequestType(String value) {
+    private SinchEventType(String value) {
       super(value);
     }
 
-    public static Stream<WebhooksEventRequestType> values() {
+    public static Stream<SinchEventType> values() {
       return ENUM_SUPPORT.values();
     }
 
-    public static WebhooksEventRequestType from(String value) {
+    public static SinchEventType from(String value) {
       return ENUM_SUPPORT.from(value);
     }
 
-    public static String valueOf(WebhooksEventRequestType e) {
+    public static String valueOf(SinchEventType e) {
       return ENUM_SUPPORT.valueOf(e);
     }
   }
@@ -84,7 +83,7 @@ public interface NotificationEvent extends VoiceWebhookEvent {
   }
 
   /** Dedicated Builder */
-  interface Builder extends VoiceWebhookEvent.Builder<Builder> {
+  interface Builder extends VoiceSinchEvent.Builder<Builder> {
 
     /**
      * see getter

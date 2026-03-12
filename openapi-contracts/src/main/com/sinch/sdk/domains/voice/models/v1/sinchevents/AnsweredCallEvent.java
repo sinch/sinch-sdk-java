@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.voice.models.v1.webhooks;
+package com.sinch.sdk.domains.voice.models.v1.sinchevents;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
@@ -17,34 +17,9 @@ import java.time.Instant;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** The request body of a Prompt Input Event. */
-@JsonDeserialize(builder = PromptInputEventImpl.Builder.class)
-public interface PromptInputEvent extends VoiceWebhookEvent {
-
-  /** Must have the value <code>pie</code>. */
-  public class WebhooksEventRequestType extends EnumDynamic<String, WebhooksEventRequestType> {
-    public static final WebhooksEventRequestType PIE = new WebhooksEventRequestType("pie");
-
-    private static final EnumSupportDynamic<String, WebhooksEventRequestType> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(
-            WebhooksEventRequestType.class, WebhooksEventRequestType::new, Arrays.asList(PIE));
-
-    private WebhooksEventRequestType(String value) {
-      super(value);
-    }
-
-    public static Stream<WebhooksEventRequestType> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static WebhooksEventRequestType from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(WebhooksEventRequestType e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
+/** The request body of an Answered Call Event. */
+@JsonDeserialize(builder = AnsweredCallEventImpl.Builder.class)
+public interface AnsweredCallEvent extends VoiceSinchEvent, VoiceCallSinchEvent {
 
   /**
    * The timestamp in UTC format.
@@ -52,13 +27,6 @@ public interface PromptInputEvent extends VoiceWebhookEvent {
    * @return timestamp
    */
   Instant getTimestamp();
-
-  /**
-   * Get menuResult
-   *
-   * @return menuResult
-   */
-  MenuResult getMenuResult();
 
   /**
    * A string that can be used to pass custom information related to the call.
@@ -75,17 +43,48 @@ public interface PromptInputEvent extends VoiceWebhookEvent {
    */
   String getApplicationKey();
 
+  /** Must have the value <code>ace</code>. */
+  public class SinchEventType extends EnumDynamic<String, SinchEventType> {
+    public static final SinchEventType ACE = new SinchEventType("ace");
+
+    private static final EnumSupportDynamic<String, SinchEventType> ENUM_SUPPORT =
+        new EnumSupportDynamic<>(SinchEventType.class, SinchEventType::new, Arrays.asList(ACE));
+
+    private SinchEventType(String value) {
+      super(value);
+    }
+
+    public static Stream<SinchEventType> values() {
+      return ENUM_SUPPORT.values();
+    }
+
+    public static SinchEventType from(String value) {
+      return ENUM_SUPPORT.from(value);
+    }
+
+    public static String valueOf(SinchEventType e) {
+      return ENUM_SUPPORT.valueOf(e);
+    }
+  }
+
+  /**
+   * Get amd
+   *
+   * @return amd
+   */
+  AnsweringMachineDetection getAmd();
+
   /**
    * Getting builder
    *
    * @return New Builder instance
    */
   static Builder builder() {
-    return new PromptInputEventImpl.Builder();
+    return new AnsweredCallEventImpl.Builder();
   }
 
   /** Dedicated Builder */
-  interface Builder extends VoiceWebhookEvent.Builder<Builder> {
+  interface Builder extends VoiceSinchEvent.Builder<Builder>, VoiceCallSinchEvent.Builder {
 
     /**
      * see getter
@@ -95,15 +94,6 @@ public interface PromptInputEvent extends VoiceWebhookEvent {
      * @see #getTimestamp
      */
     Builder setTimestamp(Instant timestamp);
-
-    /**
-     * see getter
-     *
-     * @param menuResult see getter
-     * @return Current builder
-     * @see #getMenuResult
-     */
-    Builder setMenuResult(MenuResult menuResult);
 
     /**
      * see getter
@@ -124,10 +114,19 @@ public interface PromptInputEvent extends VoiceWebhookEvent {
     Builder setApplicationKey(String applicationKey);
 
     /**
+     * see getter
+     *
+     * @param amd see getter
+     * @return Current builder
+     * @see #getAmd
+     */
+    Builder setAmd(AnsweringMachineDetection amd);
+
+    /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    PromptInputEvent build();
+    AnsweredCallEvent build();
   }
 }

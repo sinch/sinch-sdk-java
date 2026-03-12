@@ -8,10 +8,10 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.voice.models.v1.webhooks;
+package com.sinch.sdk.domains.voice.models.v1.sinchevents;
 
-/** VoiceWebhookEvent */
-public interface VoiceWebhookEvent {
+/** VoiceSinchEvent */
+public interface VoiceSinchEvent {
 
   /**
    * Used in some types of events, it presents the unique ID assigned to this call.
@@ -69,6 +69,6 @@ public interface VoiceWebhookEvent {
      *
      * @return The instance build with current builder values
      */
-    VoiceWebhookEvent build();
+    VoiceSinchEvent build();
   }
 }

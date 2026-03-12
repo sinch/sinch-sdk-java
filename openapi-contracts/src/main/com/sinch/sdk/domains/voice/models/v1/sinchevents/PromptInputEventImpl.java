@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.voice.models.v1.webhooks;
+package com.sinch.sdk.domains.voice.models.v1.sinchevents;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -30,12 +30,12 @@ import java.util.Objects;
 /*@JsonTypeInfo(use = JsonTypeInfo.Id.NONE, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "event", visible = true)
  */
 
-public class PromptInputEventImpl implements PromptInputEvent, VoiceWebhookEvent {
+public class PromptInputEventImpl implements PromptInputEvent, VoiceSinchEvent {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_EVENT = "event";
 
-  private OptionalValue<WebhooksEventRequestType> event;
+  private OptionalValue<SinchEventType> event;
 
   public static final String JSON_PROPERTY_TIMESTAMP = "timestamp";
 
@@ -68,7 +68,7 @@ public class PromptInputEventImpl implements PromptInputEvent, VoiceWebhookEvent
   public PromptInputEventImpl() {}
 
   protected PromptInputEventImpl(
-      OptionalValue<WebhooksEventRequestType> event,
+      OptionalValue<SinchEventType> event,
       OptionalValue<Instant> timestamp,
       OptionalValue<MenuResult> menuResult,
       OptionalValue<String> custom,
@@ -87,13 +87,13 @@ public class PromptInputEventImpl implements PromptInputEvent, VoiceWebhookEvent
   }
 
   @JsonIgnore
-  public WebhooksEventRequestType getEvent() {
+  public SinchEventType getEvent() {
     return event.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_EVENT)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<WebhooksEventRequestType> event() {
+  public OptionalValue<SinchEventType> event() {
     return event;
   }
 
@@ -238,7 +238,7 @@ public class PromptInputEventImpl implements PromptInputEvent, VoiceWebhookEvent
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements PromptInputEvent.Builder {
-    OptionalValue<WebhooksEventRequestType> event = OptionalValue.of(WebhooksEventRequestType.PIE);
+    OptionalValue<SinchEventType> event = OptionalValue.of(SinchEventType.PIE);
     OptionalValue<Instant> timestamp = OptionalValue.empty();
     OptionalValue<MenuResult> menuResult = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
@@ -248,10 +248,10 @@ public class PromptInputEventImpl implements PromptInputEvent, VoiceWebhookEvent
     OptionalValue<Integer> version = OptionalValue.empty();
 
     @JsonProperty(value = JSON_PROPERTY_EVENT, required = true)
-    Builder setEvent(WebhooksEventRequestType event) {
-      if (!Objects.equals(event, WebhooksEventRequestType.PIE)) {
+    Builder setEvent(SinchEventType event) {
+      if (!Objects.equals(event, SinchEventType.PIE)) {
         throw new IllegalArgumentException(
-            String.format("'event' must be '%s' (is '%s')", WebhooksEventRequestType.PIE, event));
+            String.format("'event' must be '%s' (is '%s')", SinchEventType.PIE, event));
       }
       return this;
     }

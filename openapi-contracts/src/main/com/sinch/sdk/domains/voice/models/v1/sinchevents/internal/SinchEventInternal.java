@@ -8,9 +8,9 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.voice.models.v1.webhooks.internal;
+package com.sinch.sdk.domains.voice.models.v1.sinchevents.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-@JsonDeserialize(using = WebhooksEventInternalImpl.WebhooksEventInternalImplDeserializer.class)
-public interface WebhooksEventInternal {}
+@JsonDeserialize(using = SinchEventInternalImpl.SinchEventInternalImplDeserializer.class)
+public interface SinchEventInternal {}

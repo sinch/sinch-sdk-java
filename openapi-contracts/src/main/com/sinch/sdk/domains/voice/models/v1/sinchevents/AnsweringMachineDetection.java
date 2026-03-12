@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.voice.models.v1.webhooks;
+package com.sinch.sdk.domains.voice.models.v1.sinchevents;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;

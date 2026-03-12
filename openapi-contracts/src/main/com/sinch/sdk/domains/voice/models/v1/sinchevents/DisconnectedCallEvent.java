@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.voice.models.v1.webhooks;
+package com.sinch.sdk.domains.voice.models.v1.sinchevents;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.utils.EnumDynamic;
@@ -24,7 +24,7 @@ import java.util.stream.Stream;
 
 /** The request body of a Disconnected Call Event. */
 @JsonDeserialize(builder = DisconnectedCallEventImpl.Builder.class)
-public interface DisconnectedCallEvent extends VoiceWebhookEvent, VoiceWebhookCallEvent {
+public interface DisconnectedCallEvent extends VoiceSinchEvent, VoiceCallSinchEvent {
 
   /**
    * The timestamp in UTC format.
@@ -49,26 +49,25 @@ public interface DisconnectedCallEvent extends VoiceWebhookEvent, VoiceWebhookCa
   String getApplicationKey();
 
   /** Must have the value <code>dice</code>. */
-  public class WebhooksEventRequestType extends EnumDynamic<String, WebhooksEventRequestType> {
-    public static final WebhooksEventRequestType DICE = new WebhooksEventRequestType("dice");
+  public class SinchEventType extends EnumDynamic<String, SinchEventType> {
+    public static final SinchEventType DICE = new SinchEventType("dice");
 
-    private static final EnumSupportDynamic<String, WebhooksEventRequestType> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(
-            WebhooksEventRequestType.class, WebhooksEventRequestType::new, Arrays.asList(DICE));
+    private static final EnumSupportDynamic<String, SinchEventType> ENUM_SUPPORT =
+        new EnumSupportDynamic<>(SinchEventType.class, SinchEventType::new, Arrays.asList(DICE));
 
-    private WebhooksEventRequestType(String value) {
+    private SinchEventType(String value) {
       super(value);
     }
 
-    public static Stream<WebhooksEventRequestType> values() {
+    public static Stream<SinchEventType> values() {
       return ENUM_SUPPORT.values();
     }
 
-    public static WebhooksEventRequestType from(String value) {
+    public static SinchEventType from(String value) {
       return ENUM_SUPPORT.from(value);
     }
 
-    public static String valueOf(WebhooksEventRequestType e) {
+    public static String valueOf(SinchEventType e) {
       return ENUM_SUPPORT.valueOf(e);
     }
   }
@@ -197,7 +196,7 @@ public interface DisconnectedCallEvent extends VoiceWebhookEvent, VoiceWebhookCa
   }
 
   /** Dedicated Builder */
-  interface Builder extends VoiceWebhookEvent.Builder<Builder>, VoiceWebhookCallEvent.Builder {
+  interface Builder extends VoiceSinchEvent.Builder<Builder>, VoiceCallSinchEvent.Builder {
 
     /**
      * see getter

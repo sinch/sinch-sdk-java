@@ -463,8 +463,8 @@ public class CalloutRequestConferenceImpl
     }
 
     @JsonIgnore
-    public Builder setMusicOnHold(MusicOnHold MusicOnHold) {
-      getDelegatedBuilder().setMusicOnHold(MusicOnHold);
+    public Builder setMusicOnHold(MusicOnHold musicOnHold) {
+      getDelegatedBuilder().setMusicOnHold(musicOnHold);
       return this;
     }
 

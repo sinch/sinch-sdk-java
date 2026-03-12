@@ -25,14 +25,14 @@ public class ManageConferenceParticipantRequestImpl implements ManageConferenceP
 
   public static final String JSON_PROPERTY_MOH = "moh";
 
-  private OptionalValue<MusicOnHold> MusicOnHold;
+  private OptionalValue<MusicOnHold> musicOnHold;
 
   public ManageConferenceParticipantRequestImpl() {}
 
   protected ManageConferenceParticipantRequestImpl(
-      OptionalValue<CommandEnum> command, OptionalValue<MusicOnHold> MusicOnHold) {
+      OptionalValue<CommandEnum> command, OptionalValue<MusicOnHold> musicOnHold) {
     this.command = command;
-    this.MusicOnHold = MusicOnHold;
+    this.musicOnHold = musicOnHold;
   }
 
   @JsonIgnore
@@ -48,13 +48,13 @@ public class ManageConferenceParticipantRequestImpl implements ManageConferenceP
 
   @JsonIgnore
   public MusicOnHold getMusicOnHold() {
-    return MusicOnHold.orElse(null);
+    return musicOnHold.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_MOH)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<MusicOnHold> musicOnHold() {
-    return MusicOnHold;
+    return musicOnHold;
   }
 
   /** Return true if this manageConferenceParticipantRequest object is equal to o. */
@@ -69,12 +69,12 @@ public class ManageConferenceParticipantRequestImpl implements ManageConferenceP
     ManageConferenceParticipantRequestImpl manageConferenceParticipantRequest =
         (ManageConferenceParticipantRequestImpl) o;
     return Objects.equals(this.command, manageConferenceParticipantRequest.command)
-        && Objects.equals(this.MusicOnHold, manageConferenceParticipantRequest.MusicOnHold);
+        && Objects.equals(this.musicOnHold, manageConferenceParticipantRequest.musicOnHold);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(command, MusicOnHold);
+    return Objects.hash(command, musicOnHold);
   }
 
   @Override
@@ -82,7 +82,7 @@ public class ManageConferenceParticipantRequestImpl implements ManageConferenceP
     StringBuilder sb = new StringBuilder();
     sb.append("class ManageConferenceParticipantRequestImpl {\n");
     sb.append("    command: ").append(toIndentedString(command)).append("\n");
-    sb.append("    MusicOnHold: ").append(toIndentedString(MusicOnHold)).append("\n");
+    sb.append("    musicOnHold: ").append(toIndentedString(musicOnHold)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -100,7 +100,7 @@ public class ManageConferenceParticipantRequestImpl implements ManageConferenceP
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements ManageConferenceParticipantRequest.Builder {
     OptionalValue<CommandEnum> command = OptionalValue.empty();
-    OptionalValue<MusicOnHold> MusicOnHold = OptionalValue.empty();
+    OptionalValue<MusicOnHold> musicOnHold = OptionalValue.empty();
 
     @JsonProperty(value = JSON_PROPERTY_COMMAND, required = true)
     public Builder setCommand(CommandEnum command) {
@@ -109,13 +109,13 @@ public class ManageConferenceParticipantRequestImpl implements ManageConferenceP
     }
 
     @JsonProperty(JSON_PROPERTY_MOH)
-    public Builder setMusicOnHold(MusicOnHold MusicOnHold) {
-      this.MusicOnHold = OptionalValue.of(MusicOnHold);
+    public Builder setMusicOnHold(MusicOnHold musicOnHold) {
+      this.musicOnHold = OptionalValue.of(musicOnHold);
       return this;
     }
 
     public ManageConferenceParticipantRequest build() {
-      return new ManageConferenceParticipantRequestImpl(command, MusicOnHold);
+      return new ManageConferenceParticipantRequestImpl(command, musicOnHold);
     }
   }
 }

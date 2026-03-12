@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.voice.models.v1.webhooks.internal;
+package com.sinch.sdk.domains.voice.models.v1.sinchevents.internal;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
@@ -16,11 +16,11 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.sinch.sdk.core.models.AbstractOpenApiSchema;
 import com.sinch.sdk.core.utils.databind.JSONNavigator;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.AnsweredCallEventImpl;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.DisconnectedCallEventImpl;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.IncomingCallEventImpl;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.NotificationEventImpl;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.PromptInputEventImpl;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.AnsweredCallEventImpl;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.DisconnectedCallEventImpl;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.IncomingCallEventImpl;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.NotificationEventImpl;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.PromptInputEventImpl;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,81 +29,80 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@JsonDeserialize(using = WebhooksEventInternalImpl.WebhooksEventInternalImplDeserializer.class)
-@JsonSerialize(using = WebhooksEventInternalImpl.WebhooksEventInternalImplSerializer.class)
-public class WebhooksEventInternalImpl extends AbstractOpenApiSchema
-    implements WebhooksEventInternal {
-  private static final Logger log = Logger.getLogger(WebhooksEventInternalImpl.class.getName());
+@JsonDeserialize(using = SinchEventInternalImpl.SinchEventInternalImplDeserializer.class)
+@JsonSerialize(using = SinchEventInternalImpl.SinchEventInternalImplSerializer.class)
+public class SinchEventInternalImpl extends AbstractOpenApiSchema implements SinchEventInternal {
+  private static final Logger log = Logger.getLogger(SinchEventInternalImpl.class.getName());
 
-  public static final class WebhooksEventInternalImplSerializer
-      extends StdSerializer<WebhooksEventInternalImpl> {
+  public static final class SinchEventInternalImplSerializer
+      extends StdSerializer<SinchEventInternalImpl> {
     private static final long serialVersionUID = 1L;
 
-    public WebhooksEventInternalImplSerializer(Class<WebhooksEventInternalImpl> t) {
+    public SinchEventInternalImplSerializer(Class<SinchEventInternalImpl> t) {
       super(t);
     }
 
-    public WebhooksEventInternalImplSerializer() {
+    public SinchEventInternalImplSerializer() {
       this(null);
     }
 
     @Override
     public void serialize(
-        WebhooksEventInternalImpl value, JsonGenerator jgen, SerializerProvider provider)
+        SinchEventInternalImpl value, JsonGenerator jgen, SerializerProvider provider)
         throws IOException, JsonProcessingException {
       jgen.writeObject(value.getActualInstance());
     }
   }
 
-  public static final class WebhooksEventInternalImplDeserializer
-      extends StdDeserializer<WebhooksEventInternalImpl> {
+  public static final class SinchEventInternalImplDeserializer
+      extends StdDeserializer<SinchEventInternalImpl> {
 
     private static final long serialVersionUID = 1L;
 
-    public WebhooksEventInternalImplDeserializer() {
-      this(WebhooksEventInternalImpl.class);
+    public SinchEventInternalImplDeserializer() {
+      this(SinchEventInternalImpl.class);
     }
 
-    public WebhooksEventInternalImplDeserializer(Class<?> vc) {
+    public SinchEventInternalImplDeserializer(Class<?> vc) {
       super(vc);
     }
 
     @Override
-    public WebhooksEventInternalImpl deserialize(JsonParser jp, DeserializationContext ctxt)
+    public SinchEventInternalImpl deserialize(JsonParser jp, DeserializationContext ctxt)
         throws IOException, JsonProcessingException {
       JsonNode tree = jp.readValueAsTree();
       Object deserialized = null;
-      WebhooksEventInternalImpl newWebhooksEventInternalImpl = new WebhooksEventInternalImpl();
+      SinchEventInternalImpl newSinchEventInternalImpl = new SinchEventInternalImpl();
       Map<String, Object> result2 =
           tree.traverse(jp.getCodec()).readValueAs(new TypeReference<Map<String, Object>>() {});
       String discriminatorValue = (String) result2.get("event");
       switch (discriminatorValue) {
         case "ace":
           deserialized = tree.traverse(jp.getCodec()).readValueAs(AnsweredCallEventImpl.class);
-          newWebhooksEventInternalImpl.setActualInstance(deserialized);
-          return newWebhooksEventInternalImpl;
+          newSinchEventInternalImpl.setActualInstance(deserialized);
+          return newSinchEventInternalImpl;
         case "dice":
           deserialized = tree.traverse(jp.getCodec()).readValueAs(DisconnectedCallEventImpl.class);
-          newWebhooksEventInternalImpl.setActualInstance(deserialized);
-          return newWebhooksEventInternalImpl;
+          newSinchEventInternalImpl.setActualInstance(deserialized);
+          return newSinchEventInternalImpl;
         case "ice":
           deserialized = tree.traverse(jp.getCodec()).readValueAs(IncomingCallEventImpl.class);
-          newWebhooksEventInternalImpl.setActualInstance(deserialized);
-          return newWebhooksEventInternalImpl;
+          newSinchEventInternalImpl.setActualInstance(deserialized);
+          return newSinchEventInternalImpl;
         case "notify":
           deserialized = tree.traverse(jp.getCodec()).readValueAs(NotificationEventImpl.class);
-          newWebhooksEventInternalImpl.setActualInstance(deserialized);
-          return newWebhooksEventInternalImpl;
+          newSinchEventInternalImpl.setActualInstance(deserialized);
+          return newSinchEventInternalImpl;
         case "pie":
           deserialized = tree.traverse(jp.getCodec()).readValueAs(PromptInputEventImpl.class);
-          newWebhooksEventInternalImpl.setActualInstance(deserialized);
-          return newWebhooksEventInternalImpl;
+          newSinchEventInternalImpl.setActualInstance(deserialized);
+          return newSinchEventInternalImpl;
         default:
           log.log(
               Level.WARNING,
               String.format(
-                  "Failed to lookup discriminator value `%s` for WebhooksEventInternalImpl."
-                      + " Possible values: ace dice ice notify pie",
+                  "Failed to lookup discriminator value `%s` for SinchEventInternalImpl. Possible"
+                      + " values: ace dice ice notify pie",
                   discriminatorValue));
       }
 
@@ -316,53 +315,53 @@ public class WebhooksEventInternalImpl extends AbstractOpenApiSchema
       }
 
       if (match == 1) {
-        WebhooksEventInternalImpl ret = new WebhooksEventInternalImpl();
+        SinchEventInternalImpl ret = new SinchEventInternalImpl();
         ret.setActualInstance(deserialized);
         return ret;
       }
       throw new IOException(
           String.format(
-              "Failed deserialization for WebhooksEventInternalImpl: %d classes match result,"
-                  + " expected 1",
+              "Failed deserialization for SinchEventInternalImpl: %d classes match result, expected"
+                  + " 1",
               match));
     }
 
     /** Handle deserialization of the 'null' value. */
     @Override
-    public WebhooksEventInternalImpl getNullValue(DeserializationContext ctxt)
+    public SinchEventInternalImpl getNullValue(DeserializationContext ctxt)
         throws JsonMappingException {
-      throw new JsonMappingException(ctxt.getParser(), "WebhooksEventInternalImpl cannot be null");
+      throw new JsonMappingException(ctxt.getParser(), "SinchEventInternalImpl cannot be null");
     }
   }
 
   // store a list of schema names defined in oneOf
   public static final Map<String, Class<?>> schemas = new HashMap<>();
 
-  public WebhooksEventInternalImpl() {
+  public SinchEventInternalImpl() {
     super("oneOf", Boolean.FALSE);
   }
 
-  public WebhooksEventInternalImpl(AnsweredCallEventImpl o) {
-    super("oneOf", Boolean.FALSE);
-    setActualInstance(o);
-  }
-
-  public WebhooksEventInternalImpl(DisconnectedCallEventImpl o) {
+  public SinchEventInternalImpl(AnsweredCallEventImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public WebhooksEventInternalImpl(IncomingCallEventImpl o) {
+  public SinchEventInternalImpl(DisconnectedCallEventImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public WebhooksEventInternalImpl(NotificationEventImpl o) {
+  public SinchEventInternalImpl(IncomingCallEventImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
 
-  public WebhooksEventInternalImpl(PromptInputEventImpl o) {
+  public SinchEventInternalImpl(NotificationEventImpl o) {
+    super("oneOf", Boolean.FALSE);
+    setActualInstance(o);
+  }
+
+  public SinchEventInternalImpl(PromptInputEventImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
   }
@@ -374,7 +373,7 @@ public class WebhooksEventInternalImpl extends AbstractOpenApiSchema
     schemas.put("NotificationEventImpl", NotificationEventImpl.class);
     schemas.put("PromptInputEventImpl", PromptInputEventImpl.class);
     JSONNavigator.registerDescendants(
-        WebhooksEventInternalImpl.class, Collections.unmodifiableMap(schemas));
+        SinchEventInternalImpl.class, Collections.unmodifiableMap(schemas));
     // Initialize and register the discriminator mappings.
     Map<String, Class<?>> mappings = new HashMap<String, Class<?>>();
     mappings.put("ace", AnsweredCallEventImpl.class);
@@ -382,13 +381,13 @@ public class WebhooksEventInternalImpl extends AbstractOpenApiSchema
     mappings.put("ice", IncomingCallEventImpl.class);
     mappings.put("notify", NotificationEventImpl.class);
     mappings.put("pie", PromptInputEventImpl.class);
-    mappings.put("webhooksEvent", WebhooksEventInternalImpl.class);
-    JSONNavigator.registerDiscriminator(WebhooksEventInternalImpl.class, "event", mappings);
+    mappings.put("webhooksEvent", SinchEventInternalImpl.class);
+    JSONNavigator.registerDiscriminator(SinchEventInternalImpl.class, "event", mappings);
   }
 
   @Override
   public Map<String, Class<?>> getSchemas() {
-    return WebhooksEventInternalImpl.schemas;
+    return SinchEventInternalImpl.schemas;
   }
 
   /**
