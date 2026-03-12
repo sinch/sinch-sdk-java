@@ -2,9 +2,9 @@ package com.sinch.sdk.e2e.domains.voice.v1;
 
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.voice.api.v1.ApplicationsService;
-import com.sinch.sdk.domains.voice.models.v1.applications.Callbacks;
-import com.sinch.sdk.domains.voice.models.v1.applications.CallbacksUrl;
 import com.sinch.sdk.domains.voice.models.v1.applications.Capability;
+import com.sinch.sdk.domains.voice.models.v1.applications.EventDestinationTarget;
+import com.sinch.sdk.domains.voice.models.v1.applications.EventDestinations;
 import com.sinch.sdk.domains.voice.models.v1.applications.request.UnAssignNumberRequest;
 import com.sinch.sdk.domains.voice.models.v1.applications.request.UpdateNumbersRequest;
 import com.sinch.sdk.domains.voice.models.v1.applications.response.OwnedNumberInformation;
@@ -27,8 +27,8 @@ public class ApplicationsSteps {
   Boolean assignNumbersPassed;
   Boolean unassignNumberPassed;
 
-  Callbacks getCallbackUrlsResult;
-  Boolean updateCallbackUrlsPassed;
+  EventDestinations getEventDestinationsResult;
+  Boolean updateEventDestinationsPassed;
 
   @Given("^the Voice service \"Applications\" is available")
   public void serviceAvailable() {
@@ -65,22 +65,23 @@ public class ApplicationsSteps {
   }
 
   @When("^I send a request to get the callback URLs associated to an application$")
-  public void getCallbackUrls() {
+  public void getEventDestinations() {
 
-    getCallbackUrlsResult = service.getCallbackUrls("f00dcafe-abba-c0de-1dea-dabb1ed4caf3");
+    getEventDestinationsResult =
+        service.getEventDestinations("f00dcafe-abba-c0de-1dea-dabb1ed4caf3");
   }
 
   @When("^I send a request to update the callback URLs associated to an application$")
-  public void updateCallbackUrls() {
-    Callbacks request =
-        Callbacks.builder()
-            .setUrl(
-                CallbacksUrl.builder()
+  public void updateEventDestinations() {
+    EventDestinations request =
+        EventDestinations.builder()
+            .setTarget(
+                EventDestinationTarget.builder()
                     .setPrimary("https://my-new.callback-server.com/voice")
                     .build())
             .build();
-    service.updateCallbackUrls("f00dcafe-abba-c0de-1dea-dabb1ed4caf3", request);
-    updateCallbackUrlsPassed = true;
+    service.updateEventDestinations("f00dcafe-abba-c0de-1dea-dabb1ed4caf3", request);
+    updateEventDestinationsPassed = true;
   }
 
   @Then("the response contains details about the numbers that I own")
@@ -121,20 +122,20 @@ public class ApplicationsSteps {
   }
 
   @Then("the response contains callback URLs details")
-  public void getCallbackUrlsResult() {
-    Callbacks expected =
-        Callbacks.builder()
-            .setUrl(
-                CallbacksUrl.builder()
+  public void getEventDestinationsResult() {
+    EventDestinations expected =
+        EventDestinations.builder()
+            .setTarget(
+                EventDestinationTarget.builder()
                     .setPrimary("https://my.callback-server.com/voice")
                     .setFallback("https://my.fallback-server.com/voice")
                     .build())
             .build();
-    TestHelpers.recursiveEquals(getCallbackUrlsResult, expected);
+    TestHelpers.recursiveEquals(getEventDestinationsResult, expected);
   }
 
   @Then("the update callback URLs response contains no data")
-  public void updateCallbackUrlsResult() {
-    Assertions.assertTrue(updateCallbackUrlsPassed);
+  public void updateEventDestinationsResult() {
+    Assertions.assertTrue(updateEventDestinationsPassed);
   }
 }

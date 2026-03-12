@@ -21,11 +21,11 @@ import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.domains.voice.adapters.VoiceBaseTest;
 import com.sinch.sdk.domains.voice.api.v1.ApplicationsService;
-import com.sinch.sdk.domains.voice.models.v1.applications.Callbacks;
+import com.sinch.sdk.domains.voice.models.v1.applications.EventDestinations;
 import com.sinch.sdk.domains.voice.models.v1.applications.request.UnAssignNumberRequestTest;
-import com.sinch.sdk.domains.voice.models.v1.applications.request.UpdateCallbackUrlsRequestTest;
+import com.sinch.sdk.domains.voice.models.v1.applications.request.UpdateEventDestinationsRequestTest;
 import com.sinch.sdk.domains.voice.models.v1.applications.request.UpdateNumbersRequestTest;
-import com.sinch.sdk.domains.voice.models.v1.applications.response.GetCallbackUrlsResponseTest;
+import com.sinch.sdk.domains.voice.models.v1.applications.response.GetEventDestinationsResponseTest;
 import com.sinch.sdk.domains.voice.models.v1.applications.response.OwnedNumberInformation;
 import com.sinch.sdk.domains.voice.models.v1.applications.response.OwnedNumbersListResponse;
 import com.sinch.sdk.domains.voice.models.v1.applications.response.OwnedNumbersResponseTest;
@@ -45,11 +45,12 @@ public class ApplicationsServiceTest extends VoiceBaseTest {
   @GivenTextResource("/domains/voice/v1/applications/response/OwnedNumbersResponseDto.json")
   String ownedNumbersResponseDto;
 
-  @GivenTextResource("/domains/voice/v1/applications/response/GetCallbackUrlsResponseDto.json")
-  String getCallbackUrlsResponseDto;
+  @GivenTextResource("/domains/voice/v1/applications/response/GetEventDestinationsResponseDto.json")
+  String getEventDestinationsResponseDto;
 
-  @GivenTextResource("/domains/voice/v1/applications/request/UpdateCallbackUrlsRequestDto.json")
-  String updateCallbackUrlsRequestDto;
+  @GivenTextResource(
+      "/domains/voice/v1/applications/request/UpdateEventDestinationsRequestDto.json")
+  String updateEventDestinationsRequestDto;
 
   @GivenTextResource("/domains/voice/v1/applications/request/UpdateNumbersRequestDto.json")
   String updateNumbersRequestDto;
@@ -111,7 +112,7 @@ public class ApplicationsServiceTest extends VoiceBaseTest {
   }
 
   @Test
-  void getCallbackUrls() throws ApiException {
+  void getEventDestinations() throws ApiException {
 
     HttpRequest httpRequest =
         new HttpRequest(
@@ -124,7 +125,8 @@ public class ApplicationsServiceTest extends VoiceBaseTest {
             Collections.emptyList(),
             AUTH_NAMES);
     HttpResponse httpResponse =
-        new HttpResponse(200, null, Collections.emptyMap(), getCallbackUrlsResponseDto.getBytes());
+        new HttpResponse(
+            200, null, Collections.emptyMap(), getEventDestinationsResponseDto.getBytes());
 
     when(httpClient.invokeAPI(
             eq(serverConfiguration),
@@ -132,20 +134,20 @@ public class ApplicationsServiceTest extends VoiceBaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    Callbacks response = service.getCallbackUrls("app/id");
+    EventDestinations response = service.getEventDestinations("app/id");
 
-    TestHelpers.recursiveEquals(response, GetCallbackUrlsResponseTest.expected);
+    TestHelpers.recursiveEquals(response, GetEventDestinationsResponseTest.expected);
   }
 
   @Test
-  void updateCallbackUrls() {
+  void updateEventDestinations() {
 
     HttpRequest httpRequest =
         new HttpRequest(
             "/v1/configuration/callbacks/applications/" + URLPathUtils.encodePathSegment("app/key"),
             HttpMethod.POST,
             Collections.emptyList(),
-            updateCallbackUrlsRequestDto,
+            updateEventDestinationsRequestDto,
             Collections.emptyMap(),
             Collections.emptyList(),
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
@@ -158,7 +160,7 @@ public class ApplicationsServiceTest extends VoiceBaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    service.updateCallbackUrls("app/key", UpdateCallbackUrlsRequestTest.expected);
+    service.updateEventDestinations("app/key", UpdateEventDestinationsRequestTest.expected);
   }
 
   @Test

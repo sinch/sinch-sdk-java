@@ -9,14 +9,14 @@ package voice.applications;
 
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.voice.api.v1.ApplicationsService;
-import com.sinch.sdk.domains.voice.models.v1.applications.Callbacks;
+import com.sinch.sdk.domains.voice.models.v1.applications.EventDestinations;
 import com.sinch.sdk.models.Configuration;
 import java.util.logging.Logger;
 import utils.Settings;
 
-public class GetCallbackUrls {
+public class GetEventDestinations {
 
-  private static final Logger LOGGER = Logger.getLogger(GetCallbackUrls.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(GetEventDestinations.class.getName());
 
   public static void main(String[] args) {
 
@@ -33,9 +33,9 @@ public class GetCallbackUrls {
 
     ApplicationsService applicationsService = client.voice().v1().applications();
 
-    LOGGER.info(String.format("Get callback URLs for application key '%s'", applicationKey));
+    LOGGER.info(String.format("Get even destinations for application key '%s'", applicationKey));
 
-    Callbacks response = applicationsService.getCallbackUrls(applicationKey);
+    EventDestinations response = applicationsService.getEventDestinations(applicationKey);
 
     LOGGER.info("Response: " + response);
   }

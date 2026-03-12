@@ -19,5 +19,5 @@ See main [README.md](../../../../README.md) for how to execute snippets
   - [voice/applications/ListNumbers](./applications/ListNumbers.java)
   - [voice/applications/AssignNumbers](./applications/AssignNumbers.java)
   - [voice/applications/UnAssignNumber](./applications/UnAssignNumber.java)
-  - [voice/applications/GetCallbackUrls](./applications/GetCallbackUrls.java)
-  - [voice/applications/UpdateCallbackUrls](./applications/UpdateCallbackUrls.java)
+  - [voice/applications/GetEventDestinations](./applications/GetEventDestinations.java)
+  - [voice/applications/UpdateEventDestinations](./applications/UpdateEventDestinations.java)
