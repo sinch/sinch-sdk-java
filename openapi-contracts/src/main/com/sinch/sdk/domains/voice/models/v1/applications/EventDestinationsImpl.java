@@ -9,31 +9,31 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
-@JsonPropertyOrder({CallbacksImpl.JSON_PROPERTY_URL})
+@JsonPropertyOrder({EventDestinationsImpl.JSON_PROPERTY_URL})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class CallbacksImpl implements Callbacks {
+public class EventDestinationsImpl implements EventDestinations {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_URL = "url";
 
-  private OptionalValue<CallbacksUrl> url;
+  private OptionalValue<EventDestinationTarget> target;
 
-  public CallbacksImpl() {}
+  public EventDestinationsImpl() {}
 
-  protected CallbacksImpl(OptionalValue<CallbacksUrl> url) {
-    this.url = url;
+  protected EventDestinationsImpl(OptionalValue<EventDestinationTarget> target) {
+    this.target = target;
   }
 
   @JsonIgnore
-  public CallbacksUrl getUrl() {
-    return url.orElse(null);
+  public EventDestinationTarget getTarget() {
+    return target.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_URL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<CallbacksUrl> url() {
-    return url;
+  public OptionalValue<EventDestinationTarget> target() {
+    return target;
   }
 
   /** Return true if this callbacks object is equal to o. */
@@ -45,20 +45,20 @@ public class CallbacksImpl implements Callbacks {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CallbacksImpl callbacks = (CallbacksImpl) o;
-    return Objects.equals(this.url, callbacks.url);
+    EventDestinationsImpl callbacks = (EventDestinationsImpl) o;
+    return Objects.equals(this.target, callbacks.target);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(url);
+    return Objects.hash(target);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CallbacksImpl {\n");
-    sb.append("    url: ").append(toIndentedString(url)).append("\n");
+    sb.append("class EventDestinationsImpl {\n");
+    sb.append("    target: ").append(toIndentedString(target)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -74,17 +74,17 @@ public class CallbacksImpl implements Callbacks {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements Callbacks.Builder {
-    OptionalValue<CallbacksUrl> url = OptionalValue.empty();
+  static class Builder implements EventDestinations.Builder {
+    OptionalValue<EventDestinationTarget> target = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_URL)
-    public Builder setUrl(CallbacksUrl url) {
-      this.url = OptionalValue.of(url);
+    public Builder setTarget(EventDestinationTarget target) {
+      this.target = OptionalValue.of(target);
       return this;
     }
 
-    public Callbacks build() {
-      return new CallbacksImpl(url);
+    public EventDestinations build() {
+      return new EventDestinationsImpl(target);
     }
   }
 }

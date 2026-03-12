@@ -11,7 +11,7 @@
 package com.sinch.sdk.domains.voice.api.v1;
 
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.domains.voice.models.v1.applications.Callbacks;
+import com.sinch.sdk.domains.voice.models.v1.applications.EventDestinations;
 import com.sinch.sdk.domains.voice.models.v1.applications.request.UnAssignNumberRequest;
 import com.sinch.sdk.domains.voice.models.v1.applications.request.UpdateNumbersRequest;
 import com.sinch.sdk.domains.voice.models.v1.applications.response.OwnedNumbersListResponse;
@@ -35,10 +35,10 @@ public interface ApplicationsService {
    * <p>Returns any callback URLs configured for the specified application.
    *
    * @param applicationkey The unique identifying key of the application. (required)
-   * @return Callbacks
+   * @return EventDestinations
    * @throws ApiException if fails to make API call
    */
-  Callbacks getCallbackUrls(String applicationkey) throws ApiException;
+  EventDestinations getEventDestinations(String applicationkey) throws ApiException;
 
   /**
    * Get Numbers
@@ -68,8 +68,9 @@ public interface ApplicationsService {
    * <p>Update the configured callback URLs for the specified application.
    *
    * @param applicationkey The unique identifying key of the application. (required)
-   * @param callbacks (optional)
+   * @param eventDestinations (optional)
    * @throws ApiException if fails to make API call
    */
-  void updateCallbackUrls(String applicationkey, Callbacks callbacks) throws ApiException;
+  void updateEventDestinations(String applicationkey, EventDestinations eventDestinations)
+      throws ApiException;
 }

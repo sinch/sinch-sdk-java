@@ -13,8 +13,8 @@ package com.sinch.sdk.domains.voice.models.v1.applications;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /** Contains primary and or fallback callback URLs */
-@JsonDeserialize(builder = CallbacksUrlImpl.Builder.class)
-public interface CallbacksUrl {
+@JsonDeserialize(builder = EventDestinationTargetImpl.Builder.class)
+public interface EventDestinationTarget {
 
   /**
    * Your primary callback URL
@@ -37,7 +37,7 @@ public interface CallbacksUrl {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new CallbacksUrlImpl.Builder();
+    return new EventDestinationTargetImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -66,6 +66,6 @@ public interface CallbacksUrl {
      *
      * @return The instance build with current builder values
      */
-    CallbacksUrl build();
+    EventDestinationTarget build();
   }
 }

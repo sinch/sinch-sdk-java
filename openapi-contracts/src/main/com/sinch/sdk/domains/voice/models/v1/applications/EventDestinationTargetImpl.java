@@ -10,12 +10,12 @@ import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  CallbacksUrlImpl.JSON_PROPERTY_PRIMARY,
-  CallbacksUrlImpl.JSON_PROPERTY_FALLBACK
+  EventDestinationTargetImpl.JSON_PROPERTY_PRIMARY,
+  EventDestinationTargetImpl.JSON_PROPERTY_FALLBACK
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class CallbacksUrlImpl implements CallbacksUrl {
+public class EventDestinationTargetImpl implements EventDestinationTarget {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_PRIMARY = "primary";
@@ -26,9 +26,10 @@ public class CallbacksUrlImpl implements CallbacksUrl {
 
   private OptionalValue<String> fallback;
 
-  public CallbacksUrlImpl() {}
+  public EventDestinationTargetImpl() {}
 
-  protected CallbacksUrlImpl(OptionalValue<String> primary, OptionalValue<String> fallback) {
+  protected EventDestinationTargetImpl(
+      OptionalValue<String> primary, OptionalValue<String> fallback) {
     this.primary = primary;
     this.fallback = fallback;
   }
@@ -64,7 +65,7 @@ public class CallbacksUrlImpl implements CallbacksUrl {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CallbacksUrlImpl callbacksUrl = (CallbacksUrlImpl) o;
+    EventDestinationTargetImpl callbacksUrl = (EventDestinationTargetImpl) o;
     return Objects.equals(this.primary, callbacksUrl.primary)
         && Objects.equals(this.fallback, callbacksUrl.fallback);
   }
@@ -77,7 +78,7 @@ public class CallbacksUrlImpl implements CallbacksUrl {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CallbacksUrlImpl {\n");
+    sb.append("class EventDestinationTargetImpl {\n");
     sb.append("    primary: ").append(toIndentedString(primary)).append("\n");
     sb.append("    fallback: ").append(toIndentedString(fallback)).append("\n");
     sb.append("}");
@@ -95,7 +96,7 @@ public class CallbacksUrlImpl implements CallbacksUrl {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements CallbacksUrl.Builder {
+  static class Builder implements EventDestinationTarget.Builder {
     OptionalValue<String> primary = OptionalValue.empty();
     OptionalValue<String> fallback = OptionalValue.empty();
 
@@ -111,8 +112,8 @@ public class CallbacksUrlImpl implements CallbacksUrl {
       return this;
     }
 
-    public CallbacksUrl build() {
-      return new CallbacksUrlImpl(primary, fallback);
+    public EventDestinationTarget build() {
+      return new EventDestinationTargetImpl(primary, fallback);
     }
   }
 }
