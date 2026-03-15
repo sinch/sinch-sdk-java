@@ -4,7 +4,7 @@
 
 This release removes legacy SDK support. 
 
-This guide lists all removed classes and interfaces from V1 and how to migrate to their V2 equivalents.
+This guide lists all removed classes and interfaces from SDK V1 and how to migrate to their SDK V2 equivalents.
 
 ### [`Conversation`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/package-summary.html)
 
@@ -470,3 +470,32 @@ Use the new versioned API under `verification().v1()` to get access to [Verifica
 - `VerificationMethod.DATA` enum no longer defined. No need to be replaced because not public definition is required.
 - `template` field removed from `VerificationStartRequestSms`.
 
+### `Mailgun`
+
+Full Mailgun support (introduced in SDK 1.6 as preview) has been **removed** in SDK V2. There is no replacement within this SDK. To continue using Mailgun, integrate [Mailgun's SDKs](https://documentation.mailgun.com/docs/mailgun/sdk/introduction) directly.
+
+#### Removed entry point
+
+- `SinchClient.mailgun()` has been removed. Remove all calls to this method and its returned service.
+
+#### Removed `Configuration.Builder` methods
+
+- `Configuration.Builder.setMailgunApiKey(String apiKey)`
+- `Configuration.Builder.setMailgunUrl(String url)`
+- `Configuration.Builder.setMailgunRegion(MailgunRegion region)`
+
+#### Removed classes
+
+- `com.sinch.sdk.models.MailgunCredentials` 
+- `com.sinch.sdk.models.MailgunRegion`
+
+#### Removed service interfaces and implementations
+
+- `com.sinch.sdk.domains.mailgun.MailgunService`
+- `com.sinch.sdk.domains.mailgun.api.v1.MailgunService`
+- `com.sinch.sdk.domains.mailgun.api.v1.EmailsService` 
+- `com.sinch.sdk.domains.mailgun.api.v1.TemplatesService`
+
+#### Removed email request/response models
+- `com.sinch.sdk.domains.mailgun.models.v1.emails`
+- `com.sinch.sdk.domains.mailgun.models.v1.templates`

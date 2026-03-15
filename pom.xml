@@ -138,8 +138,6 @@
                             <sourceFileExclude>**/*Impl.java</sourceFileExclude>
                             <sourceFileExclude>**/BuildersDelegation.java</sourceFileExclude>
                             <sourceFileExclude>**/*Mapper.java</sourceFileExclude>
-
-                            <sourceFileExclude>**/mailgun/models/v1/response/GenericResponse.java</sourceFileExclude>
                         </sourceFileExcludes>
                         <tags>
                             <tag>
@@ -170,10 +168,6 @@
                             <group>
                                 <title>Conversation</title>
                                 <packages>com.sinch.sdk.domains.conversation*</packages>
-                            </group>
-                            <group>
-                                <title>Mailgun</title>
-                                <packages>com.sinch.sdk.domains.mailgun*</packages>
                             </group>
                             <group>
                                 <title>Numbers</title>
@@ -264,6 +258,9 @@
                                     <directory>client/src/test/resources</directory>
                                 </resource>
                                 <resource>
+                                    <directory>core/src/test/resources</directory>
+                                </resource>
+                                <resource>
                                     <directory>openapi-contracts/src/test/resources</directory>
                                 </resource>
                             </resources>
@@ -296,7 +293,6 @@
                         </goals>
                         <configuration>
                             <includes>
-                                <include>com.sinch.sdk.e2e.domains.mailgun.v1.MailgunIT</include>
                                 <include>com.sinch.sdk.e2e.domains.numbers.v1.NumbersIT</include>
                                 <include>com.sinch.sdk.e2e.domains.conversation.ConversationIT</include>
                                 <include>com.sinch.sdk.e2e.domains.sms.v1.SmsIT</include>
