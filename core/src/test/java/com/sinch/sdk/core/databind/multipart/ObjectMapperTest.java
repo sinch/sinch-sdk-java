@@ -13,7 +13,6 @@ import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import com.sinch.sdk.core.utils.databind.RFC822FormSerializer;
-import com.sinch.sdk.domains.mailgun.models.v1.emails.request.SendEmailRequestTest;
 import java.beans.IntrospectionException;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -40,13 +39,11 @@ public class ObjectMapperTest {
   public static SerializableObject object;
 
   static {
-    ClassLoader classLoader = SendEmailRequestTest.class.getClassLoader();
+    ClassLoader classLoader = ObjectMapperTest.class.getClassLoader();
     fileAttachment1 =
-        new File(
-            classLoader.getResource("domains/mailgun/v1/emails/request/attachment1.txt").getFile());
+        new File(classLoader.getResource("core/databind/multipart/attachment1.txt").getFile());
     fileAttachment2 =
-        new File(
-            classLoader.getResource("domains/mailgun/v1/emails/request/attachment2.txt").getFile());
+        new File(classLoader.getResource("core/databind/multipart/attachment2.txt").getFile());
 
     Map<String, Object> additionalProperties =
         fillMap("header:toto", "toto-value", "variable:foo", "foo-value", "raw", "raw-value");

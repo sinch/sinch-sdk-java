@@ -4,13 +4,11 @@ import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.ConversationRegion;
-import com.sinch.sdk.models.MailgunContext;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.SMSRegion;
 import com.sinch.sdk.models.SmsContext;
 import com.sinch.sdk.models.VerificationContext;
 import com.sinch.sdk.models.VoiceContext;
-import java.util.Arrays;
 
 public class Config {
 
@@ -61,10 +59,6 @@ public class Config {
                     .setVoiceApplicationMngmtUrl(VOICE_MANAGEMENT_HOST_NAME)
                     .setVoiceUrl(VOICE_HOST_NAME)
                     .build())
-            .setMailgunContext(
-                MailgunContext.builder().setStorageUrls(Arrays.asList(MAILGUN_STORAGE)).build())
-            .setMailgunApiKey(MAILGUN_API_KEY)
-            .setMailgunUrl(MAILGUN_HOST_NAME)
             .setSmsContext(
                 SmsContext.builder().setSmsUrl(SMS_HOST_NAME).setSmsRegion(SMSRegion.EU).build())
             .setVerificationContext(
