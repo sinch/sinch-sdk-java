@@ -255,6 +255,7 @@ Use the new versioned API under `sms().v1()` to get access to [SMSService](https
 ### [`Voice`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/package-summary.html)
 
 - `Applications.listNumbers()` is returning a `[OwnedNumbersListResponse](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/application/response/OwnedNumbersListResponse.html)` instead of a list of `OwnedNumbersResponse`. The new response still contains the list of assigned numbers but support the pagination of the results by <code>iterator</code>. 
+- Deprecated `Applications.queryNumber()` is removed and `NumberInformation`, `QueryNumber` related classes no longer available.
 
 #### Replacement APIs
 
@@ -296,8 +297,6 @@ Use the new versioned API under `voice().v1()` to get access to [VoiceService](h
 | models/response/AssignedNumbers                            | [com.sinch.sdk.domains.voice.models.v1.applications.response.OwnedNumbersListResponse](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/response/OwnedNumbersListResponse.html) |
 | models/Callbacks                                           | [com.sinch.sdk.domains.voice.models.v1.applications.EventDestinations](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/EventDestinations.html)                                 |
 | models/CallbacskUrls                                       | [com.sinch.sdk.domains.voice.models.v1.applications.EventDestinationsTarget](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/EventDestinationsTarget.html)                     |
-| models/NumberInformation                                   | [com.sinch.sdk.domains.voice.models.v1.applications.response.QueryNumberInformation](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/response/QueryNumberInformation.html)     |
-| models/response/QueryNumber                                | [com.sinch.sdk.domains.voice.models.v1.applications.response.QueryNumberResponse](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/response/QueryNumberResponse.html)           |
 | models/requests/ApplicationsAssignNumbersRequestParameters | [com.sinch.sdk.domains.voice.models.v1.applications.request.UpdateNumbersRequest](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/request/UpdateNumbersRequest.html)           |
 | models/NumberType                                          | N/A                                                                                                                                                                                                                                             |
 | models/CapabilityType                                      | [com.sinch.sdk.domains.voice.models.v1.applications.Capability](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/applications/Capability.html)                                               |
