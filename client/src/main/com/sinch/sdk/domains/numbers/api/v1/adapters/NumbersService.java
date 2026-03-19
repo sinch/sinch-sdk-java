@@ -146,6 +146,11 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
   }
 
   @Override
+  public ActiveNumbersListResponse list() throws ApiException {
+    return active().list();
+  }
+
+  @Override
   public ActiveNumbersListResponse list(ActiveNumbersListQueryParameters queryParameter)
       throws ApiException {
     return active().list(queryParameter);

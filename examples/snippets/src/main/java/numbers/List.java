@@ -9,8 +9,6 @@ package numbers;
 
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
-import com.sinch.sdk.domains.numbers.models.v1.NumberType;
-import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumbersListQueryParameters;
 import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumbersListResponse;
 import com.sinch.sdk.models.Configuration;
 import java.util.logging.Logger;
@@ -39,12 +37,7 @@ public class List {
 
     LOGGER.info("Listing active numbers");
 
-    ActiveNumbersListResponse response =
-        numbersService.list(
-            ActiveNumbersListQueryParameters.builder()
-                .setRegionCode("US")
-                .setType(NumberType.LOCAL)
-                .build());
+    ActiveNumbersListResponse response = numbersService.list();
 
     LOGGER.info("Response");
 
