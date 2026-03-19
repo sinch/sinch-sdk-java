@@ -227,7 +227,7 @@ class AvailableNumberServiceTest extends BaseTest {
             .setSmsConfiguration(
                 SmsConfiguration.builder().setServicePlanId("").setCampaignId("").build())
             .setVoiceConfiguration(VoiceConfigurationRTC.builder().setAppId("").build())
-            .setCallbackUrl("foo")
+            .setEventDestinationTarget("foo")
             .build();
 
     HttpRequest httpRequest =

@@ -54,7 +54,7 @@ public class AvailableNumberRentAnyRequestImpl implements AvailableNumberRentAny
 
   public static final String JSON_PROPERTY_CALLBACK_URL = "callbackUrl";
 
-  private OptionalValue<String> callbackUrl;
+  private OptionalValue<String> eventDestinationTarget;
 
   public AvailableNumberRentAnyRequestImpl() {}
 
@@ -65,14 +65,14 @@ public class AvailableNumberRentAnyRequestImpl implements AvailableNumberRentAny
       OptionalValue<List<Capability>> capabilities,
       OptionalValue<SmsConfiguration> smsConfiguration,
       OptionalValue<VoiceConfiguration> voiceConfiguration,
-      OptionalValue<String> callbackUrl) {
+      OptionalValue<String> eventDestinationTarget) {
     this.numberPattern = numberPattern;
     this.regionCode = regionCode;
     this.type = type;
     this.capabilities = capabilities;
     this.smsConfiguration = smsConfiguration;
     this.voiceConfiguration = voiceConfiguration;
-    this.callbackUrl = callbackUrl;
+    this.eventDestinationTarget = eventDestinationTarget;
   }
 
   @JsonIgnore
@@ -142,14 +142,14 @@ public class AvailableNumberRentAnyRequestImpl implements AvailableNumberRentAny
   }
 
   @JsonIgnore
-  public String getCallbackUrl() {
-    return callbackUrl.orElse(null);
+  public String getEventDestinationTarget() {
+    return eventDestinationTarget.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> callbackUrl() {
-    return callbackUrl;
+  public OptionalValue<String> eventDestinationTarget() {
+    return eventDestinationTarget;
   }
 
   /** Return true if this RentAnyNumberRequest object is equal to o. */
@@ -168,7 +168,7 @@ public class AvailableNumberRentAnyRequestImpl implements AvailableNumberRentAny
         && Objects.equals(this.capabilities, rentAnyNumberRequest.capabilities)
         && Objects.equals(this.smsConfiguration, rentAnyNumberRequest.smsConfiguration)
         && Objects.equals(this.voiceConfiguration, rentAnyNumberRequest.voiceConfiguration)
-        && Objects.equals(this.callbackUrl, rentAnyNumberRequest.callbackUrl);
+        && Objects.equals(this.eventDestinationTarget, rentAnyNumberRequest.eventDestinationTarget);
   }
 
   @Override
@@ -180,7 +180,7 @@ public class AvailableNumberRentAnyRequestImpl implements AvailableNumberRentAny
         capabilities,
         smsConfiguration,
         voiceConfiguration,
-        callbackUrl);
+        eventDestinationTarget);
   }
 
   @Override
@@ -193,7 +193,9 @@ public class AvailableNumberRentAnyRequestImpl implements AvailableNumberRentAny
     sb.append("    capabilities: ").append(toIndentedString(capabilities)).append("\n");
     sb.append("    smsConfiguration: ").append(toIndentedString(smsConfiguration)).append("\n");
     sb.append("    voiceConfiguration: ").append(toIndentedString(voiceConfiguration)).append("\n");
-    sb.append("    callbackUrl: ").append(toIndentedString(callbackUrl)).append("\n");
+    sb.append("    eventDestinationTarget: ")
+        .append(toIndentedString(eventDestinationTarget))
+        .append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -216,7 +218,7 @@ public class AvailableNumberRentAnyRequestImpl implements AvailableNumberRentAny
     OptionalValue<List<Capability>> capabilities = OptionalValue.empty();
     OptionalValue<SmsConfiguration> smsConfiguration = OptionalValue.empty();
     OptionalValue<VoiceConfiguration> voiceConfiguration = OptionalValue.empty();
-    OptionalValue<String> callbackUrl = OptionalValue.empty();
+    OptionalValue<String> eventDestinationTarget = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_NUMBER_PATTERN)
     public Builder setNumberPattern(SearchPattern numberPattern) {
@@ -255,8 +257,8 @@ public class AvailableNumberRentAnyRequestImpl implements AvailableNumberRentAny
     }
 
     @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
-    public Builder setCallbackUrl(String callbackUrl) {
-      this.callbackUrl = OptionalValue.of(callbackUrl);
+    public Builder setEventDestinationTarget(String eventDestinationTarget) {
+      this.eventDestinationTarget = OptionalValue.of(eventDestinationTarget);
       return this;
     }
 
@@ -268,7 +270,7 @@ public class AvailableNumberRentAnyRequestImpl implements AvailableNumberRentAny
           capabilities,
           smsConfiguration,
           voiceConfiguration,
-          callbackUrl);
+          eventDestinationTarget);
     }
   }
 }

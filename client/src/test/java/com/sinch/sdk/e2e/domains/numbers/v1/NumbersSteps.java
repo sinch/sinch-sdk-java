@@ -169,7 +169,7 @@ public class NumbersSteps {
                 SmsConfiguration.builder().setServicePlanId("SingingMooseSociety").build())
             .setVoiceConfiguration(
                 VoiceConfigurationFAX.builder().setServiceId("01W4FFL35P4NC4K35FAXSERVICE").build())
-            .setCallbackUrl("https://my-callback-server.com/numbers")
+            .setEventDestinationTarget("https://my-callback-server.com/numbers")
             .build();
     updateResponse = service.update(phoneNumber, request);
   }
@@ -276,7 +276,7 @@ public class NumbersSteps {
                             .setLastUpdatedTime(Instant.parse("2024-06-06T14:42:42.604092Z"))
                             .build())
                     .build())
-            .setCallbackUrl("")
+            .setEventDestinationTarget("")
             .build();
 
     Assertions.assertEquals(expected, rentAnyResponse);
@@ -321,7 +321,7 @@ public class NumbersSteps {
                             .setLastUpdatedTime(Instant.parse("2024-06-06T14:42:42.604092Z"))
                             .build())
                     .build())
-            .setCallbackUrl("")
+            .setEventDestinationTarget("")
             .build();
 
     Assertions.assertEquals(expected, rentResponse);
@@ -378,7 +378,7 @@ public class NumbersSteps {
                             .setLastUpdatedTime(Instant.parse("2024-06-06T20:02:20.437509Z"))
                             .build())
                     .build())
-            .setCallbackUrl("https://my-callback-server.com/numbers")
+            .setEventDestinationTarget("https://my-callback-server.com/numbers")
             .build();
 
     Assertions.assertEquals(expected, updateResponse);
@@ -411,7 +411,7 @@ public class NumbersSteps {
                     .setLastUpdatedTime(null)
                     .setScheduledProvisioning(null)
                     .build())
-            .setCallbackUrl("https://my-callback-server.com/numbers")
+            .setEventDestinationTarget("https://my-callback-server.com/numbers")
             .build();
 
     Assertions.assertEquals(expected, getResponse);
@@ -453,7 +453,7 @@ public class NumbersSteps {
                     .setLastUpdatedTime(null)
                     .setScheduledProvisioning(null)
                     .build())
-            .setCallbackUrl("https://my-callback-server.com/numbers")
+            .setEventDestinationTarget("https://my-callback-server.com/numbers")
             .build();
 
     Assertions.assertEquals(expected, getResponse);
@@ -493,7 +493,7 @@ public class NumbersSteps {
                     .setLastUpdatedTime(null)
                     .setScheduledProvisioning(null)
                     .build())
-            .setCallbackUrl("https://my-callback-server.com/numbers")
+            .setEventDestinationTarget("https://my-callback-server.com/numbers")
             .build();
 
     Assertions.assertEquals(expected, releaseResponse);
