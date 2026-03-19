@@ -13,59 +13,59 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.verification.models.v1.sinchevents.internal.VerificationRequestEventResponseFlashCallContent;
-import com.sinch.sdk.domains.verification.models.v1.sinchevents.internal.VerificationRequestEventResponseFlashCallContentImpl;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.internal.VerificationStartEventResponseFlashCallContent;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.internal.VerificationStartEventResponseFlashCallContentImpl;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 
 @JsonPropertyOrder({
-  VerificationRequestEventResponseFlashCallImpl.JSON_PROPERTY_ACTION,
-  VerificationRequestEventResponseFlashCallImpl.JSON_PROPERTY_FLASH_CALL
+  VerificationStartEventResponseFlashCallImpl.JSON_PROPERTY_ACTION,
+  VerificationStartEventResponseFlashCallImpl.JSON_PROPERTY_FLASH_CALL
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class VerificationRequestEventResponseFlashCallImpl
-    implements VerificationRequestEventResponseFlashCall,
-        com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEventResponse {
+public class VerificationStartEventResponseFlashCallImpl
+    implements VerificationStartEventResponseFlashCall,
+        com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationStartEventResponse {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ACTION = "action";
 
-  private OptionalValue<VerificationEventResponseAction> action;
+  private OptionalValue<VerificationStartEventAction> action;
 
   public static final String JSON_PROPERTY_FLASH_CALL = "flashCall";
 
-  private OptionalValue<VerificationRequestEventResponseFlashCallContent> flashCall;
+  private OptionalValue<VerificationStartEventResponseFlashCallContent> flashCall;
 
-  public VerificationRequestEventResponseFlashCallImpl() {}
+  public VerificationStartEventResponseFlashCallImpl() {}
 
-  protected VerificationRequestEventResponseFlashCallImpl(
-      OptionalValue<VerificationEventResponseAction> action,
-      OptionalValue<VerificationRequestEventResponseFlashCallContent> flashCall) {
+  protected VerificationStartEventResponseFlashCallImpl(
+      OptionalValue<VerificationStartEventAction> action,
+      OptionalValue<VerificationStartEventResponseFlashCallContent> flashCall) {
     this.action = action;
     this.flashCall = flashCall;
   }
 
   @JsonIgnore
-  public VerificationEventResponseAction getAction() {
+  public VerificationStartEventAction getAction() {
     return action.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_ACTION)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<VerificationEventResponseAction> action() {
+  public OptionalValue<VerificationStartEventAction> action() {
     return action;
   }
 
   @JsonIgnore
-  public VerificationRequestEventResponseFlashCallContent getFlashCall() {
+  public VerificationStartEventResponseFlashCallContent getFlashCall() {
     return flashCall.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_FLASH_CALL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<VerificationRequestEventResponseFlashCallContent> flashCall() {
+  public OptionalValue<VerificationStartEventResponseFlashCallContent> flashCall() {
     return flashCall;
   }
 
@@ -80,7 +80,7 @@ public class VerificationRequestEventResponseFlashCallImpl
   public OptionalValue<String> cli() {
     return null != flashCall && flashCall.isPresent()
         ? flashCall
-            .map(f -> ((VerificationRequestEventResponseFlashCallContentImpl) f).cli())
+            .map(f -> ((VerificationStartEventResponseFlashCallContentImpl) f).cli())
             .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
@@ -96,7 +96,7 @@ public class VerificationRequestEventResponseFlashCallImpl
   public OptionalValue<Integer> dialTimeout() {
     return null != flashCall && flashCall.isPresent()
         ? flashCall
-            .map(f -> ((VerificationRequestEventResponseFlashCallContentImpl) f).dialTimeout())
+            .map(f -> ((VerificationStartEventResponseFlashCallContentImpl) f).dialTimeout())
             .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
@@ -115,9 +115,7 @@ public class VerificationRequestEventResponseFlashCallImpl
     return null != flashCall && flashCall.isPresent()
         ? flashCall
             .map(
-                f ->
-                    ((VerificationRequestEventResponseFlashCallContentImpl) f)
-                        .interceptionTimeout())
+                f -> ((VerificationStartEventResponseFlashCallContentImpl) f).interceptionTimeout())
             .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
@@ -136,8 +134,8 @@ public class VerificationRequestEventResponseFlashCallImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerificationRequestEventResponseFlashCallImpl verificationRequestEventResponseFlashCall =
-        (VerificationRequestEventResponseFlashCallImpl) o;
+    VerificationStartEventResponseFlashCallImpl verificationRequestEventResponseFlashCall =
+        (VerificationStartEventResponseFlashCallImpl) o;
     return Objects.equals(this.action, verificationRequestEventResponseFlashCall.action)
         && Objects.equals(this.flashCall, verificationRequestEventResponseFlashCall.flashCall);
   }
@@ -150,7 +148,7 @@ public class VerificationRequestEventResponseFlashCallImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VerificationRequestEventResponseFlashCallImpl {\n");
+    sb.append("class VerificationStartEventResponseFlashCallImpl {\n");
     sb.append("    action: ").append(toIndentedString(action)).append("\n");
     sb.append("    flashCall: ").append(toIndentedString(flashCall)).append("\n");
     sb.append("}");
@@ -168,21 +166,20 @@ public class VerificationRequestEventResponseFlashCallImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements VerificationRequestEventResponseFlashCall.Builder {
-    OptionalValue<VerificationEventResponseAction> action = OptionalValue.empty();
-    OptionalValue<VerificationRequestEventResponseFlashCallContent> flashCall =
-        OptionalValue.empty();
+  static class Builder implements VerificationStartEventResponseFlashCall.Builder {
+    OptionalValue<VerificationStartEventAction> action = OptionalValue.empty();
+    OptionalValue<VerificationStartEventResponseFlashCallContent> flashCall = OptionalValue.empty();
 
-    VerificationRequestEventResponseFlashCallContent.Builder _delegatedBuilder = null;
+    VerificationStartEventResponseFlashCallContent.Builder _delegatedBuilder = null;
 
     @JsonProperty(value = JSON_PROPERTY_ACTION, required = true)
-    public Builder setAction(VerificationEventResponseAction action) {
+    public Builder setAction(VerificationStartEventAction action) {
       this.action = OptionalValue.of(action);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_FLASH_CALL)
-    public Builder setFlashCall(VerificationRequestEventResponseFlashCallContent flashCall) {
+    public Builder setFlashCall(VerificationStartEventResponseFlashCallContent flashCall) {
       this.flashCall = OptionalValue.of(flashCall);
       return this;
     }
@@ -210,27 +207,27 @@ public class VerificationRequestEventResponseFlashCallImpl
       return this;
     }
 
-    private VerificationRequestEventResponseFlashCallContent.Builder getDelegatedBuilder() {
+    private VerificationStartEventResponseFlashCallContent.Builder getDelegatedBuilder() {
       if (null == _delegatedBuilder) {
-        this._delegatedBuilder = VerificationRequestEventResponseFlashCallContent.builder();
+        this._delegatedBuilder = VerificationStartEventResponseFlashCallContent.builder();
       }
       return this._delegatedBuilder;
     }
 
-    public VerificationRequestEventResponseFlashCall build() {
+    public VerificationStartEventResponseFlashCall build() {
       // delegated builder was used: filling the related source of delegation field
       if (null != this._delegatedBuilder) {
         this.flashCall = OptionalValue.of(this._delegatedBuilder.build());
       }
-      return new VerificationRequestEventResponseFlashCallImpl(action, flashCall);
+      return new VerificationStartEventResponseFlashCallImpl(action, flashCall);
     }
   }
 
   public static class DelegatedSerializer
-      extends JsonSerializer<OptionalValue<VerificationRequestEventResponseFlashCall>> {
+      extends JsonSerializer<OptionalValue<VerificationStartEventResponseFlashCall>> {
     @Override
     public void serialize(
-        OptionalValue<VerificationRequestEventResponseFlashCall> value,
+        OptionalValue<VerificationStartEventResponseFlashCall> value,
         JsonGenerator jgen,
         SerializerProvider provider)
         throws IOException {
@@ -238,29 +235,29 @@ public class VerificationRequestEventResponseFlashCallImpl
       if (!value.isPresent()) {
         return;
       }
-      VerificationRequestEventResponseFlashCallImpl impl =
-          (VerificationRequestEventResponseFlashCallImpl) value.get();
+      VerificationStartEventResponseFlashCallImpl impl =
+          (VerificationStartEventResponseFlashCallImpl) value.get();
       jgen.writeObject(null != impl ? impl.getFlashCall() : null);
     }
   }
 
   public static class DelegatedDeSerializer
-      extends JsonDeserializer<VerificationRequestEventResponseFlashCall> {
+      extends JsonDeserializer<VerificationStartEventResponseFlashCall> {
     @Override
-    public VerificationRequestEventResponseFlashCall deserialize(
+    public VerificationStartEventResponseFlashCall deserialize(
         JsonParser jp, DeserializationContext ctxt) throws IOException {
 
-      VerificationRequestEventResponseFlashCallImpl.Builder builder =
-          new VerificationRequestEventResponseFlashCallImpl.Builder();
-      VerificationRequestEventResponseFlashCallContentImpl deserialized =
-          jp.readValueAs(VerificationRequestEventResponseFlashCallContentImpl.class);
+      VerificationStartEventResponseFlashCallImpl.Builder builder =
+          new VerificationStartEventResponseFlashCallImpl.Builder();
+      VerificationStartEventResponseFlashCallContentImpl deserialized =
+          jp.readValueAs(VerificationStartEventResponseFlashCallContentImpl.class);
       builder.setFlashCall(deserialized);
       return builder.build();
     }
   }
 
-  public static Optional<VerificationRequestEventResponseFlashCall> delegatedConverter(
-      VerificationRequestEventResponseFlashCallContent internal) {
+  public static Optional<VerificationStartEventResponseFlashCall> delegatedConverter(
+      VerificationStartEventResponseFlashCallContent internal) {
     if (null == internal) {
       return Optional.empty();
     }

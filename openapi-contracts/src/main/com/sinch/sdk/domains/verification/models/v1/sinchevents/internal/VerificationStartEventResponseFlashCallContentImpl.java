@@ -14,14 +14,14 @@ import java.util.Map;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  VerificationRequestEventResponseFlashCallContentImpl.JSON_PROPERTY_CLI,
-  VerificationRequestEventResponseFlashCallContentImpl.JSON_PROPERTY_DIAL_TIMEOUT,
-  VerificationRequestEventResponseFlashCallContentImpl.JSON_PROPERTY_INTERCEPTION_TIMEOUT
+  VerificationStartEventResponseFlashCallContentImpl.JSON_PROPERTY_CLI,
+  VerificationStartEventResponseFlashCallContentImpl.JSON_PROPERTY_DIAL_TIMEOUT,
+  VerificationStartEventResponseFlashCallContentImpl.JSON_PROPERTY_INTERCEPTION_TIMEOUT
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class VerificationRequestEventResponseFlashCallContentImpl
-    implements VerificationRequestEventResponseFlashCallContent {
+public class VerificationStartEventResponseFlashCallContentImpl
+    implements VerificationStartEventResponseFlashCallContent {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CLI = "cli";
@@ -42,9 +42,9 @@ public class VerificationRequestEventResponseFlashCallContentImpl
    */
   private OptionalValue<Map<String, Object>> additionalProperties;
 
-  public VerificationRequestEventResponseFlashCallContentImpl() {}
+  public VerificationStartEventResponseFlashCallContentImpl() {}
 
-  protected VerificationRequestEventResponseFlashCallContentImpl(
+  protected VerificationStartEventResponseFlashCallContentImpl(
       OptionalValue<String> cli,
       OptionalValue<Integer> dialTimeout,
       OptionalValue<Integer> interceptionTimeout,
@@ -117,9 +117,9 @@ public class VerificationRequestEventResponseFlashCallContentImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerificationRequestEventResponseFlashCallContentImpl
+    VerificationStartEventResponseFlashCallContentImpl
         verificationRequestEventResponseFlashCallAllOfFlashCall =
-            (VerificationRequestEventResponseFlashCallContentImpl) o;
+            (VerificationStartEventResponseFlashCallContentImpl) o;
     return Objects.equals(this.cli, verificationRequestEventResponseFlashCallAllOfFlashCall.cli)
         && Objects.equals(
             this.dialTimeout, verificationRequestEventResponseFlashCallAllOfFlashCall.dialTimeout)
@@ -139,7 +139,7 @@ public class VerificationRequestEventResponseFlashCallContentImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VerificationRequestEventResponseFlashCallContentImpl {\n");
+    sb.append("class VerificationStartEventResponseFlashCallContentImpl {\n");
     sb.append("    cli: ").append(toIndentedString(cli)).append("\n");
     sb.append("    dialTimeout: ").append(toIndentedString(dialTimeout)).append("\n");
     sb.append("    interceptionTimeout: ")
@@ -163,7 +163,7 @@ public class VerificationRequestEventResponseFlashCallContentImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements VerificationRequestEventResponseFlashCallContent.Builder {
+  static class Builder implements VerificationStartEventResponseFlashCallContent.Builder {
     OptionalValue<String> cli = OptionalValue.empty();
     OptionalValue<Integer> dialTimeout = OptionalValue.empty();
     OptionalValue<Integer> interceptionTimeout = OptionalValue.empty();
@@ -196,8 +196,8 @@ public class VerificationRequestEventResponseFlashCallContentImpl
       return this;
     }
 
-    public VerificationRequestEventResponseFlashCallContent build() {
-      return new VerificationRequestEventResponseFlashCallContentImpl(
+    public VerificationStartEventResponseFlashCallContent build() {
+      return new VerificationStartEventResponseFlashCallContentImpl(
           cli, dialTimeout, interceptionTimeout, additionalProperties);
     }
   }

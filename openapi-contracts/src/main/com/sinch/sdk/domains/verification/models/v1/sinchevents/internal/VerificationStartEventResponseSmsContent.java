@@ -15,9 +15,9 @@ import com.sinch.sdk.core.models.AdditionalProperties;
 import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
 import java.util.List;
 
-/** VerificationRequestEventResponseSmsContent */
-@JsonDeserialize(builder = VerificationRequestEventResponseSmsContentImpl.Builder.class)
-public interface VerificationRequestEventResponseSmsContent extends AdditionalProperties {
+/** VerificationStartEventResponseSmsContent */
+@JsonDeserialize(builder = VerificationStartEventResponseSmsContentImpl.Builder.class)
+public interface VerificationStartEventResponseSmsContent extends AdditionalProperties {
 
   /**
    * The SMS OTP code that should be used. By default, the Sinch dashboard will automatically
@@ -56,7 +56,7 @@ public interface VerificationRequestEventResponseSmsContent extends AdditionalPr
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationRequestEventResponseSmsContentImpl.Builder();
+    return new VerificationStartEventResponseSmsContentImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -111,6 +111,6 @@ public interface VerificationRequestEventResponseSmsContent extends AdditionalPr
      *
      * @return The instance build with current builder values
      */
-    VerificationRequestEventResponseSmsContent build();
+    VerificationStartEventResponseSmsContent build();
   }
 }

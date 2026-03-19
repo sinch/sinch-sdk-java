@@ -14,9 +14,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.core.models.AdditionalProperties;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 
-/** VerificationRequestEventResponsePhoneCallContent */
-@JsonDeserialize(builder = VerificationRequestEventResponsePhoneCallContentImpl.Builder.class)
-public interface VerificationRequestEventResponsePhoneCallContent extends AdditionalProperties {
+/** VerificationStartEventResponsePhoneCallContent */
+@JsonDeserialize(builder = VerificationStartEventResponsePhoneCallContentImpl.Builder.class)
+public interface VerificationStartEventResponsePhoneCallContent extends AdditionalProperties {
 
   /**
    * The Phone Call OTP code that should be entered by the user. Sinch servers automatically
@@ -40,7 +40,7 @@ public interface VerificationRequestEventResponsePhoneCallContent extends Additi
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationRequestEventResponsePhoneCallContentImpl.Builder();
+    return new VerificationStartEventResponsePhoneCallContentImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -77,6 +77,6 @@ public interface VerificationRequestEventResponsePhoneCallContent extends Additi
      *
      * @return The instance build with current builder values
      */
-    VerificationRequestEventResponsePhoneCallContent build();
+    VerificationStartEventResponsePhoneCallContent build();
   }
 }

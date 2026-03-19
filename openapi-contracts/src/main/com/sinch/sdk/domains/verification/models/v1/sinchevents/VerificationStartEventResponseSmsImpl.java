@@ -14,60 +14,60 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
-import com.sinch.sdk.domains.verification.models.v1.sinchevents.internal.VerificationRequestEventResponseSmsContent;
-import com.sinch.sdk.domains.verification.models.v1.sinchevents.internal.VerificationRequestEventResponseSmsContentImpl;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.internal.VerificationStartEventResponseSmsContent;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.internal.VerificationStartEventResponseSmsContentImpl;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 @JsonPropertyOrder({
-  VerificationRequestEventResponseSmsImpl.JSON_PROPERTY_ACTION,
-  VerificationRequestEventResponseSmsImpl.JSON_PROPERTY_SMS
+  VerificationStartEventResponseSmsImpl.JSON_PROPERTY_ACTION,
+  VerificationStartEventResponseSmsImpl.JSON_PROPERTY_SMS
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class VerificationRequestEventResponseSmsImpl
-    implements VerificationRequestEventResponseSms,
-        com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEventResponse {
+public class VerificationStartEventResponseSmsImpl
+    implements VerificationStartEventResponseSms,
+        com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationStartEventResponse {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ACTION = "action";
 
-  private OptionalValue<VerificationEventResponseAction> action;
+  private OptionalValue<VerificationStartEventAction> action;
 
   public static final String JSON_PROPERTY_SMS = "sms";
 
-  private OptionalValue<VerificationRequestEventResponseSmsContent> sms;
+  private OptionalValue<VerificationStartEventResponseSmsContent> sms;
 
-  public VerificationRequestEventResponseSmsImpl() {}
+  public VerificationStartEventResponseSmsImpl() {}
 
-  protected VerificationRequestEventResponseSmsImpl(
-      OptionalValue<VerificationEventResponseAction> action,
-      OptionalValue<VerificationRequestEventResponseSmsContent> sms) {
+  protected VerificationStartEventResponseSmsImpl(
+      OptionalValue<VerificationStartEventAction> action,
+      OptionalValue<VerificationStartEventResponseSmsContent> sms) {
     this.action = action;
     this.sms = sms;
   }
 
   @JsonIgnore
-  public VerificationEventResponseAction getAction() {
+  public VerificationStartEventAction getAction() {
     return action.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_ACTION)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<VerificationEventResponseAction> action() {
+  public OptionalValue<VerificationStartEventAction> action() {
     return action;
   }
 
   @JsonIgnore
-  public VerificationRequestEventResponseSmsContent getSms() {
+  public VerificationStartEventResponseSmsContent getSms() {
     return sms.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_SMS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<VerificationRequestEventResponseSmsContent> sms() {
+  public OptionalValue<VerificationStartEventResponseSmsContent> sms() {
     return sms;
   }
 
@@ -81,7 +81,7 @@ public class VerificationRequestEventResponseSmsImpl
 
   public OptionalValue<String> code() {
     return null != sms && sms.isPresent()
-        ? sms.map(f -> ((VerificationRequestEventResponseSmsContentImpl) f).code())
+        ? sms.map(f -> ((VerificationStartEventResponseSmsContentImpl) f).code())
             .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
@@ -96,7 +96,7 @@ public class VerificationRequestEventResponseSmsImpl
 
   public OptionalValue<SmsCodeType> codeType() {
     return null != sms && sms.isPresent()
-        ? sms.map(f -> ((VerificationRequestEventResponseSmsContentImpl) f).codeType())
+        ? sms.map(f -> ((VerificationStartEventResponseSmsContentImpl) f).codeType())
             .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
@@ -111,7 +111,7 @@ public class VerificationRequestEventResponseSmsImpl
 
   public OptionalValue<String> expiry() {
     return null != sms && sms.isPresent()
-        ? sms.map(f -> ((VerificationRequestEventResponseSmsContentImpl) f).expiry())
+        ? sms.map(f -> ((VerificationStartEventResponseSmsContentImpl) f).expiry())
             .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
@@ -126,7 +126,7 @@ public class VerificationRequestEventResponseSmsImpl
 
   public OptionalValue<List<String>> acceptLanguage() {
     return null != sms && sms.isPresent()
-        ? sms.map(f -> ((VerificationRequestEventResponseSmsContentImpl) f).acceptLanguage())
+        ? sms.map(f -> ((VerificationStartEventResponseSmsContentImpl) f).acceptLanguage())
             .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
@@ -145,8 +145,8 @@ public class VerificationRequestEventResponseSmsImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerificationRequestEventResponseSmsImpl verificationRequestEventResponseSms =
-        (VerificationRequestEventResponseSmsImpl) o;
+    VerificationStartEventResponseSmsImpl verificationRequestEventResponseSms =
+        (VerificationStartEventResponseSmsImpl) o;
     return Objects.equals(this.action, verificationRequestEventResponseSms.action)
         && Objects.equals(this.sms, verificationRequestEventResponseSms.sms);
   }
@@ -159,7 +159,7 @@ public class VerificationRequestEventResponseSmsImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VerificationRequestEventResponseSmsImpl {\n");
+    sb.append("class VerificationStartEventResponseSmsImpl {\n");
     sb.append("    action: ").append(toIndentedString(action)).append("\n");
     sb.append("    sms: ").append(toIndentedString(sms)).append("\n");
     sb.append("}");
@@ -177,20 +177,20 @@ public class VerificationRequestEventResponseSmsImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements VerificationRequestEventResponseSms.Builder {
-    OptionalValue<VerificationEventResponseAction> action = OptionalValue.empty();
-    OptionalValue<VerificationRequestEventResponseSmsContent> sms = OptionalValue.empty();
+  static class Builder implements VerificationStartEventResponseSms.Builder {
+    OptionalValue<VerificationStartEventAction> action = OptionalValue.empty();
+    OptionalValue<VerificationStartEventResponseSmsContent> sms = OptionalValue.empty();
 
-    VerificationRequestEventResponseSmsContent.Builder _delegatedBuilder = null;
+    VerificationStartEventResponseSmsContent.Builder _delegatedBuilder = null;
 
     @JsonProperty(value = JSON_PROPERTY_ACTION, required = true)
-    public Builder setAction(VerificationEventResponseAction action) {
+    public Builder setAction(VerificationStartEventAction action) {
       this.action = OptionalValue.of(action);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_SMS)
-    public Builder setSms(VerificationRequestEventResponseSmsContent sms) {
+    public Builder setSms(VerificationStartEventResponseSmsContent sms) {
       this.sms = OptionalValue.of(sms);
       return this;
     }
@@ -224,27 +224,27 @@ public class VerificationRequestEventResponseSmsImpl
       return this;
     }
 
-    private VerificationRequestEventResponseSmsContent.Builder getDelegatedBuilder() {
+    private VerificationStartEventResponseSmsContent.Builder getDelegatedBuilder() {
       if (null == _delegatedBuilder) {
-        this._delegatedBuilder = VerificationRequestEventResponseSmsContent.builder();
+        this._delegatedBuilder = VerificationStartEventResponseSmsContent.builder();
       }
       return this._delegatedBuilder;
     }
 
-    public VerificationRequestEventResponseSms build() {
+    public VerificationStartEventResponseSms build() {
       // delegated builder was used: filling the related source of delegation field
       if (null != this._delegatedBuilder) {
         this.sms = OptionalValue.of(this._delegatedBuilder.build());
       }
-      return new VerificationRequestEventResponseSmsImpl(action, sms);
+      return new VerificationStartEventResponseSmsImpl(action, sms);
     }
   }
 
   public static class DelegatedSerializer
-      extends JsonSerializer<OptionalValue<VerificationRequestEventResponseSms>> {
+      extends JsonSerializer<OptionalValue<VerificationStartEventResponseSms>> {
     @Override
     public void serialize(
-        OptionalValue<VerificationRequestEventResponseSms> value,
+        OptionalValue<VerificationStartEventResponseSms> value,
         JsonGenerator jgen,
         SerializerProvider provider)
         throws IOException {
@@ -252,29 +252,29 @@ public class VerificationRequestEventResponseSmsImpl
       if (!value.isPresent()) {
         return;
       }
-      VerificationRequestEventResponseSmsImpl impl =
-          (VerificationRequestEventResponseSmsImpl) value.get();
+      VerificationStartEventResponseSmsImpl impl =
+          (VerificationStartEventResponseSmsImpl) value.get();
       jgen.writeObject(null != impl ? impl.getSms() : null);
     }
   }
 
   public static class DelegatedDeSerializer
-      extends JsonDeserializer<VerificationRequestEventResponseSms> {
+      extends JsonDeserializer<VerificationStartEventResponseSms> {
     @Override
-    public VerificationRequestEventResponseSms deserialize(
-        JsonParser jp, DeserializationContext ctxt) throws IOException {
+    public VerificationStartEventResponseSms deserialize(JsonParser jp, DeserializationContext ctxt)
+        throws IOException {
 
-      VerificationRequestEventResponseSmsImpl.Builder builder =
-          new VerificationRequestEventResponseSmsImpl.Builder();
-      VerificationRequestEventResponseSmsContentImpl deserialized =
-          jp.readValueAs(VerificationRequestEventResponseSmsContentImpl.class);
+      VerificationStartEventResponseSmsImpl.Builder builder =
+          new VerificationStartEventResponseSmsImpl.Builder();
+      VerificationStartEventResponseSmsContentImpl deserialized =
+          jp.readValueAs(VerificationStartEventResponseSmsContentImpl.class);
       builder.setSms(deserialized);
       return builder.build();
     }
   }
 
-  public static Optional<VerificationRequestEventResponseSms> delegatedConverter(
-      VerificationRequestEventResponseSmsContent internal) {
+  public static Optional<VerificationStartEventResponseSms> delegatedConverter(
+      VerificationStartEventResponseSmsContent internal) {
     if (null == internal) {
       return Optional.empty();
     }

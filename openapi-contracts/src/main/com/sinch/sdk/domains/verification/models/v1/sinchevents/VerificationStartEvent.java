@@ -20,9 +20,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-/** VerificationRequestEvent */
-@JsonDeserialize(builder = VerificationRequestEventImpl.Builder.class)
-public interface VerificationRequestEvent
+/** VerificationStartEvent */
+@JsonDeserialize(builder = VerificationStartEventImpl.Builder.class)
+public interface VerificationStartEvent
     extends com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSinchEvent {
 
   /**
@@ -125,7 +125,7 @@ public interface VerificationRequestEvent
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationRequestEventImpl.Builder();
+    return new VerificationStartEventImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -202,6 +202,6 @@ public interface VerificationRequestEvent
      *
      * @return The instance build with current builder values
      */
-    VerificationRequestEvent build();
+    VerificationStartEvent build();
   }
 }

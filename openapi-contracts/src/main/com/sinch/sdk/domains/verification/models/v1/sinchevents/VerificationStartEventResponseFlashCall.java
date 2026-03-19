@@ -8,14 +8,24 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.verification.models.v1.sinchevents.internal;
+package com.sinch.sdk.domains.verification.models.v1.sinchevents;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.core.models.AdditionalProperties;
 
-/** VerificationRequestEventResponseFlashCallContent */
-@JsonDeserialize(builder = VerificationRequestEventResponseFlashCallContentImpl.Builder.class)
-public interface VerificationRequestEventResponseFlashCallContent extends AdditionalProperties {
+/** Flash Call Request Event Response */
+@JsonDeserialize(builder = VerificationStartEventResponseFlashCallImpl.Builder.class)
+public interface VerificationStartEventResponseFlashCall
+    extends com.sinch.sdk.domains.verification.models.v1.sinchevents
+        .VerificationStartEventResponse {
+
+  /**
+   * Get action
+   *
+   * <p>Field is required
+   *
+   * @return action
+   */
+  VerificationStartEventAction getAction();
 
   /**
    * The phone number that will be displayed to the user when the flash call is received on the
@@ -49,16 +59,35 @@ public interface VerificationRequestEventResponseFlashCallContent extends Additi
   Integer getInterceptionTimeout();
 
   /**
+   * Return the additional "flashCall" with the specified name.
+   *
+   * @param key the name of the property
+   * @return the additional property with the specified name
+   */
+  Object getExtraOption(String key);
+
+  /**
    * Getting builder
    *
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationRequestEventResponseFlashCallContentImpl.Builder();
+    return new VerificationStartEventResponseFlashCallImpl.Builder();
   }
 
   /** Dedicated Builder */
-  interface Builder extends AdditionalProperties.Builder {
+  interface Builder
+      extends com.sinch.sdk.domains.verification.models.v1.sinchevents
+          .VerificationStartEventResponse.Builder {
+
+    /**
+     * see getter
+     *
+     * @param action see getter
+     * @return Current builder
+     * @see #getAction
+     */
+    Builder setAction(VerificationStartEventAction action);
 
     /**
      * see getter
@@ -91,15 +120,15 @@ public interface VerificationRequestEventResponseFlashCallContent extends Additi
      * see getter
      *
      * @return Current builder
-     * @see #get
+     * @see #getExtraOption
      */
-    Builder put(String key, Object value);
+    Builder putExtraOption(String key, Object value);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    VerificationRequestEventResponseFlashCallContent build();
+    VerificationStartEventResponseFlashCall build();
   }
 }

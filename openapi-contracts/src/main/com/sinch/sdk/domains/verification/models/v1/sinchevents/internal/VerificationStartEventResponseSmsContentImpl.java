@@ -9,25 +9,35 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.verification.models.v1.WhatsAppCodeType;
+import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  VerificationRequestEventResponseWhatsAppContentImpl.JSON_PROPERTY_CODE_TYPE,
-  VerificationRequestEventResponseWhatsAppContentImpl.JSON_PROPERTY_ACCEPT_LANGUAGE
+  VerificationStartEventResponseSmsContentImpl.JSON_PROPERTY_CODE,
+  VerificationStartEventResponseSmsContentImpl.JSON_PROPERTY_CODE_TYPE,
+  VerificationStartEventResponseSmsContentImpl.JSON_PROPERTY_EXPIRY,
+  VerificationStartEventResponseSmsContentImpl.JSON_PROPERTY_ACCEPT_LANGUAGE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class VerificationRequestEventResponseWhatsAppContentImpl
-    implements VerificationRequestEventResponseWhatsAppContent {
+public class VerificationStartEventResponseSmsContentImpl
+    implements VerificationStartEventResponseSmsContent {
   private static final long serialVersionUID = 1L;
+
+  public static final String JSON_PROPERTY_CODE = "code";
+
+  private OptionalValue<String> code;
 
   public static final String JSON_PROPERTY_CODE_TYPE = "codeType";
 
-  private OptionalValue<WhatsAppCodeType> codeType;
+  private OptionalValue<SmsCodeType> codeType;
+
+  public static final String JSON_PROPERTY_EXPIRY = "expiry";
+
+  private OptionalValue<String> expiry;
 
   public static final String JSON_PROPERTY_ACCEPT_LANGUAGE = "acceptLanguage";
 
@@ -39,26 +49,52 @@ public class VerificationRequestEventResponseWhatsAppContentImpl
    */
   private OptionalValue<Map<String, Object>> additionalProperties;
 
-  public VerificationRequestEventResponseWhatsAppContentImpl() {}
+  public VerificationStartEventResponseSmsContentImpl() {}
 
-  protected VerificationRequestEventResponseWhatsAppContentImpl(
-      OptionalValue<WhatsAppCodeType> codeType,
+  protected VerificationStartEventResponseSmsContentImpl(
+      OptionalValue<String> code,
+      OptionalValue<SmsCodeType> codeType,
+      OptionalValue<String> expiry,
       OptionalValue<List<String>> acceptLanguage,
       OptionalValue<Map<String, Object>> additionalProperties) {
+    this.code = code;
     this.codeType = codeType;
+    this.expiry = expiry;
     this.acceptLanguage = acceptLanguage;
     this.additionalProperties = additionalProperties;
   }
 
   @JsonIgnore
-  public WhatsAppCodeType getCodeType() {
+  public String getCode() {
+    return code.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CODE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> code() {
+    return code;
+  }
+
+  @JsonIgnore
+  public SmsCodeType getCodeType() {
     return codeType.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CODE_TYPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<WhatsAppCodeType> codeType() {
+  public OptionalValue<SmsCodeType> codeType() {
     return codeType;
+  }
+
+  @JsonIgnore
+  public String getExpiry() {
+    return expiry.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_EXPIRY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> expiry() {
+    return expiry;
   }
 
   @JsonIgnore
@@ -89,10 +125,7 @@ public class VerificationRequestEventResponseWhatsAppContentImpl
     return additionalProperties.get();
   }
 
-  /**
-   * Return true if this VerificationRequestEventResponseWhatsApp_allOf_whatsapp object is equal to
-   * o.
-   */
+  /** Return true if this VerificationRequestEventResponseSms_allOf_sms object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -101,29 +134,30 @@ public class VerificationRequestEventResponseWhatsAppContentImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerificationRequestEventResponseWhatsAppContentImpl
-        verificationRequestEventResponseWhatsAppAllOfWhatsapp =
-            (VerificationRequestEventResponseWhatsAppContentImpl) o;
-    return Objects.equals(
-            this.codeType, verificationRequestEventResponseWhatsAppAllOfWhatsapp.codeType)
+    VerificationStartEventResponseSmsContentImpl verificationRequestEventResponseSmsAllOfSms =
+        (VerificationStartEventResponseSmsContentImpl) o;
+    return Objects.equals(this.code, verificationRequestEventResponseSmsAllOfSms.code)
+        && Objects.equals(this.codeType, verificationRequestEventResponseSmsAllOfSms.codeType)
+        && Objects.equals(this.expiry, verificationRequestEventResponseSmsAllOfSms.expiry)
         && Objects.equals(
-            this.acceptLanguage,
-            verificationRequestEventResponseWhatsAppAllOfWhatsapp.acceptLanguage)
+            this.acceptLanguage, verificationRequestEventResponseSmsAllOfSms.acceptLanguage)
         && Objects.equals(
             this.additionalProperties,
-            verificationRequestEventResponseWhatsAppAllOfWhatsapp.additionalProperties);
+            verificationRequestEventResponseSmsAllOfSms.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(codeType, acceptLanguage, additionalProperties);
+    return Objects.hash(code, codeType, expiry, acceptLanguage, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VerificationRequestEventResponseWhatsAppContentImpl {\n");
+    sb.append("class VerificationStartEventResponseSmsContentImpl {\n");
+    sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    codeType: ").append(toIndentedString(codeType)).append("\n");
+    sb.append("    expiry: ").append(toIndentedString(expiry)).append("\n");
     sb.append("    acceptLanguage: ").append(toIndentedString(acceptLanguage)).append("\n");
     sb.append("    additionalProperties: ")
         .append(toIndentedString(additionalProperties))
@@ -143,14 +177,28 @@ public class VerificationRequestEventResponseWhatsAppContentImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements VerificationRequestEventResponseWhatsAppContent.Builder {
-    OptionalValue<WhatsAppCodeType> codeType = OptionalValue.empty();
+  static class Builder implements VerificationStartEventResponseSmsContent.Builder {
+    OptionalValue<String> code = OptionalValue.empty();
+    OptionalValue<SmsCodeType> codeType = OptionalValue.empty();
+    OptionalValue<String> expiry = OptionalValue.empty();
     OptionalValue<List<String>> acceptLanguage = OptionalValue.empty();
     OptionalValue<Map<String, Object>> additionalProperties = OptionalValue.empty();
 
+    @JsonProperty(JSON_PROPERTY_CODE)
+    public Builder setCode(String code) {
+      this.code = OptionalValue.of(code);
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_CODE_TYPE)
-    public Builder setCodeType(WhatsAppCodeType codeType) {
+    public Builder setCodeType(SmsCodeType codeType) {
       this.codeType = OptionalValue.of(codeType);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_EXPIRY)
+    public Builder setExpiry(String expiry) {
+      this.expiry = OptionalValue.of(expiry);
       return this;
     }
 
@@ -169,9 +217,9 @@ public class VerificationRequestEventResponseWhatsAppContentImpl
       return this;
     }
 
-    public VerificationRequestEventResponseWhatsAppContent build() {
-      return new VerificationRequestEventResponseWhatsAppContentImpl(
-          codeType, acceptLanguage, additionalProperties);
+    public VerificationStartEventResponseSmsContent build() {
+      return new VerificationStartEventResponseSmsContentImpl(
+          code, codeType, expiry, acceptLanguage, additionalProperties);
     }
   }
 }

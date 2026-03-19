@@ -14,60 +14,60 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.WhatsAppCodeType;
-import com.sinch.sdk.domains.verification.models.v1.sinchevents.internal.VerificationRequestEventResponseWhatsAppContent;
-import com.sinch.sdk.domains.verification.models.v1.sinchevents.internal.VerificationRequestEventResponseWhatsAppContentImpl;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.internal.VerificationStartEventResponseWhatsAppContent;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.internal.VerificationStartEventResponseWhatsAppContentImpl;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 @JsonPropertyOrder({
-  VerificationRequestEventResponseWhatsAppImpl.JSON_PROPERTY_ACTION,
-  VerificationRequestEventResponseWhatsAppImpl.JSON_PROPERTY_WHATSAPP
+  VerificationStartEventResponseWhatsAppImpl.JSON_PROPERTY_ACTION,
+  VerificationStartEventResponseWhatsAppImpl.JSON_PROPERTY_WHATSAPP
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class VerificationRequestEventResponseWhatsAppImpl
-    implements VerificationRequestEventResponseWhatsApp,
-        com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEventResponse {
+public class VerificationStartEventResponseWhatsAppImpl
+    implements VerificationStartEventResponseWhatsApp,
+        com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationStartEventResponse {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ACTION = "action";
 
-  private OptionalValue<VerificationEventResponseAction> action;
+  private OptionalValue<VerificationStartEventAction> action;
 
   public static final String JSON_PROPERTY_WHATSAPP = "whatsapp";
 
-  private OptionalValue<VerificationRequestEventResponseWhatsAppContent> whatsapp;
+  private OptionalValue<VerificationStartEventResponseWhatsAppContent> whatsapp;
 
-  public VerificationRequestEventResponseWhatsAppImpl() {}
+  public VerificationStartEventResponseWhatsAppImpl() {}
 
-  protected VerificationRequestEventResponseWhatsAppImpl(
-      OptionalValue<VerificationEventResponseAction> action,
-      OptionalValue<VerificationRequestEventResponseWhatsAppContent> whatsapp) {
+  protected VerificationStartEventResponseWhatsAppImpl(
+      OptionalValue<VerificationStartEventAction> action,
+      OptionalValue<VerificationStartEventResponseWhatsAppContent> whatsapp) {
     this.action = action;
     this.whatsapp = whatsapp;
   }
 
   @JsonIgnore
-  public VerificationEventResponseAction getAction() {
+  public VerificationStartEventAction getAction() {
     return action.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_ACTION)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<VerificationEventResponseAction> action() {
+  public OptionalValue<VerificationStartEventAction> action() {
     return action;
   }
 
   @JsonIgnore
-  public VerificationRequestEventResponseWhatsAppContent getWhatsapp() {
+  public VerificationStartEventResponseWhatsAppContent getWhatsapp() {
     return whatsapp.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_WHATSAPP)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<VerificationRequestEventResponseWhatsAppContent> whatsapp() {
+  public OptionalValue<VerificationStartEventResponseWhatsAppContent> whatsapp() {
     return whatsapp;
   }
 
@@ -82,7 +82,7 @@ public class VerificationRequestEventResponseWhatsAppImpl
   public OptionalValue<WhatsAppCodeType> codeType() {
     return null != whatsapp && whatsapp.isPresent()
         ? whatsapp
-            .map(f -> ((VerificationRequestEventResponseWhatsAppContentImpl) f).codeType())
+            .map(f -> ((VerificationStartEventResponseWhatsAppContentImpl) f).codeType())
             .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
@@ -98,7 +98,7 @@ public class VerificationRequestEventResponseWhatsAppImpl
   public OptionalValue<List<String>> acceptLanguage() {
     return null != whatsapp && whatsapp.isPresent()
         ? whatsapp
-            .map(f -> ((VerificationRequestEventResponseWhatsAppContentImpl) f).acceptLanguage())
+            .map(f -> ((VerificationStartEventResponseWhatsAppContentImpl) f).acceptLanguage())
             .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
@@ -117,8 +117,8 @@ public class VerificationRequestEventResponseWhatsAppImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerificationRequestEventResponseWhatsAppImpl verificationRequestEventResponseWhatsApp =
-        (VerificationRequestEventResponseWhatsAppImpl) o;
+    VerificationStartEventResponseWhatsAppImpl verificationRequestEventResponseWhatsApp =
+        (VerificationStartEventResponseWhatsAppImpl) o;
     return Objects.equals(this.action, verificationRequestEventResponseWhatsApp.action)
         && Objects.equals(this.whatsapp, verificationRequestEventResponseWhatsApp.whatsapp);
   }
@@ -131,7 +131,7 @@ public class VerificationRequestEventResponseWhatsAppImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VerificationRequestEventResponseWhatsAppImpl {\n");
+    sb.append("class VerificationStartEventResponseWhatsAppImpl {\n");
     sb.append("    action: ").append(toIndentedString(action)).append("\n");
     sb.append("    whatsapp: ").append(toIndentedString(whatsapp)).append("\n");
     sb.append("}");
@@ -149,20 +149,20 @@ public class VerificationRequestEventResponseWhatsAppImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements VerificationRequestEventResponseWhatsApp.Builder {
-    OptionalValue<VerificationEventResponseAction> action = OptionalValue.empty();
-    OptionalValue<VerificationRequestEventResponseWhatsAppContent> whatsapp = OptionalValue.empty();
+  static class Builder implements VerificationStartEventResponseWhatsApp.Builder {
+    OptionalValue<VerificationStartEventAction> action = OptionalValue.empty();
+    OptionalValue<VerificationStartEventResponseWhatsAppContent> whatsapp = OptionalValue.empty();
 
-    VerificationRequestEventResponseWhatsAppContent.Builder _delegatedBuilder = null;
+    VerificationStartEventResponseWhatsAppContent.Builder _delegatedBuilder = null;
 
     @JsonProperty(value = JSON_PROPERTY_ACTION, required = true)
-    public Builder setAction(VerificationEventResponseAction action) {
+    public Builder setAction(VerificationStartEventAction action) {
       this.action = OptionalValue.of(action);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_WHATSAPP)
-    public Builder setWhatsapp(VerificationRequestEventResponseWhatsAppContent whatsapp) {
+    public Builder setWhatsapp(VerificationStartEventResponseWhatsAppContent whatsapp) {
       this.whatsapp = OptionalValue.of(whatsapp);
       return this;
     }
@@ -184,27 +184,27 @@ public class VerificationRequestEventResponseWhatsAppImpl
       return this;
     }
 
-    private VerificationRequestEventResponseWhatsAppContent.Builder getDelegatedBuilder() {
+    private VerificationStartEventResponseWhatsAppContent.Builder getDelegatedBuilder() {
       if (null == _delegatedBuilder) {
-        this._delegatedBuilder = VerificationRequestEventResponseWhatsAppContent.builder();
+        this._delegatedBuilder = VerificationStartEventResponseWhatsAppContent.builder();
       }
       return this._delegatedBuilder;
     }
 
-    public VerificationRequestEventResponseWhatsApp build() {
+    public VerificationStartEventResponseWhatsApp build() {
       // delegated builder was used: filling the related source of delegation field
       if (null != this._delegatedBuilder) {
         this.whatsapp = OptionalValue.of(this._delegatedBuilder.build());
       }
-      return new VerificationRequestEventResponseWhatsAppImpl(action, whatsapp);
+      return new VerificationStartEventResponseWhatsAppImpl(action, whatsapp);
     }
   }
 
   public static class DelegatedSerializer
-      extends JsonSerializer<OptionalValue<VerificationRequestEventResponseWhatsApp>> {
+      extends JsonSerializer<OptionalValue<VerificationStartEventResponseWhatsApp>> {
     @Override
     public void serialize(
-        OptionalValue<VerificationRequestEventResponseWhatsApp> value,
+        OptionalValue<VerificationStartEventResponseWhatsApp> value,
         JsonGenerator jgen,
         SerializerProvider provider)
         throws IOException {
@@ -212,29 +212,29 @@ public class VerificationRequestEventResponseWhatsAppImpl
       if (!value.isPresent()) {
         return;
       }
-      VerificationRequestEventResponseWhatsAppImpl impl =
-          (VerificationRequestEventResponseWhatsAppImpl) value.get();
+      VerificationStartEventResponseWhatsAppImpl impl =
+          (VerificationStartEventResponseWhatsAppImpl) value.get();
       jgen.writeObject(null != impl ? impl.getWhatsapp() : null);
     }
   }
 
   public static class DelegatedDeSerializer
-      extends JsonDeserializer<VerificationRequestEventResponseWhatsApp> {
+      extends JsonDeserializer<VerificationStartEventResponseWhatsApp> {
     @Override
-    public VerificationRequestEventResponseWhatsApp deserialize(
+    public VerificationStartEventResponseWhatsApp deserialize(
         JsonParser jp, DeserializationContext ctxt) throws IOException {
 
-      VerificationRequestEventResponseWhatsAppImpl.Builder builder =
-          new VerificationRequestEventResponseWhatsAppImpl.Builder();
-      VerificationRequestEventResponseWhatsAppContentImpl deserialized =
-          jp.readValueAs(VerificationRequestEventResponseWhatsAppContentImpl.class);
+      VerificationStartEventResponseWhatsAppImpl.Builder builder =
+          new VerificationStartEventResponseWhatsAppImpl.Builder();
+      VerificationStartEventResponseWhatsAppContentImpl deserialized =
+          jp.readValueAs(VerificationStartEventResponseWhatsAppContentImpl.class);
       builder.setWhatsapp(deserialized);
       return builder.build();
     }
   }
 
-  public static Optional<VerificationRequestEventResponseWhatsApp> delegatedConverter(
-      VerificationRequestEventResponseWhatsAppContent internal) {
+  public static Optional<VerificationStartEventResponseWhatsApp> delegatedConverter(
+      VerificationStartEventResponseWhatsAppContent internal) {
     if (null == internal) {
       return Optional.empty();
     }

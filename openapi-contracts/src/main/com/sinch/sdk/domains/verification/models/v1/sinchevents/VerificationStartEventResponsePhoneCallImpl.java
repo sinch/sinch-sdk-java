@@ -13,60 +13,60 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.verification.models.v1.sinchevents.internal.VerificationRequestEventResponsePhoneCallContent;
-import com.sinch.sdk.domains.verification.models.v1.sinchevents.internal.VerificationRequestEventResponsePhoneCallContentImpl;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.internal.VerificationStartEventResponsePhoneCallContent;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.internal.VerificationStartEventResponsePhoneCallContentImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 
 @JsonPropertyOrder({
-  VerificationRequestEventResponsePhoneCallImpl.JSON_PROPERTY_ACTION,
-  VerificationRequestEventResponsePhoneCallImpl.JSON_PROPERTY_CALLOUT
+  VerificationStartEventResponsePhoneCallImpl.JSON_PROPERTY_ACTION,
+  VerificationStartEventResponsePhoneCallImpl.JSON_PROPERTY_CALLOUT
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class VerificationRequestEventResponsePhoneCallImpl
-    implements VerificationRequestEventResponsePhoneCall,
-        com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEventResponse {
+public class VerificationStartEventResponsePhoneCallImpl
+    implements VerificationStartEventResponsePhoneCall,
+        com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationStartEventResponse {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ACTION = "action";
 
-  private OptionalValue<VerificationEventResponseAction> action;
+  private OptionalValue<VerificationStartEventAction> action;
 
   public static final String JSON_PROPERTY_CALLOUT = "callout";
 
-  private OptionalValue<VerificationRequestEventResponsePhoneCallContent> callout;
+  private OptionalValue<VerificationStartEventResponsePhoneCallContent> callout;
 
-  public VerificationRequestEventResponsePhoneCallImpl() {}
+  public VerificationStartEventResponsePhoneCallImpl() {}
 
-  protected VerificationRequestEventResponsePhoneCallImpl(
-      OptionalValue<VerificationEventResponseAction> action,
-      OptionalValue<VerificationRequestEventResponsePhoneCallContent> callout) {
+  protected VerificationStartEventResponsePhoneCallImpl(
+      OptionalValue<VerificationStartEventAction> action,
+      OptionalValue<VerificationStartEventResponsePhoneCallContent> callout) {
     this.action = action;
     this.callout = callout;
   }
 
   @JsonIgnore
-  public VerificationEventResponseAction getAction() {
+  public VerificationStartEventAction getAction() {
     return action.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_ACTION)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<VerificationEventResponseAction> action() {
+  public OptionalValue<VerificationStartEventAction> action() {
     return action;
   }
 
   @JsonIgnore
-  public VerificationRequestEventResponsePhoneCallContent getCallout() {
+  public VerificationStartEventResponsePhoneCallContent getCallout() {
     return callout.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CALLOUT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<VerificationRequestEventResponsePhoneCallContent> callout() {
+  public OptionalValue<VerificationStartEventResponsePhoneCallContent> callout() {
     return callout;
   }
 
@@ -81,7 +81,7 @@ public class VerificationRequestEventResponsePhoneCallImpl
   public OptionalValue<String> code() {
     return null != callout && callout.isPresent()
         ? callout
-            .map(f -> ((VerificationRequestEventResponsePhoneCallContentImpl) f).code())
+            .map(f -> ((VerificationStartEventResponsePhoneCallContentImpl) f).code())
             .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
@@ -97,7 +97,7 @@ public class VerificationRequestEventResponsePhoneCallImpl
   public OptionalValue<PhoneCallSpeech> speech() {
     return null != callout && callout.isPresent()
         ? callout
-            .map(f -> ((VerificationRequestEventResponsePhoneCallContentImpl) f).speech())
+            .map(f -> ((VerificationStartEventResponsePhoneCallContentImpl) f).speech())
             .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
@@ -116,8 +116,8 @@ public class VerificationRequestEventResponsePhoneCallImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerificationRequestEventResponsePhoneCallImpl verificationRequestEventResponsePhoneCall =
-        (VerificationRequestEventResponsePhoneCallImpl) o;
+    VerificationStartEventResponsePhoneCallImpl verificationRequestEventResponsePhoneCall =
+        (VerificationStartEventResponsePhoneCallImpl) o;
     return Objects.equals(this.action, verificationRequestEventResponsePhoneCall.action)
         && Objects.equals(this.callout, verificationRequestEventResponsePhoneCall.callout);
   }
@@ -130,7 +130,7 @@ public class VerificationRequestEventResponsePhoneCallImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VerificationRequestEventResponsePhoneCallImpl {\n");
+    sb.append("class VerificationStartEventResponsePhoneCallImpl {\n");
     sb.append("    action: ").append(toIndentedString(action)).append("\n");
     sb.append("    callout: ").append(toIndentedString(callout)).append("\n");
     sb.append("}");
@@ -148,20 +148,20 @@ public class VerificationRequestEventResponsePhoneCallImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements VerificationRequestEventResponsePhoneCall.Builder {
-    OptionalValue<VerificationEventResponseAction> action = OptionalValue.empty();
-    OptionalValue<VerificationRequestEventResponsePhoneCallContent> callout = OptionalValue.empty();
+  static class Builder implements VerificationStartEventResponsePhoneCall.Builder {
+    OptionalValue<VerificationStartEventAction> action = OptionalValue.empty();
+    OptionalValue<VerificationStartEventResponsePhoneCallContent> callout = OptionalValue.empty();
 
-    VerificationRequestEventResponsePhoneCallContent.Builder _delegatedBuilder = null;
+    VerificationStartEventResponsePhoneCallContent.Builder _delegatedBuilder = null;
 
     @JsonProperty(value = JSON_PROPERTY_ACTION, required = true)
-    public Builder setAction(VerificationEventResponseAction action) {
+    public Builder setAction(VerificationStartEventAction action) {
       this.action = OptionalValue.of(action);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_CALLOUT)
-    public Builder setCallout(VerificationRequestEventResponsePhoneCallContent callout) {
+    public Builder setCallout(VerificationStartEventResponsePhoneCallContent callout) {
       this.callout = OptionalValue.of(callout);
       return this;
     }
@@ -183,27 +183,27 @@ public class VerificationRequestEventResponsePhoneCallImpl
       return this;
     }
 
-    private VerificationRequestEventResponsePhoneCallContent.Builder getDelegatedBuilder() {
+    private VerificationStartEventResponsePhoneCallContent.Builder getDelegatedBuilder() {
       if (null == _delegatedBuilder) {
-        this._delegatedBuilder = VerificationRequestEventResponsePhoneCallContent.builder();
+        this._delegatedBuilder = VerificationStartEventResponsePhoneCallContent.builder();
       }
       return this._delegatedBuilder;
     }
 
-    public VerificationRequestEventResponsePhoneCall build() {
+    public VerificationStartEventResponsePhoneCall build() {
       // delegated builder was used: filling the related source of delegation field
       if (null != this._delegatedBuilder) {
         this.callout = OptionalValue.of(this._delegatedBuilder.build());
       }
-      return new VerificationRequestEventResponsePhoneCallImpl(action, callout);
+      return new VerificationStartEventResponsePhoneCallImpl(action, callout);
     }
   }
 
   public static class DelegatedSerializer
-      extends JsonSerializer<OptionalValue<VerificationRequestEventResponsePhoneCall>> {
+      extends JsonSerializer<OptionalValue<VerificationStartEventResponsePhoneCall>> {
     @Override
     public void serialize(
-        OptionalValue<VerificationRequestEventResponsePhoneCall> value,
+        OptionalValue<VerificationStartEventResponsePhoneCall> value,
         JsonGenerator jgen,
         SerializerProvider provider)
         throws IOException {
@@ -211,29 +211,29 @@ public class VerificationRequestEventResponsePhoneCallImpl
       if (!value.isPresent()) {
         return;
       }
-      VerificationRequestEventResponsePhoneCallImpl impl =
-          (VerificationRequestEventResponsePhoneCallImpl) value.get();
+      VerificationStartEventResponsePhoneCallImpl impl =
+          (VerificationStartEventResponsePhoneCallImpl) value.get();
       jgen.writeObject(null != impl ? impl.getCallout() : null);
     }
   }
 
   public static class DelegatedDeSerializer
-      extends JsonDeserializer<VerificationRequestEventResponsePhoneCall> {
+      extends JsonDeserializer<VerificationStartEventResponsePhoneCall> {
     @Override
-    public VerificationRequestEventResponsePhoneCall deserialize(
+    public VerificationStartEventResponsePhoneCall deserialize(
         JsonParser jp, DeserializationContext ctxt) throws IOException {
 
-      VerificationRequestEventResponsePhoneCallImpl.Builder builder =
-          new VerificationRequestEventResponsePhoneCallImpl.Builder();
-      VerificationRequestEventResponsePhoneCallContentImpl deserialized =
-          jp.readValueAs(VerificationRequestEventResponsePhoneCallContentImpl.class);
+      VerificationStartEventResponsePhoneCallImpl.Builder builder =
+          new VerificationStartEventResponsePhoneCallImpl.Builder();
+      VerificationStartEventResponsePhoneCallContentImpl deserialized =
+          jp.readValueAs(VerificationStartEventResponsePhoneCallContentImpl.class);
       builder.setCallout(deserialized);
       return builder.build();
     }
   }
 
-  public static Optional<VerificationRequestEventResponsePhoneCall> delegatedConverter(
-      VerificationRequestEventResponsePhoneCallContent internal) {
+  public static Optional<VerificationStartEventResponsePhoneCall> delegatedConverter(
+      VerificationStartEventResponsePhoneCallContent internal) {
     if (null == internal) {
       return Optional.empty();
     }

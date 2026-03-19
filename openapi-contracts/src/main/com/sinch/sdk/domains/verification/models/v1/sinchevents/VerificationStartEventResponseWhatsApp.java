@@ -8,16 +8,26 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.verification.models.v1.sinchevents.internal;
+package com.sinch.sdk.domains.verification.models.v1.sinchevents;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.core.models.AdditionalProperties;
 import com.sinch.sdk.domains.verification.models.v1.WhatsAppCodeType;
 import java.util.List;
 
-/** VerificationRequestEventResponseWhatsAppContent */
-@JsonDeserialize(builder = VerificationRequestEventResponseWhatsAppContentImpl.Builder.class)
-public interface VerificationRequestEventResponseWhatsAppContent extends AdditionalProperties {
+/** WhatsApp Request Event Response */
+@JsonDeserialize(builder = VerificationStartEventResponseWhatsAppImpl.Builder.class)
+public interface VerificationStartEventResponseWhatsApp
+    extends com.sinch.sdk.domains.verification.models.v1.sinchevents
+        .VerificationStartEventResponse {
+
+  /**
+   * Get action
+   *
+   * <p>Field is required
+   *
+   * @return action
+   */
+  VerificationStartEventAction getAction();
 
   /**
    * Get codeType
@@ -34,16 +44,35 @@ public interface VerificationRequestEventResponseWhatsAppContent extends Additio
   List<String> getAcceptLanguage();
 
   /**
+   * Return the additional "whatsapp" with the specified name.
+   *
+   * @param key the name of the property
+   * @return the additional property with the specified name
+   */
+  Object getExtraOption(String key);
+
+  /**
    * Getting builder
    *
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationRequestEventResponseWhatsAppContentImpl.Builder();
+    return new VerificationStartEventResponseWhatsAppImpl.Builder();
   }
 
   /** Dedicated Builder */
-  interface Builder extends AdditionalProperties.Builder {
+  interface Builder
+      extends com.sinch.sdk.domains.verification.models.v1.sinchevents
+          .VerificationStartEventResponse.Builder {
+
+    /**
+     * see getter
+     *
+     * @param action see getter
+     * @return Current builder
+     * @see #getAction
+     */
+    Builder setAction(VerificationStartEventAction action);
 
     /**
      * see getter
@@ -67,15 +96,15 @@ public interface VerificationRequestEventResponseWhatsAppContent extends Additio
      * see getter
      *
      * @return Current builder
-     * @see #get
+     * @see #getExtraOption
      */
-    Builder put(String key, Object value);
+    Builder putExtraOption(String key, Object value);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    VerificationRequestEventResponseWhatsAppContent build();
+    VerificationStartEventResponseWhatsApp build();
   }
 }

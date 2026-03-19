@@ -9,28 +9,29 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
+import com.sinch.sdk.domains.verification.models.v1.WhatsAppCodeType;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  VerificationRequestEventResponsePhoneCallContentImpl.JSON_PROPERTY_CODE,
-  VerificationRequestEventResponsePhoneCallContentImpl.JSON_PROPERTY_SPEECH
+  VerificationStartEventResponseWhatsAppContentImpl.JSON_PROPERTY_CODE_TYPE,
+  VerificationStartEventResponseWhatsAppContentImpl.JSON_PROPERTY_ACCEPT_LANGUAGE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class VerificationRequestEventResponsePhoneCallContentImpl
-    implements VerificationRequestEventResponsePhoneCallContent {
+public class VerificationStartEventResponseWhatsAppContentImpl
+    implements VerificationStartEventResponseWhatsAppContent {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_CODE = "code";
+  public static final String JSON_PROPERTY_CODE_TYPE = "codeType";
 
-  private OptionalValue<String> code;
+  private OptionalValue<WhatsAppCodeType> codeType;
 
-  public static final String JSON_PROPERTY_SPEECH = "speech";
+  public static final String JSON_PROPERTY_ACCEPT_LANGUAGE = "acceptLanguage";
 
-  private OptionalValue<PhoneCallSpeech> speech;
+  private OptionalValue<List<String>> acceptLanguage;
 
   /**
    * A container for additional, undeclared properties. This is a holder for any undeclared
@@ -38,37 +39,37 @@ public class VerificationRequestEventResponsePhoneCallContentImpl
    */
   private OptionalValue<Map<String, Object>> additionalProperties;
 
-  public VerificationRequestEventResponsePhoneCallContentImpl() {}
+  public VerificationStartEventResponseWhatsAppContentImpl() {}
 
-  protected VerificationRequestEventResponsePhoneCallContentImpl(
-      OptionalValue<String> code,
-      OptionalValue<PhoneCallSpeech> speech,
+  protected VerificationStartEventResponseWhatsAppContentImpl(
+      OptionalValue<WhatsAppCodeType> codeType,
+      OptionalValue<List<String>> acceptLanguage,
       OptionalValue<Map<String, Object>> additionalProperties) {
-    this.code = code;
-    this.speech = speech;
+    this.codeType = codeType;
+    this.acceptLanguage = acceptLanguage;
     this.additionalProperties = additionalProperties;
   }
 
   @JsonIgnore
-  public String getCode() {
-    return code.orElse(null);
+  public WhatsAppCodeType getCodeType() {
+    return codeType.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_CODE)
+  @JsonProperty(JSON_PROPERTY_CODE_TYPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> code() {
-    return code;
+  public OptionalValue<WhatsAppCodeType> codeType() {
+    return codeType;
   }
 
   @JsonIgnore
-  public PhoneCallSpeech getSpeech() {
-    return speech.orElse(null);
+  public List<String> getAcceptLanguage() {
+    return acceptLanguage.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_SPEECH)
+  @JsonProperty(JSON_PROPERTY_ACCEPT_LANGUAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<PhoneCallSpeech> speech() {
-    return speech;
+  public OptionalValue<List<String>> acceptLanguage() {
+    return acceptLanguage;
   }
 
   @JsonIgnore
@@ -89,7 +90,7 @@ public class VerificationRequestEventResponsePhoneCallContentImpl
   }
 
   /**
-   * Return true if this VerificationRequestEventResponsePhoneCall_allOf_callout object is equal to
+   * Return true if this VerificationRequestEventResponseWhatsApp_allOf_whatsapp object is equal to
    * o.
    */
   @Override
@@ -100,27 +101,30 @@ public class VerificationRequestEventResponsePhoneCallContentImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerificationRequestEventResponsePhoneCallContentImpl
-        verificationRequestEventResponsePhoneCallAllOfCallout =
-            (VerificationRequestEventResponsePhoneCallContentImpl) o;
-    return Objects.equals(this.code, verificationRequestEventResponsePhoneCallAllOfCallout.code)
-        && Objects.equals(this.speech, verificationRequestEventResponsePhoneCallAllOfCallout.speech)
+    VerificationStartEventResponseWhatsAppContentImpl
+        verificationRequestEventResponseWhatsAppAllOfWhatsapp =
+            (VerificationStartEventResponseWhatsAppContentImpl) o;
+    return Objects.equals(
+            this.codeType, verificationRequestEventResponseWhatsAppAllOfWhatsapp.codeType)
+        && Objects.equals(
+            this.acceptLanguage,
+            verificationRequestEventResponseWhatsAppAllOfWhatsapp.acceptLanguage)
         && Objects.equals(
             this.additionalProperties,
-            verificationRequestEventResponsePhoneCallAllOfCallout.additionalProperties);
+            verificationRequestEventResponseWhatsAppAllOfWhatsapp.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, speech, additionalProperties);
+    return Objects.hash(codeType, acceptLanguage, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VerificationRequestEventResponsePhoneCallContentImpl {\n");
-    sb.append("    code: ").append(toIndentedString(code)).append("\n");
-    sb.append("    speech: ").append(toIndentedString(speech)).append("\n");
+    sb.append("class VerificationStartEventResponseWhatsAppContentImpl {\n");
+    sb.append("    codeType: ").append(toIndentedString(codeType)).append("\n");
+    sb.append("    acceptLanguage: ").append(toIndentedString(acceptLanguage)).append("\n");
     sb.append("    additionalProperties: ")
         .append(toIndentedString(additionalProperties))
         .append("\n");
@@ -139,20 +143,20 @@ public class VerificationRequestEventResponsePhoneCallContentImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements VerificationRequestEventResponsePhoneCallContent.Builder {
-    OptionalValue<String> code = OptionalValue.empty();
-    OptionalValue<PhoneCallSpeech> speech = OptionalValue.empty();
+  static class Builder implements VerificationStartEventResponseWhatsAppContent.Builder {
+    OptionalValue<WhatsAppCodeType> codeType = OptionalValue.empty();
+    OptionalValue<List<String>> acceptLanguage = OptionalValue.empty();
     OptionalValue<Map<String, Object>> additionalProperties = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_CODE)
-    public Builder setCode(String code) {
-      this.code = OptionalValue.of(code);
+    @JsonProperty(JSON_PROPERTY_CODE_TYPE)
+    public Builder setCodeType(WhatsAppCodeType codeType) {
+      this.codeType = OptionalValue.of(codeType);
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_SPEECH)
-    public Builder setSpeech(PhoneCallSpeech speech) {
-      this.speech = OptionalValue.of(speech);
+    @JsonProperty(JSON_PROPERTY_ACCEPT_LANGUAGE)
+    public Builder setAcceptLanguage(List<String> acceptLanguage) {
+      this.acceptLanguage = OptionalValue.of(acceptLanguage);
       return this;
     }
 
@@ -165,9 +169,9 @@ public class VerificationRequestEventResponsePhoneCallContentImpl
       return this;
     }
 
-    public VerificationRequestEventResponsePhoneCallContent build() {
-      return new VerificationRequestEventResponsePhoneCallContentImpl(
-          code, speech, additionalProperties);
+    public VerificationStartEventResponseWhatsAppContent build() {
+      return new VerificationStartEventResponseWhatsAppContentImpl(
+          codeType, acceptLanguage, additionalProperties);
     }
   }
 }

@@ -14,10 +14,10 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 
 /** Phone Call Request Event Response */
-@JsonDeserialize(builder = VerificationRequestEventResponsePhoneCallImpl.Builder.class)
-public interface VerificationRequestEventResponsePhoneCall
+@JsonDeserialize(builder = VerificationStartEventResponsePhoneCallImpl.Builder.class)
+public interface VerificationStartEventResponsePhoneCall
     extends com.sinch.sdk.domains.verification.models.v1.sinchevents
-        .VerificationRequestEventResponse {
+        .VerificationStartEventResponse {
 
   /**
    * Get action
@@ -26,7 +26,7 @@ public interface VerificationRequestEventResponsePhoneCall
    *
    * @return action
    */
-  VerificationEventResponseAction getAction();
+  VerificationStartEventAction getAction();
 
   /**
    * The Phone Call OTP code that should be entered by the user. Sinch servers automatically
@@ -58,13 +58,13 @@ public interface VerificationRequestEventResponsePhoneCall
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationRequestEventResponsePhoneCallImpl.Builder();
+    return new VerificationStartEventResponsePhoneCallImpl.Builder();
   }
 
   /** Dedicated Builder */
   interface Builder
       extends com.sinch.sdk.domains.verification.models.v1.sinchevents
-          .VerificationRequestEventResponse.Builder {
+          .VerificationStartEventResponse.Builder {
 
     /**
      * see getter
@@ -73,7 +73,7 @@ public interface VerificationRequestEventResponsePhoneCall
      * @return Current builder
      * @see #getAction
      */
-    Builder setAction(VerificationEventResponseAction action);
+    Builder setAction(VerificationStartEventAction action);
 
     /**
      * see getter
@@ -106,6 +106,6 @@ public interface VerificationRequestEventResponsePhoneCall
      *
      * @return The instance build with current builder values
      */
-    VerificationRequestEventResponsePhoneCall build();
+    VerificationStartEventResponsePhoneCall build();
   }
 }

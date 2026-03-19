@@ -10,8 +10,8 @@
 
 package com.sinch.sdk.domains.verification.models.v1.sinchevents;
 
-/** VerificationRequestEventResponse */
-public interface VerificationRequestEventResponse {
+/** VerificationStartEventResponse */
+public interface VerificationStartEventResponse {
 
   /**
    * Get action
@@ -20,7 +20,7 @@ public interface VerificationRequestEventResponse {
    *
    * @return action
    */
-  VerificationEventResponseAction getAction();
+  VerificationStartEventAction getAction();
 
   /** Dedicated Builder */
   interface Builder {
@@ -32,13 +32,13 @@ public interface VerificationRequestEventResponse {
      * @return Current builder
      * @see #getAction
      */
-    Builder setAction(VerificationEventResponseAction action);
+    Builder setAction(VerificationStartEventAction action);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    VerificationRequestEventResponse build();
+    VerificationStartEventResponse build();
   }
 }

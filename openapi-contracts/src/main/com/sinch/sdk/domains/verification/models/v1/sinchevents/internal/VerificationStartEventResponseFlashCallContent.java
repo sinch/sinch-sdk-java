@@ -8,24 +8,14 @@
  * Do not edit the class manually.
  */
 
-package com.sinch.sdk.domains.verification.models.v1.sinchevents;
+package com.sinch.sdk.domains.verification.models.v1.sinchevents.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.models.AdditionalProperties;
 
-/** Flash Call Request Event Response */
-@JsonDeserialize(builder = VerificationRequestEventResponseFlashCallImpl.Builder.class)
-public interface VerificationRequestEventResponseFlashCall
-    extends com.sinch.sdk.domains.verification.models.v1.sinchevents
-        .VerificationRequestEventResponse {
-
-  /**
-   * Get action
-   *
-   * <p>Field is required
-   *
-   * @return action
-   */
-  VerificationEventResponseAction getAction();
+/** VerificationStartEventResponseFlashCallContent */
+@JsonDeserialize(builder = VerificationStartEventResponseFlashCallContentImpl.Builder.class)
+public interface VerificationStartEventResponseFlashCallContent extends AdditionalProperties {
 
   /**
    * The phone number that will be displayed to the user when the flash call is received on the
@@ -59,35 +49,16 @@ public interface VerificationRequestEventResponseFlashCall
   Integer getInterceptionTimeout();
 
   /**
-   * Return the additional "flashCall" with the specified name.
-   *
-   * @param key the name of the property
-   * @return the additional property with the specified name
-   */
-  Object getExtraOption(String key);
-
-  /**
    * Getting builder
    *
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VerificationRequestEventResponseFlashCallImpl.Builder();
+    return new VerificationStartEventResponseFlashCallContentImpl.Builder();
   }
 
   /** Dedicated Builder */
-  interface Builder
-      extends com.sinch.sdk.domains.verification.models.v1.sinchevents
-          .VerificationRequestEventResponse.Builder {
-
-    /**
-     * see getter
-     *
-     * @param action see getter
-     * @return Current builder
-     * @see #getAction
-     */
-    Builder setAction(VerificationEventResponseAction action);
+  interface Builder extends AdditionalProperties.Builder {
 
     /**
      * see getter
@@ -120,15 +91,15 @@ public interface VerificationRequestEventResponseFlashCall
      * see getter
      *
      * @return Current builder
-     * @see #getExtraOption
+     * @see #get
      */
-    Builder putExtraOption(String key, Object value);
+    Builder put(String key, Object value);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    VerificationRequestEventResponseFlashCall build();
+    VerificationStartEventResponseFlashCallContent build();
   }
 }

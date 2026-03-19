@@ -14,19 +14,19 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  VerificationRequestEventImpl.JSON_PROPERTY_ID,
-  VerificationRequestEventImpl.JSON_PROPERTY_EVENT,
-  VerificationRequestEventImpl.JSON_PROPERTY_METHOD,
-  VerificationRequestEventImpl.JSON_PROPERTY_IDENTITY,
-  VerificationRequestEventImpl.JSON_PROPERTY_REFERENCE,
-  VerificationRequestEventImpl.JSON_PROPERTY_CUSTOM,
-  VerificationRequestEventImpl.JSON_PROPERTY_PRICE,
-  VerificationRequestEventImpl.JSON_PROPERTY_ACCEPT_LANGUAGE
+  VerificationStartEventImpl.JSON_PROPERTY_ID,
+  VerificationStartEventImpl.JSON_PROPERTY_EVENT,
+  VerificationStartEventImpl.JSON_PROPERTY_METHOD,
+  VerificationStartEventImpl.JSON_PROPERTY_IDENTITY,
+  VerificationStartEventImpl.JSON_PROPERTY_REFERENCE,
+  VerificationStartEventImpl.JSON_PROPERTY_CUSTOM,
+  VerificationStartEventImpl.JSON_PROPERTY_PRICE,
+  VerificationStartEventImpl.JSON_PROPERTY_ACCEPT_LANGUAGE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class VerificationRequestEventImpl
-    implements VerificationRequestEvent,
+public class VerificationStartEventImpl
+    implements VerificationStartEvent,
         com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSinchEvent {
   private static final long serialVersionUID = 1L;
 
@@ -62,9 +62,9 @@ public class VerificationRequestEventImpl
 
   private OptionalValue<List<String>> acceptLanguage;
 
-  public VerificationRequestEventImpl() {}
+  public VerificationStartEventImpl() {}
 
-  protected VerificationRequestEventImpl(
+  protected VerificationStartEventImpl(
       OptionalValue<String> id,
       OptionalValue<EventEnum> event,
       OptionalValue<VerificationMethod> method,
@@ -180,7 +180,7 @@ public class VerificationRequestEventImpl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerificationRequestEventImpl verificationRequestEvent = (VerificationRequestEventImpl) o;
+    VerificationStartEventImpl verificationRequestEvent = (VerificationStartEventImpl) o;
     return Objects.equals(this.id, verificationRequestEvent.id)
         && Objects.equals(this.event, verificationRequestEvent.event)
         && Objects.equals(this.method, verificationRequestEvent.method)
@@ -199,7 +199,7 @@ public class VerificationRequestEventImpl
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VerificationRequestEventImpl {\n");
+    sb.append("class VerificationStartEventImpl {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    event: ").append(toIndentedString(event)).append("\n");
     sb.append("    method: ").append(toIndentedString(method)).append("\n");
@@ -223,7 +223,7 @@ public class VerificationRequestEventImpl
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements VerificationRequestEvent.Builder {
+  static class Builder implements VerificationStartEvent.Builder {
     OptionalValue<String> id = OptionalValue.empty();
     OptionalValue<EventEnum> event = OptionalValue.of(EventEnum.VERIFICATION_REQUEST_EVENT);
     OptionalValue<VerificationMethod> method = OptionalValue.empty();
@@ -285,8 +285,8 @@ public class VerificationRequestEventImpl
       return this;
     }
 
-    public VerificationRequestEvent build() {
-      return new VerificationRequestEventImpl(
+    public VerificationStartEvent build() {
+      return new VerificationStartEventImpl(
           id, event, method, identity, reference, custom, price, acceptLanguage);
     }
   }
