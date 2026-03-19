@@ -1,11 +1,12 @@
 package com.sinch.sdk.domains.sms.models.v1.deliveryreports;
 
-import com.sinch.sdk.domains.sms.models.v1.webhooks.SmsEvent;
+import com.sinch.sdk.domains.sms.api.v1.SinchEventsService;
+import com.sinch.sdk.domains.sms.models.v1.sinchevents.SmsSinchEvent;
 
 /**
  * Base class for all classes supporting DeliveryReport
  *
- * @see com.sinch.sdk.domains.sms.api.v1.WebHooksService#parseEvent(String)
+ * @see SinchEventsService#parseEvent(String)
  * @since 1.5
  */
-public interface DeliveryReport extends SmsEvent {}
+public interface DeliveryReport extends SmsSinchEvent {}

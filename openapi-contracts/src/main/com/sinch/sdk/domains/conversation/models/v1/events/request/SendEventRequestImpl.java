@@ -34,7 +34,7 @@ public class SendEventRequestImpl implements SendEventRequest {
 
   public static final String JSON_PROPERTY_CALLBACK_URL = "callback_url";
 
-  private OptionalValue<String> callbackUrl;
+  private OptionalValue<String> eventDestinationTarget;
 
   public static final String JSON_PROPERTY_CHANNEL_PRIORITY_ORDER = "channel_priority_order";
 
@@ -60,14 +60,14 @@ public class SendEventRequestImpl implements SendEventRequest {
 
   protected SendEventRequestImpl(
       OptionalValue<String> appId,
-      OptionalValue<String> callbackUrl,
+      OptionalValue<String> eventDestinationTarget,
       OptionalValue<List<ConversationChannel>> channelPriorityOrder,
       OptionalValue<AppEvent> event,
       OptionalValue<String> eventMetadata,
       OptionalValue<MessageQueue> queue,
       OptionalValue<Recipient> recipient) {
     this.appId = appId;
-    this.callbackUrl = callbackUrl;
+    this.eventDestinationTarget = eventDestinationTarget;
     this.channelPriorityOrder = channelPriorityOrder;
     this.event = event;
     this.eventMetadata = eventMetadata;
@@ -87,14 +87,14 @@ public class SendEventRequestImpl implements SendEventRequest {
   }
 
   @JsonIgnore
-  public String getCallbackUrl() {
-    return callbackUrl.orElse(null);
+  public String getEventDestinationTarget() {
+    return eventDestinationTarget.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> callbackUrl() {
-    return callbackUrl;
+  public OptionalValue<String> eventDestinationTarget() {
+    return eventDestinationTarget;
   }
 
   @JsonIgnore
@@ -163,7 +163,7 @@ public class SendEventRequestImpl implements SendEventRequest {
     }
     SendEventRequestImpl sendEventRequest = (SendEventRequestImpl) o;
     return Objects.equals(this.appId, sendEventRequest.appId)
-        && Objects.equals(this.callbackUrl, sendEventRequest.callbackUrl)
+        && Objects.equals(this.eventDestinationTarget, sendEventRequest.eventDestinationTarget)
         && Objects.equals(this.channelPriorityOrder, sendEventRequest.channelPriorityOrder)
         && Objects.equals(this.event, sendEventRequest.event)
         && Objects.equals(this.eventMetadata, sendEventRequest.eventMetadata)
@@ -174,7 +174,13 @@ public class SendEventRequestImpl implements SendEventRequest {
   @Override
   public int hashCode() {
     return Objects.hash(
-        appId, callbackUrl, channelPriorityOrder, event, eventMetadata, queue, recipient);
+        appId,
+        eventDestinationTarget,
+        channelPriorityOrder,
+        event,
+        eventMetadata,
+        queue,
+        recipient);
   }
 
   @Override
@@ -182,7 +188,9 @@ public class SendEventRequestImpl implements SendEventRequest {
     StringBuilder sb = new StringBuilder();
     sb.append("class SendEventRequestImpl {\n");
     sb.append("    appId: ").append(toIndentedString(appId)).append("\n");
-    sb.append("    callbackUrl: ").append(toIndentedString(callbackUrl)).append("\n");
+    sb.append("    eventDestinationTarget: ")
+        .append(toIndentedString(eventDestinationTarget))
+        .append("\n");
     sb.append("    channelPriorityOrder: ")
         .append(toIndentedString(channelPriorityOrder))
         .append("\n");
@@ -207,7 +215,7 @@ public class SendEventRequestImpl implements SendEventRequest {
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements SendEventRequest.Builder {
     OptionalValue<String> appId = OptionalValue.empty();
-    OptionalValue<String> callbackUrl = OptionalValue.empty();
+    OptionalValue<String> eventDestinationTarget = OptionalValue.empty();
     OptionalValue<List<ConversationChannel>> channelPriorityOrder = OptionalValue.empty();
     OptionalValue<AppEvent> event = OptionalValue.empty();
     OptionalValue<String> eventMetadata = OptionalValue.empty();
@@ -221,8 +229,8 @@ public class SendEventRequestImpl implements SendEventRequest {
     }
 
     @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
-    public Builder setCallbackUrl(String callbackUrl) {
-      this.callbackUrl = OptionalValue.of(callbackUrl);
+    public Builder setEventDestinationTarget(String eventDestinationTarget) {
+      this.eventDestinationTarget = OptionalValue.of(eventDestinationTarget);
       return this;
     }
 
@@ -258,7 +266,13 @@ public class SendEventRequestImpl implements SendEventRequest {
 
     public SendEventRequest build() {
       return new SendEventRequestImpl(
-          appId, callbackUrl, channelPriorityOrder, event, eventMetadata, queue, recipient);
+          appId,
+          eventDestinationTarget,
+          channelPriorityOrder,
+          event,
+          eventMetadata,
+          queue,
+          recipient);
     }
   }
 }

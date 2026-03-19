@@ -10,8 +10,8 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.ContactMessageBody;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.message.MessageInboundEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.message.MessageInboundEventMessage;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.message.MessageInboundEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.message.MessageInboundEventMessage;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Component;
 

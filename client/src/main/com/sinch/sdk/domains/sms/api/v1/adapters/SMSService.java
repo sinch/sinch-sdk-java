@@ -40,7 +40,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   private volatile InboundsService inbounds;
   private volatile DeliveryReportsService deliveryReports;
   private volatile GroupsService groups;
-  private volatile WebHooksService webhooks;
+  private volatile SinchEventsService sinchEvents;
 
   public SMSService(
       UnifiedCredentials credentials,
@@ -124,11 +124,11 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   }
 
   @Override
-  public WebHooksService webhooks() {
-    if (null == this.webhooks) {
-      this.webhooks = new WebHooksService(new HmacAuthenticationValidation());
+  public SinchEventsService sinchEvents() {
+    if (null == this.sinchEvents) {
+      this.sinchEvents = new SinchEventsService(new HmacAuthenticationValidation());
     }
-    return this.webhooks;
+    return this.sinchEvents;
   }
 
   private void instanceLazyInit() {

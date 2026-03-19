@@ -145,9 +145,9 @@ public interface BinaryResponse extends BatchResponse {
   /**
    * The callback URL provided in the request.
    *
-   * @return callbackUrl
+   * @return eventDestinationTarget
    */
-  String getCallbackUrl();
+  String getEventDestinationTarget();
 
   /**
    * The string input to identify this batch message. If set, the identifier will be added in the
@@ -302,11 +302,11 @@ public interface BinaryResponse extends BatchResponse {
     /**
      * see getter
      *
-     * @param callbackUrl see getter
+     * @param eventDestinationTarget see getter
      * @return Current builder
-     * @see #getCallbackUrl
+     * @see #getEventDestinationTarget
      */
-    Builder setCallbackUrl(String callbackUrl);
+    Builder setEventDestinationTarget(String eventDestinationTarget);
 
     /**
      * see getter

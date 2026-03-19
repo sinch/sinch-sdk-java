@@ -34,9 +34,9 @@ public interface SendEventRequest {
    * Overwrites the default callback url for delivery receipts for this message The REST URL should
    * be of the form: <code>http://host[:port]/path</code>
    *
-   * @return callbackUrl
+   * @return eventDestinationTarget
    */
-  String getCallbackUrl();
+  String getEventDestinationTarget();
 
   /**
    * Optional. A single element array that dictates on what channel should the Conversation API try
@@ -103,11 +103,11 @@ public interface SendEventRequest {
     /**
      * see getter
      *
-     * @param callbackUrl see getter
+     * @param eventDestinationTarget see getter
      * @return Current builder
-     * @see #getCallbackUrl
+     * @see #getEventDestinationTarget
      */
-    Builder setCallbackUrl(String callbackUrl);
+    Builder setEventDestinationTarget(String eventDestinationTarget);
 
     /**
      * see getter

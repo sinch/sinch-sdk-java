@@ -1,29 +1,29 @@
 package com.mycompany.app.conversation;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.conversation.api.v1.WebhooksService;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.ConversationWebhookEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.capability.CapabilityEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.channel.ChannelEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.contact.ContactCreateEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.contact.ContactDeleteEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.contact.ContactIdentitiesDuplicationEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.contact.ContactMergeEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.contact.ContactUpdateEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.conversation.ConversationDeleteEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.conversation.ConversationStartEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.conversation.ConversationStopEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.delivery.EventDeliveryReceiptEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.delivery.MessageDeliveryReceiptEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.inbound.InboundEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.message.MessageInboundEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.message.MessageSubmitEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.opting.OptInEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.opting.OptOutEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.record.RecordNotificationEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.smartconversations.MessageInboundSmartConversationRedactionEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.smartconversations.SmartConversationsEvent;
-import com.sinch.sdk.domains.conversation.models.v1.webhooks.events.unsupported.UnsupportedCallbackEvent;
+import com.sinch.sdk.domains.conversation.api.v1.SinchEventsService;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.ConversationSinchEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.capability.CapabilityEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.channel.ChannelEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.contact.ContactCreateEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.contact.ContactDeleteEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.contact.ContactIdentitiesDuplicationEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.contact.ContactMergeEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.contact.ContactUpdateEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.conversation.ConversationDeleteEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.conversation.ConversationStartEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.conversation.ConversationStopEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.delivery.EventDeliveryReceiptEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.delivery.MessageDeliveryReceiptEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.inbound.InboundEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.message.MessageInboundEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.message.MessageSubmitEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.opting.OptInEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.opting.OptOutEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.record.RecordNotificationEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.smartconversations.MessageInboundSmartConversationRedactionEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.smartconversations.SmartConversationsEvent;
+import com.sinch.sdk.domains.conversation.models.v1.sinchevents.unsupported.UnsupportedCallbackEvent;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,7 +58,7 @@ public class Controller {
   public ResponseEntity<Void> ConversationEvent(
       @RequestHeader Map<String, String> headers, @RequestBody String body) {
 
-    WebhooksService webhooks = sinchClient.conversation().v1().webhooks();
+    SinchEventsService webhooks = sinchClient.conversation().v1().sinchEvents();
 
     // set this value to true to validate request from Sinch servers
     // see https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Numbers-Callbacks for
@@ -75,7 +75,7 @@ public class Controller {
     }
 
     // decode the request payload
-    ConversationWebhookEvent event = webhooks.parseEvent(body);
+    ConversationSinchEvent event = webhooks.parseEvent(body);
 
     // let business layer process the request
     switch (event) {

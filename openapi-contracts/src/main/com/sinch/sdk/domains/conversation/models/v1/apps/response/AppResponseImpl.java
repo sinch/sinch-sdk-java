@@ -8,10 +8,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
-import com.sinch.sdk.domains.conversation.models.v1.apps.CallbackSettings;
 import com.sinch.sdk.domains.conversation.models.v1.apps.ConversationMetadataReportView;
 import com.sinch.sdk.domains.conversation.models.v1.apps.DeliveryReportBasedFallback;
 import com.sinch.sdk.domains.conversation.models.v1.apps.DispatchRetentionPolicy;
+import com.sinch.sdk.domains.conversation.models.v1.apps.EventDestinationSettings;
 import com.sinch.sdk.domains.conversation.models.v1.apps.MessageRetrySettings;
 import com.sinch.sdk.domains.conversation.models.v1.apps.RetentionPolicy;
 import com.sinch.sdk.domains.conversation.models.v1.apps.SmartConversation;
@@ -82,7 +82,7 @@ public class AppResponseImpl implements AppResponse {
 
   public static final String JSON_PROPERTY_CALLBACK_SETTINGS = "callback_settings";
 
-  private OptionalValue<CallbackSettings> callbackSettings;
+  private OptionalValue<EventDestinationSettings> eventDestinationSettings;
 
   public static final String JSON_PROPERTY_DELIVERY_REPORT_BASED_FALLBACK =
       "delivery_report_based_fallback";
@@ -106,7 +106,7 @@ public class AppResponseImpl implements AppResponse {
       OptionalValue<ProcessingMode> processingMode,
       OptionalValue<SmartConversation> smartConversation,
       OptionalValue<QueueStats> queueStats,
-      OptionalValue<CallbackSettings> callbackSettings,
+      OptionalValue<EventDestinationSettings> eventDestinationSettings,
       OptionalValue<DeliveryReportBasedFallback> deliveryReportBasedFallback,
       OptionalValue<MessageRetrySettings> messageRetrySettings) {
     this.channelCredentials = channelCredentials;
@@ -119,7 +119,7 @@ public class AppResponseImpl implements AppResponse {
     this.processingMode = processingMode;
     this.smartConversation = smartConversation;
     this.queueStats = queueStats;
-    this.callbackSettings = callbackSettings;
+    this.eventDestinationSettings = eventDestinationSettings;
     this.deliveryReportBasedFallback = deliveryReportBasedFallback;
     this.messageRetrySettings = messageRetrySettings;
   }
@@ -235,14 +235,14 @@ public class AppResponseImpl implements AppResponse {
   }
 
   @JsonIgnore
-  public CallbackSettings getCallbackSettings() {
-    return callbackSettings.orElse(null);
+  public EventDestinationSettings getEventDestinationSettings() {
+    return eventDestinationSettings.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CALLBACK_SETTINGS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<CallbackSettings> callbackSettings() {
-    return callbackSettings;
+  public OptionalValue<EventDestinationSettings> eventDestinationSettings() {
+    return eventDestinationSettings;
   }
 
   @JsonIgnore
@@ -288,7 +288,7 @@ public class AppResponseImpl implements AppResponse {
         && Objects.equals(this.processingMode, appResponse.processingMode)
         && Objects.equals(this.smartConversation, appResponse.smartConversation)
         && Objects.equals(this.queueStats, appResponse.queueStats)
-        && Objects.equals(this.callbackSettings, appResponse.callbackSettings)
+        && Objects.equals(this.eventDestinationSettings, appResponse.eventDestinationSettings)
         && Objects.equals(this.deliveryReportBasedFallback, appResponse.deliveryReportBasedFallback)
         && Objects.equals(this.messageRetrySettings, appResponse.messageRetrySettings);
   }
@@ -306,7 +306,7 @@ public class AppResponseImpl implements AppResponse {
         processingMode,
         smartConversation,
         queueStats,
-        callbackSettings,
+        eventDestinationSettings,
         deliveryReportBasedFallback,
         messageRetrySettings);
   }
@@ -329,7 +329,9 @@ public class AppResponseImpl implements AppResponse {
     sb.append("    processingMode: ").append(toIndentedString(processingMode)).append("\n");
     sb.append("    smartConversation: ").append(toIndentedString(smartConversation)).append("\n");
     sb.append("    queueStats: ").append(toIndentedString(queueStats)).append("\n");
-    sb.append("    callbackSettings: ").append(toIndentedString(callbackSettings)).append("\n");
+    sb.append("    eventDestinationSettings: ")
+        .append(toIndentedString(eventDestinationSettings))
+        .append("\n");
     sb.append("    deliveryReportBasedFallback: ")
         .append(toIndentedString(deliveryReportBasedFallback))
         .append("\n");
@@ -363,7 +365,7 @@ public class AppResponseImpl implements AppResponse {
     OptionalValue<ProcessingMode> processingMode = OptionalValue.empty();
     OptionalValue<SmartConversation> smartConversation = OptionalValue.empty();
     OptionalValue<QueueStats> queueStats = OptionalValue.empty();
-    OptionalValue<CallbackSettings> callbackSettings = OptionalValue.empty();
+    OptionalValue<EventDestinationSettings> eventDestinationSettings = OptionalValue.empty();
     OptionalValue<DeliveryReportBasedFallback> deliveryReportBasedFallback = OptionalValue.empty();
     OptionalValue<MessageRetrySettings> messageRetrySettings = OptionalValue.empty();
 
@@ -429,8 +431,8 @@ public class AppResponseImpl implements AppResponse {
     }
 
     @JsonProperty(JSON_PROPERTY_CALLBACK_SETTINGS)
-    public Builder setCallbackSettings(CallbackSettings callbackSettings) {
-      this.callbackSettings = OptionalValue.of(callbackSettings);
+    public Builder setEventDestinationSettings(EventDestinationSettings eventDestinationSettings) {
+      this.eventDestinationSettings = OptionalValue.of(eventDestinationSettings);
       return this;
     }
 
@@ -459,7 +461,7 @@ public class AppResponseImpl implements AppResponse {
           processingMode,
           smartConversation,
           queueStats,
-          callbackSettings,
+          eventDestinationSettings,
           deliveryReportBasedFallback,
           messageRetrySettings);
     }

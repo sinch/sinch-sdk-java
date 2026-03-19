@@ -1,0 +1,225 @@
+package com.sinch.sdk.domains.verification.models.v1.sinchevents.internal;
+
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+@JsonPropertyOrder({
+  VerificationStartEventResponseSmsContentImpl.JSON_PROPERTY_CODE,
+  VerificationStartEventResponseSmsContentImpl.JSON_PROPERTY_CODE_TYPE,
+  VerificationStartEventResponseSmsContentImpl.JSON_PROPERTY_EXPIRY,
+  VerificationStartEventResponseSmsContentImpl.JSON_PROPERTY_ACCEPT_LANGUAGE
+})
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
+public class VerificationStartEventResponseSmsContentImpl
+    implements VerificationStartEventResponseSmsContent {
+  private static final long serialVersionUID = 1L;
+
+  public static final String JSON_PROPERTY_CODE = "code";
+
+  private OptionalValue<String> code;
+
+  public static final String JSON_PROPERTY_CODE_TYPE = "codeType";
+
+  private OptionalValue<SmsCodeType> codeType;
+
+  public static final String JSON_PROPERTY_EXPIRY = "expiry";
+
+  private OptionalValue<String> expiry;
+
+  public static final String JSON_PROPERTY_ACCEPT_LANGUAGE = "acceptLanguage";
+
+  private OptionalValue<List<String>> acceptLanguage;
+
+  /**
+   * A container for additional, undeclared properties. This is a holder for any undeclared
+   * properties as specified with the 'additionalProperties' keyword in the OAS document.
+   */
+  private OptionalValue<Map<String, Object>> additionalProperties;
+
+  public VerificationStartEventResponseSmsContentImpl() {}
+
+  protected VerificationStartEventResponseSmsContentImpl(
+      OptionalValue<String> code,
+      OptionalValue<SmsCodeType> codeType,
+      OptionalValue<String> expiry,
+      OptionalValue<List<String>> acceptLanguage,
+      OptionalValue<Map<String, Object>> additionalProperties) {
+    this.code = code;
+    this.codeType = codeType;
+    this.expiry = expiry;
+    this.acceptLanguage = acceptLanguage;
+    this.additionalProperties = additionalProperties;
+  }
+
+  @JsonIgnore
+  public String getCode() {
+    return code.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CODE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> code() {
+    return code;
+  }
+
+  @JsonIgnore
+  public SmsCodeType getCodeType() {
+    return codeType.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CODE_TYPE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<SmsCodeType> codeType() {
+    return codeType;
+  }
+
+  @JsonIgnore
+  public String getExpiry() {
+    return expiry.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_EXPIRY)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> expiry() {
+    return expiry;
+  }
+
+  @JsonIgnore
+  public List<String> getAcceptLanguage() {
+    return acceptLanguage.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_ACCEPT_LANGUAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<List<String>> acceptLanguage() {
+    return acceptLanguage;
+  }
+
+  @JsonIgnore
+  public Object get(String key) {
+
+    if (null == this.additionalProperties || !additionalProperties.isPresent()) {
+      return null;
+    }
+    return this.additionalProperties.get().get(key);
+  }
+
+  @JsonAnyGetter
+  public Map<String, Object> additionalProperties() {
+    if (null == this.additionalProperties || !additionalProperties.isPresent()) {
+      return null;
+    }
+    return additionalProperties.get();
+  }
+
+  /** Return true if this VerificationRequestEventResponseSms_allOf_sms object is equal to o. */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    VerificationStartEventResponseSmsContentImpl verificationRequestEventResponseSmsAllOfSms =
+        (VerificationStartEventResponseSmsContentImpl) o;
+    return Objects.equals(this.code, verificationRequestEventResponseSmsAllOfSms.code)
+        && Objects.equals(this.codeType, verificationRequestEventResponseSmsAllOfSms.codeType)
+        && Objects.equals(this.expiry, verificationRequestEventResponseSmsAllOfSms.expiry)
+        && Objects.equals(
+            this.acceptLanguage, verificationRequestEventResponseSmsAllOfSms.acceptLanguage)
+        && Objects.equals(
+            this.additionalProperties,
+            verificationRequestEventResponseSmsAllOfSms.additionalProperties);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(code, codeType, expiry, acceptLanguage, additionalProperties);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class VerificationStartEventResponseSmsContentImpl {\n");
+    sb.append("    code: ").append(toIndentedString(code)).append("\n");
+    sb.append("    codeType: ").append(toIndentedString(codeType)).append("\n");
+    sb.append("    expiry: ").append(toIndentedString(expiry)).append("\n");
+    sb.append("    acceptLanguage: ").append(toIndentedString(acceptLanguage)).append("\n");
+    sb.append("    additionalProperties: ")
+        .append(toIndentedString(additionalProperties))
+        .append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
+
+  @JsonPOJOBuilder(withPrefix = "set")
+  static class Builder implements VerificationStartEventResponseSmsContent.Builder {
+    OptionalValue<String> code = OptionalValue.empty();
+    OptionalValue<SmsCodeType> codeType = OptionalValue.empty();
+    OptionalValue<String> expiry = OptionalValue.empty();
+    OptionalValue<List<String>> acceptLanguage = OptionalValue.empty();
+    OptionalValue<Map<String, Object>> additionalProperties = OptionalValue.empty();
+
+    @JsonProperty(JSON_PROPERTY_CODE)
+    public Builder setCode(String code) {
+      this.code = OptionalValue.of(code);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_CODE_TYPE)
+    public Builder setCodeType(SmsCodeType codeType) {
+      this.codeType = OptionalValue.of(codeType);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_EXPIRY)
+    public Builder setExpiry(String expiry) {
+      this.expiry = OptionalValue.of(expiry);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_ACCEPT_LANGUAGE)
+    public Builder setAcceptLanguage(List<String> acceptLanguage) {
+      this.acceptLanguage = OptionalValue.of(acceptLanguage);
+      return this;
+    }
+
+    @JsonAnySetter
+    public Builder put(String key, Object value) {
+      if (!this.additionalProperties.isPresent()) {
+        this.additionalProperties = OptionalValue.of(new HashMap<String, Object>());
+      }
+      this.additionalProperties.get().put(key, value);
+      return this;
+    }
+
+    public VerificationStartEventResponseSmsContent build() {
+      return new VerificationStartEventResponseSmsContentImpl(
+          code, codeType, expiry, acceptLanguage, additionalProperties);
+    }
+  }
+}

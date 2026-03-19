@@ -38,10 +38,10 @@ public class VerificationService
   private volatile VerificationsStartService startService;
   private volatile VerificationsReportService reportService;
   private volatile VerificationsStatusService statusService;
-  private volatile WebhooksService webhooks;
+  private volatile SinchEventsService sinchEvents;
 
   private volatile Map<String, AuthManager> clientAuthManagers;
-  private volatile Map<String, AuthManager> webhooksAuthManagers;
+  private volatile Map<String, AuthManager> sinchEventsAuthManagers;
 
   static {
     LocalLazyInit.init();
@@ -66,21 +66,22 @@ public class VerificationService
             credentials.getApplicationKey(), credentials.getApplicationSecret());
 
     boolean useApplicationAuth = true;
-    // to handle request from client we can only have "Basic" keyword behind the auth managers
+    // To handle request from client we can only have "Basic" keyword behind the auth managers
     // because of the OAS file only contains it; so we need to trick the application auth manager
     // hidden behind the "Basic" keyword
-    // we need both auth manager to handle webhooks because of customer will choose from his
+    // We need both auth manager to handle Sinch Events because of customer will choose from his
     // dashboard which scheme to be used
     clientAuthManagers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     clientAuthManagers.put(
         BASIC_SECURITY_SCHEME_KEYWORD_VERIFICATION,
         useApplicationAuth ? applicationAuthManager : basicAuthManager);
 
-    // here we need both auth managers to handle webhooks because we are receiving an Authorization
+    // here we need both auth managers to handle Sinch Events because we are receiving an
+    // Authorization
     // header with "Application" keyword
-    webhooksAuthManagers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-    webhooksAuthManagers.put(BASIC_SECURITY_SCHEME_KEYWORD_VERIFICATION, basicAuthManager);
-    webhooksAuthManagers.put(
+    sinchEventsAuthManagers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    sinchEventsAuthManagers.put(BASIC_SECURITY_SCHEME_KEYWORD_VERIFICATION, basicAuthManager);
+    sinchEventsAuthManagers.put(
         APPLICATION_SECURITY_SCHEME_KEYWORD_VERIFICATION, applicationAuthManager);
   }
 
@@ -123,20 +124,20 @@ public class VerificationService
     return this.statusService;
   }
 
-  public WebhooksService webhooks() {
-    if (null == this.webhooks) {
+  public SinchEventsService sinchEvents() {
+    if (null == this.sinchEvents) {
       instanceLazyInit();
-      this.webhooks = new WebhooksService(webhooksAuthManagers);
+      this.sinchEvents = new SinchEventsService(sinchEventsAuthManagers);
     }
-    return this.webhooks;
+    return this.sinchEvents;
   }
 
   private void instanceLazyInit() {
-    if (null != this.clientAuthManagers && null != this.webhooksAuthManagers) {
+    if (null != this.clientAuthManagers && null != this.sinchEventsAuthManagers) {
       return;
     }
     synchronized (this) {
-      if (null == this.clientAuthManagers || null == this.webhooksAuthManagers) {
+      if (null == this.clientAuthManagers || null == this.sinchEventsAuthManagers) {
 
         // Currently, we are not supporting unified credentials: ensure application credentials are
         // defined

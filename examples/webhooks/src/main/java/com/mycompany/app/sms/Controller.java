@@ -1,10 +1,10 @@
 package com.mycompany.app.sms;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.sms.api.v1.WebHooksService;
+import com.sinch.sdk.domains.sms.api.v1.SinchEventsService;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReport;
 import com.sinch.sdk.domains.sms.models.v1.inbounds.InboundMessage;
-import com.sinch.sdk.domains.sms.models.v1.webhooks.SmsEvent;
+import com.sinch.sdk.domains.sms.models.v1.sinchevents.SmsSinchEvent;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,25 +21,25 @@ import org.springframework.web.server.ResponseStatusException;
 public class Controller {
 
   private final SinchClient sinchClient;
-  private final ServerBusinessLogic webhooksBusinessLogic;
+  private final ServerBusinessLogic serverBusinessLogic;
 
-  @Value("${sms.webhooks.secret: }")
-  private String webhooksSecret;
+  @Value("${sms.sinchevents.secret: }")
+  private String sincheventsSecret;
 
   @Autowired
-  public Controller(SinchClient sinchClient, ServerBusinessLogic webhooksBusinessLogic) {
+  public Controller(SinchClient sinchClient, ServerBusinessLogic serverBusinessLogic) {
     this.sinchClient = sinchClient;
-    this.webhooksBusinessLogic = webhooksBusinessLogic;
+    this.serverBusinessLogic = serverBusinessLogic;
   }
 
   @PostMapping(
-      value = "/SmsEvent",
+      value = "/SmsSinchEvent",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Void> smsEvent(
       @RequestHeader Map<String, String> headers, @RequestBody String body) {
 
-    WebHooksService webhooks = sinchClient.sms().v1().webhooks();
+    SinchEventsService sinchEvents = sinchClient.sms().v1().sinchEvents();
 
     // ensure valid authentication to handle request
     // See
@@ -52,8 +52,8 @@ public class Controller {
     boolean ensureValidAuthentication = false;
     if (ensureValidAuthentication) {
       var validAuth =
-          webhooks.validateAuthenticationHeader(
-              webhooksSecret,
+          sinchEvents.validateAuthenticationHeader(
+              sincheventsSecret,
               // request headers
               headers,
               // request payload body
@@ -66,12 +66,12 @@ public class Controller {
     }
 
     // decode the request payload
-    SmsEvent event = webhooks.parseEvent(body);
+    SmsSinchEvent event = sinchEvents.parseEvent(body);
 
     // let business layer process the request
     switch (event) {
-      case InboundMessage e -> webhooksBusinessLogic.processInboundEvent(e);
-      case DeliveryReport e -> webhooksBusinessLogic.processDeliveryReportEvent(e);
+      case InboundMessage e -> serverBusinessLogic.processInboundEvent(e);
+      case DeliveryReport e -> serverBusinessLogic.processDeliveryReportEvent(e);
       default -> throw new IllegalStateException("Unexpected value: " + event);
     }
 

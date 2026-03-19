@@ -43,7 +43,7 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
 
   public static final String JSON_PROPERTY_CALLBACK_URL = "callback_url";
 
-  private OptionalValue<String> callbackUrl;
+  private OptionalValue<String> eventDestinationTarget;
 
   public static final String JSON_PROPERTY_CHANNEL_PRIORITY_ORDER = "channel_priority_order";
 
@@ -98,7 +98,7 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
 
   protected SendMessageRequestImpl(
       OptionalValue<String> appId,
-      OptionalValue<String> callbackUrl,
+      OptionalValue<String> eventDestinationTarget,
       OptionalValue<List<ConversationChannel>> channelPriorityOrder,
       OptionalValue<Map<String, String>> channelProperties,
       OptionalValue<AppMessage<T>> message,
@@ -112,7 +112,7 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
       OptionalValue<MetadataUpdateStrategy> conversationMetadataUpdateStrategy,
       OptionalValue<MessageContentType> messageContentType) {
     this.appId = appId;
-    this.callbackUrl = callbackUrl;
+    this.eventDestinationTarget = eventDestinationTarget;
     this.channelPriorityOrder = channelPriorityOrder;
     this.channelProperties = channelProperties;
     this.message = message;
@@ -139,14 +139,14 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
   }
 
   @JsonIgnore
-  public String getCallbackUrl() {
-    return callbackUrl.orElse(null);
+  public String getEventDestinationTarget() {
+    return eventDestinationTarget.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> callbackUrl() {
-    return callbackUrl;
+  public OptionalValue<String> eventDestinationTarget() {
+    return eventDestinationTarget;
   }
 
   @JsonIgnore
@@ -292,7 +292,7 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
     }
     SendMessageRequestImpl sendMessageRequest = (SendMessageRequestImpl) o;
     return Objects.equals(this.appId, sendMessageRequest.appId)
-        && Objects.equals(this.callbackUrl, sendMessageRequest.callbackUrl)
+        && Objects.equals(this.eventDestinationTarget, sendMessageRequest.eventDestinationTarget)
         && Objects.equals(this.channelPriorityOrder, sendMessageRequest.channelPriorityOrder)
         && Objects.equals(this.channelProperties, sendMessageRequest.channelProperties)
         && Objects.equals(this.message, sendMessageRequest.message)
@@ -313,7 +313,7 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
   public int hashCode() {
     return Objects.hash(
         appId,
-        callbackUrl,
+        eventDestinationTarget,
         channelPriorityOrder,
         channelProperties,
         message,
@@ -333,7 +333,9 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
     StringBuilder sb = new StringBuilder();
     sb.append("class SendMessageRequestImpl {\n");
     sb.append("    appId: ").append(toIndentedString(appId)).append("\n");
-    sb.append("    callbackUrl: ").append(toIndentedString(callbackUrl)).append("\n");
+    sb.append("    eventDestinationTarget: ")
+        .append(toIndentedString(eventDestinationTarget))
+        .append("\n");
     sb.append("    channelPriorityOrder: ")
         .append(toIndentedString(channelPriorityOrder))
         .append("\n");
@@ -369,7 +371,7 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder<T extends AppMessageBody> implements SendMessageRequest.Builder<T> {
     OptionalValue<String> appId = OptionalValue.empty();
-    OptionalValue<String> callbackUrl = OptionalValue.empty();
+    OptionalValue<String> eventDestinationTarget = OptionalValue.empty();
     OptionalValue<List<ConversationChannel>> channelPriorityOrder = OptionalValue.empty();
     OptionalValue<Map<String, String>> channelProperties = OptionalValue.empty();
     OptionalValue<AppMessage<T>> message = OptionalValue.empty();
@@ -391,8 +393,8 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
     }
 
     @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
-    public Builder<T> setCallbackUrl(String callbackUrl) {
-      this.callbackUrl = OptionalValue.of(callbackUrl);
+    public Builder<T> setEventDestinationTarget(String eventDestinationTarget) {
+      this.eventDestinationTarget = OptionalValue.of(eventDestinationTarget);
       return this;
     }
 
@@ -473,7 +475,7 @@ public class SendMessageRequestImpl<T extends AppMessageBody> implements SendMes
     public SendMessageRequest<T> build() {
       return new SendMessageRequestImpl<T>(
           appId,
-          callbackUrl,
+          eventDestinationTarget,
           channelPriorityOrder,
           channelProperties,
           message,
