@@ -73,8 +73,8 @@ public class AppDtoTest extends BaseTest {
                   .build())
           .setSmartConversation(SmartConversation.builder().setEnabled(true).build())
           .setQueueStats(QueueStats.builder().setOutboundLimit(500000L).setOutboundSize(0L).build())
-          .setCallbackSettings(
-              CallbackSettings.builder().setSecretForOverriddenCallbackUrls("my secret").build())
+          .setEventDestinationSettings(
+              EventDestinationSettings.builder().setSecretForOverriddenTarget("my secret").build())
           .setDeliveryReportBasedFallback(
               DeliveryReportBasedFallback.builder()
                   .setEnabled(true)
@@ -118,8 +118,8 @@ public class AppDtoTest extends BaseTest {
                   .setTtlDays(0L)
                   .build())
           .setSmartConversation(SmartConversation.builder().setEnabled(true).build())
-          .setCallbackSettings(
-              CallbackSettings.builder().setSecretForOverriddenCallbackUrls("my secret").build())
+          .setEventDestinationSettings(
+              EventDestinationSettings.builder().setSecretForOverriddenTarget("my secret").build())
           .build();
   public static AppUpdateRequest appUpdateRequestDto =
       AppUpdateRequest.builder()
@@ -153,8 +153,8 @@ public class AppDtoTest extends BaseTest {
                   .setTtlDays(0L)
                   .build())
           .setSmartConversation(SmartConversation.builder().setEnabled(true).build())
-          .setCallbackSettings(
-              CallbackSettings.builder().setSecretForOverriddenCallbackUrls("my secret").build())
+          .setEventDestinationSettings(
+              EventDestinationSettings.builder().setSecretForOverriddenTarget("my secret").build())
           .build();
 
   @Test

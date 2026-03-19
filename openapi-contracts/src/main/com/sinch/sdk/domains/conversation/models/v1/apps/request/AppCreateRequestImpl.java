@@ -8,10 +8,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
-import com.sinch.sdk.domains.conversation.models.v1.apps.CallbackSettings;
 import com.sinch.sdk.domains.conversation.models.v1.apps.ConversationMetadataReportView;
 import com.sinch.sdk.domains.conversation.models.v1.apps.DeliveryReportBasedFallback;
 import com.sinch.sdk.domains.conversation.models.v1.apps.DispatchRetentionPolicy;
+import com.sinch.sdk.domains.conversation.models.v1.apps.EventDestinationSettings;
 import com.sinch.sdk.domains.conversation.models.v1.apps.MessageRetrySettings;
 import com.sinch.sdk.domains.conversation.models.v1.apps.RetentionPolicy;
 import com.sinch.sdk.domains.conversation.models.v1.apps.SmartConversation;
@@ -67,7 +67,7 @@ public class AppCreateRequestImpl implements AppCreateRequest {
 
   public static final String JSON_PROPERTY_CALLBACK_SETTINGS = "callback_settings";
 
-  private OptionalValue<CallbackSettings> callbackSettings;
+  private OptionalValue<EventDestinationSettings> eventDestinationSettings;
 
   public static final String JSON_PROPERTY_MESSAGE_RETRY_SETTINGS = "message_retry_settings";
 
@@ -88,7 +88,7 @@ public class AppCreateRequestImpl implements AppCreateRequest {
       OptionalValue<DispatchRetentionPolicy> dispatchRetentionPolicy,
       OptionalValue<ProcessingMode> processingMode,
       OptionalValue<SmartConversation> smartConversation,
-      OptionalValue<CallbackSettings> callbackSettings,
+      OptionalValue<EventDestinationSettings> eventDestinationSettings,
       OptionalValue<MessageRetrySettings> messageRetrySettings,
       OptionalValue<DeliveryReportBasedFallback> deliveryReportBasedFallback) {
     this.channelCredentials = channelCredentials;
@@ -98,7 +98,7 @@ public class AppCreateRequestImpl implements AppCreateRequest {
     this.dispatchRetentionPolicy = dispatchRetentionPolicy;
     this.processingMode = processingMode;
     this.smartConversation = smartConversation;
-    this.callbackSettings = callbackSettings;
+    this.eventDestinationSettings = eventDestinationSettings;
     this.messageRetrySettings = messageRetrySettings;
     this.deliveryReportBasedFallback = deliveryReportBasedFallback;
   }
@@ -181,14 +181,14 @@ public class AppCreateRequestImpl implements AppCreateRequest {
   }
 
   @JsonIgnore
-  public CallbackSettings getCallbackSettings() {
-    return callbackSettings.orElse(null);
+  public EventDestinationSettings getEventDestinationSettings() {
+    return eventDestinationSettings.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CALLBACK_SETTINGS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<CallbackSettings> callbackSettings() {
-    return callbackSettings;
+  public OptionalValue<EventDestinationSettings> eventDestinationSettings() {
+    return eventDestinationSettings;
   }
 
   @JsonIgnore
@@ -231,7 +231,7 @@ public class AppCreateRequestImpl implements AppCreateRequest {
         && Objects.equals(this.dispatchRetentionPolicy, appCreateRequest.dispatchRetentionPolicy)
         && Objects.equals(this.processingMode, appCreateRequest.processingMode)
         && Objects.equals(this.smartConversation, appCreateRequest.smartConversation)
-        && Objects.equals(this.callbackSettings, appCreateRequest.callbackSettings)
+        && Objects.equals(this.eventDestinationSettings, appCreateRequest.eventDestinationSettings)
         && Objects.equals(this.messageRetrySettings, appCreateRequest.messageRetrySettings)
         && Objects.equals(
             this.deliveryReportBasedFallback, appCreateRequest.deliveryReportBasedFallback);
@@ -247,7 +247,7 @@ public class AppCreateRequestImpl implements AppCreateRequest {
         dispatchRetentionPolicy,
         processingMode,
         smartConversation,
-        callbackSettings,
+        eventDestinationSettings,
         messageRetrySettings,
         deliveryReportBasedFallback);
   }
@@ -267,7 +267,9 @@ public class AppCreateRequestImpl implements AppCreateRequest {
         .append("\n");
     sb.append("    processingMode: ").append(toIndentedString(processingMode)).append("\n");
     sb.append("    smartConversation: ").append(toIndentedString(smartConversation)).append("\n");
-    sb.append("    callbackSettings: ").append(toIndentedString(callbackSettings)).append("\n");
+    sb.append("    eventDestinationSettings: ")
+        .append(toIndentedString(eventDestinationSettings))
+        .append("\n");
     sb.append("    messageRetrySettings: ")
         .append(toIndentedString(messageRetrySettings))
         .append("\n");
@@ -298,7 +300,7 @@ public class AppCreateRequestImpl implements AppCreateRequest {
     OptionalValue<DispatchRetentionPolicy> dispatchRetentionPolicy = OptionalValue.empty();
     OptionalValue<ProcessingMode> processingMode = OptionalValue.empty();
     OptionalValue<SmartConversation> smartConversation = OptionalValue.empty();
-    OptionalValue<CallbackSettings> callbackSettings = OptionalValue.empty();
+    OptionalValue<EventDestinationSettings> eventDestinationSettings = OptionalValue.empty();
     OptionalValue<MessageRetrySettings> messageRetrySettings = OptionalValue.empty();
     OptionalValue<DeliveryReportBasedFallback> deliveryReportBasedFallback = OptionalValue.empty();
 
@@ -346,8 +348,8 @@ public class AppCreateRequestImpl implements AppCreateRequest {
     }
 
     @JsonProperty(JSON_PROPERTY_CALLBACK_SETTINGS)
-    public Builder setCallbackSettings(CallbackSettings callbackSettings) {
-      this.callbackSettings = OptionalValue.of(callbackSettings);
+    public Builder setEventDestinationSettings(EventDestinationSettings eventDestinationSettings) {
+      this.eventDestinationSettings = OptionalValue.of(eventDestinationSettings);
       return this;
     }
 
@@ -373,7 +375,7 @@ public class AppCreateRequestImpl implements AppCreateRequest {
           dispatchRetentionPolicy,
           processingMode,
           smartConversation,
-          callbackSettings,
+          eventDestinationSettings,
           messageRetrySettings,
           deliveryReportBasedFallback);
     }

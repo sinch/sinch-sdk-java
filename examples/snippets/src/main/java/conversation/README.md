@@ -46,15 +46,14 @@ See main [README.md](../../../../README.md) for how to execute snippets
   - [conversation/messages/Delete](./messages/Delete.java)
   - [conversation/messages/List](./messages/List.java)
   - [conversation/messages/ListLastMessagesByChannelIdentity](./messages/ListLastMessagesByChannelIdentity.java)
-
 - Transcoding
   - [conversation/transcoding/Transcode](./transcoding/Transcode.java)
-- Webhooks
-  - [conversation/webhooks/List](./webhooks/List.java)
-  - [conversation/webhooks/Create](./webhooks/Create.java)
-  - [conversation/webhooks/Get](./webhooks/Get.java)
-  - [conversation/webhooks/Update](./webhooks/Update.java)
-  - [conversation/webhooks/Delete](./webhooks/Delete.java)
+- Event Destinations
+  - [conversation/eventdestinations/List](./eventdestinations/List.java)
+  - [conversation/eventdestinations/Create](./eventdestinations/Create.java)
+  - [conversation/eventdestinations/Get](./eventdestinations/Get.java)
+  - [conversation/eventdestinations/Update](./eventdestinations/Update.java)
+  - [conversation/eventdestinations/Delete](./eventdestinations/Delete.java)
 
 - Templates
   - V2
