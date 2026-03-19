@@ -31,7 +31,7 @@ public interface NumbersService extends ActiveNumberService, AvailableNumberServ
   AvailableRegionsService regions();
 
   /**
-   * Event destinations Service instance
+   * Event Destinations Configuration Service instance
    *
    * @return service instance for project
    * @since 2.0
@@ -42,7 +42,7 @@ public interface NumbersService extends ActiveNumberService, AvailableNumberServ
    * Sinch Events helpers instance
    *
    * @return instance service related to Sinch Events helpers
-   * @since 1.2
+   * @since 2.0
    */
   SinchEventsService sinchEvents();
 }
