@@ -72,6 +72,12 @@ public class ActiveNumberServiceImpl
   }
 
   @Override
+  public ActiveNumbersListResponse list() throws ApiException {
+
+    return list((ActiveNumbersListQueryParameters) null);
+  }
+
+  @Override
   public ActiveNumbersListResponse list(ActiveNumbersListQueryParameters queryParameter)
       throws ApiException {
 
@@ -120,14 +126,6 @@ public class ActiveNumberServiceImpl
     if (this.projectId == null) {
       throw new ApiException(
           400, "Missing the required parameter 'this.projectId' when calling list");
-    }
-    // verify the required parameter 'regionCode' is set
-    if (null == queryParameter || queryParameter.getRegionCode() == null) {
-      throw new ApiException(400, "Missing the required parameter 'regionCode' when calling list");
-    }
-    // verify the required parameter 'type' is set
-    if (null == queryParameter || queryParameter.getType() == null) {
-      throw new ApiException(400, "Missing the required parameter 'type' when calling list");
     }
 
     String localVarPath =
