@@ -26,7 +26,7 @@ public interface SinchEventsService {
    * @param path The path to you backend endpoint used for callback
    * @param headers Received headers
    * @param jsonPayload Received payload
-   * @return Is authentication is validated (true) or not (false)
+   * @return Is authentication validated (true) or not (false)
    *     <p>see <a
    *     href="https://developers.sinch.com/docs/voice/api-reference/authentication/callback-signed-request">https://developers.sinch.com/docs/voice/api-reference/authentication/callback-signed-request/</a>
    * @since 2.0

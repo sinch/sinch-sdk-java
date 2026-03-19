@@ -20,13 +20,13 @@ import org.springframework.web.server.ResponseStatusException;
 public class Controller {
 
   private final SinchClient sinchClient;
-  private final ServerBusinessLogic webhooksBusinessLogic;
+  private final ServerBusinessLogic serverBusinessLogic;
   private static final Logger LOGGER = Logger.getLogger(Controller.class.getName());
 
   @Autowired
-  public Controller(SinchClient sinchClient, ServerBusinessLogic webhooksBusinessLogic) {
+  public Controller(SinchClient sinchClient, ServerBusinessLogic serverBusinessLogic) {
     this.sinchClient = sinchClient;
-    this.webhooksBusinessLogic = webhooksBusinessLogic;
+    this.serverBusinessLogic = serverBusinessLogic;
   }
 
   @PostMapping(
@@ -36,7 +36,7 @@ public class Controller {
   public ResponseEntity<String> VoiceEvent(
       @RequestHeader Map<String, String> headers, @RequestBody String body) {
 
-    SinchEventsService webhooks = sinchClient.voice().v1().sinchEvents();
+    SinchEventsService sinchEvents = sinchClient.voice().v1().sinchEvents();
 
     // ensure valid authentication to handle request
     // see
@@ -48,7 +48,7 @@ public class Controller {
     if (ensureValidAuthentication) {
       // ensure valid authentication to handle request
       var validAuth =
-          webhooks.validateAuthenticationHeader(
+          sinchEvents.validateAuthenticationHeader(
               // The HTTP verb this controller is managing
               "POST",
               // The URI this controller is managing
@@ -65,14 +65,14 @@ public class Controller {
     }
 
     // decode the payload request
-    var event = webhooks.parseEvent(body);
+    var event = sinchEvents.parseEvent(body);
 
     // let business layer process the request
     var response =
         switch (event) {
-          case IncomingCallEvent e -> webhooksBusinessLogic.incoming(e);
+          case IncomingCallEvent e -> serverBusinessLogic.incoming(e);
           case DisconnectedCallEvent e -> {
-            webhooksBusinessLogic.disconnect(e);
+            serverBusinessLogic.disconnect(e);
             yield null;
           }
           default -> throw new IllegalStateException("Unexpected value: " + event);
@@ -80,7 +80,7 @@ public class Controller {
 
     String serializedResponse = "";
     if (null != response) {
-      serializedResponse = webhooks.serializeResponse(response);
+      serializedResponse = sinchEvents.serializeResponse(response);
     }
 
     LOGGER.finest("JSON response: " + serializedResponse);

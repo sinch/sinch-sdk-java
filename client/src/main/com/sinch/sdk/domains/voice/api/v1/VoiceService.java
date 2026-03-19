@@ -42,9 +42,9 @@ public interface VoiceService {
   ApplicationsService applications();
 
   /**
-   * Webhooks helpers instance
+   * Sinch Events helpers instance
    *
-   * @return instance service related to webhooks helpers
+   * @return service instance for project
    * @since 2.0
    */
   SinchEventsService sinchEvents();
