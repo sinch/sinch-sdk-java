@@ -24,7 +24,7 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.models.pagination.Page;
-import com.sinch.sdk.domains.voice.models.v1.applications.Callbacks;
+import com.sinch.sdk.domains.voice.models.v1.applications.EventDestinations;
 import com.sinch.sdk.domains.voice.models.v1.applications.request.UnAssignNumberRequest;
 import com.sinch.sdk.domains.voice.models.v1.applications.request.UpdateNumbersRequest;
 import com.sinch.sdk.domains.voice.models.v1.applications.response.OwnedNumbersListResponse;
@@ -107,17 +107,17 @@ public class ApplicationsServiceImpl
   }
 
   @Override
-  public Callbacks getCallbackUrls(String applicationkey) throws ApiException {
+  public EventDestinations getEventDestinations(String applicationkey) throws ApiException {
 
-    LOGGER.finest("[getCallbackUrls]" + " " + "applicationkey: " + applicationkey);
+    LOGGER.finest("[getEventDestinations]" + " " + "applicationkey: " + applicationkey);
 
-    HttpRequest httpRequest = getCallbackUrlsRequestBuilder(applicationkey);
+    HttpRequest httpRequest = getEventDestinationsRequestBuilder(applicationkey);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      return mapper.deserialize(response, new TypeReference<Callbacks>() {});
+      return mapper.deserialize(response, new TypeReference<EventDestinations>() {});
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -128,11 +128,12 @@ public class ApplicationsServiceImpl
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest getCallbackUrlsRequestBuilder(String applicationkey) throws ApiException {
+  private HttpRequest getEventDestinationsRequestBuilder(String applicationkey)
+      throws ApiException {
     // verify the required parameter 'applicationkey' is set
     if (applicationkey == null) {
       throw new ApiException(
-          400, "Missing the required parameter 'applicationkey' when calling getCallbackUrls");
+          400, "Missing the required parameter 'applicationkey' when calling getEventDestinations");
     }
 
     String localVarPath =
@@ -270,18 +271,20 @@ public class ApplicationsServiceImpl
   }
 
   @Override
-  public void updateCallbackUrls(String applicationkey, Callbacks callbacks) throws ApiException {
+  public void updateEventDestinations(String applicationkey, EventDestinations eventDestinations)
+      throws ApiException {
 
     LOGGER.finest(
-        "[updateCallbackUrls]"
+        "[updateEventDestinations]"
             + " "
             + "applicationkey: "
             + applicationkey
             + ", "
-            + "callbacks: "
-            + callbacks);
+            + "eventDestinations: "
+            + eventDestinations);
 
-    HttpRequest httpRequest = updateCallbackUrlsRequestBuilder(applicationkey, callbacks);
+    HttpRequest httpRequest =
+        updateEventDestinationsRequestBuilder(applicationkey, eventDestinations);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -298,12 +301,13 @@ public class ApplicationsServiceImpl
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest updateCallbackUrlsRequestBuilder(String applicationkey, Callbacks callbacks)
-      throws ApiException {
+  private HttpRequest updateEventDestinationsRequestBuilder(
+      String applicationkey, EventDestinations eventDestinations) throws ApiException {
     // verify the required parameter 'applicationkey' is set
     if (applicationkey == null) {
       throw new ApiException(
-          400, "Missing the required parameter 'applicationkey' when calling updateCallbackUrls");
+          400,
+          "Missing the required parameter 'applicationkey' when calling updateEventDestinations");
     }
 
     String localVarPath =
@@ -321,7 +325,7 @@ public class ApplicationsServiceImpl
     final Collection<String> localVarContentTypes = Arrays.asList("application/json");
 
     final Collection<String> localVarAuthNames = Arrays.asList("Basic", "Signed");
-    final String serializedBody = mapper.serialize(localVarContentTypes, callbacks);
+    final String serializedBody = mapper.serialize(localVarContentTypes, eventDestinations);
 
     return new HttpRequest(
         localVarPath,

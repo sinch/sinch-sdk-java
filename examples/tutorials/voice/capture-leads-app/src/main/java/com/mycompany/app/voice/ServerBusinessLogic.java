@@ -1,6 +1,9 @@
 package com.mycompany.app.voice;
 
 import com.sinch.sdk.domains.voice.models.v1.destination.DestinationSip;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.AnsweredCallEvent;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.AnsweringMachineDetection.StatusEnum;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.PromptInputEvent;
 import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.Menu;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.MenuOption;
@@ -10,9 +13,6 @@ import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectSip.
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionHangup;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionRunMenu;
 import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionSay;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.AnsweredCallEvent;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.AnsweringMachineDetection.StatusEnum;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.PromptInputEvent;
 import com.sinch.sdk.models.DualToneMultiFrequency;
 import java.util.Arrays;
 import java.util.Collections;

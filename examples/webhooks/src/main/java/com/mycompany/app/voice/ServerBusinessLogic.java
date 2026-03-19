@@ -1,11 +1,11 @@
 package com.mycompany.app.voice;
 
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.AnsweredCallEvent;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.DisconnectedCallEvent;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.IncomingCallEvent;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.NotificationEvent;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.PromptInputEvent;
 import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.AnsweredCallEvent;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.DisconnectedCallEvent;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.IncomingCallEvent;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.NotificationEvent;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.PromptInputEvent;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Component;
 

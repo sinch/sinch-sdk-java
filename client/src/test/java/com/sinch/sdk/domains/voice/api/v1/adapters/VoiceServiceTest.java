@@ -30,6 +30,6 @@ class VoiceServiceTest {
 
   @Test
   void checkCredentialsVoiceWebhooks() {
-    CredentialsValidationHelper.checkCredentials(() -> httpClient, VoiceService::webhooks);
+    CredentialsValidationHelper.checkCredentials(() -> httpClient, VoiceService::sinchEvents);
   }
 }

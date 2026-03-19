@@ -73,7 +73,7 @@ public interface SvamlActionConnectConference
    * join. If <code>moh</code> isn't specified, the user will only hear silence while alone in the
    * conference.
    *
-   * @return MusicOnHold
+   * @return musicOnHold
    */
   MusicOnHold getMusicOnHold();
 
@@ -110,11 +110,11 @@ public interface SvamlActionConnectConference
     /**
      * see getter
      *
-     * @param MusicOnHold see getter
+     * @param musicOnHold see getter
      * @return Current builder
      * @see #getMusicOnHold
      */
-    Builder setMusicOnHold(MusicOnHold MusicOnHold);
+    Builder setMusicOnHold(MusicOnHold musicOnHold);
 
     /**
      * Create instance

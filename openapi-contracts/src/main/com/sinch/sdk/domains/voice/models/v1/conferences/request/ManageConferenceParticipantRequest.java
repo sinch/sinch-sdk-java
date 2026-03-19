@@ -64,7 +64,7 @@ public interface ManageConferenceParticipantRequest {
    * join. If <code>moh</code> isn't specified, the user will only hear silence while alone in the
    * conference. This property is only available to use with the <code>onhold</code> command.
    *
-   * @return MusicOnHold
+   * @return musicOnHold
    */
   MusicOnHold getMusicOnHold();
 
@@ -92,11 +92,11 @@ public interface ManageConferenceParticipantRequest {
     /**
      * see getter
      *
-     * @param MusicOnHold see getter
+     * @param musicOnHold see getter
      * @return Current builder
      * @see #getMusicOnHold
      */
-    Builder setMusicOnHold(MusicOnHold MusicOnHold);
+    Builder setMusicOnHold(MusicOnHold musicOnHold);
 
     /**
      * Create instance

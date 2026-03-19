@@ -1,10 +1,10 @@
 package com.mycompany.app.voice;
 
 import com.sinch.sdk.domains.voice.VoiceService;
-import com.sinch.sdk.domains.voice.api.v1.WebHooksService;
+import com.sinch.sdk.domains.voice.api.v1.SinchEventsService;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.AnsweredCallEvent;
+import com.sinch.sdk.domains.voice.models.v1.sinchevents.PromptInputEvent;
 import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.AnsweredCallEvent;
-import com.sinch.sdk.domains.voice.models.v1.webhooks.PromptInputEvent;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +20,13 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController("Voice")
 public class Controller {
 
-  private final WebHooksService webhooks;
-  private final ServerBusinessLogic webhooksBusinessLogic;
+  private final SinchEventsService sinchEvents;
+  private final ServerBusinessLogic sinchEventsBusinessLogic;
 
   @Autowired
-  public Controller(VoiceService voiceService, ServerBusinessLogic webhooksBusinessLogic) {
-    this.webhooks = voiceService.v1().webhooks();
-    this.webhooksBusinessLogic = webhooksBusinessLogic;
+  public Controller(VoiceService voiceService, ServerBusinessLogic sinchEventsBusinessLogic) {
+    this.sinchEvents = voiceService.v1().sinchEvents();
+    this.sinchEventsBusinessLogic = sinchEventsBusinessLogic;
   }
 
   @PostMapping(
@@ -39,16 +39,16 @@ public class Controller {
     validateRequest(headers, body);
 
     // decode the request payload
-    var event = webhooks.parseEvent(body);
+    var event = sinchEvents.parseEvent(body);
 
     Optional<SvamlControl> response = Optional.empty();
 
     // let business layer process the request
     if (event instanceof AnsweredCallEvent e) {
-      response = Optional.of(webhooksBusinessLogic.answeredCallEvent(e));
+      response = Optional.of(sinchEventsBusinessLogic.answeredCallEvent(e));
     }
     if (event instanceof PromptInputEvent e) {
-      response = Optional.of(webhooksBusinessLogic.promptInputEvent(e));
+      response = Optional.of(sinchEventsBusinessLogic.promptInputEvent(e));
     }
 
     if (response.isEmpty()) {
@@ -57,7 +57,7 @@ public class Controller {
 
     ResponseEntity<String> responseEntity = ResponseEntity.ok().body(null);
 
-    String serializedResponse = webhooks.serializeResponse(response.get());
+    String serializedResponse = sinchEvents.serializeResponse(response.get());
 
     return ResponseEntity.ok().body(serializedResponse);
   }
@@ -75,7 +75,7 @@ public class Controller {
     }
 
     var validAuth =
-        webhooks.validateAuthenticationHeader(
+        sinchEvents.validateAuthenticationHeader(
             // The HTTP verb this controller is managing
             "POST",
             // The URI this controller is managing
