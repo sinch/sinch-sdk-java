@@ -15,7 +15,7 @@ import com.sinch.sdk.models.NumbersContext;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class AvailableNumberServiceFacade implements AvailableNumberService {
+class AvailableNumberServiceFacade implements AvailableNumberService {
 
   private final AvailableNumberService availableNumberService;
 
@@ -31,10 +31,6 @@ public class AvailableNumberServiceFacade implements AvailableNumberService {
             authManagers,
             HttpMapper.getInstance(),
             uriUUID);
-  }
-
-  protected AvailableNumberService getService() {
-    return this.availableNumberService;
   }
 
   @Override

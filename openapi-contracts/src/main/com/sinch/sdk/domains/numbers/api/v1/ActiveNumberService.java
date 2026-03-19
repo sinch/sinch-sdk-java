@@ -23,6 +23,16 @@ import com.sinch.sdk.domains.numbers.models.v1.response.ValidateAddressResponse;
 public interface ActiveNumberService {
 
   /**
+   * Lists active numbers for a project (using default parameters)
+   *
+   * <p>Lists all active numbers for a project.
+   *
+   * @return ActiveNumbersListResponse
+   * @throws ApiException if fails to make API call
+   */
+  ActiveNumbersListResponse list() throws ApiException;
+
+  /**
    * Lists active numbers for a project
    *
    * <p>Lists all active numbers for a project.
