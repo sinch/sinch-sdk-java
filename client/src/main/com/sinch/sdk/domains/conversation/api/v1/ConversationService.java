@@ -76,7 +76,7 @@ public interface ConversationService {
   ProjectSettingsService projectSettings();
 
   /**
-   * WebHooksService Service instance
+   * SinchEventsService Service instance
    *
    * @return service instance for project
    * @since 1.3

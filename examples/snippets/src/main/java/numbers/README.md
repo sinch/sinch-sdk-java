@@ -19,7 +19,7 @@ See main [README.md](../../../../README.md) for how to execute snippets
   - [numbers/DeprovisionEmergencyAddress](DeprovisionEmergencyAddress.java)
 - Regions
   - [numbers/regions/List](List.java) 
-- Callbacks
-   - [numbers/callback/Get](Get.java)
-   - [numbers/callback/Update](Update.java)
+- Event Destinations
+   - [numbers/eventdestinations/Get](Get.java)
+   - [numbers/eventdestinations/Update](Update.java)
 
