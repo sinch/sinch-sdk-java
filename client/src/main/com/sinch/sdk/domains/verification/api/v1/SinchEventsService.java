@@ -1,8 +1,8 @@
 package com.sinch.sdk.domains.verification.api.v1;
 
 import com.sinch.sdk.core.exceptions.ApiMappingException;
-import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEventResponse;
 import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSinchEvent;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationStartEventResponse;
 import java.util.Map;
 
 /**
@@ -59,5 +59,5 @@ public interface SinchEventsService {
    *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/">https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/</a>
    * @since 1.1
    */
-  String serializeResponse(VerificationRequestEventResponse response) throws ApiMappingException;
+  String serializeResponse(VerificationStartEventResponse response) throws ApiMappingException;
 }

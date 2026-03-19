@@ -6,11 +6,11 @@ import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.v1.Price;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import com.sinch.sdk.domains.verification.models.v1.VerificationStatus;
-import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEvent;
 import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationResultEvent;
 import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSinchEvent;
 import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSmsDeliveredEvent;
 import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSmsDeliveredEvent.SmsResultEnum;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationStartEvent;
 import com.sinch.sdk.e2e.Config;
 import com.sinch.sdk.e2e.domains.WebhooksHelper;
 import io.cucumber.java.en.Given;
@@ -32,7 +32,7 @@ public class SinchEventsEventsSteps {
   SinchEventsService service;
 
   static VerificationSinchEvent expectedVerificationRequestEvent =
-      VerificationRequestEvent.builder()
+      VerificationStartEvent.builder()
           .setId("1ce0ffee-c0de-5eed-d00d-f00dfeed1337")
           .setMethod(VerificationMethod.SMS)
           .setIdentity(NumberIdentity.builder().setEndpoint("+33612345678").build())

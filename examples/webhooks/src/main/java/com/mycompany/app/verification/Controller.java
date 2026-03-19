@@ -2,9 +2,9 @@ package com.mycompany.app.verification;
 
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.verification.api.v1.SinchEventsService;
-import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEvent;
 import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationResultEvent;
 import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSmsDeliveredEvent;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationStartEvent;
 import java.util.Map;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +22,12 @@ public class Controller {
 
   private static final Logger LOGGER = Logger.getLogger(Controller.class.getName());
   private final SinchClient sinchClient;
-  private final ServerBusinessLogic webhooksBusinessLogic;
+  private final ServerBusinessLogic serverBusinessLogic;
 
   @Autowired
-  public Controller(SinchClient sinchClient, ServerBusinessLogic webhooksBusinessLogic) {
+  public Controller(SinchClient sinchClient, ServerBusinessLogic serverBusinessLogic) {
     this.sinchClient = sinchClient;
-    this.webhooksBusinessLogic = webhooksBusinessLogic;
+    this.serverBusinessLogic = serverBusinessLogic;
   }
 
   @PostMapping(
@@ -37,7 +37,7 @@ public class Controller {
   public ResponseEntity<String> VerificationEvent(
       @RequestHeader Map<String, String> headers, @RequestBody String body) {
 
-    SinchEventsService webhooks = sinchClient.verification().v1().sinchEvents();
+    SinchEventsService sinchEvents = sinchClient.verification().v1().sinchEvents();
 
     // ensure valid authentication to handle request
     // set this value to true to validate request from Sinch servers
@@ -47,7 +47,7 @@ public class Controller {
     boolean ensureValidAuthentication = false;
     if (ensureValidAuthentication) {
       var validAuth =
-          webhooks.validateAuthenticationHeader(
+          sinchEvents.validateAuthenticationHeader(
               // The HTTP verb this controller is managing
               "POST",
               // The URI this controller is managing
@@ -64,19 +64,19 @@ public class Controller {
     }
 
     // decode the request payload
-    var event = webhooks.parseEvent(body);
+    var event = sinchEvents.parseEvent(body);
 
     // let business layer process the request
     var response =
         switch (event) {
-          case VerificationRequestEvent requestEvent ->
-              webhooksBusinessLogic.verificationEvent(requestEvent);
+          case VerificationStartEvent requestEvent ->
+              serverBusinessLogic.verificationEvent(requestEvent);
           case VerificationResultEvent resultEvent -> {
-            webhooksBusinessLogic.verificationEvent(resultEvent);
+            serverBusinessLogic.verificationEvent(resultEvent);
             yield null;
           }
           case VerificationSmsDeliveredEvent smsEvent -> {
-            webhooksBusinessLogic.verificationSmsDeliveredEvent(smsEvent);
+            serverBusinessLogic.verificationSmsDeliveredEvent(smsEvent);
             yield null;
           }
           default -> throw new IllegalStateException("Unexpected value: " + event);
@@ -85,7 +85,7 @@ public class Controller {
     ResponseEntity<String> responseEntity = ResponseEntity.ok().body(null);
 
     if (null != response) {
-      var serializedResponse = webhooks.serializeResponse(response);
+      var serializedResponse = sinchEvents.serializeResponse(response);
       LOGGER.finest("JSON response: " + serializedResponse);
       responseEntity = ResponseEntity.ok(serializedResponse);
     }

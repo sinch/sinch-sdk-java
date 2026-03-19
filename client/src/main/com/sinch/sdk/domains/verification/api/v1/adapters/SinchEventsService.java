@@ -6,8 +6,8 @@ import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.utils.MapUtils;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.core.utils.databind.Mapper;
-import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEventResponse;
 import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationSinchEvent;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationStartEventResponse;
 import com.sinch.sdk.domains.verification.models.v1.sinchevents.internal.VerificationEventInternalImpl;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -60,7 +60,7 @@ public class SinchEventsService
   }
 
   @Override
-  public String serializeResponse(VerificationRequestEventResponse response)
+  public String serializeResponse(VerificationStartEventResponse response)
       throws ApiMappingException {
     try {
       return Mapper.getInstance().writeValueAsString(response);

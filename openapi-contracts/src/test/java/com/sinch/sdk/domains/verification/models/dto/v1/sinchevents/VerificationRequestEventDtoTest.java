@@ -7,8 +7,8 @@ import com.sinch.sdk.domains.verification.adapters.VerificationBaseTest;
 import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.v1.Price;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
-import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEvent;
-import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationRequestEventImpl;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationStartEvent;
+import com.sinch.sdk.domains.verification.models.v1.sinchevents.VerificationStartEventImpl;
 import com.sinch.sdk.domains.verification.models.v1.sinchevents.internal.VerificationEventInternal;
 import com.sinch.sdk.domains.verification.models.v1.sinchevents.internal.VerificationEventInternalImpl;
 import org.junit.jupiter.api.Test;
@@ -16,13 +16,13 @@ import org.junit.jupiter.api.Test;
 @TestWithResources
 public class VerificationRequestEventDtoTest extends VerificationBaseTest {
 
-  @GivenJsonResource("/domains/verification/v1/sinchevents/VerificationRequestEventDto.json")
+  @GivenJsonResource("/domains/verification/v1/sinchevents/VerificationStartEventDto.json")
   VerificationEventInternal requestEventDto;
 
   public static VerificationEventInternalImpl expectedRequestEventDto =
       new VerificationEventInternalImpl(
-          (VerificationRequestEventImpl)
-              VerificationRequestEvent.builder()
+          (VerificationStartEventImpl)
+              VerificationStartEvent.builder()
                   .setId("1234567890")
                   .setMethod(VerificationMethod.SMS)
                   .setIdentity(NumberIdentity.valueOf("+11235551234"))

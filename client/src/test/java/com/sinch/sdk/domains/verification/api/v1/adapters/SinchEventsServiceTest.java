@@ -28,22 +28,26 @@ public class SinchEventsServiceTest extends VerificationBaseTest {
   String request =
       "{\"id\":\"018c25e1-7163-5677-b8fb-467d7b1cffa5\",\"event\":\"VerificationResultEvent\",\"method\":\"sms\",\"identity\":{\"verified\":false,\"type\":\"number\",\"endpoint\":\"+33628254417\"},\"status\":\"FAIL\",\"reason\":\"Expired\"}";
 
-  @GivenTextResource("/domains/verification/v1/sinchevents/VerificationRequestEventDto.json")
+  @GivenTextResource("/domains/verification/v1/sinchevents/VerificationStartEventDto.json")
   static String jsonVerificationRequestEventDto;
 
   @GivenTextResource("/domains/verification/v1/sinchevents/VerificationResultEventDto.json")
   static String jsonVerificationResultEventDto;
 
-  @GivenTextResource("/domains/verification/v1/sinchevents/VerificationResponsePhoneCall.json")
+  @GivenTextResource(
+      "/domains/verification/v1/sinchevents/VerificationStartEventResponsePhoneCallDto.json")
   String jsonResponsePhoneCall;
 
-  @GivenTextResource("/domains/verification/v1/sinchevents/VerificationResponseFlashCall.json")
+  @GivenTextResource(
+      "/domains/verification/v1/sinchevents/VerificationStartEventResponseFlashCallDto.json")
   String jsonResponseFlashCall;
 
-  @GivenTextResource("/domains/verification/v1/sinchevents/VerificationResponseSms.json")
+  @GivenTextResource(
+      "/domains/verification/v1/sinchevents/VerificationStartEventResponseSmsDto.json")
   String jsonResponseSms;
 
-  @GivenTextResource("/domains/verification/v1/sinchevents/VerificationResponseWhatsApp.json")
+  @GivenTextResource(
+      "/domains/verification/v1/sinchevents/VerificationStartEventResponseWhatsAppDto.json")
   String jsonResponseWhatsApp;
 
   SinchEventsService sinchEventsService;
@@ -105,7 +109,7 @@ public class SinchEventsServiceTest extends VerificationBaseTest {
 
     TestHelpers.recursiveEquals(
         sinchEventsService.parseEvent(jsonVerificationRequestEventDto),
-        VerificationRequestEventDtoTest.expectedRequestEventDto.getVerificationRequestEventImpl());
+        VerificationRequestEventDtoTest.expectedRequestEventDto.getVerificationStartEventImpl());
   }
 
   @Test
