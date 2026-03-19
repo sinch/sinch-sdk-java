@@ -76,7 +76,7 @@ public interface ConversationService {
   ProjectSettingsService projectSettings();
 
   /**
-   * EventDestinationsService Service instance
+   * Event Destinations Management Service instance
    *
    * @return service instance for project
    * @since 2.0

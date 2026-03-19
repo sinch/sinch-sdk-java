@@ -31,18 +31,18 @@ public interface NumbersService extends ActiveNumberService, AvailableNumberServ
   AvailableRegionsService regions();
 
   /**
-   * Callbacks Configuration Service instance
+   * Event Destinations Configuration Service instance
    *
    * @return service instance for project
    * @since 2.0
    */
-  CallbackConfigurationService callbackConfiguration();
+  EventDestinationsService eventDestinations();
 
   /**
-   * Webhooks helpers instance
+   * Sinch Events helpers instance
    *
-   * @return instance service related to webhooks helpers
-   * @since 1.2
+   * @return instance service related to Sinch Events helpers
+   * @since 2.0
    */
-  WebHooksService webhooks();
+  SinchEventsService sinchEvents();
 }

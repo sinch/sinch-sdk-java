@@ -1,0 +1,111 @@
+package com.sinch.sdk.domains.numbers.api.v1.adapters;
+
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
+
+import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
+import com.adelean.inject.resources.junit.jupiter.TestWithResources;
+import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
+import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.core.http.AuthManager;
+import com.sinch.sdk.core.http.HttpClient;
+import com.sinch.sdk.core.http.HttpContentType;
+import com.sinch.sdk.core.http.HttpMapper;
+import com.sinch.sdk.core.http.HttpMethod;
+import com.sinch.sdk.core.http.HttpRequest;
+import com.sinch.sdk.core.http.HttpRequestTest.HttpRequestMatcher;
+import com.sinch.sdk.core.http.HttpResponse;
+import com.sinch.sdk.core.http.URLPathUtils;
+import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.domains.numbers.api.v1.EventDestinationsService;
+import com.sinch.sdk.domains.numbers.models.v1.EventDestinationsDtoTest;
+import com.sinch.sdk.domains.numbers.models.v1.eventdestinations.response.EventDestinationResponse;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+
+@TestWithResources
+class EventDestinationsServiceTest extends BaseTest {
+
+  @GivenTextResource("/domains/numbers/v1/eventdestinations/event-destination-response.json")
+  String jsonGetResponse;
+
+  @Mock HttpClient httpClient;
+  @Mock ServerConfiguration serverConfiguration;
+  @Mock Map<String, AuthManager> authManagers;
+  EventDestinationsService service;
+
+  static final String uriUUID = "foo";
+
+  static final Collection<String> NUMBERS_AUTH_NAMES = Arrays.asList("Basic", "OAuth2.0");
+
+  @BeforeEach
+  public void initMocks() {
+    service =
+        new EventDestinationsServiceImpl(
+            httpClient, serverConfiguration, authManagers, HttpMapper.getInstance(), uriUUID);
+  }
+
+  @Test
+  void get() throws ApiException {
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v1/projects/" + URLPathUtils.encodePathSegment(uriUUID) + "/callbackConfiguration",
+            HttpMethod.GET,
+            Collections.emptyList(),
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            NUMBERS_AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonGetResponse.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    EventDestinationResponse response = service.get();
+
+    TestHelpers.recursiveEquals(response, EventDestinationsDtoTest.getResponse);
+  }
+
+  @Test
+  void update() {
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v1/projects/" + URLPathUtils.encodePathSegment(uriUUID) + "/callbackConfiguration",
+            HttpMethod.PATCH,
+            Collections.emptyList(),
+            HttpMapper.getInstance()
+                .serialize(
+                    Collections.singletonList(HttpContentType.APPLICATION_JSON),
+                    EventDestinationsDtoTest.updateRequest),
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            NUMBERS_AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonGetResponse.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    EventDestinationResponse response = service.update(EventDestinationsDtoTest.updateRequest);
+
+    TestHelpers.recursiveEquals(response, EventDestinationsDtoTest.getResponse);
+  }
+}
