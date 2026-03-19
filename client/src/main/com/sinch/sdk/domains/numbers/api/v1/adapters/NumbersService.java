@@ -8,7 +8,7 @@ import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.numbers.api.v1.AvailableRegionsService;
-import com.sinch.sdk.domains.numbers.api.v1.CallbackConfigurationService;
+import com.sinch.sdk.domains.numbers.api.v1.EventDestinationsService;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.EmergencyAddress;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
@@ -46,8 +46,8 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
   private volatile AvailableNumberServiceFacade available;
   private volatile ActiveNumberServiceFacade active;
   private volatile AvailableRegionsService regions;
-  private volatile CallbackConfigurationService callbackConfiguration;
-  private volatile WebHooksService webhooks;
+  private volatile EventDestinationsService eventDestinations;
+  private volatile SinchEventsService sinchEvents;
 
   static {
     LocalLazyInit.init();
@@ -96,26 +96,26 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
     return this.active;
   }
 
-  public CallbackConfigurationService callbackConfiguration() {
-    if (null == this.callbackConfiguration) {
+  public EventDestinationsService eventDestinations() {
+    if (null == this.eventDestinations) {
       instanceLazyInit();
-      this.callbackConfiguration =
-          new CallbackConfigurationServiceImpl(
+      this.eventDestinations =
+          new EventDestinationsServiceImpl(
               httpClientSupplier.get(),
               context.getNumbersServer(),
               authManagers,
               HttpMapper.getInstance(),
               uriUUID);
     }
-    return this.callbackConfiguration;
+    return this.eventDestinations;
   }
 
-  public WebHooksService webhooks() {
+  public SinchEventsService sinchEvents() {
 
-    if (null == this.webhooks) {
-      this.webhooks = new WebHooksService(new NumbersWebhooksAuthenticationValidation());
+    if (null == this.sinchEvents) {
+      this.sinchEvents = new SinchEventsService(new SinchEventsAuthenticationValidation());
     }
-    return this.webhooks;
+    return this.sinchEvents;
   }
 
   @Override

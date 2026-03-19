@@ -72,9 +72,9 @@ public interface AvailableNumberRentAnyRequest {
   /**
    * The callback URL to be called for a rented number's provisioning / deprovisioning operations.
    *
-   * @return callbackUrl
+   * @return eventDestinationTarget
    */
-  String getCallbackUrl();
+  String getEventDestinationTarget();
 
   /**
    * Getting builder
@@ -145,11 +145,11 @@ public interface AvailableNumberRentAnyRequest {
     /**
      * see getter
      *
-     * @param callbackUrl see getter
+     * @param eventDestinationTarget see getter
      * @return Current builder
-     * @see #getCallbackUrl
+     * @see #getEventDestinationTarget
      */
-    Builder setCallbackUrl(String callbackUrl);
+    Builder setEventDestinationTarget(String eventDestinationTarget);
 
     /**
      * Create instance

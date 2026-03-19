@@ -319,7 +319,7 @@ class ActiveNumberServiceTest extends NumbersBaseTest {
             .setDisplayName("my display name")
             .setSmsConfiguration(smsConfiguration)
             .setVoiceConfiguration(voiceConfiguration)
-            .setCallbackUrl("foo callback")
+            .setEventDestinationTarget("foo callback")
             .build();
 
     HttpRequest httpRequest =

@@ -42,7 +42,7 @@ public class ActiveNumberDtoTest extends NumbersBaseTest {
           .setExpireAt(Instant.parse("2023-10-06T15:49:58.813381Z"))
           .setSmsConfiguration(SmsConfigurationDtoTest.configurationResponse)
           .setVoiceConfiguration(VoiceConfigurationDtoTest.configurationResponseRTC)
-          .setCallbackUrl("foo callback")
+          .setEventDestinationTarget("foo callback")
           .build();
 
   public static ActiveNumberUpdateRequest activeNumberUpdateRequest =
@@ -57,7 +57,7 @@ public class ActiveNumberDtoTest extends NumbersBaseTest {
               VoiceConfigurationRTC.builder()
                   .setAppId("AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE")
                   .build())
-          .setCallbackUrl("foo callback")
+          .setEventDestinationTarget("foo callback")
           .build();
 
   public static ActiveNumbersListResponseInternal activeNumberList =
@@ -89,7 +89,7 @@ public class ActiveNumberDtoTest extends NumbersBaseTest {
                               .build())
                       .setVoiceConfiguration(
                           VoiceConfigurationRTC.builder().setAppId("app id").build())
-                      .setCallbackUrl("")
+                      .setEventDestinationTarget("")
                       .build()))
           .setNextPageToken("")
           .setTotalSize(1)
