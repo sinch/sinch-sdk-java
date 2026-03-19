@@ -17,7 +17,7 @@ import com.sinch.sdk.models.NumbersContext;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class ActiveNumberServiceFacade implements ActiveNumberService {
+class ActiveNumberServiceFacade implements ActiveNumberService {
 
   private final ActiveNumberService activeNumberService;
 
@@ -35,10 +35,6 @@ public class ActiveNumberServiceFacade implements ActiveNumberService {
             HttpMapper.getInstance(),
             uriUUID,
             numbersService);
-  }
-
-  protected ActiveNumberService getService() {
-    return this.activeNumberService;
   }
 
   @Override
